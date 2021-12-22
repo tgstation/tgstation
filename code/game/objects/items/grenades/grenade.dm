@@ -149,12 +149,16 @@
 		return ..()
 
 	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		var/newtime = tgui_input_number(user, "Please enter a new detonation time", name)
-		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
-			if(change_det_time(newtime))
-				to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
-				if (round(newtime * 10) != det_time)
-					to_chat(user, span_warning("The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible."))
+		var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+		if (isnull(newtime))
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(newtime == "Instant")
+			newtime = 0
+		newtime = round(newtime)
+		if(change_det_time(newtime))
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 		return
 	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 		if(change_det_time())

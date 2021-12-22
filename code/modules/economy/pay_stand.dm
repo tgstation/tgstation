@@ -55,6 +55,9 @@
 			var/credit_amount = 0
 			if(!force_fee)
 				credit_amount = tgui_input_number(user, "How much would you like to deposit?", "Money Deposit")
+				if(isnull(credit_amount))
+					return
+				credit_amount = round(credit_amount)
 			else
 				credit_amount = force_fee
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -75,7 +78,10 @@
 			return
 	if(istype(W, /obj/item/holochip))
 		var/obj/item/holochip/H = W
-		var/cashmoney = tgui_input_number(user, "How much would you like to deposit?", "Money Deposit")
+		var/cashmoney = round(tgui_input_number(user, "How much would you like to deposit?", "Money Deposit"))
+		if(isnull(cashmoney))
+			return
+		cashmoney = round(cashmoney)
 		if(H.spend(cashmoney, FALSE))
 			purchase(user, cashmoney)
 			to_chat(user, "Thanks for purchasing! The vendor has been informed.")
@@ -99,12 +105,14 @@
 			return
 		if(!signaler)
 			var/cash_limit = tgui_input_number(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold", 1, min_value = 1)
-			if(cash_limit)
-				S.forceMove(src)
-				signaler = S
-				signaler_threshold = cash_limit
-				to_chat(user, "You attach the signaler to the paystand.")
-				desc += " A signaler appears to be attached to the scanner."
+			if(isnull(cash_limit))
+				return
+			cash_limit = round(cash_limit)
+			S.forceMove(src)
+			signaler = S
+			signaler_threshold = cash_limit
+			to_chat(user, "You attach the signaler to the paystand.")
+			desc += " A signaler appears to be attached to the scanner."
 		else
 			to_chat(user, span_warning("A signaler is already attached to this unit!"))
 

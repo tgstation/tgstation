@@ -128,10 +128,11 @@
 		return
 
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", max_value = 360)
-	if(deg && (deg > 0 && deg <= 360))
-		degrees = deg
-		to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
-		SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
+	if(isnull(deg))
+		return
+	degrees = round(deg)
+	to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
+	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
 	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
