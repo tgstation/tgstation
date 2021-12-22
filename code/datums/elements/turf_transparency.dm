@@ -11,7 +11,7 @@
 	var/turf/our_turf = target
 
 	our_turf.layer = OPENSPACE_LAYER
-	if(isopenturf(our_turf))
+	if(isgroundlessturf(our_turf))
 		our_turf.plane = OPENSPACE_PLANE
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
@@ -65,7 +65,7 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_z_transparency/proc/add_baseturf_underlay(turf/our_turf)
-	if(isopenturf(our_turf)) // we don't ever want our bottom turf to be openspace
+	if(isgroundlessturf(our_turf)) // we don't ever want our bottom turf to be openspace
 		our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space
 	if(!ispath(path))
