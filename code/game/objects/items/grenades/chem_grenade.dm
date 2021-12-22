@@ -275,7 +275,7 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if (isnull(newspread))
+	if(isnull(newspread))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
