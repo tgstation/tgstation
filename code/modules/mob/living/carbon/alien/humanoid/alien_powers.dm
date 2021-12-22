@@ -169,7 +169,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
 	var/list/nearby_targets = list()
-	for(var/atom/target as obj|turf in oview(1, user))
+	for(var/atom/target in oview(1, user))
 		nearby_targets.Add(target)
 	if(!length(nearby_targets))
 		to_chat(user, span_noticealien("There's nothing to corrode."))
