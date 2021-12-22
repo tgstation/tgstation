@@ -17,6 +17,9 @@
 	circuit = /obj/item/circuitboard/computer/communications
 	light_color = LIGHT_COLOR_BLUE
 
+	/// If the battlecruiser has been called
+	var/static/battlecruiser_called = FALSE
+
 	/// Cooldown for important actions, such as messaging CentCom or other sectors
 	COOLDOWN_DECLARE(static/important_action_cooldown)
 	COOLDOWN_DECLARE(static/emergency_access_cooldown)
@@ -82,8 +85,15 @@
 	else
 		return ..()
 
-/obj/machinery/computer/communications/emag_act(mob/user)
-	if (obj_flags & EMAGGED)
+/obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
+		if(battlecruiser_called)
+			to_chat(user, span_danger("The card reports a long-range message already sent to the Syndicate fleet...?"))
+			return
+		battlecruiser_called = TRUE
+		//summon_battlecruiser()
+		return
+	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
 	if (authenticated)
@@ -573,7 +583,7 @@
 		message_admins("[key_name(usr)] has cancelled the outgoing cross-comms message.")
 
 		return TRUE
-	
+
 	return ..()
 
 /// Returns whether or not the communications console can communicate with the station

@@ -77,10 +77,10 @@
 		return
 
 	var/original_host = host_pda
-	var/fakename = sanitize_name(stripped_input(user, "Enter a name for the rigged message.", "Forge Message", null, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/fakename = sanitize_name(tgui_input_text(user, "Enter a name for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!fakename || host_pda != original_host || !user.canUseTopic(host_pda, BE_CLOSE))
 		return
-	var/fakejob = sanitize_name(stripped_input(user, "Enter a job for the rigged message.", "Forge Message", null, MAX_NAME_LEN), allow_numbers = TRUE)
+	var/fakejob = sanitize_name(tgui_input_text(user, "Enter a job for the rigged message.", "Forge Message", max_length = MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!fakejob || host_pda != original_host || !user.canUseTopic(host_pda, BE_CLOSE))
 		return
 	if(charges > 0 && host_pda.send_message(user, list(target), rigged = REF(user), fakename = fakename, fakejob = fakejob))

@@ -164,6 +164,7 @@
 
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
+	///this is the last recorded client eye by SSparallax/fire()
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	///world.time of when we can state animate()ing parallax again
