@@ -390,6 +390,8 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 	var/r = hex2num(copytext(color, 2, 4))
 	var/g = hex2num(copytext(color, 4, 6))
 	var/b = hex2num(copytext(color, 6, 8))
+	if(r == null || g == null || b == null)
+		stack_trace("Attempted to convert invalid hex to RGB: [color]")
 	return list(r, g, b)
 
 //This is a weird one:
