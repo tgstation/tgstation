@@ -43,7 +43,7 @@
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 	qdel(src)
 
 /*

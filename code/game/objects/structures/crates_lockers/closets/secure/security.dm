@@ -180,6 +180,31 @@
 	anchored = TRUE
 	var/id = null
 
+/obj/structure/closet/secure_closet/brig/genpop
+	name = "genpop storage locker"
+	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
+	/// reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id = null
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/C, mob/user)
+	..()
+	if(!assigned_id && istype(C, /obj/item/card/id/advanced/prisoner))
+		assigned_id = WEAKREF(C)
+		name = "genpop storage locker - [C.registered_name]"
+		say("Prisoner ID linked to locker.")
+		return
+	if(C == assigned_id)
+		locked = FALSE
+		assigned_id = initial(assigned_id)
+		name = initial(name)
+		say("Linked prisoner ID detected. Unlocking locker and resetting ID.")
+		update_appearance()
+
+/obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
+	. = ..()
+	if(assigned_id)
+		. += span_notice("The digital display on the locker shows it is currently owned by [assigned_id].")
+
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "Secure Evidence Closet"

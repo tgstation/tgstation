@@ -123,7 +123,7 @@
 				to_chat(usr, span_danger("Unauthorized access."))
 
 		else if(href_list["warn"])
-			var/warning = stripped_input(usr, "Message:", "Enter your message here!", "", MAX_MESSAGE_LEN)
+			var/warning = tgui_input_text(usr, "Enter your message here", "Messaging")
 			if(!warning)
 				return
 			var/obj/item/implant/I = locate(href_list["warn"]) in GLOB.tracked_implants

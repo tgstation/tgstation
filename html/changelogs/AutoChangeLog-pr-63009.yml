@@ -1,5 +1,0 @@
-author: "tf-4"
-delete-after: True
-changes: 
-  - code_imp: "GAR glasses are now (mostly) subtypes rather than all their own thing"
-  - qol: "GAR glasses now layer above hair, rather than under it."
