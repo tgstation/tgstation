@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Fixes width on black market uplinks to show three delivery options. Technology!"
