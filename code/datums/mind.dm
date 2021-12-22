@@ -535,7 +535,7 @@
 		if(!GLOB.admin_objective_list)
 			generate_admin_objective_list()
 
-		if(old_objective && old_objective.name in GLOB.admin_objective_list)
+		if(old_objective && (old_objective.name in GLOB.admin_objective_list))
 			def_value = old_objective.name
 
 		var/choice_type = tgui_input_list(usr, "Select objective type", "Objective type", GLOB.admin_objective_list, def_value)

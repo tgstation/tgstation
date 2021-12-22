@@ -121,7 +121,7 @@
 				else
 					name = "bookcase ([sanitize(newname)])"
 			else if(I.tool_behaviour == TOOL_CROWBAR)
-				if(contents.len)
+				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))
 				else
 					I.play_tool_sound(src, 100)
@@ -142,17 +142,19 @@
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
 		load_random_books = FALSE
-	if(contents.len)
-		var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
-		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
-				return
-			if(ishuman(user))
-				if(!user.get_active_held_item())
-					user.put_in_hands(choice)
-			else
-				choice.forceMove(drop_location())
-			update_appearance()
+	if(!length(contents))
+		return
+	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
+	if(!choice)
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
+		return
+	if(ishuman(user))
+		if(!user.get_active_held_item())
+			user.put_in_hands(choice)
+	else
+		choice.forceMove(drop_location())
+	update_appearance()
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
@@ -169,7 +171,7 @@
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
-	var/amount = contents.len
+	var/amount = length(contents)
 	if(load_random_books)
 		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"

@@ -19,23 +19,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/B in GLOB.total_extraction_beacons)
-		var/obj/structure/extraction_point/EP = B
-		if(EP.beacon_network in beacon_networks)
-			possible_beacons += EP
-
+	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
+		if(extraction_point.beacon_network in beacon_networks)
+			possible_beacons += extraction_point
 	if(!possible_beacons.len)
 		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
-
 	else
-		var/A
-
-		A = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
-
-		if(!A)
+		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+		if(!chosen_beacon)
 			return
-		beacon = A
+		beacon = chosen_beacon
 		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)

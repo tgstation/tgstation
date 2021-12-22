@@ -15,7 +15,7 @@
 	var/list/nearby_targets = list()
 	for(var/mob/living/target in oview(ninja))
 		nearby_targets.Add(target)
-	if(!nearby_targets)
+	if(!length(nearby_targets))
 		to_chat(ninja, span_warning("You see no one nearby to ensnare."))
 		return
 	var/mob/living/net_target = tgui_input_list(ninja, "Select who to capture", "Capture Target", sort_names(nearby_targets))

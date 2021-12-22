@@ -39,12 +39,14 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 	possible_targets = list("Free objective", "Random") + sort_names(possible_targets)
 
+
 	if(target?.current)
 		def_value = target.current
 
-	var/mob/new_target = tgui_input_list(admin, "Select target", "Objective target", possible_targets, def_value)
+	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
+
 	if (new_target == "Free objective")
 		target = null
 	else if (new_target == "Random")
@@ -596,17 +598,17 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items
-	var/new_target = tgui_input_list(admin, "Select target", "Objective target", sort_names(possible_items_all) + "custom", steal_target)
+	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sort_names(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
 	if (new_target == "custom") //Can set custom items.
-		var/custom_path = tgui_input_text(admin, "Search for target item type", "Type")
+		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
 		if (!custom_path)
 			return
 		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
 		var/custom_name = initial(custom_target.name)
-		custom_name = tgui_input_text(admin, "Enter target name", "Objective target", custom_name)
+		custom_name = stripped_input(admin,"Enter target name:", "Objective target", custom_name)
 		if (!custom_name)
 			return
 		steal_target = custom_target
@@ -692,7 +694,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	return captured_amount >= target_amount
 
 /datum/objective/capture/admin_edit(mob/admin)
-	var/count = tgui_input_number(admin, "How many mobs to capture?", "Capture", target_amount)
+	var/count = input(admin,"How many mobs to capture ?","capture",target_amount) as num|null
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -743,7 +745,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Extract [target_amount] compatible genome\s."
 
 /datum/objective/absorb/admin_edit(mob/admin)
-	var/count = tgui_input_number(admin, "How many people to absorb?", "Absorb", target_amount)
+	var/count = input(admin,"How many people to absorb?","absorb",target_amount) as num|null
 	if(count)
 		target_amount = count
 	update_explanation_text()
@@ -830,7 +832,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = tgui_input_list(admin, "Select target", "Objective target", sort_names(possible_targets))
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
 		target = new_target.mind
 	else
 		to_chat(admin, span_boldwarning("No active AIs with minds."))
@@ -895,7 +897,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "custom"
 
 /datum/objective/custom/admin_edit(mob/admin)
-	var/expl = tgui_input_text(admin, "Custom objective", "Objective", explanation_text)
+	var/expl = stripped_input(admin, "Custom objective:", "Objective", explanation_text)
 	if(expl)
 		explanation_text = expl
 

@@ -45,8 +45,7 @@
 	var/list/combined = sort_list(logs_present) + sort_list(logs_missing)
 
 	var/selected = tgui_input_list(usr, "Investigate what?", "Investigation", combined)
-
-	if(!(selected in combined) || selected == "---")
+	if(!selected || !(selected in combined) || selected == "---")
 		return
 
 	selected = replacetext(selected, " (empty)", "")
