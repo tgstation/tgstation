@@ -194,7 +194,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		SSmove_manager.stop_looping(convayable, SSconveyors)
 
 /obj/machinery/conveyor/proc/start_conveying(atom/movable/moving)
-	if(!istype(moving) || iseffect(moving) || isdead(moving) || moving == src)
+	var/static/list/unconveyables = typecacheof(list(/obj/effect, /mob/dead))
+	if(!istype(moving) || is_type_in_typecache(moving, unconveyables) || moving == src)
 		return
 	moving.AddComponent(/datum/component/convey, movedir, 0.2 SECONDS)
 
