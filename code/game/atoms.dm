@@ -30,7 +30,7 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///This atom's HUD (med/sec, etc) images. Associative list.
+	///This atom's active HUD (med/sec, etc) images. Associative list of the form: list(hud = list(images this hud uses from this atom))
 	var/list/image/hud_list = null
 	///HUD images that this atom can provide.
 	var/list/hud_possible
