@@ -20,8 +20,9 @@ GLOBAL_LIST_INIT(huds, list(
 	///list of all atoms which display this hud by z level. when a client in hud_users enters a z level all hud images in that z gets added to their client.images
 	var/list/atom/hud_atoms = list()
 
-	///list with all mobs who can see the hud. associated by z level.
-	var/list/mob/hud_users = list()
+	///associative list of the form: list(z level = list(hud user client mob = number of times this hud has been added to that mob)).
+	///tracks users of this hud by z level so when they change z's we can adjust what images they see from this hud.
+	var/list/hud_users = list()
 
 	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isnt separated by z level
 	var/list/atom/hud_atoms_all_z_levels = list()
