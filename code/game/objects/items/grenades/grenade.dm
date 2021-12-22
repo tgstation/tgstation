@@ -154,8 +154,9 @@
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
-		if(newtime == "Instant")
-			newtime = 0
+		if(newtime == "Instant" && change_det_time(0))
+			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+			return
 		newtime = round(newtime)
 		if(change_det_time(newtime))
 			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
@@ -166,9 +167,7 @@
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE
-	if(time != null)
-		if(time < 3)
-			time = 3
+	if(!isnull(time))
 		det_time = round(clamp(time * 10, 0, 5 SECONDS))
 	else
 		var/previous_time = det_time
