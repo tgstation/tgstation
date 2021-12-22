@@ -35,5 +35,5 @@
 	light_mask = "donksoft-light-mask"
 
 /obj/item/vending_refill/syndicate_donksoft
-	machine_name = "Donksoft Toy Vendor"
+	machine_name = "Syndicate Donksoft Toy Vendor"
 	icon_state = "refill_donksoft"
