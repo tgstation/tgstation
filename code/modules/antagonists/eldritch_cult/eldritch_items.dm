@@ -194,8 +194,10 @@
 	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
+	if (!HAS_TRAIT(src, TRAIT_NO_STRIP))
+		return ..()
 	var/mob/living/carbon/carbon_user = loc
-	to_chat(carbon_user,span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
+	to_chat(carbon_user, span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
 	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
 	return ..()
