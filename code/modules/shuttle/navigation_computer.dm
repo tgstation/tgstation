@@ -379,7 +379,7 @@
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sort_list(L))
-	if(!selected)
+	if(isnull(selected))
 		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 		return
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
