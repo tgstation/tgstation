@@ -42,13 +42,14 @@
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
-		balloon_alert(user, "removing airlock electronics...")
-		if(tool.use_tool(src, user, 100, volume = 50))
-			new /obj/item/electronics/airlock(loc)
-			id = null
-			deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
-			balloon_alert(user, "removed airlock electronics")
-		return TRUE
+		return
+	balloon_alert(user, "removing airlock electronics...")
+	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
+		new /obj/item/electronics/airlock(loc)
+		id = null
+		deconstruction = BLASTDOOR_NEEDS_ELECTRONICS
+		balloon_alert(user, "removed airlock electronics")
+	return TRUE
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -57,7 +58,7 @@
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
 		return
 	balloon_alert(user, "removing internal cables...")
-	if(tool.use_tool(src, user, 100, volume = 50))
+	if(tool.use_tool(src, user, 10 SECONDS, volume = 50))
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 		var/amount = recipe.reqs[/obj/item/stack/cable_coil]
 		new /obj/item/stack/cable_coil(loc, amount)
@@ -72,7 +73,7 @@
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
 		return
 	balloon_alert(user, "tearing apart...") //You're tearing me apart, Lisa!
-	if(tool.use_tool(src, user, 150, volume = 50))
+	if(tool.use_tool(src, user, 15 SECONDS, volume = 50))
 		var/datum/crafting_recipe/recipe = locate(recipe_type) in GLOB.crafting_recipes
 		var/amount = recipe.reqs[/obj/item/stack/sheet/plasteel]
 		new /obj/item/stack/sheet/plasteel(loc, amount)
