@@ -30,6 +30,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	//handle facial hair (if necessary)
 	if(hairdresser.gender != FEMALE)
 		var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+		if(!new_style)
+			return TRUE
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return TRUE //no tele-grooming
 		if(new_style)
@@ -147,6 +149,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 	var/mob/living/carbon/human/amazed_human = user
 
 	var/choice = tgui_input_list(user, "Something to change?", "Magical Grooming", list("name", "race", "gender", "hair", "eyes"))
+	if(!choice)
+		return TRUE
 
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return TRUE

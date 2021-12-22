@@ -778,6 +778,8 @@ What a mess.*/
 					if("species")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_list(usr, "Select a species", "Species Selection", get_selectable_species())
+							if(!t1)
+								return
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							active1.fields["species"] = t1

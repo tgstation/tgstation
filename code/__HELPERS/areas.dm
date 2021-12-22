@@ -66,11 +66,11 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 			continue // No expanding powerless rooms etc
 		areas[place.name] = place
 	var/area_choice = tgui_input_list(creator, "Choose an area to expand or make a new area", "Area Expansion", areas)
-	area_choice = areas[area_choice]
-
 	if(!area_choice)
 		to_chat(creator, span_warning("No choice selected. The area remains undefined."))
 		return
+	area_choice = areas[area_choice]
+
 	var/area/newA
 	var/area/oldA = get_area(get_turf(creator))
 	if(!isarea(area_choice))

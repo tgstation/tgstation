@@ -34,6 +34,8 @@
 			return
 
 		var/choice = tgui_input_list(user, "Underwear, Undershirt, or Socks?", "Changing", list("Underwear","Underwear Color","Undershirt","Socks"))
+		if(!choice)
+			return
 
 		if(!Adjacent(user))
 			return
