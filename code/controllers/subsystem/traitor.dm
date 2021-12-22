@@ -16,10 +16,15 @@ SUBSYSTEM_DEF(traitor)
 	var/current_progression_scaling = 1 MINUTES
 	/// Used to handle the probability of getting an objective.
 	var/datum/traitor_category_handler/category_handler
+	/// The current debug handler for objectives. Used for debugging objectives
+	var/datum/traitor_objective_debug/traitor_debug_panel
+	/// Used by the debug menu, decides whether newly created objectives should generate progression and telecrystals. Do not modify for non-debug purposes.
+	var/generate_objectives = TRUE
 
 /datum/controller/subsystem/traitor/Initialize(start_timeofday)
 	. = ..()
 	category_handler = new()
+	traitor_debug_panel = new(category_handler)
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)

@@ -2008,6 +2008,7 @@
 #include "code\modules\antagonists\space_ninja\space_ninja.dm"
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\swarmer\swarmer.dm"
+#include "code\modules\antagonists\traitor\balance_helper.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
 #include "code\modules\antagonists\traitor\objective_category.dm"
 #include "code\modules\antagonists\traitor\traitor_objective.dm"

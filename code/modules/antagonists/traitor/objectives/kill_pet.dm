@@ -1,5 +1,5 @@
 /datum/traitor_objective_category/kill_pet
-	name = "Steal Item"
+	name = "Kill Pet"
 	objectives = list(
 		/datum/traitor_objective/kill_pet/high_risk = 1,
 		list(
@@ -37,7 +37,7 @@
 
 /datum/traitor_objective/kill_pet/high_risk
 	progression_minimum = 25 MINUTES
-	progression_reward = list()
+	progression_reward = list(4 MINUTES, 7 MINUTES)
 	telecrystal_reward = list(2, 4)
 
 	limited_to_department_head = FALSE

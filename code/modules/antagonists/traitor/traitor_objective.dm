@@ -41,15 +41,22 @@
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
 	src.handler = handler
-	if(islist(telecrystal_reward))
-		telecrystal_reward = rand(telecrystal_reward[1], telecrystal_reward[2])
-
-	if(islist(progression_reward))
-		progression_reward = rand(progression_reward[1], progression_reward[2])
+	if(SStraitor.generate_objectives)
+		if(islist(telecrystal_reward))
+			telecrystal_reward = rand(telecrystal_reward[1], telecrystal_reward[2])
+		if(islist(progression_reward))
+			progression_reward = rand(progression_reward[1], progression_reward[2])
+	else
+		if(!islist(telecrystal_reward))
+			telecrystal_reward = list(telecrystal_reward, telecrystal_reward)
+		if(!islist(progression_reward))
+			progression_reward = list(progression_reward, progression_reward)
 	progression_cost_coeff = (rand()*2 - 1) * progression_cost_coeff_deviance
 
 /// Updates the progression cost, scaling it depending on their current progression compared against the global progression
 /datum/traitor_objective/proc/update_progression_cost()
+	if(!SStraitor.generate_objectives)
+		return
 	progression_reward = original_progression
 	if(global_progression_influence_intensity <= 0)
 		return
