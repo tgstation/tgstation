@@ -56,7 +56,12 @@
 		else
 			C.key = brainmob.key
 
+		C.set_suicide(brainmob.suiciding)
+
 		QDEL_NULL(brainmob)
+
+	else
+		C.set_suicide(suicided)
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X
