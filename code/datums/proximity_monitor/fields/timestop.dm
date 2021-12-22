@@ -43,17 +43,13 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune, "check_anti_magic" = check_anti_magic, "check_holy" = check_holy))
+	chronofield = new (src, freezerange, TRUE, immune, check_anti_magic, check_holy)
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/magic
 	check_anti_magic = TRUE
 
 /datum/proximity_monitor/advanced/timestop
-	name = "chronofield"
-	setup_field_turfs = TRUE
-	field_shape = FIELD_SHAPE_RADIUS_SQUARE
-	requires_processing = TRUE
 	var/list/immune = list()
 	var/list/frozen_things = list()
 	var/list/frozen_mobs = list() //cached separately for processing
@@ -64,12 +60,21 @@
 
 	var/static/list/global_frozen_atoms = list()
 
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy)
+	..()
+	src.immune = immune
+	src.check_anti_magic = check_anti_magic
+	src.check_holy = check_holy
+	recalculate_field()
+	START_PROCESSING(SSfastprocess, src)
+
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/AM)
-	freeze_atom(AM)
+/datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/location)
+	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
 	if(immune[A] || global_frozen_atoms[A] || !istype(A))
@@ -167,10 +172,10 @@
 		m.Stun(20, ignore_canstun = TRUE)
 
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/T)
+	. = ..()
 	for(var/i in T.contents)
 		freeze_atom(i)
 	freeze_turf(T)
-	return ..()
 
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/projectile/P)
