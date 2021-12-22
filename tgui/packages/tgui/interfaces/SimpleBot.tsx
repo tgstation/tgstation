@@ -7,6 +7,7 @@ type SimpleBotContext = {
   can_hack: number;
   locked: number;
   emagged: number;
+  has_access: number;
   pai: Pai;
   settings: Settings;
   custom_controls: Controls;
@@ -60,7 +61,7 @@ export const SimpleBot = (_, context) => {
 /** Creates a lock button at the top of the controls */
 const TabDisplay = (_, context) => {
   const { act, data } = useBackend<SimpleBotContext>(context);
-  const { can_hack, locked, pai } = data;
+  const { can_hack, has_access, locked, pai } = data;
   const { allow_pai } = pai;
 
   return (
@@ -69,6 +70,7 @@ const TabDisplay = (_, context) => {
       {!!allow_pai && <PaiButton />}
       <Button
         color="transparent"
+        disabled={!has_access && !can_hack}
         icon={locked ? 'lock' : 'lock-open'}
         onClick={() => act('lock')}
         selected={locked}

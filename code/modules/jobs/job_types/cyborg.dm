@@ -1,5 +1,6 @@
 /datum/job/cyborg
-	title = "Cyborg"
+	title = JOB_CYBORG
+	description = "Assist the crew, follow your laws, obey your AI."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	faction = FACTION_STATION
 	total_positions = 0

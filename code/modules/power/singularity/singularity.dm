@@ -147,7 +147,7 @@
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(prob(event_chance))
 			event()
 	dissipate(delta_time)
 	check_energy()

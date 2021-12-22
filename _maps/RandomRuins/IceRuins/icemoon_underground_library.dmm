@@ -152,7 +152,7 @@
 	},
 /area/ruin/unpowered/buried_library)
 "aI" = (
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/item/clothing/head/rice_hat,
 /turf/open/floor/cult,
 /area/ruin/unpowered/buried_library)

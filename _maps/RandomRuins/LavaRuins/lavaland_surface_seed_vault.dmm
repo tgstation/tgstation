@@ -61,7 +61,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "ak" = (
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
@@ -82,12 +82,12 @@
 /area/ruin/powered/seedvault)
 "ap" = (
 /obj/machinery/light/directional/north,
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "aq" = (
 /obj/machinery/light/directional/north,
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)

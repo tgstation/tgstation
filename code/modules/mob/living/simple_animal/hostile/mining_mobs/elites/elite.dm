@@ -191,6 +191,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
 /obj/structure/elite_tumor/proc/mychild_gone_missing()
+	SIGNAL_HANDLER
 	mychild = null
 
 /obj/structure/elite_tumor/proc/return_elite()
@@ -222,6 +223,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/clear_activator)
 
 /obj/structure/elite_tumor/proc/clear_activator(mob/source)
+	SIGNAL_HANDLER
 	if(!activator)
 		return
 	activator = null
