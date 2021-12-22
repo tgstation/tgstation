@@ -40,7 +40,7 @@
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
 			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
 		var/chosen_name = tgui_input_list(user, "New name to assign", "Plastic Surgery", names)
-		if(!isnull(chosen_name))
+		if(isnull(chosen_name))
 			return
 		var/oldname = target.real_name
 		target.real_name = chosen_name

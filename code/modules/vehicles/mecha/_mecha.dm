@@ -833,7 +833,7 @@
 				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))
 			else
 				AI = ai_pilots[1]
-			if(!isnull(AI))
+			if(isnull(AI))
 				return
 			if(!(AI in occupants) || !user.Adjacent(src))
 				return //User sat on the selection window and things changed.

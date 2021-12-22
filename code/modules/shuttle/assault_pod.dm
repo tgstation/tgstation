@@ -37,7 +37,7 @@
 	var/target_area = tgui_input_list(user, "Area to land", "Landing Zone", GLOB.teleportlocs)
 	if(isnull(target_area))
 		return
-	if(!isnull(GLOB.teleportlocs[target_area]))
+	if(isnull(GLOB.teleportlocs[target_area]))
 		return
 	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))
