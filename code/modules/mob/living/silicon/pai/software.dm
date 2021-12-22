@@ -99,9 +99,11 @@
 		if("camera_zoom")
 			aicamera.adjust_zoom(usr)
 		if("change_image")
-			var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
+			var/newImage = tgui_input_list(usr, "Select your new display image", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses", "None")))
+			if(isnull(newImage))
+				return FALSE
 			switch(newImage)
-				if(null)
+				if("None")
 					card.emotion_icon = "null"
 				if("Extremely Happy")
 					card.emotion_icon = "extremely-happy"

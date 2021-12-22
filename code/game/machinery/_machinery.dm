@@ -632,7 +632,7 @@
 			return TRUE
 
 	var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
-	if(!unbuckled)
+	if(isnull(unbuckled))
 		return FALSE
 	if(user_unbuckle_mob(unbuckled,user))
 		return TRUE

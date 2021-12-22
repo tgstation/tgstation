@@ -250,8 +250,7 @@
 	if(!sensor_mode)
 		sensor_mode = modes[1]
 	var/switchMode = tgui_input_list(M, "Select a sensor mode:", "Suit Sensor Mode", modes, modes[sensor_mode + 1])
-	if(!switchMode)
-		to_chat(M, span_warning("No sensor mode selected."))
+	if(isnull(switchMode))
 		return
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, span_warning("You have moved too far away!"))

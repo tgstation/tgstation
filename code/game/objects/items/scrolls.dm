@@ -40,8 +40,11 @@
  * * user The mob that is being teleported
  */
 /obj/item/teleportation_scroll/proc/teleportscroll(mob/user)
+	if(!length(GLOB.teleportlocs))
+		to_chat(user, span_warning("There are no locations available"))
+		return
 	var/jump_target = tgui_input_list(user, "Area to jump to", "BOOYEA", GLOB.teleportlocs)
-	if(!jump_target)
+	if(isnull(jump_target))
 		return
 	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !uses)
 		return

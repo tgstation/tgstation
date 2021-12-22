@@ -22,12 +22,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
 		if(extraction_point.beacon_network in beacon_networks)
 			possible_beacons += extraction_point
-	if(!possible_beacons.len)
+	if(!length(possible_beacons))
 		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
 	else
 		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
-		if(!chosen_beacon)
+		if(isnull(chosen_beacon))
 			return
 		beacon = chosen_beacon
 		to_chat(user, span_notice("You link the extraction pack to the beacon system."))

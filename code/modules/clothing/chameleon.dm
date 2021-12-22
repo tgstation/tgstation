@@ -94,13 +94,13 @@
 	if(!user || !IsAvailable())
 		return FALSE
 	var/selected = tgui_input_list(user, "Select outfit to change into", "Chameleon Outfit", outfit_options)
-	if(!selected)
+	if(isnull(selected))
 		return FALSE
 	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
 		return FALSE
-	var/outfit_type = outfit_options[selected]
-	if(!outfit_type)
+	if(isnull(outfit_options[selected]))
 		return FALSE
+	var/outfit_type = outfit_options[selected]
 	var/datum/outfit/job/O = new outfit_type()
 	var/list/outfit_types = O.get_chameleon_disguise_info()
 	var/datum/job/job_datum = SSjob.GetJobType(O.jobtype)
@@ -184,11 +184,11 @@
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
 	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon [chameleon_name]", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
-	if(!picked_name)
+	if(isnull(picked_name))
+		return
+	if(isnull(chameleon_list[picked_name]))
 		return
 	picked_item = chameleon_list[picked_name]
-	if(!picked_item)
-		return
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)

@@ -19,7 +19,7 @@
 		to_chat(ninja, span_warning("You see no one nearby to ensnare."))
 		return
 	var/mob/living/net_target = tgui_input_list(ninja, "Select who to capture", "Capture Target", sort_names(nearby_targets))
-	if(!net_target)
+	if(isnull(net_target))
 		return
 	if(QDELETED(net_target) || !(net_target in oview(ninja)) || !isliving(net_target))
 		return

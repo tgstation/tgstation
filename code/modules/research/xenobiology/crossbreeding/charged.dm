@@ -170,7 +170,7 @@ Charged extracts:
 		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
 	var/racechoice = tgui_input_list(H, "Choose your slime subspecies", "Slime Selection", sort_list(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc))
-	if(!racechoice)
+	if(isnull(racechoice))
 		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))

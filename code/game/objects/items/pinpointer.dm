@@ -139,12 +139,12 @@
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
-	if(!names.len)
+	if(!length(names))
 		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
 
 	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
-	if(!pinpoint_target)
+	if(isnull(pinpoint_target))
 		return
 	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
 		return

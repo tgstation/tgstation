@@ -86,6 +86,8 @@
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
 				var/choice = tgui_input_list(user, "How do you want to add this language?", "[language_datum]", choices)
+				if(isnull(choice))
+					return
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)
@@ -109,6 +111,8 @@
 			if((is_admin || isobserver(AM)) && language_datum)
 				var/list/choices = list("Only Spoken", "Only Understood", "Both")
 				var/choice = tgui_input_list(user, "Which part do you wish to remove?", "[language_datum]", choices)
+				if(isnull(choice))
+					return
 				var/spoken = FALSE
 				var/understood = FALSE
 				switch(choice)

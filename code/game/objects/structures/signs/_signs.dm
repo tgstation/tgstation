@@ -133,7 +133,7 @@
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
-		if(!choice)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
@@ -161,12 +161,10 @@
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
 		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
-		if(!choice)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		if(!choice)
 			return
 		user.visible_message(span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src))

@@ -179,7 +179,7 @@
 		return
 
 	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
-	if(!new_layer)
+	if(isnull(new_layer))
 		return
 	target_layer = layers[new_layer]
 

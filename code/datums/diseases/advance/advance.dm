@@ -475,10 +475,9 @@
 		var/list/targets = list("Random")
 		targets += sort_names(GLOB.human_list)
 		var/target = tgui_input_list(user, "Viable human target", "Disease Target", targets)
-
-		var/mob/living/carbon/human/H
-		if(!target)
+		if(isnull(target))
 			return
+		var/mob/living/carbon/human/H
 		if(target == "Random")
 			for(var/human in shuffle(GLOB.human_list))
 				H = human

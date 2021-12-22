@@ -29,7 +29,9 @@
 
 	var/list/choices = beard_or_hair == "Hair" ? GLOB.hair_gradients_list : GLOB.facial_hair_gradients_list
 	var/new_grad_style = tgui_input_list(user, "Choose a color pattern", "Character Preference", choices)
-	if(!new_grad_style || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
+	if(isnull(new_grad_style))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE))
 		return
 
 	var/new_grad_color = input(user, "Choose a secondary hair color:", "Character Preference",human_target.grad_color) as color|null

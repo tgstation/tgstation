@@ -22,10 +22,14 @@
 
 /obj/item/choice_beacon/proc/generate_options(mob/living/M)
 	var/list/display_names = generate_display_names()
-	if(!display_names.len)
+	if(!length(display_names))
 		return
 	var/choice = tgui_input_list(M, "Which item would you like to order?", "Select an Item", display_names)
-	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(choice))
+		return
+	if(isnull(display_names[choice]))
+		return
+	if(!M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	spawn_option(display_names[choice],M)

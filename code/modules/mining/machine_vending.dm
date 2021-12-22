@@ -171,7 +171,9 @@
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = tgui_input_list(redeemer, "Pick your equipment", "Mining Voucher Redemption", sort_list(items))
-	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+	if(isnull(selection))
+		return
+	if(!Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
 	switch(selection)

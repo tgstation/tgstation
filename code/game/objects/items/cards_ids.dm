@@ -454,7 +454,7 @@
 		to_chat(user, span_warning("[src] doesn't have a linked account to deposit into!"))
 		return FALSE
 
-	if (!money || !money.len)
+	if (!money || !length(money))
 		return FALSE
 
 	var/total = 0

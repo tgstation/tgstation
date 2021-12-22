@@ -393,7 +393,7 @@
 		if(3)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
-	if(idle_threads.len)
+	if(length(idle_threads))
 		var/list/program_headers = list()
 		for(var/I in idle_threads)
 			var/datum/computer_file/program/P = I
@@ -486,7 +486,7 @@
 	return TRUE
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(!all_components.len)
+	if(!length(all_components))
 		to_chat(user, span_warning("This device doesn't have any components installed."))
 		return
 	var/list/component_names = list()
@@ -496,7 +496,7 @@
 
 	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
 
-	if(!choice)
+	if(isnull(choice))
 		return
 
 	if(!Adjacent(user))
@@ -528,7 +528,7 @@
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)
-		if(all_components.len)
+		if(length(all_components))
 			to_chat(user, span_warning("Remove all components from \the [src] before disassembling it."))
 			return
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )

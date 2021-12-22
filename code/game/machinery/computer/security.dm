@@ -588,7 +588,7 @@ What a mess.*/
 					if(wanted_name)
 						var/default_description = "A poster declaring [wanted_name] to be a dangerous individual, wanted by Nanotrasen. Report any sightings to security immediately."
 						var/list/crimes = active2.fields["crim"]
-						if(crimes.len)
+						if(length(crimes))
 							default_description += "\n[wanted_name] is wanted for the following crimes:\n"
 							for(var/datum/data/crime/c in active2.fields["crim"])
 								default_description += "\n[c.crimeName]\n"
@@ -778,7 +778,7 @@ What a mess.*/
 					if("species")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_list(usr, "Select a species", "Species Selection", get_selectable_species())
-							if(!t1)
+							if(isnull(t1))
 								return
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return

@@ -453,7 +453,9 @@
 	if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
 		var/list/possible_items = list(gun_light, bayonet)
 		var/obj/item/item_to_remove = tgui_input_list(user, "Attachment to remove", "Attachment Removal", sort_names(possible_items))
-		if(!item_to_remove || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(isnull(item_to_remove))
+			return
+		if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
 		return remove_gun_attachment(user, I, item_to_remove)
 

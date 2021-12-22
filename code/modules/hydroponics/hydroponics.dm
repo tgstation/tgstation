@@ -738,7 +738,7 @@
 				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
 		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
-		if(removed_trait == null)
+		if(isnull(removed_trait))
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
@@ -819,7 +819,9 @@
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] = muties
 			var/locked_mutation = tgui_input_list(user, "Mutation to lock", "Plant Mutation Locks", sort_list(fresh_mut_list))
-			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
+			if(isnull(locked_mutation))
+				return
+			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.set_endurance(myseed.endurance/2)

@@ -468,7 +468,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path?.len)
+	if(path && length(path))
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = TRUE //Indicates the AI's custom path is initialized.
@@ -525,7 +525,7 @@
 				at_target()
 				return
 
-			else if(path.len > 0 && target) // valid path
+			else if(length(path) > 0 && target) // valid path
 				var/turf/next = path[1]
 				reached_target = FALSE
 				if(next == loc)
@@ -574,14 +574,14 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
-	if(path.len > 0)
+	if(length(path) > 0)
 		buzz(DELIGHT)
 	mode = BOT_BLOCKED
 
 /mob/living/simple_animal/bot/mulebot/proc/process_nav()
 	calc_path()
 
-	if(path.len > 0)
+	if(length(path) > 0)
 		blockcount = 0
 		mode = BOT_BLOCKED
 		buzz(DELIGHT)

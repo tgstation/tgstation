@@ -25,7 +25,7 @@
 	options += "Into The Sunset (delete & greentext 'escape')"
 
 	var/selection = tgui_input_list(user, "Select where to fly [name || id]:", "Fly Shuttle", options)
-	if(!selection)
+	if(isnull(selection))
 		return
 
 	switch(selection)
@@ -68,7 +68,7 @@
 			options[S.name || S.id] = S
 
 	var/selection = tgui_input_list(user, "New arrivals destination", "Fly Shuttle", options)
-	if(!selection)
+	if(isnull(selection))
 		return
 	target_dock = options[selection]
 	if(!QDELETED(target_dock))

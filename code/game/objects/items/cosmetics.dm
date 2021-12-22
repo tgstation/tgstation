@@ -141,7 +141,7 @@
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
-					if(!new_style)
+					if(isnull(new_style))
 						return
 					if(!get_location_accessible(H, location))
 						to_chat(user, span_warning("The mask is in the way!"))
@@ -189,6 +189,8 @@
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+				if(isnull(new_style))
+					return
 				if(!get_location_accessible(H, location))
 					to_chat(user, span_warning("The headgear is in the way!"))
 					return

@@ -92,27 +92,26 @@ Doesn't work on other aliens/AI.*/
 		to_chat(user, span_noticealien("There's no one around to whisper to."))
 		return FALSE
 	var/mob/living/chosen_recipient = tgui_input_list(user, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
-	if(!chosen_recipient || !isliving(chosen_recipient))
+	if(isnull(chosen_recipient))
 		return FALSE
 	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		to_chat(user, span_noticealien("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
 		return FALSE
 	var/msg = tgui_input_text(user, title = "Alien Whisper")
-	if(msg)
-		if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, span_notice("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
-			return
-		log_directed_talk(user, chosen_recipient, msg, LOG_SAY, tag="alien whisper")
-		to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][msg]")
-		to_chat(user, span_noticealien("You said: \"[msg]\" to [chosen_recipient]"))
-		for(var/ded in GLOB.dead_mob_list)
-			if(!isobserver(ded))
-				continue
-			var/follow_link_user = FOLLOW_LINK(ded, user)
-			var/follow_link_whispee = FOLLOW_LINK(ded, chosen_recipient)
-			to_chat(ded, "[follow_link_user] [span_name("[user]")] [span_alertalien("Alien Whisper --> ")] [follow_link_whispee] [span_name("[chosen_recipient]")] [span_noticealien("[msg]")]")
-	else
+	if(isnull(msg))
 		return FALSE
+	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(user, span_notice("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+		return
+	log_directed_talk(user, chosen_recipient, msg, LOG_SAY, tag="alien whisper")
+	to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][msg]")
+	to_chat(user, span_noticealien("You said: \"[msg]\" to [chosen_recipient]"))
+	for(var/ded in GLOB.dead_mob_list)
+		if(!isobserver(ded))
+			continue
+		var/follow_link_user = FOLLOW_LINK(ded, user)
+		var/follow_link_whispee = FOLLOW_LINK(ded, chosen_recipient)
+		to_chat(ded, "[follow_link_user] [span_name("[user]")] [span_alertalien("Alien Whisper --> ")] [follow_link_whispee] [span_name("[chosen_recipient]")] [span_noticealien("[msg]")]")
 	return TRUE
 
 /obj/effect/proc_holder/alien/transfer
@@ -130,19 +129,21 @@ Doesn't work on other aliens/AI.*/
 		to_chat(user, span_noticealien("There are no other aliens around."))
 		return FALSE
 	var/mob/living/carbon/donation_target = tgui_input_list(user, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
-	if(!donation_target || !ismob(donation_target))
-		return
+	if(isnull(donation_target))
+		return FALSE
 	var/amount = tgui_input_number(user, "Amount", "Transfer Plasma to [donation_target]", max_value = user.getPlasma())
-	if (amount)
-		amount = min(abs(round(amount)), user.getPlasma())
-		if (get_dist(user, donation_target) <= 1)
-			donation_target.adjustPlasma(amount)
-			user.adjustPlasma(-amount)
-			to_chat(donation_target, span_noticealien("[user] has transferred [amount] plasma to you."))
-			to_chat(user, span_noticealien("You transfer [amount] plasma to [donation_target]."))
-		else
-			to_chat(user, span_noticealien("You need to be closer!"))
-	return
+	if(isnull(amount))
+		return FALSE
+
+	amount = min(abs(round(amount)), user.getPlasma())
+	if (get_dist(user, donation_target) <= 1)
+		donation_target.adjustPlasma(amount)
+		user.adjustPlasma(-amount)
+		to_chat(donation_target, span_noticealien("[user] has transferred [amount] plasma to you."))
+		to_chat(user, span_noticealien("You transfer [amount] plasma to [donation_target]."))
+	else
+		to_chat(user, span_noticealien("You need to be closer!"))
+
 
 /obj/effect/proc_holder/alien/acid
 	name = "Corrosive Acid"
@@ -156,8 +157,8 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid/on_lose(mob/living/carbon/user)
 	remove_verb(user, /mob/living/carbon/proc/corrosive_acid)
 
-/obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
-	if(!target in oview(1,user))
+/obj/effect/proc_holder/alien/acid/proc/corrode(atom/target, mob/living/carbon/user = usr)
+	if(!(target in oview(1,user)))
 		to_chat(src, span_noticealien("[target] is too far away."))
 		return FALSE
 	if(target.acid_act(200, 1000))
@@ -175,10 +176,12 @@ Doesn't work on other aliens/AI.*/
 		to_chat(user, span_noticealien("There's nothing to corrode."))
 		return FALSE
 	var/atom/dissolve_target = tgui_input_list(user, "Select what to dissolve", "Dissolve", nearby_targets)
-	if(!dissolve_target || QDELETED(dissolve_target) || user.incapacitated())
+	if(isnull(dissolve_target))
 		return FALSE
-	else
-		return corrode(dissolve_target, user)
+	if(QDELETED(dissolve_target) || user.incapacitated())
+		return FALSE
+
+	return corrode(dissolve_target, user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
 	set name = "Corrosive Acid"
@@ -282,7 +285,9 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/choice = tgui_input_list(user, "Choose what you wish to shape.","Resin building", structures)
-	if(!choice)
+	if(isnull(choice))
+		return FALSE
+	if(isnull(structures[choice]))
 		return FALSE
 	if (!cost_check(check_turf,user))
 		return FALSE

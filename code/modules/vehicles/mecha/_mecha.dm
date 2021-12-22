@@ -364,7 +364,7 @@
 	var/hide_weapon = locate(/obj/item/mecha_parts/concealed_weapon_bay) in contents
 	var/hidden_weapon = hide_weapon ? (locate(/obj/item/mecha_parts/mecha_equipment/weapon) in equipment) : null
 	var/list/visible_equipment = equipment - hidden_weapon
-	if(visible_equipment.len)
+	if(length(visible_equipment))
 		. += "It's equipped with:"
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
@@ -833,7 +833,7 @@
 				AI = tgui_input_list(user, "Which AI do you wish to card?", "AI Selection", sort_list(ai_pilots))
 			else
 				AI = ai_pilots[1]
-			if(!AI)
+			if(!isnull(AI))
 				return
 			if(!(AI in occupants) || !user.Adjacent(src))
 				return //User sat on the selection window and things changed.
@@ -946,7 +946,7 @@
 		if(atom_integrity <= 0)
 			to_chat(M, span_warning("You cannot get in the [name], it has been destroyed!"))
 		else if(LAZYLEN(occupants) >= max_occupants)
-			to_chat(M, span_danger("[occupants[occupants.len]] was faster! Try better next time, loser."))//get the last one that hopped in
+			to_chat(M, span_danger("[occupants[length(occupants)]] was faster! Try better next time, loser."))//get the last one that hopped in
 		else if(M.buckled)
 			to_chat(M, span_warning("You can't enter the exosuit while buckled."))
 		else if(M.has_buckled_mobs())

@@ -409,6 +409,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		//admin picks, cleanup the ones we didn't do and handle chosen
 		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
+		if(isnull(picked_affix_name))
+			return
 		if(!affixes[picked_affix_name] || QDELETED(src))
 			return
 		var/datum/fantasy_affix/affix = affixes[picked_affix_name]

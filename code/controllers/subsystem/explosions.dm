@@ -94,6 +94,8 @@ SUBSYSTEM_DEF(explosions)
 	var/light = 0
 	var/list/choices = list("Small Bomb","Medium Bomb","Big Bomb","Custom Bomb")
 	var/choice = tgui_input_list(usr, "Pick the bomb size", "Bomb Size?", choices)
+	if(isnull(choice))
+		return
 	switch(choice)
 		if(null)
 			return 0

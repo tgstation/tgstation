@@ -184,18 +184,18 @@
 
 	if (regime_set == "Teleporter")
 		var/desc = tgui_input_list(usr, "Select a location to lock in", "Locking Computer", sort_list(targets))
-		if(!desc)
+		if(isnull(desc))
 			return
 		set_teleport_target(targets[desc])
 		var/turf/target_turf = get_turf(targets[desc])
 		log_game("[key_name(user)] has set the teleporter target to [targets[desc]] at [AREACOORD(target_turf)]")
 	else
-		if (targets.len == 0)
+		if (!length(targets))
 			to_chat(user, span_alert("No active connected stations located."))
 			return
 
 		var/desc = tgui_input_list(usr, "Select a station to lock in", "Locking Computer", sort_list(targets))
-		if(!desc)
+		if(isnull(desc))
 			return
 		var/obj/machinery/teleport/station/target_station = targets[desc]
 		if(!target_station || !target_station.teleporter_hub)

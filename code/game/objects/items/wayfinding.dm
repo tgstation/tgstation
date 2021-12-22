@@ -253,20 +253,24 @@
 	if (!owner)
 		owner = user.real_name
 
-	if(beacons.len)
+	if(length(beacons))
 		beacons.Cut()
 	for(var/obj/machinery/navbeacon/B in GLOB.wayfindingbeacons)
 		beacons[B.codes["wayfinding"]] = B
 
-	if(!beacons.len)
+	if(!length(beacons))
 		to_chat(user, span_notice("Your pinpointer fails to detect a signal."))
 		return
 
-	var/A = tgui_input_list(user, "Select a location", "Pinpoint", sort_list(beacons))
-	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	var/wayfind_target = tgui_input_list(user, "Select a location", "Pinpoint", sort_list(beacons))
+	if(isnull(wayfind_target))
 		return
-
-	target = beacons[A]
+	if(isnull(beacons[wayfind_target]))
+		to_chat(user, span_warning("Your pinpointer fails to detect a signal."))
+		return
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+		return
+	target = beacons[wayfind_target]
 	toggle_on()
 	to_chat(user, span_notice("You activate your pinpointer."))
 

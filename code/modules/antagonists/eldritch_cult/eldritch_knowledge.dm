@@ -147,7 +147,7 @@
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
 	list_clear_nulls(fingerprints)
-	if(fingerprints.len == 0)
+	if(!length(fingerprints))
 		return FALSE
 	return TRUE
 
@@ -160,12 +160,12 @@
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
 
-	if(compiled_list.len == 0)
+	if(!length(compiled_list))
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
 	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse","Your target", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
-	if(!chosen_mob)
+	if(isnull(chosen_mob))
 		return FALSE
 	curse(compiled_list[chosen_mob])
 	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)

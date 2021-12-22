@@ -145,7 +145,7 @@
 	if(!length(contents))
 		return
 	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
-	if(!choice)
+	if(isnull(choice))
 		return
 	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
 		return
@@ -252,6 +252,8 @@
 			to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 			return
 		var/choice = tgui_input_list(usr, "What would you like to change?",,list("Title", "Contents", "Author", "Cancel"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)

@@ -97,6 +97,8 @@
 		choice_list[memory_iter.name] = memory_iter
 
 	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
+	if(isnull(choice))
+		return
 	var/datum/memory/memory_choice = choice_list[choice]
 
 	return memory_choice
