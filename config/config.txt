@@ -584,9 +584,9 @@ URGENT_AHELP_COOLDOWN 300
 MOTD motd.txt
 #MOTD motd_extra.txt
 
-## By default, preference assets will cache between git revisions.
-## This lowers init times by around ~20 seconds (almost entirely non-sleeping)
-## but will create odd to debug/notice errors in preference assets, such as antagonists.
-## This should be disabled (through `CACHE_PREFERENCE_ASSETS 0`) on development,
-## but enabled on production.
-CACHE_PREFERENCE_ASSETS 0
+## Assets can opt-in to caching their results into `tmp`.
+## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## This should be disabled (through `CACHE_ASSETS 0`) on development,
+## but enabled on production (the default).
+CACHE_ASSETS 0

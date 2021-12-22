@@ -9,8 +9,9 @@
 /datum/asset/spritesheet/species
 	name = "species"
 	early = TRUE
+	cross_round_cachable = TRUE
 
-/datum/asset/spritesheet/species/register()
+/datum/asset/spritesheet/species/create_spritesheets()
 	var/list/to_insert = list()
 
 	for (var/species_id in get_selectable_species())
@@ -32,5 +33,3 @@
 
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
-
-	return ..()
