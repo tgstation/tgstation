@@ -2,7 +2,8 @@
 #define MAP_EDGE_PAD 5
 
 GLOBAL_VAR_INIT(meteor_wave_delay, 625) //minimum wait between waves in tenths of seconds
-//set to at least 100 unless you want evarr ruining every round (This spelling mistake is older then git, I'm scared to touch it)
+//set to at least 100 unless you want evarr ruining every round
+// This spelling mistake? Name? is older then git, I'm scared to touch it
 
 //Meteors probability of spawning during a given wave
 GLOBAL_LIST_INIT(meteors_normal, list(/obj/effect/meteor/dust=3, /obj/effect/meteor/medium=8, /obj/effect/meteor/big=3, \

@@ -4,7 +4,7 @@
 /datum/component/force_move
 
 /datum/component/force_move/Initialize(atom/target, spin)
-	if(!target && ismob(parent))
+	if(!target || !ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/mob_parent = parent
