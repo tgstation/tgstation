@@ -69,7 +69,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		if(1)
 			pick = csa[1]
 		else
-			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
+			pick = tgui_input_list(src, "Server to jump to", "Server Hop", csa)
 
 	if(!pick)
 		return

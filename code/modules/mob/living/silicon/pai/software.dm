@@ -141,7 +141,7 @@
 			if(params["scan"] == "wounds")
 				hostscan.attack_self(usr)
 			if(params["scan"] == "limbs")
-				hostscan.toggle_mode()
+				hostscan.AltClick(usr)
 		if("internal_gps")
 			if(!internal_gps)
 				internal_gps = new(src)

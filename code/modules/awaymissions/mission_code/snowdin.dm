@@ -460,40 +460,6 @@
 	desc = "This wand uses healing magics to heal and revive. The years of the cold have weakened the magic inside the wand."
 	max_charges = 5
 
-/obj/effect/mob_spawn/human/syndicatesoldier/coldres
-	name = "Syndicate Snow Operative"
-	outfit = /datum/outfit/snowsyndie/corpse
-
-/datum/outfit/snowsyndie/corpse
-	name = "Syndicate Snow Operative Corpse"
-	implants = null
-
-/obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive
-	name = "sleeper"
-	mob_name = "Syndicate Snow Operative"
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper"
-	roundstart = FALSE
-	death = FALSE
-	faction = list(ROLE_SYNDICATE)
-	outfit = /datum/outfit/snowsyndie
-	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
-	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
-	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
-
-/datum/outfit/snowsyndie
-	name = "Syndicate Snow Operative"
-	uniform = /obj/item/clothing/under/syndicate/coldres
-	shoes = /obj/item/clothing/shoes/combat/coldres
-	ears = /obj/item/radio/headset/syndicate/alt
-	r_pocket = /obj/item/gun/ballistic/automatic/pistol
-	id = /obj/item/card/id/advanced/chameleon
-	implants = list(/obj/item/implant/exile)
-	id_trim = /datum/id_trim/chameleon/operative
-
-/obj/effect/mob_spawn/human/syndicatesoldier/coldres/alive/female
-	mob_gender = FEMALE
-
 //mobs//--
 
 //ice spiders moved to giant_spiders.dm

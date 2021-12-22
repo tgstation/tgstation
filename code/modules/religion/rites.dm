@@ -67,7 +67,7 @@
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
-	desc = "Convert a human-esque individual into a (superior) Android."
+	desc = "Convert a human-esque individual into a (superior) Android. Buckle a human to convert them, otherwise it will convert you."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list("By the inner workings of our god ...",
 						"... We call upon you, in the face of adversity ...",
@@ -82,13 +82,16 @@
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
-	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		. = FALSE
+	if(LAZYLEN(movable_reltool.buckled_mobs))
+		to_chat(user, span_warning("You're going to convert the one buckled on [movable_reltool]."))
+	else
 		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
 			to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
-			return
-		to_chat(user, span_warning("This rite requires an individual to be buckled to [movable_reltool]."))
-		return
+			return FALSE
+		if(isandroid(user))
+			to_chat(user, span_warning("You've already converted yourself. To convert others, they must be buckled to [movable_reltool]."))
+			return FALSE
+		to_chat(user, span_warning("You're going to convert yourself with this ritual."))
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
@@ -96,17 +99,18 @@
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
+	var/mob/living/carbon/human/rite_target
 	if(!movable_reltool?.buckled_mobs?.len)
+		rite_target = user
+	else
+		for(var/buckled in movable_reltool.buckled_mobs)
+			if(ishuman(buckled))
+				rite_target = buckled
+				break
+	if(!rite_target)
 		return FALSE
-	var/mob/living/carbon/human/human2borg
-	for(var/i in movable_reltool.buckled_mobs)
-		if(istype(i,/mob/living/carbon/human))
-			human2borg = i
-			break
-	if(!human2borg)
-		return FALSE
-	human2borg.set_species(/datum/species/android)
-	human2borg.visible_message(span_notice("[human2borg] has been converted by the rite of [name]!"))
+	rite_target.set_species(/datum/species/android)
+	rite_target.visible_message(span_notice("[rite_target] has been converted by the rite of [name]!"))
 	return TRUE
 
 
@@ -391,7 +395,7 @@
 	if(!honormut.guilty.len)
 		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
 		return FALSE
-	var/forgiven_choice = input(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive") as null|anything in honormut.guilty
+	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive", honormut.guilty)
 	if(!forgiven_choice)
 		return FALSE
 	who = forgiven_choice

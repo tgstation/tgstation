@@ -443,6 +443,16 @@
 	desc = "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
 	icon_state = "poster49"
 
+/obj/structure/sign/poster/contraband/moffuchis_pizza
+	name = "Moffuchi's Pizza"
+	desc = "Moffuchi's Pizzeria: family style pizza for 2 centuries."
+	icon_state = "poster50"
+
+/obj/structure/sign/poster/contraband/donk_co
+	name = "DONK CO. BRAND MICROWAVEABLE FOOD"
+	desc = "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
+	icon_state = "poster51"
+
 /obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
 	name = "Syndie Moth - Nuclear Operation"
 	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."

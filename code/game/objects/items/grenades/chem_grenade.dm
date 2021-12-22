@@ -274,7 +274,7 @@
 /obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
 	if (active)
 		return
-	var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
+	var/newspread = tgui_input_number(user, "Please enter a new spread amount", name)
 	if (newspread != null && user.canUseTopic(src, BE_CLOSE))
 		newspread = round(newspread)
 		unit_spread = clamp(newspread, 5, 100)
