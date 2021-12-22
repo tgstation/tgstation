@@ -53,11 +53,11 @@
 
 /mob/living/simple_animal/robot_customer/MouseEntered(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.add_hud_to(usr)
+	hud_to_show_on_hover?.add_hud_to_mob(usr)
 
 /mob/living/simple_animal/robot_customer/MouseExited(location, control, params)
 	. = ..()
-	hud_to_show_on_hover?.remove_hud_from(usr)
+	hud_to_show_on_hover?.remove_hud_from_mob(usr)
 
 /mob/living/simple_animal/robot_customer/update_overlays()
 	. = ..()

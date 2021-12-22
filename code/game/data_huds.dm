@@ -9,11 +9,11 @@
 
 /atom/proc/add_to_all_human_data_huds()
 	for(var/datum/atom_hud/data/human/hud in GLOB.huds)
-		hud.add_to_hud(src)
+		hud.add_atom_to_hud(src)
 
 /atom/proc/remove_from_all_data_huds()
 	for(var/datum/atom_hud/data/hud in GLOB.huds)
-		hud.remove_from_hud(src)
+		hud.remove_atom_from_hud(src)
 
 /datum/atom_hud/data
 
@@ -32,12 +32,12 @@
 		return FALSE
 	return TRUE
 
-/datum/atom_hud/data/human/medical/basic/add_to_single_hud(mob/M, mob/living/carbon/H)
+/datum/atom_hud/data/human/medical/basic/add_atom_to_single_mob_hud(mob/M, mob/living/carbon/H)
 	if(check_sensors(H))
 		..()
 
 /datum/atom_hud/data/human/medical/basic/proc/update_suit_sensors(mob/living/carbon/H)
-	check_sensors(H) ? add_to_hud(H) : remove_from_hud(H)
+	check_sensors(H) ? add_atom_to_hud(H) : remove_atom_from_hud(H)
 
 /datum/atom_hud/data/human/medical/advanced
 
@@ -72,9 +72,9 @@
 /datum/atom_hud/ai_detector
 	hud_icons = list(AI_DETECT_HUD)
 
-/datum/atom_hud/ai_detector/add_hud_to(mob/M)
+/datum/atom_hud/ai_detector/add_hud_to_mob(mob/M)
 	..()
-	if(M && (hudusers.len == 1))
+	if(M && (hud_users.len == 1))
 		for(var/V in GLOB.aiEyes)
 			var/mob/camera/ai_eye/E = V
 			E.update_ai_detect_hud()

@@ -154,10 +154,10 @@
 			medHUD = !medHUD
 			if(medHUD)
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.add_hud_to(src)
+				med.add_hud_to_mob(src)
 			else
 				var/datum/atom_hud/med = GLOB.huds[med_hud]
-				med.remove_hud_from(src)
+				med.remove_hud_from_mob(src)
 		if("newscaster")
 			newscaster.ui_interact(src)
 		if("pda")
@@ -191,10 +191,10 @@
 			secHUD = !secHUD
 			if(secHUD)
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.add_hud_to(src)
+				sec.add_hud_to_mob(src)
 			else
 				var/datum/atom_hud/sec = GLOB.huds[sec_hud]
-				sec.remove_hud_from(src)
+				sec.remove_hud_from_mob(src)
 		if("universal_translator")
 			if(!languages_granted)
 				grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_SOFTWARE)

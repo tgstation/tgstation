@@ -302,7 +302,7 @@
 	if(alternate_appearances)
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]
-			selected_alternate_appearance.remove_from_hud(src)
+			selected_alternate_appearance.remove_atom_from_hud(src)
 
 	if(reagents)
 		QDEL_NULL(reagents)

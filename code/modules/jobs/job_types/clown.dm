@@ -89,4 +89,4 @@
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
-	fan.add_hud_to(H)
+	fan.add_hud_to_mob(H)

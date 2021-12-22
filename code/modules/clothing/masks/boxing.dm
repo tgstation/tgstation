@@ -32,14 +32,14 @@
 	to_chat(user, "You roll the balaclava over your face, and a data display appears before your eyes.")
 	ADD_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.add_hud_to(user)
+	H.add_hud_to_mob(user)
 	voice_unknown = TRUE
 
 /obj/item/clothing/mask/infiltrator/dropped(mob/living/carbon/human/user)
 	to_chat(user, "You pull off the balaclava, and the mask's internal hud system switches off quietly.")
 	REMOVE_TRAIT(user, TRAIT_DIAGNOSTIC_HUD, MASK_TRAIT)
 	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-	H.remove_hud_from(user)
+	H.remove_hud_from_mob(user)
 	voice_unknown = FALSE
 	return ..()
 

@@ -539,7 +539,7 @@
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.add_hud_to(user)
+			H.add_hud_to_mob(user)
 		ADD_TRAIT(user, TRAIT_MEDICAL_HUD, GLASSES_TRAIT)
 		ADD_TRAIT(user, TRAIT_SECURITY_HUD, GLASSES_TRAIT)
 
@@ -550,7 +550,7 @@
 	if(ishuman(user))
 		for(var/hud in hudlist)
 			var/datum/atom_hud/H = GLOB.huds[hud]
-			H.remove_hud_from(user)
+			H.remove_hud_from_mob(user)
 
 /obj/item/clothing/glasses/debug/AltClick(mob/user)
 	. = ..()

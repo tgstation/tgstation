@@ -939,7 +939,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(ishuman(M))
 			if(!IS_CULTIST(M))
-				AH.remove_hud_from(M)
+				AH.remove_hud_from_mob(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
 			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
@@ -1032,4 +1032,4 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/obj/O = target.get_item_by_slot(ITEM_SLOT_EYES)
 	if(istype(O, /obj/item/clothing/glasses/hud/security))
 		var/datum/atom_hud/AH = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-		AH.add_hud_to(target)
+		AH.add_hud_to_mob(target)

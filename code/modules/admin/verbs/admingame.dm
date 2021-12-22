@@ -368,9 +368,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	for(var/hudtype in list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED)) // add data huds
 		var/datum/atom_hud/H = GLOB.huds[hudtype]
-		(combo_hud_enabled) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+		(combo_hud_enabled) ? H.add_hud_to_mob(usr) : H.remove_hud_from_mob(usr)
 	for(var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/H in GLOB.active_alternate_appearances) // add antag huds
-		(combo_hud_enabled) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
+		(combo_hud_enabled) ? H.add_hud_to_mob(usr) : H.remove_hud_from_mob(usr)
 
 	if(prefs.toggles & COMBOHUD_LIGHTING)
 		if(combo_hud_enabled)

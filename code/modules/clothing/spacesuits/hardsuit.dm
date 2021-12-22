@@ -559,13 +559,13 @@
 	..()
 	if (slot == ITEM_SLOT_HEAD)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.add_hud_to(user)
+		DHUD.add_hud_to_mob(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/dropped(mob/living/carbon/human/user)
 	..()
 	if (user.head == src)
 		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_DIAGNOSTIC_BASIC]
-		DHUD.remove_hud_from(user)
+		DHUD.remove_hud_from_mob(user)
 
 /obj/item/clothing/head/helmet/space/hardsuit/rd/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range,
 		light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)

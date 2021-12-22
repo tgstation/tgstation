@@ -204,7 +204,7 @@
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
-		diag_hud.add_to_hud(src)
+		diag_hud.add_atom_to_hud(src)
 	diag_hud_set_bothealth()
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
@@ -212,10 +212,10 @@
 	//If a bot has its own HUD (for player bots), provide it.
 	if(data_hud_type)
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
-		datahud.add_hud_to(src)
+		datahud.add_hud_to_mob(src)
 	if(path_hud)
-		path_hud.add_to_hud(src)
-		path_hud.add_hud_to(src)
+		path_hud.add_atom_to_hud(src)
+		path_hud.add_hud_to_mob(src)
 
 
 /mob/living/simple_animal/bot/Destroy()
@@ -1045,7 +1045,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		path_huds_watching_me += path_hud
 	for(var/V in path_huds_watching_me)
 		var/datum/atom_hud/H = V
-		H.remove_from_hud(src)
+		H.remove_atom_from_hud(src)
 
 	var/list/path_images = hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
@@ -1088,7 +1088,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 	for(var/V in path_huds_watching_me)
 		var/datum/atom_hud/H = V
-		H.add_to_hud(src)
+		H.add_atom_to_hud(src)
 
 
 /mob/living/simple_animal/bot/proc/increment_path()
