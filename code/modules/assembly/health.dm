@@ -72,7 +72,7 @@
 /obj/item/assembly/health/attack_self(mob/user)
 	. = ..()
 	if (secured)
-		to_chat(user, span_notice("You toggle [src] [src.scanning ? "off" : "on"]."))
+		balloon_alert(user, "scanning [scanning ? "disabled" : "enabled"]")
 	else
-		to_chat(user, span_warning("This device must be secured first!"))
+		balloon_alert(user, span_warning("secure it first!"))
 	toggle_scan()
