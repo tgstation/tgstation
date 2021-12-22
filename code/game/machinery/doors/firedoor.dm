@@ -131,8 +131,6 @@
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
-	if(obj_flags & EMAGGED)
-		return
 	if(alarm_type)
 		return
 	for(var/area/place in affecting_areas)
@@ -414,12 +412,18 @@
 /obj/machinery/door/firedoor/open()
 	if(welded)
 		return
+	var/alarm = alarm_type
 	. = ..()
+	if(alarm != alarm_type) //Something changed while we were sleeping
+		correct_state() //So we should re-evaluate our state
 
 /obj/machinery/door/firedoor/close()
 	if(HAS_TRAIT(loc, TRAIT_FIREDOOR_STOP))
 		return
+	var/alarm = alarm_type
 	. = ..()
+	if(alarm != alarm_type) //Something changed while we were sleeping
+		correct_state() //So we should re-evaluate our state
 
 /obj/machinery/door/firedoor/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
