@@ -35,21 +35,21 @@
 		return TRUE
 
 /obj/item/clothing/suit/hooded/ablative/ToggleHood()
-	. = ..()
 	if (!hood_up)
-		return
+		return ..()
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	hud.add_hud_to(user)
-	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
+	balloon_alert(user, "You put on the hood, and enable the HUD.")
+	return ..()
 
 /obj/item/clothing/suit/hooded/ablative/RemoveHood()
-	. = ..()
 	var/mob/living/carbon/user = loc
 	if (!HAS_TRAIT(user, TRAIT_SECURITY_HUD))
-		return
+		return ..()
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
 	hud.remove_hud_from(user)
-	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
+	balloon_alert(user, "You take off the hood, and disable the HUD.")
+	return ..()
