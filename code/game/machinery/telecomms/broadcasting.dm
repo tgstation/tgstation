@@ -128,7 +128,7 @@
 	copy.levels = levels
 	return copy
 
-// This is the meat function for making radios hear vocal transmissions.
+/// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
 	set waitfor = FALSE
 
@@ -140,47 +140,60 @@
 	if(compression > 0)
 		message = Gibberish(message, compression >= 30)
 
+	var/list/signal_reaches_every_z_level = levels
+
+	if(0 in levels)
+		signal_reaches_every_z_level = RADIO_NO_Z_LEVEL_RESTRICTION
+
 	// Assemble the list of radios
 	var/list/radios = list()
 	switch (transmission_method)
 		if (TRANSMISSION_SUBSPACE)
 			// Reaches any radios on the levels
-			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
-				if(R.can_receive(frequency, levels))
-					radios += R
+			var/list/all_radios_of_our_frequency = GLOB.all_radios["[frequency]"]
+			radios = all_radios_of_our_frequency.Copy()
+
+			for(var/obj/item/radio/subspace_radio in radios)
+				if(!subspace_radio.can_receive(frequency, signal_reaches_every_z_level))
+					radios -= subspace_radio
 
 			// Syndicate radios can hear all well-known radio channels
 			if (num2text(frequency) in GLOB.reverseradiochannels)
-				for(var/obj/item/radio/R in GLOB.all_radios["[FREQ_SYNDICATE]"])
-					if(R.can_receive(FREQ_SYNDICATE, list(R.z)))
-						radios |= R
+				for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
+					if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
+						radios |= syndicate_radios
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
-			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
-				if(!R.subspace_transmission && R.can_receive(frequency, levels))
-					radios += R
+			for(var/obj/item/radio/non_subspace_radio in GLOB.all_radios["[frequency]"])
+				if(!non_subspace_radio.subspace_transmission && non_subspace_radio.can_receive(frequency, levels))
+					radios += non_subspace_radio
 
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
-			for(var/obj/item/radio/R in GLOB.all_radios["[frequency]"])
-				if(R.independent && R.can_receive(frequency, levels))
-					radios += R
+			for(var/obj/item/radio/independent_radio in GLOB.all_radios["[frequency]"])
+				if(independent_radio.independent && independent_radio.can_receive(frequency, levels))
+					radios += independent_radio
 
 	// From the list of radios, find all mobs who can hear those.
-	var/list/receive = get_mobs_in_radio_ranges(radios)
+	var/list/receive = get_hearers_in_radio_ranges(radios)
 
 	// Add observers who have ghost radio enabled.
-	for(var/mob/dead/observer/M in GLOB.player_list)
-		if(M.client?.prefs.chat_toggles & CHAT_GHOSTRADIO)
-			receive |= M
+	for(var/mob/dead/observer/ghost in GLOB.player_list)
+		if(ghost.client.prefs?.chat_toggles & CHAT_GHOSTRADIO)
+			receive |= ghost
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
 	var/list/message_mods = data["mods"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
-	for(var/atom/movable/hearer in receive)
+
+	for(var/atom/movable/hearer as anything in receive)
+		if(!hearer)
+			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
+			continue
+
 		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
@@ -198,7 +211,8 @@
 	var/log_text = "\[[get_radio_name(frequency)]\] [spans_part]\"[message]\" (language: [lang_name])"
 
 	var/mob/source_mob = virt.source
-	if(istype(source_mob))
+
+	if(ismob(source_mob))
 		source_mob.log_message(log_text, LOG_TELECOMMS)
 	else
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")

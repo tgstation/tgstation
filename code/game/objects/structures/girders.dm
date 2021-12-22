@@ -59,14 +59,14 @@
 		if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
-					to_chat(user, span_warning("You need at least two rods to create a false wall!"))
+				if(S.get_amount() < 5)
+					to_chat(user, span_warning("You need at least five rods to create a false wall!"))
 					return
-				to_chat(user, span_notice("You start building a reinforced false wall..."))
+				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(S.get_amount() < 5)
 						return
-					S.use(2)
+					S.use(5)
 					to_chat(user, span_notice("You create a false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)

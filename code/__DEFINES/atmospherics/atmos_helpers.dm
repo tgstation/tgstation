@@ -1,8 +1,7 @@
 //DO NOT USE THESE FOR ACCESSING ATMOS DATA, THEY MUTATE THINGS WHEN CALLED. I WILL BEAT YOU WITH A STICK. See the actual proc for more details
-///Check if the turfs allows gas passage based on density, do not use.
-#define CANATMOSPASS(A, O) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
-///Check if the turfs allows gas passage on a z level, do not use.
-#define CANVERTICALATMOSPASS(A, O) ( A.can_atmos_pass_vertical == ATMOS_PASS_PROC ? A.can_atmos_pass(O, TRUE) : ( A.can_atmos_pass_vertical == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass_vertical ) )
+///Check if an atom (A) and a turf (O) allow gas passage based on the atom's can_atmos_pass var, do not use.
+///(V) is if the share is vertical or not. True or False
+#define CANATMOSPASS(A, O, V) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O, V) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
 
 //Helpers
 ///Moves the icon of the device based on the piping layer and on the direction
@@ -70,3 +69,8 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define TURFS_CAN_SHARE(T1, T2) (LAZYACCESS(T2.atmos_adjacent_turfs, T1) || LAZYLEN(T1.atmos_adjacent_turfs & T2.atmos_adjacent_turfs))
 //Use this to see if a turf is fully blocked or not, think windows or firelocks. Fails with 1x1 non full tile windows, but it's not worth the cost.
 #define TURF_SHARES(T) (LAZYLEN(T.atmos_adjacent_turfs))
+
+#define LINDA_CYCLE_ARCHIVE(turf)\
+	turf.air.archive();\
+	turf.archived_cycle = SSair.times_fired;\
+	turf.temperature_archived = turf.temperature;

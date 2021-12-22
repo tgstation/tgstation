@@ -20,7 +20,7 @@
 		return MAP_ERROR
 	var/turf/landing_turf = pick(possible_spawns)
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_TRAITOR, ROLE_TRAITOR)
+	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
 	if(candidates.len >= 1) //solo refugees
 		if(prob(30))
 			possible_backstories.Add("waldo") //less common as it comes with magicks and is kind of immershun shattering

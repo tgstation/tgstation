@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)
-	if(!isanimal(entering) && !isbasicmob(entering))
+	if(!isanimal_or_basicmob(entering))
 		return FALSE
 	var/mob/living/animal_or_basic = entering
 	if(animal_or_basic.mob_size != MOB_SIZE_TINY)

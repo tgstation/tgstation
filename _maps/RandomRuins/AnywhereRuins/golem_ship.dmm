@@ -71,7 +71,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "m" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "n" = (
@@ -208,7 +208,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "M" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
@@ -230,7 +230,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
