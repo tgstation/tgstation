@@ -234,6 +234,8 @@
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
 		return TRUE
+	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
+		return TRUE
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(!id_card || !id_card.access)
