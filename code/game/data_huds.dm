@@ -472,5 +472,5 @@ Diagnostic HUDs!
 ~~~~~~~~~~~~~*/
 /obj/machinery/door/airlock/proc/diag_hud_set_electrified()
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
-	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)//TODOKYLER: make inactive hud icons
+	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)
 		holder.icon_state = "electrified"

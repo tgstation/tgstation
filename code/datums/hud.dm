@@ -132,13 +132,13 @@ GLOBAL_LIST_INIT(huds, list(
 	hud_atoms[atom_turf.z] |= new_hud_atom
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
 
-	for(var/mob/mob_to_show in hud_users[atom_turf.z])
+	for(var/mob/mob_to_show as anything in hud_users[atom_turf.z])
 		if(!queued_to_see[mob_to_show])
 			add_atom_to_single_mob_hud(mob_to_show, new_hud_atom)
 	return TRUE
 
 /// remove this atom from this hud completely
-/datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)//TODOKYLER: rename to remove_atom_from_hud after compiling and group it with the additive version
+/datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)
 	if(!hud_atom_to_remove)
 		return FALSE
 
