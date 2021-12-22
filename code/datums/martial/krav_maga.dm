@@ -172,7 +172,7 @@
 		playsound(defender, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 		defender.apply_damage(rand(10, 15), STAMINA, affecting, armor_block)
 		log_combat(attacker, defender, "stomped nonlethally")
-	if(prob(defender.getStaminaLoss()) && !defender.stat >= UNCONSCIOUS)
+	if(prob(defender.getStaminaLoss()) && defender.stat < UNCONSCIOUS)
 		defender.visible_message(span_warning("[defender] sputters and recoils in pain!"), span_userdanger("You recoil in pain as you are jabbed in a nerve!"))
 		defender.drop_all_held_items()
 	return TRUE
