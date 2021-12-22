@@ -1346,7 +1346,7 @@
 		return SIGN_CUFFED
 	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
 		return SIGN_ONE_HAND
-    
+
 /**
  * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
  *
