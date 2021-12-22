@@ -57,8 +57,8 @@
 
 	///The bitflag that's being checked on ventcrawling. Default is to allow ventcrawling and seeing pipes.
 	var/vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE
-	
-	///keeps the name of the object from being overridden if it's vareditted. 
+
+	///keeps the name of the object from being overridden if it's vareditted.
 	var/override_naming
 
 /obj/machinery/atmospherics/LateInitialize()
@@ -89,7 +89,7 @@
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
-	return ..()	
+	return ..()
 
 /obj/machinery/atmospherics/Destroy()
 	for(var/i in 1 to device_type)
