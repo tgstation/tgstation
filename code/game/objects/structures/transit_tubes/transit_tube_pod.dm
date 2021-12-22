@@ -136,7 +136,7 @@
 
 	if(!current_tube)
 		setDir(next_dir)
-		 // Allow collisions when leaving the tubes.
+		// Allow collisions when leaving the tubes.
 		Move(get_step(loc, dir), dir, DELAY_TO_GLIDE_SIZE(exit_delay))
 		qdel(src)
 		return
