@@ -163,11 +163,11 @@
 		return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 	if(!can_be_driven)
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='notice'>[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first.<span>")
+			to_chat(rider, span_warning("[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first."))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(!ride_check(rider, FALSE))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>You're unable to ride [movable_parent] right now!</span>")
+			to_chat(rider, span_warning("You're unable to ride [movable_parent] right now!"))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 

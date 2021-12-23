@@ -291,7 +291,7 @@
 	for(var/occupant in occupants)
 		var/mob/mob_occupant = occupant
 		SEND_SOUND(mob_occupant, sound('sound/items/timer.ogg', volume=50))
-		to_chat(mob_occupant, "<span=notice>Equipment control unit has been rebooted successfully.</span>")
+		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
 		mob_occupant.update_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/CheckParts(list/parts_list)
