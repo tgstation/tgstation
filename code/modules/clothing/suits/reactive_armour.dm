@@ -8,23 +8,23 @@
 /obj/item/reactive_armour_shell/attackby(obj/item/weapon, mob/user, params)
 	..()
 	var/static/list/anomaly_armour_types = list(
-		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armour/reactive/repulse,
-		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armour/reactive/tesla,
-		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armour/reactive/teleport,
+		/obj/effect/anomaly/grav = /obj/item/clothing/suit/armor/reactive/repulse,
+		/obj/effect/anomaly/flux = /obj/item/clothing/suit/armor/reactive/tesla,
+		/obj/effect/anomaly/bluespace = /obj/item/clothing/suit/armor/reactive/teleport,
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
 		var/obj/item/assembly/signaler/anomaly/anomaly = weapon
 		var/armour_path = anomaly_armour_types[anomaly.anomaly_type]
 		if(!armour_path)
-			armour_path = /obj/item/clothing/suit/armour/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
+			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
 		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(anomaly)
 
 //Reactive armour
-/obj/item/clothing/suit/armour/reactive
+/obj/item/clothing/suit/armor/reactive
 	name = "reactive armour"
 	desc = "Doesn't seem to do much for some reason."
 	icon_state = "reactiveoff"
@@ -48,11 +48,11 @@
 	var/reactivearmour_cooldown = 0
 
 
-/obj/item/clothing/suit/armour/reactive/Initialize(mapload)
+/obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 
-/obj/item/clothing/suit/armour/reactive/update_icon_state()
+/obj/item/clothing/suit/armor/reactive/update_icon_state()
 	. = ..()
 	if(active)
 		icon_state = "reactive"
@@ -61,13 +61,13 @@
 		icon_state = "reactiveoff"
 		inhand_icon_state = "reactiveoff"
 
-/obj/item/clothing/suit/armour/reactive/attack_self(mob/user)
+/obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
 	active = !active
 	to_chat(user, span_notice("[src] is now [active ? "active" : "inactive"]."))
 	update_icon()
 	add_fingerprint(user)
 
-/obj/item/clothing/suit/armour/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
+/obj/item/clothing/suit/armor/reactive/hit_reaction(owner, hitby, attack_text, final_block_chance, damage, attack_type)
 	if(!active || !prob(hit_reaction_chance))
 		return FALSE
 	if(world.time < reactivearmour_cooldown)
@@ -83,7 +83,7 @@
  * Called from the suit activating whilst on cooldown.
  * You should be calling ..()
  */
-/obj/item/clothing/suit/armour/reactive/proc/cooldown_activation(mob/living/carbon/human/owner)
+/obj/item/clothing/suit/armor/reactive/proc/cooldown_activation(mob/living/carbon/human/owner)
 	owner.visible_message(cooldown_message)
 
 /**
@@ -91,7 +91,7 @@
  * Called from the suit activating while off cooldown, with no emp.
  * Returning TRUE will block the attack that triggered this
  */
-/obj/item/clothing/suit/armour/reactive/proc/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/proc/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive armour doesn't do much! No surprises here."))
 	return TRUE
 
@@ -100,11 +100,11 @@
  * Called from the suit activating while off cooldown, while the armour is still suffering from the effect of an EMP.
  * Returning TRUE will block the attack that triggered this
  */
-/obj/item/clothing/suit/armour/reactive/proc/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/proc/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive armour doesn't do much, despite being emp'd! Besides giving off a special message, of course."))
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/emp_act(severity)
+/obj/item/clothing/suit/armor/reactive/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF || bad_effect || !active) //didn't get hit or already emp'd, or off
 		return
@@ -113,7 +113,7 @@
 	addtimer(VARSET_CALLBACK(src, bad_effect, FALSE), 30 SECONDS)
 
 //When the wearer gets hit, this armour will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
-/obj/item/clothing/suit/armour/reactive/teleport
+/obj/item/clothing/suit/armor/reactive/teleport
 	name = "reactive teleport armour"
 	desc = "Someone separated our Research Director from his own head!"
 	emp_message = span_warning("The reactive armour's teleportation calculations begin spewing errors!")
@@ -121,14 +121,14 @@
 	reactivearmour_cooldown_duration = 10 SECONDS
 	var/tele_range = 6
 
-/obj/item/clothing/suit/armour/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text]!"))
 	playsound(get_turf(owner),'sound/magic/blink.ogg', 100, TRUE)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings itself clear of [attack_text], leaving someone behind in the process!"))
 	owner.dropItemToGround(src, TRUE, TRUE)
 	playsound(get_turf(owner),'sound/machines/buzz-sigh.ogg', 50, TRUE)
@@ -139,13 +139,13 @@
 
 //Fire
 
-/obj/item/clothing/suit/armour/reactive/fire
+/obj/item/clothing/suit/armor/reactive/fire
 	name = "reactive incendiary armour"
 	desc = "An experimental suit of armour with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
 	cooldown_message = span_danger("The reactive incendiary armour activates, but fails to send out flames as it is still recharging its flame jets!")
 	emp_message = span_warning("The reactive incendiary armour's targeting system begins rebooting...")
 
-/obj/item/clothing/suit/armour/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	for(var/mob/living/carbon/carbon_victim in range(6, owner))
@@ -156,7 +156,7 @@
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/fire/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/fire/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] just makes [attack_text] worse by spewing molten death on [owner]!"))
 	playsound(get_turf(owner),'sound/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
@@ -166,7 +166,7 @@
 
 //Stealth
 
-/obj/item/clothing/suit/armour/reactive/stealth
+/obj/item/clothing/suit/armor/reactive/stealth
 	name = "reactive stealth armour"
 	desc = "An experimental suit of armour that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
 	cooldown_message = span_danger("The reactive stealth system activates, but is not charged enough to fully cloak!")
@@ -181,14 +181,14 @@
 	var/animation_time = 2 SECONDS
 	var/in_stealth = FALSE
 
-/obj/item/clothing/suit/armour/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
+/obj/item/clothing/suit/armor/reactive/stealth/cooldown_activation(mob/living/carbon/human/owner)
 	if(in_stealth)
 		return //we don't want the cooldown message either)
 	owner.alpha = max(0, owner.alpha - cooldown_alpha_removal)
 	animate(owner, alpha = initial(owner.alpha), time = cooldown_animation_time)
 	..()
 
-/obj/item/clothing/suit/armour/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/stealth/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/mob/living/simple_animal/hostile/illusion/escape/decoy = new(owner.loc)
 	decoy.Copy_Parent(owner, 50)
 	decoy.GiveTarget(owner) //so it starts running right away
@@ -200,11 +200,11 @@
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
+/obj/item/clothing/suit/armor/reactive/stealth/proc/end_stealth(mob/living/carbon/human/owner)
 	in_stealth = FALSE
 	animate(owner, alpha = initial(owner.alpha), time = animation_time)
 
-/obj/item/clothing/suit/armour/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/stealth/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(!isliving(hitby))
 		return FALSE //it just doesn't activate
 	var/mob/living/attacker = hitby
@@ -216,7 +216,7 @@
 
 //Tesla
 
-/obj/item/clothing/suit/armour/reactive/tesla
+/obj/item/clothing/suit/armor/reactive/tesla
 	name = "reactive tesla armour"
 	desc = "An experimental suit of armour with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
 	siemens_coefficient = -1
@@ -226,29 +226,29 @@
 	var/zap_range = 20
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
-/obj/item/clothing/suit/armour/reactive/tesla/dropped(mob/user)
+/obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()
 	if(istype(user))
 		REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armour")
 
-/obj/item/clothing/suit/armour/reactive/tesla/equipped(mob/user, slot)
+/obj/item/clothing/suit/armor/reactive/tesla/equipped(mob/user, slot)
 	..()
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armour")
 
-/obj/item/clothing/suit/armour/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
+/obj/item/clothing/suit/armor/reactive/tesla/cooldown_activation(mob/living/carbon/human/owner)
 	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 	sparks.set_up(1, 1, src)
 	sparks.start()
 	..()
 
-/obj/item/clothing/suit/armour/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], sending out arcs of lightning!"))
 	tesla_zap(owner, zap_range, zap_power, zap_flags)
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
 	REMOVE_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, "reactive_tesla_armour") //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
@@ -258,14 +258,14 @@
 
 //Repulse
 
-/obj/item/clothing/suit/armour/reactive/repulse
+/obj/item/clothing/suit/armor/reactive/repulse
 	name = "reactive repulse armour"
 	desc = "An experimental suit of armour that violently throws back attackers."
 	cooldown_message = span_danger("The repulse generator is still recharging! It fails to generate a strong enough wave!")
 	emp_message = span_warning("The repulse generator is reset to default settings...")
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/obj/item/clothing/suit/armour/reactive/repulse/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/repulse/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 	owner.visible_message(span_danger("[src] blocks [attack_text], converting the attack into a wave of force!"))
 	var/turf/owner_turf = get_turf(owner)
@@ -280,7 +280,7 @@
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/magic/repulse.ogg', 100, TRUE)
 	owner.visible_message(span_danger("[src] does not block [attack_text], and instead generates an attracting force!"))
 	var/turf/owner_turf = get_turf(owner)
@@ -294,14 +294,14 @@
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return FALSE
 
-/obj/item/clothing/suit/armour/reactive/table
+/obj/item/clothing/suit/armor/reactive/table
 	name = "reactive table armour"
 	desc = "If you can't beat the memes, embrace them."
 	cooldown_message = span_danger("The reactive table armour's fabricators are still on cooldown!")
 	emp_message = span_danger("The reactive table armour's fabricators click and whirr ominously for a moment...")
 	var/tele_range = 10
 
-/obj/item/clothing/suit/armour/reactive/table/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/table/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated table!"))
 	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE TABLE!!!</font>")
 	owner.Knockdown(30)
@@ -314,7 +314,7 @@
 	reactivearmour_cooldown = world.time + reactivearmour_cooldown_duration
 	return TRUE
 
-/obj/item/clothing/suit/armour/reactive/table/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/suit/armor/reactive/table/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated glass table!"))
 	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE GLASS TABLE!!!</font>")
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
