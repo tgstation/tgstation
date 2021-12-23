@@ -1,4 +1,0 @@
-author: "carshalash"
-delete-after: True
-changes: 
-  - bugfix: "Adds seeds to vending machines as intended. Corrects pathway for lasagne. Fixes issue with Bell peppers and baking cheese."
