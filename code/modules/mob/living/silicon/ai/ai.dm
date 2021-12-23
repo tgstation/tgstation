@@ -43,7 +43,8 @@
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
-	var/mob/living/simple_animal/bot/Bot
+	///Weakref to the bot the ai's commanding right now
+	var/datum/weakref/bot_ref
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
@@ -499,16 +500,16 @@
 		to_chat(src, span_danger("Selected location is not visible."))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
-
-	if(!Bot)
+	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
+	if(!bot)
 		return
 
-	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
+	if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		to_chat(src, span_danger("Interface error. Unit is already in use."))
 		return
 	to_chat(src, span_notice("Sending command to bot..."))
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-	Bot.call_bot(src, waypoint)
+	bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
 
 /mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)

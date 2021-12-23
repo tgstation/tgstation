@@ -67,9 +67,10 @@
 	var/mob/living/simple_animal/robot_customer/customer = pawn
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	attending_venue.mob_blacklist[greytider] += 1
+	//Living mobs are tagged, so these will always be valid
+	attending_venue.mob_blacklist(REF(greytider)) += 1
 
-	switch(attending_venue.mob_blacklist[greytider])
+	switch(attending_venue.mob_blacklist[REF(greytider)])
 		if(1)
 			customer.say(customer_data.first_warning_line)
 			return

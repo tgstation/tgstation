@@ -160,11 +160,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
-	ui_sources[WEAKREF(M)] = source
+	ui_sources[WEAKREF(M)] = WEAKREF(source)
 	ui_interact(M)
 
 /datum/crewmonitor/ui_host(mob/user)
-	return ui_sources[WEAKREF(user)]
+	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]
+	return host_ref?.resolve()
 
 /datum/crewmonitor/ui_data(mob/user)
 	var/z = user.z

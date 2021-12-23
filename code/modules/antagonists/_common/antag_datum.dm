@@ -55,8 +55,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	///name of the UI that will try to open, right now using a generic ui
 	var/ui_name = "AntagInfoGeneric"
-	///button to access antag interface
-	var/datum/action/antag_info/info_button
+	///weakref to button to access antag interface
+	var/datum/weakref/info_button_ref
 
 	/// The HUD shown to teammates, created by `add_team_hud`
 	var/datum/atom_hud/alternate_appearance/team_hud
@@ -136,6 +136,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the add_antag_datum() mind proc after the instanced datum is added to the mind's antag_datums list.
 /datum/antagonist/proc/on_gain()
 	SHOULD_CALL_PARENT(TRUE)
+	var/datum/action/antag_info/info_button
 	if(!owner)
 		CRASH("[src] ran on_gain() without a mind")
 	if(!owner.current)
@@ -143,6 +144,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(ui_name)//in the future, this should entirely replace greet.
 		info_button = new(owner.current, src)
 		info_button.Grant(owner.current)
+		info_button_ref = WEAKREF(info_button)
 	if(!silent)
 		greet()
 		if(ui_name)
@@ -200,8 +202,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
-	if(info_button)
-		QDEL_NULL(info_button)
+	if(info_button_ref)
+		QDEL_NULL(info_button_ref)
 	if(!silent && owner.current)
 		farewell()
 	UnregisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT)
@@ -482,6 +484,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	src.antag_datum = antag_datum
 	name += " [antag_datum.name]"
+
+/datum/action/antag_info/Destroy()
+	antag_datum = null
+	return ..()
 
 /datum/action/antag_info/Trigger()
 	if(antag_datum)

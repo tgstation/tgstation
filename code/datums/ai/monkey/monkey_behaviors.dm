@@ -234,7 +234,7 @@
 
 /datum/ai_behavior/disposal_mob/setup(datum/ai_controller/controller, attack_target_key, disposal_target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
+	controller.current_movement_target = controller.blackboard[attack_target_key]
 
 
 /datum/ai_behavior/disposal_mob/finish_action(datum/ai_controller/controller, succeeded, attack_target_key, disposal_target_key)
@@ -259,7 +259,8 @@
 			target.grabbedby(living_pawn)
 		return //Do the rest next turn
 
-	var/obj/machinery/disposal/disposal = controller.blackboard[disposal_target_key]
+	var/datum/weakref/disposal_ref = controller.blackboard[disposal_target_key]
+	var/obj/machinery/disposal/disposal = disposal_ref.resolve()
 	controller.current_movement_target = disposal
 
 	if(living_pawn.Adjacent(disposal))
