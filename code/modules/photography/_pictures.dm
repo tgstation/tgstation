@@ -23,10 +23,10 @@
 		picture_desc = desc
 	if(!isnull(mobs_spotted))
 		for(var/mob/seen as anything in mobs_spotted)
-			mobs_seen =+ WEAKREF(seen)
+			mobs_seen += WEAKREF(seen)
 	if(!isnull(dead_spotted))
 		for(var/mob/seen as anything in dead_spotted)
-			dead_seen =+ WEAKREF(seen)
+			dead_seen += WEAKREF(seen)
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))
