@@ -559,3 +559,25 @@
   - bugfix: The Nanotrasen News Network has updated their news tickers for when a
       station horrifically blows up to be more accommodating towards the person directly
       responsible for making sure it didn't horrifically blow up.
+2021-12-23:
+  JohnFulpWillard:
+  - bugfix: Balloon alerts when picking up staffs as a non wizard now properly appears
+      over the player's head.
+  LemonInTheDark:
+  - bugfix: Fixed garbage bags being uncleanable by mops, for silly silly reasons
+  Pickle-Coding:
+  - bugfix: Allows the supermatter crystal to produce gases while powered, even in
+      absolutely empty turfs, excluding space turfs.
+  SuperNovaa41:
+  - bugfix: Fixes the ablative trenchcoat giving you a permanent sechud.
+  - qol: The health sensor's status is now more clear when unsecured.
+  - bugfix: Fixed players appearing above fire and foam.
+  - bugfix: Void cloak (and other items intended to be invisible) can longer be seen
+      and unequipped in the strip menu.
+  - bugfix: You can no longer wrap a locker to bypass the drag slowdown.
+  - bugfix: Flying over lava no longer erroneously ignites you ablaze.
+  jlsnow301:
+  - bugfix: Fixes width on black market uplinks to show three delivery options. Technology!
+  optimumtact:
+  - bugfix: Fixed mops wetting the turf when you refill them from the mop bucket I'm
+      oranges and I don't put changelogs on my PRs

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Balloon alerts when picking up staffs as a non wizard now properly appears over the player's head."
