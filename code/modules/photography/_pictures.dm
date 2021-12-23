@@ -1,7 +1,9 @@
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
+	/// List of weakrefs pointing at mobs that appear in this photo
 	var/list/mobs_seen = list()
+	/// List of weakrefs pointing at dead mobs that appear in this photo
 	var/list/dead_seen = list()
 	var/caption
 	var/icon/picture_image
@@ -20,9 +22,11 @@
 	if(!isnull(desc))
 		picture_desc = desc
 	if(!isnull(mobs_spotted))
-		mobs_seen = mobs_spotted
+		for(var/mob/seen as anything in mobs_spotted)
+			mobs_seen =+ WEAKREF(seen)
 	if(!isnull(dead_spotted))
-		dead_seen = dead_spotted
+		for(var/mob/seen as anything in dead_spotted)
+			dead_seen =+ WEAKREF(seen)
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))
