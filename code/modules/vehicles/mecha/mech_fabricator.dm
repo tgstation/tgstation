@@ -125,7 +125,7 @@
 	if(categories)
 		// Handle some special cases to build up sub-categories for the fab interface.
 		// Start with checking if this design builds a cyborg module.
-		if(built_item in typesof(/obj/item/borg/upgrade))
+		if(ispath(built_item,/obj/item/borg/upgrade))
 			var/obj/item/borg/upgrade/U = built_item
 			var/model_types = initial(U.model_flags)
 			sub_category = list()
@@ -146,7 +146,7 @@
 			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
 
 		// Else check if this design builds a piece of exosuit equipment.
-		else if(built_item in typesof(/obj/item/mecha_parts/mecha_equipment))
+		else if(ispath(built_item,/obj/item/mecha_parts/mecha_equipment))
 			var/obj/item/mecha_parts/mecha_equipment/E = built_item
 			var/mech_types = initial(E.mech_flags)
 			sub_category = "Equipment"
