@@ -16,7 +16,6 @@
 /datum/component/cult_status/Initialize()
 	RegisterSignal(parent, COMSIG_CULT_VIS, .proc/raise_level)
 	RegisterSignal(parent, COMSIG_CULT_DECONVERT, .proc/UnregisterFromParent)
-	// idk init here
 
 /datum/component/cult_status/UnregisterFromParent()
 	. = ..()
@@ -34,13 +33,7 @@
 
 
 /datum/component/cult_status/proc/raise_level(var/new_stage, var/override_timer = FALSE)
-	// if a stage wasn't supplied
-	// this is probably just sanity checking
-	// TODO: see if this is ever actually needed when done
-	if (!new_stage)
-		new_stage = stage + 1
-
-	//var/datum/mind/mind = parent // probably a different type path
+	stage = new_stage
 	switch(stage)
 		if (STAGE_CULT_RED_EYES)
 			SEND_SOUND(parent, 'sound/hallucinations/i_see_you2.ogg')
@@ -49,7 +42,6 @@
 				set_eyes()
 			else
 				addtimer(CALLBACK(src, .proc/set_eyes, parent), 20 SECONDS)
-
 		if (STAGE_CULT_HALOS)
 			SEND_SOUND(parent, 'sound/hallucinations/im_here1.ogg')
 			to_chat(parent, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
