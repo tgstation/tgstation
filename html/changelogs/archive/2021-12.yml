@@ -471,3 +471,113 @@
   - bugfix: Fixed a bug with taste description generation for fruit wine.
   jlsnow301:
   - bugfix: Bot cover lock button is now disabled when you lack sufficient access.
+2021-12-19:
+  RandomGamer123:
+  - bugfix: When the nuke goes off, the "you are shredded to atoms" message no longer
+      displays to people not on the z-level or on the station.
+  - bugfix: The nuke now kills everyone on a station z-level if blown up on the station.
+  SuperNovaa41:
+  - bugfix: Fixes being able to table slam through impassable objects.
+  - bugfix: Nested containers (lockers, crates, etc) can be resisted out of.
+  jlsnow301:
+  - bugfix: TGUI list input will now respond to having large/swapped buttons in preferences.
+  - bugfix: BYOND functionality restored in TGUI input lists - keyboard support. Up/Down,
+      type a letter to jump to it (while search is not visible).
+2021-12-20:
+  Fikou:
+  - bugfix: neurotoxin spit no longer hits the xeno that spat it
+  JohnFulpWillard:
+  - bugfix: Enemies of the State and (Command-only) Enemies of the Revolution are
+      now ACTUALLY blacklisted from being defibrilated.
+  - bugfix: Basic mobs (Cows, cockroaches), count as Animals for the DNA vault.
+  - bugfix: The Pirate's shuttle scrambler will now ONLY work if you tell it to.
+  - admin: Actions done from the R&D console is now logged
+  MMMiracles:
+  - bugfix: "The prison gate in Tramstation's Prison is no longer made of Papier-m\xE2\
+      ch\xE9"
+  SuperNovaa41:
+  - bugfix: Ninjas can no longer call reinforcements if the comms console is depowered
+  jlsnow301:
+  - bugfix: Camera consoles now require you to be close by and alive in order to operate.
+  - bugfix: TramStation's tram console is no longer shifted over to the right
+  - bugfix: Mr. Pingsky no longer spams AI private because he wants to leave AI satellite
+      but can't (free him). Autopatrol set to off.
+  - bugfix: Power control consoles now alert you if you lack access.
+  - bugfix: Pandemic machine no longer blue screens while inserting premade viruses.
+  - bugfix: Long civilian bounty texts (specifically viro) no longer overflow the
+      button. The window is slightly wider as a result.
+  san7890:
+  - bugfix: Adds the High-performance liquid chromatography machine to the Syndicate
+      Lavaland Base.
+2021-12-21:
+  Bizzonium:
+  - bugfix: fixed potential bucket corruption in timer reset_buckets
+  JohnFulpWillard:
+  - bugfix: Headrevs only get a revolutionary banner if they actually win.
+  Krysonism:
+  - bugfix: Cows, roaches and their subtypes can be sentienced and mind transfer potioned
+      again.
+  - refactor: refactored syndicate sentience potion and abductor all access gland
+      to use the new simple_access component.
+  Melbert:
+  - bugfix: Removed a floating teleport beacon in Icebox's chapel
+  - bugfix: Fixed APC visibilty in icebox science outpost / RD office
+  - bugfix: Fixed Air alarm accessibility in icebox atmos office
+  Mooshimi:
+  - bugfix: Power has been returned to Tramstation Security department!
+  - bugfix: Everything in the curator's closet on Kilo Station can now be reached.
+  Sealed101:
+  - bugfix: fixed a missing wire in Deltastation's Arrivals Solar array, connecting
+      the control console to the array
+  - bugfix: fixed energy axe sprites's clipping issues and incorrect facing directions
+  tastyfish:
+  - bugfix: The advanced camera console's and AI's camera search function now works
+      again.
+2021-12-22:
+  Azarak:
+  - bugfix: Fixes FoV mask and hiding in potted plants
+  JohnFulpWillard:
+  - bugfix: You will no longer spasm if you're unconscious/dead.
+  RandomGamer123:
+  - bugfix: Inverse reagents are now properly consumed when being transferred into
+      a living body (eg. through syringes).
+  Ryll/Shaps:
+  - admin: Added Datum Tagging, a new admin tool for quickly marking and referring
+      back to various datums and atoms. You can tag atoms by ctrl+middle clicking
+      them or using the right click context menu, or from their VV dropdown menu (especially
+      for abstract datums that can't be clicked).
+  - admin: The View-Tags menu can quickly be accessed by F9 default, or using the
+      View-Tags button at the bottom of the Admin -> Game status panel section.
+  - admin: Tagged datums can also be referenced for things like proccalls and VV var
+      edits, similarly to Marked objects.
+  Watermelon914:
+  - bugfix: You can no longer shove megafauna that you can't normally push.
+  carshalash:
+  - bugfix: Adds seeds to vending machines as intended. Corrects pathway for lasagne.
+      Fixes issue with Bell peppers and baking cheese.
+  san7890:
+  - bugfix: The Nanotrasen News Network has updated their news tickers for when a
+      station horrifically blows up to be more accommodating towards the person directly
+      responsible for making sure it didn't horrifically blow up.
+2021-12-23:
+  JohnFulpWillard:
+  - bugfix: Balloon alerts when picking up staffs as a non wizard now properly appears
+      over the player's head.
+  LemonInTheDark:
+  - bugfix: Fixed garbage bags being uncleanable by mops, for silly silly reasons
+  Pickle-Coding:
+  - bugfix: Allows the supermatter crystal to produce gases while powered, even in
+      absolutely empty turfs, excluding space turfs.
+  SuperNovaa41:
+  - bugfix: Fixes the ablative trenchcoat giving you a permanent sechud.
+  - qol: The health sensor's status is now more clear when unsecured.
+  - bugfix: Fixed players appearing above fire and foam.
+  - bugfix: Void cloak (and other items intended to be invisible) can longer be seen
+      and unequipped in the strip menu.
+  - bugfix: You can no longer wrap a locker to bypass the drag slowdown.
+  - bugfix: Flying over lava no longer erroneously ignites you ablaze.
+  jlsnow301:
+  - bugfix: Fixes width on black market uplinks to show three delivery options. Technology!
+  optimumtact:
+  - bugfix: Fixed mops wetting the turf when you refill them from the mop bucket I'm
+      oranges and I don't put changelogs on my PRs

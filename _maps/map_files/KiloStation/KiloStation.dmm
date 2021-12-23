@@ -20397,22 +20397,22 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/destructible/cult/tome,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/book/codex_gigas{
+/obj/structure/table/wood,
+/obj/item/storage/photo_album{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/flashlight/lantern{
-	pixel_x = 4
-	},
-/obj/machinery/light_switch/directional/north,
-/obj/machinery/newscaster/security_unit/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 4;
+/obj/item/taperecorder{
+	pixel_x = 5;
 	pixel_y = 4
 	},
+/obj/item/camera,
+/obj/item/pen{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/machinery/newscaster/security_unit/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "cjL" = (
@@ -26864,22 +26864,25 @@
 /turf/open/floor/iron/showroomfloor,
 /area/medical/exam_room)
 "drk" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/destructible/cult/tome,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 4;
+	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/item/flashlight/lantern{
+	pixel_x = 4
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
+/obj/item/book/codex_gigas{
+	pixel_x = -4;
+	pixel_y = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
 /area/service/library)
 "drn" = (
 /obj/effect/turf_decal/tile/red{
@@ -27890,7 +27893,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/modular_computer/console/preset/curator{
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
@@ -49240,25 +49243,16 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "lxQ" = (
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/table/wood,
-/obj/item/storage/photo_album{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/taperecorder{
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/item/camera,
-/obj/item/pen{
-	pixel_x = -7;
-	pixel_y = -5
+/obj/effect/landmark/start/librarian,
+/obj/structure/chair/comfy/brown{
+	buildstackamount = 0;
+	color = "#c45c57";
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -50523,18 +50517,8 @@
 /turf/open/floor/iron/dark,
 /area/service/bar)
 "lXq" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/showroomfloor,
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall,
 /area/service/library)
 "lXt" = (
 /obj/effect/turf_decal/tile/blue{
@@ -59455,8 +59439,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/library)
@@ -60838,6 +60823,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/service/library)
 "pIj" = (
@@ -62320,12 +62306,14 @@
 /turf/open/floor/circuit/red,
 /area/engineering/supermatter/room)
 "qld" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Art Cabinet"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/stripes/line{
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/modular_computer/console/preset/curator{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)
@@ -63749,6 +63737,7 @@
 /obj/machinery/door/airlock/public/glass{
 	name = "Art Cabinet"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "qNd" = (
@@ -72325,16 +72314,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/chair/comfy/brown{
-	buildstackamount = 0;
-	color = "#c45c57"
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
-/obj/effect/landmark/start/librarian,
 /obj/effect/landmark/xeno_spawn,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "tSA" = (
@@ -109036,9 +109018,9 @@ kPG
 uwS
 rMv
 rnk
-qld
+sim
 lXq
-drk
+thp
 sim
 sim
 bRX
@@ -109294,8 +109276,8 @@ pBd
 moO
 jlg
 sim
-sim
-thp
+drk
+qld
 sim
 bAM
 bRY
