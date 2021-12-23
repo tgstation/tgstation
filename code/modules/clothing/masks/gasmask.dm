@@ -82,8 +82,6 @@
 /obj/item/clothing/mask/gas/proc/init_fov()
 	if (has_fov)
 		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
-	else
-		return
 
 /**
  * Getter for overall filter durability, takes into consideration all filters filter_status
