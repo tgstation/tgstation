@@ -31,11 +31,15 @@
 		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
 		add_juice()
 
+
 /obj/item/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_plant(src))
+		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
+		if(seed)
+			msg += seed.get_analyzer_text()
+		msg += "</span>"
+		to_chat(usr, msg)
 		return
 
 /obj/item/grown/proc/add_juice()

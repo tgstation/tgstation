@@ -81,8 +81,28 @@
 /obj/item/food/grown/attackby(obj/item/O, mob/user, params)
 	..()
 	if (istype(O, /obj/item/plant_analyzer))
-		var/obj/item/plant_analyzer/plant_analyzer = O
-		to_chat(user, plant_analyzer.scan_plant(src))
+		var/obj/item/plant_analyzer/P_analyzer = O
+		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
+		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
+			msg += seed.get_analyzer_text()
+		var/reag_txt = ""
+		if(seed && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
+			msg += "<br><span class='info'>*Plant Reagents*</span>"
+			msg += "<br><span class='info'>Maximum reagent capacity: [reagents.maximum_volume]</span>"
+			var/chem_cap = 0
+			for(var/reagent_id in reagents.reagent_list)
+				var/datum/reagent/R  = reagent_id
+				var/amt = R.volume
+				chem_cap += R.volume
+				reag_txt += "\n<span class='info'>- [R.name]: [amt]</span>"
+			if(chem_cap > 100)
+				msg += "<br><span class='warning'>- Reagent Traits Over 100% Production</span></br>"
+
+		if(reag_txt)
+			msg += "<br><span class='info'>*---------*</span>"
+			msg += reag_txt
+		msg += "<br><span class='info'>*---------*</span>"
+		to_chat(user, msg)
 	else
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)

@@ -598,12 +598,6 @@
 	reqs = list (/obj/item/food/grown/poppy = 6)
 	category = CAT_MISC
 
-/datum/crafting_recipe/rosebouquet
-	name = "Rose bouquet"
-	result = /obj/item/bouquet/rose
-	reqs = list(/obj/item/food/grown/rose = 6)
-	category = CAT_MISC
-
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
 	result = /obj/item/camera/spooky

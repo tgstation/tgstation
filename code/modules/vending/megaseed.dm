@@ -33,7 +33,6 @@
 					/obj/item/seeds/poppy = 3,
 					/obj/item/seeds/pumpkin = 3,
 					/obj/item/seeds/wheat/rice = 3,
-					/obj/item/seeds/rose = 3,
 					/obj/item/seeds/soya = 3,
 					/obj/item/seeds/sugarcane = 3,
 					/obj/item/seeds/sunflower = 3,

@@ -43,11 +43,11 @@
 	growthstages = 3
 	icon_grow = "laughpeas-grow"
 	icon_dead = "laughpeas-dead"
-	genes = list (/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/plant_laughter)
+	genes = list (/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/purple)
 	mutatelist = list (/obj/item/seeds/peas/laugh/peace)
 	reagents_add = list (/datum/reagent/consumable/laughter = 0.05, /datum/reagent/consumable/sugar = 0.05, /datum/reagent/consumable/nutriment = 0.07)
 	rarity = 25 //It actually might make Central Command Officials loosen up a smidge, eh?
-	graft_gene = /datum/plant_gene/trait/plant_laughter
+	graft_gene = /datum/plant_gene/trait/glow/purple
 
 /obj/item/food/grown/laugh
 	seed = /obj/item/seeds/peas/laugh

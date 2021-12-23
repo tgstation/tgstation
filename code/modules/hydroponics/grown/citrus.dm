@@ -99,7 +99,7 @@
 	lifespan = 55
 	endurance = 45
 	yield = 4
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel = 0.05)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
 /obj/item/food/grown/firelemon
 	seed = /obj/item/seeds/firelemon

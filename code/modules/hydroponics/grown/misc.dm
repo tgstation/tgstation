@@ -41,7 +41,6 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list()
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/toxin/formaldehyde = 0.1)
 
 /obj/item/seeds/starthistle/corpse_flower/pre_attack(obj/machinery/hydroponics/I)
 	if(istype(I, /obj/machinery/hydroponics))

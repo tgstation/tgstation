@@ -409,11 +409,6 @@
 	desc = "A bouquet of poppies. You feel loved just looking at it."
 	icon_state = "poppybouquet"
 
-/obj/item/bouquet/rose
-	name = "rose bouquet"
-	desc = "A bouquet of roses. A bundle of love."
-	icon_state = "rosebouquet"
-
 /obj/item/gun_maintenance_supplies
 	name = "gun maintenance supplies"
 	desc = "plastic box containing gun maintenance supplies and spare parts. Use them on a Mosin Nagant to clean it."
