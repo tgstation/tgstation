@@ -728,53 +728,56 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick()
-	if(prob(15))
-		switch(rand(1,5))
-			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
-					to_chat(owner, span_warning("Your leg spasms!"))
-					step(owner, pick(GLOB.cardinals))
-			if(2)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				if(I)
-					to_chat(owner, span_warning("Your fingers spasm!"))
-					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
-					I.attack_self(owner)
-			if(3)
-				owner.set_combat_mode(TRUE)
+	if(owner.stat >= UNCONSCIOUS)
+		return
+	if(!prob(15))
+		return
+	switch(rand(1,5))
+		if(1)
+			if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
+				to_chat(owner, span_warning("Your leg spasms!"))
+				step(owner, pick(GLOB.cardinals))
+		if(2)
+			if(owner.incapacitated())
+				return
+			var/obj/item/held_item = owner.get_active_held_item()
+			if(!held_item)
+				return
+			to_chat(owner, span_warning("Your fingers spasm!"))
+			owner.log_message("used [held_item] due to a Muscle Spasm", LOG_ATTACK)
+			held_item.attack_self(owner)
+		if(3)
+			owner.set_combat_mode(TRUE)
 
-				var/range = 1
-				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
-					range = 7
+			var/range = 1
+			if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
+				range = 7
 
-				var/list/mob/living/targets = list()
-				for(var/mob/M in oview(owner, range))
-					if(isliving(M))
-						targets += M
-				if(LAZYLEN(targets))
-					to_chat(owner, span_warning("Your arm spasms!"))
-					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
-					owner.ClickOn(pick(targets))
-				owner.set_combat_mode(FALSE)
-			if(4)
-				owner.set_combat_mode(TRUE)
+			var/list/mob/living/targets = list()
+			for(var/mob/living/nearby_mobs in oview(owner, range))
+				targets += nearby_mobs
+			if(LAZYLEN(targets))
 				to_chat(owner, span_warning("Your arm spasms!"))
-				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
-				owner.ClickOn(owner)
-				owner.set_combat_mode(FALSE)
-			if(5)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				var/list/turf/targets = list()
-				for(var/turf/T in oview(owner, 3))
-					targets += T
-				if(LAZYLEN(targets) && I)
-					to_chat(owner, span_warning("Your arm spasms!"))
-					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
-					owner.throw_item(pick(targets))
+				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
+				owner.ClickOn(pick(targets))
+			owner.set_combat_mode(FALSE)
+		if(4)
+			owner.set_combat_mode(TRUE)
+			to_chat(owner, span_warning("Your arm spasms!"))
+			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
+			owner.ClickOn(owner)
+			owner.set_combat_mode(FALSE)
+		if(5)
+			if(owner.incapacitated())
+				return
+			var/obj/item/held_item = owner.get_active_held_item()
+			var/list/turf/targets = list()
+			for(var/turf/nearby_turfs in oview(owner, 3))
+				targets += nearby_turfs
+			if(LAZYLEN(targets) && held_item)
+				to_chat(owner, span_warning("Your arm spasms!"))
+				owner.log_message("threw [held_item] due to a Muscle Spasm", LOG_ATTACK)
+				owner.throw_item(pick(targets))
 
 /datum/status_effect/convulsing
 	id = "convulsing"

@@ -35,8 +35,7 @@
 	if(isnull(old_loc))
 		return
 
-	for (var/signal in connections)
-		listener.UnregisterSignal(old_loc, signal)
+	listener.UnregisterSignal(old_loc, connections)
 
 /datum/element/connect_loc/proc/on_moved(atom/movable/listener, atom/old_loc)
 	SIGNAL_HANDLER

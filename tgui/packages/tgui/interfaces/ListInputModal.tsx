@@ -140,7 +140,9 @@ export const ListInputModal = (_, context) => {
             </Stack.Item>
             {searchBarVisible && <SearchBar onSearch={onSearch} />}
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
-              <InputButtons input={selected} inputIsValid={inputIsValid} />
+              <InputButtons
+                input={selected !== null ? filteredItems[selected] : null}
+                inputIsValid={inputIsValid} />
             </Stack.Item>
           </Stack>
         </Section>
