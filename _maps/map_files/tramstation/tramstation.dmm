@@ -9514,6 +9514,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "bPl" = (
@@ -29038,6 +29039,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "iQy" = (
@@ -45791,6 +45793,7 @@
 	},
 /obj/machinery/newscaster/security_unit/directional/east,
 /obj/effect/landmark/start/lawyer,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "paa" = (
@@ -49531,6 +49534,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "qqU" = (
@@ -62360,6 +62364,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "vcR" = (
