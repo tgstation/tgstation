@@ -142,6 +142,7 @@
 		return
 	..()
 	changeling.transform(user, chosen_prof)
+	SEND_SIGNAL(user, COMSIG_MOB_TRANSFORMING)
 	return TRUE
 
 /**

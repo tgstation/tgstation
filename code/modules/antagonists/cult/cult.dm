@@ -141,10 +141,8 @@
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
 		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
-		//cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
-			//cult_team.ascend(current)
 
 	add_team_hud(current)
 
@@ -163,12 +161,6 @@
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
 		SEND_SIGNAL(H, COMSIG_CULT_DECONVERT)
-		/*
-		H.eye_color = initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		H.remove_overlay(HALO_LAYER)
-		H.update_body()
-		*/
 		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
@@ -246,10 +238,8 @@
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
 		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
-		//cult_team.rise(current)
 		if(cult_team.cult_ascendent)
 			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
-			//cult_team.ascend(current)
 	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
@@ -293,9 +283,6 @@
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SIGNAL(B.current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES)
-				//SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
-				//to_chat(B.current, span_cultlarge("<span class='warningplain'>The veil weakens as your cult grows, your eyes begin to glow...</span>"))
-				//addtimer(CALLBACK(src, .proc/rise, B.current), 200)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 
@@ -303,33 +290,8 @@
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SIGNAL(B.current, COMSIG_CULT_VIS, STAGE_CULT_HALOS)
-				//SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				//to_chat(B.current, span_cultlarge("<span class='warningplain'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>"))
-				//addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
-
-
-/*
-/datum/team/cult/proc/rise(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/H = cultist
-		H.eye_color = BLOODCULT_EYE
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		ADD_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		H.update_body()
-*/
-
-/*
-/datum/team/cult/proc/ascend(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/human = cultist
-		new /obj/effect/temp_visual/cult/sparks(get_turf(human), human.dir)
-		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
-		human.overlays_standing[HALO_LAYER] = new_halo_overlay
-		human.apply_overlay(HALO_LAYER)
-*/
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
