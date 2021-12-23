@@ -1,0 +1,6 @@
+author: "GoldenAlpharex, sprites from WalterJe"
+delete-after: True
+changes: 
+  - qol: "Conveyors will now also convey how to interact with them with tools upon being examined."
+  - imageadd: "Updated the sprites of the conveyor belts and the conveyor switches, ported and adapted from Tau Ceti!"
+  - refactor: "Brought up to today's standards conveyor codes, alongside properly documenting it. Also changed how conveyor corners are handled to make them both more intuitive for mappers and for people in-game."
