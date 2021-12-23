@@ -1243,6 +1243,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "aih" = (
@@ -10012,6 +10013,7 @@
 	dir = 5
 	},
 /obj/structure/cable,
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "bPl" = (
@@ -24418,6 +24420,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "hdc" = (
@@ -61488,6 +61491,7 @@
 	dir = 10
 	},
 /obj/structure/cable,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/security/courtroom)
 "vcR" = (
@@ -61548,6 +61552,7 @@
 /area/hallway/secondary/command)
 "veo" = (
 /obj/machinery/firealarm/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "vep" = (
