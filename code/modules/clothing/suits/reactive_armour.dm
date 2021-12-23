@@ -14,11 +14,11 @@
 		)
 
 	if(istype(weapon, /obj/item/assembly/signaler/anomaly))
-		var/obj/item/assembly/signaler/anomaly/A = weapon
-		var/armour_path = anomaly_armour_types[A.anomaly_type]
+		var/obj/item/assembly/signaler/anomaly/anomaly = weapon
+		var/armour_path = anomaly_armour_types[anomaly.anomaly_type]
 		if(!armour_path)
 			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
-		to_chat(user, span_notice("You insert [A] into the chest plate, and the armour gently hums to life."))
+		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
 		new armour_path(get_turf(src))
 		qdel(src)
 		qdel(A)
@@ -27,6 +27,13 @@
 /obj/item/clothing/suit/armor/reactive
 	name = "reactive armor"
 	desc = "Doesn't seem to do much for some reason."
+	icon_state = "reactiveoff"
+	inhand_icon_state = "reactiveoff"
+	blood_overlay_type = "armor"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
+	actions_types = list(/datum/action/item_action/toggle)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	hit_reaction_chance = 50
 	///Whether the armor will try to react to hits (is it on)
 	var/active = FALSE
 	///This will be true for 30 seconds after an EMP, it makes the reaction effect dangerous to the user.
@@ -39,13 +46,7 @@
 	var/reactivearmor_cooldown_duration = 10 SECONDS
 	///The cooldown itself of the reactive armor for when it can activate again.
 	var/reactivearmor_cooldown = 0
-	icon_state = "reactiveoff"
-	inhand_icon_state = "reactiveoff"
-	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)
-	actions_types = list(/datum/action/item_action/toggle)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	hit_reaction_chance = 50
+
 
 /obj/item/clothing/suit/armor/reactive/Initialize(mapload)
 	. = ..()
