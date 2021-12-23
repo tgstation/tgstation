@@ -39,21 +39,22 @@
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	uplink = owner.find_syndicate_uplink()
-	if(uplink_handler)
-		uplink.uplink_handler = uplink_handler
-	else
-		uplink_handler = uplink.uplink_handler
-	uplink_handler.has_progression = TRUE
-	SStraitor.register_uplink_handler(uplink_handler)
+	if(uplink)
+		if(uplink_handler)
+			uplink.uplink_handler = uplink_handler
+		else
+			uplink_handler = uplink.uplink_handler
+		uplink_handler.has_progression = TRUE
+		SStraitor.register_uplink_handler(uplink_handler)
 
-	uplink_handler.has_objectives = TRUE
-	uplink_handler.owner = owner
-	uplink_handler.generate_objectives()
+		uplink_handler.has_objectives = TRUE
+		uplink_handler.owner = owner
+		uplink_handler.generate_objectives()
 
-	if(uplink_handler.progression_points < SStraitor.current_global_progression)
-		uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+		if(uplink_handler.progression_points < SStraitor.current_global_progression)
+			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
-	RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
+		RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
 
 	if(give_objectives)
 		forge_traitor_objectives()

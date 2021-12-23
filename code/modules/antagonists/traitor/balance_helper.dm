@@ -51,6 +51,7 @@
 		"description" = objective.description,
 		"progression_minimum" = objective.progression_minimum,
 		"progression_maximum" = objective.progression_maximum,
+		"global_progression" = objective.global_progression_deviance_required,
 		"global_progression_limit_coeff" = objective.global_progression_limit_coeff,
 		"global_progression_influence_intensity" = objective.global_progression_influence_intensity,
 		"progression_reward" = objective.progression_reward,
@@ -77,6 +78,7 @@
 /datum/traitor_objective_debug/ui_static_data(mob/user)
 	var/list/data = list()
 	data["objective_data"] = all_objectives
+	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
 	return data
 
 /datum/traitor_objective_debug/ui_state(mob/user)

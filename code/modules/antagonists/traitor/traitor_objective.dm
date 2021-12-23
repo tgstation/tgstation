@@ -22,6 +22,8 @@
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
 	var/global_progression_influence_intensity = 0.5
+	/// Determines how great the deviance has to be before progression starts to get reduced.
+	var/global_progression_deviance_required = 0.25
 	/// Determines the minimum and maximum progression this objective can be worth as a result of being influenced by global progression
 	/// Should only be smaller than or equal to 1
 	var/global_progression_limit_coeff = 0.1
@@ -54,8 +56,8 @@
 			progression_reward = list(progression_reward, progression_reward)
 	progression_cost_coeff = (rand()*2 - 1) * progression_cost_coeff_deviance
 
-/// Updates the progression cost, scaling it depending on their current progression compared against the global progression
-/datum/traitor_objective/proc/update_progression_cost()
+/// Updates the progression reward, scaling it depending on their current progression compared against the global progression
+/datum/traitor_objective/proc/update_progression_reward()
 	if(!SStraitor.generate_objectives)
 		return
 	progression_reward = original_progression
@@ -64,6 +66,12 @@
 	var/minimum_progression = progression_reward * global_progression_limit_coeff
 	var/maximum_progression = global_progression_limit_coeff != 0? progression_reward / global_progression_limit_coeff : INFINITY
 	var/deviance = (SStraitor.current_global_progression - handler.progression_points) / SStraitor.progression_scaling_deviance
+	if(abs(deviance) < global_progression_deviance_required)
+		return
+	if(abs(deviance) == deviance) // If it is positive
+		deviance = deviance - global_progression_deviance_required
+	else
+		deviance = deviance + global_progression_deviance_required
 	var/coeff = NUM_E ** (global_progression_influence_intensity * deviance) - 1
 	// This has less of an effect as the coeff gets nearer to 1. Is linear
 	coeff += progression_cost_coeff * (1 - coeff)

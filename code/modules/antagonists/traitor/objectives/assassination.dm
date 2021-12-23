@@ -19,8 +19,10 @@
 
 	abstract_type = /datum/traitor_objective/assassinate
 
+	progression_minimum = 30 MINUTES
+
 	//this is a prototype so this progression is for all basic level kill objectives
-	progression_reward = list(8 MINUTES, 12 MINUTES)
+	progression_reward = list(5 MINUTES, 7 MINUTES)
 	telecrystal_reward = list(1, 2)
 
 	/**
@@ -39,7 +41,7 @@
 	var/obj/item/paper/calling_card/card
 
 /datum/traitor_objective/assassinate/calling_card/heads_of_staff
-	progression_reward = list(12 MINUTES, 15 MINUTES)
+	progression_reward = list(7 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE
@@ -54,7 +56,7 @@
 	var/obj/item/bodypart/head/behead_goal
 
 /datum/traitor_objective/assassinate/behead/heads_of_staff
-	progression_reward = list(12 MINUTES, 15 MINUTES)
+	progression_reward = list(7 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE

@@ -18,6 +18,7 @@
 		"Chief Medical Officer" = /area/command/heads_quarters/cmo,
 		"Chief Engineer" = /area/command/heads_quarters/ce,
 		"Head of Personnel" = /area/command/heads_quarters/hop,
+		"Captain" = /area/command/heads_quarters/captain, // For head roles so that they can still get this objective.
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE

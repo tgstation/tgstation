@@ -92,7 +92,7 @@ export type Item = {
   id: string | number,
   name: string,
   category: string,
-  cost: JSX.Element,
+  cost: JSX.Element | string,
   desc: JSX.Element | string,
   disabled: BooleanLike,
 }

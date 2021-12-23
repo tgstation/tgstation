@@ -47,6 +47,7 @@ const Abductsoft = (props, context) => {
     experiment,
     points,
     credits,
+    categories,
   } = data;
 
   if (!experiment) {
@@ -55,6 +56,24 @@ const Abductsoft = (props, context) => {
         No Experiment Machine Detected
       </NoticeBox>
     );
+  }
+
+  const categoriesList = [];
+  const items = [];
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    categoriesList.push(category.name);
+    for (let itemIndex = 0; itemIndex < category.items.length; itemIndex++) {
+      const item = category.items[itemIndex];
+      items.push({
+        id: item.name,
+        name: item.name,
+        category: category.name,
+        cost: `${item.cost} Credits`,
+        desc: item.desc,
+        disabled: credits < item.cost,
+      });
+    }
   }
 
   return (
@@ -67,8 +86,10 @@ const Abductsoft = (props, context) => {
         </LabeledList>
       </Section>
       <GenericUplink
-        currencyAmount={credits}
-        currencySymbol="Credits"
+        currency={`${credits} Credits`}
+        categories={categoriesList}
+        items={items}
+        handleBuy={(item) => act("buy", { name: item.name })}
       />
     </>
   );

@@ -30,7 +30,7 @@
 	)
 
 /datum/traitor_objective/smuggle/is_duplicate(datum/traitor_objective/smuggle/objective_to_compare)
-	if(objective_to_compare.contraband_type == objective_to_compare.contraband_type)
+	if(objective_to_compare.contraband_type == contraband_type)
 		return TRUE
 	//it's too similar if its from the same area
 	if(objective_to_compare.smuggle_spawn_type == smuggle_spawn_type)
@@ -60,7 +60,9 @@
 				penalty = telecrystal_penalty \
 			)
 			if(contraband.reagents)
-				AddComponent(/datum/component/traitor_objective_register, contraband.reagents, fail_signals = COMSIG_REAGENTS_DEL_REAGENT)
+				AddComponent(/datum/component/traitor_objective_register, contraband.reagents, \
+					fail_signals = list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), \
+					penalty = telecrystal_penalty)
 
 /datum/traitor_objective/smuggle/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	//anyone working cargo should not get almost free objectives by having direct access to the cargo shuttle

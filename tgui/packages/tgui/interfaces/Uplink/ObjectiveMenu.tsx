@@ -424,7 +424,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                   {telecrystalReward} TC,
                   <Box ml={1} as="span">
                     {calculateProgression(progressionReward)} Reputation
-                    {Math.abs(progressionDiff) > 5 && (
+                    {Math.abs(progressionDiff) > 10 && (
                       <Tooltip
                         content={(
                           <Box>
@@ -432,7 +432,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                             <Box
                               mr={1}
                               ml={1}
-                              color={progressionDiff > 0? "red" : "green"}
+                              color={progressionDiff > 0? progressionDiff > 25? "red" : "orange" : "green"}
                               as="span"
                             >
                               {Math.abs(progressionDiff)}%
@@ -445,7 +445,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                       >
                         <Box
                           ml={1}
-                          color={progressionDiff > 0? "red" : "green"}
+                          color={progressionDiff > 0? progressionDiff > 35? "red" : "orange" : "green"}
                           as="span"
                         >
                           ({progressionDiff > 0? "-" : "+"}{Math.abs(progressionDiff)}%)

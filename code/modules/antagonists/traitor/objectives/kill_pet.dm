@@ -13,6 +13,8 @@
 	description = "The \[DEPARTMENT HEAD] has particularly annoyed us by sending us spam emails and we want their \[PET] dead to show them what happens when they cross us. "
 	telecrystal_reward = list(1, 3)
 
+	progression_reward = list(3 MINUTES, 6 MINUTES)
+
 	/// Possible heads mapped to their pet type. Can be a list of possible pets
 	var/list/possible_heads = list(
 		"Head of Personnel" = list(
@@ -32,12 +34,12 @@
 
 /datum/traitor_objective/kill_pet/medium_risk
 	progression_minimum = 10 MINUTES
-	progression_reward = list(3 MINUTES, 6 MINUTES)
+	progression_reward = list(5 MINUTES, 8 MINUTES)
 	limited_to_department_head = FALSE
 
 /datum/traitor_objective/kill_pet/high_risk
 	progression_minimum = 25 MINUTES
-	progression_reward = list(4 MINUTES, 7 MINUTES)
+	progression_reward = list(8 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(2, 4)
 
 	limited_to_department_head = FALSE

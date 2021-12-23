@@ -114,7 +114,7 @@
 		potential_duplicate_objectives[objective.type] -= objective
 		return
 	objective.original_progression = objective.progression_reward
-	objective.update_progression_cost()
+	objective.update_progression_reward()
 	potential_objectives += objective
 	return objective
 
@@ -160,7 +160,7 @@
 		if(progression_points > objective.progression_maximum && !objective.forced)
 			objective.fail_objective(trigger_update = FALSE)
 			continue
-		objective.update_progression_cost()
+		objective.update_progression_reward()
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
