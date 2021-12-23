@@ -40,7 +40,7 @@
 	var/mob/living/carbon/user = loc
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.add_hud_to(user)
+	hud.add_hud_to_mob(user)
 	balloon_alert(user, "you put on the hood, and enable the hud")
 	return ..()
 
@@ -50,6 +50,6 @@
 		return ..()
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	hud.remove_hud_from(user)
+	hud.remove_hud_from_mob(user)
 	balloon_alert(user, "you take off the hood, and disable the hud")
 	return ..()

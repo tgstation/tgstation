@@ -471,6 +471,13 @@ Diagnostic HUDs!
 	Airlocks!
 ~~~~~~~~~~~~~*/
 /obj/machinery/door/airlock/proc/diag_hud_set_electrified()
+	if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+		for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+			diag_hud.remove_atom_from_hud(src)
+		return
+
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_atom_to_hud(src)
 	var/image/holder = hud_list[DIAG_AIRLOCK_HUD]
-	if(secondsElectrified != MACHINE_NOT_ELECTRIFIED)
-		holder.icon_state = "electrified"
+	holder.icon_state = "electrified"
