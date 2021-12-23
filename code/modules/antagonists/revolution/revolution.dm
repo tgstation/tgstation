@@ -431,7 +431,7 @@
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/datum/mind/rev_head as anything in ex_revs)
+		for (var/datum/mind/rev_head as anything in ex_headrevs)
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
 			rev_head.current.med_hud_set_status()
 
