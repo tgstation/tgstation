@@ -13,11 +13,11 @@
 	announceWhen = rand(announceWhen, announceWhen + 50)
 
 /datum/round_event/spider_infestation/announce(fake)
-	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 /datum/round_event/spider_infestation/start()
 	create_midwife_eggs(spawncount)
-	
+
 /proc/create_midwife_eggs(amount)
 	var/list/spawn_locs = list()
 	for(var/x in GLOB.xeno_spawn)

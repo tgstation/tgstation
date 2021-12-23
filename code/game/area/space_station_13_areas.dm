@@ -620,6 +620,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/service/bar/Initialize(mapload)
+
+	. = ..()
+	GLOB.bar_areas += src
+
+
 /area/engine/break_room
 	name = "Engineering Foyer"
 	icon_state = "engine_break"
