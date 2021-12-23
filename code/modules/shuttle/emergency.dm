@@ -200,10 +200,10 @@
 	if(!user.CanReach(src))
 		return
 	if(!user?.mind?.get_hijack_speed())
-		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
+		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
 		return
 	if(!EMERGENCY_AT_LEAST_DOCKED) // prevent advancing hijack stages on BYOS shuttles until the shuttle has "docked"
-		to_chat(user, "<span class='warning'>The flight plans for the shuttle haven't been loaded yet, you can't hack this right now.</span.")
+		to_chat(user, span_warning("The flight plans for the shuttle haven't been loaded yet, you can't hack this right now."))
 		return
 	if(hijack_hacking == TRUE)
 		return
