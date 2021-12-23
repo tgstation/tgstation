@@ -485,6 +485,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	src.antag_datum = antag_datum
 	name += " [antag_datum.name]"
 
+/datum/action/antag_info/Destroy()
+	antag_datum = null
+	return ..()
+
 /datum/action/antag_info/Trigger()
 	if(antag_datum)
 		antag_datum.ui_interact(owner)
