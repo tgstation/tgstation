@@ -58,14 +58,14 @@
 	if(!is_interactable(usr))
 		return
 
-	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
+	var/mob/living/simple_animal/bot/bot
 	switch(action)
 		if("callbot") //Command a bot to move to a selected location.
 			if(owner.call_bot_cooldown > world.time)
 				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
 			bot = locate(params["ref"]) in GLOB.bots_list
-			owner.bot = WEAKREF(bot)
+			owner.bot_ref = WEAKREF(bot)
 			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			owner.waypoint_mode = TRUE
@@ -73,7 +73,7 @@
 			. = TRUE
 		if("interface") //Remotely connect to a bot!
 			bot = locate(params["ref"]) in GLOB.bots_list
-			owner.bot = WEAKREF(bot)
+			owner.bot_ref = WEAKREF(bot)
 			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			bot.attack_ai(usr)

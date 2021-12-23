@@ -220,7 +220,7 @@
 	QDEL_NULL(alert_control)
 	malfhack = null
 	current = null
-	Bot = null
+	bot_ref = null
 	controlled_mech = null
 	linked_core = null
 	apc_override = null
