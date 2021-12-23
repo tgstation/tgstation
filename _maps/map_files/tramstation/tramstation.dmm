@@ -8059,10 +8059,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "baW" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/security)
 "bbb" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -8908,6 +8905,10 @@
 /area/medical/surgery)
 "bsp" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissarydoor";
+	name = "Vacant Commissary Shutters"
+	},
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "bsq" = (
@@ -15253,15 +15254,10 @@
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "dMV" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "dNy" = (
 /obj/structure/cable,
@@ -18793,9 +18789,11 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior)
 "eYZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "eZr" = (
 /obj/effect/turf_decal/stripes{
@@ -20540,7 +20538,7 @@
 /area/maintenance/tram/mid)
 "fEy" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -23804,7 +23802,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "gOS" = (
-/obj/structure/ladder,
+/obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/security)
@@ -25200,9 +25198,18 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "hqQ" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Security - Upper Power Hatch";
+	dir = 9;
+	network = list("ss13","Security")
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "hrn" = (
 /obj/structure/chair/office{
@@ -36900,9 +36907,8 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/central)
 "lPh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/ladder,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "lPm" = (
@@ -39606,7 +39612,7 @@
 /area/commons/lounge)
 "mVK" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -43892,11 +43898,10 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "oCa" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/maintenance/four,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "oCm" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -50916,10 +50921,14 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/radshelter/civil)
 "ril" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "riv" = (
@@ -51789,18 +51798,10 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "rBF" = (
-/obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Security - Upper Power Hatch";
-	dir = 9;
-	network = list("ss13","Security")
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "rBH" = (
 /obj/machinery/camera{
@@ -160543,7 +160544,7 @@ lTE
 xNY
 bKx
 kaL
-hqQ
+bKx
 cTe
 bKx
 jQw
@@ -160800,10 +160801,10 @@ ust
 xNY
 pXV
 kaL
+gOS
 kaL
+bKx
 kaL
-erH
-erH
 ezo
 ezo
 ezo
@@ -161056,13 +161057,13 @@ eHD
 sdk
 xNY
 bKx
-kaL
-uqG
-jQw
 erH
-bKx
+erH
+erH
+erH
+erH
 sCH
-bKx
+jQw
 dMt
 ezo
 bvw
@@ -161313,13 +161314,13 @@ pSM
 eRg
 xNY
 bKx
-caT
-bKx
-bKx
 erH
-rBF
-gOS
-dMV
+hqQ
+lPh
+ril
+erH
+bKx
+bKx
 dMt
 ezo
 ezo
@@ -161570,15 +161571,15 @@ slK
 ust
 xNY
 bKx
-kaL
+erH
 oCa
 eYZ
+rBF
 erH
-baW
-ril
-lPh
 bKx
-erH
+bKx
+uqG
+kaL
 dhe
 dhe
 dhe
@@ -161827,15 +161828,15 @@ slK
 wWf
 xNY
 bKx
-kaL
-kaL
-aBE
 erH
 erH
 pNB
 erH
 erH
-erH
+caT
+kaL
+kaL
+kaL
 oXC
 oXC
 gap
@@ -162084,12 +162085,12 @@ qZz
 xNY
 xNY
 bKx
-kaL
+baW
 oxT
 tIV
-tIV
-tIV
-tIV
+bKx
+bKx
+bKx
 hkc
 sRi
 gap
@@ -162341,7 +162342,7 @@ cHG
 cHG
 kFW
 gzy
-gzy
+dMV
 gzy
 prC
 hkI

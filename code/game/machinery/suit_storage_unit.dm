@@ -3,7 +3,8 @@
 	name = "suit storage unit"
 	desc = "An industrial unit made to hold and decontaminate irradiated equipment. It comes with a built-in UV cauterization mechanism. A small warning label advises that organic matter should not be placed into the unit."
 	icon = 'icons/obj/machines/suit_storage.dmi'
-	icon_state = "close"
+	icon_state = "classic"
+	base_icon_state = "classic"
 	use_power = ACTIVE_POWER_USE
 	active_power_usage = 60
 	power_channel = AREA_USAGE_EQUIP
@@ -50,10 +51,6 @@
 	var/breakout_time = 300
 	/// How fast it charges cells in a suit
 	var/charge_rate = 250
-
-/obj/machinery/suit_storage_unit/Initialize(mapload)
-	. = ..()
-	interaction_flags_machine |= INTERACT_MACHINE_OFFLINE
 
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
@@ -145,6 +142,11 @@
 	state_open = TRUE
 	density = FALSE
 
+/obj/machinery/suit_storage_unit/industrial
+	name = "industrial suit storage unit"
+	icon_state = "industrial"
+	base_icon_state = "industrial"
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
@@ -167,35 +169,36 @@
 
 /obj/machinery/suit_storage_unit/update_overlays()
 	. = ..()
-
-	if(uv)
-		if(uv_super)
-			. += "super"
-			return
-		if(occupant)
-			. += "uvhuman"
-			return
-
-		. += "uv"
-		return
-
+	//if things arent powered, these show anyways
+	if(panel_open)
+		. += "[base_icon_state]_panel"
 	if(state_open)
-		if(machine_stat & BROKEN)
-			. += "broken"
-			return
-
-		. += "open"
+		. += "[base_icon_state]_open"
 		if(suit)
-			. += "suit"
+			. += "[base_icon_state]_suit"
 		if(helmet)
-			. += "helm"
+			. += "[base_icon_state]_helm"
 		if(storage)
-			. += "storage"
-		return
+			. += "[base_icon_state]_storage"
+		if(uv && uv_super)
+			. += "[base_icon_state]_super"
+	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
+		if(state_open)
+			. += "[base_icon_state]_lights_open"
+		else
+			if(uv)
+				. += "[base_icon_state]_lights_red"
+			else
+				. += "[base_icon_state]_lights_closed"
+		//top lights
+		if(uv)
+			if(uv_super)
+				. += "[base_icon_state]_uvstrong"
+			else
+				. += "[base_icon_state]_uv"
+		else
+			. += "[base_icon_state]_ready"
 
-	if(occupant)
-		. += "human"
-		return
 
 /obj/machinery/suit_storage_unit/power_change()
 	. = ..()
@@ -294,10 +297,12 @@
 			if (item_to_dispense)
 				vars[choice] = null
 				try_put_in_hand(item_to_dispense, user)
+				update_icon()
 			else
 				var/obj/item/in_hands = user.get_active_held_item()
 				if (in_hands)
 					attackby(in_hands, user)
+				update_icon()
 
 	interact(user)
 
@@ -346,7 +351,7 @@
 		if(occupant || helmet || suit || storage)
 			return
 		if(target == user)
-			user.visible_message(span_warning("[user] slips into [src] and closes the door behind [user.p_them()]!"), "<span class=notice'>You slip into [src]'s cramped space and shut its door.</span>")
+			user.visible_message(span_warning("[user] slips into [src] and closes the door behind [user.p_them()]!"), span_notice("You slip into [src]'s cramped space and shut its door."))
 		else
 			target.visible_message(span_warning("[user] pushes [target] into [src] and shuts its door!"), span_userdanger("[user] shoves you into [src] and shuts the door!"))
 		close_machine(target)
@@ -524,7 +529,7 @@
 		wires.interact(user)
 		return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "panel", "close", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "close", I))
 			return
 	if(default_pry_open(I))
 		dump_inventory_contents()

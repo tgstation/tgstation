@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	/// String name of owner
 	var/owner = null
-	/// Access level defined by cartridge
+	/// Typepath of the default cartridge to use
 	var/default_cartridge = 0
 	/// Current cartridge
 	var/obj/item/cartridge/cartridge = null
@@ -97,8 +97,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/datum/picture/picture //Scanned photo
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
-	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
-
+	//This is the typepath to load "into" the pda
+	var/obj/item/insert_type = /obj/item/pen
+	//This is the currently inserted item
+	var/obj/item/inserted_item
 	var/underline_flag = TRUE //flag for underline
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
@@ -128,14 +130,25 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	GLOB.PDAs += src
 	if(default_cartridge)
-		cartridge = new default_cartridge(src)
-	if(inserted_item)
-		inserted_item = new inserted_item(src)
-	else
-		inserted_item = new /obj/item/pen(src)
+		cartridge = SSwardrobe.provide_type(default_cartridge, src)
+		cartridge.host_pda = src
+	if(insert_type)
+		inserted_item = SSwardrobe.provide_type(insert_type, src)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	update_appearance()
+
+/obj/item/pda/Destroy()
+	GLOB.PDAs -= src
+	if(istype(id))
+		QDEL_NULL(id)
+	if(istype(cartridge))
+		QDEL_NULL(cartridge)
+	if(istype(pai))
+		QDEL_NULL(pai)
+	if(istype(inserted_item))
+		QDEL_NULL(inserted_item)
+	return ..()
 
 /obj/item/pda/equipped(mob/user, slot)
 	. = ..()
@@ -159,6 +172,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 					font_index = MODE_MONO
 					font_mode = FONT_MONO
 			equipped = TRUE
+
+/obj/item/pda/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cartridge)
+		cartridge.host_pda = null
+		cartridge = null
+	if(gone == inserted_item)
+		inserted_item = null
 
 /obj/item/pda/proc/update_label()
 	name = "PDA-[owner] ([ownjob])" //Name generalisation
@@ -587,7 +608,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(!silent)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Drone Phone")
-				var/alert_s = input(U,"Alert severity level","Ping Drones",null) as null|anything in list("Low","Medium","High","Critical")
+				var/alert_s = tgui_input_list(U, "Alert severity level", "Ping Drones", list("Low","Medium","High","Critical"))
 				var/area/A = get_area(U)
 				if(A && alert_s && !QDELETED(U))
 					var/msg = span_boldnotice("NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!")
@@ -609,7 +630,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //NOTEKEEPER FUNCTIONS===================================
 
 			if ("Edit")
-				var/n = stripped_multiline_input(U, "Please enter message", name, note)
+				var/n = tgui_input_text(U, "Please enter message", name, note, multiline = TRUE)
 				if (in_range(src, U) && loc == U)
 					if (ui_mode == PDA_UI_NOTEKEEPER && n)
 						note = n
@@ -628,7 +649,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
+				var/t = tgui_input_text(U, "Enter a new ringtone", "PDA Ringtone", ttone, 20)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
@@ -678,6 +699,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						pai.attack_self(U)
 					if("2") // Eject pAI device
 						usr.put_in_hands(pai)
+						pai.slotted = FALSE
 						to_chat(usr, span_notice("You remove the pAI from the [name]."))
 
 //SKILL FUNCTIONS===================================
@@ -745,7 +767,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr, rigged = FALSE)
-	var/t = stripped_input(U, "Please enter message", name)
+	var/t = tgui_input_text(U, "Enter a message", "PDA Messaging")
 	if (!t || toff)
 		return
 	if(!U.canUseTopic(src, BE_CLOSE))
@@ -803,6 +825,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		"rigged" = rigged,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
+		signal.data["rigged_user"] = REF(user) // Used for bomb logging
 		signal.server_type = /obj/machinery/telecomms/hub
 		signal.data["reject"] = FALSE // Do not refuse the message
 	if (picture)
@@ -831,7 +854,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	// Log in the talk log
 	user.log_talk(message, LOG_PDA, tag="[rigged ? "Rigged" : ""] PDA: [initial(name)] to [target_text]")
 	if(rigged)
-		log_bomber(user, "Sent a Rigged PDA message (Name: [fakename || owner]. Job: [fakejob || ownjob]) to [english_list(string_targets)] [!is_special_character(user) ? "(TRIGGED BY NON-ANTAG)" : ""]")
+		log_bomber(user, "sent a rigged PDA message (Name: [fakename || owner]. Job: [fakejob || ownjob]) to [english_list(string_targets)] [!is_special_character(user) ? "(SENT BY NON-ANTAG)" : ""]")
 	to_chat(user, span_info("PDA message sent to [target_text]: \"[message]\""))
 	if(!silent)
 		playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
@@ -843,7 +866,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return TRUE
 
 /obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
-	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[signal.data["rigged"] || REF(signal.source)]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
+	var/ref_target = signal.data["rigged"] ? signal.data["rigged_user"] : REF(signal.source)
+	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[ref_target]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 
 	if (!silent)
 		if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
@@ -966,9 +990,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		return
 
 	if(inserted_item)
-		user.put_in_hands(inserted_item)
 		to_chat(user, span_notice("You remove [inserted_item] from [src]."))
-		inserted_item = null
+		user.put_in_hands(inserted_item) //Don't need to manage the pen ref, handled on Exited()
 		update_appearance()
 		playsound(src, 'sound/machines/pda_button2.ogg', 50, TRUE)
 	else
@@ -978,11 +1001,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(issilicon(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) //TK disabled to stop cartridge teleporting into hand
 		return
 	if (!isnull(cartridge))
-		user.put_in_hands(cartridge)
 		to_chat(user, span_notice("You eject [cartridge] from [src]."))
+		user.put_in_hands(cartridge) //We don't manage reference clearing here, dealt with in Exited()
 		scanmode = PDA_SCANNER_NONE
-		cartridge.host_pda = null
-		cartridge = null
 		updateSelfDialog()
 		update_appearance()
 
@@ -1085,6 +1106,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!user.transferItemToLoc(C, src))
 			return
 		pai = C
+		pai.slotted = TRUE
 		to_chat(user, span_notice("You slot \the [C] into [src]."))
 		update_appearance()
 		updateUsrDialog()
@@ -1162,7 +1184,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/explode(mob/target, mob/bomber, from_message_menu = FALSE)
 	var/turf/T = get_turf(src)
 
-	log_bomber(bomber, "PDA-bombed", target, "as [target.p_they()] tried to [from_message_menu ? "open the PDA message menu" : "reply to the rigged PDA message"] [bomber && !is_special_character(bomber) ? "(TRIGGED BY NON-ANTAG)" : ""]")
+	if(from_message_menu)
+		log_bomber(null, null, target, "'s PDA exploded as [target.p_they()] tried to open their PDA message menu because of a recent pda bomb.")
+	else
+		log_bomber(bomber, "successfully PDA-bombed", target, "as [target.p_they()] tried to reply to a rigged PDA message [bomber && !is_special_character(bomber) ? "(SENT BY NON-ANTAG)" : ""]")
 
 	if (ismob(loc))
 		var/mob/M = loc
@@ -1179,18 +1204,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		else
 			explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2, flash_range = 3)
 	qdel(src)
-
-/obj/item/pda/Destroy()
-	GLOB.PDAs -= src
-	if(istype(id))
-		QDEL_NULL(id)
-	if(istype(cartridge))
-		QDEL_NULL(cartridge)
-	if(istype(pai))
-		QDEL_NULL(pai)
-	if(istype(inserted_item))
-		QDEL_NULL(inserted_item)
-	return ..()
 
 //AI verb and proc for sending PDA messages.
 
@@ -1294,6 +1307,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 /obj/item/pda/proc/pda_no_detonate()
 	SIGNAL_HANDLER
 	return COMPONENT_PDA_NO_DETONATE
+
+/// Return a list of types you want to pregenerate and use later
+/// Do not pass in things that care about their init location, or expect extra input
+/// Also as a curtiousy to me, don't pass in any bombs
+/obj/item/pda/proc/get_types_to_preload()
+	var/list/preload = list()
+	preload += default_cartridge
+	preload += insert_type
+	return preload
+
+/// Callbacks for preloading pdas
+/obj/item/pda/proc/display_pda()
+	GLOB.PDAs += src
+
+/// See above, we don't want jerry from accounting to try and message nullspace his new bike
+/obj/item/pda/proc/cloak_pda()
+	GLOB.PDAs -= src
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL

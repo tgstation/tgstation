@@ -94,6 +94,7 @@
 #define SHELL_FLAG_ALLOW_FAILURE_ACTION (1<<3)
 
 // Shell capacities. These can be converted to configs very easily later
+#define SHELL_CAPACITY_TINY 12
 #define SHELL_CAPACITY_SMALL 25
 #define SHELL_CAPACITY_MEDIUM 50
 #define SHELL_CAPACITY_LARGE 100

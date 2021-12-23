@@ -482,6 +482,8 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
+		if(LOG_RADIO_EMOTE)
+			colored_message = "(RADIOEMOTE) [colored_message]"
 
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 

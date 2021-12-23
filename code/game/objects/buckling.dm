@@ -138,7 +138,7 @@
  * buckled_mob - The mob to be unbuckled
  * force - TRUE if we should ignore buckled_mob.can_buckle_to
  */
-/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE)
+/atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)
@@ -157,11 +157,16 @@
 		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
-	var/turf/location = buckled_mob.loc
-	if(istype(location) && !buckled_mob.zfalling)
-		location.zFall(buckled_mob)
+	if(can_fall)
+		var/turf/location = buckled_mob.loc
+		if(istype(location) && !buckled_mob.currently_z_moving)
+			location.zFall(buckled_mob)
 
 	post_unbuckle_mob(.)
+
+	if(!QDELETED(buckled_mob) && !buckled_mob.currently_z_moving && isturf(buckled_mob.loc)) // In the case they unbuckled to a flying movable midflight.
+		var/turf/pitfall = buckled_mob.loc
+		pitfall?.zFall(buckled_mob)
 
 /atom/movable/proc/on_set_anchored(atom/movable/source, anchorvalue)
 	SIGNAL_HANDLER
@@ -211,6 +216,11 @@
 
 	// Check if the target to buckle isn't INSIDE OF A WALL
 	if(!isopenturf(loc) || !isopenturf(target.loc))
+		return FALSE
+
+	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
+	var/turf/ground = get_turf(src)
+	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		return FALSE
 
 	// Check if this atom can have things buckled to it.

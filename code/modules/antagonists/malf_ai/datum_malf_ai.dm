@@ -19,6 +19,9 @@
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
 
+/datum/antagonist/malf_ai/New(give_objectives = TRUE)
+	. = ..()
+	src.give_objectives = give_objectives
 
 /datum/antagonist/malf_ai/on_gain()
 	if(owner.current && !isAI(owner.current))

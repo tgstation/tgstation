@@ -4,6 +4,7 @@
 	desc = "There are three parts to the ear. Inner, middle and outer. Only one of these parts should be normally visible."
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EARS
+	visual = FALSE
 	gender = PLURAL
 
 	healing_factor = STANDARD_ORGAN_HEALING
@@ -63,6 +64,7 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
+	visual = TRUE
 	damage_multiplier = 2
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/ear_owner, special = 0, drop_if_replaced = TRUE)
@@ -70,13 +72,13 @@
 	if(istype(ear_owner))
 		color = ear_owner.hair_color
 		ear_owner.dna.features["ears"] = ear_owner.dna.species.mutant_bodyparts["ears"] = "Cat"
+		ear_owner.dna.update_uf_block(DNA_EARS_BLOCK)
 		ear_owner.update_body()
 
 /obj/item/organ/ears/cat/Remove(mob/living/carbon/human/ear_owner,  special = 0)
 	..()
 	if(istype(ear_owner))
 		color = ear_owner.hair_color
-		ear_owner.dna.features["ears"] = "None"
 		ear_owner.dna.species.mutant_bodyparts -= "ears"
 		ear_owner.update_body()
 

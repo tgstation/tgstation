@@ -482,6 +482,8 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	if(shell)
+		undeploy()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
 		robot_suit.forceMove(T)

@@ -171,7 +171,7 @@
 
 /datum/antagonist/cult/on_removal()
 	if(!silent)
-		owner.current.visible_message(span_deconversion_message("<span class'warningplain'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>"), null, null, null, owner.current)
+		owner.current.visible_message(span_deconversion_message(span_warning("[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!")), null, null, null, owner.current)
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
@@ -326,7 +326,31 @@
 	reshape.Crop(-5,-3,26,30)
 	sac_objective.sac_image = reshape
 
+/datum/team/cult/proc/setup_objectives()
+	var/datum/objective/sacrifice/sacrifice_objective = new
+	sacrifice_objective.team = src
+	sacrifice_objective.find_target()
+	objectives += sacrifice_objective
+
+	var/datum/objective/eldergod/summon_objective = new
+	summon_objective.team = src
+	objectives += summon_objective
+
+/datum/objective/sacrifice
+	var/sacced = FALSE
+	var/sac_image
+
+/// Unregister signals from the old target so it doesn't cause issues when sacrificed of when a new target is found.
+/datum/objective/sacrifice/proc/clear_sacrifice()
+	if(!target)
+		return
+	UnregisterSignal(target, COMSIG_MIND_TRANSFERRED)
+	if(target.current)
+		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	target = null
+
 /datum/objective/sacrifice/find_target(dupe_search_range)
+	clear_sacrifice()
 	if(!istype(team, /datum/team/cult))
 		return
 	var/datum/team/cult/cult = team
@@ -343,27 +367,47 @@
 	if(LAZYLEN(target_candidates))
 		target = pick(target_candidates)
 		update_explanation_text()
+		// Register a bunch of signals to both the target mind and its body
+		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
+		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
-	cult.make_image(src)
+		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
+	if(!sacced)
+		cult.make_image(src)
 	for(var/datum/mind/mind in cult.members)
 		if(mind.current)
 			mind.current.clear_alert("bloodsense")
 			mind.current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 
-/datum/team/cult/proc/setup_objectives()
-	var/datum/objective/sacrifice/sacrifice_objective = new
-	sacrifice_objective.team = src
-	sacrifice_objective.find_target()
-	objectives += sacrifice_objective
+/datum/objective/sacrifice/proc/on_target_body_del()
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/find_target)
 
-	var/datum/objective/eldergod/summon_objective = new
-	summon_objective.team = src
-	objectives += summon_objective
+/datum/objective/sacrifice/proc/on_mind_transfer(datum/source, mob/previous_body)
+	SIGNAL_HANDLER
+	//If, for some reason, the mind was transferred to a ghost (better safe than sorry), find a new target.
+	if(!isliving(target.current))
+		INVOKE_ASYNC(src, .proc/find_target)
+		return
+	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 
-/datum/objective/sacrifice
-	var/sacced = FALSE
-	var/sac_image
+/datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
+	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
+
+/datum/objective/sacrifice/proc/do_we_have_a_body()
+	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
+		find_target()
+		return
+	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed

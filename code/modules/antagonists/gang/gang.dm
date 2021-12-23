@@ -40,7 +40,17 @@
 
 /datum/antagonist/gang/get_admin_commands()
 	. = ..()
-	.["Give extra equipment"] = CALLBACK(src,.proc/equip_gangster_in_inventory)
+	.["Give extra equipment"] = CALLBACK(src, .proc/equip_gangster_in_inventory)
+	if(!starter_gangster)
+		.["Make Leader"] = CALLBACK(src, .proc/make_gangster_leader)
+
+/datum/antagonist/gang/proc/make_gangster_leader()
+	if(starter_gangster)
+		return
+	starter_gangster = TRUE
+	package_spawner.Grant(owner.current)
+	package_spawner.my_gang_datum = src
+	my_gang.rename_gangster(owner, original_name, TRUE) // gives them the leader name
 
 /datum/antagonist/gang/create_team(team_given) // gets called whenever add_antag_datum() is called on a mind
 	if(team_given)

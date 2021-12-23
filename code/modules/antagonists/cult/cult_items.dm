@@ -491,7 +491,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
-	if(!IS_CULTIST(user) && slot == ITEM_SLOT_EYES)
+	if(user.stat != DEAD && !IS_CULTIST(user) && slot == ITEM_SLOT_EYES)
 		to_chat(user, span_cultlarge("\"You want to be blind, do you?\""))
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
@@ -665,7 +665,7 @@ Striking a noncultist, however, will tear their flesh."}
 		for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
 			if(M.current && M.current.stat != DEAD)
 				cultists |= M.current
-		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in (cultists - user)
+		var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
 		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)

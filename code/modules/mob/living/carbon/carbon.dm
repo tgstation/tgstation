@@ -8,7 +8,6 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
@@ -861,6 +860,9 @@
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
 
+	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
+		return DEFIB_FAIL_BLACKLISTED
+
 	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
@@ -1308,7 +1310,7 @@
 
 /mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
-	if(src == target || !can_be_shoved_into)
+	if(src == target || LAZYFIND(target.buckled_mobs, src) || !can_be_shoved_into)
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 	if(!is_shove_knockdown_blocked())

@@ -572,7 +572,7 @@
 	SIGNAL_HANDLER
 
 	var/turf/T = get_turf(src)
-	if(T.z != epicenter.z)
+	if(T?.z != epicenter.z)
 		return
 	if(get_dist(epicenter, T) > explosion_detection_dist)
 		return

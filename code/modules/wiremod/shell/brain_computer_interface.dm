@@ -3,6 +3,7 @@
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "bci"
+	visual = FALSE
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
@@ -339,6 +340,11 @@
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
 
+/obj/machinery/bci_implanter/on_deconstruction()
+	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
+	bci_to_implant_resolved?.forceMove(drop_location())
+	bci_to_implant = null
+
 /obj/machinery/bci_implanter/Destroy()
 	QDEL_NULL(bci_to_implant)
 	return ..()
@@ -416,7 +422,7 @@
 		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant?.resolve()
 
 		bci_to_implant = WEAKREF(weapon)
-		weapon.forceMove(src)
+		weapon.moveToNullspace()
 
 		if (isnull(previous_bci_to_implant))
 			balloon_alert(user, "inserted bci")
@@ -475,7 +481,7 @@
 
 		if (isnull(bci_to_implant_resolved))
 			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
-			bci_organ.forceMove(src)
+			bci_organ.moveToNullspace()
 			bci_to_implant = WEAKREF(bci_organ)
 		else
 			say("Occupant's previous brain-computer interface has been ejected.")

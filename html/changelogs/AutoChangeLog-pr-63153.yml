@@ -1,4 +1,0 @@
-author: "Guillaume Prata"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a rogue airlock at the SM room on Icebox having the wrong access requirement."

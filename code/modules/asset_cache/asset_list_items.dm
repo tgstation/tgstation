@@ -143,11 +143,11 @@
 
 /datum/asset/simple/namespaced/tgfont
 	assets = list(
-		"tgfont.eot" = file("tgui/packages/tgfont/dist/tgfont.eot"),
-		"tgfont.woff2" = file("tgui/packages/tgfont/dist/tgfont.woff2"),
+		"tgfont.eot" = file("tgui/packages/tgfont/static/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
 	)
 	parents = list(
-		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
+		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
 
 /datum/asset/spritesheet/chat
@@ -442,27 +442,17 @@
 	..()
 
 /datum/asset/simple/portraits
-	var/tab = "use subtypes of this please"
 	assets = list()
 
 /datum/asset/simple/portraits/New()
-	if(!length(SSpersistent_paintings.paintings[tab]))
+	if(!length(SSpersistent_paintings.paintings))
 		return
-	for(var/list/portrait as anything in SSpersistent_paintings.paintings[tab])
-		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+	for(var/datum/painting/portrait as anything in SSpersistent_paintings.paintings)
+		var/png = "data/paintings/images/[portrait.md5].png"
 		if(fexists(png))
-			var/asset_name = "[tab]_[portrait["md5"]]"
+			var/asset_name = "paintings_[portrait.md5]"
 			assets[asset_name] = png
 	..() //this is where it registers all these assets we added to the list
-
-/datum/asset/simple/portraits/library
-	tab = "library"
-
-/datum/asset/simple/portraits/library_secure
-	tab = "library_secure"
-
-/datum/asset/simple/portraits/library_private
-	tab = "library_private"
 
 /datum/asset/simple/safe
 	assets = list(

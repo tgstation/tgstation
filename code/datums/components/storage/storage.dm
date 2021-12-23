@@ -115,14 +115,33 @@
 /datum/component/storage/PreTransfer()
 	update_actions()
 
-/datum/component/storage/proc/set_holdable(can_hold_list, cant_hold_list)
-	can_hold_description = generate_hold_desc(can_hold_list)
+/// Almost 100% of the time the lists passed into set_holdable are reused for each instance of the component
+/// Just fucking cache it 4head
+/// Yes I could generalize this, but I don't want anyone else using it. in fact, DO NOT COPY THIS
+/// If you find yourself needing this pattern, you're likely better off using static typecaches
+/// I'm not because I do not trust implementers of the storage component to use them, BUT
+/// IF I FIND YOU USING THIS PATTERN IN YOUR CODE I WILL BREAK YOU ACROSS MY KNEES
+/// ~Lemon
+GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
-	if (can_hold_list != null)
-		can_hold = string_list(typecacheof(can_hold_list))
+/datum/component/storage/proc/set_holdable(list/can_hold_list, list/cant_hold_list)
+	if(!islist(can_hold_list))
+		can_hold_list = list(can_hold_list)
+	if(!islist(cant_hold_list))
+		cant_hold_list = list(cant_hold_list)
+
+	can_hold_description = generate_hold_desc(can_hold_list)
+	if (can_hold_list)
+		var/unique_key = can_hold_list.Join("-")
+		if(!GLOB.cached_storage_typecaches[unique_key])
+			GLOB.cached_storage_typecaches[unique_key] = typecacheof(can_hold_list)
+		can_hold = GLOB.cached_storage_typecaches[unique_key]
 
 	if (cant_hold_list != null)
-		cant_hold = string_list(typecacheof(cant_hold_list))
+		var/unique_key = cant_hold_list.Join("-")
+		if(!GLOB.cached_storage_typecaches[unique_key])
+			GLOB.cached_storage_typecaches[unique_key] = typecacheof(cant_hold_list)
+		cant_hold = GLOB.cached_storage_typecaches[unique_key]
 
 /datum/component/storage/proc/generate_hold_desc(can_hold_list)
 	var/list/desc = list()

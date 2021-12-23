@@ -98,6 +98,11 @@
 	target.grad_color[GRADIENT_FACIAL_HAIR_KEY] = value
 	target.update_hair()
 
+/datum/preference/color/facial_hair_gradient/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+	return preferences.read_preference(/datum/preference/choiced/facial_hair_gradient) != "None"
+
 /datum/preference/color/hair_color
 	savefile_key = "hair_color"
 	savefile_identifier = PREFERENCE_CHARACTER
@@ -155,3 +160,8 @@
 	LAZYSETLEN(target.grad_color, GRADIENTS_LEN)
 	target.grad_color[GRADIENT_HAIR_KEY] = value
 	target.update_hair()
+
+/datum/preference/color/hair_gradient/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+	return preferences.read_preference(/datum/preference/choiced/hair_gradient) != "None"

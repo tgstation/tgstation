@@ -406,7 +406,7 @@
 				return
 
 			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-			var/target = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in possible_destinations
+			var/target = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", possible_destinations)
 
 			if (isnull(target))
 				return
@@ -638,7 +638,7 @@
 			var/turf/target_turf = get_turf(target)
 			setDropoff(target_turf)
 			customDropoff = TRUE
-			to_chat(user, "<span class = 'notice'> You've selected [target_turf] at [COORD(target_turf)] as your dropoff location.</span>")
+			to_chat(user, span_notice("You've selected [target_turf] at [COORD(target_turf)] as your dropoff location."))
 
 /datum/centcom_podlauncher/proc/refreshView()
 	switch(tabIndex)

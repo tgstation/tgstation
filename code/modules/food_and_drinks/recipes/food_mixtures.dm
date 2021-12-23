@@ -200,3 +200,52 @@
 /datum/chemical_reaction/food/gravy
 	results = list(/datum/reagent/consumable/gravy = 3)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
+
+/datum/chemical_reaction/food/mothic_pizza_dough
+	required_reagents = list(/datum/reagent/consumable/milk = 5, /datum/reagent/consumable/quality_oil = 2, /datum/reagent/medicine/salglu_solution = 5, /datum/reagent/consumable/cornmeal = 10, /datum/reagent/consumable/flour = 5)
+	mix_message = "The ingredients form a pizza dough."
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/mothic_pizza_dough/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/food/mothic_pizza_dough(location)
+
+/datum/chemical_reaction/food/curd_cheese
+	required_reagents = list(/datum/reagent/consumable/milk = 15, /datum/reagent/consumable/vinegar = 5, /datum/reagent/consumable/cream = 5)
+	mix_message = "The milk curdles into cheese."
+	required_temp = 353
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/curd_cheese/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/food/curd_cheese(location)
+
+/datum/chemical_reaction/food/mozzarella
+	required_reagents = list(/datum/reagent/consumable/milk = 10, /datum/reagent/consumable/cream = 10)
+	required_catalysts = list(/datum/reagent/consumable/enzyme = 1)
+	mix_message = "Fine ribbons of curd form in the milk."
+	required_temp = 353
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/mozzarella/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/food/mozzarella(location)
+
+/datum/chemical_reaction/food/cornmeal_batter
+	results = list(/datum/reagent/consumable/cornmeal_batter = 35)
+	required_reagents = list(/datum/reagent/consumable/cornmeal = 20, /datum/reagent/consumable/yoghurt = 10, /datum/reagent/consumable/eggyolk = 5)
+	mix_message = "A silky batter forms."
+
+/datum/chemical_reaction/food/cornbread
+	required_reagents = list(/datum/reagent/consumable/cornmeal_batter = 25)
+	mix_message = "The batter bakes into cornbread- somehow!"
+	required_temp = 473
+	reaction_flags = REACTION_INSTANT
+
+/datum/chemical_reaction/food/cornbread/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i = 1, i <= created_volume, i++)
+		new /obj/item/food/bread/corn(location)

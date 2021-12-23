@@ -35,7 +35,7 @@
 /datum/ai_controller/dog/UnpossessPawn(destroy)
 	var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
 	if(carried_item)
-		pawn.visible_message("<span='danger'>[pawn] drops [carried_item].</span>")
+		pawn.visible_message(span_danger("[pawn] drops [carried_item]"))
 		carried_item.forceMove(pawn.drop_location())
 		blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_LIVING_DEATH, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_PARENT_QDELETING))
@@ -98,7 +98,7 @@
 		var/list/friends = blackboard[BB_DOG_FRIENDS]
 		if(blackboard[BB_SIMPLE_CARRY_ITEM] && !current_movement_target && friends[WEAKREF(user)])
 			var/obj/item/carried_item = blackboard[BB_SIMPLE_CARRY_ITEM]
-			pawn.visible_message("<span='danger'>[pawn] drops [carried_item] at [user]'s feet!</span>")
+			pawn.visible_message(span_danger("[pawn] drops [carried_item] at [user]'s feet!"))
 			// maybe have a dedicated proc for dropping things
 			carried_item.forceMove(get_turf(user))
 			blackboard[BB_SIMPLE_CARRY_ITEM] = null
@@ -141,7 +141,7 @@
 	if(!carried_item)
 		return
 
-	ol_yeller.visible_message("<span='danger'>[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()].</span>")
+	ol_yeller.visible_message(span_danger("[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()]."))
 	carried_item.forceMove(ol_yeller.drop_location())
 	blackboard[BB_SIMPLE_CARRY_ITEM] = null
 

@@ -516,8 +516,7 @@
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
-	max = get_amount()
+	var/stackmaterial = round(tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max))
 	stackmaterial = min(max, stackmaterial)
 	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN

@@ -258,7 +258,7 @@
 		stack_trace("[type] - [cultist] attempted to scribe a rune, but the global rune list is empty!")
 		return FALSE
 
-	entered_rune_name = input(cultist, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
+	entered_rune_name = tgui_input_list(cultist, "Choose a rite to scribe", "Sigils of Power", GLOB.rune_types)
 	if(!entered_rune_name || !can_scribe_rune(tool, cultist))
 		return FALSE
 
@@ -268,7 +268,7 @@
 		return FALSE
 
 	if(initial(rune_to_scribe.req_keyword))
-		chosen_keyword = stripped_input(cultist, "Enter a keyword for the new rune.", "Words of Power")
+		chosen_keyword = tgui_input_text(cultist, "Keyword for the new rune", "Words of Power", max_length = MAX_NAME_LEN)
 		if(!chosen_keyword)
 			drawing_a_rune = FALSE
 			start_scribe_rune(tool, cultist)

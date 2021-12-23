@@ -12,6 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS

@@ -106,8 +106,13 @@
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
-	if(!(shell_flags & SHELL_FLAG_CIRCUIT_FIXED) && !attached_circuit?.admin_only)
-		remove_circuit()
+	if(!attached_circuit)
+		return
+	if(attached_circuit.admin_only)
+		return
+	if(shell_flags & SHELL_FLAG_CIRCUIT_FIXED)
+		return
+	remove_circuit()
 
 /datum/component/shell/proc/on_attack_ghost(datum/source, mob/dead/observer/ghost)
 	SIGNAL_HANDLER
@@ -282,7 +287,8 @@
 
 	if(power_used_in_minute > max_power_use_in_minute)
 		explosion(parent, light_impact_range = 1, explosion_cause = attached_circuit)
-		remove_circuit()
+		if(attached_circuit)
+			remove_circuit()
 		return
 	location.use_power(power_to_use, AREA_USAGE_EQUIP)
 	power_used_in_minute += power_to_use
@@ -355,6 +361,10 @@
 		source.balloon_alert(user, "no circuit inside")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
+	if(attached_circuit.locked)
+		source.balloon_alert(user, "circuit is locked!")
+		return COMSIG_CANCEL_USB_CABLE_ATTACK
+	
 	usb_cable.attached_circuit = attached_circuit
 	return COMSIG_USB_CABLE_CONNECTED_TO_CIRCUIT
 
