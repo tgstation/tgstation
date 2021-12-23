@@ -669,7 +669,7 @@
 			value = input(usr, "Pick new light color", "Flashlight Color") as color|null
 			if(!value)
 				return
-			if(color_hex2num(value) < 150)
+			if(is_color_dark(value, 50))
 				balloon_alert(mod.wearer, "too dark!")
 				return
 			set_light_color(value)
