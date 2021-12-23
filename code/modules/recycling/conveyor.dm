@@ -224,7 +224,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			return
 
 		var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
-		transfer_fingerprints_to(belt_item)Wa
+		transfer_fingerprints_to(belt_item)
 
 		to_chat(user, span_notice("You remove [src]."))
 		qdel(src)
