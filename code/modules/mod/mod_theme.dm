@@ -714,7 +714,7 @@
 
 /datum/mod_theme/apocryphal
 	name = "apocryphal"
-	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies"
+	desc = "A high-tech, only technically legal, armored suit created by a collaboration effort between Nanotrasen and Apadyne Technologies."
 	default_skin = "apocryphal"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
