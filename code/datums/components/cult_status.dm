@@ -31,7 +31,7 @@
 	UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
 
 
-/datum/component/cult_status/proc/raise_level(var/_stage = -1, var/override_timer = FALSE)
+/datum/component/cult_status/proc/raise_level(_stage = -1, override_timer = FALSE)
 	if (_stage == -1)
 		stage += 1
 	else
