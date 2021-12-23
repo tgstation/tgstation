@@ -243,7 +243,7 @@
 	. = ..()
 	exposed_mob.adjustOxyLoss(0.5*REM, 0)
 	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob?.getorganslot(ORGAN_SLOT_STOMACH).reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
 		if(istype(zombiepowder))
 			zombiepowder.fakedeath_active = TRUE
 
