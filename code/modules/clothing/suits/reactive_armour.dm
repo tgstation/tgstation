@@ -21,7 +21,7 @@
 		to_chat(user, span_notice("You insert [anomaly] into the chest plate, and the armour gently hums to life."))
 		new armour_path(get_turf(src))
 		qdel(src)
-		qdel(A)
+		qdel(anomaly)
 
 //Reactive armor
 /obj/item/clothing/suit/armor/reactive
