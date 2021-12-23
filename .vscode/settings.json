@@ -7,12 +7,9 @@
 		"tgui/.yarn": true,
 		"tgui/.pnp.*": true
 	},
-	"workbench.editorAssociations": [
-		{
-			"filenamePattern": "*.dmi",
-			"viewType": "imagePreview.previewEditor"
-		}
-	],
+	"workbench.editorAssociations": {
+		"*.dmi": "imagePreview.previewEditor"
+	},
 	"files.eol": "\n",
 	"gitlens.advanced.blame.customArguments": ["-w"],
 	"tgstationTestExplorer.project.resultsType": "json"
