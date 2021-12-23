@@ -31,3 +31,10 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
+
+//visibility stage signal
+#define COMSIG_CULT_VIS "cult_visibility"
+//visibilty stages
+#define STAGE_CULT_UNSEEN 0
+#define STAGE_CULT_RED_EYES 1
+#define STAGE_CULT_HALOS 2
