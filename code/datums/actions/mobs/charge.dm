@@ -152,9 +152,10 @@
 		hit_target(source, target, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
-	if(!isliving(target) || already_hit[source].Find(target))
+	var/list/hit_things = already_hit[source]
+	if(!isliving(target) || hit_things.Find(target))
 		return
-	already_hit[source].Add(target)
+	hit_things.Add(target)
 	var/mob/living/living_target = target
 	living_target.visible_message("<span class='danger'>[source] slams into [living_target]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
 	source.forceMove(get_turf(living_target))
