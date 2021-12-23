@@ -73,6 +73,13 @@
 	if(connected_recycler)
 		connected_recycler.connected -= src
 	connected_recycler = null
+	QDEL_NULL(slime_place_action)
+	QDEL_NULL(slime_up_action)
+	QDEL_NULL(feed_slime_action)
+	QDEL_NULL(monkey_recycle_action)
+	QDEL_NULL(scan_action)
+	QDEL_NULL(potion_action)
+	QDEL_NULL(hotkey_help)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/handle_atom_del(atom/A)
