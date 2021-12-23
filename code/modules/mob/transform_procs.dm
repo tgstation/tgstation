@@ -25,6 +25,7 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	SEND_SIGNAL(user, COMSIG_MOB_TRANSFORMING)
 	uncuff()
 	return src
 
