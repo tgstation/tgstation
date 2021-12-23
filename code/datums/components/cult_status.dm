@@ -24,8 +24,7 @@
 			human_parent.remove_overlay(HALO_LAYER)
 			human_parent.update_body()
 		else
-			var/mob/living/simple_animal/simple_parent = parent
-			simple_parent.cut_overlay(HALO_LAYER)
+			parent.cut_overlay(HALO_LAYER)
 	UnregisterSignal(parent, COMSIG_CULT_VIS)
 	UnregisterSignal(parent, COMSIG_CULT_DECONVERT)
 	UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
@@ -61,8 +60,7 @@
 		ADD_TRAIT(human_parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 		human_parent.update_body()
 	else
-		var/mob/living/simple_animal/simple_parent = parent
-		ADD_TRAIT(simple_parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+		ADD_TRAIT(parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 
 
 /datum/component/cult_status/proc/set_halo()
@@ -74,8 +72,7 @@
 		human_parent.overlays_standing[HALO_LAYER] = new_halo_overlay
 		human_parent.apply_overlay(HALO_LAYER)
 	else
-		var/mob/living/simple_animal/simple_parent = parent
-		simple_parent.add_overlay(new_halo_overlay)
+		parent.add_overlay(new_halo_overlay)
 	has_halo = TRUE
 
 /datum/component/cult_status/proc/handle_transform()
