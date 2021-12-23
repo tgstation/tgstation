@@ -556,8 +556,8 @@
 	if(stat != DEAD)
 		tod = null
 
-
-/mob/living/proc/fakedeath(source, silent = FALSE)
+/// Induces fake death on a living mob.
+/mob/living/proc/fakedeath(source, comatose = FALSE, silent = FALSE)
 	if(stat == DEAD)
 		return
 	if(!silent)
