@@ -68,7 +68,7 @@
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
 	//Living mobs are tagged, so these will always be valid
-	attending_venue.mob_blacklist(REF(greytider)) += 1
+	attending_venue.mob_blacklist[REF(greytider)] += 1
 
 	switch(attending_venue.mob_blacklist[REF(greytider)])
 		if(1)
