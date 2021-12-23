@@ -22,6 +22,8 @@
 	var/has_objectives = TRUE
 	/// The maximum number of objectives that can be taken
 	var/maximum_active_objectives = 1
+	/// The maximum number of potential objectives that can exist.
+	var/maximum_potential_objectives = 6
 	/// Current objectives taken
 	var/list/active_objectives = list()
 	/// Potential objectives that can be taken
@@ -34,6 +36,10 @@
 	var/assigned_role
 	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
 	var/debug_mode = FALSE
+
+/datum/uplink_handler/New()
+	. = ..()
+	maximum_potential_objectives = CONFIG_GET(number/maximum_potential_objectives)
 
 /// Called whenever an update occurs on this uplink handler. Used for UIs
 /datum/uplink_handler/proc/on_update()
@@ -75,7 +81,7 @@
 
 /// Generates objectives for this uplink handler
 /datum/uplink_handler/proc/generate_objectives()
-	var/potential_objectives_left = CONFIG_GET(number/maximum_potential_objectives) - (length(potential_objectives) + length(active_objectives))
+	var/potential_objectives_left = maximum_potential_objectives - (length(potential_objectives) + length(active_objectives))
 	var/list/objectives = SStraitor.category_handler.get_possible_objectives(progression_points)
 	if(!length(objectives))
 		return
@@ -92,18 +98,22 @@
 			objective_typepath = pick_weight(objective_typepath)
 		if(islist(objective_typepath) || !objective_typepath)
 			continue
-		var/datum/traitor_objective/objective = new objective_typepath(src)
-		if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
+		if(!try_add_objective(objective_typepath))
 			target_list -= objective_typepath
 			continue
-		if(!handle_duplicate(objective))
-			target_list -= objective_typepath
-			continue
-		objective.original_progression = objective.progression_reward
-		objective.update_progression_cost()
-		potential_objectives += objective
 		potential_objectives_left--
 	on_update()
+
+/datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath)
+	var/datum/traitor_objective/objective = new objective_typepath(src)
+	if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
+		return FALSE
+	if(!handle_duplicate(objective))
+		return FALSE
+	objective.original_progression = objective.progression_reward
+	objective.update_progression_cost()
+	potential_objectives += objective
+	return TRUE
 
 /datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)
 	if(!istype(potential_duplicate))
@@ -154,6 +164,7 @@
 	if(!(to_take in potential_objectives))
 		return
 
+	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take
 	active_objectives += to_take

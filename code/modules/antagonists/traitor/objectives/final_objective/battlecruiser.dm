@@ -41,7 +41,7 @@
 	if(!ship.load(battlecruiser_loading_turf))
 		CRASH("Loading battlecruiser ship failed!")
 
-	for(var/turf/open/spawned_turf in ship.get_affected_turfs(battlecruiser_loading_turf)) //not as anything to filter out closed turfs
+	for(var/turf/open/spawned_turf as anything in ship.get_affected_turfs(battlecruiser_loading_turf)) //not as anything to filter out closed turfs
 		for(var/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/spawner in spawned_turf)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]

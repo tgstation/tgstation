@@ -8,8 +8,9 @@
 		var/datum/traitor_objective_category/category = new type()
 		if(length(category.objectives))
 			all_categories += category
-		// Category should just get autoGC'd here if they don't have any length, this may not be necessary
-		qdel(category)
+		else
+			// Category should just get autoGC'd here if they don't have any length, this may not be necessary
+			qdel(category)
 
 /datum/traitor_category_handler/proc/objective_valid(datum/traitor_objective/objective_path, progression_points)
 	if(initial(objective_path.abstract_type) == objective_path)

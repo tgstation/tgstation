@@ -624,11 +624,42 @@
 				if(check_rights(R_FUN, 0))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
-						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler) as null | num
+						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
 						if(!isnull(crystals))
 							U.uplink_handler.telecrystals = crystals
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
+			if("progression")
+				if(!check_rights(R_FUN, 0))
+					return
+				var/datum/component/uplink/uplink = find_syndicate_uplink()
+				if(!uplink)
+					return
+				var/progression = input("Set new progression points for [key]","Syndicate uplink", uplink.uplink_handler.progression_points) as null | num
+				if(isnull(progression))
+					return
+				uplink.uplink_handler.progression_points = progression
+				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
+				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
+				uplink.uplink_handler.update_objectives()
+				uplink.uplink_handler.generate_objectives()
+			if("give_objective")
+				if(!check_rights(R_FUN, 0))
+					return
+				var/datum/component/uplink/uplink = find_syndicate_uplink()
+				if(!uplink || !uplink.uplink_handler)
+					return
+				var/list/all_objectives = subtypesof(/datum/traitor_objective)
+				var/objective = text2path(tgui_input_list(usr, "Select objective", "Select objective", all_objectives))
+				if(!objective || !ispath(objective, /datum/traitor_objective))
+					return
+				if(uplink.uplink_handler.try_add_objective(objective))
+					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective]).")
+					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective]).")
+				else
+					to_chat(usr, span_warning("Failed to generate the objective!"))
+					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective]).")
+					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective]).")
 			if("uplink")
 				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))

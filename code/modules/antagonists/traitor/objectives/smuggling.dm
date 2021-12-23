@@ -10,6 +10,10 @@
 	description = "Go to a designated area, pick up syndicate contraband, and get it off the station via the cargo shuttle. \
 	You will instantly fail this objective if anyone else picks up your contraband. If you fail, you are liable for the costs \
 	of the smuggling item."
+
+	progression_reward = list(5 MINUTES, 9 MINUTES)
+	telecrystal_reward = list(0, 1)
+
 	///the only person who should be allowed to pickup the contraband without failing the objective
 	var/mob/living/smuggler
 	///area type the objective owner must be in to recieve the contraband
@@ -26,7 +30,7 @@
 	)
 
 /datum/traitor_objective/smuggle/is_duplicate(datum/traitor_objective/smuggle/objective_to_compare)
-	if(objective_to_compare.contraband_type == objective_to_compare)
+	if(objective_to_compare.contraband_type == objective_to_compare.contraband_type)
 		return TRUE
 	//it's too similar if its from the same area
 	if(objective_to_compare.smuggle_spawn_type == smuggle_spawn_type)
@@ -52,9 +56,11 @@
 			//DEL_REAGENT signal is for removing ritual wine from the bottle
 			AddComponent(/datum/component/traitor_objective_register, contraband, \
 				succeed_signals = COMSIG_ITEM_SOLD, \
-				fail_signals = list(COMSIG_REAGENTS_DEL_REAGENT, COMSIG_PARENT_QDELETING), \
+				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = telecrystal_penalty \
 			)
+			if(contraband.reagents)
+				AddComponent(/datum/component/traitor_objective_register, contraband.reagents, fail_signals = COMSIG_REAGENTS_DEL_REAGENT)
 
 /datum/traitor_objective/smuggle/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	//anyone working cargo should not get almost free objectives by having direct access to the cargo shuttle

@@ -147,7 +147,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(amount <=0 || (the_cost <=0 && !allow_negative_cost))
 		return FALSE
 	if(dry_run == FALSE)
-		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
+		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, get_cost(O, apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
 			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_DRY)
 			the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	else

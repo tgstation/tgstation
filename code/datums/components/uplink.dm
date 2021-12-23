@@ -232,8 +232,6 @@
 	if(objective_index < 1 || objective_index > length(objectives))
 		return TRUE
 	var/datum/traitor_objective/objective = objectives[objective_index]
-	if(objective.name != params["name"])
-		return TRUE // Failsafe to prevent selecting an objective they didn't actually select in the UI
 
 	// Objective actions
 	switch(action)

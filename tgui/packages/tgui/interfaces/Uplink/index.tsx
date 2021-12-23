@@ -166,7 +166,7 @@ export class Uplink extends Component<{}, UplinkState> {
               : ""}
           </Box>
         ),
-        disabled: !canBuy || !hasEnoughProgression,
+        disabled: !canBuy || (has_progression && !hasEnoughProgression),
       });
     }
     // Get the difference between the current progression and
@@ -202,7 +202,7 @@ export class Uplink extends Component<{}, UplinkState> {
                   </Stack.Item>
                   <Stack.Item align="center">
                     <Box bold fontSize={1.2}>
-                      <Tooltip content={(
+                      <Tooltip content={!!has_progression && (
                         <Box>
                           <Box>
                             Your current level of reputation.&nbsp;
@@ -231,7 +231,7 @@ export class Uplink extends Component<{}, UplinkState> {
                             {reputationLevelsTooltip}
                           </Box>
                         </Box>
-                      )}>
+                      ) || "Your current level of reputation. You are a respected elite and do not need to improve your reputation."}>
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
@@ -286,9 +286,9 @@ export class Uplink extends Component<{}, UplinkState> {
                   maximumActiveObjectives={maximum_active_objectives}
                   maximumPotentialObjectives={maximum_potential_objectives}
                   handleObjectiveAction={(objective, action) =>
-                    act("objective_act", { objective_action: action, index: objective.id, name: objective.name })}
-                  handleStartObjective={(objective) => act("start_objective", { index: objective.id, name: objective.name })}
-                  handleObjectiveCompleted={(objective) => act("finish_objective", { index: objective.id, name: objective.name })}
+                    act("objective_act", { objective_action: action, index: objective.id })}
+                  handleStartObjective={(objective) => act("start_objective", { index: objective.id })}
+                  handleObjectiveCompleted={(objective) => act("finish_objective", { index: objective.id })}
                   handleRequestObjectives={() => act("regenerate_objectives")}
                 />
               ) || (

@@ -29,10 +29,11 @@
 	RegisterSignal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
 
 /datum/component/traitor_objective_register/UnregisterFromParent()
-	if(succeed_signals)
-		UnregisterSignal(target, succeed_signals)
-	if(fail_signals)
-		UnregisterSignal(target, fail_signals)
+	if(target)
+		if(succeed_signals)
+			UnregisterSignal(target, succeed_signals)
+		if(fail_signals)
+			UnregisterSignal(target, fail_signals)
 	UnregisterSignal(parent, list(
 		COMSIG_TRAITOR_OBJECTIVE_COMPLETED,
 		COMSIG_TRAITOR_OBJECTIVE_FAILED

@@ -94,7 +94,7 @@
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
 
 /// Used to fail objectives. Players can clear completed objectives in the UI
-/datum/traitor_objective/proc/fail_objective(penalty_cost)
+/datum/traitor_objective/proc/fail_objective(penalty_cost = FALSE)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
 	if(penalty_cost)
@@ -143,6 +143,9 @@
 		"original_progression" = original_progression,
 		"telecrystal_penalty" = telecrystal_penalty,
 	)
+
+/datum/traitor_objective/proc/on_objective_taken(mob/user)
+	return
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.
 /datum/traitor_objective/proc/generate_ui_buttons(mob/user)
