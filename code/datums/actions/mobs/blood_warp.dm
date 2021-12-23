@@ -4,7 +4,7 @@
 	button_icon_state = "floor1"
 	desc = "Allows you to teleport to blood at a clicked position."
 	cooldown_time = 0
-	shared_cooldown = MOB_SHARED_COOLDOWN_2
+	shared_cooldown = MOB_SHARED_COOLDOWN_1
 	/// The range of turfs to try to jaunt to from around the target
 	var/pick_range = 5
 	/// The range of turfs if a client is using this ability

@@ -55,6 +55,11 @@
 // mob cooldowns
 #define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
 
+//Shared cooldowns for actions
+#define MOB_SHARED_COOLDOWN_1 "mob_shared_cooldown_1"
+#define MOB_SHARED_COOLDOWN_2 "mob_shared_cooldown_2"
+#define MOB_SHARED_COOLDOWN_3 "mob_shared_cooldown_3"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"
@@ -95,8 +100,3 @@
 #define COOLDOWN_RESET(cd_source, cd_index) cd_source.cd_index = 0
 
 #define COOLDOWN_TIMELEFT(cd_source, cd_index) (max(0, cd_source.cd_index - world.time))
-
-//Shared cooldowns for actions
-#define MOB_SHARED_COOLDOWN_1 "mob_shared_cooldown_1"
-#define MOB_SHARED_COOLDOWN_2 "mob_shared_cooldown_2"
-#define MOB_SHARED_COOLDOWN_3 "mob_shared_cooldown_3"

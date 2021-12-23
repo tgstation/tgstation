@@ -28,35 +28,37 @@
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
 	StartCooldown(100)
-	SEND_SIGNAL(owner, COMSIG_PROJECTILE_FIRING_STARTED)
 	attack_sequence(owner, target_atom)
-	SEND_SIGNAL(owner, COMSIG_PROJECTILE_FIRING_FINISHED)
 	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/proc/shoot_projectile(atom/origin, atom/target, set_angle, mob/firer, projectile_spread, speed_multiplier)
+/datum/action/cooldown/mob_cooldown/projectile_attack/proc/shoot_projectile(atom/origin, atom/target, set_angle, mob/firer, projectile_spread, speed_multiplier, override_projectile_type, override_homing)
 	var/turf/startloc = get_turf(origin)
 	var/turf/endloc = get_turf(target)
 	if(!startloc || !endloc)
 		return
-	var/obj/projectile/P = new projectile_type(startloc)
+	var/obj/projectile/our_projectile
+	if(override_projectile_type)
+		our_projectile = new override_projectile_type(startloc)
+	else
+		our_projectile = new projectile_type(startloc)
 	if(!isnum(speed_multiplier))
 		speed_multiplier = projectile_speed_multiplier
-	P.speed *= speed_multiplier
-	P.preparePixelProjectile(endloc, startloc, null, projectile_spread)
-	P.firer = firer
+	our_projectile.speed *= speed_multiplier
+	our_projectile.preparePixelProjectile(endloc, startloc, null, projectile_spread)
+	our_projectile.firer = firer
 	if(target)
-		P.original = target
-	if(has_homing)
-		P.homing_turn_speed = homing_turn_speed
-		P.set_homing_target(target)
+		our_projectile.original = target
+	if(override_homing == null && has_homing || override_homing)
+		our_projectile.homing_turn_speed = homing_turn_speed
+		our_projectile.set_homing_target(target)
 	if(isnum(set_angle))
-		P.fire(set_angle)
+		our_projectile.fire(set_angle)
 		return
-	P.fire()
-	return P
+	our_projectile.fire()
+	return our_projectile
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire
 	name = "Rapid Fire"
@@ -89,6 +91,7 @@
 	shot_delay = 1 SECONDS
 	var/shrapnel_projectile_type = /obj/projectile/colossus/ice_blast
 	var/shrapnel_angles = list(0, 60, 120, 180, 240, 300)
+	var/shrapnel_spread = 10
 	var/break_time = 2 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/attack_sequence(mob/living/firer, atom/target)
@@ -100,10 +103,10 @@
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/proc/explode_into_shrapnel(mob/living/firer, atom/target, obj/projectile/to_explode)
 	if(!to_explode)
 		return
-	qdel(to_explode)
 	for(var/angle in shrapnel_angles)
 		// no speed multiplier for shrapnel
-		shoot_projectile(firer, target, angle, firer, null, 1)
+		shoot_projectile(to_explode, target, angle + rand(-shrapnel_spread, shrapnel_spread), firer, null, 1, shrapnel_projectile_type, FALSE)
+	qdel(to_explode)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots
 	name = "Spiral Shots"
@@ -117,14 +120,12 @@
 	var/enraged = FALSE
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/attack_sequence(mob/living/firer, atom/target)
-	SEND_SIGNAL(owner, COMSIG_SPIRAL_ATTACK_START)
 	if(enraged)
 		SLEEP_CHECK_DEATH(1 SECONDS, firer)
 		INVOKE_ASYNC(src, .proc/create_spiral_attack, firer, target, TRUE)
 		create_spiral_attack(firer, target, FALSE)
 		return
 	create_spiral_attack(firer, target)
-	SEND_SIGNAL(owner, COMSIG_SPIRAL_ATTACK_FINISHED)
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/proc/create_spiral_attack(mob/living/firer, atom/target, negative = pick(TRUE, FALSE))
 	var/counter = 8

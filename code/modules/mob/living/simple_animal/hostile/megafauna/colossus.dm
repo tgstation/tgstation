@@ -74,8 +74,8 @@
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
 	dir_shots.Grant(src)
-	RegisterSignal(src, COMSIG_SPIRAL_ATTACK_START, .proc/start_spiral_attack)
-	RegisterSignal(src, COMSIG_SPIRAL_ATTACK_FINISHED, .proc/finished_spiral_attack)
+	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	QDEL_NULL(spiral_shots)
@@ -118,16 +118,18 @@
 			shake_camera(M, 4, 3)
 	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/start_spiral_attack(mob/living/L)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
-	spiral_shots.enraged = COLOSSUS_ENRAGED
-	telegraph()
-	icon_state = "eva_attack"
-	visible_message(COLOSSUS_ENRAGED ? span_colossus("\"<b>Die.</b>\"") : span_colossus("\"<b>Judgement.</b>\""))
+	if(activated == spiral_shots)
+		spiral_shots.enraged = COLOSSUS_ENRAGED
+		telegraph()
+		icon_state = "eva_attack"
+		visible_message(COLOSSUS_ENRAGED ? span_colossus("\"<b>Die.</b>\"") : span_colossus("\"<b>Judgement.</b>\""))
 
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_spiral_attack(mob/living/L)
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
-	icon_state = initial(icon_state)
+	if(finished == spiral_shots)
+		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))

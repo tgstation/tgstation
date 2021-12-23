@@ -679,17 +679,21 @@
 	button.maptext_height = 12
 
 /datum/action/cooldown/IsAvailable()
-	return next_use_time <= world.time
+	return (..() && (next_use_time <= world.time))
 
-/// Starts a cooldown time, will use default cooldown time if an override is not specified, shares that cooldown with similar abilities
-/datum/action/cooldown/proc/StartCooldown(override_cooldown_time, will_share_cooldowns = TRUE)
-	if(shared_cooldown && will_share_cooldowns)
-		for(var/datum/action/cooldown/C in owner.actions - src)
-			if(shared_cooldown == C.shared_cooldown)
+/// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
+/datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
+	if(shared_cooldown)
+		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
+			if(shared_cooldown == shared_ability.shared_cooldown)
 				if(isnum(override_cooldown_time))
-					C.StartCooldown(override_cooldown_time, FALSE)
+					shared_ability.StartCooldownSelf(override_cooldown_time)
 				else
-					C.StartCooldown(cooldown_time, FALSE)
+					shared_ability.StartCooldownSelf(cooldown_time)
+	StartCooldownSelf(override_cooldown_time)
+
+/// Starts a cooldown time for this ability only, will use default cooldown time if an override is not specified
+/datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
 	if(isnum(override_cooldown_time))
 		next_use_time = world.time + override_cooldown_time
 	else
@@ -709,25 +713,32 @@
 			return InterceptClickOn(owner, null, target)
 		if(owner.click_intercept == src)
 			owner.click_intercept = null
-			to_chat(owner, "<b>[src] is no longer active</b>")
 		else
 			owner.click_intercept = src
-			to_chat(owner, "<b>You are now prepared to use [src]</b>")
-		for(var/datum/action/cooldown/C in owner.actions)
-			C.UpdateButtonIcon()
+		for(var/datum/action/cooldown/ability in owner.actions)
+			ability.UpdateButtonIcon()
 		return TRUE
-	return Activate(owner)
+	return PreActivate(owner)
 
-/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+/// Intercepts client owner clicks to activate the ability
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(!IsAvailable())
 		return FALSE
-	if(!A)
+	if(!target)
 		return FALSE
-	Activate(A)
+	PreActivate(target)
 	caller.click_intercept = null
 	return TRUE
 
-/datum/action/cooldown/proc/Activate(atom/target_atom)
+/// For signal calling
+/datum/action/cooldown/proc/PreActivate(atom/target)
+	if(SEND_SIGNAL(owner, COMSIG_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+		return
+	. = Activate(target)
+	SEND_SIGNAL(owner, COMSIG_ABILITY_FINISHED, src)
+
+/// To be implemented by subtypes
+/datum/action/cooldown/proc/Activate(atom/target)
 	return
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
@@ -735,11 +746,11 @@
 	var/time_left = max(next_use_time - world.time, 0)
 	if(button)
 		if(text_cooldown)
-			button.maptext = "<b>[round(time_left/10, 0.1)]</b>"
+			button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
 	if(!owner || time_left == 0)
 		button.maptext = ""
 	if(IsAvailable() && owner.click_intercept == src)
-		button.color = rgb(0,255,0)
+		button.color = COLOR_GREEN
 
 /datum/action/cooldown/process()
 	var/time_left = max(next_use_time - world.time, 0)

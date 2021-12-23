@@ -3,8 +3,8 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to rain meteors down around yourself."
-	cooldown_time = 4 SECONDS
-	shared_cooldown = MOB_SHARED_COOLDOWN_2
+	cooldown_time = 3 SECONDS
+	shared_cooldown = MOB_SHARED_COOLDOWN_1
 
 /datum/action/cooldown/mob_cooldown/meteors/Activate(atom/target_atom)
 	StartCooldown(10 SECONDS)

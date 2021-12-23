@@ -1,3 +1,4 @@
+#define FROST_MINER_SHOULD_ENRAGE (health <= maxHealth*0.25 && !enraged)
 GLOBAL_LIST_EMPTY(frost_miner_prisms)
 
 /*
@@ -63,7 +64,7 @@ Difficulty: Extremely Hard
 	ice_shotgun.Grant(src)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
-	RegisterSignal(src, COMSIG_PROJECTILE_FIRING_STARTED, .proc/start_projectile_attack)
+	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
@@ -112,9 +113,13 @@ Difficulty: Extremely Hard
 				ice_shotgun.Trigger(target)
 
 /// Pre-ability usage stuff
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_projectile_attack()
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, .proc/check_enraged)
+	if(enraging)
+		return COMPONENT_BLOCK_ABILITY_START
+	if(FROST_MINER_SHOULD_ENRAGE)
+		INVOKE_ASYNC(src, .proc/check_enraged)
+		return COMPONENT_BLOCK_ABILITY_START
 	var/projectile_speed_multiplier = 1 - enraged * 0.5
 	frost_orbs.projectile_speed_multiplier = projectile_speed_multiplier
 	snowball_machine_gun.projectile_speed_multiplier = projectile_speed_multiplier
@@ -122,11 +127,10 @@ Difficulty: Extremely Hard
 
 /// Checks if the demonic frost miner is ready to be enraged
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
-	if(enraged)
-		return
-	if(health > maxHealth*0.25)
+	if(!FROST_MINER_SHOULD_ENRAGE)
 		return
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
+	frost_orbs.StartCooldown(8 SECONDS)
 	adjustHealth(-maxHealth)
 	enraged = TRUE
 	enraging = TRUE

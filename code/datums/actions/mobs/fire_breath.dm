@@ -3,7 +3,7 @@
 	icon_icon = 'icons/obj/wizard.dmi'
 	button_icon_state = "fireball"
 	desc = "Allows you to shoot fire towards a target."
-	cooldown_time = 2 SECONDS
+	cooldown_time = 3 SECONDS
 	/// The range of the fire
 	var/fire_range = 15
 	/// The sound played when you use this ability

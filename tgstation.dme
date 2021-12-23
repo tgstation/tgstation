@@ -227,6 +227,7 @@
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movable.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_movement.dm"
 #include "code\__DEFINES\dcs\signals\signals_atom\signals_atom_x_act.dm"
+#include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_abilities.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_carbon.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_living.dm"
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_main.dm"

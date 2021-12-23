@@ -91,9 +91,9 @@
 	meteors.Grant(src)
 	mass_fire.Grant(src)
 	lava_swoop.Grant(src)
-	RegisterSignal(src, COMSIG_SWOOP_ATTACK_STARTED, .proc/swoop_started)
+	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
 	RegisterSignal(src, COMSIG_SWOOP_INVULNERABILITY_STARTED, .proc/swoop_invulnerability_started)
-	RegisterSignal(src, COMSIG_SWOOP_ATTACK_FINISHED, .proc/swoop_finished)
 	RegisterSignal(src, COMSIG_LAVA_ARENA_FAILED, .proc/on_arena_fail)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Destroy()
@@ -127,22 +127,25 @@
 		mass_fire.Trigger(target)
 		return
 	if(fire_cone.Trigger(target))
-		meteors.StartCooldown(0)
-		INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
+		if(prob(50))
+			meteors.StartCooldown(0)
+			meteors.Trigger(target)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_started()
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER
-	icon_state = "shadow"
-	swooping = SWOOP_DAMAGEABLE
+	if(activated == lava_swoop)
+		icon_state = "shadow"
+		swooping = SWOOP_DAMAGEABLE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_invulnerability_started()
 	SIGNAL_HANDLER
 	swooping = SWOOP_INVULNERABLE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_finished()
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
 	SIGNAL_HANDLER
-	icon_state = initial(icon_state)
-	swooping = NONE
+	if(finished == lava_swoop)
+		icon_state = initial(icon_state)
+		swooping = NONE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/on_arena_fail()
 	SIGNAL_HANDLER

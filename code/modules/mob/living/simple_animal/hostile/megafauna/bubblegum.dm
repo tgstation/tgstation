@@ -240,6 +240,7 @@ Difficulty: Hard
 	minimum_distance = get_minimum_distance()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
+	SIGNAL_HANDLER
 	if(!BUBBLEGUM_CAN_ENRAGE)
 		return FALSE
 	enrage_till = world.time + enrage_time
@@ -250,6 +251,7 @@ Difficulty: Hard
 	addtimer(cb, enrage_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/after_charge()
+	SIGNAL_HANDLER
 	try_bloodattack()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end()

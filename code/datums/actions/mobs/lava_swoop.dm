@@ -40,7 +40,6 @@
 	// stop swooped target movement
 	//RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	swooping = TRUE
-	SEND_SIGNAL(owner, COMSIG_SWOOP_ATTACK_STARTED)
 	owner.set_density(FALSE)
 	owner.visible_message(span_boldwarning("[owner] swoops up high!"))
 
@@ -123,7 +122,6 @@
 	if(!lava_success)
 		SEND_SIGNAL(owner, COMSIG_LAVA_ARENA_FAILED)
 	owner.status_flags &= ~GODMODE
-	SEND_SIGNAL(owner, COMSIG_SWOOP_ATTACK_FINISHED)
 
 /datum/action/cooldown/mob_cooldown/lava_swoop/proc/lava_pools(atom/target, amount = 30, delay = 0.8)
 	if(!target)

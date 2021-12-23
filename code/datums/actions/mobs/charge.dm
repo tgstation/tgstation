@@ -18,6 +18,8 @@
 	var/destroy_objects = TRUE
 	/// Associative boolean list of chargers that are currently charging
 	var/list/charging = list()
+	/// Associative list of chargers and their hit targets
+	var/list/already_hit = list()
 	/// Associative direction list of chargers that lets our move signal know how we are supposed to move
 	var/list/next_move_allowed = list()
 
@@ -60,9 +62,10 @@
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	charging[charger] = TRUE
+	already_hit[charger] = list()
 	DestroySurroundings(charger)
 	charger.setDir(get_dir(charger, target_atom))
-	do_charge_indicator(charger, target_atom)
+	do_charge_indicator(charger, T)
 	SLEEP_CHECK_DEATH(delay, charger)
 	var/distance = min(get_dist(charger, T), charge_distance)
 	for(var/i in 1 to distance)
@@ -75,6 +78,7 @@
 	UnregisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(charger, COMSIG_MOVABLE_MOVED)
 	charging.Remove(charger)
+	already_hit.Remove(charger)
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	return TRUE
 
@@ -109,18 +113,26 @@
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
 		return
+	if(!isanimal(charger))
+		return
 	for(var/dir in GLOB.cardinals)
 		var/turf/T = get_step(charger, dir)
 		if(QDELETED(T))
 			continue
 		if(T.Adjacent(charger))
 			if(iswallturf(T) || ismineralturf(T))
+				if(!isanimal(charger))
+					SSexplosions.medturf += T
+					continue
 				T.attack_animal(charger)
 				continue
 		for(var/obj/O in T.contents)
 			if(!O.Adjacent(charger))
 				continue
 			if((ismachinery(O) || isstructure(O)) && O.density && !O.IsObscured())
+				if(!isanimal(charger))
+					SSexplosions.med_mov_atom += target
+					break
 				O.attack_animal(charger)
 				break
 
@@ -140,8 +152,9 @@
 		hit_target(source, target, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
-	if(!isliving(target))
+	if(!isliving(target) || already_hit[source].Find(target))
 		return
+	already_hit[source].Add(target)
 	var/mob/living/living_target = target
 	living_target.visible_message("<span class='danger'>[source] slams into [living_target]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
 	source.forceMove(get_turf(living_target))
