@@ -14,13 +14,18 @@
 	. = ..()
 	if (HAS_TRAIT(parent, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 		REMOVE_TRAIT(parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		var/mob/living/carbon/human/human_parent = parent
-		human_parent.eye_color = initial(human_parent.eye_color)
-		human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-	if (stage == STAGE_CULT_HALOS)
-		var/mob/living/carbon/human/human_parent = parent
-		human_parent.remove_overlay(HALO_LAYER)
-		human_parent.update_body()
+		if (ishuman(parent))
+			var/mob/living/carbon/human/human_parent = parent
+			human_parent.eye_color = initial(human_parent.eye_color)
+			human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+	if (has_halo)
+		if (ishuman(parent))
+			var/mob/living/carbon/human/human_parent = parent
+			human_parent.remove_overlay(HALO_LAYER)
+			human_parent.update_body()
+		else
+			var/mob/living/simple_animal/simple_parent = parent
+			simple_parent.cut_overlay(HALO_LAYER)
 	UnregisterSignal(parent, COMSIG_CULT_VIS)
 	UnregisterSignal(parent, COMSIG_CULT_DECONVERT)
 	UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
@@ -49,28 +54,31 @@
 				addtimer(CALLBACK(src, .proc/set_halo, parent), 20 SECONDS)
 
 /datum/component/cult_status/proc/set_eyes()
-	if (!ishuman(parent))
-		return
-	var/mob/living/carbon/human/human_parent = parent
-	human_parent.eye_color = BLOODCULT_EYE
-	human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-	ADD_TRAIT(human_parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-	human_parent.update_body()
+	if (ishuman(parent))
+		var/mob/living/carbon/human/human_parent = parent
+		human_parent.eye_color = BLOODCULT_EYE
+		human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		ADD_TRAIT(human_parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+		human_parent.update_body()
+	else
+		var/mob/living/simple_animal/simple_parent = parent
+		ADD_TRAIT(simple_parent, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+
 
 /datum/component/cult_status/proc/set_halo()
-	if (!ishuman(parent))
-		return
-	var/mob/living/carbon/human/human_parent = parent
-	new /obj/effect/temp_visual/cult/sparks(get_turf(human_parent), human_parent.dir)
 	var/icon_state = pick ("halo1", "halo2", "halo3", "halo4", "halo5", "halo6")
 	var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', icon_state, -HALO_LAYER)
-	human_parent.overlays_standing[HALO_LAYER] = new_halo_overlay
-	human_parent.apply_overlay(HALO_LAYER)
+	if (ishuman(parent))
+		var/mob/living/carbon/human/human_parent = parent
+		new /obj/effect/temp_visual/cult/sparks(get_turf(human_parent), human_parent.dir)
+		human_parent.overlays_standing[HALO_LAYER] = new_halo_overlay
+		human_parent.apply_overlay(HALO_LAYER)
+	else
+		var/mob/living/simple_animal/simple_parent = parent
+		simple_parent.add_overlay(new_halo_overlay)
 	has_halo = TRUE
 
 /datum/component/cult_status/proc/handle_transform()
-	if (!ishuman(parent))
-		return
 	if (HAS_TRAIT(parent, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 		set_eyes()
 	if (has_halo)
