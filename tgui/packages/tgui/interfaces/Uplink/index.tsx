@@ -286,9 +286,11 @@ export class Uplink extends Component<{}, UplinkState> {
                   maximumActiveObjectives={maximum_active_objectives}
                   maximumPotentialObjectives={maximum_potential_objectives}
                   handleObjectiveAction={(objective, action) =>
-                    act("objective_act", { objective_action: action, index: objective.id })}
-                  handleStartObjective={(objective) => act("start_objective", { index: objective.id })}
-                  handleObjectiveCompleted={(objective) => act("finish_objective", { index: objective.id })}
+                    act("objective_act", { check: objective.original_progression, objective_action: action, index: objective.id })}
+                  handleStartObjective={(objective) => act("start_objective", { check: objective.original_progression, index: objective.id })}
+                  handleObjectiveAbort={(objective) =>
+                    act("objective_abort", { check: objective.original_progression, index: objective.id })}
+                  handleObjectiveCompleted={(objective) => act("finish_objective", { check: objective.original_progression, index: objective.id })}
                   handleRequestObjectives={() => act("regenerate_objectives")}
                 />
               ) || (

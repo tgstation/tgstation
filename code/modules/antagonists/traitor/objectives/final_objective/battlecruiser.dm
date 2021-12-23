@@ -1,5 +1,5 @@
 /datum/traitor_objective/final/battlecruiser
-	name = "Final Objective: Reveal Station Coordinates to nearby Syndicate Battlecruiser"
+	name = "Reveal Station Coordinates to nearby Syndicate Battlecruiser"
 	description = "Use a special upload card on a communications console to send the coordinates \
 	of the station to a nearby Battlecruiser. You may want to make your syndicate status known to \
 	the battlecruiser crew when they arrive, their goal will be to destroy the station."

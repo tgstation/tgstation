@@ -1,6 +1,6 @@
-import { classes } from "common/react";
+import { BooleanLike, classes } from "common/react";
 import { Component } from "inferno";
-import { Section, Stack, Box, Button, Flex, Tooltip } from "../../components";
+import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox } from "../../components";
 import { calculateProgression, getReputation, Rank } from "./calculateReputationLevel";
 import { ObjectiveState } from "./constants";
 
@@ -15,6 +15,7 @@ export type Objective = {
   ui_buttons?: ObjectiveUiButton[],
   objective_state: ObjectiveState,
   original_progression: number,
+  final_objective: BooleanLike
 }
 
 export type ObjectiveUiButton = {
@@ -33,6 +34,7 @@ type ObjectiveMenuProps = {
   handleStartObjective: (objective: Objective) => void;
   handleObjectiveAction: (objective: Objective, action: string) => void;
   handleObjectiveCompleted: (objective: Objective) => void;
+  handleObjectiveAbort: (objective: Objective) => void;
   handleRequestObjectives: () => void;
 }
 
@@ -117,6 +119,7 @@ export class ObjectiveMenu
       maximumPotentialObjectives,
       handleObjectiveAction,
       handleObjectiveCompleted,
+      handleObjectiveAbort,
       handleRequestObjectives,
     } = this.props;
     const {
@@ -173,6 +176,7 @@ export class ObjectiveMenu
                         true,
                         handleObjectiveAction,
                         handleObjectiveCompleted,
+                        handleObjectiveAbort,
                         true,
                       )}
                     </Stack.Item>
@@ -205,6 +209,7 @@ export class ObjectiveMenu
                       && ObjectiveFunction(
                         objective,
                         false,
+                        undefined,
                         undefined,
                         undefined,
                         true,
@@ -275,6 +280,7 @@ const ObjectiveFunction = (
   active: boolean,
   handleObjectiveAction?: (objective: Objective, action: string) => void,
   handleCompletion?: (objective: Objective) => void,
+  handleAbort?: (objective: Objective) => void,
   grow: boolean = false,
 ) => {
   const reputation = getReputation(objective.progression_minimum);
@@ -288,10 +294,16 @@ const ObjectiveFunction = (
       progressionReward={objective.progression_reward}
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
+      finalObjective={objective.final_objective}
       grow={grow}
       handleCompletion={(event) => {
         if (handleCompletion) {
           handleCompletion(objective);
+        }
+      }}
+      handleAbort={(event) => {
+        if (handleAbort) {
+          handleAbort(objective);
         }
       }}
       uiButtons={
@@ -331,8 +343,10 @@ type ObjectiveElementProps = {
   originalProgression: number;
   telecrystalPenalty: number;
   grow: boolean;
+  finalObjective: BooleanLike;
 
   handleCompletion: (event: MouseEvent) => void;
+  handleAbort: (event: MouseEvent) => void;
 }
 
 const ObjectiveElement = (props: ObjectiveElementProps, context) => {
@@ -346,8 +360,10 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     objectiveState,
     telecrystalPenalty,
     handleCompletion,
+    handleAbort,
     originalProgression,
     grow,
+    finalObjective,
     ...rest
   } = props;
 
@@ -386,7 +402,19 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
           width="100%"
           height="100%"
         >
-          {name} {!objectiveFinished? null : `- ${objectiveCompletionText}`}
+          <Stack>
+            <Stack.Item grow={1}>
+              {name} {!objectiveFinished? null : `- ${objectiveCompletionText}`}
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                icon="trash"
+                color="red"
+                tooltip="Abort Objective"
+                onClick={handleAbort}
+              />
+            </Stack.Item>
+          </Stack>
         </Box>
       </Flex.Item>
       <Flex.Item grow={grow} basis="content">
@@ -397,9 +425,17 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
           <Box>
             {description}
           </Box>
-          <Box mt={1}>
-            Failing this objective will deduct {telecrystalPenalty} TC.
-          </Box>
+          {!finalObjective && (
+            <Box mt={1}>
+              Failing this objective will deduct {telecrystalPenalty} TC.
+            </Box>
+          ) || (
+            <NoticeBox warning mt={1}>
+              Taking this objective will lock you out of getting
+              anymore objectives! Furthermore, you will be unable to
+              abort this objective.
+            </NoticeBox>
+          )}
         </Box>
       </Flex.Item>
       <Flex.Item>

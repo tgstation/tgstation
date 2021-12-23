@@ -92,14 +92,61 @@
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
 
+/datum/objective/traitor_progression
+	name = "traitor progression"
+	explanation_text = "Become a living legend by reaching the 'Legendary' reputation status"
+
+/datum/objective/traitor_progression/check_completion()
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
+	if(!traitor)
+		return FALSE
+	if(!traitor.uplink_handler)
+		return FALSE
+	if(traitor.uplink_handler.progression_points < 140 MINUTES)
+		return FALSE
+	return TRUE
+
+/datum/objective/traitor_objectives
+	name = "traitor objective"
+	explanation_text = "Complete objectives colletively worth more than \[REPUTATION] reputation points"
+
+	var/required_progression_in_objectives
+
+/datum/objective/traitor_objectives/New(text)
+	. = ..()
+	var/datum/traitor_objective/final/final_type = /datum/traitor_objective/final
+	explanation_text = replacetext(explanation_text, "\[REPUTATION]", initial(final_type.progression_points_in_objectives) / 60)
+	required_progression_in_objectives = initial(final_type.progression_points_in_objectives)
+
+/datum/objective/traitor_objectives/check_completion()
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
+	if(!traitor)
+		return FALSE
+	if(!traitor.uplink_handler)
+		return FALSE
+	var/total_points = 0
+	for(var/datum/traitor_objective/objective as anything in traitor.uplink_handler.completed_objectives)
+		total_points += objective.progression_reward
+	if(total_points < required_progression_in_objectives)
+		return FALSE
+	return TRUE
+
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
 
-	var/datum/objective/custom/final_objective = new /datum/objective/custom()
+	var/datum/objective/traitor_progression/final_objective = new /datum/objective/traitor_progression()
 	final_objective.owner = owner
-	final_objective.explanation_text = "Complete enough objectives to unlock your Final Objective."
 	objectives += final_objective
+
+	var/datum/objective/traitor_objectives/objective_completion = new /datum/objective/traitor_objectives()
+	objective_completion.owner = owner
+	objectives += objective_completion
+
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()

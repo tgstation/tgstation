@@ -162,6 +162,11 @@
 			continue
 		objective.update_progression_reward()
 
+/datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
+	if(istype(to_abort, /datum/traitor_objective/final))
+		return
+	to_abort.fail_objective(penalty_cost = TRUE)
+
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
 		return

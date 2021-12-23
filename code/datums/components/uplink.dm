@@ -222,7 +222,7 @@
 	switch(action)
 		if("start_objective")
 			objectives = uplink_handler.potential_objectives
-		if("objective_act", "finish_objective")
+		if("objective_act", "finish_objective", "objective_abort")
 			objectives = uplink_handler.active_objectives
 
 	if(!objectives)
@@ -232,6 +232,9 @@
 	if(objective_index < 1 || objective_index > length(objectives))
 		return TRUE
 	var/datum/traitor_objective/objective = objectives[objective_index]
+	// This'll practically verify for 99.99% of cases that we are targetting the correct objective
+	if(round(objective.original_progression) == round(text2num(params["check"])))
+		return
 
 	// Objective actions
 	switch(action)
@@ -243,7 +246,8 @@
 			if(!objective.finish_objective(ui.user))
 				return
 			uplink_handler.complete_objective(objective)
-
+		if("objective_abort")
+			uplink_handler.abort_objective(objective)
 	return TRUE
 
 // Implant signal responses

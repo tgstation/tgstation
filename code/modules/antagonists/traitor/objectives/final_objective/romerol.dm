@@ -11,7 +11,8 @@
 	var/sent_romerol = FALSE
 
 /datum/traitor_objective/final/romerol/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	. = ..()
+	if(!can_take_final_objective())
+		return
 	var/list/possible_areas = GLOB.the_station_areas.Copy()
 	for(var/area/possible_area as anything in possible_areas)
 		//remove areas too close to the destination, too obvious for our poor shmuck, or just unfair
