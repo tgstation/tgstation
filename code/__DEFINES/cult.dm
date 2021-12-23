@@ -34,6 +34,7 @@
 
 //visibility stage signal
 #define COMSIG_CULT_VIS "cult_visibility"
+#define COMSIG_CULT_DECONVERT "cult_deconvert"
 //visibilty stages
 #define STAGE_CULT_UNSEEN 0
 #define STAGE_CULT_RED_EYES 1

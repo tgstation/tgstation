@@ -643,6 +643,7 @@
 #include "code\datums\components\cracked.dm"
 #include "code\datums\components\creamed.dm"
 #include "code\datums\components\cult_ritual_item.dm"
+#include "code\datums\components\cult_status.dm"
 #include "code\datums\components\curse_of_hunger.dm"
 #include "code\datums\components\customizable_reagent_holder.dm"
 #include "code\datums\components\deadchat_control.dm"

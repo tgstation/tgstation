@@ -61,6 +61,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	add_objectives()
+	current.AddComponent(/datum/component/cult_status)
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
@@ -72,6 +73,7 @@
 
 /datum/antagonist/cult/on_removal()
 	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
+	SEND_SIGNAL(owner.current, COMSIG_CULT_DECONVERT)
 
 	return ..()
 
@@ -138,9 +140,11 @@
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
-		cult_team.rise(current)
+		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
+		//cult_team.rise(current)
 		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
+			//cult_team.ascend(current)
 
 	add_team_hud(current)
 
@@ -158,11 +162,14 @@
 	current.clear_alert("bloodsense")
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
+		SEND_SIGNAL(H, COMSIG_CULT_DECONVERT)
+		/*
 		H.eye_color = initial(H.eye_color)
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 		H.remove_overlay(HALO_LAYER)
 		H.update_body()
+		*/
+		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
@@ -238,9 +245,11 @@
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
-		cult_team.rise(current)
+		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
+		//cult_team.rise(current)
 		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
+			//cult_team.ascend(current)
 	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
@@ -301,6 +310,7 @@
 		log_game("The blood cult has ascended with [cultplayers] players.")
 
 
+/*
 /datum/team/cult/proc/rise(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/H = cultist
@@ -308,7 +318,9 @@
 		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		ADD_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
 		H.update_body()
+*/
 
+/*
 /datum/team/cult/proc/ascend(cultist)
 	if(ishuman(cultist))
 		var/mob/living/carbon/human/human = cultist
@@ -317,6 +329,7 @@
 		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
 		human.overlays_standing[HALO_LAYER] = new_halo_overlay
 		human.apply_overlay(HALO_LAYER)
+*/
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
