@@ -220,12 +220,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
 		span_notice("You struggle to pry up [src] with [attacking_item]."))
 
-		if(attacking_item.use_tool(src, user, 40, volume = 40))
-			var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
-			transfer_fingerprints_to(belt_item)
+		if(!attacking_item.use_tool(src, user, 4 SECONDS, volume = 40))
+			return
 
-			to_chat(user, span_notice("You remove [src]."))
-			qdel(src)
+		var/obj/item/stack/conveyor/belt_item = new /obj/item/stack/conveyor(loc, 1, TRUE, null, null, id)
+		transfer_fingerprints_to(belt_item)Wa
+
+		to_chat(user, span_notice("You remove [src]."))
+		qdel(src)
 
 	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		attacking_item.play_tool_sound(src)
