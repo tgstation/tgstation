@@ -54,6 +54,56 @@ GLOBAL_LIST_INIT(huds, list(
 	hud_atoms += list(list())
 	hud_users += list(list())
 
+///returns a list of all hud atoms in the given z level and linked lower z levels (because hud users in higher z levels can see below)
+/datum/atom_hud/proc/get_hud_atoms_for_z_level(z_level)
+	if(z_level <= 0)
+		return FALSE
+	if(z_level > length(hud_atoms))
+		stack_trace("get_hud_atoms_for_z_level() was given a z level index out of bounds of hud_atoms!")
+		return FALSE
+
+	. = list()
+	. += hud_atoms[z_level]
+
+	var/max_number_of_linked_z_levels_i_care_to_support_here = 10
+
+	while(max_number_of_linked_z_levels_i_care_to_support_here)
+		var/lower_z_level_exists = SSmapping.level_trait(z_level, ZTRAIT_DOWN)
+
+		if(lower_z_level_exists)
+			z_level--
+			. += hud_atoms[z_level]
+			max_number_of_linked_z_levels_i_care_to_support_here--
+			continue
+
+		else
+			break
+
+///returns a list of all hud users in the given z level and linked upper z levels (because hud users in higher z levels can see below)
+/datum/atom_hud/proc/get_hud_users_for_z_level(z_level)
+	if(z_level <= 0)
+		return FALSE
+	if(z_level > length(hud_users))
+		stack_trace("get_hud_atoms_for_z_level() was given a z level index out of bounds of hud_atoms!")
+		return FALSE
+
+	. = list()
+	. += hud_users[z_level]
+
+	var/max_number_of_linked_z_levels_i_care_to_support_here = 10
+
+	while(max_number_of_linked_z_levels_i_care_to_support_here)
+		var/upper_level_exists = SSmapping.level_trait(z_level, ZTRAIT_UP)
+
+		if(upper_level_exists)
+			z_level++
+			. += hud_users[z_level]
+			max_number_of_linked_z_levels_i_care_to_support_here--
+			continue
+
+		else
+			break
+
 /datum/atom_hud/Destroy()
 	for(var/mob/mob as anything in hud_users_all_z_levels)
 		remove_hud_from_mob(mob)
@@ -87,7 +137,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 		else
 			next_time_allowed[new_mob_user] = world.time + ADD_HUD_TO_COOLDOWN
-			for(var/atom/hud_atom_to_add in hud_atoms[their_turf.z])
+			for(var/atom/hud_atom_to_add as anything in get_hud_atoms_for_z_level(their_turf.z))
 				add_atom_to_single_mob_hud(new_mob_user, hud_atom_to_add)
 	else
 		hud_users[their_turf.z][new_mob_user]++
@@ -116,7 +166,7 @@ GLOBAL_LIST_INIT(huds, list(
 			queued_to_see -= former_hud_user
 
 		else
-			for(var/atom/hud_atom as anything in hud_atoms[their_turf.z])
+			for(var/atom/hud_atom as anything in get_hud_atoms_for_z_level(their_turf.z))
 				remove_atom_from_single_hud(former_hud_user, hud_atom)
 
 /// add new_hud_atom to this hud
@@ -132,7 +182,7 @@ GLOBAL_LIST_INIT(huds, list(
 	hud_atoms[atom_turf.z] |= new_hud_atom
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
 
-	for(var/mob/mob_to_show as anything in hud_users[atom_turf.z])
+	for(var/mob/mob_to_show as anything in get_hud_users_for_z_level(atom_turf.z))
 		if(!queued_to_see[mob_to_show])
 			add_atom_to_single_mob_hud(mob_to_show, new_hud_atom)
 	return TRUE
@@ -167,26 +217,26 @@ GLOBAL_LIST_INIT(huds, list(
 		if(hud_users_all_z_levels[moved_atom])
 			hud_users[old_turf.z] -= moved_atom
 
-			for(var/atom/formerly_seen_hud_atom as anything in hud_atoms[old_turf.z])
+			for(var/atom/formerly_seen_hud_atom as anything in get_hud_atoms_for_z_level(old_turf.z))
 				remove_atom_from_single_hud(moved_atom, formerly_seen_hud_atom)
 
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[old_turf.z] -= moved_atom
 
-			for(var/mob/formerly_seeing as anything in hud_users[old_turf.z])
+			for(var/mob/formerly_seeing as anything in get_hud_users_for_z_level(old_turf.z))
 				remove_atom_from_single_hud(formerly_seeing, moved_atom)
 
 	if(new_turf)
 		if(hud_users_all_z_levels[moved_atom])
 			hud_users[new_turf.z] += moved_atom
 
-			for(var/atom/newly_seen_hud_atom as anything in hud_atoms[new_turf.z])
+			for(var/atom/newly_seen_hud_atom as anything in get_hud_atoms_for_z_level(new_turf.z))
 				add_atom_to_single_mob_hud(moved_atom, newly_seen_hud_atom)
 
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[new_turf.z] += moved_atom
 
-			for(var/mob/newly_seeing as anything in hud_users[new_turf.z])
+			for(var/mob/newly_seeing as anything in get_hud_users_for_z_level(new_turf.z))
 				add_atom_to_single_mob_hud(newly_seeing, moved_atom)
 
 /// add just hud_atom's hud images (that are part of this atom_hud) to requesting_mob's client.images list
@@ -241,7 +291,7 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!user_turf)
 		return
 
-	for(var/atom/hud_atom_to_show as anything in hud_atoms[user_turf.z])
+	for(var/atom/hud_atom_to_show as anything in get_hud_atoms_for_z_level(user_turf.z))
 		add_atom_to_single_mob_hud(queued_hud_user, hud_atom_to_show)
 
 //MOB PROCS
@@ -251,9 +301,9 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 
 	for(var/datum/atom_hud/hud in GLOB.all_huds)
-		if(hud?.hud_users[our_turf.z][src])
-			for(var/atom/A in hud.hud_atoms[our_turf.z])
-				hud.add_atom_to_single_mob_hud(src, A)
+		if(hud?.hud_users_all_z_levels[src])
+			for(var/atom/hud_atom as anything in hud.get_hud_atoms_for_z_level(our_turf.z))
+				hud.add_atom_to_single_mob_hud(src, hud_atom)
 
 /mob/dead/new_player/reload_huds()
 	return

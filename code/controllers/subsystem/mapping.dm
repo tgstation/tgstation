@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(mapping)
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
+	///list of all the z level datums created representing the z levels in the world
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
