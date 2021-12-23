@@ -702,6 +702,11 @@
 	if (can_interact(user))
 		return ..()
 
+/obj/item/storage/pod/attackby_secondary(obj/item/weapon, mob/user, params)
+	if (!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
