@@ -214,11 +214,11 @@ const DroneSelectionSection = (props: {
   const { all_drones } = props;
 
   return (
-    <Section scrollable fill title="Exploration Drone Listing">
+    <Section fill scrollable title="Exploration Drone Listing">
       <Stack vertical>
         {all_drones.map(drone => (
           <Fragment key={drone.ref}>
-            <Stack.Item grow>
+            <Stack.Item>
               <Stack fill>
                 <Stack.Item basis={10} fontFamily="monospace" fontSize="18px">
                   {drone.name}
@@ -234,9 +234,10 @@ const DroneSelectionSection = (props: {
                     "Controlled by another console."
                   ) || (
                     <Button
-                      content="Assume Control"
                       icon="plug"
-                      onClick={() => act("select_drone", { "drone_ref": drone.ref })} />
+                      onClick={() => act("select_drone", { "drone_ref": drone.ref })}>
+                      Assume Control
+                    </Button>
                   )}
                 </Stack.Item>
               </Stack>
@@ -425,26 +426,28 @@ const EquipmentGrid = (props: {
       </Stack.Item>
       <Stack.Item>
         <Section title="Cargo">
-          <Stack.Item>
-            {!!configurable && (
-              <Button
-                fluid
-                color="average"
-                icon="wrench"
-                content="Install Tool"
-                onClick={() => setChoosingTools(true)} />
-            )}
-          </Stack.Item>
-          <Stack.Item>
-            <Stack wrap="wrap" width={10}>
-              {cargo.map(cargo_element => (
-                <EquipmentBox
-                  drone={props.drone}
-                  key={cargo_element.name}
-                  cargo={cargo_element} />
-              ))}
-            </Stack>
-          </Stack.Item>
+          <Stack fill vertical>
+            <Stack.Item>
+              {!!configurable && (
+                <Button
+                  fluid
+                  color="average"
+                  icon="wrench"
+                  content="Install Tool"
+                  onClick={() => setChoosingTools(true)} />
+              )}
+            </Stack.Item>
+            <Stack.Item>
+              <Stack wrap="wrap" width={10}>
+                {cargo.map(cargo_element => (
+                  <EquipmentBox
+                    drone={props.drone}
+                    key={cargo_element.name}
+                    cargo={cargo_element} />
+                ))}
+              </Stack>
+            </Stack.Item>
+          </Stack>
         </Section>
       </Stack.Item>
     </Stack>
