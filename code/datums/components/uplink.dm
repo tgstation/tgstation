@@ -232,9 +232,6 @@
 	if(objective_index < 1 || objective_index > length(objectives))
 		return TRUE
 	var/datum/traitor_objective/objective = objectives[objective_index]
-	// This'll practically verify for 99.99% of cases that we are targetting the correct objective
-	if(round(objective.original_progression) == round(text2num(params["check"])))
-		return
 
 	// Objective actions
 	switch(action)

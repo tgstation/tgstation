@@ -295,6 +295,7 @@ const ObjectiveFunction = (
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
       finalObjective={objective.final_objective}
+      canAbort={!!handleAbort}
       grow={grow}
       handleCompletion={(event) => {
         if (handleCompletion) {
@@ -344,6 +345,7 @@ type ObjectiveElementProps = {
   telecrystalPenalty: number;
   grow: boolean;
   finalObjective: BooleanLike;
+  canAbort: BooleanLike;
 
   handleCompletion: (event: MouseEvent) => void;
   handleAbort: (event: MouseEvent) => void;
@@ -361,6 +363,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
     telecrystalPenalty,
     handleCompletion,
     handleAbort,
+    canAbort,
     originalProgression,
     grow,
     finalObjective,
@@ -406,14 +409,16 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
             <Stack.Item grow={1}>
               {name} {!objectiveFinished? null : `- ${objectiveCompletionText}`}
             </Stack.Item>
-            <Stack.Item>
-              <Button
-                icon="trash"
-                color="red"
-                tooltip="Abort Objective"
-                onClick={handleAbort}
-              />
-            </Stack.Item>
+            {canAbort && (
+              <Stack.Item>
+                <Button
+                  icon="trash"
+                  color="red"
+                  tooltip="Abort Objective"
+                  onClick={handleAbort}
+                />
+              </Stack.Item>
+            )}
           </Stack>
         </Box>
       </Flex.Item>
