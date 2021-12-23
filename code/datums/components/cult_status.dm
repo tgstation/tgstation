@@ -24,7 +24,8 @@
 			human_parent.remove_overlay(HALO_LAYER)
 			human_parent.update_body()
 		else
-			parent.cut_overlay(HALO_LAYER)
+			var/mob/living/mob = parent
+			mob.cut_overlay(HALO_LAYER)
 	UnregisterSignal(parent, COMSIG_CULT_VIS)
 	UnregisterSignal(parent, COMSIG_CULT_DECONVERT)
 	UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
@@ -72,7 +73,8 @@
 		human_parent.overlays_standing[HALO_LAYER] = new_halo_overlay
 		human_parent.apply_overlay(HALO_LAYER)
 	else
-		parent.add_overlay(new_halo_overlay)
+		var/mob/living/mob = parent
+		mob.add_overlay(new_halo_overlay)
 	has_halo = TRUE
 
 /datum/component/cult_status/proc/handle_transform()
