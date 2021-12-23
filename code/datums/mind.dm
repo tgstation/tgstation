@@ -650,16 +650,18 @@
 				if(!uplink || !uplink.uplink_handler)
 					return
 				var/list/all_objectives = subtypesof(/datum/traitor_objective)
-				var/objective = text2path(tgui_input_list(usr, "Select objective", "Select objective", all_objectives))
-				if(!objective || !ispath(objective, /datum/traitor_objective))
+				var/objective_typepath = text2path(tgui_input_list(usr, "Select objective", "Select objective", all_objectives))
+				if(!objective_typepath || !ispath(objective_typepath, /datum/traitor_objective))
 					return
-				if(uplink.uplink_handler.try_add_objective(objective))
-					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective]).")
-					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective]).")
+				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
+				if(objective)
+					message_admins("[key_name_admin(usr)] gave [current] a traitor objective ([objective_typepath]).")
+					log_admin("[key_name(usr)] gave [current] a traitor objective ([objective_typepath]).")
+					objective.forced = TRUE
 				else
 					to_chat(usr, span_warning("Failed to generate the objective!"))
-					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective]).")
-					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective]).")
+					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
+					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
 				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))

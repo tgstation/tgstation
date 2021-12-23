@@ -13,9 +13,8 @@
 		) = 1,
 	)
 
-///base objective prototype
 /datum/traitor_objective/assassinate
-	name = "Assassinate \[TARGET] the \[JOB TITLE]."
+	name = "Assassinate \[TARGET] the \[JOB TITLE]"
 	description = "Simply kill your target to accomplish this objective."
 
 	abstract_type = /datum/traitor_objective/assassinate
@@ -34,7 +33,7 @@
 	var/mob/living/kill_target
 
 /datum/traitor_objective/assassinate/calling_card
-	name = "Assassinate \[TARGET] the \[JOB TITLE], and plant a calling card."
+	name = "Assassinate \[TARGET] the \[JOB TITLE], and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
 
 	var/obj/item/paper/calling_card/card
@@ -46,7 +45,7 @@
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/behead
-	name = "Behead \[TARGET], the \[JOB TITLE]."
+	name = "Behead \[TARGET], the \[JOB TITLE]"
 	description = "Behead and hold \[TARGET]'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
 
 	///the body who needs to hold the head

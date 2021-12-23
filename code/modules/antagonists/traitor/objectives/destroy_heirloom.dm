@@ -1,15 +1,18 @@
 /datum/traitor_objective_category/destroy_heirloom
 	name = "Destroy Heirloom"
 	objectives = list(
-		/datum/traitor_objective/destroy_heirloom/common = 4,
+		list(
+			// There's about 16 jobs in common, so assistant has a 1/21 chance of getting chosen.
+			/datum/traitor_objective/destroy_heirloom/common = 20,
+			/datum/traitor_objective/destroy_heirloom/less_common = 1,
+		) = 4,
 		/datum/traitor_objective/destroy_heirloom/uncommon = 3,
 		/datum/traitor_objective/destroy_heirloom/rare = 2,
 		/datum/traitor_objective/destroy_heirloom/captain = 1
 	)
 
-///base objective prototype
 /datum/traitor_objective/destroy_heirloom
-	name = "Destroy \[ITEM], the family heirloom that belongs to \[TARGET] the \[JOB TITLE]."
+	name = "Destroy \[ITEM], the family heirloom that belongs to \[TARGET] the \[JOB TITLE]"
 	description = "\[TARGET] has been on our shitlist for a while and we want to show him we mean business. Find his \[ITEM] and destroy it, you'll be rewarded handsomely for doing this"
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
@@ -48,6 +51,14 @@
 		// Engineering
 		/datum/job/station_engineer,
 		/datum/job/atmospheric_technician,
+	)
+
+/// This is only for assistants, because the syndies are a lot less likely to give a shit about what an assistant does, so they're a lot less likely to appear
+/datum/traitor_objective/destroy_heirloom/less_common
+	/// 30 minutes in, syndicate won't care about common heirlooms anymore
+	progression_maximum = 30 MINUTES
+	target_jobs = list(
+		/datum/job/assistant
 	)
 
 /datum/traitor_objective/destroy_heirloom/uncommon
@@ -106,8 +117,7 @@
 	var/datum/mind/target_mind = pick(possible_targets)
 	AddComponent(/datum/component/traitor_objective_register, target_mind.current, fail_signals = COMSIG_PARENT_QDELETING)
 	var/datum/quirk/item_quirk/family_heirloom/quirk = locate() in target_mind.current.quirks
-	var/datum/component/heirloom = quirk.heirloom.resolve()
-	target_item = heirloom.parent
+	target_item = quirk.heirloom.resolve()
 	AddComponent(/datum/component/traitor_objective_register, target_item, succeed_signals = COMSIG_PARENT_QDELETING)
 	replace_in_name("\[TARGET]", target_mind.name)
 	replace_in_name("\[JOB TITLE]", target_mind.assigned_role.title)

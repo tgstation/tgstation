@@ -17,7 +17,8 @@
 	var/telecrystal_penalty = 1
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
-
+	/// Whether this objective was forced upon by an admin. Won't get autocleared by the traitor subsystem if progression surpasses an amount
+	var/forced = FALSE
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
 	var/global_progression_influence_intensity = 0.5
@@ -94,7 +95,7 @@
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
 
 /// Used to fail objectives. Players can clear completed objectives in the UI
-/datum/traitor_objective/proc/fail_objective(penalty_cost = FALSE)
+/datum/traitor_objective/proc/fail_objective(penalty_cost = FALSE, trigger_update = TRUE)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
 	if(penalty_cost)
@@ -102,7 +103,8 @@
 		objective_state = OBJECTIVE_STATE_FAILED
 	else
 		objective_state = OBJECTIVE_STATE_INVALID
-	handler.on_update() // Trigger an update to the UI
+	if(trigger_update)
+		handler.on_update() // Trigger an update to the UI
 
 /// Used to succeed objectives. Allows the player to cash it out in the UI.
 /datum/traitor_objective/proc/succeed_objective()

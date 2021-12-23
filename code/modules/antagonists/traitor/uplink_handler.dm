@@ -107,13 +107,16 @@
 /datum/uplink_handler/proc/try_add_objective(datum/traitor_objective/objective_typepath)
 	var/datum/traitor_objective/objective = new objective_typepath(src)
 	if(!objective.generate_objective(owner, potential_duplicate_objectives[objective_typepath]))
-		return FALSE
+		qdel(objective)
+		return
 	if(!handle_duplicate(objective))
-		return FALSE
+		qdel(objective)
+		potential_duplicate_objectives[objective.type] -= objective
+		return
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_cost()
 	potential_objectives += objective
-	return TRUE
+	return objective
 
 /datum/uplink_handler/proc/handle_duplicate(datum/traitor_objective/potential_duplicate)
 	if(!istype(potential_duplicate))
@@ -154,9 +157,8 @@
 /datum/uplink_handler/proc/update_objectives()
 	var/list/potential_objectives_copy = potential_objectives.Copy()
 	for(var/datum/traitor_objective/objective as anything in potential_objectives_copy)
-		if(progression_points > objective.progression_maximum)
-			objective.objective_state = OBJECTIVE_STATE_FAILED
-			objective -= potential_objectives
+		if(progression_points > objective.progression_maximum && !objective.forced)
+			objective.fail_objective(trigger_update = FALSE)
 			continue
 		objective.update_progression_cost()
 

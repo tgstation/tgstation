@@ -1,5 +1,5 @@
 /datum/traitor_objective/final/romerol
-	name = "Spread the experimental bioterror agent Romerol."
+	name = "Spread the experimental bioterror agent Romerol"
 	description = "Go to the designated dropoff area, and recieve the bioterror agent. Spread it to the crew, \
 	and watch then raise from the dead as mindless killing machines. Warning: The undead will attack you too."
 
