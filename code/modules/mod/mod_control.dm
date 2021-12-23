@@ -100,8 +100,6 @@
 		cell = new cell(src)
 	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
 	helmet.mod = src
-	helmet.alternate_layer = theme.alternate_layer
-	helmet.alternate_worn_layer = helmet.alternate_layer
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/armor/mod(src)
 	chestplate.mod = src
@@ -118,6 +116,8 @@
 		piece.desc = "[piece.desc] [theme.desc]"
 		piece.armor = getArmor(arglist(theme.armor))
 		piece.resistance_flags = theme.resistance_flags
+		piece.heat_protection = NONE
+		piece.cold_protection = NONE
 		piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
 		piece.permeability_coefficient = theme.permeability_coefficient
@@ -393,6 +393,8 @@
 		var/used_category
 		if(part == helmet)
 			used_category = HELMET_FLAGS
+			helmet.alternate_worn_layer = used_skin[HELMET_LAYER]
+			helmet.alternate_layer = used_skin[HELMET_LAYER]
 		if(part == chestplate)
 			used_category = CHESTPLATE_FLAGS
 		if(part == gauntlets)

@@ -13,7 +13,8 @@
 /// Actively usable module, you may only have one selected at a time.
 #define MODULE_ACTIVE 3
 
-//Defines used by the theme for clothing flags
+//Defines used by the theme for clothing flags and similar
+#define HELMET_LAYER "helmet_layer"
 #define HELMET_FLAGS "helmet_flags"
 #define CHESTPLATE_FLAGS "chestplate_flags"
 #define GAUNTLETS_FLAGS "gauntlets_flags"

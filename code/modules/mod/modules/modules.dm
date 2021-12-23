@@ -1556,6 +1556,8 @@
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
+			clothing_part.heat_protection = NONE
+			clothing_part.cold_protection = NONE
 			spaceproofed[clothing_part] = TRUE
 
 /obj/item/mod/module/armor_booster/on_deactivation()
@@ -1576,6 +1578,8 @@
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
+			clothing_part.heat_protection = initial(clothing_part.heat_protection)
+			clothing_part.cold_protection = initial(clothing_part.cold_protection)
 	spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/elite

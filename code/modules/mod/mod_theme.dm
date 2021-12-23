@@ -17,8 +17,6 @@
 	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	/// Resistance flags shared across the MOD pieces.
 	var/resistance_flags = NONE
-	/// Alternate layer used by the helmet
-	var/alternate_layer = NECK_LAYER
 	/// Max heat protection shared across the MOD pieces.
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD pieces.
@@ -44,6 +42,7 @@
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -66,6 +65,7 @@
 			),
 		),
 		"civilian" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -100,6 +100,7 @@
 	slowdown_active = 1
 	skins = list(
 		"engineering" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -134,6 +135,7 @@
 	slowdown_active = 1
 	skins = list(
 		"atmospheric" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -171,6 +173,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	skins = list(
 		"advanced" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -200,12 +203,12 @@
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cell_drain = DEFAULT_CELL_DRAIN * 2
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	skins = list(
 		"mining" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -239,6 +242,7 @@
 	slowdown_active = 0.5
 	skins = list(
 		"medical" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -261,6 +265,7 @@
 			),
 		),
 		"corpsman" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -297,6 +302,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	skins = list(
 		"rescue" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -326,7 +332,6 @@
 	default_skin = "research"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 2
@@ -334,6 +339,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	skins = list(
 		"research" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -361,13 +367,13 @@
 	desc = "An Apadyne Technologies security suit, offering shock protection and quicker speed, at the cost of carrying capacity."
 	default_skin = "security"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
-	alternate_layer = null
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	skins = list(
 		"security" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -398,7 +404,6 @@
 	default_skin = "safeguard"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 25, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
 	resistance_flags = FIRE_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
@@ -406,6 +411,7 @@
 	slowdown_active = 0.25
 	skins = list(
 		"safeguard" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -441,6 +447,7 @@
 	slowdown_active = 0.25
 	skins = list(
 		"magnate" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -474,6 +481,7 @@
 	slowdown_active = 1.25
 	skins = list(
 		"cosmohonk" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -510,6 +518,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	skins = list(
 		"syndicate" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -547,6 +556,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster/elite)
 	skins = list(
 		"elite" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -585,6 +595,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	skins = list(
 		"enchanted" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -613,7 +624,6 @@
 	default_skin = "prototype"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
-	alternate_layer = null
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	slowdown_inactive = 2.5
 	slowdown_active = 2
@@ -621,6 +631,7 @@
 	inbuilt_modules = list(/obj/item/mod/module/kinesis)
 	skins = list(
 		"prototype" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -655,6 +666,7 @@
 	slowdown_active = 0
 	skins = list(
 		"responsory" = list(
+			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
@@ -677,6 +689,7 @@
 			),
 		),
 		"inquisitory" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -705,12 +718,12 @@
 	default_skin = "apocryphal"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
 	skins = list(
 		"apocryphal" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -740,13 +753,13 @@
 	default_skin = "corporate"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	skins = list(
 		"corporate" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -776,13 +789,13 @@
 	default_skin = "debug"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 0)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	skins = list(
 		"debug" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
@@ -813,7 +826,6 @@
 	default_skin = "debug"
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
-	alternate_layer = null
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
 	cell_drain = DEFAULT_CELL_DRAIN * 0
@@ -821,6 +833,7 @@
 	slowdown_active = 0
 	skins = list(
 		"debug" = list(
+			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|STOPSPRESSUREDAMAGE,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,

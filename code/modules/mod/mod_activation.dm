@@ -116,6 +116,10 @@
 			balloon_alert(user, "suit already [active ? "shutting down" : "starting up"]!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
+	for(var/obj/item/mod/module/module as anything in modules)
+		if(!module.active)
+			continue
+		module.on_deactivation()
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
 	if(do_after(wearer, MOD_ACTIVATION_STEP_TIME, wearer, MOD_ACTIVATION_STEP_FLAGS))
@@ -153,10 +157,14 @@
 		part.clothing_flags |= part.visor_flags
 		part.flags_inv |= part.visor_flags_inv
 		part.flags_cover |= part.visor_flags_cover
+		part.heat_protection = initial(part.heat_protection)
+		part.cold_protection = initial(part.cold_protection)
 	else
 		part.flags_cover &= ~part.visor_flags_cover
 		part.flags_inv &= ~part.visor_flags_inv
 		part.clothing_flags &= ~part.visor_flags
+		part.heat_protection = NONE
+		part.cold_protection = NONE
 	if(part == boots)
 		boots.icon_state = "[skin]-boots[seal ? "-sealed" : ""]"
 		wearer.update_inv_shoes()
@@ -188,8 +196,6 @@
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
-			if(module.active)
-				module.on_deactivation()
 		STOP_PROCESSING(SSobj, src)
 	wearer.update_equipment_speed_mods()
 	active = on
