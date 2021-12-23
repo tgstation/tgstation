@@ -12,6 +12,10 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
+	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+		return FALSE
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
@@ -66,10 +70,6 @@
 	var/speed_mod = 1
 	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
-
-	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
-		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
-		return FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == -1)
 		surgery.step_in_progress = FALSE
