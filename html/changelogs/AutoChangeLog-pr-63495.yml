@@ -1,0 +1,5 @@
+author: "ReinaCoder"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Tramstation Vacant Commissary not having shutters"
+  - bugfix: "Engineers now have access to the SM's External Airlock on Tramstation"

@@ -12,6 +12,10 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
+	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+		return FALSE
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
