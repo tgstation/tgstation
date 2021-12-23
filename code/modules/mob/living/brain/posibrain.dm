@@ -68,12 +68,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, MAX_NAME_LEN)
+	if(isnull(input_seed))
+		return
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
-	if(input_seed)
-		to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
-		ask_role = input_seed
-		update_appearance()
+	to_chat(user, span_notice("You set the personality seed to \"[input_seed]\"."))
+	ask_role = input_seed
+	update_appearance()
 
 /obj/item/mmi/posibrain/proc/check_success()
 	searching = FALSE

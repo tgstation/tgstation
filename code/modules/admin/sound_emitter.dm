@@ -78,7 +78,7 @@
 		return
 	var/mob/user = usr
 	if(href_list["edit_label"])
-		var/new_label = tgui_input_text(user, "Choose a new label.", "Sound Emitter")
+		var/new_label = tgui_input_text(user, "Choose a new label", "Sound Emitter")
 		if(!new_label)
 			return
 		maptext = MAPTEXT(new_label)
@@ -90,7 +90,7 @@
 		sound_file = new_file
 		to_chat(user, span_notice("New sound file set to [sound_file]."), confidential = TRUE)
 	if(href_list["edit_volume"])
-		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
+		var/new_volume = tgui_input_number(user, "Choose a volume", "Sound Emitter", sound_volume, 100)
 		if(isnull(new_volume))
 			return
 		new_volume = clamp(new_volume, 0, 100)
@@ -99,21 +99,21 @@
 	if(href_list["edit_mode"])
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
-		new_mode = input(user, "Choose a new mode.", "Sound Emitter") as null|anything in mode_list
-		if(!new_mode)
+		new_mode = tgui_input_list(user, "Choose a new mode", "Sound Emitter", mode_list)
+		if(isnull(new_mode))
 			return
 		motus_operandi = mode_list[new_mode]
 		to_chat(user, span_notice("Mode set to [motus_operandi]."), confidential = TRUE)
 	if(href_list["edit_range"])
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
-		new_range = input(user, "Choose a new range.", "Sound Emitter") as null|anything in range_list
-		if(!new_range)
+		new_range = tgui_input_list(user, "Choose a new range", "Sound Emitter", range_list)
+		if(isnull(new_range))
 			return
 		emitter_range = range_list[new_range]
 		to_chat(user, span_notice("Range set to [emitter_range]."), confidential = TRUE)
 	if(href_list["edit_radius"])
-		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
+		var/new_radius = tgui_input_number(user, "Choose a radius.", "Sound Emitter", sound_volume, 127)
 		if(isnull(new_radius))
 			return
 		new_radius = clamp(new_radius, 0, 127)

@@ -87,12 +87,13 @@
 		to_chat(user, span_alert("There is no linked console."))
 
 /obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
-		var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag")
-		if(!user.canUseTopic(src, BE_CLOSE))
-			return
-		if(new_beacon_name)
-			name += " ([tag])"
-		return
-	else
+	if(!istype(W, /obj/item/pen)) //give a tag that is visible from the linked express console
 		return ..()
+	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
+	if(isnull(new_beacon_name))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	name += " ([tag])"
+
+

@@ -503,6 +503,8 @@
 		return
 	var/mob/living/simple_animal/hostile/giant_spider/midwife/spider = owner
 	spider.directive = tgui_input_text(spider, "Enter the new directive", "Create directive", "[spider.directive]")
+	if(isnull(spider.directive))
+		return
 	message_admins("[ADMIN_LOOKUPFLW(owner)] set its directive to: '[spider.directive]'.")
 	log_game("[key_name(owner)] set its directive to: '[spider.directive]'.")
 

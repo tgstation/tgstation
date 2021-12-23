@@ -103,18 +103,18 @@
 		if(!my_card)
 			to_chat(user, span_warning("ERROR: No identification card has been assigned to this paystand yet!"))
 			return
-		if(!signaler)
-			var/cash_limit = tgui_input_number(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold", 1, min_value = 1)
-			if(isnull(cash_limit))
-				return
-			cash_limit = round(cash_limit)
-			S.forceMove(src)
-			signaler = S
-			signaler_threshold = cash_limit
-			to_chat(user, "You attach the signaler to the paystand.")
-			desc += " A signaler appears to be attached to the scanner."
-		else
+		if(!isnull(signaler))
 			to_chat(user, span_warning("A signaler is already attached to this unit!"))
+			return
+		var/cash_limit = tgui_input_number(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold", 1, min_value = 1)
+		if(isnull(cash_limit))
+			return
+		cash_limit = round(cash_limit)
+		S.forceMove(src)
+		signaler = S
+		signaler_threshold = cash_limit
+		to_chat(user, "You attach the signaler to the paystand.")
+		desc += " A signaler appears to be attached to the scanner."
 
 	if(default_deconstruction_screwdriver(user, "card_scanner", "card_scanner", W))
 		return

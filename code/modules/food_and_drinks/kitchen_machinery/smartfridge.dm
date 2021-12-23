@@ -214,7 +214,7 @@
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
-				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", 1)
+				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", 1, min_value = 1)
 				if(isnull(desired))
 					return FALSE
 				desired = round(desired)
