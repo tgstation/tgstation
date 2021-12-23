@@ -105,7 +105,7 @@
 /// Used to fail objectives. Players can clear completed objectives in the UI
 /datum/traitor_objective/proc/fail_objective(penalty_cost = FALSE, trigger_update = TRUE)
 	// Don't let players succeed already succeeded/failed objectives
-	if(objective_state != OBJECTIVE_STATE_INACTIVE || objective_state != OBJECTIVE_STATE_ACTIVE)
+	if(objective_state != OBJECTIVE_STATE_INACTIVE && objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
@@ -120,7 +120,7 @@
 /// Used to succeed objectives. Allows the player to cash it out in the UI.
 /datum/traitor_objective/proc/succeed_objective()
 	// Don't let players succeed already succeeded/failed objectives
-	if(objective_state != OBJECTIVE_STATE_INACTIVE || objective_state != OBJECTIVE_STATE_ACTIVE)
+	if(objective_state != OBJECTIVE_STATE_INACTIVE && objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
 	handle_cleanup()

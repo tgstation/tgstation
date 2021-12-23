@@ -21,7 +21,7 @@
 	/// Whether this uplink handler has objectives.
 	var/has_objectives = TRUE
 	/// The maximum number of objectives that can be taken
-	var/maximum_active_objectives = 1
+	var/maximum_active_objectives = 2
 	/// The maximum number of potential objectives that can exist.
 	var/maximum_potential_objectives = 6
 	/// Current objectives taken
