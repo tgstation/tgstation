@@ -46,7 +46,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "am" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "an" = (
@@ -126,7 +126,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aJ" = (
@@ -224,7 +224,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "be" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bf" = (
@@ -900,7 +900,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "dX" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Andrew Thorn";
 	name = "Andrew Thorn"
 	},
@@ -1063,7 +1063,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eH" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Peter West";
 	name = "Peter West"
 	},
@@ -1176,7 +1176,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Eric Abnett";
 	name = "Eric Abnett"
 	},
@@ -1761,7 +1761,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	name = "Jeremy Tailor"
 	},
 /obj/effect/decal/cleanable/blood,
@@ -1863,7 +1863,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hh" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Dan Hedricks";
 	name = "Dan Hedricks"
 	},
@@ -1914,8 +1914,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit,
-/obj/item/clothing/head/helmet/space/hardsuit,
+/obj/item/mod/control/pre_equipped/standard,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "hr" = (
@@ -2010,7 +2009,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hL" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "William Gannon";
 	name = "William Gannon"
 	},
@@ -2342,7 +2341,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jo" = (
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (

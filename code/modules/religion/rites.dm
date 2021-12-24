@@ -167,7 +167,7 @@
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
 	..()
 	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
-		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
+		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)

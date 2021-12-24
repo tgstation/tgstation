@@ -444,7 +444,7 @@
 					threatcount += 2
 
 	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
+	if(istype(head, /obj/item/clothing/head/wizard))
 		threatcount += 2
 
 	//Check for nonhuman scum

@@ -180,6 +180,7 @@
 		diag_hud.add_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
 	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
@@ -352,15 +353,6 @@
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
-
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return TRUE
-
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
-
-/mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
-	return
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?

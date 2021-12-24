@@ -202,6 +202,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/storage/box/clown = 1,
 		/obj/item/seeds/kronkus = 1,
 		/obj/item/seeds/odious_puffball = 1,
+		/obj/item/mod/construction/broken_core = 1,
 		) = 8,
 
 	list(//medical and chemicals
