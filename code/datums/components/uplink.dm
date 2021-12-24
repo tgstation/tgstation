@@ -155,7 +155,7 @@
 	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
 	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
-	data["maximum_potential_objectives"] = CONFIG_GET(number/maximum_potential_objectives)
+	data["maximum_potential_objectives"] = handler.maximum_potential_objectives
 	if(uplink_handler.has_objectives)
 		var/list/potential_objectives = list()
 		var/index = 1

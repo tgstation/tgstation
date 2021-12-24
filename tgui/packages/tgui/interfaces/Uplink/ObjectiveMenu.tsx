@@ -1,6 +1,6 @@
 import { BooleanLike, classes } from "common/react";
 import { Component } from "inferno";
-import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox } from "../../components";
+import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from "../../components";
 import { calculateProgression, getReputation, Rank } from "./calculateReputationLevel";
 import { ObjectiveState } from "./constants";
 
@@ -226,7 +226,20 @@ export class ObjectiveMenu
                     </Flex.Item>
                   );
                 })}
-                {potentialObjectives.length < maximumPotentialObjectives && (
+                {(true || maximumPotentialObjectives === 0) && (
+                  <Dimmer>
+                    <Icon
+                      name="lock"
+                      color="red"
+                      fontSize={8}
+                      mb={2}
+                    />
+                    <Box color="red" fontSize={3}>
+                      You are locked out of objectives
+                    </Box>
+                  </Dimmer>
+                )
+                || potentialObjectives.length < maximumPotentialObjectives && (
                   <Flex.Item
                     basis="100%"
                     style={{
@@ -295,7 +308,7 @@ const ObjectiveFunction = (
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
       finalObjective={objective.final_objective}
-      canAbort={!!handleAbort}
+      canAbort={!!handleAbort && !objective.final_objective}
       grow={grow}
       handleCompletion={(event) => {
         if (handleCompletion) {
@@ -413,7 +426,7 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
               <Stack.Item>
                 <Button
                   icon="trash"
-                  color="red"
+                  color="transparent"
                   tooltip="Abort Objective"
                   onClick={handleAbort}
                 />
@@ -434,13 +447,15 @@ const ObjectiveElement = (props: ObjectiveElementProps, context) => {
             <Box mt={1}>
               Failing this objective will deduct {telecrystalPenalty} TC.
             </Box>
-          ) || (
+          )}
+          {(finalObjective && objectiveState === ObjectiveState.Inactive) && (
             <NoticeBox warning mt={1}>
               Taking this objective will lock you out of getting
               anymore objectives! Furthermore, you will be unable to
               abort this objective.
             </NoticeBox>
           )}
+
         </Box>
       </Flex.Item>
       <Flex.Item>
