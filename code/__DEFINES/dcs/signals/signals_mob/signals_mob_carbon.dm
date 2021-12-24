@@ -23,7 +23,7 @@
 ///from base of /obj/item/bodypart/proc/attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
-#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb" //from base of /obj/item/bodypart/proc/drop_limb(lost_limb, special)
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb" //from base of /obj/item/bodypart/proc/drop_limb(lost_limb, dismembered)
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed" // from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze)
 #define COMSIG_BODYPART_GAUZE_DESTROYED "bodypart_degauzed" // from [/obj/item/bodypart/proc/seep_gauze] when it runs out of absorption
 

@@ -14,7 +14,7 @@
 	)
 
 /datum/traitor_objective/assassinate
-	name = "Assassinate \[TARGET] the \[JOB TITLE]"
+	name = "Assassinate %TARGET% the %JOB TITLE%"
 	description = "Simply kill your target to accomplish this objective."
 
 	abstract_type = /datum/traitor_objective/assassinate
@@ -35,7 +35,7 @@
 	var/mob/living/kill_target
 
 /datum/traitor_objective/assassinate/calling_card
-	name = "Assassinate \[TARGET] the \[JOB TITLE], and plant a calling card"
+	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
 	description = "Kill your target and plant a calling card in the pockets of your victim. If your calling card gets destroyed before you are able to plant it, this objective will fail."
 
 	var/obj/item/paper/calling_card/card
@@ -47,8 +47,8 @@
 	heads_of_staff = TRUE
 
 /datum/traitor_objective/assassinate/behead
-	name = "Behead \[TARGET], the \[JOB TITLE]"
-	description = "Behead and hold \[TARGET]'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
+	name = "Behead %TARGET%, the %JOB TITLE%"
+	description = "Behead and hold %TARGET%'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
 
 	///the body who needs to hold the head
 	var/mob/living/needs_to_hold_head
@@ -108,7 +108,7 @@
 
 /datum/traitor_objective/assassinate/calling_card/on_target_qdeleted()
 	//you cannot plant anything on someone who is gone gone, so even if this happens after you're still liable to fail
-	fail_objective(telecrystal_penalty)
+	fail_objective(penalty_cost = telecrystal_penalty)
 
 /datum/traitor_objective/assassinate/behead/special_target_filter(list/possible_targets)
 	for(var/datum/mind/possible_target as anything in possible_targets)
@@ -163,7 +163,7 @@
 	var/try_target_late_joiners = FALSE
 	if(generating_for.late_joiner)
 		try_target_late_joiners = TRUE
-	for(var/datum/mind/possible_target in get_crewmember_minds())
+	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		var/target_area = get_area(possible_target.current)
 		if(possible_target == generating_for)
 			continue
@@ -185,7 +185,7 @@
 		possible_targets -= objective.kill_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
-		for(var/datum/mind/possible_target in all_possible_targets)
+		for(var/datum/mind/possible_target as anything in all_possible_targets)
 			if(!possible_target.late_joiner)
 				possible_targets -= possible_target
 		if(!possible_targets.len)
@@ -196,8 +196,8 @@
 
 	var/datum/mind/kill_target_mind = pick(possible_targets)
 	kill_target = kill_target_mind.current
-	replace_in_name("\[TARGET]", kill_target.real_name)
-	replace_in_name("\[JOB TITLE]", kill_target_mind.assigned_role.title)
+	replace_in_name("%TARGET%", kill_target.real_name)
+	replace_in_name("%JOB TITLE%", kill_target_mind.assigned_role.title)
 	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
 	return TRUE
 

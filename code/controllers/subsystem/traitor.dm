@@ -59,7 +59,9 @@ SUBSYSTEM_DEF(traitor)
 	if(!uplink_handler.has_progression)
 		return
 	uplink_handlers |= uplink_handler
-	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, .proc/uplink_handler_deleted, TRUE)
+	// An uplink handler can be registered multiple times if they get assigned to new uplinks, so
+	// override is set to TRUE here because it is intentional that they could get added multiple times.
+	RegisterSignal(uplink_handler, COMSIG_PARENT_QDELETING, .proc/uplink_handler_deleted, override = TRUE)
 
 /datum/controller/subsystem/traitor/proc/uplink_handler_deleted(datum/uplink_handler/uplink_handler)
 	SIGNAL_HANDLER

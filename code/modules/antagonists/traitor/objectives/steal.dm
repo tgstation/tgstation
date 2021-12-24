@@ -11,7 +11,7 @@
 	)
 
 /datum/traitor_objective/steal_item
-	name = "Steal \[ITEM] and place a bug on it. Hold it for \[TIME] minutes"
+	name = "Steal %ITEM% and place a bug on it. Hold it for \[TIME] minutes"
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for \[TIME] minutes"
 
 	progression_minimum = 20 MINUTES
@@ -146,7 +146,7 @@
 		special_equipment = target_item.special_equipment
 	hold_time_required = rand(hold_time_required[1], hold_time_required[2])
 	progression_reward += hold_time_required * (1 MINUTES)
-	replace_in_name("\[ITEM]", target_item.name)
+	replace_in_name("%ITEM%", target_item.name)
 	replace_in_name("\[TIME]", hold_time_required)
 	return TRUE
 
@@ -180,7 +180,7 @@
 			bug = new(user.drop_location())
 			user.put_in_hands(bug)
 			bug.balloon_alert(user, "the bug materializes in your hand")
-			bug.target_object = target_item.targetitem
+			bug.target_object_type = target_item.targetitem
 			AddComponent(/datum/component/traitor_objective_register, bug, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
 				penalty = telecrystal_penalty)

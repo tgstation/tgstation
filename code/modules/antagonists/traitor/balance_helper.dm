@@ -92,10 +92,10 @@
 	switch(action)
 		if("set_current_expected_progression")
 			SStraitor.current_global_progression = text2num(params["new_expected_progression"])
-			. = TRUE
+			return TRUE
 		if("generate_json")
 			var/temp_file = file("data/TraitorObjectiveDownloadTempFile")
 			fdel(temp_file)
 			WRITE_FILE(temp_file, all_objectives)
 			DIRECT_OUTPUT(ui.user, ftp(temp_file, "TraitorObjectiveData.json"))
-			. = TRUE
+			return TRUE

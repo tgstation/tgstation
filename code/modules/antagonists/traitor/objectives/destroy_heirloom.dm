@@ -12,8 +12,8 @@
 	)
 
 /datum/traitor_objective/destroy_heirloom
-	name = "Destroy \[ITEM], the family heirloom that belongs to \[TARGET] the \[JOB TITLE]"
-	description = "\[TARGET] has been on our shitlist for a while and we want to show him we mean business. Find his \[ITEM] and destroy it, you'll be rewarded handsomely for doing this"
+	name = "Destroy %ITEM%, the family heirloom that belongs to %TARGET% the %JOB TITLE%"
+	description = "%TARGET% has been on our shitlist for a while and we want to show him we mean business. Find his %ITEM% and destroy it, you'll be rewarded handsomely for doing this"
 
 	abstract_type = /datum/traitor_objective/destroy_heirloom
 
@@ -99,7 +99,7 @@
 
 /datum/traitor_objective/destroy_heirloom/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
+	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == generating_for)
 			continue
 		if(!ishuman(possible_target.current))
@@ -119,9 +119,9 @@
 	var/datum/quirk/item_quirk/family_heirloom/quirk = locate() in target_mind.current.quirks
 	target_item = quirk.heirloom.resolve()
 	AddComponent(/datum/component/traitor_objective_register, target_item, succeed_signals = COMSIG_PARENT_QDELETING)
-	replace_in_name("\[TARGET]", target_mind.name)
-	replace_in_name("\[JOB TITLE]", target_mind.assigned_role.title)
-	replace_in_name("\[ITEM]", target_item.name)
+	replace_in_name("%TARGET%", target_mind.name)
+	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
+	replace_in_name("%ITEM%", target_item.name)
 	return TRUE
 
 /datum/traitor_objective/destroy_heirloom/ungenerate_objective()

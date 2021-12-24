@@ -24,7 +24,7 @@
 /datum/traitor_objective/final/on_objective_taken(mob/user)
 	handler.maximum_potential_objectives = 0
 	for(var/datum/traitor_objective/objective as anything in handler.potential_objectives)
-		objective.fail_objective(FALSE)
+		objective.fail_objective()
 
 /datum/traitor_objective/final/is_duplicate(datum/traitor_objective/objective_to_compare)
 	return TRUE

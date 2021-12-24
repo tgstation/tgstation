@@ -158,19 +158,17 @@
 	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
 	if(uplink_handler.has_objectives)
 		var/list/potential_objectives = list()
-		var/index = 1
-		for(var/datum/traitor_objective/objective as anything in uplink_handler.potential_objectives)
+		for(var/index in 1 to uplink_handler.potential_objectives.len)
+			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			potential_objectives += list(objective_data)
-			index++
-		index = 1
 		var/list/active_objectives = list()
-		for(var/datum/traitor_objective/objective as anything in uplink_handler.active_objectives)
+		for(var/index in 1 to uplink_handler.active_objectives.len)
+			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
 			var/list/objective_data = objective.uplink_ui_data(user)
 			objective_data["id"] = index
 			active_objectives += list(objective_data)
-			index++
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
 
@@ -228,7 +226,7 @@
 	if(!objectives)
 		return
 
-	var/objective_index = text2num(params["index"])
+	var/objective_index = round(text2num(params["index"]))
 	if(objective_index < 1 || objective_index > length(objectives))
 		return TRUE
 	var/datum/traitor_objective/objective = objectives[objective_index]

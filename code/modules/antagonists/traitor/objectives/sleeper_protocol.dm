@@ -13,10 +13,10 @@
 	telecrystal_reward = 0
 
 	var/list/limited_to = list(
-		"Chief Medical Officer",
-		"Medical Doctor",
-		"Paramedic",
-		"Virologist",
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_MEDICAL_DOCTOR,
+		JOB_PARAMEDIC,
+		JOB_VIROLOGIST,
 	)
 
 	var/obj/item/disk/surgery/sleeper_protocol/disk

@@ -9,21 +9,21 @@
 	)
 
 /datum/traitor_objective/kill_pet
-	name = "Kill the \[DEPARTMENT HEAD]'s beloved \[PET]"
-	description = "The \[DEPARTMENT HEAD] has particularly annoyed us by sending us spam emails and we want their \[PET] dead to show them what happens when they cross us. "
+	name = "Kill the %DEPARTMENT HEAD%'s beloved %PET%"
+	description = "The %DEPARTMENT HEAD% has particularly annoyed us by sending us spam emails and we want their %PET% dead to show them what happens when they cross us. "
 	telecrystal_reward = list(1, 3)
 
 	progression_reward = list(3 MINUTES, 6 MINUTES)
 
 	/// Possible heads mapped to their pet type. Can be a list of possible pets
 	var/list/possible_heads = list(
-		"Head of Personnel" = list(
+		JOB_HEAD_OF_PERSONNEL = list(
 			/mob/living/simple_animal/pet/dog/corgi/ian,
 			/mob/living/simple_animal/pet/dog/corgi/puppy/ian
 		),
-		"Captain" = /mob/living/simple_animal/pet/fox/renault,
-		"Chief Medical Officer" = /mob/living/simple_animal/pet/cat/runtime,
-		"Chief Engineer" = /mob/living/simple_animal/parrot/poly,
+		JOB_CAPTAIN = /mob/living/simple_animal/pet/fox/renault,
+		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
+		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
 	)
 	/// The head that we are targetting
 	var/datum/job/target
@@ -44,7 +44,7 @@
 
 	limited_to_department_head = FALSE
 	possible_heads = list(
-		"Head of Security" = list(
+		JOB_HEAD_OF_SECURITY = list(
 			/mob/living/simple_animal/hostile/carp/lia,
 			/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus
 		),
@@ -75,8 +75,8 @@
 		return
 	AddComponent(/datum/component/traitor_objective_register, target_pet, \
 		succeed_signals = list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
-	replace_in_name("\[DEPARTMENT HEAD]", target.title)
-	replace_in_name("\[PET]", target_pet.name)
+	replace_in_name("%DEPARTMENT HEAD%", target.title)
+	replace_in_name("%PET%", target_pet.name)
 	return TRUE
 
 /datum/traitor_objective/kill_pet/ungenerate_objective()

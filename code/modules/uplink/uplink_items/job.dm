@@ -16,7 +16,7 @@
 			Be warned, that spirits are often capricious or just little assholes. To use, simply speak your question aloud, then begin shaking."
 	item = /obj/item/toy/eightball/haunted
 	cost = 2
-	restricted_roles = list("Curator")
+	restricted_roles = list(JOB_CURATOR)
 	limited_stock = 1 //please don't spam deadchat
 
 /datum/uplink_item/role_restricted/bureaucratic_error_remote
@@ -25,14 +25,14 @@
 	cost = 2
 	limited_stock = 1
 	item = /obj/item/devices/bureaucratic_error_remote
-	restricted_roles = list("Head of Personnel", "Quartermaster")
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
 	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clowns who wish to reconnect with their former clownish nature or for clowns who wish to torment and play with their prey before killing them."
 	item = /obj/item/dnainjector/clumsymut
 	cost = 1
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/ancient_jumpsuit
@@ -40,7 +40,7 @@
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
 	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
-	restricted_roles = list("Assistant")
+	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
 // Low progression cost
@@ -51,7 +51,7 @@
 	progression_minimum = 5 MINUTES
 	cost = 4
 	item = /obj/item/firing_pin/clown/ultra
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/clownsuperpin
@@ -60,7 +60,7 @@
 	progression_minimum = 5 MINUTES
 	cost = 7
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/syndimmi
@@ -69,7 +69,7 @@
 	progression_minimum = 10 MINUTES
 	item = /obj/item/mmi/syndie
 	cost = 2
-	restricted_roles = list("Roboticist", "Research Director", "Scientist", "Medical Doctor", "Chief Medical Officer")
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
@@ -80,7 +80,7 @@
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
 	surplus = 0
-	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
+	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -90,7 +90,7 @@
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
 	surplus = 20
-	restricted_roles = list("Janitor")
+	restricted_roles = list(JOB_JANITOR)
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
 	name = "Reverse Bear Trap"
@@ -100,7 +100,7 @@
 	progression_minimum = 10 MINUTES
 	cost = 5
 	item = /obj/item/reverse_bear_trap
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
@@ -108,7 +108,7 @@
 	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
@@ -116,7 +116,7 @@
 	progression_minimum = 15 MINUTES
 	item = /obj/item/gun/magic/hook
 	cost = 11
-	restricted_roles = list("Cook")
+	restricted_roles = list(JOB_COOK)
 
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
@@ -124,7 +124,7 @@
 	progression_minimum = 15 MINUTES
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
-	restricted_roles = list("Station Engineer")
+	restricted_roles = list(JOB_STATION_ENGINEER)
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
@@ -133,7 +133,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/gorillacubes
 	name = "Box of Gorilla Cubes"
@@ -142,7 +142,7 @@
 	progression_minimum = 20 MINUTES
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
 
 // Medium progression cost
 
@@ -152,7 +152,7 @@
 	Insert into an Operating Console to enable the procedure."
 	progression_minimum = 25 MINUTES
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
 	cost = 5
 
 /datum/uplink_item/role_restricted/reverse_revolver
@@ -162,7 +162,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/pressure_mod
 	name = "Kinetic Accelerator Pressure Mod"
@@ -181,7 +181,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
-	restricted_roles = list("Mime")
+	restricted_roles = list(JOB_MIME)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/laser_arm
@@ -190,7 +190,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 10
 	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
-	restricted_roles = list("Roboticist", "Research Director")
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
@@ -198,7 +198,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/gun/chem
 	cost = 12
-	restricted_roles = list("Chemist", "Chief Medical Officer", "Botanist")
+	restricted_roles = list(JOB_CHEMIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_BOTANIST)
 
 /datum/uplink_item/role_restricted/pie_cannon
 	name = "Banana Cream Pie Cannon"
@@ -206,7 +206,7 @@
 	progression_minimum = 30 MINUTES
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	surplus = 0 //No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/clown_bomb
@@ -219,7 +219,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -229,7 +229,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/mecha_parts/concealed_weapon_bay
 	cost = 3
-	restricted_roles = list("Roboticist", "Research Director")
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
 // High progression cost
 
@@ -242,7 +242,7 @@
 	progression_minimum = 40 MINUTES
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
-	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
@@ -255,7 +255,7 @@
 	progression_minimum = 45 MINUTES
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
@@ -266,7 +266,7 @@
 	progression_minimum = 45 MINUTES
 	item = /obj/item/his_grace
 	cost = 20
-	restricted_roles = list("Chaplain")
+	restricted_roles = list(JOB_CHAPLAIN)
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 /datum/uplink_item/role_restricted/blastcannon
@@ -278,4 +278,4 @@
 	progression_minimum = 45 MINUTES
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
-	restricted_roles = list("Research Director", "Scientist")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)

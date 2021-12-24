@@ -1,6 +1,6 @@
 /datum/traitor_objective/final/romerol
-	name = "Spread the experimental bioterror agent Romerol"
-	description = "Go to the designated dropoff area, and recieve the bioterror agent. Spread it to the crew, \
+	name = "Spread the experimental bioterror agent Romerol by calling a droppod down at %AREA%"
+	description = "Go to %AREA%, and recieve the bioterror agent. Spread it to the crew, \
 	and watch then raise from the dead as mindless killing machines. Warning: The undead will attack you too."
 
 	//this is a prototype so this progression is for all basic level kill objectives
@@ -19,6 +19,7 @@
 		if(istype(possible_area, /area/hallway) || istype(possible_area, /area/security))
 			possible_areas -= possible_area
 	romerol_spawnarea_type = pick(possible_areas)
+	replace_in_name("%AREA%", romerol_spawnarea_type.name)
 	return TRUE
 
 /datum/traitor_objective/final/romerol/generate_ui_buttons(mob/user)

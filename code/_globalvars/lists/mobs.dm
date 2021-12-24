@@ -109,9 +109,10 @@ GLOBAL_LIST_INIT(construct_radial_images, list(
 				.[E.key_third_person] |= E
 
 /proc/get_crewmember_minds()
-	. = list()
-	for(var/V in GLOB.data_core.locked)
-		var/datum/data/record/R = V
-		var/datum/mind/M = R.fields["mindref"]
-		if(M)
-			. += M
+	var/list/minds = list()
+	for(var/data in GLOB.data_core.locked)
+		var/datum/data/record/record = data
+		var/datum/mind/mind = record.fields["mindref"]
+		if(mind)
+			minds += mind
+	return minds

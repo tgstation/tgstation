@@ -1298,7 +1298,7 @@
 					if(selected_trim_path)
 						SSid_access.apply_trim_to_chameleon_card(src, trim_list[selected_trim_path])
 
-				var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
+				var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels.", "Agent card job assignment", assignment ? assignment : JOB_ASSISTANT, MAX_MESSAGE_LEN)
 				if(target_occupation)
 					assignment = target_occupation
 

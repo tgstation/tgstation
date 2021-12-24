@@ -6,7 +6,7 @@
 
 ///smuggle! bring a traitor item from its arrival area to the cargo shuttle, where the objective completes on selling the item
 /datum/traitor_objective/smuggle
-	name = "Smuggle \[CONTRABAND] from \[AREA] off the station via cargo shuttle."
+	name = "Smuggle %CONTRABAND% from %AREA% off the station via cargo shuttle."
 	description = "Go to a designated area, pick up syndicate contraband, and get it off the station via the cargo shuttle. \
 	You will instantly fail this objective if anyone else picks up your contraband. If you fail, you are liable for the costs \
 	of the smuggling item."
@@ -88,8 +88,8 @@
 	//choose contraband type to spawn when reaching starting area
 	contraband_type = pick(possible_contrabands)
 	telecrystal_penalty = possible_contrabands[contraband_type]
-	replace_in_name("\[CONTRABAND]", initial(contraband_type.name))
-	replace_in_name("\[AREA]", initial(smuggle_spawn_type.name))
+	replace_in_name("%CONTRABAND%", initial(contraband_type.name))
+	replace_in_name("%AREA%", initial(smuggle_spawn_type.name))
 	return TRUE
 
 /datum/traitor_objective/smuggle/ungenerate_objective()
@@ -104,7 +104,7 @@
 /datum/traitor_objective/smuggle/proc/on_contraband_pickup(datum/source, mob/taker)
 	SIGNAL_HANDLER
 	if(taker != smuggler)
-		fail_objective(telecrystal_penalty)
+		fail_objective(penalty_cost = telecrystal_penalty)
 
 //smuggling container
 /obj/item/reagent_containers/glass/bottle/ritual_wine

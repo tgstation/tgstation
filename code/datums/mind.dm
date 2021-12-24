@@ -621,7 +621,7 @@
 				wipe_memory()//Remove any memory they may have had.
 				log_admin("[key_name(usr)] removed [current]'s uplink.")
 			if("crystals")
-				if(check_rights(R_FUN, 0))
+				if(check_rights(R_FUN))
 					var/datum/component/uplink/U = find_syndicate_uplink()
 					if(U)
 						var/crystals = input("Amount of telecrystals for [key]","Syndicate uplink", U.uplink_handler.telecrystals) as null | num
@@ -630,7 +630,7 @@
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
 			if("progression")
-				if(!check_rights(R_FUN, 0))
+				if(!check_rights(R_FUN))
 					return
 				var/datum/component/uplink/uplink = find_syndicate_uplink()
 				if(!uplink)
@@ -644,14 +644,14 @@
 				uplink.uplink_handler.update_objectives()
 				uplink.uplink_handler.generate_objectives()
 			if("give_objective")
-				if(!check_rights(R_FUN, 0))
+				if(!check_rights(R_FUN))
 					return
 				var/datum/component/uplink/uplink = find_syndicate_uplink()
 				if(!uplink || !uplink.uplink_handler)
 					return
 				var/list/all_objectives = subtypesof(/datum/traitor_objective)
 				var/objective_typepath = text2path(tgui_input_list(usr, "Select objective", "Select objective", all_objectives))
-				if(!objective_typepath || !ispath(objective_typepath, /datum/traitor_objective))
+				if(!ispath(objective_typepath, /datum/traitor_objective))
 					return
 				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
 				if(objective)

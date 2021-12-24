@@ -7,18 +7,18 @@
 	)
 
 /datum/traitor_objective/bug_room
-	name = "Bug the \[DEPARTMENT HEAD]'s office"
-	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it down in the \[DEPARTMENT HEAD]'s office. If it gets destroyed before you are able to plant it, this objective will fail."
+	name = "Bug the %DEPARTMENT HEAD%'s office"
+	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it down in the %DEPARTMENT HEAD%'s office. If it gets destroyed before you are able to plant it, this objective will fail."
 
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
 	var/list/applicable_heads = list(
-		"Research Director" = /area/command/heads_quarters/rd,
-		"Chief Medical Officer" = /area/command/heads_quarters/cmo,
-		"Chief Engineer" = /area/command/heads_quarters/ce,
-		"Head of Personnel" = /area/command/heads_quarters/hop,
-		"Captain" = /area/command/heads_quarters/captain, // For head roles so that they can still get this objective.
+		JOB_RESEARCH_DIRECTOR = /area/command/heads_quarters/rd,
+		JOB_CHIEF_MEDICAL_OFFICER = /area/command/heads_quarters/cmo,
+		JOB_CHIEF_ENGINEER = /area/command/heads_quarters/ce,
+		JOB_HEAD_OF_PERSONNEL = /area/command/heads_quarters/hop,
+		JOB_CAPTAIN = /area/command/heads_quarters/captain, // For head roles so that they can still get this objective.
 	)
 	var/datum/job/target_office
 	var/requires_head_as_supervisor = TRUE
@@ -28,7 +28,7 @@
 /datum/traitor_objective/bug_room/risky
 	progression_minimum = 10 MINUTES
 	applicable_heads = list(
-		"Captain" = /area/command/heads_quarters/captain,
+		JOB_CAPTAIN = /area/command/heads_quarters/captain,
 	)
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = list(1, 2)
@@ -37,7 +37,7 @@
 /datum/traitor_objective/bug_room/super_risky
 	progression_minimum = 20 MINUTES
 	applicable_heads = list(
-		"Head of Security" = /area/command/heads_quarters/hos,
+		JOB_HEAD_OF_SECURITY = /area/command/heads_quarters/hos,
 	)
 	progression_reward = list(10 MINUTES, 15 MINUTES)
 	telecrystal_reward = list(2, 3)
@@ -64,7 +64,7 @@
 			bug = new(user.drop_location())
 			user.put_in_hands(bug)
 			bug.balloon_alert(user, "the bug materializes in your hand")
-			bug.target_area = applicable_heads[target_office.title]
+			bug.target_area_type = applicable_heads[target_office.title]
 			AddComponent(/datum/component/traitor_objective_register, bug, \
 				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
@@ -84,7 +84,7 @@
 	var/target_head = pick(possible_heads)
 
 	target_office = SSjob.name_occupations[target_head]
-	replace_in_name("\[DEPARTMENT HEAD]", target_head)
+	replace_in_name("%DEPARTMENT HEAD%", target_head)
 	return TRUE
 
 /datum/traitor_objective/bug_room/ungenerate_objective()
@@ -104,9 +104,9 @@
 	icon_state = "bug"
 
 	/// The area at which this bug can be planted at Has to be a type.
-	var/area/target_area
+	var/area/target_area_type
 	/// The object on which this bug can be planted on. Has to be a type.
-	var/obj/target_object
+	var/obj/target_object_type
 	/// The object this bug is currently planted on
 	var/obj/planted_on
 
@@ -114,13 +114,13 @@
 
 /obj/item/traitor_bug/interact(mob/user)
 	. = ..()
-	if(!target_area)
+	if(!target_area_type)
 		return
 	var/turf/location = drop_location()
 	if(!location)
 		return
 	var/area/current_area = get_area(location)
-	if(!istype(current_area, target_area))
+	if(!istype(current_area, target_area_type))
 		balloon_alert(user, "you can't deploy this here!")
 		return
 	if(!do_after(user, deploy_time, src))
@@ -131,13 +131,13 @@
 
 /obj/item/traitor_bug/afterattack(atom/movable/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!target_object)
+	if(!target_object_type)
 		return
 	if(!user.Adjacent(target))
 		return
 	var/result = SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PRE_PLANTED_OBJECT, target)
 	if(!(result & COMPONENT_FORCE_PLACEMENT))
-		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object))
+		if(result & COMPONENT_FORCE_FAIL_PLACEMENT || !istype(target, target_object_type))
 			balloon_alert(user, "you can't attach this onto here!")
 			return
 	if(!do_after(user, deploy_time, src))
@@ -183,5 +183,5 @@
 	animate(src, alpha = 30, time = seconds)
 
 /obj/structure/traitor_bug/deconstruct(disassembled)
-	explosion(src, 0, 0, 3, 5, explosion_cause = src) // Pretty god damn dangerous
+	explosion(src, light_impact_range = 3, flame_range = 5, explosion_cause = src) // Pretty god damn dangerous
 	return ..()
