@@ -3,6 +3,7 @@
 	var/amount
 	var/burn_require
 	var/overlay
+	var/burn_timer
 
 	var/static/list/blacklist = typecacheof(list(
 		/turf/open/lava,
@@ -59,13 +60,19 @@
 		amount += newC.amount
 	else
 		amount += _amount
+	if (burn_timer) // prevent people from skipping a longer timer
+		deltimer(burn_timer)
+		var/fakefire
+		for (var/obj/effect/overlay/thermite/fire in parent)
+			fakefire = fire
+		burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, fakefire, usr), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 
 /datum/component/thermite/proc/thermite_melt(mob/user)
 	var/turf/master = parent
 	master.cut_overlay(overlay)
 	playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 	var/obj/effect/overlay/thermite/fakefire = new(master)
-	addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS))
+	burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, fakefire, user), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 	UnregisterFromParent()
 
 /datum/component/thermite/proc/burn_parent(datum/fakefire, mob/user)

@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Clipping and sizing issues on drone consoles have been fixed."

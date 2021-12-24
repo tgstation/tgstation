@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Allows the supermatter crystal to produce gases while powered, even in absolutely empty turfs, excluding space turfs."

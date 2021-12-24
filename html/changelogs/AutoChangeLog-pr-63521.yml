@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed garbage bags being uncleanable by mops, for silly silly reasons"

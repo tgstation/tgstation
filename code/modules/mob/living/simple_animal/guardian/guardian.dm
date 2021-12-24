@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		add_atom_colour(guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrename()
-	var/new_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		guardianrename()
@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	if(summoner)
 		var/sender_key = key
-		var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
+		var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
 		if(sender_key != key || !input) //guardian got reset, or did not enter anything
 			return
 
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set name = "Communicate"
 	set category = "Guardian"
 	set desc = "Communicate telepathically with your guardian."
-	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
+	var/input = tgui_input_text(src, "Enter a message to tell your guardian", "Message")
 	if(!input)
 		return
 

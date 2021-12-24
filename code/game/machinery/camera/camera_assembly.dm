@@ -221,9 +221,8 @@
 		return FALSE
 
 	tool.play_tool_sound(src)
-	var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13", multiline = TRUE)
-	if(!input)
-		to_chat(user, span_warning("No input found, please hang up and try your call again!"))
+	var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13")
+	if(isnull(input))
 		return
 	var/list/tempnetwork = splittext(input, ",")
 	if(!length(tempnetwork))

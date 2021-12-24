@@ -559,3 +559,52 @@
   - bugfix: The Nanotrasen News Network has updated their news tickers for when a
       station horrifically blows up to be more accommodating towards the person directly
       responsible for making sure it didn't horrifically blow up.
+2021-12-23:
+  JohnFulpWillard:
+  - bugfix: Balloon alerts when picking up staffs as a non wizard now properly appears
+      over the player's head.
+  LemonInTheDark:
+  - bugfix: Fixed garbage bags being uncleanable by mops, for silly silly reasons
+  Pickle-Coding:
+  - bugfix: Allows the supermatter crystal to produce gases while powered, even in
+      absolutely empty turfs, excluding space turfs.
+  SuperNovaa41:
+  - bugfix: Fixes the ablative trenchcoat giving you a permanent sechud.
+  - qol: The health sensor's status is now more clear when unsecured.
+  - bugfix: Fixed players appearing above fire and foam.
+  - bugfix: Void cloak (and other items intended to be invisible) can longer be seen
+      and unequipped in the strip menu.
+  - bugfix: You can no longer wrap a locker to bypass the drag slowdown.
+  - bugfix: Flying over lava no longer erroneously ignites you ablaze.
+  jlsnow301:
+  - bugfix: Fixes width on black market uplinks to show three delivery options. Technology!
+  optimumtact:
+  - bugfix: Fixed mops wetting the turf when you refill them from the mop bucket I'm
+      oranges and I don't put changelogs on my PRs
+2021-12-24:
+  AndrewL97:
+  - bugfix: skin tone sorting
+  - refactor: refactor various color procs to use natives instead
+  GoldenAlpharex, sprites from WalterJe:
+  - qol: Conveyors will now also convey how to interact with them with tools upon
+      being examined.
+  - imageadd: Updated the sprites of the conveyor belts and the conveyor switches,
+      ported and adapted from Tau Ceti!
+  - refactor: Brought up to today's standards conveyor codes, alongside properly documenting
+      it. Also changed how conveyor corners are handled to make them both more intuitive
+      for mappers and for people in-game.
+  ReinaCoder:
+  - bugfix: Fixes Tramstation Vacant Commissary not having shutters
+  - bugfix: Engineers now have access to the SM's External Airlock on Tramstation
+  SuperNovaa41:
+  - bugfix: You can no longer continue a surgery if the organ in question is somehow
+      removed whilst mid operation.
+  - bugfix: Non-headrev revs can be properly revived after a revolution is quelled
+      again.
+  - bugfix: You can no longer bypass the red alert lock on the escape pod safe.
+  - bugfix: Fixes an exploit with thermite burn times.
+  jlsnow301:
+  - spellcheck: Fixed a number of typos in HTML elements that would cause messages
+      to not render properly.
+  - bugfix: Changed the font of some messages to better reflect if they were errors,
+      notices.

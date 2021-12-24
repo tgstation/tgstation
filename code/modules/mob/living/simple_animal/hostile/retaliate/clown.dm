@@ -368,7 +368,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
+	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom

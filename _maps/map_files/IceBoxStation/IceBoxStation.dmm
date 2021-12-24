@@ -383,6 +383,7 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "abN" = (
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "acd" = (
@@ -5542,6 +5543,8 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
 /obj/structure/cable,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /obj/item/stock_parts/cell/emproof{
 	pixel_x = -4;
 	pixel_y = -1
@@ -6972,6 +6975,16 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/mod/construction/core{
+	pixel_x = -4
+	},
+/obj/item/mod/construction/core{
+	pixel_x = 4
+	},
+/obj/item/mod/construction/core{
+	pixel_y = 4
+	},
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
 "biP" = (
@@ -22320,6 +22333,7 @@
 /area/science/robotics/lab)
 "hym" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/recharge_station,
 /turf/open/floor/wood,
 /area/command/meeting_room)
 "hyo" = (
@@ -33790,6 +33804,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/engineering/lobby)
 "nuM" = (
@@ -37743,7 +37758,7 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/item/kirbyplants/random,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "ptZ" = (

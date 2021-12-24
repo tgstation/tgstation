@@ -265,7 +265,7 @@
 
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-		to_chat(owner, "<span class ='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
+		to_chat(owner, "<span class='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you."))
@@ -276,9 +276,9 @@
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 		else
-			to_chat(owner, "<span class ='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts."))
@@ -431,7 +431,7 @@
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/datum/mind/rev_head as anything in ex_revs)
+		for (var/datum/mind/rev_head as anything in ex_headrevs)
 			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
 			rev_head.current.med_hud_set_status()
 

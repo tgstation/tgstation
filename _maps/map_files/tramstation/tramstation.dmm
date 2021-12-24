@@ -2129,12 +2129,12 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "ana" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable/layer3,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "anb" = (
@@ -6038,6 +6038,16 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/item/mod/construction/core{
+	pixel_x = -4
+	},
+/obj/item/mod/construction/core{
+	pixel_x = 4
+	},
+/obj/item/mod/construction/core{
+	pixel_y = 4
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "aIc" = (
@@ -6101,6 +6111,7 @@
 	dir = 5
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "aIm" = (
@@ -8905,6 +8916,10 @@
 /area/medical/surgery)
 "bsp" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissarydoor";
+	name = "Vacant Commissary Shutters"
+	},
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "bsq" = (
@@ -14898,10 +14913,13 @@
 /turf/open/floor/carpet,
 /area/commons/dorms)
 "dHW" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 10
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
-/turf/open/floor/iron,
+/obj/structure/table,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
+/turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "dHX" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -16233,21 +16251,15 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "efY" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/storage/box/lights/mixed,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/emproof,
-/obj/item/stock_parts/cell/emproof,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engineering - SMES Misc";
 	dir = 10;
 	network = list("ss13","engineering")
 	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "egh" = (
@@ -18501,13 +18513,11 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "eUc" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "eUe" = (
@@ -19110,6 +19120,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/security/office)
 "fgr" = (
@@ -20534,7 +20545,7 @@
 /area/maintenance/tram/mid)
 "fEy" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -32658,6 +32669,8 @@
 	name = "Medbay Requests Console"
 	},
 /obj/structure/closet/l3closet,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "kgz" = (
@@ -37835,10 +37848,20 @@
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "mkS" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 6
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/box/lights/mixed,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/cell/emproof,
+/obj/item/stock_parts/cell/emproof,
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "mlb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -39020,6 +39043,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "mLo" = (
@@ -39608,7 +39632,7 @@
 /area/commons/lounge)
 "mVK" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -50237,8 +50261,8 @@
 /turf/open/floor/carpet,
 /area/cargo/miningdock)
 "qVF" = (
-/obj/effect/landmark/event_spawn,
 /obj/structure/cable,
+/obj/machinery/recharge_station,
 /turf/open/floor/plating,
 /area/command/bridge)
 "qVO" = (
@@ -67026,6 +67050,7 @@
 "xlC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/command/bridge)
 "xlD" = (

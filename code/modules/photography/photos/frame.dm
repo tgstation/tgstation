@@ -19,7 +19,7 @@
 			displayed = I
 			update_appearance()
 		else
-			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
+			to_chat(user, span_warning("\The [src] already contains a photo."))
 	..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -139,7 +139,7 @@
 			framed = P
 			update_appearance()
 		else
-			to_chat(user, "<span class=notice>\The [src] already contains a photo.</span>")
+			to_chat(user, span_warning("\The [src] already contains a photo."))
 
 	..()
 

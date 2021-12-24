@@ -10,12 +10,12 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5, 10, 15)
 	volume = 15
-	var/busy = FALSE // needed for delayed drawing of blood
-	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_EASY * 0.5
 	sharpness = SHARP_POINTY
+	/// Flags used by the injection
+	var/inject_flags = NONE
 
 /obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
@@ -25,8 +25,6 @@
 	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user, proximity)
-	if(busy)
-		return FALSE
 	if(!proximity)
 		return FALSE
 	if(!target.reagents)
@@ -34,7 +32,7 @@
 
 	if(isliving(target))
 		var/mob/living/living_target = target
-		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags))
 			return FALSE
 
 	// chance of monkey retaliation
@@ -64,12 +62,12 @@
 
 	if(isliving(target))
 		var/mob/living/living_target = target
-		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
+		if(!living_target.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags))
 			return
 		if(living_target != user)
 			living_target.visible_message(span_danger("[user] is trying to inject [living_target]!"), \
 									span_userdanger("[user] is trying to inject you!"))
-			if(!do_mob(user, living_target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
+			if(!do_mob(user, living_target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags)))
 				return
 			if(!reagents.total_volume)
 				return
@@ -99,13 +97,10 @@
 		if(target != user)
 			target.visible_message(span_danger("[user] is trying to take a blood sample from [target]!"), \
 							span_userdanger("[user] is trying to take a blood sample from you!"))
-			busy = TRUE
-			if(!do_mob(user, target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE)))
-				busy = FALSE
+			if(!do_mob(user, target, CHEM_INTERACT_DELAY(3 SECONDS, user), extra_checks = CALLBACK(living_target, /mob/living/proc/try_inject, user, null, INJECT_TRY_SHOW_ERROR_MESSAGE|inject_flags)))
 				return SECONDARY_ATTACK_CONTINUE_CHAIN
 			if(reagents.total_volume >= reagents.maximum_volume)
 				return SECONDARY_ATTACK_CONTINUE_CHAIN
-		busy = FALSE
 		if(living_target.transfer_blood_to(src, drawn_amount))
 			user.visible_message(span_notice("[user] takes a blood sample from [living_target]."))
 		else
@@ -234,7 +229,7 @@
 	base_icon_state = "piercing"
 	volume = 10
 	possible_transfer_amounts = list(5, 10)
-	proj_piercing = 1
+	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
 /obj/item/reagent_containers/syringe/spider_extract
 	name = "spider extract syringe"

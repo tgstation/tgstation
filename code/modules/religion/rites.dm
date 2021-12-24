@@ -167,7 +167,7 @@
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
 	..()
 	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
-		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
+		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
@@ -439,7 +439,7 @@
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	autograph.visible_message(span_notice("words magically form on [autograph]!"))
+	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)

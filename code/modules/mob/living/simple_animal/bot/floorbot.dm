@@ -386,7 +386,7 @@
 
 /mob/living/simple_animal/bot/floorbot/update_icon_state()
 	. = ..()
-	icon_state = "[toolbox_color]floorbot[get_bot_flag(BOT_MODE_ON)]"
+	icon_state = "[toolbox_color]floorbot[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
 	bot_mode_flags &= ~BOT_MODE_ON
