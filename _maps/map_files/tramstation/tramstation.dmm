@@ -37429,6 +37429,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/service/bar)
+"mbQ" = (
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/service/chapel)
 "mcb" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "MiniSat Maintenance";
@@ -94278,7 +94282,7 @@ avP
 avP
 avP
 oOc
-avP
+mbQ
 avP
 avP
 avP
