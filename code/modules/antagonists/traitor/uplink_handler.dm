@@ -168,6 +168,8 @@
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
 	if(istype(to_abort, /datum/traitor_objective/final))
 		return
+	if(to_abort.objective_state != OBJECTIVE_STATE_ACTIVE)
+		return
 	to_abort.fail_objective(penalty_cost = to_abort.telecrystal_penalty)
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)

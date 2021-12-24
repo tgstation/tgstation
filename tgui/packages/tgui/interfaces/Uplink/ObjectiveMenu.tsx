@@ -308,7 +308,8 @@ const ObjectiveFunction = (
       objectiveState={objective.objective_state}
       originalProgression={objective.original_progression}
       finalObjective={objective.final_objective}
-      canAbort={!!handleAbort && !objective.final_objective}
+      canAbort={!!handleAbort && !objective.final_objective
+        && objective.objective_state === ObjectiveState.Active}
       grow={grow}
       handleCompletion={(event) => {
         if (handleCompletion) {
