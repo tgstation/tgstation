@@ -8,6 +8,7 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	dying_key = DYE_REGISTRY_UNDER
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"

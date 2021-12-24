@@ -46,6 +46,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_RD = /obj/item/clothing/under/rank/rnd/research_director/skirt,
 		DYE_CMO = /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt,
 		DYE_PRISONER = /obj/item/clothing/under/rank/prisoner/skirt,
+		DYE_SYNDICATE = /obj/item/clothing/under/syndicate/skirt,
 	),
 	DYE_REGISTRY_GLOVES = list(
 		DYE_RED = /obj/item/clothing/gloves/color/red,
@@ -127,7 +128,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_SYNDICATE = /obj/item/bedsheet/syndie,
 		DYE_CENTCOM = /obj/item/bedsheet/centcom
 	),
-		DYE_REGISTRY_DOUBLE_BEDSHEET = list(
+	DYE_REGISTRY_DOUBLE_BEDSHEET = list(
 		DYE_RED = /obj/item/bedsheet/red/double,
 		DYE_ORANGE = /obj/item/bedsheet/orange/double,
 		DYE_YELLOW = /obj/item/bedsheet/yellow/double,
