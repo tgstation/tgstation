@@ -651,7 +651,7 @@
 					return
 				var/list/all_objectives = subtypesof(/datum/traitor_objective)
 				var/objective_typepath = text2path(tgui_input_list(usr, "Select objective", "Select objective", all_objectives))
-				if(!ispath(objective_typepath, /datum/traitor_objective))
+				if(!objective_typepath)
 					return
 				var/datum/traitor_objective/objective = uplink.uplink_handler.try_add_objective(objective_typepath)
 				if(objective)
