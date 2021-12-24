@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer continue a surgery if the organ in question is somehow removed whilst mid operation."

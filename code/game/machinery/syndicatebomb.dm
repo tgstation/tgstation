@@ -194,24 +194,28 @@
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-
 	if (isnull(new_timer))
 		return
-
+	new_timer = round(new_timer)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer_set = clamp(new_timer, minimum_timer, maximum_timer)
 		loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
-	if(tgui_alert(user,"Would you like to start the countdown now?",,list("Yes","No")) == "Yes" && in_range(src, user) && isliving(user))
-		if(!active)
-			visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
-			activate()
-			user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
-			update_appearance()
-			add_fingerprint(user)
-
-			if(payload && !istype(payload, /obj/item/bombcore/training))
-				log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
-				payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
+	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
+	if(choice != "Yes")
+		return
+	if(!in_range(src, user) || !isliving(user))
+		return
+	if(active)
+		to_chat(user, span_warning("The bomb is already active!"))
+		return
+	visible_message(span_danger("[icon2html(src, viewers(loc))] [timer_set] seconds until detonation, please clear the area."))
+	activate()
+	user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_AMAZING)
+	update_appearance()
+	add_fingerprint(user)
+	if(payload && !istype(payload, /obj/item/bombcore/training))
+		log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
+		payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
 
 ///Bomb Subtypes///
 
