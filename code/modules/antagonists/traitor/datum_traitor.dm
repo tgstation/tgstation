@@ -49,6 +49,7 @@
 
 		uplink_handler.has_objectives = TRUE
 		uplink_handler.owner = owner
+		uplink_handler.assigned_role = owner.assigned_role.title
 		uplink_handler.generate_objectives()
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
