@@ -19,7 +19,7 @@
 		if(istype(possible_area, /area/hallway) || istype(possible_area, /area/security))
 			possible_areas -= possible_area
 	romerol_spawnarea_type = pick(possible_areas)
-	replace_in_name("%AREA%", romerol_spawnarea_type.name)
+	replace_in_name("%AREA%", initial(romerol_spawnarea_type.name))
 	return TRUE
 
 /datum/traitor_objective/final/romerol/generate_ui_buttons(mob/user)

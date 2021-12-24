@@ -306,7 +306,7 @@ export const TraitorObjectiveDebug = (props, context) => {
                   position="absolute"
                   left={`${(value.progression_points/sizeLimit)
                   *(window.innerWidth)}px`}
-                  width="2px"
+                  width="3px"
                   height="100%"
                   top={0}
                   opacity={0.8}
@@ -331,7 +331,7 @@ export const TraitorObjectiveDebug = (props, context) => {
               position="absolute"
               left={`${(current_progression/sizeLimit)
                   *(window.innerWidth)}px`}
-              width="2px"
+              width="3px"
               height="100%"
               top={0}
               opacity={1}

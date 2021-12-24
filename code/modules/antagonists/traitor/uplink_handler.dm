@@ -111,7 +111,6 @@
 		return
 	if(!handle_duplicate(objective))
 		qdel(objective)
-		potential_duplicate_objectives[objective.type] -= objective
 		return
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_reward()
@@ -123,15 +122,19 @@
 		return FALSE
 
 	var/datum/traitor_objective/current_type = potential_duplicate.type
+	var/list/added_types = list()
 	while(current_type != /datum/traitor_objective)
 		if(!potential_duplicate_objectives[current_type])
 			potential_duplicate_objectives[current_type] = list(potential_duplicate)
 		else
 			for(var/datum/traitor_objective/duplicate_checker as anything in potential_duplicate_objectives[current_type])
 				if(duplicate_checker.is_duplicate(potential_duplicate))
+					for(var/typepath in added_types)
+						potential_duplicate_objectives[typepath] -= potential_duplicate
 					return FALSE
 			potential_duplicate_objectives[current_type] += potential_duplicate
 
+		added_types += current_type
 		current_type = type2parent(current_type)
 	return TRUE
 
@@ -165,12 +168,13 @@
 /datum/uplink_handler/proc/abort_objective(datum/traitor_objective/to_abort)
 	if(istype(to_abort, /datum/traitor_objective/final))
 		return
-	to_abort.fail_objective(penalty_cost = TRUE)
+	to_abort.fail_objective(penalty_cost = to_abort.telecrystal_penalty)
 
 /datum/uplink_handler/proc/take_objective(mob/user, datum/traitor_objective/to_take)
 	if(!(to_take in potential_objectives))
 		return
 
+	user.playsound_local(get_turf(user), 'sound/traitor/objective_taken.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 	to_take.on_objective_taken(user)
 	to_take.objective_state = OBJECTIVE_STATE_ACTIVE
 	potential_objectives -= to_take

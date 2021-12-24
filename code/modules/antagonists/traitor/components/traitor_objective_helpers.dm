@@ -41,7 +41,8 @@
 
 /datum/component/traitor_objective_register/proc/on_fail(datum/traitor_objective/source)
 	SIGNAL_HANDLER
-	source.fail_objective(penalty)
+	var/datum/traitor_objective/objective = parent
+	objective.succeed_objective()
 
 /datum/component/traitor_objective_register/proc/on_success()
 	SIGNAL_HANDLER

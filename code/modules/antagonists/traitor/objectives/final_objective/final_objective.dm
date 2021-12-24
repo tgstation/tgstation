@@ -27,6 +27,7 @@
 	handler.maximum_potential_objectives = 0
 	for(var/datum/traitor_objective/objective as anything in handler.potential_objectives)
 		objective.fail_objective()
+	user.playsound_local(get_turf(user), 'sound/traitor/final_objective.ogg', vol = 100, vary = FALSE, channel = CHANNEL_TRAITOR)
 
 /datum/traitor_objective/final/is_duplicate(datum/traitor_objective/objective_to_compare)
 	return TRUE
