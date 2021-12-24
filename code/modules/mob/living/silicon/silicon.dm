@@ -195,9 +195,9 @@
 	var/list/lawcache_lawcheck = lawcheck.Copy()
 	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
-
+	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	say("[radiomod] Current Active Laws:")
+	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	//laws_sanity_check()
 	//laws.show_laws(world)
 	var/number = 1
@@ -205,7 +205,7 @@
 
 	if (lawcache_zeroth)
 		if (force || lawcache_lawcheck[1] == "Yes")
-			say("[radiomod] 0. [lawcache_zeroth]")
+			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
 			sleep(10)
 
 	for (var/index in 1 to length(lawcache_hacked))
@@ -213,7 +213,7 @@
 		var/num = ion_num()
 		if (length(law) > 0)
 			if (force || lawcache_hackedcheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
+				say("[radiomod] [num]. [law]", forced = forced_log_message)
 				sleep(10)
 
 	for (var/index in 1 to length(lawcache_ion))
@@ -221,7 +221,7 @@
 		var/num = ion_num()
 		if (length(law) > 0)
 			if (force || lawcache_ioncheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
+				say("[radiomod] [num]. [law]", forced = forced_log_message)
 				sleep(10)
 
 	for (var/index in 1 to length(lawcache_inherent))
@@ -229,7 +229,7 @@
 
 		if (length(law) > 0)
 			if (force || lawcache_lawcheck[index+1] == "Yes")
-				say("[radiomod] [number]. [law]")
+				say("[radiomod] [number]. [law]", forced = forced_log_message)
 				number++
 				sleep(10)
 
@@ -239,7 +239,7 @@
 		if (length(law) > 0)
 			if(lawcache_lawcheck.len >= number+1)
 				if (force || lawcache_lawcheck[number+1] == "Yes")
-					say("[radiomod] [number]. [law]")
+					say("[radiomod] [number]. [law]", forced = forced_log_message)
 					number++
 					sleep(10)
 
