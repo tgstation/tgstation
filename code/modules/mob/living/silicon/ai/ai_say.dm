@@ -123,6 +123,7 @@
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
+	say(";[message]", forced = "VOX Announcement")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
