@@ -93,7 +93,8 @@
 /turf/open/floor/bamboo
 	desc = "A bamboo mat with a decorative trim."
 	icon = 'icons/turf/floors/bamboo_mat.dmi'
-	icon_state = "mat0"
+	icon_state = "mat-0"
+	base_icon_state = "mat"
 	floor_tile = /obj/item/stack/tile/bamboo
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_BAMBOO_FLOOR)
@@ -103,7 +104,6 @@
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
 
 /turf/open/floor/bamboo/setup_broken_states()
 	return list("damaged")
