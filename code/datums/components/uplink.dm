@@ -211,6 +211,9 @@
 	if(!uplink_handler.has_objectives)
 		return TRUE
 
+	if(uplink_handler.owner.current != ui.user)
+		return TRUE
+
 	switch(action)
 		if("regenerate_objectives")
 			uplink_handler.generate_objectives()
