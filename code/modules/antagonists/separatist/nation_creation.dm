@@ -29,7 +29,7 @@
 		department = pick(list(/datum/job_department/assistant, /datum/job_department/medical, /datum/job_department/engineering, /datum/job_department/science, /datum/job_department/cargo, /datum/job_department/service, /datum/job_department/security) - independent_departments)
 		if(!department)
 			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
-
+			stack_trace("Department Revolt could not create a nation, as all the departments are independent)
 	department = SSjob.get_department_type(department)
 
 	for(var/datum/job/job as anything in department.department_jobs)
@@ -40,7 +40,7 @@
 	//setup team datum
 	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
 	nation.name = department.generate_nation_name()
-	var/datum/team/department_target //dodges unfortunate runtime
+	var/datum/team/department_target //dodges picking from an empty list giving a runtime.
 	if(team_datums.len)
 		department_target = pick(team_datums)
 	nation.generate_nation_objectives(dangerous, department_target)

@@ -4,17 +4,22 @@
 	team_explanation_text = "Make sure no member of the enemy nation escapes alive!"
 	var/datum/team/nation/target_team
 
+/datum/objective/destroy_nation/New(text, target_department)
+	. = ..()
+	target_team = target_department
+	update_explanation_text()
+
+/datum/objective/destroy_nation/Destroy()
+	target_team = null
+	. = ..()
+
+
 /datum/objective/destroy_nation/update_explanation_text()
 	. = ..()
 	if(target_team)
 		explanation_text = "Make sure no member of [target_team] ([target_team.nation_department]) nation escapes alive!"
 	else
 		explanation_text = "Free Objective"
-
-/datum/objective/destroy_nation/New(text, target_department)
-	. = ..()
-	target_team = target_department
-	update_explanation_text()
 
 /datum/objective/destroy_nation/check_completion()
 	if(!target_team)
