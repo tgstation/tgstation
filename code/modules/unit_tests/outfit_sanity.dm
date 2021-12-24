@@ -1,9 +1,11 @@
 #define CHECK_OUTFIT_SLOT(outfit_key, slot_name) if (outfit.##outfit_key) { \
-	H.equip_to_slot_or_del(new outfit.##outfit_key(H), ##slot_name, TRUE); \
+	var/obj/item/outfit_item = new outfit.##outfit_key(H); \
+	H.equip_to_slot_or_del(outfit_item, ##slot_name, TRUE); \
 	/* We don't check the result of equip_to_slot_or_del because it returns false for random jumpsuits, as they delete themselves on init */ \
-	if (!H.get_item_by_slot(##slot_name)) { \
+	if (H.get_item_by_slot(##slot_name) != outfit_item) { \
 		Fail("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
+	outfit_item.on_outfit_equip(H, FALSE); \
 }
 
 /datum/unit_test/outfit_sanity/Run()
@@ -31,8 +33,6 @@
 		CHECK_OUTFIT_SLOT(id, ITEM_SLOT_ID)
 		CHECK_OUTFIT_SLOT(l_pocket, ITEM_SLOT_LPOCKET)
 		CHECK_OUTFIT_SLOT(r_pocket, ITEM_SLOT_RPOCKET)
-		for(var/obj/item/equipped_item in H.contents) //before suit storage, as equipped items for example could extend a suit item
-			equipped_item.on_outfit_equip(H, FALSE)
 		CHECK_OUTFIT_SLOT(suit_store, ITEM_SLOT_SUITSTORE)
 		if (outfit.backpack_contents || outfit.box)
 			var/list/backpack_contents = outfit.backpack_contents?.Copy()

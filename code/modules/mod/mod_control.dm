@@ -131,7 +131,8 @@
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	if(active)
+		STOP_PROCESSING(SSobj, src)
 	var/atom/deleting_atom
 	if(!QDELETED(helmet))
 		deleting_atom = helmet
@@ -350,7 +351,7 @@
 	if (wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
 
-/obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only)
+/obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	if(visuals_only)
 		set_wearer(outfit_wearer) //we need to set wearer manually since it doesnt call equipped
 	quick_activation()
