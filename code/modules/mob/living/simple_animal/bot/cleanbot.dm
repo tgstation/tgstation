@@ -44,7 +44,7 @@
 	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" = "Det.", "Security Officer" = "Officer")
 	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
 	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
-	var/static/list/research = list(JOB_RESEARCH_DIRECTOR = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
+	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
 	var/static/list/legal = list("Lawyer" = "Esq.")
 
 	var/list/prefixes
