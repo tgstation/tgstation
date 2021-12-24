@@ -11,6 +11,12 @@
  */
 
 /turf/open/water/cursed_spring
+	name = "transforming spring"
+	color = "#CBC3E3"
+	light_color = "#CBC3E3"
+	light_range = 3
+	light_power = 1.75
+	light_on = TRUE
 	baseturfs = /turf/open/water/cursed_spring
 	planetary_atmos = TRUE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
