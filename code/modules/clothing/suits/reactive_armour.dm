@@ -221,7 +221,7 @@
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
 	siemens_coefficient = -1
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
-	cooldown_message = span_warning("The tesla capacitors beep ominously for a moment.")
+	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	var/zap_power = 25000
 	var/zap_range = 20
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
