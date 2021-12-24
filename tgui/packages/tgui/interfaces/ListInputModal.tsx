@@ -99,6 +99,10 @@ export const ListInputModal = (_, context) => {
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+  // Grabs the cursor when no search bar is visible.
+  if (!searchBarVisible) {
+    setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
+  }
 
   return (
     <Window title={title} width={325} height={windowHeight}>
