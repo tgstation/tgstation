@@ -6,20 +6,6 @@
 	strip_delay = 30
 	var/hit_reflect_chance = 50
 
-/obj/item/clothing/head/hooded/ablative/equipped(mob/living/carbon/human/user, slot)
-	..()
-	to_chat(user, "As you put on the hood, a visor shifts into place and starts analyzing the people around you. Neat!")
-	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	H.add_hud_to(user)
-
-/obj/item/clothing/head/hooded/ablative/dropped(mob/living/carbon/human/user)
-	..()
-	to_chat(user, "You take off the hood, removing the visor in the process and disabling its integrated hud.")
-	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
-	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	H.remove_hud_from(user)
-
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
 	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
@@ -47,3 +33,23 @@
 		return FALSE
 	if (prob(hit_reflect_chance))
 		return TRUE
+
+/obj/item/clothing/suit/hooded/ablative/ToggleHood()
+	if (!hood_up)
+		return ..()
+	var/mob/living/carbon/user = loc
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	ADD_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
+	hud.add_hud_to(user)
+	balloon_alert(user, "you put on the hood, and enable the hud")
+	return ..()
+
+/obj/item/clothing/suit/hooded/ablative/RemoveHood()
+	var/mob/living/carbon/user = loc
+	if (!HAS_TRAIT(user, TRAIT_SECURITY_HUD))
+		return ..()
+	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
+	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
+	hud.remove_hud_from(user)
+	balloon_alert(user, "you take off the hood, and disable the hud")
+	return ..()
