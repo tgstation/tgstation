@@ -139,11 +139,6 @@
 	if(ishuman(current))
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
-	if(cult_team.cult_risen)
-		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
-		if(cult_team.cult_ascendent)
-			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
-
 	add_team_hud(current)
 
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)

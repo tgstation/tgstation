@@ -77,3 +77,6 @@
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
 ///(NOT on humans) from mob/living/*/UnarmedAttack(): (atom/target, proximity, modifiers)
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
+
+/// Mob transforming signal
+#define COMSIG_MOB_TRANSFORMING "mob_transforming"

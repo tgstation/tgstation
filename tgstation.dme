@@ -185,6 +185,7 @@
 #include "code\__DEFINES\dcs\signals\signals_circuit.dm"
 #include "code\__DEFINES\dcs\signals\signals_clothing.dm"
 #include "code\__DEFINES\dcs\signals\signals_container.dm"
+#include "code\__DEFINES\dcs\signals\signals_cult.dm"
 #include "code\__DEFINES\dcs\signals\signals_customizable.dm"
 #include "code\__DEFINES\dcs\signals\signals_cytology.dm"
 #include "code\__DEFINES\dcs\signals\signals_datum.dm"

@@ -497,5 +497,3 @@
 #define SIGN_TRAIT_BLOCKED 3
 #define SIGN_CUFFED 4
 
-/// Mob transforming signal
-#define COMSIG_MOB_TRANSFORMING "mob_transforming"
