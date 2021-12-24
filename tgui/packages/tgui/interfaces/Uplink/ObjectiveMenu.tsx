@@ -226,7 +226,7 @@ export class ObjectiveMenu
                     </Flex.Item>
                   );
                 })}
-                {(true || maximumPotentialObjectives === 0) && (
+                {maximumPotentialObjectives === 0 && (
                   <Dimmer>
                     <Icon
                       name="lock"
