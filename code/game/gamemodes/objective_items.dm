@@ -70,7 +70,7 @@
 /datum/objective_item/steal/low_risk/bartender_shotgun
 	name = "the bartender's shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
-	excludefromjob = list("Bartender")
+	excludefromjob = list(JOB_BARTENDER)
 
 /datum/objective_item/steal/low_risk/fireaxe
 	name = "a fire axe"
@@ -80,18 +80,18 @@
 /datum/objective_item/steal/low_risk/nullrod
 	name = "the chaplain's null rod"
 	targetitem = /obj/item/nullrod
-	excludefromjob = list("Chaplain")
+	excludefromjob = list(JOB_CHAPLAIN)
 
 /datum/objective_item/steal/low_risk/clown_shoes
 	name = "the clown's shoes"
 	targetitem = /obj/item/clothing/shoes/clown_shoes
-	excludefromjob = list("Clown", JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 
 /datum/objective_item/steal/low_risk/clown_shoes/TargetExists()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(player.stat == DEAD)
 			continue
-		if(player.job != "Clown")
+		if(player.job != JOB_CLOWN)
 			continue
 		if(is_centcom_level(player.z))
 			continue
