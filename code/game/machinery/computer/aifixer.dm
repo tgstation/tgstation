@@ -133,9 +133,8 @@
 /obj/machinery/computer/aifixer/Destroy()
 	if(occupier)
 		QDEL_NULL(occupier)
-	..()
+	return ..()
 
 /obj/machinery/computer/aifixer/on_deconstruction()
 	if(occupier)
 		QDEL_NULL(occupier)
-	..()
