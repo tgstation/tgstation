@@ -1,11 +1,11 @@
 #define CHECK_OUTFIT_SLOT(outfit_key, slot_name) if (outfit.##outfit_key) { \
-	var/obj/item/outfit_item = new outfit.##outfit_key(H); \
-	H.equip_to_slot_or_del(outfit_item, ##slot_name, TRUE); \
+	H.equip_to_slot_or_del(new outfit.##outfit_key(H), ##slot_name, TRUE); \
 	/* We don't check the result of equip_to_slot_or_del because it returns false for random jumpsuits, as they delete themselves on init */ \
-	if (H.get_item_by_slot(##slot_name) != outfit_item) { \
+	var/obj/item/outfit_item = H.get_item_by_slot(##slot_name); \
+	if (!outfit_item) { \
 		Fail("[outfit.name]'s [#outfit_key] is invalid! Could not equip a [outfit.##outfit_key] into that slot."); \
 	} \
-	outfit_item.on_outfit_equip(H, FALSE); \
+	outfit_item.on_outfit_equip(H, FALSE, ##slot_name); \
 }
 
 /datum/unit_test/outfit_sanity/Run()
