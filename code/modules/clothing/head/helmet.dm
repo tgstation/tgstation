@@ -523,14 +523,13 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/update_icon_state()
-	var/state = "[initial(icon_state)]"
 	if(attached_light)
+		var/state = "[initial(icon_state)]"
 		if(attached_light.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
 		else
 			state += "-flight" //etc.
-
-	icon_state = state
+		icon_state = state
 	return ..()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)

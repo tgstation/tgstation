@@ -2129,12 +2129,12 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "ana" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable/layer3,
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "anb" = (
@@ -6038,6 +6038,16 @@
 	dir = 6
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/item/mod/construction/core{
+	pixel_x = -4
+	},
+/obj/item/mod/construction/core{
+	pixel_x = 4
+	},
+/obj/item/mod/construction/core{
+	pixel_y = 4
+	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "aIc" = (
@@ -6101,6 +6111,7 @@
 	dir = 5
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "aIm" = (
@@ -8059,10 +8070,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "baW" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/security)
 "bbb" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -8908,6 +8916,10 @@
 /area/medical/surgery)
 "bsp" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissarydoor";
+	name = "Vacant Commissary Shutters"
+	},
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "bsq" = (
@@ -14901,10 +14913,13 @@
 /turf/open/floor/carpet,
 /area/commons/dorms)
 "dHW" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 10
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
-/turf/open/floor/iron,
+/obj/structure/table,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
+/turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "dHX" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -15253,15 +15268,10 @@
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "dMV" = (
-/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "dNy" = (
 /obj/structure/cable,
@@ -16241,21 +16251,15 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "efY" = (
-/obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/storage/box/lights/mixed,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/emproof,
-/obj/item/stock_parts/cell/emproof,
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engineering - SMES Misc";
 	dir = 10;
 	network = list("ss13","engineering")
 	},
+/obj/effect/turf_decal/bot{
+	dir = 1
+	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "egh" = (
@@ -18509,13 +18513,11 @@
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "eUc" = (
-/obj/effect/turf_decal/trimline/yellow/filled/corner{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/engineering/engine_smes)
 "eUe" = (
@@ -18793,9 +18795,11 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior)
 "eYZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "eZr" = (
 /obj/effect/turf_decal/stripes{
@@ -19116,6 +19120,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/security/office)
 "fgr" = (
@@ -20540,7 +20545,7 @@
 /area/maintenance/tram/mid)
 "fEy" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -23804,7 +23809,7 @@
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "gOS" = (
-/obj/structure/ladder,
+/obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/security)
@@ -25200,9 +25205,18 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
 "hqQ" = (
+/obj/structure/cable/multilayer/multiz,
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Security - Upper Power Hatch";
+	dir = 9;
+	network = list("ss13","Security")
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/stripes/box,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "hrn" = (
 /obj/structure/chair/office{
@@ -32655,6 +32669,8 @@
 	name = "Medbay Requests Console"
 	},
 /obj/structure/closet/l3closet,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "kgz" = (
@@ -36900,9 +36916,8 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/central)
 "lPh" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/ladder,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "lPm" = (
@@ -37833,10 +37848,20 @@
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "mkS" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 6
+/obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/storage/box/lights/mixed,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/cell/emproof,
+/obj/item/stock_parts/cell/emproof,
+/obj/effect/turf_decal/bot{
+	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "mlb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
@@ -39018,6 +39043,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "mLo" = (
@@ -39606,7 +39632,7 @@
 /area/commons/lounge)
 "mVK" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -43892,11 +43918,10 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "oCa" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/random/maintenance/four,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "oCm" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
@@ -50236,8 +50261,8 @@
 /turf/open/floor/carpet,
 /area/cargo/miningdock)
 "qVF" = (
-/obj/effect/landmark/event_spawn,
 /obj/structure/cable,
+/obj/machinery/recharge_station,
 /turf/open/floor/plating,
 /area/command/bridge)
 "qVO" = (
@@ -50916,10 +50941,14 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/radshelter/civil)
 "ril" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "riv" = (
@@ -51789,18 +51818,10 @@
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "rBF" = (
-/obj/structure/cable/multilayer/multiz,
-/obj/structure/sign/warning/electricshock{
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Security - Upper Power Hatch";
-	dir = 9;
-	network = list("ss13","Security")
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/box,
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/security)
 "rBH" = (
 /obj/machinery/camera{
@@ -67029,6 +67050,7 @@
 "xlC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/command/bridge)
 "xlD" = (
@@ -160543,7 +160565,7 @@ lTE
 xNY
 bKx
 kaL
-hqQ
+bKx
 cTe
 bKx
 jQw
@@ -160800,10 +160822,10 @@ ust
 xNY
 pXV
 kaL
+gOS
 kaL
+bKx
 kaL
-erH
-erH
 ezo
 ezo
 ezo
@@ -161056,13 +161078,13 @@ eHD
 sdk
 xNY
 bKx
-kaL
-uqG
-jQw
 erH
-bKx
+erH
+erH
+erH
+erH
 sCH
-bKx
+jQw
 dMt
 ezo
 bvw
@@ -161313,13 +161335,13 @@ pSM
 eRg
 xNY
 bKx
-caT
-bKx
-bKx
 erH
-rBF
-gOS
-dMV
+hqQ
+lPh
+ril
+erH
+bKx
+bKx
 dMt
 ezo
 ezo
@@ -161570,15 +161592,15 @@ slK
 ust
 xNY
 bKx
-kaL
+erH
 oCa
 eYZ
+rBF
 erH
-baW
-ril
-lPh
 bKx
-erH
+bKx
+uqG
+kaL
 dhe
 dhe
 dhe
@@ -161827,15 +161849,15 @@ slK
 wWf
 xNY
 bKx
-kaL
-kaL
-aBE
 erH
 erH
 pNB
 erH
 erH
-erH
+caT
+kaL
+kaL
+kaL
 oXC
 oXC
 gap
@@ -162084,12 +162106,12 @@ qZz
 xNY
 xNY
 bKx
-kaL
+baW
 oxT
 tIV
-tIV
-tIV
-tIV
+bKx
+bKx
+bKx
 hkc
 sRi
 gap
@@ -162341,7 +162363,7 @@ cHG
 cHG
 kFW
 gzy
-gzy
+dMV
 gzy
 prC
 hkI

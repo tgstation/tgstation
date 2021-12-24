@@ -156,7 +156,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
@@ -458,7 +458,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.everyone_a_traitor)
 				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
 				return
-			var/objective = stripped_input(holder, "Enter an objective")
+			var/objective = tgui_input_text(holder, "Enter an objective", "Objective")
 			if(!objective)
 				return
 			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
