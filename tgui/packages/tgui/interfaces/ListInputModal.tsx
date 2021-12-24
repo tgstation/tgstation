@@ -1,7 +1,14 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
+import {
+  KEY_A,
+  KEY_DOWN,
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_UP,
+  KEY_Z,
+} from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
@@ -148,6 +155,7 @@ export const ListInputModal = (_, context) => {
                 filteredItems={filteredItems}
                 onClick={onClick}
                 onFocusSearch={onFocusSearch}
+                searchBarVisible={searchBarVisible}
                 selected={selected}
               />
             </Stack.Item>
@@ -175,7 +183,8 @@ export const ListInputModal = (_, context) => {
  */
 const ListDisplay = (props, context) => {
   const { act } = useBackend<ListInputData>(context);
-  const { filteredItems, onClick, onFocusSearch, selected } = props;
+  const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected }
+    = props;
 
   return (
     <Section fill scrollable tabIndex={0}>
@@ -193,7 +202,7 @@ const ListDisplay = (props, context) => {
             }}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (keyCode >= KEY_A && keyCode <= KEY_Z) {
+              if (searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
                 event.preventDefault();
                 onFocusSearch();
               }
