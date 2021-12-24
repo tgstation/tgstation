@@ -1997,6 +1997,8 @@
 /mob/living/proc/set_body_position(new_value)
 	if(body_position == new_value)
 		return
+	if((new_value == LYING_DOWN) && !(mobility_flags & MOBILITY_LIEDOWN))
+		return
 	. = body_position
 	body_position = new_value
 	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION)
