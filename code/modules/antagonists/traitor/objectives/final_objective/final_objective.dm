@@ -16,6 +16,8 @@
 /datum/traitor_objective/final/proc/can_take_final_objective()
 	var/total_progression = 0
 	for(var/datum/traitor_objective/objective as anything in handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
+			continue
 		total_progression += objective.progression_reward
 	if(total_progression < progression_points_in_objectives)
 		return FALSE

@@ -138,6 +138,8 @@
 		return FALSE
 	var/total_points = 0
 	for(var/datum/traitor_objective/objective as anything in traitor.uplink_handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
+			continue
 		total_points += objective.progression_reward
 	if(total_points < required_progression_in_objectives)
 		return FALSE

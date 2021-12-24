@@ -6,7 +6,7 @@
 
 ///smuggle! bring a traitor item from its arrival area to the cargo shuttle, where the objective completes on selling the item
 /datum/traitor_objective/smuggle
-	name = "Smuggle %CONTRABAND% from %AREA% off the station via cargo shuttle."
+	name = "Smuggle %CONTRABAND% from %AREA% off the station via cargo shuttle"
 	description = "Go to a designated area, pick up syndicate contraband, and get it off the station via the cargo shuttle. \
 	You will instantly fail this objective if anyone else picks up your contraband. If you fail, you are liable for the costs \
 	of the smuggling item."

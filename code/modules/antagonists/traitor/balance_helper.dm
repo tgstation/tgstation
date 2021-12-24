@@ -73,6 +73,20 @@
 /datum/traitor_objective_debug/ui_data(mob/user)
 	var/list/data = list()
 	data["current_progression"] = SStraitor.current_global_progression
+	var/list/handlers = SStraitor.uplink_handlers
+	var/list/handler_data = list()
+	for(var/datum/uplink_handler/handler as anything in handlers)
+		var/total_progression_from_objectives = 0
+		for(var/datum/traitor_objective/objective as anything in handler.completed_objectives)
+			if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
+				continue
+			total_progression_from_objectives += objective.progression_reward
+		handler_data += list(list(
+			"player" = handler.owner?.key,
+			"progression_points" = handler.progression_points,
+			"total_progression_from_objectives" = total_progression_from_objectives
+		))
+	data["player_data"] = handler_data
 	return data
 
 /datum/traitor_objective_debug/ui_static_data(mob/user)

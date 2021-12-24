@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from "../backend";
-import { Box, Stack, Tabs } from "../components";
+import { Box, LabeledList, Stack, Tabs, Tooltip } from "../components";
 import { Window } from "../layouts";
 import { getReputation } from "./Uplink/calculateReputationLevel";
 
@@ -26,9 +26,16 @@ type ObjectiveCategory = ObjectiveList & {
   name: string
 }
 
+type PlayerData = {
+  player: string,
+  progression_points: number,
+  total_progression_from_objectives: number,
+}
+
 type ObjectiveData = {
   current_progression: number
-  objective_data: ObjectiveCategory[]
+  objective_data: ObjectiveCategory[],
+  player_data: PlayerData[]
 }
 
 const recursivelyGetObjectives = (value: ObjectiveList) => {
@@ -120,7 +127,7 @@ const sortingOptions: SortingOption[] = [
 
 export const TraitorObjectiveDebug = (props, context) => {
   const { data, act } = useBackend<ObjectiveData>(context);
-  const { objective_data } = data;
+  const { objective_data, player_data, current_progression } = data;
   const lines: JSX.Element[] = [];
   lines.sort();
   for (let i = 10; i < 100; i += 10) {
@@ -271,6 +278,74 @@ export const TraitorObjectiveDebug = (props, context) => {
               </Stack.Item>
             ))}
           </Stack>
+          {player_data.map(value => {
+            const rep = getReputation(value.progression_points);
+            return (
+              <Tooltip
+                key={value.player}
+                content={(
+                  <Box>
+                    <LabeledList>
+                      <LabeledList.Item label={"Key"}>
+                        {value.player}
+                      </LabeledList.Item>
+                      <LabeledList.Item label={"Total PR"}>
+                        {Math.floor(value.progression_points/600)} mins
+                      </LabeledList.Item>
+                      <LabeledList.Item label={"Obj PR"}>
+                        {Math.floor(
+                          value.total_progression_from_objectives/600)} mins
+                      </LabeledList.Item>
+                    </LabeledList>
+                  </Box>
+                )}
+                position="top"
+              >
+                <Box
+                  backgroundColor="red"
+                  position="absolute"
+                  left={`${(value.progression_points/sizeLimit)
+                  *(window.innerWidth)}px`}
+                  width="2px"
+                  height="100%"
+                  top={0}
+                  opacity={0.8}
+                >
+                  <Box
+                    position="absolute"
+                    top={0}
+                    left="-50px"
+                    width="100px"
+                    height="100%"
+                  />
+                </Box>
+              </Tooltip>
+            );
+          })}
+          <Tooltip
+            content={`Expected Progression: ${
+              Math.floor(current_progression/600)} mins`}
+            position="top"
+          >
+            <Box
+              position="absolute"
+              left={`${(current_progression/sizeLimit)
+                  *(window.innerWidth)}px`}
+              width="2px"
+              height="100%"
+              top={0}
+              opacity={1}
+              backgroundColor="pink"
+            >
+              <Box
+                position="absolute"
+                top={0}
+                left="-50px"
+                width="100px"
+                height="100%"
+              />
+            </Box>
+          </Tooltip>
         </Box>
       </Window.Content>
     </Window>
@@ -283,7 +358,6 @@ type ObjectiveBoxProps = {
 
 const ObjectiveBox = (props: ObjectiveBoxProps, context) => {
   const { objective } = props;
-  const rep = getReputation(objective.progression_minimum);
   let width = `${(objective.progression_maximum/sizeLimit)
     *(window.innerWidth)}px`;
   if (objective.progression_maximum > sizeLimit) {
