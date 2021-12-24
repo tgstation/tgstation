@@ -344,9 +344,9 @@
 				name_default = reagents.get_master_reagent_name()
 			if (name_has_units)
 				name_default += " ([vol_each]u)"
-			name = stripped_input(usr,
-				"Name:",
+			name = tgui_input_text(usr,
 				"Give it a name!",
+				"Name",
 				name_default,
 				MAX_NAME_LEN)
 		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))

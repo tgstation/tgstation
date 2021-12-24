@@ -640,7 +640,7 @@
 	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	times++
-	var/message = stripped_input(user, "Whisper a secret truth to drive your victims to madness.", "Whispers of Madness")
+	var/message = tgui_input_text(user, "Whisper a secret truth to drive your victims to madness", "Whispers of Madness")
 	if(!message)
 		return FALSE
 	curse_of_madness(user, message)

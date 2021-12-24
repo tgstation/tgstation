@@ -59,7 +59,7 @@
 		if("rename")
 			//Modify the metadata
 			var/old_title = chosen_painting.title
-			var/new_title = stripped_input(user, "New painting title?", "Painting rename", chosen_painting.title)
+			var/new_title = tgui_input_text(user, "New painting title?", "Painting Rename", chosen_painting.title)
 			if(!new_title)
 				return
 			chosen_painting.title = new_title
@@ -67,7 +67,7 @@
 			return TRUE
 		if("rename_author")
 			var/old_name = chosen_painting.creator_name
-			var/new_name = stripped_input(user, "New painting author name?", "Painting rename", chosen_painting.creator_name)
+			var/new_name = tgui_input_text(user, "New painting author name?", "Painting Rename", chosen_painting.creator_name)
 			if(!new_name)
 				return
 			chosen_painting.creator_name = new_name
@@ -86,7 +86,7 @@
 			log_admin("[key_name(user)] has removed tag [params["tag"]] from persistent painting made by [chosen_painting.creator_ckey] with id [chosen_painting.md5].")
 			return TRUE
 		if("add_tag")
-			var/tag_name = stripped_input(user, "New tag name?", "???")
+			var/tag_name = tgui_input_text(user, "New tag name?", "Add Tag")
 			if(!tag_name)
 				return
 			if(!chosen_painting.tags)

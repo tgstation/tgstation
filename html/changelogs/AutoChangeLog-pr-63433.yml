@@ -1,0 +1,7 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a bluescreen when turning on admin mode in NtOS chat software."
+  - bugfix: "Literally 1984: NtOS chat admins can now properly mute others."
+  - bugfix: "Turning off NtOS admin mode now properly returns you to the channel."
+  - bugfix: "NtOS chat screen widened slightly to fix clipping issue on the participants panel."

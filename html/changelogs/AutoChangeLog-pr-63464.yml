@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - refactor: "Many more tgui inputs have been converted over: Paystands, paintings, pet names and more."
+  - bugfix: "TGUI inputs now support automatically selecting preexisting input (BYOND default behavior)."
+  - bugfix: "You can now press ESC to exit TGUI inputs."
