@@ -71,7 +71,7 @@
 		found_exit = TRUE
 		break
 	if(!found_exit)
-		to_chat(target, "<span='danger'>Unable to find an unobstructed space, you find yourself ripped back to where you started.</span>")
+		to_chat(target, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
 	exit_point_list.Cut()
 	holder.forceMove(exit_point)
 

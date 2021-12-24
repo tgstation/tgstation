@@ -230,23 +230,6 @@
 
 //All of the armor below is mostly unused
 
-/obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
-	name = "\improper CentCom SWAT helmet"
-	icon = 'icons/obj/clothing/hats.dmi'
-	worn_icon = 'icons/mob/clothing/head.dmi'
-	worn_icon_state = "centcomspace"
-	icon_state = "centcomspace"
-	inhand_icon_state = "centcomspacehelmet"
-	desc = "A tactical MK.II SWAT helmet boasting better protection and a reasonable fashion sense."
-
-/obj/item/clothing/suit/space/hardsuit/swat/centcom
-	name = "\improper CentCom SWAT armor"
-	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat with the complementary gas mask. Usually given to station Captains, this one has been painted CC green with complimentary gold accents."
-	icon_state = "centcom"
-	inhand_icon_state = "centcomspacesuit"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/centcom
-	cell = /obj/item/stock_parts/cell/super
-
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."

@@ -1,8 +1,7 @@
 /// Given a color in the format of "#RRGGBB", will return if the color
 /// is dark.
-/proc/is_color_dark(color, threshold = 0.25)
-	var/list/rgb = hex2rgb(color)
-	var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+/proc/is_color_dark(color, threshold = 25)
+	var/hsl = rgb2num(color, COLORSPACE_HSL)
 	return hsl[3] < threshold
 
 /// Given a 3 character color (no hash), converts it into #RRGGBB (with hash)
