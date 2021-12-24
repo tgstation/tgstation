@@ -69,7 +69,6 @@
 	for(var/obj/item/suicide_wrench in user)
 		user.dropItemToGround(suicide_wrench)
 	suicider = user.real_name
-	user.dust()
 	return OXYLOSS
 
 /obj/item/wrench/cyborg
