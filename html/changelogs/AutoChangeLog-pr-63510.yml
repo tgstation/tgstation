@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - spellcheck: "Fixed a number of typos in HTML elements that would cause messages to not render properly."
-  - bugfix: "Changed the font of some messages to better reflect if they were errors, notices."
