@@ -367,7 +367,7 @@
 	if(!active)
 		return
 	for(var/obj/item/mod/module/module as anything in modules)
-		var/list/module_icons = module.generate_worn_overlay()
+		var/list/module_icons = module.generate_worn_overlay(standing)
 		if(!length(module_icons))
 			continue
 		. += module_icons

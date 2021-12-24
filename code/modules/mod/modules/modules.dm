@@ -649,11 +649,11 @@
 		return
 	active_power_cost = base_power * light_range
 
-/obj/item/mod/module/flashlight/generate_worn_overlay()
+/obj/item/mod/module/flashlight/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
 	if(!active)
 		return
-	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/mod.dmi', "module_light_on")
+	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/mod.dmi', "module_light_on", layer = standing.layer + 0.2)
 	light_icon.appearance_flags = RESET_COLOR
 	light_icon.color = light_color
 	. += light_icon
@@ -1536,7 +1536,7 @@
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
 	var/list/spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay()
+/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
@@ -1604,6 +1604,7 @@
 	var/charge_recovery = 1
 	var/lose_multiple_charges = FALSE
 	var/recharge_path = null
+	var/shield_icon_file = 'icons/effects/effects.dmi'
 	var/shield_icon = "shield-red"
 	var/charges
 
@@ -1613,7 +1614,7 @@
 
 /obj/item/mod/module/energy_shield/on_suit_activation()
 	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
-	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon = shield_icon)
+	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation()
@@ -1640,6 +1641,8 @@
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
+	shield_icon_file = 'icons/effects/magic.dmi'
+	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
 
 /obj/item/mod/module/plasma_stabilizer
@@ -1742,29 +1745,29 @@
 	incompatible_modules = list(/obj/item/mod/module/insignia)
 	overlay_state_inactive = "insignia"
 
-/obj/item/mod/module/insignia/generate_worn_overlay()
+/obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
 		appearance.color = color
 
 /obj/item/mod/module/insignia/commander
-	color = "#4f94ad"
+	color = "#4980a5"
 
 /obj/item/mod/module/insignia/security
-	color = "#820a16"
+	color = "#b30d1e"
 
 /obj/item/mod/module/insignia/engineer
-	color = "#c68200"
+	color = "#e9c80e"
 
 /obj/item/mod/module/insignia/medic
 	color = "#ebebf5"
 
 /obj/item/mod/module/insignia/janitor
-	color = "#901f9f"
+	color = "#7925c7"
 
 /obj/item/mod/module/insignia/clown
-	color = "#cc0099"
+	color = "#ff1fc7"
 
 /obj/item/mod/module/insignia/chaplain
-	color = "#411f9f"
+	color = "#f0a00c"

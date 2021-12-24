@@ -228,7 +228,7 @@
 		qdel(src)
 
 /// Generates an icon to be used for the suit's worn overlays
-/obj/item/mod/module/proc/generate_worn_overlay()
+/obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
@@ -237,7 +237,9 @@
 		used_overlay = overlay_state_active
 	else if(overlay_state_inactive)
 		used_overlay = overlay_state_inactive
-	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay)
+	else
+		return
+	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay, layer = standing.layer + 0.1)
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated
