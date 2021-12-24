@@ -61,7 +61,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	add_objectives()
-	current.AddComponent(/datum/component/cult_status)
+	current
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
@@ -73,7 +73,6 @@
 
 /datum/antagonist/cult/on_removal()
 	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
-	SEND_SIGNAL(owner.current, COMSIG_CULT_DECONVERT)
 
 	return ..()
 
@@ -153,10 +152,14 @@
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
+	// todo:
+	// probably justn eed to remove element here
+	/*
 	if(ishuman(current))
 		var/mob/living/carbon/human/H = current
-		SEND_SIGNAL(H, COMSIG_CULT_DECONVERT)
-		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+		//REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+		// TODO: see if this needs to be here
+	*/
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
