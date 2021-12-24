@@ -392,7 +392,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/command
 	name = "Command"
-	icon_state = "Bridge
+	icon_state = "Bridge"
 	ambientsounds = list('sound/ambience/signal.ogg')
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
