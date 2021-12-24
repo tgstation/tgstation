@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 /datum/component/storage/proc/get_dumping_location(atom/dest_object)
 	var/datum/component/storage/storage = dest_object.GetComponent(/datum/component/storage)
-	if(isitem(dest_object) && storage)
+	if(storage)
 		return storage.real_location()
 	return dest_object.get_dumping_location()
 
