@@ -439,7 +439,7 @@
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	autograph.visible_message(span_notice("words magically form on [autograph]!"))
+	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)

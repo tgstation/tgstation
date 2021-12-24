@@ -8905,6 +8905,10 @@
 /area/medical/surgery)
 "bsp" = (
 /obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissarydoor";
+	name = "Vacant Commissary Shutters"
+	},
 /turf/open/floor/plating,
 /area/commons/vacant_room/commissary)
 "bsq" = (
@@ -20534,7 +20538,7 @@
 /area/maintenance/tram/mid)
 "fEy" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -39608,7 +39612,7 @@
 /area/commons/lounge)
 "mVK" = (
 /obj/machinery/door/airlock/external{
-	req_access_txt = "24"
+	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
