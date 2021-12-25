@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Updated the binary key's description / examine text to actually describe its abilities."
