@@ -697,7 +697,7 @@
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
 	. = ..()
-	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly
+	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
 	var/list/department_types = list(
 		/datum/job_department/silicon, //united nations
 		/datum/job_department/cargo,
@@ -707,6 +707,6 @@
 		/datum/job_department/security,
 		/datum/job_department/service,
 	)
-	
+
 	for(var/department_type in department_types)
-		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE)
+		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)

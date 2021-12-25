@@ -8,10 +8,11 @@
  * * department: which department to revolt. if null, will pick a random non-independent department. starts as a type, then turns into the reference to the singleton.
  * * announcement: whether to tell the station a department has gone independent.
  * * dangerous: whether this nation will have objectives to attack other independent departments, requires more than one nation to exist obviously
+ * * message_admins: whether this will admin log how the nation creation went. Errors are still put in runtime log either way.
  *
- * Returns null if everything went well, otherwise a string describing what went wrong.
+ * Returns nothing.
  */
-/proc/create_separatist_nation(datum/job_department/department, announcement = FALSE, dangerous = FALSE)
+/proc/create_separatist_nation(datum/job_department/department, announcement = FALSE, dangerous = FALSE, message_admins = TRUE)
 	var/list/jobs_to_revolt = list()
 	var/list/citizens = list()
 
@@ -28,8 +29,9 @@
 		//picks a random department if none was given
 		department = pick(list(/datum/job_department/assistant, /datum/job_department/medical, /datum/job_department/engineering, /datum/job_department/science, /datum/job_department/cargo, /datum/job_department/service, /datum/job_department/security) - independent_departments)
 		if(!department)
-			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
-			stack_trace("Department Revolt could not create a nation, as all the departments are independent)
+			if(message_admins)
+				message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
+			CRASH("Department Revolt could not create a nation, as all the departments are independent")
 	department = SSjob.get_department_type(department)
 
 	for(var/datum/job/job as anything in department.department_jobs)
@@ -60,10 +62,12 @@
 	//if we didn't convert anyone we just kill the team datum, otherwise cleanup and make official
 	if(!citizens.len)
 		qdel(nation)
-		message_admins("The nation of [nation.name] did not have enough potential members to be created.")
+		if(message_admins)
+			message_admins("The nation of [nation.name] did not have enough potential members to be created.")
 		return
 	var/jobs_english_list = english_list(jobs_to_revolt)
-	message_admins("The nation of [nation.name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
+	if(message_admins)
+		message_admins("The nation of [nation.name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
 	if(announcement)
 		var/announce_text = "The new independent state of [nation.name] has formed from the ashes of the [department.department_name] department!"
 		if(istype(department, /datum/job_department/assistant)) //the text didn't really work otherwise
