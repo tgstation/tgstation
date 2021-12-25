@@ -1,5 +1,0 @@
-author: "AndrewL97"
-delete-after: True
-changes: 
-  - bugfix: "skin tone sorting"
-  - refactor: "refactor various color procs to use natives instead"

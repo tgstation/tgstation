@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "dogs will no longer forget to unbuckle themselves when fetching items thrown nearby"

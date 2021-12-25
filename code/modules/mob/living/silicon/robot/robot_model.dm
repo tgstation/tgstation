@@ -37,8 +37,6 @@
 	var/list/model_traits = null
 	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
-	///Do we have a magboot effect
-	var/magpulsing = FALSE
 	///Do we clean when we move
 	var/clean_on_move = FALSE
 	///Whether the borg loses tool slots with damage.
@@ -330,7 +328,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	magpulsing = TRUE
+	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 
 /obj/item/robot_model/janitor
@@ -631,8 +629,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE)
-	magpulsing = TRUE
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 	canDispose = TRUE
 
