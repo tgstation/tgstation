@@ -245,11 +245,9 @@
 /obj/vehicle/sealed/mecha/atom_destruction()
 	loc.assume_air(cabin_air)
 	for(var/mob/living/occupant as anything in occupants)
-		if(isAI(occupant))
-			occupant.gib() //No wreck, no AI to recover
-			continue
 		mob_exit(occupant, FALSE, TRUE)
-		occupant.SetSleeping(destruction_sleep_duration)
+		if(iscarbon(occupant))
+			occupant.SetSleeping(destruction_sleep_duration)
 	return ..()
 
 
@@ -1030,6 +1028,13 @@
 	log_game("[key_name(user)] has put the MMI/posibrain of [key_name(brain_mob)] into [src] at [AREACOORD(src)]")
 	return TRUE
 
+/obj/vehicle/sealed/mecha/proc/mmi_removed(mob/living/brain/brain_mob)
+	var/obj/item/mmi/brain_obj = brain_mob.container
+	brain_obj.set_mecha(null)
+	remove_occupant(brain_mob)
+	brain_mob.reset_perspective()
+	log_game("[key_name(brain_mob)] the MMI has exited [src] at [AREACOORD(src)]")
+
 /obj/vehicle/sealed/mecha/container_resist_act(mob/living/user)
 	if(isAI(user))
 		var/mob/living/silicon/ai/AI = user
@@ -1076,20 +1081,14 @@
 			qdel(AI.linked_core)
 	else
 		return ..()
+
 	var/mob/living/ejector = M
-	mecha_flags  &= ~SILICON_PILOT
+	if(istype(mob_container, /obj/item/mmi))
+		mmi_removed(ejector)
+	mecha_flags &= ~SILICON_PILOT
 	mob_container.forceMove(newloc)//ejecting mob container
 	log_message("[mob_container] moved out.", LOG_MECHA)
 	ejector << browse(null, "window=exosuit")
-
-	if(istype(mob_container, /obj/item/mmi))
-		var/obj/item/mmi/mmi = mob_container
-		if(mmi.brainmob)
-			ejector.forceMove(mmi)
-			ejector.reset_perspective()
-			remove_occupant(ejector)
-		mmi.set_mecha(null)
-		mmi.update_appearance()
 	set_dir_mecha(dir_in)
 	return ..()
 
