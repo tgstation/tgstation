@@ -247,9 +247,7 @@
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	if(!sensor_mode)
-		sensor_mode = modes[1]
-	var/switchMode = tgui_input_list(M, "Select a sensor mode:", "Suit Sensor Mode", modes, modes[sensor_mode + 1])
+	var/switchMode = tgui_input_list(M, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
 	if(isnull(switchMode))
 		return
 	if(get_dist(usr, src) > 1)
