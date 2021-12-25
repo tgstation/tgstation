@@ -190,7 +190,7 @@
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
 		
-		if(src && !QDELETED(src)) // some grenades don't detonate but we want them destroyed
+		if(!QDELETED(src)) // some grenades don't detonate but we want them destroyed
 			qdel(src)
 		return TRUE //It hit the grenade, not them
 
