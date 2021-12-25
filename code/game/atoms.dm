@@ -30,8 +30,12 @@
 	///Reagents holder
 	var/datum/reagents/reagents = null
 
-	///This atom's active HUD (med/sec, etc) images. Associative list of the form: list(hud = list(images this hud uses from this atom))
+	///all of this atom's HUD (med/sec, etc) images. Associative list of the form: list(hud category = hud image or images for that category).
+	///most of the time hud category is associated with a single image, sometimes its associated with a list of images.
+	///not every hud in this list is actually used. for ones available for others to see, look at active_hud_list.
 	var/list/image/hud_list = null
+	///all of this atom's HUD images which can actually be seen by players with that hud
+	var/list/image/active_hud_list = null
 	///HUD images that this atom can provide.
 	var/list/hud_possible
 

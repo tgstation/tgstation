@@ -33,6 +33,7 @@
 	light_on = FALSE
 	light_range = 8
 	generic_canpass = FALSE
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
@@ -166,9 +167,6 @@
 
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE
-
-
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE

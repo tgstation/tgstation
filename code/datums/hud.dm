@@ -2,6 +2,10 @@
 
 GLOBAL_LIST_EMPTY(all_huds)
 
+///gets filled by each /datum/atom_hud/New().
+///associative list of the form: list(hud category = list(all global atom huds that use that category))
+GLOBAL_LIST_EMPTY(huds_by_category)
+
 //GLOBAL HUD LIST
 GLOBAL_LIST_INIT(huds, list(
 	DATA_HUD_SECURITY_BASIC = new/datum/atom_hud/data/human/security/basic(),
@@ -24,6 +28,7 @@ GLOBAL_LIST_INIT(huds, list(
 	///associative list of the form: list(z level = list(hud user client mob = number of times this hud has been added to that mob)).
 	///tracks users of this hud by z level so when they change z's we can adjust what images they see from this hud.
 	var/list/hud_users = list()
+	//TODOKYLER: make the mob users by z level list only contain client mobs!
 
 	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isnt separated by z level
 	var/list/atom/hud_atoms_all_z_levels = list()
@@ -48,6 +53,21 @@ GLOBAL_LIST_INIT(huds, list(
 		hud_users += list(list())
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_Z, .proc/add_z_level_huds)
+
+	for(var/hud_icon in hud_icons)
+		GLOB.huds_by_category[hud_icon] += list(src)
+
+/datum/atom_hud/Destroy()
+	for(var/mob/mob as anything in hud_users_all_z_levels)
+		remove_hud_from_mob(mob)
+
+	for(var/atom/atom as anything in hud_atoms_all_z_levels)
+		remove_atom_from_hud(atom)
+
+	for(var/hud_icon in hud_icons)
+		LAZYREMOVEASSOC(GLOB.huds_by_category, hud_icon, src)
+	GLOB.all_huds -= src
+	return ..()
 
 /datum/atom_hud/proc/add_z_level_huds()
 	SIGNAL_HANDLER
@@ -103,16 +123,6 @@ GLOBAL_LIST_INIT(huds, list(
 
 		else
 			break
-
-/datum/atom_hud/Destroy()
-	for(var/mob/mob as anything in hud_users_all_z_levels)
-		remove_hud_from_mob(mob)
-
-	for(var/atom/atom as anything in hud_atoms_all_z_levels)
-		remove_atom_from_hud(atom)
-
-	GLOB.all_huds -= src
-	return ..()
 
 ///apply this atom_hud to new_mob_user
 /datum/atom_hud/proc/add_hud_to_mob(mob/new_mob_user)
@@ -187,6 +197,16 @@ GLOBAL_LIST_INIT(huds, list(
 			add_atom_to_single_mob_hud(mob_to_show, new_hud_atom)
 	return TRUE
 
+/mob/proc/add_images()
+	var/list/thing = list()
+	for(var/i in 1 to 1000)
+		thing += new/image(loc = src)
+
+	var/len1 = length(client.images)
+	client.images |= thing
+	var/len2 = length(client.images)
+	var/a = 2
+
 /// remove this atom from this hud completely
 /datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)
 	if(!hud_atom_to_remove)
@@ -205,6 +225,48 @@ GLOBAL_LIST_INIT(huds, list(
 
 	hud_atoms[atom_turf.z] -= hud_atom_to_remove
 	hud_atoms_all_z_levels -= hud_atom_to_remove
+
+	return TRUE
+
+///adds a newly active hud category's image on a hud atom to every mob that could see it
+/datum/atom_hud/proc/add_single_hud_category_on_atom(atom/hud_atom, hud_category_to_add)
+	if(!hud_atom?.active_hud_list?[hud_category_to_add] || QDELING(hud_atom) || !(hud_category_to_add in hud_icons))
+		return FALSE
+
+	var/turf/atom_turf = get_turf(hud_atom)
+	if(!atom_turf)
+		return FALSE
+
+	if(!hud_atoms_all_z_levels[hud_atom])
+		add_atom_to_hud(hud_atom)
+		return TRUE
+
+	for(var/mob/hud_user as anything in get_hud_users_for_z_level(atom_turf.z))
+		if(!hud_user.client)
+			continue
+		if(!hud_exceptions[hud_user] || !(hud_atom in hud_exceptions[hud_user]))
+			hud_user.client.images |= hud_atom.active_hud_list[hud_category_to_add]
+
+	return TRUE
+
+///removes the image or images in hud_atom.hud_list[hud_category_to_remove] from every mob that can see it but leaves every other image
+///from that atom there.
+/datum/atom_hud/proc/remove_single_hud_category_on_atom(atom/hud_atom, hud_category_to_remove)
+	if(QDELETED(hud_atom) || !(hud_category_to_remove in hud_icons) || !hud_atoms_all_z_levels[hud_atom])
+		return FALSE
+
+	if(!hud_atom.active_hud_list)
+		remove_atom_from_hud(hud_atom)
+		return TRUE
+
+	var/turf/atom_turf = get_turf(hud_atom)
+	if(!atom_turf)
+		return FALSE
+
+	for(var/mob/hud_user as anything in get_hud_users_for_z_level(atom_turf.z))
+		if(!hud_user.client)
+			continue
+		hud_user.client.images -= hud_atom.active_hud_list[hud_category_to_remove]//by this point it shouldnt be in active_hud_list
 
 	return TRUE
 
@@ -244,16 +306,19 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!requesting_mob || !requesting_mob.client || !hud_atom)
 		return
 
-	for(var/i in hud_icons)
-		if(hud_atom.hud_list[i] && (!hud_exceptions[requesting_mob] || !(hud_atom in hud_exceptions[requesting_mob])))
-			requesting_mob.client.images |= hud_atom.hud_list[i]
+	for(var/hud_category in (hud_icons & hud_atom.active_hud_list))
+		if(!hud_exceptions[requesting_mob] || !(hud_atom in hud_exceptions[requesting_mob]))
+			requesting_mob.client.images |= hud_atom.active_hud_list[hud_category]
 
 /// remove every hud image for this hud on atom_to_remove from client_mob's client.images list
 /datum/atom_hud/proc/remove_atom_from_single_hud(mob/client_mob, atom/atom_to_remove)
-	if(!client_mob || !client_mob.client || !atom_to_remove)
+	if(!client_mob || !client_mob.client || !atom_to_remove?.active_hud_list)
 		return
+	var/len1 = length(client_mob.client.images)
 	for(var/hud_image in hud_icons)
-		client_mob.client.images -= atom_to_remove.hud_list[hud_image]
+		client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
+	var/len2 = length(client_mob.client.images)
+	var/a = 1
 
 /datum/atom_hud/proc/unregister_mob(datum/source, force)
 	SIGNAL_HANDLER

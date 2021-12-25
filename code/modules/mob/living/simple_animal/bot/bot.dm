@@ -1047,7 +1047,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		var/datum/atom_hud/H = V
 		H.remove_atom_from_hud(src)
 
-	var/list/path_images = hud_list[DIAG_PATH_HUD]
+	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
 	QDEL_LIST(path_images)
 	if(newpath)
 		for(var/i in 1 to newpath.len)
