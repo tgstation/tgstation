@@ -138,13 +138,15 @@ export const ListInputModal = (_, context) => {
           buttons={
             <Button
               compact
-              icon="search"
-              color="transparent"
-              selected={searchBarVisible}
-              tooltip="Search Bar"
+              icon={searchBarVisible ? "search" : "font"}
+              selected
+              tooltip={searchBarVisible
+                ? "Search Mode. Type to search or use arrow keys to select manually."
+                : "Hotkey Mode. Type a letter to jump to the first match. Enter to select."}
               tooltipPosition="left"
               onClick={() => onSearchBarToggle()}
             />
+
           }
           className="ListInput__Section"
           fill
