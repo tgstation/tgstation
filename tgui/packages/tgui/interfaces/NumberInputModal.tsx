@@ -20,10 +20,14 @@ export const NumberInputModal = (_, context) => {
   const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
   const [input, setInput] = useLocalState(context, 'input', init_value);
+
   const onChange = (value: number) => {
     setInput(value);
   };
   const onClick = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
@@ -71,8 +75,9 @@ const InputArea = (props, context) => {
     <Stack fill>
       <Stack.Item>
         <Button
+          disabled={input === min_value}
           icon="angle-double-left"
-          onClick={() => onClick(min_value || 0)}
+          onClick={() => onClick(min_value)}
           tooltip="Minimum"
         />
       </Stack.Item>
@@ -85,20 +90,21 @@ const InputArea = (props, context) => {
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || init_value || 0}
+          value={input || init_value}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={!max_value || max_value === 0 || input === max_value}
           icon="angle-double-right"
-          onClick={() => onClick(max_value || 10000)}
+          onClick={() => onClick(max_value)}
           tooltip="Max"
         />
       </Stack.Item>
       <Stack.Item>
         <Button
           icon="redo"
-          onClick={() => onClick(init_value || 0)}
+          onClick={() => onClick(init_value)}
           tooltip="Reset"
         />
       </Stack.Item>
