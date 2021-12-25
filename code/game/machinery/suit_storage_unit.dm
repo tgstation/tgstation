@@ -81,7 +81,7 @@
 
 /obj/machinery/suit_storage_unit/ce
 	mask_type = /obj/item/clothing/mask/breath
-	storage_type = /obj/item/clothing/shoes/magboots/advance
+	storage_type = /obj/item/tank/internals/oxygen
 	mod_type = /obj/item/mod/control/pre_equipped/advanced
 
 /obj/machinery/suit_storage_unit/security
