@@ -13,6 +13,8 @@
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
 
+	progression_maximum = 30 MINUTES
+
 	var/list/applicable_heads = list(
 		JOB_RESEARCH_DIRECTOR = /area/command/heads_quarters/rd,
 		JOB_CHIEF_MEDICAL_OFFICER = /area/command/heads_quarters/cmo,
@@ -27,6 +29,7 @@
 
 /datum/traitor_objective/bug_room/risky
 	progression_minimum = 10 MINUTES
+	progression_maximum = 40 MINUTES
 	applicable_heads = list(
 		JOB_CAPTAIN = /area/command/heads_quarters/captain,
 	)
@@ -36,6 +39,7 @@
 
 /datum/traitor_objective/bug_room/super_risky
 	progression_minimum = 20 MINUTES
+	progression_maximum = 60 MINUTES
 	applicable_heads = list(
 		JOB_HEAD_OF_SECURITY = /area/command/heads_quarters/hos,
 	)

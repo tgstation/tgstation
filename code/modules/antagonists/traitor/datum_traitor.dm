@@ -102,7 +102,7 @@
 
 /datum/objective/traitor_progression/New(text)
 	. = ..()
-	required_total_progression_points = rand(possible_range[1], possible_range[2]) / 60
+	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / 60)
 	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
 
 /datum/objective/traitor_progression/check_completion()
@@ -126,7 +126,7 @@
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	required_progression_in_objectives = possible_range / 60
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
 	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
 
 /datum/objective/traitor_objectives/check_completion()

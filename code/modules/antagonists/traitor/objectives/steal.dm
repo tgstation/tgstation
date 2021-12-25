@@ -2,17 +2,24 @@
 	name = "Steal Item"
 	objectives = list(
 		list(
-			/datum/traitor_objective/steal_item/low_risk = 1,
+			list(
+				/datum/traitor_objective/steal_item/low_risk = 1,
+				/datum/traitor_objective/destroy_item/low_risk = 1,
+			) = 1,
 			/datum/traitor_objective/steal_item/low_risk_cap = 1,
+
 		) = 1,
 		/datum/traitor_objective/steal_item/somewhat_risky = 1,
-		/datum/traitor_objective/steal_item/risky = 1,
+		list(
+			/datum/traitor_objective/destroy_item/very_risky = 1,
+			/datum/traitor_objective/steal_item/risky = 1,
+		) = 1,
 		/datum/traitor_objective/steal_item/most_risky = 1
 	)
 
 /datum/traitor_objective/steal_item
-	name = "Steal %ITEM% and place a bug on it. Hold it for \[TIME] minutes"
-	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for \[TIME] minutes"
+	name = "Steal %ITEM% and place a bug on it. Hold it for %TIME% minutes"
+	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for %TIME% minutes"
 
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES
@@ -48,12 +55,11 @@
 
 /datum/traitor_objective/steal_item/low_risk
 	progression_minimum = 10 MINUTES
+	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
 	telecrystal_reward = 1
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/bartender_shotgun,
-		/datum/objective_item/steal/low_risk/fireaxe,
 		/datum/objective_item/steal/low_risk/nullrod,
 		/datum/objective_item/steal/low_risk/cargo_budget,
 		/datum/objective_item/steal/low_risk/clown_shoes,
@@ -85,7 +91,6 @@
 	possible_items = list(
 		/datum/objective_item/steal/reflector,
 		/datum/objective_item/steal/capmedal,
-		/datum/objective_item/steal/blackbox,
 		/datum/objective_item/steal/hdd_extraction,
 		/datum/objective_item/steal/documents,
 	)
@@ -134,7 +139,8 @@
 		var/datum/objective_item/steal/target = pick_n_take(possible_items)
 		target = new target()
 		if(!target.TargetExists())
-			return
+			qdel(target)
+			continue
 		if(role.title in target.excludefromjob)
 			qdel(target)
 			continue
@@ -147,7 +153,7 @@
 	hold_time_required = rand(hold_time_required[1], hold_time_required[2])
 	progression_reward += hold_time_required * (1 MINUTES)
 	replace_in_name("%ITEM%", target_item.name)
-	replace_in_name("\[TIME]", hold_time_required)
+	replace_in_name("%TIME%", hold_time_required)
 	return TRUE
 
 /datum/traitor_objective/steal_item/ungenerate_objective()
