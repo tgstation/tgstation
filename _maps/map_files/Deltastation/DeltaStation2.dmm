@@ -7636,26 +7636,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/warden)
-"bFQ" = (
+"bFR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
-/area/security/warden)
-"bFR" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/security/warden)
 "bFT" = (
 /obj/effect/landmark/start/ai,
@@ -7890,25 +7876,14 @@
 /area/security/warden)
 "bHJ" = (
 /obj/structure/cable,
+/turf/open/floor/iron,
+/area/security/warden)
+"bHK" = (
+/obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/security/warden)
-"bHK" = (
-/obj/structure/tank_dispenser/oxygen,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/security/warden)
 "bHL" = (
 /obj/machinery/computer/crew{
@@ -8155,25 +8130,14 @@
 /turf/open/floor/iron/dark,
 /area/security/warden)
 "bJD" = (
+/obj/machinery/suit_storage_unit/security,
+/turf/open/floor/iron,
+/area/security/warden)
+"bJE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/security/warden)
-"bJE" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/security/warden)
 "bJF" = (
 /obj/structure/chair/office{
@@ -19391,8 +19355,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/tank_holder/oxygen,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "cYe" = (
@@ -21065,6 +21029,7 @@
 /area/command/heads_quarters/cmo)
 "deJ" = (
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/tank_holder/oxygen,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "deK" = (
@@ -21072,6 +21037,8 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/tile/neutral,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "deN" = (
@@ -25408,6 +25375,15 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
+/obj/item/mod/construction/core{
+	pixel_x = -4
+	},
+/obj/item/mod/construction/core{
+	pixel_x = 4
+	},
+/obj/item/mod/construction/core{
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "dzH" = (
@@ -49861,6 +49837,21 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
+"iTL" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/dark,
+/area/security/warden)
 "iTT" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
@@ -57398,9 +57389,6 @@
 /area/science/misc_lab/range)
 "kYz" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/toilet{
-	dir = 8
-	},
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/button/door/directional/south{
 	id = "Arrivals_Toilet3";
@@ -57409,6 +57397,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/commons/toilet/restrooms)
 "kYC" = (
@@ -61277,10 +61266,11 @@
 	c_tag = "Engineering - Shared Storage";
 	name = "engineering camera"
 	},
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/storage_shared)
 "lTG" = (
@@ -63448,6 +63438,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/research)
+"myc" = (
+/obj/machinery/light/small/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark,
+/area/security/warden)
 "myi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73198,6 +73203,9 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/machinery/newscaster/directional/east,
+/obj/item/mod/module/plasma_stabilizer,
+/obj/item/mod/module/thermal_regulator,
+/obj/item/mod/module/magboot,
 /turf/open/floor/iron,
 /area/engineering/storage)
 "oYq" = (
@@ -79505,7 +79513,6 @@
 /turf/open/floor/iron/white/corner,
 /area/engineering/atmos)
 "qOr" = (
-/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -79516,6 +79523,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/dark,
 /area/command/meeting_room/council)
 "qOv" = (
@@ -84314,6 +84322,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "sgm" = (
@@ -88463,6 +88472,20 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"tlC" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/recharge_station,
+/turf/open/floor/iron/dark,
+/area/security/warden)
 "tlE" = (
 /obj/machinery/door/window/eastright{
 	name = "Hydroponics Delivery";
@@ -94506,7 +94529,6 @@
 /turf/open/floor/iron/dark,
 /area/service/kitchen)
 "uQe" = (
-/obj/structure/chair/stool/directional/south,
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -94515,6 +94537,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "uQf" = (
@@ -160141,7 +160164,7 @@ swl
 swl
 swl
 guL
-bFQ
+bJD
 bHJ
 bJD
 bLs
@@ -160655,9 +160678,9 @@ vhn
 dRo
 upI
 guL
-bFL
-bFP
-bFL
+tlC
+iTL
+myc
 bLs
 bNs
 bPz
@@ -160912,9 +160935,9 @@ hhH
 eQk
 fZP
 guL
-aad
-aaa
-aad
+bFL
+bFP
+bFL
 bLs
 bNt
 bPA

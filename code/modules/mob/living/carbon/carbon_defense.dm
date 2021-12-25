@@ -276,9 +276,9 @@
 
 	var/directional_blocked = FALSE
 	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
-	if(shove_blocked && can_hit_something)
-		if(!(shove_dir in GLOB.cardinals)) //Directional checks to make sure that we're not shoving through a windoor or something like that
-			return
+
+	//Directional checks to make sure that we're not shoving through a windoor or something like that
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
 		var/target_turf = get_turf(target)
 		for(var/obj/obj_content in target_turf)
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
@@ -291,7 +291,10 @@
 					break
 
 	if(can_hit_something)
-		if(directional_blocked || (!(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED) && shove_blocked))
+		//Don't hit people through windows, ok?
+		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
+			return
+		if(directional_blocked || shove_blocked)
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)

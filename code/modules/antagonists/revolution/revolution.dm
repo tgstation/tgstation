@@ -265,7 +265,7 @@
 
 	if(ishuman(owner.current))
 		owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-		to_chat(owner, "<span class ='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
+		to_chat(owner, "<span class='deconversion_message bold'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you....</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you."))
@@ -276,9 +276,9 @@
 	if((ishuman(owner.current)))
 		if(owner.current.stat != DEAD)
 			owner.current.visible_message(span_deconversion_message("[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!"), null, null, null, owner.current)
-			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
 		else
-			to_chat(owner, "<span class ='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
+			to_chat(owner, "<span class='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
 	else if(issilicon(owner.current))
 		owner.current.visible_message(span_deconversion_message("The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it."), null, null, null, owner.current)
 		to_chat(owner, span_userdanger("The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts."))
@@ -428,52 +428,50 @@
 			else
 				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
 				add_memory_in_range(rev_mind.current, 7, MEMORY_WON_REVOLUTION, list(DETAIL_PROTAGONIST = rev_mind.current, DETAIL_STATION_NAME = station_name()), story_value = STORY_VALUE_LEGENDARY, memory_flags = MEMORY_FLAG_NOSTATIONNAME|MEMORY_CHECK_BLIND_AND_DEAF, protagonist_memory_flags = MEMORY_FLAG_NOSTATIONNAME)
-				if(!charter_given && rev_mind.current && rev_mind.current.stat == CONSCIOUS)
-					charter_given = TRUE
-					podspawn(list(
-						"target" = get_turf(rev_mind.current),
-						"style" = STYLE_SYNDICATE,
-						"spawn" = /obj/item/station_charter/revolution
-					))
-					to_chat(rev_mind.current, "<span class='hear'>You hear something crackle in your ears for a moment before a voice speaks. \
-						\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
-						<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\"</span>")
 
 	if (. == STATION_VICTORY)
 		// If the revolution was quelled, make rev heads unable to be revived through pods
-		for (var/_rev_head_mind in ex_revs)
-			var/datum/mind/rev_head_mind = _rev_head_mind
-			var/mob/living/carbon/rev_head_body = rev_head_mind.current
-			if(istype(rev_head_body) && rev_head_body.stat == DEAD)
-				rev_head_body.makeUncloneable()
+		for (var/datum/mind/rev_head as anything in ex_headrevs)
+			ADD_TRAIT(rev_head.current, TRAIT_DEFIB_BLACKLISTED, REF(src))
+			rev_head.current.med_hud_set_status()
 
 		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
 		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
 	else
-		for (var/_player in GLOB.player_list)
-			var/mob/player = _player
-			var/datum/mind/mind = player.mind
+		for(var/datum/mind/headrev_mind as anything in ex_headrevs)
+			if(charter_given)
+				break
+			if(!headrev_mind.current || headrev_mind.current.stat != CONSCIOUS)
+				continue
+			charter_given = TRUE
+			podspawn(list(
+				"target" = get_turf(headrev_mind.current),
+				"style" = STYLE_SYNDICATE,
+				"spawn" = /obj/item/station_charter/revolution,
+			))
+			to_chat(headrev_mind.current, span_hear("You hear something crackle in your ears for a moment before a voice speaks. \
+				\"Please stand by for a message from your benefactor. Message as follows, provocateur. \
+				<b>You have been chosen out of your fellow provocateurs to rename the station. Choose wisely.</b> Message ends.\""))
+		for (var/mob/living/player as anything in GLOB.player_list)
+			var/datum/mind/player_mind = player.mind
 
-			if (isnull(mind))
+			if (isnull(player_mind))
 				continue
 
-			if (!(mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
+			if (!(player_mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))
 				continue
 
-			if (mind in ex_revs + ex_headrevs)
+			if (player_mind in ex_revs + ex_headrevs)
 				continue
 
-			var/mob/living/carbon/target_body = mind.current
+			player_mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
 
-			mind.add_antag_datum(/datum/antagonist/enemy_of_the_revolution)
-
-			if (!istype(target_body))
+			if (!istype(player))
 				continue
 
-			if (target_body.stat == DEAD)
-				target_body.makeUncloneable()
-			else
-				mind.announce_objectives()
+			if(player_mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+				ADD_TRAIT(player, TRAIT_DEFIB_BLACKLISTED, REF(src))
+				player.med_hud_set_status()
 
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND)))

@@ -1,5 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - bugfix: "Fixes some effects appearing below mob (smoke, blur, chairrests)"
-  - bugfix: "Fixed FOV not applying if you were inside contents of something"

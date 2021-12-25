@@ -12,6 +12,7 @@
 	name = "telecommunication hub"
 	icon_state = "hub"
 	desc = "A mighty piece of hardware used to send/receive massive amounts of data."
+	telecomms_type = /obj/machinery/telecomms/hub
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80

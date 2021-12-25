@@ -6,7 +6,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "ac" = (
-/obj/effect/mob_spawn/corpse/human/engineer/rig,
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "ad" = (
@@ -367,7 +367,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "bz" = (
-/obj/item/clothing/suit/space/hardsuit/engine,
+/obj/item/mod/control/pre_equipped/engineering,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
 "bA" = (
@@ -719,7 +719,7 @@
 /area/icemoon/surface/outdoors)
 "cU" = (
 /obj/structure/cable,
-/obj/effect/mob_spawn/corpse/human/engineer/rig,
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "cV" = (

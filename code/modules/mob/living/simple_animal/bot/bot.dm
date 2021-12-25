@@ -182,8 +182,8 @@
 	balloon_alert(src, "turned off")
 	update_appearance()
 
-/mob/living/simple_animal/bot/proc/get_bot_flag(checked_flag)
-	if(bot_mode_flags & checked_flag)
+/mob/living/simple_animal/bot/proc/get_bot_flag(checked_mode, checked_flag)
+	if(checked_mode & checked_flag)
 		return TRUE
 	return FALSE
 
@@ -882,6 +882,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
+	data["has_access"] = check_access(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["pai"] = list()
 	data["settings"] = list()
@@ -945,7 +946,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	return
 
 /mob/living/simple_animal/bot/update_icon_state()
-	icon_state = "[initial(icon_state)][get_bot_flag(BOT_MODE_ON)]"
+	icon_state = "[initial(icon_state)][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	return ..()
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
