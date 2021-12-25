@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix AIs inside a AI restorer computer now die if the computer is destroyed while they are inside it."

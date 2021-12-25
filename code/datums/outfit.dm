@@ -151,7 +151,7 @@
 	return
 
 #define EQUIP_OUTFIT_ITEM(item_path, slot_name) if(##item_path) { \
-	H.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path), ##slot_name, TRUE); \
+	H.equip_to_slot_or_del(SSwardrobe.provide_type(##item_path, H), ##slot_name, TRUE); \
 	var/obj/item/outfit_item = H.get_item_by_slot(##slot_name); \
 	if (outfit_item && outfit_item.type == ##item_path) { \
 		outfit_item.on_outfit_equip(H, visualsOnly, ##slot_name); \
