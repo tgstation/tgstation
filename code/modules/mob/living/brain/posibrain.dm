@@ -39,6 +39,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/searching = FALSE
 	///If it pings on creation immediately
 	var/autoping = TRUE
+	///List of all ckeys who has already entered this posibrain once before.
+	var/list/ckeys_entered = list()
 
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
@@ -112,6 +114,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 /obj/item/mmi/posibrain/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
+	if(user.ckey in ckeys_entered)
+		to_chat(user, span_warning("You cannot re-enter [src] a second time!"))
+		return
 	if(is_occupied() || is_banned_from(user.ckey, ROLE_POSIBRAIN) || QDELETED(brainmob) || QDELETED(src) || QDELETED(user))
 		return
 	if(user.suiciding) //if they suicided, they're out forever.
@@ -163,6 +168,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	visible_message(new_mob_message)
 	check_success()
+	ckeys_entered |= brainmob.ckey
 	return TRUE
 
 
