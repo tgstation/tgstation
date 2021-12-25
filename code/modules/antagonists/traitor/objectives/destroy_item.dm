@@ -20,11 +20,12 @@
 	progression_minimum = 10 MINUTES
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = 2
 
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/bartender_shotgun,
 		/datum/objective_item/steal/low_risk/fireaxe,
+		/datum/objective_item/steal/low_risk/nullrod,
 	)
 
 /datum/traitor_objective/destroy_item/very_risky

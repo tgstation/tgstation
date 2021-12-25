@@ -46,7 +46,7 @@
 	progression_maximum = 20 MINUTES
 
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = 2
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/techboard/borgupload,
 		/datum/objective_item/steal/low_risk/techboard/aiupload,
@@ -57,10 +57,9 @@
 	progression_minimum = 10 MINUTES
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = 1
+	telecrystal_reward = 2
 
 	possible_items = list(
-		/datum/objective_item/steal/low_risk/nullrod,
 		/datum/objective_item/steal/low_risk/cargo_budget,
 		/datum/objective_item/steal/low_risk/clown_shoes,
 	)
@@ -68,7 +67,7 @@
 /datum/traitor_objective/steal_item/somewhat_risky
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES
-	telecrystal_reward = list(1, 2)
+	telecrystal_reward = list(2, 3)
 
 	possible_items = list(
 		/datum/objective_item/steal/magboots,
@@ -86,7 +85,7 @@
 /datum/traitor_objective/steal_item/risky
 	progression_minimum = 30 MINUTES
 	progression_reward = 5 MINUTES
-	telecrystal_reward = list(2, 4)
+	telecrystal_reward = list(3, 5)
 
 	possible_items = list(
 		/datum/objective_item/steal/reflector,
@@ -103,7 +102,7 @@
 /datum/traitor_objective/steal_item/very_risky
 	progression_minimum = 40 MINUTES
 	progression_reward = 8 MINUTES
-	telecrystal_reward = list(3, 6)
+	telecrystal_reward = list(4, 7)
 
 	possible_items = list(
 		/datum/objective_item/steal/hoslaser,
@@ -120,7 +119,7 @@
 /datum/traitor_objective/steal_item/most_risky
 	progression_minimum = 50 MINUTES
 	progression_reward = 13 MINUTES
-	telecrystal_reward = list(5, 8)
+	telecrystal_reward = list(8, 12)
 
 	possible_items = list(
 		/datum/objective_item/steal/nukedisc,
