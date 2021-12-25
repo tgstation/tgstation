@@ -485,46 +485,38 @@
 	var/datum/bank_account/old_account = registered_account
 
 	var/new_bank_id = tgui_input_number(user, "Enter your account ID number", "Account Reclamation", 111111, 999999, 111111)
-
-	if (isnull(new_bank_id))
+	if(isnull(new_bank_id))
 		return
-
 	if(!alt_click_can_use_id(user))
 		return
-
-	if (registered_account && registered_account.account_id == new_bank_id)
+	if(registered_account && registered_account.account_id == new_bank_id)
 		to_chat(user, span_warning("The account ID was already assigned to this card."))
 		return
-
-	var/datum/bank_account/B = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
-	if(B)
-		if (old_account)
-			old_account.bank_cards -= src
-
-		B.bank_cards += src
-		registered_account = B
-		to_chat(user, span_notice("The provided account has been linked to this ID card."))
-
-		return TRUE
-
-	to_chat(user, span_warning("The account ID number provided is invalid."))
-	return
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
+	if(isnull(account))
+		to_chat(user, span_warning("The account ID number provided is invalid."))
+		return
+	if(old_account)
+		old_account.bank_cards -= src
+	account.bank_cards += src
+	registered_account = account
+	to_chat(user, span_notice("The provided account has been linked to this ID card."))
+	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
 	if(!alt_click_can_use_id(user))
 		return
-
 	if(!registered_account)
 		set_new_account(user)
 		return
-
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
-
-	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 5, registered_account.account_balance), 1)
-
-	if(!amount_to_remove || amount_to_remove < 0)
+	var/start_value = registered_account.account_balance ? 1 : 0
+	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw? Max: [registered_account.account_balance]", "Withdraw Funds", start_value, registered_account.account_balance, 1), 1)
+	if(isnull(amount_to_remove))
+		return
+	if(amount_to_remove < 1 || amount_to_remove > registered_account.account_balance)
 		return
 	if(!alt_click_can_use_id(user))
 		return

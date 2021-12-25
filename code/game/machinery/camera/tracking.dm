@@ -19,6 +19,8 @@
 	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
 	if(isnull(camera))
 		return
+	if(isnull(cameras[camera]))
+		return
 	switchCamera(cameras[camera])
 
 /datum/trackable

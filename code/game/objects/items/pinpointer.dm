@@ -142,13 +142,13 @@
 	if(!length(names))
 		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
-
 	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
 	if(isnull(pinpoint_target))
 		return
+	if(isnull(names[pinpoint_target]))
+		return
 	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
 		return
-
 	target = names[pinpoint_target]
 	toggle_on()
 	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
