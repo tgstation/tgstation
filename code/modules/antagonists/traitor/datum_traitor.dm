@@ -97,13 +97,13 @@
 	name = "traitor progression"
 	explanation_text = "Become a living legend by getting a total of %REPUTATION% reputation points"
 
+	var/possible_range = list(40 MINUTES, 90 MINUTES)
 	var/required_total_progression_points
 
 /datum/objective/traitor_progression/New(text)
 	. = ..()
-	var/datum/traitor_objective/final/final_type = /datum/traitor_objective/final
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", initial(final_type.progression_minimum) / 60)
-	required_total_progression_points = initial(final_type.progression_minimum)
+	required_total_progression_points = rand(possible_range[1], possible_range[2]) / 60
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
 
 /datum/objective/traitor_progression/check_completion()
 	if(!owner)
@@ -121,13 +121,13 @@
 	name = "traitor objective"
 	explanation_text = "Complete objectives colletively worth more than %REPUTATION% reputation points"
 
+	var/possible_range = list(20 MINUTES, 30 MINUTES)
 	var/required_progression_in_objectives
 
 /datum/objective/traitor_objectives/New(text)
 	. = ..()
-	var/datum/traitor_objective/final/final_type = /datum/traitor_objective/final
-	explanation_text = replacetext(explanation_text, "%REPUTATION%", initial(final_type.progression_points_in_objectives) / 60)
-	required_progression_in_objectives = initial(final_type.progression_points_in_objectives)
+	required_progression_in_objectives = possible_range / 60
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
 
 /datum/objective/traitor_objectives/check_completion()
 	if(!owner)
