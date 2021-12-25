@@ -1,14 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
-import {
-  KEY_A,
-  KEY_DOWN,
-  KEY_ESCAPE,
-  KEY_ENTER,
-  KEY_UP,
-  KEY_Z,
-} from '../../common/keycodes';
+import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
 import { Window } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 
