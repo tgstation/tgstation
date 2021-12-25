@@ -511,7 +511,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = ..()
 	if(!gold_ratio)
 		// Calculate the amount of gold that goldschlager is made from
-		var/datum/chemical_reaction/goldschlager/goldschlager_reaction = new
+		var/datum/chemical_reaction/drink/goldschlager/goldschlager_reaction = new
 		var/vodka_amount = goldschlager_reaction.required_reagents[/datum/reagent/consumable/ethanol/vodka]
 		var/gold_amount = goldschlager_reaction.required_reagents[/datum/reagent/gold]
 		gold_ratio = gold_amount / (gold_amount + vodka_amount)
