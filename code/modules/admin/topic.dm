@@ -125,7 +125,7 @@
 		if(!check_rights(R_SERVER))
 			return
 
-		var/timer = tgui_input_number(usr, "Enter new shuttle duration (seconds)", "Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft())
+		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
 		if(!timer)
 			return
 		SSshuttle.emergency.setTimer(timer SECONDS)
@@ -164,7 +164,7 @@
 			tgui_alert(usr, "The round end is already delayed. The reason for the current delay is: \"[SSticker.admin_delay_notice]\"", "Alert", list("Ok"))
 			return
 
-		var/delay_reason = tgui_input_text(usr, "Enter a reason for delaying the round end", "Round Delay Reason")
+		var/delay_reason = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
 
 		if(isnull(delay_reason))
 			return
@@ -432,7 +432,7 @@
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
 			var/datum/dynamic_ruleset/roundstart/newrule = new rule()
 			roundstart_rules[newrule.name] = newrule
-		var/added_rule = tgui_input_list(usr ,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", sort_list(roundstart_rules))
+		var/added_rule = input(usr,"What ruleset do you want to force? This will bypass threat level and population restrictions.", "Rigging Roundstart", null) as null|anything in sort_list(roundstart_rules)
 		if (added_rule)
 			GLOB.dynamic_forced_roundstart_ruleset += roundstart_rules[added_rule]
 			log_admin("[key_name(usr)] set [added_rule] to be a forced roundstart ruleset.")
@@ -485,7 +485,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		GLOB.dynamic_stacking_limit = tgui_input_number(usr, "Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit")
+		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 		log_admin("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		dynamic_mode_options(usr)
@@ -497,7 +497,9 @@
 		if(SSticker?.mode)
 			return tgui_alert(usr, "The game has already started.")
 
-		var/new_value = tgui_input_number(usr, "Enter the forced threat level for dynamic mode", "Forced threat level", max_value = 100)
+		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
+		if (new_value > 100)
+			return tgui_alert(usr, "The value must be be under 100.")
 		GLOB.dynamic_forced_threat_level = new_value
 
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
@@ -512,7 +514,7 @@
 		if(!ismob(M))
 			to_chat(usr, "this can only be used on instances of type /mob.", confidential = TRUE)
 
-		var/speech = tgui_input_text(usr, "What will [key_name(M)] say?", "Force speech")// Don't need to sanitize, since it does that in say(), we also trust our admins.
+		var/speech = input("What will [key_name(M)] say?", "Force speech", "")// Don't need to sanitize, since it does that in say(), we also trust our admins.
 		if(!speech)
 			return
 		M.say(speech, forced = "admin speech")
@@ -846,7 +848,7 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
 				var/newtime = null
-				newtime = tgui_input_number(usr, "How many jebs do you want?", "Add wanted posters")
+				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
 				if(!newtime)
 					to_chat(src.owner, "Setting to amount of positions filled for the job", confidential = TRUE)
 					job.total_positions = job.current_positions
@@ -937,7 +939,7 @@
 		if (!check_rights(R_ADMIN))
 			return
 
-		var/message = tgui_input_text(owner, "As well as a popup, they'll also be sent a message to reply to. What do you want that to be?", "Message")
+		var/message = input(owner, "As well as a popup, they'll also be sent a message to reply to. What do you want that to be?", "Message") as text|null
 		if (!message)
 			to_chat(owner, span_notice("Popup cancelled."))
 			return
@@ -1028,10 +1030,10 @@
 		if(!check_rights(R_SOUND))
 			return
 
-		var/mob/mob_listener = locate(href_list["playsoundto"])
-		var/sound = input(usr, "Select a sound file", "Sound") as null|sound
-		if(sound)
-			usr.client.play_direct_mob_sound(sound, mob_listener)
+		var/mob/M = locate(href_list["playsoundto"])
+		var/S = input("", "Select a sound file",) as null|sound
+		if(S)
+			usr.client.play_direct_mob_sound(S, M)
 
 	else if(href_list["individuallog"])
 		if(!check_rights(R_ADMIN))
@@ -1271,7 +1273,7 @@
 	else if(href_list["ac_set_channel_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_feed_channel.channel_name = tgui_input_text(usr, "Provide a Feed Channel Name", "Network Channel Handler")
+		src.admincaster_feed_channel.channel_name = stripped_input(usr, "Provide a Feed Channel Name.", "Network Channel Handler", "")
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -1305,13 +1307,13 @@
 		var/list/available_channels = list()
 		for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 			available_channels += F.channel_name
-		src.admincaster_feed_channel.channel_name = adminscrub(tgui_input_list(usr, "Receiving Feed Channel", "Network Channel Handler", sort_list(available_channels)))
+		src.admincaster_feed_channel.channel_name = adminscrub(input(usr, "Choose receiving Feed Channel.", "Network Channel Handler") in sort_list(available_channels) )
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_feed_message.body = adminscrub(tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", multiline = TRUE))
+		src.admincaster_feed_message.body = adminscrub(stripped_input(usr, "Write your Feed story.", "Network Channel Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -1370,13 +1372,13 @@
 	else if(href_list["ac_set_wanted_name"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.criminal = adminscrub(tgui_input_text(usr, "Provide the name of the Wanted person.", "Network Security Handler"))
+		src.admincaster_wanted_message.criminal = adminscrub(stripped_input(usr, "Provide the name of the Wanted person.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admincaster_wanted_message.body = adminscrub(tgui_input_text(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler"))
+		src.admincaster_wanted_message.body = adminscrub(stripped_input(usr, "Provide the a description of the Wanted person and any other details you deem important.", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -1485,7 +1487,7 @@
 	else if(href_list["ac_set_signature"])
 		if(!check_rights(R_ADMIN))
 			return
-		src.admin_signature = adminscrub(tgui_input_text(usr, "Provide your desired signature", "Network Identity Handler", encode = FALSE))
+		src.admin_signature = adminscrub(input(usr, "Provide your desired signature.", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_del_comment"])
@@ -1540,16 +1542,16 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/list/type_choices = typesof(/datum/station_goal)
-		var/picked = tgui_input_list(usr, "Choose goal type", "Goal Type", type_choices)
+		var/picked = tgui_input_list(usr, "Choose goal type",, type_choices)
 		if(!picked)
 			return
 		var/datum/station_goal/G = new picked()
 		if(picked == /datum/station_goal)
-			var/newname = tgui_input_text(usr, "Enter goal name", "Station Goal")
+			var/newname = input("Enter goal name:") as text|null
 			if(!newname)
 				return
 			G.name = newname
-			var/description = tgui_input_text(usr, "Enter CentCom message contents", "CentCom Message")
+			var/description = input("Enter CentCom message contents:") as message|null
 			if(!description)
 				return
 			G.report_message = description
@@ -1595,13 +1597,13 @@
 				log_admin("[key_name(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
 				message_admins("[key_name_admin(usr)] toggled automatic Lag Switch activation [SSlag_switch.auto_switch ? "ON" : "OFF"].")
 			if("NUM")
-				var/new_num = tgui_input_number(usr, "Enter new threshold value", "Threshold")
+				var/new_num = input("Enter new threshold value:", "Num") as null|num
 				if(!isnull(new_num))
 					SSlag_switch.trigger_pop = new_num
 					log_admin("[key_name(usr)] set the Lag Switch automatic trigger pop to [new_num].")
 					message_admins("[key_name_admin(usr)] set the Lag Switch automatic trigger pop to [new_num].")
 			if("SLOWCOOL")
-				var/new_num = tgui_input_number(usr, "Enter new cooldown in seconds", "SlowCool")
+				var/new_num = input("Enter new cooldown in seconds:", "Num") as null|num
 				if(!isnull(new_num))
 					SSlag_switch.change_slowmode_cooldown(new_num)
 					log_admin("[key_name(usr)] set the Lag Switch slowmode cooldown to [new_num] seconds.")

@@ -207,7 +207,7 @@
 	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
 
 	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
@@ -269,7 +269,7 @@
 	options["Excité"] ="sexymime"
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
@@ -351,7 +351,7 @@
 	options["Angry Tiki"] ="tiki_angry"
 
 	var/choice = show_radial_menu(user,src, tikimask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 
 	if(src && choice && !M.stat && in_range(M,src))

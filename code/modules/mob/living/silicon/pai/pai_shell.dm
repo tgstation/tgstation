@@ -84,7 +84,7 @@
 
 	var/atom/anchor = get_atom_on_turf(src)
 	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 	set_holochassis(choice)
 	to_chat(src, span_boldnotice("You switch your holochassis projection composite to [choice]."))
@@ -96,7 +96,7 @@
  * * choice The animal skin that will be used for the pAI holoform
  */
 /mob/living/silicon/pai/proc/set_holochassis(choice)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 	chassis = choice
 	icon_state = "[chassis]"

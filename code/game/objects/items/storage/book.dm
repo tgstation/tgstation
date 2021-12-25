@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		skins += list("[GLOB.biblenames[i]]" = bible_image)
 
 	var/choice = show_radial_menu(user, src, skins, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 40, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return FALSE
 	var/bible_index = GLOB.biblenames.Find(choice)
 	if(!bible_index)

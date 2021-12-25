@@ -956,7 +956,7 @@
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
 		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, .proc/check_menu, user, W), radius = 36, require_near = TRUE)
-		if(isnull(choice))
+		if(!choice)
 			return FALSE
 		if(icon_state == "paperbag_[choice]")
 			return FALSE

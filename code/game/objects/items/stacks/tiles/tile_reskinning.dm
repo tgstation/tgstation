@@ -65,6 +65,6 @@ GLOBAL_LIST_EMPTY(tile_dir_lists)
 
 /obj/item/stack/tile/proc/tile_rotate(mob/user)
 	var/choice = show_radial_menu(user, src, tile_rotate_dirs, radius = 56, require_near = TRUE)
-	if(isnull(choice))
+	if(!choice)
 		return
 	turf_dir = text2dir(choice)
