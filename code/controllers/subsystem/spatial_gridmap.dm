@@ -1,32 +1,6 @@
 ///the subsystem creates this many [/mob/oranges_ear] mob instances during init. allocations that require more than this create more.
 #define NUMBER_OF_PREGENERATED_ORANGES_EARS 2500
 
-// macros meant specifically to add/remove movables from lazy content lists in the spatial grid.
-// when empty they become references to a single list in SSspatial_grid and when filled they become their own list
-// this is to save memory without making them lazylists as that slows down iteration through them
-#define GRID_CELL_ADD(cell_contents_list, movable_or_list) \
-	if(!length(cell_contents_list)) { \
-		cell_contents_list = list(); \
-		cell_contents_list += movable_or_list; \
-	} else { \
-		cell_contents_list += movable_or_list; \
-	};
-
-#define GRID_CELL_SET(cell_contents_list, movable_or_list) \
-	if(!length(cell_contents_list)) { \
-		cell_contents_list = list(); \
-		cell_contents_list += movable_or_list; \
-	} else { \
-		cell_contents_list |= movable_or_list; \
-	};
-
-//dont use these outside of SSspatial_grid's scope use the procs it has for this purpose
-#define GRID_CELL_REMOVE(cell_contents_list, movable_or_list) \
-	cell_contents_list -= movable_or_list; \
-	if(!length(cell_contents_list)) {\
-		cell_contents_list = dummy_list; \
-	};
-
 /**
  * # Spatial Grid Cell
  *
@@ -49,11 +23,9 @@
 	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
 
 	///every hearing sensitive movable inside this cell
-	var/list/hearing_contents = list()
+	var/list/hearing_contents
 	///every client possessed mob inside this cell
-	var/list/client_contents = list()
-	///every image used for a datum hud that has its loc in this grid cell's bounds goes here.
-	var/list/hud_images
+	var/list/client_contents
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
@@ -66,8 +38,8 @@
 	if(length(dummy_list))
 		dummy_list.Cut()
 		stack_trace("SSspatial_grid.dummy_list had something inserted into it at some point! this is a problem as it is supposed to stay empty")
-
-
+	hearing_contents = dummy_list
+	client_contents = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force, ...)
 	if(force)//the response to someone trying to qdel this is a right proper fuck you
@@ -361,12 +333,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
 
 	if(new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-		intersecting_cell.client_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+		GRID_CELL_SET(intersecting_cell.client_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 	if(new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-		intersecting_cell.hearing_contents |= new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING]
+		GRID_CELL_SET(intersecting_cell.hearing_contents, new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_ENTERED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), new_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
@@ -391,12 +363,12 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/list/old_target_contents = old_target.important_recursive_contents //cache for sanic speeds (lists are references anyways)
 
 	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
-		intersecting_cell.client_contents -= old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+		GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 	if(old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
-		intersecting_cell.hearing_contents -= old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING]
+		GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 		SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(SPATIAL_GRID_CONTENTS_TYPE_HEARING), old_target_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
@@ -417,15 +389,12 @@ SUBSYSTEM_DEF(spatial_grid)
 
 	var/datum/spatial_grid_cell/intersecting_cell = grids_by_z_level[z_index][y_index][x_index]
 
-	intersecting_cell.client_contents -= old_target.important_recursive_contents[exclusive_type]
-	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
-
 	switch(exclusive_type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
-			intersecting_cell.client_contents -= old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS]
+			GRID_CELL_REMOVE(intersecting_cell.client_contents, old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_CLIENTS])
 
 		if(SPATIAL_GRID_CONTENTS_TYPE_HEARING)
-			intersecting_cell.hearing_contents -= old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING]
+			GRID_CELL_REMOVE(intersecting_cell.hearing_contents, old_target.important_recursive_contents[SPATIAL_GRID_CONTENTS_TYPE_HEARING])
 
 	SEND_SIGNAL(intersecting_cell, SPATIAL_GRID_CELL_EXITED(exclusive_type), old_target)
 
@@ -444,8 +413,8 @@ SUBSYSTEM_DEF(spatial_grid)
 			find_hanging_cell_refs_for_movable(to_remove, TRUE)
 			return
 
-	input_cell.client_contents -= to_remove
-	input_cell.hearing_contents -= to_remove
+	GRID_CELL_REMOVE(input_cell.client_contents, to_remove)
+	GRID_CELL_REMOVE(input_cell.hearing_contents, to_remove)
 
 ///if shit goes south, this will find hanging references for qdeleting movables inside the spatial grid
 /datum/controller/subsystem/spatial_grid/proc/find_hanging_cell_refs_for_movable(atom/movable/to_remove, remove_from_cells = TRUE)

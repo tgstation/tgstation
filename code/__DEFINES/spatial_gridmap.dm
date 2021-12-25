@@ -14,3 +14,29 @@
 
 ///whether movable is itself or containing something which should be in one of the spatial grid channels.
 #define HAS_SPATIAL_GRID_CONTENTS(movable) (movable.important_recursive_contents && (movable.important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE] || movable.important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS]))
+
+// macros meant specifically to add/remove movables from lazy content lists in the spatial grid.
+// when empty they become references to a single list in SSspatial_grid and when filled they become their own list
+// this is to save memory without making them lazylists as that slows down iteration through them
+#define GRID_CELL_ADD(cell_contents_list, movable_or_list) \
+	if(!length(cell_contents_list)) { \
+		cell_contents_list = list(); \
+		cell_contents_list += movable_or_list; \
+	} else { \
+		cell_contents_list += movable_or_list; \
+	};
+
+#define GRID_CELL_SET(cell_contents_list, movable_or_list) \
+	if(!length(cell_contents_list)) { \
+		cell_contents_list = list(); \
+		cell_contents_list += movable_or_list; \
+	} else { \
+		cell_contents_list |= movable_or_list; \
+	};
+
+//dont use these outside of SSspatial_grid's scope use the procs it has for this purpose
+#define GRID_CELL_REMOVE(cell_contents_list, movable_or_list) \
+	cell_contents_list -= movable_or_list; \
+	if(!length(cell_contents_list)) {\
+		cell_contents_list = dummy_list; \
+	};
