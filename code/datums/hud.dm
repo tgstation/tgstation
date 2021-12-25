@@ -202,10 +202,7 @@ GLOBAL_LIST_INIT(huds, list(
 	for(var/i in 1 to 1000)
 		thing += new/image(loc = src)
 
-	var/len1 = length(client.images)
 	client.images |= thing
-	var/len2 = length(client.images)
-	var/a = 2
 
 /// remove this atom from this hud completely
 /datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)
@@ -314,11 +311,8 @@ GLOBAL_LIST_INIT(huds, list(
 /datum/atom_hud/proc/remove_atom_from_single_hud(mob/client_mob, atom/atom_to_remove)
 	if(!client_mob || !client_mob.client || !atom_to_remove?.active_hud_list)
 		return
-	var/len1 = length(client_mob.client.images)
 	for(var/hud_image in hud_icons)
 		client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
-	var/len2 = length(client_mob.client.images)
-	var/a = 1
 
 /datum/atom_hud/proc/unregister_mob(datum/source, force)
 	SIGNAL_HANDLER
