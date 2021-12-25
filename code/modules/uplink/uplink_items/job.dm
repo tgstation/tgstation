@@ -231,6 +231,32 @@
 	cost = 3
 	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
 
+/datum/uplink_item/role_restricted/clowncar
+	name = "Clown Car"
+	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
+			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
+			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
+			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
+			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
+			Premium features can be unlocked with a cryptographic sequencer!"
+	progression_minimum = 30 MINUTES
+	item = /obj/vehicle/sealed/car/clowncar
+	cost = 20
+	restricted_roles = list(JOB_CLOWN)
+
+/datum/uplink_item/role_restricted/his_grace
+	name = "His Grace"
+	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
+	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
+	However, if left alone for long enough, He will fall back to slumber. \
+	To activate His Grace, simply unlatch Him."
+	progression_minimum = 30 MINUTES
+	item = /obj/item/his_grace
+	cost = 20
+	restricted_roles = list(JOB_CHAPLAIN)
+	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
+
+
 // High progression cost
 
 /datum/uplink_item/role_restricted/spider_injector
@@ -243,31 +269,6 @@
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
 	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
-
-/datum/uplink_item/role_restricted/clowncar
-	name = "Clown Car"
-	desc = "The Clown Car is the ultimate transportation method for any worthy clown! \
-			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
-			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
-			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
-			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
-			Premium features can be unlocked with a cryptographic sequencer!"
-	progression_minimum = 45 MINUTES
-	item = /obj/vehicle/sealed/car/clowncar
-	cost = 20
-	restricted_roles = list(JOB_CLOWN)
-
-/datum/uplink_item/role_restricted/his_grace
-	name = "His Grace"
-	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
-	His Grace grants gradual regeneration and complete stun immunity to His wielder, but be wary: if He gets too hungry, He will become impossible to drop and eventually kill you if not fed. \
-	However, if left alone for long enough, He will fall back to slumber. \
-	To activate His Grace, simply unlatch Him."
-	progression_minimum = 45 MINUTES
-	item = /obj/item/his_grace
-	cost = 20
-	restricted_roles = list(JOB_CHAPLAIN)
-	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 /datum/uplink_item/role_restricted/blastcannon
 	name = "Blast Cannon"

@@ -22,7 +22,7 @@
 	desc = "C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, sabotage equipment, or connect \
 			an assembly to it in order to alter the way it detonates. It can be attached to almost all objects and has a modifiable timer with a \
 			minimum setting of 10 seconds."
-	progression_minimum = 20 MINUTES
+	progression_minimum = 10 MINUTES
 	item = /obj/item/grenade/c4
 	cost = 1
 
@@ -30,7 +30,7 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 10 C-4 plastic explosives."
 	item = /obj/item/storage/backpack/duffelbag/syndie/c4
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	cost = 8 //20% discount!
 	cant_discount = TRUE
 
