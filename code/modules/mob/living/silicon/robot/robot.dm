@@ -323,6 +323,7 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
+	icon = model.cyborg_icon_file
 	if(stat != DEAD && !(HAS_TRAIT(src, TRAIT_KNOCKEDOUT) || IsStun() || IsParalyzed() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
@@ -336,6 +337,12 @@
 			eye_lights.plane = GAME_PLANE
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
+
+	else if(model.cyborg_stat_icons)
+		if(stat == DEAD)
+			icon_state = "[model.cyborg_base_icon]-dead"
+		else
+			icon_state = "[model.cyborg_base_icon]-unconscious"
 
 	if(opened)
 		if(wiresexposed)

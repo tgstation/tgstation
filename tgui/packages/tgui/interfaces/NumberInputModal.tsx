@@ -9,7 +9,7 @@ type NumberInputData = {
   max_value: number | null;
   message: string;
   min_value: number | null;
-  placeholder: number;
+  init_value: number;
   preferences: Preferences;
   timeout: number;
   title: string;
@@ -17,17 +17,15 @@ type NumberInputData = {
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, placeholder, preferences, timeout, title } = data;
+  const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
     setInput(value);
   };
   const onClick = (value: number) => {
     setInput(value);
   };
-  // NumberInput basically handles everything here
-  const defaultValidState = { isValid: true, error: null };
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
@@ -54,7 +52,7 @@ export const NumberInputModal = (_, context) => {
               <InputArea input={input} onClick={onClick} onChange={onChange} />
             </Stack.Item>
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
-              <InputButtons input={input} inputIsValid={defaultValidState} />
+              <InputButtons input={input} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -65,8 +63,8 @@ export const NumberInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act, data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, placeholder } = data;
+  const { data } = useBackend<NumberInputData>(context);
+  const { min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
   return (
@@ -87,7 +85,7 @@ const InputArea = (props, context) => {
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || placeholder || 0}
+          value={input || init_value || 0}
         />
       </Stack.Item>
       <Stack.Item>
@@ -100,7 +98,7 @@ const InputArea = (props, context) => {
       <Stack.Item>
         <Button
           icon="redo"
-          onClick={() => onClick(placeholder || 0)}
+          onClick={() => onClick(init_value || 0)}
           tooltip="Reset"
         />
       </Stack.Item>
