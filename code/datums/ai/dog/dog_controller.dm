@@ -80,9 +80,14 @@
 	if(!istype(thrown_thing) || !isturf(thrown_thing.loc) || !can_see(pawn, thrown_thing, length=AI_DOG_VISION_RANGE))
 		return
 
+	var/mob/living/living_pawn = pawn
+	if(IS_DEAD_OR_INCAP(living_pawn))
+		return
 	current_movement_target = thrown_thing
 	blackboard[BB_FETCH_TARGET] = thrown_thing
 	blackboard[BB_FETCH_DELIVER_TO] = throwing_datum.thrower
+	if(living_pawn.buckled)
+		queue_behavior(/datum/ai_behavior/resist)
 	queue_behavior(/datum/ai_behavior/fetch)
 
 /// Someone's interacting with us by hand, see if they're being nice or mean
