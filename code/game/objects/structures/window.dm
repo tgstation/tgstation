@@ -328,7 +328,7 @@
 	if(anchored)
 		move_update_air(T)
 
-/obj/structure/window/can_atmos_pass(turf/T)
+/obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))

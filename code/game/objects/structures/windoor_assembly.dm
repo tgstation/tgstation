@@ -68,11 +68,11 @@
 	if(istype(mover, /obj/structure/windoor_assembly) || istype(mover, /obj/machinery/door/window))
 		return valid_window_location(loc, mover.dir, is_fulltile = FALSE)
 
-/obj/structure/windoor_assembly/can_atmos_pass(turf/T)
+/obj/structure/windoor_assembly/can_atmos_pass(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
-		return 1
+		return TRUE
 
 /obj/structure/windoor_assembly/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

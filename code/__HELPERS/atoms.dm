@@ -34,6 +34,7 @@
 		. += checked_atom
 
 ///Step-towards method of determining whether one atom can see another. Similar to viewers()
+///note: this is a line of sight algorithm, view() does not do any sort of raycasting and cannot be emulated by it accurately
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
 	var/turf/target_turf = get_turf(target)

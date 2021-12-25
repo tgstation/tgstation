@@ -361,3 +361,201 @@
       stacks of materials, hand labelers, station charters. Check them out!
   tf-4:
   - bugfix: Cameras will no longer runtime if the mob has no client
+2021-12-13:
+  Bumtickley00:
+  - qol: Health analyzers have had significant readability improvements!
+  - qol: Health analyzers now display allergy information when performing a reagent
+      scan.
+  - qol: Health analyzer limb readout toggle moved from a verb to alt-click.
+  FernandoJ8:
+  - bugfix: Removes hypnosis from the list of traumas neruwhine can cause, fixing
+      a pair of related bugs.
+  Ghommie:
+  - admin: PDA bomb logging shouldn't be as confusing now.
+  GoldenAlpharex:
+  - qol: Plexagon is happy to announce its newest patch, which addresses a highly-requested
+      quality of life change, consisting of adding the name of the person which had
+      their ID modified to the name of their access report printout.
+  - bugfix: The Access Report from the Plexagon Access Management app will now be
+      smarter and actually remember who it was prepared by, even if the ID used for
+      the login was removed before printing said Access Report.
+  JohnFulpWillard:
+  - bugfix: HoPs can now use security record consoles again.
+  LemonInTheDark:
+  - bugfix: Removed a hidden doublepipe, you'll never find the rest, FOOLS
+  Melbert:
+  - bugfix: You can actually reskin the pride pin now
+  OneAsianTortoise:
+  - bugfix: cigarette pack has correct sprite now.
+  RandomGamer123:
+  - bugfix: Cyborgs can no longer attack clown cars when inside them.
+  unit0016:
+  - bugfix: The archmagister's ID card icon now exists. Whoopsies.
+2021-12-14:
+  Iamgoofball:
+  - bugfix: Fixes being able to telekinesis through cameras.
+  - bugfix: Fixes being able to telekinesis across z-levels.
+  Mothblocks:
+  - bugfix: Fixed the skin tones on the preferences menu not having colors.
+  - bugfix: Jumpsuits, such as in species icons, are now grey again instead of white
+      on the preferences menu.
+  tralezab:
+  - bugfix: fugitives are now their own antagonist toggle, instead of polling for
+      traitors for some reason
+2021-12-15:
+  Azarak:
+  - rscadd: Gas Masks now limit your field of view
+  - rscadd: Added field of view mechanics. It's darkness can be tweaked by a pref
+  - rscadd: Blind, nearsighted and fov-limited people will now see sounds as visual
+      effects.
+  Ghilker:
+  - bugfix: fix oversight where HFR can EMP its own APC
+  LemonInTheDark:
+  - bugfix: Fixed gas flowing into windows from above, I am.... so tired
+  - bugfix: Fixes gas sometimes not moving up from below after a structure change,
+      see above
+  Sealed101:
+  - bugfix: CentCom has finally begun shipping helmets with working flashlight mounts
+      to Deltastation's armory.
+  armhulen:
+  - refactor: Mob spawns are refactored, no more assortment of "random, instant, and
+      roundstart" vars on every mob spawn type
+  - refactor: if there are some minimal differences in how mob spawners feel, that's
+      why!
+  gbfree:
+  - bugfix: fix kilostation emergency pods controls staying locked at red and delta
+      alerts
+2021-12-16:
+  SuperNovaa41:
+  - bugfix: Fixes the security warrant computer runtiming if you have no ID.
+  jlsnow301:
+  - bugfix: TGUI text input will now let you submit default values without rewriting
+      the input
+  - bugfix: TGUI text and number input will now accept pressing ENTER anywhere on
+      the window (assuming the input is valid)
+  - refactor: Many more inputs have been converted to TGUI - PDA messaging, GPS tags,
+      cult runes, roulette machines, custom vendors, more.
+  vincentiusvin:
+  - bugfix: fixed rough iron false wall telling you that you need two rods instead
+      of five.
+  - bugfix: fixed rough iron wall dropping two rods instead of five.
+2021-12-17:
+  Azarak:
+  - bugfix: Fixes some effects appearing below mob (smoke, blur, chairrests)
+  - bugfix: Fixed FOV not applying if you were inside contents of something
+  LemonInTheDark:
+  - bugfix: Cat ears will no longer display only on every other render in the preferences
+      menu. God who added these things
+  RandomGamer123:
+  - bugfix: Stops malf AIs in intellicards from activating doomsday device.
+  tralezab:
+  - bugfix: fixes fugitives preference having missing textures
+2021-12-18:
+  Iamgoofball:
+  - bugfix: Fixes Families runtimes and not making enough gang leaders
+  JohnFulpWillard:
+  - spellcheck: Fixed a small typo in Cargo's mail console, saying mail had homing
+      beacons in them.
+  LemonInTheDark:
+  - bugfix: Fixes shoving people into lockers sometimes trapping them in lockerspace.
+      Crummy vacation destination, don't go there.
+  - bugfix: Fixes directional shoving just not working
+  - bugfix: Fixes shoving people carrying other people being weird
+  Melbert:
+  - bugfix: Placing tiny fans in the aux base gives feedback
+  - bugfix: Breaking / deconstructing aux base turrets no longer brick the console
+  Pepsilawn:
+  - bugfix: The rat spit's OD effect will no longer repeat on players already under
+      the Rat King's rule.
+  ike709:
+  - bugfix: Fixed a bug with taste description generation for fruit wine.
+  jlsnow301:
+  - bugfix: Bot cover lock button is now disabled when you lack sufficient access.
+2021-12-19:
+  RandomGamer123:
+  - bugfix: When the nuke goes off, the "you are shredded to atoms" message no longer
+      displays to people not on the z-level or on the station.
+  - bugfix: The nuke now kills everyone on a station z-level if blown up on the station.
+  SuperNovaa41:
+  - bugfix: Fixes being able to table slam through impassable objects.
+  - bugfix: Nested containers (lockers, crates, etc) can be resisted out of.
+  jlsnow301:
+  - bugfix: TGUI list input will now respond to having large/swapped buttons in preferences.
+  - bugfix: BYOND functionality restored in TGUI input lists - keyboard support. Up/Down,
+      type a letter to jump to it (while search is not visible).
+2021-12-20:
+  Fikou:
+  - bugfix: neurotoxin spit no longer hits the xeno that spat it
+  JohnFulpWillard:
+  - bugfix: Enemies of the State and (Command-only) Enemies of the Revolution are
+      now ACTUALLY blacklisted from being defibrilated.
+  - bugfix: Basic mobs (Cows, cockroaches), count as Animals for the DNA vault.
+  - bugfix: The Pirate's shuttle scrambler will now ONLY work if you tell it to.
+  - admin: Actions done from the R&D console is now logged
+  MMMiracles:
+  - bugfix: "The prison gate in Tramstation's Prison is no longer made of Papier-m\xE2\
+      ch\xE9"
+  SuperNovaa41:
+  - bugfix: Ninjas can no longer call reinforcements if the comms console is depowered
+  jlsnow301:
+  - bugfix: Camera consoles now require you to be close by and alive in order to operate.
+  - bugfix: TramStation's tram console is no longer shifted over to the right
+  - bugfix: Mr. Pingsky no longer spams AI private because he wants to leave AI satellite
+      but can't (free him). Autopatrol set to off.
+  - bugfix: Power control consoles now alert you if you lack access.
+  - bugfix: Pandemic machine no longer blue screens while inserting premade viruses.
+  - bugfix: Long civilian bounty texts (specifically viro) no longer overflow the
+      button. The window is slightly wider as a result.
+  san7890:
+  - bugfix: Adds the High-performance liquid chromatography machine to the Syndicate
+      Lavaland Base.
+2021-12-21:
+  Bizzonium:
+  - bugfix: fixed potential bucket corruption in timer reset_buckets
+  JohnFulpWillard:
+  - bugfix: Headrevs only get a revolutionary banner if they actually win.
+  Krysonism:
+  - bugfix: Cows, roaches and their subtypes can be sentienced and mind transfer potioned
+      again.
+  - refactor: refactored syndicate sentience potion and abductor all access gland
+      to use the new simple_access component.
+  Melbert:
+  - bugfix: Removed a floating teleport beacon in Icebox's chapel
+  - bugfix: Fixed APC visibilty in icebox science outpost / RD office
+  - bugfix: Fixed Air alarm accessibility in icebox atmos office
+  Mooshimi:
+  - bugfix: Power has been returned to Tramstation Security department!
+  - bugfix: Everything in the curator's closet on Kilo Station can now be reached.
+  Sealed101:
+  - bugfix: fixed a missing wire in Deltastation's Arrivals Solar array, connecting
+      the control console to the array
+  - bugfix: fixed energy axe sprites's clipping issues and incorrect facing directions
+  tastyfish:
+  - bugfix: The advanced camera console's and AI's camera search function now works
+      again.
+2021-12-22:
+  Azarak:
+  - bugfix: Fixes FoV mask and hiding in potted plants
+  JohnFulpWillard:
+  - bugfix: You will no longer spasm if you're unconscious/dead.
+  RandomGamer123:
+  - bugfix: Inverse reagents are now properly consumed when being transferred into
+      a living body (eg. through syringes).
+  Ryll/Shaps:
+  - admin: Added Datum Tagging, a new admin tool for quickly marking and referring
+      back to various datums and atoms. You can tag atoms by ctrl+middle clicking
+      them or using the right click context menu, or from their VV dropdown menu (especially
+      for abstract datums that can't be clicked).
+  - admin: The View-Tags menu can quickly be accessed by F9 default, or using the
+      View-Tags button at the bottom of the Admin -> Game status panel section.
+  - admin: Tagged datums can also be referenced for things like proccalls and VV var
+      edits, similarly to Marked objects.
+  Watermelon914:
+  - bugfix: You can no longer shove megafauna that you can't normally push.
+  carshalash:
+  - bugfix: Adds seeds to vending machines as intended. Corrects pathway for lasagne.
+      Fixes issue with Bell peppers and baking cheese.
+  san7890:
+  - bugfix: The Nanotrasen News Network has updated their news tickers for when a
+      station horrifically blows up to be more accommodating towards the person directly
+      responsible for making sure it didn't horrifically blow up.

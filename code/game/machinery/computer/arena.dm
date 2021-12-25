@@ -266,6 +266,10 @@
 		toggle_spawn(user)
 	if(href_list["start"])
 		start_match(user)
+	if(href_list["follow"])
+		var/mob/observed_team_member = locate(href_list["follow"]) in GLOB.mob_list
+		if(observed_team_member)
+			user.client?.admin_follow(observed_team_member)
 	if(href_list["team_action"])
 		var/team = href_list["team"]
 		switch(href_list["team_action"])
@@ -326,7 +330,7 @@
 				else
 					player_status = M.stat == DEAD ? "Dead" : "Alive"
 				dat += "<li>[ckey] - [player_status] - "
-				dat += "<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(M)]'>FLW</a>"
+				dat += "<a href='?src=[REF(src)];follow=[REF(M)]'>FLW</a>"
 				dat += "<a href='?src=[REF(src)];member_action=remove;team=[team];ckey=[ckey]'>Remove</a>"
 				//Add more per player features here
 				dat += "</li>"

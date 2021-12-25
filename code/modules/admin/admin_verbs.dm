@@ -17,6 +17,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_panel, /*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
+	/client/proc/tag_datum_mapview,
 	/client/proc/debugstatpanel,
 	/client/proc/fix_air, /*resets air in designated radius to its default atmos composition*/
 	/client/proc/requests
@@ -77,6 +78,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/view_all_sdql_spells,
 	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/paintings_manager,
+	/datum/admins/proc/display_tags,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -189,6 +191,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_sdql_spell_menu,
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
+	/client/proc/cmd_admin_toggle_fov,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)

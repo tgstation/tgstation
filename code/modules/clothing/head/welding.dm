@@ -6,7 +6,7 @@
 	inhand_icon_state = "welding"
 	custom_materials = list(/datum/material/iron=1750, /datum/material/glass=400)
 	flash_protect = FLASH_PROTECTION_WELDER
-	tint = 2.75
+	tint = 2
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 60)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	actions_types = list(/datum/action/item_action/toggle)

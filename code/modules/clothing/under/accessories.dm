@@ -93,10 +93,12 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		if(initial(above_suit))
-			above_suit = !above_suit
-			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		above_suit = !above_suit
+		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
+		return
+
+	return ..()
 
 /obj/item/clothing/accessory/examine(mob/user)
 	. = ..()

@@ -488,15 +488,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		else
 			to_chat(user, "No vacated rooms.")
 
-/obj/effect/mob_spawn/human/doctorhilbert
+/obj/effect/mob_spawn/corpse/human/doctorhilbert
 	name = "Doctor Hilbert"
 	mob_name = "Doctor Hilbert"
-	mob_gender = "male"
-	spawner_job_path = /datum/job/ghost_role
-	ghost_usable = FALSE
 	oxy_damage = 500
 	mob_species = /datum/species/skeleton
-	instant = TRUE
 	outfit = /datum/outfit/doctorhilbert
 
 /datum/outfit/doctorhilbert
@@ -506,6 +502,12 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	back = /obj/item/storage/backpack/satchel/leather
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	id_trim = /datum/id_trim/away/hilbert
+
+/datum/outfit/doctorhilbert/pre_equip(mob/living/carbon/human/hilbert, visualsOnly)
+	. = ..()
+	if(!visualsOnly)
+		hilbert.gender = MALE
+		hilbert.update_body()
 
 /obj/item/paper/crumpled/docslogs
 	name = "Research Logs"

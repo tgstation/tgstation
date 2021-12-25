@@ -56,27 +56,30 @@
 	. = ..()
 	desc += " This drone appears to have a complex holoprojector built on its 'head'."
 
-/obj/effect/mob_spawn/drone/syndrone
+/obj/effect/mob_spawn/ghost_role/drone/syndrone
 	name = "syndrone shell"
 	desc = "A shell of a syndrone, a modified maintenance drone designed to infiltrate and annihilate."
 	icon_state = "syndrone_item"
 	mob_name = "syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone
-	short_desc = "You are a Syndicate Maintenance Drone."
+	prompt_name = "a syndrone"
+	you_are_text = "You are a Syndicate Maintenance Drone."
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some upgrades... and now serve an enemy of your former masters."
-	important_info = ""
+	important_text = ""
 	spawner_job_path = /datum/job/ghost_role
 
-/obj/effect/mob_spawn/drone/syndrone/badass
+/obj/effect/mob_spawn/ghost_role/drone/syndrone/badass
 	name = "badass syndrone shell"
 	mob_name = "badass syndrone"
 	mob_type = /mob/living/simple_animal/drone/syndrone/badass
+	prompt_name = "a badass syndrone"
 	flavour_text = "In a prior life, you maintained a Nanotrasen Research Station. Abducted from your home, you were given some BETTER upgrades... and now serve an enemy of your former masters."
 
-/obj/effect/mob_spawn/drone/snowflake
+/obj/effect/mob_spawn/ghost_role/drone/snowflake
 	name = "snowflake drone shell"
 	desc = "A shell of a snowflake drone, a maintenance drone with a built in holographic projector to display hats and masks."
 	mob_name = "snowflake drone"
+	prompt_name = "a drone with a holohat projector"
 	mob_type = /mob/living/simple_animal/drone/snowflake
 
 /mob/living/simple_animal/drone/polymorphed
@@ -98,7 +101,7 @@
 	icon_living = icon_state
 	icon_dead = "[visualAppearance]_dead"
 
-/obj/effect/mob_spawn/drone/classic
+/obj/effect/mob_spawn/ghost_role/drone/classic
 	mob_type = /mob/living/simple_animal/drone/classic
 
 /mob/living/simple_animal/drone/classic
@@ -106,7 +109,7 @@
 	shy = FALSE
 	default_storage = /obj/item/storage/backpack/duffelbag/drone
 
-/obj/effect/mob_spawn/drone/derelict
+/obj/effect/mob_spawn/ghost_role/drone/derelict
 	name = "derelict drone shell"
 	desc = "A long-forgotten drone shell. It seems kind of... Space Russian."
 	icon = 'icons/mob/drone.dmi'
@@ -114,9 +117,10 @@
 	mob_name = "derelict drone"
 	mob_type = /mob/living/simple_animal/drone/derelict
 	anchored = TRUE
-	short_desc = "You are a drone on Kosmicheskaya Stantsiya 13."
+	prompt_name = "a derelict drone"
+	you_are_text = "You are a drone on Kosmicheskaya Stantsiya 13."
 	flavour_text = "Something has brought you out of hibernation, and the station is in gross disrepair."
-	important_info = "Build, repair, maintain and improve the station that housed you on activation."
+	important_text = "Build, repair, maintain and improve the station that housed you on activation."
 	spawner_job_path = /datum/job/ghost_role
 
 /mob/living/simple_animal/drone/derelict

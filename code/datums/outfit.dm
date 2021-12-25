@@ -191,8 +191,10 @@
 		H.equip_to_slot_or_del(SSwardrobe.provide_type(id, H), ITEM_SLOT_ID, TRUE) //We don't provide ids (Fix this?)
 	if(!visualsOnly && id_trim && H.wear_id)
 		var/obj/item/card/id/id_card = H.wear_id
-		if(istype(id_card) && !SSid_access.apply_trim_to_card(id_card, id_trim))
-			WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
+		id_card.registered_age = H.age
+		if(id_trim)
+			if(!SSid_access.apply_trim_to_card(id_card, id_trim))
+				WARNING("Unable to apply trim [id_trim] to [id_card] in outfit [name].")
 	if(suit_store)
 		H.equip_to_slot_or_del(SSwardrobe.provide_type(suit_store, H), ITEM_SLOT_SUITSTORE, TRUE)
 
