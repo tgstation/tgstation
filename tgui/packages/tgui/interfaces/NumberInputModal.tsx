@@ -103,6 +103,7 @@ const InputArea = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={input === init_value}
           icon="redo"
           onClick={() => onClick(init_value)}
           tooltip="Reset"
