@@ -30,7 +30,7 @@
 			total_reagents += reactant.total_volume
 		maximum_reagents += reactant.maximum_volume
 
-	if (total_reagents > 0)
+	if (total_reagents <= 0)
 		return FALSE
 
 	var/tmp_holder = null
