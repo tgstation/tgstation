@@ -37,14 +37,12 @@
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
-	var/amount_to_remove = FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5, money, 1)
+	if(isnull(amount_to_remove))
+		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-
-	if(!amount_to_remove || amount_to_remove < 0)
-		return
-	if(amount_to_remove > money)
-		to_chat(user, span_warning("There is only [money] credits in [src]"))
+	if(amount_to_remove <= 0)
 		return
 
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
