@@ -292,7 +292,12 @@
 				if(!targeted)
 					break
 				targets["[targeted.current.real_name] the [targeted.assigned_role.title][is_teammate ? " (ally)" : ""]"] = targeted.current
-			heart.target = targets[input(user,"Choose your next target","Target") in targets]
+			var/chosen_target = tgui_input_list(user, "Choose a target", "Eldritch Targeting", targets)
+			if(isnull(chosen_target))
+				return FALSE
+			if(isnull(targets[chosen_target]))
+				return FALSE
+			heart.target = targets[chosen_target]
 			qdel(temp_objective)
 			if(heart.target)
 				to_chat(user,span_warning("Your new target has been selected, go and sacrifice [heart.target.real_name]!"))

@@ -690,7 +690,7 @@
 		to_chat(human_user, span_warning("The link seems to have been severed..."))
 		return
 
-	var/message = sanitize(input("Message:", "Slime Telepathy") as text|null)
+	var/message = sanitize(tgui_input_text(human_user, "Enter a message", "Slime Telepathy"))
 
 	if(!message)
 		return

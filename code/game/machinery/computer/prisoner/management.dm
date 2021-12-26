@@ -98,10 +98,10 @@
 					if("reset")
 						contained_id.points = 0
 					if("setgoal")
-						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
-						if(num >= 0)
-							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
-							contained_id.goal = num
+						var/num = tgui_input_text(usr, "Enter prisoner's goal", "Prisoner Management", 1, 1000, 1)
+						if(isnull(num))
+							return
+						contained_id.goal = round(num)
 		else if(href_list["inject1"])
 			var/obj/item/implant/I = locate(href_list["inject1"]) in GLOB.tracked_chem_implants
 			if(I && istype(I))
