@@ -101,17 +101,17 @@
 	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE) //beautiful destruction
 
-/turf/closed/mineral/attack_animal(mob/living/simple_animal/user)
+/turf/closed/mineral/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if((user.environment_smash & ENVIRONMENT_SMASH_WALLS) || (user.environment_smash & ENVIRONMENT_SMASH_RWALLS))
 		gets_drilled(user)
 	..()
 
-/turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
-	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
+/turf/closed/mineral/attack_alien(mob/living/carbon/alien/user, list/modifiers)
+	to_chat(user, "<span class='notice'>You start digging into the rock...</span>")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, TRUE)
-	if(do_after(M, 40, target = src))
-		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
-		gets_drilled(M)
+	if(do_after(user, 4 SECONDS, target = src))
+		to_chat(user, "<span class='notice'>You tunnel into the rock.</span>")
+		gets_drilled(user)
 
 /turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()

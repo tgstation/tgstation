@@ -113,7 +113,7 @@
 		unworthy_unequip(user)
 	return ..()
 
-/obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user)
+/obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user, list/modifiers)
 	if (check_wearable(user))
 		unworthy_unequip(user)
 	return ..()

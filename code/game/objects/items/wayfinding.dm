@@ -97,7 +97,7 @@
 		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
 	return ..()
 
-/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user)
+/obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 
 	if(machine_stat & (BROKEN|NOPOWER))

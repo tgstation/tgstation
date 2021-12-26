@@ -82,7 +82,7 @@
 	to_chat(user, "<span class='warning'>You cannot crush the polycrystal in-hand, try breaking one off.</span>")
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user)
+/obj/item/stack/sheet/bluespace_crystal/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return

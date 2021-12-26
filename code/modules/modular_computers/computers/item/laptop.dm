@@ -75,7 +75,7 @@
 			return
 		M.put_in_hand(src, H.held_index)
 
-/obj/item/modular_computer/laptop/attack_hand(mob/user)
+/obj/item/modular_computer/laptop/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

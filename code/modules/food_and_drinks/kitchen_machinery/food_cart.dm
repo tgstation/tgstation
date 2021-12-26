@@ -76,7 +76,7 @@
 		iteration++
 	unpacked = TRUE
 
-/obj/machinery/food_cart/attack_hand(mob/living/user)
+/obj/machinery/food_cart/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src] is completely busted.</span>")

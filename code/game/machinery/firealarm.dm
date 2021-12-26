@@ -169,7 +169,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/attack_hand(mob/user)
+/obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
 		return ..()
 	add_fingerprint(user)

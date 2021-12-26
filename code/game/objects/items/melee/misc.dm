@@ -600,7 +600,7 @@
 			to_chat(user, "<span class='warning'>[target] doesn't seem to want to get on [src]!</span>")
 	update_icon()
 
-/obj/item/melee/roastingstick/attack_hand(mob/user)
+/obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
 	..()
 	if (held_sausage)
 		user.put_in_hands(held_sausage)

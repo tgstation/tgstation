@@ -163,8 +163,8 @@
 		if(det_time == previous_time)
 			det_time = 50
 
-/obj/item/grenade/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/grenade/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/obj/projectile/P = hitby

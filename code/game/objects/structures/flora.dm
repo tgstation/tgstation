@@ -70,7 +70,7 @@
 	if(!took_presents)
 		took_presents = list()
 
-/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
+/obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

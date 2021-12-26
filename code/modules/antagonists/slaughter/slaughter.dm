@@ -131,7 +131,7 @@
 	slam_cooldown = world.time
 	log_combat(src, victim, "slaughter slammed")
 
-/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/hostile/imp/slaughter/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	if(iscarbon(A))

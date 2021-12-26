@@ -103,7 +103,7 @@
 	desc = "Space Jesus is my copilot."
 	icon_state = "driverseat"
 
-/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
+/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user, list/modifiers)
 	playsound(src, 'sound/items/carhorn.ogg', 50, TRUE)
 	. = ..()
 

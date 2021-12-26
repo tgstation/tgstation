@@ -113,10 +113,10 @@
 		walk_link(user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_hand(mob/user, list/modifiers)
 	walk_link(user)
 
-/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user)
+/obj/effect/cross_action/spacetime_dist/attack_paw(mob/user, list/modifiers)
 	walk_link(user)
 
 /obj/effect/cross_action/spacetime_dist/Destroy()

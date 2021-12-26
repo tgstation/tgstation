@@ -98,7 +98,7 @@
 			move_speed = clamp(range_input, MIN_SPEED, MAX_SPEED)
 			. = TRUE
 
-/obj/structure/training_machine/attack_hand(mob/user)
+/obj/structure/training_machine/attack_hand(mob/user, list/modifiers)
 	ui_interact(user)
 
 /**

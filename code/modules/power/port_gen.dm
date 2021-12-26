@@ -224,7 +224,7 @@
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
+/obj/machinery/power/port_gen/pacman/attack_paw(mob/user, list/modifiers)
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/ui_interact(mob/user, datum/tgui/ui)

@@ -68,7 +68,7 @@
 /obj/item/radio/intercom/attack_ai(mob/user)
 	interact(user)
 
-/obj/item/radio/intercom/attack_hand(mob/user)
+/obj/item/radio/intercom/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

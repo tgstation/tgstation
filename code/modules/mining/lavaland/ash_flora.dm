@@ -66,7 +66,7 @@
 	else
 		return ..()
 
-/obj/structure/flora/ash/attack_hand(mob/user)
+/obj/structure/flora/ash/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

@@ -132,7 +132,7 @@
 		id = "[port.id]_[id]"
 		setup_device()
 
-/obj/machinery/button/attack_hand(mob/user)
+/obj/machinery/button/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

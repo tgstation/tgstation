@@ -133,7 +133,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 								/mob/living/simple_animal/hostile/asteroid/elite/legionnaire,
 								/mob/living/simple_animal/hostile/asteroid/elite/herald)
 
-/obj/structure/elite_tumor/attack_hand(mob/user)
+/obj/structure/elite_tumor/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(ishuman(user))
 		switch(activity)

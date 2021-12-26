@@ -61,7 +61,7 @@
 
 	return ..()
 
-/obj/structure/eldritch_crucible/attack_hand(mob/user)
+/obj/structure/eldritch_crucible/attack_hand(mob/user, list/modifiers)
 	if(!IS_HERETIC(user) && !IS_HERETIC_MONSTER(user))
 		if(iscarbon(user))
 			devour(user)

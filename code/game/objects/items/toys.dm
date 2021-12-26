@@ -550,8 +550,8 @@
 	var/phomeme
 
 // Talking toys are language universal, and thus all species can use them
-/obj/item/toy/talking/attack_alien(mob/user)
-	return attack_hand(user)
+/obj/item/toy/talking/attack_alien(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
 
 /obj/item/toy/talking/attack_self(mob/user)
 	if(!cooldown)
@@ -695,7 +695,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
-/obj/item/toy/cards/deck/attack_hand(mob/user)
+/obj/item/toy/cards/deck/attack_hand(mob/user, list/modifiers)
 	draw_card(user)
 
 /obj/item/toy/cards/deck/proc/draw_card(mob/user)
