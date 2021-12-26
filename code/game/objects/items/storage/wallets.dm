@@ -20,6 +20,7 @@
 		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
+		/obj/item/coupon,
 		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
