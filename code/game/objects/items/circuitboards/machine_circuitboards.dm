@@ -735,11 +735,13 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk.", "Pricing", custom_cost)
-	if(!new_cost || (loc != user))
+	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
+	if(isnull(new_cost))
+		return
+	if(loc != user)
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return
-	custom_cost = clamp(round(new_cost, 1), 10, 1000)
+	custom_cost = round(new_cost)
 	to_chat(user, span_notice("The cost is now set to [custom_cost]."))
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)

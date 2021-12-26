@@ -162,7 +162,7 @@
 	if(!length(GLOB.sortedAreas))
 		to_chat(src, "No areas found.", confidential = TRUE)
 		return
-	var/area/target_area = tgui_input_list(usr, "Pick an area", "Send Mob", GLOB.sortedAreas)
+	var/area/target_area = tgui_input_list(src, "Pick an area", "Send Mob", GLOB.sortedAreas)
 	if(isnull(target_area))
 		return
 	if(!istype(target_area))
