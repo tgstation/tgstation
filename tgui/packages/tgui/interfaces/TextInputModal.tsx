@@ -63,7 +63,9 @@ export const TextInputModal = (_, context) => {
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <InputArea input={input} onType={onType} />
+            <Stack.Item grow mb={1}>
+              <InputArea input={input} onType={onType} />
+            </Stack.Item>
             <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
               <InputButtons
                 input={input}
@@ -84,16 +86,14 @@ const InputArea = (props, context) => {
   const { input, onType } = props;
 
   return (
-    <Stack.Item grow>
-      <TextArea
-        autoFocus
-        autoSelect
-        height="100%"
-        maxLength={max_length}
-        onInput={(_, value) => onType(value)}
-        placeholder="Type something..."
-        value={input}
-      />
-    </Stack.Item>
+    <TextArea
+      autoFocus
+      autoSelect
+      height="100%"
+      maxLength={max_length}
+      onInput={(_, value) => onType(value)}
+      placeholder="Type something..."
+      value={input}
+    />
   );
 };
