@@ -8,6 +8,8 @@
 /datum/action/item_action/mod/New(Target)
 	..()
 	mod = Target
+	if(ai_action)
+		background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 
 /datum/action/item_action/mod/Grant(mob/M)
 	if(ai_action && M != mod.ai)
@@ -28,7 +30,6 @@
 	return TRUE
 
 /datum/action/item_action/mod/deploy/ai
-	background_icon_state = "bg_tech_blue_on"
 	ai_action = TRUE
 
 /datum/action/item_action/mod/activate
@@ -43,7 +44,6 @@
 	return TRUE
 
 /datum/action/item_action/mod/activate/ai
-	background_icon_state = "bg_tech_blue_on"
 	ai_action = TRUE
 
 /datum/action/item_action/mod/module
@@ -58,7 +58,6 @@
 	return TRUE
 
 /datum/action/item_action/mod/module/ai
-	background_icon_state = "bg_tech_blue_on"
 	ai_action = TRUE
 
 /datum/action/item_action/mod/panel
@@ -73,5 +72,4 @@
 	return TRUE
 
 /datum/action/item_action/mod/panel/ai
-	background_icon_state = "bg_tech_blue_on"
 	ai_action = TRUE

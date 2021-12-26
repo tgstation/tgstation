@@ -65,7 +65,7 @@
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
 #define CELL_PER_STEP DEFAULT_CELL_DRAIN * 2.5
-#define AI_FALL_TIME 3 SECONDS
+#define AI_FALL_TIME 1 SECONDS
 
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
@@ -93,6 +93,7 @@
 	if(!wearer)
 		return
 	REMOVE_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+	wearer.loc.handle_fall(wearer)
 
 /obj/item/mod/ai_minicard
 	name = "AI mini-card"

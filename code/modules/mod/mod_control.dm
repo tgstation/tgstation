@@ -187,6 +187,24 @@
 		new /obj/item/mod/ai_minicard(drop_location(), ai)
 	return ..()
 
+/obj/item/mod/control/examine(mob/user)
+	. = ..()
+	if(active)
+		. += span_notice("Cell power: [cell ? "[round(cell.percent(), 1)]%" : "No cell"].")
+		. += span_notice("Selected module: [selected_module || "None"].")
+	if(!open && !active)
+		. += span_notice("You could put it on your <b>back</b> to turn it on.")
+		. += span_notice("You could open the cover with a <b>screwdriver</b>.")
+	else if(open)
+		. += span_notice("You could use <b>modules</b> on it to install them.")
+		. += span_notice("You could remove modules with a <b>crowbar</b>.")
+		. += span_notice("You could update the access with an <b>ID</b>.")
+		if(cell)
+			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
+		else
+			. += span_notice("You could use a <b>cell</b> on it to install one.")
+
+
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
