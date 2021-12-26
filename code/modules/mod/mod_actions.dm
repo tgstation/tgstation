@@ -12,7 +12,7 @@
 /datum/action/item_action/mod/Grant(mob/M)
 	if(ai_action && M != mod.ai)
 		return
-	else if(!ai_action && M != mod.wearer)
+	else if(!ai_action && M == mod.ai)
 		return
 	return ..()
 
