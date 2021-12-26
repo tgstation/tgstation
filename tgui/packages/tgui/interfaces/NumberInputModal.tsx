@@ -20,11 +20,16 @@ export const NumberInputModal = (_, context) => {
   const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
   const [input, setInput] = useLocalState(context, 'input', init_value);
-
   const onChange = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   const onClick = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
