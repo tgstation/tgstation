@@ -72,7 +72,7 @@
 		needs_objectives.owner.announce_objectives()
 
 /datum/antagonist/separatist
-	name = "Separatists"
+	name = "\improper Separatists"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR THE MOTHERLAND!!"
@@ -110,5 +110,6 @@
 	return nation
 
 /datum/antagonist/separatist/greet()
+	. = ..()
 	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
 	owner.announce_objectives()

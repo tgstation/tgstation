@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("You are the overmind!"))
+	to_chat(src, span_big("You are the overmind!"))
 	blob_help()
 	update_health_hud()
 	add_points(0)
