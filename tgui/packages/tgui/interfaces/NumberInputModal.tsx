@@ -25,9 +25,6 @@ export const NumberInputModal = (_, context) => {
     setInput(value);
   };
   const onClick = (value: number) => {
-    if (value === input) {
-      return;
-    }
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
@@ -77,7 +74,7 @@ const InputArea = (props, context) => {
         <Button
           disabled={input === min_value}
           icon="angle-double-left"
-          onClick={() => onClick(min_value)}
+          onClick={() => onClick(min_value || 0)}
           tooltip="Minimum"
         />
       </Stack.Item>
@@ -87,10 +84,10 @@ const InputArea = (props, context) => {
           autoSelect
           fluid
           minValue={min_value}
-          maxValue={max_value}
+          maxValue={max_value ? max_value : 1000000}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || init_value}
+          value={input}
         />
       </Stack.Item>
       <Stack.Item>
