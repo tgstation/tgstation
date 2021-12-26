@@ -2015,6 +2015,8 @@
 #include "code\modules\antagonists\revolution\enemy_of_the_state.dm"
 #include "code\modules\antagonists\revolution\revolution.dm"
 #include "code\modules\antagonists\santa\santa.dm"
+#include "code\modules\antagonists\separatist\nation_creation.dm"
+#include "code\modules\antagonists\separatist\objectives.dm"
 #include "code\modules\antagonists\separatist\separatist.dm"
 #include "code\modules\antagonists\slaughter\imp_antag.dm"
 #include "code\modules\antagonists\slaughter\slaughter.dm"
