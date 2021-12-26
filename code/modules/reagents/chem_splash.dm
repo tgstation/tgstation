@@ -23,28 +23,33 @@
 	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
 		return
 
-	var/has_reagents = FALSE
-	var/total_reagents = 0
+	var/total_reagents = holder?.total_volume
+	var/maximum_reagents = holder?.maximum_volume
 	for(var/datum/reagents/reactant in reactants)
 		if(reactant.total_volume)
-			has_reagents = TRUE
 			total_reagents += reactant.total_volume
+		maximum_reagents += reactant.maximum_volume
 
-	if(!has_reagents)
+	if (total_reagents > 0)
 		return FALSE
 
 	var/tmp_holder = null
 	var/original_max_volume = null
 	if (isnull(holder))
 		tmp_holder = TRUE
-		holder = new /datum/reagents(INFINITY)
+		holder = new /datum/reagents(maximum_reagents * threatscale)
 		holder.my_atom = epicenter
 	else
 		tmp_holder = FALSE
 		original_max_volume = holder.maximum_volume
-		holder.maximum_volume = INFINITY
+		if(threatscale < 1)
+			holder.multiply_reagents(threatscale)
+			holder.maximum_volume = maximum_reagents * threatscale
+		else
+			holder.maximum_volume = maximum_reagents * threatscale
+			holder.multiply_reagents(threatscale)
 
-	for(var/datum/reagents/reactant in reactants)
+	for(var/datum/reagents/reactant as anything in reactants)
 		reactant.trans_to(holder, reactant.total_volume, threatscale, preserve_data = TRUE, no_react = TRUE)
 
 	holder.chem_temp += extra_heat // Average temperature of reagents + extra heat.

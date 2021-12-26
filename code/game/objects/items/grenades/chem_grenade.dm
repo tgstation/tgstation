@@ -6,20 +6,30 @@
 	inhand_icon_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
+	/// Which stage of construction this grenade is currently at.
 	var/stage = GRENADE_EMPTY
+	/// The set of reagent containers that have been added to this grenade casing.
 	var/list/obj/item/reagent_containers/glass/beakers = list()
+	/// The types of reagent containers that can be added to this grenade casing.
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
+	/// The types of reagent containers that can't be added to this grenade casing.
 	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace) //Containers to exclude from specific grenade subtypes
+	/// The maximum volume of the reagents in the grenade casing.
+	var/casing_holder_volume = 1000
+	/// The range that this grenade can splash reagents at if they aren't consumed on detonation.
 	var/affected_area = 3
-	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
-	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
-	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
-	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition." // Appears when examining empty casings.
+	/// The amount of temperature that is added to the reagents on detonation.
+	var/ignition_temp = 10
+	/// How much to scale the reagents by when the grenade detonates. Used by advanced grenades to make them slightly more worthy.
+	var/threatscale = 1
+	/// The description when examining empty casings.
+	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition."
+	/// Whether or not the grenade is currently acting as a landmine. Currently broken and not my current project.
 	var/obj/item/assembly/prox_sensor/landminemode = null
 
 /obj/item/grenade/chem_grenade/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(casing_holder_volume)
 	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
 	wires = new /datum/wires/explosive/chem_grenade(src)
 
@@ -209,7 +219,7 @@
 		reactants += glass_beaker.reagents
 
 	var/turf/detonation_turf = get_turf(src)
-	if (chem_splash(detonation_turf, reagents, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
+	if (chem_splash(detonation_turf, reagents, affected_area, reactants, ignition_temp, threatscale))
 		// logs from custom assemblies priming are handled by the wire component
 		log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
@@ -232,29 +242,52 @@
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
-		return
+		return FALSE
 
-	for(var/obj/item/slime_extract/slime_extract in beakers)
-		if (!slime_extract.Uses)
+
+	var/extract_total_volume = 0
+	var/extract_maximum_volume = 0
+	var/list/extracts = list()
+
+	var/beaker_total_volume = 0
+	var/list/other_containers = list()
+
+	for(var/obj/item/thing as anything in beakers)
+		if(!thing.reagents)
 			continue
 
-		for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-			glass_beaker.reagents.trans_to(slime_extract, glass_beaker.reagents.total_volume)
+		if(istype(thing, /obj/item/slime_extract))
+			var/obj/item/slime_extract/extract = thing
+			if(!extract.Uses)
+				continue
 
-		//If there is still a core (sometimes it's used up)
-		//and there are reagents left, behave normally,
-		//otherwise drop it on the ground for timed reactions like gold.
-
-		if(!slime_extract)
-			continue
-
-		if(slime_extract.reagents && slime_extract.reagents.total_volume)
-			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-				slime_extract.reagents.trans_to(glass_beaker, slime_extract.reagents.total_volume)
+			extract_total_volume += extract.reagents.total_volume
+			extract_maximum_volume += extract.reagents.maximum_volume
+			extracts += extract
 		else
-			slime_extract.forceMove(get_turf(src))
-			no_splash = TRUE
-	..()
+			beaker_total_volume += thing.reagents.total_volume
+			other_containers += thing
+
+
+	var/available_extract_volume = extract_maximum_volume - extract_total_volume
+	if(beaker_total_volume <= 0 || available_extract_volume <= 0)
+		return ..()
+
+	var/container_ratio = available_extract_volume / beaker_total_volume
+	var/datum/reagents/tmp_holder = new/datum/reagents(beaker_total_volume)
+	for(var/obj/item/container as anything in other_containers)
+		container.reagents.trans_to(tmp_holder, container.reagents.total_volume * container_ratio, 1, preserve_data = TRUE, no_react = TRUE)
+
+	for(var/obj/item/slime_extract/extract as anything in extracts)
+		var/available_volume = extract.reagents.maximum_volume - extract.reagents.total_volume
+		tmp_holder.trans_to(extract, beaker_total_volume * (available_volume / available_extract_volume), 1, preserve_data = TRUE, no_react = TRUE)
+
+		extract.reagents.handle_reactions() // Reaction handling in the transfer proc is reciprocal and we don't want to blow up the tmp holder early.
+		if(QDELETED(extract))
+			beakers -= extract
+			extracts -= extract
+
+	return ..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to

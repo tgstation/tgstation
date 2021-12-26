@@ -380,20 +380,27 @@
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
 	icon_state = "chemcore"
+	/// The initial volume of the reagent holder the bombcore has.
+	var/core_holder_volume = 1000
+	/// The set of beakers that have been inserted into the bombcore.
 	var/list/beakers = list()
+	/// The maximum number of beakers that this bombcore can have.
 	var/max_beakers = 1 // Read on about grenade casing properties below
+	/// The range this spreads the reagents added to the bombcore.
 	var/spread_range = 5
+	/// How much this heats the reagents in it on detonation.
 	var/temp_boost = 50
+	/// The amount of reagents released with each detonation.
 	var/time_release = 0
 
 /obj/item/bombcore/chemical/Initialize(mapload)
 	. = ..()
-	create_reagents(1000)
+	create_reagents(core_holder_volume)
 
 /obj/item/bombcore/chemical/detonate()
 
 	if(time_release > 0)
-		var/total_volume = 0
+		var/total_volume = reagents.total_volume
 		for(var/obj/item/reagent_containers/RC in beakers)
 			total_volume += RC.reagents.total_volume
 
