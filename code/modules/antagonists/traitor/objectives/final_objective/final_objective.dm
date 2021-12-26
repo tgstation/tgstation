@@ -14,12 +14,9 @@
 
 /// Determines if this final objective can be taken. Should be put into every final objective's generate function.
 /datum/traitor_objective/final/proc/can_take_final_objective()
-	var/total_progression = 0
-	for(var/datum/traitor_objective/objective as anything in handler.completed_objectives)
-		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
-			continue
-		total_progression += objective.progression_reward
-	if(total_progression < progression_points_in_objectives)
+	if(handler.get_completion_progression(/datum/traitor_objective) < progression_points_in_objectives)
+		return FALSE
+	if(length(SStraitor.get_completed_objectives(type)) > 0) // Prevents multiple people from ever getting the same final objective.
 		return FALSE
 	return TRUE
 

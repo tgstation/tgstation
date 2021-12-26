@@ -1,3 +1,6 @@
+/// A traitor objective. Traitor objectives should not be deleted after they have been created and established, only failed.
+/// If a traitor objective needs to be removed from the failed/completed objective list of their handler, then you are doing something wrong
+/// and you should reconsider. When an objective is failed/completed, that is final and the only way you can change that is by refactoring the code.
 /datum/traitor_objective
 	/// The name of the traitor objective
 	var/name = "traitor objective"
@@ -123,8 +126,10 @@
 	if(objective_state != OBJECTIVE_STATE_INACTIVE && objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	handle_cleanup()
 	objective_state = OBJECTIVE_STATE_COMPLETED
+	SStraitor.on_objective_completed(src)
 	handler.on_update() // Trigger an update to the UI
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.

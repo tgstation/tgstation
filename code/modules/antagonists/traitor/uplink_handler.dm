@@ -148,6 +148,13 @@
 			amount_completed += 1
 	return amount_completed
 
+/datum/uplink_handler/proc/get_completion_progression(datum/traitor_objective/type)
+	var/total_progression = 0
+	for(var/datum/traitor_objective/objective as anything in potential_duplicate_objectives[type])
+		if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
+			total_progression += objective.progression_reward
+	return total_progression
+
 /// Used to complete objectives, failed or successful.
 /datum/uplink_handler/proc/complete_objective(datum/traitor_objective/to_remove)
 	if(to_remove in completed_objectives)

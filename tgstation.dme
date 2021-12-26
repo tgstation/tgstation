@@ -2040,6 +2040,7 @@
 #include "code\modules\antagonists\traitor\objectives\bug_room.dm"
 #include "code\modules\antagonists\traitor\objectives\destroy_heirloom.dm"
 #include "code\modules\antagonists\traitor\objectives\destroy_item.dm"
+#include "code\modules\antagonists\traitor\objectives\hack_comm_console.dm"
 #include "code\modules\antagonists\traitor\objectives\kill_pet.dm"
 #include "code\modules\antagonists\traitor\objectives\sleeper_protocol.dm"
 #include "code\modules\antagonists\traitor\objectives\smuggling.dm"
