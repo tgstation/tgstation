@@ -645,3 +645,41 @@
   - bugfix: Turning off NtOS admin mode now properly returns you to the channel.
   - bugfix: NtOS chat screen widened slightly to fix clipping issue on the participants
       panel.
+2021-12-26:
+  CRITAWAKETS:
+  - imageadd: The Spider Clan has issued a recall of all it's katanas, replacing them
+      with new ones that are differently styled. Something about the old ones being
+      literally impossible to find in bright conditions. Or maybe they just didnt
+      like how it looked so they changed its "sprite".
+  Cheshify:
+  - imageadd: The PanD.E.M.I.C 2200 is now visually different than the ChemMaster
+  Fikou, theOOZ:
+  - imageadd: adds a new janiborg sprite!
+  Iamgoofball:
+  - qol: AI VOX announcements are now additionally broadcasted over the radio.
+  JohnFulpWillard:
+  - bugfix: The HoP will now get strange reagent in the mail if Ian is dead, as originally
+      intended.
+  Melbert:
+  - bugfix: Updated the binary key's description / examine text to actually describe
+      its abilities.
+  ReinaCoder:
+  - imageadd: Resprites the sec grenade launcher
+  TheBonded:
+  - bugfix: Tesla reactive armour now has separate emp and cooldown messages
+  - bugfix: dogs will no longer forget to unbuckle themselves when fetching items
+      thrown nearby
+  axietheaxolotl:
+  - imageadd: Resprited the Tactical Turtleneck Suit
+  jlsnow301:
+  - bugfix: Double click and enter on tgui input lists no longer clears selection.
+  - bugfix: 'Functionality restored: typing while not selecting the search bar will
+      refocus. You can also quick search by typing while the search bar is hidden.'
+  - refactor: Support for current value selections has been added to tgui input lists
+      - lists now work for suit sensors, etc.
+  tf-4:
+  - bugfix: Disarming a heavily incapacitated person with krav maga will no longer
+      make them recoil in pain.
+  timothymtorres:
+  - bugfix: Fix AIs inside a AI restorer computer now die if the computer is destroyed
+      while they are inside it.
