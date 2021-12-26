@@ -849,5 +849,5 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			return
 		eyes.Remove(src)
 		qdel(eyes)
-		visible_message(span_notice("[src] looks up and their eyes melt away!"), "<span class>='userdanger'>I understand now.</span>")
+		visible_message(span_notice("[src] looks up and their eyes melt away!"), span_userdanger("I understand now."))
 		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)
