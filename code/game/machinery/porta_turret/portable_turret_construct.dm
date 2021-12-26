@@ -178,13 +178,13 @@
 				return
 
 	if(istype(I, /obj/item/pen)) //you can rename turrets like bots!
-		var/t = stripped_input(user, "Enter new turret name", name, finish_name)
-		if(!t)
+		var/choice = tgui_input_text(user, "Enter anew turret name", "Turret Classification", finish_name, MAX_NAME_LEN)
+		if(!choice)
 			return
 		if(!Adjacent(user))
 			return
 
-		finish_name = t
+		finish_name = choice
 		return
 	return ..()
 
