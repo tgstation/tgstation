@@ -2,7 +2,6 @@ import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type VendingData = {
   onstation: boolean;
@@ -185,8 +184,6 @@ const VendingRow = (props, context) => {
     || (onstation && !user)
     || (onstation && !access
     && (discount ? redPrice : product.price) > user?.cash);
-
-  logger.log(product.price > user.cash);
 
   return (
     <Table.Row>
