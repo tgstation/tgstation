@@ -936,6 +936,9 @@
  * * movement_dir - 0 when stopping or any dir when trying to move
  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+		return TRUE
+
 	if(has_gravity(src))
 		return TRUE
 

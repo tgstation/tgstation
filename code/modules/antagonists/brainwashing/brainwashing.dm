@@ -26,7 +26,7 @@
 		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 
 /datum/antagonist/brainwashed
-	name = "Brainwashed Victim"
+	name = "\improper Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
