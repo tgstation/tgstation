@@ -18,6 +18,13 @@
 		return
 	return ..()
 
+/datum/action/item_action/mod/Remove(mob/M)
+	if(ai_action && M != mod.ai)
+		return
+	else if(!ai_action && M == mod.ai)
+		return
+	return ..()
+
 /datum/action/item_action/mod/deploy
 	name = "Deploy MODsuit"
 	desc = "Deploy/Conceal a part of the MODsuit."

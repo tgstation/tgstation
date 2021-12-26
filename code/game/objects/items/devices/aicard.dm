@@ -41,7 +41,6 @@
 			log_combat(user, AI, "carded", src)
 			update_appearance()
 			return TRUE
-	update_appearance() //Whatever happened, update the card's state (icon, name) to match.
 	return ..()
 
 /obj/item/aicard/update_icon_state()

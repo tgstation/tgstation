@@ -22,8 +22,7 @@
 			intAI.forceMove(card)
 			card.AI = intAI
 			for(var/datum/action/action as anything in actions)
-				if(action.owner == intAI)
-					action.Remove(intAI)
+				action.Remove(intAI)
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
 			balloon_alert(intAI, "transferred to a card")
@@ -93,7 +92,6 @@
 	if(!wearer)
 		return
 	REMOVE_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
-	wearer.loc.handle_fall(wearer)
 
 /obj/item/mod/ai_minicard
 	name = "AI mini-card"

@@ -196,6 +196,7 @@
 		. += span_notice("You could put it on your <b>back</b> to turn it on.")
 		. += span_notice("You could open the cover with a <b>screwdriver</b>.")
 	else if(open)
+		. += span_notice("You could close the cover with a <b>screwdriver</b>.")
 		. += span_notice("You could use <b>modules</b> on it to install them.")
 		. += span_notice("You could remove modules with a <b>crowbar</b>.")
 		. += span_notice("You could update the access with an <b>ID</b>.")

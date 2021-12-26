@@ -118,7 +118,7 @@
 	var/list/overlays = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return overlays
-	overlays += busy ? "red" : "green"
+	overlays += busy || !mod_unit ? "red" : "green"
 	return overlays
 
 /obj/machinery/mod_installer/proc/start_process()
