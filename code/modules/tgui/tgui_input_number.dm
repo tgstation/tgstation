@@ -105,6 +105,9 @@
 		src.min_value = 0
 		if(default)
 			src.default = 0
+	/// Sanity check
+	if(default < min_value)
+		src.default = min_value
 
 /datum/tgui_input_number/Destroy(force, ...)
 	SStgui.close_uis(src)
