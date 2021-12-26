@@ -82,7 +82,7 @@ const InputArea = (props, context) => {
           disabled={input === min_value}
           icon="angle-double-left"
           onClick={() => onClick(min_value || 0)}
-          tooltip="Minimum"
+          tooltip={min_value ? `Min (${min_value})` : 'Min'}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -102,7 +102,7 @@ const InputArea = (props, context) => {
           disabled={!max_value || max_value === 0 || input === max_value}
           icon="angle-double-right"
           onClick={() => onClick(max_value)}
-          tooltip="Max"
+          tooltip={max_value ? `Max (${max_value})` : 'Max'}
         />
       </Stack.Item>
       <Stack.Item>
@@ -110,7 +110,7 @@ const InputArea = (props, context) => {
           disabled={input === init_value}
           icon="redo"
           onClick={() => onClick(init_value)}
-          tooltip="Reset"
+          tooltip={init_value ? `Reset (${init_value})` : 'Reset'}
         />
       </Stack.Item>
     </Stack>

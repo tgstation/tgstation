@@ -512,7 +512,7 @@
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
-	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw? Max: [registered_account.account_balance]", "Withdraw Funds", 1, registered_account.account_balance, 1), 1)
+	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 1, registered_account.account_balance, 1), 1)
 	if(isnull(amount_to_remove))
 		return
 	if(amount_to_remove < 1 || amount_to_remove > registered_account.account_balance)
