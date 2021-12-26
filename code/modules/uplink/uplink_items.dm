@@ -1,30 +1,24 @@
 
 // TODO: Work into reworked uplinks.
-/proc/create_uplink_sales(num, category_name, limited_stock, sale_items, uplink_items)
-	if (num <= 0)
-		return
-
-	if(!uplink_items[category_name])
-		uplink_items[category_name] = list()
-
+/proc/create_uplink_sales(num, datum/uplink_category/category, limited_stock, list/sale_items)
+	var/list/sales = list()
+	var/list/sale_items_copy = sale_items.Copy()
 	for (var/i in 1 to num)
-		var/datum/uplink_item/I = pick_n_take(sale_items)
-		var/datum/uplink_item/A = new I.type
-		var/discount = A.get_discount()
+		var/datum/uplink_item/taken_item = pick_n_take(sale_items_copy)
+		var/datum/uplink_item/uplink_item = new taken_item.type()
+		var/discount = uplink_item.get_discount()
 		var/list/disclaimer = list("Void where prohibited.", "Not recommended for children.", "Contains small parts.", "Check local laws for legality in region.", "Do not taunt.", "Not responsible for direct, indirect, incidental or consequential damages resulting from any defect, error or failure to perform.", "Keep away from fire or flames.", "Product is provided \"as is\" without any implied or expressed warranties.", "As seen on TV.", "For recreational use only.", "Use only as directed.", "16% sales tax will be charged for orders originating within Space Nebraska.")
-		A.limited_stock = limited_stock
-		I.refundable = FALSE //THIS MAN USES ONE WEIRD TRICK TO GAIN FREE TC, CODERS HATES HIM!
-		A.refundable = FALSE
-		if(A.cost >= 20) //Tough love for nuke ops
+		uplink_item.limited_stock = limited_stock
+		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
-		A.category = category_name
-		A.cost = max(round(A.cost * discount),1)
-		A.name += " ([round(((initial(A.cost)-A.cost)/initial(A.cost))*100)]% off!)"
-		A.desc += " Normally costs [initial(A.cost)] TC. All sales final. [pick(disclaimer)]"
-		A.item = I.item
+		uplink_item.category = category
+		uplink_item.cost = max(round(uplink_item.cost * discount),1)
+		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
+		uplink_item.desc += " Normally costs [initial(uplink_item.cost)] TC. All sales final. [pick(disclaimer)]"
+		uplink_item.item = taken_item.item
 
-		uplink_items[category_name][A.name] = A
-
+		sales += uplink_item
+	return sales
 
 /**
  * Uplink Items
@@ -100,8 +94,16 @@
 	return A
 
 /datum/uplink_category/discounts
-	name = "Discounts"
+	name = "Discounted Gear"
 	weight = -1
+
+/datum/uplink_category/discount_team_gear
+	name = "Discounted Team Gear"
+	weight = -1
+
+/datum/uplink_category/limited_discount_team_gear
+	name = "Limited Stock Team Gear"
+	weight = -2
 
 //Discounts (dynamically filled above)
 /datum/uplink_item/discounts

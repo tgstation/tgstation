@@ -20,6 +20,7 @@ type UplinkItem = {
   limited_stock: number,
   restricted_roles: string,
   progression_minimum: number,
+  ref?: string,
 }
 
 type UplinkData = {
@@ -31,6 +32,13 @@ type UplinkData = {
   uplink_flag: number,
   assigned_role: string,
   debug: BooleanLike,
+  extra_purchasable: UplinkItem[],
+  extra_purchasable_stock: {
+    [key: string]: number;
+  }
+  current_stock: {
+    [key: string]: number;
+  }
 
   has_objectives: BooleanLike,
   has_progression: BooleanLike,
@@ -49,6 +57,10 @@ type UplinkState = {
 type ServerData = {
   items: UplinkItem[],
   categories: string[],
+}
+
+type ItemExtraData = {
+  ref?: string | undefined
 }
 
 // Cache response so it's only sent once
@@ -130,15 +142,27 @@ export class Uplink extends Component<{}, UplinkState> {
       current_expected_progression,
       progression_scaling_deviance,
       current_progression_scaling,
+      extra_purchasable,
+      extra_purchasable_stock,
+      current_stock,
     } = data;
     const {
       allItems,
       allCategories,
       currentTab,
     } = this.state as UplinkState;
-    const items: Item[] = [];
-    for (let i = 0; i < allItems.length; i++) {
-      const item = allItems[i];
+
+    const itemsToAdd = [...allItems];
+    const items: Item<ItemExtraData>[] = [];
+    itemsToAdd.push(...extra_purchasable);
+    for (let i = 0; i < extra_purchasable.length; i++) {
+      const item = extra_purchasable[i];
+      if (!allCategories.includes(item.category)) {
+        allCategories.push(item.category);
+      }
+    }
+    for (let i = 0; i < itemsToAdd.length; i++) {
+      const item = itemsToAdd[i];
       const canBuy = telecrystals >= item.cost;
       const hasEnoughProgression
         = progression_points >= item.progression_minimum;
@@ -167,6 +191,9 @@ export class Uplink extends Component<{}, UplinkState> {
           </Box>
         ),
         disabled: !canBuy || (has_progression && !hasEnoughProgression),
+        extraData: {
+          ref: item.ref,
+        },
       });
     }
     // Get the difference between the current progression and
@@ -184,7 +211,7 @@ export class Uplink extends Component<{}, UplinkState> {
         width={820}
         height={580}
         theme="syndicate">
-        <Window.Content scrollable={currentTab !== 0}>
+        <Window.Content scrollable={currentTab !== 0 || !has_objectives}>
           <Stack vertical fill>
             <Stack.Item>
               <Section>
@@ -299,7 +326,12 @@ export class Uplink extends Component<{}, UplinkState> {
                   categories={allCategories}
                   items={items}
                   handleBuy={(item) => {
-                    act("buy", { path: item.id });
+                    const extraDataItem = item as Item<ItemExtraData>;
+                    if (!extraDataItem.extraData?.ref) {
+                      act("buy", { path: item.id });
+                    } else {
+                      act("buy", { ref: extraDataItem.extraData.ref });
+                    }
                   }}
                 />
               )}

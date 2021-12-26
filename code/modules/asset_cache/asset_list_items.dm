@@ -549,8 +549,6 @@
 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 	return pre_asset
 
-GLOBAL_LIST_EMPTY_TYPED(uplink_items_by_type, /datum/uplink_item)
-
 /// Sends information needed for uplinks
 /datum/asset/json/uplink
 	name = "uplink"
@@ -584,7 +582,8 @@ GLOBAL_LIST_EMPTY_TYPED(uplink_items_by_type, /datum/uplink_item)
 				"progression_minimum" = item.progression_minimum,
 			))
 		}
-		GLOB.uplink_items_by_type[item_path] = item
+		SStraitor.uplink_items += item
+		SStraitor.uplink_items_by_type[item_path] = item
 
 	data["items"] = items
 	data["categories"] = categories

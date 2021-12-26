@@ -88,23 +88,24 @@ export const GenericUplink = (props: GenericUplinkProps, context) => {
   );
 };
 
-export type Item = {
+export type Item<ItemData = {}> = {
   id: string | number,
   name: string,
   category: string,
   cost: JSX.Element | string,
   desc: JSX.Element | string,
   disabled: BooleanLike,
+  extraData?: ItemData,
 }
 
-type ItemListProps = {
+export type ItemListProps = {
   compactMode: BooleanLike,
   items: Item[],
 
   handleBuy: (item: Item) => void;
 }
 
-const ItemList = (props: ItemListProps, context) => {
+const ItemList = (props: ItemListProps, context: any) => {
   const {
     compactMode,
     items,

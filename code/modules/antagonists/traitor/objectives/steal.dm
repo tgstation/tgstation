@@ -84,7 +84,7 @@
 
 /datum/traitor_objective/steal_item/risky
 	progression_minimum = 30 MINUTES
-	progression_reward = 5 MINUTES
+	progression_reward = 13 MINUTES
 	telecrystal_reward = list(3, 5)
 
 	possible_items = list(
@@ -101,7 +101,7 @@
 
 /datum/traitor_objective/steal_item/very_risky
 	progression_minimum = 40 MINUTES
-	progression_reward = 8 MINUTES
+	progression_reward = 17 MINUTES
 	telecrystal_reward = list(4, 7)
 
 	possible_items = list(
@@ -118,7 +118,7 @@
 
 /datum/traitor_objective/steal_item/most_risky
 	progression_minimum = 50 MINUTES
-	progression_reward = 13 MINUTES
+	progression_reward = 25 MINUTES
 	telecrystal_reward = list(8, 12)
 
 	possible_items = list(

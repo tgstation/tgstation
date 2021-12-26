@@ -2705,8 +2705,8 @@
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
 /datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
 	var/list/uplink_items = list()
-	for(var/datum/uplink_item/item_path as anything in GLOB.uplink_items_by_type)
-		var/datum/uplink_item/item = GLOB.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
 		if(item.purchasable_from & UPLINK_TRAITORS)
 			uplink_items += item
 

@@ -16,8 +16,8 @@
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/component/uplink/uplink)
 	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in GLOB.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = GLOB.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
 		if(src == uplink_item || !uplink_item.item)
 			continue
 		if(!uplink.uplink_handler.can_purchase_item(uplink))

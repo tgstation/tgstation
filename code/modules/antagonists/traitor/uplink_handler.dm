@@ -18,6 +18,8 @@
 	var/datum/uplink_purchase_log/purchase_log
 	/// Associative array of uplink item = stock left
 	var/list/item_stock = list()
+	/// Extra stuff that can be purchased by an uplink, regardless of flag.
+	var/list/extra_purchasable = list()
 	/// Whether this uplink handler has objectives.
 	var/has_objectives = TRUE
 	/// The maximum number of objectives that can be taken
@@ -50,13 +52,14 @@
 	if(debug_mode)
 		return TRUE
 
-	if(!(to_purchase.purchasable_from & uplink_flag))
-		return FALSE
+	if(!(to_purchase in extra_purchasable))
+		if(!(to_purchase.purchasable_from & uplink_flag))
+			return FALSE
 
-	if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
-		return FALSE
+		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
+			return FALSE
 
-	var/stock = item_stock[to_purchase.type] || INFINITY
+	var/stock = item_stock[to_purchase] || INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
 		return FALSE
 
@@ -67,13 +70,13 @@
 		return
 
 	if(to_purchase.limited_stock != -1 && !(to_purchase.type in item_stock))
-		item_stock[to_purchase.type] = to_purchase.limited_stock
+		item_stock[to_purchase] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
 	to_purchase.purchase(user, src)
 
 	if(to_purchase.type in item_stock)
-		item_stock[to_purchase.type] -= 1
+		item_stock[to_purchase] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))
 	on_update()

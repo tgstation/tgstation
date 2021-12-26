@@ -172,6 +172,33 @@
 		data["potential_objectives"] = potential_objectives
 		data["active_objectives"] = active_objectives
 
+	var/list/stock_list = uplink_handler.item_stock.Copy()
+	var/list/extra_purchasable_stock = list()
+	var/list/extra_purchasable = list()
+	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
+		if(item in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item]
+			stock_list -= item
+		extra_purchasable += list(list(
+			"id" = item.type,
+			"name" = item.name,
+			"cost" = item.cost,
+			"desc" = item.desc,
+			"category" = item.category? initial(item.category.name) : null,
+			"purchasable_from" = item.purchasable_from,
+			"restricted" = item.restricted,
+			"limited_stock" = item.limited_stock,
+			"restricted_roles" = item.restricted_roles,
+			"progression_minimum" = item.progression_minimum,
+			"ref" = REF(item)
+		))
+
+	var/list/remaining_stock = list()
+	for(var/datum/uplink_item/item as anything in stock_list)
+		remaining_stock[item.type] = stock_list[item]
+	data["extra_purchasable"] = extra_purchasable
+	data["extra_purchasable_stock"] = extra_purchasable_stock
+	data["current_stock"] = remaining_stock
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
@@ -197,11 +224,16 @@
 		return
 	switch(action)
 		if("buy")
-			var/datum/uplink_item/item_path = text2path(params["path"])
-			if(!ispath(item_path, /datum/uplink_item))
-				return
-
-			var/datum/uplink_item/item = GLOB.uplink_items_by_type[item_path]
+			var/datum/uplink_item/item
+			if(params["ref"])
+				item = locate(params["ref"]) in uplink_handler.extra_purchasable
+				if(!item)
+					return
+			else
+				var/datum/uplink_item/item_path = text2path(params["path"])
+				if(!ispath(item_path, /datum/uplink_item))
+					return
+				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
 			active = FALSE

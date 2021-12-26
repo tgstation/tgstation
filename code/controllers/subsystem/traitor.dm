@@ -3,6 +3,12 @@ SUBSYSTEM_DEF(traitor)
 	flags = SS_KEEP_TIMING
 	wait = 10 SECONDS
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+
+	/// A list of all uplink items mapped by type
+	var/list/uplink_items_by_type = list()
+	/// A list of all uplink items
+	var/list/uplink_items = list()
+
 	/// The coefficient multiplied by the current_global_progression for new joining traitors to calculate their progression
 	var/newjoin_progression_coeff = 0.6
 	/// The current progression that all traitors should be at in the round
