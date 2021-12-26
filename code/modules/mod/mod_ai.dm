@@ -24,8 +24,6 @@
 			for(var/datum/action/action as anything in actions)
 				if(action.owner == intAI)
 					action.Remove(intAI)
-				else
-					action.Unshare(intAI)
 			intAI.controlled_equipment = null
 			intAI.remote_control = null
 			balloon_alert(intAI, "transferred to a card")
@@ -67,6 +65,7 @@
 #define WEARER_DELAY 1
 #define LONE_DELAY 5
 #define CELL_PER_STEP DEFAULT_CELL_DRAIN * 2.5
+#define AI_FALL_TIME 3 SECONDS
 
 /obj/item/mod/control/relaymove(mob/user, direction)
 	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
@@ -75,6 +74,9 @@
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
+	if(wearer)
+		ADD_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+		addtimer(CALLBACK(src, .proc/ai_fall), AI_FALL_TIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 	if(ismovable(wearer?.loc))
 		return wearer.loc.relaymove(wearer, direction)
 	if(wearer && !wearer.Process_Spacemove(direction))
@@ -86,3 +88,49 @@
 #undef WEARER_DELAY
 #undef LONE_DELAY
 #undef CELL_PER_STEP
+
+/obj/item/mod/control/proc/ai_fall()
+	if(!wearer)
+		return
+	REMOVE_TRAIT(wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+
+/obj/item/mod/ai_minicard
+	name = "AI mini-card"
+	desc = "A small card designed to eject dead AIs. You could use an intellicard to recover it."
+	icon = 'icons/obj/aicards.dmi'
+	icon_state = "minicard"
+	var/mob/living/silicon/ai/stored_ai
+
+/obj/item/mod/ai_minicard/Initialize(mapload, mob/living/silicon/ai/ai)
+	. = ..()
+	if(!ai)
+		return
+	ai.apply_damage(150, BURN)
+	INVOKE_ASYNC(ai, /mob/living/silicon/ai.proc/death)
+	ai.forceMove(src)
+	stored_ai = ai
+	icon_state = "minicard-filled"
+
+/obj/item/mod/ai_minicard/examine(mob/user)
+	. = ..()
+	. += span_notice("You see [stored_ai || "no AI"] stored inside.")
+
+/obj/item/mod/ai_minicard/transfer_ai(interaction, mob/user, mob/living/silicon/ai/intAI, obj/item/aicard/card)
+	. = ..()
+	if(!.)
+		return
+	if(interaction != AI_TRANS_TO_CARD)
+		return
+	if(!stored_ai)
+		balloon_alert(user, "no AI!")
+		return
+	balloon_alert(user, "transferring to card...")
+	if(!do_after(user, 5 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	icon_state = "minicard"
+	stored_ai.forceMove(card)
+	card.AI = stored_ai
+	stored_ai.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
+	balloon_alert(user, "AI transferred to card")
+	stored_ai = null

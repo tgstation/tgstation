@@ -144,9 +144,13 @@
 	human_occupant.update_action_buttons(TRUE)
 	playsound(src, 'sound/machines/ping.ogg', 30, FALSE)
 	if(!human_occupant.dropItemToGround(human_occupant.wear_suit) || !human_occupant.dropItemToGround(human_occupant.head))
-		open_machine()
+		finish_completion()
 		return
 	mod_unit.quick_activation()
+	finish_completion()
+
+/obj/machinery/mod_installer/proc/finish_completion()
+	mod_unit = null
 	open_machine()
 
 /obj/machinery/mod_installer/open_machine()
