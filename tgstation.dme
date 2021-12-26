@@ -612,7 +612,6 @@
 #include "code\datums\elements\caltrop.dm"
 #include "code\datums\elements\cleaning.dm"
 #include "code\datums\elements\climbable.dm"
-#include "code\datums\elements\connect_loc.dm"
 #include "code\datums\elements\decal.dm"
 #include "code\datums\elements\deferred_aquarium_content.dm"
 #include "code\datums\elements\digitalcamo.dm"

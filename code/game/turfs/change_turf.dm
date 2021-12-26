@@ -90,15 +90,18 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
 
-	var/list/post_change_callbacks = list()
-	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, post_change_callbacks)
+	var/list/transferring_comps = list()
+	SEND_SIGNAL(src, COMSIG_TURF_CHANGE, path, new_baseturfs, flags, transferring_comps)
+	for(var/i in transferring_comps)
+		var/datum/component/comp = i
+		comp.RemoveComponent()
 
 	changing_turf = TRUE
 	qdel(src) //Just get the side effects and call Destroy
 	var/turf/W = new path(src)
 
-	for(var/datum/callback/callback as anything in post_change_callbacks)
-		callback.InvokeAsync(W)
+	for(var/i in transferring_comps)
+		W.TakeComponent(i)
 
 	if(new_baseturfs)
 		W.baseturfs = baseturfs_string_list(new_baseturfs, W)
