@@ -964,7 +964,7 @@
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
 	var/list/id_access = C.GetAccess()
-	if(!ACCESS_BRIG in id_access)
+	if(!(ACCESS_BRIG in id_access))
 		return
 	if(timed)
 		timed = FALSE
