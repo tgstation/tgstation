@@ -79,3 +79,6 @@
 //from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)
+
+///From mob/living/carbon/human/suicide()
+#define COMSIG_HUMAN_SUICIDE "human_suicide_act"

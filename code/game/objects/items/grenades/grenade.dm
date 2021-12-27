@@ -27,6 +27,8 @@
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 	///Was sticky tape used to make this sticky?
 	var/sticky = FALSE
+	///Is this grenade being used to suicide?
+	var/mob/living/carbon/suicider
 	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/detonate] so we can send COMSIG_GRENADE_DETONATE
 	///how big of a devastation explosion radius on prime
 	var/ex_dev = 0
@@ -48,6 +50,7 @@
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
+	suicider = user
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
@@ -131,6 +134,9 @@
  * * lanced_by- If this grenade was detonated by an elance, we need to pass that along with the COMSIG_GRENADE_DETONATE signal for pellet clouds
  */
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
+	if(suicider)
+		suicider.spill_organs(no_bodyparts=TRUE)
+		forceMove(get_turf(suicider))
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
@@ -140,9 +146,8 @@
 		explosion(src, ex_dev, ex_heavy, ex_light, ex_flame)
 
 /obj/item/grenade/proc/update_mob()
-	if(ismob(loc))
-		var/mob/mob = loc
-		mob.dropItemToGround(src)
+	var/mob/mob = ismob(loc) ? loc : suicider
+	mob?.dropItemToGround(src)
 
 /obj/item/grenade/attackby(obj/item/weapon, mob/user, params)
 	if(active)

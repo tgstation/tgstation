@@ -80,6 +80,33 @@
 	if(use_charge)
 		return ..()
 
+/obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
+	. = FIRELOSS
+	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
+	var/mob/living/carbon/C = user	//iscarbon already used in spell's parent
+	var/datum/antagonist/heretic/cultie = C.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/list/knowledge = cultie.get_all_knowledge()
+	var/escape_our_torment = 0
+	while(C.stat == CONSCIOUS)
+		if(escape_our_torment > 20)	//Stops us from infinitely stunning ourselves if we're just not taking the damage
+			return
+		if(prob(70))
+			C.adjustFireLoss(20)
+			playsound(C, 'sound/effects/wounds/sizzle1.ogg', 70, TRUE)
+			if(prob(50))
+				C.emote("scream")
+				C.stuttering += 13
+
+		for(var/X in knowledge)
+			var/datum/eldritch_knowledge/EK = knowledge[X]
+			EK.on_mansus_grasp(C, C)
+
+		C.adjustBruteLoss(10)
+		C.AdjustKnockdown(5 SECONDS)
+		C.adjustStaminaLoss(80)
+		escape_our_torment++
+		sleep(0.4 SECONDS)
+
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby surfaces."

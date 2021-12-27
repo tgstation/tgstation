@@ -35,6 +35,25 @@
 	new /obj/item/stamp/law(src)
 	..()
 
+/obj/item/storage/briefcase/suicide_act(mob/user)
+	var/list/papers_found = list()
+	var/turf/T = get_turf(src)
+	for(var/atom/A in contents)
+		if(istype(A, /obj/item/paper) || istype(A, /obj/item/paperplane))
+			papers_found += A
+	if(!LAZYLEN(papers_found) || !T)
+		user.visible_message(span_suicide("[user] bashes [user.p_them()]self in the head with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+
+	user.visible_message(span_suicide("[user] opens [src] and all of [user.p_their()] papers fly out!"))
+	for(var/obj/item/I in papers_found)
+		I.throw_at(get_ranged_target_turf(T, pick(GLOB.modulo_angle_to_dir), 2))
+	sleep(1 SECONDS)
+	user.set_suicide(FALSE)	//Just temporary, because say() whispers if you're trying to suicide for some reason
+	user.say("ARGGHH, HOW WILL I GET THIS WORK DONE NOW?!!")
+	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
+	return OXYLOSS
+
 /obj/item/storage/briefcase/sniperbundle
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
