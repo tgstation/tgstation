@@ -40,7 +40,7 @@ export const TextInputModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125
+    = 127
     + Math.ceil(message.length / 3)
     + (multiline || input.length >= 30 ? 75 : 0)
     + (message.length && large_buttons ? 5 : 0);
@@ -63,7 +63,7 @@ export const TextInputModal = (_, context) => {
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <Stack.Item grow mb={1}>
+            <Stack.Item grow mb={0.5}>
               <InputArea input={input} onType={onType} />
             </Stack.Item>
             <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
