@@ -26,8 +26,8 @@
 	var/list/data = get_header_data()
 
 	data["disk_size"] = hard_drive.max_capacity
-	data["disk_used"] = computer.used_capacity
-	data["power_usage"] = movable.last_power_usage
+	data["disk_used"] = hard_drive.used_capacity
+	data["power_usage"] = computer.last_power_usage
 	data["battery_exists"] = battery_module ? 1 : 0
 	if(battery_module?.battery)
 		data["battery_rating"] = battery_module.battery.maxcharge

@@ -16,7 +16,7 @@
 
 	var/has_alert = 0
 	var/datum/weakref/attached_wire_ref
-	var/datum/weakref/apc/local_apc_ref
+	var/datum/weakref/local_apc_ref
 	var/list/history = list()
 	var/record_size = 60
 	var/record_interval = 50

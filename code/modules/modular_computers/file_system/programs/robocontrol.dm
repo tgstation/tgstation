@@ -35,7 +35,7 @@
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(current_user)) // Only check Bots we can access)
+		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
