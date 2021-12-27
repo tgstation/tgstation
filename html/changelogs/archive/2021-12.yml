@@ -683,3 +683,31 @@
   timothymtorres:
   - bugfix: Fix AIs inside a AI restorer computer now die if the computer is destroyed
       while they are inside it.
+2021-12-27:
+  Fikou:
+  - bugfix: the protect objective now checks for mob and brain suicides
+  JohnFulpWillard:
+  - bugfix: Some antags (like Abductors) no longer have 2 antag gain messages.
+  - spellcheck: Gaining and losing antagonist status will now be properly written
+      with 'the', as needed.
+  ReinaCoder:
+  - bugfix: Cult robes now have sprites for when the hood is down
+  - bugfix: Tramstation Court Room and Lawyer's Office now have lights
+  SuperNovaa41:
+  - bugfix: Makes all cyborg storage items drop their contents on module change.
+  - bugfix: Sechailer no longer has FOV.
+  - bugfix: SWAT mask no longer has a tint.
+  Y0SH1M4S73R:
+  - admin: The Save Shell admin circuit component now properly loads circuits that
+      use a BCI or MODsuit module as their shell.
+  necromanceranne:
+  - bugfix: Restores the cardborg sprite.
+  timothymtorres:
+  - bugfix: Fix all types of grenades to be deleted when shot bullets.
+  tralezab:
+  - code_imp: Some code improvements and proper use of department datums by independent
+      nation creation
+  - refactor: Some wonderful cleanup of separatist code, if you notice minor differences
+      it's because of that.
+  - admin: The nations ruleset is back(?) and disabled for admins to run fi they so
+      desire

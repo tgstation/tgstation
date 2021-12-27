@@ -441,6 +441,7 @@
 #include "code\controllers\subsystem\minor_mapping.dm"
 #include "code\controllers\subsystem\mobs.dm"
 #include "code\controllers\subsystem\moods.dm"
+#include "code\controllers\subsystem\mouse_entered.dm"
 #include "code\controllers\subsystem\nightshift.dm"
 #include "code\controllers\subsystem\npcpool.dm"
 #include "code\controllers\subsystem\overlays.dm"

@@ -1,5 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Sechailer no longer has FOV."
-  - bugfix: "SWAT mask no longer has a tint."

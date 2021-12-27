@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - code_imp: "Some code improvements and proper use of department datums by independent nation creation"
-  - refactor: "Some wonderful cleanup of separatist code, if you notice minor differences it's because of that."
-  - admin: "The nations ruleset is back(?) and disabled for admins to run fi they so desire"

@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "the protect objective now checks for mob and brain suicides"
