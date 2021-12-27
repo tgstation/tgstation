@@ -907,7 +907,13 @@
 	return FALSE
 
 /**
- *
+ * Calculates the pixel offsets and angle that a projectile should be launched at.
+ * 
+ * Arguments:
+ * - [source][/atom]: The thing that the projectile is being shot from.
+ * - [target][/atom]: (Optional) The thing that the projectile is being shot at.
+ *   - If this is not provided the  source atom must be a mob with a client.
+ * - [modifiers][/list]: A list of click parameters used to modify the shot angle.
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
 	var/p_x = 0
