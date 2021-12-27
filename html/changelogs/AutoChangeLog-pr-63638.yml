@@ -1,0 +1,16 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "the mod installer from charliestation no longer has infinite uses"
+  - bugfix: "fixes broken sprites on prototype suit"
+  - bugfix: "fixes intellicards not updating"
+  - bugfix: "fixes techwebs having two of the same modsuit module"
+  - bugfix: "fixes autofire acting weird with screen objects"
+  - bugfix: "fixes modsuits bricking when stripping or putting another one on with the pathfinder"
+  - bugfix: "fixes modsuits deleting everything inside when they explode"
+  - bugfix: "fixes ais in modsuits not being able to use abilities"
+  - bugfix: "fixes the tether not being able to hook onto catwalks/lattices"
+  - qol: "ais in modsuits now make the user stand up instead of weirdly crawling"
+  - qol: "a modsuit being destroyed with an ai inside now pops it out as a small card you can recover from with an intellicard"
+  - qol: "modsuit module radial is now more friendly, showing you tooltips and which modules are active"
+  - qol: "mech fabricator module list is now sorted"
