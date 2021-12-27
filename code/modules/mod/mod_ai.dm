@@ -124,14 +124,14 @@
 		return
 	if(interaction != AI_TRANS_TO_CARD)
 		return
-	if(!stored_ai)
+	var/mob/living/silicon/ai/ai = stored_ai.resolve()
+	if(!ai)
 		balloon_alert(user, "no AI!")
 		return
 	balloon_alert(user, "transferring to card...")
-	if(!do_after(user, 5 SECONDS, target = src))
+	if(!do_after(user, 5 SECONDS, target = src) || !ai)
 		balloon_alert(user, "interrupted!")
 		return
-	var/mob/living/silicon/ai/ai = stored_ai.resolve()
 	icon_state = "minicard"
 	ai.forceMove(card)
 	card.AI = ai
