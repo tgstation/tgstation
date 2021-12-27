@@ -4482,7 +4482,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "aGK" = (
 /obj/structure/table,
@@ -11211,7 +11211,7 @@
 	pixel_y = 2
 	},
 /obj/item/folder/yellow,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "cli" = (
 /obj/effect/turf_decal/trimline/green/filled/end{
@@ -13683,7 +13683,7 @@
 "cZY" = (
 /obj/machinery/announcement_system,
 /obj/machinery/status_display/evac/directional/north,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "cZZ" = (
 /obj/structure/chair/office,
@@ -15813,7 +15813,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "ehF" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -18625,7 +18625,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "fGe" = (
 /turf/open/openspace,
@@ -20270,7 +20270,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "gyJ" = (
 /obj/machinery/power/terminal,
@@ -20877,7 +20877,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "gMG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -21335,7 +21335,7 @@
 "gZe" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "gZj" = (
 /obj/item/chair/wood,
@@ -29936,7 +29936,7 @@
 	pixel_y = 5
 	},
 /obj/item/pen,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "lwB" = (
 /obj/effect/landmark/event_spawn,
@@ -37889,7 +37889,7 @@
 /area/hallway/primary/starboard)
 "pxs" = (
 /obj/structure/filingcabinet,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "pxA" = (
 /obj/effect/turf_decal/stripes/line{
@@ -42789,7 +42789,7 @@
 "seL" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "sfj" = (
 /obj/structure/chair/sofa/corp{
@@ -48052,7 +48052,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "uHl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -48743,7 +48743,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark/telecomms,
+/turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "vdT" = (
 /obj/effect/turf_decal/stripes/line{
