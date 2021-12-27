@@ -6,6 +6,14 @@
 ///Collect and command
 /datum/lift_master
 	var/list/lift_platforms
+	var/list/ignored_smashthroughs = list(	//Typepath list of what to ignore smashing through, controls all lifts. Could be admemery?
+		/obj/machinery/power/supermatter_crystal,
+		/obj/structure/holosign
+	)
+
+/datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
+	Rebuild_lift_plaform(lift_platform)
+	ignored_smashthroughs = typecacheof(ignored_smashthroughs)
 
 /datum/lift_master/Destroy()
 	for(var/l in lift_platforms)
@@ -14,8 +22,6 @@
 	lift_platforms = null
 	return ..()
 
-/datum/lift_master/New(obj/structure/industrial_lift/lift_platform)
-	Rebuild_lift_plaform(lift_platform)
 
 /datum/lift_master/proc/add_lift_platforms(obj/structure/industrial_lift/new_lift_platform)
 	if(new_lift_platform in lift_platforms)
@@ -234,7 +240,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	else
 		destination = going
 	///handles any special interactions objects could have with the lift/tram, handled on the item itself	
-	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER)
+	SEND_SIGNAL(destination, COMSIG_TURF_INDUSTRIAL_LIFT_ENTER, things_to_move)
 
 	if(istype(destination, /turf/closed/wall))
 		var/turf/closed/wall/C = destination
@@ -254,7 +260,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		for(var/obj/structure/victim_structure in destination.contents)
 			if(QDELETED(victim_structure))
 				continue
-			if(!istype(victim_structure, /obj/structure/holosign) && victim_structure.layer >= LOW_OBJ_LAYER)
+			if(!is_type_in_typecache(victim_structure, lift_master_datum.ignored_smashthroughs) && victim_structure.layer >= LOW_OBJ_LAYER)
 				if(victim_structure.anchored && initial(victim_structure.anchored) == TRUE)
 					visible_message(span_danger("[src] smashes through [victim_structure]!"))
 					victim_structure.deconstruct(FALSE)
@@ -266,6 +272,8 @@ GLOBAL_LIST_EMPTY(lifts)
 		for(var/obj/machinery/victim_machine in destination.contents)
 			if(QDELETED(victim_machine))
 				continue
+			if(is_type_in_typecache(victim_machine, lift_master_datum.ignored_smashthroughs))
+				continue
 			if(istype(victim_machine, /obj/machinery/field)) //graceful break handles this scenario
 				continue
 			if(victim_machine.layer >= LOW_OBJ_LAYER) //avoids stuff that is probably flush with the ground
@@ -274,6 +282,8 @@ GLOBAL_LIST_EMPTY(lifts)
 				qdel(victim_machine)
 
 		for(var/mob/living/collided in destination.contents)
+			if(is_type_in_typecache(collided, lift_master_datum.ignored_smashthroughs))
+				continue
 			to_chat(collided, span_userdanger("[src] collides into you!"))
 			playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 			var/damage = rand(5, 10)
