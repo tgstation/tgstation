@@ -41,7 +41,7 @@
 		"style" = STYLE_BLUESPACE,
 		"spawn" = choice,
 	))
-	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	var/msg = span_danger("After making your selection, you notice a strange target on the ground. It might be best to step back!")
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.ears, /obj/item/radio/headset))

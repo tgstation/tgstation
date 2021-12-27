@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	///Public name for this antagonist. Appears for player prompts and round-end reports.
-	var/name = "Antagonist"
+	var/name = "\improper Antagonist"
 	///Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/roundend_category = "other antagonists"
 	///Set to false to hide the antagonists from roundend report
@@ -148,7 +148,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!silent)
 		greet()
 		if(ui_name)
-			to_chat(owner.current, span_big("You are \a [src]."))
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
 			info_button.Trigger()
 	apply_innate_effects()
@@ -226,14 +225,16 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Use this proc for playing sounds, sending alerts, or helping to setup non-gameplay influencing aspects of the antagonist type.
  */
 /datum/antagonist/proc/greet()
-	return
+	if(!silent)
+		to_chat(owner.current, span_big("You are \the [src]."))
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
  * Use this proc for playing sounds, sending alerts, or otherwise informing the player that they're no longer a specific antagonist type.
  */
 /datum/antagonist/proc/farewell()
-	return
+	if(!silent)
+		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
 
 /**
  * Proc that assigns this antagonist's ascribed moodlet to the player.
@@ -391,7 +392,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
+	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo

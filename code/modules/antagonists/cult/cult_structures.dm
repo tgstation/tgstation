@@ -149,7 +149,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Nar'Sien Hardened Armor")
-			pickedtype += /obj/item/clothing/suit/space/hardsuit/cult/real
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/hardened
 		if("Flagellant's Robe")
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Eldritch Longsword")

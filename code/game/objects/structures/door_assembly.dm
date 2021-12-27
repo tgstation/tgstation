@@ -51,7 +51,7 @@
 
 /obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
+		var/t = tgui_input_text(user, "Enter the name for the door.", name, created_name, MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)

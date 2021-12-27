@@ -332,10 +332,10 @@
 				temp_pod.adminNamed = FALSE
 				temp_pod.setStyle(temp_pod.style) //This resets the name of the pod based on it's current style (see supplypod/setStyle() proc)
 				return
-			var/nameInput= input("Custom name", "Enter a custom name", GLOB.podstyles[temp_pod.style][POD_NAME]) as null|text //Gather input for name and desc
+			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", GLOB.podstyles[temp_pod.style][POD_NAME], MAX_NAME_LEN) //Gather input for name and desc
 			if (isnull(nameInput))
 				return
-			var/descInput = input("Custom description", "Enter a custom desc", GLOB.podstyles[temp_pod.style][POD_DESC]) as null|text //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
+			var/descInput = tgui_input_text(usr, "Enter a custom desc", "Custom description", GLOB.podstyles[temp_pod.style][POD_DESC])  //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
 			if (isnull(descInput))
 				return
 			temp_pod.name = nameInput
@@ -406,7 +406,7 @@
 				return
 
 			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-			var/target = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in possible_destinations
+			var/target = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", possible_destinations)
 
 			if (isnull(target))
 				return
@@ -638,7 +638,7 @@
 			var/turf/target_turf = get_turf(target)
 			setDropoff(target_turf)
 			customDropoff = TRUE
-			to_chat(user, "<span class = 'notice'> You've selected [target_turf] at [COORD(target_turf)] as your dropoff location.</span>")
+			to_chat(user, span_notice("You've selected [target_turf] at [COORD(target_turf)] as your dropoff location."))
 
 /datum/centcom_podlauncher/proc/refreshView()
 	switch(tabIndex)

@@ -1,7 +1,7 @@
 /datum/job/cook
-	title = "Cook"
+	title = JOB_COOK
 	description = "Serve food, cook meat, keep the crew fed."
-	department_head = list("Head of Personnel")
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
@@ -38,7 +38,7 @@
 	if(!length(job_changes))
 		return
 
-	var/list/cook_changes = job_changes["cook"]
+	var/list/cook_changes = job_changes[JOB_COOK]
 
 	if(!length(cook_changes))
 		return

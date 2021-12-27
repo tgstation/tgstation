@@ -1590,7 +1590,7 @@
 	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
-	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
+	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
 	new /obj/item/clothing/mask/gas/carp(src)
 	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
@@ -1646,3 +1646,19 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+
+/obj/item/storage/box/mothic_rations
+	name = "Mothic Rations Pack"
+	desc = "A box containing a few rations and some Activin gum, for keeping a starving moth going."
+	icon_state = "moth_package"
+	illustration = null
+
+/obj/item/storage/box/mothic_rations/PopulateContents()
+	for(var/i in 1 to 3)
+		var/randomFood = pick_weight(list(/obj/item/food/sustenance_bar = 10,
+							  /obj/item/food/sustenance_bar/cheese = 5,
+							  /obj/item/food/sustenance_bar/mint = 5,
+							  /obj/item/food/sustenance_bar/neapolitan = 5,
+							  /obj/item/food/sustenance_bar/wonka = 1))
+		new randomFood(src)
+	new /obj/item/storage/box/gum/wake_up(src)

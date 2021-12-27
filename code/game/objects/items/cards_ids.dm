@@ -988,7 +988,7 @@
 			return
 		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
 		timed = TRUE
-		
+
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
 	START_PROCESSING(SSobj, src)

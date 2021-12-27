@@ -943,7 +943,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{

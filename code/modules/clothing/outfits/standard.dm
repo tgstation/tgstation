@@ -406,14 +406,13 @@
 	head = /obj/item/clothing/head/helmet/space/chronos
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/debug //Debug objs plus hardsuit
+/datum/outfit/debug //Debug objs plus MODsuit
 	name = "Debug outfit"
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/debug
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
@@ -443,9 +442,8 @@
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/administrative
 	backpack_contents = list(
 		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,

@@ -7272,7 +7272,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tK" = (
-/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tN" = (
@@ -7654,7 +7654,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/cavern1)
 "vl" = (
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "vn" = (
@@ -8279,7 +8279,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier{
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
 	brute_damage = 145;
 	mob_name = "James Reed";
 	name = "James Reed";
@@ -9896,7 +9896,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "Cn" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Co" = (
@@ -10085,7 +10085,7 @@
 /area/awaymission/snowdin/cave)
 "CU" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10617,7 +10617,7 @@
 /area/awaymission/snowdin/cave)
 "Eb" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/floor/iron/dark,
 /area/awaymission/snowdin/cave)
 "Ec" = (
@@ -10756,7 +10756,7 @@
 "Et" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/decal/cleanable/blood/old,
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -11160,7 +11160,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
 "FA" = (
-/obj/effect/mob_spawn/human/corpse/assistant{
+/obj/effect/mob_spawn/corpse/human/assistant{
 	brute_damage = 150;
 	oxy_damage = 50
 	},

@@ -14,7 +14,7 @@
 	var/contraband = FALSE
 	var/self_paid = FALSE
 	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, mail \
+		cannot transport live organisms, human remains, classified nuclear weaponry, mail, \
 		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	/// radio used by the console to send messages on supply channel
@@ -238,7 +238,7 @@
 
 			var/reason = ""
 			if(requestonly && !self_paid)
-				reason = stripped_input("Reason:", name, "")
+				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
 

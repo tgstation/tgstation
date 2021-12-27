@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB | PASSFLAPS
 	combat_mode = TRUE
 
-	bot_core = /obj/machinery/bot_core/secbot
+	maints_access_required = list(ACCESS_SECURITY)
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
 	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
@@ -79,6 +79,8 @@
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
 	radio_channel = RADIO_CHANNEL_AI_PRIVATE
+	bot_mode_flags = ~BOT_MODE_AUTOPATROL
+	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS
 
 /mob/living/simple_animal/bot/secbot/genesky
 	name = "Officer Genesky"
@@ -493,9 +495,6 @@
 		if(!istype(C) || !C || in_range(src, target))
 			return
 		knockOver(C)
-
-/obj/machinery/bot_core/secbot
-	req_access = list(ACCESS_SECURITY)
 
 /// Returns false if the current target is unable to pay the fair_market_price for being arrested/detained
 /mob/living/simple_animal/bot/secbot/proc/check_nap_violations()

@@ -1,5 +1,5 @@
 /datum/antagonist/blob
-	name = "Blob"
+	name = "\improper Blob"
 	roundend_category = "blobs"
 	antagpanel_category = "Biohazards"
 	show_to_ghosts = TRUE
@@ -19,7 +19,7 @@
 	return basic_report
 
 /datum/antagonist/blob/greet()
-	to_chat(owner.current, span_notice("<font color=\"#EE4000\">You are the Blob!</font>"))
+	. = ..()
 	owner.announce_objectives()
 	if(!isovermind(owner.current))
 		to_chat(owner.current, span_notice("Use the pop ability to place your blob core! It is recommended you do this away from anyone else, as you'll be taking on the entire crew!"))
@@ -32,10 +32,6 @@
 
 /datum/antagonist/blob/remove_innate_effects()
 	QDEL_NULL(pop_action)
-	return ..()
-
-/datum/antagonist/blob/farewell()
-	to_chat(owner.current, "<span class='alertsyndie'><font color=\"#EE4000\">You are no longer the Blob!</font></span>")
 	return ..()
 
 /datum/antagonist/blob/get_preview_icon()
