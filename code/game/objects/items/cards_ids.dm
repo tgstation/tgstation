@@ -512,7 +512,7 @@
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
 		return
-	var/amount_to_remove = FLOOR(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 1, registered_account.account_balance, 1), 1)
+	var/amount_to_remove = round(tgui_input_number(user, "How much do you want to withdraw?", "Withdraw Funds", 1, registered_account.account_balance, 1))
 	if(isnull(amount_to_remove))
 		return
 	if(amount_to_remove < 1 || amount_to_remove > registered_account.account_balance)
@@ -964,19 +964,21 @@
 /obj/item/card/id/advanced/prisoner/attackby(obj/item/card/id/C, mob/user)
 	..()
 	var/list/id_access = C.GetAccess()
-	if(ACCESS_BRIG in id_access)
-		if(timed)
-			timed = FALSE
-			time_to_assign = initial(time_to_assign)
-			registered_name = initial(registered_name)
-			STOP_PROCESSING(SSobj, src)
-			to_chat(user, "Restating prisoner ID to default parameters.")
-			return
-		time_to_assign = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-		if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-			return
-		to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
-		timed = TRUE
+	if(!ACCESS_BRIG in id_access)
+		return
+	if(timed)
+		timed = FALSE
+		time_to_assign = initial(time_to_assign)
+		registered_name = initial(registered_name)
+		STOP_PROCESSING(SSobj, src)
+		to_chat(user, "Restating prisoner ID to default parameters.")
+		return
+	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
+	if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	time_to_assign = round(choice)
+	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
+	timed = TRUE
 
 /obj/item/card/id/advanced/prisoner/proc/start_timer()
 	say("Sentence started, welcome to the corporate rehabilitation center!")
@@ -1292,7 +1294,7 @@
 
 				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", max_value = AGE_MAX, min_value = AGE_MIN)
 				if(new_age)
-					registered_age = max(round(text2num(new_age)), 0)
+					registered_age = round(new_age)
 
 				if(tgui_alert(user, "Activate wallet ID spoofing, allowing this card to force itself to occupy the visible ID slot in wallets?", "Wallet ID Spoofing", list("Yes", "No")) == "Yes")
 					ADD_TRAIT(src, TRAIT_MAGNETIC_ID_CARD, CHAMELEON_ITEM_TRAIT)

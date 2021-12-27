@@ -735,7 +735,7 @@ What a mess.*/
 				switch(href_list["field"])
 					if("name")
 						if(istype(active1, /datum/data/record) || istype(active2, /datum/data/record))
-							var/t1 = tgui_input_text(usr, "Input a name", "Security Records", active1.fields["name"], MAX_MESSAGE_LEN)
+							var/t1 = tgui_input_text(usr, "Input a name", "Security Records", active1.fields["name"])
 							if(!canUseSecurityRecordsConsole(usr, t1, a1))
 								return
 							if(istype(active1, /datum/data/record))
@@ -767,7 +767,7 @@ What a mess.*/
 								active1.fields["gender"] = "Male"
 					if("age")
 						if(istype(active1, /datum/data/record))
-							var/t1 = tgui_input_number(usr, "Input age", "Security records", active1.fields["age"])
+							var/t1 = tgui_input_number(usr, "Input age", "Security records", active1.fields["age"], AGE_MAX, AGE_MIN)
 
 							if (!t1)
 								return
@@ -830,7 +830,7 @@ What a mess.*/
 					if("crim_add")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_text(usr, "Input crime names", "Security Records")
-							var/t2 = tgui_input_text(usr, "Input crime details", "Security Records", multiline = TRUE)
+							var/t2 = tgui_input_text(usr, "Input crime details", "Security Records")
 							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/crime = GLOB.data_core.createCrimeEntry(t1, t2, authenticated, station_time_timestamp())
@@ -845,7 +845,7 @@ What a mess.*/
 					if("add_details")
 						if(istype(active1, /datum/data/record))
 							if(href_list["cdataid"])
-								var/t1 = tgui_input_text(usr, "Input crime details", "Security Records", multiline = TRUE)
+								var/t1 = tgui_input_text(usr, "Input crime details", "Security Records")
 								if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 									return
 								GLOB.data_core.addCrimeDetails(active1.fields["id"], href_list["cdataid"], t1)
@@ -855,7 +855,7 @@ What a mess.*/
 							var/maxFine = CONFIG_GET(number/maxfine)
 
 							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
-							var/fine = FLOOR(tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine, 1), 1)
+							var/fine = round(tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine, 1))
 
 							if (isnull(fine))
 								return
