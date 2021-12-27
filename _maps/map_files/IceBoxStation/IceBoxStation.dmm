@@ -8524,7 +8524,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Service-Ultils Top"
 	},
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "bAf" = (
 /obj/machinery/holopad,
@@ -12275,7 +12275,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "cwY" = (
 /obj/structure/chair/stool/directional/south,
@@ -12688,7 +12688,9 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/smooth_half,
+/turf/open/floor/iron/smooth_edge{
+	dir = 8
+	},
 /area/maintenance/department/medical)
 "cDg" = (
 /obj/structure/cable,
@@ -14969,7 +14971,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "dKO" = (
 /obj/effect/turf_decal/loading_area{
@@ -30352,7 +30354,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "lHk" = (
 /obj/structure/closet/toolcloset,
@@ -34511,7 +34513,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/turf/open/floor/iron/smooth_edge,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/department/medical)
 "nOU" = (
 /obj/effect/turf_decal/tile/brown{
@@ -41966,7 +41968,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/department/medical)
 "rJH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
@@ -44113,7 +44115,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "sMr" = (
 /obj/effect/landmark/start/ai,
@@ -50558,7 +50560,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "vYu" = (
 /obj/effect/turf_decal/box,
@@ -54416,7 +54418,7 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/turf/open/floor/catwalk_floor,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/maintenance/starboard/fore)
 "xVE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
