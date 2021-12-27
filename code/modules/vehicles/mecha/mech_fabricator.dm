@@ -169,6 +169,9 @@
 				if(mech_types & EXOSUIT_MODULE_PHAZON)
 					category_override += "Phazon"
 
+		else if(istype(D, /datum/design/module))
+			var/datum/design/module/module_design = D
+			sub_category = list(module_design.department_type)
 
 	var/list/part = list(
 		"name" = D.name,

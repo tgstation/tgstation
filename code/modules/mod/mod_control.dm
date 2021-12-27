@@ -204,7 +204,10 @@
 			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
 		else
 			. += span_notice("You could use a <b>cell</b> on it to install one.")
-
+		if(ai)
+			. += span_notice("You could remove [ai] with an <b>intellicard</b>")
+		else
+			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -472,17 +475,21 @@
 			continue
 		display_names[module.name] = REF(module)
 		var/image/module_image = image(icon = module.icon, icon_state = module.icon_state)
+		if(module == selected_module)
+			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected")
+		else if(module.active)
+			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_active")
 		items += list(module.name = module_image)
 	if(!length(items))
 		return
-	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 	var/module_reference = display_names[pick]
-	var/obj/item/mod/module/selected_module = locate(module_reference) in modules
-	if(!istype(selected_module) || user.incapacitated())
+	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
+	if(!istype(picked_module) || user.incapacitated())
 		return
-	selected_module.on_select()
+	picked_module.on_select()
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(length(theme.skins) <= 1)
