@@ -127,7 +127,7 @@
 
 	// flee from anyone who attacked us and we didn't beat down
 	for(var/mob/living/L in view(living_pawn, MONKEY_FLEE_VISION))
-		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
+		if(controller.blackboard[BB_MONKEY_ENEMIES][REF(L)] && L.stat == CONSCIOUS)
 			target = L
 			break
 
@@ -219,13 +219,15 @@
 	if(controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		return
 
+	/// mob refs are uids, so this is safe
+	var/target_ref = REF(target)
 	if(DT_PROB(MONKEY_HATRED_REDUCTION_PROB, delta_time))
-		controller.blackboard[BB_MONKEY_ENEMIES][target]--
+		controller.blackboard[BB_MONKEY_ENEMIES][target_ref]--
 
 	// if we are not angry at our target, go back to idle
-	if(controller.blackboard[BB_MONKEY_ENEMIES][target] <= 0)
+	if(controller.blackboard[BB_MONKEY_ENEMIES][target_ref)] <= 0)
 		var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
-		enemies.Remove(target)
+		enemies.Remove(target_ref)
 		if(controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET] == target)
 			finish_action(controller, TRUE)
 
@@ -295,7 +297,7 @@
 		var/datum/ai_controller/monkey/monkey_ai = L.ai_controller
 		var/atom/your_enemy = controller.blackboard[BB_MONKEY_CURRENT_ATTACK_TARGET]
 		var/list/enemies = L.ai_controller.blackboard[BB_MONKEY_ENEMIES]
-		enemies[your_enemy] = MONKEY_RECRUIT_HATED_AMOUNT
+		enemies[REF(your_enemy)] = MONKEY_RECRUIT_HATED_AMOUNT
 		monkey_ai.blackboard[BB_MONKEY_RECRUIT_COOLDOWN] = world.time + MONKEY_RECRUIT_COOLDOWN
 	finish_action(controller, TRUE)
 
@@ -303,10 +305,11 @@
 	var/list/enemies = controller.blackboard[enemies_key]
 	var/list/valids = list()
 	for(var/mob/living/possible_enemy in view(MONKEY_ENEMY_VISION, controller.pawn))
-		if(possible_enemy == controller.pawn || (!enemies[possible_enemy] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
+		var/enemy_ref = REF(possible_enemy)
+		if(possible_enemy == controller.pawn || (!enemies[enemy_ref] && (!controller.blackboard[BB_MONKEY_AGGRESSIVE] || HAS_AI_CONTROLLER_TYPE(possible_enemy, /datum/ai_controller/monkey)))) //Are they an enemy? (And do we even care?)
 			continue
 		// Weighted list, so the closer they are the more likely they are to be chosen as the enemy
-		valids[possible_enemy] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
+		valids[enemy_ref] = CEILING(100 / (get_dist(controller.pawn, possible_enemy) || 1), 1)
 
 	if(!valids.len)
 		finish_action(controller, FALSE)
