@@ -19,11 +19,14 @@
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	var/covered = TRUE
 	var/catwalk_type = "maint"
+	var/static/list/catwalk_underlays = list()
 
 /turf/open/floor/catwalk_floor/Initialize(mapload)
 	. = ..()
-	var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
-	underlays += plating_underlay
+	if(!catwalk_underlays[catwalk_type])
+		var/mutable_appearance/plating_underlay = mutable_appearance(icon, "[catwalk_type]_below", TURF_LAYER)
+		catwalk_underlays[catwalk_type] = plating_underlay
+	underlays += catwalk_underlays[catwalk_type]
 	update_appearance()
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
