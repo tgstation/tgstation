@@ -85,9 +85,10 @@
 	TEST_ASSERT(pill_user.mind.addiction_points[addiction_type_to_check], "User did not gain addiction points after metabolizing meth")
 
 	// Then injected metabolism
-	syringe.volume = meth.addiction_threshold
-	syringe.amount_per_transfer_from_this = meth.addiction_threshold
-	syringe.reagents.add_reagent(meth.type, meth.addiction_threshold)
+	syringe.volume = 5
+	syringe.amount_per_transfer_from_this = 5
+	syringe.reagents.add_reagent(meth.type, 5)
+	syringe.melee_attack_chain(syringe_user, syringe_user)
 
 	syringe.mode = SYRINGE_INJECT
 	syringe_user.a_intent = INTENT_HARM
