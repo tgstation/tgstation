@@ -25,7 +25,7 @@
 		/datum/action/item_action/mod/activate/ai,
 		/datum/action/item_action/mod/panel/ai,
 		/datum/action/item_action/mod/module/ai,
-		)
+	)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT

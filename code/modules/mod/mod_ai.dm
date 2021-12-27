@@ -98,7 +98,7 @@
 	desc = "A small card designed to eject dead AIs. You could use an intellicard to recover it."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "minicard"
-	var/mob/living/silicon/ai/stored_ai
+	var/datum/weakref/stored_ai
 
 /obj/item/mod/ai_minicard/Initialize(mapload, mob/living/silicon/ai/ai)
 	. = ..()
@@ -107,12 +107,16 @@
 	ai.apply_damage(150, BURN)
 	INVOKE_ASYNC(ai, /mob/living/silicon/ai.proc/death)
 	ai.forceMove(src)
-	stored_ai = ai
+	stored_ai = WEAKREF(ai)
 	icon_state = "minicard-filled"
+
+/obj/item/mod/ai_minicard/Destroy()
+	QDEL_NULL(stored_ai)
+	return ..()
 
 /obj/item/mod/ai_minicard/examine(mob/user)
 	. = ..()
-	. += span_notice("You see [stored_ai || "no AI"] stored inside.")
+	. += span_notice("You see [stored_ai.resolve() || "no AI"] stored inside.")
 
 /obj/item/mod/ai_minicard/transfer_ai(interaction, mob/user, mob/living/silicon/ai/intAI, obj/item/aicard/card)
 	. = ..()
@@ -127,9 +131,10 @@
 	if(!do_after(user, 5 SECONDS, target = src))
 		balloon_alert(user, "interrupted!")
 		return
+	var/mob/living/silicon/ai/ai = stored_ai.resolve()
 	icon_state = "minicard"
-	stored_ai.forceMove(card)
-	card.AI = stored_ai
-	stored_ai.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
+	ai.forceMove(card)
+	card.AI = ai
+	ai.notify_ghost_cloning("You have been recovered from the wreckage!", source = card)
 	balloon_alert(user, "AI transferred to card")
 	stored_ai = null

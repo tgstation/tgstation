@@ -2,7 +2,9 @@
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
+	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
 	var/ai_action = FALSE
+	/// The MODsuit linked to this action
 	var/obj/item/mod/control/mod
 
 /datum/action/item_action/mod/New(Target)
@@ -11,17 +13,17 @@
 	if(ai_action)
 		background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
 
-/datum/action/item_action/mod/Grant(mob/M)
-	if(ai_action && M != mod.ai)
+/datum/action/item_action/mod/Grant(mob/user)
+	if(ai_action && user != mod.ai)
 		return
-	else if(!ai_action && M == mod.ai)
+	else if(!ai_action && user == mod.ai)
 		return
 	return ..()
 
-/datum/action/item_action/mod/Remove(mob/M)
-	if(ai_action && M != mod.ai)
+/datum/action/item_action/mod/Remove(mob/user)
+	if(ai_action && user != mod.ai)
 		return
-	else if(!ai_action && M == mod.ai)
+	else if(!ai_action && user == mod.ai)
 		return
 	return ..()
 
