@@ -16,7 +16,7 @@
 /datum/traitor_objective/final/proc/can_take_final_objective()
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_points_in_objectives)
 		return FALSE
-	if(length(SStraitor.get_completed_objectives(type)) > 0) // Prevents multiple people from ever getting the same final objective.
+	if(SStraitor.get_completion_count(type) > 0) // Prevents multiple people from ever getting the same final objective.
 		return FALSE
 	return TRUE
 
