@@ -111,7 +111,7 @@
 	if(!target.has_reagent(/datum/reagent/water/holywater))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_purge_holywater, user)
+	INVOKE_ASYNC(src, .proc/do_purge_holywater, target, user)
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
