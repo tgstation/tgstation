@@ -142,12 +142,8 @@
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
 		quality_loss = max(quality_loss - 5.5, -100)
 
-	if(selected_recipe.reaction_type == "endothermic")
-		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
-	else if(selected_recipe.reaction_type == "exothermic")
-		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
+	internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+	update_parents()
 
 ///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
@@ -291,7 +287,7 @@
 			var/amount_consumed = selected_recipe.requirements[gas_type]
 			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
 		requirements += "In a temperature range between [selected_recipe.min_temp] K and [selected_recipe.max_temp] K"
-		requirements += "The crystallization reaction will be [selected_recipe.reaction_type]"
+		requirements += "The crystallization reaction will be [selected_recipe.energy_release ? (selected_recipe.energy_release > 0 ? "exothermic" : "endothermic") : "thermally neutral"]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature
