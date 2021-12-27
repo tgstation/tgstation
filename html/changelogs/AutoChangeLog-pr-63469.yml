@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Some antags (like Abductors) no longer have 2 antag gain messages."
-  - spellcheck: "Gaining and losing antagonist status will now be properly written with 'the', as needed."

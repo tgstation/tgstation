@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fix all types of grenades to be deleted when shot bullets."

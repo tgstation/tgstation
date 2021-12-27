@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - admin: "The Save Shell admin circuit component now properly loads circuits that use a BCI or MODsuit module as their shell."
