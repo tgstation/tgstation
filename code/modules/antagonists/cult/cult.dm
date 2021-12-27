@@ -61,7 +61,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	add_objectives()
-	current
+	current.AddElement(/datum/element/cult_status) // TODO: send get_status() here (or get the status inside the element idk)
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
@@ -73,7 +73,8 @@
 
 /datum/antagonist/cult/on_removal()
 	REMOVE_TRAIT(owner.current, TRAIT_HEALS_FROM_CULT_PYLONS, CULT_TRAIT)
-
+	var/mob/living/current = owner.current
+	current.RemoveElement(/datum/element/cult_status)
 	return ..()
 
 /datum/antagonist/cult/get_preview_icon()
@@ -234,10 +235,6 @@
 	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
-	if(cult_team.cult_risen)
-		SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES, override_timer = TRUE)
-		if(cult_team.cult_ascendent)
-			SEND_SIGNAL(current, COMSIG_CULT_VIS, STAGE_CULT_HALOS, override_timer = TRUE)
 	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
@@ -277,19 +274,28 @@
 			else
 				++alive
 	var/ratio = cultplayers/alive
+
+	var/list/cult_members = list()
+	for (var/datum/mind/cult_mind in members)
+		cult_members.Add(cult_mind)
+
 	if(ratio > CULT_RISEN && !cult_risen)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SIGNAL(B.current, COMSIG_CULT_VIS, STAGE_CULT_RED_EYES)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
+		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_RISEN, cult_members)
 
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SIGNAL(B.current, COMSIG_CULT_VIS, STAGE_CULT_HALOS)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
+		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_ASCENDED, cult_members)
+
+/datum/team/cult/proc/get_status()
+	var/status = CULT_STATUS_NORMAL
+	if (cult_ascendent)
+		status = CULT_STATUS_ASCENDED
+	else if (cult_risen)
+		status = CULT_STATUS_RISEN
+	return status
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role
