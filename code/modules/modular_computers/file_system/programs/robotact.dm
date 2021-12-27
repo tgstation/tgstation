@@ -90,7 +90,8 @@
 	. = ..()
 	if(.)
 		return
-
+	//Implied type, memes
+	var/obj/item/modular_computer/tablet/integrated/tablet = computer
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	switch(action)

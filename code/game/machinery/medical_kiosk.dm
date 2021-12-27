@@ -60,7 +60,7 @@
 		RefreshParts()
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
-	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
+	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
 	use_power(20)
 	paying_customer = TRUE
@@ -113,7 +113,7 @@
 		span_notice("You press [O] into the side of [src], clicking into place."))
 		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
-			var/datum/weakref/target_ref = WEAKREF(W.return_patient)
+			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
 			if(patient_ref != target_ref)
 				clearScans()
 			patient_ref = target_ref
@@ -169,7 +169,7 @@
 		if (ui)
 			ui.close()
 		return
-	var/mob/living/human/patient = patient_ref?.resolve()
+	var/mob/living/carbon/human/patient = patient_ref?.resolve()
 	patient_distance = get_dist(src.loc, patient)
 	if(patient == null)
 		say("Scanner reset.")
@@ -189,7 +189,7 @@
 		paying_ref = WEAKREF(paying)
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
-	var/mob/living/human/patient = patient_ref?.resolve()
+	var/mob/living/carbon/human/patient = patient_ref?.resolve()
 	var/list/data = list()
 	if(!patient)
 		return
@@ -212,7 +212,7 @@
 	var/blood_type = patient.dna.blood_type
 	var/blood_warning = " "
 
-	for(var/thing in altPatient.diseases) //Disease Information
+	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
@@ -275,7 +275,7 @@
 	for(var/datum/addiction/addiction_type as anything in patient.mind.active_addictions)
 		addict_list += list(list("name" = initial(addiction_type.name)))
 
-	if (altPatient.hallucinating())
+	if (patient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
 	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
