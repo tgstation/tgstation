@@ -125,7 +125,7 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/falsewall/get_dumping_location()
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
@@ -289,7 +289,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
 /obj/structure/falsewall/iron
-	name = "rough metal wall"
+	name = "rough iron wall"
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"

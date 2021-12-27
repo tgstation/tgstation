@@ -25,7 +25,7 @@
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
 
-	bot_core = /obj/machinery/bot_core/mulebot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
 	bot_type = MULE_BOT
@@ -316,7 +316,7 @@
 		if("setid")
 			var/new_id
 			if(pda)
-				new_id = stripped_input(user, "Enter ID:", name, id, MAX_NAME_LEN)
+				new_id = tgui_input_text(user, "Enter ID", "ID Assignment", id, MAX_NAME_LEN)
 			else
 				new_id = params["value"]
 			if(new_id)
@@ -869,6 +869,3 @@
 #undef ANNOYED
 #undef DELIGHT
 #undef CHIME
-
-/obj/machinery/bot_core/mulebot
-	req_access = list(ACCESS_CARGO)

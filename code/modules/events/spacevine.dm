@@ -421,8 +421,12 @@
 	eat(user)
 
 /datum/spacevine_controller
+	///Canonical list of all the vines we "own"
 	var/list/obj/structure/spacevine/vines
+	///Queue of vines to process
 	var/list/growth_queue
+	//List of currently processed vines, on this level to prevent runtime tomfoolery
+	var/list/obj/structure/spacevine/queue_end
 	var/spread_multiplier = 5
 	var/spread_cap = 30
 	var/list/vine_mutations_list
@@ -431,6 +435,7 @@
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
+	queue_end = list()
 	var/obj/structure/spacevine/SV = spawn_spacevine_piece(location, null, muts)
 	if (event)
 		event.announce_to_ghosts(SV)
@@ -458,12 +463,15 @@
 
 /datum/spacevine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	vines.Cut()
+	growth_queue.Cut()
+	queue_end.Cut()
 	return ..()
 
 /datum/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
 	var/obj/structure/spacevine/SV = new(location)
-	growth_queue += SV
 	vines += SV
+	growth_queue += SV
 	SV.master = src
 	if(muts?.len)
 		for(var/datum/spacevine_mutation/M in muts)
@@ -485,44 +493,43 @@
 	S.master = null
 	vines -= S
 	growth_queue -= S
-	if(!vines.len)
-		var/obj/item/seeds/kudzu/KZ = new(S.loc)
-		KZ.mutations |= S.mutations
-		KZ.set_potency(mutativeness * 10)
-		KZ.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
-		qdel(src)
+	queue_end -= S
+	if(length(vines))
+		return
+	var/obj/item/seeds/kudzu/KZ = new(S.loc)
+	KZ.mutations |= S.mutations
+	KZ.set_potency(mutativeness * 10)
+	KZ.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
+	qdel(src)
 
 /datum/spacevine_controller/process(delta_time)
-	if(!LAZYLEN(vines))
+	var/vine_count = length(vines)
+	if(!vine_count)
 		qdel(src) //space vines exterminated. Remove the controller
 		return
-	if(!growth_queue)
-		qdel(src) //Sanity check
-		return
 
-	var/length = round(clamp(delta_time * 0.5 * vines.len / spread_multiplier, 1, spread_cap))
-	var/i = 0
-	var/list/obj/structure/spacevine/queue_end = list()
-
-	for(var/obj/structure/spacevine/SV in growth_queue)
-		if(QDELETED(SV))
-			continue
-		i++
-		queue_end += SV
+	var/spread_max = round(clamp(delta_time * 0.5 * vine_count / spread_multiplier, 1, spread_cap))
+	var/amount_processed = 0
+	for(var/obj/structure/spacevine/SV as anything in growth_queue)
 		growth_queue -= SV
+		queue_end += SV
 		for(var/datum/spacevine_mutation/SM in SV.mutations)
 			SM.process_mutation(SV)
-		if(SV.energy < 2) //If tile isn't fully grown
-			if(DT_PROB(10, delta_time))
-				SV.grow()
-		else //If tile is fully grown
+
+		if(SV.energy >= 2) //If tile is fully grown
 			SV.entangle_mob()
+		else if(DT_PROB(10, delta_time)) //If tile isn't fully grown
+			SV.grow()
 
 		SV.spread()
-		if(i >= length)
+
+		amount_processed++
+		if(amount_processed >= spread_max)
 			break
 
-	growth_queue = growth_queue + queue_end
+	//We can only do so much work per process, but we still want to process everything at some point
+	//So we shift the queue a bit
+	growth_queue += queue_end
 
 /obj/structure/spacevine/proc/grow()
 	if(!energy)

@@ -172,7 +172,7 @@ the new instance inside the host to be updated to the template's stats.
 			taken_names[initial(D.name)] = TRUE
 	var/set_name
 	while(!set_name)
-		var/input = sanitize_name(stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN))
+		var/input = sanitize_name(tgui_input_text(src, "Select a name for your disease", "Select Name", max_length = MAX_NAME_LEN))
 		if(!input)
 			set_name = "Sentient Virus"
 			break
@@ -212,7 +212,7 @@ the new instance inside the host to be updated to the template's stats.
 		possible_hosts.Cut(1, 2)
 
 	if(del_on_fail)
-		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
+		to_chat(src, span_warning("No hosts were available for your disease to infect."))
 		qdel(src)
 	return FALSE
 

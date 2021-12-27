@@ -71,7 +71,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
-		var/txt = stripped_input(user, "What would you like to write on the back?", "Photo Writing", "", 128)
+		var/txt = tgui_input_text(user, "What would you like to write on the back?", "Photo Writing", max_length = 128)
 		if(txt && user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	else
@@ -102,7 +102,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", "", MAX_NAME_LEN)
+	var/n_name = tgui_input_text(usr, "What would you like to label the photo?", "Photo Labelling", max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"

@@ -118,7 +118,7 @@
 	dog_fashion = null
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle_welding_screen)
 	flash_protect = FLASH_PROTECTION_WELDER
-	tint = 2.75
+	tint = 2
 	flags_inv = HIDEEYES | HIDEFACE | HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT

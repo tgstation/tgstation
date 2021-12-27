@@ -174,10 +174,11 @@
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"
 	sheet_type = /obj/item/stack/rods
+	sheet_amount = 5
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
-	custom_materials = list(/datum/material/iron = 4000)
+	custom_materials = list(/datum/material/iron = 5000)
 
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"

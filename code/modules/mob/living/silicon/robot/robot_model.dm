@@ -21,8 +21,12 @@
 	var/model_select_icon = "nomod"
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
+	///The icon file for our borg icon
+	var/cyborg_icon_file = 'icons/mob/robots.dmi'
 	///If we want specific lights, use this instead of copying lights in the dmi
 	var/special_light_key
+	///If we want specific sprites for being stunned/dead
+	var/cyborg_stat_icons = FALSE
 	///Holds all the usable modules (tools)
 	var/list/modules = list()
 	///Paths of modules to be created when the model is created
@@ -37,8 +41,6 @@
 	var/list/model_traits = null
 	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
-	///Do we have a magboot effect
-	var/magpulsing = FALSE
 	///Do we clean when we move
 	var/clean_on_move = FALSE
 	///Whether the borg loses tool slots with damage.
@@ -180,6 +182,8 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
+	cyborg.base_pixel_x = 0
+	cyborg.base_pixel_y = 0
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
 		return
@@ -188,6 +192,10 @@
 	new_model.rebuild_modules()
 	cyborg.radio.recalculateChannels()
 	cyborg.set_modularInterface_theme()
+	cyborg.diag_hud_set_health()
+	cyborg.diag_hud_set_status()
+	cyborg.diag_hud_set_borgcell()
+	cyborg.diag_hud_set_aishell()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
@@ -208,7 +216,7 @@
 		if(!isnull(details[SKIN_ICON_STATE]))
 			cyborg_base_icon = details[SKIN_ICON_STATE]
 		if(!isnull(details[SKIN_ICON]))
-			cyborg.icon = details[SKIN_ICON]
+			cyborg_icon_file = details[SKIN_ICON]
 		if(!isnull(details[SKIN_PIXEL_X]))
 			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
 		if(!isnull(details[SKIN_PIXEL_Y]))
@@ -219,6 +227,8 @@
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
+		if(!isnull(details[SKIN_STAT_ICONS]))
+			cyborg_stat_icons = details[SKIN_STAT_ICONS]
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
@@ -330,7 +340,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	magpulsing = TRUE
+	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 
 /obj/item/robot_model/janitor
@@ -356,6 +366,10 @@
 	model_select_icon = "janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
+	borg_skins = list(
+		"Cart Janitor" = list(SKIN_ICON_STATE = "janitor"),
+		"Maid Janitor" = list(SKIN_ICON_STATE = "mekajani", SKIN_ICON = 'icons/mob/robots_tall.dmi', SKIN_HAT_OFFSET = 15, SKIN_STAT_ICONS = TRUE),
+	)
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
@@ -631,8 +645,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE)
-	magpulsing = TRUE
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 	canDispose = TRUE
 

@@ -42,6 +42,8 @@
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 	///Represents a signel source of camera alarms about movement or camera tampering
 	var/datum/alarm_handler/alarm_manager
+	///Proximity monitor associated with this atom, for motion sensitive cameras.
+	var/datum/proximity_monitor/proximity_monitor
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
@@ -101,7 +103,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		network -= i
 		network += "[port.id]_[i]"
 
-/obj/machinery/proc/create_prox_monitor()
+/obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
 		proximity_monitor = new(src, 1)
 
@@ -166,7 +168,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
-				if (M.client.eye == src)
+				if (M.client?.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
@@ -350,7 +352,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(paper_user.name)]'>[paper_user]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				AI.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-			else if (potential_viewer.client.eye == src)
+			else if (potential_viewer.client?.eye == src)
 				to_chat(potential_viewer, "[span_name("[paper_user]")] holds \a [itemname] up to one of the cameras ...")
 				potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				potential_viewer << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
@@ -451,7 +453,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in GLOB.player_list)
-		if (O.client.eye == src)
+		if (O.client?.eye == src)
 			O.unset_machine()
 			O.reset_perspective(null)
 			to_chat(O, span_warning("The screen bursts into static!"))

@@ -1,9 +1,9 @@
 /datum/job/cargo_technician
-	title = "Cargo Technician"
+	title = JOB_CARGO_TECHNICIAN
 	description = "Distribute supplies to the departments that ordered them, \
 		collect empty crates, load and unload the supply shuttle, \
 		ship bounty cubes."
-	department_head = list("Head of Personnel")
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2

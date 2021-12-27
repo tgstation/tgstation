@@ -669,10 +669,10 @@
 	M.set_nutrition(700)
 	to_chat(M, span_warning("You absorb the potion and feel your intense desire to feed melt away."))
 	to_chat(user, span_notice("You feed the slime the potion, removing its hunger and calming it."))
-	var/newname = sanitize_name(stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN))
+	var/newname = sanitize_name(tgui_input_text(user, "Would you like to give the slime a name?", "Name your new pet", "Pet Slime", MAX_NAME_LEN))
 
 	if (!newname)
-		newname = "pet slime"
+		newname = "Pet Slime"
 	M.name = newname
 	M.real_name = newname
 	qdel(src)
@@ -686,58 +686,62 @@
 	var/being_used = FALSE
 	var/sentience_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/slime/sentience/attack(mob/living/M, mob/user)
-	if(being_used || !ismob(M))
+/obj/item/slimepotion/slime/sentience/attack(mob/living/dumb_mob, mob/user)
+	if(being_used || !ismob(dumb_mob))
 		return
-	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		to_chat(user, span_warning("[M] is already too intelligent for this to work!"))
+	if((!isanimal(dumb_mob) && !isbasicmob(dumb_mob)) || dumb_mob.ckey) //only works on animals that aren't player controlled
+		to_chat(user, span_warning("[dumb_mob] is already too intelligent for this to work!"))
 		return
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
+	if(dumb_mob.stat)
+		to_chat(user, span_warning("[dumb_mob] is dead!"))
 		return
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != sentience_type)
-		to_chat(user, span_warning("[src] won't work on [SM]."))
-		return
+	if(isanimal(dumb_mob))
+		var/mob/living/simple_animal/dumb_animal = dumb_mob
+		if(dumb_animal.sentience_type != sentience_type)
+			to_chat(user, span_warning("[src] won't work on [dumb_animal]."))
+			return
+	else if(isbasicmob(dumb_mob)) //duplicate shit code until all simple animasls are made into basic mobs. sentience_type is not on living, but it duplicated  on basic and animal
+		var/mob/living/basic/basic_dumb_bitch = dumb_mob
+		if(basic_dumb_bitch.sentience_type != sentience_type)
+			to_chat(user, span_warning("[src] won't work on [basic_dumb_bitch]."))
+			return
 
-	to_chat(user, span_notice("You offer [src] to [SM]..."))
+	to_chat(user, span_notice("You offer [src] to [dumb_mob]..."))
 	being_used = TRUE
 
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as [SM.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, SM, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
+	var/list/candidates = poll_candidates_for_mob("Do you want to play as [dumb_mob.name]?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, dumb_mob, POLL_IGNORE_SENTIENCE_POTION) // see poll_ignore.dm
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
-		SM.key = C.key
-		SM.mind.enslave_mind_to_creator(user)
-		SEND_SIGNAL(SM, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
-		SM.sentience_act()
-		to_chat(SM, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
-		to_chat(SM, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
-		if(SM.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
-			to_chat(SM, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
-		to_chat(user, span_notice("[SM] accepts [src] and suddenly becomes attentive and aware. It worked!"))
-		SM.copy_languages(user)
-		after_success(user, SM)
+		dumb_mob.key = C.key
+		dumb_mob.mind.enslave_mind_to_creator(user)
+		SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
+		if(isanimal(dumb_mob))
+			var/mob/living/simple_animal/smart_animal = dumb_mob
+			smart_animal.sentience_act()
+		to_chat(dumb_mob, span_warning("All at once it makes sense: you know what you are and who you are! Self awareness is yours!"))
+		to_chat(dumb_mob, span_userdanger("You are grateful to be self aware and owe [user.real_name] a great debt. Serve [user.real_name], and assist [user.p_them()] in completing [user.p_their()] goals at any cost."))
+		if(dumb_mob.flags_1 & HOLOGRAM_1) //Check to see if it's a holodeck creature
+			to_chat(dumb_mob, span_userdanger("You also become depressingly aware that you are not a real creature, but instead a holoform. Your existence is limited to the parameters of the holodeck."))
+		to_chat(user, span_notice("[dumb_mob] accepts [src] and suddenly becomes attentive and aware. It worked!"))
+		dumb_mob.copy_languages(user)
+		after_success(user, dumb_mob)
 		qdel(src)
 	else
-		to_chat(user, span_notice("[SM] looks interested for a moment, but then looks back down. Maybe you should try again later."))
+		to_chat(user, span_notice("[dumb_mob] looks interested for a moment, but then looks back down. Maybe you should try again later."))
 		being_used = FALSE
 		..()
 
-/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/simple_animal/SM)
+/obj/item/slimepotion/slime/sentience/proc/after_success(mob/living/user, mob/living/smart_mob)
 	return
 
 /obj/item/slimepotion/slime/sentience/nuclear
 	name = "syndicate intelligence potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to living beings. It has been modified with Syndicate technology to also grant an internal radio implant to the target and authenticate with identification systems."
 
-/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/simple_animal/SM)
+/obj/item/slimepotion/slime/sentience/nuclear/after_success(mob/living/user, mob/living/smart_mob)
 	var/obj/item/implant/radio/syndicate/imp = new(src)
-	imp.implant(SM, user)
-
-	// Ugly as sin. Simble mob accesses are for another time.
-	SM.access_card = new /obj/item/card/id/advanced/chameleon(SM)
-	SSid_access.apply_trim_to_card(SM, /datum/id_trim/chameleon)
-	ADD_TRAIT(SM.access_card, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+	imp.implant(smart_mob, user)
+	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
@@ -747,45 +751,53 @@
 	var/prompted = 0
 	var/animal_type = SENTIENCE_ORGANIC
 
-/obj/item/slimepotion/transference/afterattack(mob/living/M, mob/living/user, proximity)
+/obj/item/slimepotion/transference/afterattack(mob/living/switchy_mob, mob/living/user, proximity)
 	if(!proximity)
 		return
-	if(prompted || !ismob(M))
+	if(prompted || !ismob(switchy_mob))
 		return
-	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
-		to_chat(user, span_warning("[M] already has a higher consciousness!"))
+	if(!(isanimal(switchy_mob) || isbasicmob(switchy_mob))|| switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
+		to_chat(user, span_warning("[switchy_mob] already has a higher consciousness!"))
 		return ..()
-	if(M.stat)
-		to_chat(user, span_warning("[M] is dead!"))
+	if(switchy_mob.stat)
+		to_chat(user, span_warning("[switchy_mob] is dead!"))
 		return ..()
-	var/mob/living/simple_animal/SM = M
-	if(SM.sentience_type != animal_type)
-		to_chat(user, span_warning("You cannot transfer your consciousness to [SM].") )
-		return ..()
-	var/jb = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
-	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
+	if(isanimal(switchy_mob))
+		var/mob/living/simple_animal/switchy_animal= switchy_mob
+		if(switchy_animal.sentience_type != animal_type)
+			to_chat(user, span_warning("You cannot transfer your consciousness to [switchy_animal].") )
+			return ..()
+	else	//ugly code duplication, but necccesary as sentience_type is implemented twice.
+		var/mob/living/basic/basic_mob = switchy_mob
+		if(basic_mob.sentience_type != animal_type)
+			to_chat(user, span_warning("You cannot transfer your consciousness to [basic_mob].") )
+			return ..()
+
+	var/job_banned = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
+	if(QDELETED(src) || QDELETED(switchy_mob) || QDELETED(user))
 		return
 
-	if(jb)
+	if(job_banned)
 		to_chat(user, span_warning("Your mind goes blank as you attempt to use the potion."))
 		return
 
 	prompted = 1
-	if(tgui_alert(usr,"This will permanently transfer your consciousness to [SM]. Are you sure you want to do this?",,list("Yes","No"))=="No")
+	if(tgui_alert(usr,"This will permanently transfer your consciousness to [switchy_mob]. Are you sure you want to do this?",,list("Yes","No"))=="No")
 		prompted = 0
 		return
 
-	to_chat(user, span_notice("You drink the potion then place your hands on [SM]..."))
+	to_chat(user, span_notice("You drink the potion then place your hands on [switchy_mob]..."))
 
-
-	user.mind.transfer_to(SM)
-	SM.faction = user.faction.Copy()
-	SM.sentience_act() //Same deal here as with sentience
+	user.mind.transfer_to(switchy_mob)
+	switchy_mob.faction = user.faction.Copy()
 	user.death()
-	to_chat(SM, span_notice("In a quick flash, you feel your consciousness flow into [SM]!"))
-	to_chat(SM, span_warning("You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
-	SM.name = "[user.real_name]"
+	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
+	to_chat(switchy_mob, span_warning("You are now [switchy_mob]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!"))
+	switchy_mob.name = "[user.real_name]"
 	qdel(src)
+	if(isanimal(switchy_mob))
+		var/mob/living/simple_animal/switchy_animal= switchy_mob
+		switchy_animal.sentience_act()
 
 /obj/item/slimepotion/slime/steroid
 	name = "slime steroid"
@@ -964,7 +976,7 @@
 
 	to_chat(user, span_notice("You offer [src] to [user]..."))
 
-	var/new_name = sanitize_name(stripped_input(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN))
+	var/new_name = sanitize_name(tgui_input_text(M, "What would you like your name to be?", "Input a name", M.real_name, MAX_NAME_LEN))
 
 	if(!new_name || QDELETED(src) || QDELETED(M) || new_name == M.real_name || !M.Adjacent(user))
 		being_used = FALSE
@@ -972,6 +984,7 @@
 
 	M.visible_message(span_notice("[span_name("[M]")] has a new name, [span_name("[new_name]")]."), span_notice("Your old name of [span_name("[M.real_name]")] fades away, and your new name [span_name("[new_name]")] anchors itself in your mind."))
 	message_admins("[ADMIN_LOOKUPFLW(user)] used [src] on [ADMIN_LOOKUPFLW(M)], letting them rename themselves into [new_name].")
+	log_game("[key_name(user)] used [src] on [key_name(M)], letting them rename themselves into [new_name].")
 
 	// pass null as first arg to not update records or ID/PDA
 	M.fully_replace_character_name(null, new_name)

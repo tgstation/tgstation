@@ -211,7 +211,7 @@
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	Radio.set_listening(FALSE)
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -1214,9 +1214,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	if(compartmentLoadAccessCheck(user))
 		if(istype(I, /obj/item/pen))
-			name = stripped_input(user,"Set name","Name", name, 20)
-			desc = stripped_input(user,"Set description","Description", desc, 60)
-			slogan_list += stripped_input(user,"Set slogan","Slogan","Epic", 60)
+			name = tgui_input_text(user, "Set name", "Name", name, 20)
+			desc = tgui_input_text(user, "Set description", "Description", desc, 60)
+			slogan_list += tgui_input_text(user, "Set slogan", "Slogan", "Epic", 60)
 			last_slogan = world.time + rand(0, slogan_delay)
 			return
 

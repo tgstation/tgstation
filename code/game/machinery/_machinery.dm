@@ -208,7 +208,7 @@
 	if(our_area)
 		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
 
-	REMOVE_TRAIT(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)
+	lose_area_sensitivity(INNATE_TRAIT)
 	UnregisterSignal(src, COMSIG_ENTER_AREA)
 	UnregisterSignal(src, COMSIG_EXIT_AREA)
 

@@ -312,13 +312,13 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
+	var/Autochan = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
 
 	if(!Autochan)
 		return
 	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
 		radiomod = ";"
-		Autochan += " ([radio.frequency])"
+		Autochan += " ([radio.get_frequency()])"
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else //For department channels, if any, given by the internal radio.
