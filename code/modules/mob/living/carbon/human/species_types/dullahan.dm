@@ -24,23 +24,28 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
+	return TRUE // DEBUG-ONLY!
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
 
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
-	REMOVE_TRAIT(src, TRAIT_HEARING_SENSITIVE, TRAIT_GENERIC)
+	REMOVE_TRAIT(H, TRAIT_HEARING_SENSITIVE, TRAIT_GENERIC)
 	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
+		head.no_update = TRUE
 		head.drop_limb()
 		if(!QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
 			head.throwforce = 25
 			myhead = new /obj/item/dullahan_relay (head, H)
 			H.put_in_hands(head)
-			var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
-			var/datum/action/item_action/organ_action/dullahan/D = locate() in E?.actions
-			D?.Trigger()
+			// We already know that we're a dullahan at this point.
+			var/datum/species/dullahan/head_species = H.dna.species
+			head_species.update_vision_perspective(H)
+			// var/obj/item/organ/eyes/E = H.getorganslot(ORGAN_SLOT_EYES)
+			// var/datum/action/item_action/organ_action/dullahan/D = locate() in E?.actions
+			// D?.Trigger()
 	H.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/H)
@@ -58,6 +63,10 @@
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
+
+	if(istype(myhead.loc, /obj/item/bodypart/head) && myhead.loc.name != H.real_name)
+		myhead.loc.name = H.real_name
+
 	var/obj/item/bodypart/head/head2 = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head2)
 		myhead = null
@@ -143,6 +152,11 @@
 	SIGNAL_HANDLER
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
+
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods)
+	. = ..()
+	if(owner)
+		owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
 
 ///Adds the owner to the list of hearers in hearers_in_view(), for visible/hearable on top of say messages
 /obj/item/dullahan_relay/proc/include_owner(datum/source, list/hearers)
