@@ -1,9 +1,10 @@
 
 /datum/element/turf_z_transparency
 	element_flags = ELEMENT_DETACH
+	var/is_openspace = FALSE
 
 ///This proc sets up the signals to handle updating viscontents when turfs above/below update. Handle plane and layer here too so that they don't cover other obs/turfs in Dream Maker
-/datum/element/turf_z_transparency/Attach(datum/target)
+/datum/element/turf_z_transparency/Attach(datum/target, is_openspace = FALSE)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -11,7 +12,7 @@
 	var/turf/our_turf = target
 
 	our_turf.layer = OPENSPACE_LAYER
-	if(isgroundlessturf(our_turf))
+	if(is_openspace)
 		our_turf.plane = OPENSPACE_PLANE
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
@@ -65,7 +66,7 @@
 
 ///Called when there is no real turf below this turf
 /datum/element/turf_z_transparency/proc/add_baseturf_underlay(turf/our_turf)
-	if(isgroundlessturf(our_turf)) // we don't ever want our bottom turf to be openspace
+	if(is_openspace) // we don't ever want our bottom turf to be openspace
 		our_turf.ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 	var/turf/path = SSmapping.level_trait(our_turf.z, ZTRAIT_BASETURF) || /turf/open/space
 	if(!ispath(path))
