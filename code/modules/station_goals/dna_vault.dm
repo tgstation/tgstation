@@ -86,7 +86,7 @@
 		var/obj/machinery/hydroponics/H = target
 		if(!H.myseed)
 			return
-		if(!H.harvest)// So it's bit harder.
+		if(H.plant_status != HYDROTRAY_PLANT_HARVESTABLE)// So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
 		if(plants[H.myseed.type])
@@ -97,7 +97,7 @@
 
 	//animals
 	var/static/list/non_simple_animals = typecacheof(list(/mob/living/carbon/alien))
-	if(isanimal(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
+	if(isanimal_or_basicmob(target) || is_type_in_typecache(target,non_simple_animals) || ismonkey(target))
 		if(isanimal(target))
 			var/mob/living/simple_animal/A = target
 			if(!A.healable)//simple approximation of being animal not a robot or similar

@@ -6,9 +6,9 @@
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
+	icon_state = "pandemic0"
 	icon_keyboard = null
-	base_icon_state = "mixer"
+	base_icon_state = "pandemic"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
@@ -154,7 +154,10 @@
 	data["is_ready"] = !wait
 	if(beaker)
 		data["has_beaker"] = TRUE
-		data["beaker_empty"] = (!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+		data["beaker"] = list(
+			"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
+			"capacity" = beaker.volume,
+		)
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE

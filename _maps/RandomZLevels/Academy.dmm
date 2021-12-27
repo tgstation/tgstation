@@ -449,10 +449,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ch" = (
-/obj/structure/chair/stool/directional/east,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ci" = (
@@ -486,7 +484,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cp" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ct" = (
@@ -772,10 +770,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dG" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/chem_master/condimaster,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dH" = (
@@ -1365,9 +1361,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fX" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fY" = (
@@ -1601,10 +1595,8 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "gQ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /mob/living/simple_animal/hostile/bear,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gR" = (
@@ -2501,7 +2493,7 @@
 "lk" = (
 /obj/structure/safe/floor,
 /obj/item/gun/magic/wand/fireball,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ll" = (
@@ -11469,9 +11461,9 @@ ab
 ah
 ah
 ah
-ax
+rl
 ah
-ax
+rl
 ah
 ah
 ah

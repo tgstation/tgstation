@@ -406,7 +406,7 @@
 		return
 	flickering = TRUE
 	if(on && status == LIGHT_OK)
-		for(var/i = 0; i < amount; i++)
+		for(var/i in 1 to amount)
 			if(status != LIGHT_OK)
 				break
 			on = !on
@@ -414,6 +414,7 @@
 			sleep(rand(5, 15))
 		on = (status == LIGHT_OK)
 		update(FALSE)
+		. = TRUE //did we actually flicker?
 	flickering = FALSE
 
 // ai attack - make lights flicker, because why not

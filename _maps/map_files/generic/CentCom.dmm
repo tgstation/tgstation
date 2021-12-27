@@ -310,7 +310,7 @@
 /turf/open/floor/iron,
 /area/centcom/briefing/storage)
 "bm" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
@@ -391,7 +391,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/centcom/holding)
 "bL" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
 "bN" = (
@@ -585,7 +585,7 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -824,11 +824,10 @@
 /turf/open/floor/stone,
 /area/centcom/holding)
 "dr" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
 	name = "Hijikata";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/wood/large,
 /area/centcom/holding)
@@ -964,10 +963,6 @@
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/centcom/holding)
-"ed" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "eh" = (
 /obj/structure/chair/office,
@@ -1139,7 +1134,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/intern,
+/obj/effect/mob_spawn/corpse/human/intern,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
@@ -1250,7 +1245,7 @@
 /turf/open/floor/stone,
 /area/centcom/holding)
 "ff" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
@@ -1599,11 +1594,10 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "gV" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Momo";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -1809,7 +1803,7 @@
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
 "hR" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
 "hT" = (
@@ -1995,7 +1989,7 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -2257,7 +2251,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "jg" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3215,7 +3209,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lj" = (
-/obj/structure/closet/abductor,
+/obj/machinery/limbgrower/fullupgrade,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lk" = (
@@ -3999,7 +3993,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "mW" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5424,7 +5418,7 @@
 	icon_state = "plant-21"
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/wood,
 /area/centcom/admin)
 "qI" = (
@@ -5557,7 +5551,7 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "rf" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -5862,7 +5856,7 @@
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/security_unit/directional/north,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7904,7 +7898,7 @@
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
 "xC" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
@@ -8413,7 +8407,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "yX" = (
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
 "zk" = (
@@ -9485,7 +9479,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /obj/item/camera,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9828,7 +9822,7 @@
 	},
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10684,7 +10678,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -11077,7 +11071,7 @@
 	},
 /area/centcom/holding)
 "GB" = (
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced,
@@ -12438,7 +12432,7 @@
 /turf/open/floor/iron,
 /area/tdome/tdomeadmin)
 "Jg" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Red Team";
 	network = list("thunder");
 	pixel_x = 11;
@@ -12481,7 +12475,7 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "Jl" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Green Team";
 	network = list("thunder");
 	pixel_x = 12;
@@ -13746,7 +13740,7 @@
 /turf/open/floor/wood,
 /area/centcom/admin)
 "MA" = (
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
@@ -14753,7 +14747,7 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14894,6 +14888,7 @@
 "RQ" = (
 /obj/structure/closet/abductor,
 /obj/item/storage/box/alienhandcuffs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "RU" = (
@@ -14937,11 +14932,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
 "Sa" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Hattori";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -14961,7 +14955,7 @@
 /area/centcom/supplypod/loading/two)
 "Sh" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/deathsquad{
+/obj/item/mod/control/pre_equipped/corporate{
 	pixel_y = 5
 	},
 /obj/item/clothing/gloves/combat,
@@ -15956,15 +15950,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
-"VX" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/nukeop,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "VZ" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
@@ -16567,7 +16552,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/supplypod)
 "Yw" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -35392,8 +35377,8 @@ pF
 qa
 pZ
 pZ
-VX
-VX
+sh
+sh
 pZ
 rg
 Qd
@@ -44163,7 +44148,7 @@ es
 bu
 fO
 Pf
-hb
+Sa
 cH
 fO
 Oe
@@ -44420,7 +44405,7 @@ AG
 AG
 Up
 hb
-Sa
+hb
 ge
 fO
 UC
@@ -45696,7 +45681,7 @@ ZY
 fO
 df
 Zt
-ed
+fK
 RL
 Zk
 OF
@@ -45953,7 +45938,7 @@ fg
 Nd
 gk
 Zt
-ed
+fK
 RL
 UZ
 ep

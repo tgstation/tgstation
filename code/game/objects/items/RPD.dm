@@ -611,6 +611,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))

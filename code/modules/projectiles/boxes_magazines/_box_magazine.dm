@@ -75,7 +75,7 @@
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
-	for(var/i = max(1, stored_ammo.len), i <= max_ammo, i++)
+	for(var/i in max(1, stored_ammo.len) to max_ammo)
 		stored_ammo += new round_check(src)
 	update_ammo_count()
 

@@ -42,6 +42,7 @@
 	icon_state = "unanchoredstatusdisplay"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/status_display
+	pixel_shift = 32
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -205,30 +206,11 @@
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
-
-/obj/machinery/status_display/evac/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/status_display/evac/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/status_display/evac/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/status_display/evac/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(ndir)
-		pixel_x = NSCOMPONENT(dir) ? 0 : (dir == EAST ? -world.icon_size : world.icon_size)
-		pixel_y = NSCOMPONENT(dir) ? (dir == NORTH ? -world.icon_size : world.icon_size) : 0
 	update_appearance()
 
 /obj/machinery/status_display/evac/Initialize(mapload)
@@ -396,21 +378,8 @@
 		AI_EMOTION_RED_GLOW = "ai_hal",
 	)
 
-/obj/machinery/status_display/ai/directional/north
-	dir = SOUTH
-	pixel_y = 32
 
-/obj/machinery/status_display/ai/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/status_display/ai/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/status_display/ai/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 /obj/machinery/status_display/ai/Initialize(mapload)
 	. = ..()

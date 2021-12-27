@@ -140,7 +140,12 @@
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
-	var/turf/open/location = isturf(holder) ? holder : null
+	var/turf/open/location
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/pipenet = holder
+		location = get_turf(pick(pipenet.members))
+	else
+		location = get_turf(holder)
 	var/burned_fuel = 0
 
 	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
@@ -165,6 +170,8 @@
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		cached_results["fire"] += burned_fuel * 10
 
+	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY)
+		radiation_pulse(location, max_range = min(sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 1.5, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -401,32 +408,33 @@
 			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB) //the air heats up when reacting
 		return REACTING
 
-/datum/gas_reaction/nitryl_decomposition //The decomposition of nitryl. Exothermic. Requires oxygen as catalyst.
+/datum/gas_reaction/nitrium_decomposition //The decomposition of nitrium. Exothermic. Requires oxygen as catalyst.
 	priority_group = PRIORITY_PRE_FORMATION
-	name = "Nitryl Decomposition"
-	id = "nitryl_decomp"
+	name = "Nitrium Decomposition"
+	id = "nitrium_decomp"
 
-/datum/gas_reaction/nitryl_decomposition/init_reqs()
+/datum/gas_reaction/nitrium_decomposition/init_reqs()
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		/datum/gas/nitryl = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
 		"MAX_TEMP" = T0C + 70 //Pretty warm, explicitly not fire temps. Time bombs are cool, but not that cool. If it makes you feel any better it's close
 	)
 
-/datum/gas_reaction/nitryl_decomposition/react(datum/gas_mixture/air)
+/datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
-	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
-	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitryl][MOLES])
-	var/energy_produced = heat_efficency * NITRYL_DECOMPOSITION_ENERGY
 
-	if ((cached_gases[/datum/gas/nitryl][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+	//This reaction is agressively slow. like, a tenth of a mole per fire slow. Keep that in mind
+	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/nitrium][MOLES])
+	var/energy_produced = heat_efficency * NITRIUM_DECOMPOSITION_ENERGY
+
+	if ((cached_gases[/datum/gas/nitrium][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/nitrogen, air)
-	cached_gases[/datum/gas/nitryl][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/oxygen][MOLES] += heat_efficency
+	air.assert_gases(/datum/gas/nitrogen, /datum/gas/hydrogen)
+	cached_gases[/datum/gas/nitrium][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/hydrogen][MOLES] += heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] += heat_efficency
 
 	if(energy_produced> 0)
@@ -435,36 +443,34 @@
 			air.temperature = max(((temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB) //the air heats up when reacting
 		return REACTING
 
-/datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
+/datum/gas_reaction/nitrium_formation //The formation of nitrium. Endothermic. Requires bz.
 	priority_group = PRIORITY_FORMATION
-	name = "Nitryl formation"
-	id = "nitrylformation"
+	name = "Nitrium formation"
+	id = "nitrium_formation"
 
-/datum/gas_reaction/nitrylformation/init_reqs()
+/datum/gas_reaction/nitrium_formation/init_reqs()
 	requirements = list(
-		/datum/gas/oxygen = 10,
+		/datum/gas/tritium = 20,
 		/datum/gas/nitrogen = 10,
 		/datum/gas/bz = 5,
-		"MIN_TEMP" = 1500,
-		"MAX_TEMP" = 10000
+		"MIN_TEMP" = 1500
 	)
 
-/datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/nitrium_formation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.05))
-	var/energy_used = heat_efficency * NITRYL_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/nitryl, air)
-	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
+	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.05))
+	var/energy_used = heat_efficency * NITRIUM_FORMATION_ENERGY
+	ASSERT_GAS(/datum/gas/nitrium, air)
+	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/nitryl, air)
-	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/tritium][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.05 //bz gets consumed to balance the nitryl production and not make it too common and/or easy
-	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.05 //bz gets consumed to balance the nitrium production and not make it too common and/or easy
+	cached_gases[/datum/gas/nitrium][MOLES] += heat_efficency
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -540,38 +546,6 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature * old_heat_capacity - energy_used)/new_heat_capacity), TCMB)
-		return REACTING
-
-/datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
-	priority_group = PRIORITY_FORMATION
-	name = "Stimulum formation"
-	id = "stimformation"
-
-/datum/gas_reaction/stimformation/init_reqs()
-	requirements = list(
-		/datum/gas/tritium = 30,
-		/datum/gas/bz = 20,
-		/datum/gas/nitryl = 30,
-		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = 1500)
-
-/datum/gas_reaction/stimformation/react(datum/gas_mixture/air)
-	var/list/cached_gases = air.gases
-
-	var/old_heat_capacity = air.heat_capacity()
-	var/heat_scale = min(air.temperature/STIMULUM_HEAT_SCALE, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/nitryl][MOLES])
-	var/stim_energy_change = heat_scale + STIMULUM_FIRST_RISE * (heat_scale ** 2) - STIMULUM_FIRST_DROP * (heat_scale ** 3) + STIMULUM_SECOND_RISE * (heat_scale ** 4) - STIMULUM_ABSOLUTE_DROP * (heat_scale ** 5)
-	ASSERT_GAS(/datum/gas/stimulum, air)
-	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_scale < 0 ) || (cached_gases[/datum/gas/nitryl][MOLES] - heat_scale < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale
-	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
-	cached_gases[/datum/gas/stimulum][MOLES] += heat_scale * 0.75
-
-	if(stim_energy_change)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((air.temperature * old_heat_capacity + stim_energy_change) / new_heat_capacity), TCMB)
 		return REACTING
 
 /datum/gas_reaction/nobliumformation //Hyper-Noblium formation is extrememly endothermic, but requires high temperatures to start. Due to its high mass, hyper-nobelium uses large amounts of nitrogen and tritium. BZ can be used as a catalyst to make it less endothermic.
@@ -739,7 +713,7 @@
 /datum/gas_reaction/zauker_formation/init_reqs()
 	requirements = list(
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
-		/datum/gas/stimulum = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = 50000,
 		"MAX_TEMP" = 75000
 	)
@@ -748,13 +722,13 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature * 0.000005, cached_gases[/datum/gas/hypernoblium][MOLES] * INVERSE(0.01), cached_gases[/datum/gas/stimulum][MOLES] * INVERSE(0.5))
+	var/heat_efficency = min(temperature * 0.000005, cached_gases[/datum/gas/hypernoblium][MOLES] * INVERSE(0.01), cached_gases[/datum/gas/nitrium][MOLES] * INVERSE(0.5))
 	var/energy_used = heat_efficency * 5000
 	ASSERT_GAS(/datum/gas/zauker, air)
-	if ((cached_gases[/datum/gas/hypernoblium][MOLES] - heat_efficency * 0.01 < 0 ) || (cached_gases[/datum/gas/stimulum][MOLES] - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/hypernoblium][MOLES] - heat_efficency * 0.01 < 0 ) || (cached_gases[/datum/gas/nitrium][MOLES] - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/hypernoblium][MOLES] -= heat_efficency * 0.01
-	cached_gases[/datum/gas/stimulum][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/nitrium][MOLES] -= heat_efficency * 0.5
 	cached_gases[/datum/gas/zauker][MOLES] += heat_efficency * 0.5
 
 	if(energy_used)
@@ -854,15 +828,21 @@
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var consumed_amount = min(5, cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
+	var consumed_amount = min(air.temperature / 2240 * cached_gases[/datum/gas/bz][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES] / (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
-	if(cached_gases[/datum/gas/bz][MOLES] < 30)
-		cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
-	else
-		for(var/mob/living/carbon/L in location)
-			L.hallucination += cached_gases[/datum/gas/bz][MOLES] * 0.7
-	energy_released += 100
+
+	ASSERT_GAS(/datum/gas/nitrogen, air)
+	ASSERT_GAS(/datum/gas/helium, air)
+	ASSERT_GAS(/datum/gas/plasma, air)
+	cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
+	cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 1.6
+	cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
+	cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
+	energy_released += consumed_amount * 60000
+	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
+	for(var/mob/living/carbon/L in location)
+		L.hallucination += consumed_amount
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -887,17 +867,21 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
-	var/turf/open/location = isturf(holder) ? holder : null
-	if(location == null)
-		return NO_REACTION
-	var produced_amount = min(5, cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
+	var/turf/open/location
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/pipenet = holder
+		location = get_turf(pick(pipenet.members))
+	else
+		location = get_turf(holder)
+	var produced_amount = min(air.temperature / 34 * (cached_gases[/datum/gas/tritium][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES]) / (cached_gases[/datum/gas/tritium][MOLES] + 10 * cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/hydrogen, air)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
-	energy_released += 50
+	energy_released += produced_amount * 10000
+	radiation_pulse(location, max_range = min(sqrt(produced_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + produced_amount), chance = 50)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)

@@ -143,11 +143,11 @@
 
 /datum/asset/simple/namespaced/tgfont
 	assets = list(
-		"tgfont.eot" = file("tgui/packages/tgfont/dist/tgfont.eot"),
-		"tgfont.woff2" = file("tgui/packages/tgfont/dist/tgfont.woff2"),
+		"tgfont.eot" = file("tgui/packages/tgfont/static/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
 	)
 	parents = list(
-		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
+		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
 
 /datum/asset/spritesheet/chat
@@ -207,40 +207,10 @@
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
-	assets = list(
-		"default" = 'icons/ui_icons/achievements/default.png',
-		"basemisc" = 'icons/ui_icons/achievements/basemisc.png',
-		"baseboss" = 'icons/ui_icons/achievements/baseboss.png',
-		"baseskill" = 'icons/ui_icons/achievements/baseskill.png',
-		"bbgum" = 'icons/ui_icons/achievements/boss/bbgum.png',
-		"colossus" = 'icons/ui_icons/achievements/boss/colossus.png',
-		"hierophant" = 'icons/ui_icons/achievements/boss/hierophant.png',
-		"legion" = 'icons/ui_icons/achievements/boss/legion.png',
-		"miner" = 'icons/ui_icons/achievements/boss/miner.png',
-		"swarmer" = 'icons/ui_icons/achievements/boss/swarmer.png',
-		"tendril" = 'icons/ui_icons/achievements/boss/tendril.png',
-		"featofstrength" = 'icons/ui_icons/achievements/misc/featofstrength.png',
-		"helbital" = 'icons/ui_icons/achievements/misc/helbital.png',
-		"jackpot" = 'icons/ui_icons/achievements/misc/jackpot.png',
-		"meteors" = 'icons/ui_icons/achievements/misc/meteors.png',
-		"timewaste" = 'icons/ui_icons/achievements/misc/timewaste.png',
-		"upgrade" = 'icons/ui_icons/achievements/misc/upgrade.png',
-		"clownking" = 'icons/ui_icons/achievements/misc/clownking.png',
-		"clownthanks" = 'icons/ui_icons/achievements/misc/clownthanks.png',
-		"rule8" = 'icons/ui_icons/achievements/misc/rule8.png',
-		"snail" = 'icons/ui_icons/achievements/misc/snail.png',
-		"ascension" = 'icons/ui_icons/achievements/misc/ascension.png',
-		"ashascend" = 'icons/ui_icons/achievements/misc/ashascend.png',
-		"fleshascend" = 'icons/ui_icons/achievements/misc/fleshascend.png',
-		"rustascend" = 'icons/ui_icons/achievements/misc/rustascend.png',
-		"voidascend" = 'icons/ui_icons/achievements/misc/voidascend.png',
-		"mining" = 'icons/ui_icons/achievements/skills/mining.png',
-		"changeling" = 'icons/ui_icons/achievements/mafia/mafia.png',
-		"chaplain" = 'icons/ui_icons/achievements/mafia/town.png',
-		"clown" = 'icons/ui_icons/achievements/mafia/neutral.png',
-		"basemafia" ='icons/ui_icons/achievements/basemafia.png',
-		"frenching" = 'icons/ui_icons/achievements/misc/frenchingthebubble.png'
-	)
+
+/datum/asset/spritesheet/simple/achievements/register()
+	InsertAll("", ACHIEVEMENTS_SET)
+	return ..()
 
 /datum/asset/spritesheet/simple/pills
 	name = "pills"
@@ -472,27 +442,17 @@
 	..()
 
 /datum/asset/simple/portraits
-	var/tab = "use subtypes of this please"
 	assets = list()
 
 /datum/asset/simple/portraits/New()
-	if(!length(SSpersistent_paintings.paintings[tab]))
+	if(!length(SSpersistent_paintings.paintings))
 		return
-	for(var/list/portrait as anything in SSpersistent_paintings.paintings[tab])
-		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+	for(var/datum/painting/portrait as anything in SSpersistent_paintings.paintings)
+		var/png = "data/paintings/images/[portrait.md5].png"
 		if(fexists(png))
-			var/asset_name = "[tab]_[portrait["md5"]]"
+			var/asset_name = "paintings_[portrait.md5]"
 			assets[asset_name] = png
 	..() //this is where it registers all these assets we added to the list
-
-/datum/asset/simple/portraits/library
-	tab = "library"
-
-/datum/asset/simple/portraits/library_secure
-	tab = "library_secure"
-
-/datum/asset/simple/portraits/library_private
-	tab = "library_private"
 
 /datum/asset/simple/safe
 	assets = list(

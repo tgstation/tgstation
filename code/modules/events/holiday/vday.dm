@@ -70,8 +70,8 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
-		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
-		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
+		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
+		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(recipient && sender)

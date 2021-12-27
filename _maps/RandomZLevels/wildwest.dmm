@@ -125,7 +125,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aK" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aL" = (
@@ -141,7 +141,7 @@
 /turf/closed/mineral,
 /area/awaymission/wildwest/mines)
 "aO" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando,
+/obj/effect/mob_spawn/corpse/human/syndicatecommando,
 /turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -204,7 +204,7 @@
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "bi" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /obj/effect/mine/sound/bwoink,
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
@@ -236,7 +236,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bq" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "br" = (
@@ -417,7 +417,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cd" = (
-/obj/effect/mob_spawn/human/cook{
+/obj/effect/mob_spawn/corpse/human/cook{
 	mob_name = "Chef"
 	},
 /turf/open/floor/iron/cafeteria{
@@ -555,7 +555,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "cH" = (
-/obj/effect/mob_spawn/human/cook{
+/obj/effect/mob_spawn/corpse/human/cook{
 	mob_name = "Chef"
 	},
 /turf/open/floor/iron/cafeteria{
@@ -584,7 +584,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cM" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cN" = (
@@ -691,7 +691,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dh" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando{
+/obj/effect/mob_spawn/corpse/human/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -776,7 +776,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dy" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dz" = (
@@ -909,7 +909,7 @@
 /area/awaymission/wildwest/mines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dZ" = (
@@ -919,12 +919,12 @@
 /area/awaymission/wildwest/mines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly,
+/obj/item/food/donut/jelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/food/donut,
+/obj/item/food/donut/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ec" = (
@@ -1070,7 +1070,7 @@
 "eG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eH" = (
@@ -1100,7 +1100,7 @@
 /area/awaymission/wildwest/mines)
 "eL" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eN" = (
@@ -1220,7 +1220,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fh" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Doctor Mugabee"
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1450,7 +1450,7 @@
 /area/awaymission/wildwest/mines)
 "fR" = (
 /obj/effect/mine/sound/bwoink,
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fS" = (
@@ -1520,7 +1520,7 @@
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
 "ge" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/iron,
 /area/awaymission/wildwest/refine)
 "gf" = (
@@ -1611,7 +1611,7 @@
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
 "gy" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando{
+/obj/effect/mob_spawn/corpse/human/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,
@@ -1715,10 +1715,6 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
-"Gw" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/carpet,
-/area/awaymission/wildwest/mines)
 "Kh" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -43517,7 +43513,7 @@ bu
 bF
 bF
 bF
-Gw
+cj
 bF
 bF
 bD

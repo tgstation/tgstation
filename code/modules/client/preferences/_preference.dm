@@ -9,14 +9,17 @@
 #define PREFERENCE_PRIORITY_GENDER 3
 
 /// The priority at which body type is decided, applied after gender so we can
-/// make sure they're non-binary.
+/// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 4
 
 /// The priority at which names are decided, needed for proper randomization.
 #define PREFERENCE_PRIORITY_NAMES 5
 
+/// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 6
+
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAMES
+#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
@@ -498,6 +501,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	abstract_type = /datum/preference/numeric
 
 /datum/preference/numeric/deserialize(input, datum/preferences/preferences)
+	if(istext(input)) // Sometimes TGUI will return a string instead of a number, so we take that into account.
+		input = text2num(input) // Worst case, it's null, it'll just use create_default_value()
 	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/serialize(input)

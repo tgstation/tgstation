@@ -32,7 +32,7 @@ Ractive looks very similar, the only real difference is that React uses one para
 {{data.example_data}}
 ```
 
-However, you may occasionally come across data inserts that instead of referencing the `data` var or things contained within it instead reference `adata`. `adata` was short for animated data, and was used for smooth number animations in interfaces. instead of having a seperate data structure for this. tgui-next instead uses a component, which is `AnimatedNumber`.
+However, you may occasionally come across data inserts that instead of referencing the `data` var or things contained within it instead reference `adata`. `adata` was short for animated data, and was used for smooth number animations in interfaces. instead of having a separate data structure for this. tgui-next instead uses a component, which is `AnimatedNumber`.
 
 `AnimatedNumber` is used like this
 

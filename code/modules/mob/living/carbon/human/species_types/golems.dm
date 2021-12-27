@@ -414,7 +414,7 @@
 	H.visible_message(span_danger("[H] turns into a pile of sand!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/ore/glass(get_turf(H))
 	qdel(H)
 
@@ -446,7 +446,7 @@
 	H.visible_message(span_danger("[H] shatters!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/shard(get_turf(H))
 	qdel(H)
 
@@ -1013,7 +1013,7 @@
 			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
 /datum/species/golem/leather
@@ -1210,7 +1210,7 @@
 	H.visible_message(span_danger("[H] turns into a pile of snow!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
 	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)

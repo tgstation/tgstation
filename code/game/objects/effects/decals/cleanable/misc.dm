@@ -250,7 +250,8 @@
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "garbage"
-	layer = OBJ_LAYER //To display the decal over wires.
+	plane = GAME_PLANE
+	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
 
@@ -264,6 +265,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ants"
 	beauty = -150
+	plane = GAME_PLANE
 	layer = LOW_OBJ_LAYER
 	var/ant_bite_damage = 0.1
 	var/ant_volume

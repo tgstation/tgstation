@@ -46,9 +46,12 @@
 	sort_list(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
 
 	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
-	for(var/path in subtypesof(/datum/sprite_accessory/hair_gradient))
-		var/datum/sprite_accessory/hair_gradient/H = new path()
-		GLOB.hair_gradients_list[H.name] = H
+	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
+		var/datum/sprite_accessory/gradient/gradient = new path()
+		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
+			GLOB.hair_gradients_list[gradient.name] = gradient
+		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
+			GLOB.facial_hair_gradients_list[gradient.name] = gradient
 
 	// Keybindings
 	init_keybindings()
@@ -56,8 +59,6 @@
 	GLOB.emote_list = init_emote_list()
 
 	init_crafting_recipes(GLOB.crafting_recipes)
-
-	init_subtypes_w_path_keys(/obj/projectile, GLOB.proj_by_path_key)
 
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
@@ -96,7 +97,8 @@
 /**
  * Checks if that loc and dir has an item on the wall
 **/
-GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
+// Wall mounted machinery which are visually on the wall.
+GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
@@ -104,6 +106,8 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,
+	/obj/machinery/bluespace_vendor,
+	/obj/machinery/defibrillator_mount,
 	/obj/machinery/door_timer,
 	/obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/machinery/firealarm,
@@ -114,23 +118,22 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/power/apc,
 	/obj/machinery/requests_console,
 	/obj/machinery/status_display,
+	/obj/machinery/ticket_machine,
+	/obj/machinery/turretid,
 	/obj/structure/extinguisher_cabinet,
 	/obj/structure/fireaxecabinet,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
-	/obj/structure/reagent_dispensers/peppertank,
+	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame
 	)))
 
-GLOBAL_LIST_INIT(WALLITEMS_EXTERNAL, typecacheof(list(
+// Wall mounted machinery which are visually coming out of the wall.
+// These do not conflict with machinery which are visually placed on the wall.
+GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/camera_assembly,
-	/obj/structure/light_construct
-	)))
-
-GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
-	/obj/machinery/light,
 	/obj/structure/light_construct
 	)))

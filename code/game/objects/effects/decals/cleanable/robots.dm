@@ -20,7 +20,7 @@
 /obj/effect/decal/cleanable/robot_debris/proc/streak(list/directions, mapload=FALSE)
 	set waitfor = FALSE
 	var/direction = pick(directions)
-	for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4, 17; 50), i++) //the 3% chance of 50 steps is intentional and played for laughs.
+	for (var/i in 1 to pick(1, 200; 2, 150; 3, 50; 4, 17; 50)) //the 3% chance of 50 steps is intentional and played for laughs.
 		if (!mapload)
 			sleep(2)
 		if (i > 0)

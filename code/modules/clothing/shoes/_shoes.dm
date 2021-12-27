@@ -35,7 +35,7 @@
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
-		for(var/i = 0, i < 3, i++)
+		for(var/i in 1 to 3)
 			sleep(3)
 			playsound(user, 'sound/weapons/genhit2.ogg', 50, TRUE)
 		return(BRUTELOSS)
@@ -97,9 +97,6 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_shoes()
-
-/obj/item/proc/negates_gravity()
-	return FALSE
 
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
@@ -262,6 +259,9 @@
 
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
+	
+	if (!can_be_tied)
+		return
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		to_chat(user, span_warning("You're already interacting with [src]!"))
@@ -271,4 +271,4 @@
 
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, .proc/still_shoed, user)))
 		to_chat(user, span_notice("You [tied ? "untie" : "tie"] the laces on [src]."))
-		adjust_laces(tied ? SHOES_TIED : SHOES_UNTIED, user)
+		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)

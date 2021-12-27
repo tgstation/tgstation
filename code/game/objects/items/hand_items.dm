@@ -466,7 +466,6 @@
 	damage = 0
 	nodamage = TRUE // love can't actually hurt you
 	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
-	flag = MAGIC // and most importantly, love is magic~
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer)
@@ -482,7 +481,7 @@
 	return FALSE
 
 /**
- * To get around shielded hardsuits & such being set off by kisses when they shouldn't, we take a page from hallucination projectiles
+ * To get around shielded modsuits & such being set off by kisses when they shouldn't, we take a page from hallucination projectiles
  * and simply fake our on hit effects. This lets kisses remain incorporeal without having to make some new trait for this one niche situation.
  * This fake hit only happens if we can deal damage and if we hit a living thing. Otherwise, we just do normal on hit effects.
  */
@@ -524,7 +523,7 @@
 			living_target.face_atom(firer)
 			living_target.Stun(rand(3 SECONDS, 8 SECONDS))
 
-	living_target.visible_message("<b>[living_target]</b> [other_msg]", "<span class='userdanger'>Whoa! [self_msg]<span>")
+	living_target.visible_message("<b>[living_target]</b> [other_msg]", span_userdanger("Whoa! [self_msg]"))
 
 /obj/projectile/kiss/on_hit(atom/target, blocked, pierce_hit)
 	def_zone = BODY_ZONE_HEAD // let's keep it PG, people

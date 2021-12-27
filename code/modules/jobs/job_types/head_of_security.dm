@@ -1,7 +1,9 @@
 /datum/job/head_of_security
-	title = "Head of Security"
+	title = JOB_HEAD_OF_SECURITY
+	description = "Coordinate security personnel, ensure they are not corrupt, \
+		make sure every department is protected."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	head_announce = list(RADIO_CHANNEL_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
@@ -52,7 +54,7 @@
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	suit_store = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
-		/obj/item/melee/baton/security/loaded = 1,
+		/obj/item/evidencebag = 1,
 		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
 		)
 	belt = /obj/item/pda/heads/hos
@@ -75,9 +77,11 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/hos/hardsuit
-	name = "Head of Security (Hardsuit)"
+/datum/outfit/job/hos/mod
+	name = "Head of Security (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/security/hos
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/safeguard
+	suit = null
+	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer

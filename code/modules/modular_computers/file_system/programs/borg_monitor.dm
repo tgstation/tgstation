@@ -130,7 +130,7 @@
 				return
 			if(R.stat == DEAD) //Dead borgs will listen to you no longer
 				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
-			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
+			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
 			if(!message)
 				return
 			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
@@ -150,7 +150,7 @@
 		return FALSE
 	return TRUE
 
-///Gets the ID's name, if one is inserted into the device. This is a seperate proc solely to be overridden by the syndicate version of the app.
+///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)

@@ -103,9 +103,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/button/door/directional/west{
 	id = "cargoload";
 	name = "Loading Doors";
@@ -116,6 +113,7 @@
 	name = "Loading Doors";
 	pixel_y = 8
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "q" = (

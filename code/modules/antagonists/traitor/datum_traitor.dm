@@ -14,12 +14,11 @@
 #define MAROON_PROB 30
 
 /datum/antagonist/traitor
-	name = "Traitor"
+	name = "\improper Traitor"
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
 	antag_moodlet = /datum/mood_event/focused
-	antag_hud_type = ANTAG_HUD_TRAITOR
 	antag_hud_name = "traitor"
 	hijack_speed = 0.5 //10 seconds per hijack stage by default
 	ui_name = "AntagInfoTraitor"
@@ -46,6 +45,10 @@
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
+/datum/antagonist/traitor/New(give_objectives = TRUE)
+	. = ..()
+	src.give_objectives = give_objectives
+
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 
@@ -69,11 +72,7 @@
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
-
 	owner.special_role = null
-
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer(faction)
@@ -187,7 +186,6 @@
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
 
-	add_antag_hud(antag_hud_type, antag_hud_name, datum_owner)
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	if(should_give_codewords)
 		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
@@ -196,7 +194,6 @@
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/datum_owner = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, datum_owner)
 	handle_clown_mutation(datum_owner, removing = FALSE)
 
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
@@ -250,6 +247,8 @@
 				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] [span_redtext("Fail.")]"
 				traitor_won = FALSE
 			count++
+
+	result += "<br>[owner.name] <B>[traitor_flavor["roundend_report"]]</B>"
 
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"

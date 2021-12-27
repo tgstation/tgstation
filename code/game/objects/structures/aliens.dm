@@ -43,7 +43,7 @@
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-		new/obj/effect/mob_spawn/human/corpse/damaged(get_turf(src))
+		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 	qdel(src)
 
 /*
@@ -257,6 +257,7 @@
  */
 
 //for the status var
+#define BURSTING "bursting"
 #define BURST "burst"
 #define GROWING "growing"
 #define GROWN "grown"
@@ -275,6 +276,8 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	layer = MOB_LAYER
 	var/obj/item/clothing/mask/facehugger/child
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/structure/alien/egg/Initialize(mapload)
 	. = ..()
@@ -311,6 +314,9 @@
 		return
 	if(user.getorgan(/obj/item/organ/alien/plasmavessel))
 		switch(status)
+			if(BURSTING)
+				to_chat(user, span_notice("The child is hatching out."))
+				return
 			if(BURST)
 				to_chat(user, span_notice("You clear the hatched egg."))
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
@@ -331,18 +337,19 @@
 /obj/structure/alien/egg/proc/Grow()
 	status = GROWN
 	update_appearance()
-	proximity_monitor.SetRange(1)
+	proximity_monitor.set_range(1)
 
 //drops and kills the hugger if any is remaining
 /obj/structure/alien/egg/proc/Burst(kill = TRUE)
 	if(status == GROWN || status == GROWING)
-		proximity_monitor.SetRange(0)
-		status = BURST
+		status = BURSTING
+		proximity_monitor.set_range(0)
 		update_appearance()
 		flick("egg_opening", src)
 		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
+	status = BURST
 	if(child)
 		child.forceMove(get_turf(src))
 		// TECHNICALLY you could put non-facehuggers in the child var
@@ -386,6 +393,7 @@
 	status = BURST
 	icon_state = "egg_hatched"
 
+#undef BURSTING
 #undef BURST
 #undef GROWING
 #undef GROWN

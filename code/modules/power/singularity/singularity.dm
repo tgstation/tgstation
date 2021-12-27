@@ -147,7 +147,7 @@
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(prob(event_chance))
 			event()
 	dissipate(delta_time)
 	check_energy()
@@ -395,10 +395,10 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/stunned_mob in oviewers(8, src))
-		if(isbrain(stunned_mob)) //Ignore brains
+		if(stunned_mob.stat == DEAD || stunned_mob.is_blind())
 			continue
 
-		if(stunned_mob.stat != CONSCIOUS || !ishuman(stunned_mob))
+		if(!ishuman(stunned_mob))
 			apply_stun(stunned_mob)
 			continue
 

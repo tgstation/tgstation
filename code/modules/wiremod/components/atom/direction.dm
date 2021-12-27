@@ -44,7 +44,7 @@
 	var/atom/object = input_port.value
 	if(!object)
 		return
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 
 	if(object.z != location.z || get_dist(location, object) > max_range)
 		output.set_output(null)

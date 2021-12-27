@@ -87,7 +87,7 @@
 		CRASH("Loading pirate ship failed!")
 
 	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				spawner.create(our_candidate)
@@ -137,16 +137,17 @@
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
-	if(!active)
-		if(tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel")) == "Cancel")
-			return
-		if(active || !user.canUseTopic(src, BE_CLOSE))
-			return
-		toggle_on(user)
-		update_appearance()
-		send_notification()
-	else
+	if(active)
 		dump_loot(user)
+		return
+	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
+	if(scramble_response != "Yes")
+		return
+	if(active || !user.canUseTopic(src, BE_CLOSE))
+		return
+	toggle_on(user)
+	update_appearance()
+	send_notification()
 
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()

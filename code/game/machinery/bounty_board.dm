@@ -19,29 +19,11 @@ GLOBAL_LIST_EMPTY(request_list)
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
-/obj/machinery/bounty_board/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/bounty_board/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/bounty_board/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/bounty_board/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bounty_board, 32)
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
 	GLOB.allbountyboards += src
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 /obj/machinery/bounty_board/Destroy()
 	GLOB.allbountyboards -= src
@@ -180,6 +162,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	icon_state = "request_kiosk"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/bounty_board
+	pixel_shift = 32
 
 /**
  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account

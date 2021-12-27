@@ -57,26 +57,6 @@
 	set_species(species)
 	return src
 
-/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
-	if (notransform)
-		return
-	for(var/t in bodyparts)
-		qdel(t)
-
-	return ..()
-
-/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
-	if (notransform)
-		return
-	notransform = TRUE
-	Paralyze(1, ignore_canstun = TRUE)
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-	regenerate_icons()
-	icon = null
-	invisibility = INVISIBILITY_MAXIMUM
-	return ..()
-
 /mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)
 	var/list/turf/landmark_loc = list()
 
@@ -103,33 +83,45 @@
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-	if(!transfer_after)
-		mind.active = FALSE
+	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	. = our_AI
 
-	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	if(mind)
+		if(!transfer_after)
+			mind.active = FALSE
+		mind.transfer_to(our_AI)
+	else if(transfer_after)
+		our_AI.key = key
 
 	if(preference_source)
 		apply_pref_name(/datum/preference/name/ai, preference_source)
 
 	qdel(src)
 
-/mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
+/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	notransform = TRUE
 	Paralyze(1, ignore_canstun = TRUE)
-
 	for(var/obj/item/W in src)
-		if(delete_items)
-			qdel(W)
-		else
-			dropItemToGround(W)
+		dropItemToGround(W)
 	regenerate_icons()
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
+	return ..()
+
+/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
+	if (notransform)
+		return
 	for(var/t in bodyparts)
 		qdel(t)
 
+	return ..()
+
+/mob/proc/Robotize(delete_items = 0, transfer_after = TRUE)
+	if(notransform)
+		return
+	notransform = TRUE
 	var/mob/living/silicon/robot/R = new /mob/living/silicon/robot(loc)
 
 	R.gender = gender
@@ -153,13 +145,31 @@
 			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
 			R.mmi.brainmob.name = real_name
 
-	R.job = "Cyborg"
-	R.notify_ai(NEW_BORG)
+	R.job = JOB_CYBORG
+	R.notify_ai(AI_NOTIFICATION_NEW_BORG)
 
 	. = R
-	if(R.ckey && is_banned_from(R.ckey, "Cyborg"))
+	if(R.ckey && is_banned_from(R.ckey, JOB_CYBORG))
 		INVOKE_ASYNC(R, /mob/living/silicon/robot.proc/replace_banned_cyborg)
 	qdel(src)
+
+/mob/living/Robotize(delete_items = 0, transfer_after = TRUE)
+	if(notransform)
+		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
+
+	for(var/obj/item/W in src)
+		if(delete_items)
+			qdel(W)
+		else
+			dropItemToGround(W)
+	regenerate_icons()
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+
+	notransform = FALSE
+	return ..()
 
 /mob/living/silicon/robot/proc/replace_banned_cyborg()
 	to_chat(src, "<b>You are job banned from cyborg! Appeal your job ban if you want to avoid this in the future!</b>")
@@ -222,7 +232,7 @@
 	if(reproduce)
 		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
 		var/list/babies = list()
-		for(var/i=1,i<=number,i++)
+		for(var/i in 1 to number)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
 			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)

@@ -177,7 +177,7 @@
 			var/new_powerlevel = round(powerlevel / 4)
 			var/turf/drop_loc = drop_location()
 
-			for(var/i=1,i<=4,i++)
+			for(var/i in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"

@@ -197,7 +197,7 @@
 			the_targets.Add(T3,T4)
 
 		var/list/water_particles=list()
-		for(var/a=0, a<5, a++)
+		for(var/a in 1 to 5)
 			var/obj/effect/particle_effect/water/W = new /obj/effect/particle_effect/water(get_turf(src))
 			var/my_target = pick(the_targets)
 			water_particles[W] = my_target

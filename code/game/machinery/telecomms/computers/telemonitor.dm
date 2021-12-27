@@ -107,16 +107,12 @@
 
 	if(href_list["network"])
 
-		var/newnet = stripped_input(usr, "Which network do you want to view?", "Comm Monitor", network)
+		var/newnet = tgui_input_text(usr, "Which network do you want to view?", "Comm Monitor", network, 15)
 		if(newnet && ((usr in range(1, src)) || issilicon(usr)))
-			if(length(newnet) > 15)
-				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
-
-			else
-				network = newnet
-				screen = 0
-				machinelist = list()
-				temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
+			network = newnet
+			screen = 0
+			machinelist = list()
+			temp = "<font color = #336699>- NEW NETWORK TAG SET IN ADDRESS \[[network]\] -</font color>"
 
 	updateUsrDialog()
 	return

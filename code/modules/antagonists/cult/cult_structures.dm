@@ -69,13 +69,6 @@
 	icon_state = "[initial(icon_state)][anchored ? null : "_off"]"
 	return ..()
 
-/obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user))
-		set_anchored(!anchored)
-		to_chat(user, span_notice("You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor."))
-	else
-		return ..()
-
 /obj/structure/destructible/cult/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
@@ -156,7 +149,7 @@
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Nar'Sien Hardened Armor")
-			pickedtype += /obj/item/clothing/suit/space/hardsuit/cult/real
+			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/hardened
 		if("Flagellant's Robe")
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Eldritch Longsword")
@@ -179,13 +172,25 @@
 	light_color = COLOR_SOFT_RED
 	break_sound = 'sound/effects/glassbr2.ogg'
 	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
-	var/heal_delay = 25
 	var/last_heal = 0
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
 
 /obj/structure/destructible/cult/pylon/Initialize(mapload)
 	. = ..()
+
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 5, \
+		brute_heal = 0.4, \
+		burn_heal = 0.4, \
+		blood_heal = 0.4, \
+		simple_heal = 1.2, \
+		requires_visibility = FALSE, \
+		limit_to_trait = TRAIT_HEALS_FROM_CULT_PYLONS, \
+		healing_color = COLOR_CULT_RED, \
+	)
+
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/structure/destructible/cult/pylon/Destroy()
@@ -195,23 +200,6 @@
 /obj/structure/destructible/cult/pylon/process()
 	if(!anchored)
 		return
-	if(last_heal <= world.time)
-		last_heal = world.time + heal_delay
-		for(var/mob/living/L in range(5, src))
-			if(IS_CULTIST(L) || isshade(L) || isconstruct(L))
-				if(L.health != L.maxHealth)
-					new /obj/effect/temp_visual/heal(get_turf(src), "#960000")
-					if(ishuman(L))
-						L.adjustBruteLoss(-1, 0)
-						L.adjustFireLoss(-1, 0)
-						L.updatehealth()
-					if(isshade(L) || isconstruct(L))
-						var/mob/living/simple_animal/M = L
-						if(M.health < M.maxHealth)
-							M.adjustHealth(-3)
-				if(ishuman(L) && L.blood_volume < BLOOD_VOLUME_NORMAL)
-					L.blood_volume += 1.0
-			CHECK_TICK
 	if(last_corrupt <= world.time)
 		var/list/validturfs = list()
 		var/list/cultturfs = list()

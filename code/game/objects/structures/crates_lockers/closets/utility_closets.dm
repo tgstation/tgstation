@@ -49,7 +49,7 @@
 		if ("nothing")
 			// doot
 
-		// teehee
+		// teehee //Fuck you
 		if ("delete")
 			qdel(src)
 

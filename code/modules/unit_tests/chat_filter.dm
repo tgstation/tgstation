@@ -50,6 +50,14 @@
 		BLOCKED_SHARED,
 	)
 
+	test_filter(
+		" This message has a space at the beginning, a  double space, and a space at the end, but it's fine! ",
+		null,
+		null,
+		null,
+		null,
+	)
+
 /datum/unit_test/chat_filter_sanity/proc/test_filter(
 	message,
 	blocked_word,

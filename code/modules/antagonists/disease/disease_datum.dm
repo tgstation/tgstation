@@ -19,7 +19,7 @@
 	. = ..()
 
 /datum/antagonist/disease/greet()
-	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
+	. = ..()
 	to_chat(owner.current, span_notice("Infect members of the crew to gain adaptation points, and spread your infection further."))
 	owner.announce_objectives()
 
@@ -74,7 +74,7 @@
 	return result.Join("<br>")
 
 /datum/antagonist/disease/get_preview_icon()
-	var/icon/icon = icon('icons/mob/hud.dmi', "virus_infected")
+	var/icon/icon = icon('icons/mob/huds/antag_hud.dmi', "virus_infected")
 	icon.Blend(COLOR_GREEN_GRAY, ICON_MULTIPLY)
 	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 	return icon

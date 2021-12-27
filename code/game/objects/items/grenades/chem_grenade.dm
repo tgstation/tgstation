@@ -32,9 +32,9 @@
 	if(user.can_see_reagents())
 		if(beakers.len)
 			. += span_notice("You scan the grenade and detect the following reagents:")
-			for(var/obj/item/reagent_containers/glass/G in beakers)
-				for(var/datum/reagent/R in G.reagents.reagent_list)
-					. += span_notice("[R.volume] units of [R.name] in the [G.name].")
+			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+				for(var/datum/reagent/reagent in glass_beaker.reagents.reagent_list)
+					. += span_notice("[reagent.volume] units of [reagent.name] in the [glass_beaker.name].")
 			if(beakers.len == 1)
 				. += span_notice("You detect no second beaker in the grenade.")
 		else
@@ -43,8 +43,8 @@
 		if(beakers.len == 2 && beakers[1].name == beakers[2].name)
 			. += span_notice("You see two [beakers[1].name]s inside the grenade.")
 		else
-			for(var/obj/item/reagent_containers/glass/G in beakers)
-				. += span_notice("You see a [G.name] inside the grenade.")
+			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+				. += span_notice("You see a [glass_beaker.name] inside the grenade.")
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == GRENADE_READY && !active)
@@ -52,15 +52,15 @@
 	if(stage == GRENADE_WIRED)
 		wires.interact(user)
 
-/obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/assembly) && stage == GRENADE_WIRED)
+/obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/assembly) && stage == GRENADE_WIRED)
 		wires.interact(user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == GRENADE_WIRED)
 			if(beakers.len)
 				stage_change(GRENADE_READY)
 				to_chat(user, span_notice("You lock the [initial(name)] assembly."))
-				I.play_tool_sound(src, 25)
+				item.play_tool_sound(src, 25)
 			else
 				to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
 		else if(stage == GRENADE_READY)
@@ -72,28 +72,28 @@
 		else
 			to_chat(user, span_warning("You need to add a wire!"))
 		return
-	else if(stage == GRENADE_WIRED && is_type_in_list(I, allowed_containers))
+	else if(stage == GRENADE_WIRED && is_type_in_list(item, allowed_containers))
 		. = TRUE //no afterattack
-		if(is_type_in_list(I, banned_containers))
-			to_chat(user, span_warning("[src] is too small to fit [I]!")) // this one hits home huh anon?
+		if(is_type_in_list(item, banned_containers))
+			to_chat(user, span_warning("[src] is too small to fit [item]!")) // this one hits home huh anon?
 			return
 		if(beakers.len == 2)
 			to_chat(user, span_warning("[src] can not hold more containers!"))
 			return
 		else
-			if(I.reagents.total_volume)
-				if(!user.transferItemToLoc(I, src))
+			if(item.reagents.total_volume)
+				if(!user.transferItemToLoc(item, src))
 					return
-				to_chat(user, span_notice("You add [I] to the [initial(name)] assembly."))
-				beakers += I
-				var/reagent_list = pretty_string_from_reagent_list(I.reagents)
-				user.log_message("inserted [I] ([reagent_list]) into [src]",LOG_GAME)
+				to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
+				beakers += item
+				var/reagent_list = pretty_string_from_reagent_list(item.reagents)
+				user.log_message("inserted [item] ([reagent_list]) into [src]", LOG_GAME)
 			else
-				to_chat(user, span_warning("[I] is empty!"))
+				to_chat(user, span_warning("[item] is empty!"))
 
-	else if(stage == GRENADE_EMPTY && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
-		if (C.use(1))
+	else if(stage == GRENADE_EMPTY && istype(item, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = item
+		if (coil.use(1))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(GRENADE_WIRED)
 			to_chat(user, span_notice("You rig the [initial(name)] assembly."))
@@ -101,23 +101,23 @@
 			to_chat(user, span_warning("You need one length of coil to wire the assembly!"))
 			return
 
-	else if(stage == GRENADE_READY && I.tool_behaviour == TOOL_WIRECUTTER && !active)
+	else if(stage == GRENADE_READY && item.tool_behaviour == TOOL_WIRECUTTER && !active)
 		stage_change(GRENADE_WIRED)
 		to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
 
-	else if(stage == GRENADE_WIRED && I.tool_behaviour == TOOL_WRENCH)
+	else if(stage == GRENADE_WIRED && item.tool_behaviour == TOOL_WRENCH)
 		if(beakers.len)
-			for(var/obj/O in beakers)
-				O.forceMove(drop_location())
-				if(!O.reagents)
+			for(var/obj/beaker in beakers)
+				beaker.forceMove(drop_location())
+				if(!beaker.reagents)
 					continue
-				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
-				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
+				var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
+				user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
 			return
 		wires.detach_assembly(wires.get_wire(1))
-		new /obj/item/stack/cable_coil(get_turf(src),1)
+		new /obj/item/stack/cable_coil(get_turf(src), 1)
 		stage_change(GRENADE_EMPTY)
 		to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
 	else
@@ -140,9 +140,8 @@
 		icon_state = "[initial(icon_state)]_locked"
 
 /obj/item/grenade/chem_grenade/on_found(mob/finder)
-	var/obj/item/assembly/A = wires.get_attached(wires.get_wire(1))
-	if(A)
-		A.on_found(finder)
+	var/obj/item/assembly/assembly = wires.get_attached(wires.get_wire(1))
+	assembly?.on_found(finder)
 
 /obj/item/grenade/chem_grenade/log_grenade(mob/user)
 	var/reagent_string = ""
@@ -179,16 +178,16 @@
 
 	. = ..()
 	var/list/datum/reagents/reactants = list()
-	for(var/obj/item/reagent_containers/glass/G in beakers)
-		reactants += G.reagents
+	for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+		reactants += glass_beaker.reagents
 
 	var/turf/detonation_turf = get_turf(src)
 
 	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
 		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		if(beakers.len)
-			for(var/obj/O in beakers)
-				O.forceMove(drop_location())
+			for(var/obj/beaker as anything in beakers)
+				beaker.forceMove(drop_location())
 			beakers = list()
 		stage_change(GRENADE_EMPTY)
 		active = FALSE
@@ -216,35 +215,39 @@
 	if(stage != GRENADE_READY)
 		return
 
-	for(var/obj/item/slime_extract/S in beakers)
-		if(S.Uses)
-			for(var/obj/item/reagent_containers/glass/G in beakers)
-				G.reagents.trans_to(S, G.reagents.total_volume)
+	for(var/obj/item/slime_extract/slime_extract in beakers)
+		if (!slime_extract.Uses)
+			continue
 
-			//If there is still a core (sometimes it's used up)
-			//and there are reagents left, behave normally,
-			//otherwise drop it on the ground for timed reactions like gold.
+		for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+			glass_beaker.reagents.trans_to(slime_extract, glass_beaker.reagents.total_volume)
 
-			if(S)
-				if(S.reagents && S.reagents.total_volume)
-					for(var/obj/item/reagent_containers/glass/G in beakers)
-						S.reagents.trans_to(G, S.reagents.total_volume)
-				else
-					S.forceMove(get_turf(src))
-					no_splash = TRUE
+		//If there is still a core (sometimes it's used up)
+		//and there are reagents left, behave normally,
+		//otherwise drop it on the ground for timed reactions like gold.
+
+		if(!slime_extract)
+			continue
+
+		if(slime_extract.reagents && slime_extract.reagents.total_volume)
+			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
+				slime_extract.reagents.trans_to(glass_beaker, slime_extract.reagents.total_volume)
+		else
+			slime_extract.forceMove(get_turf(src))
+			no_splash = TRUE
 	..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
 	//make a special case you might as well do it explicitly. -Sayu
-/obj/item/grenade/chem_grenade/large/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/slime_extract) && stage == GRENADE_WIRED)
-		if(!user.transferItemToLoc(I, src))
-			return
-		to_chat(user, span_notice("You add [I] to the [initial(name)] assembly."))
-		beakers += I
-	else
+/obj/item/grenade/chem_grenade/large/attackby(obj/item/item, mob/user, params)
+	if(!istype(item, /obj/item/slime_extract) || stage != GRENADE_WIRED)
 		return ..()
+
+	if(!user.transferItemToLoc(item, src))
+		return
+	to_chat(user, span_notice("You add [item] to the [initial(name)] assembly."))
+	beakers += item
 
 /obj/item/grenade/chem_grenade/cryo // Intended for rare cryogenic mixes. Cools the area moderately upon detonation.
 	name = "cryo grenade"
@@ -268,15 +271,17 @@
 	icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
-/obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MULTITOOL && !active)
-		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
-		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
-			newspread = round(newspread)
-			unit_spread = clamp(newspread, 5, 100)
-			to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
-		if (newspread != unit_spread)
-			to_chat(user, span_notice("The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units."))
+/obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
+	if (active)
+		return
+	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
+	if(isnull(newspread))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	newspread = round(newspread)
+	unit_spread = clamp(newspread, 5, 100)
+	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
@@ -284,21 +289,21 @@
 		return
 
 	var/total_volume = 0
-	for(var/obj/item/reagent_containers/RC in beakers)
-		total_volume += RC.reagents.total_volume
+	for(var/obj/item/reagent_containers/reagent_container in beakers)
+		total_volume += reagent_container.reagents.total_volume
 	if(!total_volume)
 		qdel(src)
 		return
 	var/fraction = unit_spread/total_volume
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
-	for(var/obj/item/reagent_containers/RC in beakers)
-		RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, threatscale, 1, 1)
+	for(var/obj/item/reagent_containers/reagent_container in beakers)
+		reagent_container.reagents.trans_to(reactants, reagent_container.reagents.total_volume*fraction, threatscale, 1, 1)
 	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
 
-	var/turf/DT = get_turf(src)
+	var/turf/detonated_turf = get_turf(src)
 	addtimer(CALLBACK(src, .proc/detonate), det_time)
-	log_game("A grenade detonated at [AREACOORD(DT)]")
+	log_game("A grenade detonated at [AREACOORD(detonated_turf)]")
 
 
 
@@ -314,15 +319,15 @@
 
 /obj/item/grenade/chem_grenade/metalfoam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/aluminium, 30)
-	B2.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
-	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
+	beaker_one.reagents.add_reagent(/datum/reagent/aluminium, 30)
+	beaker_two.reagents.add_reagent(/datum/reagent/foaming_agent, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 10)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/smart_metal_foam
@@ -332,15 +337,15 @@
 
 /obj/item/grenade/chem_grenade/smart_metal_foam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/aluminium, 75)
-	B2.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
-	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/aluminium, 75)
+	beaker_two.reagents.add_reagent(/datum/reagent/smart_foaming_agent, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 25)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/incendiary
@@ -350,15 +355,15 @@
 
 /obj/item/grenade/chem_grenade/incendiary/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent(/datum/reagent/stable_plasma, 25)
-	B2.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/stable_plasma, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid, 25)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/antiweed
@@ -368,16 +373,16 @@
 
 /obj/item/grenade/chem_grenade/antiweed/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
-	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
-	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/cleaner
@@ -387,15 +392,15 @@
 
 /obj/item/grenade/chem_grenade/cleaner/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
-	B2.reagents.add_reagent(/datum/reagent/water, 40)
-	B2.reagents.add_reagent(/datum/reagent/space_cleaner, 10)
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/water, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/space_cleaner, 10)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/ez_clean
@@ -405,15 +410,15 @@
 
 /obj/item/grenade/chem_grenade/ez_clean/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
-	B2.reagents.add_reagent(/datum/reagent/water, 40)
-	B2.reagents.add_reagent(/datum/reagent/space_cleaner/ez_clean, 60) //ensures a  t h i c c  distribution
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/water, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/space_cleaner/ez_clean, 60) //ensures a  t h i c c  distribution
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 
@@ -424,16 +429,16 @@
 
 /obj/item/grenade/chem_grenade/teargas/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/large/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/large/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/large/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 60)
-	B1.reagents.add_reagent(/datum/reagent/potassium, 40)
-	B2.reagents.add_reagent(/datum/reagent/phosphorus, 40)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
+	beaker_one.reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 60)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 40)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 40)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/facid
@@ -443,17 +448,17 @@
 
 /obj/item/grenade/chem_grenade/facid/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
-	B1.reagents.add_reagent(/datum/reagent/potassium, 10)
-	B2.reagents.add_reagent(/datum/reagent/phosphorus, 10)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 10)
-	B2.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 290)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 10)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/acid/fluacid, 280)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 
 /obj/item/grenade/chem_grenade/colorful
@@ -463,16 +468,16 @@
 
 /obj/item/grenade/chem_grenade/colorful/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/colorful_reagent, 25)
-	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
-	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/colorful_reagent, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/glitter
 	name = "generic glitter grenade"
@@ -482,16 +487,16 @@
 
 /obj/item/grenade/chem_grenade/glitter/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/beaker_two = new(src)
 
-	B1.reagents.add_reagent(glitter_type, 25)
-	B1.reagents.add_reagent(/datum/reagent/potassium, 25)
-	B2.reagents.add_reagent(/datum/reagent/phosphorus, 25)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
+	beaker_one.reagents.add_reagent(glitter_type, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 25)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/glitter/pink
 	name = "pink glitter bomb"
@@ -515,16 +520,16 @@
 
 /obj/item/grenade/chem_grenade/clf3/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/fluorosurfactant, 250)
-	B1.reagents.add_reagent(/datum/reagent/clf3, 50)
-	B2.reagents.add_reagent(/datum/reagent/water, 250)
-	B2.reagents.add_reagent(/datum/reagent/clf3, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/fluorosurfactant, 250)
+	beaker_one.reagents.add_reagent(/datum/reagent/clf3, 50)
+	beaker_two.reagents.add_reagent(/datum/reagent/water, 250)
+	beaker_two.reagents.add_reagent(/datum/reagent/clf3, 50)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/bioterrorfoam
 	name = "Bio terror foam grenade"
@@ -533,18 +538,18 @@
 
 /obj/item/grenade/chem_grenade/bioterrorfoam/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/cryptobiolin, 75)
-	B1.reagents.add_reagent(/datum/reagent/water, 50)
-	B1.reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 50)
-	B1.reagents.add_reagent(/datum/reagent/toxin/spore, 75)
-	B1.reagents.add_reagent(/datum/reagent/toxin/itching_powder, 50)
-	B2.reagents.add_reagent(/datum/reagent/fluorosurfactant, 150)
-	B2.reagents.add_reagent(/datum/reagent/toxin/mutagen, 150)
-	beakers += B1
-	beakers += B2
+	beaker_one.reagents.add_reagent(/datum/reagent/cryptobiolin, 75)
+	beaker_one.reagents.add_reagent(/datum/reagent/water, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/mutetoxin, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/spore, 75)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/itching_powder, 50)
+	beaker_two.reagents.add_reagent(/datum/reagent/fluorosurfactant, 150)
+	beaker_two.reagents.add_reagent(/datum/reagent/toxin/mutagen, 150)
+	beakers += beaker_one
+	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/tuberculosis
 	name = "Fungal tuberculosis grenade"
@@ -553,17 +558,17 @@
 
 /obj/item/grenade/chem_grenade/tuberculosis/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/bluespace/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/bluespace/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/potassium, 50)
-	B1.reagents.add_reagent(/datum/reagent/phosphorus, 50)
-	B1.reagents.add_reagent(/datum/reagent/fungalspores, 200)
-	B2.reagents.add_reagent(/datum/reagent/blood, 250)
-	B2.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/phosphorus, 50)
+	beaker_one.reagents.add_reagent(/datum/reagent/fungalspores, 200)
+	beaker_two.reagents.add_reagent(/datum/reagent/blood, 250)
+	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 50)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two
 
 /obj/item/grenade/chem_grenade/holy
 	name = "holy hand grenade"
@@ -573,11 +578,11 @@
 
 /obj/item/grenade/chem_grenade/holy/Initialize(mapload)
 	. = ..()
-	var/obj/item/reagent_containers/glass/beaker/meta/B1 = new(src)
-	var/obj/item/reagent_containers/glass/beaker/meta/B2 = new(src)
+	var/obj/item/reagent_containers/glass/beaker/meta/beaker_one = new(src)
+	var/obj/item/reagent_containers/glass/beaker/meta/beaker_two = new(src)
 
-	B1.reagents.add_reagent(/datum/reagent/potassium, 150)
-	B2.reagents.add_reagent(/datum/reagent/water/holywater, 150)
+	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 150)
+	beaker_two.reagents.add_reagent(/datum/reagent/water/holywater, 150)
 
-	beakers += B1
-	beakers += B2
+	beakers += beaker_one
+	beakers += beaker_two

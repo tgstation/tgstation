@@ -190,7 +190,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/research/interior/engineering)
 "aK" = (
-/obj/effect/mob_spawn/human/syndicatesoldier{
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
 	brute_damage = 200
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -423,7 +423,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bp" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	brute_damage = 200
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -599,7 +599,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bI" = (
-/obj/effect/mob_spawn/human/syndicatesoldier{
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
 	brute_damage = 200
 	},
 /obj/item/ammo_casing/c45,
@@ -665,7 +665,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bN" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	brute_damage = 200
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -743,7 +743,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "bX" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	brute_damage = 200
 	},
 /obj/item/ammo_casing/c45,
@@ -794,7 +794,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "cg" = (
-/obj/effect/mob_spawn/human/syndicatesoldier{
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
 	brute_damage = 200
 	},
 /turf/open/floor/iron{
@@ -851,7 +851,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/engineering)
 "cr" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier{
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -942,7 +942,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "cG" = (
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -1050,7 +1050,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "cP" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier{
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
 	brute_damage = 200
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -1417,7 +1417,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "dz" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier{
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier{
 	brute_damage = 200
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -2399,7 +2399,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "fH" = (
-/obj/effect/mob_spawn/human/syndicatesoldier{
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -2767,7 +2767,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/cryo)
 "gw" = (
-/obj/effect/mob_spawn/human/geneticist{
+/obj/effect/mob_spawn/corpse/human/geneticist{
 	brute_damage = 145;
 	oxy_damage = 55
 	},
@@ -3433,7 +3433,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "hN" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -3652,14 +3652,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "A beefy variant of the standard securitron model.";
-	emagged = 1;
-	faction = list("nanotrasenprivate");
-	health = 50;
-	maxHealth = 50;
-	name = "Officer Genesky"
-	},
+/mob/living/simple_animal/bot/secbot/genesky,
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "ik" = (
@@ -3698,7 +3691,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "in" = (
-/obj/effect/mob_spawn/human/geneticist{
+/obj/effect/mob_spawn/corpse/human/geneticist{
 	brute_damage = 145;
 	oxy_damage = 55
 	},
@@ -3842,7 +3835,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior)
 "iF" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/security)
@@ -3884,7 +3877,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/genetics)
 "iI" = (
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -4387,7 +4380,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "jZ" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -4462,7 +4455,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "kj" = (
-/obj/effect/mob_spawn/human/geneticist{
+/obj/effect/mob_spawn/corpse/human/geneticist{
 	brute_damage = 145;
 	oxy_damage = 55
 	},
@@ -4979,7 +4972,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lw" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -5058,7 +5051,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "lF" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	brute_damage = 200
 	},
 /obj/effect/decal/cleanable/blood,
@@ -5173,7 +5166,7 @@
 /turf/open/floor/wood,
 /area/awaymission/research/interior/dorm)
 "lW" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/medbay)
@@ -5191,7 +5184,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "lZ" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/escapepods)
@@ -5300,7 +5293,7 @@
 "mr" = (
 /obj/item/stack/rods,
 /obj/item/shard,
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	brute_damage = 200
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -5309,7 +5302,7 @@
 /obj/structure/chair{
 	dir = 8
 	},
-/obj/effect/mob_spawn/human/geneticist{
+/obj/effect/mob_spawn/corpse/human/geneticist{
 	brute_damage = 145;
 	oxy_damage = 55
 	},
@@ -39751,7 +39744,7 @@ jC
 jV
 iX
 jn
-qo
+wa
 jF
 jF
 kc
@@ -41293,7 +41286,7 @@ jk
 jY
 iX
 jn
-kU
+zs
 kR
 jF
 kc
@@ -42066,7 +42059,7 @@ kt
 kE
 jF
 jF
-qo
+wa
 jF
 jF
 jF
@@ -47702,7 +47695,7 @@ fW
 fW
 ho
 hF
-eo
+ux
 dT
 dF
 do
@@ -48730,7 +48723,7 @@ fX
 fW
 ho
 hF
-eo
+ux
 dT
 dF
 do

@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio(src)
-	radio.listening = 0
+	radio.set_listening(FALSE)
 	setup_events()
 
 /obj/machinery/computer/arcade/orion_trail/proc/setup_events()
@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 /obj/machinery/computer/arcade/orion_trail/proc/newgame()
 	// Set names of settlers in crew
-	var/mob/living/carbon/player = usr
+	var/mob/living/player = usr
 	var/player_crew_name = player.first_name()
 	settlers = list()
 	for(var/i in 1 to ORION_STARTING_CREW_COUNT - 1) //one reserved to be YOU
@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	if(.)
 		return
 
-	var/mob/living/carbon/gamer = usr
+	var/mob/living/gamer = usr
 	if(!istype(gamer))
 		return
 
@@ -330,7 +330,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
  */
 /obj/machinery/computer/arcade/orion_trail/proc/encounter_event(path, gamer, gamer_skill, gamer_skill_level, gamer_skill_rands)
 	if(!path)
-		event = pick_weight_allow_zero(events)
+		event = pick_weight(events)
 	else
 		for(var/datum/orion_event/instance as anything in events)
 			if(instance.type == path)
@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	event = null
 	reason = given_reason || death_reason(user)
 
-/obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/carbon/gamer)
+/obj/machinery/computer/arcade/orion_trail/proc/death_reason(mob/living/gamer)
 	var/reason
 	if(!settlers.len)
 		reason = "Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
@@ -421,7 +421,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
  * Arguments:
  * * gamer: carbon that may need emag effects applied
  */
-/obj/machinery/computer/arcade/orion_trail/proc/execute_crewmember(mob/living/carbon/gamer, target)
+/obj/machinery/computer/arcade/orion_trail/proc/execute_crewmember(mob/living/gamer, target)
 	var/sheriff = remove_crewmember(target) //I shot the sheriff
 	if(target)
 		killed_crew += 1 //if there was no suspected lings, this is just plain murder

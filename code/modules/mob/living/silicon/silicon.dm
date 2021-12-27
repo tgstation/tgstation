@@ -1,6 +1,6 @@
 /mob/living/silicon
 	gender = NEUTER
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	verb_say = "states"
 	verb_ask = "queries"
 	verb_exclaim = "declares"
@@ -253,7 +253,7 @@
 			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
 		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index = 1, index <= laws.hacked.len, index++)
+	for (var/index in 1 to laws.hacked.len)
 		var/law = laws.hacked[index]
 		if (length(law) > 0)
 			if (!hackedcheck[index])
@@ -261,7 +261,7 @@
 			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
 			hackedcheck.len += 1
 
-	for (var/index = 1, index <= laws.ion.len, index++)
+	for (var/index in 1 to laws.ion.len)
 		var/law = laws.ion[index]
 
 		if (length(law) > 0)
@@ -271,7 +271,7 @@
 			ioncheck.len += 1
 
 	var/number = 1
-	for (var/index = 1, index <= laws.inherent.len, index++)
+	for (var/index in 1 to laws.inherent.len)
 		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
@@ -282,7 +282,7 @@
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index = 1, index <= laws.supplied.len, index++)
+	for (var/index in 1 to laws.supplied.len)
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
 			lawcheck.len += 1
@@ -312,13 +312,13 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
+	var/Autochan = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
 
 	if(!Autochan)
 		return
 	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
 		radiomod = ";"
-		Autochan += " ([radio.frequency])"
+		Autochan += " ([radio.get_frequency()])"
 	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else //For department channels, if any, given by the internal radio.
@@ -331,12 +331,6 @@
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE
-
-// The src mob is trying to place an item on someone
-// But the src mob is a silicon!!  Disable.
-/mob/living/silicon/stripPanelEquip(obj/item/what, mob/who, slot)
-	return FALSE
-
 
 /mob/living/silicon/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //Secbots won't hunt silicon units
 	return -10

@@ -71,9 +71,8 @@
 /turf/open/floor/plating,
 /area/shuttle/auxiliary_base)
 "X" = (
-/obj/machinery/camera{
+/obj/machinery/camera/directional/south{
 	c_tag = "Auxiliary Base";
-	dir = 1;
 	network = list("auxbase")
 	},
 /obj/structure/mining_shuttle_beacon,

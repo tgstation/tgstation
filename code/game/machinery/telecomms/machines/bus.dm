@@ -12,6 +12,7 @@
 	name = "bus mainframe"
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
+	telecomms_type = /obj/machinery/telecomms/bus
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50

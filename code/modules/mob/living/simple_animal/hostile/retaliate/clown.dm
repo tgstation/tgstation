@@ -27,7 +27,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 1
-	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
+	loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
@@ -50,11 +50,18 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
-	if(banana_time && banana_time < world.time)
-		var/turf/T = get_turf(src)
-		var/list/adjacent = T.get_atmos_adjacent_turfs(1)
-		new banana_type(pick(adjacent))
-		banana_time = world.time + rand(30,60)
+	if(!banana_time || banana_time >= world.time)
+		return
+	banana_time = world.time + rand(30,60)
+	if(!isturf(loc))
+		return
+	var/list/reachable_turfs = list()
+	for(var/turf/adjacent_turf in RANGE_TURFS(1, loc))
+		if(adjacent_turf == loc || !CanReach(adjacent_turf))
+			continue
+		reachable_turfs += adjacent_turf
+	if(length(reachable_turfs))
+		new banana_type(pick(reachable_turfs))
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -361,7 +368,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
+	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom

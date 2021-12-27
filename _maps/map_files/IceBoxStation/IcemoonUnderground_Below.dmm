@@ -143,7 +143,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "fF" = (
@@ -212,7 +212,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hx" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood/large,
@@ -932,7 +932,7 @@
 /area/icemoon/underground/explored)
 "If" = (
 /obj/machinery/light/small/directional/north,
-/obj/machinery/camera{
+/obj/machinery/camera/directional/north{
 	c_tag = "Mining Mech Bay"
 	},
 /turf/open/floor/iron/smooth,
@@ -1011,7 +1011,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/camera{
 	c_tag = "Mining Break Room";
-	dir = 6
+	dir = 9
 	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 9
@@ -1143,7 +1143,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera{
 	c_tag = "Mining B-2 Hallway";
-	dir = 6
+	dir = 9
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -21396,7 +21396,7 @@ Gv
 NB
 LN
 hx
-Kn
+iu
 kc
 Fy
 NB

@@ -143,21 +143,21 @@
 		gets_drilled(H)
 	return TRUE
 
-/turf/closed/mineral/Bumped(atom/movable/AM)
-	..()
-	if(ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		var/obj/item/I = H.is_holding_tool_quality(TOOL_MINING)
-		if(I)
-			attackby(I, H)
+/turf/closed/mineral/Bumped(atom/movable/movable)
+	. = ..()
+	if(!isliving(movable))
 		return
-	else if(iscyborg(AM))
-		var/mob/living/silicon/robot/R = AM
-		if(R.module_active && R.module_active.tool_behaviour == TOOL_MINING)
-			attackby(R.module_active, R)
-			return
-	else
+	var/mob/living/miner = movable
+	if(!ISADVANCEDTOOLUSER(miner)) // Unadvanced tool users can't mine anyway. This just prevents message spam from attackby()
 		return
+	if(iscyborg(miner))
+		var/mob/living/silicon/robot/robot = miner
+		if(robot.module_active?.tool_behaviour == TOOL_MINING)
+			attackby(robot.module_active, robot)
+		return
+	var/obj/item/mining_item = miner.is_holding_tool_quality(TOOL_MINING)
+	if(mining_item)
+		attackby(mining_item, miner)
 
 /turf/closed/mineral/acid_melt()
 	ScrapeAway()
@@ -229,7 +229,7 @@
 	defer_change = TRUE
 	mineralSpawnChanceList = list(
 		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
-		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal)
+		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"

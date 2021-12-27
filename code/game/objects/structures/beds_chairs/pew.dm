@@ -70,3 +70,16 @@
 /obj/structure/chair/pew/right/post_unbuckle_mob()
 	. = ..()
 	update_rightpewarmrest()
+
+/obj/structure/chair/pew/can_user_rotate(mob/user)
+	. = ..()
+	if(!.)
+		return
+
+	var/mob/living/living_user = user
+	if(!istype(living_user))
+		return
+	var/obj/item/tool = living_user.get_active_held_item()
+	if(!tool || tool.tool_behaviour != TOOL_WRENCH)
+		balloon_alert(user, "you need a wrench!")
+		return FALSE

@@ -1,32 +1,40 @@
 GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
 GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
+#define VALID_RANDOM_RECIPE_REAGENT(chemical_flags) (chemical_flags & REAGENT_CAN_BE_SYNTHESIZED && !(chemical_flags & REAGENT_NO_RANDOM_RECIPE))
+
 /proc/build_reagents_to_food()
 	. = list()
 	for (var/type in subtypesof(/obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/item = new type()
-		for(var/r in item.list_reagents)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.list_reagents)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 	//dang plant snowflake
 	for (var/type in subtypesof(/obj/item/seeds))
 		var/obj/item/seeds/item = new type()
-		for(var/r in item.reagents_add)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.reagents_add)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 
 ///Just grab every craftable medicine you can think off
 /proc/build_medicine_reagents()
 	. = list()
 
-	for(var/A in subtypesof(/datum/reagent/medicine))
-		var/datum/reagent/R = A
-		if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-			. += R
+	for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/medicine))
+		var/chem_flags = initial(reagent.chemical_flags)
+		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+			. += reagent
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -323,3 +331,5 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "."
 	info = dat.Join("")
 	update_appearance()
+
+#undef VALID_RANDOM_RECIPE_REAGENT

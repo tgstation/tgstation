@@ -104,6 +104,16 @@ export class TextArea extends Component {
     if (input) {
       input.value = toInputValue(nextValue);
     }
+
+    if (this.props.autoFocus || this.props.autoSelect) {
+      setTimeout(() => {
+        input.focus();
+
+        if (this.props.autoSelect) {
+          input.select();
+        }
+      }, 1);
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {

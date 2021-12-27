@@ -74,7 +74,12 @@
 	. = ..()
 	update_appearance()
 	PopulateContents()
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/locker_carbon)
+	if(QDELETED(src)) //It turns out populate contents has a 1 in 100 chance of qdeling src on /obj/structure/closet/emcloset
+		return //Why
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/locker_carbon,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -250,6 +255,8 @@
 		return
 	if(opened)
 		return
+	if(SEND_SIGNAL(src, COMSIG_CLOSET_PRE_OPEN, user, force) & BLOCK_OPEN)
+		return
 	welded = FALSE
 	locked = FALSE
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
@@ -259,7 +266,9 @@
 	dump_contents()
 	animate_door(FALSE)
 	update_appearance()
+
 	after_open(user, force)
+	SEND_SIGNAL(src, COMSIG_CLOSET_POST_OPEN, force)
 	return TRUE
 
 ///Proc to override for effects after opening a door
@@ -567,6 +576,8 @@
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
+	if(isstructure(loc))
+		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -595,6 +606,10 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+	container.container_resist_act()
+
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER
@@ -679,19 +694,24 @@
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(obj/structure/closet/closet, mob/living/carbon/shover, mob/living/carbon/target)
+/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
-	if(opened)
+	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
+		return
+	if(!opened && !shove_blocked)
+		return
+	var/was_opened = opened
+	if(!toggle())
+		return
+	if(was_opened)
 		target.forceMove(src)
-	if(!(locked || welded))
-		toggle()
+	else
+		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
 	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
 	log_combat(src, target, "shoved", "into [src] (locker/crate)")
-	if(locked || welded)
-		return
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 #undef LOCKER_FULL

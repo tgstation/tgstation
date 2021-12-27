@@ -157,8 +157,8 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
-	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
+	.["visible"] = span_danger("[user] knocks [target] down with [src]!")
+	.["local"] = span_userdanger("[user] knocks you down with [src]!")
 
 	return .
 
@@ -175,8 +175,8 @@
 /obj/item/melee/baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
-	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
+	.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
+	.["local"] = span_userdanger("[target] tries to... knock you down with [src]?") //look at the top of his head!
 
 	return .
 
@@ -277,13 +277,14 @@
 	else
 		attack_self(user)
 
-	sleep(3)
-	if (!QDELETED(human_user))
-		if(!QDELETED(our_brain))
-			human_user.internal_organs -= our_brain
-			qdel(our_brain)
-		new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
-		return (BRUTELOSS)
+	sleep(0.3 SECONDS)
+	if (QDELETED(human_user))
+		return
+	if(!QDELETED(our_brain))
+		human_user.internal_organs -= our_brain
+		qdel(our_brain)
+	new /obj/effect/gibspawner/generic(human_user.drop_location(), human_user)
+	return (BRUTELOSS)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -362,7 +363,7 @@
 /obj/item/melee/baton/security/Initialize(mapload)
 	. = ..()
 	if(preload_cell_type)
-		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
+		if(!ispath(preload_cell_type, /obj/item/stock_parts/cell))
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
@@ -376,7 +377,7 @@
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (FIRELOSS)
-		attack(user,user)
+		attack(user, user)
 	else
 		user.visible_message(span_suicide("[user] is shoving the [name] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
 		. = (OXYLOSS)
@@ -387,18 +388,19 @@
 	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
 	return ..()
 
-/obj/item/melee/baton/security/proc/convert(datum/source, obj/item/I, mob/user)
+/obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER
 
-	if(istype(I,/obj/item/conversion_kit) && convertible)
-		var/turf/source_turf = get_turf(src)
-		var/obj/item/melee/baton/baton = new (source_turf)
-		baton.alpha = 20
-		playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
-		animate(src, alpha = 0, time = 10)
-		animate(baton, alpha = 255, time = 10)
-		qdel(I)
-		qdel(src)
+	if(!istype(item, /obj/item/conversion_kit) || !convertible)
+		return
+	var/turf/source_turf = get_turf(src)
+	var/obj/item/melee/baton/baton = new (source_turf)
+	baton.alpha = 20
+	playsound(source_turf, 'sound/items/drill_use.ogg', 80, TRUE, -1)
+	animate(src, alpha = 0, time = 1 SECONDS)
+	animate(baton, alpha = 255, time = 1 SECONDS)
+	qdel(item)
+	qdel(src)
 
 /obj/item/melee/baton/security/Exited(atom/movable/mov_content)
 	. = ..()
@@ -425,22 +427,22 @@
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
-/obj/item/melee/baton/security/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stock_parts/cell))
-		var/obj/item/stock_parts/cell/C = W
+/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/active_cell = item
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell!"))
 		else
-			if(C.maxcharge < cell_hit_cost)
+			if(active_cell.maxcharge < cell_hit_cost)
 				to_chat(user, span_notice("[src] requires a higher capacity cell."))
 				return
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(item, src))
 				return
-			cell = W
+			cell = item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_appearance()
 
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+	else if(item.tool_behaviour == TOOL_SCREWDRIVER)
 		tryremovecell(user)
 	else
 		return ..()
@@ -497,8 +499,8 @@
 
 /obj/item/melee/baton/security/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)
 	if(iscyborg(loc))
-		var/mob/living/silicon/robot/R = loc
-		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
+		var/mob/living/silicon/robot/robot = loc
+		if(!robot || !robot.cell || !robot.cell.use(cell_hit_cost))
 			return FALSE
 	else if(!deductcharge(cell_hit_cost))
 		return FALSE
@@ -521,7 +523,7 @@
 /obj/item/melee/baton/security/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
 	if(!target.IsKnockdown())
-		to_chat(target, span_warning("Your muscles seize, making you collapse [trait_check ? ", but your body quickly recovers..." : "!"]"))
+		to_chat(target, span_warning("Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]"))
 
 	target.Knockdown(knockdown_time * (trait_check ? 0.1 : 1))
 
@@ -549,6 +551,17 @@
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
+	if (cell.charge >= cell_hit_cost)
+		var/scramble_time
+		scramble_mode()
+		for(var/loops in 1 to rand(6, 12))
+			scramble_time = rand(5, 15) / (1 SECONDS)
+			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
+
+/obj/item/melee/baton/security/proc/scramble_mode()
+	active = !active
+	playsound(src, "sparks", 75, TRUE, -1)
+	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
@@ -576,19 +589,18 @@
 	sparkler = new (src)
 
 /obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
-	if(istype(item, /obj/item/stack/ore/bluespace_crystal))
-		if(!cell)
-			var/obj/item/stack/ore/bluespace_crystal/crystal = item
-			var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
-			remove_item_from_storage(user)
-			qdel(src)
-			crystal.use(1)
-			user.put_in_hands(prod)
-			to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
-		else
-			user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
-	else
+	if(!istype(item, /obj/item/stack/ore/bluespace_crystal))
 		return ..()
+	if(!cell)
+		var/obj/item/stack/ore/bluespace_crystal/crystal = item
+		var/obj/item/melee/baton/security/cattleprod/teleprod/prod = new
+		remove_item_from_storage(user)
+		qdel(src)
+		crystal.use(1)
+		user.put_in_hands(prod)
+		to_chat(user, span_notice("You place the bluespace crystal firmly into the igniter."))
+	else
+		user.visible_message(span_warning("You can't put the crystal onto the stunprod while it has a power cell installed!"))
 
 /obj/item/melee/baton/security/cattleprod/baton_effect()
 	if(!sparkler.activate())
@@ -614,23 +626,22 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/security/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/obj/item/melee/baton/security/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin = 1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(active)
 		if(ishuman(thrower))
-			var/mob/living/carbon/human/H = thrower
-			H.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
+			var/mob/living/carbon/human/human_thrower = thrower
+			human_thrower.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
 	return ..()
 
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(active)
-		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		var/mob/thrown_by = thrownby?.resolve()
-		if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
-			finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
-		if(thrown_by && !caught)
-			addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
-	else
+	if(!active)
 		return ..()
+	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
+	var/mob/thrown_by = thrownby?.resolve()
+	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
+		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
+	if(thrown_by && !caught)
+		addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high

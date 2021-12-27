@@ -36,7 +36,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ag" = (
-/obj/effect/mob_spawn/human/syndicatespace/captain,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
@@ -79,7 +79,7 @@
 "ar" = (
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
-	dir = 9;
+	dir = 6;
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -494,7 +494,8 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/clothing/suit/space/hardsuit/cybersun,
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
@@ -515,7 +516,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bE" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
@@ -584,7 +585,8 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1039,16 +1041,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cX" = (
-/obj/machinery/camera/xray{
+/obj/machinery/camera/xray/directional/east{
 	c_tag = "Conference room";
-	dir = 8;
 	network = list("fsc");
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cY" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1129,7 +1130,7 @@
 "dh" = (
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
-	dir = 6;
+	dir = 9;
 	network = list("fsci");
 	screen_loc = ""
 	},
