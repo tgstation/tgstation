@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -49,36 +48,15 @@ const BrokenTramDimmer = () => {
   );
 };
 
-const MovingTramDimmer = () => {
-  return (
-    <Dimmer>
-      <Stack vertical>
-        <Stack.Item>
-          <Icon
-            ml={10}
-            name="sync-alt"
-            color="green"
-            size={11}
-          />
-        </Stack.Item>
-        <Stack.Item mt={5} fontSize="14px" color="green">
-          The tram is travelling to {current_loc[0].name}!
-        </Stack.Item>
-      </Stack>
-    </Dimmer>
-  );
-};
-
 export const TramControl = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     broken,
     moving,
     destinations,
+    tram_location,
   } = data;
 
-  const current_loc = (destinations ? destinations.filter(
-    dest => dest.here === 1) : null);
   const [
     transitIndex,
     setTransitIndex,
@@ -96,7 +74,7 @@ export const TramControl = (props, context) => {
             />
           </Stack.Item>
           <Stack.Item mt={5} fontSize="14px" color="green">
-            The tram is travelling to {current_loc[0].name}!
+            The tram is travelling to {tram_location}!
           </Stack.Item>
         </Stack>
       </Dimmer>
@@ -105,9 +83,10 @@ export const TramControl = (props, context) => {
   const Destination = props => {
     const { dest } = props;
     const getDestColor = dest => {
-      const here = dest.name === current_loc[0].name;
+      if (!tram_location) return "bad";
+      const here = dest.name === tram_location;
       const selected = transitIndex === destinations.indexOf(dest);
-      return !current_loc ? "bad" : here ? "blue" : selected ? "green" : "transparent";
+      return here ? "blue" : selected ? "green" : "transparent";
     };
     return (
       <Stack vertical>
@@ -173,7 +152,7 @@ export const TramControl = (props, context) => {
               </Stack.Item>
               <Stack.Item mb={4}>
                 <Stack fill>
-                  <Stack.Item grow={2} />
+                  <Stack.Item grow />
                   {destinations.map(dest => (
                     <Stack.Item key={dest.name} grow={1} >
                       <Destination dest={dest} />
@@ -185,11 +164,11 @@ export const TramControl = (props, context) => {
               <Stack.Item fontSize="16px" mt={1} mb={9} textAlign="center" grow>
                 <Button
                   disabled={
-                    current_loc[0].name === destinations[transitIndex].name
+                    tram_location === destinations[transitIndex].name
                   }
                   content="Send Tram"
                   onClick={() => act('send', {
-                    destination: destinations[transitIndex].name,
+                    destination: destinations[transitIndex].id,
                   })} />
               </Stack.Item>
             </Stack>
