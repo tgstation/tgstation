@@ -194,8 +194,7 @@
 /obj/machinery/mecha_part_fabricator/proc/update_menu_tech()
 	final_sets = list()
 	buildable_parts = list()
-	for(var/part_set in part_sets)
-		final_sets += part_set
+	final_sets += part_sets
 
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
