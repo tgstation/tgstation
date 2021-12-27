@@ -650,7 +650,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	if(robeless)
 		new_spell.clothes_req = FALSE
-		new_spell.cult_req = FALSE
 
 	if(spell_recipient.mind)
 		spell_recipient.mind.AddSpell(new_spell)

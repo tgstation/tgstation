@@ -608,3 +608,106 @@
       to not render properly.
   - bugfix: Changed the font of some messages to better reflect if they were errors,
       notices.
+2021-12-25:
+  ? 'Fikou; Sprites: PositiveEntropy, Azlan, Infrared_Baron, Thunder12345, Yeeye;
+    Code: Waltermeldron, Goof, Armhulen, ArcaneMusic, DatBoiTim; Descriptions: Nerevar'
+  : - rscadd: Adds Modular Suits. Printable at robotics.
+    - rscdel: Removes Hardsuits.
+    - balance: Almost all Hardsuits have been replaced with MODsuits.
+    - balance: HECKsuit, Berserker Hardsuit, Cult Hardsuit and Carp Hardsuit became
+        hoodies, the first 2 losing their spaceproofness
+    - rscdel: Cybersun, Combat Medic and Owl Hardsuits didn't make the cut.
+    - refactor: Changes how mob gravity checks are made. Uses a gravity negation trait.
+        As part of this, space wind pushing you is handled by gravity negation, not
+        noslips.
+    - balance: Hardsuits no longer defend from tackles, but negating gravity does.
+    - code_imp: Adds support for digitigrade compatible shoes.
+    - qol: Piercing syringes now pierce when used from hand, not just as projectile.
+    - code_imp: Removes the unused outside of admin shenanigans cult hardsuit requirement
+        for spells.
+  JohnFulpWillard:
+  - bugfix: the observe button's tgui is now functional.
+  Krysonism:
+  - expansion: Added a new cake, the english fruitcake.
+  Sealed101:
+  - bugfix: plopped an xmas tree in tramsation's chapel
+  SuperNovaa41:
+  - spellcheck: Fixed a small spelling mistake in the sparring rite ritual.
+  jlsnow301:
+  - bugfix: Clipping and sizing issues on drone consoles have been fixed.
+  - refactor: 'Many more tgui inputs have been converted over: Paystands, paintings,
+      pet names and more.'
+  - bugfix: TGUI inputs now support automatically selecting preexisting input (BYOND
+      default behavior).
+  - bugfix: You can now press ESC to exit TGUI inputs.
+  - bugfix: Fixes a bluescreen when turning on admin mode in NtOS chat software.
+  - bugfix: 'Literally 1984: NtOS chat admins can now properly mute others.'
+  - bugfix: Turning off NtOS admin mode now properly returns you to the channel.
+  - bugfix: NtOS chat screen widened slightly to fix clipping issue on the participants
+      panel.
+2021-12-26:
+  CRITAWAKETS:
+  - imageadd: The Spider Clan has issued a recall of all it's katanas, replacing them
+      with new ones that are differently styled. Something about the old ones being
+      literally impossible to find in bright conditions. Or maybe they just didnt
+      like how it looked so they changed its "sprite".
+  Cheshify:
+  - imageadd: The PanD.E.M.I.C 2200 is now visually different than the ChemMaster
+  Fikou, theOOZ:
+  - imageadd: adds a new janiborg sprite!
+  Iamgoofball:
+  - qol: AI VOX announcements are now additionally broadcasted over the radio.
+  JohnFulpWillard:
+  - bugfix: The HoP will now get strange reagent in the mail if Ian is dead, as originally
+      intended.
+  Melbert:
+  - bugfix: Updated the binary key's description / examine text to actually describe
+      its abilities.
+  ReinaCoder:
+  - imageadd: Resprites the sec grenade launcher
+  TheBonded:
+  - bugfix: Tesla reactive armour now has separate emp and cooldown messages
+  - bugfix: dogs will no longer forget to unbuckle themselves when fetching items
+      thrown nearby
+  axietheaxolotl:
+  - imageadd: Resprited the Tactical Turtleneck Suit
+  jlsnow301:
+  - bugfix: Double click and enter on tgui input lists no longer clears selection.
+  - bugfix: 'Functionality restored: typing while not selecting the search bar will
+      refocus. You can also quick search by typing while the search bar is hidden.'
+  - refactor: Support for current value selections has been added to tgui input lists
+      - lists now work for suit sensors, etc.
+  tf-4:
+  - bugfix: Disarming a heavily incapacitated person with krav maga will no longer
+      make them recoil in pain.
+  timothymtorres:
+  - bugfix: Fix AIs inside a AI restorer computer now die if the computer is destroyed
+      while they are inside it.
+2021-12-27:
+  Fikou:
+  - bugfix: the protect objective now checks for mob and brain suicides
+  JohnFulpWillard:
+  - bugfix: Some antags (like Abductors) no longer have 2 antag gain messages.
+  - spellcheck: Gaining and losing antagonist status will now be properly written
+      with 'the', as needed.
+  ReinaCoder:
+  - bugfix: Cult robes now have sprites for when the hood is down
+  - bugfix: Tramstation Court Room and Lawyer's Office now have lights
+  SuperNovaa41:
+  - bugfix: Makes all cyborg storage items drop their contents on module change.
+  - bugfix: Sechailer no longer has FOV.
+  - bugfix: SWAT mask no longer has a tint.
+  Y0SH1M4S73R:
+  - admin: The Save Shell admin circuit component now properly loads circuits that
+      use a BCI or MODsuit module as their shell.
+  necromanceranne:
+  - bugfix: Restores the cardborg sprite.
+  timothymtorres:
+  - bugfix: Fix all types of grenades to be deleted when shot bullets.
+  tralezab:
+  - code_imp: Some code improvements and proper use of department datums by independent
+      nation creation
+  - refactor: Some wonderful cleanup of separatist code, if you notice minor differences
+      it's because of that.
+  - admin: The nations ruleset is back(?) and disabled for admins to run fi they so
+      desire

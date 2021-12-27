@@ -328,7 +328,7 @@
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)
+/obj/structure/grille/get_dumping_location()
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
