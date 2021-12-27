@@ -27,9 +27,9 @@
 	var/rendered = "<span class='game deadsay'>[span_prefix("DEAD:")] [span_name("[rank_name]([admin_name])")] says, <span class='message'>\"[emoji_parse(msg)]\"</span></span>"
 
 	for (var/mob/M in GLOB.player_list)
-		if(isnewplayer(M))
+		if(isnewplayer(M) && !M.client?.holder) // We want to make sure admins can see this when in the lobby too!
 			continue
-		if (M.stat == DEAD || (M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
+		if (M.stat == DEAD || (M.client?.holder && (M.client?.prefs?.chat_toggles & CHAT_DEAD))) //admins can toggle deadchat on and off. This is a proc in admin.dm and is only given to Administrators and above
 			to_chat(M, rendered, confidential = TRUE)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Dsay") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
