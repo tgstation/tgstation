@@ -137,14 +137,18 @@
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
-	LAZYCLEARLIST(important_recursive_contents)//has to be before moveToNullspace() so that we can exit our spatial_grid cell if we're in it
-
 	. = ..()
 
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	moveToNullspace()
+
+	//This absolutely must be before moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYCLEARLIST(important_recursive_contents)
+
 
 	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
