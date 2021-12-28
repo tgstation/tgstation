@@ -496,4 +496,3 @@
 #define SIGN_ARMLESS 2
 #define SIGN_TRAIT_BLOCKED 3
 #define SIGN_CUFFED 4
-

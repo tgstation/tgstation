@@ -61,7 +61,7 @@
 	. = ..()
 	var/mob/living/current = owner.current
 	add_objectives()
-	current.AddElement(/datum/element/cult_status) // TODO: send get_status() here (or get the status inside the element idk)
+	current.AddElement(/datum/element/cult_status)
 	if(give_equipment)
 		equip_cultist(TRUE)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
@@ -274,11 +274,6 @@
 			else
 				++alive
 	var/ratio = cultplayers/alive
-
-	var/list/cult_members = list()
-	for (var/datum/mind/cult_mind in members)
-		cult_members.Add(cult_mind)
-
 	if(ratio > CULT_RISEN && !cult_risen)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
