@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - bugfix: "Fixes phylactery exploits.  Liches can no longer be soulstone captured or be debrained and put into an MMI."
