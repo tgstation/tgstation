@@ -60,13 +60,11 @@
 	/// Whether we can currently respec in the cellular emporium.
 	var/can_respec = FALSE
 
-	/// The currently chosen DNA this ling is.
-	var/datum/dna/chosen_dna
 	/// The currently active changeling sting.
 	var/datum/action/changeling/sting/chosen_sting
-	/// A reference to our cellular emprium datum.
+	/// A reference to our cellular emporium datum.
 	var/datum/cellular_emporium/cellular_emporium
-	/// A reference to our cellular emprium action (which opens the UI for the datum).
+	/// A reference to our cellular emporium action (which opens the UI for the datum).
 	var/datum/action/innate/cellular_emporium/emporium_action
 
 	/// The name of our "hive" that our ling came from. Flavor.

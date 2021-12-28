@@ -76,6 +76,8 @@
 				return
 			changeling.purchase_power(sting_path)
 
+	return TRUE
+
 /datum/action/innate/cellular_emporium
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
