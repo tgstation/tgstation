@@ -24,7 +24,7 @@
 	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	switch(choice)
 		if(NARSIE_ARMOR)
-			. += /obj/item/clothing/suit/space/hardsuit/cult/real
+			. += /obj/item/clothing/suit/hooded/cultrobes/hardened
 		if(FLAGELLANT_ARMOR)
 			. += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if(ELDRITCH_SWORD)
