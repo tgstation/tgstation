@@ -596,7 +596,7 @@ What a mess.*/
 
 						var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Wanted Poster", "WANTED", 7)
 
-						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description, multiline = TRUE)
+						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Wanted Poster", default_description)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
@@ -613,7 +613,7 @@ What a mess.*/
 
 						var/headerText = tgui_input_text(usr, "Enter a poster heading", "Print Missing Persons Poster", "MISSING", 7)
 
-						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Missing Persons Poster", default_description, multiline = TRUE)
+						var/info = tgui_input_text(usr, "Input a description for the poster", "Print Missing Persons Poster", default_description)
 						if(info)
 							playsound(loc, 'sound/items/poster_being_created.ogg', 100, TRUE)
 							printing = 1
@@ -641,7 +641,7 @@ What a mess.*/
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
-				var/t1 = tgui_input_text(usr, "Add a comment", "Security Records", multiline = TRUE)
+				var/t1 = tgui_input_text(usr, "Add a comment", "Security Records")
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
 					return
 				var/counter = 1

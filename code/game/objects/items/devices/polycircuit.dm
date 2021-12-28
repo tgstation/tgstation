@@ -19,7 +19,7 @@
 	else
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		chosen_circuit = tgui_input_list(user, "Circuit to remove", "Choose a Circuit Type", list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
+		chosen_circuit = tgui_input_list(user, "Circuit to remove", "Circuit Removal", list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
 		if(isnull(chosen_circuit))
 			to_chat(user, span_notice("You wisely avoid putting your hands anywhere near [src]."))
 			return

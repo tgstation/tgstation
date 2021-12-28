@@ -1292,7 +1292,7 @@
 				if(target_occupation)
 					assignment = target_occupation
 
-				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", max_value = AGE_MAX, min_value = AGE_MIN)
+				var/new_age = tgui_input_number(user, "Choose the ID's age", "Agent card age", AGE_MIN, AGE_MAX, AGE_MIN)
 				if(new_age)
 					registered_age = round(new_age)
 

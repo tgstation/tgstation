@@ -84,7 +84,7 @@
 	set name = "Set Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
-	if(length(snares) <6)
+	if(length(snares) < 6)
 		var/turf/snare_loc = get_turf(loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src

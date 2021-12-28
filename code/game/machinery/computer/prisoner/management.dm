@@ -98,7 +98,7 @@
 					if("reset")
 						contained_id.points = 0
 					if("setgoal")
-						var/num = tgui_input_text(usr, "Enter prisoner's goal", "Prisoner Management", 1, 1000, 1)
+						var/num = tgui_input_text(usr, "Enter the prisoner's goal", "Prisoner Management", 1, 1000, 1)
 						if(isnull(num))
 							return
 						contained_id.goal = round(num)

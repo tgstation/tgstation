@@ -731,10 +731,7 @@
 	var/mob/living/recipient = tgui_input_list(telepath, "Choose a telepathic message recipient", "Telepathy", sort_names(recipient_options))
 	if(isnull(recipient))
 		return
-	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
-		return
-	var/msg = tgui_input_text(telepath, title="Telepathy")
+	var/msg = tgui_input_text(telepath, title = "Telepathy")
 	if(isnull(msg))
 		return
 	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))

@@ -419,7 +419,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, span_alert("No machinery detected."))
-	var/S = tgui_input_list(user, "Select the device set ", "Reconnect", sort_list(IO))
+	var/S = tgui_input_list(user, "Select the device set", "Reconnect", sort_list(IO))
 	if(isnull(S))
 		return
 	if(src)

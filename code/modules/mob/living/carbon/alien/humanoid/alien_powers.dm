@@ -175,7 +175,7 @@ Doesn't work on other aliens/AI.*/
 	if(!length(nearby_targets))
 		to_chat(user, span_noticealien("There's nothing to corrode."))
 		return FALSE
-	var/atom/dissolve_target = tgui_input_list(user, "Select what to dissolve", "Dissolve", nearby_targets)
+	var/atom/dissolve_target = tgui_input_list(user, "Select a target to dissolve", "Dissolve", nearby_targets)
 	if(isnull(dissolve_target))
 		return FALSE
 	if(QDELETED(dissolve_target) || user.incapacitated())
@@ -284,7 +284,7 @@ Doesn't work on other aliens/AI.*/
 	if(!check_vent_block(user))
 		return FALSE
 
-	var/choice = tgui_input_list(user, "Choose what you wish to shape.","Resin building", structures)
+	var/choice = tgui_input_list(user, "Select a shape to build", "Resin building", structures)
 	if(isnull(choice))
 		return FALSE
 	if(isnull(structures[choice]))
