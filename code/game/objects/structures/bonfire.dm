@@ -119,6 +119,15 @@
 
 /obj/structure/bonfire/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
+	if(isliving(entered))
+		var/mob/living/burning_body = entered
+		if(burning_body.on_fire)
+			start_burning()
+			visible_message(span_notice("[entered] runs over [src], starting it's fire!"))
+	else if(entered.resistance_flags & ON_FIRE)
+		start_burning()
+		visible_message(span_notice("[entered] runs over [src], starting it's fire!"))
+
 	if(burning & !grill)
 		bonfire_burn()
 
