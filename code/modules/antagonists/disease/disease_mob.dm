@@ -212,7 +212,7 @@ the new instance inside the host to be updated to the template's stats.
 		possible_hosts.Cut(1, 2)
 
 	if(del_on_fail)
-		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
+		to_chat(src, span_warning("No hosts were available for your disease to infect."))
 		qdel(src)
 	return FALSE
 

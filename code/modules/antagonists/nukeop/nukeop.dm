@@ -32,7 +32,7 @@
 
 /datum/antagonist/nukeop/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, span_notice("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
+	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/on_gain()
@@ -172,18 +172,26 @@
 /datum/outfit/nuclear_operative
 	name = "Nuclear Operative (Preview only)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi
+	back = /obj/item/mod/control/pre_equipped/syndicate_empty
+	uniform = /obj/item/clothing/under/syndicate
+
+/datum/outfit/nuclear_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_inv_back()
 
 /datum/outfit/nuclear_operative_elite
 	name = "Nuclear Operative (Elite, Preview only)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	head = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
+	back = /obj/item/mod/control/pre_equipped/syndicate_empty/elite
+	uniform = /obj/item/clothing/under/syndicate
 	l_hand = /obj/item/modular_computer/tablet/nukeops
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/mod/module/armor_booster/elite/booster = locate() in H.back
+	booster.active = TRUE
+	H.update_inv_back()
 	var/obj/item/shield/energy/shield = locate() in H.held_items
 	shield.icon_state = "[shield.base_icon_state]1"
 	H.update_inv_hands()

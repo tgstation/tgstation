@@ -13,7 +13,6 @@
 	gloves = /obj/item/clothing/gloves/combat
 	mask = /obj/item/clothing/mask/gas/sechailer
 	shoes = /obj/item/clothing/shoes/combat/swat
-	toggle_helmet = FALSE
 
 /datum/outfit/centcom/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -34,13 +33,13 @@
 	name = "ERT Commander"
 
 	id = /obj/item/card/id/advanced/centcom/ert
-	suit = /obj/item/clothing/suit/space/hardsuit/ert
-	suit_store = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/ert
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/commander
+	l_hand = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/security/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	l_pocket = /obj/item/switchblade
@@ -61,7 +60,7 @@
 		/obj/item/gun/energy/pulse/pistol/loyalpin = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
 	l_pocket = /obj/item/melee/energy/sword/saber
 
@@ -69,14 +68,14 @@
 	name = "ERT Security"
 
 	id = /obj/item/card/id/advanced/centcom/ert/security
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
-	suit_store = /obj/item/gun/energy/e_gun/stun
-	back = /obj/item/storage/backpack/ert/security
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/security
+	l_hand = /obj/item/gun/energy/e_gun/stun
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/security/full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/tackler/combat/insulated
@@ -94,31 +93,31 @@
 /datum/outfit/centcom/ert/security/alert
 	name = "ERT Security - High Alert"
 
-	belt = /obj/item/gun/energy/pulse/carbine/loyalpin
+	l_hand = /obj/item/gun/energy/pulse/carbine/loyalpin
 	backpack_contents = list(
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/belt/security/full = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 
 /datum/outfit/centcom/ert/medic
 	name = "ERT Medic"
 
 	id = /obj/item/card/id/advanced/centcom/ert/medical
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
-	suit_store = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/ert/medical
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/medic
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/medical
 	glasses = /obj/item/clothing/glasses/hud/health
 	l_hand = /obj/item/storage/firstaid/regular
+	r_hand = /obj/item/gun/energy/e_gun
 
 /datum/outfit/centcom/ert/medic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -140,22 +139,22 @@
 		/obj/item/reagent_containers/hypospray/combat/nanites = 1,
 		/obj/item/storage/box/hug/plushes = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 
 /datum/outfit/centcom/ert/engineer
 	name = "ERT Engineer"
 
 	id = /obj/item/card/id/advanced/centcom/ert/engineer
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
-	suit_store = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/ert/engineer
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/engineer
+	l_hand = /obj/item/gun/energy/e_gun
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded/upgraded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/utility/full/powertools
 	glasses = /obj/item/clothing/glasses/meson/engine
 	l_pocket = /obj/item/rcd_ammo/large
@@ -179,7 +178,7 @@
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/pipe_dispenser = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 
 /datum/outfit/centcom/centcom_official
 	name = "CentCom Official"
@@ -191,7 +190,7 @@
 	backpack_contents = list(
 		/obj/item/stamp/centcom = 1,
 		/obj/item/storage/box/survival = 1,
-)
+	)
 	belt = /obj/item/gun/energy/e_gun
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -219,49 +218,51 @@
 /datum/outfit/centcom/ert/commander/inquisitor
 	name = "Inquisition Commander"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/commander
+	r_hand = /obj/item/nullrod/scythe/talking/chainsword
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
-)
-	l_hand = /obj/item/nullrod/scythe/talking/chainsword
+	)
 
 /datum/outfit/centcom/ert/security/inquisitor
 	name = "Inquisition Security"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
-	suit_store = /obj/item/gun/energy/e_gun/stun
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/security
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 
 /datum/outfit/centcom/ert/medic/inquisitor
 	name = "Inquisition Medic"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/medic
 	backpack_contents = list(
 		/obj/item/gun/medbeam = 1,
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/reagent_containers/hypospray/combat/heresypurge = 1,
-)
+	)
 
 /datum/outfit/centcom/ert/chaplain
 	name = "ERT Chaplain"
 
 	id = /obj/item/card/id/advanced/centcom/ert/chaplain
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor // Chap role always gets this suit
-	suit_store = /obj/item/gun/energy/e_gun
-	back = /obj/item/storage/backpack/cultpack
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/chaplain
+	l_hand = /obj/item/gun/energy/e_gun
+	belt = /obj/item/storage/belt/soulstone
+	glasses = /obj/item/clothing/glasses/hud/health
 	backpack_contents = list(
 		/obj/item/nullrod = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
-	belt = /obj/item/storage/belt/soulstone
-	glasses = /obj/item/clothing/glasses/hud/health
+	)
 
 /datum/outfit/centcom/ert/chaplain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -274,19 +275,20 @@
 /datum/outfit/centcom/ert/chaplain/inquisitor
 	name = "Inquisition Chaplain"
 
+	back = /obj/item/mod/control/pre_equipped/responsory/inquisitory/chaplain
 	backpack_contents = list(
 		/obj/item/grenade/chem_grenade/holy = 1,
 		/obj/item/nullrod = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/soulstone/full/chappy
 
 /datum/outfit/centcom/ert/janitor
 	name = "ERT Janitor"
 
 	id = /obj/item/card/id/advanced/centcom/ert/janitor
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
-	back = /obj/item/storage/backpack/ert/janitor
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/janitor
 	backpack_contents = list(
 		/obj/item/grenade/clusterbuster/cleaner = 1,
 		/obj/item/melee/baton/security/loaded = 1,
@@ -294,7 +296,7 @@
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/janitor/full
 	glasses = /obj/item/clothing/glasses/night
 	l_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -319,21 +321,21 @@
 		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
-	l_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
+	)
+	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
 
 /datum/outfit/centcom/ert/clown
 	name = "ERT Clown"
 
 	id = /obj/item/card/id/advanced/centcom/ert/clown
-	suit = /obj/item/clothing/suit/space/hardsuit/ert/clown
-	back = /obj/item/storage/backpack/ert/clown
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/responsory/clown
 	backpack_contents = list(
 		/obj/item/gun/ballistic/revolver/reverse = 1,
 		/obj/item/melee/energy/sword/bananium = 1,
 		/obj/item/shield/energy/bananium = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/champion
 	glasses = /obj/item/clothing/glasses/trickblindfold
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -362,7 +364,7 @@
 	back = /obj/item/storage/backpack/satchel
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
-)
+	)
 	belt = /obj/item/melee/baton
 	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -412,12 +414,13 @@
 	uniform = /obj/item/clothing/under/misc/overalls
 	suit = /obj/item/clothing/suit/apron
 	suit_store = null
+	back = /obj/item/storage/backpack/ert/janitor
 	backpack_contents = list(
 		/obj/item/mop/advanced = 1,
 		/obj/item/reagent_containers/glass/bucket = 1,
 		/obj/item/storage/box/lights/mixed = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/janitor/full
 	glasses = /obj/item/clothing/glasses/meson
 	mask = /obj/item/clothing/mask/bandana/blue
@@ -431,11 +434,12 @@
 	uniform = /obj/item/clothing/under/misc/bouncer
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = null
+	back = /obj/item/storage/backpack/ert/security
 	backpack_contents = list(
 		/obj/item/clothing/head/helmet/police = 1,
 		/obj/item/storage/box/handcuffs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/melee/baton/telescopic
 	l_pocket = /obj/item/assembly/flash
 	r_pocket = /obj/item/storage/wallet
@@ -446,6 +450,7 @@
 	uniform = /obj/item/clothing/under/rank/engineering/engineer/hazard
 	suit = /obj/item/clothing/suit/hazardvest
 	suit_store = null
+	back = /obj/item/storage/backpack/ert/engineer
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded = 1,
 		/obj/item/etherealballdeployer = 1,
@@ -454,7 +459,7 @@
 		/obj/item/stack/sheet/iron/fifty = 1,
 		/obj/item/stack/sheet/plasteel/twenty = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	head = /obj/item/clothing/head/hardhat/weldhat
 	mask = /obj/item/clothing/mask/gas/atmos
 	l_hand = /obj/item/areaeditor/blueprints
@@ -465,11 +470,12 @@
 	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/chameleon
 	suit_store = null
+	back = /obj/item/storage/backpack/ert/clown
 	backpack_contents = list(
 		/obj/item/instrument/piano_synth = 1,
 		/obj/item/shield/energy/bananium = 1,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	glasses = /obj/item/clothing/glasses/chameleon
 	head = /obj/item/clothing/head/chameleon
 
@@ -479,11 +485,12 @@
 	uniform = /obj/item/clothing/under/misc/coordinator
 	suit = /obj/item/clothing/suit/coordinator
 	suit_store = null
+	back = /obj/item/storage/backpack/ert
 	backpack_contents = list(
 		/obj/item/food/cake/birthday = 1,
 		/obj/item/storage/box/fireworks = 3,
 		/obj/item/storage/box/survival/engineer = 1,
-)
+	)
 	belt = /obj/item/storage/belt/sabre
 	head = /obj/item/clothing/head/coordinator
 	l_pocket = /obj/item/knife/kitchen
@@ -495,9 +502,8 @@
 	id = /obj/item/card/id/advanced/black/deathsquad
 	id_trim = /datum/id_trim/centcom/deathsquad
 	uniform = /obj/item/clothing/under/rank/centcom/commander
-	suit = /obj/item/clothing/suit/space/hardsuit/deathsquad
-	suit_store = /obj/item/tank/internals/emergency_oxygen/double
-	back = /obj/item/storage/backpack/security
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/apocryphal
 	backpack_contents = list(
 		/obj/item/ammo_box/a357 = 1,
 		/obj/item/flashlight = 1,
@@ -505,7 +511,7 @@
 		/obj/item/storage/box/flashbangs = 1,
 		/obj/item/storage/box/survival/engineer = 1,
 		/obj/item/storage/firstaid/regular = 1,
-)
+	)
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	ears = /obj/item/radio/headset/headset_cent/alt
 	glasses = /obj/item/clothing/glasses/hud/toggle/thermal
@@ -518,7 +524,7 @@
 
 	skillchips = list(
 		/obj/item/skillchip/disk_verifier,
-)
+	)
 
 /datum/outfit/centcom/death_commando/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -593,7 +599,7 @@
 		/obj/item/reagent_containers/hypospray/combat = 1,
 		/obj/item/storage/firstaid/regular = 1,
 		/obj/item/storage/firstaid/advanced = 1,
-)
+	)
 	belt = /obj/item/storage/belt/medical/paramedic
 	glasses = /obj/item/clothing/glasses/hud/health/sunglasses
 

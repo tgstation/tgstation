@@ -517,8 +517,10 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
 	var/stackmaterial = round(tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max))
+	if(isnull(stackmaterial))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	stackmaterial = min(max, stackmaterial)
-	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))

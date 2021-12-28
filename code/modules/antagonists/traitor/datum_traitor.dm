@@ -14,7 +14,7 @@
 #define MAROON_PROB 30
 
 /datum/antagonist/traitor
-	name = "Traitor"
+	name = "\improper Traitor"
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
@@ -72,11 +72,7 @@
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
-
 	owner.special_role = null
-
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer(faction)
