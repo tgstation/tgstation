@@ -55,6 +55,8 @@
 #define MATERIAL_AFFECT_STATISTICS (1<<3)
 /// Applies the material greyscale color to the atom's greyscale color.
 #define MATERIAL_GREYSCALE (1<<4)
+/// Applies the mass of the materials to the atom.
+#define MATERIAL_MASS (1<<5)
 
 /// Wrapper for fetching material references. Exists exclusively so that people don't need to wrap everything in a list every time.
 #define GET_MATERIAL_REF(arguments...) SSmaterials._GetMaterialRef(list(##arguments))

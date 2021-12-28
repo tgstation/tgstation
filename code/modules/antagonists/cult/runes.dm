@@ -880,6 +880,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		affecting = null
 		rune_in_use = FALSE
 
+/mob/living/carbon/human/cult_ghost
+	atom_mass = 0 // Ghosts have no mass.
+
 /mob/living/carbon/human/cult_ghost/spill_organs(no_brain, no_organs, no_bodyparts) //cult ghosts never drop a brain
 	no_brain = TRUE
 	. = ..()

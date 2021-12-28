@@ -17,6 +17,8 @@
 	real_name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
+	atom_mass = 1000000 // One metric ton of AI.
+	atom_size = 1000000 // One cubic meter of AI.
 	move_resist = MOVE_FORCE_OVERPOWERING
 	density = TRUE
 	status_flags = CANSTUN|CANPUSH

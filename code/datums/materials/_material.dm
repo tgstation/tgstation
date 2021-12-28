@@ -13,6 +13,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	/// What the material is indexed by in the SSmaterials.materials list. Defaults to the type of the material.
 	var/id
 
+	/// How dense this material is.
+	var/density
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
 	///Deprecated, use greyscale_color instead.
 	var/color
@@ -77,6 +79,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(material_flags & MATERIAL_GREYSCALE)
 		var/config_path = get_greyscale_config_for(source.greyscale_config)
 		source.set_greyscale(greyscale_colors, config_path)
+	
+	if((material_flags & MATERIAL_MASS) && density)
+		source.set_mass(source.atom_mass + (density * amount))
 
 	if(alpha < 255)
 		source.opacity = FALSE
@@ -171,6 +176,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 	if(material_flags & MATERIAL_GREYSCALE)
 		source.set_greyscale(initial(source.greyscale_colors), initial(source.greyscale_config))
+	
+	if((material_flags & MATERIAL_MASS) && density)
+		source.set_mass(source.atom_mass - (density * amount))
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)

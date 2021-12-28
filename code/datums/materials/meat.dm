@@ -2,6 +2,7 @@
 /datum/material/meat
 	name = "meat"
 	desc = "Meat"
+	density = 1.00
 	id = /datum/material/meat // So the bespoke versions are categorized under this
 	color = rgb(214, 67, 67)
 	greyscale_colors = rgb(214, 67, 67)

@@ -30,6 +30,7 @@
 /datum/material/alloy/plasteel
 	name = "plasteel"
 	desc = "The heavy duty result of infusing iron with plasma."
+	density = 20
 	color = "#706374"
 	greyscale_colors = "#706374"
 	init_flags = MATERIAL_INIT_MAPLOAD
@@ -63,6 +64,7 @@
 /datum/material/alloy/plastitanium
 	name = "plastitanium"
 	desc = "The extremely heat resistant result of infusing titanium with plasma."
+	density = 16.63
 	color = "#3a313a"
 	greyscale_colors = "#3a313a"
 	init_flags = MATERIAL_INIT_MAPLOAD
@@ -81,6 +83,7 @@
 /datum/material/alloy/plasmaglass
 	name = "plasmaglass"
 	desc = "Plasma-infused silicate. It is much more durable and heat resistant than either of its component materials."
+	density = 8.77
 	color = "#ff80f4"
 	greyscale_colors = "#ff80f4"
 	alpha = 150
@@ -100,6 +103,7 @@
 /datum/material/alloy/titaniumglass
 	name = "titanium glass"
 	desc = "A specialized silicate-titanium alloy that is commonly used in shuttle windows."
+	density = 4.95
 	color = "#cfbee0"
 	greyscale_colors = "#cfbee0"
 	alpha = 150
@@ -118,6 +122,7 @@
 /datum/material/alloy/plastitaniumglass
 	name = "plastitanium glass"
 	desc = "A specialized silicate-plastitanium alloy."
+	density = 11.02
 	color = "#5d3369"
 	greyscale_colors = "#5d3369"
 	alpha = 150
@@ -139,6 +144,7 @@
 /datum/material/alloy/alien
 	name = "alien alloy"
 	desc = "An extremely dense alloy similar to plasteel in composition. It requires exotic metallurgical processes to create."
+	density = 40.00
 	color = "#6041aa"
 	greyscale_colors = "#6041aa"
 	init_flags = MATERIAL_INIT_MAPLOAD

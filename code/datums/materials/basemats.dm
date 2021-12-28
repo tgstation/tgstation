@@ -2,6 +2,7 @@
 /datum/material/iron
 	name = "iron"
 	desc = "Common iron ore often found in sedimentary and igneous layers of the crust."
+	density = 7.87
 	color = "#878687"
 	greyscale_colors = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -16,6 +17,7 @@
 /datum/material/glass
 	name = "glass"
 	desc = "Glass forged by melting sand."
+	density = 2.70
 	color = "#88cdf1"
 	greyscale_colors = "#88cdf1"
 	alpha = 150
@@ -55,6 +57,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/gold
 	name = "gold"
 	desc = "Gold"
+	density = 19.30
 	color = list(340/255, 240/255, 50/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //gold is shiny, but not as bright as bananium
 	greyscale_colors = "#dbdd4c"
 	strength_modifier = 1.2
@@ -72,6 +75,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/diamond
 	name = "diamond"
 	desc = "Highly pressurized carbon"
+	density = 3.50
 	color = list(48/255, 272/255, 301/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#71c8f7"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -89,6 +93,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/uranium
 	name = "uranium"
 	desc = "Uranium"
+	density = 19.10
 	color = rgb(48, 237, 26)
 	greyscale_colors = rgb(48, 237, 26)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -124,6 +129,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plasma
 	name = "plasma"
 	desc = "Isn't plasma a state of matter? Oh whatever."
+	density = 12.13
 	color = list(298/255, 46/255, 352/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#c162ec"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -156,6 +162,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bluespace
 	name = "bluespace crystal"
 	desc = "Crystals with bluespace properties"
+	density = 50.00
 	color = list(119/255, 217/255, 396/255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0)
 	greyscale_colors = "#4e7dff"
 	alpha = 200
@@ -173,6 +180,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bananium
 	name = "bananium"
 	desc = "Material with hilarious properties"
+	density = 10.00
 	color = list(460/255, 464/255, 0, 0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0) //obnoxiously bright yellow
 	greyscale_colors = "#ffff00"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -200,6 +208,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/titanium
 	name = "titanium"
 	desc = "Titanium"
+	density = 4.50
 	color = "#b3c0c7"
 	greyscale_colors = "#b3c0c7"
 	strength_modifier = 1.3
@@ -216,6 +225,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/runite
 	name = "runite"
 	desc = "Runite"
+	density = 10.00
 	color = "#3F9995"
 	greyscale_colors = "#3F9995"
 	strength_modifier = 1.3
@@ -233,6 +243,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plastic
 	name = "plastic"
 	desc = "Plastic"
+	density = 1.40
 	color = "#caccd9"
 	greyscale_colors = "#caccd9"
 	strength_modifier = 0.85
@@ -251,6 +262,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/biomass
 	name = "biomass"
 	desc = "Organic matter"
+	density = 1.00
 	color = "#735b4d"
 	greyscale_colors = "#735b4d"
 	strength_modifier = 0.8
@@ -259,6 +271,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/wood
 	name = "wood"
 	desc = "Flexible, durable, but flamable. Hard to come across in space."
+	density = 0.60
 	color = "#bb8e53"
 	greyscale_colors = "#bb8e53"
 	strength_modifier = 0.5
@@ -292,6 +305,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/adamantine
 	name = "adamantine"
 	desc = "A powerful material made out of magic, I mean science!"
+	density = 0.20
 	color = "#6d7e8e"
 	greyscale_colors = "#6d7e8e"
 	strength_modifier = 1.5
@@ -309,6 +323,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/mythril
 	name = "mythril"
 	desc = "How this even exists is byond me"
+	density = 20.00
 	color = "#f2d5d7"
 	greyscale_colors = "#f2d5d7"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -336,6 +351,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/hot_ice
 	name = "hot ice"
 	desc = "A weird kind of ice, feels warm to the touch"
+	density = 393.9
 	color = "#88cdf1"
 	greyscale_colors = "#88cdf1"
 	alpha = 150
@@ -360,6 +376,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/metalhydrogen
 	name = "Metal Hydrogen"
 	desc = "Solid metallic hydrogen. Some say it should be impossible"
+	density = 1.00
 	color = "#f2d5d7"
 	greyscale_colors = "#f2d5d7"
 	alpha = 150
@@ -378,6 +395,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/sand
 	name = "sand"
 	desc = "You know, it's amazing just how structurally sound sand can be."
+	density = 1.63
 	color = "#EDC9AF"
 	greyscale_colors = "#EDC9AF"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -398,6 +416,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/sandstone
 	name = "sandstone"
 	desc = "Bialtaakid 'ant taerif ma hdha."
+	density = 2.60
 	color = "#B77D31"
 	greyscale_colors = "#B77D31"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -411,6 +430,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/snow
 	name = "snow"
 	desc = "There's no business like snow business."
+	density = 0.55
 	color = "#FFFFFF"
 	greyscale_colors = "#FFFFFF"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -428,6 +448,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/runedmetal
 	name = "runed metal"
 	desc = "Mir'ntrath barhah Nar'sie."
+	density = 8.00
 	color = "#3C3434"
 	greyscale_colors = "#3C3434"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -445,6 +466,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bronze
 	name = "bronze"
 	desc = "Clock Cult? Never heard of it."
+	density = 8.73
 	color = "#92661A"
 	greyscale_colors = "#92661A"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -456,6 +478,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/paper
 	name = "paper"
 	desc = "Ten thousand folds of pure starchy power."
+	density = 3.30
 	color = "#E5DCD5"
 	greyscale_colors = "#E5DCD5"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -482,6 +505,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/cardboard
 	name = "cardboard"
 	desc = "They say cardboard is used by hobos to make incredible things."
+	density = 0.69
 	color = "#5F625C"
 	greyscale_colors = "#5F625C"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -506,6 +530,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bone
 	name = "bone"
 	desc = "Man, building with this will make you the coolest caveman on the block."
+	density = 0.69
 	color = "#e3dac9"
 	greyscale_colors = "#e3dac9"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
@@ -518,6 +543,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	name = "bamboo"
 	desc = "If it's good enough for pandas, it's good enough for you."
 	color = "#339933"
+	density = 0.64
 	greyscale_colors = "#339933"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
@@ -530,6 +556,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/zaukerite
 	name = "zaukerite"
 	desc = "A light absorbing crystal"
+	density = 15.00
 	color = COLOR_ALMOST_BLACK
 	greyscale_colors = COLOR_ALMOST_BLACK
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
