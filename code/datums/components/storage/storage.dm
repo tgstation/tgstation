@@ -546,10 +546,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(!I.attackby_storage_insert(src, parent, M))
 		return FALSE
-	if(istype(I, /obj/item/hand_labeler))
-		var/obj/item/hand_labeler/labeler = I
-		if(labeler.mode)
-			return FALSE
 	. = TRUE //no afterattack
 	if(iscyborg(M))
 		return
