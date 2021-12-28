@@ -711,3 +711,32 @@
       it's because of that.
   - admin: The nations ruleset is back(?) and disabled for admins to run fi they so
       desire
+2021-12-28:
+  Fikou:
+  - bugfix: the mod installer from charliestation no longer has infinite uses
+  - bugfix: fixes broken sprites on prototype suit
+  - bugfix: fixes intellicards not updating
+  - bugfix: fixes techwebs having two of the same modsuit module
+  - bugfix: fixes autofire acting weird with screen objects
+  - bugfix: fixes modsuits bricking when stripping or putting another one on with
+      the pathfinder
+  - bugfix: fixes modsuits deleting everything inside when they explode
+  - bugfix: fixes ais in modsuits not being able to use abilities
+  - bugfix: fixes the tether not being able to hook onto catwalks/lattices
+  - qol: ais in modsuits now make the user stand up instead of weirdly crawling
+  - qol: a modsuit being destroyed with an ai inside now pops it out as a small card
+      you can recover from with an intellicard
+  - qol: modsuit module radial is now more friendly, showing you tooltips and which
+      modules are active
+  - qol: mech fabricator module list is now sorted
+  JohnFulpWillard:
+  - spellcheck: Removed a visible b> from Cult's objective text.
+  SuperNovaa41:
+  - bugfix: You can no longer get an alert by checking your mood with telekinesis.
+  Zonespace27:
+  - refactor: Mech Fabricator's `output_part_info()` proc is much more optimized.
+  timothymtorres:
+  - bugfix: Fixes phylactery exploits.  Liches can no longer be soulstone captured
+      or be debrained and put into an MMI.
+  tralezab:
+  - bugfix: fixed weird "Mob Spawner" objects showing up when you killed clowns

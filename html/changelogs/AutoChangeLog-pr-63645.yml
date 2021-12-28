@@ -1,0 +1,5 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "italian mafioso now get their proper names"
+  - admin: "admins can now view family objectives from the traitor panel"

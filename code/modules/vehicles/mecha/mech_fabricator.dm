@@ -42,10 +42,10 @@
 
 	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/component/remote_materials/rmat
-	
+
 	/// A list of part sets used for TGUI static data. Updated on Init() and syncing with the R&D console.
 	var/list/final_sets = list()
-	
+
 	/// A list of individual parts used for TGUI static data. Updated on Init() and syncing with the R&D console.
 	var/list/buildable_parts = list()
 
@@ -176,6 +176,9 @@
 		else if(ispath(built_item, /obj/item/borg_restart_board))
 			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
 
+		else if(istype(D, /datum/design/module))
+			var/datum/design/module/module_design = D
+			sub_category = list(module_design.department_type)
 
 	var/list/part = list(
 		"name" = D.name,

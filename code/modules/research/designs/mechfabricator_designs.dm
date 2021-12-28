@@ -1093,6 +1093,7 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module
 	category = list("MOD Modules")
+	var/department_type = MODULE_GENERAL
 
 /datum/design/module/New()
 	. = ..()
@@ -1110,24 +1111,28 @@
 	id = "mod_visor_medhud"
 	materials = list(/datum/material/silver = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/medhud
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_visor_diaghud
 	name = "MOD Module: Diagnostic Visor"
 	id = "mod_visor_diaghud"
 	materials = list(/datum/material/gold = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/diaghud
+	department_type = MODULE_SCIENCE
 
 /datum/design/module/mod_visor_sechud
 	name = "MOD Module: Security Visor"
 	id = "mod_visor_sechud"
 	materials = list(/datum/material/titanium = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/sechud
+	department_type = MODULE_SECURITY
 
 /datum/design/module/mod_visor_meson
 	name = "MOD Module: Meson Visor"
 	id = "mod_visor_meson"
 	materials = list(/datum/material/uranium = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/visor/meson
+	department_type = MODULE_SUPPLY
 
 /datum/design/module/mod_visor_welding
 	name = "MOD Module: Welding Protection"
@@ -1140,18 +1145,21 @@
 	id = "mod_t_ray"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/t_ray
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_health_analyzer
 	name = "MOD Module: Health Analyzer"
 	id = "mod_health_analyzer"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/health_analyzer
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_stealth
 	name = "MOD Module: Cloak"
 	id = "mod_stealth"
 	materials = list(/datum/material/iron = 1000, /datum/material/bluespace = 500)
 	build_path = /obj/item/mod/module/stealth
+	department_type = MODULE_SECURITY
 
 /datum/design/module/mod_jetpack
 	name = "MOD Module: Ion Jetpack"
@@ -1164,18 +1172,21 @@
 	id = "mod_magboot"
 	materials = list(/datum/material/iron = 1000, /datum/material/gold = 500)
 	build_path = /obj/item/mod/module/magboot
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_holster
 	name = "MOD Module: Holster"
 	id = "mod_holster"
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/holster
+	department_type = MODULE_SECURITY
 
 /datum/design/module/mod_tether
 	name = "MOD Module: Emergency Tether"
 	id = "mod_tether"
 	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500)
 	build_path = /obj/item/mod/module/tether
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_mouthhole
 	name = "MOD Module: Eating Apparatus"
@@ -1188,6 +1199,7 @@
 	id = "mod_rad_protection"
 	materials = list(/datum/material/iron = 1000, /datum/material/uranium = 1000)
 	build_path = /obj/item/mod/module/rad_protection
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_emp_shield
 	name = "MOD Module: EMP Shield"
@@ -1206,24 +1218,28 @@
 	id = "mod_reagent_scanner"
 	materials = list(/datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/reagent_scanner
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_gps
 	name = "MOD Module: Internal GPS"
 	id = "mod_gps"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/gps
+	department_type = MODULE_SUPPLY
 
 /datum/design/module/mod_constructor
 	name = "MOD Module: Constructor"
 	id = "mod_constructor"
 	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500)
 	build_path = /obj/item/mod/module/constructor
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_quick_carry
 	name = "MOD Module: Quick Carry"
 	id = "mod_quick_carry"
 	materials = list(/datum/material/iron = 1000, /datum/material/titanium = 500)
 	build_path = /obj/item/mod/module/quick_carry
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_longfall
 	name = "MOD Module: Longfall"
@@ -1242,42 +1258,49 @@
 	id = "mod_injector"
 	materials = list(/datum/material/iron = 1000, /datum/material/diamond = 500)
 	build_path = /obj/item/mod/module/injector
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
 	id = "mod_microwave_beam"
 	materials = list(/datum/material/iron = 1000, /datum/material/uranium = 500)
 	build_path = /obj/item/mod/module/microwave_beam
+	department_type = MODULE_SERVICE
 
 /datum/design/module/mod_bikehorn
 	name = "MOD Module: Bike Horn"
 	id = "mod_bikehorn"
 	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
 	build_path = /obj/item/mod/module/bikehorn
+	department_type = MODULE_SERVICE
 
 /datum/design/module/mod_clamp
 	name = "MOD Module: Crate Clamp"
 	id = "mod_clamp"
 	materials = list(/datum/material/iron = 2000)
 	build_path = /obj/item/mod/module/clamp
+	department_type = MODULE_SUPPLY
 
 /datum/design/module/mod_drill
 	name = "MOD Module: Drill"
 	id = "mod_drill"
 	materials = list(/datum/material/silver = 1000, /datum/material/iron = 2000)
 	build_path = /obj/item/mod/module/drill
+	department_type = MODULE_SUPPLY
 
 /datum/design/module/mod_orebag
 	name = "MOD Module: Ore Bag"
 	id = "mod_orebag"
 	materials = list(/datum/material/iron = 1500)
 	build_path = /obj/item/mod/module/orebag
+	department_type = MODULE_SUPPLY
 
 /datum/design/module/mod_organ_thrower
 	name = "MOD Module: Organ Thrower"
 	id = "mod_organ_thrower"
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/organ_thrower
+	department_type = MODULE_MEDICAL
 
 /datum/design/module/mod_pathfinder
 	name = "MOD Module: Pathfinder"
@@ -1296,6 +1319,7 @@
 	id = "mod_circuit"
 	materials = list(/datum/material/glass = 2000)
 	build_path = /obj/item/mod/module/circuit
+	department_type = MODULE_SCIENCE
 
 /datum/design/module/mod_plasma_stabilizer
 	name = "MOD Module: Plasma Stabilizer"
