@@ -2,7 +2,7 @@
 	name = "Dullahan"
 	id = SPECIES_DULLAHAN
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS, HAS_FLESH, HAS_BONE)
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
@@ -20,7 +20,11 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
+	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
+
+	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
+	var/owner_first_client_connection_handled = FALSE
 
 
 /datum/species/dullahan/check_roundstart_eligible()
@@ -33,19 +37,22 @@
 	. = ..()
 	human.lose_hearing_sensitivity(TRAIT_GENERIC)
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
+
 	if(head)
 		head.no_update = TRUE
 		head.drop_limb()
+
 		if(!QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.
 			head.throwforce = 25
 			my_head = new /obj/item/dullahan_relay(head, human)
 			human.put_in_hands(head)
-			// We already know that we're a dullahan at this point.
-			var/datum/species/dullahan/head_species = human.dna.species
-			head_species.update_vision_perspective(human)
-			// var/obj/item/organ/eyes/E = human.getorganslot(ORGAN_SLOT_EYES)
-			// var/datum/action/item_action/organ_action/dullahan/D = locate() in E?.actions
-			// D?.Trigger()
+			head.show_organs_on_examine = FALSE
+
+			// We want to give the head some boring old eyes just so it doesn't look too jank on the head sprite.
+			head.eyes = new /obj/item/organ/eyes(head)
+			head.eyes.eye_color = human.eye_color
+			head.update_icon_dropped()
+
 	human.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
@@ -74,9 +81,25 @@
 	if(eyes)
 		human.update_tint()
 		if(eyes.tint)
-			human.reset_perspective(human)
+			prevent_perspective_change = FALSE
+			human.reset_perspective(human, TRUE)
 		else
-			human.reset_perspective(my_head)
+			human.reset_perspective(my_head, TRUE)
+			prevent_perspective_change = TRUE
+
+/datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
+	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
+	if(owner_first_client_connection_handled)
+		if(!eyes.tint)
+			owner.reset_perspective(my_head, TRUE)
+			prevent_perspective_change = TRUE
+		return
+
+	// As it's the first time there's a client in our mob, we can finally update its vision to place it in the head instead!
+	var/datum/action/item_action/organ_action/dullahan/eyes_toggle_perspective_action = locate() in eyes?.actions
+
+	eyes_toggle_perspective_action?.Trigger()
+	owner_first_client_connection_handled = TRUE
 
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
@@ -123,6 +146,7 @@
 
 /obj/item/dullahan_relay
 	name = "dullahan relay"
+	/// The mob (a dullahan) that owns this relay.
 	var/mob/living/owner
 
 /obj/item/dullahan_relay/Initialize(mapload, mob/living/carbon/human/new_owner)
@@ -149,7 +173,7 @@
 		. = PROCESS_KILL
 		qdel(src)
 
-/obj/item/dullahan_relay/proc/examinate_check(atom/source, mob/user)
+/obj/item/dullahan_relay/proc/examinate_check(mob/user, atom/source)
 	SIGNAL_HANDLER
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
