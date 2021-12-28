@@ -15151,7 +15151,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "73"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31685,7 +31685,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/maintenance{
 	name = "Service Hall Maintenance";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "73"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -43665,8 +43665,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "73"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46855,8 +46854,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "73"
 	},
 /turf/open/floor/iron/textured_half,
 /area/hallway/secondary/service)
