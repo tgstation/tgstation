@@ -19,7 +19,7 @@
 
 	else if(body_position == LYING_DOWN)
 		icon_state = "alien[caste]_sleep"
-	else if(mob_size == MOB_SIZE_LARGE)
+	else if(atom_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
 		if(drooling)
 			add_overlay("alienspit_[caste]")
@@ -60,7 +60,7 @@
 	var/cuff_icon = "aliencuff"
 	var/dmi_file = 'icons/mob/alien.dmi'
 
-	if(mob_size == MOB_SIZE_LARGE)
+	if(atom_size == MOB_SIZE_LARGE)
 		cuff_icon = "aliencuff_[caste]"
 		dmi_file = 'icons/mob/alienqueen.dmi'
 

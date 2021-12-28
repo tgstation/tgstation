@@ -16,6 +16,7 @@
 #include "_maps\_basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\_debugger.dm"
+#include "code\atom_size.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_click.dm"
 #include "code\__DEFINES\_globals.dm"

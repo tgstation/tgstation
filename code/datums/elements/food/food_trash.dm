@@ -53,7 +53,7 @@
 	if(!isliving(crosser) || bitecount) // can't pop opened chips
 		return
 	var/mob/living/popper = crosser
-	if(popper.mob_size < MOB_SIZE_HUMAN)
+	if(popper.atom_size < MOB_SIZE_HUMAN)
 		return
 
 	playsound(source, 'sound/effects/chipbagpop.ogg', 100)

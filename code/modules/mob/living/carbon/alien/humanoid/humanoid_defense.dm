@@ -6,7 +6,7 @@
 		return
 	adjustBruteLoss(15)
 	var/hitverb = "hit"
-	if(mob_size < MOB_SIZE_LARGE)
+	if(atom_size < MOB_SIZE_LARGE)
 		safe_throw_at(get_edge_target_turf(src, get_dir(user, src)), 2, 1, user)
 		hitverb = "slam"
 	playsound(loc, "punch", 25, TRUE, -1)

@@ -24,7 +24,7 @@
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
 
-//Sizes of mobs, used by mob/living/var/mob_size
+//Sizes of mobs, used by mob/living/var/atom_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1
 #define MOB_SIZE_HUMAN 2

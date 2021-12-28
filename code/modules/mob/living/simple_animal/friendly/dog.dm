@@ -636,7 +636,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	icon_dead = "puppy_dead"
 	density = FALSE
 	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	collar_type = "puppy"
 
 //puppies cannot wear anything.

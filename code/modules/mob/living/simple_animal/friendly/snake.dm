@@ -23,7 +23,7 @@
 	faction = list("hostile")
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	obj_damage = 0

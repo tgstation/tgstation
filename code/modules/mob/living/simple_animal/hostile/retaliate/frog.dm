@@ -26,7 +26,7 @@
 	attack_sound = 'sound/effects/reee.ogg'
 	butcher_results = list(/obj/item/food/nugget = 1)
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 
@@ -53,7 +53,7 @@
 	SIGNAL_HANDLER
 	if(!stat && isliving(AM))
 		var/mob/living/L = AM
-		if(L.mob_size > MOB_SIZE_TINY)
+		if(L.atom_size > MOB_SIZE_TINY)
 			playsound(src, stepped_sound, 50, TRUE)
 
 /mob/living/simple_animal/hostile/retaliate/frog/add_cell_sample()

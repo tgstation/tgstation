@@ -14,7 +14,7 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	pass_flags = PASSTABLE
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	minbodytemp = 200
 	maxbodytemp = 400
@@ -98,7 +98,7 @@
 	icon_dead = "kitten_dead"
 	density = FALSE
 	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	collar_type = "kitten"
 
 //RUNTIME IS ALIVE! SQUEEEEEEEE~

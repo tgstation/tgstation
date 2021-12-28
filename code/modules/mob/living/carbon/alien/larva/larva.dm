@@ -3,7 +3,7 @@
 	real_name = "alien larva"
 	icon_state = "larva0"
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	density = FALSE
 	hud_type = /datum/hud/larva
 	melee_damage_lower = 1

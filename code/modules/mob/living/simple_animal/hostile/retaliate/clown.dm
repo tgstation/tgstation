@@ -308,7 +308,7 @@
 	speak = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!")
 	emote_see = list("jiggles", "wobbles")
 	health = 200
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
@@ -350,7 +350,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/check_edible(atom/movable/potential_food)
 	if(isliving(potential_food))
 		var/mob/living/living_morsel = potential_food
-		if(living_morsel.mob_size > MOB_SIZE_SMALL)
+		if(living_morsel.atom_size > MOB_SIZE_SMALL)
 			return FALSE
 		else
 			return TRUE

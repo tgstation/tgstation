@@ -270,7 +270,7 @@
 	verb_yell = "bellows"
 	force_threshold = 10
 	pressure_resistance = 50
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)

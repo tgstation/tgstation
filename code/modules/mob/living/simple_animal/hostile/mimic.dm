@@ -376,8 +376,8 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return FALSE
-		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
-			if(L.density || L.mob_size > max_mob_size)
+		if(L.atom_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
+			if(L.density || L.atom_size > max_mob_size)
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)

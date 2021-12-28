@@ -223,7 +223,7 @@
 	butcher_results = list(/obj/item/food/meat/slab/mouse = 1)
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
 

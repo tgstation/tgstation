@@ -151,7 +151,7 @@
 		return
 	if(target.buckled || target.has_buckled_mobs())
 		return
-	if(target.mob_size > MOB_SIZE_HUMAN)
+	if(target.atom_size > MOB_SIZE_HUMAN)
 		to_chat(user, span_warning("[target] doesn't fit inside [src]!"))
 		return
 	add_fingerprint(user)

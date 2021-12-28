@@ -38,7 +38,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	density = FALSE
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!

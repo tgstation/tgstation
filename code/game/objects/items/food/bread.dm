@@ -303,7 +303,7 @@
 	righthand_file = fried.righthand_file
 	inhand_icon_state = fried.inhand_icon_state
 	desc = fried.desc
-	set_size(fried.atom_size) = fried.atom_size
+	set_size(fried.atom_size, force = TRUE)
 	slowdown = fried.slowdown
 	equip_delay_self = fried.equip_delay_self
 	equip_delay_other = fried.equip_delay_other

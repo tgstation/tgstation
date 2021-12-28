@@ -127,7 +127,7 @@
 	maxHealth = 3
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -185,7 +185,7 @@
 	health = 15
 	maxHealth = 15
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	footstep_type = FOOTSTEP_MOB_CLAW
 	///counter for how many chickens are in existence to stop too many chickens from lagging shit up

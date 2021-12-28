@@ -55,6 +55,6 @@
 	icon_dead = "penguin_baby_dead"
 	density = FALSE
 	pass_flags = PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/organ/ears/penguin = 1, /obj/item/food/meat/slab/penguin = 1)
 

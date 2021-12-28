@@ -7,7 +7,7 @@
 	maxHealth = 100
 	obj_damage = 60
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 
 	bot_type = ADVANCED_SEC_BOT
 	hackables = "combat inhibitors"

@@ -363,7 +363,7 @@
 		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
-	if(owner.mob_size >= MOB_SIZE_LARGE)
+	if(owner.atom_size >= MOB_SIZE_LARGE)
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
@@ -397,7 +397,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/on_apply()
-	if(owner.mob_size >= MOB_SIZE_HUMAN)
+	if(owner.atom_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
 		owner.update_appearance()
 		return TRUE

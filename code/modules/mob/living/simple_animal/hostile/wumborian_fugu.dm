@@ -41,7 +41,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "is avoided by the"
 	aggro_vision_range = 9
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	gold_core_spawnable = HOSTILE_SPAWN
 	var/wumbo = 0
@@ -105,7 +105,7 @@
 	F.minimum_distance = 1
 	F.move_to_delay = 6
 	F.environment_smash = ENVIRONMENT_SMASH_WALLS
-	F.mob_size = MOB_SIZE_LARGE
+	F.atom_size = MOB_SIZE_LARGE
 	F.speed = 1
 	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
 
@@ -124,7 +124,7 @@
 		move_to_delay = 2
 		inflate_cooldown = 4
 		environment_smash = ENVIRONMENT_SMASH_NONE
-		mob_size = MOB_SIZE_SMALL
+		atom_size = MOB_SIZE_SMALL
 		speed = 0
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)

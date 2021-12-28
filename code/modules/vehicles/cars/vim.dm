@@ -36,7 +36,7 @@
 	if(!isanimal_or_basicmob(entering))
 		return FALSE
 	var/mob/living/animal_or_basic = entering
-	if(animal_or_basic.mob_size != MOB_SIZE_TINY)
+	if(animal_or_basic.atom_size != MOB_SIZE_TINY)
 		return FALSE
 	return ..()
 

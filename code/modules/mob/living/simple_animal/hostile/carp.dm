@@ -162,7 +162,7 @@
 	health = 20
 	pixel_x = -16
 	base_pixel_x = -16
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	random_color = FALSE
 
 	obj_damage = 80

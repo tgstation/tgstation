@@ -189,7 +189,7 @@
 	move_to_delay = 8
 	speed = 1
 	status_flags = NONE
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
 	charger = TRUE
 	charge_distance = 4

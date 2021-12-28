@@ -385,17 +385,17 @@
 	. = ..()
 
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
-/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
-	suppressed = S
-	atom_size += S.atom_size //so pistols do not fit in pockets when suppressed
+/obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/suppressor)
+	suppressed = suppressor
+	set_size(atom_size + suppressor.atom_size, force = TRUE) // so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
 	if(!can_unsuppress)
 		return
 	if(isitem(suppressed))
-		var/obj/item/I = suppressed
-		atom_size -= I.atom_size
+		var/obj/item/suppressor = suppressed
+		set_size(atom_size - suppressor.atom_size, force = TRUE)
 	return ..()
 
 /obj/item/gun/ballistic/AltClick(mob/user)

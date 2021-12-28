@@ -35,13 +35,13 @@
 	if(isliving(gone) && (gone in occupants))
 		var/mob/living/L = gone
 		occupants -= gone
-		occupant_weight -= L.mob_size
+		occupant_weight -= L.atom_size
 
 /obj/item/pet_carrier/handle_atom_del(atom/A)
 	if(A in occupants && isliving(A))
 		var/mob/living/L = A
 		occupants -= L
-		occupant_weight -= L.mob_size
+		occupant_weight -= L.atom_size
 	..()
 
 /obj/item/pet_carrier/examine(mob/user)
@@ -88,7 +88,7 @@
 	if(!open)
 		to_chat(user, span_warning("You need to open [src]'s door!"))
 		return
-	if(target.mob_size > max_occupant_weight)
+	if(target.atom_size > max_occupant_weight)
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(isfelinid(H))
@@ -121,7 +121,7 @@
 /obj/item/pet_carrier/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
-	if(user.mob_size <= MOB_SIZE_SMALL)
+	if(user.atom_size <= MOB_SIZE_SMALL)
 		to_chat(user, span_notice("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, span_warning("You see [user] reach through the bars and fumble for the lock switch!"))
 		if(!do_after(user, rand(300, 400), target = user) || open || !locked || !(user in occupants))
@@ -187,14 +187,14 @@
 		return
 	occupant.forceMove(src)
 	occupants += occupant
-	occupant_weight += occupant.mob_size
+	occupant_weight += occupant.atom_size
 
 /obj/item/pet_carrier/proc/remove_occupant(mob/living/occupant, turf/new_turf)
 	if(!(occupant in occupants) || !istype(occupant))
 		return
 	occupant.forceMove(new_turf ? new_turf : drop_location())
 	occupants -= occupant
-	occupant_weight -= occupant.mob_size
+	occupant_weight -= occupant.atom_size
 	occupant.setDir(SOUTH)
 
 /obj/item/pet_carrier/biopod

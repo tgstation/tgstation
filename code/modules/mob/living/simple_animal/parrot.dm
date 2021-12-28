@@ -63,7 +63,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	friendly_verb_continuous = "grooms"
 	friendly_verb_simple = "groom"
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	var/parrot_damage_upper = 10

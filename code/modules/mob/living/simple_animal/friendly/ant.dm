@@ -13,7 +13,7 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	pass_flags = PASSTABLE
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	minbodytemp = 200
 	maxbodytemp = 400

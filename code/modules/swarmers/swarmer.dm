@@ -51,7 +51,7 @@
 	faction = list("swarmer")
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	ranged = TRUE
 	projectiletype = /obj/projectile/beam/disabler/swarmer
 	ranged_cooldown_time = 20

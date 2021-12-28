@@ -218,7 +218,7 @@
 		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
 		return TRUE
-	if(!client && (mob_size < MOB_SIZE_SMALL))
+	if(!client && (atom_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
 	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)

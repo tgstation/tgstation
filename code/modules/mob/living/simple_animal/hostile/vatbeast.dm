@@ -7,7 +7,7 @@
 	icon_living = "vat_beast"
 	icon_dead = "vat_beast_dead"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")

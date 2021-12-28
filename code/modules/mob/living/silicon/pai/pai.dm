@@ -6,7 +6,7 @@
 	density = FALSE
 	hud_type = /datum/hud/pai
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	health = 500
 	maxHealth = 500

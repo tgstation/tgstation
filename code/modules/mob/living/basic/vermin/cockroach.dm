@@ -5,7 +5,7 @@
 	icon_dead = "cockroach" //Make this work
 	density = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	health = 1
 	maxHealth = 1
 	speed = 1.25

@@ -570,7 +570,7 @@
 	friendly_verb_simple = "tap"
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	gold_core_spawnable = HOSTILE_SPAWN
 	verb_say = "warps"
 	verb_ask = "floats inquisitively"
@@ -622,7 +622,7 @@
 		if(ishuman(user))
 			var/mobcheck = FALSE
 			for(var/mob/living/simple_animal/A in range(1, src))
-				if(A.melee_damage_upper > 5 || A.mob_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
+				if(A.melee_damage_upper > 5 || A.atom_size >= MOB_SIZE_LARGE || A.ckey || A.stat)
 					break
 				var/obj/structure/closet/stasis/S = new /obj/structure/closet/stasis(A)
 				user.forceMove(S)

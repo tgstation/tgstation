@@ -956,7 +956,7 @@
 /mob/proc/get_mob_buckling_height(mob/seat)
 	if(isliving(seat))
 		var/mob/living/L = seat
-		if(L.mob_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
+		if(L.atom_size <= MOB_SIZE_SMALL) //being on top of a small mob doesn't put you very high.
 			return 0
 	return 9
 

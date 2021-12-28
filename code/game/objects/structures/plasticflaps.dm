@@ -69,7 +69,7 @@
 
 		var/mob/living/living_caller = caller
 		var/ventcrawler = HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_caller, TRAIT_VENTCRAWLER_NUDE)
-		if(!ventcrawler && living_caller.mob_size != MOB_SIZE_TINY)
+		if(!ventcrawler && living_caller.atom_size != MOB_SIZE_TINY)
 			return FALSE
 
 	if(caller?.pulling)
@@ -102,7 +102,7 @@
 		if(istype(living_mover.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return TRUE
 
-		if(living_mover.body_position == STANDING_UP && living_mover.mob_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
+		if(living_mover.body_position == STANDING_UP && living_mover.atom_size != MOB_SIZE_TINY && !(HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(living_mover, TRAIT_VENTCRAWLER_NUDE)))
 			return FALSE //If you're not laying down, or a small creature, or a ventcrawler, then no pass.
 
 

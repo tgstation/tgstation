@@ -43,7 +43,7 @@
 	var/allow_objects = FALSE
 	var/allow_dense = FALSE
 	var/dense_when_open = FALSE //if it's dense when open or not
-	var/max_mob_size = MOB_SIZE_HUMAN //Biggest mob_size accepted by the container
+	var/max_mob_size = MOB_SIZE_HUMAN //Biggest atom_size accepted by the container
 	var/mob_storage_capacity = 3 // how many human sized mob/living can fit together inside a closet.
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate then open it in a populated area to crash clients.
 	var/cutting_tool = /obj/item/weldingtool
@@ -210,7 +210,7 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchored || horizontal && L.atom_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, span_danger("There's something large on top of [src], preventing it from opening."))
 			return FALSE
@@ -222,7 +222,7 @@
 		if(closet != src && !closet.wall_mounted)
 			return FALSE
 	for(var/mob/living/L in T)
-		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
+		if(L.anchored || horizontal && L.atom_size > MOB_SIZE_TINY && L.density)
 			if(user)
 				to_chat(user, span_danger("There's something too large in [src], preventing it from closing."))
 			return FALSE
@@ -295,10 +295,10 @@
 		var/mob/living/L = AM
 		if(L.anchored || L.buckled || L.incorporeal_move || L.has_buckled_mobs())
 			return FALSE
-		if(L.mob_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
+		if(L.atom_size > MOB_SIZE_TINY) // Tiny mobs are treated as items.
 			if(horizontal && L.density)
 				return FALSE
-			if(L.mob_size > max_mob_size)
+			if(L.atom_size > max_mob_size)
 				return FALSE
 			var/mobs_stored = 0
 			for(var/mob/living/M in contents)

@@ -59,7 +59,7 @@
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	pass_flags = PASSTABLE | PASSMOB
-	mob_size = MOB_SIZE_SMALL
+	atom_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	///passed to animal_variety component as the prefix icon.
 	var/icon_prefix = "rabbit"

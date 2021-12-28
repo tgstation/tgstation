@@ -5,7 +5,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	bubble_icon = "alienroyal"
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)

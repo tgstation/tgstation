@@ -22,7 +22,7 @@
 	response_harm_simple = "splat"
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	mob_size = MOB_SIZE_TINY
+	atom_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN

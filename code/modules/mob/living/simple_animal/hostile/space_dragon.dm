@@ -50,7 +50,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
-	mob_size = MOB_SIZE_LARGE
+	atom_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
 	base_pixel_x = -16
