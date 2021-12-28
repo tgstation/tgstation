@@ -1480,11 +1480,13 @@
 
 /obj/item/mod/module/dna_lock/on_install()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
 	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
 	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 
 /obj/item/mod/module/dna_lock/on_uninstall()
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
 	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
 	UnregisterSignal(mod, COMSIG_ATOM_EMAG_ACT)
 
@@ -1506,6 +1508,12 @@
 	. = ..()
 	on_emag(src, user, emag_card)
 
+/obj/item/mod/module/dna_lock/proc/dna_check()
+	if(!dna || (mod.wearer.has_dna() && mod.wearer.dna.unique_enzymes == dna))
+		return TRUE
+	balloon_alert(mod.wearer, "dna locked!")
+	return FALSE
+
 /obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
 	SIGNAL_HANDLER
 
@@ -1519,10 +1527,14 @@
 /obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source)
 	SIGNAL_HANDLER
 
-	if(!dna || (mod.wearer.has_dna() && mod.wearer.dna.unique_enzymes == dna))
-		return
-	balloon_alert(mod.wearer, "dna locked!")
-	return MOD_CANCEL_ACTIVATE
+	if(!dna_check())
+		return MOD_CANCEL_ACTIVATE
+
+/obj/item/mod/module/dna_lock/proc/on_mod_removal(datum/source)
+	SIGNAL_HANDLER
+
+	if(!dna_check())
+		return MOD_CANCEL_REMOVAL
 
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
