@@ -127,11 +127,11 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		atom_size = clamp(full_atom_size-2, WEIGHT_CLASS_TINY, full_atom_size)
+		set_size(clamp(full_atom_size-2, WEIGHT_CLASS_TINY, full_atom_size), force = TRUE)
 	else if (amount <= (max_amount * (2/3)))
-		atom_size = clamp(full_atom_size-1, WEIGHT_CLASS_TINY, full_atom_size)
+		set_size(clamp(full_atom_size-1, WEIGHT_CLASS_TINY, full_atom_size), force = TRUE)
 	else
-		atom_size = full_atom_size
+		set_size(full_atom_size, force = TRUE)
 
 /obj/item/stack/update_icon_state()
 	if(novariants)

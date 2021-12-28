@@ -163,6 +163,12 @@
  * source - the item being transformed / parent
  */
 /datum/component/transforming/proc/set_active(obj/item/source)
+	if(!source.set_size(size_on))
+		return FALSE
+
+	source.hitsound = hitsound_on
+	source.icon_state = "[source.icon_state]_on"
+
 	if(sharpness_on)
 		source.sharpness = sharpness_on
 	if(force_on)
@@ -176,10 +182,7 @@
 		source.attack_verb_continuous = attack_verb_continuous_on
 	if(LAZYLEN(attack_verb_simple_on))
 		source.attack_verb_simple = attack_verb_simple_on
-
-	source.hitsound = hitsound_on
-	source.atom_size = size_on
-	source.icon_state = "[source.icon_state]_on"
+	return TRUE
 
 /*
  * Set our transformed item into its inactive state.
@@ -188,6 +191,12 @@
  * source - the item being un-transformed / parent
  */
 /datum/component/transforming/proc/set_inactive(obj/item/source)
+	if(!source.set_size(initial(source.atom_size)))
+		return FALSE
+
+	source.hitsound = initial(source.hitsound)
+	source.icon_state = initial(source.icon_state)
+
 	if(sharpness_on)
 		source.sharpness = initial(source.sharpness)
 	if(force_on)
@@ -201,10 +210,7 @@
 		source.attack_verb_continuous = attack_verb_continuous_off
 	if(LAZYLEN(attack_verb_simple_off))
 		source.attack_verb_simple = attack_verb_simple_off
-
-	source.hitsound = initial(source.hitsound)
-	source.atom_size = initial(source.atom_size)
-	source.icon_state = initial(source.icon_state)
+	return TRUE
 
 /*
  * If [clumsy_check] is set to TRUE, attempt to cause a side effect for clumsy people activating this item.

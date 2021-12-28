@@ -201,11 +201,12 @@
 /datum/component/two_handed/proc/unwield(mob/living/carbon/user, show_message=TRUE, can_drop = TRUE)
 	if(!wielded)
 		return
-
+	if (SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
+		return
+	
 	// wield update status
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
-	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
 
 	// update item stats

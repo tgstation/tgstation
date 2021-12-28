@@ -125,7 +125,7 @@
 			I.forceMove(P)
 			var/size = round(I.atom_size)
 			P.name = "[weight_class_to_text(size)] parcel"
-			P.atom_size = size
+			P.set_size(size, force = TRUE)
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
 

@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		atom_size = WEIGHT_CLASS_NORMAL
+		set_size(WEIGHT_CLASS_NORMAL, force = TRUE)
 		//The file might not have a "gun" icon, let's prepare for this
 		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'

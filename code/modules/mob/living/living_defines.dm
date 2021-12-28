@@ -4,6 +4,7 @@
 	see_in_dark = 2
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
+	atom_size = WEIGHT_CLASS_NORMAL
 	plane = GAME_PLANE_FOV_HIDDEN
 
 	hud_type = /datum/hud/living
@@ -140,8 +141,6 @@
 
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE
-	/// The atom_size of the holder when held.
-	var/held_atom_size = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
 	var/worn_slot_flags = NONE
 

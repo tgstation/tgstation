@@ -148,7 +148,7 @@
 		if(A_is_item.atom_size < max_weight_of_contents)
 			continue
 		max_weight_of_contents = A_is_item.atom_size
-	B.atom_size = max_weight_of_contents
+	B.set_size(max_weight_of_contents, force = TRUE)
 	usr.put_in_hands(B)
 
 /// Environmental bags. They protect against bad weather.

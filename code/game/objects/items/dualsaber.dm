@@ -48,8 +48,10 @@
 		if(user.dna.check_mutation(HULK))
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
+	if(!set_size(size_on))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
+	
 	wielded = TRUE
-	atom_size = size_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
@@ -59,6 +61,8 @@
 /// switch hitsounds
 /obj/item/dualsaber/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
+	if(!set_size(initial(atom_size)))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
 
 	wielded = FALSE
 	atom_size = initial(atom_size)

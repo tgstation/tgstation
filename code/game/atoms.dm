@@ -2144,14 +2144,15 @@
  * Arguments:
  * - value: The new size of the movable.
  * Returns:
- * - The old size of the movable.
+ * - Whether the operation was successful.
  */
-/atom/proc/set_size(value)
+/atom/proc/set_size(value, force = FALSE)
 	if (value == atom_size)
-		return value
-	if (SEND_SIGNAL(src, COMSIG_ATOM_SET_SIZE, value) & COMPONENT_BLOCK_SIZE_CHANGE)
-		return value
+		return TRUE
+	if ((SEND_SIGNAL(src, COMSIG_ATOM_SET_SIZE, value) & COMPONENT_BLOCK_SIZE_CHANGE) && !force)
+		return FALSE
 
-	. = atom_size
+	var/old_size = atom_size
 	atom_size = value
-	SEND_SIGNAL(src, COMSIG_ATOM_SIZE_CHANGED, value, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_SIZE_CHANGED, value, old_size)
+	return TRUE

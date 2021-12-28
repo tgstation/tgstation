@@ -103,13 +103,17 @@
 
 /obj/item/modular_computer/laptop/proc/toggle_open(mob/living/user=null)
 	if(screen_on)
+		if(!set_size(initial(atom_size)))
+			return
+		
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
-		atom_size = initial(atom_size)
 	else
+		if(!set_size(open_size))
+			return
+
 		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
-		atom_size = open_size
 
 	screen_on = !screen_on
 	display_overlays = screen_on
