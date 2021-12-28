@@ -1858,6 +1858,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/fore)
+"aiB" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall,
+/area/service/hallway)
 "aiC" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
@@ -6705,7 +6709,7 @@
 "aIN" = (
 /obj/structure/sign/departments/botany,
 /turf/closed/wall,
-/area/maintenance/central)
+/area/service/hallway)
 "aIQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -13127,7 +13131,7 @@
 "bqb" = (
 /obj/structure/sign/departments/custodian,
 /turf/closed/wall/rust,
-/area/maintenance/central)
+/area/service/hallway)
 "bqe" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13606,7 +13610,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/central)
+/area/service/hallway)
 "bvZ" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -33294,10 +33298,12 @@
 	},
 /obj/item/hand_labeler,
 /obj/machinery/light/small/directional/south,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/maintenance/central)
+/area/service/hallway)
 "fGU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
@@ -34247,6 +34253,9 @@
 /obj/item/trash/syndi_cakes,
 /turf/open/floor/iron/white,
 /area/security/prison)
+"geL" = (
+/turf/closed/wall/rust,
+/area/service/hallway)
 "geX" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/blue{
@@ -59790,6 +59799,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/security/brig)
+"pqX" = (
+/turf/closed/wall,
+/area/service/hallway)
 "prk" = (
 /obj/effect/decal/cleanable/ash,
 /obj/effect/decal/cleanable/dirt,
@@ -70635,8 +70647,9 @@
 /obj/machinery/rnd/production/techfab/department/service,
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
-/area/maintenance/central)
+/area/service/hallway)
 "tnH" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -71197,7 +71210,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
-/area/maintenance/central)
+/area/service/hallway)
 "txD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -116730,10 +116743,10 @@ yfP
 mFz
 uuQ
 rcm
-aox
-apX
-aox
-aox
+pqX
+geL
+pqX
+pqX
 aox
 aox
 pjy
@@ -116987,7 +117000,7 @@ dpC
 rqT
 bjq
 ltB
-bpq
+aiB
 tnG
 bvQ
 fGN
@@ -117244,7 +117257,7 @@ dim
 bvi
 rou
 epE
-apX
+geL
 bqb
 txC
 aIN

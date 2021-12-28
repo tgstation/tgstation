@@ -464,10 +464,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
 
-/area/hallway/secondary/service
-	name = "\improper Service Hallway"
-	icon_state = "hall_service"
-
 //Command
 
 /area/command
@@ -669,6 +665,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service
 	airlock_wires = /datum/wires/airlock/service
+
+/area/service/hallway
+	name = "\improper Service Hallway"
+	icon_state = "hall_service"
 
 /area/service/cafeteria
 	name = "\improper Cafeteria"
