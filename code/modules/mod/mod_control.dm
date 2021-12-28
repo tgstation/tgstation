@@ -137,6 +137,7 @@
 		module = new module(src)
 		install(module)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -200,12 +201,13 @@
 		. += span_notice("You could use <b>modules</b> on it to install them.")
 		. += span_notice("You could remove modules with a <b>crowbar</b>.")
 		. += span_notice("You could update the access with an <b>ID</b>.")
+		. += span_notice("You could access the wire panel with a <b>wire configuring tool</b>.")
 		if(cell)
 			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
 		else
 			. += span_notice("You could use a <b>cell</b> on it to install one.")
 		if(ai)
-			. += span_notice("You could remove [ai] with an <b>intellicard</b>")
+			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
 		else
 			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
@@ -617,3 +619,23 @@
 		return
 	cell.give(amount)
 	update_cell_alert()
+
+/obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(slowdown_inactive <= 0)
+		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
+		return
+	if(wearer)
+		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
+		return
+	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	slowdown_inactive = 0
+	slowdown_active = 0
+	slowdown = 0
+	qdel(speed_potion)
+	return SPEED_POTION_SUCCESSFUL
