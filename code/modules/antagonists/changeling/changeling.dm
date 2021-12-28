@@ -45,7 +45,7 @@
 	var/total_genetic_points = 10
 	/// List of all powers we start with.
 	var/list/innate_powers = list()
-	/// List of all powers we have eveolved.
+	/// List of all powers we have evolved / bought from the emporium.
 	var/list/purchased_powers = list()
 
 	/// The voice we're mimicing via the changeling voice ability.
