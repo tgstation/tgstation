@@ -16,6 +16,14 @@
 
 /obj/item/blackmarket_uplink/Initialize(mapload)
 	. = ..()
+	// We don't want to go through this at mapload because the SSblackmarket isn't initialized yet.
+	if(mapload)
+		return
+
+	update_viewing_category()
+
+/// Simple internal proc for updating the viewing_category variable.
+/obj/item/blackmarket_uplink/proc/update_viewing_category()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
 		var/list/categories = SSblackmarket.markets[viewing_market].categories
@@ -54,6 +62,9 @@
 	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, datum/tgui/ui)
+	if(!viewing_category)
+		update_viewing_category()
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BlackMarketUplink", name)
