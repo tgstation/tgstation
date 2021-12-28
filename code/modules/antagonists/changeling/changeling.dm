@@ -1,5 +1,10 @@
-#define LING_FAKEDEATH_TIME 400 //40 seconds
-#define LING_ABSORB_RECENT_SPEECH 8 //The amount of recent spoken lines to gain on absorbing a mob
+/// The duration of the fakedeath coma.
+#define LING_FAKEDEATH_TIME 40 SECONDS
+/// The number of recent spoken lines to gain on absorbing a mob
+#define LING_ABSORB_RECENT_SPEECH 8
+
+/// Helper to format the text that gets thrown onto the chem hud element.
+#define FORMAT_CHEM_CHARGES_TEXT(charges) MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(charges)]</font></div>")
 
 /datum/antagonist/changeling
 	name = "\improper Changeling"
@@ -11,13 +16,15 @@
 	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"
 	suicide_cry = "FOR THE HIVE!!"
-
 	/// Whether to give this changeling objectives or not
 	var/give_objectives = TRUE
 	/// Weather we assign objectives which compete with other lings
 	var/competitive_objectives = FALSE
 
-	//Changeling Stuff
+	// Changeling Stuff.
+	// If you want good boy points,
+	// separate the changeling (antag)
+	// and the changeling (mechanics).
 
 	/// list of datum/changeling_profile
 	var/list/stored_profiles = list()
@@ -97,30 +104,9 @@
 		break
 
 /datum/antagonist/changeling/Destroy()
-	QDEL_NULL(cellular_emporium)
 	QDEL_NULL(emporium_action)
+	QDEL_NULL(cellular_emporium)
 	return ..()
-
-/*
- * Instantiate the cellular emporium for the changeling.
- */
-/datum/antagonist/changeling/proc/create_emporium()
-	cellular_emporium = new(src)
-	emporium_action = new(cellular_emporium)
-	emporium_action.Grant(owner.current)
-
-/*
- * Instantiate all the default actions of a ling (transform, dna sting, absorb, etc)
- * Any Changeling action with dna_cost == 0 will be added
- */
-/datum/antagonist/changeling/proc/create_innate_actions()
-	for(var/datum/action/changeling/path as anything in all_powers)
-		if(initial(path.dna_cost) > 0)
-			continue
-
-		var/datum/action/changeling/innate_ability = new path()
-		innate_ability += innate_ability
-		innate_ability.on_purchase(owner.current, TRUE)
 
 /datum/antagonist/changeling/on_gain()
 	create_emporium()
@@ -130,7 +116,37 @@
 		forge_objectives()
 	owner.current.grant_all_languages(FALSE, FALSE, TRUE) //Grants omnitongue. We are able to transform our body after all.
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	. = ..()
+	return ..()
+
+/datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
+	var/mob/mob_to_tweak = mob_override || owner.current
+	if(!isliving(mob_to_tweak))
+		return
+
+	var/mob/living/living_mob = mob_to_tweak
+	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
+	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/try_regrant_buttons)
+	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/regenerate_chemicals)
+	owner.current.hud_used?.lingchemdisplay.invisibility = 0
+	owner.current.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+
+	if(!iscarbon(mob_to_tweak))
+		return
+
+	var/mob/living/carbon/carbon_mob = mob_to_tweak
+	RegisterSignal(mob_to_tweak, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/sting_atom)
+
+	// Brains are optional for lings.
+	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
+	if(our_ling_brain)
+		our_ling_brain.organ_flags &= ~ORGAN_VITAL
+		our_ling_brain.decoy_override = TRUE
+
+/datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/living_mob = mob_override || owner.current
+	handle_clown_mutation(living_mob, removing = FALSE)
+	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	owner.current.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/changeling/on_removal()
 	remove_changeling_powers(include_innate = TRUE)
@@ -143,34 +159,29 @@
 		not_ling_brain.decoy_override = FALSE
 	return ..()
 
+/datum/antagonist/changeling/farewell()
+	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
+
 /*
- * Remove changeling powers from the current Changeling's purchased_powers list.
- *
- * if [include_innate] = TRUE, will also remove all powers from the Changeling's innate_powers list.
+ * Instantiate the cellular emporium for the changeling.
  */
-/datum/antagonist/changeling/proc/remove_changeling_powers(include_innate = FALSE)
-	if(ishuman(owner.current))
-		for(var/datum/action/changeling/power as anything in purchased_powers)
-			purchased_powers -= power
-			power.Remove(owner.current)
-			qdel(power)
-		if(include_innate)
-			for(var/datum/action/changeling/power as anything in innate_powers)
-				innate_powers -= power
-				power.Remove(owner.current)
-				qdel(power)
+/datum/antagonist/changeling/proc/create_emporium()
+	cellular_emporium = new(src)
+	emporium_action = new(cellular_emporium)
+	emporium_action.Grant(owner.current)
 
-		chosen_sting = null
+/*
+ * Instantiate all the default actions of a ling (transform, dna sting, absorb, etc)
+ * Any Changeling action with `dna_cost == 0` will be added here automatically
+ */
+/datum/antagonist/changeling/proc/create_innate_actions()
+	for(var/datum/action/changeling/path as anything in all_powers)
+		if(initial(path.dna_cost) != 0)
+			continue
 
-		genetic_points = total_genetic_points
-		chem_charges = min(chem_charges, total_chem_storage)
-		chem_recharge_rate = initial(chem_recharge_rate)
-		chem_recharge_slowdown = initial(chem_recharge_slowdown)
-
-	//MOVE THIS //Where??
-	if(owner.current.hud_used?.lingstingdisplay)
-		owner.current.hud_used.lingstingdisplay.icon_state = null
-		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
+		var/datum/action/changeling/innate_ability = new path()
+		innate_powers += innate_ability
+		innate_ability.on_purchase(owner.current, TRUE)
 
 /*
  * Signal proc for [COMSIG_MOB_LOGIN].
@@ -188,19 +199,25 @@
 	regain_powers()
 
 /*
- * For resetting all of the changeling's action buttons. (IE, re-granting them all.)
+ * Signal proc for [COMSIG_LIVING_LIFE].
+ * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/regain_powers()
-	emporium_action.Grant(owner.current)
-	for(var/datum/action/changeling/power as anything in innate_powers)
-		if(istype(power) && power.needs_button)
-			power.Grant(owner.current)
-	for(var/datum/action/changeling/power as anything in purchased_powers)
-		if(istype(power) && power.needs_button)
-			power.Grant(owner.current)
+/datum/antagonist/changeling/proc/regenerate_chemicals(datum/source, delta_time, times_fired)
+	SIGNAL_HANDLER
+
+	if(!iscarbon(owner.current))
+		return
+
+	// If dead, we only regenerate up to half chem storage.
+	if(owner.current.stat == DEAD)
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time, total_chem_storage * 0.5)
+
+	// If we're not dead - we go up to the full chem cap.
+	else
+		adjust_chemicals((chem_recharge_rate - chem_recharge_slowdown) * delta_time)
 
 /*
- * Signal proc for COMSIG_MOB_MIDDLECLICKON and COMSIG_MOB_ALTCLICKON.
+ * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
  *
  * Allows the changeling to sting people with a click.
  */
@@ -214,8 +231,56 @@
 
 	return COMSIG_MOB_CANCEL_CLICKON
 
-/datum/antagonist/changeling/proc/adjust_chemicals(amount)
-	chem_charges = clamp(chem_charges + amount, 0, total_chem_storage)
+/*
+ * Adjust the chem charges of the ling by [amount]
+ * and clamp it between 0 and override_cap (if supplied) or total_chem_storage (if no override supplied)
+ */
+/datum/antagonist/changeling/proc/adjust_chemicals(amount, override_cap)
+	if(!isnum(amount))
+		return
+	var/cap_to = isnum(override_cap) ? override_cap : total_chem_storage
+	chem_charges = clamp(chem_charges + amount, 0, cap_to)
+
+	owner.current.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+
+/*
+ * Remove changeling powers from the current Changeling's purchased_powers list.
+ *
+ * if [include_innate] = TRUE, will also remove all powers from the Changeling's innate_powers list.
+ */
+/datum/antagonist/changeling/proc/remove_changeling_powers(include_innate = FALSE)
+	if(!isliving(owner.current))
+		return
+
+	if(chosen_sting)
+		chosen_sting.unset_sting(owner.current)
+
+	for(var/datum/action/changeling/power as anything in purchased_powers)
+		purchased_powers -= power
+		power.Remove(owner.current)
+		qdel(power)
+	if(include_innate)
+		for(var/datum/action/changeling/power as anything in innate_powers)
+			innate_powers -= power
+			power.Remove(owner.current)
+			qdel(power)
+
+	genetic_points = total_genetic_points
+	chem_charges = min(chem_charges, total_chem_storage)
+	chem_recharge_rate = initial(chem_recharge_rate)
+	chem_recharge_slowdown = initial(chem_recharge_slowdown)
+
+/*
+ * For resetting all of the changeling's action buttons. (IE, re-granting them all.)
+ */
+/datum/antagonist/changeling/proc/regain_powers()
+	emporium_action.Grant(owner.current)
+	for(var/datum/action/changeling/power as anything in innate_powers)
+		if(istype(power) && power.needs_button)
+			power.Grant(owner.current)
+	for(var/datum/action/changeling/power as anything in purchased_powers)
+		if(istype(power) && power.needs_button)
+			power.Grant(owner.current)
 
 /*
  * The act of purchasing a certain power for a changeling.
@@ -280,16 +345,6 @@
 
 	to_chat(owner.current, span_warning("You lack the power to readapt your evolutions!"))
 	return FALSE
-
-/// Called in Life(). (EW)
-/datum/antagonist/changeling/proc/regenerate(delta_time, times_fired) // Grants the HuD in life.dm
-	if(!iscarbon(owner.current))
-		return
-
-	if(owner.current.stat == DEAD)
-		chem_charges = min(max(0, chem_charges + ((chem_recharge_rate - chem_recharge_slowdown) * delta_time)), (total_chem_storage * 0.5))
-	else // Not dead? No chem caps.
-		chem_charges = min(max(0, chem_charges + ((chem_recharge_rate - chem_recharge_slowdown) * delta_time)), total_chem_storage)
 
 /*
  * Get the corresponding changeling profile for the passed name.
@@ -483,33 +538,6 @@
 
 	add_new_profile(owner.current)
 
-/datum/antagonist/changeling/apply_innate_effects(mob/living/mob_override)
-	var/mob/mob_to_tweak = mob_override || owner.current
-	if(!isliving(mob_to_tweak))
-		return
-
-	var/mob/living/living_mob = mob_to_tweak
-	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/try_regrant_buttons)
-
-	if(!iscarbon(mob_to_tweak))
-		return
-
-	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(mob_to_tweak, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/sting_atom)
-
-	// Brains are optional for lings.
-	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
-	our_ling_brain?.organ_flags &= ~ORGAN_VITAL
-	our_ling_brain?.decoy_override = TRUE
-
-/datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/living_mob = mob_override || owner.current
-	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
-
-/datum/antagonist/changeling/farewell()
-	to_chat(owner.current, span_userdanger("You grow weak and lose your powers! You are no longer a changeling and are stuck in your current form!"))
 
 /// Generate objectives for our changeling.
 /datum/antagonist/changeling/proc/forge_objectives()

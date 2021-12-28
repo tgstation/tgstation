@@ -12,7 +12,7 @@
 
 /datum/cellular_emporium/Destroy()
 	changeling = null
-	. = ..()
+	return ..()
 
 /datum/cellular_emporium/ui_state(mob/user)
 	return GLOB.always_state
@@ -81,6 +81,7 @@
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
 	background_icon_state = "bg_changeling"
+	/// The cell emporium we open.
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)
@@ -90,6 +91,10 @@
 		cellular_emporium = our_target
 	else
 		CRASH("cellular_emporium action created with non emporium")
+
+/datum/action/innate/cellular_emporium/Destroy()
+	cellular_emporium = null
+	return ..()
 
 /datum/action/innate/cellular_emporium/Activate()
 	cellular_emporium.ui_interact(owner)
