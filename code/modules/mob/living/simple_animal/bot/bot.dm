@@ -234,6 +234,8 @@
 		return TRUE
 	if(!maints_access_required) // No requirements to access it.
 		return TRUE
+	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
+		return TRUE
 
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(!id_card || !id_card.access)
@@ -421,9 +423,9 @@
 		else
 			if(attacking_item.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
-			..()
+	..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
@@ -907,9 +909,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(action == "lock")
 		bot_cover_flags ^= BOT_COVER_LOCKED
 
-	if(bot_cover_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
-		return
-
 	switch(action)
 		if("power")
 			if(bot_mode_flags & BOT_MODE_ON)
@@ -943,7 +942,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(paicard)
 				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
 				ejectpai(usr)
-	return
 
 /mob/living/simple_animal/bot/update_icon_state()
 	icon_state = "[initial(icon_state)][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
@@ -964,11 +962,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
-	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || !key)
-		to_chat(user, span_warning("[src] is not compatible with [card]!"))
-		return
 	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
 		to_chat(user, span_warning("The personality slot is locked."))
+		return
+	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || key) //Not pAI controllable or is already player controlled.
+		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
 	if(!card.pai || !card.pai.mind)
 		to_chat(user, span_warning("[card] is inactive."))
