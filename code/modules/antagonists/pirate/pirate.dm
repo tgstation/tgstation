@@ -1,5 +1,5 @@
 /datum/antagonist/pirate
-	name = "Space Pirate"
+	name = "\improper Space Pirate"
 	job_rank = ROLE_TRAITOR
 	roundend_category = "space pirates"
 	show_in_antagpanel = FALSE
@@ -9,7 +9,7 @@
 	var/datum/team/pirate/crew
 
 /datum/antagonist/pirate/greet()
-	to_chat(owner, span_boldannounce("You are a Space Pirate!"))
+	. = ..()
 	to_chat(owner, "<B>The station refused to pay for your protection, protect the ship, siphon the credits from the station and raid it for even more loot.</B>")
 	owner.announce_objectives()
 

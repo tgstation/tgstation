@@ -59,7 +59,7 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = stripped_input(user,"Enter the password:", "Password", "")
+	var/guess = tgui_input_text(user, "Enter the password", "Password")
 	if(guess == password)
 		return TRUE
 	return FALSE

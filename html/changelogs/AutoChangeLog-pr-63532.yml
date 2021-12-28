@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Dirt piles can no longer exceed their maximum reagent capacity by 10. Sorry prison botanists."
