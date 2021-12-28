@@ -803,6 +803,7 @@
  */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
 	contents_explosion(severity, target)
 	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
