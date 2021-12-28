@@ -496,7 +496,7 @@
 "bJ" = (
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "bL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -707,14 +707,14 @@
 /obj/effect/turf_decal/siding/white,
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "cK" = (
 /obj/structure/sink{
 	dir = 4;
 	pixel_x = -12
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "cM" = (
 /turf/closed/wall,
 /area/mine/living_quarters)
@@ -1195,7 +1195,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "fo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -1704,7 +1704,7 @@
 /obj/structure/cable,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "hs" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -1893,7 +1893,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ic" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -2155,7 +2155,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "jg" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -2478,7 +2478,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "kB" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -2642,7 +2642,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "lj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2793,7 +2793,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "lP" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -2991,7 +2991,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "mF" = (
 /obj/item/clothing/mask/fakemoustache,
 /obj/item/clothing/mask/cigarette/pipe,
@@ -3547,14 +3547,14 @@
 "oR" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "oS" = (
 /obj/machinery/camera{
 	c_tag = "Service-Hallway Bottom 1";
 	dir = 9
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "oT" = (
 /obj/machinery/holopad,
 /turf/open/floor/iron/cafeteria,
@@ -3576,7 +3576,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "oX" = (
 /obj/machinery/button/door/directional/west{
 	id = "xenobio4";
@@ -3761,7 +3761,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "pC" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hazardvest,
@@ -3814,7 +3814,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "pO" = (
 /turf/closed/wall,
 /area/service/theater)
@@ -4030,7 +4030,7 @@
 /area/mine/laborcamp)
 "qJ" = (
 /turf/closed/wall,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "qK" = (
 /obj/machinery/door/morgue{
 	name = "Relic Closet";
@@ -4650,7 +4650,7 @@
 /area/science/xenobiology)
 "sG" = (
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -4708,7 +4708,7 @@
 	c_tag = "Service-Hallway Bottom 2"
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sS" = (
 /obj/machinery/mech_bay_recharge_port,
 /obj/item/radio/intercom/directional/south,
@@ -4727,7 +4727,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sW" = (
 /obj/machinery/door/window/westright{
 	name = "Exterior Access"
@@ -4739,7 +4739,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sY" = (
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
@@ -5089,7 +5089,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "uh" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
@@ -5186,7 +5186,7 @@
 /obj/effect/turf_decal/siding/white,
 /obj/effect/spawner/random/vending/snackvend,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "uE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -5364,7 +5364,7 @@
 	},
 /obj/machinery/duct,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "vy" = (
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
@@ -5650,7 +5650,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "wI" = (
 /obj/structure/railing,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -6010,7 +6010,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "yq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
@@ -6344,7 +6344,7 @@
 /obj/structure/cable,
 /obj/machinery/duct,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "zC" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
@@ -6728,7 +6728,7 @@
 "Bi" = (
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Bj" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -6884,7 +6884,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "BN" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -7116,7 +7116,7 @@
 "CF" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "CG" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -7289,7 +7289,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Dg" = (
 /turf/closed/wall,
 /area/service/bar)
@@ -7302,7 +7302,7 @@
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Di" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -8593,7 +8593,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Ig" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
@@ -8853,7 +8853,7 @@
 /area/cargo/drone_bay)
 "Ji" = (
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Jl" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -9254,7 +9254,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "KD" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio2";
@@ -9408,7 +9408,7 @@
 "Lb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Lc" = (
 /obj/structure/closet/crate/grave,
 /turf/open/floor/plating/dirt{
@@ -9506,7 +9506,7 @@
 "LA" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "LB" = (
 /obj/effect/spawner/random/maintenance/three,
 /obj/structure/closet/crate,
@@ -9626,7 +9626,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Mc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -9880,7 +9880,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Nc" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -10582,7 +10582,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "PP" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/stripes/box,
@@ -10800,7 +10800,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "QC" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp{
@@ -11015,7 +11015,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Rz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/east,
@@ -11344,7 +11344,7 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ST" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -11577,7 +11577,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "TE" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -11678,7 +11678,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "TW" = (
 /obj/structure/table/wood,
 /obj/item/radio/intercom/directional/south,
@@ -12246,7 +12246,7 @@
 "Wo" = (
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Wr" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/closet/crate{

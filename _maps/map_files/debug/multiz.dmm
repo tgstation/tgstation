@@ -105,7 +105,7 @@
 "av" = (
 /obj/structure/stairs/north,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "aw" = (
 /turf/open/floor/plating,
 /area/engineering/atmos)
@@ -887,7 +887,7 @@
 /area/engineering/main)
 "dY" = (
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "dZ" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -910,12 +910,12 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ee" = (
 /turf/open/floor/iron{
 	dir = 9
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ej" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -928,36 +928,36 @@
 /turf/open/floor/iron{
 	dir = 1
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "en" = (
 /turf/open/floor/iron{
 	dir = 10
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eo" = (
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "es" = (
 /obj/effect/turf_decal/stripes/asteroid/corner,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eu" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ey" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ez" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron{
 	dir = 8
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eC" = (
 /turf/open/openspace,
 /area/maintenance/department/bridge)
@@ -967,58 +967,58 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eE" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eH" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eI" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eJ" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eL" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eM" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 4
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eN" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eO" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "eQ" = (
 /obj/structure/railing{
 	dir = 4
@@ -1071,7 +1071,7 @@
 "gW" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "gY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -1100,7 +1100,7 @@
 "hY" = (
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "ij" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1118,7 +1118,7 @@
 /area/construction)
 "iu" = (
 /turf/open/openspace,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "iH" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing/corner{
@@ -1130,11 +1130,11 @@
 /turf/open/floor/iron{
 	dir = 8
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "jb" = (
 /obj/machinery/atmospherics/pipe/multiz,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "jA" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 8
@@ -1153,7 +1153,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "jT" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1170,7 +1170,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "lm" = (
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
@@ -1181,7 +1181,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "lT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -1204,7 +1204,7 @@
 /turf/open/floor/iron{
 	dir = 4
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "nx" = (
 /turf/open/openspace,
 /area/space/nearstation)
@@ -1215,7 +1215,7 @@
 "nF" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "nS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/industrial_lift,
@@ -1251,7 +1251,7 @@
 "pi" = (
 /obj/machinery/light/directional/east,
 /turf/open/openspace,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "qo" = (
 /turf/open/openspace,
 /area/engineering/storage)
@@ -1285,7 +1285,7 @@
 /turf/open/floor/iron{
 	dir = 1
 	},
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sm" = (
 /obj/structure/stairs/south,
 /turf/open/floor/plating,
@@ -1295,7 +1295,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "sE" = (
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 4
@@ -1368,7 +1368,7 @@
 "xI" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "xK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -1408,7 +1408,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "zC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1430,7 +1430,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "AG" = (
 /turf/closed/wall/r_wall,
 /area/engineering/storage)
@@ -1476,7 +1476,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "CP" = (
 /obj/structure/railing{
 	dir = 8
@@ -1518,7 +1518,7 @@
 "Fd" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Fs" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1537,7 +1537,7 @@
 /area/construction)
 "Gb" = (
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Hk" = (
 /obj/machinery/atmospherics/pipe/multiz{
 	dir = 1
@@ -1557,14 +1557,14 @@
 "IC" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "IL" = (
 /obj/structure/railing/corner,
 /obj/structure/railing/corner{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "IN" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/iron,
@@ -1572,7 +1572,7 @@
 "Jg" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Jt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1599,7 +1599,7 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "KM" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1611,14 +1611,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "LE" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "LW" = (
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
@@ -1657,7 +1657,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Qw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
@@ -1682,7 +1682,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Tf" = (
 /obj/structure/railing{
 	dir = 1
@@ -1694,7 +1694,7 @@
 /area/engineering/storage)
 "TY" = (
 /turf/closed/wall/r_wall,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Um" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -1729,7 +1729,7 @@
 "WN" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "WR" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/iron,
@@ -1737,18 +1737,18 @@
 "XN" = (
 /obj/structure/railing,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "XQ" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/hallway/secondary/service)
+/area/service/hallway)
 "Zk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
