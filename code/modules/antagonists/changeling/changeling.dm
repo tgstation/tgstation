@@ -123,16 +123,16 @@
 
 	var/mob/living/living_mob = mob_to_tweak
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/try_regrant_buttons)
-	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/regenerate_chemicals)
-	owner.current.hud_used?.lingchemdisplay.invisibility = 0
-	owner.current.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
+	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
+	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
+	living_mob.hud_used?.lingchemdisplay.invisibility = 0
+	living_mob.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
 	if(!iscarbon(mob_to_tweak))
 		return
 
 	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/sting_atom)
+	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
 	// Brains are optional for lings.
 	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
@@ -144,7 +144,7 @@
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
 	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
-	owner.current.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
+	living_mob.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/changeling/on_removal()
 	remove_changeling_powers(include_innate = TRUE)
@@ -185,7 +185,7 @@
  * Signal proc for [COMSIG_MOB_LOGIN].
  * Gives us back our action buttons if we lose them on log-in.
  */
-/datum/antagonist/changeling/proc/try_regrant_buttons(datum/source)
+/datum/antagonist/changeling/proc/on_login(datum/source)
 	SIGNAL_HANDLER
 
 	if(!isliving(source))
@@ -200,7 +200,7 @@
  * Signal proc for [COMSIG_LIVING_LIFE].
  * Handles regenerating chemicals on life ticks.
  */
-/datum/antagonist/changeling/proc/regenerate_chemicals(datum/source, delta_time, times_fired)
+/datum/antagonist/changeling/proc/on_life(datum/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
 	if(!iscarbon(owner.current))
@@ -216,10 +216,9 @@
 
 /*
  * Signal proc for [COMSIG_MOB_MIDDLECLICKON] and [COMSIG_MOB_ALTCLICKON].
- *
  * Allows the changeling to sting people with a click.
  */
-/datum/antagonist/changeling/proc/sting_atom(mob/living/carbon/ling, atom/clicked)
+/datum/antagonist/changeling/proc/on_click_sting(mob/living/carbon/ling, atom/clicked)
 	SIGNAL_HANDLER
 
 	if(!chosen_sting || clicked == ling || !istype(ling) || ling.stat != CONSCIOUS)
