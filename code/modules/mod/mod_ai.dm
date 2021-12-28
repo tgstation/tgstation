@@ -72,13 +72,15 @@
 	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != ai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
 		return FALSE
 	var/timemodifier = MOVE_DELAY * (ISDIAGONALDIR(direction) ? SQRT_2 : 1) * (wearer ? WEARER_DELAY : LONE_DELAY)
-	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
-	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
-	cell.charge = max(0, cell.charge - CELL_PER_STEP)
-	if(ismovable(wearer?.loc))
-		return wearer.loc.relaymove(wearer, direction)
 	if(wearer && !wearer.Process_Spacemove(direction))
 		return FALSE
+	else if(!wearer && (!has_gravity() || !isturf(loc)))
+		return FALSE
+	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
+	cell.charge = max(0, cell.charge - CELL_PER_STEP)
+	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
+	if(ismovable(wearer?.loc))
+		return wearer.loc.relaymove(wearer, direction)
 	var/atom/movable/mover = wearer || src
 	return step(mover, direction)
 
