@@ -1,28 +1,28 @@
-//TODO: ALL THATS LEFT:
-// send a list in check_size or wherever it calls the signal of all thecultists
-//
-// clean the code up
-// finish and redo all the autodoc comments
-
-
 /**
  * # Cult Status element
  *
  * Element used to manage and display the visual cult effects.
  *
  * Used to apply and remove the traits, and overlays associated with the growing size of a cult.
+ *
  */
 /datum/element/cult_status
 
 /**
- * Check if the cultist needs to have their
+ * Attach proc.
+ *
+ * If the parent is a mob, setup the cult visibility.
+ *
  */
 /datum/element/cult_status/Attach(datum/parent)
 	. = ..()
-	if (!isliving(parent))
+	if (istype(parent, /datum/team/cult))
+		RegisterSignal(parent, COMSIG_CULT_STATUS_CHANGED, .proc/raise_level)
+		return .
+	else if (isliving(parent))
+		RegisterSignal(parent, COMSIG_MOB_TRANSFORMING, .proc/handle_transform)
+	else
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_TRANSFORMING, .proc/handle_transform)
-	RegisterSignal(parent, COMSIG_CULT_STATUS_CHANGED, .proc/raise_level)
 
 	var/status = CULT_STATUS_NORMAL
 	var/mob/living/mob = parent
@@ -31,7 +31,6 @@
 			status = CULT_STATUS_ASCENDED
 		else if (player_datum.cult_team.cult_risen)
 			status = CULT_STATUS_RISEN
-
 	// Do a shortened version of raise_level() here, since we don't need all the flavour text
 	switch(status)
 		if (CULT_STATUS_RISEN)
@@ -45,49 +44,54 @@
  */
 /datum/element/cult_status/Detach(datum/parent, ...)
 	. = ..()
-	var/mob/living/parent_mob = parent
-	if (HAS_TRAIT(parent_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES))
-		REMOVE_TRAIT(parent_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		if (ishuman(parent_mob))
-			var/mob/living/carbon/human/human_parent = parent_mob
-			human_parent.eye_color = initial(human_parent.eye_color)
-			human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-	if (HAS_TRAIT(parent_mob, TRAIT_CULT_HALO))
-		REMOVE_TRAIT(parent_mob, TRAIT_CULT_HALO, CULT_TRAIT)
-		if (ishuman(parent_mob))
-			var/mob/living/carbon/human/human_parent = parent_mob
-			human_parent.remove_overlay(HALO_LAYER)
-			human_parent.update_body()
-		else
-			parent_mob.cut_overlay(HALO_LAYER)
-	UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
-	UnregisterSignal(parent, COMSIG_CULT_STATUS_CHANGED)
+	if (isliving(parent))
+		var/mob/living/parent_mob = parent
+		if (HAS_TRAIT(parent_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES))
+			REMOVE_TRAIT(parent_mob, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
+			if (ishuman(parent_mob))
+				var/mob/living/carbon/human/human_parent = parent_mob
+				human_parent.eye_color = initial(human_parent.eye_color)
+				human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		if (HAS_TRAIT(parent_mob, TRAIT_CULT_HALO))
+			REMOVE_TRAIT(parent_mob, TRAIT_CULT_HALO, CULT_TRAIT)
+			if (ishuman(parent_mob))
+				var/mob/living/carbon/human/human_parent = parent_mob
+				human_parent.remove_overlay(HALO_LAYER)
+				human_parent.update_body()
+			else
+				parent_mob.cut_overlay(HALO_LAYER)
+		UnregisterSignal(parent, COMSIG_MOB_TRANSFORMING)
+	else
+		UnregisterSignal(parent, COMSIG_CULT_STATUS_CHANGED)
 
 /**
- * Raise the current visibility level of the cultist.
+ * Raise the current visibility level of the cult team.
  *
- * Checks the current stage, raises it if a specific level is not applied.
+ * Updates all cultist's to the new visibility stage, with the given status.
  * Supplies the flavour text, and the sounds, then calls the procs associated with each stage.
- * Arguments: (re turn true if raised)
- * * _stage - (Optional) Specify the cult visibility stage to raise to.
+ * Arguments:
+ * * status - Specify the cult visibility stage to raise to.
  */
-/datum/element/cult_status/proc/raise_level(datum/target, status, list/to_raise)
-	for (var/datum/mind/parent_mind in to_raise)
-		var/mob/living/parent = parent_mind.current
+/datum/element/cult_status/proc/raise_level(datum/parent, status)
+	var/datum/team/cult/parent_team = parent
+	for (var/datum/mind/parent_mind in parent_team.members)
+		var/mob/living/parent_mob = parent_mind.current
 		switch(status)
 			if (CULT_STATUS_RISEN)
-				SEND_SOUND(parent, 'sound/hallucinations/i_see_you2.ogg')
-				to_chat(parent, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
-				addtimer(CALLBACK(src, .proc/set_eyes, parent), 20 SECONDS)
+				SEND_SOUND(parent_mob, 'sound/hallucinations/i_see_you2.ogg')
+				to_chat(parent_mob, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
+				addtimer(CALLBACK(src, .proc/set_eyes, parent_mob), 20 SECONDS)
 			if (CULT_STATUS_ASCENDED)
-				SEND_SOUND(parent, 'sound/hallucinations/im_here1.ogg')
-				to_chat(parent, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
-				addtimer(CALLBACK(src, .proc/set_halo, parent), 20 SECONDS)
+				SEND_SOUND(parent_mob, 'sound/hallucinations/im_here1.ogg')
+				to_chat(parent_mob, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+				addtimer(CALLBACK(src, .proc/set_halo, parent_mob), 20 SECONDS)
 
 /**
  * Set the eyes of the cultist to begin glowing.
  *
  * Humans will have their eye colour changed, while any other mob will just have "glowing eyes".
+ * Arguments:
+ * * override - Override the check to see if the mob already has the glowing eye trait.
  */
 /datum/element/cult_status/proc/set_eyes(datum/parent, override = FALSE)
 	var/mob/living/parent_mob = parent
@@ -102,6 +106,8 @@
 
 /**
  * Apply a floating halo above the cultist.
+ * Arguments:
+ * * override - Override the check to see if the mob already has the halo trait.
  */
 /datum/element/cult_status/proc/set_halo(datum/parent, override = FALSE)
 	var/mob/living/parent_mob = parent
@@ -122,6 +128,7 @@
  * Handle mob transformation.
  *
  * Prevents deleting the given traits by transforming into a different mob.
+ *
  */
 /datum/element/cult_status/proc/handle_transform(datum/parent)
 	if (HAS_TRAIT(parent, TRAIT_UNNATURAL_RED_GLOWY_EYES))

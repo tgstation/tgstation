@@ -153,14 +153,6 @@
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
-	// todo:
-	// probably justn eed to remove element here
-	/*
-	if(ishuman(current))
-		var/mob/living/carbon/human/H = current
-		//REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		// TODO: see if this needs to be here
-	*/
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
@@ -261,6 +253,14 @@
 	var/cult_risen = FALSE
 	var/cult_ascendent = FALSE
 
+/datum/team/cult/New(starting_members)
+	. = ..()
+	src.AddElement(/datum/element/cult_status)
+
+/datum/team/cult/Destroy(force, ...)
+	. = ..()
+	src.RemoveElement(/datum/element/cult_status)
+
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return
@@ -282,12 +282,12 @@
 	if(ratio > CULT_RISEN && !cult_risen)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
-		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_RISEN, cult_members)
+		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_RISEN)
 
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
-		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_ASCENDED, cult_members)
+		SEND_SIGNAL(src, COMSIG_CULT_STATUS_CHANGED, CULT_STATUS_ASCENDED)
 
 /datum/team/cult/proc/get_status()
 	var/status = CULT_STATUS_NORMAL
