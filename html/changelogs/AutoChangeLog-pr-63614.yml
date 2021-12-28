@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "fixed weird \"Mob Spawner\" objects showing up when you killed clowns"
