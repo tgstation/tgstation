@@ -6,7 +6,7 @@
 // Allows the AI Eye to stream these chunks and know what it can and cannot see.
 
 /datum/camerachunk
-	///turfs our cameras cant see but are inside our grid
+	///turfs our cameras cant see but are inside our grid. associative list of the form: list(obscured turf = static image on that turf)
 	var/list/obscuredTurfs = list()
 	///turfs our cameras can see inside our grid
 	var/list/visibleTurfs = list()
@@ -16,6 +16,11 @@
 	var/list/turfs = list()
 	///camera mobs that can see turfs in our grid
 	var/list/seenby = list()
+	///images created to represent obscured turfs
+	var/list/inactive_static_images = list()
+	///images currently in use on obscured turfs.
+	var/list/active_static_images = list()
+
 	var/changed = FALSE
 	var/x = 0
 	var/y = 0
@@ -28,15 +33,18 @@
 	if(changed)
 		update()
 
-/// Remove an AI eye from the chunk, then update if changed.
+	var/client/client = eye.GetViewerClient()
+	if(client && eye.use_static)
+		client.images += active_static_images
+
+/// Remove an AI eye from the chunk
 /datum/camerachunk/proc/remove(mob/camera/ai_eye/eye, remove_static_with_last_chunk = TRUE)
 	eye.visibleCameraChunks -= src
 	seenby -= eye
 
-	if(remove_static_with_last_chunk && !eye.visibleCameraChunks.len)
-		var/client/client = eye.GetViewerClient()
-		if(client && eye.use_static)
-			client.images -= GLOB.cameranet.obscured
+	var/client/client = eye.GetViewerClient()
+	if(client && eye.use_static)
+		client.images -= active_static_images
 
 /// Called when a chunk has changed. I.E: A wall was deleted.
 /datum/camerachunk/proc/visibilityChanged(turf/loc)
@@ -56,7 +64,7 @@
 
 /// The actual updating. It gathers the visible turfs from cameras and puts them into the appropiate lists.
 /datum/camerachunk/proc/update()
-	var/list/newVisibleTurfs = list()
+	var/list/updated_visible_turfs = list()
 
 	for(var/obj/machinery/camera/current_camera as anything in cameras)
 		if(!current_camera || !current_camera.can_use())
@@ -68,24 +76,40 @@
 
 		for(var/turf/vis_turf in current_camera.can_see())
 			if(turfs[vis_turf])
-				newVisibleTurfs[vis_turf] = vis_turf
+				updated_visible_turfs[vis_turf] = vis_turf
 
-	//new turfs will be in visibleTurfs but werent last update
-	var/list/visAdded = newVisibleTurfs - visibleTurfs
-	//old turfs that will no longer be in visibleTurfs but were last update
-	var/list/visRemoved = visibleTurfs - newVisibleTurfs
+	///new turfs that we couldnt see last update but can now
+	var/list/newly_visible_turfs = updated_visible_turfs - visibleTurfs
+	///turfs that we could see last update but cant see now
+	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
-	visibleTurfs = newVisibleTurfs
-	//turfs that are included in the chunks normal turfs list minus the turfs the cameras CAN see
-	obscuredTurfs = turfs - newVisibleTurfs
+	for(var/turf/visible_turf as anything in newly_visible_turfs)
+		var/image/static_image_to_deallocate = obscuredTurfs[visible_turf]
+		if(!static_image_to_deallocate)
+			continue
 
-	var/static/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque //ba dum tsss
-	for(var/turf/added_turf as anything in visAdded)
-		added_turf.vis_contents -= vis_contents_opaque
+		static_image_to_deallocate.loc = null
+		active_static_images -= static_image_to_deallocate
+		inactive_static_images += static_image_to_deallocate
 
-	for(var/turf/removed_turf as anything in visRemoved)
-		if(obscuredTurfs[removed_turf] && !istype(removed_turf, /turf/open/ai_visible))
-			removed_turf.vis_contents += vis_contents_opaque
+		obscuredTurfs -= visible_turf
+
+	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
+		if(!obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
+			continue
+
+		var/image/static_image_to_allocate = inactive_static_images[length(inactive_static_images)]
+		if(!static_image_to_allocate)
+			stack_trace("somehow a camera chunk ran out of static images!")
+			break
+
+		obscuredTurfs[obscured_turf] = static_image_to_allocate
+		static_image_to_allocate.loc = obscured_turf
+
+		inactive_static_images -= static_image_to_allocate
+		active_static_images += static_image_to_allocate
+
+	visibleTurfs = updated_visible_turfs
 
 	changed = FALSE
 
@@ -97,6 +121,9 @@
 	src.x = x
 	src.y = y
 	src.z = z
+
+	for(var/turf_num in 1 to 16 * 16)
+		inactive_static_images += new/image(GLOB.cameranet.obscured)
 
 	for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(camera.can_use())
@@ -120,11 +147,12 @@
 			if(turfs[vis_turf])
 				visibleTurfs[vis_turf] = vis_turf
 
-	obscuredTurfs = turfs - visibleTurfs
-
-	var/list/vis_contents_opaque = GLOB.cameranet.vis_contents_opaque
-	for(var/turf/obscured_turf as anything in obscuredTurfs)
-		obscured_turf.vis_contents += vis_contents_opaque
+	for(var/turf/obscured_turf as anything in turfs - visibleTurfs)
+		var/image/new_static = inactive_static_images[inactive_static_images.len]
+		new_static.loc = obscured_turf
+		active_static_images += new_static
+		inactive_static_images -= new_static
+		obscuredTurfs[obscured_turf] = new_static
 
 #undef UPDATE_BUFFER_TIME
 #undef CHUNK_SIZE
