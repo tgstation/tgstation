@@ -5,7 +5,7 @@
 	icon_state = "nothingwand"
 	inhand_icon_state = "wand"
 	base_icon_state = "nothingwand"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	can_charge = FALSE
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = TRUE

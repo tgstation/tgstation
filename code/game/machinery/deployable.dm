@@ -201,7 +201,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "folded_hmg"
 	max_integrity = 250
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 
 /obj/item/deployable_turret_folded/Initialize(mapload)

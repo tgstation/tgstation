@@ -134,7 +134,7 @@
 	icon_state = "dueling_pistol"
 	inhand_icon_state = "gun"
 	ammo_x_offset = 2
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	ammo_type = list(/obj/item/ammo_casing/energy/duel)
 	automatic_charge_overlays = FALSE
 	var/unlocked = FALSE
@@ -310,7 +310,7 @@
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_CAPTAIN)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -320,7 +320,7 @@
 /obj/item/storage/lockbox/dueling/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
 	STR.max_items = 2
 	STR.set_holdable(list(/obj/item/gun/energy/dueling))
 

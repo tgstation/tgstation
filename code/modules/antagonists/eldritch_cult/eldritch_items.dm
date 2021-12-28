@@ -3,7 +3,7 @@
 	desc = "A link to the worlds beyond."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "living_heart"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	///Target
 	var/mob/living/carbon/human/target
 
@@ -44,7 +44,7 @@
 	inhand_y_dimension = 64
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 17
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -120,7 +120,7 @@
 	desc = "A strange medallion. Peering through the crystalline surface, the world around you melts away. You see your own beating heart, and the pulsing of a thousand others."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	///What trait do we want to add upon equipiing
 	var/trait = TRAIT_THERMAL_VISION
 
@@ -221,7 +221,7 @@
 	desc = "Mask created from the suffering of existance, you can look down it's eyes, and notice something gazing back at you."
 	icon_state = "mad_mask"
 	inhand_icon_state = "mad_mask"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -279,7 +279,7 @@
 	icon_state = "rune_carver"
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	wound_bonus = 20
 	force = 10
 	throwforce = 20

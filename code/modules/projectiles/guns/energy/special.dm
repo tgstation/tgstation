@@ -6,7 +6,7 @@
 	worn_icon_state = null
 	shaded_charge = TRUE
 	can_flashlight = TRUE
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
@@ -20,7 +20,7 @@
 	name = "ion carbine"
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	flight_x_offset = 18
 	flight_y_offset = 11
@@ -57,7 +57,7 @@
 	desc = "For the love of god, make sure you're aiming this the right way!"
 	icon_state = "meteor_gun"
 	inhand_icon_state = "c20r"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = /obj/item/stock_parts/cell/potato
 	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
@@ -73,14 +73,14 @@
 	worn_icon_state = "pen"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	automatic_charge_overlays = FALSE
 
 /obj/item/gun/energy/mindflayer
 	name = "\improper Mind Flayer"
 	desc = "A prototype weapon recovered from the ruins of Research-Station Epsilon."
 	icon_state = "xray"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	inhand_icon_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
@@ -91,7 +91,7 @@
 	icon_state = "crossbow"
 	base_icon_state = "crossbow"
 	inhand_icon_state = "crossbow"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
@@ -116,7 +116,7 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	base_icon_state = "crossbowlarge"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
@@ -206,7 +206,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function. Fits in a bag."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	can_select = FALSE // left-click for blue, right-click for orange.
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
 	icon_state = "wormhole_projector"
 	base_icon_state = "wormhole_projector"
@@ -333,7 +333,7 @@
 	name = "temperature gun"
 	icon_state = "freezegun"
 	desc = "A gun that changes temperatures. Comes with a collapsible stock."
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = /obj/item/stock_parts/cell/high
 	pin = null
@@ -346,7 +346,7 @@
 /obj/item/gun/energy/gravity_gun
 	name = "one-point gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"

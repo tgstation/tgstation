@@ -24,7 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
 	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
 /datum/crafting_recipe/oar

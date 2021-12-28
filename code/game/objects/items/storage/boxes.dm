@@ -705,7 +705,7 @@
 	icon_state = "matchbox"
 	inhand_icon_state = "zippo"
 	worn_icon_state = "lighter"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
@@ -753,7 +753,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 21
 	STR.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
-	STR.max_combined_w_class = 21
+	STR.max_total_atom_size = 21
 	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
@@ -1213,7 +1213,7 @@
 	name = "bubblegum packet"
 	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
 	icon_state = "bubblegum_generic"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	illustration = null
 	foldable = null
 	custom_price = PAYCHECK_EASY

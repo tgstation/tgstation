@@ -8,7 +8,7 @@
 	inhand_icon_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
 
@@ -50,7 +50,7 @@
 	inhand_icon_state = "rocketlauncher"
 	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
 	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1

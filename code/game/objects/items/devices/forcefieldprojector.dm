@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"

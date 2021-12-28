@@ -27,7 +27,7 @@
 	var/use_overlays = FALSE
 
 	var/crayon_color = "red"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "colours")
 	attack_verb_simple = list("attack", "colour")
 	grind_results = list()
@@ -601,7 +601,7 @@
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonbox"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = 2000)
 
 /obj/item/storage/crayons/Initialize(mapload)

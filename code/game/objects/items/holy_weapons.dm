@@ -140,7 +140,7 @@
 	throw_range = 4
 	throwforce = 10
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	obj_flags = UNIQUE_RENAME
 	wound_bonus = -10
 	/// boolean on whether it's allowed to be picked from the nullrod's transformation ability
@@ -193,7 +193,7 @@
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
@@ -211,7 +211,7 @@
 	inhand_icon_state = "godstaff-red"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 5
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 50
@@ -239,7 +239,7 @@
 	worn_icon_state = "claymore_gold"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 30
 	sharpness = SHARP_EDGED
@@ -365,7 +365,7 @@
 	inhand_icon_state = "scythe1"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	armour_penetration = 35
 	slot_flags = ITEM_SLOT_BACK
 	sharpness = SHARP_EDGED
@@ -442,7 +442,7 @@
 	worn_icon_state = "hammeron"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("smashes", "bashes", "hammers", "crunches")
 	attack_verb_simple = list("smash", "bash", "hammer", "crunch")
 	menu_description = "A war hammer. Capable of tapping knees to measure brain health. Can be worn on the belt."
@@ -458,7 +458,7 @@
 	inhand_icon_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = null
 	item_flags = ABSTRACT
 	sharpness = SHARP_EDGED
@@ -499,7 +499,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	force = 16
 	throwforce = 15
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("attacks", "smashes", "crushes", "splatters", "cracks")
 	attack_verb_simple = list("attack", "smash", "crush", "splatter", "crack")
@@ -562,7 +562,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	slot_flags = null
 	item_flags = ABSTRACT
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	wound_bonus = -20
 	bare_wound_bonus = 25
@@ -604,7 +604,7 @@
 	force = 15
 	block_chance = 40
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	sharpness = NONE
 	hitsound = "swing_hit"
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
@@ -624,7 +624,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "arrhythmic knife"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	sharpness = SHARP_EDGED
 	slot_flags = null
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -657,7 +657,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	worn_icon_state = "pitchfork0"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("pokes", "impales", "pierces", "jabs")
 	attack_verb_simple = list("poke", "impale", "pierce", "jab")
@@ -674,7 +674,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	worn_icon_state = "pharoah_sceptre"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("bashes", "smacks", "whacks")
 	attack_verb_simple = list("bash", "smack", "whack")
@@ -708,7 +708,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	armour_penetration = 10
 	sharpness = SHARP_POINTY
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("stabs", "pokes", "slashes", "clocks")
 	attack_verb_simple = list("stab", "poke", "slash", "clock")
 	hitsound = 'sound/weapons/bladeslice.ogg'

@@ -2,7 +2,7 @@
 
 /obj/item/bot_assembly
 	icon = 'icons/mob/aibots.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 3
 	throw_speed = 2
 	throw_range = 5

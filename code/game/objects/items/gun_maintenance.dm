@@ -3,4 +3,4 @@
 	desc = "plastic box containing gun maintenance supplies and spare parts. Use them on a Mosin Nagant to clean it."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "plasticbox"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL

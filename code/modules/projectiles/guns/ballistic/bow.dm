@@ -12,7 +12,7 @@
 	attack_verb_continuous = list("whipped", "cracked")
 	attack_verb_simple = list("whip", "crack")
 	weapon_weight = WEAPON_HEAVY
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
@@ -104,9 +104,9 @@
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_TINY
+	storage.max_atom_size = WEIGHT_CLASS_TINY
 	storage.max_items = 40
-	storage.max_combined_w_class = 100
+	storage.max_total_atom_size = 100
 	storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))

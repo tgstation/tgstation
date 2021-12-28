@@ -11,7 +11,7 @@
 	light_on = FALSE
 	bare_wound_bonus = 20
 	stealthy_audio = TRUE
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 	/// The color of this energy based sword, for use in editing the icon_state.
 	var/sword_color_icon
@@ -26,7 +26,7 @@
 	/// Hitsound played attacking while active.
 	var/active_hitsound = 'sound/weapons/blade1.ogg'
 	/// Weight class while active.
-	var/active_w_class = WEIGHT_CLASS_BULKY
+	var/active_atom_size = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
 	var/active_heat = 3500
 
@@ -49,7 +49,7 @@
 		throw_speed_on = 4, \
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
-		w_class_on = active_w_class, \
+		size_on = active_atom_size, \
 		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
@@ -128,13 +128,13 @@
 	throw_range = 5
 	armour_penetration = 100
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	flags_1 = CONDUCT_1
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 
 	active_force = 150
 	active_throwforce = 30
-	active_w_class = WEIGHT_CLASS_HUGE
+	active_atom_size = WEIGHT_CLASS_HUGE
 
 /obj/item/melee/energy/axe/make_transformable()
 	AddComponent(/datum/component/transforming, \
@@ -142,7 +142,7 @@
 		throwforce_on = active_throwforce, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
-		w_class_on = active_w_class)
+		size_on = active_atom_size)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/energy/axe/suicide_act(mob/user)
@@ -200,7 +200,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	force = 18
 	hitcost = 75 // Costs more than a standard cyborg esword.
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	sharpness = SHARP_EDGED
 	light_color = LIGHT_COLOR_LIGHT_CYAN
 	tool_behaviour = TOOL_SAW
@@ -284,7 +284,7 @@
 	throw_range = 1
 	sharpness = SHARP_EDGED
 	heat = 3500
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	blade_active = TRUE
 	/// Our linked spark system that emits from our sword.
 	var/datum/effect_system/spark_spread/spark_system

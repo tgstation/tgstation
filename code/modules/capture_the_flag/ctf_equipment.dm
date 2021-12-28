@@ -154,7 +154,7 @@
 	icon_state = "instagib"
 	inhand_icon_state = "instagib"
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
 	slot_flags = null

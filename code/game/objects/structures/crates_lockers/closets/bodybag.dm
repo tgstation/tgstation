@@ -135,7 +135,7 @@
 /obj/structure/closet/body_bag/bluespace/perform_fold(mob/living/carbon/human/the_folder)
 	visible_message(span_notice("[usr] folds up [src]."))
 	var/obj/item/bodybag/B = foldedbag_instance || new foldedbag_path
-	var/max_weight_of_contents = initial(B.w_class)
+	var/max_weight_of_contents = initial(B.atom_size)
 	for(var/am in contents)
 		var/atom/movable/content = am
 		content.forceMove(B)
@@ -145,10 +145,10 @@
 			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
 			continue
 		var/obj/item/A_is_item = content
-		if(A_is_item.w_class < max_weight_of_contents)
+		if(A_is_item.atom_size < max_weight_of_contents)
 			continue
-		max_weight_of_contents = A_is_item.w_class
-	B.w_class = max_weight_of_contents
+		max_weight_of_contents = A_is_item.atom_size
+	B.atom_size = max_weight_of_contents
 	usr.put_in_hands(B)
 
 /// Environmental bags. They protect against bad weather.

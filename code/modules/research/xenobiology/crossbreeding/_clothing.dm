@@ -11,7 +11,7 @@ Slimecrossing Armor
 	icon_state = "slime"
 	inhand_icon_state = "slime"
 	body_parts_covered = NONE
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_NOBREATH)
 	permeability_coefficient = 0.5
 	flags_cover = MASKCOVERSMOUTH
@@ -104,7 +104,7 @@ Slimecrossing Armor
 	dynamic_hair_suffix = ""
 	force = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
 /obj/item/clothing/head/peaceflower/proc/at_peace_check(mob/user)

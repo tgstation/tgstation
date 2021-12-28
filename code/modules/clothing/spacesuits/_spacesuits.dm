@@ -29,7 +29,7 @@
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
 	inhand_icon_state = "s_suit"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	permeability_coefficient = 0.02
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

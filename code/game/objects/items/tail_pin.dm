@@ -3,7 +3,7 @@
 	name = "tail pin"
 	desc = "Offically branded 'pin the tail on the corgi' style party implement. Not intended to be used on people."
 	force = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throwforce = 0
 	throw_speed = 1
 	embedding = EMBED_HARMLESS

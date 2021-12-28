@@ -300,7 +300,7 @@
 	throwforce = 15 //15 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = i didnt do the math
 	throw_speed = 4
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_ignore_throwspeed_threshold" = TRUE)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = 500)
 	var/mob/living/carbon/human/fired_by

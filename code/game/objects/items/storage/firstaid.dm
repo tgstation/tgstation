@@ -63,9 +63,9 @@
 /obj/item/storage/firstaid/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 	STR.max_items = 12
-	STR.max_combined_w_class = 24
+	STR.max_total_atom_size = 24
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -277,7 +277,7 @@
 /obj/item/storage/firstaid/tactical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -331,7 +331,7 @@
 	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
@@ -546,8 +546,8 @@
 /obj/item/storage/organbox/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	STR.max_combined_w_class = 21
+	STR.max_atom_size = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
+	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,

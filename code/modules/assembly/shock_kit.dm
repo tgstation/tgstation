@@ -5,7 +5,7 @@
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/helmet_part = null
 	var/obj/item/electropack/electropack_part = null
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 
 /obj/item/assembly/shock_kit/Destroy()

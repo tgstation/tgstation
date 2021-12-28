@@ -60,7 +60,7 @@ Slimecrossing Weapons
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "adamshield"
 	inhand_icon_state = "adamshield"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 70)
 	slot_flags = ITEM_SLOT_BACK
 	block_chance = 75
@@ -85,7 +85,7 @@ Slimecrossing Weapons
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	force = 5
 	max_charges = 1 //Recharging costs blood.

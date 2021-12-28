@@ -6,7 +6,7 @@
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
 	var/installed = FALSE
 	var/require_model = FALSE
@@ -761,7 +761,7 @@
 /obj/item/borg_restart_board
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cyborg_upgrade1"
 

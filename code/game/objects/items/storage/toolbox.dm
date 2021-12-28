@@ -10,7 +10,7 @@
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron = 500)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
@@ -92,7 +92,7 @@
 	name = "toolbox" //this will be named "X family toolbox"
 	desc = "It's seen better days."
 	force = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
@@ -192,13 +192,13 @@
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	atom_size = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 20
+	STR.max_total_atom_size = 20
 	STR.max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
@@ -250,14 +250,14 @@
 	inhand_icon_state = "infiltrator_case"
 	force = 15
 	throwforce = 18
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	has_latches = FALSE
 
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 10
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,

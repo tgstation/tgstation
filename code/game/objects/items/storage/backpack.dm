@@ -16,7 +16,7 @@
 	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
@@ -24,8 +24,8 @@
 /obj/item/storage/backpack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 21
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 21
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
 /*
@@ -35,7 +35,7 @@
 /obj/item/storage/backpack/old/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 12
+	STR.max_total_atom_size = 12
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
@@ -45,7 +45,7 @@
 	inhand_icon_state = "brokenpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
@@ -63,8 +63,8 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_big_nesting = TRUE
-	STR.max_w_class = WEIGHT_CLASS_GIGANTIC
-	STR.max_combined_w_class = 35
+	STR.max_atom_size = WEIGHT_CLASS_GIGANTIC
+	STR.max_total_atom_size = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
@@ -79,7 +79,7 @@
 	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
@@ -88,8 +88,8 @@
 /obj/item/storage/backpack/santabag/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 60
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
@@ -309,7 +309,7 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	inhand_icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	atom_size = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 
 /obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
@@ -318,7 +318,7 @@
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 15
+	STR.max_total_atom_size = 15
 	STR.set_holdable(null, list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
@@ -348,7 +348,7 @@
 /obj/item/storage/backpack/duffelbag/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 30
+	STR.max_total_atom_size = 30
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"

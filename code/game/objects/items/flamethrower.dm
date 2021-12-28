@@ -11,7 +11,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
 	trigger_guard = TRIGGER_GUARD_NORMAL

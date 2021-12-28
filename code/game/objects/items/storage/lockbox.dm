@@ -5,7 +5,7 @@
 	inhand_icon_state = "lockbox"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
 	var/broken = FALSE
 	var/open = FALSE
@@ -16,8 +16,8 @@
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 14
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 14
 	STR.max_items = 4
 	STR.locked = TRUE
 
@@ -91,7 +91,7 @@
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_CAPTAIN)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
@@ -100,9 +100,9 @@
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
 	STR.max_items = 10
-	STR.max_combined_w_class = 20
+	STR.max_total_atom_size = 20
 	STR.set_holdable(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
@@ -211,7 +211,7 @@
 	inhand_icon_state = "sec-case"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	var/datum/bank_account/buyer_account
 	var/privacy_lock = TRUE
 

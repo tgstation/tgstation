@@ -6,7 +6,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	force = 1
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	attack_verb_continuous = list("bans")
@@ -46,7 +46,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = ITEM_SLOT_BELT
 	force = 2
 	throwforce = 1
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
@@ -68,7 +68,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 50
@@ -256,7 +256,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
@@ -281,7 +281,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
@@ -327,7 +327,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
 	armour_penetration = 40
 
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
@@ -355,7 +355,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A sharp, concealable, spring-loaded knife."
 	flags_1 = CONDUCT_1
 	force = 3
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 6
@@ -378,7 +378,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
 		hitsound_on = 'sound/weapons/bladeslice.ogg', \
-		w_class_on = WEIGHT_CLASS_NORMAL, \
+		size_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
 		attack_verb_simple_on = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"))
 
@@ -398,7 +398,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 2
 	throw_speed = 3
 	throw_range = 4
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("calls", "rings")
 	attack_verb_simple = list("call", "ring")
 	hitsound = 'sound/weapons/ring.ogg'
@@ -420,7 +420,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 5
 	throwforce = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines", "thrashes")
 	attack_verb_simple = list("bludgeon", "whack", "discipline", "thrash")
@@ -436,7 +436,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	armour_penetration = 100
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
@@ -461,7 +461,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/ectoplasm
 	name = "ectoplasm"
@@ -490,7 +490,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 24
 	throwforce = 0
 	throw_range = 0
@@ -573,7 +573,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	inhand_icon_state = "skateboard"
 	force = 12
 	throwforce = 4
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("smacks", "whacks", "slams", "smashes")
 	attack_verb_simple = list("smack", "whack", "slam", "smash")
 	///The vehicle counterpart for the board
@@ -626,7 +626,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("beats", "smacks")
 	attack_verb_simple = list("beat", "smack")
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 3.5)
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	var/homerun_ready = 0
 	var/homerun_able = 0
 
@@ -711,7 +711,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("swats", "smacks")
 	attack_verb_simple = list("swat", "smack")
 	hitsound = 'sound/effects/snap.ogg'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
@@ -801,7 +801,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("cuts", "slices", "dices")
 	attack_verb_simple = list("cut", "slice", "dice")
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/wielded = FALSE // track wielded status on item
@@ -854,7 +854,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	worn_icon_state = "swordon"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	block_chance = 20
 	sharpness = SHARP_EDGED

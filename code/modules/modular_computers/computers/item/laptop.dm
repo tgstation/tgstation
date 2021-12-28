@@ -11,7 +11,7 @@
 
 	hardware_flag = PROGRAM_LAPTOP
 	max_hardware_size = 2
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	max_bays = 4
 
 	// No running around with open laptops in hands.
@@ -20,7 +20,7 @@
 	screen_on = FALSE // Starts closed
 	var/start_open = TRUE // unless this var is set to 1
 	var/icon_state_closed = "laptop-closed"
-	var/w_class_open = WEIGHT_CLASS_BULKY
+	var/open_size = WEIGHT_CLASS_BULKY
 	var/slowdown_open = TRUE
 
 /obj/item/modular_computer/laptop/examine(mob/user)
@@ -105,11 +105,11 @@
 	if(screen_on)
 		to_chat(user, span_notice("You close \the [src]."))
 		slowdown = initial(slowdown)
-		w_class = initial(w_class)
+		atom_size = initial(atom_size)
 	else
 		to_chat(user, span_notice("You open \the [src]."))
 		slowdown = slowdown_open
-		w_class = w_class_open
+		atom_size = open_size
 
 	screen_on = !screen_on
 	display_overlays = screen_on

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	worn_icon_state = "portable_chem_mixer"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	custom_price = PAYCHECK_MEDIUM * 10
@@ -21,7 +21,7 @@
 /obj/item/storage/portable_chem_mixer/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 200
+	STR.max_total_atom_size = 200
 	STR.max_items = 50
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(

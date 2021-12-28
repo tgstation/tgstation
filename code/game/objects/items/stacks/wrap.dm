@@ -123,9 +123,9 @@
 				I.add_fingerprint(user)
 				user.put_in_hands(P)
 			I.forceMove(P)
-			var/size = round(I.w_class)
+			var/size = round(I.atom_size)
 			P.name = "[weight_class_to_text(size)] parcel"
-			P.w_class = size
+			P.atom_size = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
 
@@ -161,7 +161,7 @@
 
 /obj/item/stack/package_wrap/small
 	desc = "You can use this to wrap items in. This roll looks a bit skimpy."
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
 
@@ -171,6 +171,6 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 5

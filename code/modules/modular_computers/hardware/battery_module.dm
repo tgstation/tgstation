@@ -39,7 +39,7 @@
 		to_chat(user, span_warning("You try to connect \the [I] to \the [src], but its connectors are occupied."))
 		return FALSE
 
-	if(I.w_class > holder.max_hardware_size)
+	if(I.atom_size > holder.max_hardware_size)
 		to_chat(user, span_warning("This power cell is too large for \the [holder]!"))
 		return FALSE
 
@@ -68,21 +68,21 @@
 	desc = "A standard power cell, commonly seen in high-end portable microcomputers or low-end laptops."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	maxcharge = 750
 
 /obj/item/stock_parts/cell/computer/advanced
 	name = "advanced battery"
 	desc = "An advanced power cell, often used in most laptops. It is too large to be fitted into smaller devices."
 	icon_state = "cell"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	maxcharge = 1500
 
 /obj/item/stock_parts/cell/computer/super
 	name = "super battery"
 	desc = "An advanced power cell, often used in high-end laptops."
 	icon_state = "cell"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	maxcharge = 2000
 
 /obj/item/stock_parts/cell/computer/micro

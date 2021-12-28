@@ -10,7 +10,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
 	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
@@ -45,7 +45,7 @@
 	name = "crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big."
 	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	throw_speed = 3
 	throw_range = 3
 	custom_materials = list(/datum/material/iron=70)
@@ -80,7 +80,7 @@
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
-		w_class_on = w_class, \
+		size_on = atom_size, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 

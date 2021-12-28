@@ -25,7 +25,7 @@ GENE SCANNER
 	icon_state = "t-ray0"
 	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -89,7 +89,7 @@ GENE SCANNER
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
@@ -563,7 +563,7 @@ GENE SCANNER
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -742,7 +742,7 @@ GENE SCANNER
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	throwforce = 0
 	throw_speed = 3
@@ -802,7 +802,7 @@ GENE SCANNER
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=200)
@@ -901,7 +901,7 @@ GENE SCANNER
 	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
 	force = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/selected_target = null
 
 /obj/item/scanner_wand/attack(mob/living/M, mob/living/carbon/human/user)

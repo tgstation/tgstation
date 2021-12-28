@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	inhand_icon_state = "chronogun"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 	var/mob/living/current_target
 	var/last_check = 0

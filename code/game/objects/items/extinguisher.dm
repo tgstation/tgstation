@@ -8,7 +8,7 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags_1 = CONDUCT_1
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 7
 	force = 10
@@ -39,7 +39,7 @@
 	hitsound = null //it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 2
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	force = 3
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	max_water = 30
@@ -55,7 +55,7 @@
 	hitsound = null	//it is much lighter, after all.
 	flags_1 = null //doesn't CONDUCT_1
 	throwforce = 1
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	force = 3
 	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 40)
 	max_water = 30

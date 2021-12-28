@@ -30,4 +30,4 @@
 	icon_state = "feather"
 	force = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY

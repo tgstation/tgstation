@@ -3,7 +3,7 @@
 	desc = "A dense, overdesigned cluster of electronics which attempted to function as a multipurpose circuit electronic. Circuits can be removed from it... if you don't bleed out in the process."
 	icon_state = "circuit_mess"
 	inhand_icon_state = "rods"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	max_amount = 8
 	merge_type = /obj/item/stack/circuit_stack
 	var/circuit_type = /obj/item/electronics/airlock

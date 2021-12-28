@@ -255,7 +255,7 @@
 /obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
+	STR.max_total_atom_size = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
@@ -272,7 +272,7 @@
 	name = "Crusader's Armour"
 	desc = "Armour that's comprised of metal and cloth."
 	icon_state = "crusader"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
@@ -287,7 +287,7 @@
 	name = "Crusader's Hood"
 	desc = "A brownish hood."
 	icon_state = "crusader"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
@@ -361,7 +361,7 @@
 	name = "Plate Boots"
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
 	clothing_flags = NOSLIP
 	cold_protection = FEET

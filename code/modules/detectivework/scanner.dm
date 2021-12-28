@@ -7,7 +7,7 @@
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "forensicnew"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

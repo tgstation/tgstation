@@ -12,7 +12,7 @@
 	worn_icon_state = "salestagger"
 	inhand_icon_state = "electronic"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
@@ -249,7 +249,7 @@
 			prints a clowncrypted report regarding the maintenance of the station. Hard to replace."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "bananium_inspector"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	max_mode = BANANIUM_CLOWN_INSPECTOR_PRINT_SOUND_MODE_LAST
 	///How many more times can we print?
 	var/paper_charges = 32

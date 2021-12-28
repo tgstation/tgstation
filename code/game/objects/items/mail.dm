@@ -8,7 +8,7 @@
 	inhand_icon_state = "paper"
 	worn_icon_state = "paper"
 	item_flags = NOBLUDGEON
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
@@ -271,8 +271,8 @@
 /obj/item/storage/bag/mail/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_w_class = WEIGHT_CLASS_NORMAL
-	storage.max_combined_w_class = 42
+	storage.max_atom_size = WEIGHT_CLASS_NORMAL
+	storage.max_total_atom_size = 42
 	storage.max_items = 21
 	storage.display_numerical_stacking = FALSE
 	storage.set_holdable(list(

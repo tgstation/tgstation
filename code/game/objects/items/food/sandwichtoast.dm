@@ -7,7 +7,7 @@
 	tastes = list("meat" = 2, "cheese" = 1, "bread" = 2, "lettuce" = 1)
 	foodtypes = GRAIN | VEGETABLES
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/grilled_cheese_sandwich
 	name = "grilled cheese sandwich"
@@ -18,7 +18,7 @@
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
 /obj/item/food/cheese_sandwich
@@ -30,7 +30,7 @@
 	tastes = list("bread" = 1, "cheese" = 1)
 	foodtypes = GRAIN | DAIRY
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/cheese_sandwich/MakeGrillable()
@@ -45,7 +45,7 @@
 	tastes = list("bread" = 1, "jelly" = 1)
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -64,7 +64,7 @@
 	tastes = list("nothing suspicious" = 1)
 	foodtypes = GRAIN | GROSS
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast
 	name = "jellied toast"
@@ -75,7 +75,7 @@
 	tastes = list("toast" = 1, "jelly" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/jelliedtoast/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -95,7 +95,7 @@
 	tastes = list("butter" = 1, "toast" = 1)
 	foodtypes = GRAIN | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/twobread
 	name = "two bread"
@@ -106,7 +106,7 @@
 	tastes = list("bread" = 2)
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/hotdog
 	name = "hotdog"
@@ -116,7 +116,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT //Ketchup is not a vegetable
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/hotdog/debug
@@ -132,4 +132,4 @@
 	tastes = list("bacon" = 3, "lettuce" = 2, "tomato" = 2, "bread" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL

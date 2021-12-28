@@ -16,7 +16,7 @@
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 70, ACID = 30)
 
 	// Built automatically from the corresponding vending machine.

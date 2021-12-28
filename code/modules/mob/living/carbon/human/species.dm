@@ -1060,7 +1060,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!(I.slot_flags & slot))
 		var/excused = FALSE
 		// Anything that's small or smaller can fit into a pocket by default
-		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.w_class <= WEIGHT_CLASS_SMALL)
+		if((slot == ITEM_SLOT_RPOCKET || slot == ITEM_SLOT_LPOCKET) && I.atom_size <= WEIGHT_CLASS_SMALL)
 			excused = TRUE
 		else if(slot == ITEM_SLOT_SUITSTORE || slot == ITEM_SLOT_BACKPACK || slot == ITEM_SLOT_HANDS)
 			excused = TRUE
@@ -1163,7 +1163,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				if(!disable_warning)
 					to_chat(H, span_warning("You somehow have a suit with no defined allowed items for suit storage, stop that."))
 				return FALSE
-			if(I.w_class > WEIGHT_CLASS_BULKY)
+			if(I.atom_size > WEIGHT_CLASS_BULKY)
 				if(!disable_warning)
 					to_chat(H, span_warning("The [I.name] is too big to attach!")) //should be src?
 				return FALSE

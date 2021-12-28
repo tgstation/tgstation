@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
 	inhand_icon_state = "shard-glass"

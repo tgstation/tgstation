@@ -17,7 +17,7 @@
 	foodtypes = GRAIN
 	food_flags = FOOD_FINGER_FOOD
 	eat_time = 0.5 SECONDS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/breadslice/Initialize(mapload)
 	. = ..()
@@ -30,7 +30,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	tastes = list("bread" = 10)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
@@ -250,7 +250,7 @@
 	worn_icon_state = "baguette"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 3)
 	bite_consumption = 3
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	attack_verb_continuous = list("touche's")
 	attack_verb_simple = list("touche")
@@ -303,7 +303,7 @@
 	righthand_file = fried.righthand_file
 	inhand_icon_state = fried.inhand_icon_state
 	desc = fried.desc
-	w_class = fried.w_class
+	atom_size = fried.atom_size
 	slowdown = fried.slowdown
 	equip_delay_self = fried.equip_delay_self
 	equip_delay_other = fried.equip_delay_other
@@ -356,7 +356,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | BREAKFAST
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/butterdog
@@ -368,7 +368,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "exotic butter" = 1)
 	foodtypes = GRAIN | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/butterdog/ComponentInitialize()
 	. = ..()

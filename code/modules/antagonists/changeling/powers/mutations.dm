@@ -154,7 +154,7 @@
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 25
 	throwforce = 0 //Just to be on the safe side
 	throw_range = 0
@@ -242,7 +242,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL | NOBLUDGEON
 	flags_1 = NONE
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = NONE
 	pinless = TRUE
 	ammo_type = /obj/item/ammo_casing/magic/tentacle

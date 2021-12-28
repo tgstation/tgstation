@@ -501,7 +501,7 @@
 /obj/item/turret_control
 	name = "turret controls"
 	icon_state = "offhand"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///Ticks before being able to shoot

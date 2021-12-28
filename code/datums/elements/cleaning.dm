@@ -21,7 +21,7 @@
 		// Clean small items that are lying on the ground
 		if(isitem(A))
 			var/obj/item/I = A
-			if(I.w_class <= WEIGHT_CLASS_SMALL && !ismob(I.loc))
+			if(I.atom_size <= WEIGHT_CLASS_SMALL && !ismob(I.loc))
 				I.wash(CLEAN_SCRUB)
 		// Clean humans that are lying down
 		else if(ishuman(A))

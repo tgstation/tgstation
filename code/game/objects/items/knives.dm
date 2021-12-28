@@ -10,7 +10,7 @@
 	desc = "The original knife, it is said that all other knives are only copies of this one."
 	flags_1 = CONDUCT_1
 	force = 10
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
@@ -52,7 +52,7 @@
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/knife/bloodletter
 	name = "bloodletter"
@@ -60,7 +60,7 @@
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
@@ -88,7 +88,7 @@
 	custom_materials = list(/datum/material/iron=18000)
 	attack_verb_continuous = list("cleaves", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("cleave", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	custom_price = PAYCHECK_EASY * 5
 	wound_bonus = 15
 

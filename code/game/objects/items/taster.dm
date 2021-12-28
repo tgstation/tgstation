@@ -4,7 +4,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tonguenormal"
 
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 	var/taste_sensitivity = 15
 

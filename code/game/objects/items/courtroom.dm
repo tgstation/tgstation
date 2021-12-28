@@ -9,7 +9,7 @@
 	icon_state = "gavelhammer"
 	force = 5
 	throwforce = 6
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("bashes", "batters", "judges", "whacks")
 	attack_verb_simple = list("bash", "batter", "judge", "whack")
 	resistance_flags = FLAMMABLE
@@ -30,7 +30,7 @@
 	icon_state = "gavelblock"
 	force = 2
 	throwforce = 2
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/gavelblock/attackby(obj/item/I, mob/user, params)

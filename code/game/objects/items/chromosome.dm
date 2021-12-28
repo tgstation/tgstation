@@ -4,7 +4,7 @@
 	icon_state = ""
 	desc = "A tube holding chromosomic data."
 	force = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 	var/stabilizer_coeff = 1 //lower is better, affects genetic stability
 	var/synchronizer_coeff = 1 //lower is better, affects chance to backfire

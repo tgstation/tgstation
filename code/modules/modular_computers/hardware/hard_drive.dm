@@ -4,7 +4,7 @@
 	power_usage = 25
 	icon_state = "harddisk_mini"
 	critical = 1
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	device_type = MC_HDD
 	var/max_capacity = 128
 	var/used_capacity = 0
@@ -131,7 +131,7 @@
 	max_capacity = 256
 	power_usage = 50 // Hybrid, medium capacity and medium power storage
 	icon_state = "harddisk_mini"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/computer_hardware/hard_drive/super
 	name = "super hard disk drive"
@@ -139,7 +139,7 @@
 	max_capacity = 512
 	power_usage = 100 // High-capacity but uses lots of power, shortening battery life. Best used with APC link.
 	icon_state = "harddisk_mini"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/computer_hardware/hard_drive/cluster
 	name = "cluster hard disk drive"
@@ -147,7 +147,7 @@
 	power_usage = 500
 	max_capacity = 2048
 	icon_state = "harddisk"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 // For tablets, etc. - highly power efficient.
 /obj/item/computer_hardware/hard_drive/small
@@ -156,7 +156,7 @@
 	power_usage = 10
 	max_capacity = 64
 	icon_state = "ssd_mini"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_MEDIUM * 2
 
 // For borg integrated tablets. No downloader.
@@ -190,4 +190,4 @@
 	power_usage = 2
 	max_capacity = 32
 	icon_state = "ssd_micro"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY

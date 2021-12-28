@@ -1,7 +1,7 @@
 /datum/component/storage/concrete/pockets
 	max_items = 2
-	max_w_class = WEIGHT_CLASS_SMALL
-	max_combined_w_class = 50
+	max_atom_size = WEIGHT_CLASS_SMALL
+	max_total_atom_size = 50
 	rustle_sound = FALSE
 
 /datum/component/storage/concrete/pockets/handle_item_insertion(obj/item/I, prevent_warning, mob/user)
@@ -14,12 +14,12 @@
 
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
-	max_w_class = WEIGHT_CLASS_SMALL
+	max_atom_size = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
 /datum/component/storage/concrete/pockets/tiny
 	max_items = 1
-	max_w_class = WEIGHT_CLASS_TINY
+	max_atom_size = WEIGHT_CLASS_TINY
 	attack_hand_interact = FALSE
 
 /datum/component/storage/concrete/pockets/small/fedora/Initialize()
@@ -36,7 +36,7 @@
 /datum/component/storage/concrete/pockets/chefhat
 	attack_hand_interact = TRUE
 	max_items = 1
-	max_w_class = WEIGHT_CLASS_NORMAL
+	max_atom_size = WEIGHT_CLASS_NORMAL
 
 /datum/component/storage/concrete/pockets/chefhat/Initialize()
 	. = ..()
@@ -83,7 +83,7 @@
 
 /datum/component/storage/concrete/pockets/pocketprotector
 	max_items = 3
-	max_w_class = WEIGHT_CLASS_TINY
+	max_atom_size = WEIGHT_CLASS_TINY
 	var/atom/original_parent
 
 /datum/component/storage/concrete/pockets/pocketprotector/Initialize()
@@ -103,7 +103,7 @@
 
 /datum/component/storage/concrete/pockets/helmet
 	quickdraw = TRUE
-	max_combined_w_class = 6
+	max_total_atom_size = 6
 
 /datum/component/storage/concrete/pockets/helmet/Initialize()
 	. = ..()

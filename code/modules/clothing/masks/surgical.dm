@@ -3,7 +3,7 @@
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	inhand_icon_state = "sterile"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	flags_inv = HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_inv = HIDEFACE|HIDESNOUT

@@ -55,7 +55,7 @@
 	if(user.combat_mode)
 		return
 
-	if(inserted_item.w_class > minimum_weight_class)
+	if(inserted_item.atom_size > minimum_weight_class)
 		to_chat(user, span_warning("\The [inserted_item.name] won't fit in \the [parent]."))
 		return
 

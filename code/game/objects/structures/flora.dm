@@ -306,7 +306,7 @@
 	icon_state = "plant-01"
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
 	throw_speed = 2

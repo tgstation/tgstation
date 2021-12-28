@@ -1,5 +1,5 @@
 /obj/item/food/soup
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash_type = /obj/item/reagent_containers/glass/bowl
 	bite_consumption = 5

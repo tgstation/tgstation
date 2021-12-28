@@ -11,7 +11,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6,  /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fish" = 4, "batter" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 
 /obj/item/food/fishmeat
@@ -23,7 +23,7 @@
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
 	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fishmeat/carp
 	name = "carp fillet"
@@ -80,7 +80,7 @@
 	bite_consumption = 1
 	tastes = list("fish" = 1, "breadcrumbs" = 1)
 	foodtypes = SEAFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/fishandchips
@@ -99,7 +99,7 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("fish" = 1, "pan seared vegtables" = 1)
 	foodtypes = SEAFOOD | VEGETABLES | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
@@ -110,7 +110,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("tofu" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/tofu/prison
@@ -126,7 +126,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | TOXIC
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spiderleg/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/boiledspiderleg, rand(50 SECONDS, 60 SECONDS), TRUE, TRUE)
@@ -138,7 +138,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("meat" = 1, "cabbage" = 1)
 	foodtypes = MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/bearsteak
 	name = "Filet migrawr"
@@ -147,7 +147,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 9, /datum/reagent/consumable/ethanol/manly_dorf = 5)
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtypes = MEAT | ALCOHOL
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/raw_meatball
@@ -157,7 +157,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/meatball_type = /obj/item/food/meatball
 	var/patty_type = /obj/item/food/raw_patty
 
@@ -199,7 +199,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -229,7 +229,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/patty_type = /obj/item/food/patty/plain
 
 /obj/item/food/raw_patty/MakeGrillable()
@@ -265,7 +265,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
 ///Exists purely for the crafting recipe (because itll take subtypes)
@@ -298,7 +298,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_sausage/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
@@ -312,7 +312,7 @@
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
 	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -336,7 +336,7 @@
 	tastes = list("meat" = 1, "smoke" = 1)
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawkhinkali
 	name = "raw khinkali"
@@ -345,7 +345,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/garlic = 1)
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawkhinkali/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
@@ -358,7 +358,7 @@
 	bite_consumption = 3
 	tastes = list("meat" = 1, "onions" = 1, "garlic" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
 /obj/item/food/meatbun
@@ -368,7 +368,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 3, "meat" = 2)
 	foodtypes = GRAIN | MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/monkeycube
@@ -380,7 +380,7 @@
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/faction
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
 
@@ -458,7 +458,7 @@
 	tastes = list("soy" = 1, "vegetables" = 1)
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/boiledspiderleg
 	name = "boiled spider leg"
@@ -467,7 +467,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("hot peppers" = 1, "cobwebs" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 
 /obj/item/food/spidereggsham
@@ -478,7 +478,7 @@
 	bite_consumption = 4
 	tastes = list("meat" = 1, "the colour green" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sashimi
 	name = "carp sashimi"
@@ -487,7 +487,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/capsaicin = 9, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtypes = SEAFOOD | TOXIC
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	//total price of this dish is 20 and a small amount more for soy sauce, all of which are available at the orders console
 	venue_value = FOOD_PRICE_CHEAP
 
@@ -501,7 +501,7 @@
 	tastes = list("\"chicken\"" = 1)
 	foodtypes = MEAT
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/nugget/Initialize(mapload)
@@ -517,13 +517,13 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1, "butter" = 1)
 	foodtypes = MEAT | DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/food/bbqribs
 	name = "bbq ribs"
 	desc = "BBQ ribs, slathered in a healthy coating of BBQ sauce. The least vegan thing to ever exist."
 	icon_state = "ribs"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/bbqsauce = 10)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
@@ -534,7 +534,7 @@
 	icon_state = "meatclown"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/banana = 2)
 	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/meatclown/ComponentInitialize()
 	. = ..()
@@ -554,10 +554,10 @@
 /obj/item/food/kebab
 	trash_type = /obj/item/stack/rods
 	icon_state = "kebab"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 14)
 	tastes = list("meat" = 3, "metal" = 1)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/kebab/human
 	name = "human-kebab"
@@ -594,7 +594,7 @@
 	name = "rat-kebab"
 	desc = "Not so delicious rat meat, on a stick."
 	icon_state = "ratkebab"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	trash_type = null
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("rat meat" = 1, "metal" = 1)
@@ -615,7 +615,7 @@
 
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/subjectname = ""
 	var/subjectjob = null
 
@@ -1237,7 +1237,7 @@
 	tastes = list("chicken" = 3, "fried batter" = 1)
 	foodtypes = MEAT | FRIED
 	junkiness = 25
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fried_chicken/Initialize(mapload)
 	. = ..()
@@ -1252,7 +1252,7 @@
 	tastes = list("beef" = 3, "sour cream" = 1, "salt" = 1, "pepper" = 1)
 	foodtypes = MEAT | VEGETABLES | DAIRY
 
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	//basic ingredients, but a lot of them. just covering costs here
 	venue_value = FOOD_PRICE_NORMAL
 
@@ -1263,7 +1263,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 21, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/beef_wellington/MakeProcessable()
@@ -1276,7 +1276,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("beef" = 3, "mushrooms" = 1, "pancetta" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/full_english
@@ -1286,5 +1286,5 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sausage" = 1, "bacon" = 1, "egg" = 1, "tomato" = 1, "mushrooms" = 1, "bread" = 1, "beans" = 1)
 	foodtypes = MEAT | VEGETABLES | GRAIN | BREAKFAST
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC

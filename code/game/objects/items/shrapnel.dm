@@ -4,7 +4,7 @@
 	weak_against_armour = TRUE
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	item_flags = DROPDEL
 	sharpness = SHARP_EDGED
 

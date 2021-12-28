@@ -6,7 +6,7 @@
 	worn_icon_state = "plushie"
 	attack_verb_continuous = list("thumps", "whomps", "bumps")
 	attack_verb_simple = list("thump", "whomp", "bump")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 	var/list/squeak_override //Weighted list; If you want your plush to have different squeak sounds use this
 	var/stuffed = TRUE //If the plushie has stuffing in it

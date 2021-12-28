@@ -65,7 +65,7 @@
 	if(user.combat_mode || .)
 		return
 
-	if(item.w_class > max_weight)
+	if(item.atom_size > max_weight)
 		balloon_alert(user, "item too big!")
 		return
 

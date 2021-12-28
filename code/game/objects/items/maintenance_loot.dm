@@ -16,7 +16,7 @@
 	force = 15
 	throwforce = 12
 	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	wound_bonus = 20
 	grind_results = list(/datum/reagent/lead = 20)
 
@@ -31,7 +31,7 @@
 	maxcharge = 20000 //decent max charge
 	chargerate = 1400 //charging is about 30% less efficient compared lithium batteries.
 	rating = 2 //Kind of a mid-tier battery
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)
 
 //starts partially discharged

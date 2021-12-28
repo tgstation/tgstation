@@ -5,7 +5,7 @@
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "telecrystal"
 	dye_color = DYE_SYNDICATE
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	max_amount = 50
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/telecrystal

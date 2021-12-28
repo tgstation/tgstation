@@ -5,7 +5,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	desc = "A balloon that can be used to extract equipment or personnel to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3

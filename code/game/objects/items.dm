@@ -80,8 +80,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	///Whether or not we use stealthy audio levels for this item's attack sounds
 	var/stealthy_audio = FALSE
 
-	///How large is the object, used for stuff like whether it can fit in backpacks or not
-	var/w_class = WEIGHT_CLASS_NORMAL
 	///This is used to determine on which slots an item can fit.
 	var/slot_flags = 0
 	pass_flags = PASSTABLE
@@ -316,7 +314,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
 
-	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(w_class)] item."
+	. += "[gender == PLURAL ? "They are" : "It is"] a [weight_class_to_text(atom_size)] item."
 
 	if(resistance_flags & INDESTRUCTIBLE)
 		. += "[src] seems extremely robust! It'll probably withstand anything that could happen to it!"
@@ -691,10 +689,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/mob/living/L = hit_atom
 			L.IgniteMob()
 		var/itempush = 1
-		if(w_class < 4)
+		if(atom_size < 4)
 			itempush = 0 //too light to push anything
 		if(istype(hit_atom, /mob/living)) //Living mobs handle hit sounds differently.
-			var/volume = get_volume_by_throwforce_and_or_w_class()
+			var/volume = get_volume_by_throwforce_and_or_atom_size()
 			if (throwforce > 0)
 				if (mob_throw_hit_sound)
 					playsound(hit_atom, mob_throw_hit_sound, volume, TRUE, -1)
@@ -823,7 +821,7 @@ attack_basic_mob
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/ash_type = /obj/effect/decal/cleanable/ash
-		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
+		if(atom_size == WEIGHT_CLASS_HUGE || atom_size == WEIGHT_CLASS_GIGANTIC)
 			ash_type = /obj/effect/decal/cleanable/ash/large
 		var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
 		A.desc += "\nLooks like this used to be \an [name] some time ago."
@@ -1179,7 +1177,7 @@ attack_basic_mob
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bitten into something hard."), \
 						span_warning("Eugh! Did I just bite into something?"))
 
-	else if(w_class == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
+	else if(atom_size == WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
 		/// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)

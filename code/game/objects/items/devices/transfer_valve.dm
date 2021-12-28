@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks."
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two

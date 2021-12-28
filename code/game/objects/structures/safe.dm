@@ -19,7 +19,7 @@ FLOOR SAFES
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
-	/// The maximum combined w_class of stuff in the safe
+	/// The maximum combined atom_size of stuff in the safe
 	var/maxspace = 24
 	/// The amount of tumblers that will be generated
 	var/number_of_tumblers = 2
@@ -33,7 +33,7 @@ FLOOR SAFES
 	var/list/tumblers = list()
 	/// The index in the tumblers list of the tumbler dial position that needs to be hit
 	var/current_tumbler_index = 1
-	/// The combined w_class of everything in the safe
+	/// The combined atom_size of everything in the safe
 	var/space = 0
 	/// Tough, but breakable if explosion counts reaches set value
 	var/explosion_count = 0
@@ -52,8 +52,8 @@ FLOOR SAFES
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
-		if(I.w_class + space <= maxspace)
-			space += I.w_class
+		if(I.atom_size + space <= maxspace)
+			space += I.atom_size
 			I.forceMove(src)
 
 /obj/structure/safe/update_icon_state()
@@ -63,8 +63,8 @@ FLOOR SAFES
 /obj/structure/safe/attackby(obj/item/I, mob/user, params)
 	if(open)
 		. = TRUE //no afterattack
-		if(I.w_class + space <= maxspace)
-			space += I.w_class
+		if(I.atom_size + space <= maxspace)
+			space += I.atom_size
 			if(!user.transferItemToLoc(I, src))
 				to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the safe!"))
 				return
@@ -199,7 +199,7 @@ FLOOR SAFES
 			if(!I || !in_range(src, user))
 				return
 			user.put_in_hands(I)
-			space -= I.w_class
+			space -= I.atom_size
 			return TRUE
 
 /**

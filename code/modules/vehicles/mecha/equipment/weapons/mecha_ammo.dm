@@ -1,7 +1,7 @@
 /obj/item/mecha_ammo
 	name = "generic ammo box"
 	desc = "A box of ammo for an unknown weapon."
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	icon = 'icons/mecha/mecha_ammo.dmi'
 	icon_state = "empty"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'

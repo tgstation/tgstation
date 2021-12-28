@@ -6,7 +6,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	base_icon_state = "posibrain"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	var/ask_role = "" ///Can be set to tell ghosts what the brain will be used for
 	var/next_ask ///World time tick when ghost polling will be available again
 	var/askDelay = 600 ///Delay after polling ghosts

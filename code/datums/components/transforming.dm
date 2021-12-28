@@ -19,7 +19,7 @@
 	/// Throw speed of the weapon when active
 	var/throw_speed_on
 	/// Weight class of the weapon when active
-	var/w_class_on
+	var/size_on
 	/// The sharpness of the weapon when active
 	var/sharpness_on
 	/// Hitsound played when active
@@ -47,7 +47,7 @@
 		throw_speed_on = 2,
 		sharpness_on = NONE,
 		hitsound_on = 'sound/weapons/blade1.ogg',
-		w_class_on = WEIGHT_CLASS_BULKY,
+		size_on = WEIGHT_CLASS_BULKY,
 		clumsy_check = TRUE,
 		list/attack_verb_continuous_on,
 		list/attack_verb_simple_on,
@@ -64,7 +64,7 @@
 	src.throw_speed_on = throw_speed_on
 	src.sharpness_on = sharpness_on
 	src.hitsound_on = hitsound_on
-	src.w_class_on = w_class_on
+	src.size_on = size_on
 	src.clumsy_check = clumsy_check
 
 	if(attack_verb_continuous_on)
@@ -178,7 +178,7 @@
 		source.attack_verb_simple = attack_verb_simple_on
 
 	source.hitsound = hitsound_on
-	source.w_class = w_class_on
+	source.atom_size = size_on
 	source.icon_state = "[source.icon_state]_on"
 
 /*
@@ -203,7 +203,7 @@
 		source.attack_verb_simple = attack_verb_simple_off
 
 	source.hitsound = initial(source.hitsound)
-	source.w_class = initial(source.w_class)
+	source.atom_size = initial(source.atom_size)
 	source.icon_state = initial(source.icon_state)
 
 /*

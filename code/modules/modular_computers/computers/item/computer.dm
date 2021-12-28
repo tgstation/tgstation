@@ -36,7 +36,7 @@
 	var/icon_state_powered = null // Icon state when the computer is turned on.
 	var/icon_state_menu = "menu" // Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
 	var/display_overlays = TRUE // If FALSE, don't draw overlays on this device at all
-	var/max_hardware_size = 0 // Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
+	var/max_hardware_size = 0 // Maximal hardware atom_size. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5 // Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
 	/// List of "connection ports" in this computer and the components with which they are plugged

@@ -24,7 +24,7 @@
 	light_on = FALSE
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	resistance_flags = FIRE_PROOF
 	heat = 3800
@@ -336,7 +336,7 @@
 	desc = "A miniature welder used during emergencies."
 	icon_state = "miniwelder"
 	max_fuel = 10
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=10)
 	change_icons = FALSE
 

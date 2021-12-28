@@ -7,7 +7,7 @@
 	anchored = TRUE
 	var/open = FALSE //if the lid is up
 	var/cistern = 0 //if the cistern bit is open
-	var/w_items = 0 //the combined w_class of all the items in the cistern
+	var/w_items = 0 //the combined atom_size of all the items in the cistern
 	var/mob/living/swirlie = null //the mob being given a swirlie
 	var/buildstacktype = /obj/item/stack/sheet/iron //they're iron now, shut up
 	var/buildstackamount = 1
@@ -72,7 +72,7 @@
 			else
 				I.forceMove(drop_location())
 			to_chat(user, span_notice("You find [I] in the cistern."))
-			w_items -= I.w_class
+			w_items -= I.atom_size
 	else
 		open = !open
 		update_appearance()
@@ -109,16 +109,16 @@
 		deconstruct()
 		return TRUE
 	else if(cistern && !user.combat_mode)
-		if(I.w_class > WEIGHT_CLASS_NORMAL)
+		if(I.atom_size > WEIGHT_CLASS_NORMAL)
 			to_chat(user, span_warning("[I] does not fit!"))
 			return
-		if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
+		if(w_items + I.atom_size > WEIGHT_CLASS_HUGE)
 			to_chat(user, span_warning("The cistern is full!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in the cistern!"))
 			return
-		w_items += I.w_class
+		w_items += I.atom_size
 		to_chat(user, span_notice("You carefully place [I] into the cistern."))
 
 	else if(istype(I, /obj/item/reagent_containers) && !user.combat_mode)
@@ -142,7 +142,7 @@
 	if (secret_type)
 		secret = new secret_type(src)
 		secret.desc += " It's a secret!"
-		w_items += secret.w_class
+		w_items += secret.atom_size
 		contents += secret
 
 /obj/structure/toilet/greyscale
@@ -199,7 +199,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		if (hiddenitem)
 			to_chat(user, span_warning("There is already something in the drain enclosure!"))
 			return
-		if(I.w_class > 1)
+		if(I.atom_size > 1)
 			to_chat(user, span_warning("[I] is too large for the drain enclosure."))
 			return
 		if(!user.transferItemToLoc(I, src))
@@ -228,7 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
 	foodtypes = TOXIC | GROSS
 

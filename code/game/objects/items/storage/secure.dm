@@ -22,14 +22,14 @@
 	var/l_hacking = FALSE
 	var/open = FALSE
 	var/can_hack_open = TRUE
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 14
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
+	STR.max_total_atom_size = 14
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
@@ -130,7 +130,7 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 
@@ -141,8 +141,8 @@
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_combined_w_class = 21
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 21
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
@@ -167,7 +167,7 @@
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	desc = "Excellent for securing things away from grubby hands."
-	w_class = WEIGHT_CLASS_GIGANTIC
+	atom_size = WEIGHT_CLASS_GIGANTIC
 	anchored = TRUE
 	density = FALSE
 
@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
-	STR.max_w_class = 8 //??
+	STR.max_atom_size = 8 //??
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)

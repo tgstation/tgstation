@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
 	///The implant in our implanter
 	var/obj/item/implant/imp = null

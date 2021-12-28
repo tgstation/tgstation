@@ -58,7 +58,7 @@
 	icon_state = "sc_Ace of Hearts_syndicate" // shut up
 	var/message = "A generic message of love or whatever."
 	resistance_flags = FLAMMABLE
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/valentine/Initialize(mapload)
 	. = ..()

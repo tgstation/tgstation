@@ -14,7 +14,7 @@
 	icon_state = "docs_generic"
 	inhand_icon_state = "paper"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	layer = MOB_LAYER

@@ -1,7 +1,7 @@
 // Pizza (Whole)
 /obj/item/food/pizza
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	max_volume = 80
 	food_reagents = list(/datum/reagent/consumable/nutriment = 28, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
@@ -32,7 +32,7 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	decomp_type = /obj/item/food/pizzaslice/moldy
 
 /obj/item/food/pizzaslice/MakeProcessable()

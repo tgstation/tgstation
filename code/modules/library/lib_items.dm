@@ -208,7 +208,7 @@
 	desc = "Crack it open, inhale the musk of its pages, and learn something new."
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	atom_size = WEIGHT_CLASS_NORMAL  //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb_continuous = list("bashes", "whacks", "educates")
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
@@ -348,7 +348,7 @@
 	desc = "A fabulous tool if you need to scan a barcode."
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/obj/machinery/computer/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
 	var/obj/item/book/book //Currently scanned book
 	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory

@@ -8,7 +8,7 @@
 	inhand_icon_state = "clipboard"
 	worn_icon_state = "clipboard"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
 	slot_flags = ITEM_SLOT_BELT

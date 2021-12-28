@@ -89,7 +89,7 @@
 	icon_state = "2"
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//inhand_icon_state = null
-	w_class = WEIGHT_CLASS_GIGANTIC
+	atom_size = WEIGHT_CLASS_GIGANTIC
 	plane = ABOVE_HUD_PLANE
 
 	///Object focused / selected by the TK user

@@ -12,7 +12,7 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/can_use = 1
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null

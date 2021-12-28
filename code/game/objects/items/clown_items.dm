@@ -18,7 +18,7 @@
 	icon_state = "soap"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
 	throwforce = 0
 	throw_speed = 3
@@ -179,7 +179,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
 	hitsound = null //To prevent tap.ogg playing, as the item lacks of force
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7

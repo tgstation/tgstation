@@ -20,7 +20,7 @@
 		righthand_file = rh_icon
 	if(worn_slot_flags)
 		slot_flags = worn_slot_flags
-	w_class = M.held_w_class
+	atom_size = M.held_atom_size
 	deposit(M)
 	. = ..()
 

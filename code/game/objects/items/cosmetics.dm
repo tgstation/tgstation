@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "lipstick"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/colour = "red"
 	var/open = FALSE
 	/// A trait that's applied while someone has this lipstick applied, and is removed when the lipstick is removed
@@ -107,7 +107,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "razor"
 	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins shaving [user.p_them()]self without the razor guard! It looks like [user.p_theyre()] trying to commit suicide!"))

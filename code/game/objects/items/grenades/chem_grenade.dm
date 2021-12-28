@@ -3,7 +3,7 @@
 	desc = "A custom made grenade."
 	icon_state = "chemg"
 	inhand_icon_state = "flashbang"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	force = 2
 	var/stage = GRENADE_EMPTY
 	var/list/obj/item/reagent_containers/glass/beakers = list()

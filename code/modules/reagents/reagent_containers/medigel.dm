@@ -12,7 +12,7 @@
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
 	amount_per_transfer_from_this = 10

@@ -8,7 +8,7 @@
 	worn_icon_state = "plantanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
 
@@ -396,7 +396,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 7
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
 	attack_verb_simple = list("slash", "slice", "cut", "claw")
@@ -409,7 +409,7 @@
 /obj/item/cultivator/rake
 	name = "rake"
 	icon_state = "rake"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("slashes", "slices", "bashes", "claws")
 	attack_verb_simple = list("slash", "slice", "bash", "claw")
 	hitsound = null
@@ -446,7 +446,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 12
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throwforce = 15
 	throw_speed = 4
 	throw_range = 7
@@ -482,7 +482,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
 	slot_flags = ITEM_SLOT_BACK
@@ -532,7 +532,7 @@
 	flags_1 = CONDUCT_1
 	force = 5
 	throwforce = 6
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=4000)
 	attack_verb_continuous = list("slashes", "slices", "cuts", "claws")
@@ -551,7 +551,7 @@
 	flags_1 = CONDUCT_1
 	force = 10
 	throwforce = 8
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
 	attack_verb_continuous = list("slashes", "slices", "cuts")

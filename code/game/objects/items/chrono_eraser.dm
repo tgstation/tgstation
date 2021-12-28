@@ -8,7 +8,7 @@
 	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/equip_unequip_ted_gun)
@@ -47,7 +47,7 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	inhand_icon_state = "chronogun"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = FALSE

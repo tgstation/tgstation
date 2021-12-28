@@ -11,7 +11,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("cheese" = 1, "herbs" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/grilled_cheese
 	name = "grilled cheese"
@@ -21,7 +21,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/char = 1)
 	tastes = list("cheese" = 1, "char" = 1)
 	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mothic_salad
 	name = "mothic salad"
@@ -31,7 +31,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("salad" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/toasted_seeds
 	name = "toasted seeds"
@@ -41,7 +41,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("seeds" = 1)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/engine_fodder
 	name = "engine fodder"
@@ -51,7 +51,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/salt = 1)
 	tastes = list("seeds" = 1, "nuts" = 1, "chocolate" = 1, "salt" = 1, "popcorn" = 1, "potato" = 1)
 	foodtypes = GRAIN | NUTS | VEGETABLES | SUGAR
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mothic_pizza_dough
 	name = "mothic pizza dough"
@@ -61,7 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("raw flour" = 1)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Entrees: categorising food that is 90% cheese and salad is not easy
 /obj/item/food/squeaking_stir_fry
@@ -72,7 +72,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("cheese" = 1, "tofu" = 1, "veggies" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sweet_chili_cabbage_wrap
 	name = "sweet chili cabbage wrap"
@@ -82,7 +82,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("cheese" = 1, "salad" = 1, "sweet chili" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/loaded_curds
 	name = "ozlsettitæloskekllön ede pommes" //ozlsettit = overflowing (ozl = over, sett = flow, it = ing), ælo = cheese, skekllön = curds (skeklit = squeaking, llön = pieces/bits), ede = and, pommes = fries (hey, France!)
@@ -92,7 +92,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("cheese" = 1, "oil" = 1, "chili" = 1, "fries" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/baked_cheese
 	name = "baked cheese wheel"
@@ -102,7 +102,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
 /obj/item/food/baked_cheese_platter
@@ -113,7 +113,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("cheese" = 1, "bread" = 1)
 	foodtypes = DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Baked Green Lasagna at the Whistlestop Cafe
 /obj/item/food/raw_green_lasagne
@@ -124,7 +124,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
 	foodtypes = VEGETABLES | GRAIN | NUTS
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_green_lasagne/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/green_lasagne, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -137,7 +137,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 18)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
 	foodtypes = VEGETABLES | GRAIN | NUTS
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
@@ -151,7 +151,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("cheese" = 1, "pesto" = 1, "pasta" = 1)
 	foodtypes = VEGETABLES | GRAIN | NUTS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_baked_rice
 	name = "big rice pan"
@@ -161,7 +161,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/food/raw_baked_rice/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/big_baked_rice, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -174,7 +174,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 12, /datum/reagent/consumable/nutriment/vitamin = 36)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
@@ -188,7 +188,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/oven_baked_corn
 	name = "oven-baked corn"
@@ -198,7 +198,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/char = 1)
 	tastes = list("corn" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
 /obj/item/food/buttered_baked_corn
@@ -209,7 +209,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/char = 1)
 	tastes = list("corn" = 1, "char" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fiesta_corn_skillet
 	name = "fiesta corn skillet"
@@ -219,7 +219,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 7, /datum/reagent/consumable/char = 1)
 	tastes = list("corn" = 1, "chili" = 1, "char" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_ratatouille
 	name = "raw ratatouille" //rawtatouille?
@@ -229,7 +229,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 7, /datum/reagent/consumable/char = 1)
 	tastes = list("veggies" = 1, "roasted peppers" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_ratatouille/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/ratatouille, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -242,7 +242,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 7, /datum/reagent/consumable/char = 1)
 	tastes = list("veggies" = 1, "roasted peppers" = 1, "char" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
 /obj/item/food/mozzarella_sticks
@@ -253,7 +253,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("creamy cheese" = 1, "breading" = 1, "oil" = 1)
 	foodtypes = DAIRY | GRAIN | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_stuffed_peppers
 	name = "raw voltölpaprik" //voltöl = stuffed (vol = full, töl = push), paprik (from German paprika) = bell pepper
@@ -263,7 +263,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("creamy cheese" = 1, "herbs" = 1, "onion" = 1, "bell pepper" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_stuffed_peppers/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/stuffed_peppers, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -276,7 +276,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("creamy cheese" = 1, "herbs" = 1, "onion" = 1, "bell pepper" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	burns_in_oven = TRUE
 
 /obj/item/food/fueljacks_lunch
@@ -287,7 +287,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("cabbage" = 1, "potato" = 1, "onion" = 1, "chili" = 1, "cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mac_balls
 	name = "macheronirölen"
@@ -297,7 +297,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("pasta" = 1, "cornbread" = 1, "cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES | FRIED | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sustenance_bar
 	name = "surplus fleet PSB"
@@ -307,7 +307,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20)
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/sustenance_bar/neapolitan
 	name = "surplus fleet PSB- neapolitan flavour"
@@ -338,7 +338,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("cotton" = 1, "broth" = 1)
 	foodtypes = VEGETABLES | CLOTH
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/moth_cheese_soup
 	name = "ælosterrmæsch" //ælo = cheese, sterr = melt, mæsch = soup
@@ -348,7 +348,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 1)
 	tastes = list("cheese" = 1, "cream" = 1, "sweet potato" = 1)
 	foodtypes = DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/moth_seed_soup
 	name = "misklmæsch" //miskl = seed, mæsch = soup
@@ -358,7 +358,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("bitterness" = 1, "sourness" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/vegetarian_chili
 	name = "chili sin carne"
@@ -367,7 +367,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/tomatojuice = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bitterness" = 1, "sourness" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/moth_bean_stew 
 	name = "prickeldröndolhaskl" //prickeld = spicy, röndol = bean, haskl = stew
@@ -377,7 +377,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 7, /datum/reagent/consumable/char = 1)
 	tastes = list("beans" = 1, "cabbage" = 1, "spicy sauce" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/moth_oat_stew
 	name = "häfmisklhaskl" //häfmiskl = oat (häf from German hafer meaning oat, miskl meaning seed), haskl = stew
@@ -387,7 +387,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 7, /datum/reagent/consumable/char = 1)
 	tastes = list("oats" = 1, "sweet potato" = 1, "carrot" = 1, "parsnip" = 1, "pumpkin" = 1)
 	foodtypes = VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/moth_fire_soup 
 	name = "tömpröttkrakklmæsch" //tömprött = heart (tömp = thump, rött = muscle), krakkl = fire, mæsch = soup
@@ -397,7 +397,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("love" = 1, "hate" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/rice_porridge
 	name = "rice porridge" 
@@ -407,7 +407,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("nothing" = 1)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/hua_mulan_congee
 	name = "\improper Hua Mulan congee" 
@@ -417,7 +417,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("bacon" = 1, "eggs" = 1)
 	foodtypes = MEAT | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/toechtauese_rice_porridge
 	name = "töchtaüse rice porridge" 
@@ -427,7 +427,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("sugar" = 1, "spice" = 1)
 	foodtypes = GRAIN | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/cornmeal_porridge
 	name = "cornmeal porridge" 
@@ -437,7 +437,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cornmeal" = 1)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/cheesy_porridge //milk, polenta, firm cheese, curd cheese, butter
 	name = "cheesy porridge" 
@@ -447,7 +447,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cornmeal" = 1, "cheese" = 1, "more cheese" = 1, "lots of cheese" = 1)
 	foodtypes = DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/fried_eggplant_polenta
 	name = "fried eggplant and polenta" 
@@ -457,7 +457,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cornmeal" = 1, "cheese" = 1, "eggplant" = 1, "tomato sauce" = 1)
 	foodtypes = DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Salads: the bread and butter of mothic cuisine
 /obj/item/food/caprese_salad
@@ -468,7 +468,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("mozzarella" = 1, "tomato" = 1, "balsamic" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/fleet_salad
 	name = "lörtonknusksolt" //lörton = fleet, knusksolt = salad (knusk = crisp, solt = bowl)
@@ -478,7 +478,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cheese" = 1, "salad" = 1, "bread" = 1)
 	foodtypes = DAIRY | VEGETABLES | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/cotton_salad
 	name = "flöfrölenknusksolt"
@@ -488,7 +488,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cheese" = 1, "salad" = 1, "bread" = 1)
 	foodtypes = VEGETABLES | CLOTH
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/salad/moth_kachumbari
 	name = "\improper Kæniatknusksolt" //Kæniat = Kenyan, knusksolt = salad
@@ -498,7 +498,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("onion" = 1, "tomato" = 1, "corn" = 1, "chili" = 1, "cilantro" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Pizza
 /obj/item/food/raw_mothic_margherita
@@ -696,7 +696,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	tastes = list("cornbread" = 10)
 	foodtypes = GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/bread/corn/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/corn, 6, 20)
@@ -718,7 +718,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/sugar = 5)
 	tastes = list("cheesecake" = 1, "chocolate" = 1, "honey" = 1)
 	foodtypes = SUGAR | FRIED | DAIRY | GRAIN
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cake/mothmallow
 	name = "mothmallow tray"
@@ -789,4 +789,4 @@
 	tastes = list("strong mint" = 1)
 	junkiness = 15
 	foodtypes = JUNKFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL

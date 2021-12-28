@@ -13,7 +13,7 @@
 	desc = "A simple tool used for moving hay."
 	force = 7
 	throwforce = 15
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("attacks", "impales", "pierces")
 	attack_verb_simple = list("attack", "impale", "pierce")
 	hitsound = 'sound/weapons/bladeslice.ogg'

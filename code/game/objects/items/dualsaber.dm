@@ -13,7 +13,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 35
 	light_system = MOVABLE_LIGHT
@@ -28,7 +28,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	var/w_class_on = WEIGHT_CLASS_BULKY
+	var/size_on = WEIGHT_CLASS_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34
 	var/hacked = FALSE
@@ -49,7 +49,7 @@
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	wielded = TRUE
-	w_class = w_class_on
+	atom_size = size_on
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)
 	set_light_on(TRUE)
@@ -61,7 +61,7 @@
 	SIGNAL_HANDLER
 
 	wielded = FALSE
-	w_class = initial(w_class)
+	atom_size = initial(atom_size)
 	hitsound = "swing_hit"
 	STOP_PROCESSING(SSobj, src)
 	set_light_on(FALSE)

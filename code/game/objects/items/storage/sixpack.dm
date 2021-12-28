@@ -24,8 +24,8 @@
 /obj/item/storage/cans/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 12
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
+	STR.max_total_atom_size = 12
 	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food/drinks/soda_cans,

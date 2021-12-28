@@ -2,7 +2,7 @@
 	if(!try_install.can_install(src, user))
 		return FALSE
 
-	if(try_install.w_class > max_hardware_size)
+	if(try_install.atom_size > max_hardware_size)
 		to_chat(user, span_warning("This component is too large for \the [src]!"))
 		return FALSE
 

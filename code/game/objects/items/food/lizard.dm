@@ -10,7 +10,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/blood = 3)
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
@@ -24,7 +24,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("meat" = 1, "black pudding" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_headcheese
 	name = "raw headcheese block"
@@ -34,7 +34,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("meat" = 1, "salt" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
@@ -48,7 +48,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/headcheese/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30)
@@ -61,7 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/salt = 1)
 	tastes = list("cheese" = 1, "salt" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -71,7 +71,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "heat" = 1, "veggies" = 1)
 	foodtypes = MEAT | VEGETABLES | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/tsatsikh
 	name = "tsatsikh"
@@ -81,7 +81,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("assorted minced organs" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/liver_pate
 	name = "liver pate"
@@ -91,7 +91,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("liver" = 1)
 	foodtypes = MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
@@ -101,7 +101,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_caviar
 	name = "moonfish caviar paste"
@@ -111,7 +111,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("caviar" = 1)
 	foodtypes = SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_escargot
 	name = "desert snail cocleas"
@@ -121,7 +121,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/garlic = 1)
 	tastes = list("snails" = 1, "garlic" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fried_blood_sausage
 	name = "fried blood sausage"
@@ -131,7 +131,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/cooking_oil = 1)
 	tastes = list("black pudding" = 1, "batter" = 1, "oil" = 1)
 	foodtypes = MEAT | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
@@ -142,7 +142,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/salt = 1, /datum/reagent/consumable/bbqsauce = 2)
 	tastes = list("fries" = 2, "bbq sauce" = 1, "barbecued meat" = 1)
 	foodtypes = MEAT | VEGETABLES | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/brain_pate
 	name = "eyeball-and-brain pate"
@@ -152,7 +152,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5)
 	tastes = list("brains" = 2)
 	foodtypes = MEAT | VEGETABLES | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/crispy_headcheese
 	name = "crispy breaded headcheese"
@@ -162,7 +162,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 1)
 	tastes = list("cheese" = 1, "oil" = 1)
 	foodtypes = MEAT | VEGETABLES | NUTS | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/kebab/picoss_skewers
 	name = "picoss skewer"
@@ -172,7 +172,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/vinegar= 1, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
 	foodtypes = SEAFOOD | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/nectar_larvae
 	name = "nectar larvae"
@@ -182,7 +182,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/korta_nectar = 2, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("meat" = 1, "sweet" = 1, "heat" = 1)
 	foodtypes = GROSS | MEAT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/mushroomy_stirfry
 	name = "mushroomy stirfry"
@@ -192,7 +192,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("marvelous mushrooms" = 1, "sublime shrooms" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Fish Dishes
 /obj/item/food/grilled_moonfish
@@ -204,7 +204,7 @@
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_demiglace
 	name = "moonfish demiglace"
@@ -214,7 +214,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_surf_n_turf
 	name = "\improper Zagosk surf 'n' turf smorgasbord"
@@ -224,7 +224,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("surf" = 1, "turf" = 1)
 	foodtypes = MEAT | SEAFOOD | VEGETABLES
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 //Spaghetti Dishes
 
@@ -281,7 +281,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rootdough"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
@@ -312,7 +312,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rootdough_slice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 
@@ -338,7 +338,7 @@
 	icon = 'icons/obj/food/lizard.dmi'
 	icon_state = "rootroll"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	tastes = list("roll" = 1) // the roll tastes of roll.
 	foodtypes = VEGETABLES | NUTS
 	burns_in_oven = TRUE
@@ -353,7 +353,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	tastes = list("bread" = 8, "nuts" = 2)
 	foodtypes = VEGETABLES | NUTS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
@@ -422,7 +422,7 @@
 	tastes = list("bread" = 1, "cheese" = 1, "liver" = 1, "caviar" = 1)
 	foodtypes = VEGETABLES | NUTS | MEAT | GROSS | SEAFOOD
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/honey_roll
 	name = "honey sweetroll"
@@ -433,7 +433,7 @@
 	tastes = list("bread" = 1, "honey" = 1, "fruit" = 1)
 	foodtypes = VEGETABLES | NUTS | FRUIT
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Soup Dishes
 /obj/item/food/soup/atrakor_dumplings
@@ -490,7 +490,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("eggs" = 1, "greens" = 1, "blood" = 1)
 	foodtypes = MEAT | BREAKFAST | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/patzikula
 	name = "patzikula"
@@ -500,7 +500,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("eggs" = 1, "tomato" = 1, "heat" = 1)
 	foodtypes = VEGETABLES | MEAT | BREAKFAST
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 //Cakes/Sweets
 
@@ -552,7 +552,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
 	tastes = list("cabbage" = 1, "acid" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_dumplings
 	name = "\improper Tiziran dumplings"
@@ -562,7 +562,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/steeped_mushrooms
 	name = "steeped seraka mushrooms"
@@ -572,7 +572,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("savouriness" = 1, "nuttiness" = 1)
 	foodtypes = VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/canned_jellyfish
 	name = "canned gunner jellyfish"
@@ -582,7 +582,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2, /datum/reagent/consumable/salt = 1)
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/desert_snails
 	name = "canned desert snails"
@@ -592,7 +592,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/salt = 2)
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/larvae
 	name = "canned bee larva"
@@ -602,4 +602,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/honey = 2)
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GROSS
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL

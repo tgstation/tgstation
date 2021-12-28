@@ -11,7 +11,7 @@
 	force = 20
 	throwforce = 10
 	throw_range = 7
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 40)
 	resistance_flags = FIRE_PROOF
 	var/click_delay = 1.5

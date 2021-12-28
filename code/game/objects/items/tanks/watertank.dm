@@ -7,7 +7,7 @@
 	inhand_icon_state = "waterbackpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/toggle_mister)
@@ -112,7 +112,7 @@
 	inhand_icon_state = "mister"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(50)
 	can_toggle_range = FALSE
@@ -245,7 +245,7 @@
 	force = 10
 	precision = 1
 	cooling_power = 5
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
 	var/obj/item/watertank/tank
@@ -368,7 +368,7 @@
 	inhand_icon_state = "waterbackpackchem"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/activate_injector)
@@ -460,7 +460,7 @@
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackop"
 	inhand_icon_state = "waterbackpackop"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	volume = 2000
 	slowdown = 0
 
@@ -481,7 +481,7 @@
 	inhand_icon_state = "misterop"
 	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 

@@ -198,7 +198,7 @@
 	inhand_icon_state = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
 
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
@@ -225,7 +225,7 @@
 	allowed_instrument_ids = list("bikehorn", "honk")
 	attack_verb_continuous = list("beautifully honks")
 	attack_verb_simple = list("beautifully honk")
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	force = 0
 	throw_speed = 3
 	throw_range = 15
@@ -266,7 +266,7 @@
 	allowed_instrument_ids = "mothscream"
 	attack_verb_continuous = list("flutters", "flaps")
 	attack_verb_simple = list("flutter", "flap")
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
 	custom_price = PAYCHECK_HARD * 2.37

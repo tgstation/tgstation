@@ -14,7 +14,7 @@
 	desc = "An emergency shelter stored within a pocket of bluespace."
 	icon_state = "capsule"
 	icon = 'icons/obj/mining.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/template_id = "shelter_alpha"
 	var/datum/map_template/shelter/template
 	var/used = FALSE

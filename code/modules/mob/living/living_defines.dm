@@ -140,8 +140,8 @@
 
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE
-	/// The w_class of the holder when held.
-	var/held_w_class = WEIGHT_CLASS_NORMAL
+	/// The atom_size of the holder when held.
+	var/held_atom_size = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
 	var/worn_slot_flags = NONE
 

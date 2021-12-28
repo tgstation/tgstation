@@ -11,7 +11,7 @@
 	desc = "The control unit of a Modular Outerwear Device, a powered, back-mounted suit that protects against various environments."
 	icon_state = "control"
 	inhand_icon_state = "mod_control"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
 	slowdown = 2

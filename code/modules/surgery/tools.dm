@@ -9,7 +9,7 @@
 	custom_materials = list(/datum/material/iron=6000, /datum/material/glass=3000)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	tool_behaviour = TOOL_RETRACTOR
 	toolspeed = 1
 
@@ -29,7 +29,7 @@
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("attacks", "pinches")
 	attack_verb_simple = list("attack", "pinch")
 	tool_behaviour = TOOL_HEMOSTAT
@@ -51,7 +51,7 @@
 	custom_materials = list(/datum/material/iron=2500, /datum/material/glass=750)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("burns")
 	attack_verb_simple = list("burn")
 	tool_behaviour = TOOL_CAUTERY
@@ -82,7 +82,7 @@
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
-		w_class_on = w_class, \
+		size_on = atom_size, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
@@ -115,7 +115,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("drills")
 	attack_verb_simple = list("drill")
 	tool_behaviour = TOOL_DRILL
@@ -138,7 +138,7 @@
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm. May or may not pierce the heavens."
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 
@@ -153,7 +153,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 10
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
@@ -193,7 +193,7 @@
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	throwforce = 9
 	throw_speed = 2
 	throw_range = 5
@@ -212,7 +212,7 @@
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
 
@@ -224,7 +224,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "drapes"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 
@@ -281,7 +281,7 @@
 		throw_speed_on = throw_speed, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
-		w_class_on = w_class, \
+		size_on = atom_size, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
@@ -322,7 +322,7 @@
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
-		w_class_on = w_class, \
+		size_on = atom_size, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
@@ -352,7 +352,7 @@
 	item_flags = SURGICAL_TOOL
 	toolspeed = 1
 	force = 12
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	throwforce = 6
 	throw_speed = 2
 	throw_range = 5
@@ -433,7 +433,7 @@
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("corrects", "properly sets")
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
@@ -448,7 +448,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=1500, /datum/material/silver=500)
 	item_flags = SURGICAL_TOOL
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("pumps", "siphons")
 	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER

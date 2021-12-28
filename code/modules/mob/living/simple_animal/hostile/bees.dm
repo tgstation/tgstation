@@ -43,7 +43,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
 	can_be_held = TRUE
-	held_w_class = WEIGHT_CLASS_TINY
+	held_atom_size = WEIGHT_CLASS_TINY
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)

@@ -167,10 +167,10 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 				melee_damage_upper *= 2
 		else if(isitem(O))
 			var/obj/item/I = O
-			health = 15 * I.w_class
+			health = 15 * I.atom_size
 			melee_damage_lower = 2 + I.force
 			melee_damage_upper = 2 + I.force
-			move_to_delay = 2 * I.w_class + 1
+			move_to_delay = 2 * I.atom_size + 1
 		maxHealth = health
 		if(user)
 			creator = user
@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(mimic_blacklist, list(/obj/structure/table, /obj/structure/cabl
 		var/obj/item/gun/G = O
 		melee_damage_upper = G.force
 		melee_damage_lower = G.force - max(0, (G.force / 2))
-		move_to_delay = 2 * G.w_class + 1
+		move_to_delay = 2 * G.atom_size + 1
 		projectilesound = G.fire_sound
 		TrueGun = G
 		if(istype(G, /obj/item/gun/magic))

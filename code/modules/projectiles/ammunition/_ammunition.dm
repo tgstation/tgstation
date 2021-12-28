@@ -7,7 +7,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
 	override_notes = TRUE
 	///What sound should play when this ammo is fired

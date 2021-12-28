@@ -6,7 +6,7 @@
 	icon_state = "plasma"
 	inhand_icon_state = "" //no inhands
 	slot_flags = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	/// Whether or not the accessory displays through suits and the like.
 	var/above_suit = FALSE
 	/// TRUE if shown as a small icon in corner, FALSE if overlayed

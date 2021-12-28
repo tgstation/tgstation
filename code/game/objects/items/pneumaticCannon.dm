@@ -5,7 +5,7 @@
 /obj/item/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	force = 8 //Very heavy
 	attack_verb_continuous = list("bludgeons", "smashes", "beats")
 	attack_verb_simple = list("bludgeon", "smash", "beat")
@@ -108,11 +108,11 @@
 		if(user)
 			to_chat(user, span_warning("[I] won't fit into [src]!"))
 		return
-	if((loadedWeightClass + I.w_class) > maxWeightClass) //Only make messages if there's a user
+	if((loadedWeightClass + I.atom_size) > maxWeightClass) //Only make messages if there's a user
 		if(user)
 			to_chat(user, span_warning("\The [I] won't fit into \the [src]!"))
 		return FALSE
-	if(I.w_class > w_class)
+	if(I.atom_size > atom_size)
 		if(user)
 			to_chat(user, span_warning("\The [I] is too large to fit into \the [src]!"))
 		return FALSE
@@ -129,7 +129,7 @@
 		I.forceMove(src)
 	loadedItems += I
 	if(isitem(I))
-		loadedWeightClass += I.w_class
+		loadedWeightClass += I.atom_size
 	else
 		loadedWeightClass++
 	return TRUE
@@ -205,7 +205,7 @@
 	loadedItems -= AM
 	if(isitem(AM))
 		var/obj/item/I = AM
-		loadedWeightClass -= I.w_class
+		loadedWeightClass -= I.atom_size
 	else
 		loadedWeightClass--
 	AM.forceMove(get_turf(src))
@@ -227,7 +227,7 @@
 	if (loadedItems.Remove(A))
 		var/obj/item/I = A
 		if(istype(I))
-			loadedWeightClass -= I.w_class
+			loadedWeightClass -= I.atom_size
 		else
 			loadedWeightClass--
 	else if (A == tank)

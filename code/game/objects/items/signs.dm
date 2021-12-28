@@ -3,7 +3,7 @@
 	name = "blank picket sign"
 	desc = "It's blank."
 	force = 5
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bashes", "smacks")
 	attack_verb_simple = list("bash", "smack")
 	resistance_flags = FLAMMABLE

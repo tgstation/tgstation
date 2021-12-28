@@ -6,7 +6,7 @@
 	base_icon_state = "holochip"
 	throwforce = 0
 	force = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/credits = 0
 
 /obj/item/holochip/Initialize(mapload, amount)

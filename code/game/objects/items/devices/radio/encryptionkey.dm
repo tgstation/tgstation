@@ -3,7 +3,7 @@
 	desc = "An encryption key for a radio headset."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/translate_binary = FALSE
 	var/syndie = FALSE
 	var/independent = FALSE

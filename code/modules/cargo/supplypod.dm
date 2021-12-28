@@ -666,4 +666,4 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cargodisk"
 	inhand_icon_state = "card-id"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL

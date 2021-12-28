@@ -12,7 +12,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "ore"
 	inhand_icon_state = "ore"
-	full_w_class = WEIGHT_CLASS_BULKY
+	full_atom_size = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	material_flags = MATERIAL_EFFECTS
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
@@ -105,7 +105,7 @@
 	points = 1
 	mats_per_unit = list(/datum/material/glass=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
 	merge_type = /obj/item/stack/ore/glass
 
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "Gibtonite ore"
 	inhand_icon_state = "Gibtonite ore"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	throw_range = 0
 	var/primed = FALSE
 	var/det_time = 100
@@ -351,7 +351,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	flags_1 = CONDUCT_1
 	force = 1
 	throwforce = 2
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached

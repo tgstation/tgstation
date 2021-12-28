@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	icon_state = "rods"
 	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 9
 	throwforce = 10
 	throw_speed = 3
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	flags_1 = CONDUCT_1
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	mats_per_unit = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
 	max_amount = 30
 	resistance_flags = FIRE_PROOF | LAVA_PROOF

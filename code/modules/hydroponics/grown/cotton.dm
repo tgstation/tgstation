@@ -25,7 +25,7 @@
 	icon_state = "cotton"
 	force = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_speed = 2
 	throw_range = 3
 	attack_verb_continuous = list("pomfs")
@@ -74,7 +74,7 @@
 	icon_state = "durathread"
 	force = 5
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")

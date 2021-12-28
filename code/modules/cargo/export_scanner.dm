@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/export_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()

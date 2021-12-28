@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	color = "yellow"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
@@ -427,7 +427,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
 	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
-	full_w_class = WEIGHT_CLASS_SMALL
+	full_atom_size = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 	cost = 1

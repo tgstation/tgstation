@@ -37,7 +37,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	permeability_coefficient = 0.02
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST | GROIN | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.

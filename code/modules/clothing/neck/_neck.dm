@@ -23,7 +23,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bluetie"
 	inhand_icon_state = "" //no inhands
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_EASY
 
 /obj/item/clothing/neck/tie/blue
@@ -94,7 +94,7 @@
 	name = "white scarf"
 	icon_state = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	dog_fashion = /datum/dog_fashion/head
 	custom_price = PAYCHECK_EASY
 
@@ -229,7 +229,7 @@
 
 /obj/item/clothing/neck/neckerchief
 	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/sourceBandanaType
 
 /obj/item/clothing/neck/neckerchief/worn_overlays(mutable_appearance/standing, isinhands)

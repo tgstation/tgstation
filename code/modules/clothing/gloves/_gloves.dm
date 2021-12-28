@@ -1,7 +1,7 @@
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.5
 	body_parts_covered = HANDS

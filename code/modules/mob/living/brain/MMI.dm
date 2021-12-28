@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	var/braintype = "Cyborg"
 	var/obj/item/radio/radio = null //Let's give it a radio.
 	var/mob/living/brain/brainmob = null //The current occupant.

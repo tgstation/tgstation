@@ -6,7 +6,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
@@ -636,7 +636,7 @@
 /obj/item/slimepotion
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/slimepotion/afterattack(obj/item/reagent_containers/target, mob/user , proximity)
 	. = ..()
@@ -1021,7 +1021,7 @@
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile_bluespace"
 	inhand_icon_state = "tile-bluespace"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 6
 	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10
@@ -1038,7 +1038,7 @@
 	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile_sepia"
 	inhand_icon_state = "tile-sepia"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 6
 	mats_per_unit = list(/datum/material/iron=500)
 	throwforce = 10

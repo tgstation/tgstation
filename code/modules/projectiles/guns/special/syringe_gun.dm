@@ -9,7 +9,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	worn_icon_state = null
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	throw_speed = 3
 	throw_range = 7
@@ -103,7 +103,7 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "gun"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	base_pixel_x = 0
 	pixel_x = 0
@@ -120,7 +120,7 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "gun"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	base_pixel_x = 0
 	pixel_x = 0
@@ -139,7 +139,7 @@
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	worn_icon_state = "gun"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	base_pixel_x = 0
 	pixel_x = 0
@@ -181,7 +181,7 @@
 	worn_icon_state = "gun"
 	has_syringe_overlay = FALSE
 	fire_sound = 'sound/items/syringeproj.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	base_pixel_x = 0
 	pixel_x = 0

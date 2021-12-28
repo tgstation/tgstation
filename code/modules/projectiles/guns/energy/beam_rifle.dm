@@ -27,7 +27,7 @@
 	modifystate = FALSE
 	charge_sections = 1
 	weapon_weight = WEAPON_HEAVY
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
 	cell_type = /obj/item/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE

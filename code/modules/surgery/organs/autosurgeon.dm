@@ -7,7 +7,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autoimplanter"
 	inhand_icon_state = "nothing"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 	var/uses = INFINITE
 

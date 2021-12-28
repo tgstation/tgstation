@@ -20,7 +20,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
@@ -38,7 +38,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
@@ -109,7 +109,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
@@ -133,13 +133,13 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 2
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.

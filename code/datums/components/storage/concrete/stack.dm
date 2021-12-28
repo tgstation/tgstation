@@ -2,8 +2,8 @@
 /datum/component/storage/concrete/stack
 	display_numerical_stacking = TRUE
 	var/max_combined_stack_amount = 300
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = WEIGHT_CLASS_NORMAL * 14
+	max_atom_size = WEIGHT_CLASS_NORMAL
+	max_total_atom_size = WEIGHT_CLASS_NORMAL * 14
 
 /datum/component/storage/concrete/stack/proc/total_stack_amount()
 	. = 0

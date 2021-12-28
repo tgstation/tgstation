@@ -21,7 +21,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "match_unlit"
 	var/smoketime = 10 SECONDS
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list(/datum/reagent/phosphorus = 2)
 	/// Whether this match has been lit.
@@ -130,7 +130,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	inhand_icon_state = "cigoff"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
 	heat = 1000
@@ -541,7 +541,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old cigarette butt."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "cigbutt"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throwforce = 0
 	grind_results = list(/datum/reagent/carbon = 2)
 
@@ -670,7 +670,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "zippo"
 	inhand_icon_state = "zippo"
 	worn_icon_state = "lighter"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	heat = 1500
@@ -904,7 +904,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A thin piece of paper used to make fine smokeables."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/rollingpaper/Initialize(mapload)
 	. = ..()
@@ -920,7 +920,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "red_vape"
 	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 	/// The capacity of the vape.
 	var/chem_volume = 100

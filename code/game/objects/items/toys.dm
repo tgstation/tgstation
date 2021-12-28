@@ -126,7 +126,7 @@
 	inhand_icon_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/balloons_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
@@ -251,7 +251,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	attack_verb_continuous = list("strikes", "pistol whips", "hits", "bashes")
 	attack_verb_simple = list("strike", "pistol whip", "hit", "bash")
@@ -306,7 +306,7 @@
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/guns/ammo.dmi'
 	icon_state = "357OLD-7"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=10)
 	var/amount_left = 7
 
@@ -328,7 +328,7 @@
 	icon = 'icons/obj/transforming_energy.dmi'
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("attacks", "strikes", "hits")
 	attack_verb_simple = list("attack", "strike", "hit")
 	/// Whether our sword has been multitooled to rainbow
@@ -402,7 +402,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	attack_verb_continuous = list("pricks", "absorbs", "gores")
 	attack_verb_simple = list("prick", "absorb", "gore")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
 
 
@@ -504,7 +504,7 @@
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 5
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices")
 	attack_verb_simple = list("attack", "slash", "stab", "slice")
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -518,7 +518,7 @@
 	desc = "Wow!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "snappop"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/ash_type = /obj/effect/decal/cleanable/ash
 
 /obj/item/toy/snappop/proc/pop_burst(n=3, c=1)
@@ -574,7 +574,7 @@
 	desc = "A generic action figure modeled after nothing in particular."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "owlprize"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = FALSE
 	var/messages = list("I'm super generic!", "Mathematics class is of variable difficulty!")
 	var/span = "danger"
@@ -625,7 +625,7 @@
 	name = "toy AI"
 	desc = "A little toy model AI core with real law announcing action!"
 	icon_state = "AI"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/ai/generate_messages()
 	return list(generate_ion_law())
@@ -638,7 +638,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	messages = list("You must challenge the devil to a dance-off!", "The devils true name is Ian", "The devil hates salt!", "Would you like infinite power?", "Would you like infinite  wisdom?", " Would you like infinite healing?")
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
 /obj/item/toy/talking/codex_gigas/activation_message(mob/user)
@@ -654,7 +654,7 @@
 	messages = list("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 	chattering = TRUE
 	phomeme = "owl"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/talking/griffin
 	name = "griffin action figure"
@@ -663,7 +663,7 @@
 	messages = list("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 	chattering = TRUE
 	phomeme = "griffin"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /*
 || A Deck of Cards for playing various games of chance ||
@@ -708,7 +708,7 @@
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
@@ -811,7 +811,7 @@
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "none"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/list/currenthand = list()
 	var/choice = null
 
@@ -910,7 +910,7 @@
 	desc = "A playing card used to play card games like poker."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/cardname = null
 	var/flipped = 0
 	pixel_x = -5
@@ -1026,7 +1026,7 @@
 	desc = "A plastic model of a Nuclear Fission Explosive."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/nuke/attack_self(mob/user)
@@ -1069,7 +1069,7 @@
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "minimeteor"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/minimeteor/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
@@ -1098,7 +1098,7 @@
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "bigred"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/redbutton/attack_self(mob/user)
@@ -1145,7 +1145,7 @@
 	icon = 'icons/misc/beach.dmi'
 	icon_state = "ball"
 	inhand_icon_state = "beachball"
-	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
+	atom_size = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/branded
 	name = "\improper Nanotrasen-brand beach ball"
@@ -1162,7 +1162,7 @@
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/clockwork_watch/attack_self(mob/user)
@@ -1189,7 +1189,7 @@
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /*
  * Xenomorph action figure
@@ -1200,7 +1200,7 @@
 	icon_state = "toy_xeno"
 	name = "xenomorph action figure"
 	desc = "MEGA presents the new Xenos Isolated action figure! Comes complete with realistic sounds! Pull back string to use."
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/toy_xeno/attack_self(mob/user)
@@ -1225,7 +1225,7 @@
 	desc = "A colorful toy mouse!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_mouse"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 	resistance_flags = FLAMMABLE
 
@@ -1241,7 +1241,7 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/toy/figure/Initialize(mapload)
 	. = ..()
@@ -1505,7 +1505,7 @@
 	desc = "An old radio that produces nothing but static when turned on."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "broken_radio"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/cooldown = 0
 
 /obj/item/toy/brokenradio/attack_self(mob/user)
@@ -1539,7 +1539,7 @@
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	attack_verb_continuous = list("sacrifices", "transmutes", "graspes", "curses")
 	attack_verb_simple = list("sacrifice", "transmute", "grasp", "curse")
 	/// Helps determine the icon state of this item when it's used on self.
@@ -1580,7 +1580,7 @@
 	inhand_icon_state = "foamfinger_inhand"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	COOLDOWN_DECLARE(foamfinger_cooldown)
 
 /obj/item/toy/foamfinger/attack_self(mob/living/carbon/human/user)

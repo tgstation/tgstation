@@ -12,7 +12,7 @@
 	tastes = list("candy" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy/bronx
 	name = "South Bronx Paradise bar"
@@ -26,7 +26,7 @@
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtypes = JUNKFOOD | RAW | GROSS
 	custom_price = PAYCHECK_ASSISTANT * 1.6 //Joke adjusted for inflation
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
 /obj/item/food/candy/bronx/MakeEdible()
@@ -66,7 +66,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/salt = 2)
 	junkiness = 25
 	tastes = list("dried meat" = 1)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	foodtypes = JUNKFOOD | MEAT | SUGAR
 
 /obj/item/food/sosjerky/healthy
@@ -85,7 +85,7 @@
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtypes = JUNKFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/chips/MakeLeaveTrash()
 	if(trash_type)
@@ -99,7 +99,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3, /datum/reagent/consumable/salt = 1)
 	tastes = list("salt" = 1, "shrimp" = 1)
 	foodtypes = JUNKFOOD | FRIED | SEAFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
 	name = "4no raisins"
@@ -112,7 +112,7 @@
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_ASSISTANT * 0.7
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin/healthy
 	name = "homemade raisins"
@@ -120,7 +120,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	junkiness = 0
 	foodtypes = FRUIT
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spacetwinkie
 	name = "space twinkie"
@@ -131,7 +131,7 @@
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	custom_price = PAYCHECK_PRISONER
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/candy_trash
 	name = "candy cigarette butt"
@@ -142,7 +142,7 @@
 	junkiness = 10 //powergame trash food by buying candy cigs in bulk and eating them when they extinguish
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy_trash/nicotine
 	desc = "The leftover from a smoked-out candy cigarette. Smells like nicotine..?"
@@ -157,7 +157,7 @@
 	junkiness = 25
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtypes = JUNKFOOD | DAIRY | SUGAR
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/syndicake
 	name = "syndi-cakes"
@@ -167,7 +167,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/doctor_delight = 5)
 	tastes = list("sweetness" = 3, "cake" = 1)
 	foodtypes = GRAIN | FRUIT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/energybar
 	name = "High-power energy bars"
@@ -178,7 +178,7 @@
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
 	food_flags = FOOD_FINGER_FOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/peanuts
 	name = "\improper Gallery's peanuts"
@@ -190,7 +190,7 @@
 	foodtypes = JUNKFOOD | NUTS
 	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
 	var/safe_for_consumption = TRUE
 
@@ -263,7 +263,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("chocolate candy" = 3)
 	junkiness = 25
 	foodtypes = JUNKFOOD
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cnds/suicide_act(mob/user)
 	. = ..()

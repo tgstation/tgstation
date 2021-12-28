@@ -4,7 +4,7 @@
 	desc = "A folded bag designed for the storage and transportation of cadavers."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bodybag_folded"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
 /obj/item/bodybag/attack_self(mob/user)
@@ -45,7 +45,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
 
 /obj/item/bodybag/bluespace/examine(mob/user)
@@ -96,7 +96,7 @@
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "envirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
-	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag, so it has a higher bulkiness than regular bodybag
+	atom_size = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag, so it has a higher bulkiness than regular bodybag
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF
 
 /obj/item/bodybag/environmental/nanotrasen

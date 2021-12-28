@@ -25,7 +25,7 @@
 	pixel_x = -2
 	inhand_icon_state = "blastcannon_empty"
 	base_icon_state = "blastcannon"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 10
 	fire_sound = 'sound/weapons/blastcannon.ogg'
 	item_flags = NONE

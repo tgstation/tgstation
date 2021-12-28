@@ -442,8 +442,8 @@
 /obj/item/shared_storage/red/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage/concrete)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 15
 	STR.max_items = 21
 	new /obj/item/shared_storage/blue(drop_location(), STR)
 
@@ -452,8 +452,8 @@
 	if(!istype(master))
 		return INITIALIZE_HINT_QDEL
 	var/datum/component/storage/STR = AddComponent(/datum/component/storage, master)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 15
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 15
 	STR.max_items = 21
 
 //Book of Babel
@@ -463,7 +463,7 @@
 	desc = "An ancient tome written in countless tongues."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "book1"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(!user.can_read(src))
@@ -862,7 +862,7 @@
 	armour_penetration = 30
 	block_chance = 30
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'

@@ -59,7 +59,7 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 15
 	attack_verb_continuous = list("clubs", "beats", "pummels")
 	attack_verb_simple = list("club", "beat", "pummel")
@@ -293,7 +293,7 @@
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -626,7 +626,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
 	hitsound = 'sound/effects/ghost2.ogg'
@@ -746,7 +746,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	force = 18
 	damtype = BURN
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -825,7 +825,7 @@
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BELT
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	/// Whether the saw is open or not
 	var/is_open = FALSE
@@ -850,7 +850,7 @@
 		throwforce_on = open_throwforce, \
 		sharpness_on = sharpness, \
 		hitsound_on = hitsound, \
-		w_class_on = w_class, \
+		size_on = atom_size, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
 		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
@@ -939,7 +939,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	slot_flags = ITEM_SLOT_BACK
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	force = 20
 	damtype = BURN
 	hitsound = 'sound/weapons/taserhit.ogg'

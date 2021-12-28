@@ -10,7 +10,7 @@
 	flags_1 = NONE
 	det_time = 10
 	display_timer = FALSE
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	gender = PLURAL
 	var/atom/target = null
 	var/mutable_appearance/plastic_overlay

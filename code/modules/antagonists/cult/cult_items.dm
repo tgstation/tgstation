@@ -4,7 +4,7 @@
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/melee/cultblade/dagger
 	name = "ritual dagger"
@@ -17,7 +17,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
 	block_chance = 25
@@ -64,7 +64,7 @@ Striking a noncultist, however, will tear their flesh."}
 	inhand_y_dimension = 64
 	flags_1 = CONDUCT_1
 	sharpness = SHARP_EDGED
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
 	block_chance = 50 // now it's officially a cult esword
@@ -120,7 +120,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/cult_bastard
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	block_chance = 50
 	throwforce = 20
 	force = 35
@@ -395,7 +395,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_armor"
 	inhand_icon_state = "cult_armor"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50, ENERGY = 60, BOMB = 50, BIO = 30, FIRE = 100, ACID = 100)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
@@ -437,7 +437,7 @@ Striking a noncultist, however, will tear their flesh."}
 	desc = "Empowered armor which creates a powerful shield around the user."
 	icon_state = "cult_armor"
 	inhand_icon_state = "cult_armor"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	armor = list(MELEE = 50, BULLET = 40, LASER = 50,ENERGY = 50, BOMB = 50, BIO = 30, FIRE = 50, ACID = 60)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
@@ -648,7 +648,7 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/flashlight/flare/culttorch
 	name = "void torch"
 	desc = "Used by veteran cultists to instantly transport items to their needful brethren."
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	light_range = 1
 	icon_state = "torch"
 	inhand_icon_state = "torch"
@@ -707,7 +707,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "occultpoleaxe0"
 	base_icon_state = "occultpoleaxe"
 	inhand_icon_state = "occultpoleaxe0"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 17
 	throwforce = 40
 	throw_speed = 2
@@ -892,7 +892,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
 	item_flags = ABSTRACT | DROPDEL
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
@@ -1008,7 +1008,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 15
 	throw_speed = 1
 	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bumps", "prods")
 	attack_verb_simple = list("bump", "prod")
 	hitsound = 'sound/weapons/smash.ogg'

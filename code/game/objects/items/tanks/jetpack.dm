@@ -5,7 +5,7 @@
 	inhand_icon_state = "jetpack"
 	lefthand_file = 'icons/mob/inhands/equipment/jetpacks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/jetpacks_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	distribute_pressure = ONE_ATMOSPHERE * O2STANDARD
 	actions_types = list(/datum/action/item_action/set_internals, /datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
 	var/gas_type = /datum/gas/oxygen
@@ -185,14 +185,14 @@
 	inhand_icon_state = "jetpack-mini"
 	volume = 40
 	throw_range = 7
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 /obj/item/tank/jetpack/oxygen/captain
 	name = "captain's jetpack"
 	desc = "A compact, lightweight jetpack containing a high amount of compressed oxygen."
 	icon_state = "jetpack-captain"
 	inhand_icon_state = "jetpack-captain"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	volume = 90
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //steal objective items are hard to destroy.
 

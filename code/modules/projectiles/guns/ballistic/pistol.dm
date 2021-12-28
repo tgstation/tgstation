@@ -2,7 +2,7 @@
 	name = "makarov pistol"
 	desc = "A small, easily concealable 9mm handgun. Has a threaded barrel for suppressors."
 	icon_state = "pistol"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/m9mm
 	can_suppress = TRUE
 	burst_size = 1
@@ -36,7 +36,7 @@
 	name = "\improper M1911"
 	desc = "A classic .45 handgun with a small magazine capacity."
 	icon_state = "m1911"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
 	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
@@ -74,7 +74,7 @@
 	name = "stechkin APS machine pistol"
 	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
 	burst_size = 3

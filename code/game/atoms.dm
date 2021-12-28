@@ -156,7 +156,7 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
-	/// The size of the atom.
+	/// The size of the atom. Commonly using in inventory checks and as a scaling factor for impacts and the like.
 	var/atom_size
 	/// The total mass of the atom and its contents.
 	var/atom_mass

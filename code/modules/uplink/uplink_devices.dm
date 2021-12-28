@@ -18,7 +18,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 
 	/// The uplink flag for this type.
 	/// See [`code/__DEFINES/uplink.dm`]

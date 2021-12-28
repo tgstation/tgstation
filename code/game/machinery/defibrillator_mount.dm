@@ -214,7 +214,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 100)
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	result_path = /obj/machinery/defibrillator_mount
 	pixel_shift = 28
 

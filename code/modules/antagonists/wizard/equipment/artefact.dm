@@ -16,7 +16,7 @@
 	inhand_y_dimension = 64
 	force = 15
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/charges = 1
 	var/spawn_type = /obj/tear_in_reality
@@ -217,7 +217,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 

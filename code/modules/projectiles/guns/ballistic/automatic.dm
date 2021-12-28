@@ -1,5 +1,5 @@
 /obj/item/gun/ballistic/automatic
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	can_suppress = TRUE
 	burst_size = 3
 	fire_delay = 2
@@ -99,7 +99,7 @@
 	name = "security auto rifle"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
@@ -147,7 +147,7 @@
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be fired using right click."
 	icon_state = "m90"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "m90"
 	selector_switch_icon = TRUE
 	mag_type = /obj/item/ammo_box/magazine/m556
@@ -217,7 +217,7 @@
 	icon_state = "tommygun"
 	inhand_icon_state = "shotgun"
 	selector_switch_icon = TRUE
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	can_suppress = FALSE
@@ -252,7 +252,7 @@
 	icon_state = "l6"
 	inhand_icon_state = "l6"
 	base_icon_state = "l6"
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
@@ -335,7 +335,7 @@
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
@@ -349,7 +349,7 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 40
 	burst_size = 1
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 5
@@ -380,7 +380,7 @@
 	burst_size = 1
 	can_unsuppress = TRUE
 	can_suppress = TRUE
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
@@ -391,7 +391,7 @@
 	name = "laser rifle"
 	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	empty_indicator = TRUE

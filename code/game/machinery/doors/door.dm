@@ -144,7 +144,7 @@
 
 	if(isitem(AM))
 		var/obj/item/I = AM
-		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
+		if(!density || (I.atom_size < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
 			return
 		if(check_access(I))
 			open()

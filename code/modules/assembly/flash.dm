@@ -15,7 +15,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 300, /datum/material/glass = 300)
 	light_system = MOVABLE_LIGHT //Used as a flash here.
 	light_range = FLASH_LIGHT_RANGE

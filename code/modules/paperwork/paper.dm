@@ -29,7 +29,7 @@
 	worn_icon_state = "paper"
 	custom_fire_overlay = "paper_onfire_overlay"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0

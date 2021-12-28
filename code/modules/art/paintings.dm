@@ -513,7 +513,7 @@
 	icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	///Chosen paint color
 	var/current_color
 

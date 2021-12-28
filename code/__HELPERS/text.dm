@@ -1019,8 +1019,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
 
 ///Returns a string based on the weight class define used as argument
-/proc/weight_class_to_text(w_class)
-	switch(w_class)
+/proc/weight_class_to_text(atom_size)
+	switch(atom_size)
 		if(WEIGHT_CLASS_TINY)
 			. = "tiny"
 		if(WEIGHT_CLASS_SMALL)

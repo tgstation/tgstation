@@ -4,7 +4,7 @@
 
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "eightball"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 	verb_say = "rattles"
 

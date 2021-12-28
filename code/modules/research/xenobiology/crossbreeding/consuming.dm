@@ -51,7 +51,7 @@ Consuming extracts:
 	var/nutrition = 5
 	icon_state = "base"
 	force = 0
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6

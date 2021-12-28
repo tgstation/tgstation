@@ -3,9 +3,9 @@
  */
 /datum/component/storage/concrete/tcg
 	display_numerical_stacking = FALSE
-	max_w_class = WEIGHT_CLASS_TINY
+	max_atom_size = WEIGHT_CLASS_TINY
 	max_items = 30
-	max_combined_w_class = WEIGHT_CLASS_TINY * 30
+	max_total_atom_size = WEIGHT_CLASS_TINY * 30
 	///The deck that the card pile is using for FAIR PLAY.
 
 /datum/component/storage/concrete/tcg/Initialize()

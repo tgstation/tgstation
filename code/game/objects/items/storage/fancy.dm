@@ -180,7 +180,7 @@
 	inhand_icon_state = "cigpacket"
 	worn_icon_state = "cigpack"
 	base_icon_state = "cig"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
@@ -380,7 +380,7 @@
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
 	base_icon_state = "cig_paper_pack"
@@ -414,7 +414,7 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
 	base_icon_state = "cigarcase"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 	spawn_coupon = FALSE

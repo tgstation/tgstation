@@ -326,7 +326,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	inhand_icon_state = "screwdriver_head"
 	throwforce = 5
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
 

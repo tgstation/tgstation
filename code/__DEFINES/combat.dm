@@ -153,15 +153,15 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define EMBEDDED_ITEM_FALLOUT 5
 ///Chance for an object to embed into somebody when thrown
 #define EMBED_CHANCE 45
-///Coefficient of multiplication for the damage the item does while embedded (this*item.w_class)
+///Coefficient of multiplication for the damage the item does while embedded (this*item.atom_size)
 #define EMBEDDED_PAIN_MULTIPLIER 2
-///Coefficient of multiplication for the damage the item does when it first embeds (this*item.w_class)
+///Coefficient of multiplication for the damage the item does when it first embeds (this*item.atom_size)
 #define EMBEDDED_IMPACT_PAIN_MULTIPLIER 4
 ///The minimum value of an item's throw_speed for it to embed (Unless it has embedded_ignore_throwspeed_threshold set to 1)
 #define EMBED_THROWSPEED_THRESHOLD 4
-///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.w_class)
+///Coefficient of multiplication for the damage the item does when it falls out or is removed without a surgery (this*item.atom_size)
 #define EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER 6
-///A Time in ticks, total removal time = (this*item.w_class)
+///A Time in ticks, total removal time = (this*item.atom_size)
 #define EMBEDDED_UNSAFE_REMOVAL_TIME 30
 ///Chance for embedded objects to cause pain every time they move (jostle)
 #define EMBEDDED_JOSTLE_CHANCE 5

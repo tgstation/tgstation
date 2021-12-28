@@ -6,7 +6,7 @@
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	alternate_worn_layer = UNDER_HEAD_LAYER
 	species_exception = list(/datum/species/golem)

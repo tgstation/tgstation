@@ -151,7 +151,7 @@
 	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
 	icon_state = "egg"
 	resistance_flags = FLAMMABLE
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/food/food.dmi'
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'

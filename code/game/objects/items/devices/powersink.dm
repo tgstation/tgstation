@@ -16,7 +16,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	item_flags = NO_PIXEL_RANDOM_DROP
 	throwforce = 5

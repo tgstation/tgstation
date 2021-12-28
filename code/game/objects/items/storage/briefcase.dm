@@ -9,7 +9,7 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	resistance_flags = FLAMMABLE
@@ -19,8 +19,8 @@
 /obj/item/storage/briefcase/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 21
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)

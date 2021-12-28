@@ -4,7 +4,7 @@
 	singular_name = "arcade ticket"
 	icon_state = "arcade-ticket"
 	inhand_icon_state = "tickets"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	max_amount = 30
 	merge_type = /obj/item/stack/arcadeticket
 

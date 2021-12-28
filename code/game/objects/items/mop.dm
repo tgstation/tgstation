@@ -9,7 +9,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("mops", "bashes", "bludgeons", "whacks")
 	attack_verb_simple = list("mop", "bash", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE

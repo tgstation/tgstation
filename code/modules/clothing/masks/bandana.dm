@@ -1,7 +1,7 @@
 /obj/item/clothing/mask/bandana
 	name = "botany bandana"
 	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT

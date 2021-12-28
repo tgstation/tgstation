@@ -11,7 +11,7 @@
 	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
 	var/stream_mode = FALSE //whether we use the more focused mode
@@ -338,7 +338,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	throwforce = 0
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	stream_mode = 1
 	current_range = 7
 	spray_range = 4

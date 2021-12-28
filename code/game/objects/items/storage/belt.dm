@@ -43,8 +43,8 @@
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -207,8 +207,8 @@
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 21
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -299,7 +299,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 5
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/melee/baton,
 		/obj/item/grenade,
@@ -347,14 +347,14 @@
 	icon_state = "explorer1"
 	inhand_icon_state = "explorer1"
 	worn_icon_state = "explorer1"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/mining/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.max_combined_w_class = 20
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	STR.max_total_atom_size = 20
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -474,7 +474,7 @@
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
@@ -488,7 +488,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
 	STR.set_holdable(list(
 		/obj/item/food,
 		/obj/item/reagent_containers/food/drinks
@@ -577,8 +577,8 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 30
 	STR.display_numerical_stacking = TRUE
-	STR.max_combined_w_class = 60
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_total_atom_size = 60
+	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/grenade,
 		/obj/item/screwdriver,
@@ -644,7 +644,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	STR.set_holdable(list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
@@ -679,7 +679,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 18
-	STR.max_combined_w_class = 18
+	STR.max_total_atom_size = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/shotgun,
@@ -699,7 +699,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_atom_size = WEIGHT_CLASS_SMALL
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -767,7 +767,7 @@
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	w_class = WEIGHT_CLASS_BULKY
+	atom_size = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
@@ -775,7 +775,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/melee/sabre
 		))
@@ -822,7 +822,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/plant_analyzer,

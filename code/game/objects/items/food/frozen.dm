@@ -3,7 +3,7 @@
 	desc = "Portable Ice-cream in its own packaging."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "icecreamsandwich"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
@@ -14,7 +14,7 @@
 	desc = "Portable ice-cream in its own packaging of the strawberry variety."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "strawberryicecreamsandwich"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -26,7 +26,7 @@
 	desc = "The best icecream in space."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "spacefreezy"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/bluecherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -40,7 +40,7 @@
 	desc = "A classic dessert."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "sundae"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -54,7 +54,7 @@
 	desc = "The clown's favorite dessert."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "honkdae"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
@@ -72,7 +72,7 @@
 	desc = "It's just shaved ice. Still fun to chew on."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "flavorless_sc"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	trash_type = /obj/item/reagent_containers/food/drinks/sillycup //We dont eat paper cups
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
@@ -224,7 +224,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
 	tastes = list("beetlejuice")
 	trash_type = /obj/item/popsicle_stick
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 
@@ -270,7 +270,7 @@
 	icon_state = "popsicle_stick"
 	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden."
 	custom_materials = list(/datum/material/wood = 20)
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	force = 0
 
 /obj/item/food/popsicle/creamsicle_orange
@@ -301,7 +301,7 @@
 
 /obj/item/food/cornuto
 	name = "cornuto"
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "cornuto"
 	desc = "A neapolitan vanilla and chocolate icecream cone. It menaces with a sprinkling of caramelized nuts."

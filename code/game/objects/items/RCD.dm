@@ -21,7 +21,7 @@ RLD
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron=100000)
 	req_access_txt = "11"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
@@ -848,7 +848,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcdammo"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron=12000, /datum/material/glass=8000)

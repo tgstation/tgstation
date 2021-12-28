@@ -10,7 +10,7 @@
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
-	w_class = WEIGHT_CLASS_SMALL
+	atom_size = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
 	var/energy = 10
 	var/max_energy = 10

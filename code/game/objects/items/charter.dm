@@ -107,7 +107,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A cunning device used to claim ownership of celestial bodies."
-	w_class = WEIGHT_CLASS_HUGE
+	atom_size = WEIGHT_CLASS_HUGE
 	force = 15
 
 /obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)
@@ -130,7 +130,7 @@
 	inhand_icon_state = "banner-red"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
-	w_class = 5
+	atom_size = 5
 	force = 15
 	ignores_timeout = TRUE //non roundstart!
 	//A cooldown, once it's over you can't declare a new name anymore

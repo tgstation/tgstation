@@ -4,7 +4,7 @@
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	name = "projectile gun"
 	icon_state = "pistol"
-	w_class = WEIGHT_CLASS_NORMAL
+	atom_size = WEIGHT_CLASS_NORMAL
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
@@ -387,7 +387,7 @@
 ///Installs a new suppressor, assumes that the suppressor is already in the contents of src
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	suppressed = S
-	w_class += S.w_class //so pistols do not fit in pockets when suppressed
+	atom_size += S.atom_size //so pistols do not fit in pockets when suppressed
 	update_appearance()
 
 /obj/item/gun/ballistic/clear_suppressor()
@@ -395,7 +395,7 @@
 		return
 	if(isitem(suppressed))
 		var/obj/item/I = suppressed
-		w_class -= I.w_class
+		atom_size -= I.atom_size
 	return ..()
 
 /obj/item/gun/ballistic/AltClick(mob/user)
@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		w_class = WEIGHT_CLASS_NORMAL
+		atom_size = WEIGHT_CLASS_NORMAL
 		//The file might not have a "gun" icon, let's prepare for this
 		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -673,7 +673,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	desc = "A syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "suppressor"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 
 /obj/item/suppressor/specialoffer

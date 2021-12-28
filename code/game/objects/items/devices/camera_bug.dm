@@ -10,7 +10,7 @@
 	desc = "For illicit snooping through the camera network."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "camera_bug"
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	inhand_icon_state = "camera_bug"
 	throw_speed = 4
 	throw_range = 20

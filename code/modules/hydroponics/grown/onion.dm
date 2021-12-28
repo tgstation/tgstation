@@ -64,7 +64,7 @@
 	icon_state = "onionslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	gender = PLURAL
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 	microwaved_type = /obj/item/food/onionrings
 
 /obj/item/food/onion_slice/red

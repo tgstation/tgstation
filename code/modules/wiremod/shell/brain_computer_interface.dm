@@ -5,7 +5,7 @@
 	icon_state = "bci"
 	visual = FALSE
 	zone = BODY_ZONE_HEAD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/bci/Initialize(mapload)
 	. = ..()

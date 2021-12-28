@@ -28,7 +28,7 @@
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
 	zone = BODY_ZONE_HEAD
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
 	. = ..()
@@ -155,7 +155,7 @@
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
-	w_class = WEIGHT_CLASS_TINY
+	atom_size = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
