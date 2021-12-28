@@ -49,7 +49,7 @@
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user?.mind)
 		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C?.purchasedpowers)
+		if(C?.purchased_powers)
 			to_chat(user, span_notice("We are ready to revive."))
 			name = "Revive"
 			desc = "We arise once more."

@@ -11,6 +11,7 @@ type CellularEmporiumContext = {
 type Ability = {
   name: string;
   desc: string;
+  path: string;
   dna_cost: number;
   helptext: string;
   owned: boolean;
@@ -73,7 +74,7 @@ const AbilityList = (props, context) => {
                     disabled={ability.owned || ability.dna_cost
                     > genetic_points_remaining}
                     onClick={() => act('evolve', {
-                      name: ability.name,
+                      path: ability.path,
                     })} />
                 </Stack.Item>
               </Stack>

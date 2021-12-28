@@ -155,12 +155,25 @@
 
 			return "[output][and_text][input[index]]"
 
-///Checks for specific types in a list
+/*
+ * Checks if the datum [type_to_check] is one of the types in [list_to_check].
+ */
 /proc/is_type_in_list(atom/type_to_check, list/list_to_check)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
 	for(var/type in list_to_check)
 		if(istype(type_to_check, type))
+			return TRUE
+	return FALSE
+
+/*
+ * Checks if any datum within [list_of_types] is of type [path].
+ */
+/proc/is_path_in_list_of_types(path_to_check, list/list_of_types)
+	if(!LAZYLEN(list_of_types) || !ispath(path_to_check))
+		return FALSE
+	for(var/thing in list_of_types)
+		if(istype(thing, path_to_check))
 			return TRUE
 	return FALSE
 

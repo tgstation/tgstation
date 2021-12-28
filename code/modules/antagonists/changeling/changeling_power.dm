@@ -49,10 +49,10 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 /datum/action/changeling/proc/try_to_sting(mob/user, mob/target)
 	if(!can_sting(user, target))
 		return FALSE
-	var/datum/antagonist/changeling/c = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(sting_action(user, target))
 		sting_feedback(user, target)
-		c.chem_charges -= chemical_cost
+		changeling.adjust_chemicals(-chemical_cost)
 		user.changeNext_move(CLICK_CD_MELEE)
 		return TRUE
 	return FALSE
@@ -73,7 +73,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(c.chem_charges < chemical_cost)
 		to_chat(user, span_warning("We require at least [chemical_cost] unit\s of chemicals to do that!"))
 		return FALSE
-	if(c.absorbedcount < req_dna)
+	if(c.absorbed_count < req_dna)
 		to_chat(user, span_warning("We require at least [req_dna] sample\s of compatible DNA."))
 		return FALSE
 	if(c.trueabsorbs < req_absorbs)
