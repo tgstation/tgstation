@@ -908,9 +908,6 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(action == "lock")
 		bot_cover_flags ^= BOT_COVER_LOCKED
 
-	if(bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege)
-		return
-
 	switch(action)
 		if("power")
 			if(bot_mode_flags & BOT_MODE_ON)

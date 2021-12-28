@@ -384,7 +384,7 @@
 // Actions received from TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_act(action, params)
 	. = ..()
-	if(.)
+	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 
 	switch(action)
