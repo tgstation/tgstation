@@ -156,6 +156,11 @@
 
 	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
+	/// The size of the atom.
+	var/atom_size
+	/// The total mass of the atom and its contents.
+	var/atom_mass
+
 /**
  * Called when an atom is created in byond (built in engine proc)
  *
@@ -228,6 +233,7 @@
 
 	if(loc)
 		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
+		loc.set_mass(loc.atom_mass + atom_mass)
 
 	if(greyscale_config && greyscale_colors)
 		update_greyscale()
@@ -301,6 +307,9 @@
 		for(var/current_alternate_appearance in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/selected_alternate_appearance = alternate_appearances[current_alternate_appearance]
 			selected_alternate_appearance.remove_from_hud(src)
+
+	if(loc)
+		loc.set_mass(loc.atom_mass - atom_mass)
 
 	if(reagents)
 		QDEL_NULL(reagents)
@@ -1333,6 +1342,7 @@
 /atom/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, arrived, old_loc, old_locs)
 	SEND_SIGNAL(arrived, COMSIG_ATOM_ENTERING, src, old_loc, old_locs)
+	set_mass(atom_mass + arrived.atom_mass)
 
 /**
  * An atom is attempting to exit this atom's contents
@@ -1354,6 +1364,7 @@
  * Default behaviour is to send the [COMSIG_ATOM_EXITED]
  */
 /atom/Exited(atom/movable/gone, direction)
+	set_mass(atom_mass - gone.atom_mass)
 	SEND_SIGNAL(src, COMSIG_ATOM_EXITED, gone, direction)
 
 ///Return atom temperature
@@ -2109,3 +2120,38 @@
 		new /datum/merger(id, allowed_types, src)
 		candidate = mergers[id]
 	return candidate
+
+/**
+ * Sets the total mass of this movable.
+ *
+ * Arguments:
+ * - value: The new total mass of this movable.
+ * Returns:
+ * - The old total mass of this movable and its contents.
+ */
+/atom/proc/set_mass(value)
+	if (value == atom_mass)
+		return value
+
+	. = atom_mass
+	atom_mass = value
+	SEND_SIGNAL(src, COMSIG_ATOM_MASS_CHANGED, value, .)
+	loc?.set_mass(loc.atom_mass + value - .) // Recursively set the total mass of the location.
+
+/**
+ * Sets the size of this movable.
+ * 
+ * Arguments:
+ * - value: The new size of the movable.
+ * Returns:
+ * - The old size of the movable.
+ */
+/atom/proc/set_size(value)
+	if (value == atom_size)
+		return value
+	if (SEND_SIGNAL(src, COMSIG_ATOM_SET_SIZE, value) & COMPONENT_BLOCK_SIZE_CHANGE)
+		return value
+
+	. = atom_size
+	atom_size = value
+	SEND_SIGNAL(src, COMSIG_ATOM_SIZE_CHANGED, value, .)

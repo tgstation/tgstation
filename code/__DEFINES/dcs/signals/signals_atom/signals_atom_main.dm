@@ -82,4 +82,11 @@
 ///When the transform or an atom is varedited through vv topic.
 #define COMSIG_ATOM_VV_MODIFY_TRANSFORM "atom_vv_modify_transform"
 
-
+///from base of [/atom/proc/set_mass]: (new_mass, old_mass)
+#define COMSIG_ATOM_MASS_CHANGED "atom_mass_changed"
+///from base of [/atom/proc/set_size]: (new_size)
+#define COMSIG_ATOM_SET_SIZE "atom_set_size"
+	/// Prevents the size of an atom from changing when returned by a handler to [COMSIG_ATOM_SET_SIZE].
+	#define COMPONENT_BLOCK_SIZE_CHANGE (1<<0)
+///from base of [/atom/proc/set_size]: (new_size, old_size) 
+#define COMSIG_ATOM_SIZE_CHANGED "atom_size_changed"
