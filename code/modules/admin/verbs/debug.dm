@@ -511,7 +511,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/list/L = M.get_contents()
 	for(var/t in L)
-		to_chat(usr, "[t] [ADMIN_VV(t)]", confidential = TRUE)
+		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/modify_goals()

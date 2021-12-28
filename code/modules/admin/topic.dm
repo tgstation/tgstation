@@ -1942,6 +1942,14 @@
 			return
 		GLOB.interviews.ui_interact(usr)
 
+	else if(href_list["tag_datum"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/datum_to_tag = locate(href_list["tag_datum"])
+		if(!datum_to_tag)
+			return
+		return add_tagged_datum(datum_to_tag)
+
 	else if(href_list["del_tag"])
 		if(!check_rights(R_ADMIN))
 			return
