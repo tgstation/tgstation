@@ -134,7 +134,7 @@
 		return
 
 	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(mob_to_tweak, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/sting_atom)
+	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/sting_atom)
 
 	// Brains are optional for lings.
 	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
@@ -375,8 +375,9 @@
 	var/mob/living/carbon/user = owner.current
 
 	if(stored_profiles.len)
-		var/datum/changeling_profile/first_profileile = stored_profiles[1]
-		if(first_profileile.dna.is_same_as(user.dna) && stored_profiles.len > dna_max)//If our current DNA is the stalest, we gotta ditch it.
+		// If our current DNA is the stalest, we gotta ditch it before absorbing more.
+		var/datum/changeling_profile/top_profile = stored_profiles[1]
+		if(top_profile.dna.is_same_as(user.dna) && stored_profiles.len > dna_max)
 			if(verbose)
 				to_chat(user, span_warning("We have reached our capacity to store genetic information! We must transform before absorbing more."))
 			return FALSE

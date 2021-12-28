@@ -167,7 +167,7 @@
 	return FALSE
 
 /*
- * Checks if any datum within [list_of_types] is of type [path].
+ * Checks if any datum within [list_of_types] is of type [path_to_check].
  */
 /proc/is_path_in_list_of_types(path_to_check, list/list_of_types)
 	if(!LAZYLEN(list_of_types) || !ispath(path_to_check))
