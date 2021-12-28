@@ -40,7 +40,7 @@
 			set_halo(parent)
 
 /**
- * Removes all the effects applied when removing the component.
+ * Removes all the effects applied when removing the element.
  */
 /datum/element/cult_status/Detach(datum/parent, ...)
 	. = ..()
