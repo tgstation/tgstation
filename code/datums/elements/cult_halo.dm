@@ -1,9 +1,16 @@
+/**
+ * # Cult halo element
+ *
+ * Applies and removes the cult halo
+ */
 /datum/element/cult_halo
 
 /datum/element/cult_halo/Attach(datum/target, override = FALSE)
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
+
+	// Register signals for mob transformation to prevent premature halo removal
 	RegisterSignal(target, COMSIG_CHANGELING_TRANSFORM, .proc/set_halo)
 	RegisterSignal(target, COMSIG_MONKEY_HUMANIZE, .proc/set_halo)
 	RegisterSignal(target, COMSIG_HUMAN_MONKEYIZE, .proc/set_halo)
@@ -13,6 +20,11 @@
 	else
 		addtimer(CALLBACK(src, .proc/set_halo, target), 20 SECONDS)
 
+/**
+ * Halo setter proc
+ *
+ * Adds the cult halo overlays, and adds the halo trait to the mob.
+ */
 /datum/element/cult_halo/proc/set_halo(datum/target)
 	SIGNAL_HANDLER
 
@@ -28,6 +40,11 @@
 	else
 		parent_mob.add_overlay(new_halo_overlay)
 
+/**
+ * Detach proc
+ *
+ * Removes the halo overlays, and trait from the mob
+ */
 /datum/element/cult_halo/Detach(datum/target, ...)
 	. = ..()
 	var/mob/living/parent_mob = target
