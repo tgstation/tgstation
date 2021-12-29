@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 2
+	slowdown = 1.25
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
@@ -59,9 +59,9 @@
 	/// Power usage of the MOD.
 	var/cell_drain = DEFAULT_CELL_DRAIN
 	/// Slowdown of the MOD when not active.
-	var/slowdown_inactive = 2
+	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
-	var/slowdown_active = 1
+	var/slowdown_active = 0.75
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
@@ -411,6 +411,8 @@
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
 	for(var/obj/item/part in mod_parts)
+		if(part.loc == src)
+			continue
 		conceal(null, part)
 	return ..()
 

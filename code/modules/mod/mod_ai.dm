@@ -74,7 +74,7 @@
 		return FALSE
 	else if(!wearer && (!has_gravity() || !isturf(loc)))
 		return FALSE
-	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
+	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown_active)
 	cell.charge = max(0, cell.charge - CELL_PER_STEP)
 	playsound(src, 'sound/mecha/mechmove01.ogg', 25, TRUE)
 	if(ismovable(wearer?.loc))
