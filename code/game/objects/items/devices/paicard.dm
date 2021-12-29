@@ -108,11 +108,11 @@
 			if(SSpai.check_ready(candidate) != candidate)
 				return FALSE
 			/// The newly downloaded pAI personality
-			var/mob/living/silicon/pai/pai = new(src)
-			pai.name = candidate.name || pick(GLOB.ninja_names)
-			pai.real_name = pai.name
-			pai.key = candidate.key
-			setPersonality(pai)
+			var/mob/living/silicon/pai/new_pai = new(src)
+			new_pai.name = candidate.name || pick(GLOB.ninja_names)
+			new_pai.real_name = pai.name
+			new_pai.key = candidate.key
+			setPersonality(new_pai)
 			SSpai.candidates -= candidate
 		if("fix_speech")
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
