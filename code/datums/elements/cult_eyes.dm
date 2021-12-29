@@ -9,6 +9,8 @@
 	. = ..()
 	if (!isliving(target))
 		return ELEMENT_INCOMPATIBLE
+
+	// Register signals for mob transformation to prevent premature halo removal
 	RegisterSignal(target, COMSIG_CHANGELING_TRANSFORM, .proc/set_eyes)
 	RegisterSignal(target, COMSIG_MONKEY_HUMANIZE, .proc/set_eyes)
 	RegisterSignal(target, COMSIG_HUMAN_MONKEYIZE, .proc/set_eyes)
