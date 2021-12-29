@@ -1,19 +1,3 @@
-
-
-/*
- * GAMEMODES (by Rastaf0)
- *
- * In the new mode system all special roles are fully supported.
- * You can have proper wizards/traitors/changelings/cultists during any mode.
- * Only two things really depends on gamemode:
- * 1. Starting roles, equipment and preparations
- * 2. Conditions of finishing the round.
- *
- */
-
-
-/datum/game_mode
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////
@@ -65,7 +49,3 @@
 
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
-
-/// Mode specific admin panel.
-/datum/game_mode/proc/admin_panel()
-	return
