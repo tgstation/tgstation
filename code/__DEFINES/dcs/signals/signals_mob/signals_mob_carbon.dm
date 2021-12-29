@@ -80,7 +80,11 @@
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)
 
+// Mob transformation signals
 ///Human transforming into a monkey
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
 ///Monkey transforming into a human
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+///Changeling transforming
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
+
