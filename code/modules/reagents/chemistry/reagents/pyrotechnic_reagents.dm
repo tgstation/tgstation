@@ -103,6 +103,16 @@
 	taste_description = "salt"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/gunpowder/on_new(data)
+	. = ..()
+	if(holder?.my_atom)
+		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
+
+/datum/reagent/gunpowder/Destroy()
+	if(holder?.my_atom)
+		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
+	return ..()
+
 /datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = TRUE
 	..()
@@ -112,7 +122,8 @@
 	if(M.hallucination < volume)
 		M.hallucination += 5 * REM * delta_time
 
-/datum/reagent/gunpowder/on_ex_act()
+/datum/reagent/gunpowder/proc/on_ex_act(atom/source, severity, target)
+	SIGNAL_HANDLER
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)

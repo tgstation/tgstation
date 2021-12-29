@@ -211,10 +211,6 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-/// Called when the reagent container is hit by an explosion
-/datum/reagent/proc/on_ex_act(severity)
-	return
-
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
 /datum/reagent/proc/overdose_process(mob/living/M, delta_time, times_fired)
 	return
