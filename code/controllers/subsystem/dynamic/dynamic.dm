@@ -16,7 +16,10 @@ GLOBAL_LIST_EMPTY(dynamic_forced_roundstart_ruleset)
 // Forced threat level, setting this to zero or higher forces the roundstart threat to the value.
 GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
-/datum/game_mode/dynamic
+SUBSYSTEM_DEF(dynamic)
+	name = "Dynamic"
+	flags = SS_NO_INIT | SS_NO_FIRE
+
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
 	var/threat_level = 0
@@ -156,7 +159,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/max_threat_level = 100
 
 
-/datum/game_mode/dynamic/admin_panel()
+/datum/controller/subsystem/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
@@ -188,7 +191,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
-/datum/game_mode/dynamic/Topic(href, href_list)
+/datum/controller/subsystem/dynamic/Topic(href, href_list)
 	if (..()) // Sanity, maybe ?
 		return
 	if(!check_rights(R_ADMIN))
@@ -249,14 +252,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	admin_panel() // Refreshes the window
 
 // Checks if there are HIGH_IMPACT_RULESETs and calls the rule's round_result() proc
-/datum/game_mode/dynamic/set_round_result()
+/datum/controller/subsystem/dynamic/set_round_result()
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGH_IMPACT_RULESET)
 			return rule.round_result()
 	return ..()
 
-/datum/game_mode/dynamic/proc/send_intercept()
+/datum/controller/subsystem/dynamic/proc/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
@@ -291,7 +294,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
-/datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
+/datum/controller/subsystem/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "The round hasn't started yet!")
 		return
@@ -310,20 +313,20 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	usr << browse(out.Join(), "window=threatlog;size=700x500")
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
-/datum/game_mode/dynamic/proc/generate_threat()
+/datum/controller/subsystem/dynamic/proc/generate_threat()
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
 	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 
 /// Generates the midround and roundstart budgets
-/datum/game_mode/dynamic/proc/generate_budgets()
+/datum/controller/subsystem/dynamic/proc/generate_budgets()
 	var/relative_round_start_budget_scale = LORENTZ_DISTRIBUTION(roundstart_split_curve_centre, roundstart_split_curve_width)
 	round_start_budget = round((lorentz_to_amount(relative_round_start_budget_scale) / 100) * threat_level, 0.1)
 	initial_round_start_budget = round_start_budget
 	mid_round_budget = threat_level - round_start_budget
 
-/datum/game_mode/dynamic/proc/setup_parameters()
+/datum/controller/subsystem/dynamic/proc/setup_parameters()
 	log_game("DYNAMIC: Dynamic mode parameters for the round:")
 	log_game("DYNAMIC: Centre is [threat_curve_centre], Width is [threat_curve_width], Forced extended is [GLOB.dynamic_forced_extended ? "Enabled" : "Disabled"], No stacking is [GLOB.dynamic_no_stacking ? "Enabled" : "Disabled"].")
 	log_game("DYNAMIC: Stacking limit is [GLOB.dynamic_stacking_limit].")
@@ -336,20 +339,20 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]! ([round_start_budget] round start budget)")
 	return TRUE
 
-/datum/game_mode/dynamic/proc/setup_shown_threat()
+/datum/controller/subsystem/dynamic/proc/setup_shown_threat()
 	if (prob(FAKE_REPORT_CHANCE))
 		shown_threat = rand(1, 100)
 	else
 		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
-/datum/game_mode/dynamic/proc/set_cooldowns()
+/datum/controller/subsystem/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
 	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
-/datum/game_mode/dynamic/pre_setup()
+/datum/controller/subsystem/dynamic/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
@@ -396,7 +399,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	candidates.Cut()
 	return TRUE
 
-/datum/game_mode/dynamic/post_setup(report)
+/datum/controller/subsystem/dynamic/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
@@ -407,13 +410,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	..()
 
 /// Initializes the internal ruleset variables
-/datum/game_mode/dynamic/proc/setup_rulesets()
+/datum/controller/subsystem/dynamic/proc/setup_rulesets()
 	midround_rules = init_rulesets(/datum/dynamic_ruleset/midround)
 	latejoin_rules = init_rulesets(/datum/dynamic_ruleset/latejoin)
 
 /// Returns a list of the provided rulesets.
 /// Configures their variables to match config.
-/datum/game_mode/dynamic/proc/init_rulesets(ruleset_subtype)
+/datum/controller/subsystem/dynamic/proc/init_rulesets(ruleset_subtype)
 	var/list/rulesets = list()
 
 	for (var/datum/dynamic_ruleset/ruleset_type as anything in subtypesof(ruleset_subtype))
@@ -430,7 +433,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return rulesets
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
-/datum/game_mode/dynamic/proc/rigged_roundstart()
+/datum/controller/subsystem/dynamic/proc/rigged_roundstart()
 	message_admins("[GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	log_game("DYNAMIC: [GLOB.dynamic_forced_roundstart_ruleset.len] rulesets being forced. Will now attempt to draft players for them.")
 	for (var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
@@ -450,7 +453,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 			spend_roundstart_budget(picking_roundstart_rule(rule, scaled_times, forced = TRUE))
 
-/datum/game_mode/dynamic/proc/roundstart(list/roundstart_rules)
+/datum/controller/subsystem/dynamic/proc/roundstart(list/roundstart_rules)
 	if (GLOB.dynamic_forced_extended)
 		log_game("DYNAMIC: Starting a round of forced extended.")
 		return TRUE
@@ -508,7 +511,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	update_log()
 
 /// Initializes the round start ruleset provided to it. Returns how much threat to spend.
-/datum/game_mode/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
+/datum/controller/subsystem/dynamic/proc/picking_roundstart_rule(datum/dynamic_ruleset/roundstart/ruleset, scaled_times = 0, forced = FALSE)
 	log_game("DYNAMIC: Picked a ruleset: [ruleset.name], scaled [scaled_times] times")
 
 	ruleset.trim_candidates()
@@ -527,7 +530,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return 0
 
 /// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
-/datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
+/datum/controller/subsystem/dynamic/proc/execute_roundstart_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	if(rule.execute())
 		if(rule.persistent)
@@ -540,7 +543,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return FALSE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
-/datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
+/datum/controller/subsystem/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
 	var/datum/dynamic_ruleset/midround/new_rule
 	if(ispath(ruletype))
 		new_rule = new ruletype() // You should only use it to call midround rules though.
@@ -586,7 +589,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
-/datum/game_mode/dynamic/process()
+/datum/controller/subsystem/dynamic/process()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
@@ -634,7 +637,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		random_event_hijacked = HIJACKED_NOTHING
 
 /// Gets the chance for latejoin injection, the dry_run argument is only used for forced injection.
-/datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
+/datum/controller/subsystem/dynamic/proc/get_injection_chance(dry_run = FALSE)
 	if(forced_injection)
 		forced_injection = dry_run
 		return 100
@@ -658,7 +661,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 /// Gets the chance for midround injection, the dry_run argument is only used for forced injection.
 /// Usually defers to the latejoin injection chance.
-/datum/game_mode/dynamic/proc/get_midround_injection_chance(dry_run)
+/datum/controller/subsystem/dynamic/proc/get_midround_injection_chance(dry_run)
 	var/chance = get_injection_chance(dry_run)
 
 	if (random_event_hijacked != HIJACKED_NOTHING)
@@ -667,14 +670,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return chance
 
 /// Removes type from the list
-/datum/game_mode/dynamic/proc/remove_from_list(list/type_list, type)
+/datum/controller/subsystem/dynamic/proc/remove_from_list(list/type_list, type)
 	for(var/I in type_list)
 		if(istype(I, type))
 			type_list -= I
 	return type_list
 
 /// Checks if a type in blocking_list is in rule_list.
-/datum/game_mode/dynamic/proc/check_blocking(list/blocking_list, list/rule_list)
+/datum/controller/subsystem/dynamic/proc/check_blocking(list/blocking_list, list/rule_list)
 	if(blocking_list.len > 0)
 		for(var/blocking in blocking_list)
 			for(var/_executed in rule_list)
@@ -683,7 +686,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					return TRUE
 	return FALSE
 
-/datum/game_mode/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
+/datum/controller/subsystem/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
@@ -720,7 +723,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), latejoin_delay_min, latejoin_delay_max)) + world.time
 
 /// Apply configurations to rule.
-/datum/game_mode/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
+/datum/controller/subsystem/dynamic/proc/configure_ruleset(datum/dynamic_ruleset/ruleset)
 	var/rule_conf = LAZYACCESSASSOC(configuration, ruleset.ruletype, ruleset.name)
 	for(var/variable in rule_conf)
 		if(!(variable in ruleset.vars))
@@ -733,26 +736,26 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		ruleset.restricted_roles |= "Assistant"
 
 /// Refund threat, but no more than threat_level.
-/datum/game_mode/dynamic/proc/refund_threat(regain)
+/datum/controller/subsystem/dynamic/proc/refund_threat(regain)
 	mid_round_budget = min(threat_level, mid_round_budget + regain)
 
 /// Generate threat and increase the threat_level if it goes beyond, capped at 100
-/datum/game_mode/dynamic/proc/create_threat(gain)
+/datum/controller/subsystem/dynamic/proc/create_threat(gain)
 	mid_round_budget = min(100, mid_round_budget + gain)
 	if(mid_round_budget > threat_level)
 		threat_level = mid_round_budget
 
 /// Expend round start threat, can't fall under 0.
-/datum/game_mode/dynamic/proc/spend_roundstart_budget(cost)
+/datum/controller/subsystem/dynamic/proc/spend_roundstart_budget(cost)
 	round_start_budget = max(round_start_budget - cost,0)
 
 /// Expend midround threat, can't fall under 0.
-/datum/game_mode/dynamic/proc/spend_midround_budget(cost)
+/datum/controller/subsystem/dynamic/proc/spend_midround_budget(cost)
 	mid_round_budget = max(mid_round_budget - cost,0)
 
 /// Turns the value generated by lorentz distribution to number between 0 and 100.
 /// Used for threat level and splitting the budgets.
-/datum/game_mode/dynamic/proc/lorentz_to_amount(x)
+/datum/controller/subsystem/dynamic/proc/lorentz_to_amount(x)
 	switch (x)
 		if (-INFINITY to -20)
 			return rand(0, 10)
@@ -776,7 +779,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return rand(90, 100)
 
 /// Log to messages and to the game
-/datum/game_mode/dynamic/proc/dynamic_log(text)
+/datum/controller/subsystem/dynamic/proc/dynamic_log(text)
 	message_admins("DYNAMIC: [text]")
 	log_game("DYNAMIC: [text]")
 

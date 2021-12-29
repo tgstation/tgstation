@@ -563,12 +563,10 @@
 	desc = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill you. There is a good chance that they will shoot each other first."
 
 /datum/spellbook_entry/summon/guns/IsAvailable()
-	if(!SSticker.mode) // In case spellbook is placed on map
+	if(SSticker.current_state < GAME_STATE_SETTING_UP) // In case spellbook is placed on map
 		return FALSE
-	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-			return FALSE
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -585,12 +583,10 @@
 	desc = "Share the wonders of magic with the crew and show them why they aren't to be trusted with it at the same time."
 
 /datum/spellbook_entry/summon/magic/IsAvailable()
-	if(!SSticker.mode) // In case spellbook is placed on map
+	if(SSticker.current_state < GAME_STATE_SETTING_UP) // In case spellbook is placed on map
 		return FALSE
-	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-			return FALSE
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -609,12 +605,10 @@
 	limit = 1
 
 /datum/spellbook_entry/summon/events/IsAvailable()
-	if(!SSticker.mode) // In case spellbook is placed on map
+	if(SSticker.current_state < GAME_STATE_SETTING_UP) // In case spellbook is placed on map
 		return FALSE
-	if(istype(SSticker.mode, /datum/game_mode/dynamic)) // Disable events on dynamic
-		var/datum/game_mode/dynamic/mode = SSticker.mode
-		if(mode.threat_level < MINIMUM_THREAT_FOR_RITUALS)
-			return FALSE
+	if(SSdynamic.threat_level < MINIMUM_THREAT_FOR_RITUALS)
+		return FALSE
 	return !CONFIG_GET(flag/no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)

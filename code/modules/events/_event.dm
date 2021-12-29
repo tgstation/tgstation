@@ -54,8 +54,7 @@
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
 		return FALSE
 
-	var/datum/game_mode/dynamic/dynamic = SSticker.mode
-	if (istype(dynamic) && dynamic_should_hijack && dynamic.random_event_hijacked != HIJACKED_NOTHING)
+	if (dynamic_should_hijack && SSdynamic.random_event_hijacked != HIJACKED_NOTHING)
 		return FALSE
 
 	return TRUE
