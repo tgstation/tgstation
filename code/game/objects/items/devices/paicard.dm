@@ -112,7 +112,7 @@
 			new_pai.name = candidate.name || pick(GLOB.ninja_names)
 			new_pai.real_name = new_pai.name
 			new_pai.key = candidate.key
-			setPersonality(pai)
+			setPersonality(new_pai)
 			SSpai.candidates -= candidate
 		if("fix_speech")
 			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
