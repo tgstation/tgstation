@@ -429,28 +429,24 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
-///Compares sample to self to see if within acceptable ranges that group processing may be enabled
+///Compares sample to self to see if within acceptable ranges that group processing may be enabled.
 ///Returns: a string indicating what check failed, or "" if check passes
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
+	var/our_moles = 0
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = cached_gases[id]?[MOLES] || 0
-		var/sample_moles = sample_gases[id]?[MOLES] || 0
-		var/delta = abs(gas_moles - sample_moles)
-		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
-			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+		var/gas_moles = cached_gases[id]?[MOLES]
+
+		var/delta = abs(gas_moles - sample_gases[id]?[MOLES])
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-	var/our_moles
-	TOTAL_MOLES(cached_gases, our_moles)
-	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
-		var/temp = temperature
-		var/sample_temp = sample.temperature
+		our_moles += gas_moles
 
-		var/temperature_delta = abs(temp - sample_temp)
-		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
+		if(abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 			return "temp"
 
 	return ""
