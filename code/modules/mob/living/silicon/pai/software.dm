@@ -90,10 +90,8 @@
 		if("door_jack")
 			if(params["jack"] == "jack")
 				if(hacking_cable?.machine)
-					hackdoor = hacking_cable.machine
-					hackloop()
+					hack_door()
 			if(params["jack"]  == "cancel")
-				hackdoor = null
 				QDEL_NULL(hacking_cable)
 			if(params["jack"]  == "cable")
 				extendcable()
@@ -231,22 +229,34 @@
 /**
  * Door jacking supporting proc
  *
- * This begins the hacking process on a door.
- * Mostly, this gives UI feedback, while the "hack"
- * is handled inside pai.dm itself.
+ * This will, after alerting any AIs on station, begin to hack open a door.
+ * After a 10 second timer, the door will crack open, provided they don't move out of the way.
  */
-/mob/living/silicon/pai/proc/hackloop()
+
+/mob/living/silicon/pai/proc/hack_door()
 	var/turf/turf = get_turf(src)
 	playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 	to_chat(usr, span_boldnotice("You begin overriding the airlock security protocols."))
-	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
+	for(var/mob/living/silicon/ai/all_ais in GLOB.player_list)
+		if(!all_ais.stat)
+			continue
 		if(turf.loc)
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [turf.loc].</b></font>")
+			to_chat(all_ais, span_boldannounce("Network Alert: Brute-force security override in progress in [turf.loc]."))
 		else
-			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
-	if(!hackbar)
-		hackbar = new(src, HACK_COMPLETE, hacking_cable.machine)
-	hacking = TRUE
+			to_chat(all_ais, span_boldannounce("Network Alert: Brute-force security override in progress. Unable to pinpoint location."))
+	//Now begin hacking
+	if(!do_after(src, 10 SECONDS, hacking_cable.machine, timed_action_flags = NONE, progress = TRUE))
+		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
+		hacking_cable.visible_message(
+			span_warning("[hacking_cable] rapidly retracts back into its spool."),\
+			span_hear("You hear a click and the sound of wire spooling rapidly."))
+		QDEL_NULL(hacking_cable)
+		if(!QDELETED(card))
+			card.update_appearance()
+		return
+	var/obj/machinery/door/door = hacking_cable.machine
+	door.open()
+	QDEL_NULL(hacking_cable)
 
 /**
  * Proc that switches whether a pAI can refresh

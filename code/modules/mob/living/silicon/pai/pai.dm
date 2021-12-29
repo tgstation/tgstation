@@ -51,17 +51,6 @@
 
 	// Various software-specific vars
 
-	/// The cable we produce when hacking a door
-	var/obj/item/pai_cable/hacking_cable
-	/// The airlock being hacked
-	var/obj/machinery/door/hackdoor
-	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
-	var/hackprogress = 0
-	/// Are we hacking a door?
-	var/hacking = FALSE
-	/// The progress for hacking
-	var/datum/progressbar/hackbar
-
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
 	/// Toggles whether the Medical  HUD is active or not
@@ -82,6 +71,8 @@
 	var/obj/item/healthanalyzer/hostscan
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
 	var/obj/item/gps/pai/internal_gps
+	/// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable
 
 	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
@@ -212,44 +203,9 @@
 	aiPDA.ownjob = "pAI Messenger"
 	aiPDA.name = real_name + "[real_name] ([aiPDA.ownjob])"
 
-/mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
-	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
-		hackprogress = clamp(hackprogress + (2 * delta_time), 0, HACK_COMPLETE)
-		hackbar.update(hackprogress)
-	else
-		to_chat(src, span_notice("Door Jack: Connection to airlock has been lost. Hack aborted."))
-		hackprogress = 0
-		hacking = FALSE
-		hackdoor = null
-		hackbar.end_progress()
-		QDEL_NULL(hackbar)
-		QDEL_NULL(hacking_cable)
-		if(!QDELETED(card))
-			card.update_appearance()
-		return
-	if(hackprogress >= HACK_COMPLETE)
-		hackprogress = 0
-		hacking = FALSE
-		hackbar.end_progress()
-		var/obj/machinery/door/door = hacking_cable.machine
-		door.open()
-		QDEL_NULL(hackbar)
-		QDEL_NULL(hacking_cable)
-
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
 	return TRUE
-
-/mob/living/silicon/pai/Login()
-	. = ..()
-	if(!. || !client)
-		return FALSE
-
-	client.perspective = EYE_PERSPECTIVE
-	if(holoform)
-		client.eye = src
-	else
-		client.eye = card
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
@@ -284,20 +240,6 @@
 /mob/living/silicon/pai/examine(mob/user)
 	. = ..()
 	. += "A personal AI in holochassis mode. Its master ID string seems to be [master]."
-
-/mob/living/silicon/pai/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(QDELETED(src) || stat == DEAD)
-		return
-	if(hacking_cable)
-		if(get_dist(src, hacking_cable) > 1)
-			var/turf/T = get_turf(src)
-			T.visible_message(span_warning("[hacking_cable] rapidly retracts back into its spool."), span_hear("You hear a click and the sound of wire spooling rapidly."))
-			QDEL_NULL(hacking_cable)
-			if(!QDELETED(card))
-				card.update_appearance()
-		else if(hacking)
-			process_hack(delta_time, times_fired)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
