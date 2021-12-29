@@ -31,7 +31,7 @@
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID.", "Door Controller ID", id, 100, 1)
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100, 1)
 	if(isnull(change_id))
 		return
 	id = round(change_id)
