@@ -279,6 +279,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/hercuri/on_new(data)
 	. = ..()
+	if(!data)
+		return
 	method |= data["method"]
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)

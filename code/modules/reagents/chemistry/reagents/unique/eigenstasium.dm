@@ -34,6 +34,8 @@
 
 /datum/reagent/eigenstate/on_new(list/data)
 	. = ..()
+	if(!data)
+		return
 	location_created = data["location_created"]
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
