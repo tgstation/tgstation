@@ -144,6 +144,7 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			dullahan_species.update_vision_perspective(human)
 
+
 /obj/item/dullahan_relay
 	name = "dullahan relay"
 	/// The mob (a dullahan) that owns this relay.
@@ -164,10 +165,6 @@
 	owner = null
 	return ..()
 
-
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	owner.Hear(arglist(args))
-
 /obj/item/dullahan_relay/process()
 	if(!istype(loc, /obj/item/bodypart/head) || QDELETED(owner))
 		. = PROCESS_KILL
@@ -178,7 +175,7 @@
 	if(user.client.eye == src)
 		return COMPONENT_ALLOW_EXAMINATE
 
-/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods)
+/obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
 	if(owner)
 		owner.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mods)
