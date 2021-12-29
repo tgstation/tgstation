@@ -296,7 +296,7 @@
 				if(!can_finish_build(I, user))
 					return
 				to_chat(user, span_notice("You add the [I] to [src]! Honk!"))
-				var/mob/living/simple_animal/bot/honkbot/S = new(drop_location())
+				var/mob/living/simple_animal/bot/secbot/honkbot/S = new(drop_location())
 				S.name = created_name
 				S.limiting_spam = TRUE // only long enough to hear the first ping.
 				addtimer(CALLBACK (S, .mob/living/simple_animal/bot/honkbot/proc/react_ping), 5)
