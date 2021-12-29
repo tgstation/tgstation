@@ -503,28 +503,27 @@
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 
+/obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!keyslot)
+		to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
+		return
+
+	for(var/ch_name in channels)
+		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+		secure_radio_connections[ch_name] = null
+
+	if(keyslot)
+		var/turf/T = get_turf(user)
+		if(T)
+			keyslot.forceMove(T)
+			keyslot = null
+
+	recalculateChannels()
+	to_chat(user, span_notice("You pop out the encryption key in the radio."))
+
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(keyslot)
-			for(var/ch_name in channels)
-				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
-
-
-			if(keyslot)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot.forceMove(T)
-					keyslot = null
-
-			recalculateChannels()
-			to_chat(user, span_notice("You pop out the encryption key in the radio."))
-
-		else
-			to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
-
-	else if(istype(W, /obj/item/encryptionkey/))
+	if(istype(W, /obj/item/encryptionkey))
 		if(keyslot)
 			to_chat(user, span_warning("The radio can't hold another key!"))
 			return

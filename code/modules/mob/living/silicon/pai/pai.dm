@@ -210,7 +210,7 @@
 	aiPDA = new /obj/item/pda/ai(src)
 	aiPDA.owner = real_name
 	aiPDA.ownjob = "pAI Messenger"
-	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+	aiPDA.name = real_name + "[real_name] ([aiPDA.ownjob])"
 
 /mob/living/silicon/pai/proc/process_hack(delta_time, times_fired)
 	if(hacking_cable?.machine && istype(hacking_cable.machine, /obj/machinery/door) && hacking_cable.machine == hackdoor && get_dist(src, hackdoor) <= 1)
@@ -314,10 +314,10 @@
 
 	return ..()
 
+/obj/item/paicard/screwdriver_act(mob/living/user, obj/item/tool)
+	return pai.radio.screwdriver_act(user, tool)
+
 /obj/item/paicard/attackby(obj/item/used, mob/user, params)
-	if(used.tool_behaviour == TOOL_SCREWDRIVER)
-		pai.radio.attackby(used, user, params)
-		return
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encryptmod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
