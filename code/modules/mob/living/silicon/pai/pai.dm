@@ -318,7 +318,7 @@
 	if(used.tool_behaviour == TOOL_SCREWDRIVER)
 		pai.radio.attackby(used, user, params)
 		return
-	if(pai && (istype(used, /obj/item/encryptionkey))
+	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encryptmod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
