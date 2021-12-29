@@ -200,7 +200,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
-	return
+	if(data)
+		src.data = data
 
 /// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount)
