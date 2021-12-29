@@ -184,6 +184,7 @@
 #include "code\__DEFINES\dcs\signals\signals_adventure.dm"
 #include "code\__DEFINES\dcs\signals\signals_area.dm"
 #include "code\__DEFINES\dcs\signals\signals_bot.dm"
+#include "code\__DEFINES\dcs\signals\signals_changeling.dm"
 #include "code\__DEFINES\dcs\signals\signals_circuit.dm"
 #include "code\__DEFINES\dcs\signals\signals_clothing.dm"
 #include "code\__DEFINES\dcs\signals\signals_container.dm"

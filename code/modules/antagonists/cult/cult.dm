@@ -138,9 +138,9 @@
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
-		current.AddElement(/datum/element/cult_eyes, override = TRUE)
+		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 	if(cult_team.cult_ascendent)
-		current.AddElement(/datum/element/cult_halo, override = TRUE)
+		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
 	add_team_hud(current)
 
@@ -235,9 +235,9 @@
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
-		current.AddElement(/datum/element/cult_eyes, override = TRUE)
+		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
 	if(cult_team.cult_ascendent)
-		current.AddElement(/datum/element/cult_halo, override = TRUE)
+		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
