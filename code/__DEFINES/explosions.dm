@@ -8,7 +8,7 @@
 /// The default explosion severity used to mark that an object is beyond the impact range of the explosion.
 #define EXPLODE_NONE 0
 
-///
+/// A wrapper for [/atom/proc/ex_act] to ensure that the explosion propagation and attendant signal are always handled.
 #define EX_ACT(target, args...)\
 	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
 		target.contents_explosion(##args);\
