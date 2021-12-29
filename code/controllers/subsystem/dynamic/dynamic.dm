@@ -18,7 +18,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
-	flags = SS_NO_INIT | SS_NO_FIRE
+	flags = SS_NO_INIT
+	wait = 1 SECONDS
 
 	// Threat logging vars
 	/// The "threat cap", threat shouldn't normally go above this and is used in ruleset calculations
@@ -164,7 +165,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/force_result
 
 
-/datum/controller/subsystem/dynamic/admin_panel()
+/datum/controller/subsystem/dynamic/proc/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
@@ -693,7 +694,7 @@ SUBSYSTEM_DEF(dynamic)
 	force_result = round_result
 	SSticker.force_ending = TRUE
 
-/datum/controller/subsystem/dynamic/process()
+/datum/controller/subsystem/dynamic/fire()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
@@ -790,7 +791,7 @@ SUBSYSTEM_DEF(dynamic)
 					return TRUE
 	return FALSE
 
-/datum/controller/subsystem/dynamic/make_antag_chance(mob/living/carbon/human/newPlayer)
+/datum/controller/subsystem/dynamic/proc/make_antag_chance(mob/living/carbon/human/newPlayer)
 	if (GLOB.dynamic_forced_extended)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left

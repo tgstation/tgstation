@@ -137,7 +137,7 @@
 
 	return CEILING(population / antag_cap["denominator"], 1) + (antag_cap["offset"] || 0)
 
-/// This is called if persistent variable is true everytime SSTicker ticks.
+/// This is called if persistent variable is true everytime SSdynamic ticks.
 /datum/dynamic_ruleset/proc/rule_process()
 	return
 

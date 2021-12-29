@@ -1,3 +1,4 @@
+// MOTHBLOCKS TODO: All of this
 #ifdef TESTING
 /datum/dynamic_simulation
 	var/datum/game_mode/dynamic/gamemode

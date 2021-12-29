@@ -14,20 +14,6 @@
 
 /datum/game_mode
 
-///Handles late-join antag assignments
-/datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
-	return
-
-/datum/game_mode/proc/check_finished(force_ending) //to be called by SSticker
-	if(!SSticker.setup_done)
-		return FALSE
-	if(SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
-		return TRUE
-	if(GLOB.station_was_nuked)
-		return TRUE
-	if(force_ending)
-		return TRUE
-
 //////////////////////////
 //Reports player logouts//
 //////////////////////////

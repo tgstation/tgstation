@@ -14,8 +14,6 @@ SUBSYSTEM_DEF(ticker)
 	var/start_immediately = FALSE
 	var/setup_done = FALSE //All game setup done including mode post setup and
 
-	var/datum/game_mode/mode = null
-
 	var/login_music //music played in pregame lobby
 	var/round_end_sound //music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE //If all clients have loaded it
@@ -193,10 +191,9 @@ SUBSYSTEM_DEF(ticker)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
 			check_queue()
 
-			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
+			if(!roundend_check_paused && check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -220,7 +217,6 @@ SUBSYSTEM_DEF(ticker)
 	if(!GLOB.Debug2)
 		if(!can_continue)
 			log_game("Game failed pre_setup")
-			QDEL_NULL(mode)
 			to_chat(world, "<B>Error setting up game.</B> Reverting to pre-game lobby.")
 			SSjob.ResetOccupations()
 			return FALSE
@@ -502,6 +498,17 @@ SUBSYSTEM_DEF(ticker)
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
+/datum/controller/subsystem/ticker/proc/check_finished(forced_ending)
+	if (!setup_done)
+		return FALSE
+	if (SSshuttle.emergency && (SSshuttle.emergency.mode == SHUTTLE_ENDGAME))
+		return TRUE
+	if (GLOB.station_was_nuked)
+		return TRUE
+	if (force_ending)
+		return TRUE
+	return FALSE
+
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
 
@@ -511,7 +518,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
-	mode = SSticker.mode
 
 	login_music = SSticker.login_music
 	round_end_sound = SSticker.round_end_sound
