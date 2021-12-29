@@ -19,7 +19,6 @@
 	mod_pai.can_receive = TRUE
 	mod_pai.canholo = FALSE
 	mod_pai.remote_control = src
-	mod_pai.forceMove(src)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(mod_pai)
 	return TRUE
@@ -70,6 +69,7 @@
 #undef WEARER_DELAY
 #undef LONE_DELAY
 #undef CELL_PER_STEP
+#undef PAI_FALL_TIME
 
 /obj/item/mod/control/proc/pai_fall()
 	if(!wearer)
