@@ -122,9 +122,6 @@
 	src.y = y
 	src.z = z
 
-	for(var/turf_num in 1 to 16 * 16)
-		inactive_static_images += new/image(GLOB.cameranet.obscured)
-
 	for(var/obj/machinery/camera/camera in urange(CHUNK_SIZE, locate(x + (CHUNK_SIZE / 2), y + (CHUNK_SIZE / 2), z)))
 		if(camera.can_use())
 			cameras += camera
@@ -135,6 +132,9 @@
 
 	for(var/turf/t as anything in block(locate(max(x, 1), max(y, 1), z), locate(min(x + CHUNK_SIZE - 1, world.maxx), min(y + CHUNK_SIZE - 1, world.maxy), z)))
 		turfs[t] = t
+
+	for(var/turf in turfs)//one for each 16x16 = 256 turfs this camera chunk encompasses
+		inactive_static_images += new/image(GLOB.cameranet.obscured)
 
 	for(var/obj/machinery/camera/camera as anything in cameras)
 		if(!camera)
