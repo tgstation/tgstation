@@ -3,27 +3,27 @@
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
 	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
-	var/ai_action = FALSE
+	var/pai_action = FALSE
 	/// The MODsuit linked to this action
 	var/obj/item/mod/control/mod
 
 /datum/action/item_action/mod/New(Target)
 	..()
 	mod = Target
-	if(ai_action)
-		background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	if(pai_action)
+		background_icon_state = ACTION_BUTTON_PAI_BACKGROUND
 
 /datum/action/item_action/mod/Grant(mob/user)
-	if(ai_action && user != mod.ai)
+	if(pai_action && user != mod.mod_pai)
 		return
-	else if(!ai_action && user == mod.ai)
+	else if(!pai_action && user == mod.mod_pai)
 		return
 	return ..()
 
 /datum/action/item_action/mod/Remove(mob/user)
-	if(ai_action && user != mod.ai)
+	if(pai_action && user != mod.mod_pai)
 		return
-	else if(!ai_action && user == mod.ai)
+	else if(!pai_action && user == mod.mod_pai)
 		return
 	return ..()
 
@@ -38,8 +38,8 @@
 	mod.choose_deploy(usr)
 	return TRUE
 
-/datum/action/item_action/mod/deploy/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/deploy/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/activate
 	name = "Activate MODsuit"
@@ -52,8 +52,8 @@
 	mod.toggle_activate(usr)
 	return TRUE
 
-/datum/action/item_action/mod/activate/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/activate/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/module
 	name = "Toggle Module"
@@ -66,8 +66,8 @@
 	mod.quick_module(usr)
 	return TRUE
 
-/datum/action/item_action/mod/module/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/module/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/panel
 	name = "MODsuit Panel"
@@ -80,5 +80,5 @@
 	mod.ui_interact(usr)
 	return TRUE
 
-/datum/action/item_action/mod/panel/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/panel/pai
+	pai_action = TRUE

@@ -1,4 +1,5 @@
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
+#define ACTION_BUTTON_PAI_BACKGROUND "bg_tech"
 
 /atom/movable/screen/movable/action_button
 	var/datum/action/linked_action

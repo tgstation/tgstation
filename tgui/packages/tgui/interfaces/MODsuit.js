@@ -209,7 +209,7 @@ const ParametersSection = (props, context) => {
     complexity_max,
     wearer_name,
     wearer_job,
-    AI,
+    pAI,
   } = data;
   const status = malfunctioning
     ? 'Malfunctioning' : active
@@ -249,8 +249,8 @@ const ParametersSection = (props, context) => {
         <LabeledList.Item label="Occupant">
           {wearer_name}, {wearer_job}
         </LabeledList.Item>
-        <LabeledList.Item label="Onboard AI">
-          {AI || 'None'}
+        <LabeledList.Item label="Onboard pAI">
+          {pAI || 'None'}
         </LabeledList.Item>
       </LabeledList>
     </Section>
