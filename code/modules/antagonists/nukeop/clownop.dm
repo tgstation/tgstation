@@ -70,6 +70,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/syndicate_empty
 	mask = /obj/item/clothing/mask/gas/clown_hat
+	uniform = /obj/item/clothing/under/syndicate
 
 /datum/outfit/clown_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
@@ -81,6 +82,7 @@
 
 	back = /obj/item/mod/control/pre_equipped/syndicate_empty/elite
 	mask = /obj/item/clothing/mask/gas/clown_hat
+	uniform = /obj/item/clothing/under/syndicate
 
 /datum/outfit/clown_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/elite/booster = locate() in H.back

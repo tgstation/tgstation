@@ -43,6 +43,12 @@
 	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/component/remote_materials/rmat
 
+	/// A list of part sets used for TGUI static data. Updated on Init() and syncing with the R&D console.
+	var/list/final_sets = list()
+
+	/// A list of individual parts used for TGUI static data. Updated on Init() and syncing with the R&D console.
+	var/list/buildable_parts = list()
+
 	/// A list of categories that valid MECHFAB design datums will broadly categorise themselves under.
 	var/list/part_sets = list(
 								"Cyborg",
@@ -69,6 +75,7 @@
 	stored_research = SSresearch.science_tech
 	rmat = AddComponent(/datum/component/remote_materials, "mechfab", mapload && link_on_init, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
+	update_menu_tech()
 	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
@@ -127,7 +134,7 @@
 	if(categories)
 		// Handle some special cases to build up sub-categories for the fab interface.
 		// Start with checking if this design builds a cyborg module.
-		if(built_item in typesof(/obj/item/borg/upgrade))
+		if(ispath(built_item, /obj/item/borg/upgrade))
 			var/obj/item/borg/upgrade/U = built_item
 			var/model_types = initial(U.model_flags)
 			sub_category = list()
@@ -144,11 +151,8 @@
 					sub_category += "Engineering"
 			else
 				sub_category += "All Cyborgs"
-		else if(ispath(built_item, /obj/item/borg_restart_board))
-			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
 
-		// Else check if this design builds a piece of exosuit equipment.
-		else if(built_item in typesof(/obj/item/mecha_parts/mecha_equipment))
+		else if(ispath(built_item, /obj/item/mecha_parts/mecha_equipment))
 			var/obj/item/mecha_parts/mecha_equipment/E = built_item
 			var/mech_types = initial(E.mech_flags)
 			sub_category = "Equipment"
@@ -169,6 +173,12 @@
 				if(mech_types & EXOSUIT_MODULE_PHAZON)
 					category_override += "Phazon"
 
+		else if(ispath(built_item, /obj/item/borg_restart_board))
+			sub_category += "All Cyborgs" //Otherwise the restart board shows in the "parts" category, which seems dumb
+
+		else if(istype(D, /datum/design/module))
+			var/datum/design/module/module_design = D
+			sub_category = list(module_design.department_type)
 
 	var/list/part = list(
 		"name" = D.name,
@@ -182,6 +192,34 @@
 	)
 
 	return part
+
+/**
+ * Updates the `final_sets` and `buildable_parts` for the current mecha fabricator.
+ */
+/obj/machinery/mecha_part_fabricator/proc/update_menu_tech()
+	final_sets = list()
+	buildable_parts = list()
+	final_sets += part_sets
+
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
+		if(D.build_type & MECHFAB)
+			// This is for us.
+			var/list/part = output_part_info(D, TRUE)
+
+			if(part["category_override"])
+				for(var/cat in part["category_override"])
+					buildable_parts[cat] += list(part)
+					if(!(cat in part_sets))
+						final_sets += cat
+				continue
+
+			for(var/cat in part_sets)
+				// Find all matching categories.
+				if(!(cat in D.category))
+					continue
+
+				buildable_parts[cat] += list(part)
 
 /**
  * Intended to be called when an item starts printing.
@@ -427,32 +465,6 @@
 /obj/machinery/mecha_part_fabricator/ui_static_data(mob/user)
 	var/list/data = list()
 
-	var/list/final_sets = list()
-	var/list/buildable_parts = list()
-
-	for(var/part_set in part_sets)
-		final_sets += part_set
-
-	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(D.build_type & MECHFAB)
-			// This is for us.
-			var/list/part = output_part_info(D, TRUE)
-
-			if(part["category_override"])
-				for(var/cat in part["category_override"])
-					buildable_parts[cat] += list(part)
-					if(!(cat in part_sets))
-						final_sets += cat
-				continue
-
-			for(var/cat in part_sets)
-				// Find all matching categories.
-				if(!(cat in D.category))
-					continue
-
-				buildable_parts[cat] += list(part)
-
 	data["partSets"] = final_sets
 	data["buildableParts"] = buildable_parts
 
@@ -497,6 +509,7 @@
 	switch(action)
 		if("sync_rnd")
 			// Syncronises designs on interface with R&D techweb.
+			update_menu_tech()
 			update_static_data(usr)
 			say("Successfully synchronized with R&D server.")
 			return

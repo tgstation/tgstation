@@ -55,6 +55,10 @@
 	cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(/obj/item/mod/module/storage/large_capacity, /obj/item/mod/module/welding, /obj/item/mod/module/holster, /obj/item/mod/module/pathfinder)
 
+/obj/item/mod/control/pre_equipped/cosmohonk
+	theme = /datum/mod_theme/cosmohonk
+	initial_modules = list(/obj/item/mod/module/storage, /obj/item/mod/module/bikehorn)
+
 /obj/item/mod/control/pre_equipped/traitor
 	theme = /datum/mod_theme/syndicate
 	cell = /obj/item/stock_parts/cell/super

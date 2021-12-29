@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Double click and enter on tgui input lists no longer clears selection."
-  - bugfix: "Functionality restored: typing while not selecting the search bar will refocus. You can also quick search by typing while the search bar is hidden."
-  - refactor: "Support for current value selections has been added to tgui input lists - lists now work for suit sensors, etc."
