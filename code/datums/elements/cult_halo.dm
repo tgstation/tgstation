@@ -47,4 +47,4 @@
 	else
 		target.cut_overlay(HALO_LAYER)
 	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
-	. = ..()
+	return ..()
