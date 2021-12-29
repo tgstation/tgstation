@@ -79,3 +79,8 @@
 //from /mob/living/carbon/human/proc/check_shields(): (atom/hit_by, damage, attack_text, attack_type, armour_penetration)
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)
+
+///Human transforming into a monkey
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+///Monkey transforming into a human
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"

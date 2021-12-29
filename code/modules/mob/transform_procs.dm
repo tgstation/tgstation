@@ -25,6 +25,7 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(/datum/species/monkey)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MONKEYIZE)
 	uncuff()
 	return src
 
@@ -55,6 +56,7 @@
 	icon = initial(icon)
 	invisibility = 0
 	set_species(species)
+	SEND_SIGNAL(src, COMSIG_MONKEY_HUMANIZE)
 	return src
 
 /mob/proc/AIize(transfer_after = TRUE, client/preference_source, move = TRUE)

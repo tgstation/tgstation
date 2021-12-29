@@ -82,3 +82,6 @@
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
+
+///Changeling transforming
+#define COMSIG_CHANGELING_TRANSFORM "changeling_transform"
