@@ -1319,11 +1319,22 @@
 	SIGNAL_HANDLER
 	set_active_storage(null)
 
-///clears the client mob in our client_mobs_in_contents list
-/mob/proc/clear_client_in_contents()
-	if(client?.movingmob)
-		LAZYREMOVE(client.movingmob.client_mobs_in_contents, src)
-		client.movingmob = null
+/// Cleanup proc that's called when a mob loses a client, either through client destroy or logout
+/// Logout happens post client del, so we can't just copypaste this there. This keeps things clean and consistent
+/mob/proc/become_uncliented()
+	if(!canon_client)
+		return
+		
+	for(var/foo in canon_client.player_details.post_logout_callbacks)
+		var/datum/callback/CB = foo
+		CB.Invoke()
+
+	if(canon_client?.movingmob)
+		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
+		canon_client.movingmob = null
+
+	clear_important_client_contents()
+	canon_client = null
 
 ///Shows a tgui window with memories
 /mob/verb/memory()
