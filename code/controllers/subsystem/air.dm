@@ -60,17 +60,17 @@ SUBSYSTEM_DEF(air)
 	msg += "AO:[round(cost_atoms, 1)]|"
 	msg += "RB:[round(cost_rebuilds,1)]|"
 	msg += "} "
-	msg += "AT:[active_turfs.len]|"
-	msg += "HS:[hotspots.len]|"
-	msg += "EG:[excited_groups.len]|"
-	msg += "HP:[high_pressure_delta.len]|"
-	msg += "SC:[active_super_conductivity.len]|"
-	msg += "PN:[networks.len]|"
-	msg += "AM:[atmos_machinery.len]|"
-	msg += "AO:[atom_process.len]|"
-	msg += "RB:[rebuild_queue.len]|"
-	msg += "EP:[expansion_queue.len]|"
-	msg += "AT/MS:[round((cost ? active_turfs.len/cost : 0),0.1)]"
+	msg += "AT:[length(active_turfs)]|"
+	msg += "HS:[length(hotspots)]|"
+	msg += "EG:[length(excited_groups)]|"
+	msg += "HP:[length(high_pressure_delta)]|"
+	msg += "SC:[length(active_super_conductivity)]|"
+	msg += "PN:[length(networks)]|"
+	msg += "AM:[length(atmos_machinery)]|"
+	msg += "AO:[length(atom_process)]|"
+	msg += "RB:[length(rebuild_queue)]|"
+	msg += "EP:[length(expansion_queue)]|"
+	msg += "AT/MS:[round((cost ? length(active_turfs)/cost_turfs : 0),0.1)]"
 	return ..()
 
 
@@ -222,8 +222,8 @@ SUBSYSTEM_DEF(air)
 		src.currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	while(currentrun.len)
-		var/datum/thing = currentrun[currentrun.len]
+	while(length(currentrun))
+		var/datum/thing = currentrun[length(currentrun)]
 		currentrun.len--
 		if(thing)
 			thing.process()
@@ -535,7 +535,7 @@ SUBSYSTEM_DEF(air)
 		EG = new
 		EG.add_turf(src)
 
-	for (var/turf/open/ET in atmos_adjacent_turfs)
+	for (var/turf/open/ET as anything in atmos_adjacent_turfs)
 		if (ET.blocks_air || !ET.air)
 			continue
 

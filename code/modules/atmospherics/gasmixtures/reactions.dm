@@ -109,9 +109,9 @@
 	if(burned_fuel)
 		energy_released += (N2O_DECOMPOSITION_ENERGY_RELEASED * burned_fuel)
 
-		ASSERT_GAS(/datum/gas/oxygen, air)
+		ASSERT_GAS(/datum/gas/oxygen, cached_gases)
 		cached_gases[/datum/gas/oxygen][MOLES] += burned_fuel * 0.5
-		ASSERT_GAS(/datum/gas/nitrogen, air)
+		ASSERT_GAS(/datum/gas/nitrogen, cached_gases)
 		cached_gases[/datum/gas/nitrogen][MOLES] += burned_fuel
 
 		var/new_heat_capacity = air.heat_capacity()
@@ -152,7 +152,7 @@
 		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / TRITIUM_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		ASSERT_GAS(/datum/gas/water_vapor, cached_gases) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_OXY_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
@@ -164,7 +164,7 @@
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		ASSERT_GAS(/datum/gas/water_vapor, cached_gases) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / TRITIUM_BURN_TRIT_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
@@ -233,11 +233,11 @@
 			cached_gases[/datum/gas/plasma][MOLES] = QUANTIZE(cached_gases[/datum/gas/plasma][MOLES] - plasma_burn_rate)
 			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (plasma_burn_rate * oxygen_burn_rate))
 			if (super_saturation)
-				ASSERT_GAS(/datum/gas/tritium, air)
+				ASSERT_GAS(/datum/gas/tritium, cached_gases)
 				cached_gases[/datum/gas/tritium][MOLES] += plasma_burn_rate
 			else
-				ASSERT_GAS(/datum/gas/carbon_dioxide,air)
-				ASSERT_GAS(/datum/gas/water_vapor,air)
+				ASSERT_GAS(/datum/gas/carbon_dioxide, cached_gases)
+				ASSERT_GAS(/datum/gas/water_vapor, cached_gases)
 				cached_gases[/datum/gas/carbon_dioxide][MOLES] += plasma_burn_rate * 0.75
 				cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
 
@@ -302,7 +302,7 @@
 			freon_burn_rate = min(freon_burn_rate, cached_gases[/datum/gas/freon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(oxygen_burn_rate)) //Ensures matter is conserved properly
 			cached_gases[/datum/gas/freon][MOLES] = QUANTIZE(cached_gases[/datum/gas/freon][MOLES] - freon_burn_rate)
 			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (freon_burn_rate * oxygen_burn_rate))
-			ASSERT_GAS(/datum/gas/carbon_dioxide, air)
+			ASSERT_GAS(/datum/gas/carbon_dioxide, cached_gases)
 			cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
 			if(temperature < 160 && temperature > 120 && prob(2))
@@ -342,7 +342,7 @@
 		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / HYDROGEN_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		ASSERT_GAS(/datum/gas/water_vapor, cached_gases) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_OXY_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_WEAK * burned_fuel)
@@ -354,7 +354,7 @@
 		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel / HYDROGEN_BURN_H2_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= burned_fuel
 
-		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
+		ASSERT_GAS(/datum/gas/water_vapor, cached_gases) //oxygen+more-or-less hydrogen=H2O
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
 
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
@@ -397,7 +397,7 @@
 	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/nitrous_oxide, air)
+	ASSERT_GAS(/datum/gas/nitrous_oxide, cached_gases)
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency * 2
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficency
@@ -463,7 +463,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / (FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 8), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.05))
 	var/energy_used = heat_efficency * NITRIUM_FORMATION_ENERGY
-	ASSERT_GAS(/datum/gas/nitrium, air)
+	ASSERT_GAS(/datum/gas/nitrium, cached_gases)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.05 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
@@ -499,10 +499,10 @@
 	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/bz, air)
+	ASSERT_GAS(/datum/gas/bz, cached_gases)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency * 2.5
 	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide][MOLES])
-		ASSERT_GAS(/datum/gas/oxygen, air)
+		ASSERT_GAS(/datum/gas/oxygen, cached_gases)
 		cached_gases[/datum/gas/bz][MOLES] -= min(pressure, 0.5)
 		cached_gases[/datum/gas/oxygen][MOLES] += min(pressure, 0.5)
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
@@ -536,7 +536,7 @@
 	if ((cached_gases[/datum/gas/plasma][MOLES] - heat_efficency * 1.5 < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - heat_efficency * 0.75 < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/freon, air)
+	ASSERT_GAS(/datum/gas/freon, cached_gases)
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency * 1.5
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency * 0.75
 	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25
@@ -601,7 +601,7 @@
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
-	ASSERT_GAS(/datum/gas/oxygen, air)
+	ASSERT_GAS(/datum/gas/oxygen, cached_gases)
 	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
@@ -628,7 +628,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/tritium][MOLES] * INVERSE(4), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
 	var/energy_used = heat_efficency * 300
-	ASSERT_GAS(/datum/gas/halon, air)
+	ASSERT_GAS(/datum/gas/halon, cached_gases)
 	if ((cached_gases[/datum/gas/tritium][MOLES] - heat_efficency * 4 < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/tritium][MOLES] -= heat_efficency * 4
@@ -660,7 +660,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.3, cached_gases[/datum/gas/freon][MOLES] * INVERSE(2.75), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
 	var/energy_used = heat_efficency * 9000
-	ASSERT_GAS(/datum/gas/healium, air)
+	ASSERT_GAS(/datum/gas/healium, cached_gases)
 	if ((cached_gases[/datum/gas/freon][MOLES] - heat_efficency * 2.75 < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/freon][MOLES] -= heat_efficency * 2.75
@@ -692,7 +692,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.005, cached_gases[/datum/gas/pluoxium][MOLES] * INVERSE(0.2), cached_gases[/datum/gas/hydrogen][MOLES] * INVERSE(2))
 	var/energy_used = heat_efficency * 650
-	ASSERT_GAS(/datum/gas/proto_nitrate, air)
+	ASSERT_GAS(/datum/gas/proto_nitrate, cached_gases)
 	if ((cached_gases[/datum/gas/pluoxium][MOLES] - heat_efficency * 0.2 < 0 ) || (cached_gases[/datum/gas/hydrogen][MOLES] - heat_efficency * 2 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency * 2
@@ -724,7 +724,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature * 0.000005, cached_gases[/datum/gas/hypernoblium][MOLES] * INVERSE(0.01), cached_gases[/datum/gas/nitrium][MOLES] * INVERSE(0.5))
 	var/energy_used = heat_efficency * 5000
-	ASSERT_GAS(/datum/gas/zauker, air)
+	ASSERT_GAS(/datum/gas/zauker, cached_gases)
 	if ((cached_gases[/datum/gas/hypernoblium][MOLES] - heat_efficency * 0.01 < 0 ) || (cached_gases[/datum/gas/nitrium][MOLES] - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/hypernoblium][MOLES] -= heat_efficency * 0.01
@@ -755,7 +755,7 @@
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(temperature / ( FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/halon][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(20))
 	var/energy_used = heat_efficency * 2500
-	ASSERT_GAS(/datum/gas/carbon_dioxide, air)
+	ASSERT_GAS(/datum/gas/carbon_dioxide, cached_gases)
 	if ((cached_gases[/datum/gas/halon][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency * 20 < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	cached_gases[/datum/gas/halon][MOLES] -= heat_efficency
@@ -793,8 +793,8 @@
 	if(burned_fuel)
 		energy_released += (460 * burned_fuel)
 
-		ASSERT_GAS(/datum/gas/oxygen, air)
-		ASSERT_GAS(/datum/gas/nitrogen, air)
+		ASSERT_GAS(/datum/gas/oxygen, cached_gases)
+		ASSERT_GAS(/datum/gas/nitrogen, cached_gases)
 		cached_gases[/datum/gas/oxygen][MOLES] += burned_fuel * 0.3
 		cached_gases[/datum/gas/nitrogen][MOLES] += burned_fuel * 0.7
 
@@ -832,9 +832,9 @@
 	if(cached_gases[/datum/gas/bz][MOLES] - consumed_amount < 0)
 		return NO_REACTION
 
-	ASSERT_GAS(/datum/gas/nitrogen, air)
-	ASSERT_GAS(/datum/gas/helium, air)
-	ASSERT_GAS(/datum/gas/plasma, air)
+	ASSERT_GAS(/datum/gas/nitrogen, cached_gases)
+	ASSERT_GAS(/datum/gas/helium, cached_gases)
+	ASSERT_GAS(/datum/gas/plasma, cached_gases)
 	cached_gases[/datum/gas/nitrogen][MOLES] += consumed_amount * 0.4
 	cached_gases[/datum/gas/helium][MOLES] += consumed_amount * 1.6
 	cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
@@ -876,7 +876,7 @@
 	var produced_amount = min(air.temperature / 34 * (cached_gases[/datum/gas/tritium][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES]) / (cached_gases[/datum/gas/tritium][MOLES] + 10 * cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/tritium][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES] * INVERSE(0.01))
 	if(cached_gases[/datum/gas/tritium][MOLES] - produced_amount < 0 || cached_gases[/datum/gas/proto_nitrate][MOLES] - produced_amount * 0.01 < 0)
 		return NO_REACTION
-	ASSERT_GAS(/datum/gas/hydrogen, air)
+	ASSERT_GAS(/datum/gas/hydrogen, cached_gases)
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
@@ -941,9 +941,9 @@
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= produced_amount
 	cached_gases[/datum/gas/oxygen][MOLES] -= produced_amount * 0.5
 	cached_gases[/datum/gas/tritium][MOLES] -= produced_amount * 0.01
-	ASSERT_GAS(/datum/gas/pluoxium, air)
+	ASSERT_GAS(/datum/gas/pluoxium, cached_gases)
 	cached_gases[/datum/gas/pluoxium][MOLES] += produced_amount
-	ASSERT_GAS(/datum/gas/hydrogen, air)
+	ASSERT_GAS(/datum/gas/hydrogen, cached_gases)
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount * 0.01
 	energy_released += produced_amount * 250
 	if(energy_released)

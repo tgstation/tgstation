@@ -253,7 +253,7 @@
 		//gas transfer
 		for(var/giver_id in giver_gases)
 			var/giver_gas_data = giver_gases[giver_id]
-			ASSERT_GAS(giver_id, total_gas_mixture)
+			ASSERT_GAS(giver_id, total_gases)
 			total_gases[giver_id][MOLES] += giver_gas_data[MOLES]
 			total_heat_capacity += giver_gas_data[MOLES] * giver_gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 

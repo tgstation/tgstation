@@ -32,10 +32,10 @@
 
 ///Directly adds a gas to a gas mixture without checking for its presence beforehand, use only if is certain the absence of said gas
 #define ADD_GAS(gas_id, out_list)\
-	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
+	var/static/list/list/_add_gas_gaslist_cache = GLOB.gaslist_cache; out_list[gas_id] = _add_gas_gaslist_cache[gas_id].Copy();
 
-///Adds a gas to a gas mixture but checks if is already present, faster than the same proc
-#define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+///Adds a gas to a gases list but checks if is already present, faster than the same proc
+#define ASSERT_GAS(gas_id, gas_mixture_gases) if (!gas_mixture_gases[gas_id]) { ADD_GAS(gas_id, gas_mixture_gases) };
 
 //prefer this to gas_mixture/total_moles in performance critical areas
 ///Calculate the total moles of the gas mixture, faster than the proc, good for performance critical areas

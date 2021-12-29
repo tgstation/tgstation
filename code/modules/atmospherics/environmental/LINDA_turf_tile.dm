@@ -13,6 +13,7 @@
 
 	///used to determine whether we should archive
 	var/archived_cycle = 0
+	///the last atmos fire the turf shared its gases to others in
 	var/current_cycle = 0
 
 	/**
@@ -258,7 +259,7 @@
 	#endif
 
 	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
-		if(fire_count <= enemy_tile.current_cycle)
+		if(fire_count <= enemy_tile.current_cycle)//skip adjacent turfs that already processed this atmos run
 			continue
 		LINDA_CYCLE_ARCHIVE(enemy_tile)
 
@@ -269,7 +270,7 @@
 
 		//cache for sanic speed
 		var/datum/excited_group/enemy_excited_group = enemy_tile.excited_group
-		//If we are both in an excited group, and they aren't the same, merge.
+		//If we are both in an excited group, and they aren't the same, merge your group into ours
 		//If we are both in an excited group, and you're active, share
 		//If we pass compare, and if we're not already both in a group, lets join up
 		//If we both pass compare, add to active and share
@@ -277,16 +278,20 @@
 			if(our_excited_group != enemy_excited_group)
 				//combine groups (this also handles updating the excited_group var of all involved turfs)
 				our_excited_group.merge_groups(enemy_excited_group)
-				our_excited_group = excited_group //update our cache
+
 		if(our_excited_group && enemy_excited_group && enemy_tile.excited) //If you're both excited, no need to compare right?
 			should_share_air = TRUE
-		else if(our_air.compare(enemy_air)) //Lets see if you're up for it
-			SSair.add_to_active(enemy_tile) //Add yourself young man
+
+		else if(our_air.compare(enemy_air)) //check if theres enough of a difference to share
+			SSair.add_to_active(enemy_tile)
 			var/datum/excited_group/existing_group = our_excited_group || enemy_excited_group || new
+
 			if(!our_excited_group)
 				existing_group.add_turf(src)
+
 			if(!enemy_excited_group)
 				existing_group.add_turf(enemy_tile)
+
 			our_excited_group = excited_group
 			should_share_air = TRUE
 
@@ -323,7 +328,7 @@
 	our_air.react(src)
 
 	update_visuals()
-	if(!consider_superconductivity(starting = TRUE) && !active_hotspot) //Might need to include the return of react() here
+	if(!consider_superconductivity(TRUE) && !active_hotspot) //Might need to include the return of react() here
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
 		if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
@@ -335,15 +340,15 @@
 //////////////////////////SPACEWIND/////////////////////////////
 
 /turf/open/proc/consider_pressure_difference(turf/target_turf, difference)
+	if(difference < pressure_difference)
+		return
+
 	SSair.high_pressure_delta |= src
-	if(difference > pressure_difference)
-		pressure_direction = get_dir(src, target_turf)
-		pressure_difference = difference
+	pressure_direction = get_dir(src, target_turf)
+	pressure_difference = difference
 
 /turf/open/proc/high_pressure_movements()
-	var/atom/movable/moving_atom
-	for(var/thing in src)
-		moving_atom = thing
+	for(var/atom/movable/moving_atom as anything in src)
 		if (!moving_atom.anchored && !moving_atom.pulledby && moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired)
 			moving_atom.experience_pressure_difference(pressure_difference, pressure_direction)
 
@@ -370,9 +375,11 @@
 /datum/excited_group
 	///Stores a reference to the turfs we are controlling
 	var/list/turf_list = list()
-	///If this is over EXCITED_GROUP_BREAKDOWN_CYCLES we call self_breakdown()
+	///If this is over EXCITED_GROUP_BREAKDOWN_CYCLES we call self_breakdown().
+	///increments every atmos tick and gets reset when gas within the group is exchanged in relevant quantities.
 	var/breakdown_cooldown = 0
-	///If this is over EXCITED_GROUP_DISMANTLE_CYCLES we call dismantle()
+	///If this is over EXCITED_GROUP_DISMANTLE_CYCLES we call dismantle(), essentially killing this group.
+	///increments every atmos tick and gets reset when anything relevant to the group or its turfs happens.
 	var/dismantle_cooldown = 0
 	///Used for debug to show the excited groups active and their turfs
 	var/should_display = FALSE
@@ -391,16 +398,20 @@
 	if(should_display || SSair.display_all_groups)
 		display_turf(target_turf)
 
+///merges the smaller of the two groups into the other, adding all of their turfs to the winner
 /datum/excited_group/proc/merge_groups(datum/excited_group/target_group)
-	if(turf_list.len > target_group.turf_list.len)
+	if(length(turf_list) > length(target_group.turf_list))
 		SSair.excited_groups -= target_group
+
 		for(var/turf/open/group_member as anything in target_group.turf_list)
 			group_member.excited_group = src
 			turf_list += group_member
+
 		should_display = target_group.should_display | should_display
 		if(should_display || SSair.display_all_groups)
 			target_group.hide_turfs()
 			display_turfs()
+
 		breakdown_cooldown = min(breakdown_cooldown, target_group.breakdown_cooldown) //Take the smaller of the two options
 		dismantle_cooldown = 0
 	else
@@ -408,10 +419,12 @@
 		for(var/turf/open/group_member as anything in turf_list)
 			group_member.excited_group = target_group
 			target_group.turf_list += group_member
+
 		target_group.should_display = target_group.should_display | should_display
 		if(target_group.should_display || SSair.display_all_groups)
 			hide_turfs()
 			target_group.display_turfs()
+
 		target_group.breakdown_cooldown = min(breakdown_cooldown, target_group.breakdown_cooldown)
 		target_group.dismantle_cooldown = 0
 
@@ -419,19 +432,21 @@
 	breakdown_cooldown = 0
 	dismantle_cooldown = 0
 
+///break this excited group down, distributing the gases of each of its members evenly to eachother
 /datum/excited_group/proc/self_breakdown(roundstart = FALSE, poke_turfs = FALSE)
+	///the mixture we're using to equalize our turfs
 	var/datum/gas_mixture/shared_mix = new
 
 	//make local for sanic speed
 	var/list/shared_gases = shared_mix.gases
 	var/list/turf_list = src.turf_list
-	var/turflen = turf_list.len
+	var/turflen = length(turf_list)
 	var/imumutable_in_group = FALSE
 	var/energy = 0
 	var/heat_cap = 0
 
 	for(var/turf/open/group_member as anything in turf_list)
-		//Cache?
+		//Cache? something about a hedgehog?
 		var/datum/gas_mixture/turf/mix = group_member.air
 		if (roundstart && istype(group_member.air, /datum/gas_mixture/immutable))
 			imumutable_in_group = TRUE
@@ -446,7 +461,7 @@
 
 		var/list/giver_gases = mix.gases
 		for(var/giver_id in giver_gases)
-			ASSERT_GAS(giver_id, shared_mix)
+			ASSERT_GAS(giver_id, shared_gases)
 			shared_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	if(!imumutable_in_group)
@@ -460,6 +475,7 @@
 			group_member.air.copy_from(SSair.planetary[group_member.initial_gas_mix]) //Comes with a cost of "slower" drains, but it's worth it
 		else
 			group_member.air.copy_from(shared_mix) //Otherwise just set the mix to a copy of our equalized mix
+
 		group_member.update_visuals()
 		if(poke_turfs) //Because we only activate all these once every breakdown, in event of lag due to this code and slow space + vent things, increase the wait time for breakdowns
 			SSair.add_to_active(group_member)
@@ -467,7 +483,7 @@
 
 	breakdown_cooldown = 0
 
-///Dismantles the excited group, puts allll the turfs to sleep
+///Dismantles/kills this excited group, puts allll the turfs to sleep
 /datum/excited_group/proc/dismantle()
 	for(var/turf/open/current_turf as anything in turf_list)
 		current_turf.excited = FALSE
@@ -478,7 +494,7 @@
 		#endif
 	garbage_collect()
 
-//Breaks down the excited group, this doesn't sleep the turfs mind, just removes them from the group
+///Breaks down the excited group, this doesn't sleep the turfs mind, just removes them from the group
 /datum/excited_group/proc/garbage_collect()
 	if(display_id) //If we ever did make those changes
 		hide_turfs()
@@ -494,13 +510,12 @@
 		wrapping_id = wrapping_id % GLOB.colored_turfs.len
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
-	for(var/thing in turf_list)
-		var/turf/display = thing
+
+	for(var/turf/display as anything in turf_list)
 		display.vis_contents += GLOB.colored_turfs[display_id]
 
 /datum/excited_group/proc/hide_turfs()
-	for(var/thing in turf_list)
-		var/turf/display = thing
+	for(var/turf/display as anything in turf_list)
 		display.vis_contents -= GLOB.colored_turfs[display_id]
 	display_id = 0
 
@@ -510,6 +525,18 @@
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
 	thing.vis_contents += GLOB.colored_turfs[display_id]
+
+/datum/excited_group/proc/debug_total_moles()
+	var/moles = 0
+	for(var/turf/open/contained_turf as anything in turf_list)
+		var/delta_moles = 0
+		if(!contained_turf.air || !istype(contained_turf.air, /datum/gas_mixture/turf))
+			continue
+
+		TOTAL_MOLES(contained_turf.air.gases, delta_moles)
+		moles += delta_moles
+
+	message_admins("this excited group contained [length(turf_list)] turfs, the combined total of which contained [moles] moles of gas")
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 
@@ -604,7 +631,7 @@ Then we space some of our heat, and think about if we should stop conducting.
 	return TRUE
 
 /turf/open/consider_superconductivity(starting)
-	if(air.temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
+	if(air.temperature < (starting ? MINIMUM_TEMPERATURE_START_SUPERCONDUCTION : MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 		return FALSE
 	if(air.heat_capacity() < M_CELL_WITH_RATIO) // Was: MOLES_CELLSTANDARD*0.1*0.05 Since there are no variables here we can make this a constant.
 		return FALSE

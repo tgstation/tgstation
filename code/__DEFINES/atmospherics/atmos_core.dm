@@ -101,10 +101,10 @@
 #define MINIMUM_AIR_RATIO_TO_SUSPEND 0.1
 /// Minimum ratio of air that must move to/from a tile
 #define MINIMUM_AIR_RATIO_TO_MOVE 0.001
-/// Minimum amount of air that has to move before a group processing can be suspended (Round about 10)
-#define MINIMUM_AIR_TO_SUSPEND (MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND)
-/// Either this must be active (round about 0.1) //Might need to raise this a tad to better support space leaks. we'll see
-#define MINIMUM_MOLES_DELTA_TO_MOVE (MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_MOVE)
+/// Minimum amount of moles that has to move before a whole-group processing gets delayed (its about 10)
+#define MINIMUM_AIR_TO_SUSPEND (MOLES_CELLSTANDARD * MINIMUM_AIR_RATIO_TO_SUSPEND)
+/// Either this must be active (its about 0.1) //Might need to raise this a tad to better support space leaks. we'll see
+#define MINIMUM_MOLES_DELTA_TO_MOVE (MOLES_CELLSTANDARD * MINIMUM_AIR_RATIO_TO_MOVE)
 /// or this (or both, obviously)
 #define MINIMUM_TEMPERATURE_TO_MOVE (T20C+100)
 /// Minimum temperature difference before group processing is suspended
@@ -163,7 +163,7 @@
 #define FREON_OXYGEN_FULLBURN 10
 
 ///moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC (103 or so)
-#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))
+#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE * CELL_VOLUME / (T20C * R_IDEAL_GAS_EQUATION))
 ///compared against for superconductivity
 #define M_CELL_WITH_RATIO (MOLES_CELLSTANDARD * 0.005)
 /// percentage of oxygen in a normal mixture of air
@@ -171,9 +171,9 @@
 /// same but for nitrogen
 #define N2STANDARD 0.79
 /// O2 standard value (21%)
-#define MOLES_O2STANDARD (MOLES_CELLSTANDARD*O2STANDARD)
+#define MOLES_O2STANDARD (MOLES_CELLSTANDARD * O2STANDARD)
 /// N2 standard value (79%)
-#define MOLES_N2STANDARD (MOLES_CELLSTANDARD*N2STANDARD)
+#define MOLES_N2STANDARD (MOLES_CELLSTANDARD * N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME 2500
 
