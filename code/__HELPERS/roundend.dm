@@ -236,9 +236,6 @@
 
 	CHECK_TICK
 
-	//Set news report and mode result
-	mode.set_round_result()
-
 	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))

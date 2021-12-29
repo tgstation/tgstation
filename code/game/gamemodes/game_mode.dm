@@ -14,42 +14,6 @@
 
 /datum/game_mode
 
-///Attempts to select players for special roles the mode might have.
-/datum/game_mode/proc/pre_setup()
-	return TRUE
-
-///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
-/datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
-	if(!report)
-		report = !CONFIG_GET(flag/no_intercept_report)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
-
-	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
-		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
-		if(delay)
-			delay = (delay SECONDS)
-		else
-			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
-
-	if(SSdbcore.Connect())
-		var/list/to_set = list()
-		var/arguments = list()
-		if(GLOB.revdata.originmastercommit)
-			to_set += "commit_hash = :commit_hash"
-			arguments["commit_hash"] = GLOB.revdata.originmastercommit
-		if(to_set.len)
-			arguments["round_id"] = GLOB.round_id
-			var/datum/db_query/query_round_game_mode = SSdbcore.NewQuery(
-				"UPDATE [format_table_name("round")] SET [to_set.Join(", ")] WHERE id = :round_id",
-				arguments
-			)
-			query_round_game_mode.Execute()
-			qdel(query_round_game_mode)
-	generate_station_goals()
-	return TRUE
-
-
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
 	return
@@ -63,70 +27,6 @@
 		return TRUE
 	if(force_ending)
 		return TRUE
-
-/*
- * Generate a list of station goals available to purchase to report to the crew.
- *
- * Returns a formatted string all station goals that are available to the station.
- */
-/datum/game_mode/proc/generate_station_goal_report()
-	if(!GLOB.station_goals.len)
-		return
-	. = "<hr><b>Special Orders for [station_name()]:</b><BR>"
-	for(var/datum/station_goal/station_goal as anything in GLOB.station_goals)
-		station_goal.on_report()
-		. += station_goal.get_report()
-	return
-
-/*
- * Generate a list of active station traits to report to the crew.
- *
- * Returns a formatted string of all station traits (that are shown) affecting the station.
- */
-/datum/game_mode/proc/generate_station_trait_report()
-	if(!SSstation.station_traits.len)
-		return
-	. = "<hr><b>Identified shift divergencies:</b><BR>"
-	for(var/datum/station_trait/station_trait as anything in SSstation.station_traits)
-		if(!station_trait.show_in_report)
-			continue
-		. += "[station_trait.get_report()]<BR>"
-	return
-
-/proc/reopen_roundstart_suicide_roles()
-	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
-	var/list/reopened_jobs = list()
-
-	for(var/mob/living/quitter in GLOB.suicided_mob_list)
-		var/datum/job/job = SSjob.GetJob(quitter.job)
-		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
-			continue
-		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-			continue
-		job.current_positions = max(job.current_positions - 1, 0)
-		reopened_jobs += quitter.job
-
-	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
-		if(reopened_jobs.len)
-			var/reopened_job_report_positions
-			for(var/dead_dudes_job in reopened_jobs)
-				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
-
-			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
-								Notice of Personnel Change</font><hr>\
-								To personnel management staff aboard [station_name()]:<br><br>\
-								Our medical staff have detected a series of anomalies in the vital sensors \
-								of some of the staff aboard your station.<br><br>\
-								Further investigation into the situation on our end resulted in us discovering \
-								a series of rather... unforturnate decisions that were made on the part of said staff.<br><br>\
-								As such, we have taken the liberty to automatically reopen employment opportunities for the positions of the crew members \
-								who have decided not to partake in our research. We will be forwarding their cases to our employment review board \
-								to determine their eligibility for continued service with the company (and of course the \
-								continued storage of cloning records within the central medical backup server.)<br><br>\
-								<i>The following positions have been reopened on our behalf:<br><br>\
-								[reopened_job_report_positions]</i>"
-
-			print_command_report(suicide_command_report, "Central Command Personnel Update")
 
 //////////////////////////
 //Reports player logouts//
@@ -179,24 +79,6 @@
 
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
-
-/datum/game_mode/proc/generate_station_goals()
-	var/list/possible = subtypesof(/datum/station_goal)
-	var/goal_weights = 0
-	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
-		var/datum/station_goal/picked = pick_n_take(possible)
-		goal_weights += initial(picked.weight)
-		GLOB.station_goals += new picked
-
-//Set result and news report here
-/datum/game_mode/proc/set_round_result()
-	SSticker.mode_result = "undefined"
-	if(GLOB.station_was_nuked)
-		SSticker.news_report = STATION_DESTROYED_NUKE
-	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
-		SSticker.news_report = STATION_EVACUATED
-		if(SSshuttle.emergency.is_hijacked())
-			SSticker.news_report = SHUTTLE_HIJACK
 
 /// Mode specific admin panel.
 /datum/game_mode/proc/admin_panel()

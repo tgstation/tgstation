@@ -158,6 +158,11 @@ SUBSYSTEM_DEF(dynamic)
 	/// Maximum amount of threat allowed to generate.
 	var/max_threat_level = 100
 
+	/// The forced result of the round, should only be used by things not controlled under Dynamic,
+	/// and should not be used directly.
+	/// Use SSdynamic.force_finish(result) instead
+	var/force_result
+
 
 /datum/controller/subsystem/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -251,13 +256,26 @@ SUBSYSTEM_DEF(dynamic)
 
 	admin_panel() // Refreshes the window
 
-// Checks if there are HIGH_IMPACT_RULESETs and calls the rule's round_result() proc
-/datum/controller/subsystem/dynamic/set_round_result()
+/// Returns the result of the round
+/datum/controller/subsystem/dynamic/proc/get_round_result()
+	if (!isnull(force_result))
+		return force_result
+
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule in executed_rules)
 		if(rule.flags & HIGH_IMPACT_RULESET)
 			return rule.round_result()
-	return ..()
+
+	if (GLOB.station_was_nuked)
+		return GAME_RESULT_STATION_NUKED
+
+	if (EMERGENCY_ESCAPED_OR_ENDGAMED)
+		if (SSshuttle.emergency.is_hijacked())
+			return GAME_RESULT_SHUTTLE_HIJACKED
+		else
+			return GAME_RESULT_STATION_EVACUATED
+
+	return null
 
 /datum/controller/subsystem/dynamic/proc/send_intercept()
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
@@ -293,6 +311,39 @@ SUBSYSTEM_DEF(dynamic)
 	priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
 	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
+
+/*
+ * Generate a list of station goals available to purchase to report to the crew.
+ *
+ * Returns a formatted string all station goals that are available to the station.
+ */
+/datum/controller/subsystem/dynamic/proc/generate_station_goal_report()
+	if (!GLOB.station_goals.len)
+		return ""
+
+	var/report = "<hr><b>Special Orders for [station_name()]:</b><BR>"
+	for (var/datum/station_goal/station_goal as anything in GLOB.station_goals)
+		station_goal.on_report()
+		report += station_goal.get_report()
+
+	return report
+
+/*
+ * Generate a list of active station traits to report to the crew.
+ *
+ * Returns a formatted string of all station traits (that are shown) affecting the station.
+ */
+/datum/controller/subsystem/dynamic/proc/generate_station_trait_report()
+	if(!SSstation.station_traits.len)
+		return ""
+
+	var/report = "<hr><b>Identified shift divergencies:</b><BR>"
+	for (var/datum/station_trait/station_trait as anything in SSstation.station_traits)
+		if (!station_trait.show_in_report)
+			continue
+		report += "[station_trait.get_report()]<BR>"
+
+	return report
 
 /datum/controller/subsystem/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -352,7 +403,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/midround_injection_cooldown_middle = 0.5*(midround_delay_max + midround_delay_min)
 	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time
 
-/datum/controller/subsystem/dynamic/pre_setup()
+/datum/controller/subsystem/dynamic/proc/pre_setup()
 	if(CONFIG_GET(flag/dynamic_config_enabled))
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
@@ -399,15 +450,27 @@ SUBSYSTEM_DEF(dynamic)
 	candidates.Cut()
 	return TRUE
 
-/datum/controller/subsystem/dynamic/post_setup(report)
+/datum/controller/subsystem/dynamic/proc/post_setup()
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
+		addtimer(CALLBACK(src, .proc/execute_roundstart_rule, rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
 		addtimer(CALLBACK(src, .proc/send_intercept), rand(waittime_l, waittime_h))
 
-	..()
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+
+	if (CONFIG_GET(flag/reopen_roundstart_suicide_roles))
+		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
+		if (delay)
+			delay *= 1 SECONDS
+		else
+			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+
+	generate_station_goals()
+
+	return TRUE
 
 /// Initializes the internal ruleset variables
 /datum/controller/subsystem/dynamic/proc/setup_rulesets()
@@ -589,6 +652,47 @@ SUBSYSTEM_DEF(dynamic)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
+/datum/controller/subsystem/dynamic/proc/reopen_roundstart_suicide_roles()
+	var/include_command = CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions)
+	var/list/reopened_jobs = list()
+
+	for(var/mob/living/quitter in GLOB.suicided_mob_list)
+		var/datum/job/job = SSjob.GetJob(quitter.job)
+		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
+			continue
+		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			continue
+		job.current_positions = max(job.current_positions - 1, 0)
+		reopened_jobs += quitter.job
+
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
+		if(reopened_jobs.len)
+			var/reopened_job_report_positions
+			for(var/dead_dudes_job in reopened_jobs)
+				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
+
+			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
+				Notice of Personnel Change</font><hr>\
+				To personnel management staff aboard [station_name()]:<br><br>\
+				Our medical staff have detected a series of anomalies in the vital sensors \
+				of some of the staff aboard your station.<br><br>\
+				Further investigation into the situation on our end resulted in us discovering \
+				a series of rather... unforturnate decisions that were made on the part of said staff.<br><br>\
+				As such, we have taken the liberty to automatically reopen employment opportunities for the positions of the crew members \
+				who have decided not to partake in our research. We will be forwarding their cases to our employment review board \
+				to determine their eligibility for continued service with the company (and of course the \
+				continued storage of cloning records within the central medical backup server.)<br><br>\
+				<i>The following positions have been reopened on our behalf:<br><br>\
+				[reopened_job_report_positions]</i>"
+
+			print_command_report(suicide_command_report, "Central Command Personnel Update")
+
+
+/// Forces the round to finish with the given round result
+/datum/controller/subsystem/dynamic/proc/force_finish(round_result)
+	force_result = round_result
+	SSticker.force_ending = TRUE
+
 /datum/controller/subsystem/dynamic/process()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
@@ -699,7 +803,7 @@ SUBSYSTEM_DEF(dynamic)
 		if (forced_latejoin_rule.ready(TRUE))
 			if (!forced_latejoin_rule.repeatable)
 				latejoin_rules = remove_from_list(latejoin_rules, forced_latejoin_rule.type)
-			addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
+			addtimer(CALLBACK(src, .proc/execute_midround_latejoin_rule, forced_latejoin_rule), forced_latejoin_rule.delay)
 		forced_latejoin_rule = null
 
 	else if (latejoin_injection_cooldown < world.time && prob(get_injection_chance()))

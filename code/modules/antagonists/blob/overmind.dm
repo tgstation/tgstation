@@ -186,8 +186,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if(main_objective)
 			main_objective.completed = TRUE
 	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
-	SSticker.news_report = BLOB_WIN
-	SSticker.force_ending = 1
+	SSdynamic.force_finish(GAME_RESULT_BLOB_WIN)
 
 /mob/camera/blob/Destroy()
 	QDEL_NULL(blobstrain)

@@ -263,8 +263,8 @@ SUBSYSTEM_DEF(dbcore)
 	if(!Connect())
 		return
 	var/datum/db_query/query_round_initialize = SSdbcore.NewQuery(
-		"INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(:internet_address), :port)",
-		list("internet_address" = world.internet_address || "0", "port" = "[world.port]")
+		"INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port, commit_hash) VALUES (Now(), INET_ATON(:internet_address), :port, :commit_hash)",
+		list("internet_address" = world.internet_address || "0", "port" = "[world.port]", "commit_hash" = GLOB.revdata.originmastercommit)
 	)
 	query_round_initialize.Execute(async = FALSE)
 	GLOB.round_id = "[query_round_initialize.last_insert_id]"
@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(dbcore)
 		return
 	var/datum/db_query/query_round_end = SSdbcore.NewQuery(
 		"UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = :game_mode_result, station_name = :station_name WHERE id = :round_id",
-		list("game_mode_result" = SSticker.mode_result, "station_name" = station_name(), "round_id" = GLOB.round_id)
+		list("game_mode_result" = SSdynamic.get_round_result(), "station_name" = station_name(), "round_id" = GLOB.round_id)
 	)
 	query_round_end.Execute()
 	qdel(query_round_end)

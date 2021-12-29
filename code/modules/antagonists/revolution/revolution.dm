@@ -491,11 +491,9 @@
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)
 	if (finished == REVOLUTION_VICTORY)
-		SSticker.mode_result = "win - heads killed"
-		SSticker.news_report = REVS_WIN
+		return GAME_RESULT_REVS_WIN
 	else if (finished == STATION_VICTORY)
-		SSticker.mode_result = "loss - rev heads killed"
-		SSticker.news_report = REVS_LOSE
+		return GAME_RESULT_REVS_LOSS
 
 /datum/team/revolution/roundend_report()
 	if(!members.len && !ex_headrevs.len)

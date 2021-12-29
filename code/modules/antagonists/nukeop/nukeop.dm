@@ -350,56 +350,57 @@
 	var/station_nuke_source = GLOB.station_nuke_source
 
 	if(station_nuke_source == NUKE_SYNDICATE_BASE)
-		return NUKE_RESULT_FLUKE
+		return GAME_RESULT_NUKE_SYNDICATE_BASE
 	else if(station_was_nuked && !syndies_didnt_escape)
-		return NUKE_RESULT_NUKE_WIN
+		return GAME_RESULT_NUKE_STATION
 	else if (station_was_nuked && syndies_didnt_escape)
-		return NUKE_RESULT_NOSURVIVORS
+		return GAME_RESULT_NUKE_STATION_OPS_DEAD
 	else if (!disk_rescued && !station_was_nuked && station_nuke_source && !syndies_didnt_escape)
-		return NUKE_RESULT_WRONG_STATION
+		return GAME_RESULT_NUKE_WRONG_STATION
 	else if (!disk_rescued && !station_was_nuked && station_nuke_source && syndies_didnt_escape)
-		return NUKE_RESULT_WRONG_STATION_DEAD
+		return GAME_RESULT_NUKE_WRONG_STATION_OPS_DEAD
 	else if ((disk_rescued && evacuation) && operatives_dead())
-		return NUKE_RESULT_CREW_WIN_SYNDIES_DEAD
+		return GAME_RESULT_NUKE_DISK_SECURED_OPS_KILLED
 	else if (disk_rescued)
-		return NUKE_RESULT_CREW_WIN
+		return GAME_RESULT_NUKE_DISK_SECURED
 	else if (!disk_rescued && operatives_dead())
-		return NUKE_RESULT_DISK_LOST
+		return GAME_RESULT_NUKE_DISK_NOT_SECURED
 	else if (!disk_rescued && evacuation)
-		return NUKE_RESULT_DISK_STOLEN
+		return GAME_RESULT_NUKE_DISK_STOLEN
 	else
-		return //Undefined result
+		// An undefined result, just play it safe
+		return GAME_RESULT_STATION_EVACUATED
 
 /datum/team/nuclear/roundend_report()
 	var/list/parts = list()
 	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
 
 	switch(get_result())
-		if(NUKE_RESULT_FLUKE)
+		if(GAME_RESULT_NUKE_SYNDICATE_BASE)
 			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
 			parts += "<B>The crew of [station_name()] gave [syndicate_name] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!"
-		if(NUKE_RESULT_NUKE_WIN)
+		if(GAME_RESULT_NUKE_STATION)
 			parts += "<span class='greentext big'>Syndicate Major Victory!</span>"
 			parts += "<B>[syndicate_name] operatives have destroyed [station_name()]!</B>"
-		if(NUKE_RESULT_NOSURVIVORS)
+		if(GAME_RESULT_NUKE_STATION_OPS_DEAD)
 			parts += "<span class='neutraltext big'>Total Annihilation</span>"
 			parts += "<B>[syndicate_name] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!"
-		if(NUKE_RESULT_WRONG_STATION)
+		if(GAME_RESULT_NUKE_WRONG_STATION)
 			parts += "<span class='redtext big'>Crew Minor Victory</span>"
 			parts += "<B>[syndicate_name] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!"
-		if(NUKE_RESULT_WRONG_STATION_DEAD)
+		if(GAME_RESULT_NUKE_WRONG_STATION_OPS_DEAD)
 			parts += "<span class='redtext big'>[syndicate_name] operatives have earned Darwin Award!</span>"
 			parts += "<B>[syndicate_name] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!"
-		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
+		if(GAME_RESULT_NUKE_DISK_SECURED_OPS_KILLED)
 			parts += "<span class='redtext big'>Crew Major Victory!</span>"
 			parts += "<B>The Research Staff has saved the disk and killed the [syndicate_name] Operatives</B>"
-		if(NUKE_RESULT_CREW_WIN)
+		if(GAME_RESULT_NUKE_DISK_SECURED)
 			parts += "<span class='redtext big'>Crew Major Victory</span>"
 			parts += "<B>The Research Staff has saved the disk and stopped the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_LOST)
+		if(GAME_RESULT_NUKE_DISK_NOT_SECURED)
 			parts += "<span class='neutraltext big'>Neutral Victory!</span>"
 			parts += "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name] Operatives!</B>"
-		if(NUKE_RESULT_DISK_STOLEN)
+		if(GAME_RESULT_NUKE_DISK_STOLEN)
 			parts += "<span class='greentext big'>Syndicate Minor Victory!</span>"
 			parts += "<B>[syndicate_name] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!"
 		else

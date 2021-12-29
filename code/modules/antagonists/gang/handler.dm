@@ -198,9 +198,7 @@ GLOBAL_VAR(families_override_theme)
  * Takes no arguments.
  */
 /datum/gang_handler/proc/set_round_result_analogue()
-	SSticker.mode_result = "win - gangs survived"
-	SSticker.news_report = GANG_OPERATING
-	return TRUE
+	return GAME_RESULT_FAMILIES_WIN
 
 /// Internal. Announces the presence of families to the entire station and sets sent_announcement to true to allow other checks to occur.
 /datum/gang_handler/proc/announce_gang_locations()

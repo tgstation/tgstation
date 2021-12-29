@@ -314,13 +314,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/round_result()
-	..()
-	if(main_cult.check_cult_victory())
-		SSticker.mode_result = "win - cult win"
-		SSticker.news_report = CULT_SUMMON
-	else
-		SSticker.mode_result = "loss - staff stopped the cult"
-		SSticker.news_report = CULT_FAILURE
+	return main_cult.check_cult_victory() ? GAME_RESULT_CULT_WIN : GAME_RESULT_CULT_LOSS
 
 //////////////////////////////////////////////
 //                                          //
@@ -373,38 +367,7 @@
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/nuclear/round_result()
-	var/result = nuke_team.get_result()
-	switch(result)
-		if(NUKE_RESULT_FLUKE)
-			SSticker.mode_result = "loss - syndicate nuked - disk secured"
-			SSticker.news_report = NUKE_SYNDICATE_BASE
-		if(NUKE_RESULT_NUKE_WIN)
-			SSticker.mode_result = "win - syndicate nuke"
-			SSticker.news_report = STATION_NUKED
-		if(NUKE_RESULT_NOSURVIVORS)
-			SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
-			SSticker.news_report = STATION_NUKED
-		if(NUKE_RESULT_WRONG_STATION)
-			SSticker.mode_result = "halfwin - blew wrong station"
-			SSticker.news_report = NUKE_MISS
-		if(NUKE_RESULT_WRONG_STATION_DEAD)
-			SSticker.mode_result = "halfwin - blew wrong station - did not evacuate in time"
-			SSticker.news_report = NUKE_MISS
-		if(NUKE_RESULT_CREW_WIN_SYNDIES_DEAD)
-			SSticker.mode_result = "loss - evacuation - disk secured - syndi team dead"
-			SSticker.news_report = OPERATIVES_KILLED
-		if(NUKE_RESULT_CREW_WIN)
-			SSticker.mode_result = "loss - evacuation - disk secured"
-			SSticker.news_report = OPERATIVES_KILLED
-		if(NUKE_RESULT_DISK_LOST)
-			SSticker.mode_result = "halfwin - evacuation - disk not secured"
-			SSticker.news_report = OPERATIVE_SKIRMISH
-		if(NUKE_RESULT_DISK_STOLEN)
-			SSticker.mode_result = "halfwin - detonation averted"
-			SSticker.news_report = OPERATIVE_SKIRMISH
-		else
-			SSticker.mode_result = "halfwin - interrupted"
-			SSticker.news_report = OPERATIVE_SKIRMISH
+	return nuke_team.get_result()
 
 //////////////////////////////////////////////
 //                                          //
@@ -489,7 +452,7 @@
 	return FALSE
 
 /datum/dynamic_ruleset/roundstart/revs/round_result()
-	revolution.round_result(finished)
+	return revolution.round_result(finished)
 
 //////////////////////////////////////////////
 //                                          //
@@ -647,10 +610,7 @@
 
 // This does not get called. Look into making it work.
 /datum/dynamic_ruleset/roundstart/monkey/round_result()
-	if(check_monkey_victory())
-		SSticker.mode_result = "win - monkey win"
-	else
-		SSticker.mode_result = "loss - staff stopped the monkeys"
+	return check_monkey_victory() ? GAME_RESULT_MONKEY_WIN : GAME_RESULT_MONKEY_LOSS
 
 //////////////////////////////////////////////
 //                                          //

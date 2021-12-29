@@ -133,7 +133,7 @@
 	return FALSE
 
 /datum/dynamic_ruleset/latejoin/provocateur/round_result()
-	revolution.round_result(finished)
+	return revolution.round_result(finished)
 
 //////////////////////////////////////////////
 //                                          //

@@ -44,3 +44,11 @@ GLOBAL_LIST_EMPTY_TYPED(station_goals, /datum/station_goal)
 		send_report()
 	else if(href_list["remove"])
 		qdel(src)
+
+/proc/generate_station_goals()
+	var/list/possible = subtypesof(/datum/station_goal)
+	var/goal_weights = 0
+	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		GLOB.station_goals += new picked
