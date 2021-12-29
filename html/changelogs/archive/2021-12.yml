@@ -740,3 +740,14 @@
       or be debrained and put into an MMI.
   tralezab:
   - bugfix: fixed weird "Mob Spawner" objects showing up when you killed clowns
+2021-12-29:
+  Melbert:
+  - bugfix: Dirt piles can no longer exceed their maximum reagent capacity by 10.
+      Sorry prison botanists.
+  Seris02:
+  - bugfix: fixed a say emoting bug where forced says' were being turned into emotes
+  dragomagol:
+  - bugfix: italian mafioso now get their proper names
+  - admin: admins can now view family objectives from the traitor panel
+  vincentiusvin:
+  - bugfix: fixed zombie powder not sleeping you on ingestion and on further ingestion.
