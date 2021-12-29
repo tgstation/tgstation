@@ -128,7 +128,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/projectile/colossus/snowball
 	name = "machine-gun snowball"
@@ -150,7 +150,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
 	adjustBruteLoss(-30 * severity)

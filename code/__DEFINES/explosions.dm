@@ -8,6 +8,14 @@
 /// The default explosion severity used to mark that an object is beyond the impact range of the explosion.
 #define EXPLODE_NONE 0
 
+///
+#define EX_ACT(target, args...)\
+	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
+		target.contents_explosion(##args);\
+	};\
+	SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
+	target.ex_act(##args);
+
 // Internal explosion argument list keys.
 // Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]
 /// The origin atom of the explosion.
