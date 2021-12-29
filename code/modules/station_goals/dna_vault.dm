@@ -158,12 +158,12 @@
 		F.parent = src
 		fillers += F
 
-	if(SSticker.mode)
-		var/datum/station_goal/dna_vault/dna_vault_goal = locate() in GLOB.station_goals
-		if (!isnull(dna_vault_goal))
-			animals_max = dna_vault_goal.animal_count
-			plants_max = dna_vault_goal.plant_count
-			dna_max = dna_vault_goal.human_count
+	var/datum/station_goal/dna_vault/dna_vault_goal = locate() in GLOB.station_goals
+	if (!isnull(dna_vault_goal))
+		animals_max = dna_vault_goal.animal_count
+		plants_max = dna_vault_goal.plant_count
+		dna_max = dna_vault_goal.human_count
+
 	return ..()
 
 /obj/machinery/dna_vault/Destroy()
