@@ -171,6 +171,7 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
+	skins = list(
 		"advanced" = list(
 			HELMET_LAYER = NECK_LAYER,
 			HELMET_FLAGS = list(
