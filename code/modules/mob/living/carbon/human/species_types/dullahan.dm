@@ -28,7 +28,6 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
-	return TRUE // DEBUG-ONLY!
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
@@ -67,9 +66,13 @@
 	if(QDELETED(my_head))
 		my_head = null
 		human.gib()
+		return
 
-	if(istype(my_head.loc, /obj/item/bodypart/head) && my_head.loc.name != human.real_name)
-		my_head.loc.name = human.real_name
+	if(my_head.loc.name != human.real_name && istype(my_head.loc, /obj/item/bodypart/head))
+		var/obj/item/bodypart/head/detached_head = my_head.loc
+		detached_head.real_name = human.real_name
+		detached_head.name = human.real_name
+		detached_head.brain.name = "[human.name]'s brain"
 
 	var/obj/item/bodypart/head/head2 = human.get_bodypart(BODY_ZONE_HEAD)
 	if(head2)
