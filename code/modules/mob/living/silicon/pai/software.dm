@@ -1,35 +1,3 @@
-/mob/living/silicon/pai/var/list/available_software = list(
-															//Nightvision
-															//T-Ray
-															//radiation eyes
-															//chem goggs
-															//mesons
-															"crew manifest" = 5,
-															"digital messenger" = 5,
-															"atmosphere sensor" = 5,
-															"photography module" = 5,
-															"camera zoom" = 10,
-															"printer module" = 10,
-															"remote signaler" = 10,
-															"medical records" = 10,
-															"security records" = 10,
-															"host scan" = 10,
-															"medical HUD" = 20,
-															"security HUD" = 20,
-															"loudness booster" = 20,
-															"newscaster" = 20,
-															"door jack" = 25,
-															"encryption keys" = 25,
-															"internal gps" = 35,
-															"universal translator" = 35
-															)
-/// Bool that determines if the pAI can refresh medical/security records.
-/mob/living/silicon/pai/var/refresh_spam = FALSE
-/// Cached list for medical records to send as static data
-/mob/living/silicon/pai/var/list/medical_records = list()
-/// Cached list for security records to send as static data
-/mob/living/silicon/pai/var/list/security_records = list()
-
 // Opens TGUI interface
 /mob/living/silicon/pai/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -211,20 +179,20 @@
 		return
 	to_chat(pai, span_notice("Requesting a DNA sample."))
 	var/confirm = tgui_alert(master, "[pai] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "Checking DNA", list("Yes", "No"))
-	if(confirm == "Yes")
-		master.visible_message(span_notice("[master] presses [master.p_their()] thumb against [pai]."),\
-						span_notice("You press your thumb against [pai]."),\
-						span_notice("[pai] makes a sharp clicking sound as it extracts DNA material from [master]."))
-		if(!master.has_dna())
-			to_chat(pai, "<b>No DNA detected.</b>")
-			return
-		to_chat(pai, "<font color = red><h3>[master]'s UE string : [master.dna.unique_enzymes]</h3></font>")
-		if(master.dna.unique_enzymes == pai.master_dna)
-			to_chat(pai, "<b>DNA is a match to stored Master DNA.</b>")
-		else
-			to_chat(pai, "<b>DNA does not match stored Master DNA.</b>")
-	else
+	if(confirm != "Yes")
 		to_chat(pai, span_warning("[master] does not seem like [master.p_theyre()] going to provide a DNA sample willingly."))
+		return
+	master.visible_message(span_notice("[master] presses [master.p_their()] thumb against [pai]."),\
+					span_notice("You press your thumb against [pai]."),\
+					span_notice("[pai] makes a sharp clicking sound as it extracts DNA material from [master]."))
+	if(!master.has_dna())
+		to_chat(pai, "<b>No DNA detected.</b>")
+		return
+	to_chat(pai, "<font color = red><h3>[master]'s UE string : [master.dna.unique_enzymes]</h3></font>")
+	if(master.dna.unique_enzymes == pai.master_dna)
+		to_chat(pai, span_bold("DNA is a match to stored Master DNA."))
+	else
+		to_chat(pai, span_bold("DNA does not match stored Master DNA."))
 
 /**
  * Host scan supporting proc
@@ -251,15 +219,14 @@
 /mob/living/silicon/pai/proc/extendcable()
 	QDEL_NULL(hacking_cable) //clear any old cables
 	hacking_cable = new
-	var/transfered_to_mob
-	if(isliving(card.loc))
-		var/mob/living/hacker = card.loc
-		if(hacker.put_in_hands(hacking_cable))
-			transfered_to_mob = TRUE
-			hacker.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
-		if(!transfered_to_mob)
-			hacking_cable.forceMove(drop_location())
-			hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
+	if(!isliving(card.loc))
+		return
+	var/mob/living/hacker = card.loc
+	if(hacker.put_in_hands(hacking_cable))
+		hacker.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which you quickly grab hold of."), span_hear("You hear the soft click of something light and manage to catch hold of [hacking_cable]."))
+		return
+	hacking_cable.forceMove(drop_location())
+	hacking_cable.visible_message(span_warning("A port on [src] opens to reveal \a [hacking_cable], which promptly falls to the floor."), span_hear("You hear the soft click of something light and hard falling to the ground."))
 
 /**
  * Door jacking supporting proc

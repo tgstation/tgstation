@@ -1,6 +1,9 @@
 /mob/living/silicon/pai
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
+	held_lh = 'icons/mob/pai_item_lh.dmi'
+	held_rh = 'icons/mob/pai_item_rh.dmi'
+	head_icon = 'icons/mob/pai_item_head.dmi'
 	icon_state = "repairbot"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
@@ -16,74 +19,87 @@
 	pull_force = 0
 	move_resist = 0
 	worn_slot_flags = ITEM_SLOT_HEAD
-	held_lh = 'icons/mob/pai_item_lh.dmi'
-	held_rh = 'icons/mob/pai_item_rh.dmi'
-	head_icon = 'icons/mob/pai_item_head.dmi'
 	radio = /obj/item/radio/headset/silicon/pai
 	can_buckle_to = FALSE
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	var/network = "ss13"
-	var/obj/machinery/camera/current = null
+
+	/// The card we inhabit
+	var/obj/item/paicard/card
+
 	/// Used as currency to purchase different abilities
 	var/ram = 100
 	/// Installed software on the pAI
 	var/list/software = list()
-	/// current user's DNA
-	var/userDNA
-	/// The card we inhabit
-	var/obj/item/paicard/card
-	/// Are we hacking a door?
-	var/hacking = FALSE
-	/// The progress for hacking
-	var/datum/progressbar/hackbar
+	/// The strength of the internal flashlight
+	var/brightness_power = 5
 	/// Changes the display to syndi if true
 	var/emagged = FALSE
 
-	var/speakStatement = "states"
-	var/speakExclamation = "declares"
-	var/speakDoubleExclamation = "alarms"
-	var/speakQuery = "queries"
-	/// The cable we produce when hacking a door
-	var/obj/item/pai_cable/hacking_cable
 	/// Name of the one who commands us
 	var/master
 	/// DNA string for owner verification
 	var/master_dna
+	/// Whether we are currently holoformed
+	var/holoform = FALSE
+	/// Whether the pAI can enter holoform or not
+	var/canholo = TRUE
+	/// Whether this pAI can transmit radio messages
+	var/can_transmit = TRUE
+	/// Whether this pAI can recieve radio messages
+	var/can_receive = TRUE
 
-// Various software-specific vars
+
+	// Various software-specific vars
+
+	/// The cable we produce when hacking a door
+	var/obj/item/pai_cable/hacking_cable
+	/// The airlock being hacked
+	var/obj/machinery/door/hackdoor
+	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
+	var/hackprogress = 0
+	/// Are we hacking a door?
+	var/hacking = FALSE
+	/// The progress for hacking
+	var/datum/progressbar/hackbar
 
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
 	/// Toggles whether the Medical  HUD is active or not
 	var/medHUD = FALSE
+	/// Toggles whether the pAI can hold encryption keys or not
+	var/encryptmod = FALSE
 	/// Toggles whether universal translator has been activated. Cannot be reversed
 	var/languages_granted = FALSE
-	/// The airlock being hacked
-	var/obj/machinery/door/hackdoor
-	/// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
-	var/hackprogress = 0
-
-	// Software
 	/// Atmospheric analyzer
 	var/obj/item/analyzer/atmos_analyzer
 	/// AI's signaler
 	var/obj/item/assembly/signaler/internal/signaler
-	/// Synthesizer
+	/// pAI Synthesizer
 	var/obj/item/instrument/piano_synth/internal_instrument
 	/// pAI Newscaster
 	var/obj/machinery/newscaster
 	/// pAI healthanalyzer
 	var/obj/item/healthanalyzer/hostscan
 	/// Internal pAI GPS, enabled if pAI downloads GPS software, and then uses it.
-	var/obj/item/gps/pai/internal_gps = null
+	var/obj/item/gps/pai/internal_gps
 
-	var/encryptmod = FALSE
-	var/holoform = FALSE
-	var/canholo = TRUE
-	var/can_transmit = TRUE
-	var/can_receive = TRUE
+	/// The current chasis that will appear when in holoform
 	var/chassis = "repairbot"
-	var/list/possible_chassis = list("cat" = TRUE, "mouse" = TRUE, "monkey" = TRUE, "corgi" = FALSE, "fox" = FALSE, "repairbot" = TRUE, "rabbit" = TRUE, "bat" = FALSE, "butterfly" = FALSE, "hawk" = FALSE, "lizard" = FALSE, "duffel" = TRUE) //assoc value is whether it can be picked up.
+	/// List of all possible chasises. TRUE means the pAI can be picked up in this chasis.
+	var/list/possible_chassis = list(
+		"cat" = TRUE,
+		"mouse" = TRUE,
+		"monkey" = TRUE,
+		"corgi" = FALSE,
+		"fox" = FALSE,
+		"repairbot" = TRUE,
+		"rabbit" = TRUE,
+		"bat" = FALSE,
+		"butterfly" = FALSE,
+		"hawk" = FALSE,
+		"lizard" = FALSE,
+		"duffel" = TRUE,
+	)
 
 	var/emitterhealth = 20
 	var/emittermaxhealth = 20
@@ -92,62 +108,68 @@
 	var/emitteroverloadcd = 100
 	var/emittersemicd = FALSE
 
-	var/overload_ventcrawl = 0
-	var/overload_bulletblock = 0 //Why is this a good idea?
-	var/overload_maxhealth = 0
-	var/silent = FALSE
-	var/brightness_power = 5
+	/// Bool that determines if the pAI can refresh medical/security records.
+	var/refresh_spam = FALSE
+	/// Cached list for medical records to send as static data
+	var/list/medical_records = list()
+	/// Cached list for security records to send as static data
+	var/list/security_records = list()
+
+	var/list/available_software = list(
+		"crew manifest" = 5,
+		"digital messenger" = 5,
+		"atmosphere sensor" = 5,
+		"photography module" = 5,
+		"camera zoom" = 10,
+		"printer module" = 10,
+		"remote signaler" = 10,
+		"medical records" = 10,
+		"security records" = 10,
+		"host scan" = 10,
+		"medical HUD" = 20,
+		"security HUD" = 20,
+		"loudness booster" = 20,
+		"newscaster" = 20,
+		"door jack" = 25,
+		"encryption keys" = 25,
+		"internal gps" = 35,
+		"universal translator" = 35,
+	)
 
 /mob/living/silicon/pai/add_sensors() //pAIs have to buy their HUDs
 	return
 
-/mob/living/silicon/pai/handle_atom_del(atom/A)
-	if(A == hacking_cable)
+/mob/living/silicon/pai/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == hacking_cable)
 		hacking_cable = null
 		if(!QDELETED(card))
 			card.update_appearance()
-	if(A == atmos_analyzer)
+	if(deleting_atom == atmos_analyzer)
 		atmos_analyzer = null
-	if(A == internal_instrument)
+	if(deleting_atom == internal_instrument)
 		internal_instrument = null
-	if(A == newscaster)
+	if(deleting_atom == newscaster)
 		newscaster = null
-	if(A == signaler)
+	if(deleting_atom == signaler)
 		signaler = null
-	if(A == hostscan)
+	if(deleting_atom == hostscan)
 		hostscan = null
-	if(A == internal_gps)
+	if(deleting_atom == internal_gps)
 		internal_gps = null
 	return ..()
 
-/mob/living/silicon/pai/Destroy()
-	QDEL_NULL(atmos_analyzer)
-	QDEL_NULL(internal_instrument)
-	QDEL_NULL(hacking_cable)
-	QDEL_NULL(newscaster)
-	QDEL_NULL(signaler)
-	QDEL_NULL(hostscan)
-	QDEL_NULL(internal_gps)
-	if(!QDELETED(card) && loc != card)
-		card.forceMove(drop_location())
-		card.pai = null //these are otherwise handled by paicard/handle_atom_del()
-		card.emotion_icon = initial(card.emotion_icon)
-		card.update_appearance()
-	GLOB.pai_list -= src
-	return ..()
-
 /mob/living/silicon/pai/Initialize(mapload)
-	var/obj/item/paicard/P = loc
+	var/obj/item/paicard/pai_card = loc
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
-		var/newcardloc = P
-		P = new /obj/item/paicard(newcardloc)
-		P.setPersonality(src)
-	forceMove(P)
-	card = P
-	job = "Personal AI"
+	if(!istype(pai_card)) //when manually spawning a pai, we create a card to put it into.
+		var/newcardloc = pai_card
+		pai_card = new /obj/item/paicard(newcardloc)
+		pai_card.setPersonality(src)
+	forceMove(pai_card)
+	card = pai_card
+	job = JOB_PERSONAL_AI
 	atmos_analyzer = new /obj/item/analyzer(src)
 	signaler = new /obj/item/assembly/signaler/internal(src)
 	hostscan = new /obj/item/healthanalyzer(src)
@@ -167,10 +189,25 @@
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, PAI_FOLDED)
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, PAI_FOLDED)
 
+/mob/living/silicon/pai/Destroy()
+	QDEL_NULL(atmos_analyzer)
+	QDEL_NULL(internal_instrument)
+	QDEL_NULL(hacking_cable)
+	QDEL_NULL(newscaster)
+	QDEL_NULL(signaler)
+	QDEL_NULL(hostscan)
+	QDEL_NULL(internal_gps)
+	if(!QDELETED(card) && loc != card)
+		card.forceMove(drop_location())
+		card.pai = null //these are otherwise handled by paicard/handle_atom_del()
+		card.emotion_icon = initial(card.emotion_icon)
+		card.update_appearance()
+	GLOB.pai_list -= src
+	return ..()
 
 /mob/living/silicon/pai/proc/pdaconfig()
 	//PDA
-	aiPDA = new/obj/item/pda/ai(src)
+	aiPDA = new /obj/item/pda/ai(src)
 	aiPDA.owner = real_name
 	aiPDA.ownjob = "pAI Messenger"
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
@@ -217,7 +254,7 @@
 /mob/living/silicon/pai/get_status_tab_items()
 	. += ..()
 	if(!stat)
-		. += text("Emitter Integrity: [emitterhealth * (100/emittermaxhealth)]")
+		. += text("Emitter Integrity: [emitterhealth * (100 / emittermaxhealth)]")
 	else
 		. += text("Systems nonfunctional")
 
@@ -235,65 +272,6 @@
 	card.setPersonality(pai)
 	if(delold)
 		qdel(src)
-
-/datum/action/innate/pai
-	name = "PAI Action"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
-	var/mob/living/silicon/pai/P
-
-/datum/action/innate/pai/Trigger()
-	if(!ispAI(owner))
-		return 0
-	P = owner
-
-/datum/action/innate/pai/software
-	name = "Software Interface"
-	button_icon_state = "pai"
-	background_icon_state = "bg_tech"
-
-/datum/action/innate/pai/software/Trigger()
-	..()
-	P.ui_act()
-
-/datum/action/innate/pai/shell
-	name = "Toggle Holoform"
-	button_icon_state = "pai_holoform"
-	background_icon_state = "bg_tech"
-
-/datum/action/innate/pai/shell/Trigger()
-	..()
-	if(P.holoform)
-		P.fold_in(0)
-	else
-		P.fold_out()
-
-/datum/action/innate/pai/chassis
-	name = "Holochassis Appearance Composite"
-	button_icon_state = "pai_chassis"
-	background_icon_state = "bg_tech"
-
-/datum/action/innate/pai/chassis/Trigger()
-	..()
-	P.choose_chassis()
-
-/datum/action/innate/pai/rest
-	name = "Rest"
-	button_icon_state = "pai_rest"
-	background_icon_state = "bg_tech"
-
-/datum/action/innate/pai/rest/Trigger()
-	..()
-	P.toggle_resting()
-
-/datum/action/innate/pai/light
-	name = "Toggle Integrated Lights"
-	icon_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "emp"
-	background_icon_state = "bg_tech"
-
-/datum/action/innate/pai/light/Trigger()
-	..()
-	P.toggle_integrated_light()
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
@@ -320,7 +298,6 @@
 				card.update_appearance()
 		else if(hacking)
 			process_hack(delta_time, times_fired)
-	silent = max(silent - (0.5 * delta_time), 0)
 
 /mob/living/silicon/pai/updatehealth()
 	if(status_flags & GODMODE)
@@ -338,7 +315,10 @@
 	return ..()
 
 /obj/item/paicard/attackby(obj/item/used, mob/user, params)
-	if(pai && (istype(used, /obj/item/encryptionkey) || used.tool_behaviour == TOOL_SCREWDRIVER))
+	if(used.tool_behaviour == TOOL_SCREWDRIVER)
+		pai.radio.attackby(used, user, params)
+		return
+	if(pai && (istype(used, /obj/item/encryptionkey))
 		if(!pai.encryptmod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
