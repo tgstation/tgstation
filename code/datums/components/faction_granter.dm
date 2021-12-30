@@ -50,6 +50,8 @@
 		to_chat(user, span_warning("You are not holy enough to invoke the power of [parent]!"))
 		return
 
+	ADD_TRAIT(user, TRAIT_FACTION(faction_to_grant), MAGIC_TRAIT) // Factions need to have a source in the future
+
 	to_chat(user, grant_message)
 	user.faction |= faction_to_grant
 	used = TRUE

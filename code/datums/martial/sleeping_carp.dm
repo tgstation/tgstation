@@ -124,6 +124,7 @@
 	ADD_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	ADD_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
+	ADD_TRAIT(H, TRAIT_FACTION("carp"), SLEEPING_CARP_TRAIT)
 	H.faction |= "carp" //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/H)
@@ -131,8 +132,9 @@
 	REMOVE_TRAIT(H, TRAIT_NOGUNS, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_HARDLY_WOUNDED, SLEEPING_CARP_TRAIT)
 	REMOVE_TRAIT(H, TRAIT_NODISMEMBER, SLEEPING_CARP_TRAIT)
-
-	H.faction -= "carp" //:(
+	REMOVE_TRAIT(H, TRAIT_FACTION("carp"), SLEEPING_CARP_TRAIT)
+	if(!HAS_TRAIT(H, TRAIT_FACTION("carp")))
+		H.faction -= "carp" //:(
 
 
 /// Verb added to humans who learn the art of the sleeping carp.

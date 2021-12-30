@@ -236,13 +236,14 @@
 	..()
 	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "carp"
-		ADD_TRAIT(user, TRAIT_CARP_FACTION, CARP_FACTION_TRAIT)
+		ADD_TRAIT(user, TRAIT_FACTION("carp"), CLOTHING_TRAIT)
 
 /obj/item/clothing/head/hooded/carp_hood/dropped(mob/living/carbon/human/user)
 	..()
 	if (user.head == src)
-		user.faction -= "carp"
-		REMOVE_TRAIT(user, TRAIT_CARP_FACTION, CARP_FACTION_TRAIT)
+		REMOVE_TRAIT(user, TRAIT_FACTION("carp"), CLOTHING_TRAIT)
+		if(!HAS_TRAIT(user, TRAIT_FACTION("carp")))
+			user.faction -= "carp"
 
 /obj/item/clothing/suit/hooded/carp_costume/spaceproof
 	name = "carp space suit"
