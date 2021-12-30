@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Possessing a mob no longer lowercases your ckey in admin messages."
