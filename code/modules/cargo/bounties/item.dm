@@ -3,7 +3,7 @@
 	var/required_count = 1
 	///How many items have been shipped for the bounty so far
 	var/shipped_count = 0
-	///Types accepted by the bounty (including all subtypes, unless include_subtypes is set to FALSE)
+	///Types accepted|denied by the bounty. (including all subtypes, unless include_subtypes is set to FALSE)
 	var/list/wanted_types
 	///Set to FALSE to make the bounty not accept subtypes of the wanted_types
 	var/include_subtypes = TRUE

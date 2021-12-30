@@ -25,7 +25,7 @@
 	name = "Appendix"
 	description = "Chef Gibb of Central Command wants to prepare a meal using a very special delicacy: an appendix. If you ship one, he'll pay.  We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 10 //there are no synthetic appendixes
-	wanted_types = list(/obj/item/organ/appendix)
+	wanted_types = list(/obj/item/organ/appendix = TRUE)
 
 /datum/bounty/item/medical/ears
 	name = "Ears"
@@ -65,40 +65,40 @@
 	description = "A recent attack by Mime extremists has left staff at Station 23 speechless. Ship some spare tongues."
 	reward = CARGO_CRATE_VALUE * 20
 	required_count = 3
-	wanted_types = list(/obj/item/organ/tongue)
+	wanted_types = list(/obj/item/organ/tongue = TRUE)
 
 /datum/bounty/item/medical/lizard_tail
 	name = "Lizard Tail"
 	description = "The Wizard Federation has made off with Nanotrasen's supply of lizard tails. While CentCom is dealing with the wizards, can the station spare a tail of their own?"
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/item/organ/tail/lizard)
+	wanted_types = list(/obj/item/organ/tail/lizard = TRUE)
 
 /datum/bounty/item/medical/cat_tail
 	name = "Cat Tail"
 	description = "Central Command has run out of heavy duty pipe cleaners. Can you ship over a cat tail to help us out?"
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/item/organ/tail/cat)
+	wanted_types = list(/obj/item/organ/tail/cat = TRUE)
 
 /datum/bounty/item/medical/chainsaw
 	name = "Chainsaw"
 	description = "A CMO at CentCom is having trouble operating on golems. She requests one chainsaw, please."
 	reward = CARGO_CRATE_VALUE * 5
-	wanted_types = list(/obj/item/chainsaw)
+	wanted_types = list(/obj/item/chainsaw = TRUE)
 
 /datum/bounty/item/medical/tail_whip //Like the cat tail bounties, with more processing.
 	name = "Nine Tails whip"
 	description = "Commander Jackson is looking for a fine addition to her exotic weapons collection. She will reward you handsomely for either a Cat or Liz o' Nine Tails."
 	reward = CARGO_CRATE_VALUE * 8
-	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip)
+	wanted_types = list(/obj/item/melee/chainofcommand/tailwhip = TRUE)
 
 /datum/bounty/item/medical/surgerycomp
 	name = "Surgery Computer"
 	description = "After another freak bombing incident at our annual cheesefest at centcom, we have a massive stack of injured crew on our end. Please send us a fresh surgery computer, if at all possible."
 	reward = CARGO_CRATE_VALUE * 12
-	wanted_types = list(/obj/machinery/computer/operating)
+	wanted_types = list(/obj/machinery/computer/operating = TRUE)
 
 /datum/bounty/item/medical/surgerytable
 	name = "Operating Table"
 	description = "After a recent influx of infected crew members recently, we've seen that masks just aren't cutting it alone. Silver Operating tables might just do the trick though, send us one to use."
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/structure/table/optable)
+	wanted_types = list(/obj/structure/table/optable = TRUE)
