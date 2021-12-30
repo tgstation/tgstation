@@ -90,10 +90,8 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
-/obj/machinery/computer/security/ui_status(mob/user)
-	if(!in_range(user, src) && !isobserver(user))
-		return UI_CLOSE
-	return ..()
+/obj/machinery/computer/security/ui_state(mob/user)
+	return GLOB.camera_state
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()

@@ -82,6 +82,9 @@
 		user.client.register_map_obj(cam_background)
 		return ..()
 
+/datum/computer_file/program/secureye/ui_state(mob/user)
+	return GLOB.camera_state
+
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = get_header_data()
 	data["network"] = network
