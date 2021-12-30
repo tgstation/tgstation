@@ -2,7 +2,7 @@
 	name = "Full Tank of Pluoxium"
 	description = "CentCom RnD is researching extra compact internals. Ship us a tank full of Pluoxium and you'll be compensated."
 	reward = CARGO_CRATE_VALUE * 15
-	wanted_types = list(/obj/item/tank)
+	wanted_types = list(/obj/item/tank = TRUE)
 	var/moles_required = 20 // A full tank is 28 moles, but CentCom ignores that fact.
 	var/gas_type = /datum/gas/pluoxium
 
@@ -45,10 +45,10 @@
 	name = "Emitter"
 	description = "We think there may be a defect in your station's emitter designs, based on the sheer number of delaminations your sector seems to see. Ship us one of yours."
 	reward = CARGO_CRATE_VALUE * 5
-	wanted_types = list(/obj/machinery/power/emitter)
+	wanted_types = list(/obj/machinery/power/emitter = TRUE)
 
 /datum/bounty/item/engineering/hydro_tray
 	name = "Hydroponics Tray"
 	description = "The lab technicians are trying to figure out how to lower the power drain of hydroponics trays, but we fried our last one. Mind building one for us?"
 	reward = CARGO_CRATE_VALUE * 4
-	wanted_types = list(/obj/machinery/hydroponics/constructable)
+	wanted_types = list(/obj/machinery/hydroponics/constructable = TRUE)
