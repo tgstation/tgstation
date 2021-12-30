@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - bugfix: "Pipe dispensers no longer produce broken invisible pipes."
