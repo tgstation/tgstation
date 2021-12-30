@@ -350,7 +350,7 @@
 				owner.Knockdown(10)
 			var/list/items = list()
 			for (var/obj/item/item in owner.get_contents())
-				if ((item & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
 					continue
 				items.Add(item)
 			if(!LAZYLEN(items))
