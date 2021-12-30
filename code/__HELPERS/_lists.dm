@@ -155,16 +155,49 @@
 
 			return "[output][and_text][input[index]]"
 
-///Checks for specific types in a list
-/proc/is_type_in_list(atom/type_to_check, list/list_to_check, zebra = FALSE)
+/**
+ * Checks for specific types in a list.
+ *
+ * If using zebra mode the list should be an assoc list with truthy/falsey values.
+ * The check short circuits so earlier entries in the input list will take priority.
+ * Ergo, subtypes should come before parent types.
+ * Notice that this is the opposite priority of [/proc/typecacheof].
+ *
+ * Arguments:
+ * - [type_to_check][/atom]: An instance to check.
+ * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
+ * - zebra: Whether to use the value of the mathing type in the list instead of just returning true when a match is found.
+ */
+/proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
 	for(var/type in list_to_check)
 		if(istype(type_to_check, type))
-			return zebra ? list_to_check[type] : TRUE // Subtypes must come first in zebra lists.
+			return !zebra || list_to_check[type] // Subtypes must come first in zebra lists.
 	return FALSE
 
-///Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
+/**
+ * Checks for specific paths in a list.
+ *
+ * If using zebra mode the list should be an assoc list with truthy/falsey values.
+ * The check short circuits so earlier entries in the input list will take priority.
+ * Ergo, subpaths should come before parent paths.
+ * Notice that this is the opposite priority of [/proc/typecacheof].
+ *
+ * Arguments:
+ * - path_to_check: A typepath to check.
+ * - [list_to_check][/list]: A list of typepaths to check the path_to_check against.
+ * - zebra: Whether to use the value of the mathing path in the list instead of just returning true when a match is found.
+ */
+/proc/is_path_in_list(path_to_check, list/list_to_check, zebra = FALSE)
+	if(!LAZYLEN(list_to_check) || !path_to_check)
+		return FALSE
+	for(var/path in list_to_check)
+		if(ispath(path_to_check, path))
+			return !zebra || list_to_check[path]
+	return FALSE
+
+///Checks for specific types in specifically structured (Assoc "type" = TRUE|FALSE) lists ('typecaches')
 #define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
 ///returns a new list with only atoms that are in the typecache list
@@ -190,9 +223,12 @@
 		if(typecache_include[atom_checked.type] && !typecache_exclude[atom_checked.type])
 			. += atom_checked
 
-///Like typesof() or subtypesof(), but returns a typecache instead of a list
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
+ *
+ * If choosing to generate a zebra list latter values override earlier values.
+ * Thus subtypes should come _after_ parent types in the input list.
+ * Notice that this is the opposite priority of [/proc/is_type_in_list] and [/proc/is_path_in_list].
  *
  * Arguments:
  * - path: A typepath or list of typepaths.

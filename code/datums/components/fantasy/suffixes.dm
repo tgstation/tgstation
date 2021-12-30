@@ -70,6 +70,7 @@
 			zebra = TRUE
 		)
 		// Some particular types to disallow if they're too broad/abstract
+		// Not in the above typecache generator because they it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
 		)
@@ -114,6 +115,7 @@
 			zebra = TRUE
 		)
 		// Some particular types to disallow if they're too broad/abstract
+		// Not in the above typecache generator because they it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
 		)
