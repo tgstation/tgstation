@@ -606,7 +606,7 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
-	if(health < crit_threshold)
+	if(health <= hardcrit_threshold)
 		. = FALSE
 
 
