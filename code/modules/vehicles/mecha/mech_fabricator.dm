@@ -329,7 +329,7 @@
 		if(exit.density)
 			return TRUE
 
-		say("Obstruction cleared. \The fabrication of [stored_part] is now complete.")
+		say("Obstruction cleared. The fabrication of [stored_part] is now complete.")
 		stored_part.forceMove(exit)
 		stored_part = null
 
@@ -369,7 +369,7 @@
 		stored_part = I
 		return FALSE
 
-	say("\The fabrication of [I] is now complete.")
+	say("The fabrication of [I] is now complete.")
 	I.forceMove(exit)
 	return TRUE
 
