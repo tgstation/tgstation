@@ -238,6 +238,9 @@
  * - clear_falsey: Whether to remove falsey values from the typecache after generating it.
  */
 /proc/typecacheof(path, only_root_path = FALSE, ignore_root_path = FALSE, zebra = FALSE, clear_falsey = FALSE)
+	if(isnull(path))
+		return
+
 	if(ispath(path))
 		. = list()
 		if(only_root_path)
