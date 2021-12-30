@@ -42,10 +42,10 @@
 
 	/// Reference to a remote material inventory, such as an ore silo.
 	var/datum/component/remote_materials/rmat
-	
+
 	/// A list of part sets used for TGUI static data. Updated on Init() and syncing with the R&D console.
 	var/list/final_sets = list()
-	
+
 	/// A list of individual parts used for TGUI static data. Updated on Init() and syncing with the R&D console.
 	var/list/buildable_parts = list()
 
@@ -329,7 +329,7 @@
 		if(exit.density)
 			return TRUE
 
-		say("Obstruction cleared. \The [stored_part] is complete.")
+		say("Obstruction cleared. \The fabrication of [stored_part] is now complete.")
 		stored_part.forceMove(exit)
 		stored_part = null
 
@@ -369,7 +369,7 @@
 		stored_part = I
 		return FALSE
 
-	say("\The [I] is complete.")
+	say("\The fabrication of [I] is now complete.")
 	I.forceMove(exit)
 	return TRUE
 
