@@ -685,7 +685,7 @@ CREATE TABLE `telemetry_connections` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `ckey` VARCHAR(32) NOT NULL,
     `telemetry_ckey` VARCHAR(32) NOT NULL,
-    `address` INT(10) NOT NULL,
+    `address` INT(10) UNSIGNED NOT NULL,
     `computer_id` VARCHAR(32) NOT NULL,
     `first_round_id` INT(11) UNSIGNED NULL,
     `latest_round_id` INT(11) UNSIGNED NULL,

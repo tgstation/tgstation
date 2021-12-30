@@ -1,4 +1,0 @@
-author: "TheBonded"
-delete-after: True
-changes: 
-  - bugfix: "Tesla reactive armour now has separate emp and cooldown messages"

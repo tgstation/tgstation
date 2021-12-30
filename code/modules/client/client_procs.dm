@@ -539,6 +539,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	active_mousedown_item = null
 	SSambience.remove_ambience_client(src)
+	SSmouse_entered.hovers -= src
 	QDEL_NULL(view_size)
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)

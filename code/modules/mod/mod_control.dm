@@ -14,9 +14,18 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 2
+	slowdown = 1.25
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
-	actions_types = list(/datum/action/item_action/mod/deploy, /datum/action/item_action/mod/activate, /datum/action/item_action/mod/module, /datum/action/item_action/mod/panel)
+	actions_types = list(
+		/datum/action/item_action/mod/deploy,
+		/datum/action/item_action/mod/activate,
+		/datum/action/item_action/mod/panel,
+		/datum/action/item_action/mod/module,
+		/datum/action/item_action/mod/deploy/ai,
+		/datum/action/item_action/mod/activate/ai,
+		/datum/action/item_action/mod/panel/ai,
+		/datum/action/item_action/mod/module/ai,
+	)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -50,9 +59,9 @@
 	/// Power usage of the MOD.
 	var/cell_drain = DEFAULT_CELL_DRAIN
 	/// Slowdown of the MOD when not active.
-	var/slowdown_inactive = 2
+	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
-	var/slowdown_active = 1
+	var/slowdown_active = 0.75
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
@@ -128,6 +137,7 @@
 		module = new module(src)
 		install(module)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -164,6 +174,42 @@
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
 	return ..()
+
+/obj/item/mod/control/atom_destruction(damage_flag)
+	for(var/obj/item/mod/module/module as anything in modules)
+		for(var/obj/item/item in module)
+			item.forceMove(drop_location())
+	if(ai)
+		ai.controlled_equipment = null
+		ai.remote_control = null
+		for(var/datum/action/action as anything in actions)
+			if(action.owner == ai)
+				action.Remove(ai)
+		new /obj/item/mod/ai_minicard(drop_location(), ai)
+	return ..()
+
+/obj/item/mod/control/examine(mob/user)
+	. = ..()
+	if(active)
+		. += span_notice("Cell power: [cell ? "[round(cell.percent(), 1)]%" : "No cell"].")
+		. += span_notice("Selected module: [selected_module || "None"].")
+	if(!open && !active)
+		. += span_notice("You could put it on your <b>back</b> to turn it on.")
+		. += span_notice("You could open the cover with a <b>screwdriver</b>.")
+	else if(open)
+		. += span_notice("You could close the cover with a <b>screwdriver</b>.")
+		. += span_notice("You could use <b>modules</b> on it to install them.")
+		. += span_notice("You could remove modules with a <b>crowbar</b>.")
+		. += span_notice("You could update the access with an <b>ID</b>.")
+		. += span_notice("You could access the wire panel with a <b>wire configuring tool</b>.")
+		if(cell)
+			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
+		else
+			. += span_notice("You could use a <b>cell</b> on it to install one.")
+		if(ai)
+			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
+		else
+			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -248,13 +294,13 @@
 		balloon_alert(user, "deactivate suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	balloon_alert(user, "[open ? "closing" : "opening"] panel...")
+	balloon_alert(user, "[open ? "closing" : "opening"] cover...")
 	screwdriver.play_tool_sound(src, 100)
 	if(screwdriver.use_tool(src, user, 1 SECONDS))
 		if(active || activating)
 			balloon_alert(user, "deactivate suit first!")
 		screwdriver.play_tool_sound(src, 100)
-		balloon_alert(user, "panel [open ? "closed" : "opened"]")
+		balloon_alert(user, "cover [open ? "closed" : "opened"]")
 		open = !open
 	else
 		balloon_alert(user, "interrupted!")
@@ -263,13 +309,16 @@
 /obj/item/mod/control/crowbar_act(mob/living/user, obj/item/crowbar)
 	. = ..()
 	if(!open)
-		balloon_alert(user, "open the panel first!")
+		balloon_alert(user, "open the cover first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
 	if(!allowed(user))
 		balloon_alert(user, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVAL, user) & MOD_CANCEL_REMOVAL)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
 	if(length(modules))
 		var/list/removable_modules = list()
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -290,14 +339,14 @@
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
-			balloon_alert(user, "open the panel first!")
+			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		install(attacking_item, user)
 		return TRUE
 	else if(istype(attacking_item, /obj/item/stock_parts/cell))
 		if(!open)
-			balloon_alert(user, "open the panel first!")
+			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 		if(cell)
@@ -342,13 +391,15 @@
 
 /obj/item/mod/control/emp_act(severity)
 	. = ..()
-	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
-	if(!active || !wearer || . & EMP_PROTECT_CONTENTS)
+	if(!active || !wearer)
 		return
-	selected_module = null
+	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+	selected_module.on_deactivation()
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
-	if (wearer.stat < UNCONSCIOUS && prob(10))
+	if(wearer.stat < UNCONSCIOUS && prob(10))
 		wearer.emote("scream")
 
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
@@ -360,6 +411,8 @@
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
 	for(var/obj/item/part in mod_parts)
+		if(part.loc == src)
+			continue
 		conceal(null, part)
 	return ..()
 
@@ -377,6 +430,7 @@
 	wearer = user
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
 	update_cell_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
@@ -385,8 +439,16 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
 	wearer.clear_alert("mod_charge")
 	wearer = null
+
+/obj/item/mod/control/proc/on_unequip()
+	SIGNAL_HANDLER
+
+	for(var/obj/item/part in mod_parts)
+		if(part.loc != src)
+			return COMPONENT_ITEM_BLOCK_UNEQUIP
 
 /obj/item/mod/control/proc/update_flags()
 	var/list/used_skin = theme.skins[skin]
@@ -420,17 +482,21 @@
 			continue
 		display_names[module.name] = REF(module)
 		var/image/module_image = image(icon = module.icon, icon_state = module.icon_state)
+		if(module == selected_module)
+			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected")
+		else if(module.active)
+			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_active")
 		items += list(module.name = module_image)
 	if(!length(items))
 		return
-	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 	var/module_reference = display_names[pick]
-	var/obj/item/mod/module/selected_module = locate(module_reference) in modules
-	if(!istype(selected_module) || user.incapacitated())
+	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
+	if(!istype(picked_module) || user.incapacitated())
 		return
-	selected_module.on_select()
+	picked_module.on_select()
 
 /obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
 	if(length(theme.skins) <= 1)
@@ -557,3 +623,24 @@
 	if(!cell)
 		return
 	cell.give(amount)
+	update_cell_alert()
+
+/obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(slowdown_inactive <= 0)
+		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
+		return
+	if(wearer)
+		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
+		return
+	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	slowdown_inactive = 0
+	slowdown_active = 0
+	slowdown = 0
+	qdel(speed_potion)
+	return SPEED_POTION_SUCCESSFUL
