@@ -39,8 +39,8 @@
 
 /datum/traitor_objective/kill_pet/high_risk
 	progression_minimum = 25 MINUTES
-	progression_reward = list(8 MINUTES, 10 MINUTES)
-	telecrystal_reward = list(2, 4)
+	progression_reward = list(14 MINUTES, 18 MINUTES)
+	telecrystal_reward = list(3, 5)
 
 	limited_to_department_head = FALSE
 	possible_heads = list(

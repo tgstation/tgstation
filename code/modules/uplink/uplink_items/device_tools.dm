@@ -4,7 +4,7 @@
 	name = "Misc. Gadgets"
 	weight = 3
 
-/datum/uplink_item/suits
+/datum/uplink_item/device_tools
 	category = /datum/uplink_category/device_tools
 
 // No progression cost
