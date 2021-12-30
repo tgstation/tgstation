@@ -563,7 +563,7 @@
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = tgui_input_list(U, "Which network would you like to view?", sort_list(cameralist))
+	network = tgui_input_list(U, "Which network would you like to view?", "Camera Network", sort_list(cameralist))
 
 	if(!U.eyeobj)
 		U.view_core()

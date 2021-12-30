@@ -555,7 +555,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = tgui_input_list(user, "Pick the type of [mob_name]", "[mob_name] Creation", sort_list(possible_guardians))
+		guardiantype = tgui_input_list(user, "Pick the type of [mob_name]", "Guardian Creation", sort_list(possible_guardians))
 		if(isnull(guardiantype) || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE

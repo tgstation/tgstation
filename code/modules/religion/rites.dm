@@ -395,7 +395,7 @@
 	if(!length(honormut.guilty))
 		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
 		return FALSE
-	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive", honormut.guilty)
+	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive", "Forgive", honormut.guilty)
 	if(isnull(forgiven_choice))
 		return FALSE
 	who = forgiven_choice

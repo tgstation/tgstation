@@ -179,7 +179,7 @@
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
-	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon [chameleon_name]", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
+	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
 	if(isnull(picked_name))
 		return
 	if(isnull(chameleon_list[picked_name]))

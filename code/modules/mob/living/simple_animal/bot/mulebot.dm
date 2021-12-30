@@ -307,7 +307,7 @@
 		if("destination")
 			var/new_dest
 			if(pda)
-				new_dest = tgui_input_list(user, "Enter Destination", name, GLOB.deliverybeacontags, destination)
+				new_dest = tgui_input_list(user, "Enter Destination", "Mulebot Settings", GLOB.deliverybeacontags, destination)
 			else
 				new_dest = params["value"]
 			if(new_dest)
@@ -323,7 +323,7 @@
 		if("sethome")
 			var/new_home
 			if(pda)
-				new_home = tgui_input_list(user, "Enter Home", name, GLOB.deliverybeacontags, home_destination)
+				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			else
 				new_home = params["value"]
 			if(new_home)

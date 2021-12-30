@@ -164,7 +164,7 @@
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
-	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse","Your target", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
 	if(isnull(chosen_mob))
 		return FALSE
 	curse(compiled_list[chosen_mob])
