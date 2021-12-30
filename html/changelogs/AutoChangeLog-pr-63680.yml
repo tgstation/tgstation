@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "The blackmarket uplink shouldn't run into issues loading the different categories of items it can order when it was created during mapload."
