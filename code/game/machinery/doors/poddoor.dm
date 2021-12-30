@@ -31,11 +31,12 @@
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
-	if(change_id)
-		id = clamp(round(change_id, 1), 1, 100)
-		to_chat(user, span_notice("You change the ID to [id]."))
-		balloon_alert(user, "ID changed")
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100, 1)
+	if(isnull(change_id))
+		return
+	id = round(change_id)
+	to_chat(user, span_notice("You change the ID to [id]."))
+	balloon_alert(user, "ID changed")
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()

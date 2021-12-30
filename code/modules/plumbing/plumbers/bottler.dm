@@ -67,7 +67,10 @@
 	if(!valid_output_configuration)
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
-	wanted_amount = clamp(round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1), 1, 100)
+	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", 1, 100, 1)
+	if(isnull(new_amount))
+		return .
+	wanted_amount = round(new_amount)
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
 
 /obj/machinery/plumbing/bottler/process()

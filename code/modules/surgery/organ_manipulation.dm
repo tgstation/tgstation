@@ -76,7 +76,7 @@
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	target_organ = null
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-		if(!tool.contents.len)
+		if(!length(tool.contents))
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
 			return -1
 		target_organ = tool.contents[1]
@@ -109,7 +109,7 @@
 		var/list/organs = target.getorganszone(target_zone)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
-		if(!organs.len)
+		if(!length(organs))
 			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
 			return -1
 		else
@@ -118,8 +118,11 @@
 				organs -= organ
 				organs[organ.name] = organ
 
-			target_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in sort_list(organs)
-			if(target_organ && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
+			if(isnull(chosen_organ))
+				return -1
+			target_organ = chosen_organ
+			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return -1

@@ -14,10 +14,11 @@
 		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
-	var/change_id = input("Set the shutters/blast door/blast door controllers ID. It must be a number between 1 and 100.", "ID", id) as num|null
-	if(change_id)
-		id = clamp(round(change_id, 1), 1, 100)
-		to_chat(user, span_notice("You change the ID to [id]."))
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "ID", id, 100, 1)
+	if(isnull(change_id))
+		return
+	id = round(change_id)
+	to_chat(user, span_notice("You change the ID to [id]."))
 
 /obj/item/assembly/control/activate()
 	var/openclose

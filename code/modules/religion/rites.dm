@@ -44,12 +44,12 @@
 			user.say(i)
 			first_invoke = FALSE
 			continue
-		if(!ritual_invocations.len) //we divide so we gotta protect
+		if(!length(ritual_invocations)) //we divide so we gotta protect
 			return FALSE
-		if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+		if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations)))
 			return FALSE
 		user.say(i)
-	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len)) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
+	if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -392,11 +392,11 @@
 	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
 	if(!honormut)
 		return FALSE
-	if(!honormut.guilty.len)
+	if(!length(honormut.guilty))
 		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
 		return FALSE
-	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive", honormut.guilty)
-	if(!forgiven_choice)
+	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive", "Forgive", honormut.guilty)
+	if(isnull(forgiven_choice))
 		return FALSE
 	who = forgiven_choice
 	return ..()
@@ -660,7 +660,7 @@
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
 			filtered += unfiltered_area
 	area_instance = tgui_input_list(user, "Choose an area to mark as an arena!", "Arena Declaration", filtered)
-	if(!area_instance)
+	if(isnull(area_instance))
 		return FALSE
 	. = ..()
 
