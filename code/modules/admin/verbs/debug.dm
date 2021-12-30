@@ -173,7 +173,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/adminmob = mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = ckey
+	M.key = key
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
