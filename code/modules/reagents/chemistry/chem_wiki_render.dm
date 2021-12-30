@@ -13,7 +13,7 @@
 |-
 "}
 
-	var/input_text = stripped_input(usr, "Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get it's wiki table entry", "Recipe") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
+	var/input_text = tgui_input_text(usr, "Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get it's wiki table entry", "Recipe") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(!input_text)
 		to_chat(usr, "Input was blank!")
 		return

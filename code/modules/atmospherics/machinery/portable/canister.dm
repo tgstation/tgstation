@@ -650,7 +650,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
+				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, can_max_release_pressure, can_min_release_pressure)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
@@ -703,13 +703,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				if("increase")
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
-					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
-					if(!user_input)
+					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
+					if(isnull(user_input))
 						return
-					var/N = text2num(user_input)
-					if(!N)
-						return
-					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = clamp(user_input, minimum_timer_set, maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

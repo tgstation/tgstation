@@ -98,9 +98,6 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/proc/negates_gravity()
-	return FALSE
-
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
  *

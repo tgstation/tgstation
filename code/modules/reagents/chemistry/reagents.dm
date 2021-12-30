@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
 	var/reagent_state = LIQUID
-	/// special data associated with this like viruses etc
+	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
 	var/current_cycle = 0

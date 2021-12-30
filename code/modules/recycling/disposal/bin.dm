@@ -257,7 +257,7 @@
 		AM.forceMove(T)
 	..()
 
-/obj/machinery/disposal/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/machinery/disposal/get_dumping_location()
 	return src
 
 //How disposal handles getting a storage dump from a storage object

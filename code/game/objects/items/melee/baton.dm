@@ -157,8 +157,8 @@
 /obj/item/melee/baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class ='danger'>[user] knocks [target] down with [src]!</span>"
-	.["local"] = "<span class ='userdanger'>[user] knocks you down with [src]!</span>"
+	.["visible"] = span_danger("[user] knocks [target] down with [src]!")
+	.["local"] = span_userdanger("[user] knocks you down with [src]!")
 
 	return .
 
@@ -175,8 +175,8 @@
 /obj/item/melee/baton/proc/get_unga_dunga_cyborg_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
-	.["visible"] = "<span class='danger'>[user] tries to knock down [target] with [src], and predictably fails!</span>" //look at this duuuuuude
-	.["local"] = "<span class='userdanger'>[target] tries to... knock you down with [src]?</span>" //look at the top of his head!
+	.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
+	.["local"] = span_userdanger("[target] tries to... knock you down with [src]?") //look at the top of his head!
 
 	return .
 

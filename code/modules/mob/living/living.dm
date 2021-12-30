@@ -49,6 +49,8 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
+	if(SEND_SIGNAL(src, COMSIG_LIVING_Z_IMPACT, levels, T) & NO_Z_IMPACT_DAMAGE)
+		return
 	visible_message(span_danger("[src] crashes into [T] with a sickening noise!"), \
 					span_userdanger("You crash into [T] with a sickening noise!"))
 	adjustBruteLoss((levels * 5) ** 1.5)
@@ -79,6 +81,7 @@
 
 //Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/M)
+	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
 
@@ -572,7 +575,6 @@
 /mob/living/proc/set_lying_down(new_lying_angle)
 	set_body_position(LYING_DOWN)
 
-
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
@@ -883,7 +885,8 @@
 		return pick("trails_1", "trails_2")
 
 /mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	if(buckled)
+	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
+	if(buckled || mob_negates_gravity())
 		return
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
@@ -1288,13 +1291,6 @@
 		G.summoner = new_mob
 		G.Recall()
 		to_chat(G, span_holoparasite("Your summoner has changed form!"))
-
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
-	. = ..()
-	if(.)
-		return
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
-		return src
 
 /mob/living/proc/fakefireextinguish()
 	return

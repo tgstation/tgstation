@@ -32,7 +32,18 @@
 		important_text = "Serve [creator], and assist [creator.p_them()] in completing [creator.p_their()] goals at any cost."
 		owner = creator
 
-/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, name)
+
+/obj/effect/mob_spawn/ghost_role/human/golem/name_mob(mob/living/spawned_mob, forced_name)
+	if(!forced_name)
+		var/datum/species/golem/golem_species = mob_species
+		if(has_owner)
+			forced_name =  "[initial(golem_species.prefix)] Golem ([rand(1,999)])"
+		else
+			golem_species = new mob_species
+			forced_name =  golem_species.random_name()
+	. = ..()
+
+/obj/effect/mob_spawn/ghost_role/human/golem/special(mob/living/new_spawn, mob/mob_possessor)
 	. = ..()
 	var/datum/species/golem/X = mob_species
 	to_chat(new_spawn, "[initial(X.info_text)]")
@@ -51,14 +62,7 @@
 			var/datum/species/golem/G = H.dna.species
 			G.owner = owner
 		H.set_cloned_appearance()
-		if(!name)
-			if(has_owner)
-				H.fully_replace_character_name(null, "[initial(X.prefix)] Golem ([rand(1,999)])")
-			else
-				H.fully_replace_character_name(null, H.dna.species.random_name())
-		else
-			H.fully_replace_character_name(null, name)
-	if(has_owner)
+	if(has_owner && new_spawn.mind)
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/servant_golem))
 	else
 		new_spawn.mind.set_assigned_role(SSjob.GetJobType(/datum/job/free_golem))

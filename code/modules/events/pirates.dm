@@ -137,16 +137,17 @@
 	START_PROCESSING(SSobj,src)
 
 /obj/machinery/shuttle_scrambler/interact(mob/user)
-	if(!active)
-		if(tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel")) == "Cancel")
-			return
-		if(active || !user.canUseTopic(src, BE_CLOSE))
-			return
-		toggle_on(user)
-		update_appearance()
-		send_notification()
-	else
+	if(active)
 		dump_loot(user)
+		return
+	var/scramble_response = tgui_alert(user, "Turning the scrambler on will make the shuttle trackable by GPS. Are you sure you want to do it?", "Scrambler", list("Yes", "Cancel"))
+	if(scramble_response != "Yes")
+		return
+	if(active || !user.canUseTopic(src, BE_CLOSE))
+		return
+	toggle_on(user)
+	update_appearance()
+	send_notification()
 
 //interrupt_research
 /obj/machinery/shuttle_scrambler/proc/interrupt_research()

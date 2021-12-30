@@ -42,7 +42,7 @@
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
-			to_chat(brainmob, "<span class= danger>You can't feel your body! You're still just a brain!</span>")
+			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(C)
 		C.update_hair()
 		return
@@ -56,7 +56,12 @@
 		else
 			C.key = brainmob.key
 
+		C.set_suicide(brainmob.suiciding)
+
 		QDEL_NULL(brainmob)
+
+	else
+		C.set_suicide(suicided)
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X

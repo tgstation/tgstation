@@ -576,6 +576,8 @@
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
+	if(isstructure(loc))
+		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -604,6 +606,10 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+	container.container_resist_act()
+
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER

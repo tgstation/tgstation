@@ -153,7 +153,7 @@ Stabilized extracts:
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
-		var/newname = sanitize_name(stripped_input(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
+		var/newname = sanitize_name(tgui_input_text(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
 		to_chat(user, span_notice("You speak softly into [src], and it shakes slightly in response."))
