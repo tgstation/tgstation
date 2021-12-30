@@ -364,8 +364,8 @@
 
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
-		say("Error! Part outlet is obstructed.")
-		desc = "It's trying to dispense \a [D.name], but the part outlet is obstructed."
+		say("Error! The part outlet is obstructed.")
+		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."
 		stored_part = I
 		return FALSE
 
