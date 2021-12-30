@@ -348,7 +348,11 @@
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
 				owner.Jitter(200)
 				owner.Knockdown(10)
-			var/items = owner.get_contents()
+			var/list/items = list()
+			for (var/obj/item/item in owner.get_contents())
+				if ((item & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+					continue
+				items.Add(item)
 			if(!LAZYLEN(items))
 				return ..()
 			var/obj/item/item = pick(items)
