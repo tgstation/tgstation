@@ -2,18 +2,24 @@
 	name = "Heart"
 	description = "Commander Johnson is in critical condition after suffering yet another heart attack. Doctors say he needs a new heart fast. Ship one, pronto! We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 6
-	wanted_types = list(/obj/item/organ/heart)
-	exclude_types = list(/obj/item/organ/heart/cybernetic)//Excluding tier 1s, no cheesing.
-	special_include_types = list(/obj/item/organ/heart/cybernetic/tier2, /obj/item/organ/heart/cybernetic/tier3)
+	wanted_types = list(
+		/obj/item/organ/heart = TRUE,
+		/obj/item/organ/heart/cybernetic = FALSE,
+		/obj/item/organ/heart/cybernetic/tier2 = TRUE,
+		/obj/item/organ/heart/cybernetic/tier3 = TRUE,
+	)
 
 /datum/bounty/item/medical/lung
 	name = "Lungs"
 	description = "A recent explosion at Central Command has left multiple staff with punctured lungs. Ship spare lungs to be rewarded.  We'll take a better cybernetic one, if need be."
 	reward = CARGO_CRATE_VALUE * 20
 	required_count = 3
-	wanted_types = list(/obj/item/organ/lungs)
-	exclude_types = list(/obj/item/organ/lungs/cybernetic)//As above, for all printable organs.
-	special_include_types = list(/obj/item/organ/lungs/cybernetic/tier2, /obj/item/organ/lungs/cybernetic/tier3)
+	wanted_types = list(
+		/obj/item/organ/lungs = TRUE,
+		/obj/item/organ/lungs/cybernetic = FALSE,
+		/obj/item/organ/lungs/cybernetic/tier2 = TRUE,
+		/obj/item/organ/lungs/cybernetic/tier3 = TRUE,
+	)
 
 /datum/bounty/item/medical/appendix
 	name = "Appendix"
@@ -26,26 +32,33 @@
 	description = "Multiple staff at Station 12 have been left deaf due to unauthorized clowning. Ship them new ears. "
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
-	wanted_types = list(/obj/item/organ/ears)
-	exclude_types = list(/obj/item/organ/ears/cybernetic)
-	special_include_types = list(/obj/item/organ/ears/cybernetic/upgraded)
+	wanted_types = list(
+		/obj/item/organ/ears = TRUE,
+		/obj/item/organ/ears/cybernetic = FALSE,
+		/obj/item/organ/ears/cybernetic/upgraded = TRUE,
+	)
 
 /datum/bounty/item/medical/liver
 	name = "Livers"
 	description = "Multiple high-ranking CentCom diplomats have been hospitalized with liver failure after a recent meeting with Third Soviet Union ambassadors. Help us out, will you? We'll take better cybernetic ones, if need be."
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 3
-	wanted_types = list(/obj/item/organ/liver)
-	exclude_types = list(/obj/item/organ/liver/cybernetic)
-	special_include_types = list(/obj/item/organ/liver/cybernetic/tier2, /obj/item/organ/liver/cybernetic/tier3)
+	wanted_types = list(
+		/obj/item/organ/liver = TRUE,
+		/obj/item/organ/liver/cybernetic = FALSE,
+		/obj/item/organ/liver/cybernetic/tier2 = TRUE,
+		/obj/item/organ/liver/cybernetic/tier3 = TRUE,
+	)
 
 /datum/bounty/item/medical/eye
 	name = "Organic Eyes"
 	description = "Station 5's Research Director Willem is requesting a few pairs of non-robotic eyes. Don't ask questions, just ship them."
 	reward = CARGO_CRATE_VALUE * 20
 	required_count = 3
-	wanted_types = list(/obj/item/organ/eyes)
-	exclude_types = list(/obj/item/organ/eyes/robotic)
+	wanted_types = list(
+		/obj/item/organ/eyes = TRUE,
+		/obj/item/organ/eyes/robotic = FALSE,
+	)
 
 /datum/bounty/item/medical/tongue
 	name = "Tongues"

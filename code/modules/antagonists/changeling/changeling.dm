@@ -45,7 +45,7 @@
 
 	var/hive_name
 
-	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
+	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
 
 	var/static/list/slot2type = list(
 		"head" = /obj/item/clothing/head/changeling,

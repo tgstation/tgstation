@@ -288,7 +288,7 @@
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	///turfs that you cannot draw carvings on
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed, /turf/open/space, /turf/open/lava))
 	///A check to see if you are in process of drawing a rune
 	var/drawing = FALSE
 	///A list of current runes

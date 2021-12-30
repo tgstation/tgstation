@@ -28,7 +28,7 @@
 	var/contract_rep = 0
 	var/list/hub_items = list()
 	var/list/purchased_items = list()
-	var/static/list/contractor_items = typecacheof(/datum/contractor_item/, TRUE)
+	var/static/list/contractor_items = typecacheof(/datum/contractor_item, ignore_root_path = TRUE)
 
 	var/datum/syndicate_contract/current_contract
 	var/list/datum/syndicate_contract/assigned_contracts = list()

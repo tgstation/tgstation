@@ -207,12 +207,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return
 	if(!no_restrictions)
 		var/static/list/disallowed_turf_types = typecacheof(list(
-			/turf/closed,
-			/turf/open/lava,
-			/turf/open/indestructible,
-			)) - typecacheof(list(
-			/turf/closed/mineral,
-			))
+			/turf/closed = TRUE,
+			/turf/open/lava = TRUE,
+			/turf/open/indestructible = TRUE,
+			/turf/closed/mineral = FALSE,
+			),
+			zebra = TRUE
+		)
 
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL

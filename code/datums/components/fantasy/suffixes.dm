@@ -59,19 +59,20 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(list(
-			/mob/living/simple_animal,
-			/mob/living/carbon,
-			/datum/species,
-			))
+		possible_mobtypes = typecacheof(
+			list(
+				/mob/living/simple_animal = TRUE,
+				/mob/living/carbon = TRUE,
+				/datum/species = TRUE,
+				// Some types to remove them and their subtypes
+				/mob/living/carbon/human/species = FALSE,
+			),
+			zebra = TRUE
+		)
 		// Some particular types to disallow if they're too broad/abstract
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
-			)
-		// Some types to remove them and their subtypes
-		possible_mobtypes -= typecacheof(list(
-			/mob/living/carbon/human/species,
-			))
+		)
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
 	// This works even with the species picks since we're only accessing the name
@@ -99,22 +100,23 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(list(
-			/mob/living/simple_animal,
-			/mob/living/carbon,
-			/datum/species,
-			))
+		possible_mobtypes = typecacheof(
+			list(
+				/mob/living/simple_animal = TRUE,
+				/mob/living/carbon = TRUE,
+				/datum/species = TRUE,
+				// Some types to remove them and their subtypes
+				/mob/living/carbon/human/species = FALSE,
+				/mob/living/simple_animal/hostile/syndicate/mecha_pilot = FALSE,
+				/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
+				/mob/living/simple_animal/hostile/megafauna = FALSE,
+			),
+			zebra = TRUE
+		)
 		// Some particular types to disallow if they're too broad/abstract
 		possible_mobtypes -= list(
 			/mob/living/simple_animal/hostile,
-			)
-		// Some types to remove them and their subtypes
-		possible_mobtypes -= typecacheof(list(
-			/mob/living/carbon/human/species,
-			/mob/living/simple_animal/hostile/syndicate/mecha_pilot,
-			/mob/living/simple_animal/hostile/asteroid/elite,
-			/mob/living/simple_animal/hostile/megafauna,
-			))
+		)
 
 	var/mob/picked_mobtype = pick(possible_mobtypes)
 	// This works even with the species picks since we're only accessing the name

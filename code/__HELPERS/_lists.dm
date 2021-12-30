@@ -156,12 +156,12 @@
 			return "[output][and_text][input[index]]"
 
 ///Checks for specific types in a list
-/proc/is_type_in_list(atom/type_to_check, list/list_to_check)
+/proc/is_type_in_list(atom/type_to_check, list/list_to_check, zebra = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
 	for(var/type in list_to_check)
 		if(istype(type_to_check, type))
-			return TRUE
+			return zebra ? list_to_check[type] : TRUE // Subtypes must come first in zebra lists.
 	return FALSE
 
 ///Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
@@ -191,34 +191,48 @@
 			. += atom_checked
 
 ///Like typesof() or subtypesof(), but returns a typecache instead of a list
-/proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
+/**
+ * Like typesof() or subtypesof(), but returns a typecache instead of a list.
+ *
+ * Arguments:
+ * - path: A typepath or list of typepaths.
+ * - only_root_path: Whether the typecache should be specifically of the passed types.
+ * - ignore_root_path: Whether to ignore the root path when caching subtypes.
+ * - zebra: Whether the value of the subtypes is specified in the input list. If true
+ * - clear_falsey: Whether to remove falsey values from the typecache after generating it.
+ */
+/proc/typecacheof(path, only_root_path = FALSE, ignore_root_path = FALSE, zebra = FALSE, clear_falsey = FALSE)
 	if(ispath(path))
-		var/list/types
-		var/list/output = list()
+		. = list()
 		if(only_root_path)
-			output[path] = TRUE
-		else
-			types = ignore_root_path ? subtypesof(path) : typesof(path)
-			for(var/T in types)
-				output[T] = TRUE
-		return output
-	else if(islist(path))
-		var/list/pathlist = path
-		var/list/output = list()
-		if(ignore_root_path)
-			for(var/current_path in pathlist)
-				for(var/subtype in subtypesof(current_path))
-					output[subtype] = TRUE
-			return output
+			.[path] = TRUE
+			return
 
-		if(only_root_path)
-			for(var/current_path in pathlist)
-				output[current_path] = TRUE
-		else
-			for(var/current_path in pathlist)
-				for(var/subpath in typesof(current_path))
-					output[subpath] = TRUE
-		return output
+		for(var/subtype in (ignore_root_path ? subtypesof(path) : typesof(path)))
+			.[subtype] = TRUE
+		return
+
+	if(!islist(path))
+		CRASH("Tried to create a typecache of [path] which is neither a typepath nor a list.")
+
+	. = list()
+	var/list/pathlist = path
+	if(only_root_path)
+		for(var/current_path in pathlist)
+			.[current_path] = !zebra || pathlist[current_path]
+	else if(ignore_root_path)
+		for(var/current_path in pathlist)
+			for(var/subtype in subtypesof(current_path))
+				.[subtype] = !zebra || pathlist[current_path]
+	else
+		for(var/current_path in pathlist)
+			for(var/subpath in typesof(current_path))
+				.[subpath] = !zebra || pathlist[current_path]
+
+	if(zebra && clear_falsey)
+		for(var/cached_path in .)
+			if(!.[cached_path])
+				. -= cached_path
 
 /**
  * Removes any null entries from the list

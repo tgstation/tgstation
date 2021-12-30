@@ -1281,7 +1281,10 @@
 
 				var/change_trim = tgui_alert(user, "Adjust the appearance of your card's trim?", "Modify Trim", list("Yes", "No"))
 				if(change_trim == "Yes")
-					var/list/blacklist = typecacheof(type) + typecacheof(/obj/item/card/id/advanced/simple_bot)
+					var/list/blacklist = typecacheof(list(
+						type,
+						/obj/item/card/id/advanced/simple_bot,
+					))
 					var/list/trim_list = list()
 					for(var/trim_path in typesof(/datum/id_trim))
 						if(blacklist[trim_path])

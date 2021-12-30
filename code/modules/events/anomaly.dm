@@ -24,8 +24,8 @@
 		/area/holodeck,
 		/area/shuttle,
 		/area/maintenance,
-		/area/science/test_area)
-		)
+		/area/science/test_area,
+	))
 
 		//Subtypes from the above that actually should explode.
 		var/static/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))

@@ -225,7 +225,7 @@
 		/turf/closed/indestructible,
 		/turf/open/space,
 		/turf/open/lava,
-		/turf/open/chasm
+		/turf/open/chasm,
 	))
 	var/spread_per_sec = 6
 

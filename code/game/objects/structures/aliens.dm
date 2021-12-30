@@ -161,7 +161,8 @@
 			/turf/open/space,
 			/turf/open/chasm,
 			/turf/open/lava,
-			/turf/open/openspace))
+			/turf/open/openspace,
+		))
 
 	set_base_icon()
 

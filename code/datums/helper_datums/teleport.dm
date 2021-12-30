@@ -10,13 +10,14 @@
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE, channel=TELEPORT_CHANNEL_BLUESPACE, forced = FALSE)
 	// teleporting most effects just deletes them
 	var/static/list/delete_atoms = typecacheof(list(
-		/obj/effect,
-		)) - typecacheof(list(
-		/obj/effect/dummy/chameleon,
-		/obj/effect/wisp,
-		/obj/effect/mob_spawn,
-		/obj/effect/immovablerod,
-		))
+		/obj/effect = TRUE,
+		/obj/effect/dummy/chameleon = FALSE,
+		/obj/effect/wisp = FALSE,
+		/obj/effect/mob_spawn = FALSE,
+		/obj/effect/immovablerod = FALSE,
+		),
+		zebra = TRUE
+	)
 	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
 		return FALSE

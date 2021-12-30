@@ -29,8 +29,10 @@
 
 /datum/bounty/item/botany/banana
 	name = "Bananas"
-	wanted_types = list(/obj/item/food/grown/banana)
-	exclude_types = list(/obj/item/food/grown/banana/bluespace)
+	wanted_types = list(
+		/obj/item/food/grown/banana = TRUE,
+		/obj/item/food/grown/banana/bluespace = FALSE,
+	)
 	foodtype = "banana split"
 
 /datum/bounty/item/botany/banana_bluespace
@@ -59,8 +61,12 @@
 
 /datum/bounty/item/botany/cannabis
 	name = "Cannabis Leaves"
-	wanted_types = list(/obj/item/food/grown/cannabis)
-	exclude_types = list(/obj/item/food/grown/cannabis/white, /obj/item/food/grown/cannabis/death, /obj/item/food/grown/cannabis/ultimate)
+	wanted_types = list(
+		/obj/item/food/grown/cannabis = TRUE,
+		/obj/item/food/grown/cannabis/white = FALSE,
+		/obj/item/food/grown/cannabis/death = FALSE,
+		/obj/item/food/grown/cannabis/ultimate = FALSE,
+	)
 	multiplier = 4 //hush money
 	bonus_desc = "Do not mention this shipment to security."
 	foodtype = "batch of \"muffins\""
@@ -154,8 +160,11 @@
 
 /datum/bounty/item/botany/glowshroom
 	name = "Glowshrooms"
-	wanted_types = list(/obj/item/food/grown/mushroom/glowshroom)
-	exclude_types = list(/obj/item/food/grown/mushroom/glowshroom/glowcap, /obj/item/food/grown/mushroom/glowshroom/shadowshroom)
+	wanted_types = list(
+		/obj/item/food/grown/mushroom/glowshroom = TRUE,
+		/obj/item/food/grown/mushroom/glowshroom/glowcap = FALSE,
+		/obj/item/food/grown/mushroom/glowshroom/shadowshroom = FALSE,
+	)
 	foodtype = "omelet"
 
 /datum/bounty/item/botany/glowshroom_cap
@@ -185,8 +194,10 @@
 
 /datum/bounty/item/botany/tomato
 	name = "Tomatoes"
-	wanted_types = list(/obj/item/food/grown/tomato)
-	exclude_types = list(/obj/item/food/grown/tomato/blue)
+	wanted_types = list(
+		/obj/item/food/grown/tomato = TRUE,
+		/obj/item/food/grown/tomato/blue = FALSE,
+	)
 
 /datum/bounty/item/botany/tomato_bluespace
 	name = "Bluespace Tomatoes"
