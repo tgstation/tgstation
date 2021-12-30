@@ -1,0 +1,5 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "NanoTrasen fixed a problem with their orion trail arcade machines relaying security and medical comms to the most dangerous demographic: gamers. NanoTrasen assures you that this security exploit will never happen again."
+  - bugfix: "you cant make radios play comms with a broken speaker by setting their frequency anymore."
