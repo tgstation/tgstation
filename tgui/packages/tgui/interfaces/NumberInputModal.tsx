@@ -1,7 +1,7 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
-import { KEY_ENTER } from 'common/keycodes';
-import { useBackend, useSharedState } from '../backend';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -9,25 +9,23 @@ type NumberInputData = {
   max_value: number | null;
   message: string;
   min_value: number | null;
-  placeholder: number;
+  init_value: number;
   preferences: Preferences;
   timeout: number;
   title: string;
 };
 
 export const NumberInputModal = (_, context) => {
-  const { data } = useBackend<NumberInputData>(context);
-  const { message, placeholder, preferences, timeout, title } = data;
+  const { act, data } = useBackend<NumberInputData>(context);
+  const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useSharedState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
     setInput(value);
   };
   const onClick = (value: number) => {
     setInput(value);
   };
-  // NumberInput basically handles everything here
-  const defaultValidState = { isValid: true, error: null };
   // Dynamically changes the window height based on the message.
   const windowHeight
     = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
@@ -35,7 +33,16 @@ export const NumberInputModal = (_, context) => {
   return (
     <Window title={title} width={270} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content>
+      <Window.Content
+        onKeyDown={(event) => {
+          const keyCode = window.event ? event.which : event.keyCode;
+          if (keyCode === KEY_ENTER) {
+            act('submit', { entry: input });
+          }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
+          }
+        }}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -45,7 +52,7 @@ export const NumberInputModal = (_, context) => {
               <InputArea input={input} onClick={onClick} onChange={onChange} />
             </Stack.Item>
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
-              <InputButtons input={input} inputIsValid={defaultValidState} />
+              <InputButtons input={input} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -56,8 +63,8 @@ export const NumberInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act, data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, placeholder } = data;
+  const { data } = useBackend<NumberInputData>(context);
+  const { min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
   return (
@@ -72,18 +79,13 @@ const InputArea = (props, context) => {
       <Stack.Item grow>
         <NumberInput
           autoFocus
+          autoSelect
           fluid
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          onKeyDown={(event) => {
-            const keyCode = window.event ? event.which : event.keyCode;
-            if (keyCode === KEY_ENTER && input) {
-              act('submit', { entry: input });
-            }
-          }}
-          value={input || placeholder || 0}
+          value={input || init_value || 0}
         />
       </Stack.Item>
       <Stack.Item>
@@ -96,7 +98,7 @@ const InputArea = (props, context) => {
       <Stack.Item>
         <Button
           icon="redo"
-          onClick={() => onClick(placeholder || 0)}
+          onClick={() => onClick(init_value || 0)}
           tooltip="Reset"
         />
       </Stack.Item>

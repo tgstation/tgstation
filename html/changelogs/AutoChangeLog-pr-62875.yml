@@ -1,0 +1,10 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix glass floors appearing as lower z-level when on the same z-level."
+  - bugfix: "Fix catwalks appearing as current z-level when they were on a lower z-level."
+  - bugfix: "Fix transparent turfs to display lower z-level properly."
+  - bugfix: "Fix lighting overlays appearing as current z-level when they were on lower z-level. (for transparent turfs)"
+  - bugfix: "Fix mapping icons for catwalks to display correct icon state"
+  - refactor: "Refactor turf transparency to be more robust."
+  - refactor: "Refactor catwalks to be elegant code."

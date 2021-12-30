@@ -4,6 +4,8 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.move_force < move_resist)
+			return
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		var/shove_dir = get_dir(user, src)

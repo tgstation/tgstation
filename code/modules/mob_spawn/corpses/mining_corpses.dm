@@ -166,11 +166,11 @@
 		golem.set_species(pick(/datum/species/golem/adamantine, /datum/species/golem/plasma, /datum/species/golem/diamond, /datum/species/golem/gold, /datum/species/golem/silver, /datum/species/golem/plasteel, /datum/species/golem/titanium, /datum/species/golem/plastitanium))
 	if(prob(30))
 		glasses = pick_weight(list(/obj/item/clothing/glasses/meson = 2, /obj/item/clothing/glasses/hud/health = 2, /obj/item/clothing/glasses/hud/diagnostic =2, /obj/item/clothing/glasses/science = 2, /obj/item/clothing/glasses/welding = 2, /obj/item/clothing/glasses/night = 1))
-	if(prob(10))
+	if(prob(10) && !visualsOnly) //visualsonly = not a golem = can't put things in the belt slot without a jumpsuit
 		belt = pick(list(/obj/item/storage/belt/mining/vendor, /obj/item/storage/belt/utility/full))
 	if(prob(50))
 		neck = /obj/item/bedsheet/rd/royal_cape
-	if(prob(10))
+	if(prob(10) && !visualsOnly) //visualsonly = not a golem = can't put things in the pockets without a jumpsuit
 		l_pocket = pick(list(/obj/item/crowbar/power, /obj/item/screwdriver/power, /obj/item/weldingtool/experimental))
 
 //this is so pointlessly gendered but whatever bro i'm here to refactor not judge

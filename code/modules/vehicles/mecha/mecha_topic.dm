@@ -128,14 +128,14 @@
 			<b>Radio settings:</b><br>
 			Microphone:
 			[radio? "<a href='?src=[REF(src)];rmictoggle=1'>\
-			<span id=\"rmicstate\">[radio.broadcasting?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+			<span id=\"rmicstate\">[radio.get_broadcasting()?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 			Speaker:
 			[radio? "<a href='?src=[REF(src)];rspktoggle=1'><span id=\"rspkstate\">\
-			[radio.listening?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+			[radio.get_listening()?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 			Frequency:
 			[radio? "<a href='?src=[REF(src)];rfreq=-10'>-</a>":"-"]
 			[radio? "<a href='?src=[REF(src)];rfreq=-2'>-</a>":"-"]
-			<span id=\"rfreq\">[radio?"[format_frequency(radio.frequency)]":"Error"]</span>
+			<span id=\"rfreq\">[radio?"[format_frequency(radio.get_frequency())]":"Error"]</span>
 			[radio? "<a href='?src=[REF(src)];rfreq=2'>+</a>":"+"]
 			[radio? "<a href='?src=[REF(src)];rfreq=10'>+</a>":"+"]<br>
 		</div>
@@ -336,21 +336,21 @@
 
 	//Toggles radio broadcasting
 	if(href_list["rmictoggle"])
-		radio.broadcasting = !radio.broadcasting
-		send_byjax(usr,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
+		radio.set_broadcasting(!radio.get_broadcasting())
+		send_byjax(usr,"exosuit.browser","rmicstate",(radio.get_broadcasting()?"Engaged":"Disengaged"))
 		return
 
 	//Toggles radio listening
 	if(href_list["rspktoggle"])
-		radio.listening = !radio.listening
-		send_byjax(usr,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
+		radio.set_listening(!radio.get_listening())
+		send_byjax(usr,"exosuit.browser","rspkstate",(radio.get_listening()?"Engaged":"Disengaged"))
 		return
 
 	//Changes radio freqency.
 	if(href_list["rfreq"])
-		var/new_frequency = radio.frequency + text2num(href_list["rfreq"])
+		var/new_frequency = radio.get_frequency() + text2num(href_list["rfreq"])
 		radio.set_frequency(sanitize_frequency(new_frequency, radio.freerange))
-		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
+		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.get_frequency())]")
 		return
 
 	//Changes the exosuit name.

@@ -1247,3 +1247,11 @@ attack_basic_mob
 /obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
+
+/// Special stuff you want to do when an outfit equips this item.
+/obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	return
+
+/// Whether or not this item can be put into a storage item through attackby
+/obj/item/proc/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	return TRUE

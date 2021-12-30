@@ -23,6 +23,7 @@
 #define FLOOR_PLANE -7
 #define GAME_PLANE -4
 #define GAME_PLANE_FOV_HIDDEN -3
+#define ABOVE_GAME_PLANE -2
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
@@ -49,9 +50,11 @@
 ///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
-#define SIGIL_LAYER 2.54
-#define HIGH_PIPE_LAYER 2.55
-#define HIGH_SIGIL_LAYER 2.56
+#define SIGIL_LAYER 2.53
+#define HIGH_PIPE_LAYER 2.54
+// Anything aboe this layer is not "on" a turf for the purposes of washing
+// I hate this life of ours
+#define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65

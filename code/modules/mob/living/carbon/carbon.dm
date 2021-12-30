@@ -8,7 +8,6 @@
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 
 	GLOB.carbon_list += src
-	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/attach_rot)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = .proc/disarm_precollide,
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/disarm_collision,
@@ -584,12 +583,20 @@
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
 
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
+		see_in_dark = max(see_in_dark, 8)
+
+	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
+		sight |= SEE_TURFS
+		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
+
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		sight |= (SEE_MOBS)
+		sight |= SEE_MOBS
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 
 	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
@@ -860,6 +867,9 @@
 
 	if (HAS_TRAIT(src, TRAIT_HUSK))
 		return DEFIB_FAIL_HUSK
+
+	if (HAS_TRAIT(src, TRAIT_DEFIB_BLACKLISTED))
+		return DEFIB_FAIL_BLACKLISTED
 
 	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
@@ -1308,7 +1318,7 @@
 
 /mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
-	if(src == target || !can_be_shoved_into)
+	if(src == target || LAZYFIND(target.buckled_mobs, src) || !can_be_shoved_into)
 		return
 	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 	if(!is_shove_knockdown_blocked())

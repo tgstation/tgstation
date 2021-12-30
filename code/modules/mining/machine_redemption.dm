@@ -284,7 +284,10 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt")
+					if(isnull(desired))
+						return
+					desired = round(desired)
 
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
@@ -331,7 +334,10 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt")
+					if(isnull(desired))
+						return
+					desired = round(desired)
 				var/amount = round(min(desired,50,smelt_amount))
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
