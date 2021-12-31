@@ -87,12 +87,19 @@
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
+		if(!user.mind?.has_antag_datum(/datum/antagonist/traitor))
+			to_chat(user, span_danger("You get the feeling this is a bad idea."))
+			return
+		var/obj/item/card/emag/battlecruiser/caller_card = emag_card
 		if(battlecruiser_called)
 			to_chat(user, span_danger("The card reports a long-range message already sent to the Syndicate fleet...?"))
 			return
 		battlecruiser_called = TRUE
-		//summon_battlecruiser()
+		caller_card.use_charge(user)
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/summon_battlecruiser), rand(20 SECONDS, 1 MINUTES))
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
+
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED

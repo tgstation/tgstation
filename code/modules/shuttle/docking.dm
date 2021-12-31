@@ -138,7 +138,7 @@
 		var/move_mode = old_turfs[oldT]
 
 		if(move_mode & MOVE_TURF)
-			oldT.onShuttleMove(newT, movement_force, movement_direction) //turfs
+			oldT.onShuttleMove(newT, movement_force, movement_direction, find_deepest_baseturf) //turfs
 
 		if(move_mode & MOVE_AREA)
 			var/area/shuttle_area = oldT.loc
@@ -172,7 +172,7 @@
 			continue
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
-		newT.afterShuttleMove(oldT, rotation) //turfs
+		newT.afterShuttleMove(oldT, rotation, find_deepest_baseturf) //turfs
 
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK
@@ -206,4 +206,3 @@
 			continue
 		var/turf/oldT = moved_atoms[moved_object]
 		moved_object.lateShuttleMove(oldT, movement_force, movement_direction)
-

@@ -1,0 +1,167 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"j" = (
+/obj/machinery/button/door{
+	id = "SBC_fighter2_bolt";
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = 25;
+	specialfunctions = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"o" = (
+/obj/machinery/computer/shuttle/starfury/fighter/fighter_two,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"q" = (
+/obj/structure/shuttle/engine/propulsion/burst,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"t" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_two{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"u" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_fighter2_bolt";
+	name = "Syndicate Fighter Airlock";
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile/syndicate_fighter/fighter_two,
+/turf/open/floor/plating,
+/area/shuttle/sbc_fighter2)
+"v" = (
+/obj/machinery/computer/security{
+	dir = 8;
+	network = list("SBC_Fighter2")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"D" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 9
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Left Side";
+	network = list("SBC_Fighter2");
+	pixel_x = -32;
+	pixel_y = -11
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"F" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = -32;
+	pixel_y = 26;
+	req_access = 150
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"H" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 5
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Right Side";
+	network = list("SBC_Fighter2");
+	pixel_x = 32;
+	pixel_y = -11
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"I" = (
+/obj/machinery/porta_turret/syndicate/energy/heavy{
+	dir = 1
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Front Side";
+	network = list("SBC_Fighter2");
+	pixel_x = 11;
+	pixel_y = 32
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"S" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"V" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"W" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+
+(1,1,1) = {"
+a
+a
+D
+V
+V
+q
+a
+"}
+(2,1,1) = {"
+a
+V
+V
+t
+d
+V
+q
+"}
+(3,1,1) = {"
+I
+V
+o
+F
+W
+j
+u
+"}
+(4,1,1) = {"
+a
+V
+V
+v
+S
+V
+q
+"}
+(5,1,1) = {"
+a
+a
+H
+V
+V
+q
+a
+"}
