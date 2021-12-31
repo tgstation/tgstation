@@ -1,0 +1,5 @@
+author: "Whoneedspacee"
+delete-after: True
+changes: 
+  - refactor: "Refactors megafauna abilities to be mob actions which are grantable to any living mob."
+  - admin: "Added a verb under admin events which lets you grant mob actions to a marked living mob."
