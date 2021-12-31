@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/ventcrawling
-	true_name = "pliant cartilage enabler"
+	true_name = "pliant cartilage enabler. Allows the abductee to crawl through vents without trouble."
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1

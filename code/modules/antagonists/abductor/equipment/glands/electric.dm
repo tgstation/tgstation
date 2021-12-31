@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/electric
-	true_name = "electron accumulator/discharger"
+	true_name = "electron accumulator/discharger. The abductee becomes fully immune to electric shocks. Additionally, they will randomly discharge electric bolts."
 	cooldown_low = 800
 	cooldown_high = 1200
 	icon_state = "species"

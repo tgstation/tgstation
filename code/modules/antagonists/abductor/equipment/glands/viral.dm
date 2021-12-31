@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/viral
-	true_name = "contamination incubator"
+	true_name = "contamination incubator. Makes the abductee carrier of a random advanced disease - abductee is NOT affected."
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/access
-	true_name = "anagraphic electro-scrambler"
+	true_name = "anagraphic electro-scrambler. After it activates, makes the abductee have intrinsic all access."
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = 1

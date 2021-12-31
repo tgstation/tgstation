@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/mindshock
-	true_name = "neural crosstalk uninhibitor"
+	true_name = "neural crosstalk uninhibitor. Makes the abductee emit a disrupting psychic wave every so often. This will either stun, cause hallucinations or deal random brain damage to people nearby."
 	cooldown_low = 400
 	cooldown_high = 700
 	uses = -1

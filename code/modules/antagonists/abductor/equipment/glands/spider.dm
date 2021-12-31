@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/spiderman
-	true_name = "araneae cloister accelerator"
+	true_name = "araneae cloister accelerator. Makes the abductee exhale spider pheromones and spawn spiderlings."
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = -1

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/plasma
-	true_name = "effluvium sanguine-synonym emitter"
+	true_name = "effluvium sanguine-synonym emitter. Makes the abductee emit a disrupting psychic wave every so often. This will either stun, cause hallucinations or deal random brain damage to people nearby."
 	cooldown_low = 1200
 	cooldown_high = 1800
 	icon_state = "slime"
