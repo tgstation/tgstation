@@ -47,11 +47,6 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
-	var/list/armor_list = list()
-	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
-	var/list/durability_list = list()
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -317,29 +312,7 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(LAZYLEN(armor_list))
-		armor_list.Cut()
-	if(armor.bio)
-		armor_list += list("TOXIN" = armor.bio)
-	if(armor.bomb)
-		armor_list += list("EXPLOSIVE" = armor.bomb)
-	if(armor.bullet)
-		armor_list += list("BULLET" = armor.bullet)
-	if(armor.energy)
-		armor_list += list("ENERGY" = armor.energy)
-	if(armor.laser)
-		armor_list += list("LASER" = armor.laser)
-	if(armor.melee)
-		armor_list += list("MELEE" = armor.melee)
-
-	if(LAZYLEN(durability_list))
-		durability_list.Cut()
-	if(armor.fire)
-		durability_list += list("FIRE" = armor.fire)
-	if(armor.acid)
-		durability_list += list("ACID" = armor.acid)
-
-	if(LAZYLEN(armor_list) || LAZYLEN(durability_list))
+	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid)
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
@@ -347,16 +320,26 @@
 
 	if(href_list["list_armor"])
 		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
-		if(LAZYLEN(armor_list))
+		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR</b>"
-			for(var/dam_type in armor_list)
-				var/armor_amount = armor_list[dam_type]
-				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
-		if(LAZYLEN(durability_list))
+			if(armor.bio)
+				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+			if(armor.bomb)
+				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
+			if(armor.bullet)
+				readout += "\nBULLET [armor_to_protection_class(armor.bullet)]"
+			if(armor.energy)
+				readout += "\nENERGY [armor_to_protection_class(armor.energy)]"
+			if(armor.laser)
+				readout += "\nLASER [armor_to_protection_class(armor.laser)]"
+			if(armor.melee)
+				readout += "\nMELEE [armor_to_protection_class(armor.melee)]"
+		if(armor.fire || armor.acid)
 			readout += "\n<b>DURABILITY</b>"
-			for(var/dam_type in durability_list)
-				var/durability_amount = durability_list[dam_type]
-				readout += "\n[dam_type] [armor_to_protection_class(durability_amount)]" //e.g. FIRE II
+			if(armor.fire)
+				readout += "\nFIRE [armor_to_protection_class(armor.fire)]"
+			if(armor.acid)
+				readout += "\nACID [armor_to_protection_class(armor.acid)]"
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")
@@ -370,31 +353,30 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	var/sign = ""
 	if (armor_value < 0)
-		sign = "-"
+		. = "-"
 	armor_value = round(abs(armor_value), 10) / 10
 	switch (armor_value)
 		if (1)
-			. = sign + "I"
+			. += "I"
 		if (2)
-			. = sign + "II"
+			. += "II"
 		if (3)
-			. = sign + "III"
+			. += "III"
 		if (4)
-			. = sign + "IV"
+			. += "IV"
 		if (5)
-			. = sign + "V"
+			. += "V"
 		if (6)
-			. = sign + "VI"
+			. += "VI"
 		if (7)
-			. = sign + "VII"
+			. += "VII"
 		if (8)
-			. = sign + "VIII"
+			. += "VIII"
 		if (9)
-			. = sign + "IX"
+			. += "IX"
 		if (10 to INFINITY)
-			. = sign + "X"
+			. += "X"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)
