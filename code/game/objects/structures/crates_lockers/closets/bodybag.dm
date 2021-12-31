@@ -141,13 +141,9 @@
 		content.forceMove(B)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
-		if(!isitem(content))
-			max_weight_of_contents = max(ITEM_SIZE_BULKY, max_weight_of_contents)
-			continue
-		var/obj/item/A_is_item = content
-		if(A_is_item.atom_size < max_weight_of_contents)
-			continue
-		max_weight_of_contents = A_is_item.atom_size
+		if(content.atom_size > max_weight_of_contents)
+			max_weight_of_contents = content.atom_size
+
 	B.set_size(max_weight_of_contents, force = TRUE)
 	usr.put_in_hands(B)
 

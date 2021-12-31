@@ -141,7 +141,7 @@
 	else if(owner.get_active_held_item())
 		var/drop_chance = 1
 		var/obj/item/I = owner.get_active_held_item()
-		drop_chance += I.atom_size
+		drop_chance += max(round(log(10, I.atom_size) - 2), 0)
 		if(DT_PROB(0.5 * drop_chance, delta_time) && owner.dropItemToGround(I))
 			to_chat(owner, span_warning("You drop [I]!"))
 

@@ -20,7 +20,7 @@ FLOOR SAFES
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	/// The maximum combined atom_size of stuff in the safe
-	var/maxspace = 24
+	var/maxspace = ITEM_SIZE_BULKY * 6
 	/// The amount of tumblers that will be generated
 	var/number_of_tumblers = 2
 	/// Whether the safe is open or not

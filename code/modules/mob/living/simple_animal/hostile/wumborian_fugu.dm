@@ -84,48 +84,51 @@
 	button_icon_state = "expand"
 
 /datum/action/innate/fugu/expand/Activate()
-	var/mob/living/simple_animal/hostile/asteroid/fugu/F = owner
-	if(F.wumbo)
-		to_chat(F, span_warning("YOU'RE ALREADY WUMBO!"))
+	var/mob/living/simple_animal/hostile/asteroid/fugu/host = owner
+	if(host.wumbo)
+		to_chat(host, span_warning("YOU'RE ALREADY WUMBO!"))
 		return
-	if(F.inflate_cooldown)
-		to_chat(F, span_warning("You need time to gather your strength!"))
+	if(host.inflate_cooldown)
+		to_chat(host, span_warning("You need time to gather your strength!"))
 		return
-	if(HAS_TRAIT(F, TRAIT_FUGU_GLANDED))
-		to_chat(F, span_warning("Something is interfering with your growth!"))
+	if(HAS_TRAIT(host, TRAIT_FUGU_GLANDED))
+		to_chat(host, span_warning("Something is interfering with your growth!"))
 		return
-	F.wumbo = 1
-	F.icon_state = "Fugu1"
-	F.obj_damage = 60
-	F.melee_damage_lower = 15
-	F.melee_damage_upper = 20
-	F.harm_intent_damage = 0
-	F.throw_message = "is absorbed by the girth of the"
-	F.retreat_distance = null
-	F.minimum_distance = 1
-	F.move_to_delay = 6
-	F.environment_smash = ENVIRONMENT_SMASH_WALLS
-	F.atom_size = MOB_SIZE_LARGE
-	F.speed = 1
-	addtimer(CALLBACK(F, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 100)
+
+	host.wumbo = 1
+	host.icon_state = "Fugu1"
+	host.obj_damage = 60
+	host.melee_damage_lower = 15
+	host.melee_damage_upper = 20
+	host.harm_intent_damage = 0
+	host.throw_message = "is absorbed by the girth of the"
+	host.retreat_distance = null
+	host.minimum_distance = 1
+	host.move_to_delay = 6
+	host.environment_smash = ENVIRONMENT_SMASH_WALLS
+	host.set_size(MOB_SIZE_LARGE)
+	host.speed = 1
+	addtimer(CALLBACK(host, /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate), 10 SECONDS)
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
-	if(wumbo)
-		walk(src, 0)
-		wumbo = 0
-		icon_state = "Fugu0"
-		obj_damage = 0
-		melee_damage_lower = 0
-		melee_damage_upper = 0
-		harm_intent_damage = 5
-		throw_message = "is avoided by the"
-		retreat_distance = 9
-		minimum_distance = 9
-		move_to_delay = 2
-		inflate_cooldown = 4
-		environment_smash = ENVIRONMENT_SMASH_NONE
-		atom_size = MOB_SIZE_SMALL
-		speed = 0
+	if(!wumbo)
+		return
+
+	walk(src, 0)
+	wumbo = 0
+	icon_state = "Fugu0"
+	obj_damage = 0
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	harm_intent_damage = 5
+	throw_message = "is avoided by the"
+	retreat_distance = 9
+	minimum_distance = 9
+	move_to_delay = 2
+	inflate_cooldown = 4
+	environment_smash = ENVIRONMENT_SMASH_NONE
+	set_size(MOB_SIZE_SMALL)
+	speed = 0
 
 /mob/living/simple_animal/hostile/asteroid/fugu/death(gibbed)
 	Deflate()

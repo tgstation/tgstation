@@ -258,6 +258,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	layer = ABOVE_OPEN_TURF_LAYER
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	/// The amount of weight necessary to crush this tile.
+	var/crush_weight_threshold = 1000000
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
 	var/fall_on_cross = STABLE //If the tile has some sort of effect when crossed
@@ -281,25 +283,19 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 /obj/structure/stone_tile/singularity_pull()
 	return
 
-/obj/structure/stone_tile/proc/on_entered(datum/source, atom/movable/AM)
+/obj/structure/stone_tile/proc/on_entered(datum/source, atom/movable/crosser)
 	SIGNAL_HANDLER
 	if(falling || fallen)
 		return
-	var/turf/T = get_turf(src)
-	if(!islava(T) && !ischasm(T)) //nothing to sink or fall into
+	var/turf/location = get_turf(src)
+	if(!islava(location) && !ischasm(location)) //nothing to sink or fall into
 		return
-	var/obj/item/I
-	if(istype(AM, /obj/item))
-		I = AM
-	var/mob/living/L
-	if(isliving(AM))
-		L = AM
 	switch(fall_on_cross)
 		if(COLLAPSE_ON_CROSS, DESTROY_ON_CROSS)
-			if((I && I.atom_size >= ITEM_SIZE_BULKY) || (L && !(L.movement_type & FLYING) && L.atom_size >= MOB_SIZE_HUMAN)) //too heavy! too big! aaah!
+			if(!(crosser.movement_type & (FLYING|FLOATING) && !crosser.throwing && crosser.atom_mass > crush_weight_threshold))
 				INVOKE_ASYNC(src, .proc/collapse)
 		if(UNIQUE_EFFECT)
-			crossed_effect(AM)
+			crossed_effect(crosser)
 
 /obj/structure/stone_tile/proc/collapse()
 	falling = TRUE

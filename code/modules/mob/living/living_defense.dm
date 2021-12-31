@@ -63,12 +63,11 @@
 	return 0
 
 /obj/item/proc/get_volume_by_throwforce_and_or_atom_size()
-		if(throwforce && atom_size)
-				return clamp((throwforce + atom_size) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
-		else if(atom_size)
-				return clamp(atom_size * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-		else
-				return 0
+	if(!atom_size)
+		return 0
+	if(!throwforce)
+		return clamp(8 * (log(10, atom_size) - 2), 20, 100)
+	return clamp((throwforce + (log(10, atom_size) - 2)) * 5, 30, 100)
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 	if(combat_mode == new_mode)

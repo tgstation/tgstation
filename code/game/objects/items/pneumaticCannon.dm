@@ -15,7 +15,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
-	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
+	var/maxWeightClass = ITEM_SIZE_NORMAL * 7 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
@@ -238,7 +238,7 @@
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	maxWeightClass = 10
+	maxWeightClass = ITEM_SIZE_NORMAL * 4
 	gasPerThrow = 5
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
@@ -287,7 +287,7 @@
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
-	maxWeightClass = 150 //50 pies. :^)
+	maxWeightClass = ITEM_SIZE_NORMAL * 50 //50 pies. :^)
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
@@ -299,11 +299,11 @@
 	automatic = TRUE
 	selfcharge = TRUE
 	charge_type = /obj/item/food/pie/cream
-	maxWeightClass = 60 //20 pies.
+	maxWeightClass = ITEM_SIZE_NORMAL * 20 //20 pies.
 
 /obj/item/pneumatic_cannon/pie/selfcharge/cyborg
 	name = "low velocity pie cannon"
 	automatic = FALSE
 	charge_type = /obj/item/food/pie/cream/nostun
-	maxWeightClass = 6 //2 pies
+	maxWeightClass = ITEM_SIZE_NORMAL * 2 //2 pies
 	charge_ticks = 2 //4 second/pie

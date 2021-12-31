@@ -94,7 +94,7 @@
 		victim.throw_alert("embeddedobject", /atom/movable/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
-		damage += weapon.atom_size * impact_pain_mult
+		damage += (log(10, weapon.atom_size) - 2) * impact_pain_mult
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 
 	if(damage > 0)
@@ -132,7 +132,7 @@
 	if(victim.stat == DEAD)
 		return
 
-	var/damage = weapon.atom_size * pain_mult
+	var/damage = (log(10, weapon.atom_size) - 2) * pain_mult
 	var/pain_chance_current = DT_PROB_RATE(pain_chance / 100, delta_time) * 100
 	if(pain_stam_pct && HAS_TRAIT_FROM(victim, TRAIT_INCAPACITATED, STAMINA)) //if it's a less-lethal embed, give them a break if they're already stamcritted
 		pain_chance_current *= 0.2
@@ -166,7 +166,7 @@
 		chance *= 0.5
 
 	if(harmful && prob(chance))
-		var/damage = weapon.atom_size * jostle_pain_mult
+		var/damage = (log(10, weapon.atom_size) - 2) * jostle_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 		to_chat(victim, span_userdanger("[weapon] embedded in your [limb.name] jostles and stings!"))
 
@@ -176,7 +176,7 @@
 	var/mob/living/carbon/victim = parent
 
 	if(harmful)
-		var/damage = weapon.atom_size * remove_pain_mult
+		var/damage = (log(10, weapon.atom_size) - 2) * remove_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, wound_bonus = CANT_WOUND)
 
 	victim.visible_message(span_danger("[weapon] falls [harmful ? "out" : "off"] of [victim.name]'s [limb.name]!"), span_userdanger("[weapon] falls [harmful ? "out" : "off"] of your [limb.name]!"))
@@ -190,7 +190,7 @@
 	if(I != weapon || src.limb != limb)
 		return
 	var/mob/living/carbon/victim = parent
-	var/time_taken = rip_time * weapon.atom_size
+	var/time_taken = rip_time * (log(10, weapon.atom_size) - 2)
 	INVOKE_ASYNC(src, .proc/complete_rip_out, victim, I, limb, time_taken)
 
 /// everything async that ripOut used to do
@@ -202,7 +202,7 @@
 		qdel(src)
 		return
 	if(harmful)
-		var/damage = weapon.atom_size * remove_pain_mult
+		var/damage = (log(10, weapon.atom_size) - 2) * remove_pain_mult
 		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage, sharpness=SHARP_EDGED) //It hurts to rip it out, get surgery you dingus. unlike the others, this CAN wound + increase slash bloodflow
 		victim.emote("scream")
 
@@ -271,7 +271,7 @@
 			vision_distance=COMBAT_MESSAGE_RANGE, ignored_mobs=victim)
 		to_chat(victim, span_userdanger("[user] begins plucking [weapon] from your [limb.name]..."))
 
-	var/pluck_time = 2.5 SECONDS * weapon.atom_size * (self_pluck ? 2 : 1)
+	var/pluck_time = 2.5 SECONDS * (log(10, weapon.atom_size) - 2) * (self_pluck ? 2 : 1)
 	if(!do_after(user, pluck_time, victim))
 		if(self_pluck)
 			to_chat(user, span_danger("You fail to pluck [weapon] from your [limb.name]."))
