@@ -29,6 +29,9 @@
 		QDEL_NULL(mod)
 	return ..()
 
+/obj/item/clothing/head/helmet/space/mod/atom_destruction(damage_flag)
+	return mod.atom_destruction(damage_flag)
+
 /obj/item/clothing/suit/armor/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
@@ -56,6 +59,9 @@
 		QDEL_NULL(mod)
 	return ..()
 
+/obj/item/clothing/suit/armor/mod/atom_destruction(damage_flag)
+	return mod.atom_destruction(damage_flag)
+
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
 	desc = "A pair of gauntlets for a MODsuit."
@@ -80,8 +86,12 @@
 		QDEL_NULL(mod)
 	return ..()
 
-/// Replaces these gloves on the wearer with the overslot ones
+/obj/item/clothing/gloves/mod/atom_destruction(damage_flag)
+	overslot.forceMove(drop_location())
+	overslot = null
+	return mod.atom_destruction(damage_flag)
 
+/// Replaces these gloves on the wearer with the overslot ones
 /obj/item/clothing/gloves/mod/proc/show_overslot()
 	if(!overslot)
 		return
@@ -113,6 +123,11 @@
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
 	return ..()
+
+/obj/item/clothing/shoes/mod/atom_destruction(damage_flag)
+	overslot.forceMove(drop_location())
+	overslot = null
+	return mod.atom_destruction(damage_flag)
 
 /// Replaces these shoes on the wearer with the overslot ones
 /obj/item/clothing/shoes/mod/proc/show_overslot()

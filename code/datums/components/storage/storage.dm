@@ -544,10 +544,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/component/storage/proc/attackby(datum/source, obj/item/I, mob/M, params)
 	SIGNAL_HANDLER
 
-	if(istype(I, /obj/item/hand_labeler))
-		var/obj/item/hand_labeler/labeler = I
-		if(labeler.mode)
-			return FALSE
+	if(!I.attackby_storage_insert(src, parent, M))
+		return FALSE
 	. = TRUE //no afterattack
 	if(iscyborg(M))
 		return

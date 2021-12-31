@@ -384,16 +384,27 @@
 	name = "chemical payload"
 	desc = "An explosive payload designed to spread chemicals, dangerous or otherwise, across a large area. Properties of the core may vary with grenade casing type, and must be loaded before use."
 	icon_state = "chemcore"
+	/// The initial volume of the reagent holder the bombcore has.
+	var/core_holder_volume = 1000
+	/// The set of beakers that have been inserted into the bombcore.
 	var/list/beakers = list()
+	/// The maximum number of beakers that this bombcore can have.
 	var/max_beakers = 1 // Read on about grenade casing properties below
+	/// The range this spreads the reagents added to the bombcore.
 	var/spread_range = 5
+	/// How much this heats the reagents in it on detonation.
 	var/temp_boost = 50
+	/// The amount of reagents released with each detonation.
 	var/time_release = 0
+
+/obj/item/bombcore/chemical/Initialize(mapload)
+	. = ..()
+	create_reagents(core_holder_volume)
 
 /obj/item/bombcore/chemical/detonate()
 
 	if(time_release > 0)
-		var/total_volume = 0
+		var/total_volume = reagents.total_volume
 		for(var/obj/item/reagent_containers/RC in beakers)
 			total_volume += RC.reagents.total_volume
 
@@ -408,7 +419,7 @@
 		reactants.my_atom = src
 		for(var/obj/item/reagent_containers/RC in beakers)
 			RC.reagents.trans_to(reactants, RC.reagents.total_volume*fraction, 1, 1, 1)
-		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
+		chem_splash(get_turf(src), reagents, spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
 		addtimer(CALLBACK(src, .proc/detonate), 10)
@@ -428,7 +439,7 @@
 			if(S && S.reagents && S.reagents.total_volume)
 				reactants += S.reagents
 
-	if(!chem_splash(get_turf(src), spread_range, reactants, temp_boost))
+	if(!chem_splash(get_turf(src), reagents, spread_range, reactants, temp_boost))
 		playsound(loc, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		return // The Explosion didn't do anything. No need to log, or disappear.
 
@@ -437,10 +448,6 @@
 		log_game(adminlog)
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
-
-	if(loc && istype(loc, /obj/machinery/syndicatebomb/))
-		qdel(loc)
-	qdel(src)
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)

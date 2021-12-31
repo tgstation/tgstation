@@ -21,12 +21,8 @@
 	var/model_select_icon = "nomod"
 	///Produces the icon for the borg and, if no special_light_key is set, the lights
 	var/cyborg_base_icon = "robot"
-	///The icon file for our borg icon
-	var/cyborg_icon_file = 'icons/mob/robots.dmi'
 	///If we want specific lights, use this instead of copying lights in the dmi
 	var/special_light_key
-	///If we want specific sprites for being stunned/dead
-	var/cyborg_stat_icons = FALSE
 	///Holds all the usable modules (tools)
 	var/list/modules = list()
 	///Paths of modules to be created when the model is created
@@ -182,8 +178,6 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
-	cyborg.base_pixel_x = 0
-	cyborg.base_pixel_y = 0
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
 		return
@@ -216,7 +210,7 @@
 		if(!isnull(details[SKIN_ICON_STATE]))
 			cyborg_base_icon = details[SKIN_ICON_STATE]
 		if(!isnull(details[SKIN_ICON]))
-			cyborg_icon_file = details[SKIN_ICON]
+			cyborg.icon = details[SKIN_ICON]
 		if(!isnull(details[SKIN_PIXEL_X]))
 			cyborg.base_pixel_x = details[SKIN_PIXEL_X]
 		if(!isnull(details[SKIN_PIXEL_Y]))
@@ -227,8 +221,6 @@
 			hat_offset = details[SKIN_HAT_OFFSET]
 		if(!isnull(details[SKIN_TRAITS]))
 			model_traits += details[SKIN_TRAITS]
-		if(!isnull(details[SKIN_STAT_ICONS]))
-			cyborg_stat_icons = details[SKIN_STAT_ICONS]
 	for(var/i in old_model.added_modules)
 		added_modules += i
 		old_model.added_modules -= i
@@ -366,10 +358,6 @@
 	model_select_icon = "janitor"
 	hat_offset = -5
 	clean_on_move = TRUE
-	borg_skins = list(
-		"Cart Janitor" = list(SKIN_ICON_STATE = "janitor"),
-		"Maid Janitor" = list(SKIN_ICON_STATE = "mekajani", SKIN_ICON = 'icons/mob/robots_tall.dmi', SKIN_HAT_OFFSET = 15, SKIN_STAT_ICONS = TRUE),
-	)
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
