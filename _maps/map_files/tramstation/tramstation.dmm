@@ -13717,9 +13717,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "dkY" = (
-/obj/structure/chair/stool/directional/south{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -14792,9 +14790,7 @@
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "dGi" = (
-/obj/structure/chair/stool/directional/south{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -16225,7 +16221,7 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
 "efk" = (
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /obj/effect/landmark/event_spawn,
 /obj/effect/landmark/start/virologist,
 /obj/structure/disposalpipe/segment,
@@ -18818,7 +18814,7 @@
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "eZX" = (
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/violet/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
@@ -23902,7 +23898,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/service/bar)
 "gRP" = (
@@ -30976,7 +30972,7 @@
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
 "jAF" = (
-/obj/structure/chair/stool/directional/west,
+/obj/structure/chair/stool/directional/east,
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
@@ -32517,6 +32513,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"kdk" = (
+/obj/structure/chair/stool/directional/north,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/carpet,
+/area/hallway/secondary/entry)
 "kdv" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -38876,9 +38877,7 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
 "mGI" = (
-/obj/structure/chair/stool/directional/south{
-	dir = 1
-	},
+/obj/structure/chair/stool/directional/north,
 /turf/open/floor/carpet,
 /area/commons/dorms)
 "mGJ" = (
@@ -40852,7 +40851,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/service/bar)
@@ -55659,6 +55658,10 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/cargo/office)
+"sXJ" = (
+/obj/structure/chair/stool/directional/north,
+/turf/open/floor/carpet,
+/area/hallway/secondary/entry)
 "sXN" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -64245,7 +64248,7 @@
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "wla" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /obj/effect/landmark/start/roboticist,
 /turf/open/floor/circuit/green,
 /area/science/robotics/mechbay)
@@ -66498,9 +66501,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/chair/stool/directional/west{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "xaO" = (
@@ -151351,7 +151352,7 @@ gUX
 awt
 wxA
 mqN
-kWD
+kdk
 awt
 oPe
 aBa
@@ -151865,7 +151866,7 @@ gUX
 awt
 kWD
 avy
-wxA
+sXJ
 awt
 bYj
 jDZ

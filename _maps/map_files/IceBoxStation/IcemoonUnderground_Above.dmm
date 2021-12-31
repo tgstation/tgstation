@@ -5415,7 +5415,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "vJ" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /obj/item/storage/toolbox/artistic{
 	pixel_y = 4
 	},
@@ -7438,7 +7438,7 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "DR" = (
-/obj/structure/chair/stool/directional/south,
+/obj/structure/chair/stool/directional/north,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_x = -32
 	},
