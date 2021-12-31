@@ -55,7 +55,7 @@
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
-	jaunt.Remove(user)
+	jaunt?.Remove(user)
 	user.update_icons()
 
 //If we hit the Ninja who owns this Katana, they catch it.
