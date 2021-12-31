@@ -679,7 +679,7 @@
 	button.maptext_height = 12
 
 /datum/action/cooldown/IsAvailable()
-	return (..() && (next_use_time <= world.time))
+	return ..() && (next_use_time <= world.time)
 
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
