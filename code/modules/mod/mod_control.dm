@@ -598,13 +598,6 @@
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
-/obj/item/mod/control/proc/update_slowdown()
-	if(parts_deployed > 0)
-		slowdown = on ? slowdown_active : slowdown_inactive
-	else
-		slowdown = 0
-	wearer.update_equipment_speed_mods()
-
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
