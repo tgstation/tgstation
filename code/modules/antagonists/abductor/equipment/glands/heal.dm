@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/heal
-	true_name = "organic replicator. If organs, chest or or limbs are too damaged or robotic, they will be forcefully rejected and replacements will grow out instead. If having low blood, over 40 toxin damage, or at least 10u toxins in bloodstream, the blood will be rejected (by vomit) and replaced with healthy blood. Also rejects implants such as mindshield implants."
+	true_name = "organic replicator. If organs, chest or or limbs are too damaged or robotic, they will be forcefully rejected and replacements will grow out instead. If having low blood, over 40 toxin damage, or at least 10u toxins in bloodstream, the blood will be rejected (by vomit) and replaced with healthy blood. Also rejects implants such as mindshield implants"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
