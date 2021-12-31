@@ -35,4 +35,4 @@
 /// The total area of all of the sides of a wall assuming that they are perfectly flat.
 #define CLOSED_TURF_SURFACE_AREA ((TURF_BASE_AREA * 2) + (TURF_SIDE_AREA * 4))
 /// The size of a wall. In general if its sprite fits within a turf its size should be less than this.
-#define TURF_SIZE (TURF_HORIZONTAL_AREA * TURF_HEIGHT) // 2.5m^2 | 2500L | 2500000cm^3
+#define TURF_SIZE (TURF_BASE_AREA * TURF_HEIGHT) // 2.5m^2 | 2500L | 2500000cm^3
