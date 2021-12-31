@@ -9,9 +9,13 @@
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage)
+	/// A cached reference to the storage component attached to this module.
 	var/datum/component/storage/concrete/storage
+	/// The maximum atom size of things that can be stored in the module.
 	var/max_atom_size = WEIGHT_CLASS_NORMAL
+	/// The maximum total atom size of things that can be stored in the module.
 	var/max_total_atom_size = 15
+	/// The maximum number of things that can be stored in the module.
 	var/max_items = 7
 
 /obj/item/mod/module/storage/Initialize(mapload)
