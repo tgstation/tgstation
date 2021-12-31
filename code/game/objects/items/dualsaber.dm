@@ -50,7 +50,7 @@
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	if(!set_size(size_on))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
-	
+
 	wielded = TRUE
 	hitsound = 'sound/weapons/blade1.ogg'
 	START_PROCESSING(SSobj, src)

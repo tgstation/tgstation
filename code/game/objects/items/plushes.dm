@@ -615,7 +615,7 @@
 		return ..()
 	if(splat)
 		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return	
+		return
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
