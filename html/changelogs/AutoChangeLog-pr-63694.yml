@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Bodies will no longer (sometimes) be fully deleted when escaping a disposal pipe trap."
