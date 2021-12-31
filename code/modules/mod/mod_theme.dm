@@ -366,7 +366,7 @@
 	name = "security"
 	desc = "An Apadyne Technologies security suit, offering shock protection and quicker speed, at the cost of carrying capacity."
 	default_skin = "security"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
+	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 10, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
@@ -402,7 +402,7 @@
 	name = "safeguard"
 	desc = "An Apadyne Technologies advanced security suit, offering greater speed and fire protection than the standard security model."
 	default_skin = "safeguard"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 25, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
+	armor = list(MELEE = 30, BULLET = 25, LASER = 30, ENERGY = 10, BOMB = 25, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -438,7 +438,7 @@
 	name = "magnate"
 	desc = "A fancy, very protective suit for Nanotrasen's captains. Shock, fire and acid-proof while also having a large capacity and high speed."
 	default_skin = "magnate"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -509,7 +509,7 @@
 	name = "syndicate"
 	desc = "A suit designed by Gorlex Marauders, offering armor ruled illegal in most of Spinward Stellar."
 	default_skin = "syndicate"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30, ENERGY = 15, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1
@@ -545,7 +545,7 @@
 	name = "elite"
 	desc = "An elite suit upgraded by Cybersun Industries, offering upgraded armor values."
 	default_skin = "elite"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	armor = list(MELEE = 50, BULLET = 60, LASER = 50, ENERGY = 25, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
