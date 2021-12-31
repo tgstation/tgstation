@@ -193,17 +193,19 @@
 	notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bomb Planted")
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
 	if (isnull(new_timer))
 		return
-	new_timer = round(new_timer)
-	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
-		timer_set = clamp(new_timer, minimum_timer, maximum_timer)
-		loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+	timer_set = round(new_timer)
+	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")
 		return
-	if(!in_range(src, user) || !isliving(user))
+	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))

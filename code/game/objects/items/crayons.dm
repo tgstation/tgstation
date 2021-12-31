@@ -248,7 +248,7 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)

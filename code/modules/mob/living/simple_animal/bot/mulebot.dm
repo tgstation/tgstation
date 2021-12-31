@@ -307,7 +307,7 @@
 		if("destination")
 			var/new_dest
 			if(pda)
-				new_dest = input(user, "Enter Destination:", name, destination) as null|anything in GLOB.deliverybeacontags
+				new_dest = tgui_input_list(user, "Enter Destination", "Mulebot Settings", GLOB.deliverybeacontags, destination)
 			else
 				new_dest = params["value"]
 			if(new_dest)
@@ -323,7 +323,7 @@
 		if("sethome")
 			var/new_home
 			if(pda)
-				new_home = input(user, "Enter Home:", name, home_destination) as null|anything in GLOB.deliverybeacontags
+				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			else
 				new_home = params["value"]
 			if(new_home)
@@ -467,7 +467,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path?.len)
+	if(path && length(path))
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = TRUE //Indicates the AI's custom path is initialized.
@@ -524,7 +524,7 @@
 				at_target()
 				return
 
-			else if(path.len > 0 && target) // valid path
+			else if(length(path) && target) // valid path
 				var/turf/next = path[1]
 				reached_target = FALSE
 				if(next == loc)
@@ -573,14 +573,14 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
-	if(path.len > 0)
+	if(length(path))
 		buzz(DELIGHT)
 	mode = BOT_BLOCKED
 
 /mob/living/simple_animal/bot/mulebot/proc/process_nav()
 	calc_path()
 
-	if(path.len > 0)
+	if(length(path))
 		blockcount = 0
 		mode = BOT_BLOCKED
 		buzz(DELIGHT)

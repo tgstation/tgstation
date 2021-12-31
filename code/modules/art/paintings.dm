@@ -180,11 +180,10 @@
 		to_chat(user,span_notice("You can't afford this."))
 		return
 	var/sniped_amount = painting_metadata.credit_value
-	var/offer_amount = input(user,"How much do you want to offer ? Minimum : [painting_metadata.credit_value]","Patronage Amount", painting_metadata.credit_value + 1) as num|null
-	if(account.account_balance < offer_amount)
-		to_chat(user,span_notice("You can't afford this."))
+	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
+	if(isnull(offer_amount))
 		return
-	if(!offer_amount || sniped_amount != painting_metadata.credit_value || offer_amount < painting_metadata.credit_value+1 || !user.canUseTopic(src))
+	if(offer_amount <= 0 || sniped_amount != painting_metadata.credit_value || offer_amount < painting_metadata.credit_value+1 || !user.canUseTopic(src))
 		return
 	if(!account.adjust_money(-offer_amount))
 		to_chat(user,span_warning("Transaction failure. Please try again."))

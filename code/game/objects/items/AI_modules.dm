@@ -246,15 +246,10 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
-	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
-	if(newpos == null)
+	var/newpos = tgui_input_number(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority ", lawpos, 50, 15)
+	if(isnull(newpos))
 		return
-	if(newpos < 15)
-		var/response = tgui_alert(usr, "Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", list("Change to 15", "Cancel"))
-		if (!response || response == "Cancel")
-			return
-		newpos = 15
-	lawpos = min(newpos, 50)
+	lawpos = round(newpos)
 	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
@@ -290,12 +285,8 @@ AI MODULES
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
-	lawpos = input("Please enter the law you want to delete.", "Law Number", lawpos) as num|null
-	if(lawpos == null)
-		return
-	if(lawpos <= 0)
-		to_chat(user, span_warning("Error: The law number of [lawpos] is invalid."))
-		lawpos = 1
+	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50, 1)
+	if(isnull(lawpos))
 		return
 	to_chat(user, span_notice("Law [lawpos] selected."))
 	..()
