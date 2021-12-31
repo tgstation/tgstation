@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 1.25
+	slowdown = 0
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
@@ -62,6 +62,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How many suit parts are deployed
+	var/parts_deployed = 0
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
@@ -96,7 +98,6 @@
 	theme = GLOB.mod_themes[theme]
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
-	slowdown = slowdown_inactive
 	complexity_max = theme.complexity_max
 	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
@@ -596,6 +597,13 @@
 /obj/item/mod/control/proc/power_off()
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
+
+/obj/item/mod/control/proc/update_slowdown()
+	if(parts_deployed > 0)
+		slowdown = on ? slowdown_active : slowdown_inactive
+	else
+		slowdown = 0
+	wearer.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER

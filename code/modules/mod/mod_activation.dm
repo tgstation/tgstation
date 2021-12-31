@@ -25,6 +25,8 @@
 	var/parts_to_check = mod_parts - part
 	if(part.loc == src)
 		deploy(user, part)
+		parts_deployed += 1
+		update_slowdown()
 		for(var/obj/item/piece as anything in parts_to_check)
 			if(piece.loc != src)
 				continue
@@ -32,6 +34,8 @@
 			break
 	else
 		conceal(user, part)
+		parts_deployed -= 1
+		update_slowdown()
 		for(var/obj/item/piece as anything in parts_to_check)
 			if(piece.loc == src)
 				continue
@@ -188,7 +192,7 @@
 /// Finishes the suit's activation, starts processing
 /obj/item/mod/control/proc/finish_activation(on)
 	icon_state = "[skin]-control[on ? "-sealed" : ""]"
-	slowdown = on ? slowdown_active : slowdown_inactive
+	update_slowdown()
 	if(on)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
@@ -197,7 +201,6 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_deactivation()
 		STOP_PROCESSING(SSobj, src)
-	wearer.update_equipment_speed_mods()
 	active = on
 	wearer.update_inv_back()
 
