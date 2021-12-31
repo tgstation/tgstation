@@ -42,6 +42,8 @@
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 	///Represents a signel source of camera alarms about movement or camera tampering
 	var/datum/alarm_handler/alarm_manager
+	///Proximity monitor associated with this atom, for motion sensitive cameras.
+	var/datum/proximity_monitor/proximity_monitor
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
@@ -101,7 +103,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		network -= i
 		network += "[port.id]_[i]"
 
-/obj/machinery/proc/create_prox_monitor()
+/obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
 		proximity_monitor = new(src, 1)
 
@@ -229,10 +231,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		droppable_parts += assembly.emp_module
 	if(assembly.proxy_module)
 		droppable_parts += assembly.proxy_module
-	if(!droppable_parts.len)
+	if(!length(droppable_parts))
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sort_names(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)

@@ -40,15 +40,15 @@
 		break
 	if(rune)
 		limit = MAX_BLOODCHARGE
-	if(spells.len >= limit)
+	if(length(spells) >= limit)
 		if(rune)
 			to_chat(owner, span_cultitalic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
 		else
 			to_chat(owner, span_cultitalic("<b><u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</b></u>"))
 		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
-		if(nullify_spell)
-			qdel(nullify_spell)
-		return
+		if(isnull(nullify_spell))
+			return
+		qdel(nullify_spell)
 	var/entered_spell_name
 	var/datum/action/innate/cult/blood_spell/BS
 	var/list/possible_spells = list()
@@ -58,13 +58,15 @@
 		possible_spells[cult_name] = J
 	possible_spells += "(REMOVE SPELL)"
 	entered_spell_name = tgui_input_list(owner, "Blood spell to prepare", "Spell Choices", possible_spells)
+	if(isnull(entered_spell_name))
+		return
 	if(entered_spell_name == "(REMOVE SPELL)")
 		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
-		if(nullify_spell)
-			qdel(nullify_spell)
-		return
+		if(isnull(nullify_spell))
+			return
+		qdel(nullify_spell)
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
+	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
 		return
 	to_chat(owner,span_warning("You begin to carve unnatural symbols into your flesh!"))
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -478,7 +480,7 @@
 		for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
 			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
 
-		if(!potential_runes.len)
+		if(!length(potential_runes))
 			to_chat(user, span_warning("There are no valid runes to teleport to!"))
 			return
 
@@ -488,6 +490,11 @@
 			return
 
 		var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+		if(isnull(input_rune_key))
+			return
+		if(isnull(potential_runes[input_rune_key]))
+			to_chat(user, span_warning("You must pick a valid rune!"))
+			return
 		var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
 			return

@@ -17,12 +17,7 @@
 	if(!ninja_antag)
 		to_chat(user, span_notice("While it appears normal, you can't seem to detonate the charge."))
 		return
-	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
-	if(!objective)
-		to_chat(user, span_notice("You can't seem to activate the charge.  It's location-locked, but you don't know where to detonate it."))
-		return
-	if(objective.detonation_location != get_area(user))
-		to_chat(user, span_notice("This isn't the location you're supposed to use this!"))
+	if (!check_loc(user, ninja_antag))
 		return
 	detonator = user
 	return ..()
@@ -33,5 +28,24 @@
 	if(!detonator)
 		return
 	var/datum/antagonist/ninja/ninja_antag = detonator.mind.has_antag_datum(/datum/antagonist/ninja)
+	//buuuuuuuuuuuuuuut the c4 may have moved
+	if(!check_loc(detonator, ninja_antag))
+		return
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective.completed = TRUE
+
+/obj/item/grenade/c4/ninja/proc/check_loc(mob/user, datum/antagonist/ninja/ninja_antag)
+	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
+	if(!objective)
+		if (active)
+			say("Invalid location!")
+		else
+			to_chat(user, span_notice("You can't seem to activate the charge.  It's location-locked, but you don't know where to detonate it."))
+		return FALSE
+	if(objective.detonation_location != get_area(user))
+		if (active)
+			say("Invalid location!")
+		else
+			to_chat(user, span_notice("This isn't the location you're supposed to use this!"))
+		return FALSE
+	return TRUE

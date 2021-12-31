@@ -110,18 +110,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			break
 	return turf_to_check
 
-///Returns a list of all locations (except the area) the movable is within.
-/proc/get_nested_locs(atom/movable/atom_on_location, include_turf = FALSE)
-	. = list()
-	var/atom/location = atom_on_location.loc
-	var/turf/turf = get_turf(atom_on_location)
-	while(location && location != turf)
-		. += location
-		location = location.loc
-	if(location && include_turf) //At this point, only the turf is left, provided it exists.
-		. += location
-
-
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
 	var/turf/target = locate(target_atom.x, target_atom.y, target_atom.z)

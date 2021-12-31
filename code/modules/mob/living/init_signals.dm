@@ -109,7 +109,10 @@
 /mob/living/proc/on_forced_standing_trait_loss(datum/source)
 	SIGNAL_HANDLER
 
-	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
+	if(HAS_TRAIT(src, TRAIT_FLOORED))
+		on_fall()
+		set_lying_down()
+	else if(resting)
 		set_lying_down()
 
 /// Called when [TRAIT_HANDS_BLOCKED] is added to the mob.

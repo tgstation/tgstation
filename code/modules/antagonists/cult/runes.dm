@@ -97,10 +97,10 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, span_warning("You aren't able to understand the words of [src]."))
 		return
 	var/list/invokers = can_invoke(user)
-	if(invokers.len >= req_cultists)
+	if(length(invokers) >= req_cultists)
 		invoke(invokers)
 	else
-		to_chat(user, span_danger("You need [req_cultists - invokers.len] more adjacent cultists to use this rune in such a manner."))
+		to_chat(user, span_danger("You need [req_cultists - length(invokers)] more adjacent cultists to use this rune in such a manner."))
 		fail_invoke()
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -221,7 +221,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/mob/living/M in T)
 		if(!IS_CULTIST(M))
 			myriad_targets |= M
-	if(!myriad_targets.len)
+	if(!length(myriad_targets))
 		fail_invoke()
 		log_game("Offer rune failed - no eligible targets")
 		return
@@ -250,7 +250,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	rune_in_use = FALSE
 
 /obj/effect/rune/convert/proc/do_convert(mob/living/convertee, list/invokers)
-	if(invokers.len < 2)
+	if(length(invokers) < 2)
 		for(var/M in invokers)
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
 		log_game("Offer rune failed - tried conversion with one invoker")
@@ -300,7 +300,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 
 	var/big_sac = FALSE
-	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && invokers.len < 3)
+	if((((ishuman(sacrificial) || iscyborg(sacrificial)) && sacrificial.stat != DEAD) || C.cult_team.is_sacrifice_target(sacrificial.mind)) && length(invokers) < 3)
 		for(var/M in invokers)
 			to_chat(M, span_cultitalic("[sacrificial] is too greatly linked to the world! You need three acolytes!"))
 		log_game("Offer rune failed - not enough acolytes and target is living or sac target")
@@ -395,7 +395,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(teleport_rune != src && !is_away_level(teleport_rune.z))
 			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
 
-	if(!potential_runes.len)
+	if(!length(potential_runes))
 		to_chat(user, span_warning("There are no valid runes to teleport to!"))
 		log_game("Teleport rune failed - no other teleport runes")
 		fail_invoke()
@@ -409,6 +409,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 
 	var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+	if(isnull(input_rune_key))
+		return
+	if(isnull(potential_runes[input_rune_key]))
+		fail_invoke()
+		return
 	var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated() || !actual_selected_rune)
 		fail_invoke()
@@ -561,13 +566,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/mob/living/M in T.contents)
 		if(IS_CULTIST(M) && (M.stat == DEAD || !M.client || M.client.is_afk()))
 			potential_revive_mobs |= M
-	if(!potential_revive_mobs.len)
+	if(!length(potential_revive_mobs))
 		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
 		log_game("Raise Dead rune failed - no cultists to revive")
 		fail_invoke()
 		return
-	if(potential_revive_mobs.len > 1)
+	if(length(potential_revive_mobs) > 1)
 		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
+		if(isnull(mob_to_revive))
+			return
 	else
 		mob_to_revive = potential_revive_mobs[1]
 	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
@@ -668,10 +675,14 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
 		if(!(M.current in invokers) && M.current && M.current.stat != DEAD)
 			cultists |= M.current
+	if(length(cultists) <= 1)
+		to_chat(user, span_warning("There are no cultists to summon!"))
+		fail_invoke()
+		return
 	var/mob/living/cultist_to_summon = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", cultists)
 	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 		return
-	if(!cultist_to_summon)
+	if(isnull(cultist_to_summon))
 		to_chat(user, "<span class='cult italic'>You require a summoning target!</span>")
 		fail_invoke()
 		log_game("Summon Cultist rune failed - no target")
@@ -812,7 +823,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		for(var/mob/dead/observer/O in T)
 			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(isAdminObserver(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
 				ghosts_on_rune += O
-		if(!ghosts_on_rune.len)
+		if(!length(ghosts_on_rune))
 			to_chat(user, span_cultitalic("There are no spirits near [src]!"))
 			fail_invoke()
 			log_game("Manifest rune failed - no nearby ghosts")
@@ -910,7 +921,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/mob/living/user = invokers[1]
 	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-	if(summon_objective.summon_spots.len <= 1)
+	if(length(summon_objective.summon_spots) <= 1)
 		to_chat(user, span_cultlarge("Only one ritual site remains - it must be reserved for the final summoning!"))
 		return
 	if(!(place in summon_objective.summon_spots))
@@ -924,7 +935,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	for(var/mob/living/M in GLOB.player_list)
 		if(IS_CULTIST(M))
 			intensity++
-	intensity = max(60, 360 - (360*(intensity/GLOB.player_list.len + 0.3)**2)) //significantly lower intensity for "winning" cults
+	intensity = max(60, 360 - (360*(intensity/length(GLOB.player_list) + 0.3)**2)) //significantly lower intensity for "winning" cults
 	var/duration = intensity*10
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE)
 	visible_message(span_warning("A colossal shockwave of energy bursts from the rune, disintegrating it in the process!"))

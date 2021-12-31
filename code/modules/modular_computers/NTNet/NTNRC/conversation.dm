@@ -86,7 +86,7 @@
 	offline_clients.Add(offline)
 
 /datum/ntnet_conversation/proc/mute_user(datum/computer_file/program/chatclient/op, datum/computer_file/program/chatclient/muted)
-	if(operator != op) //sanity even if the person shouldn't be able to see the mute button
+	if(!op.netadmin_mode && operator != op) //sanity even if the person shouldn't be able to see the mute button
 		return
 	if(muted in muted_clients)
 		muted_clients.Remove(muted)
