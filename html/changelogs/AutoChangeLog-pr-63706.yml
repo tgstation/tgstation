@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "MODsuits no longer runtime when EMPed with no module selected"
