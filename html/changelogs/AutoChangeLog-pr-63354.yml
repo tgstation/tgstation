@@ -1,9 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - refactor: "The majority of user facing input lists have been converted to TGUI."
-  - refactor: "Tgui text inputs now scale with entered input."
-  - bugfix: "Many inputs now properly accept cancelling out of the menu."
-  - bugfix: "Fixes an edge case where users could not press enter on number inputs."
-  - bugfix: "Custom vendor bluescreen."
-  - bugfix: "You can now press ENTER on text inputs without an entry to cancel."

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Hulk is removed more consistently when the user actually enters soft crit."

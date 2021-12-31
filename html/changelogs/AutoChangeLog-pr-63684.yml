@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "accessories on clothes placed inside garment bags will no longer delete themselves."
