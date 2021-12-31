@@ -14,7 +14,7 @@
 	/// The maximum atom size of things that can be stored in the module.
 	var/max_atom_size = ITEM_SIZE_NORMAL
 	/// The maximum total atom size of things that can be stored in the module.
-	var/max_total_atom_size = 15
+	var/max_total_atom_size = ITEM_SIZE_NORMAL * 5
 	/// The maximum number of things that can be stored in the module.
 	var/max_items = 7
 
