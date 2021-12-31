@@ -1921,7 +1921,6 @@
 #include "code\modules\antagonists\blob\structures\resource.dm"
 #include "code\modules\antagonists\blob\structures\shield.dm"
 #include "code\modules\antagonists\brainwashing\brainwashing.dm"
-#include "code\modules\antagonists\brother\brother.dm"
 #include "code\modules\antagonists\changeling\cellular_emporium.dm"
 #include "code\modules\antagonists\changeling\changeling.dm"
 #include "code\modules\antagonists\changeling\changeling_power.dm"

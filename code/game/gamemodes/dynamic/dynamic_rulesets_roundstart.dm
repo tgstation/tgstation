@@ -87,54 +87,6 @@
 		LAZYADDASSOC(SSjob.dynamic_forced_occupations, new_malf, "AI")
 	return TRUE
 
-//////////////////////////////////////////
-//                                      //
-//           BLOOD BROTHERS             //
-//                                      //
-//////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/traitorbro
-	name = "Blood Brothers"
-	antag_flag = ROLE_BROTHER
-	antag_datum = /datum/antagonist/brother
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
-	required_candidates = 2
-	weight = 4
-	cost = 15
-	scaling_cost = 15
-	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
-	var/list/datum/team/brother_team/pre_brother_teams = list()
-	var/const/min_team_size = 2
-
-/datum/dynamic_ruleset/roundstart/traitorbro/pre_execute(population)
-	. = ..()
-	var/num_teams = (get_antag_cap(population)/min_team_size) * (scaled_times + 1) // 1 team per scaling
-	for(var/j = 1 to num_teams)
-		if(candidates.len < min_team_size || candidates.len < required_candidates)
-			break
-		var/datum/team/brother_team/team = new
-		var/team_size = prob(10) ? min(3, candidates.len) : 2
-		for(var/k = 1 to team_size)
-			var/mob/bro = pick_n_take(candidates)
-			assigned += bro.mind
-			team.add_member(bro.mind)
-			bro.mind.special_role = "brother"
-			bro.mind.restricted_roles = restricted_roles
-			GLOB.pre_setup_antags += bro.mind
-		pre_brother_teams += team
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/traitorbro/execute()
-	for(var/datum/team/brother_team/team in pre_brother_teams)
-		team.pick_meeting_area()
-		team.forge_brother_objectives()
-		for(var/datum/mind/M in team.members)
-			M.add_antag_datum(/datum/antagonist/brother, team)
-			GLOB.pre_setup_antags -= M
-		team.update_name()
-	return TRUE
 
 //////////////////////////////////////////////
 //                                          //
