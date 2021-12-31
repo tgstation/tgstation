@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 2
+	slowdown = 1.25
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
@@ -59,9 +59,9 @@
 	/// Power usage of the MOD.
 	var/cell_drain = DEFAULT_CELL_DRAIN
 	/// Slowdown of the MOD when not active.
-	var/slowdown_inactive = 2
+	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
-	var/slowdown_active = 1
+	var/slowdown_active = 0.75
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
@@ -137,6 +137,7 @@
 		module = new module(src)
 		install(module)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -200,12 +201,13 @@
 		. += span_notice("You could use <b>modules</b> on it to install them.")
 		. += span_notice("You could remove modules with a <b>crowbar</b>.")
 		. += span_notice("You could update the access with an <b>ID</b>.")
+		. += span_notice("You could access the wire panel with a <b>wire configuring tool</b>.")
 		if(cell)
 			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
 		else
 			. += span_notice("You could use a <b>cell</b> on it to install one.")
 		if(ai)
-			. += span_notice("You could remove [ai] with an <b>intellicard</b>")
+			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
 		else
 			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
@@ -314,6 +316,9 @@
 		balloon_alert(user, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_REMOVAL, user) & MOD_CANCEL_REMOVAL)
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
 	if(length(modules))
 		var/list/removable_modules = list()
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -406,6 +411,8 @@
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
 	for(var/obj/item/part in mod_parts)
+		if(part.loc == src)
+			continue
 		conceal(null, part)
 	return ..()
 
@@ -617,3 +624,23 @@
 		return
 	cell.give(amount)
 	update_cell_alert()
+
+/obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
+	SIGNAL_HANDLER
+
+	if(slowdown_inactive <= 0)
+		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
+		return
+	if(wearer)
+		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
+		return
+	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	slowdown_inactive = 0
+	slowdown_active = 0
+	slowdown = 0
+	qdel(speed_potion)
+	return SPEED_POTION_SUCCESSFUL

@@ -34,12 +34,13 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.display_numerical_stacking = FALSE
 	STR.max_combined_w_class = 200
 	STR.max_items = 15
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
-		/obj/item/clothing
-		))
+		/obj/item/clothing,
+	))
 
 /obj/item/storage/bag/garment/captain/PopulateContents()
 	new /obj/item/clothing/under/rank/captain(src)

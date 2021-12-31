@@ -322,13 +322,14 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			saved_vars[params["name"]] = !saved_vars[params["name"]]
 		if("path_variable")
 			var/new_path = tgui_input_list(user, "Select type.", "Add SDQL Spell", typesof(text2path(params["root_path"])))
-			if(new_path)
-				saved_vars[params["name"]] = new_path
-				var/datum/sample = new new_path
-				var/list/overrides = list_vars[special_var_lists[params["name"]]]
-				overrides = overrides&sample.vars
-				qdel(sample)
-				icon_needs_updating(params["name"])
+			if(isnull(new_path))
+				return
+			saved_vars[params["name"]] = new_path
+			var/datum/sample = new new_path
+			var/list/overrides = list_vars[special_var_lists[params["name"]]]
+			overrides = overrides&sample.vars
+			qdel(sample)
+			icon_needs_updating(params["name"])
 		if("list_variable_add")
 			if(!list_vars[params["list"]])
 				list_vars[params["list"]] = list()
