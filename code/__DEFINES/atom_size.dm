@@ -23,3 +23,16 @@
 #define MOB_SIZE_LARGE 100000
 /// Megafauna and... well it's pretty much only megafauna. Use this for things you don't want bluespace body-bagged
 #define MOB_SIZE_HUGE 10000000
+
+/// The length of one side of a single turf (in cm)
+#define TURF_LENGTH 100 // 1m
+/// The height of a single turf. (in cm)
+#define TURF_HEIGHT 250 // 1m
+/// The area of the horizontal cross section of a wall. (in cm^2)
+#define TURF_BASE_AREA (TURF_LENGTH * TURF_LENGTH) // 1m^2 | 10000cm^2
+/// The area of the vertical cross section of a wall.
+#define TURF_SIDE_AREA (TURF_LENGTH * TURF_HEIGHT)
+/// The total area of all of the sides of a wall assuming that they are perfectly flat.
+#define CLOSED_TURF_SURFACE_AREA ((TURF_BASE_AREA * 2) + (TURF_SIDE_AREA * 4))
+/// The size of a wall. In general if its sprite fits within a turf its size should be less than this.
+#define TURF_SIZE (TURF_HORIZONTAL_AREA * TURF_HEIGHT) // 2.5m^2 | 2500L | 2500000cm^3
