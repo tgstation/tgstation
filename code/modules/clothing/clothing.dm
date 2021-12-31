@@ -345,38 +345,15 @@
 		to_chat(usr, "[readout.Join()]")
 
 /**
- * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
+ * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
  *
- * Rounds armor_value to nearest 10, divides it by 10
- * and then expresses it in roman numerals up to 10
  * Arguments:
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
 	if (armor_value < 0)
 		. = "-"
-	armor_value = round(abs(armor_value), 10) / 10
-	switch (armor_value)
-		if (1)
-			. += "I"
-		if (2)
-			. += "II"
-		if (3)
-			. += "III"
-		if (4)
-			. += "IV"
-		if (5)
-			. += "V"
-		if (6)
-			. += "VI"
-		if (7)
-			. += "VII"
-		if (8)
-			. += "VIII"
-		if (9)
-			. += "IX"
-		if (10 to INFINITY)
-			. += "X"
+	. += "\Roman[round(abs(armor_value), 10) / 10]"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)
