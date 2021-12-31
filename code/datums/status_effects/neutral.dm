@@ -348,8 +348,10 @@
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
 				owner.Jitter(200)
 				owner.Knockdown(10)
+			var/list/possible_items = owner.get_contents()
 			var/list/items = list()
-			for (var/obj/item/item in owner.get_contents())
+			for (var/i in 1 to 10)
+				var/obj/item/item = possible_items[i]
 				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
 					continue
 				items.Add(item)
