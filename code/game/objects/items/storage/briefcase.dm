@@ -9,18 +9,14 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	resistance_flags = FLAMMABLE
 	max_integrity = 150
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
 	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
-
-/obj/item/storage/briefcase/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 21
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)

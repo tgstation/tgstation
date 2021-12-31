@@ -637,12 +637,12 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 			continue
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.atom_size < WEIGHT_CLASS_SMALL)
+			if(I.atom_size < ITEM_SIZE_SMALL)
 				item = I
 		else if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.atom_size <= WEIGHT_CLASS_SMALL)
+				if(I.atom_size <= ITEM_SIZE_SMALL)
 					item = I
 					break
 		if(item)
@@ -671,13 +671,13 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
-			if(I.atom_size <= WEIGHT_CLASS_SMALL)
+			if(I.atom_size <= ITEM_SIZE_SMALL)
 				return I
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
 			for(var/obj/item/I in C.held_items)
-				if(I.atom_size <= WEIGHT_CLASS_SMALL)
+				if(I.atom_size <= ITEM_SIZE_SMALL)
 					return C
 	return null
 
@@ -699,7 +699,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	for(var/obj/item/I in view(1,src))
 		//Make sure we're not already holding it and it's small enough
-		if(I.loc != src && I.atom_size <= WEIGHT_CLASS_SMALL)
+		if(I.loc != src && I.atom_size <= ITEM_SIZE_SMALL)
 
 			//If we have a perch and the item is sitting on it, continue
 			if(!client && parrot_perch && I.loc == parrot_perch.loc)
@@ -729,7 +729,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 	for(var/mob/living/carbon/C in view(1,src))
 		for(var/obj/item/I in C.held_items)
-			if(I.atom_size <= WEIGHT_CLASS_SMALL)
+			if(I.atom_size <= ITEM_SIZE_SMALL)
 				stolen_item = I
 				break
 

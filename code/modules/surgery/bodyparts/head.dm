@@ -6,7 +6,7 @@
 	max_damage = 200
 	body_zone = BODY_ZONE_HEAD
 	body_part = HEAD
-	atom_size = WEIGHT_CLASS_BULKY //Quite a hefty load
+	atom_size = ITEM_SIZE_BULKY //Quite a hefty load
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
 	px_x = 0

@@ -14,7 +14,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll"
 	worn_icon_state = "scroll"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 	var/upgrade_amount = 1
 	var/can_backfire = TRUE

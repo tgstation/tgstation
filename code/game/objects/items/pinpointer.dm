@@ -6,7 +6,7 @@
 	icon_state = "pinpointer"
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	inhand_icon_state = "electronic"
 	worn_icon_state = "pinpointer"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

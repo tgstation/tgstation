@@ -126,7 +126,7 @@
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	var/on = FALSE
 	var/datum/effect_system/trail_follow/ion/ion_trail
 

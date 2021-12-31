@@ -5,7 +5,7 @@
 	name = "liver"
 	icon_state = "liver"
 	visual = FALSE
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
 	desc = "Pairing suggestion: chianti and fava beans."

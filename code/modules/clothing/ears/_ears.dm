@@ -2,7 +2,7 @@
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_EARS
 	resistance_flags = NONE

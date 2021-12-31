@@ -66,7 +66,7 @@
 	icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/computer_hardware/network_card/wired
 	name = "wired network card"
@@ -74,7 +74,7 @@
 	ethernet = 1
 	power_usage = 100 // Better range but higher power usage.
 	icon_state = "net_wired"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/computer_hardware/network_card/integrated //Borg tablet version, only works while the borg has power and is not locked
 	name = "cyborg data link"

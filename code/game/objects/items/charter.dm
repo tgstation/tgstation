@@ -107,7 +107,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A cunning device used to claim ownership of celestial bodies."
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	force = 15
 
 /obj/item/station_charter/banner/rename_station(designation, uname, ureal_name, ukey)

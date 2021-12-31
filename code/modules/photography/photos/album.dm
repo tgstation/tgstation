@@ -10,16 +10,16 @@
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	resistance_flags = FLAMMABLE
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	max_total_atom_size = ITEM_SIZE_NORMAL * 14
+	max_items = 21
 	var/persistence_id
 
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/photo))
-	STR.max_total_atom_size = 42
-	STR.max_items = 21
 	LAZYADD(SSpersistence.photo_albums, src)
 
 /obj/item/storage/photo_album/Destroy()

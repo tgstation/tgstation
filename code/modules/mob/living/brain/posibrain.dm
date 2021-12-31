@@ -6,7 +6,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "posibrain"
 	base_icon_state = "posibrain"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	req_access = list(ACCESS_ROBOTICS)
 	braintype = "Android"
 

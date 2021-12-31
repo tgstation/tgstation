@@ -2,10 +2,11 @@
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
 	icon_state = "wallet"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
 	component_type = /datum/component/storage/concrete/wallet
+	max_items = 4
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
@@ -14,7 +15,6 @@
 /obj/item/storage/wallet/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage/concrete/wallet)
-	STR.max_items = 4
 	STR.set_holdable(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,

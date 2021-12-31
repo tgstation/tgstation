@@ -9,7 +9,7 @@
 	flags_1 = CONDUCT_1
 	force = 13
 	var/force_on = 24
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	throwforce = 13
 	throw_speed = 2
 	throw_range = 4

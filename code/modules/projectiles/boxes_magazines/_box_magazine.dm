@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = 30000)
 	throwforce = 2
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 7
 	override_notes = TRUE

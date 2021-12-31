@@ -688,7 +688,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	force = 7
 	throwforce = 5
 	max_amount = 12
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	grind_results = list(/datum/reagent/carbon = 10)

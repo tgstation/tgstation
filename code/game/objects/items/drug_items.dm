@@ -9,7 +9,7 @@
 	tastes = list("drugs" = 2, "chemicals" = 1)
 	eatverbs = list("gnaw" = 1)
 	bite_consumption = 10
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	preserved_food = TRUE
 
 /obj/item/food/drug/saturnx

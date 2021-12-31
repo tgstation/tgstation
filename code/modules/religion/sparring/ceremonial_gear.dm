@@ -16,7 +16,7 @@
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron blade.
 	force = 2 //20
 	throwforce = 1 //10
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	block_chance = 3 //30

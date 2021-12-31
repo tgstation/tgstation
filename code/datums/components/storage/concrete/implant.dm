@@ -1,6 +1,6 @@
 /datum/component/storage/concrete/implant
-	max_atom_size = WEIGHT_CLASS_NORMAL
-	max_total_atom_size = 6
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 2
 	max_items = 2
 	drop_all_on_destroy = TRUE
 	drop_all_on_deconstruct = TRUE

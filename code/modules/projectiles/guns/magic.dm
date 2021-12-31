@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 = CONDUCT_1
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
 	var/checks_antimagic = TRUE

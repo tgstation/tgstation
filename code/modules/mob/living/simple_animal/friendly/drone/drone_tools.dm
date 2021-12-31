@@ -5,6 +5,9 @@
 	icon_state = "tool_storage"
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 14
+	max_items = 5
 
 /obj/item/storage/drone_tools/Initialize(mapload)
 	. = ..()
@@ -20,9 +23,6 @@
 		/obj/item/wirecutters/drone,
 	)
 	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
-	storage_component.max_total_atom_size = 40
-	storage_component.max_atom_size = WEIGHT_CLASS_NORMAL
-	storage_component.max_items = 5
 	storage_component.rustle_sound = FALSE
 	storage_component.set_holdable(drone_builtins)
 

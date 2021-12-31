@@ -6,14 +6,10 @@
 	worn_icon_state = "book"
 	throw_speed = 2
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	resistance_flags = FLAMMABLE
+	max_items = 1
 	var/title = "book"
-
-/obj/item/storage/book/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
 
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, span_notice("The pages of [title] have been cut out!"))

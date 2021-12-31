@@ -3,7 +3,7 @@
 	desc = "Why is it detached..."
 	force = 3
 	throwforce = 3
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	icon = 'icons/mob/human_parts.dmi'
 	icon_state = ""
 	/// The icon for Organic limbs using greyscale

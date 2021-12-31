@@ -106,7 +106,7 @@ Slimecrossing Items
 	desc = "A compressed cube of slime. When squeezed, it grows to massive size!"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "barriercube"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/barriercube/attack_self(mob/user)
 	if(locate(/obj/structure/barricade/slime) in get_turf(loc))
@@ -166,7 +166,7 @@ Slimecrossing Items
 /obj/item/capturedevice
 	name = "gold capture device"
 	desc = "Bluespace technology packed into a roughly egg-shaped device, used to store nonhuman creatures. Can't catch them all, though - it only fits one."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "capturedevice"
 

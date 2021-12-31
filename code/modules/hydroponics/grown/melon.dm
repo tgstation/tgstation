@@ -28,7 +28,7 @@
 	desc = "It's full of watery goodness."
 	icon_state = "watermelon"
 	bite_consumption_mod = 2
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40

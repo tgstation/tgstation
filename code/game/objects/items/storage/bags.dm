@@ -18,7 +18,7 @@
 //  Generic non-item
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
@@ -40,14 +40,14 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
+	max_atom_size = ITEM_SIZE_SMALL
+	max_total_atom_size = ITEM_SIZE_SMALL * 15
+	max_items = 30
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
-	STR.max_total_atom_size = 30
-	STR.max_items = 30
 	STR.set_holdable(null, list(/obj/item/disk/nuclear))
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
@@ -93,12 +93,8 @@
 	icon_state = "bluetrashbag"
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
-
-/obj/item/storage/bag/trash/bluespace/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 60
-	STR.max_items = 60
+	max_total_atom_size = ITEM_SIZE_SMALL * 30
+	max_items = 60
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
@@ -114,8 +110,9 @@
 	icon_state = "satchel"
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	component_type = /datum/component/storage/concrete/stack
+	max_atom_size = ITEM_SIZE_HUGE
 	var/spam_protection = FALSE //If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/mob/listeningTo
 
@@ -124,7 +121,6 @@
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
-	STR.max_atom_size = WEIGHT_CLASS_HUGE
 	STR.max_combined_stack_amount = 50
 
 /obj/item/storage/bag/ore/equipped(mob/user)
@@ -183,12 +179,12 @@
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
+	max_total_atom_size = INFINITY
+	max_items = INFINITY
 
 /obj/item/storage/bag/ore/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
-	STR.max_items = INFINITY
-	STR.max_total_atom_size = INFINITY
 	STR.max_combined_stack_amount = INFINITY
 
 // -----------------------------
@@ -201,13 +197,13 @@
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 33
+	max_items = 100
 
 /obj/item/storage/bag/plants/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 100
-	STR.max_items = 100
 	STR.set_holdable(list(
 		/obj/item/food/grown,
 		/obj/item/seeds,
@@ -286,13 +282,13 @@
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
+	max_items = 7
 
 /obj/item/storage/bag/books/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 21
-	STR.max_items = 7
 	STR.display_numerical_stacking = FALSE
 	STR.set_holdable(list(
 		/obj/item/book,
@@ -317,11 +313,12 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=3000)
 	custom_price = PAYCHECK_ASSISTANT * 0.6
+	max_atom_size = ITEM_SIZE_BULKY
+	max_items = 7
 
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
 		/obj/item/plate,
 		/obj/item/reagent_containers/food,
@@ -338,7 +335,6 @@
 		/obj/item/organ,
 		)) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
 	STR.insert_preposition = "on"
-	STR.max_items = 7
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -398,12 +394,12 @@
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
+	max_total_atom_size = ITEM_SIZE_SMALL * 100
+	max_items = 50
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 200
-	STR.max_items = 50
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/pill,
@@ -427,12 +423,12 @@
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
 	resistance_flags = FLAMMABLE
+	max_total_atom_size = ITEM_SIZE_SMALL * 100
+	max_items = 25
 
 /obj/item/storage/bag/bio/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 200
-	STR.max_items = 25
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/slime_extract,
@@ -462,13 +458,13 @@
 	desc = "A bag for storing small construction components."
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
+	max_atom_size = ITEM_SIZE_SMALL
+	max_total_atom_size = ITEM_SIZE_SMALL * 50
+	max_items = 50
 
 /obj/item/storage/bag/construction/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 100
-	STR.max_items = 50
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/stack/ore/bluespace_crystal,
@@ -487,13 +483,13 @@
 	icon_state = "quiver"
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
+	max_atom_size = ITEM_SIZE_TINY
+	max_total_atom_size = ITEM_SIZE_TINY * 100
+	max_items = 40
 
 /obj/item/storage/bag/harpoon_quiver/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_TINY
-	STR.max_items = 40
-	STR.max_total_atom_size = 100
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/caseless/harpoon
 		))

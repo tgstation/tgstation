@@ -99,7 +99,7 @@
 		if(!holding)
 			balloon_alert(mod.wearer, "nothing to holster!")
 			return
-		if(!istype(holding) || holding.atom_size > WEIGHT_CLASS_BULKY)
+		if(!istype(holding) || holding.atom_size > ITEM_SIZE_BULKY)
 			balloon_alert(mod.wearer, "it doesn't fit!")
 			return
 		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))

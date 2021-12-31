@@ -4,7 +4,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 
-	atom_size = WEIGHT_CLASS_TINY // atom_size limits which devices can contain this component.
+	atom_size = ITEM_SIZE_TINY // atom_size limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
 	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.

@@ -6,7 +6,7 @@
 	icon_state = "data_1"
 	icon = 'icons/obj/card.dmi'
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	var/datum/supply_pack/discounted_pack
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console

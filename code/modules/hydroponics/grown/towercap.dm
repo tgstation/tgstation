@@ -37,7 +37,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "whacks")

@@ -14,7 +14,7 @@
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
 	inhand_icon_state = "ro_suit"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/extinguisher, /obj/item/crowbar)
@@ -80,7 +80,7 @@
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
 	inhand_icon_state = "bombsuit"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -139,7 +139,7 @@
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"
 	inhand_icon_state = "rad_suit"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	permeability_coefficient = 0.5
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

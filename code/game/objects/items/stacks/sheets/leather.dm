@@ -238,7 +238,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	max_amount = 6
 	novariants = FALSE
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide
 
@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	max_amount = 10
 	novariants = FALSE
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/ashdrake
 

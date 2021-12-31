@@ -18,9 +18,12 @@
 
 	var/locked = FALSE //when locked nothing can see inside or use it.
 
-	var/max_atom_size = WEIGHT_CLASS_SMALL //max size of objects that will fit.
-	var/max_total_atom_size = 14 //max combined sizes of objects that will fit.
-	var/max_items = 7 //max number of objects that will fit.
+	/// The maximum size of objects that will fit into this storage. Used to represent the dimensions of the opening of the container. (ie: The plumbing may _technically_ have several cubic meters of volume but you aren't fitting a CRT-TV down the sink.)
+	var/max_atom_size = ITEM_SIZE_SMALL
+	/// The maximum total size of objects that will fit into this storage. Used to represent the internal volume of the container.
+	var/max_total_atom_size = 7 * ITEM_SIZE_SMALL
+	/// The maximum number of objects that will fit into this storage.
+	var/max_items = 7
 
 	var/emp_shielded = FALSE
 
@@ -55,13 +58,17 @@
 	var/screen_start_y = 2
 	//End
 
-/datum/component/storage/Initialize(datum/component/storage/concrete/master)
+/datum/component/storage/Initialize(datum/component/storage/concrete/master, max_atom_size = src.max_atom_size, max_total_atom_size = src.max_total_atom_size, max_items = src.max_items)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(master)
 		change_master(master)
+
 	boxes = new(null, src)
 	closer = new(null, src)
+	src.max_atom_size = max_atom_size
+	src.max_total_atom_size = max_total_atom_size
+	src.max_items = max_items
 	orient2hud()
 
 	RegisterSignal(parent, COMSIG_CONTAINS_STORAGE, .proc/on_check)

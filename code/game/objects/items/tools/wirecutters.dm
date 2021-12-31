@@ -15,7 +15,7 @@
 	force = 6
 	throw_speed = 3
 	throw_range = 7
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	custom_materials = list(/datum/material/iron=80)
 	attack_verb_continuous = list("pinches", "nips")
 	attack_verb_simple = list("pinch", "nip")

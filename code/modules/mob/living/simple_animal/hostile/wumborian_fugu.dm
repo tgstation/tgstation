@@ -137,7 +137,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	layer = MOB_LAYER
 
 /obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)

@@ -5,7 +5,7 @@
 	inhand_icon_state = "blindfold"
 	clothing_flags = BLOCKS_SPEECH
 	flags_cover = MASKCOVERSMOUTH
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user, list/modifiers)

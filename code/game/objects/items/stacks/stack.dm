@@ -22,7 +22,7 @@
 	var/datum/robot_energy_storage/source
 	var/cost = 1 // How much energy from storage it costs
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
-	var/full_atom_size = WEIGHT_CLASS_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
+	var/full_atom_size = ITEM_SIZE_NORMAL //The weight class the stack should have at amount > 2/3rds max_amount
 	var/novariants = TRUE //Determines whether the item should update it's sprites based on amount.
 	var/list/mats_per_unit //list that tells you how much is in a single unit.
 	///Datum material type that this stack is made of
@@ -127,9 +127,9 @@
 
 /obj/item/stack/proc/update_weight()
 	if(amount <= (max_amount * (1/3)))
-		set_size(clamp(full_atom_size-2, WEIGHT_CLASS_TINY, full_atom_size), force = TRUE)
+		set_size(clamp(full_atom_size-2, ITEM_SIZE_TINY, full_atom_size), force = TRUE)
 	else if (amount <= (max_amount * (2/3)))
-		set_size(clamp(full_atom_size-1, WEIGHT_CLASS_TINY, full_atom_size), force = TRUE)
+		set_size(clamp(full_atom_size-1, ITEM_SIZE_TINY, full_atom_size), force = TRUE)
 	else
 		set_size(full_atom_size, force = TRUE)
 

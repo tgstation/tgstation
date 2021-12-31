@@ -5,7 +5,7 @@
 	icon_state = "scanner"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_price = PAYCHECK_MEDIUM * 5
 	custom_premium_price = PAYCHECK_MEDIUM * 6

@@ -11,7 +11,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 2
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	custom_materials = list(/datum/material/glass=500)
 	///the implant within the case
 	var/obj/item/implant/imp = null

@@ -52,7 +52,7 @@
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "doughslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 
@@ -65,7 +65,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	tastes = list("bun" = 1) // the bun tastes of bun.
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
@@ -110,7 +110,7 @@
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "rawpastrybase"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	tastes = list("raw pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 
@@ -123,7 +123,7 @@
 	icon = 'icons/obj/food/food_ingredients.dmi'
 	icon_state = "pastrybase"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 	burns_in_oven = TRUE

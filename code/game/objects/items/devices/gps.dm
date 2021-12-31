@@ -6,7 +6,7 @@
 	icon_state = "gps-c"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag

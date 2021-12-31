@@ -84,11 +84,11 @@
 	appearance_flags = KEEP_TOGETHER
 	custom_premium_price = PAYCHECK_HARD * 1.75
 	contents_tag = "donut"
+	max_items = 6
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/food/donut))
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
@@ -132,11 +132,11 @@
 	desc = "A carton for containing eggs."
 	spawn_type = /obj/item/food/egg
 	contents_tag = "egg"
+	max_items = 12
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 12
 	STR.set_holdable(list(/obj/item/food/egg))
 
 /*
@@ -156,11 +156,7 @@
 	spawn_type = /obj/item/candle
 	is_open = TRUE
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
+	max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
 	if(!contents.len)
@@ -180,13 +176,14 @@
 	inhand_icon_state = "cigpacket"
 	worn_icon_state = "cigpack"
 	base_icon_state = "cig"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	slot_flags = ITEM_SLOT_BELT
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	custom_price = PAYCHECK_MEDIUM
 	age_restricted = TRUE
 	contents_tag = "cigarette"
+	max_items = 6
 	///for cigarette overlay
 	var/candy = FALSE
 	/// Does this cigarette packet come with a coupon attached?
@@ -215,7 +212,6 @@
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
@@ -380,18 +376,18 @@
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
 	desc = "A pack of Nanotrasen brand rolling papers."
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
 	base_icon_state = "cig_paper_pack"
 	contents_tag = "rolling paper"
 	spawn_type = /obj/item/rollingpaper
 	custom_price = PAYCHECK_PRISONER
+	max_items = 10
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/rollingpaper))
 
 ///Overrides to do nothing because fancy boxes are fucking insane.
@@ -414,16 +410,16 @@
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cigarcase"
 	base_icon_state = "cigarcase"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	contents_tag = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
 	spawn_coupon = FALSE
 	display_cigs = FALSE
+	max_items = 5
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
@@ -469,11 +465,11 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	contents_tag = "chocolate"
 	spawn_type = /obj/item/food/tinychocolate
+	max_items = 8
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 8
 	STR.set_holdable(list(/obj/item/food/tinychocolate))
 
 
@@ -485,9 +481,9 @@
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
 	spawn_type = /obj/item/food/nugget
+	max_items = 6
 
 /obj/item/storage/fancy/nugget_box/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/food/nugget))

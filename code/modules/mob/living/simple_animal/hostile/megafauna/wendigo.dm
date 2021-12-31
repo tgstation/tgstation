@@ -339,7 +339,7 @@ Difficulty: Hard
 	desc = "A skull of a massive hulking beast."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "wendigo_skull"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 
 #undef WENDIGO_CIRCLE_SHOTCOUNT

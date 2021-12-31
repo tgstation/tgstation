@@ -34,7 +34,7 @@
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	throw_speed = 3
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=500)
@@ -281,7 +281,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
 
@@ -472,7 +472,7 @@
 	icon_state = "ebola"
 	inhand_icon_state = "ebola"
 	hitsound = 'sound/weapons/taserhit.ogg'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_HARD * 0.35
 

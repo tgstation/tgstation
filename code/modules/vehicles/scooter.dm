@@ -185,7 +185,7 @@
 	desc = "A metal frame for building a scooter. Looks like you'll need to add some iron to make wheels."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "scooter_frame"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/stack/sheet/iron))

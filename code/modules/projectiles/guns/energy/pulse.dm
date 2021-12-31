@@ -4,7 +4,7 @@
 	icon_state = "pulse"
 	inhand_icon_state = null
 	worn_icon_state = null
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	force = 10
 	modifystate = TRUE
 	flags_1 = CONDUCT_1
@@ -35,7 +35,7 @@
 	name = "pulse carbine"
 	desc = "A compact variant of the pulse rifle with less firepower but easier storage."
 	slot_flags = ITEM_SLOT_BELT
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	icon_state = "pulse_carbine"
 	worn_icon_state = "gun"
 	inhand_icon_state = null
@@ -60,7 +60,7 @@
 /obj/item/gun/energy/pulse/pistol
 	name = "pulse pistol"
 	desc = "A pulse rifle in an easily concealed handgun package with low capacity."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	icon_state = "pulse_pistol"
 	worn_icon_state = "gun"

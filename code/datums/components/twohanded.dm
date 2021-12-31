@@ -203,7 +203,7 @@
 		return
 	if (SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return
-	
+
 	// wield update status
 	wielded = FALSE
 	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
@@ -331,7 +331,7 @@
 /obj/item/offhand
 	name = "offhand"
 	icon_state = "offhand"
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	item_flags = ABSTRACT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/wielded = FALSE // Off Hand tracking of wielded status

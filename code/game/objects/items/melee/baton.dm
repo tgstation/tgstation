@@ -9,7 +9,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	wound_bonus = 15
 
 	/// Whether this baton is active or not
@@ -241,7 +241,7 @@
 	attack_verb_simple = list("hit", "poke")
 	worn_icon_state = "tele_baton"
 	slot_flags = ITEM_SLOT_BELT
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	item_flags = NONE
 	force = 0
 	bare_wound_bonus = 5
@@ -260,7 +260,7 @@
 	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		hitsound_on = hitsound, \
-		size_on = WEIGHT_CLASS_NORMAL, \
+		size_on = ITEM_SIZE_NORMAL, \
 		clumsy_check = FALSE, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
@@ -309,7 +309,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	item_flags = NONE
 	force = 5
 	cooldown = 2.5 SECONDS
@@ -575,7 +575,7 @@
 	worn_icon_state = null
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	force = 3
 	throwforce = 5
 	cell_hit_cost = 2000
@@ -649,7 +649,7 @@
 /obj/item/melee/baton/security/cattleprod/teleprod
 	name = "teleprod"
 	desc = "A prod with a bluespace crystal on the end. The crystal doesn't look too fun to touch."
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	icon_state = "teleprod"
 	inhand_icon_state = "teleprod"
 	slot_flags = null

@@ -16,7 +16,7 @@
 	base_icon_state = "facehugger"
 	inhand_icon_state = "facehugger"
 	worn_icon_state = "facehugger"
-	atom_size = WEIGHT_CLASS_TINY //note: can be picked up by aliens unlike most other items of atom_size below 4
+	atom_size = ITEM_SIZE_TINY //note: can be picked up by aliens unlike most other items of atom_size below 4
 	clothing_flags = MASKINTERNALS
 	throw_range = 5
 	tint = 3

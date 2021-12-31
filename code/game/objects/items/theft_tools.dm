@@ -129,7 +129,7 @@
 	power_usage = 500
 	max_capacity = 2048
 	icon_state = "harddisk"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
 	name = "r&d server hard disk drive"

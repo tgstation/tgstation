@@ -44,7 +44,7 @@
 	force = 15
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 1
 	throw_range = 3
 	attack_verb_continuous = list("stings")

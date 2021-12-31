@@ -14,7 +14,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
 	icon = DEFAULT_TCG_DMI_ICON
 	icon_state = "runtime"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/id = "code"
 	///Used along with the id for lookup
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
 	icon = 'icons/obj/tcgmisc.dmi'
 	icon_state = "cardback_nt"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	custom_price = PAYCHECK_ASSISTANT * 1.5 //Effectively expensive as long as you're not a very high paying job... in which case, why are you playing trading card games?
 	///The card series to look in
 	var/series = "MEME"
@@ -407,15 +407,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	resistance_flags = FLAMMABLE //burn your enemies' collections, for only you can Collect Them All!
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
-
-/obj/item/storage/card_binder/Initialize(mapload)
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/tcgcard))
-	STR.max_total_atom_size = 120
-	STR.max_items = 60
+	max_total_atom_size = ITEM_SIZE_NORMAL * 40
+	max_items = 60
 
 ///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
 /obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)

@@ -13,7 +13,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///How many pages the booklet holds
 	var/number_of_pages = 50
 
@@ -74,7 +74,7 @@
 	item_flags = NOBLUDGEON
 	color = "#f5c352"
 	resistance_flags = FLAMMABLE
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///If the paper was used, and therefore cannot change color again
 	var/used = FALSE
 
@@ -100,7 +100,7 @@
 	desc = "An electrode attached to a small circuit box that will display details of a solution. Can be toggled to provide a description of each of the reagents. The screen currently displays nothing."
 	icon_state = "pHmeter"
 	icon = 'icons/obj/chemical.dmi'
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///level of detail for output for the meter
 	var/scanmode = DETAILED_CHEM_OUTPUT
 
@@ -150,7 +150,7 @@
 	grind_results = list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/silicon = 10)
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	heat = 2000
 	///If the flame is lit - i.e. if we're processing and burning
 	var/lit = FALSE
@@ -285,7 +285,7 @@
 	icon_state = "thermometer"
 	icon = 'icons/obj/chemical.dmi'
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	grind_results = list(/datum/reagent/mercury = 5)
 	///The reagents datum that this object is attached to, so we know where we are when it's added to something.
 	var/datum/reagents/attached_to_reagents

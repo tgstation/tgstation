@@ -89,7 +89,7 @@
 	icon_state = "bungopit"
 	bite_consumption_mod = 5
 	desc = "A large seed, it is said to be potent enough to be able to stop a mans heart."
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 7

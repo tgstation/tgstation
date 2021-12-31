@@ -1,9 +1,15 @@
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	var/rummage_if_nodrop = TRUE
 	var/component_type = /datum/component/storage/concrete
+	/// The maximum size of things that can be added to this storage.
+	var/max_atom_size
+	/// The maximum total size of the things that can be added to this storage.
+	var/max_total_atom_size
+	/// The maximum number of thing that can be added to this storage.
+	var/max_items
 	/// Should we preload the contents of this type?
 	/// BE CAREFUL, THERE'S SOME REALLY NASTY SHIT IN THIS TYPEPATH
 	/// SANTA IS EVIL
@@ -16,7 +22,7 @@
 		item.item_flags |= IN_STORAGE
 
 /obj/item/storage/ComponentInitialize()
-	AddComponent(component_type)
+	AddComponent(component_type, null, max_atom_size, max_total_atom_size, max_items)
 
 /obj/item/storage/AllowDrop()
 	return FALSE

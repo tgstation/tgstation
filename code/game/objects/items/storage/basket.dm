@@ -2,11 +2,7 @@
 	name = "basket"
 	desc = "Handwoven basket."
 	icon_state = "basket"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/basket/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 21
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7

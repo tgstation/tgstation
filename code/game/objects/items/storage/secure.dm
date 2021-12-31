@@ -12,24 +12,30 @@
 // -----------------------------
 /obj/item/storage/secure
 	name = "secstorage"
-	var/icon_locking = "secureb"
-	var/icon_sparking = "securespark"
-	var/icon_opened = "secure0"
-	var/code = ""
-	var/l_code = null
-	var/l_set = FALSE
-	var/l_setshort = FALSE
-	var/l_hacking = FALSE
-	var/open = FALSE
-	var/can_hack_open = TRUE
-	atom_size = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
-
-/obj/item/storage/secure/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
-	STR.max_total_atom_size = 14
+	atom_size = ITEM_SIZE_NORMAL
+	max_atom_size = ITEM_SIZE_SMALL
+	max_total_atom_size = ITEM_SIZE_SMALL * 7
+	/// The icon state used when this is locked.
+	var/icon_locking = "secureb"
+	/// The icon state used when this is emagged.
+	var/icon_sparking = "securespark"
+	/// The icon state used when this is opened.
+	var/icon_opened = "secure0"
+	/// The code currently entered into this.
+	var/code = ""
+	///  The code used to lock/unlock this.
+	var/l_code = null
+	///	Whether or not this is locked.
+	var/l_set = FALSE
+	/// Whether or not to set this to locked if there's an error.
+	var/l_setshort = FALSE
+	/// Whether or not this is being hacked.
+	var/l_hacking = FALSE
+	/// Whether or not this is open.
+	var/open = FALSE
+	/// Whether or not this can be hacked.
+	var/can_hack_open = TRUE
 
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
@@ -130,19 +136,15 @@
 	hitsound = "swing_hit"
 	throw_speed = 2
 	throw_range = 4
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
 
 /obj/item/storage/secure/briefcase/PopulateContents()
 	new /obj/item/paper(src)
 	new /obj/item/pen(src)
-
-/obj/item/storage/secure/briefcase/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 21
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
@@ -167,17 +169,12 @@
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	desc = "Excellent for securing things away from grubby hands."
-	atom_size = WEIGHT_CLASS_GIGANTIC
+	atom_size = ITEM_SIZE_GIGANTIC
 	anchored = TRUE
 	density = FALSE
+	max_atom_size = ITEM_SIZE_GIGANTIC * 1.5
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
-
-/obj/item/storage/secure/safe/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
-	STR.max_atom_size = 8 //??
 
 /obj/item/storage/secure/safe/PopulateContents()
 	new /obj/item/paper(src)

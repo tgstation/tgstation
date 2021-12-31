@@ -21,7 +21,7 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/device.dmi'
 	icon_state = "batterer"
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1

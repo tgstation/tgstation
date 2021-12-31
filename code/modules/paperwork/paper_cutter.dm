@@ -5,7 +5,7 @@
 	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	var/obj/item/paper/storedpaper = null
 	var/obj/item/hatchet/cutterblade/storedcutter = null
 	var/cuttersecured = TRUE

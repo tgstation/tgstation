@@ -28,7 +28,7 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 2
 	throw_range = 3
 	attack_verb_continuous = list("pompfs")

@@ -117,7 +117,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	atom_size = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
+	atom_size = ITEM_SIZE_NORMAL // No more excuses, stop getting blood everywhere
 
 /obj/item/roller/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/roller/robo))

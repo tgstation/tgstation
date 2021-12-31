@@ -4,11 +4,13 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "portablechemicalmixer_open"
 	worn_icon_state = "portable_chem_mixer"
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	slot_flags = ITEM_SLOT_BELT
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	custom_price = PAYCHECK_MEDIUM * 10
 	custom_premium_price = PAYCHECK_MEDIUM * 14
+	max_total_atom_size = ITEM_SIZE_NORMAL * 67
+	max_items = 50
 
 	var/obj/item/reagent_containers/beaker = null ///Creating an empty slot for a beaker that can be added to dispense into
 	var/amount = 30 ///The amount of reagent that is to be dispensed currently
@@ -21,8 +23,6 @@
 /obj/item/storage/portable_chem_mixer/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 200
-	STR.max_items = 50
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/glass/beaker,

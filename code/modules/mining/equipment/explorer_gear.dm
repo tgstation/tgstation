@@ -52,7 +52,7 @@
 
 /obj/item/clothing/mask/gas/explorer/adjustmask(user)
 	..()
-	set_size(mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL, force = TRUE)
+	set_size(mask_adjusted ? ITEM_SIZE_NORMAL : ITEM_SIZE_SMALL, force = TRUE)
 
 /obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()

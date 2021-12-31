@@ -13,7 +13,7 @@
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/shotgun/rack.ogg'
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	force = 10
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -62,7 +62,7 @@
 	inhand_icon_state = "shotgun_combat"
 	fire_delay = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 
 //Dual Feed Shotgun
 
@@ -73,7 +73,7 @@
 	inhand_icon_state = "bulldog"
 	worn_icon_state = "cshotgun"
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/tube
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	var/toggled = FALSE
 	var/obj/item/ammo_box/magazine/internal/shot/alternate_magazine
 	semi_auto = TRUE
@@ -150,7 +150,7 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	inhand_icon_state = "shotgun_db"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
 	flags_1 = CONDUCT_1

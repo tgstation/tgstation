@@ -28,7 +28,7 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
 	can_be_held = TRUE
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	held_state = "mouse_gray"
 	faction = list("rat")
 

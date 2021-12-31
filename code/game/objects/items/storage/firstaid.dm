@@ -59,13 +59,13 @@
 	icon_state = "firstaid_surgery"
 	inhand_icon_state = "firstaid"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
+	max_atom_size = ITEM_SIZE_NORMAL //holds the same equipment as a medibelt
+	max_total_atom_size = ITEM_SIZE_NORMAL * 8
+	max_items = 12
 
 /obj/item/storage/firstaid/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
-	STR.max_items = 12
-	STR.max_total_atom_size = 24
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -273,11 +273,7 @@
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
 	damagetype_healed = "all"
-
-/obj/item/storage/firstaid/tactical/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
+	max_atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -331,7 +327,7 @@
 	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/storage/pill_bottle/ComponentInitialize()
 	. = ..()
@@ -540,14 +536,14 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_premium_price = PAYCHECK_MEDIUM * 4
+	max_atom_size = ITEM_SIZE_BULKY // you have to remove it from your bag before opening it but I think that's fine
+	max_total_atom_size = ITEM_SIZE_BULKY * 5.25
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
 /obj/item/storage/organbox/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_BULKY /// you have to remove it from your bag before opening it but I think that's fine
-	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,

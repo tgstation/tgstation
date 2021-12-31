@@ -391,7 +391,7 @@
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/reforming = TRUE
 	var/inert = FALSE

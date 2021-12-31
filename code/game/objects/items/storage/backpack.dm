@@ -16,26 +16,19 @@
 	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	slot_flags = ITEM_SLOT_BACK //ERROOOOO
 	resistance_flags = NONE
 	max_integrity = 300
-
-/obj/item/storage/backpack/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 21
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_items = 21
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
+	max_items = 21
 
 /*
  * Backpack Types
  */
-
-/obj/item/storage/backpack/old/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 12
+/obj/item/storage/backpack/old
+	max_total_atom_size = ITEM_SIZE_NORMAL * 4
 
 /obj/item/bag_of_holding_inert
 	name = "inert bag of holding"
@@ -45,7 +38,7 @@
 	inhand_icon_state = "brokenpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 
@@ -58,13 +51,13 @@
 	item_flags = NO_MAT_REDEMPTION
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
+	max_atom_size = ITEM_SIZE_GIGANTIC
+	max_total_atom_size = ITEM_SIZE_GIGANTIC * 7
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_big_nesting = TRUE
-	STR.max_atom_size = WEIGHT_CLASS_GIGANTIC
-	STR.max_total_atom_size = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
@@ -79,17 +72,13 @@
 	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	inhand_icon_state = "giftbag"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 20
 
 /obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
-
-/obj/item/storage/backpack/santabag/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
@@ -309,7 +298,8 @@
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
 	inhand_icon_state = "satchel-flat"
-	atom_size = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	atom_size = ITEM_SIZE_NORMAL //Can fit in backpacks itself.
+	max_total_atom_size = ITEM_SIZE_NORMAL * 5
 
 /obj/item/storage/backpack/satchel/flat/Initialize(mapload)
 	. = ..()
@@ -318,7 +308,6 @@
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 15
 	STR.set_holdable(null, list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
@@ -344,11 +333,7 @@
 	icon_state = "duffel"
 	inhand_icon_state = "duffel"
 	slowdown = 1
-
-/obj/item/storage/backpack/duffelbag/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 30
+	max_total_atom_size = ITEM_SIZE_NORMAL * 10
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"

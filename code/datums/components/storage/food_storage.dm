@@ -8,7 +8,7 @@
 	/// The amount of volume the food has on creation - Used for probabilities
 	var/initial_volume = 10
 	/// Minimum size items that can be inserted
-	var/minimum_weight_class = WEIGHT_CLASS_SMALL
+	var/minimum_weight_class = ITEM_SIZE_SMALL
 	/// What are the odds we bite into the stored item?
 	var/bad_chance_of_discovery = 0
 	/// What are the odds we see the stored item before we bite it?
@@ -16,7 +16,7 @@
 	/// The stored item was found out somehow.
 	var/discovered = FALSE
 
-/datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
+/datum/component/food_storage/Initialize(_minimum_weight_class = ITEM_SIZE_SMALL, _bad_chance = 0, _good_chance = 100)
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, .proc/try_removing_item)

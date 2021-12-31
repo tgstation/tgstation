@@ -5,7 +5,7 @@
 	inhand_icon_state = "lgloves"
 	force = 0
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 1
 	throw_range = 7
 	var/state

@@ -642,7 +642,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 //==========DAT FUKKEN DISK===============
 /obj/item/disk
 	icon = 'icons/obj/module.dmi'
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'

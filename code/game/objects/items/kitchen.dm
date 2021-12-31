@@ -22,7 +22,7 @@
 	desc = "Pointy."
 	icon_state = "fork"
 	force = 4
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
@@ -66,7 +66,7 @@
 	desc = "Really takes you back to highschool lunch."
 	icon_state = "plastic_fork"
 	force = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	custom_materials = list(/datum/material/plastic=80)
 	custom_price = PAYCHECK_PRISONER * 2
@@ -85,7 +85,7 @@
 	inhand_icon_state = "knife"
 	desc = "A very safe, barely sharp knife made of plastic. Good for cutting food and not much else."
 	force = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_range = 5
 	custom_materials = list(/datum/material/plastic = 100)
@@ -108,7 +108,7 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 	custom_price = PAYCHECK_EASY * 1.5
@@ -123,7 +123,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	flags_1 = CONDUCT_1
 	force = 2
 	throw_speed = 3

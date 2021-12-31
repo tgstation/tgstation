@@ -10,7 +10,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	usesound = 'sound/items/ratchet.ogg'
 	custom_materials = list(/datum/material/iron=150)
 	drop_sound = 'sound/items/handling/wrench_drop.ogg'
@@ -95,7 +95,7 @@
 		force_on = 6, \
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \
-		size_on = WEIGHT_CLASS_NORMAL, \
+		size_on = ITEM_SIZE_NORMAL, \
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 

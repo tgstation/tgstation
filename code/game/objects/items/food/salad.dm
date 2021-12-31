@@ -4,7 +4,7 @@
 	icon = 'icons/obj/food/soupsalad.dmi'
 	trash_type = /obj/item/reagent_containers/glass/bowl
 	bite_consumption = 3
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
@@ -134,7 +134,7 @@
 	icon_state = "bowl"
 	reagent_flags = OPENCONTAINER
 	custom_materials = list(/datum/material/glass = 500)
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	custom_price = PAYCHECK_ASSISTANT * 0.6
 
 /obj/item/reagent_containers/glass/bowl/Initialize(mapload)

@@ -21,7 +21,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200
 	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)

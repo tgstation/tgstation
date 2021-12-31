@@ -68,21 +68,21 @@
 	desc = "A standard power cell, commonly seen in high-end portable microcomputers or low-end laptops."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "cell_mini"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	maxcharge = 750
 
 /obj/item/stock_parts/cell/computer/advanced
 	name = "advanced battery"
 	desc = "An advanced power cell, often used in most laptops. It is too large to be fitted into smaller devices."
 	icon_state = "cell"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	maxcharge = 1500
 
 /obj/item/stock_parts/cell/computer/super
 	name = "super battery"
 	desc = "An advanced power cell, often used in high-end laptops."
 	icon_state = "cell"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	maxcharge = 2000
 
 /obj/item/stock_parts/cell/computer/micro

@@ -118,7 +118,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 18
 	throwforce = 10
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 /obj/item/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)

@@ -24,13 +24,6 @@
 /// How efficiently humans regenerate blood.
 #define BLOOD_REGEN_FACTOR 0.25
 
-//Sizes of mobs, used by mob/living/var/atom_size
-#define MOB_SIZE_TINY 0
-#define MOB_SIZE_SMALL 1
-#define MOB_SIZE_HUMAN 2
-#define MOB_SIZE_LARGE 3
-#define MOB_SIZE_HUGE 4 // Use this for things you don't want bluespace body-bagged
-
 //Ventcrawling defines
 #define VENTCRAWLER_NONE   0
 #define VENTCRAWLER_NUDE   1

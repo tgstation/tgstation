@@ -5,7 +5,7 @@
 	desc = "A little stick coated with metal powder and barium nitrate, burns with a pleasing sparkle."
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "sparkler"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	heat = 1000
 	/// Burn time in seconds
 	var/burntime = 120
@@ -66,7 +66,7 @@
 	icon_state = "firecracker"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	inhand_icon_state = "flare"
 	throw_speed = 3
 	throw_range = 7

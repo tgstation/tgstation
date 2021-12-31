@@ -109,10 +109,10 @@
 		deconstruct()
 		return TRUE
 	else if(cistern && !user.combat_mode)
-		if(I.atom_size > WEIGHT_CLASS_NORMAL)
+		if(I.atom_size > ITEM_SIZE_NORMAL)
 			to_chat(user, span_warning("[I] does not fit!"))
 			return
-		if(w_items + I.atom_size > WEIGHT_CLASS_HUGE)
+		if(w_items + I.atom_size > ITEM_SIZE_HUGE)
 			to_chat(user, span_warning("The cistern is full!"))
 			return
 		if(!user.transferItemToLoc(I, src))
@@ -228,7 +228,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	food_reagents = list(/datum/reagent/chlorine = 3, /datum/reagent/ammonia = 1)
 	foodtypes = TOXIC | GROSS
 

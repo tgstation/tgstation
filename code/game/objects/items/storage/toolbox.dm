@@ -10,7 +10,7 @@
 	throwforce = 12
 	throw_speed = 2
 	throw_range = 7
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	custom_materials = list(/datum/material/iron = 500)
 	attack_verb_continuous = list("robusts")
 	attack_verb_simple = list("robust")
@@ -92,7 +92,7 @@
 	name = "toolbox" //this will be named "X family toolbox"
 	desc = "It's seen better days."
 	force = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
@@ -192,14 +192,10 @@
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	atom_size = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	atom_size = ITEM_SIZE_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
-
-/obj/item/storage/toolbox/artistic/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_total_atom_size = 20
-	STR.max_items = 10
+	max_total_atom_size = ITEM_SIZE_SMALL * 10
+	max_items = 10
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
@@ -250,14 +246,14 @@
 	inhand_icon_state = "infiltrator_case"
 	force = 15
 	throwforce = 18
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	has_latches = FALSE
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 10
 
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 10
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,

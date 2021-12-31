@@ -8,7 +8,7 @@
 	inhand_icon_state = "wand"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	var/datum/species/selected_species
 	var/valid_species = list()
 

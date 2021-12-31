@@ -430,7 +430,7 @@ Difficulty: Extremely Hard
 	desc = "Remnants of the demonic frost miners ice energy."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "ice_crystal"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 
 /obj/structure/frost_miner_prism

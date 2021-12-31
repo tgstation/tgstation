@@ -19,7 +19,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
@@ -113,7 +113,7 @@
 	block_chance = 30
 	transparent = FALSE
 	max_integrity = 55
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
@@ -193,7 +193,7 @@
 	icon_state = "eshield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	attack_verb_continuous = list("shoves", "bashes")
 	attack_verb_simple = list("shove", "bash")
 	throw_range = 5
@@ -253,7 +253,7 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	/// Whether the shield is extended and protecting the user..
 	var/extended = FALSE
 
@@ -264,7 +264,7 @@
 		throwforce_on = 5, \
 		throw_speed_on = 2, \
 		hitsound_on = hitsound, \
-		size_on = WEIGHT_CLASS_BULKY, \
+		size_on = ITEM_SIZE_BULKY, \
 		attack_verb_continuous_on = list("smacks", "strikes", "cracks", "beats"), \
 		attack_verb_simple_on = list("smack", "strike", "crack", "beat"))
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)

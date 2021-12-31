@@ -11,7 +11,7 @@
 	force = 5
 	throwforce = 15
 	throw_range = 1
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
@@ -94,7 +94,7 @@
 	force = 5
 	throwforce = 30
 	throw_range = 7
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	var/wielded = FALSE // track wielded status on item
 
 /obj/item/mjollnir/Initialize(mapload)

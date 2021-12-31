@@ -3,7 +3,7 @@
 	desc = "Computer-integrated printer with paper recycling module."
 	power_usage = 100
 	icon_state = "printer"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	device_type = MC_PRINT
 	expansion_hw = TRUE
 	var/stored_paper = 20
@@ -87,6 +87,6 @@
 	desc = "A small printer with paper recycling module."
 	power_usage = 50
 	icon_state = "printer_mini"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	stored_paper = 5
 	max_paper = 15

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "photo"
 	inhand_icon_state = "paper"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	grind_results = list(/datum/reagent/iodine = 4)

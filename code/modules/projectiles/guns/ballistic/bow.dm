@@ -12,7 +12,7 @@
 	attack_verb_continuous = list("whipped", "cracked")
 	attack_verb_simple = list("whip", "crack")
 	weapon_weight = WEAPON_HEAVY
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	var/drawn = FALSE
@@ -99,14 +99,14 @@
 	icon_state = "quiver"
 	inhand_icon_state = "quiver"
 	worn_icon_state = "harpoon_quiver"
+	max_atom_size = ITEM_SIZE_TINY
+	max_total_atom_size = ITEM_SIZE_TINY * 100
+	max_items = 40
 	var/arrow_path = /obj/item/ammo_casing/caseless/arrow
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
-	storage.max_atom_size = WEIGHT_CLASS_TINY
-	storage.max_items = 40
-	storage.max_total_atom_size = 100
 	storage.set_holdable(list(
 		/obj/item/ammo_casing/caseless/arrow
 		))

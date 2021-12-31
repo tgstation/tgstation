@@ -52,5 +52,5 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	desc = "The remains of the strongest clockwork knight."
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "clockwork_alloy"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0

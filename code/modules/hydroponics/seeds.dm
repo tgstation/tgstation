@@ -6,7 +6,7 @@
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed" // Unknown plant seed - these shouldn't exist in-game.
 	worn_icon_state = "seed"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	resistance_flags = FLAMMABLE
 	/// Name of plant when planted.
 	var/plantname = "Plants"

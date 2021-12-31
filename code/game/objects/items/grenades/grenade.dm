@@ -4,7 +4,7 @@
 /obj/item/grenade
 	name = "grenade"
 	desc = "It has an adjustable timer."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "grenade"
 	inhand_icon_state = "flashbang"

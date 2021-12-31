@@ -33,7 +33,7 @@ To add a crossbreed:
 	var/effect = "null"
 	var/effect_desc = "null"
 	force = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6

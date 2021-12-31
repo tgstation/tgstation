@@ -10,7 +10,7 @@
 	name = "Default"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
-	atom_size = WEIGHT_CLASS_GIGANTIC
+	atom_size = ITEM_SIZE_GIGANTIC
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'

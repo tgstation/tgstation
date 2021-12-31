@@ -15,7 +15,7 @@
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
 	inhand_icon_state = "bio_suit"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	permeability_coefficient = 0.01
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

@@ -210,7 +210,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 	icon_state = "ticket"
 	maptext_x = 7
 	maptext_y = 10
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	var/saved_maptext = null

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
 	worn_icon_state = "book"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
 	///how many charges do we have?

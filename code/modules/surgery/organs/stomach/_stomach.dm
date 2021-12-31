@@ -5,7 +5,7 @@
 	name = "stomach"
 	icon_state = "stomach"
 	visual = FALSE
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb_continuous = list("gores", "squishes", "slaps", "digests")

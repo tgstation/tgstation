@@ -1,7 +1,7 @@
 /obj/item/dyespray
 	name = "hair dye spray"
 	desc = "A spray to dye your hair any gradients you'd like."
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	icon = 'icons/obj/dyespray.dmi'
 	icon_state = "dyespray"
 

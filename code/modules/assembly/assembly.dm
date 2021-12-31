@@ -11,7 +11,7 @@
 	icon = 'icons/obj/assemblies/new_assemblies.dmi'
 	icon_state = ""
 	flags_1 = CONDUCT_1
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	custom_materials = list(/datum/material/iron=100)
 	throwforce = 2
 	throw_speed = 3

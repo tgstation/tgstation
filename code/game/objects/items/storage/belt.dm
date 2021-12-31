@@ -39,12 +39,12 @@
 	custom_premium_price = PAYCHECK_MEDIUM * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 3
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -203,12 +203,12 @@
 	icon_state = "medical"
 	inhand_icon_state = "medical"
 	worn_icon_state = "medical"
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
 
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -294,12 +294,12 @@
 	inhand_icon_state = "security"//Could likely use a better one.
 	worn_icon_state = "security"
 	content_overlays = TRUE
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 5
 
 /obj/item/storage/belt/security/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/melee/baton,
 		/obj/item/grenade,
@@ -335,11 +335,7 @@
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_HARD * 3
-
-/obj/item/storage/belt/security/webbing/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
+	max_items = 6
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -347,14 +343,14 @@
 	icon_state = "explorer1"
 	inhand_icon_state = "explorer1"
 	worn_icon_state = "explorer1"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
+	max_items = 6
 
 /obj/item/storage/belt/mining/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
-	STR.max_total_atom_size = 20
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -411,11 +407,7 @@
 	icon_state = "ebelt"
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
-
-/obj/item/storage/belt/mining/primitive/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 5
+	max_items = 5
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
@@ -423,11 +415,11 @@
 	icon_state = "soulstonebelt"
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
+	max_items = 6
 
 /obj/item/storage/belt/soulstone/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/soulstone
 		))
@@ -447,11 +439,11 @@
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=400)
+	max_items = 1
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
 	STR.set_holdable(list(
 		/obj/item/clothing/mask/luchador
 		))
@@ -470,14 +462,12 @@
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
-
-/obj/item/storage/belt/military/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
+	max_atom_size = ITEM_SIZE_SMALL
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
+	max_atom_size = ITEM_SIZE_SMALL
+	max_items = 6
 
 /obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
@@ -487,8 +477,6 @@
 /obj/item/storage/belt/military/snack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
 	STR.set_holdable(list(
 		/obj/item/food,
 		/obj/item/reagent_containers/food/drinks
@@ -553,11 +541,7 @@
 	icon_state = "assaultbelt"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
-
-/obj/item/storage/belt/military/assault/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
+	max_items = 6
 
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	generate_items_inside(list(
@@ -571,14 +555,14 @@
 	icon_state = "grenadebeltnew"
 	inhand_icon_state = "security"
 	worn_icon_state = "grenadebeltnew"
+	max_atom_size = ITEM_SIZE_BULKY
+	max_total_atom_size = ITEM_SIZE_BULKY * 12
+	max_items = 30
 
 /obj/item/storage/belt/grenade/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 30
 	STR.display_numerical_stacking = TRUE
-	STR.max_total_atom_size = 60
-	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/grenade,
 		/obj/item/screwdriver,
@@ -612,11 +596,11 @@
 	icon_state = "soulstonebelt"
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
+	max_items = 6
 
 /obj/item/storage/belt/wands/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/gun/magic/wand
 		))
@@ -639,12 +623,12 @@
 	icon_state = "janibelt"
 	inhand_icon_state = "janibelt"
 	worn_icon_state = "janibelt"
+	max_atom_size = ITEM_SIZE_NORMAL // Set to this so the  light replacer can fit.
+	max_items = 6
 
 /obj/item/storage/belt/janitor/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	STR.set_holdable(list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
@@ -674,12 +658,12 @@
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
+	max_total_atom_size = ITEM_SIZE_NORMAL * 6
+	max_items = 18
 
 /obj/item/storage/belt/bandolier/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 18
-	STR.max_total_atom_size = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/shotgun,
@@ -694,12 +678,8 @@
 	worn_icon_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
 	custom_price = PAYCHECK_ASSISTANT * 2
-
-/obj/item/storage/belt/fannypack/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
+	max_atom_size = ITEM_SIZE_SMALL
+	max_items = 3
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"
@@ -767,15 +747,15 @@
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
+	max_atom_size = ITEM_SIZE_BULKY
+	max_items = 1
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
 	STR.rustle_sound = FALSE
-	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/melee/sabre
 		))
@@ -817,12 +797,12 @@
 	inhand_icon_state = "plantbelt"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 6
 
 /obj/item/storage/belt/plant/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 6
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/plant_analyzer,

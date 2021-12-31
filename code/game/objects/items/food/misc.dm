@@ -8,7 +8,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 10
 
@@ -17,7 +17,7 @@
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	rat_heal = 35
 
 /obj/item/food/cheese/wheel/Initialize(mapload)
@@ -35,7 +35,7 @@
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/gold = 20, /datum/reagent/toxin/mutagen = 5)
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
 
@@ -57,7 +57,7 @@
 	foodtypes = FRUIT
 	food_flags = FOOD_FINGER_FOOD
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/candy_corn
 	name = "candy corn"
@@ -67,7 +67,7 @@
 	tastes = list("candy corn" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/candy_corn/prison
 	name = "desiccated candy corn"
@@ -85,7 +85,7 @@
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/hugemushroomslice
 	name = "huge mushroom slice"
@@ -94,7 +94,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("mushroom" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/hugemushroomslice/Initialize(mapload)
 	. = ..()
@@ -110,7 +110,7 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtypes = JUNKFOOD
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/loadedbakedpotato
 	name = "loaded baked potato"
@@ -119,7 +119,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("potato" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/fries
 	name = "space fries"
@@ -129,7 +129,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtypes = VEGETABLES | FRIED
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/fries/Initialize(mapload)
@@ -144,7 +144,7 @@
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtypes = FRIED | VEGETABLES
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/tatortot/Initialize(mapload)
 	. = ..()
@@ -158,7 +158,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/protein = 1)
 	tastes = list("soy" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/cheesyfries
 	name = "cheesy fries"
@@ -168,7 +168,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/cheesyfries/Initialize(mapload)
@@ -182,7 +182,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
 	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
 	foodtypes = VEGETABLES | FRIED | MEAT
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/poutine/Initialize(mapload)
@@ -195,7 +195,7 @@
 	icon_state = "badrecipe"
 	food_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	foodtypes = GROSS
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	preserved_food = TRUE //Can't decompose any more than this
 
 /obj/item/food/badrecipe/Initialize(mapload)
@@ -228,7 +228,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/medicine/oculine = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/carrotfries/Initialize(mapload)
 	. = ..()
@@ -242,7 +242,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/caramel = 5)
 	tastes = list("apple" = 2, "caramel" = 3)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/mint
 	name = "mint"
@@ -252,7 +252,7 @@
 	food_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	foodtypes = TOXIC | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/spidereggs
 	name = "spider eggs"
@@ -261,7 +261,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin = 2)
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | TOXIC
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/spiderling
 	name = "spiderling"
@@ -270,7 +270,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/toxin = 4)
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtypes = MEAT | TOXIC
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/spiderlollipop
 	name = "spider lollipop"
@@ -295,7 +295,7 @@
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/fudgedice
 	name = "fudge dice"
@@ -306,7 +306,7 @@
 	tastes = list("fudge" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/chocoorange
 	name = "chocolate orange"
@@ -316,7 +316,7 @@
 	tastes = list("chocolate" = 3, "oranges" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/eggplantparm
 	name = "eggplant parmigiana"
@@ -326,7 +326,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 2, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtypes = VEGETABLES | DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/yakiimo
@@ -337,7 +337,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/roastparsnip
 	name = "roast parsnip"
@@ -347,17 +347,17 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("parsnip" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/melonfruitbowl
 	name = "melon fruit bowl"
 	desc = "For people who wants edible fruit bowls."
 	icon_state = "melonfruitbowl"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	tastes = list("melon" = 1)
 	foodtypes = FRUIT
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -377,7 +377,7 @@
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/powercrepe
 	name = "Powercrepe"
@@ -391,7 +391,7 @@
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
 
@@ -406,7 +406,7 @@
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	var/mutable_appearance/head
 	var/head_color = rgb(0, 0, 0)
 
@@ -440,7 +440,7 @@
 	tastes = list("candy" = 1)
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
@@ -514,7 +514,7 @@
 	foodtypes = JUNKFOOD
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/gumball/Initialize(mapload)
 	. = ..()
@@ -528,7 +528,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/salt = 8)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtypes = GRAIN | FRUIT | BREAKFAST
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/butter
 	name = "stick of butter"
@@ -537,7 +537,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
@@ -573,7 +573,7 @@
 	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/pineappleslice
 	name = "pineapple slice"
@@ -582,7 +582,7 @@
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/tinychocolate
 	name = "chocolate"
@@ -592,7 +592,7 @@
 	tastes = list("chocolate" = 1)
 	foodtypes = JUNKFOOD | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/canned
 	name = "Canned Air"
@@ -601,9 +601,9 @@
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan"
 	food_flags = FOOD_IN_CONTAINER
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	max_volume = 30
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	preserved_food = TRUE
 
 
@@ -669,14 +669,14 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pine nuts" = 1)
 	foodtypes = NUTS
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/crab_rangoon
 	name = "Crab Rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon_state = "crabrangoon"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 5)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
@@ -691,7 +691,7 @@
 	junkiness = 20
 	tastes = list("fried corn" = 1)
 	foodtypes = JUNKFOOD | FRIED
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/cornchips/MakeLeaveTrash()
 	if(trash_type)
@@ -734,7 +734,7 @@
 	tastes = list("candy" = 1, "insects" = 1)
 	foodtypes = JUNKFOOD | SUGAR | GROSS
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/food/canned/envirochow
 	name = "dog eat dog envirochow"
@@ -792,7 +792,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/cream = 1)
 	tastes = list("cream" = 1, "cheese" = 1)
 	foodtypes = DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/cheese_curds
 	name = "cheese curds"
@@ -801,7 +801,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("cheese" = 1)
 	foodtypes = DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/cheese_curds/Initialize(mapload)
 	. = ..()
@@ -814,7 +814,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("aged cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/firm_cheese/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/firm_cheese_slice, 3, 30)
@@ -826,7 +826,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("aged cheese" = 1)
 	foodtypes = DAIRY | VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	burns_on_grill = TRUE
 
 /obj/item/food/firm_cheese_slice/MakeGrillable()
@@ -839,7 +839,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3)
 	tastes = list("mozzarella" = 1)
 	foodtypes = DAIRY
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/griddle_toast
 	name = "griddle toast"
@@ -848,7 +848,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("toast" = 1)
 	foodtypes = GRAIN
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	burns_on_grill = TRUE
 
 /obj/item/food/pesto
@@ -858,7 +858,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pesto" = 1)
 	foodtypes = VEGETABLES | DAIRY | NUTS
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/tomato_sauce
 	name = "tomato sauce"
@@ -867,7 +867,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("tomato" = 1, "herbs" = 1)
 	foodtypes = VEGETABLES
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/bechamel_sauce
 	name = "béchamel sauce"
@@ -876,7 +876,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("cream" = 1)
 	foodtypes = DAIRY | GRAIN
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/roasted_bell_pepper
 	name = "roasted bell pepper"
@@ -898,7 +898,7 @@
 	tastes = list("food?" = 2, "laziness" = 1)
 	foodtypes = MEAT | JUNKFOOD
 	food_flags = FOOD_FINGER_FOOD
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/food/ready_donk/examine_more(mob/user)
 	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))

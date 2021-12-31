@@ -121,7 +121,7 @@
 	desc = "Your excitement boils away as you realize it's just colored glass. Why would someone hoard these things?"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "rupee"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	custom_materials = list(/datum/material/glass = 500)
 
 /obj/item/rupee/Initialize(mapload)

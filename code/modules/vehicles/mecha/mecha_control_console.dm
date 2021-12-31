@@ -77,7 +77,7 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
 	var/ai_beacon = FALSE
 	/// Cooldown variable for EMP pulsing

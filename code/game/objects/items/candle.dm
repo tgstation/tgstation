@@ -6,7 +6,7 @@
 	icon = 'icons/obj/candle.dmi'
 	icon_state = "candle1"
 	inhand_icon_state = "candle1"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	light_color = LIGHT_COLOR_FIRE
 	heat = 1000
 	/// How many seconds it burns for

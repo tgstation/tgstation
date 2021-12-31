@@ -118,7 +118,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
 

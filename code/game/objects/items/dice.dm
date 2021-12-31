@@ -5,7 +5,7 @@
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/storage/dice/Initialize(mapload)
 	. = ..()
@@ -55,7 +55,7 @@
 	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "d6"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	var/sides = 6
 	var/result = null
 	var/list/special_faces = list() //entries should match up to sides var if used
@@ -157,7 +157,7 @@
 	name = "d100"
 	desc = "A die with one hundred sides! Probably not fairly weighted..."
 	icon_state = "d100"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	sides = 100
 
 /obj/item/dice/d100/ComponentInitialize()

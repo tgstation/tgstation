@@ -821,7 +821,7 @@ attack_basic_mob
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/ash_type = /obj/effect/decal/cleanable/ash
-		if(atom_size >= WEIGHT_CLASS_HUGE)
+		if(atom_size >= ITEM_SIZE_HUGE)
 			ash_type = /obj/effect/decal/cleanable/ash/large
 		var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
 		A.desc += "\nLooks like this used to be \an [name] some time ago."
@@ -1177,7 +1177,7 @@ attack_basic_mob
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bitten into something hard."), \
 						span_warning("Eugh! Did I just bite into something?"))
 
-	else if(atom_size <= WEIGHT_CLASS_TINY) //small items like soap or toys that don't have mat datums
+	else if(atom_size <= ITEM_SIZE_TINY) //small items like soap or toys that don't have mat datums
 		/// victim's chest (for cavity implanting the item)
 		var/obj/item/bodypart/chest/victim_cavity = victim.get_bodypart(BODY_ZONE_CHEST)
 		if(victim_cavity.cavity_item)

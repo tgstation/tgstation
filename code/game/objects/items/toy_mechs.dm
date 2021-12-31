@@ -18,7 +18,7 @@
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
 	verb_yell = "beeps"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	/// Timer when it'll be off cooldown
 	var/timer = 0
 	/// Cooldown between play sessions

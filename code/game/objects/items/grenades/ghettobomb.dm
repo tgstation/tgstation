@@ -3,7 +3,7 @@
 /obj/item/grenade/iedcasing
 	name = "improvised firebomb"
 	desc = "A weak, improvised incendiary device."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "improvised_grenade"
 	inhand_icon_state = "flashbang"

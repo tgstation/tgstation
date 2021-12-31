@@ -3,7 +3,7 @@
 	name = "skub"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "skub"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	attack_verb_continuous = list("skubs")
 	attack_verb_simple = list("skub")
 

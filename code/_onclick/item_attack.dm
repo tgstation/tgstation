@@ -308,12 +308,18 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_ATTACK_QDELETED, target, user, proximity_flag, click_parameters)
 
+/**
+ * Gets the sfx volume used by this item when hitting things.
+ */
 /obj/item/proc/get_clamped_volume()
-	if(atom_size)
-		if(force)
-			return clamp((force + atom_size) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
-		else
-			return clamp(atom_size * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+	if(!atom_size)
+		return
+	if(force)
+		// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+		return clamp((force + atom_size) * 4, 30, 100)
+	else
+		// Multiply the item's weight class by 6, then clamp the value between 10 and 100
+		return clamp(atom_size * 6, 10, 100)
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area, obj/item/bodypart/hit_bodypart)
 	if(!I.force && !length(I.attack_verb_simple) && !length(I.attack_verb_continuous))

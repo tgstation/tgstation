@@ -8,8 +8,8 @@
 	throwforce = 0
 	throw_speed = 2
 	throw_range = 2
-	atom_size = WEIGHT_CLASS_TINY
-	full_atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
+	full_atom_size = ITEM_SIZE_TINY
 	resistance_flags = FLAMMABLE
 	var/value = 0
 	grind_results = list(/datum/reagent/cellulose = 10)

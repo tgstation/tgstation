@@ -3,7 +3,7 @@
 	desc = "Removable disk used to store data."
 	power_usage = 10
 	icon_state = "datadisk6"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	critical = FALSE
 	max_capacity = 16
 	device_type = MC_SDD

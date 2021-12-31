@@ -6,7 +6,7 @@
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	var/obj/machinery/computer/cargo/express/express_console
 	var/linked = FALSE
 	var/ready = FALSE

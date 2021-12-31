@@ -5,7 +5,7 @@
 	icon_state = "stamp-ok"
 	inhand_icon_state = "stamp"
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=60)

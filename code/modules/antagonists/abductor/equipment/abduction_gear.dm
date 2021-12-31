@@ -660,7 +660,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "A beacon designed to instantly tele-construct abductor machinery."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "beacon"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	var/obj/machinery/spawned_machine
 
 /obj/item/abductor_machine_beacon/attack_self(mob/user)

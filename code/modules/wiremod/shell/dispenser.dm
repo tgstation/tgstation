@@ -12,7 +12,8 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 
-	var/max_weight = WEIGHT_CLASS_NORMAL
+	/// The maximum size things can be and still be inserted into this.
+	var/max_insertion_size = ITEM_SIZE_NORMAL
 	var/capacity = 20
 
 	var/list/obj/item/stored_items = list()
@@ -65,7 +66,7 @@
 	if(user.combat_mode || .)
 		return
 
-	if(item.atom_size > max_weight)
+	if(item.atom_size > max_insertion_size)
 		balloon_alert(user, "item too big!")
 		return
 

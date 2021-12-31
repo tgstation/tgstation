@@ -161,7 +161,7 @@
 
 /obj/item/stack/package_wrap/small
 	desc = "You can use this to wrap items in. This roll looks a bit skimpy."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
 
@@ -171,6 +171,6 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 5

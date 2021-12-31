@@ -4,7 +4,7 @@
 	icon_state = "gas_alt"
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	inhand_icon_state = "gas_alt"
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
@@ -100,7 +100,7 @@
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
@@ -164,7 +164,7 @@
 	icon_state = "syndicate"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 60
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -173,7 +173,7 @@
 	icon_state = "clown"
 	inhand_icon_state = "clown_hat"
 	dye_color = DYE_CLOWN
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
@@ -235,7 +235,7 @@
 	clothing_flags = MASKINTERNALS
 	icon_state = "mime"
 	inhand_icon_state = "mime"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
@@ -373,5 +373,5 @@
 	desc = "Great for train hijackings. Works like a normal full face gas mask, but won't conceal your identity."
 	icon_state = "driscoll_mask"
 	flags_inv = HIDEFACIALHAIR
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	inhand_icon_state = "driscoll_mask"

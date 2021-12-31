@@ -3,7 +3,7 @@
 	desc = "This device raises pink levels to unknown highs."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "suspiciousphone"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	attack_verb_continuous = list("dumps")
 	attack_verb_simple = list("dump")
 	var/dumped = FALSE

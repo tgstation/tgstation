@@ -5,7 +5,7 @@
 	icon_state = "paint sprayer"
 	inhand_icon_state = "paint sprayer"
 	worn_icon_state = "painter"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 

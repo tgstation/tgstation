@@ -351,7 +351,7 @@
 	inhand_icon_state = "disintegrate"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0

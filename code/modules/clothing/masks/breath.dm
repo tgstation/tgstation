@@ -6,7 +6,7 @@
 	body_parts_covered = 0
 	clothing_flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	permeability_coefficient = 0.5
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH

@@ -142,7 +142,7 @@
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
 		if(!isitem(content))
-			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
+			max_weight_of_contents = max(ITEM_SIZE_BULKY, max_weight_of_contents)
 			continue
 		var/obj/item/A_is_item = content
 		if(A_is_item.atom_size < max_weight_of_contents)

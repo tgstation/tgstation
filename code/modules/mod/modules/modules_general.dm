@@ -12,7 +12,7 @@
 	/// A cached reference to the storage component attached to this module.
 	var/datum/component/storage/concrete/storage
 	/// The maximum atom size of things that can be stored in the module.
-	var/max_atom_size = WEIGHT_CLASS_NORMAL
+	var/max_atom_size = ITEM_SIZE_NORMAL
 	/// The maximum total atom size of things that can be stored in the module.
 	var/max_total_atom_size = 15
 	/// The maximum number of things that can be stored in the module.
@@ -20,18 +20,12 @@
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
-	storage = AddComponent(/datum/component/storage/concrete)
-	storage.max_atom_size = max_atom_size
-	storage.max_total_atom_size = max_total_atom_size
-	storage.max_items = max_items
+	storage = AddComponent(/datum/component/storage/concrete, max_atom_size, max_total_atom_size, max_items)
 	storage.allow_big_nesting = TRUE
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/mod/module/storage/on_install()
-	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
-	modstorage.max_atom_size = max_atom_size
-	modstorage.max_total_atom_size = max_total_atom_size
-	modstorage.max_items = max_items
+	mod.AddComponent(/datum/component/storage, storage, max_atom_size, max_total_atom_size, max_items)
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 
 /obj/item/mod/module/storage/on_uninstall()
@@ -46,7 +40,7 @@
 		is entirely within the suit, distributing items and weight evenly to ensure a comfortable experience for the user; \
 		whether smuggling, or simply hauling."
 	icon_state = "storage_large"
-	max_total_atom_size = 21
+	max_total_atom_size = ITEM_SIZE_NORMAL * 7
 	max_items = 14
 
 /obj/item/mod/module/storage/syndicate
@@ -55,7 +49,7 @@
 		esoteric technology to compress the physical matter of items put inside of them, \
 		essentially shrinking items for much easier and more portable storage."
 	icon_state = "storage_syndi"
-	max_total_atom_size = 30
+	max_total_atom_size = ITEM_SIZE_NORMAL * 10
 	max_items = 21
 
 /obj/item/mod/module/storage/bluespace
@@ -63,8 +57,8 @@
 	desc = "A storage system developed by Nanotrasen, these compartments employ \
 		miniaturized bluespace pockets for the ultimate in storage technology; regardless of the weight of objects put inside."
 	icon_state = "storage_large"
-	max_atom_size = WEIGHT_CLASS_GIGANTIC
-	max_total_atom_size = 60
+	max_atom_size = ITEM_SIZE_GIGANTIC
+	max_total_atom_size = ITEM_SIZE_GIGANTIC * 12
 	max_items = 21
 
 

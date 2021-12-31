@@ -3,8 +3,8 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 	click_gather = TRUE
-	max_atom_size = WEIGHT_CLASS_NORMAL
-	max_total_atom_size = 100
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_total_atom_size = ITEM_SIZE_NORMAL * 50
 	max_items = 50
 	display_numerical_stacking = TRUE
 
@@ -20,8 +20,8 @@
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 	click_gather = TRUE
-	max_atom_size = WEIGHT_CLASS_BULKY  // can fit vending refills
-	max_total_atom_size = 800
+	max_atom_size = ITEM_SIZE_BULKY  // can fit vending refills
+	max_total_atom_size = ITEM_SIZE_BULKY * 400
 	max_items = 400
 	display_numerical_stacking = TRUE
 

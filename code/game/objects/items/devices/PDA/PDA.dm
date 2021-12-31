@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	greyscale_config = /datum/greyscale_config/pda
 	greyscale_colors = "#999875#a92323"
 	item_flags = NOBLUDGEON
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	actions_types = list(/datum/action/item_action/toggle_light)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 100)

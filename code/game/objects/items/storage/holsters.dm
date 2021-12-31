@@ -6,6 +6,8 @@
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 1
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
@@ -19,8 +21,6 @@
 /obj/item/storage/belt/holster/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 1
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/gun/ballistic/revolver,
@@ -33,12 +33,12 @@
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 3
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
@@ -80,6 +80,8 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
+	max_atom_size = ITEM_SIZE_NORMAL
+	max_items = 2
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
@@ -108,8 +110,6 @@
 /obj/item/storage/belt/holster/chameleon/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_atom_size = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
@@ -133,13 +133,13 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
+	max_atom_size = ITEM_SIZE_BULKY
+	max_items = 2
 
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 2
-	STR.max_atom_size = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.

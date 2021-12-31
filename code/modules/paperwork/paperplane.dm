@@ -7,7 +7,7 @@
 	throw_range = 7
 	throw_speed = 1
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 

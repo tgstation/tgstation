@@ -31,7 +31,7 @@
 	if(tool)
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [target_zone]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [target_zone]."),
-			span_notice("[user] begins to insert [tool.atom_size > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone]."))
+			span_notice("[user] begins to insert [tool.atom_size > ITEM_SIZE_SMALL ? tool : "something"] into [target]'s [target_zone]."))
 		display_pain(target, "You can feel something being inserted into your [target_zone], it hurts like hell!")
 	else
 		display_results(user, target, span_notice("You check for items in [target]'s [target_zone]..."),
@@ -41,13 +41,13 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery = FALSE)
 	var/obj/item/bodypart/chest/target_chest = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
-		if(item_for_cavity || tool.atom_size > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || istype(tool, /obj/item/organ))
+		if(item_for_cavity || tool.atom_size > ITEM_SIZE_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || istype(tool, /obj/item/organ))
 			to_chat(user, span_warning("You can't seem to fit [tool] in [target]'s [target_zone]!"))
 			return FALSE
 		else
 			display_results(user, target, span_notice("You stuff [tool] into [target]'s [target_zone]."),
 				span_notice("[user] stuffs [tool] into [target]'s [target_zone]!"),
-				span_notice("[user] stuffs [tool.atom_size > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone]."))
+				span_notice("[user] stuffs [tool.atom_size > ITEM_SIZE_SMALL ? tool : "something"] into [target]'s [target_zone]."))
 			user.transferItemToLoc(tool, target, TRUE)
 			target_chest.cavity_item = tool
 			return ..()
@@ -55,7 +55,7 @@
 		if(item_for_cavity)
 			display_results(user, target, span_notice("You pull [item_for_cavity] out of [target]'s [target_zone]."),
 				span_notice("[user] pulls [item_for_cavity] out of [target]'s [target_zone]!"),
-				span_notice("[user] pulls [item_for_cavity.atom_size > WEIGHT_CLASS_SMALL ? item_for_cavity : "something"] out of [target]'s [target_zone]."))
+				span_notice("[user] pulls [item_for_cavity.atom_size > ITEM_SIZE_SMALL ? item_for_cavity : "something"] out of [target]'s [target_zone]."))
 			display_pain(target, "Something is pulled out of your [target_zone]! It hurts like hell!")
 			user.put_in_hands(item_for_cavity)
 			target_chest.cavity_item = null

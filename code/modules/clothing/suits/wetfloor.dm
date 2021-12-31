@@ -8,7 +8,7 @@
 	throwforce = 3
 	throw_speed = 2
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	body_parts_covered = CHEST|GROIN
 	attack_verb_continuous = list("warns", "cautions", "smashes")
 	attack_verb_simple = list("warn", "caution", "smash")

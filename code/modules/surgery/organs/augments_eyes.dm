@@ -5,7 +5,7 @@
 	implant_overlay = "eye_implant_overlay"
 	slot = ORGAN_SLOT_EYES
 	zone = BODY_ZONE_PRECISE_EYES
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 // HUD implants
 /obj/item/organ/cyberimp/eyes/hud

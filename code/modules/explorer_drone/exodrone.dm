@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	desc = "long range semi-autonomous exploration drone"
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "drone"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 
 	/// Current drone status, see code\__DEFINES\adventure.dm
 	var/drone_status = EXODRONE_IDLE
@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// Cargo storage
 	var/datum/component/storage/storage = AddComponent(/datum/component/storage/concrete)
 	storage.cant_hold = GLOB.blacklisted_cargo_types
-	storage.max_atom_size = WEIGHT_CLASS_NORMAL
+	storage.max_atom_size = ITEM_SIZE_NORMAL
 	storage.max_items = EXODRONE_CARGO_SLOTS
 
 /obj/item/exodrone/Destroy()

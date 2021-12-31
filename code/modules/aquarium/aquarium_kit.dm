@@ -5,7 +5,7 @@
 	desc = "Autogenerates nutritious fish feed based on sample inside."
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "fish_feed"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/fish_feed/Initialize(mapload)
 	. = ..()
@@ -101,7 +101,7 @@
 	desc = "Everything you need to build your own aquarium. Raw materials sold separately."
 	icon = 'icons/obj/aquarium.dmi'
 	icon_state = "construction_kit"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/aquarium_kit/attack_self(mob/user)
 	. = ..()
@@ -111,7 +111,7 @@
 /obj/item/aquarium_prop
 	name = "generic aquarium prop"
 	desc = "very boring"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/storage/box/aquarium_props
 	name = "aquarium props box"

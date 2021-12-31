@@ -40,7 +40,7 @@
 	icon_state = "basketball"
 	inhand_icon_state = "basketball"
 	desc = "Here's your chance, do your dance at the Space Jam."
-	atom_size = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
+	atom_size = ITEM_SIZE_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/holoball/dodgeball
 	name = "dodgeball"

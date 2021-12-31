@@ -17,7 +17,7 @@
 	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
 	icon_state = "sneakboots"
 	inhand_icon_state = "sneakboots"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_traits = list(TRAIT_SILENT_FOOTSTEPS)
 

@@ -658,7 +658,7 @@
 	worn_icon_state = "book"
 	throw_speed = 2
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	var/uses = 10
 
 	/// The bonus that you get from going semi-random.

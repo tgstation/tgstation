@@ -168,4 +168,4 @@
 	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "skeleton_key"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL

@@ -4,7 +4,7 @@
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason."
 	name = "projectile gun"
 	icon_state = "pistol"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 	///sound when inserting magazine
 	var/load_sound = 'sound/weapons/gun/general/magazine_insert_full.ogg'
@@ -579,7 +579,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		set_size(WEIGHT_CLASS_NORMAL, force = TRUE)
+		set_size(ITEM_SIZE_NORMAL, force = TRUE)
 		//The file might not have a "gun" icon, let's prepare for this
 		lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
@@ -673,7 +673,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	desc = "A syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "suppressor"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 
 /obj/item/suppressor/specialoffer

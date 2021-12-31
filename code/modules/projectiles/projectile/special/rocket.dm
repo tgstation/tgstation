@@ -92,7 +92,7 @@
 	desc = "A missile that did not detonate. The tail has snapped and it is in no way fit to be used again."
 	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "missile_broken"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 
 /obj/projectile/bullet/a84mm_br/on_hit(atom/target, blocked=0)

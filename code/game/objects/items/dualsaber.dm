@@ -13,7 +13,7 @@
 	throw_speed = 3
 	throw_range = 5
 	sharpness = SHARP_EDGED
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	hitsound = "swing_hit"
 	armour_penetration = 35
 	light_system = MOVABLE_LIGHT
@@ -28,7 +28,7 @@
 	resistance_flags = FIRE_PROOF
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	var/size_on = WEIGHT_CLASS_BULKY
+	var/size_on = ITEM_SIZE_BULKY
 	var/saber_color = "green"
 	var/two_hand_force = 34
 	var/hacked = FALSE

@@ -8,6 +8,9 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	custom_materials = list(/datum/material/plastic = 1200)
 	max_integrity = 500
+	max_atom_size = ITEM_SIZE_SMALL
+	max_total_atom_size = ITEM_SIZE_SMALL * 6
+	max_items = 6
 
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -24,9 +27,6 @@
 /obj/item/storage/cans/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_atom_size = WEIGHT_CLASS_SMALL
-	STR.max_total_atom_size = 12
-	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food/drinks/soda_cans,
 		/obj/item/reagent_containers/food/drinks/bottle/beer,

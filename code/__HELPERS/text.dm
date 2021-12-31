@@ -1021,17 +1021,17 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 ///Returns a string based on the weight class define used as argument
 /proc/weight_class_to_text(atom_size)
 	switch(atom_size)
-		if(WEIGHT_CLASS_TINY)
+		if(ITEM_SIZE_TINY)
 			. = "tiny"
-		if(WEIGHT_CLASS_SMALL)
+		if(ITEM_SIZE_SMALL)
 			. = "small"
-		if(WEIGHT_CLASS_NORMAL)
+		if(ITEM_SIZE_NORMAL)
 			. = "normal-sized"
-		if(WEIGHT_CLASS_BULKY)
+		if(ITEM_SIZE_BULKY)
 			. = "bulky"
-		if(WEIGHT_CLASS_HUGE)
+		if(ITEM_SIZE_HUGE)
 			. = "huge"
-		if(WEIGHT_CLASS_GIGANTIC)
+		if(ITEM_SIZE_GIGANTIC)
 			. = "gigantic"
 		else
 			. = ""

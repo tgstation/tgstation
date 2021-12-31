@@ -6,7 +6,7 @@
 /obj/item/experi_scanner
 	name = "Experi-Scanner"
 	desc = "A handheld scanner used for completing the many experiments of modern science."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	icon = 'icons/obj/device.dmi'
 	icon_state = "experiscanner"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'

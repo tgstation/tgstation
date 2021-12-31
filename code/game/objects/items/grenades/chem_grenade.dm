@@ -4,7 +4,7 @@
 	icon_state = "chemg"
 	base_icon_state = "chemg"
 	inhand_icon_state = "flashbang"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	force = 2
 	/// Which stage of construction this grenade is currently at.
 	var/stage = GRENADE_EMPTY

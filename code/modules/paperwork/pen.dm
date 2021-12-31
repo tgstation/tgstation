@@ -19,7 +19,7 @@
 	worn_icon_state = "pen"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_EARS
 	throwforce = 0
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=10)
@@ -236,7 +236,7 @@
 		throwforce_on = 35, \
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
-		size_on = WEIGHT_CLASS_NORMAL)
+		size_on = ITEM_SIZE_NORMAL)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/pen/edagger/suicide_act(mob/user)
@@ -285,7 +285,7 @@
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
 	force = 3
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	custom_materials = list(/datum/material/iron=10, /datum/material/diamond=100, /datum/material/titanium = 10)
 	pressure_resistance = 2
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)

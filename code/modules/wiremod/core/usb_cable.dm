@@ -6,7 +6,7 @@
 	icon_state = "usb_cable"
 	inhand_icon_state = "coil"
 	base_icon_state = "coil"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	custom_materials = list(/datum/material/iron = 75)
 
 	/// The currently connected circuit

@@ -19,7 +19,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	///Current charge in cell units
 	var/charge = 0
 	///Maximum charge in cell units
@@ -404,7 +404,7 @@
 	desc = "A tiny power cell with a very low power capacity. Used in light fixtures to power them in the event of an outage."
 	maxcharge = 120 //Emergency lights use 0.2 W per tick, meaning ~10 minutes of emergency power from a cell
 	custom_materials = list(/datum/material/glass = 20)
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/stock_parts/cell/emergency_light/Initialize(mapload)
 	. = ..()

@@ -6,7 +6,7 @@
 	inhand_icon_state = "megaphone"
 	lefthand_file = 'icons/mob/inhands/misc/megaphone_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/megaphone_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	siemens_coefficient = 1
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)

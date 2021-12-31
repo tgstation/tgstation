@@ -8,7 +8,7 @@
 	worn_icon_state = "flashlight"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
@@ -169,7 +169,7 @@
 	icon_state = "penlight"
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	flags_1 = CONDUCT_1
 	light_range = 2
 	var/holo_cooldown = 0
@@ -234,7 +234,7 @@
 	force = 10
 	light_range = 5
 	light_system = STATIC_LIGHT
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = null
 	on = TRUE
@@ -268,7 +268,7 @@
 /obj/item/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	light_range = 7 // Pretty bright.
 	icon_state = "flare"
 	inhand_icon_state = "flare"
@@ -340,7 +340,7 @@
 /obj/item/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	light_range = 4
 	icon_state = "torch"
 	inhand_icon_state = "torch"
@@ -385,7 +385,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
 	inhand_icon_state = "slime"
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = null
 	light_range = 7 //luminosity when on
@@ -451,7 +451,7 @@
 	name = "glowstick"
 	desc = "A military-grade glowstick."
 	custom_price = PAYCHECK_PRISONER
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	light_range = 4
 	light_system = MOVABLE_LIGHT
 	color = LIGHT_COLOR_GREEN

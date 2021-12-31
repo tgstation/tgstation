@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	desc = "A bag to be filled with sand."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "sandbag"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/ore/glass))
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	singular_name = "titanium sheet"
 	force = 5
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	sheettype = "titanium"
@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	singular_name = "plastitanium sheet"
 	force = 5
 	throwforce = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	throw_speed = 1
 	throw_range = 3
 	sheettype = "plastitanium"
@@ -477,7 +477,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	icon_state = "sheet-metalhydrogen"
 	inhand_icon_state = "sheet-metalhydrogen"
 	singular_name = "metal hydrogen sheet"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	point_value = 100
 	mats_per_unit = list(/datum/material/metalhydrogen = MINERAL_MATERIAL_AMOUNT)
@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	icon_state = "zaukerite"
 	inhand_icon_state = "sheet-zaukerite"
 	singular_name = "zaukerite crystal"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	point_value = 120
 	mats_per_unit = list(/datum/material/zaukerite = MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/zaukerite

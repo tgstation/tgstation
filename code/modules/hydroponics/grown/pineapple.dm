@@ -28,7 +28,7 @@
 	attack_verb_simple = list("sting", "pine")
 	throw_speed = 1
 	throw_range = 5
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	foodtypes = FRUIT | PINEAPPLE
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 0)
 	tastes = list("pineapple" = 1)

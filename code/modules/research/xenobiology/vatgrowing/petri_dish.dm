@@ -4,7 +4,7 @@
 	desc = "This makes you feel well-cultured."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "petri_dish"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///The sample stored on the dish
 	var/datum/biological_sample/sample
 

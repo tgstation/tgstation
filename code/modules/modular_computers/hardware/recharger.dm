@@ -27,7 +27,7 @@
 	name = "area power connector"
 	desc = "A device that wirelessly recharges connected device from nearby APC."
 	icon_state = "charger_APC"
-	atom_size = WEIGHT_CLASS_SMALL // Can't be installed into tablets/PDAs
+	atom_size = ITEM_SIZE_SMALL // Can't be installed into tablets/PDAs
 
 /obj/item/computer_hardware/recharger/apc_recharger/use_power(amount, charging=0)
 	if(ismachinery(holder.physical))
@@ -50,7 +50,7 @@
 	name = "wired power connector"
 	desc = "A power connector that recharges connected device from nearby power wire. Incompatible with portable computers."
 	icon_state = "charger_wire"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 
 /obj/item/computer_hardware/recharger/wired/can_install(obj/item/modular_computer/install_into, mob/living/user = null)
 	if(ismachinery(install_into.physical) && install_into.physical.anchored)
@@ -91,7 +91,7 @@
 	name = "lambda coil"
 	desc = "A very complex device that draws power from its own bluespace dimension."
 	icon_state = "charger_lambda"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	charge_rate = 100000
 
 /obj/item/computer_hardware/recharger/lambda/use_power(amount, charging=0)

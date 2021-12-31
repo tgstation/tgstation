@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	))
 
 /obj/item/clothing/mask/animal
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 	clothing_flags = VOICEBOX_TOGGLABLE
 	modifies_speech = TRUE
 	flags_cover = MASKCOVERSMOUTH

@@ -2,7 +2,7 @@
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	flags_inv = HIDEFACE
 	species_exception = list(/datum/species/golem)
 

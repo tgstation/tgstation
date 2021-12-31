@@ -6,7 +6,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "evidenceobj"
 	inhand_icon_state = ""
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
 	. = ..()
@@ -40,7 +40,7 @@
 		to_chat(user, span_warning("You find putting [I] in [src] while it's still inside it quite difficult!"))
 		return
 
-	if(I.atom_size > WEIGHT_CLASS_NORMAL)
+	if(I.atom_size > ITEM_SIZE_NORMAL)
 		to_chat(user, span_warning("[I] won't fit in [src]!"))
 		return
 
@@ -79,7 +79,7 @@
 		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 		cut_overlays() //remove the overlays
 		user.put_in_hands(I)
-		set_size(WEIGHT_CLASS_TINY, force = TRUE)
+		set_size(ITEM_SIZE_TINY, force = TRUE)
 		icon_state = "evidenceobj"
 		desc = "An empty evidence bag."
 

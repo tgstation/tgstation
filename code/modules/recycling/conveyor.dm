@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	// ID of the switch-in-the-making, to link conveyor belts to it.
 	var/id = ""
 
@@ -454,7 +454,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	icon_state = "conveyor_construct"
 	max_amount = 30
 	singular_name = "conveyor belt"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	merge_type = /obj/item/stack/conveyor
 	/// ID for linking a belt to one or more switches, all conveyors with the same ID will be controlled the same switch(es).
 	var/id = ""

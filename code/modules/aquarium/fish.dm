@@ -2,7 +2,7 @@
 /obj/item/fish
 	name = "generic looking aquarium fish"
 	desc = "very bland"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 
 /// Automatically generates object of given base path from the behaviour type in loc
 /proc/generate_fish(loc,behaviour_type,base_path=/obj/item/fish)

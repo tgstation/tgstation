@@ -6,7 +6,7 @@
 	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	throw_range = 1
 	throw_speed = 1
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	///what weapons will be allowed during the sparring match
 	var/weapons_condition = CONDITION_MELEE_ONLY
 	///what arena the fight will take place in

@@ -47,7 +47,7 @@
 		throw_speed_on = 2,
 		sharpness_on = NONE,
 		hitsound_on = 'sound/weapons/blade1.ogg',
-		size_on = WEIGHT_CLASS_BULKY,
+		size_on = ITEM_SIZE_BULKY,
 		clumsy_check = TRUE,
 		list/attack_verb_continuous_on,
 		list/attack_verb_simple_on,

@@ -17,7 +17,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "simple"
 	inhand_icon_state = "buildpipe"
-	atom_size = WEIGHT_CLASS_NORMAL
+	atom_size = ITEM_SIZE_NORMAL
 	///Piping layer that we are going to be on
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///Type of pipe-object made, selected from the RPD
@@ -326,7 +326,7 @@ Buildable meters
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	inhand_icon_state = "buildpipe"
-	atom_size = WEIGHT_CLASS_BULKY
+	atom_size = ITEM_SIZE_BULKY
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)

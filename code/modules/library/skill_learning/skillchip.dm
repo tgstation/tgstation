@@ -5,7 +5,7 @@
 	icon = 'icons/obj/card.dmi'
 	icon_state = "data_3"
 	custom_price = PAYCHECK_MEDIUM * 3
-	atom_size = WEIGHT_CLASS_SMALL
+	atom_size = ITEM_SIZE_SMALL
 
 	/// Traits automatically granted by this chip, optional. Lazylist.
 	var/list/auto_traits

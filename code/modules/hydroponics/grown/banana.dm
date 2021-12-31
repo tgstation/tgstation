@@ -57,7 +57,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
 	inhand_icon_state = "banana_peel"
-	atom_size = WEIGHT_CLASS_TINY
+	atom_size = ITEM_SIZE_TINY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7

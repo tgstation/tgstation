@@ -218,7 +218,7 @@
 	name = "turret controls"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
-	atom_size = WEIGHT_CLASS_HUGE
+	atom_size = ITEM_SIZE_HUGE
 	item_flags = ABSTRACT | NOBLUDGEON | DROPDEL
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/deployable_turret/turret
