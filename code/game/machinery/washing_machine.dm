@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	inhand_y_dimension = initial(target_type.inhand_y_dimension)
 	//indicate that this is a dyed object rather than the real thing
 	name = "dyed [initial(name)]"
-	var/dyed_warning = gender == PLURAL ? "They have been dyed to resemble" : "It has been dyed to resemble a"
+	var/dyed_warning = "[p_they(TRUE)] [p_have()] been dyed to resemble"
 	desc = "[initial(desc)] [dyed_warning] [initial(target_type.name)]."
 	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
