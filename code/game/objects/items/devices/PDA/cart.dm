@@ -34,12 +34,6 @@
 	var/mob/living/simple_animal/bot/active_bot
 	var/list/botlist = list()
 
-/obj/item/cartridge/Initialize(mapload)
-	. = ..()
-	var/obj/item/pda/pda = loc
-	if(istype(pda))
-		host_pda = pda
-
 /obj/item/cartridge/engineering
 	name = "\improper Power-ON cartridge"
 	icon_state = "cart-e"
@@ -136,8 +130,6 @@
 /obj/item/cartridge/signal/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-
-
 
 /obj/item/cartridge/quartermaster
 	name = "space parts & space vendors cartridge"
@@ -722,7 +714,7 @@
 			menu += "<BR>pAI: "
 			if(active_bot.paicard && active_bot.paicard.pai)
 				menu += "[active_bot.paicard.pai.name]"
-				if(active_bot.bot_core.allowed(usr))
+				if(active_bot.check_access(usr))
 					menu += " (<A href='byond://?src=[REF(src)];op=ejectpai'><i>eject</i></A>)"
 			else
 				menu += "<i>none</i>"

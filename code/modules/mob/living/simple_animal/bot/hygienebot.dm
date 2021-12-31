@@ -12,7 +12,7 @@
 	health = 100
 	maxHealth = 100
 
-	bot_core = /obj/machinery/bot_core/hygienebot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_mode_flags = ~BOT_MODE_PAI_CONTROLLABLE
@@ -220,8 +220,3 @@
 		A.fire_act()  //lol pranked no cleaning besides that
 	else
 		A.wash(CLEAN_WASH)
-
-
-
-/obj/machinery/bot_core/hygienebot
-	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)

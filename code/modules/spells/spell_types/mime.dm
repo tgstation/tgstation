@@ -176,14 +176,14 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
+	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets."
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
+	invocation_emote_self = span_danger("You fire your finger gun!")
 	range = 20
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3

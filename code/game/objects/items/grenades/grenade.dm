@@ -149,12 +149,17 @@
 		return ..()
 
 	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
-		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
-			if(change_det_time(newtime))
-				to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
-				if (round(newtime * 10) != det_time)
-					to_chat(user, span_warning("The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible."))
+		var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+		if (isnull(newtime))
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(newtime == "Instant" && change_det_time(0))
+			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+			return
+		newtime = round(newtime)
+		if(change_det_time(newtime))
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 		return
 	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 		if(change_det_time())
@@ -162,9 +167,7 @@
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE
-	if(time != null)
-		if(time < 3)
-			time = 3
+	if(!isnull(time))
 		det_time = round(clamp(time * 10, 0, 5 SECONDS))
 	else
 		var/previous_time = det_time
@@ -189,6 +192,9 @@
 		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
+		
+		if(!QDELETED(src)) // some grenades don't detonate but we want them destroyed
+			qdel(src)
 		return TRUE //It hit the grenade, not them
 
 /obj/item/grenade/afterattack(atom/target, mob/user)

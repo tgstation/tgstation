@@ -17,7 +17,7 @@
 /obj/machinery/computer/chef_order/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	radio.frequency = FREQ_SUPPLY
+	radio.set_frequency(FREQ_SUPPLY)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()

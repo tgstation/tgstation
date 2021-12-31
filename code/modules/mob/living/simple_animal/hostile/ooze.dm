@@ -213,7 +213,7 @@
 	if(vored_mob)
 		to_chat(src, span_warning("You are already consuming another creature!"))
 		return FALSE
-	owner.visible_message("<span class='warning>[ooze] starts attempting to devour [target]!</span>", span_notice("You start attempting to devour [target]."))
+	owner.visible_message(span_warning("[ooze] starts attempting to devour [target]!"), span_notice("You start attempting to devour [target]."))
 	if(!do_after(ooze, 15, target = ooze.pulling))
 		return FALSE
 	var/mob/living/eat_target = ooze.pulling
@@ -229,7 +229,7 @@
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	RegisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED, .proc/handle_mob_deletion)
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
-	owner.visible_message("<span class='warning>[src] devours [target]!</span>", span_notice("You devour [target]."))
+	owner.visible_message(span_warning("[src] devours [target]!"), span_notice("You devour [target]."))
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
@@ -237,7 +237,7 @@
 	STOP_PROCESSING(SSprocessing, src)
 	vored_mob.forceMove(get_turf(owner))
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
-	owner.visible_message("<span class='warning>[owner] pukes out [vored_mob]!</span>", span_notice("You puke out [vored_mob]."))
+	owner.visible_message(span_warning("[owner] pukes out [vored_mob]!"), span_notice("You puke out [vored_mob]."))
 	UnregisterSignal(vored_mob, COMSIG_PARENT_PREQDELETED)
 	vored_mob = null
 
@@ -341,7 +341,7 @@
 		remove_ranged_ability()
 		return
 
-	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", span_notice("You launch a mending globule."))
+	ooze.visible_message(span_nicegreen("[ooze] launches a mending globule!"), span_notice("You launch a mending globule."))
 	var/modifiers = params2list(params)
 	var/obj/projectile/globule/globule = new (ooze.loc)
 	globule.preparePixelProjectile(target, ooze, modifiers)
@@ -419,7 +419,7 @@
 	if(!iscarbon(ooze.pulling))
 		to_chat(src, span_warning("You need to be pulling an intelligent enough creature to assist it with a cocoon!"))
 		return FALSE
-	owner.visible_message("<span class='nicegreen>[ooze] starts attempting to put [target] into a gel cocoon!</span>", span_notice("You start attempting to put [target] into a gel cocoon."))
+	owner.visible_message(span_nicegreen("[ooze] starts attempting to put [target] into a gel cocoon!"), span_notice("You start attempting to put [target] into a gel cocoon."))
 	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
 		return FALSE
 
@@ -438,7 +438,7 @@
 /datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
 	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
-	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", span_notice("You put [target] into a gel cocoon."))
+	owner.visible_message(span_nicegreen("[owner] has put [target] into a gel cocoon!"), span_notice("You put [target] into a gel cocoon."))
 	StartCooldown()
 
 /obj/structure/gel_cocoon
@@ -473,7 +473,7 @@
 	inhabitant.forceMove(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
-	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", span_notice("You fall out of [src]."))
+	inhabitant.visible_message(span_warning("[inhabitant] falls out of [src]!"), span_notice("You fall out of [src]."))
 	if(destroy_after)
 		qdel(src)
 

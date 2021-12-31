@@ -41,3 +41,13 @@
 	icon_state = "dk_yellow"
 	mood_bonus = 1
 	mood_message = "<span class='nicegreen'>This place seems strangely serene.</span>\n"
+
+/area/ruin/pizzeria
+	name = "\improper Moffuchi's Pizzeria"
+	icon_state = "red"
+
+/area/ruin/pizzeria/kitchen
+	name = "\improper Moffuchi's Kitchen"
+	icon_state = "dk_yellow"
+
+

@@ -5,8 +5,11 @@
 	max_occurrences = 1
 	earliest_start = 0 MINUTES
 
+	///manual choice of what department to revolt for admins to pick
 	var/picked_department
+	///admin choice on whether to announce the department
 	var/announce = FALSE
+	///admin choice on whether this nation will have objectives to attack other nations, default true for !fun!
 	var/dangerous_nation = TRUE
 
 /datum/round_event_control/wizard/deprevolt/admin_setup()
@@ -29,97 +32,5 @@
 		return
 
 /datum/round_event/wizard/deprevolt/start()
-
 	var/datum/round_event_control/wizard/deprevolt/event_control = control
-
-	var/list/independent_departments = list() ///departments that are already independent, these will be disallowed to be randomly picked
-	var/list/cannot_pick = list() ///departments that are already independent, these will be disallowed to be randomly picked
-	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
-		if(!separatist_datum.nation)
-			continue
-		independent_departments |= separatist_datum.nation
-		cannot_pick |= separatist_datum.nation.nation_department
-
-	var/announcement = event_control.announce
-	var/dangerous = event_control.dangerous_nation
-	var/department
-	if(event_control.picked_department)
-		department = event_control.picked_department
-		event_control.picked_department = null
-	else
-		department = pick(list("Uprising of Assistants", "Medical", "Engineering", "Science", "Supply", "Service", "Security") - cannot_pick)
-		if(!department)
-			message_admins("Department Revolt could not create a nation, as all the departments are independent! You have created nations, you madman!")
-	var/list/jobs_to_revolt = list()
-	var/nation_name
-	var/list/citizens = list()
-
-	switch(department)
-		if("Uprising of Assistants") //God help you
-			jobs_to_revolt += "Assistant"
-			nation_name = pick("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
-		if("Medical")
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/medical)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
-		if("Engineering")
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/engineering)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Atomo", "Engino", "Power", "Teleco")
-		if("Science")
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/science)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-		if("Supply")
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/cargo)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
-		if("Service") //the few, the proud, the technically aligned
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/service)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
-		if("Security")
-			var/datum/job_department/job_department = SSjob.get_department_type(/datum/job_department/security)
-			for(var/datum/job/job as anything in job_department.department_jobs)
-				jobs_to_revolt += job.title
-			nation_name = pick("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
-
-	nation_name += pick("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
-	if(department == "Uprising of Assistants")
-		var/prefix = pick("roving clans", "barbaric tribes", "tides", "bandit kingdom", "tribal society", "marauder clans", "horde")
-		nation_name = "The [prefix] of [nation_name]"
-
-	var/datum/team/nation/nation = new(null, jobs_to_revolt, department)
-	nation.name = nation_name
-	var/datum/team/department_target //dodges unfortunate runtime
-	if(independent_departments.len)
-		department_target = pick(independent_departments)
-	nation.generate_nation_objectives(dangerous, department_target)
-
-	for(var/mob/living/carbon/human/possible_separatist as anything in GLOB.human_list)
-		if(!possible_separatist.mind)
-			continue
-		var/datum/mind/separatist_mind = possible_separatist.mind
-		if(!(separatist_mind.assigned_role.title in jobs_to_revolt))
-			continue
-		citizens += possible_separatist
-		separatist_mind.add_antag_datum(/datum/antagonist/separatist, nation, department)
-		nation.add_member(separatist_mind)
-		possible_separatist.log_message("Was made into a separatist, long live [nation_name]!", LOG_ATTACK, color="red")
-
-	if(citizens.len)
-		var/jobs_english_list = english_list(jobs_to_revolt)
-		message_admins("The nation of [nation_name] has been formed. Affected jobs are [jobs_english_list]. Any new crewmembers with these jobs will join the secession.")
-		if(announcement)
-			var/announce_text = "The new independent state of [nation_name] has formed from the ashes of the [department] department!"
-			if(department == "Uprising of Assistants") //the text didn't really work otherwise
-				announce_text = "The assistants of the station have risen to form the new independent state of [nation_name]!"
-			priority_announce(announce_text, "Secession from [GLOB.station_name]",  has_important_message = TRUE)
-	else
-		message_admins("The nation of [nation_name] did not have enough potential members to be created.")
-		qdel(nation)
+	create_separatist_nation(event_control.picked_department, event_control.announce, event_control.dangerous_nation)

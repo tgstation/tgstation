@@ -10,7 +10,7 @@
 	health = 25
 	maxHealth = 25
 
-	bot_core = /obj/machinery/bot_core/cleanbot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/medbay
 	name = "Scrubs, MD"
-	bot_core = /obj/machinery/bot_core/cleanbot/medbay
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR, ACCESS_MEDICAL)
 	bot_mode_flags = ~(BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED)
 
 /mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
@@ -138,7 +138,7 @@
 		if(BOT_CLEANING)
 			icon_state = "[base_icon]-c"
 		else
-			icon_state = "[base_icon][get_bot_flag(BOT_MODE_ON)]"
+			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
@@ -370,9 +370,6 @@
 	do_sparks(3, TRUE, src)
 	..()
 
-/obj/machinery/bot_core/cleanbot
-	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
-
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/cleanbot/ui_data(mob/user)
 	var/list/data = ..()
@@ -389,6 +386,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("clean_blood")
 			blood = !blood
@@ -399,7 +397,3 @@
 		if("clean_graffiti")
 			drawn = !drawn
 	get_targets()
-	return
-
-/obj/machinery/bot_core/cleanbot/medbay
-	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

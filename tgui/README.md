@@ -29,7 +29,8 @@ If you are using the tooling provided in this repo, everything is included! Feel
 
 However, if you want finer control over the installation or build process, you will need these:
 
-- [Node v12.20+](https://nodejs.org/en/download/)
+- [Node v16.13+](https://nodejs.org/en/download/)
+  - **LTS** release is recommended instead of latest
   - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install)
   - You only need to run `npm install -g yarn`.
