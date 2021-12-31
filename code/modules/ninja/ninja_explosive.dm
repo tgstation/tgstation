@@ -44,8 +44,7 @@
 	if(objective.detonation_location != get_area(user))
 		if (active)
 			say("Invalid location!") // TODO: make c4 code not be complete shit and actually set active to true
-			return FALSE
 		else
 			to_chat(user, span_notice("This isn't the location you're supposed to use this!"))
-			return FALSE
+		return FALSE
 	return TRUE
