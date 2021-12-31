@@ -194,7 +194,7 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/this_food = parent
 
 	//Make sure we have a reagent container large enough to fit the original atom's reagents.
-	volume = max(volume, CEILING(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT], 1))
+	volume = max(volume, ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT]))
 
 	this_food.create_reagents(volume)
 	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume, 1 / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
@@ -220,7 +220,7 @@ Behavior that's still missing from this component that original food items had t
 		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume * CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER
 		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
 
-	this_food.reagents.maximum_volume = CEILING(this_food.reagents.maximum_volume, 1) // Just because I like whole numbers for this.
+	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 
