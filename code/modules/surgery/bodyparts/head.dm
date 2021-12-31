@@ -257,6 +257,17 @@
 			if(eyes.eye_color)
 				eyes_overlay.color = eyes.eye_color
 
+/obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
+	var/mob/headholder = holder
+	if(istype(headholder))
+		headholder.log_talk(message, LOG_SAY, tag = "beheaded talk")
+
+	say(message, language, sanitize = FALSE)
+	return NOPASS
+
+/obj/item/bodypart/head/GetVoice()
+	return "The head of [real_name]"
+
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_head"

@@ -335,6 +335,9 @@
 	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
 		return
 
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
+		return
+
 	var/turf/holder_turf = get_turf(quirk_holder)
 
 	var/lums = holder_turf.get_lumcount()

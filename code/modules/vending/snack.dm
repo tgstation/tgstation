@@ -29,6 +29,9 @@
 		/obj/item/food/peanuts/ban_appeal = 3,
 		/obj/item/food/candy/bronx = 1
 	)
+	premium = list(
+		/obj/item/food/spacers_sidekick = 3
+	)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
 	default_price = PAYCHECK_ASSISTANT * 0.6

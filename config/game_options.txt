@@ -470,3 +470,6 @@ MAXFINE 2000
 ## Warning: SDQL is a powerful tool and can break many things or expose security sensitive information.
 ## Giving players access to it has major security concerns, be careful and deliberate when using this feature.
 #SDQL_SPELLS
+
+## Whether native FoV is enabled for all people.
+#NATIVE_FOV

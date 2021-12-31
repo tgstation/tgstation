@@ -147,11 +147,11 @@
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
 	list_clear_nulls(fingerprints)
-	if(fingerprints.len == 0)
+	if(!length(fingerprints))
 		return FALSE
 	return TRUE
 
-/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user,list/atoms,loc)
+/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
 
 	var/list/compiled_list = list()
 
@@ -160,12 +160,12 @@
 			compiled_list |= human_to_check.real_name
 			compiled_list[human_to_check.real_name] = human_to_check
 
-	if(compiled_list.len == 0)
+	if(!length(compiled_list))
 		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
 		return FALSE
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sort_list(compiled_list, /proc/cmp_mob_realname_dsc)
-	if(!chosen_mob)
+	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
+	if(isnull(chosen_mob))
 		return FALSE
 	curse(compiled_list[chosen_mob])
 	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)
@@ -292,7 +292,12 @@
 				if(!targeted)
 					break
 				targets["[targeted.current.real_name] the [targeted.assigned_role.title][is_teammate ? " (ally)" : ""]"] = targeted.current
-			heart.target = targets[input(user,"Choose your next target","Target") in targets]
+			var/chosen_target = tgui_input_list(user, "Choose a target", "Eldritch Targeting", targets)
+			if(isnull(chosen_target))
+				return FALSE
+			if(isnull(targets[chosen_target]))
+				return FALSE
+			heart.target = targets[chosen_target]
 			qdel(temp_objective)
 			if(heart.target)
 				to_chat(user,span_warning("Your new target has been selected, go and sacrifice [heart.target.real_name]!"))

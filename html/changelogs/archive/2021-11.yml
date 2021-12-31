@@ -919,3 +919,31 @@
   tf-4:
   - code_imp: GAR glasses are now (mostly) subtypes rather than all their own thing
   - qol: GAR glasses now layer above hair, rather than under it.
+2021-11-29:
+  Ghommie:
+  - bugfix: 'Fixed yet another couple TK teleportation tricks: airlock notes and cloth
+      cut from gauzes.'
+  - bugfix: The camera circuit will now actually work.
+  MMMiracles:
+  - bugfix: The Tramstation Tram no longer force unbuckles you from chairs/vehicles
+      when moving.
+  Pickle-Coding:
+  - spellcheck: Captain's wintercoat now has spaces separating between some words.
+  tralezab:
+  - rscadd: Malfunctioning Ais now roll for backstory, much like traitors!
+  - expansion: Malfunctioning Ais now get a unique antag panel!
+2021-11-30:
+  GoldenAlpharex:
+  - bugfix: Elevators are no longer defying the laws of physics and therefore can
+      no longer phase through ceilings or floors.
+  - bugfix: When an individual is interacting with an elevator and said elevator is
+      moved, their menu will be closed if they weren't the one to cause that move,
+      to prevent more physics-defying operations.
+  - code_imp: Improved the industrial lift code by adding documentation and trying
+      to enforce the coding standards in there while I was at it.
+  Krysonism:
+  - imageadd: The blast cannon & blast wave projectile has new sprites.
+  Melbert:
+  - rscadd: Deltastation - Service and arrivals complete revamp! Cargo tweaks!
+  Thunder12345:
+  - bugfix: Some erroneous green paint has been scraped off the hydroponics airlocks.

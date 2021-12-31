@@ -2,7 +2,7 @@
 #define PROB_SPECIAL 30
 
 /datum/antagonist/malf_ai
-	name = "Malfunctioning AI"
+	name = "\improper Malfunctioning AI"
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
 	job_rank = ROLE_MALF
@@ -19,6 +19,9 @@
 	///since the module purchasing is built into the antag info, we need to keep track of its compact mode here
 	var/module_picker_compactmode = FALSE
 
+/datum/antagonist/malf_ai/New(give_objectives = TRUE)
+	. = ..()
+	src.give_objectives = give_objectives
 
 /datum/antagonist/malf_ai/on_gain()
 	if(owner.current && !isAI(owner.current))
@@ -45,9 +48,6 @@
 		malf_ai.set_zeroth_law("")
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
-
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
 
 	owner.special_role = null
 
@@ -103,6 +103,7 @@
 			objectives += yandere_two
 
 /datum/antagonist/malf_ai/greet()
+	. = ..()
 	if(should_give_codewords)
 		give_codewords()
 

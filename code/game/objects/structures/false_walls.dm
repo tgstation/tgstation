@@ -18,6 +18,7 @@
 	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
+	material_flags = MATERIAL_EFFECTS
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
@@ -27,6 +28,9 @@
 
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
+	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
+	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
+	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
@@ -121,7 +125,7 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/falsewall/get_dumping_location()
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
@@ -247,31 +251,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
 
-/obj/structure/falsewall/plasma/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)
-		var/turf/T = get_turf(src)
-		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")
-		burnbabyburn()
-	else
-		return ..()
-
-/obj/structure/falsewall/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/falsewall/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	burnbabyburn()
-
-/obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-	atmos_spawn_air("plasma=400;TEMP=1000")
-	new /obj/structure/girder/displaced(loc)
-	qdel(src)
-
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -310,7 +289,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
 /obj/structure/falsewall/iron
-	name = "rough metal wall"
+	name = "rough iron wall"
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"

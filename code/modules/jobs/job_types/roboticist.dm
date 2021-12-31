@@ -1,6 +1,7 @@
 /datum/job/roboticist
-	title = "Roboticist"
-	department_head = list("Research Director")
+	title = JOB_ROBOTICIST
+	description = "Build and repair the AI and cyborgs, create mechs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -57,3 +58,11 @@
 
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/roboticist)
+
+/datum/outfit/job/roboticist/mod
+	name = "Roboticist (MODsuit)"
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/standard
+	suit = null
+	mask = /obj/item/clothing/mask/breath
+	internals_slot = ITEM_SLOT_SUITSTORE

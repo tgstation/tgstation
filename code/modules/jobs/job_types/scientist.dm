@@ -1,6 +1,7 @@
 /datum/job/scientist
-	title = "Scientist"
-	department_head = list("Research Director")
+	title = JOB_SCIENTIST
+	description = "Do experiments, perform research, feed the slimes, make bombs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -55,3 +56,7 @@
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/neck/tie/horrible

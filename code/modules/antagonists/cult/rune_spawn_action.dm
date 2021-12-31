@@ -39,7 +39,7 @@
 	if(turf_check(T))
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
-			chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
+			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
 			if(!chosen_keyword)
 				return
 	//the outer ring is always the same across all runes

@@ -2493,7 +2493,7 @@
 "lk" = (
 /obj/structure/safe/floor,
 /obj/item/gun/magic/wand/fireball,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ll" = (

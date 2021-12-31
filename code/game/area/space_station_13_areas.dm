@@ -686,6 +686,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/kitchen/diner
 	name = "\improper Diner"
 
+/area/service/kitchen/abandoned
+	name = "\improper Abandoned Kitchen"
+
 /area/service/bar
 	name = "\improper Bar"
 	icon_state = "bar"
@@ -713,6 +716,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "abandoned_g_den"
 
 /area/service/abandoned_gambling_den/secondary
+	icon_state = "abandoned_g_den_2"
+
+/area/service/abandoned_gambling_den/gaming
+	name = "\improper Abandoned Gaming Den"
 	icon_state = "abandoned_g_den_2"
 
 /area/service/theater

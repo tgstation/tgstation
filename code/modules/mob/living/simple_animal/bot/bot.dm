@@ -33,8 +33,8 @@
 	///Cooldown between salutations for commissioned bots
 	COOLDOWN_DECLARE(next_salute_check)
 
-	///The core this bot uses, usually only used to set access? This is a hack and should be removed eventually.
-	var/obj/machinery/bot_core/bot_core = /obj/machinery/bot_core
+	///Access required to access this Bot's maintenance protocols
+	var/maints_access_required = list(ACCESS_ROBOTICS)
 	///The Robot arm attached to this robot - has a 50% chance to drop on death.
 	var/robot_arm = /obj/item/bodypart/r_arm/robot
 	///People currently looking into a bot's UI panel.
@@ -182,8 +182,8 @@
 	balloon_alert(src, "turned off")
 	update_appearance()
 
-/mob/living/simple_animal/bot/proc/get_bot_flag(checked_flag)
-	if(bot_mode_flags & checked_flag)
+/mob/living/simple_animal/bot/proc/get_bot_flag(checked_mode, checked_flag)
+	if(checked_mode & checked_flag)
 		return TRUE
 	return FALSE
 
@@ -200,8 +200,6 @@
 	internal_radio.subspace_transmission = TRUE
 	internal_radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	internal_radio.recalculateChannels()
-
-	bot_core = new(src)
 
 	//Adds bot to the diagnostic HUD system
 	prepare_huds()
@@ -229,8 +227,25 @@
 		ejectpai()
 	QDEL_NULL(internal_radio)
 	QDEL_NULL(access_card)
-	QDEL_NULL(bot_core)
 	return ..()
+
+/mob/living/simple_animal/bot/proc/check_access(mob/living/user)
+	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
+		return TRUE
+	if(!maints_access_required) // No requirements to access it.
+		return TRUE
+	if(!(bot_cover_flags & BOT_COVER_LOCKED)) // Unlocked.
+		return TRUE
+
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	if(!id_card || !id_card.access)
+		return FALSE
+	id_card = id_card.GetID()
+
+	for(var/requested_access in maints_access_required)
+		if(requested_access in id_card.access)
+			return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bot/bee_friendly()
 	return TRUE
@@ -365,7 +380,7 @@
 	if(bot_cover_flags & BOT_COVER_OPEN)
 		to_chat(user, span_warning("Please close the access panel before [bot_cover_flags & BOT_COVER_LOCKED ? "un" : ""]locking it."))
 		return
-	if(!bot_core.allowed(user))
+	if(!check_access(user))
 		to_chat(user, span_warning("Access denied."))
 		return
 	bot_cover_flags ^= BOT_COVER_LOCKED
@@ -408,9 +423,9 @@
 		else
 			if(attacking_item.force) //if force is non-zero
 				do_sparks(5, TRUE, src)
-			..()
+	..()
 
-/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj)
+/mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		if(prob(75) && Proj.damage > 0)
 			do_sparks(5, TRUE, src)
@@ -869,6 +884,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	data["can_hack"] = (issilicon(user) || isAdminGhostAI(user))
 	data["custom_controls"] = list()
 	data["emagged"] = bot_cover_flags & BOT_COVER_EMAGGED
+	data["has_access"] = check_access(user)
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["pai"] = list()
 	data["settings"] = list()
@@ -886,13 +902,13 @@ Pass a positive integer as an argument to override a bot's default speed.
 	. = ..()
 	if(.)
 		return
-	if(!bot_core.allowed(usr) && !usr.has_unlimited_silicon_privilege)
+	if(!check_access(usr))
 		to_chat(usr, span_warning("Access denied."))
 		return
+
 	if(action == "lock")
 		bot_cover_flags ^= BOT_COVER_LOCKED
-	if(bot_cover_flags & BOT_COVER_LOCKED && !(issilicon(usr) || isAdminGhostAI(usr)))
-		return
+
 	switch(action)
 		if("power")
 			if(bot_mode_flags & BOT_MODE_ON)
@@ -926,21 +942,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 			if(paicard)
 				to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
 				ejectpai(usr)
-	return
 
 /mob/living/simple_animal/bot/update_icon_state()
-	icon_state = "[initial(icon_state)][get_bot_flag(BOT_MODE_ON)]"
+	icon_state = "[initial(icon_state)][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	return ..()
-
-// Machinery to simplify topic and access calls
-/obj/machinery/bot_core
-	use_power = NO_POWER_USE
-	anchored = FALSE
-
-/obj/machinery/bot_core/Initialize(mapload)
-	. = ..()
-	if(!isbot(loc))
-		return INITIALIZE_HINT_QDEL
 
 /mob/living/simple_animal/bot/proc/topic_denied(mob/user) //Access check proc for bot topics! Remember to place in a bot's individual Topic if desired.
 	if(!user.canUseTopic(src, !issilicon(user)))
@@ -957,11 +962,11 @@ Pass a positive integer as an argument to override a bot's default speed.
 	if(paicard)
 		to_chat(user, span_warning("A [paicard] is already inserted!"))
 		return
-	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || !key)
-		to_chat(user, span_warning("[src] is not compatible with [card]!"))
-		return
 	if(bot_cover_flags & BOT_COVER_LOCKED || !(bot_cover_flags & BOT_COVER_OPEN))
 		to_chat(user, span_warning("The personality slot is locked."))
+		return
+	if(!(bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE) || key) //Not pAI controllable or is already player controlled.
+		to_chat(user, span_warning("[src] is not compatible with [card]!"))
 		return
 	if(!card.pai || !card.pai.mind)
 		to_chat(user, span_warning("[card] is inactive."))
@@ -998,7 +1003,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		faction = initial(faction)
 
 /mob/living/simple_animal/bot/proc/ejectpairemote(mob/user)
-	if(bot_core.allowed(user) && paicard)
+	if(check_access(user) && paicard)
 		speak("Ejecting personality chip.", radio_channel)
 		ejectpai(user)
 

@@ -32,11 +32,11 @@
 	access_view = ACCESS_BRIG
 	contains = list(/obj/item/grenade/stingbang)
 
-/datum/supply_pack/goody/combatknives_single
-	name = "Combat Knife Single-Pack"
-	desc = "Contains one sharpened combat knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
+/datum/supply_pack/goody/Survivalknives_single
+	name = "Survival Knife Single-Pack"
+	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_HARD * 1.75
-	contains = list(/obj/item/knife/combat)
+	contains = list(/obj/item/knife/combat/survival)
 
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
@@ -155,3 +155,15 @@
 	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_MEDIUM * 2
 	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
+
+/datum/supply_pack/goody/mothic_rations
+	name = "Surplus Mothic Ration Pack"
+	desc = "A single surplus ration pack from the Mothic Fleet. Comes with 3 random sustenance bars, and a package of Activin chewing gum."
+	cost = PAYCHECK_HARD * 2
+	contains = list(/obj/item/storage/box/mothic_rations)
+
+/datum/supply_pack/goody/ready_donk
+	name = "Ready-Donk Single Meal"
+	desc = "A complete meal package for the terminally lazy. Contains one Ready-Donk meal."
+	cost = PAYCHECK_MEDIUM * 2
+	contains = list(/obj/item/food/ready_donk)

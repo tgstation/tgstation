@@ -62,11 +62,13 @@
 					available_surgeries[surgeryloop_two.name] = surgeryloop_two
 					break
 
-		if(!available_surgeries.len)
+		if(!length(available_surgeries))
 			return
 
-		var/pick_your_surgery = input("Begin which procedure?", "Surgery", null, null) as null|anything in sort_list(available_surgeries)
-		if(pick_your_surgery && user?.Adjacent(livingtarget) && (source in user))
+		var/pick_your_surgery = tgui_input_list(user, "Which procedure?", "Surgery", sort_list(available_surgeries))
+		if(isnull(pick_your_surgery))
+			return
+		if(user?.Adjacent(livingtarget) && (source in user))
 			var/datum/surgery/surgeryinstance_notonmob = available_surgeries[pick_your_surgery]
 
 			for(var/i_three in livingtarget.surgeries)

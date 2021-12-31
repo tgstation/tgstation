@@ -1,5 +1,8 @@
 /datum/job/captain
-	title = "Captain"
+	title = JOB_CAPTAIN
+	description = "Be responsible for the station, manage your Heads of Staff, \
+		keep the crew alive, be prepared to do anything and everything or die \
+		horribly trying."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
 	faction = FACTION_STATION
@@ -23,9 +26,10 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	department_for_prefs = /datum/job_department/captain
 	departments_list = list(
 		/datum/job_department/command,
-		)
+	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
@@ -100,9 +104,11 @@
 		return
 	celestial_charter.name_type = special_charter
 
-/datum/outfit/job/captain/hardsuit
-	name = "Captain (Hardsuit)"
+/datum/outfit/job/captain/mod
+	name = "Captain (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/magnate
+	suit = null
+	head = null
 	mask = /obj/item/clothing/mask/gas/atmos/captain

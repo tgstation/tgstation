@@ -14,7 +14,7 @@
 	health = 25
 	maxHealth = 25
 
-	bot_core = /obj/machinery/bot_core/firebot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
@@ -135,6 +135,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("extinguish_fires")
 			extinguish_fires = !extinguish_fires
@@ -143,7 +144,6 @@
 		if("stationary_mode")
 			stationary_mode = !stationary_mode
 			update_appearance()
-	return
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
@@ -305,9 +305,6 @@
 
 	do_sparks(3, TRUE, src)
 	..()
-
-/obj/machinery/bot_core/firebot
-	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
 
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL

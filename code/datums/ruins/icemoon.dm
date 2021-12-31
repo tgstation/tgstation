@@ -50,6 +50,12 @@
 	description = "An independently funded research outpost, long abandoned. Their mission, to boldly go where no insect life would ever live, ever, and look for bugs."
 	suffix = "icemoon_surface_bughabitat.dmm"
 
+/datum/map_template/ruin/icemoon/pizza
+	name = "Moffuchi's Pizzeria"
+	id = "pizzeria"
+	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
+	suffix = "icemoon_surface_pizza.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
