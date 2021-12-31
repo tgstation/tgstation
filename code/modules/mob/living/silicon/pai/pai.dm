@@ -201,7 +201,7 @@
 	aiPDA = new /obj/item/pda/ai(src)
 	aiPDA.owner = real_name
 	aiPDA.ownjob = "pAI Messenger"
-	aiPDA.name = real_name + "[real_name] ([aiPDA.ownjob])"
+	aiPDA.name = "[real_name] ([aiPDA.ownjob])"
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
