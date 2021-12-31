@@ -12,7 +12,6 @@
 /obj/item/storage/bag/garment/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.display_numerical_stacking = FALSE
 	STR.insert_preposition = "in"
 	STR.set_holdable(list(
