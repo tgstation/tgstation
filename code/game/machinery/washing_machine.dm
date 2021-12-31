@@ -244,8 +244,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	worn_icon_state = initial(target_type.worn_icon_state)
 	inhand_x_dimension = initial(target_type.inhand_x_dimension)
 	inhand_y_dimension = initial(target_type.inhand_y_dimension)
-	name = initial(target_type.name)
-	desc = "[initial(target_type.desc)] The colors look a little dodgy."
+	//indicate that this is a dyed object rather than the real thing
+	name = "dyed [initial(name)]"
+	var/dyed_warning = gender == PLURAL ? "They have been dyed to resemble" : "It has been dyed to resemble a"
+	desc = "[initial(desc)] [dyed_warning] [initial(target_type.name)]."
 	return target_type //successfully "appearance copy" dyed something; returns the target type as a hacky way of extending
 
 //what happens to this object when washed inside a washing machine
