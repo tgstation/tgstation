@@ -170,14 +170,13 @@
 	if(operating)
 		return
 	add_fingerprint(user)
-	if(!requiresID())
-		user = null
+	if(!density || (obj_flags & EMAGGED))
+		return
 
-	if(density && !(obj_flags & EMAGGED))
-		if(allowed(user))
-			open()
-		else
-			do_animate("deny")
+	if(requiresID() && allowed(user))
+		open()
+	else
+		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
