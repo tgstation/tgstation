@@ -4869,6 +4869,18 @@
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/sbc_starfury)
+"ng" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "starfury_left"
+	},
+/obj/machinery/door/airlock/external{
+	name = "Starfury Port External Access";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/sbc_starfury)
 "nk" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -5441,6 +5453,7 @@
 	req_access_txt = "150"
 	},
 /obj/effect/mapping_helpers/airlock/cutaiwire,
+/obj/structure/fans/tiny/invisible,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "ID" = (
@@ -6469,7 +6482,7 @@ aa
 aa
 aa
 ac
-kM
+ng
 ae
 vl
 aH
