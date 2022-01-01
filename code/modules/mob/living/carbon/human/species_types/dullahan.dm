@@ -28,6 +28,7 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
+	return TRUE // DEBUG-ONLY!!!!
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
@@ -55,12 +56,19 @@
 	human.set_safe_hunger_level()
 
 /datum/species/dullahan/on_species_loss(mob/living/carbon/human/human)
-	human.become_hearing_sensitive()
-	human.reset_perspective(human)
+	. = ..()
+
 	if(my_head)
+		var/obj/item/bodypart/head/detached_head = my_head.loc
+		my_head.owner = null
 		QDEL_NULL(my_head)
-	human.regenerate_limb(BODY_ZONE_HEAD,FALSE)
-	..()
+		if(detached_head)
+			qdel(detached_head)
+
+	human.regenerate_limb(BODY_ZONE_HEAD, FALSE)
+	human.become_hearing_sensitive()
+	prevent_perspective_change = FALSE
+	human.reset_perspective(human)
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/human, delta_time, times_fired)
 	if(QDELETED(my_head))
@@ -74,10 +82,10 @@
 		detached_head.name = human.real_name
 		detached_head.brain.name = "[human.name]'s brain"
 
-	var/obj/item/bodypart/head/head2 = human.get_bodypart(BODY_ZONE_HEAD)
-	if(head2)
+	var/obj/item/bodypart/head/illegal_head = human.get_bodypart(BODY_ZONE_HEAD)
+	if(illegal_head)
 		my_head = null
-		human.gib()
+		human.gib() // Yeah so giving them a head on their body is really not a good idea, so their original head will remain but uh, good luck fixing it after that.
 
 /datum/species/dullahan/proc/update_vision_perspective(mob/living/carbon/human/human)
 	var/obj/item/organ/eyes/eyes = human.getorganslot(ORGAN_SLOT_EYES)
@@ -119,7 +127,7 @@
 			var/datum/species/dullahan/dullahan_species = human.dna.species
 			if(isobj(dullahan_species.my_head.loc))
 				var/obj/head = dullahan_species.my_head.loc
-				head.say(speech_args[SPEECH_MESSAGE])
+				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], range = speech_args[SPEECH_RANGE])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
