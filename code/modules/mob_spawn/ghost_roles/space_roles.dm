@@ -158,7 +158,6 @@
 	add_team_hud(mob_override || owner.current, /datum/antagonist/battlecruiser)
 
 /datum/antagonist/battlecruiser/on_gain()
-	. = ..()
 	if(battlecruiser_team)
 		objectives |= battlecruiser_team.objectives
 		if(battlecruiser_team.nuke)
@@ -166,6 +165,7 @@
 			antag_memory += "<B>[nuke] Code</B>: [nuke.r_code]<br>"
 			owner.add_memory(MEMORY_NUKECODE, list(DETAIL_NUKE_CODE = nuke.r_code, DETAIL_PROTAGONIST = owner.current), story_value = STORY_VALUE_AMAZING, memory_flags = MEMORY_FLAG_NOLOCATION | MEMORY_FLAG_NOMOOD | MEMORY_FLAG_NOPERSISTENCE)
 			to_chat(owner, "The nuclear authorization code is: <B>[nuke.r_code]</B>")
+	return ..()
 
 /datum/outfit/syndicate_empty/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
