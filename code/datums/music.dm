@@ -8,26 +8,25 @@
 	var/does_loop = FALSE
 	/// Used for removing the song if it's non-looping - not necessary to set for loops
 	var/length = 1200
-
 	/// The base volume to play at, not accounting for fading
 	var/base_volume = 65
-
 	/// Higher priority music plays over lower priority ones. If a looping music is masked by a higher priority music, it will start playing once the higher priority ends if it hasn't been removed.
 	var/priority = 0
-
-	var/client/target
-
 	var/fade_volume = 1
 	var/fade_volume_target = 1
 	var/fade_rate = 0 // per-second
-	var/sound/sound_datum
+	/// Whether or not we are in the process of fading
 	var/is_fading = FALSE
+	/// The target client of music
+	var/client/target
+	/// The sound datum playing
+	var/sound/sound_datum
 
-/datum/music/New(client/C, _fade_volume = 1)
+/datum/music/New(client/target, fade_volume = 1)
 	..()
-	C.active_music += src
-	target = C
-	fade_volume = _fade_volume
+	target.active_music += src
+	src.target = target
+	src.fade_volume = fade_volume
 	START_PROCESSING(SSprocessing, src)
 	if((target.prefs.toggles & SOUND_INSTRUMENTS) && (!target.playing_music || target.playing_music.priority < priority || (target.playing_music.priority == priority && target.playing_music.does_loop && !does_loop)))
 		unmask()
@@ -35,8 +34,6 @@
 		qdel(src)
 
 /datum/music/Destroy()
-	. = ..()
-	does_loop = TRUE // hacky code to stop runtimes from qdel loops
 	mask()
 	if(is_fading)
 		STOP_PROCESSING(SSfastprocess, src)
@@ -46,6 +43,7 @@
 		target.active_music -= src
 		target.update_playing_music()
 		target = null
+	return ..()
 
 
 /datum/music/proc/unmask()
@@ -92,8 +90,7 @@
 			playing_music.mask()
 	else if(!playing_music)
 		var/datum/music/highest_priorty = null
-		for(var/M in active_music)
-			var/datum/music/as_music = M
+		for(var/datum/music/as_music as anything in active_music)
 			if(!highest_priorty || as_music.priority > highest_priorty.priority)
 				highest_priorty = as_music
 		if(highest_priorty)
@@ -118,7 +115,6 @@
 			qdel(src)
 
 /datum/music/proc/set_is_fading(new_is_fading)
-	new_is_fading = !!new_is_fading
 	if(new_is_fading == is_fading)
 		return
 	is_fading = new_is_fading
@@ -140,9 +136,9 @@
 	/// Speed at which music will fade out while out of range
 	var/range_fade_speed = 0.01
 
-/datum/music/sourced/New(client/C, _fade_volume)
-	if(C)
-		target_mob = C.mob
+/datum/music/sourced/New(client/target, fade_volume)
+	if(target)
+		target_mob = target.mob
 	..()
 
 /datum/music/sourced/process()
@@ -150,13 +146,12 @@
 		qdel(src)
 		return
 	var/closest_range_squared = soft_range*soft_range + 10
-	for(var/_player in players)
-		var/datum/component/music_player/player = _player
-		var/atom/movable/M = player.parent
-		if(M.z != target_mob.z)
+	for(var/datum/component/music_player/player as anything in players)
+		var/atom/movable/atom = player.parent
+		if(atom.z != target_mob.z)
 			continue
-		var/dx = M.x-target_mob.x
-		var/dy = M.y-target_mob.y
+		var/dx = atom.x-target_mob.x
+		var/dy = atom.y-target_mob.y
 		var/range_squared = dx*dx+dy*dy
 		if(range_squared < closest_range_squared)
 			closest_range_squared = range_squared
@@ -170,13 +165,11 @@
 		target = (soft_range - closest_range) / (soft_range - full_range)
 	if(!is_fading || fade_volume_target != target)
 		fade_at_rate(target, range_fade_speed)
-
-	. = ..()
+	return ..()
 
 /datum/music/sourced/Destroy()
 	. = ..()
-	for(var/_player in players)
-		var/datum/component/music_player/player = _player
+	for(var/datum/component/music_player/player as anything in players)
 		player.mob_players -= target_mob
 
 /datum/component/music_player
@@ -186,55 +179,54 @@
 	var/enabled = TRUE
 	/// Range within which music will start to play
 	var/start_range = 7
+	/// Time it starts for the music to fade in
 	var/fade_in_time = 30
 	/// Whether music of the same typepath is shared
 	var/shared = TRUE
 
-/datum/component/music_player/Initialize(_music_path)
-	if(_music_path)
-		music_path = _music_path
+/datum/component/music_player/Initialize(music_path)
+	if(music_path)
+		src.music_path = music_path
 	START_PROCESSING(SSprocessing, src)
 
 /datum/component/music_player/proc/do_range_check(fade_time = fade_in_time)
 	if(!music_path)
 		return
 	var/shared = FALSE
-	for(var/mob/living/M in range(start_range, parent))
-		if(!M.client)
+	for(var/mob/living/mob in range(start_range, parent))
+		if(!mob.client)
 			continue
-		if(mob_players[M])
+		if(mob_players[mob])
 			continue
 		var/did_find = FALSE
 		if(shared)
-			for(var/_music in M.client.active_music)
-				var/datum/music/sourced/music = _music
+			for(var/datum/music/sourced/music as anything in mob.client.active_music)
 				if(istype(music, music_path))
-					mob_players[M] = music
+					mob_players[mob] = music
 					music.players += src
 					did_find = TRUE
 					break
 		if(!did_find)
-			var/datum/music/sourced/music = new music_path(M.client, fade_time > 0 ? 0 : 1)
+			var/datum/music/sourced/music = new music_path(mob.client, fade_time > 0 ? 0 : 1)
 			if(!music.gc_destroyed)
-				mob_players[M] = music
+				mob_players[mob] = music
 				music.players += src
 				if(fade_time > 0)
 					music.fade(1, fade_time)
 
 
 /datum/component/music_player/proc/stop_all(fade_time = 0)
-	for(var/_M in mob_players)
-		var/datum/music/sourced/music = mob_players[_M]
+	for(var/mob/mob as anything in mob_players)
+		var/datum/music/sourced/music = mob_players[mob]
 		music.fade(0, fade_time)
 
 /datum/component/music_player/proc/remove_all()
-	for(var/_M in mob_players)
-		var/mob/M = _M
-		if(!M || !M.client)
+	for(var/mob/mob as anything in mob_players)
+		if(!mob || !mob.client)
 			continue
-		var/datum/music/sourced/music = mob_players[M]
+		var/datum/music/sourced/music = mob_players[mob]
 		music.players -= src
-	mob_players.len = 0
+	mob_players.Cut()
 
 /datum/component/music_player/Destroy()
 	. = ..()
@@ -248,8 +240,8 @@
 
 /datum/component/music_player/battle/process()
 	. = ..()
-	var/mob/M = parent
-	var/should_be_enabled = !M.stat && !M.client
+	var/mob/mob = parent
+	var/should_be_enabled = !mob.stat && !mob.client
 	if(enabled && !should_be_enabled)
 		remove_all(fade_in_time)
 	enabled = should_be_enabled
