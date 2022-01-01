@@ -17702,7 +17702,7 @@
 "eRZ" = (
 /obj/machinery/door/airlock{
 	name = "Service Lathe Access";
-	req_one_access_txt = "35;26;28;25;22;37"
+	req_one_access_txt = "73"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -35560,7 +35560,7 @@
 "loo" = (
 /obj/machinery/door/airlock{
 	name = "Service Lathe Access";
-	req_one_access_txt = "35;26;28;25;22;37"
+	req_one_access_txt = "73"
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
