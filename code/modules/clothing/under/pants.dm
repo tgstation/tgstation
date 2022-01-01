@@ -59,11 +59,6 @@
 	desc = "A nondescript pair of tough blue jeans."
 	icon_state = "jeans"
 
-/obj/item/clothing/under/pants/khaki
-	name = "khaki pants"
-	desc = "A pair of dust beige khaki pants."
-	icon_state = "khaki"
-
 /obj/item/clothing/under/pants/camo
 	name = "camo pants"
 	desc = "A pair of woodland camouflage pants. Probably not the best choice for a space station."

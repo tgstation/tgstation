@@ -54,7 +54,6 @@
 		/obj/item/clothing/under/pants/classicjeans = 2,
 		/obj/item/clothing/under/pants/camo = 2,
 		/obj/item/clothing/under/pants/blackjeans = 2,
-		/obj/item/clothing/under/pants/khaki = 2,
 		/obj/item/clothing/under/pants/white = 2,
 		/obj/item/clothing/under/pants/red = 2,
 		/obj/item/clothing/under/pants/black = 2,
