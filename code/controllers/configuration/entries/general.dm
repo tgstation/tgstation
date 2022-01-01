@@ -558,3 +558,6 @@
 /datum/config_entry/string/adminhelp_webhook_pfp
 
 /datum/config_entry/string/adminhelp_webhook_name
+
+/datum/config_entry/flag/cache_assets
+	default = TRUE

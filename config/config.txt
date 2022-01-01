@@ -583,3 +583,10 @@ URGENT_AHELP_COOLDOWN 300
 ## Based on config directory, so "motd.txt" points to "config/motd.txt"
 MOTD motd.txt
 #MOTD motd_extra.txt
+
+## Assets can opt-in to caching their results into `tmp`.
+## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## This should be disabled (through `CACHE_ASSETS 0`) on development,
+## but enabled on production (the default).
+CACHE_ASSETS 0
