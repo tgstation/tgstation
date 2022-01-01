@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Sacrificing a mindshielded person no longer causes their soul to be left in their brain instead of getting transfered to the soulstone"
