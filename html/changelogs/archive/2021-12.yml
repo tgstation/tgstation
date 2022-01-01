@@ -711,3 +711,90 @@
       it's because of that.
   - admin: The nations ruleset is back(?) and disabled for admins to run fi they so
       desire
+2021-12-28:
+  Fikou:
+  - bugfix: the mod installer from charliestation no longer has infinite uses
+  - bugfix: fixes broken sprites on prototype suit
+  - bugfix: fixes intellicards not updating
+  - bugfix: fixes techwebs having two of the same modsuit module
+  - bugfix: fixes autofire acting weird with screen objects
+  - bugfix: fixes modsuits bricking when stripping or putting another one on with
+      the pathfinder
+  - bugfix: fixes modsuits deleting everything inside when they explode
+  - bugfix: fixes ais in modsuits not being able to use abilities
+  - bugfix: fixes the tether not being able to hook onto catwalks/lattices
+  - qol: ais in modsuits now make the user stand up instead of weirdly crawling
+  - qol: a modsuit being destroyed with an ai inside now pops it out as a small card
+      you can recover from with an intellicard
+  - qol: modsuit module radial is now more friendly, showing you tooltips and which
+      modules are active
+  - qol: mech fabricator module list is now sorted
+  JohnFulpWillard:
+  - spellcheck: Removed a visible b> from Cult's objective text.
+  SuperNovaa41:
+  - bugfix: You can no longer get an alert by checking your mood with telekinesis.
+  Zonespace27:
+  - refactor: Mech Fabricator's `output_part_info()` proc is much more optimized.
+  timothymtorres:
+  - bugfix: Fixes phylactery exploits.  Liches can no longer be soulstone captured
+      or be debrained and put into an MMI.
+  tralezab:
+  - bugfix: fixed weird "Mob Spawner" objects showing up when you killed clowns
+2021-12-29:
+  Melbert:
+  - bugfix: Dirt piles can no longer exceed their maximum reagent capacity by 10.
+      Sorry prison botanists.
+  Seris02:
+  - bugfix: fixed a say emoting bug where forced says' were being turned into emotes
+  dragomagol:
+  - bugfix: italian mafioso now get their proper names
+  - admin: admins can now view family objectives from the traitor panel
+  vincentiusvin:
+  - bugfix: fixed zombie powder not sleeping you on ingestion and on further ingestion.
+2021-12-31:
+  GoldenAlpharex:
+  - bugfix: The blackmarket uplink shouldn't run into issues loading the different
+      categories of items it can order when it was created during mapload.
+  JohnFulpWillard:
+  - bugfix: accessories on clothes placed inside garment bags will no longer delete
+      themselves.
+  Kylerace:
+  - bugfix: 'NanoTrasen fixed a problem with their orion trail arcade machines relaying
+      security and medical comms to the most dangerous demographic: gamers. NanoTrasen
+      assures you that this security exploit will never happen again.'
+  - bugfix: you cant make radios play comms with a broken speaker by setting their
+      frequency anymore.
+  Melbert:
+  - bugfix: Hulk is removed more consistently when the user actually enters soft crit.
+  - bugfix: Exo-drone fuel pellets delete when empty.
+  - bugfix: Exo-drone launchers now update their icon correctly when adding / removing
+      fuel. Removing fuel with a crowbar also doesn't smack the launcher when done.
+  - bugfix: Fixes a hard-del with the exo-drone launcher.
+  SuperNovaa41:
+  - bugfix: Possessing a mob no longer lowercases your ckey in admin messages.
+  - bugfix: You will no longer hear medibot voicelines whilst in crit.
+  - bugfix: Spidercharges can now only be blown up in their intended location.
+  - bugfix: The ablative trenchcoat actually gives you a sechud again.
+  coldud13:
+  - bugfix: fixed basil boys uniform being offset by one pixel
+  jlsnow301:
+  - refactor: The majority of user facing input lists have been converted to TGUI.
+  - refactor: Tgui text inputs now scale with entered input.
+  - bugfix: Many inputs now properly accept cancelling out of the menu.
+  - bugfix: Fixes an edge case where users could not press enter on number inputs.
+  - bugfix: Custom vendor bluescreen.
+  - bugfix: You can now press ENTER on text inputs without an entry to cancel.
+  neopythagorean:
+  - bugfix: Pipe dispensers no longer produce broken invisible pipes.
+  tf-4:
+  - code_imp: space/openspace turfs now exist to make multi-z space turfs act more
+      space-like.
+  timothymtorres:
+  - bugfix: Fix glass floors appearing as lower z-level when on the same z-level.
+  - bugfix: Fix catwalks appearing as current z-level when they were on a lower z-level.
+  - bugfix: Fix transparent turfs to display lower z-level properly.
+  - bugfix: Fix lighting overlays appearing as current z-level when they were on lower
+      z-level. (for transparent turfs)
+  - bugfix: Fix mapping icons for catwalks to display correct icon state
+  - refactor: Refactor turf transparency to be more robust.
+  - refactor: Refactor catwalks to be elegant code.

@@ -248,3 +248,51 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
+
+/turf/open/space/openspace
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "invisible"
+
+/turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+	. = ..()
+	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+	icon_state = "invisible"
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/space/openspace/LateInitialize()
+	. = ..()
+	AddElement(/datum/element/turf_z_transparency, FALSE)
+
+/turf/open/space/openspace/zAirIn()
+	return TRUE
+
+/turf/open/space/openspace/zAirOut()
+	return TRUE
+
+/turf/open/space/openspace/zPassIn(atom/movable/A, direction, turf/source)
+	if(direction == DOWN)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_IN_UP)
+				return FALSE
+		return TRUE
+	return FALSE
+
+/turf/open/space/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(A.anchored)
+		return FALSE
+	if(direction == DOWN)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_OUT_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE

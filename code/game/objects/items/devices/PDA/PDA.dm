@@ -609,8 +609,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					playsound(src, 'sound/machines/terminal_select.ogg', 15, TRUE)
 			if("Drone Phone")
 				var/alert_s = tgui_input_list(U, "Alert severity level", "Ping Drones", list("Low","Medium","High","Critical"))
+				if(isnull(alert_s))
+					return
 				var/area/A = get_area(U)
-				if(A && alert_s && !QDELETED(U))
+				if(A && !QDELETED(U))
 					var/msg = span_boldnotice("NON-DRONE PING: [U.name]: [alert_s] priority alert in [A.name]!")
 					_alert_drones(msg, TRUE, U)
 					to_chat(U, msg)
@@ -1251,8 +1253,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		plist[avoid_assoc_duplicate_keys(pda.owner, namecounts)] = pda
 
 	var/choice = tgui_input_list(user, "Please select a PDA", "PDA Messenger", sort_list(plist))
-
-	if (!choice)
+	if (isnull(choice))
 		return
 
 	var/selected = plist[choice]
