@@ -119,11 +119,13 @@
 
 /obj/structure/bonfire/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(burning & !grill)
-		bonfire_burn()
+	if(burning)
+		if(grill)
+			bonfire_burn()
+		return
 
 	//Not currently burning, let's see if we can ignite it.
-	else if(isliving(entered))
+	if(isliving(entered))
 		var/mob/living/burning_body = entered
 		if(burning_body.on_fire)
 			start_burning()
