@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 	)),
 	
-	"blood" = typecacheof(list(/obj/machinery/iv_drip, /obj/item/reagent_containers/blood, /obj/effect/decal/cleanable/blood)),
+	"blood" = typecacheof(list(/obj/machinery/iv_drip, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/blood, /obj/effect/decal/cleanable/blood)),
 ))
 
 GLOBAL_LIST_INIT(phobia_turfs, list(
