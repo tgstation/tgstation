@@ -89,7 +89,8 @@
 	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
-	var/hidden_chambered = FALSE // Check if you are able to see if a weapon has a bullet loaded in or not.
+	/// Check if you are able to see if a weapon has a bullet loaded in or not.
+	var/hidden_chambered = FALSE
 
 	///Gun internal magazine modification and misfiring
 
