@@ -382,7 +382,7 @@
 	name = "Tramstation emergency evac bay";
 	width = 32
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "acY" = (
 /obj/structure/table,
@@ -1670,7 +1670,7 @@
 	roundstart_template = /datum/map_template/shuttle/arrival/box;
 	width = 7
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "akD" = (
 /obj/structure/disposalpipe/segment{
@@ -4413,7 +4413,7 @@
 	roundstart_template = /datum/map_template/shuttle/escape_pod/default;
 	width = 3
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "azn" = (
 /obj/effect/turf_decal/tile/blue{
@@ -7765,7 +7765,7 @@
 /turf/open/floor/iron,
 /area/security/courtroom)
 "aYr" = (
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "aYt" = (
 /turf/open/floor/iron,
@@ -13407,7 +13407,7 @@
 "ddX" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space/nearstation)
 "deb" = (
 /obj/machinery/disposal/bin,
@@ -14688,7 +14688,7 @@
 	dir = 6;
 	network = list("aicore")
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "dDJ" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -18055,7 +18055,7 @@
 	name = "SS13: Auxiliary Dock, Station-Port";
 	width = 35
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "eJV" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -18150,7 +18150,7 @@
 /area/engineering/main)
 "eMA" = (
 /obj/effect/landmark/carpspawn,
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "eME" = (
 /obj/effect/turf_decal/siding/thinplating/corner,
@@ -23777,7 +23777,7 @@
 /area/science/explab)
 "gNY" = (
 /obj/structure/lattice,
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space/nearstation)
 "gOk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -34465,7 +34465,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 1
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "kTw" = (
 /obj/machinery/door/firedoor,
@@ -36381,7 +36381,7 @@
 	network = list("aicore")
 	},
 /obj/structure/lattice,
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space/nearstation)
 "lHh" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -37823,7 +37823,7 @@
 	name = "port bay 2";
 	width = 5
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "mkG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49264,7 +49264,7 @@
 	id = "pod_lavaland";
 	name = "lavaland"
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/space)
 "qCl" = (
 /obj/effect/landmark/start/cargo_technician,
@@ -54757,7 +54757,7 @@
 	c_tag = "Secure - External AI Upload";
 	dir = 10
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/ai_monitored/turret_protected/ai_upload)
 "sHq" = (
 /obj/effect/turf_decal/tile/bar,
@@ -67727,7 +67727,7 @@
 	dir = 10;
 	network = list("aicore")
 	},
-/turf/open/openspace/airless/planetary,
+/turf/open/space/openspace,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "xyc" = (
 /turf/closed/wall,

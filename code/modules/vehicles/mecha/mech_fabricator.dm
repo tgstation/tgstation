@@ -332,7 +332,7 @@
 		if(exit.density)
 			return TRUE
 
-		say("Obstruction cleared. \The [stored_part] is complete.")
+		say("Obstruction cleared. The fabrication of [stored_part] is now complete.")
 		stored_part.forceMove(exit)
 		stored_part = null
 
@@ -367,12 +367,12 @@
 
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
-		say("Error! Part outlet is obstructed.")
-		desc = "It's trying to dispense \a [D.name], but the part outlet is obstructed."
+		say("Error! The part outlet is obstructed.")
+		desc = "It's trying to dispense the fabricated [D.name], but the part outlet is obstructed."
 		stored_part = I
 		return FALSE
 
-	say("\The [I] is complete.")
+	say("The fabrication of [I] is now complete.")
 	I.forceMove(exit)
 	return TRUE
 

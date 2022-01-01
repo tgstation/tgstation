@@ -294,8 +294,10 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
+	flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
+	phasing_ignore_direct_target = TRUE // If we don't do this the blastcannon shot can be blocked by random items.
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavy_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
@@ -304,7 +306,7 @@
 	var/light_ex_range = 0
 
 /obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range)
-	range = max(heavy_ex_range, medium_ex_range, light_range, 0)
+	range = max(heavy_ex_range, medium_ex_range, light_ex_range, 0)
 	src.heavy_ex_range = heavy_ex_range
 	src.medium_ex_range = medium_ex_range
 	src.light_ex_range = light_ex_range
@@ -323,7 +325,7 @@
 		SSexplosions.highturf += loc
 	else if(medium_ex_range)
 		SSexplosions.medturf += loc
-	else if(light_range)
+	else if(light_ex_range)
 		SSexplosions.lowturf += loc
 	else
 		qdel(src)

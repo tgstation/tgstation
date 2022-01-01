@@ -505,3 +505,29 @@
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Run Weather")
+
+/client/proc/add_mob_ability()
+	set category = "Admin.Events"
+	set name = "Add Mob Ability"
+	set desc = "Adds an ability to a marked mob."
+
+	if(!holder)
+		return
+
+	if(!holder.marked_datum || !istype(holder.marked_datum, /mob/living))
+		return
+
+	var/mob/living/marked_mob = holder.marked_datum
+
+	var/ability_type = input("Choose an ability", "Ability")  as null|anything in sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), /proc/cmp_typepaths_asc)
+
+	if(!ability_type)
+		return
+
+	var/datum/action/cooldown/mob_cooldown/add_ability = new ability_type()
+	add_ability.Grant(marked_mob)
+
+	message_admins("[key_name_admin(usr)] added mob ability [ability_type] to mob [marked_mob].")
+	log_admin("[key_name(usr)] added mob ability [ability_type] to mob [marked_mob].")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Add Mob Ability") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
