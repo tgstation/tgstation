@@ -95,7 +95,6 @@
 	name = "Machine Design (Quantum Pad Board)"
 	desc = "The circuit board for a quantum telepad."
 	id = "quantumpad"
-	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
