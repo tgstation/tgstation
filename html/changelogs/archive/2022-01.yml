@@ -1,0 +1,24 @@
+2022-01-01:
+  SmArtKar:
+  - bugfix: MODsuits no longer runtime when EMPed with no module selected
+  SuperNovaa41:
+  - bugfix: Bodies will no longer (sometimes) be fully deleted when escaping a disposal
+      pipe trap.
+  TemporalOroboros:
+  - bugfix: Fixes blastcannons not actually having any light range regardless of the
+      bomb they used.
+  - bugfix: Fixes blastcannons being blocked by cigarette butts.
+  - code_imp: Unspaghettis some variable definitions.
+  - code_imp: Brings phasic carbine rounds into compliance with the rest of the projectiles.
+  Whoneedspacee:
+  - refactor: Refactors megafauna abilities to be mob actions which are grantable
+      to any living mob.
+  - admin: Added a verb under admin events which lets you grant mob actions to a marked
+      living mob.
+  jlsnow301:
+  - bugfix: Fixed a clipping issue with the brainwash objective text. Brainwashed
+      victims can now properly lead longer objectives about the clown being a zombie,
+      etc.
+  san7890:
+  - spellcheck: The exosuit fabricator should now spit out (more) grammatically correct
+      messages.
