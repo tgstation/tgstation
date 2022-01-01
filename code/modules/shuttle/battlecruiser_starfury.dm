@@ -117,6 +117,9 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	shuttleId = "SBC_starfury"
 	shuttlePortId = "SBC_starfury_custom"
+	can_rotate = FALSE
+	world_y_max = 5
+	world_x_max = 5
 
 // Once the Starfury reaches the staiton z-level, it cannot have its custom port moved.
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfury/attack_hand(mob/user, list/modifiers)
