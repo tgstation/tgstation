@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(traitor)
 	/// Used by the debug menu, decides whether newly created objectives should generate progression and telecrystals. Do not modify for non-debug purposes.
 	var/generate_objectives = TRUE
 	/// Objectives that have been completed by type. Used for limiting objectives.
-	var/list/completed_objectives_by_type = list()
+	var/list/taken_objectives_by_type = list()
 
 /datum/controller/subsystem/traitor/Initialize(start_timeofday)
 	. = ..()
@@ -75,18 +75,17 @@ SUBSYSTEM_DEF(traitor)
 	SIGNAL_HANDLER
 	uplink_handlers -= uplink_handler
 
-/datum/controller/subsystem/traitor/proc/on_objective_completed(datum/traitor_objective/objective)
-	SIGNAL_HANDLER
+/datum/controller/subsystem/traitor/proc/on_objective_taken(datum/traitor_objective/objective)
 	if(!istype(objective))
 		return
 
 	var/datum/traitor_objective/current_type = objective.type
 	while(current_type != /datum/traitor_objective)
-		if(!completed_objectives_by_type[current_type])
-			completed_objectives_by_type[current_type] = list(objective)
+		if(!taken_objectives_by_type[current_type])
+			taken_objectives_by_type[current_type] = list(objective)
 		else
-			completed_objectives_by_type[current_type] += objective
+			taken_objectives_by_type[current_type] += objective
 		current_type = type2parent(current_type)
 
-/datum/controller/subsystem/traitor/proc/get_completion_count(datum/traitor_objective/objective_type)
-	return length(completed_objectives_by_type[objective_type])
+/datum/controller/subsystem/traitor/proc/get_taken_count(datum/traitor_objective/objective_type)
+	return length(taken_objectives_by_type[objective_type])

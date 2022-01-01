@@ -2791,6 +2791,7 @@
 #include "code\modules\jobs\job_types\event\santa.dm"
 #include "code\modules\jobs\job_types\spawner\ancient_crew.dm"
 #include "code\modules\jobs\job_types\spawner\ash_walker.dm"
+#include "code\modules\jobs\job_types\spawner\battlecruiser.dm"
 #include "code\modules\jobs\job_types\spawner\beach_bum.dm"
 #include "code\modules\jobs\job_types\spawner\escaped_prisoner.dm"
 #include "code\modules\jobs\job_types\spawner\exile.dm"

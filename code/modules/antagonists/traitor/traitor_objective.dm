@@ -129,7 +129,6 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	handle_cleanup()
 	objective_state = OBJECTIVE_STATE_COMPLETED
-	SStraitor.on_objective_completed(src)
 	handler.on_update() // Trigger an update to the UI
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
@@ -168,7 +167,7 @@
 	)
 
 /datum/traitor_objective/proc/on_objective_taken(mob/user)
-	return
+	SStraitor.on_objective_taken(src)
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.
 /datum/traitor_objective/proc/generate_ui_buttons(mob/user)

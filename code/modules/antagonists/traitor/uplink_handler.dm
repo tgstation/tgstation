@@ -150,7 +150,7 @@
 
 /datum/uplink_handler/proc/get_completion_progression(datum/traitor_objective/type)
 	var/total_progression = 0
-	for(var/datum/traitor_objective/objective as anything in potential_duplicate_objectives[type])
+	for(var/datum/traitor_objective/objective as anything in completed_objectives)
 		if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
 			total_progression += objective.progression_reward
 	return total_progression

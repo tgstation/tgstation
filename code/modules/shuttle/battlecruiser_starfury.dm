@@ -117,6 +117,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	shuttleId = "SBC_starfury"
 	shuttlePortId = "SBC_starfury_custom"
+	view_range = 27
 
 // Once the Starfury reaches the staiton z-level, it cannot have its custom port moved.
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfury/attack_hand(mob/user, list/modifiers)
@@ -290,12 +291,19 @@
 	if(!ship.load(battlecruiser_loading_turf))
 		CRASH("Loading battlecruiser ship failed!")
 
+	var/datum/team/battlecruiser/team = new()
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+	if(nuke.r_code == "ADMIN")
+		nuke.r_code = random_nukecode()
+	team.nuke = nuke
+
 	for(var/turf/open/spawned_turf as anything in ship.get_affected_turfs(battlecruiser_loading_turf)) //not as anything to filter out closed turfs
 		for(var/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/spawner in spawned_turf)
+			spawner.antag_team = team
 			if(candidates.len > 0)
 				var/mob/our_candidate = candidates[1]
 				spawner.create(our_candidate)
-				candidates -= our_candidate
+				candidates.Splice(1, 2)
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [our_candidate]!",
 					source = our_candidate,
