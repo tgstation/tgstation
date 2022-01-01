@@ -81,7 +81,7 @@
 	return
 
 /mob/living/silicon/proc/queueAlarm(message, type, incoming = FALSE)
-	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
+	var/in_cooldown = (length(alarms_to_show) || length(alarms_to_clear))
 	if(incoming)
 		alarms_to_show += message
 		alarm_types_show[type] += 1
@@ -95,10 +95,10 @@
 	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
 
 /mob/living/silicon/proc/show_alarms()
-	if(alarms_to_show.len < 5)
+	if(length(alarms_to_show) < 5)
 		for(var/msg in alarms_to_show)
 			to_chat(src, msg)
-	else if(alarms_to_show.len)
+	else if(length(alarms_to_show))
 
 		var/msg = "--- "
 		for(var/alarm_type in alarm_types_show)
@@ -107,11 +107,11 @@
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
-	if(alarms_to_clear.len < 3)
+	if(length(alarms_to_clear) < 3)
 		for(var/msg in alarms_to_clear)
 			to_chat(src, msg)
 
-	else if(alarms_to_clear.len)
+	else if(length(alarms_to_clear))
 		var/msg = "--- "
 
 		for(var/alarm_type in alarm_types_clear)
@@ -237,7 +237,7 @@
 		var/law = lawcache_supplied[index]
 
 		if (length(law) > 0)
-			if(lawcache_lawcheck.len >= number+1)
+			if(length(lawcache_lawcheck) >= number+1)
 				if (force || lawcache_lawcheck[number+1] == "Yes")
 					say("[radiomod] [number]. [law]", forced = forced_log_message)
 					number++
@@ -253,7 +253,7 @@
 			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
 		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index in 1 to laws.hacked.len)
+	for (var/index in 1 to length(laws.hacked))
 		var/law = laws.hacked[index]
 		if (length(law) > 0)
 			if (!hackedcheck[index])
@@ -261,7 +261,7 @@
 			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
 			hackedcheck.len += 1
 
-	for (var/index in 1 to laws.ion.len)
+	for (var/index in 1 to length(laws.ion))
 		var/law = laws.ion[index]
 
 		if (length(law) > 0)
@@ -271,7 +271,7 @@
 			ioncheck.len += 1
 
 	var/number = 1
-	for (var/index in 1 to laws.inherent.len)
+	for (var/index in 1 to length(laws.inherent))
 		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
@@ -282,10 +282,10 @@
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index in 1 to laws.supplied.len)
+	for (var/index in 1 to length(laws.supplied))
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			lawcheck.len += 1
+			length(lawcheck) += 1
 			if (!lawcheck[number+1])
 				lawcheck[number+1] = "Yes"
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
@@ -312,22 +312,21 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
-
-	if(!Autochan)
+	var/chosen_channel = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
+	if(isnull(chosen_channel))
 		return
-	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
+	if(chosen_channel == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
 		radiomod = ";"
-		Autochan += " ([radio.get_frequency()])"
-	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
+		chosen_channel += " ([radio.get_frequency()])"
+	if(chosen_channel == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
-			if(GLOB.department_radio_keys[key] == Autochan)
+			if(GLOB.department_radio_keys[key] == chosen_channel)
 				radiomod = ":" + key
 				break
 
-	to_chat(src, span_notice("Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]"))
+	to_chat(src, span_notice("Automatic announcements [chosen_channel == "None" ? "will not use the radio." : "set to [chosen_channel]."]"))
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE

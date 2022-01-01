@@ -751,3 +751,50 @@
   - admin: admins can now view family objectives from the traitor panel
   vincentiusvin:
   - bugfix: fixed zombie powder not sleeping you on ingestion and on further ingestion.
+2021-12-31:
+  GoldenAlpharex:
+  - bugfix: The blackmarket uplink shouldn't run into issues loading the different
+      categories of items it can order when it was created during mapload.
+  JohnFulpWillard:
+  - bugfix: accessories on clothes placed inside garment bags will no longer delete
+      themselves.
+  Kylerace:
+  - bugfix: 'NanoTrasen fixed a problem with their orion trail arcade machines relaying
+      security and medical comms to the most dangerous demographic: gamers. NanoTrasen
+      assures you that this security exploit will never happen again.'
+  - bugfix: you cant make radios play comms with a broken speaker by setting their
+      frequency anymore.
+  Melbert:
+  - bugfix: Hulk is removed more consistently when the user actually enters soft crit.
+  - bugfix: Exo-drone fuel pellets delete when empty.
+  - bugfix: Exo-drone launchers now update their icon correctly when adding / removing
+      fuel. Removing fuel with a crowbar also doesn't smack the launcher when done.
+  - bugfix: Fixes a hard-del with the exo-drone launcher.
+  SuperNovaa41:
+  - bugfix: Possessing a mob no longer lowercases your ckey in admin messages.
+  - bugfix: You will no longer hear medibot voicelines whilst in crit.
+  - bugfix: Spidercharges can now only be blown up in their intended location.
+  - bugfix: The ablative trenchcoat actually gives you a sechud again.
+  coldud13:
+  - bugfix: fixed basil boys uniform being offset by one pixel
+  jlsnow301:
+  - refactor: The majority of user facing input lists have been converted to TGUI.
+  - refactor: Tgui text inputs now scale with entered input.
+  - bugfix: Many inputs now properly accept cancelling out of the menu.
+  - bugfix: Fixes an edge case where users could not press enter on number inputs.
+  - bugfix: Custom vendor bluescreen.
+  - bugfix: You can now press ENTER on text inputs without an entry to cancel.
+  neopythagorean:
+  - bugfix: Pipe dispensers no longer produce broken invisible pipes.
+  tf-4:
+  - code_imp: space/openspace turfs now exist to make multi-z space turfs act more
+      space-like.
+  timothymtorres:
+  - bugfix: Fix glass floors appearing as lower z-level when on the same z-level.
+  - bugfix: Fix catwalks appearing as current z-level when they were on a lower z-level.
+  - bugfix: Fix transparent turfs to display lower z-level properly.
+  - bugfix: Fix lighting overlays appearing as current z-level when they were on lower
+      z-level. (for transparent turfs)
+  - bugfix: Fix mapping icons for catwalks to display correct icon state
+  - refactor: Refactor turf transparency to be more robust.
+  - refactor: Refactor catwalks to be elegant code.
