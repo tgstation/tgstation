@@ -31,7 +31,7 @@
 	if(!IsAvailable())
 		return FALSE
 	if(mod.malfunctioning && prob(75))
-		balloon_alert(usr, "button malfunctions!")
+		mod.balloon_alert(usr, "button malfunctions!")
 		return FALSE
 	return TRUE
 
