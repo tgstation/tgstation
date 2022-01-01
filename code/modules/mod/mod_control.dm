@@ -242,17 +242,16 @@
 		return TRUE
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
-	var/mob/living/carbon/carbon_user = user
-	if(!istype(carbon_user) || src != carbon_user.back)
+	if(user != wearer)
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
-			balloon_alert(carbon_user, "retract parts first!")
+			balloon_alert(user, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
-	if(src != wearer?.back || !istype(over_object, /atom/movable/screen/inventory/hand))
+	if(usr != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)

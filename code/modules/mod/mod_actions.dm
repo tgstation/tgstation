@@ -82,3 +82,29 @@
 
 /datum/action/item_action/mod/panel/ai
 	ai_action = TRUE
+
+/datum/action/item_action/mod/pinned_module
+	desc = "Activate the module."
+	var/obj/item/mod/module/module
+	var/mob/pinner
+
+/datum/action/item_action/mod/pinned_module/New(Target, obj/item/mod/module/linked_module, mob/user)
+	if(user == mod.ai)
+		ai_action = TRUE
+	..()
+	module = linked_module
+	name = "Activate [capitalize(linked_module.name)]"
+	icon_icon = linked_module.icon
+	button_icon_state = linked_module.icon_state
+	pinner = user
+
+/datum/action/item_action/mod/pinned_module/Grant(mob/user)
+	if(user != pinner)
+		return
+	return ..()
+
+/datum/action/item_action/mod/pinned_module/Trigger()
+	if(!IsAvailable())
+		return FALSE
+	module.on_select()
+	return TRUE
