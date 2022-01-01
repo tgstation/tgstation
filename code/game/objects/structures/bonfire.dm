@@ -120,7 +120,7 @@
 /obj/structure/bonfire/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
 	if(burning)
-		if(grill)
+		if(!grill)
 			bonfire_burn()
 		return
 
