@@ -211,6 +211,10 @@
 		else
 			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
+/obj/item/mod/control/examine_more(mob/user)
+	. = ..()
+	. += theme.extended_desc
+
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--

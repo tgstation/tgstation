@@ -11,6 +11,12 @@
 	var/name = "standard"
 	/// Description added to the MOD.
 	var/desc = "A civilian class suit by Nakamura Engineering, doesn't offer much other than slightly quicker movement."
+	/// Extended description on examine_more
+	var/extended_desc = "A first-generation, modular civilian class suit by Nakamura Engineering, \
+		this suit is a staple across the galaxy for civilian applications. These suits are oxygenated, spaceworthy, \
+		resistant to fire and chemical threats, and are immunized against everything between a sneeze and a bioweapon. \
+		However, their combat applications are incredibly minimal due to no armor plating being installed by default, \
+		and their actuators only lead to slightly greater speed than normal."
 	/// Default skin of the MOD.
 	var/default_skin = "standard"
 	/// Armor shared across the MOD pieces.
