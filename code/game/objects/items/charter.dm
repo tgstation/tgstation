@@ -26,45 +26,6 @@
 		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
 		standard_station_regex = new(regexstr)
 
-/obj/item/station_charter/attack_self(mob/living/user)
-	if(used)
-		to_chat(user, span_warning("The [name_type] has already been named!"))
-		return
-	if(!ignores_timeout && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //5 minutes
-		to_chat(user, span_warning("The crew has already settled into the shift. It probably wouldn't be good to rename the [name_type] right now."))
-		return
-	if(response_timer_id)
-		to_chat(user, span_warning("You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now."))
-		return
-
-	var/new_name = tgui_input_text(user, "What do you want to name \
-		[station_name()]? Keep in mind particularly terrible names may be \
-		rejected by your employers, while names using the standard format \
-		will be accepted automatically.", "Station Name", max_length = MAX_CHARTER_LEN)
-
-	if(response_timer_id)
-		to_chat(user, span_warning("You're still waiting for approval from your employers about your proposed name change, it'd be best to wait for now."))
-		return
-
-	if(!new_name)
-		return
-	log_game("[key_name(user)] has proposed to name the station as \
-		[new_name]")
-
-	if(standard_station_regex.Find(new_name))
-		to_chat(user, span_notice("Your name has been automatically approved."))
-		rename_station(new_name, user.name, user.real_name, key_name(user))
-		return
-
-	to_chat(user, span_notice("Your name has been sent to your employers for approval."))
-	// Autoapproves after a certain time
-	response_timer_id = addtimer(CALLBACK(src, .proc/rename_station, new_name, user.name, user.real_name, key_name(user)), approval_time, TIMER_STOPPABLE)
-	to_chat(GLOB.admins, span_adminnotice("<b><font color=orange>CUSTOM STATION RENAME:</font></b>[ADMIN_LOOKUPFLW(user)] proposes to rename the [name_type] to [new_name] (will autoapprove in [DisplayTimeText(approval_time)]). [ADMIN_SMITE(user)] (<A HREF='?_src_=holder;[HrefToken(TRUE)];reject_custom_name=[REF(src)]'>REJECT</A>) [ADMIN_CENTCOM_REPLY(user)]"))
-	for(var/client/admin_client in GLOB.admins)
-		if(admin_client.prefs.toggles & SOUND_ADMINHELP)
-			window_flash(admin_client, ignorepref = TRUE)
-			SEND_SOUND(admin_client, sound('sound/effects/gong.ogg'))
-
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
 		return
