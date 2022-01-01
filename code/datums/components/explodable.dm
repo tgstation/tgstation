@@ -17,7 +17,7 @@
 	/// For items, lets us determine where things should be hit.
 	var/equipped_slot
 	/// Whether this component is currently in the process of exploding.
-	var/tmp/exploding = TRUE
+	var/tmp/exploding = FALSE
 
 /datum/component/explodable/Initialize(devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, uncapped = FALSE, delete_after = EXPLODABLE_DELETE_PARENT)
 	if(!isatom(parent))
