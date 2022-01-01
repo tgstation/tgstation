@@ -28,7 +28,6 @@
 
 
 /datum/species/dullahan/check_roundstart_eligible()
-	return TRUE // DEBUG-ONLY!!!!
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
