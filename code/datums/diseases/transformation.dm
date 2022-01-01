@@ -123,8 +123,7 @@
 	stage5 = list("<span class='warning'>You feel like monkeying around.</span>")
 
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
-	if(affected_mob.mind)
-		affected_mob.monkeyize()
+	affected_mob.monkeyize()
 
 /datum/disease/transformation/jungle_flu/stage_act(delta_time, times_fired)
 	. = ..()
