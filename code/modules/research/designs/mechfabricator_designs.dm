@@ -1139,6 +1139,7 @@
 	id = "mod_welding"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/welding
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_t_ray
 	name = "MOD Module: T-Ray Scanner"
@@ -1218,7 +1219,7 @@
 	id = "mod_reagent_scanner"
 	materials = list(/datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/reagent_scanner
-	department_type = MODULE_MEDICAL
+	department_type = MODULE_SCIENCE
 
 /datum/design/module/mod_gps
 	name = "MOD Module: Internal GPS"

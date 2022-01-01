@@ -14858,7 +14858,7 @@
 /obj/machinery/door/airlock{
 	name = "Service Hall";
 	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "73"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
@@ -29076,7 +29076,7 @@
 /obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "73"
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/unres{
@@ -44480,7 +44480,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/maintenance{
 	name = "Service Maintenance";
-	req_one_access_txt = "12;25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "12;73"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-passthrough"
@@ -54603,7 +54603,7 @@
 "rbg" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Service Maintenance";
-	req_one_access_txt = "12;25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "12;73"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,

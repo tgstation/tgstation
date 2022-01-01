@@ -312,6 +312,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
 	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
 	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
+	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
 	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
 	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
 	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"

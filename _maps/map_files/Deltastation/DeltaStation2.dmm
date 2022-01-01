@@ -32225,7 +32225,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Vacant Room";
-	req_one_access_txt = "28;35"
+	req_one_access_txt = "73"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -39165,7 +39165,7 @@
 	},
 /obj/machinery/door/airlock/public/glass{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "73"
 	},
 /turf/open/floor/iron/checker,
 /area/service/hallway)
@@ -74329,7 +74329,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/public/glass{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "73"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
@@ -83902,7 +83902,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "73"
 	},
 /turf/open/floor/iron/checker,
 /area/service/hallway)
@@ -101357,7 +101357,9 @@
 "wHl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/airlock,
+/obj/machinery/door/airlock{
+	req_one_access_txt = "73"
+	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/wood,
 /area/service/hallway)

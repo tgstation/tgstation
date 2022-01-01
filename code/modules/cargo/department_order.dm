@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	circuit = /obj/item/circuitboard/computer/service_orders
 	department_delivery_areas = list(/area/service/hallway, /area/service/bar/atrium)
 	override_access = ACCESS_HOP
-	req_one_access = list(ACCESS_KITCHEN, ACCESS_BAR, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_THEATRE)
+	req_one_access = ACCESS_SERVICE
 	dep_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
 
 /obj/machinery/computer/department_orders/engineering
