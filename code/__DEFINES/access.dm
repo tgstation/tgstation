@@ -84,6 +84,10 @@
 #define ACCESS_ORDNANCE_STORAGE 71
 /// Room and launching.
 #define ACCESS_AUX_BASE 72
+/// Barber
+#define ACCESS_BARBER 73
+/// Tailor
+#define ACCESS_TAILOR 74
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.

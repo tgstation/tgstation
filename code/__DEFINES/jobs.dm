@@ -74,6 +74,8 @@
 #define JOB_LAWYER "Lawyer"
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
+#define JOB_BARBER "Barber"
+#define JOB_TAILOR "Tailor"
 //ERTs
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
 #define JOB_ERT_OFFICER "Security Response Officer"
@@ -133,6 +135,8 @@
 #define JOB_DISPLAY_ORDER_DETECTIVE 33
 #define JOB_DISPLAY_ORDER_SECURITY_OFFICER 34
 #define JOB_DISPLAY_ORDER_PRISONER 35
+#define JOB_DISPLAY_ORDER_BARBER 36
+#define JOB_DISPLAY_ORDER_TAILOR 37
 
 
 #define DEPARTMENT_UNASSIGNED "No department assigned"

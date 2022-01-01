@@ -524,3 +524,21 @@
 	// Config check for if sec has maint access.
 	if(CONFIG_GET(flag/security_has_maint_access))
 		access |= list(ACCESS_MAINT_TUNNELS)
+
+/datum/id_trim/job/barber
+	assignment = "Barber"
+	trim_state = "trim_barber"
+	extra_access = list(ACCESS_HYDROPONICS)
+	minimal_access = list(ACCESS_BARBER)
+	config_job = "barber"
+	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
+	job = /datum/job/barber
+
+/datum/id_trim/job/tailor
+	assignment = "Tailor"
+	trim_state = "trim_tailor"
+	extra_access = list(ACCESS_HYDROPONICS)
+	minimal_access = list(ACCESS_TAILOR)
+	config_job = "tailor"
+	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
+	job = /datum/job/tailor
