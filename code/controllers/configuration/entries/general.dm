@@ -561,3 +561,6 @@
 
 /datum/config_entry/flag/cache_assets
 	default = TRUE
+
+/datum/config_entry/flag/station_name_in_hub_entry
+	default = FALSE
