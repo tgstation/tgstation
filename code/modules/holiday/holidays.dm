@@ -93,6 +93,7 @@
 /datum/holiday/groundhog
 	name = "Groundhog Day"
 	begin_day = 2
+	end_day = 3
 	begin_month = FEBRUARY
 	drone_hat = /obj/item/clothing/head/helmet/space/chronos
 
