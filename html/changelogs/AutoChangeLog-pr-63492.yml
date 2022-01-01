@@ -1,0 +1,7 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation has gotten an extension, both in size and layout."
+  - rscadd: "Tramstation's medical has been completely overhauled to a new layout,  hopefully a better one!"
+  - rscadd: "New bits of maintenance and maintenance path have been added on both the top and bottom levels of the map."
+  - rscadd: "Cargo now resides over a small bank vault that stores both the station's materials and wealth."
