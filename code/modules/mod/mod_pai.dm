@@ -1,6 +1,6 @@
 /obj/item/mod/control/proc/insert_pai(mob/user, obj/item/paicard/card)
 	if(mod_pai)
-		to_chat(user, span_warning("A [mod_pai] is already inserted!"))
+		balloon_alert(user, "pAI already installed!")
 		return
 	if(!card.pai || !card.pai.mind)
 		balloon_alert(user, "pAI unresponsive!")
