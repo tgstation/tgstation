@@ -125,7 +125,6 @@
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
 	if(affected_mob.mind)
 		affected_mob.monkeyize()
-		ADD_TRAIT(affected_mob, TRAIT_VENTCRAWLER_ALWAYS, type)
 
 /datum/disease/transformation/jungle_flu/stage_act(delta_time, times_fired)
 	. = ..()
