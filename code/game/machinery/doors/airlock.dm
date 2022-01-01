@@ -1201,7 +1201,7 @@
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
 	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
+	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
@@ -1351,7 +1351,7 @@
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
 				gen_access()
-				if(req_one_access.len)
+				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access
 				else
