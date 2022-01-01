@@ -46,12 +46,22 @@ All ShuttleMove procs go here
 				qdel(thing)
 
 // Called on the old turf to move the turf data
-/turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
+/turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir, find_deepest_baseturf = FALSE)
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
-	//Destination turf changes
-	//Baseturfs is definitely a list or this proc wouldnt be called
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	// Destination turf changes.
+	// Baseturfs is definitely a list or this proc wouldnt be called.
+	var/shuttle_boundary = 0
+	if(find_deepest_baseturf)
+		// Find the last instance of /turf/baseturf_skipover/shuttle, so we only take it
+		for(var/index in 1 to length(baseturfs))
+			var/turf/baseturf = baseturfs[index]
+			if(ispath(baseturf, /turf/baseturf_skipover/shuttle))
+				shuttle_boundary = index
+	else
+		// Find the first instance of /turf/baseturf_skipover/shuttle and be good with that
+		shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+
 	if(!shuttle_boundary)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
 	var/depth = baseturfs.len - shuttle_boundary + 1
@@ -68,12 +78,22 @@ All ShuttleMove procs go here
 	return TRUE
 
 // Called on the new turf after everything has been moved
-/turf/proc/afterShuttleMove(turf/oldT, rotation)
+/turf/proc/afterShuttleMove(turf/oldT, rotation, find_deepest_baseturf = FALSE)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
 
 	SSexplosions.wipe_turf(src)
-	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+	var/shuttle_boundary = 0
+	if(find_deepest_baseturf)
+		// Find the last instance of /turf/baseturf_skipover/shuttle, so we only take it
+		for(var/index in 1 to length(baseturfs))
+			var/turf/baseturf = baseturfs[index]
+			if(ispath(baseturf, /turf/baseturf_skipover/shuttle))
+				shuttle_boundary = index
+	else
+		// Find the first instance of /turf/baseturf_skipover/shuttle and be good with that
+		shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+
 	if(shuttle_boundary)
 		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
 

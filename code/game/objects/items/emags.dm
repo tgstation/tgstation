@@ -154,3 +154,4 @@
 	if(!istype(target, /obj/machinery/computer/communications))
 		to_chat(user, span_warning("[src] is unable to interface with this. It only seems to interface with the communication console."))
 		return FALSE
+	return TRUE

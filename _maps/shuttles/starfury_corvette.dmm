@@ -1,0 +1,609 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/closet/syndicate/personal,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"c" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"d" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"e" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 1;
+	max_integrity = 80;
+	
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"f" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"h" = (
+/obj/structure/closet/emcloset{
+	anchored = 1
+	},
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/machinery/button/door{
+	id = "SBC_corvette_bolt";
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = -25;
+	specialfunctions = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"j" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile/syndicate_corvette,
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
+"k" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"l" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"m" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	max_integrity = 80;
+	
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"n" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/obj/machinery/button/door{
+	id = "SBC_corvette_bolt";
+	name = "Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_y = 25;
+	specialfunctions = 4
+	},
+/obj/item/clothing/glasses/meson,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"o" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"p" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = 32;
+	pixel_y = -2;
+	req_access = 150
+	},
+/obj/machinery/button/door{
+	id = "SBC_corvette_blast";
+	name = "Corvette Blast Doors";
+	pixel_x = 32;
+	pixel_y = 8;
+	req_access_txt = "151"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"q" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Exterior View B";
+	network = list("SBC_Corvette");
+	pixel_x = 11;
+	pixel_y = -32
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"r" = (
+/obj/machinery/computer/security{
+	network = list("SBC_Corvette")
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"s" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"t" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
+"v" = (
+/obj/structure/closet/syndicate/personal,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"w" = (
+/obj/machinery/light/small,
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"x" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/storage/box/zipties,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"z" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"A" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"B" = (
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"C" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
+"D" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/shuttle/starfury/corvette{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"E" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
+"F" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"G" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"H" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	dir = 1;
+	max_integrity = 80
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"I" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/wrench,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"J" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"K" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Syndicate Corvette Ready Room";
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"L" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"M" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"N" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"O" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "SBC_corvette_blast";
+	layer = 3
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
+"P" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Syndicate Corvette Cockpit";
+	req_access_txt = "150"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"Q" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Exterior View A";
+	network = list("SBC_Corvette");
+	pixel_x = 11;
+	pixel_y = 32
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_corvette)
+"R" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"T" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"U" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"V" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/item/flashlight/seclite{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/item/flashlight/seclite,
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"W" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	name = "tactical chair"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"X" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+"Y" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/multitool,
+/obj/item/clothing/head/welding,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"Z" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_corvette)
+
+(1,1,1) = {"
+a
+C
+C
+C
+C
+C
+a
+"}
+(2,1,1) = {"
+H
+t
+t
+t
+t
+t
+m
+"}
+(3,1,1) = {"
+M
+M
+Y
+V
+x
+M
+M
+"}
+(4,1,1) = {"
+M
+k
+J
+N
+s
+X
+M
+"}
+(5,1,1) = {"
+M
+G
+z
+c
+F
+w
+M
+"}
+(6,1,1) = {"
+M
+v
+b
+c
+v
+b
+M
+"}
+(7,1,1) = {"
+e
+M
+M
+K
+M
+M
+m
+"}
+(8,1,1) = {"
+E
+s
+T
+Z
+U
+J
+j
+"}
+(9,1,1) = {"
+Q
+n
+A
+l
+l
+h
+q
+"}
+(10,1,1) = {"
+M
+M
+M
+P
+M
+M
+M
+"}
+(11,1,1) = {"
+M
+r
+o
+c
+R
+B
+M
+"}
+(12,1,1) = {"
+O
+I
+c
+W
+p
+f
+O
+"}
+(13,1,1) = {"
+O
+O
+L
+D
+d
+O
+O
+"}
+(14,1,1) = {"
+a
+O
+O
+O
+O
+O
+a
+"}
