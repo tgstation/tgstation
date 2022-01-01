@@ -201,7 +201,7 @@
 		else
 			. += span_notice("You could use a <b>cell</b> on it to install one.")
 		if(mod_pai)
-			. += span_notice("You could remove [mod_pai] with <b>Right Click</b>")
+			. += span_notice("You could remove [mod_pai] with <b>right-click</b>")
 		else
 			. += span_notice("You could install a pAI with an <b>pAI card</b>.")
 

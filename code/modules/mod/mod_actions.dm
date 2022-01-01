@@ -11,7 +11,7 @@
 	..()
 	mod = Target
 	if(pai_action)
-		background_icon_state = ACTION_BUTTON_PAI_BACKGROUND
+		background_icon_state = "bg_tech"
 
 /datum/action/item_action/mod/Grant(mob/user)
 	if(pai_action && user != mod.mod_pai)
