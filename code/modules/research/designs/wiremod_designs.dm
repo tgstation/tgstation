@@ -309,7 +309,7 @@
 /datum/design/component/bci/bci_action
 	name = "BCI Action Component"
 	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/bci_action
+	build_path = /obj/item/circuit_component/equipment_action/bci
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -341,6 +341,10 @@
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
 
+/datum/design/component/mod_action
+	name = "MOD Action Component"
+	id = "comp_mod_action"
+	build_path = /obj/item/circuit_component/equipment_action/mod
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -486,3 +490,12 @@
 	build_path = /obj/item/assembly/wiremod
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/mod_shell
+	name = "MOD Module Shell"
+	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
+	id = "module_shell"
+	materials = list(/datum/material/glass = 2000)
+	build_path = /obj/item/mod/module/circuit
+	build_type = MECHFAB | COMPONENT_PRINTER
+	category = list("MOD Modules", "Shells")
