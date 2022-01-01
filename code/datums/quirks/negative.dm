@@ -854,7 +854,7 @@
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
 	desc = "You are terrified of small spaces. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
-	icon = "house-user"
+	icon = "box-open"
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
 	hardcore_value = 5
