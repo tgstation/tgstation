@@ -61,6 +61,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// Extended description of the theme.
+	var/extended_desc
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
@@ -93,6 +95,7 @@
 	if(new_theme)
 		theme = new_theme
 	theme = GLOB.mod_themes[theme]
+	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
 	complexity_max = theme.complexity_max
@@ -213,7 +216,7 @@
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
-	. += theme.extended_desc
+	. += extended_desc
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)

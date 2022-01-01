@@ -370,6 +370,7 @@
 		and to be able to locate the second part of the system; \
 		a pathfinding implant installed into the base of the user's spine, \
 		broadcasting their location to the suit and allowing them to recall it to their back at any time. \
+		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 2
