@@ -491,7 +491,7 @@
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
 
-/datum/design/mod_shell
+/datum/design/mod_module_shell
 	name = "MOD Module Shell"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	id = "module_shell"
