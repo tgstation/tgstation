@@ -27,16 +27,24 @@
 		return
 	return ..()
 
+/datum/action/item_action/mod/Trigger()
+	if(!IsAvailable())
+		return FALSE
+	if(mod.malfunctioning && prob(75))
+		balloon_alert(usr, "button malfunctions!")
+		return FALSE
+	return TRUE
+
 /datum/action/item_action/mod/deploy
 	name = "Deploy MODsuit"
 	desc = "Deploy/Conceal a part of the MODsuit."
 	button_icon_state = "deploy"
 
 /datum/action/item_action/mod/deploy/Trigger()
-	if(!IsAvailable())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	mod.choose_deploy(usr)
-	return TRUE
 
 /datum/action/item_action/mod/deploy/ai
 	ai_action = TRUE
@@ -47,10 +55,10 @@
 	button_icon_state = "activate"
 
 /datum/action/item_action/mod/activate/Trigger()
-	if(!IsAvailable())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	mod.toggle_activate(usr)
-	return TRUE
 
 /datum/action/item_action/mod/activate/ai
 	ai_action = TRUE
@@ -61,10 +69,10 @@
 	button_icon_state = "module"
 
 /datum/action/item_action/mod/module/Trigger()
-	if(!IsAvailable())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	mod.quick_module(usr)
-	return TRUE
 
 /datum/action/item_action/mod/module/ai
 	ai_action = TRUE
@@ -75,10 +83,10 @@
 	button_icon_state = "panel"
 
 /datum/action/item_action/mod/panel/Trigger()
-	if(!IsAvailable())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	mod.ui_interact(usr)
-	return TRUE
 
 /datum/action/item_action/mod/panel/ai
 	ai_action = TRUE
@@ -104,7 +112,7 @@
 	return ..()
 
 /datum/action/item_action/mod/pinned_module/Trigger()
-	if(!IsAvailable())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	module.on_select()
-	return TRUE
