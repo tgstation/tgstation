@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"anime",
 	"authority",
 	"birds",
+	"blood",
 	"clowns",
 	"doctors",
 	"falling",
@@ -22,7 +23,6 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"spiders",
 	"strangers",
 	"the supernatural",
-	"blood",
 )))
 
 GLOBAL_LIST_INIT(phobia_regexes, list(
