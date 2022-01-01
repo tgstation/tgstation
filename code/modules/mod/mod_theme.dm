@@ -336,8 +336,8 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	slowdown_inactive = 2
-	slowdown_active = 1.5
+	slowdown_inactive = 1.75
+	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	skins = list(
 		"research" = list(
@@ -627,8 +627,8 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
-	slowdown_inactive = 2.5
-	slowdown_active = 2
+	slowdown_inactive = 2
+	slowdown_active = 1.5
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/kinesis)
 	skins = list(

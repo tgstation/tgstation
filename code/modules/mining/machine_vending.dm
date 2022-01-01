@@ -28,7 +28,7 @@
 		new /datum/data/mining_equipment("Explorer's Webbing", /obj/item/storage/belt/mining, 500),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/card/mining_point_card, 500),
 		new /datum/data/mining_equipment("Survival Medipen", /obj/item/reagent_containers/hypospray/medipen/survival, 500),
-		new /datum/data/mining_equipment("Mining Plates", /obj/item/mod/construction/armor/mining, 500),
+		new /datum/data/mining_equipment("Mining MOD Plating", /obj/item/mod/construction/armor/mining, 500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit", /obj/item/storage/firstaid/brute, 600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker, 600),
 		new /datum/data/mining_equipment("Jaunter", /obj/item/wormhole_jaunter, 750),
