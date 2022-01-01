@@ -855,9 +855,9 @@
 	name = "Claustrophobia"
 	desc = "You are terrified of small spaces. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
 	icon = "house-user"
-	value = -2
+	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
-	hardcore_value = 2
+	hardcore_value = 5
 	processing_quirk = TRUE
 
 /datum/quirk/claustrophobia/remove()
@@ -872,6 +872,6 @@
 		return 
 	
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
-	quirk_holder.losebreath++
-	if(prob(10))
+	quirk_holder.losebreath += 0.25 // miss a breath one in four times
+	if(prob(25))
 		to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
