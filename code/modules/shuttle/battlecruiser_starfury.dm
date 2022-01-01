@@ -198,6 +198,9 @@
 	. = ..()
 
 	// We just flew into the station's z-level
+	if(!new_turf)
+		return
+
 	if(is_station_level(new_turf.z))
 		// Lock it down...
 		say("Shuttle locked into orbit with a station.")
