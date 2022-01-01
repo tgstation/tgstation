@@ -35,6 +35,8 @@
 	var/slowdown_active = 0.75
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
+	/// Allowed items in the chestplate's suit storage.
+	var/list/allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
@@ -479,6 +481,7 @@
 	cell_drain = DEFAULT_CELL_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
+	inbuilt_modules = list(/obj/item/mod/module/waddle)
 	skins = list(
 		"cosmohonk" = list(
 			HELMET_LAYER = NECK_LAYER,

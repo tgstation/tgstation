@@ -206,3 +206,19 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+/obj/item/mod/module/noslip
+	name = "MOD anti slip module"
+	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
+		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+	icon_state = "noslip"
+	complexity = 1
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/noslip)
+
+/obj/item/mod/module/noslip/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+
+/obj/item/mod/module/noslip/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)

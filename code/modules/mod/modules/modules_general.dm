@@ -417,6 +417,8 @@
 		return
 	if(!human_user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
+	for(var/obj/item/part as anything in mod.mod_parts)
+		mod.deploy(null, part)
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)

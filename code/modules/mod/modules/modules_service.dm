@@ -31,7 +31,7 @@
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
-	incompatible_modules = list(/obj/item/mod/module/microwave_beam)
+	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
@@ -56,3 +56,25 @@
 	spark_effect_two.set_up(2, 1, microwave_target)
 	spark_effect_two.start()
 	drain_power(use_power_cost)
+
+//Waddle
+
+/obj/item/mod/module/waddle
+	name = "MOD waddle module"
+	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
+		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
+		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+	icon_state = "waddle"
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/waddle)
+
+/obj/item/mod/module/waddle/on_suit_activation()
+	mod.wearer.AddElement(/datum/element/waddling)
+	if(is_clown_job(mod.wearer.mind?.assigned_role))
+		SEND_SIGNAL(mod.wearer, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+
+/obj/item/mod/module/waddle/on_suit_deactivation()
+	mod.wearer.RemoveElement(/datum/element/waddling)
+	if(is_clown_job(mod.wearer.mind?.assigned_role))
+		SEND_SIGNAL(mod.wearer, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
