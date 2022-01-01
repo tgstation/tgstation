@@ -84,11 +84,12 @@
 #define ACCESS_ORDNANCE_STORAGE 71
 /// Room and launching.
 #define ACCESS_AUX_BASE 72
+/// Service access, for service hallway and service consoles
+#define ACCESS_SERVICE 73
 /// Barber
-#define ACCESS_BARBER 73
+#define ACCESS_BARBER 74
 /// Tailor
-#define ACCESS_TAILOR 74
-
+#define ACCESS_TAILOR 75
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
 	Mostly for admin fun times.*/
@@ -279,6 +280,7 @@
 	ACCESS_ATMOSPHERICS, \
 	ACCESS_ORDNANCE_STORAGE, \
 	ACCESS_ORDNANCE, \
+	ACCESS_SERVICE, \
 )
 
 /// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
