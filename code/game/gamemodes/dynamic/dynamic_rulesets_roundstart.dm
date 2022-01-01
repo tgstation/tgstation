@@ -100,8 +100,8 @@
 	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
 	restricted_roles = list(JOB_AI, JOB_CYBORG)
 	required_candidates = 2
-	weight = 4
-	cost = 15
+	weight = 2
+	cost = 12
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
