@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - rscdel: "The station name has been removed from the hub entry."
