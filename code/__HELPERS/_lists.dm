@@ -262,11 +262,6 @@
 			for(var/subpath in typesof(current_path))
 				.[subpath] = TRUE
 
-	if(zebra && clear_falsey)
-		for(var/cached_path in .)
-			if(!.[cached_path])
-				. -= cached_path
-
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
  * This time it also uses the associated values given by the input list for the values of the subtypes.
@@ -316,10 +311,12 @@
 			for(var/subpath in typesof(current_path))
 				.[subpath] = pathlist[current_path]
 
-	if(zebra && clear_nulls)
-		for(var/cached_path in .)
-			if (isnull(.[cached_path]))
-				. -= cached_path
+	if(!clear_nulls)
+		return
+
+	for(var/cached_path in .)
+		if (isnull(.[cached_path]))
+			. -= cached_path
 
 
 /**
