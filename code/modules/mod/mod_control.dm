@@ -293,7 +293,8 @@
 		return
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	if(active || activating || ai_controller)
 		balloon_alert(user, "deactivate suit first!")
