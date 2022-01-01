@@ -197,13 +197,13 @@
 		. += span_notice("You could update the access with an <b>ID</b>.")
 		. += span_notice("You could access the wire panel with a <b>wire configuring tool</b>.")
 		if(cell)
-			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
+			. += span_notice("You could remove the cell with <b>left-click</b>.")
 		else
 			. += span_notice("You could use a <b>cell</b> on it to install one.")
 		if(mod_pai)
 			. += span_notice("You could remove [mod_pai] with <b>right-click</b>")
 		else
-			. += span_notice("You could install a pAI with an <b>pAI card</b>.")
+			. += span_notice("You could install a pAI with a <b>pAI card</b>.")
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -262,9 +262,11 @@
 			return ..()
 
 /obj/item/mod/control/attack_hand(mob/user, list/modifiers)
-	if(seconds_electrified && cell?.charge)
-		if(shock(user))
-			return
+	. = ..()
+	if(.)
+		return
+	if(seconds_electrified && cell?.charge && shock(user))
+		return
 	if(open && loc == user)
 		if(!cell)
 			balloon_alert(user, "no cell!")
@@ -279,15 +281,16 @@
 			cell.forceMove(drop_location())
 		update_cell_alert()
 		return
-	return ..()
 
 /obj/item/mod/control/attack_hand_secondary(mob/user, modifiers)
-	if(seconds_electrified && cell?.charge)
-		if(shock(user))
-			return
+	. = ..()
+	if(.)
+		return
+	if(seconds_electrified && cell?.charge && shock(user))
+		return
 	if(open && loc == user)
 		remove_pai(user)
-	return ..()
+		return
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(..())

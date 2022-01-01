@@ -49,7 +49,7 @@
 #define PAI_FALL_TIME 1 SECONDS
 
 /obj/item/mod/control/relaymove(mob/user, direction)
-	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != mod_pai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state > GRAB_PASSIVE))
+	if((!active && wearer) || !cell || cell.charge < CELL_PER_STEP  || user != mod_pai || !COOLDOWN_FINISHED(src, cooldown_mod_move) || (wearer?.pulledby?.grab_state))
 		return FALSE
 	var/timemodifier = MOVE_DELAY * (ISDIAGONALDIR(direction) ? SQRT_2 : 1) * (wearer ? WEARER_DELAY : LONE_DELAY)
 	COOLDOWN_START(src, cooldown_mod_move, movedelay * timemodifier + slowdown)
