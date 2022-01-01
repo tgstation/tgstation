@@ -235,9 +235,12 @@
 			maxHealth = 200
 	adjustHealth(0) //Make the health HUD look correct.
 	visible_message(span_boldannounce("This is getting out of hands. Now there are three of them!"))
+	var/datum/component/music_player/player = GetComponent(/datum/component/music_player)
 	for(var/i in 1 to 2) //Create three skulls in total
 		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
 		L.setVarsAfterSplit(src)
+		if(player)
+			L.AddComponent(player.type, player.music_path)
 	return TRUE
 
 ///Sets the variables for new legion skulls. Usually called after splitting.

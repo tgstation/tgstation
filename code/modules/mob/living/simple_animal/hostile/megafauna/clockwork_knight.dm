@@ -39,6 +39,8 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	deathsound = "bodyfall"
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/ash_drake
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
 	. = ..()

@@ -54,6 +54,8 @@
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/spiral_shots
 	/// Random shots ablity

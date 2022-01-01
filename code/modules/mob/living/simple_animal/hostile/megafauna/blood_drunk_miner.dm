@@ -52,6 +52,8 @@ Difficulty: Medium
 	deathsound = "bodyfall"
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/miner
 	/// Dash ability
 	var/datum/action/cooldown/mob_cooldown/dash/dash
 	/// Kinetic accelerator ability

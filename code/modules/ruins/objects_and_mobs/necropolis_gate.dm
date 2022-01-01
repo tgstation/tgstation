@@ -202,6 +202,13 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 				flash_color(M, flash_color = "#FF0000", flash_time = 50)
 		var/mutable_appearance/release_overlay = mutable_appearance('icons/effects/effects.dmi', "legiondoor")
 		notify_ghosts("Legion has been released in the [get_area(src)]!", source = src, alert_overlay = release_overlay, action = NOTIFY_JUMP, flashwindow = FALSE)
+		addtimer(CALLBACK(src, .proc/start_music), 16.5 SECONDS)
+
+/obj/structure/necropolis_gate/legion_gate/proc/start_music()
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/M in GLOB.mob_list)
+		if(!M.GetComponent(/datum/component/music_player))
+			var/datum/component/music_player/battle/player = M.AddComponent(/datum/component/music_player/battle, /datum/music/sourced/battle/legion)
+			player.do_range_check(0) // Start without fading, instantly.
 
 /obj/effect/temp_visual/necropolis
 	icon = 'icons/effects/96x96.dmi'

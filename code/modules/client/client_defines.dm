@@ -219,3 +219,8 @@
 
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
+
+	/// A list of active music
+	var/list/active_music = list()
+	/// The current playing music datum
+	var/datum/music/playing_music = null

@@ -72,6 +72,8 @@
 	deathsound = 'sound/magic/demon_dies.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	small_sprite_type = /datum/action/small_sprite/megafauna/drake
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/ash_drake
 	/// Fire cone ability
 	var/datum/action/cooldown/mob_cooldown/fire_breath/cone/fire_cone
 	/// Meteors ability
@@ -343,6 +345,7 @@
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	attack_action_types = list()
+	music_component = null
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/Initialize()
 	. = ..()

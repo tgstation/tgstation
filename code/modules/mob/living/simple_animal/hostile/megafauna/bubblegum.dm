@@ -67,6 +67,8 @@ Difficulty: Hard
 	deathsound = 'sound/magic/enter_blood.ogg'
 	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list("mining", "boss", "hell")
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/bubblegum
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
 	/// Actual time where enrage ends

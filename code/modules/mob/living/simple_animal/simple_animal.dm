@@ -167,6 +167,10 @@
 	///Is this animal horrible at hunting?
 	var/inept_hunter = FALSE
 
+	///Path for music component
+	var/music_component = null
+	///Path for the music played
+	var/music_path = null
 
 /mob/living/simple_animal/Initialize(mapload)
 	. = ..()
@@ -204,6 +208,8 @@
 		unsuitable_cold_damage = unsuitable_atmos_damage
 	if(!isnull(unsuitable_heat_damage))
 		unsuitable_heat_damage = unsuitable_atmos_damage
+	if(music_component && music_path)
+		AddComponent(music_component, music_path)
 
 /mob/living/simple_animal/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()

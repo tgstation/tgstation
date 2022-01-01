@@ -43,6 +43,8 @@ Difficulty: Extremely Hard
 	deathmessage = "falls to the ground, decaying into plasma particles."
 	deathsound = "bodyfall"
 	footstep_type = FOOTSTEP_MOB_HEAVY
+	music_component = /datum/component/music_player/battle
+	music_path = /datum/music/sourced/battle/miner
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state

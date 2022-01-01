@@ -117,7 +117,8 @@
 				user.client?.playtitlemusic()
 			else
 				user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-
+		else if(legacy_flag == SOUND_INSTRUMENTS)
+			user.client?.update_playing_music()
 		return TRUE
 
 	var/legacy_chat_flag = legacy_chat_toggles[preference]
