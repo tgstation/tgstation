@@ -327,7 +327,7 @@
 /datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	if(quirk_holder.stat == DEAD)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.has_status_effect(STATUS_EFFECT_INCAPACITATED) || quirk_holder.has_status_effect(STATUS_EFFECT_SLEEPING))
 		return
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -481,7 +481,7 @@
 	processing_quirk = TRUE
 
 /datum/quirk/insanity/process(delta_time)
-	if(quirk_holder.stat == DEAD)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.has_status_effect(STATUS_EFFECT_INCAPACITATED) || quirk_holder.has_status_effect(STATUS_EFFECT_SLEEPING))
 		return
 
 	if(DT_PROB(2, delta_time))
@@ -864,7 +864,7 @@
 	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia")
 
 /datum/quirk/claustrophobia/process(delta_time)
-	if(quirk_holder.stat == DEAD)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.has_status_effect(STATUS_EFFECT_INCAPACITATED) || quirk_holder.has_status_effect(STATUS_EFFECT_SLEEPING))
 		return
 
 	if(isturf(quirk_holder.loc))
