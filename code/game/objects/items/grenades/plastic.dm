@@ -69,14 +69,11 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
-
+	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", 10, 60000, 10)
 	if (isnull(newtime))
 		return
-
 	if(user.get_active_held_item() == src)
-		newtime = clamp(newtime, 10, 60000)
-		det_time = newtime
+		det_time = round(newtime)
 		to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)

@@ -15,8 +15,8 @@
 	var/maxwater = 100
 	///How many units of nutrients will be drained in the tray.
 	var/nutridrain = 1
-	///The maximum nutrient of water in the tray
-	var/maxnutri = 10
+	///The maximum nutrient reagent container size of the tray.
+	var/maxnutri = 20
 	///The amount of pests in the tray (max 10)
 	var/pestlevel = 0
 	///The amount of weeds in the tray (max 10)
@@ -57,7 +57,7 @@
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
-	create_reagents(20)
+	create_reagents(maxnutri)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
 
@@ -737,8 +737,8 @@
 			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
 				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
-		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sort_list(current_traits))
-		if(removed_trait == null)
+		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
+		if(isnull(removed_trait))
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
@@ -818,8 +818,12 @@
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] = muties
-			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sort_list(fresh_mut_list))
-			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
+			var/locked_mutation = tgui_input_list(user, "Mutation to lock", "Plant Mutation Locks", sort_list(fresh_mut_list))
+			if(isnull(locked_mutation))
+				return
+			if(isnull(fresh_mut_list[locked_mutation]))
+				return
+			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.set_endurance(myseed.endurance/2)
@@ -933,6 +937,7 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
+	maxnutri = 10
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()

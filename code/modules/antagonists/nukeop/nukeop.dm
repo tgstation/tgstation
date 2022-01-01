@@ -37,7 +37,7 @@
 
 /datum/antagonist/nukeop/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
-	to_chat(owner, span_notice("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
+	to_chat(owner, span_big("You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!"))
 	owner.announce_objectives()
 
 /datum/antagonist/nukeop/on_gain()
@@ -192,6 +192,7 @@
 	name = "Nuclear Operative (Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/syndicate_empty
+	uniform = /obj/item/clothing/under/syndicate
 
 /datum/outfit/nuclear_operative/post_equip(mob/living/carbon/human/H, visualsOnly)
 	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
@@ -202,6 +203,7 @@
 	name = "Nuclear Operative (Elite, Preview only)"
 
 	back = /obj/item/mod/control/pre_equipped/syndicate_empty/elite
+	uniform = /obj/item/clothing/under/syndicate
 	l_hand = /obj/item/modular_computer/tablet/nukeops
 	r_hand = /obj/item/shield/energy
 

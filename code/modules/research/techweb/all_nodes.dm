@@ -1451,8 +1451,6 @@
 	prereq_ids = list("robotics")
 	design_ids = list(
 		"mod_visor_diaghud",
-		"mod_stealth",
-		"mod_holster",
 		"mod_gps",
 		"mod_reagent_scanner",
 		"mod_clamp",

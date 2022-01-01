@@ -686,3 +686,27 @@
 	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+/// Ruleset for Nations
+/datum/dynamic_ruleset/roundstart/nations
+	name = "Nations"
+	required_candidates = 0
+	weight = 0 //admin only (and for good reason)
+	cost = 0
+	flags = LONE_RULESET
+
+/datum/dynamic_ruleset/roundstart/nations/execute()
+	. = ..()
+	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
+	var/list/department_types = list(
+		/datum/job_department/silicon, //united nations
+		/datum/job_department/cargo,
+		/datum/job_department/engineering,
+		/datum/job_department/medical,
+		/datum/job_department/science,
+		/datum/job_department/security,
+		/datum/job_department/service,
+	)
+
+	for(var/department_type in department_types)
+		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)

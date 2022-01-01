@@ -391,7 +391,7 @@
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
-	chem_splash(get_turf(src), 3, R)
+	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
