@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a clipping issue with the brainwash objective text. Brainwashed victims can now properly lead longer objectives about the clown being a zombie, etc."

@@ -1,7 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Fixes blastcannons not actually having any light range regardless of the bomb they used."
-  - bugfix: "Fixes blastcannons being blocked by cigarette butts."
-  - code_imp: "Unspaghettis some variable definitions."
-  - code_imp: "Brings phasic carbine rounds into compliance with the rest of the projectiles."
