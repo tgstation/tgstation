@@ -26749,6 +26749,15 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/virology)
+"dpA" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Service Production";
+	req_one_access_txt = "73"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/maintenance/central)
 "dpC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/blood/old,
@@ -42825,6 +42834,15 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port)
+"jjl" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/structure/chair/stool/directional/east,
+/turf/open/floor/iron/dark,
+/area/commons/locker)
 "jjR" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -71189,15 +71207,6 @@
 	dir = 8
 	},
 /area/service/chapel)
-"txC" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Service Production";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/maintenance/central)
 "txD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -72492,6 +72501,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
+"tVf" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/directional/north,
+/obj/structure/chair/stool/directional/west,
+/turf/open/floor/iron/dark,
+/area/commons/locker)
 "tVh" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance/two,
@@ -73630,15 +73648,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/fore)
-"usn" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron/dark,
-/area/commons/locker)
 "usI" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -80791,15 +80800,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"xbU" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/light/directional/north,
-/obj/structure/chair/stool/directional/west,
-/turf/open/floor/iron/dark,
-/area/commons/locker)
 "xbZ" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
 /obj/effect/turf_decal/delivery,
@@ -104915,7 +104915,7 @@ rEG
 fSW
 rOO
 afe
-usn
+jjl
 dGT
 eoj
 lmP
@@ -105429,7 +105429,7 @@ biF
 bwO
 kwO
 afe
-xbU
+tVf
 bhQ
 kCl
 lmP
@@ -117246,7 +117246,7 @@ rou
 epE
 apX
 bqb
-txC
+dpA
 aIN
 aox
 bAM

@@ -111,7 +111,7 @@
 	assignment = "Bartender"
 	trim_state = "trim_bartender"
 	extra_access = list(ACCESS_HYDROPONICS, ACCESS_KITCHEN, ACCESS_MORGUE)
-	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE, ACCESS_WEAPONS)
+	minimal_access = list(ACCESS_BAR, ACCESS_MINERAL_STOREROOM, ACCESS_THEATRE, ACCESS_WEAPONS, ACCESS_SERVICE)
 	config_job = "bartender"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/bartender
@@ -120,7 +120,7 @@
 	assignment = "Botanist"
 	trim_state = "trim_botanist"
 	extra_access = list(ACCESS_BAR, ACCESS_KITCHEN)
-	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE)
+	minimal_access = list(ACCESS_HYDROPONICS, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_SERVICE)
 	config_job = "botanist"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/botanist
@@ -154,7 +154,7 @@
 	assignment = "Chaplain"
 	trim_state = "trim_chaplain"
 	extra_access = list()
-	minimal_access = list(ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_MORGUE, ACCESS_THEATRE)
+	minimal_access = list(ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_MORGUE, ACCESS_THEATRE, ACCESS_SERVICE)
 	config_job = "chaplain"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/chaplain
@@ -198,7 +198,7 @@
 	assignment = "Clown"
 	trim_state = "trim_clown"
 	extra_access = list()
-	minimal_access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE, ACCESS_SERVICE)
 	config_job = "clown"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/clown
@@ -207,7 +207,7 @@
 	assignment = "Cook"
 	trim_state = "trim_cook"
 	extra_access = list(ACCESS_BAR, ACCESS_HYDROPONICS)
-	minimal_access = list(ACCESS_KITCHEN, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE)
+	minimal_access = list(ACCESS_KITCHEN, ACCESS_MINERAL_STOREROOM, ACCESS_MORGUE, ACCESS_SERVICE)
 	config_job = "cook"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/cook
@@ -216,7 +216,7 @@
 	assignment = "Curator"
 	trim_state = "trim_curator"
 	extra_access = list()
-	minimal_access = list(ACCESS_AUX_BASE, ACCESS_LIBRARY, ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_AUX_BASE, ACCESS_LIBRARY, ACCESS_MINING_STATION, ACCESS_SERVICE)
 	config_job = "curator"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/curator
@@ -260,7 +260,7 @@
 					ACCESS_HEADS, ACCESS_HYDROPONICS, ACCESS_JANITOR, ACCESS_KEYCARD_AUTH, ACCESS_KITCHEN, ACCESS_LAWYER, ACCESS_LIBRARY,
 					ACCESS_MAILSORTING, ACCESS_MAINT_TUNNELS, ACCESS_MECH_MINING, ACCESS_MEDICAL, ACCESS_MINERAL_STOREROOM,
 					ACCESS_MINING, ACCESS_MINING_STATION, ACCESS_MORGUE, ACCESS_PSYCHOLOGY, ACCESS_QM, ACCESS_RC_ANNOUNCE,
-					ACCESS_RESEARCH, ACCESS_SEC_DOORS, ACCESS_TELEPORTER, ACCESS_THEATRE, ACCESS_VAULT, ACCESS_WEAPONS)
+					ACCESS_RESEARCH, ACCESS_SEC_DOORS, ACCESS_TELEPORTER, ACCESS_THEATRE, ACCESS_VAULT, ACCESS_WEAPONS, ACCESS_SERVICE)
 	minimal_wildcard_access = list(ACCESS_HOP)
 	config_job = "head_of_personnel"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)
@@ -294,7 +294,7 @@
 	assignment = "Janitor"
 	trim_state = "trim_janitor"
 	extra_access = list()
-	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM)
+	minimal_access = list(ACCESS_JANITOR, ACCESS_MAINT_TUNNELS, ACCESS_MINERAL_STOREROOM, ACCESS_SERVICE)
 	config_job = "janitor"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/janitor
@@ -303,7 +303,7 @@
 	assignment = "Lawyer"
 	trim_state = "trim_lawyer"
 	extra_access = list()
-	minimal_access = list(ACCESS_COURT, ACCESS_LAWYER, ACCESS_SEC_DOORS)
+	minimal_access = list(ACCESS_COURT, ACCESS_LAWYER, ACCESS_SEC_DOORS, ACCESS_SERVICE)
 	config_job = "lawyer"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_HOS, ACCESS_CHANGE_IDS)
 	job = /datum/job/lawyer
@@ -321,7 +321,7 @@
 	assignment = "Mime"
 	trim_state = "trim_mime"
 	extra_access = list()
-	minimal_access = list(ACCESS_THEATRE)
+	minimal_access = list(ACCESS_THEATRE, ACCESS_SERVICE)
 	config_job = "mime"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/mime
@@ -375,7 +375,7 @@
 	assignment = "Psychologist"
 	trim_state = "trim_psychologist"
 	extra_access = list()
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHOLOGY, ACCESS_SERVICE)
 	config_job = "psychologist"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CMO, ACCESS_CHANGE_IDS)
 	job = /datum/job/psychologist

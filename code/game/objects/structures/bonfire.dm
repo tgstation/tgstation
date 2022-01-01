@@ -119,8 +119,21 @@
 
 /obj/structure/bonfire/proc/on_entered(datum/source, atom/movable/entered)
 	SIGNAL_HANDLER
-	if(burning & !grill)
-		bonfire_burn()
+	if(burning)
+		if(!grill)
+			bonfire_burn()
+		return
+
+	//Not currently burning, let's see if we can ignite it.
+	if(isliving(entered))
+		var/mob/living/burning_body = entered
+		if(burning_body.on_fire)
+			start_burning()
+			visible_message(span_notice("[entered] runs over [src], starting its fire!"))
+
+	else if(entered.resistance_flags & ON_FIRE)
+		start_burning()
+		visible_message(span_notice("[entered]'s fire speads to [src], setting it ablaze!"))
 
 /obj/structure/bonfire/proc/bonfire_burn(delta_time = 2)
 	var/turf/current_location = get_turf(src)
