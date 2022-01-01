@@ -10,7 +10,7 @@
 
 /datum/bounty/item/New()
 	..()
-	wanted_types = string_assoc_list(typecacheof(wanted_types, only_root_path = !include_subtypes, zebra = TRUE))
+	wanted_types = string_assoc_list(zebra_typecacheof(wanted_types, only_root_path = !include_subtypes))
 
 /datum/bounty/item/can_claim()
 	return ..() && shipped_count >= required_count

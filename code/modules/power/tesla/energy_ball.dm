@@ -212,33 +212,30 @@
 	*/
 	var/atom/closest_atom
 	var/closest_type = 0
-	var/static/list/things_to_shock = typecacheof(
-		list(
-			// Things that we want to shock.
-			/obj/machinery = TRUE,
-			/mob/living = TRUE,
-			/obj/structure = TRUE,
-			/obj/vehicle/ridden = TRUE,
+	var/static/list/things_to_shock = zebra_typecacheof(list(
+		// Things that we want to shock.
+		/obj/machinery = TRUE,
+		/mob/living = TRUE,
+		/obj/structure = TRUE,
+		/obj/vehicle/ridden = TRUE,
 
-			// Things that we don't want to shock.
-			/obj/machinery/atmospherics = FALSE,
-			/obj/machinery/portable_atmospherics = FALSE,
-			/obj/machinery/power/emitter = FALSE,
-			/obj/machinery/field/generator = FALSE,
-			/obj/machinery/field/containment = FALSE,
-			/obj/machinery/camera = FALSE,
-			/obj/machinery/gateway = FALSE,
-			/mob/living/simple_animal = FALSE,
-			/obj/structure/disposalpipe = FALSE,
-			/obj/structure/disposaloutlet = FALSE,
-			/obj/machinery/disposal/delivery_chute = FALSE,
-			/obj/structure/sign = FALSE,
-			/obj/structure/lattice = FALSE,
-			/obj/structure/grille = FALSE,
-			/obj/structure/frame/machine = FALSE,
-		),
-		zebra = TRUE
-	)
+		// Things that we don't want to shock.
+		/obj/machinery/atmospherics = FALSE,
+		/obj/machinery/portable_atmospherics = FALSE,
+		/obj/machinery/power/emitter = FALSE,
+		/obj/machinery/field/generator = FALSE,
+		/obj/machinery/field/containment = FALSE,
+		/obj/machinery/camera = FALSE,
+		/obj/machinery/gateway = FALSE,
+		/mob/living/simple_animal = FALSE,
+		/obj/structure/disposalpipe = FALSE,
+		/obj/structure/disposaloutlet = FALSE,
+		/obj/machinery/disposal/delivery_chute = FALSE,
+		/obj/structure/sign = FALSE,
+		/obj/structure/lattice = FALSE,
+		/obj/structure/grille = FALSE,
+		/obj/structure/frame/machine = FALSE,
+	))
 
 	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.
 	//This means that if we find an object we can assume it is the closest one of its type. This is somewhat of a speed increase.

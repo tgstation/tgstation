@@ -226,18 +226,12 @@
 /**
  * Like typesof() or subtypesof(), but returns a typecache instead of a list.
  *
- * If choosing to generate a zebra list latter values override earlier values.
- * Thus subtypes should come _after_ parent types in the input list.
- * Notice that this is the opposite priority of [/proc/is_type_in_list] and [/proc/is_path_in_list].
- *
  * Arguments:
  * - path: A typepath or list of typepaths.
  * - only_root_path: Whether the typecache should be specifically of the passed types.
  * - ignore_root_path: Whether to ignore the root path when caching subtypes.
- * - zebra: Whether the value of the subtypes is specified in the input list. If true
- * - clear_falsey: Whether to remove falsey values from the typecache after generating it.
  */
-/proc/typecacheof(path, only_root_path = FALSE, ignore_root_path = FALSE, zebra = FALSE, clear_falsey = FALSE)
+/proc/typecacheof(path, only_root_path = FALSE, ignore_root_path = FALSE)
 	if(isnull(path))
 		return
 
@@ -258,20 +252,75 @@
 	var/list/pathlist = path
 	if(only_root_path)
 		for(var/current_path in pathlist)
-			.[current_path] = !zebra || pathlist[current_path]
+			.[current_path] = TRUE
 	else if(ignore_root_path)
 		for(var/current_path in pathlist)
 			for(var/subtype in subtypesof(current_path))
-				.[subtype] = !zebra || pathlist[current_path]
+				.[subtype] = TRUE
 	else
 		for(var/current_path in pathlist)
 			for(var/subpath in typesof(current_path))
-				.[subpath] = !zebra || pathlist[current_path]
+				.[subpath] = TRUE
 
 	if(zebra && clear_falsey)
 		for(var/cached_path in .)
 			if(!.[cached_path])
 				. -= cached_path
+
+/**
+ * Like typesof() or subtypesof(), but returns a typecache instead of a list.
+ * This time it also uses the associated values given by the input list for the values of the subtypes.
+ *
+ * Latter values from the input list override earlier values.
+ * Thus subtypes should come _after_ parent types in the input list.
+ * Notice that this is the opposite priority of [/proc/is_type_in_list] and [/proc/is_path_in_list].
+ *
+ * Arguments:
+ * - path: A typepath or list of typepaths with associated values.
+ * - single_value: The assoc value used if only a single path is passed as the first variable.
+ * - only_root_path: Whether the typecache should be specifically of the passed types.
+ * - ignore_root_path: Whether to ignore the root path when caching subtypes.
+ * - clear_nulls: Whether to remove keys with null assoc values from the typecache after generating it.
+ */
+/proc/zebra_typecacheof(path, single_value = TRUE, only_root_path = FALSE, ignore_root_path = FALSE, clear_nulls = FALSE)
+	if(isnull(path))
+		return
+
+	if(ispath(path))
+		if (isnull(single_value))
+			return
+
+		. = list()
+		if(only_root_path)
+			.[path] = single_value
+			return
+
+		for(var/subtype in (ignore_root_path ? subtypesof(path) : typesof(path)))
+			.[subtype] = single_value
+		return
+
+	if(!islist(path))
+		CRASH("Tried to create a typecache of [path] which is neither a typepath nor a list.")
+
+	. = list()
+	var/list/pathlist = path
+	if(only_root_path)
+		for(var/current_path in pathlist)
+			.[current_path] = pathlist[current_path]
+	else if(ignore_root_path)
+		for(var/current_path in pathlist)
+			for(var/subtype in subtypesof(current_path))
+				.[subtype] = pathlist[current_path]
+	else
+		for(var/current_path in pathlist)
+			for(var/subpath in typesof(current_path))
+				.[subpath] = pathlist[current_path]
+
+	if(zebra && clear_nulls)
+		for(var/cached_path in .)
+			if (isnull(.[cached_path]))
+				. -= cached_path
+
 
 /**
  * Removes any null entries from the list

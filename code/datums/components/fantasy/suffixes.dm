@@ -59,16 +59,13 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(
-			list(
-				/mob/living/simple_animal = TRUE,
-				/mob/living/carbon = TRUE,
-				/datum/species = TRUE,
-				// Some types to remove them and their subtypes
-				/mob/living/carbon/human/species = FALSE,
-			),
-			zebra = TRUE
-		)
+		possible_mobtypes = zebra_typecacheof(list(
+			/mob/living/simple_animal = TRUE,
+			/mob/living/carbon = TRUE,
+			/datum/species = TRUE,
+			// Some types to remove them and their subtypes
+			/mob/living/carbon/human/species = FALSE,
+		))
 		// Some particular types to disallow if they're too broad/abstract
 		// Not in the above typecache generator because it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
@@ -101,19 +98,16 @@
 	var/static/list/possible_mobtypes
 	if(!possible_mobtypes)
 		// The base list of allowed mob/species types
-		possible_mobtypes = typecacheof(
-			list(
-				/mob/living/simple_animal = TRUE,
-				/mob/living/carbon = TRUE,
-				/datum/species = TRUE,
-				// Some types to remove them and their subtypes
-				/mob/living/carbon/human/species = FALSE,
-				/mob/living/simple_animal/hostile/syndicate/mecha_pilot = FALSE,
-				/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
-				/mob/living/simple_animal/hostile/megafauna = FALSE,
-			),
-			zebra = TRUE
-		)
+		possible_mobtypes = zebra_typecacheof(list(
+			/mob/living/simple_animal = TRUE,
+			/mob/living/carbon = TRUE,
+			/datum/species = TRUE,
+			// Some types to remove them and their subtypes
+			/mob/living/carbon/human/species = FALSE,
+			/mob/living/simple_animal/hostile/syndicate/mecha_pilot = FALSE,
+			/mob/living/simple_animal/hostile/asteroid/elite = FALSE,
+			/mob/living/simple_animal/hostile/megafauna = FALSE,
+		))
 		// Some particular types to disallow if they're too broad/abstract
 		// Not in the above typecache generator because it includes subtypes and this doesn't.
 		possible_mobtypes -= list(
