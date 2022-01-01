@@ -19,7 +19,7 @@
 		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.add_hud_to(mod.wearer)
+		hud.add_hud_to_mob(mod.wearer)
 	for(var/trait in visor_traits)
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
@@ -30,7 +30,7 @@
 		return
 	if(hud_type)
 		var/datum/atom_hud/hud = GLOB.huds[hud_type]
-		hud.remove_hud_from(mod.wearer)
+		hud.remove_hud_from_mob(mod.wearer)
 	for(var/trait in visor_traits)
 		REMOVE_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
