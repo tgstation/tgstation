@@ -12,9 +12,12 @@
 	var/base_volume = 65
 	/// Higher priority music plays over lower priority ones. If a looping music is masked by a higher priority music, it will start playing once the higher priority ends if it hasn't been removed.
 	var/priority = 0
+	/// The fading adjustment to the volume
 	var/fade_volume = 1
+	/// The target for fading volume
 	var/fade_volume_target = 1
-	var/fade_rate = 0 // per-second
+	/// Rate at which we fade
+	var/fade_rate = 0
 	/// Whether or not we are in the process of fading
 	var/is_fading = FALSE
 	/// The target client of music
@@ -125,9 +128,10 @@
 		STOP_PROCESSING(SSfastprocess, src)
 		START_PROCESSING(SSprocessing, src)
 
-
 /datum/music/sourced
+	/// The target mob we are playing the music to
 	var/mob/target_mob
+	/// List of music players we can play from
 	var/list/datum/component/music_player/players = list()
 	/// Range within which music will play at full volume
 	var/full_range = 10
@@ -173,7 +177,9 @@
 		player.mob_players -= target_mob
 
 /datum/component/music_player
+	/// List of all the mobs the music is playing to
 	var/list/mob_players = list()
+	/// Path of the music being played
 	var/music_path
 	/// Whether new mobs will be added. To force mobs to stop playing this, use stop_all()
 	var/enabled = TRUE
