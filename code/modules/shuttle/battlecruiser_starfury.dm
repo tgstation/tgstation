@@ -118,6 +118,9 @@
 	shuttleId = "SBC_starfury"
 	shuttlePortId = "SBC_starfury_custom"
 	view_range = 27
+	can_rotate = FALSE
+	world_y_max = 5
+	world_x_max = 5
 
 // Once the Starfury reaches the staiton z-level, it cannot have its custom port moved.
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfury/attack_hand(mob/user, list/modifiers)
