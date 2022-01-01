@@ -195,7 +195,7 @@
 		music_path = _music_path
 	START_PROCESSING(SSprocessing, src)
 
-/datum/component/music_player/proc/do_range_check(var/fade_time = fade_in_time)
+/datum/component/music_player/proc/do_range_check(fade_time = fade_in_time)
 	if(!music_path)
 		return
 	var/shared = FALSE
