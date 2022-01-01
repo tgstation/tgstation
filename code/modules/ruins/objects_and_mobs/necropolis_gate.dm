@@ -205,9 +205,9 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		addtimer(CALLBACK(src, .proc/start_music), 16.5 SECONDS)
 
 /obj/structure/necropolis_gate/legion_gate/proc/start_music()
-	for(var/mob/living/simple_animal/hostile/megafauna/legion/M in GLOB.mob_list)
-		if(!M.GetComponent(/datum/component/music_player))
-			var/datum/component/music_player/battle/player = M.AddComponent(/datum/component/music_player/battle, /datum/music/sourced/battle/legion)
+	for(var/mob/living/simple_animal/hostile/megafauna/legion/legion in GLOB.mob_list)
+		if(!legion.GetComponent(/datum/component/music_player))
+			var/datum/component/music_player/battle/player = legion.AddComponent(/datum/component/music_player/battle, /datum/music/sourced/battle/legion)
 			player.do_range_check(0) // Start without fading, instantly.
 
 /obj/effect/temp_visual/necropolis
