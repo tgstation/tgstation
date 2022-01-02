@@ -98,7 +98,7 @@
 
 /datum/action/item_action/mod/pinned_module/New(Target, obj/item/mod/module/linked_module, mob/user)
 	if(user == mod.mod_pai)
-		ai_action = TRUE
+		pai_action = TRUE
 	..()
 	module = linked_module
 	name = "Activate [capitalize(linked_module.name)]"
