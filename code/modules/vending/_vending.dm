@@ -521,6 +521,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_FOV_PLANE
 
 	var/crit_case
 	if(crit)
@@ -635,6 +636,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	tilted = FALSE
 	layer = initial(layer)
+	plane = initial(plane)
 
 	var/matrix/M = matrix()
 	M.Turn(0)

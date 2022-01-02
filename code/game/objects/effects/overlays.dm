@@ -23,6 +23,7 @@
 	icon_state = "palm1"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = ABOVE_FOV_PLANE
 	anchored = TRUE
 
 /obj/effect/overlay/palmtree_l
@@ -31,6 +32,7 @@
 	icon_state = "palm2"
 	density = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = ABOVE_FOV_PLANE
 	anchored = TRUE
 
 /obj/effect/overlay/coconut

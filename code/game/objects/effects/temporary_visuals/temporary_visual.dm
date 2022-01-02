@@ -3,6 +3,7 @@
 	icon_state = "nothing"
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_FOV_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	///time, in deciseconds, that this object will exist
 	var/duration = 10

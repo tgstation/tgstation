@@ -21,8 +21,12 @@
 
 
 #define FLOOR_PLANE -7
-#define GAME_PLANE -4
-#define GAME_PLANE_FOV_HIDDEN -3
+
+#define GAME_PLANE -6
+#define GAME_PLANE_FOV_HIDDEN -5
+#define GAME_PLANE_ABOVE_FOV -4
+#define GAME_PLANE_LARGE_FOV_HIDDEN -3
+
 #define ABOVE_GAME_PLANE -2
 
 #define SPACE_LAYER 1.8

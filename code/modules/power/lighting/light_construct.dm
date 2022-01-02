@@ -5,6 +5,7 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = ABOVE_FOV_PLANE
 	max_integrity = 200
 	armor = list(MELEE = 50, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 50)
 

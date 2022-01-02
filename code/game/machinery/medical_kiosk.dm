@@ -19,6 +19,7 @@
 	icon_state = "kiosk"
 	base_icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_FOV_PLANE
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED

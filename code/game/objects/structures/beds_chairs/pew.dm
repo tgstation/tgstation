@@ -17,6 +17,7 @@
 /obj/structure/chair/pew/left/Initialize(mapload)
 	leftpewarmrest = GetLeftPewArmrest()
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
+	leftpewarmrest.plane = ABOVE_FOV_PLANE
 	return ..()
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
@@ -48,6 +49,7 @@
 /obj/structure/chair/pew/right/Initialize(mapload)
 	rightpewarmrest = GetRightPewArmrest()
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
+	rightpewarmrest.plane = ABOVE_FOV_PLANE
 	return ..()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()

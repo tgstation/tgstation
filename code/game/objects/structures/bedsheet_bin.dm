@@ -45,11 +45,13 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
+		plane = ABOVE_FOV_PLANE
 		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
+		plane = initial(plane)
 		to_chat(user, span_notice("You smooth [src] out beneath you."))
 	add_fingerprint(user)
 	return

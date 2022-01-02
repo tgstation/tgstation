@@ -103,6 +103,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/col_mod = null
 	var/image/current_image = null
 	var/image_layer = MOB_LAYER
+	var/image_plane = GAME_PLANE
 	var/active = TRUE //qdelery
 
 /obj/effect/hallucination/singularity_pull()
@@ -123,6 +124,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/simple/proc/GetImage()
 	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
+	I.plane = image_plane
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)

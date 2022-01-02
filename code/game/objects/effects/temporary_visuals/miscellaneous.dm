@@ -4,6 +4,7 @@
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
@@ -20,6 +21,7 @@
 		if(SOUTH)
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			plane = ABOVE_FOV_PLANE
 		if(EAST)
 			target_pixel_x = 16
 		if(WEST)
@@ -34,10 +36,12 @@
 			target_pixel_x = 16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			plane = ABOVE_FOV_PLANE
 		if(SOUTHWEST)
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
+			plane = ABOVE_FOV_PLANE
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter

@@ -107,7 +107,7 @@
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
-	
+
 /obj/structure/chair/attack_tk(mob/user)
 	if(!anchored || has_buckled_mobs() || !isturf(user.loc))
 		return ..()
@@ -125,8 +125,10 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
+		plane = ABOVE_FOV_PLANE
 	else
 		layer = OBJ_LAYER
+		plane = GAME_PLANE
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -181,7 +183,7 @@
 /obj/structure/chair/comfy/Initialize(mapload)
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	armrest.plane = ABOVE_GAME_PLANE
+	armrest.plane = ABOVE_FOV_PLANE
 	return ..()
 
 /obj/structure/chair/comfy/proc/GetArmrest()

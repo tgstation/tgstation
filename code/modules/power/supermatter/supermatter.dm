@@ -1156,6 +1156,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	gasefficency = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_FOV_PLANE
 	moveable = TRUE
 	psyOverlay = /obj/overlay/psy/shard
 

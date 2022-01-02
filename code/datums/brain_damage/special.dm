@@ -101,6 +101,7 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
+	image_plane = ABOVE_FOV_PLANE
 	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
 

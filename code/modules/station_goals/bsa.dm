@@ -173,7 +173,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/full/Initialize(mapload, cannon_direction = WEST)
 	. = ..()
-	top_layer = top_layer || mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
+	if(!top_layer)
+		top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
+		top_layer.plane = ABOVE_FOV_PLANE
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)

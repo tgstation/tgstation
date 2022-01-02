@@ -51,18 +51,22 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
+			turret.plane = ABOVE_FOV_PLANE
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 		if(SOUTH)
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 		if(WEST)
 			turret.pixel_x = base_pixel_x + 12
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = OBJ_LAYER
+			turret.plane = GAME_PLANE
 
 /obj/vehicle/ridden/atv/welder_act(mob/living/user, obj/item/I)
 	if(atom_integrity >= max_integrity)

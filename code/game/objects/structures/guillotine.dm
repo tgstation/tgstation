@@ -24,6 +24,7 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = plane = ABOVE_FOV_PLANE
 	var/blade_status = GUILLOTINE_BLADE_RAISED
 	var/blade_sharpness = GUILLOTINE_BLADE_MAX_SHARP // How sharp the blade is
 	var/kill_count = 0
