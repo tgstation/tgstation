@@ -891,7 +891,7 @@
 	return ishuman(target) && target.body_position == LYING_DOWN
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE))
+	if(!can_be_firemanned(target) || incapacitated(ignore_grab = TRUE))
 		to_chat(src, span_warning("You can't fireman carry [target] while [target.p_they()] [target.p_are()] standing!"))
 		return
 
@@ -911,7 +911,7 @@
 		return
 
 	//Second check to make sure they're still valid to be carried
-	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE) || target.buckled)
+	if(!can_be_firemanned(target) || incapacitated(ignore_grab = TRUE) || target.buckled)
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
@@ -927,7 +927,7 @@
 		visible_message(span_warning("[target] fails to climb onto [src]!"))
 		return
 
-	if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+	if(target.incapacitated(ignore_grab = TRUE) || incapacitated(ignore_grab = TRUE))
 		target.visible_message(span_warning("[target] can't hang onto [src]!"))
 		return
 
