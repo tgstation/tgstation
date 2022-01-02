@@ -515,6 +515,9 @@
 		display.vis_contents += GLOB.colored_turfs[display_id]
 
 /datum/excited_group/proc/hide_turfs()
+	if(display_id == 0)
+		return
+
 	for(var/turf/display as anything in turf_list)
 		display.vis_contents -= GLOB.colored_turfs[display_id]
 	display_id = 0

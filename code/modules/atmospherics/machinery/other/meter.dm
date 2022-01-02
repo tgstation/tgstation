@@ -7,7 +7,7 @@
 	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
-	active_power_usage = 4
+	active_power_usage = 9
 	max_integrity = 150
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 40, ACID = 0)
 	greyscale_config = /datum/greyscale_config/meter
@@ -63,22 +63,16 @@
 	PIPING_LAYER_DOUBLE_SHIFT(src, target_layer)
 
 /obj/machinery/meter/process_atmos()
-	if(!(target?.flags_1 & INITIALIZED_1))
-		icon_state = "meter"
-		return FALSE
-
 	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "meter"
 		return FALSE
 
-	use_power(5)
-
-	var/datum/gas_mixture/environment = target.return_air()
-	if(!environment)
+	var/datum/gas_mixture/pipe_air = target.return_air()
+	if(!pipe_air)
 		icon_state = "meter0"
 		return FALSE
 
-	var/env_pressure = environment.return_pressure()
+	var/env_pressure = pipe_air.return_pressure()
 	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
 		icon_state = "meter0"
 	else if(env_pressure <= 1.8 * ONE_ATMOSPHERE)
@@ -93,7 +87,7 @@
 	else
 		icon_state = "meter4"
 
-	var/env_temperature = environment.temperature
+	var/env_temperature = pipe_air.temperature
 	if(env_pressure == 0 || env_temperature == 0)
 		greyscale_colors = COLOR_GRAY
 	else
@@ -130,9 +124,9 @@
 
 /obj/machinery/meter/proc/status()
 	if (target)
-		var/datum/gas_mixture/environment = target.return_air()
-		if(environment)
-			. = "The pressure gauge reads [round(environment.return_pressure(), 0.01)] kPa; [round(environment.temperature,0.01)] K ([round(environment.temperature-T0C,0.01)]&deg;C)."
+		var/datum/gas_mixture/pipe_air = target.return_air()
+		if(pipe_air)
+			. = "The pressure gauge reads [round(pipe_air.return_pressure(), 0.01)] kPa; [round(pipe_air.temperature,0.01)] K ([round(pipe_air.temperature-T0C,0.01)]&deg;C)."
 		else
 			. = "The sensor error light is blinking."
 	else
