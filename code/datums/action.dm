@@ -152,7 +152,7 @@
 			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 		else
 			button.color = rgb(255,255,255,255)
-			return 1
+			return TRUE
 
 /datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
@@ -668,8 +668,16 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
+	// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
+	// The actual next time this ability can be used
 	var/next_use_time = 0
+	// Whether or not you want the cooldown for the ability to display in text form
+	var/text_cooldown = TRUE
+	// Setting for intercepting clicks before activating the ability
+	var/click_to_activate = FALSE
+	// Shares cooldowns with other cooldown abilities of the same value, not active if null
+	var/shared_cooldown
 
 /datum/action/cooldown/New()
 	..()
@@ -680,25 +688,84 @@
 	button.maptext_height = 12
 
 /datum/action/cooldown/IsAvailable()
-	return next_use_time <= world.time
+	return ..() && (next_use_time <= world.time)
 
-/datum/action/cooldown/proc/StartCooldown()
-	next_use_time = world.time + cooldown_time
-	button.maptext = MAPTEXT("<b>[round(cooldown_time/10, 0.1)]</b>")
+/// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
+/datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
+	if(shared_cooldown)
+		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
+			if(shared_cooldown == shared_ability.shared_cooldown)
+				if(isnum(override_cooldown_time))
+					shared_ability.StartCooldownSelf(override_cooldown_time)
+				else
+					shared_ability.StartCooldownSelf(cooldown_time)
+	StartCooldownSelf(override_cooldown_time)
+
+/// Starts a cooldown time for this ability only, will use default cooldown time if an override is not specified
+/datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
+	if(isnum(override_cooldown_time))
+		next_use_time = world.time + override_cooldown_time
+	else
+		next_use_time = world.time + cooldown_time
 	UpdateButtonIcon()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/action/cooldown/process()
+/datum/action/cooldown/Trigger(atom/target)
+	. = ..()
+	if(!.)
+		return
 	if(!owner)
+		return FALSE
+	if(click_to_activate)
+		if(target)
+			// For automatic / mob handling
+			return InterceptClickOn(owner, null, target)
+		if(owner.click_intercept == src)
+			owner.click_intercept = null
+		else
+			owner.click_intercept = src
+		for(var/datum/action/cooldown/ability in owner.actions)
+			ability.UpdateButtonIcon()
+		return TRUE
+	return PreActivate(owner)
+
+/// Intercepts client owner clicks to activate the ability
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(!IsAvailable())
+		return FALSE
+	if(!target)
+		return FALSE
+	PreActivate(target)
+	caller.click_intercept = null
+	return TRUE
+
+/// For signal calling
+/datum/action/cooldown/proc/PreActivate(atom/target)
+	if(SEND_SIGNAL(owner, COMSIG_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+		return
+	. = Activate(target)
+	SEND_SIGNAL(owner, COMSIG_ABILITY_FINISHED, src)
+
+/// To be implemented by subtypes
+/datum/action/cooldown/proc/Activate(atom/target)
+	return
+
+/datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	. = ..()
+	var/time_left = max(next_use_time - world.time, 0)
+	if(button)
+		if(text_cooldown)
+			button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
+	if(!owner || time_left == 0)
 		button.maptext = ""
+	if(IsAvailable() && owner.click_intercept == src)
+		button.color = COLOR_GREEN
+
+/datum/action/cooldown/process()
+	var/time_left = max(next_use_time - world.time, 0)
+	if(!owner || time_left == 0)
 		STOP_PROCESSING(SSfastprocess, src)
-	var/timeleft = max(next_use_time - world.time, 0)
-	if(timeleft == 0)
-		button.maptext = ""
-		UpdateButtonIcon()
-		STOP_PROCESSING(SSfastprocess, src)
-	else
-		button.maptext = MAPTEXT("<b>[round(timeleft/10, 0.1)]</b>")
+	UpdateButtonIcon()
 
 /datum/action/cooldown/Grant(mob/M)
 	..()

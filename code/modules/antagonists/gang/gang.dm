@@ -90,6 +90,7 @@
 	if(starter_gangster)
 		equip_gangster_in_inventory()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	add_objectives()
 	..()
 
 /datum/antagonist/gang/on_removal()
@@ -115,6 +116,12 @@
 	if(starter_gangster)
 		package_spawner.Remove(owner.current)
 	..()
+
+/// Used to display gang objectives in the player's traitor panel
+/datum/antagonist/gang/proc/add_objectives()
+	var/datum/objective/objective = new ()
+	objective.explanation_text = my_gang.current_theme.gang_objectives[type]
+	objectives.Add(objective)
 
 /// Gives a gangster their equipment in their backpack and / or pockets.
 /datum/antagonist/gang/proc/equip_gangster_in_inventory()
@@ -284,9 +291,9 @@
 		/obj/item/clothing/under/suit/checkered,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Italian"
-	gang_team_type = /datum/team/gang/russian_mafia
+	gang_team_type = /datum/team/gang/italian_mob
 
-/datum/team/gang/russian_mafia/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/italian_mob/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)

@@ -441,24 +441,28 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				//Adds a safety check post-input to make sure those targets are actually in range.
-				var/mob/M
+				var/mob/chosen_target
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in sort_names(possible_targets)
+					chosen_target = tgui_input_list(user, "Choose the target for the spell", "Targeting", sort_names(possible_targets))
+					if(isnull(chosen_target))
+						return
+					if(ismob(chosen_target) || user.incapacitated())
+						return
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
-							M = pick(possible_targets)
+							chosen_target = pick(possible_targets)
 						if(TARGET_CLOSEST)
-							for(var/mob/living/L in possible_targets)
-								if(M)
-									if(get_dist(user,L) < get_dist(user,M))
-										if(los_check(user,L))
-											M = L
+							for(var/mob/living/living_target in possible_targets)
+								if(chosen_target)
+									if(get_dist(user, living_target) < get_dist(user, chosen_target))
+										if(los_check(user, living_target))
+											chosen_target = living_target
 								else
-									if(los_check(user,L))
-										M = L
-				if(M in view_or_range(range, user, selection_type))
-					targets += M
+									if(los_check(user, living_target))
+										chosen_target = living_target
+				if(chosen_target in view_or_range(range, user, selection_type))
+					targets += chosen_target
 
 		else
 			var/list/possible_targets = list()
@@ -467,7 +471,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 					continue
 				possible_targets += target
 			for(var/i in 1 to max_targets)
-				if(!possible_targets.len)
+				if(!length(possible_targets))
 					break
 				if(target_ignore_prev)
 					var/target = pick(possible_targets)
@@ -479,11 +483,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!include_user && (user in targets))
 		targets -= user
 
-	if(!targets.len) //doesn't waste the spell
+	if(!length(targets)) //doesn't waste the spell
 		revert_cast(user)
 		return
 
-	perform(targets,user=user)
+	perform(targets, user=user)
 
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
@@ -494,7 +498,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
 
-	if(!targets.len) //doesn't waste the spell
+	if(!length(targets)) //doesn't waste the spell
 		revert_cast()
 		return
 

@@ -1,0 +1,4 @@
+author: "SarmentiCampbell"
+delete-after: True
+changes: 
+  - bugfix: "Russian Revolver can't longer be able to be examined to determine if it has a bullet in it's chamber or not."
