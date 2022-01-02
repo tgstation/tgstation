@@ -712,9 +712,9 @@
  * Adds a card to the deck (or hand of cards).
  *
  * Arguments:
- * mob/user - The user adding the card.
- * list/cards - The list of cards the user is adding to.
- * obj/item/toy/cards/card_to_add - The card (or hand of cards) that will be added back into the deck
+ * * mob/user - The user adding the card.
+ * * list/cards - The list of cards the user is adding to.
+ * * obj/item/toy/cards/card_to_add - The card (or hand of cards) that will be added back into the deck
  */
 /obj/item/toy/cards/proc/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	///Are we adding a hand of cards to the deck?
@@ -752,9 +752,9 @@
  * Draws a card from the deck (or hand of cards).
  *
  * Arguments:
- * mob/user - The user drawing from the deck.
- * list/cards - The list of cards the user is drawing from.
- * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
+ * * mob/user - The user drawing from the deck.
+ * * list/cards - The list of cards the user is drawing from.
+ * * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
  */
 /obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null)
 	if(isliving(user))
@@ -854,9 +854,7 @@
 #undef DECK_SHUFFLE_COOLDOWN
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/cards/singlecard))
-		add_card(user, cards, item)
-	else if(istype(item, /obj/item/toy/cards/cardhand))
+	if(istype(item, /obj/item/toy/cards/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
 		add_card(user, cards, item)
 	else
 		return ..()
@@ -950,7 +948,8 @@
 
 	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
 	for(var/i = k; i <= overlay_cards; i++)
-		var/card_overlay = image(icon = src.icon, icon_state = "sc_[cards[i].name]_[deckstyle]", pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
+		var/obj/item/toy/cards/singlecard/card = cards[i]
+		var/card_overlay = image(icon = src.icon, icon_state = "sc_[card.cardname]_[deckstyle]", pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
 		add_overlay(card_overlay)
 
 /obj/item/toy/cards/singlecard
@@ -960,7 +959,9 @@
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
 	pixel_x = -5
+	///The name of the card
 	var/cardname = null
+	///is the card facedown (F), or faceup (T)?
 	var/flipped = FALSE
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
@@ -1002,9 +1003,9 @@
  * do_cardhand: Creates, or adds to an existing hand of cards
  *
  * Arguments:
- * mob/living/user - the user
- * list/cards - the list of cards being added together (/obj/item/toy/cards/singlecard)
- * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
+ * * mob/living/user - the user
+ * * list/cards - the list of cards being added together (/obj/item/toy/cards/singlecard)
+ * * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
  */
 /obj/item/toy/cards/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
 	if (given_hand && (given_hand?.parentdeck != parentdeck))
