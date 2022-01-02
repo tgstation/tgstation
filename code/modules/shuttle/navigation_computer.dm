@@ -27,8 +27,8 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
-	actions += new /datum/action/innate/shuttledocker_rotate/rotate_action = new(src)
-	actions += new /datum/action/innate/shuttledocker_place/place_action = new(src)
+	actions += new /datum/action/innate/shuttledocker_rotate(src)
+	actions += new /datum/action/innate/shuttledocker_place(src)
 
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
@@ -378,5 +378,5 @@
 	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 	remote_eye.setLoc(T)
 	to_chat(owner, span_notice("Jumped to [selected]."))
-	C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-	C.clear_fullscreen("flash", 3)
+	owner.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+	owner.clear_fullscreen("flash", 3)
