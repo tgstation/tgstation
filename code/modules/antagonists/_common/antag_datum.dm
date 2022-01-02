@@ -58,8 +58,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///weakref to button to access antag interface
 	var/datum/weakref/info_button_ref
 
-	/// The HUD shown to teammates, created by `add_team_hud`
-	var/datum/atom_hud/alternate_appearance/team_hud
+	/// A weakref to the HUD shown to teammates, created by `add_team_hud`
+	var/datum/weakref/team_hud_ref
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
-	QDEL_NULL(team_hud)
+	QDEL_NULL(team_hud_ref)
 	owner = null
 	return ..()
 
@@ -408,14 +408,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Adds a HUD that will show you other members with the same antagonist.
 /// If an antag typepath is passed to `antag_to_check`, will check that, otherwise will use the source type.
 /datum/antagonist/proc/add_team_hud(mob/target, antag_to_check)
-	QDEL_NULL(team_hud)
+	QDEL_NULL(team_hud_ref)
 
-	team_hud = target.add_alt_appearance(
+	team_hud_ref = WEAKREF(target.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
 		"antag_team_hud_[REF(src)]",
 		image(hud_icon, target, antag_hud_name),
 		antag_to_check || type,
-	)
+	))
 
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
