@@ -1,4 +1,0 @@
-author: "interestingusernam3"
-delete-after: True
-changes: 
-  - bugfix: "Silicons and other mobs that shouldn't be able to lie down now won't lie down no matter what happens."
