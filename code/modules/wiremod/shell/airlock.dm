@@ -30,6 +30,9 @@
 /obj/machinery/door/airlock/shell/canAIHack(mob/user)
 	return FALSE
 
+/obj/machinery/door/airlock/shell/allowed(mob/user)
+	return isAdminGhostAI(user)
+
 /obj/machinery/door/airlock/shell/set_wires()
 	return new /datum/wires/airlock/shell(src)
 
