@@ -76,7 +76,7 @@
 		return FALSE
 	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
 		return FALSE
-	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
+	if(mob_linked.anti_magic_check(magic = FALSE, tinfoil = TRUE, chargecost = 0))
 		return FALSE
 	if(linked_mobs[mob_linked])
 		return FALSE

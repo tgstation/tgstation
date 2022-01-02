@@ -207,7 +207,7 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
-	if(target.anti_magic_check(TRUE, TRUE))
+	if(target.anti_magic_check(holy = TRUE))
 		to_chat(user, span_warning("The spell had no effect!"))
 		to_chat(target, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE

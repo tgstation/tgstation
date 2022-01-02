@@ -32,7 +32,7 @@
 			return
 		else
 			no_den_usage = 0
-	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+	if(checks_antimagic && user.anti_magic_check(chargecost = 0, self = TRUE))
 		add_fingerprint(user)
 		to_chat(user, span_warning("Something is interfering with [src]."))
 		return

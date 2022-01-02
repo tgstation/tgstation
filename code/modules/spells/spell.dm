@@ -176,7 +176,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 
 	if(!antimagic_allowed)
-		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
+		var/antimagic = user.anti_magic_check(chargecost = 0, self = TRUE)
 		if(antimagic)
 			if(isitem(antimagic))
 				to_chat(user, span_notice("[antimagic] is interfering with your magic."))
@@ -545,7 +545,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+	if(!antimagic_allowed && user.anti_magic_check(chargecost = 0, self = TRUE))
 		return FALSE
 
 	if(!ishuman(user))

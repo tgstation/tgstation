@@ -23,14 +23,14 @@
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 
 	var/summon_type = null //this will put an obj at the target's location
-
+	
 	var/check_anti_magic = TRUE
 	var/check_holy = FALSE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,TRUE)
-		if(target.anti_magic_check(check_anti_magic, check_holy))
+		if(target.anti_magic_check(magic = check_anti_magic, holy = check_holy))
 			return
 		switch(destroys)
 			if("gib")

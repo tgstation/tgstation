@@ -127,7 +127,7 @@
 	. = ..()
 
 /obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
-	if(user.anti_magic_check(TRUE, FALSE, FALSE)) // Don't let people with antimagic use the staff of chaos.
+	if(user.anti_magic_check()) // Don't let people with antimagic use the staff of chaos.
 		balloon_alert(user, "the staff refuses to fire!")
 		return FALSE
 
