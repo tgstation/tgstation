@@ -206,17 +206,17 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/shockwave_scream()
 	can_move = FALSE
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
-	SLEEP_CHECK_DEATH(5)
+	SLEEP_CHECK_DEATH(5, src)
 	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
 		dizzy_target.Dizzy(6)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))
-	SLEEP_CHECK_DEATH(1 SECONDS)
+	SLEEP_CHECK_DEATH(1 SECONDS, src)
 	spiral_attack()
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 3 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
-	SLEEP_CHECK_DEATH(3 SECONDS)
+	SLEEP_CHECK_DEATH(3 SECONDS, src)
 	can_move = TRUE
 
 /// Shoots shockwave projectiles in a random preset pattern
@@ -236,7 +236,7 @@ Difficulty: Hard
 					shockwave.firer = src
 					shockwave.speed = 3 - WENDIGO_ENRAGED
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2)
+				SLEEP_CHECK_DEATH(6 - WENDIGO_ENRAGED * 2, src)
 		if("Spiral")
 			var/shots_spiral = WENDIGO_SPIRAL_SHOTCOUNT
 			var/angle_to_target = get_angle(src, target)
@@ -250,7 +250,7 @@ Difficulty: Hard
 					shockwave.firer = src
 					shockwave.damage = 15
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(1)
+				SLEEP_CHECK_DEATH(1, src)
 		if("Wave")
 			var/shots_per = WENDIGO_WAVE_SHOTCOUNT
 			var/difference = 360 / shots_per
@@ -264,7 +264,7 @@ Difficulty: Hard
 					shockwave.speed = 8
 					shockwave.wave_speed = 10 * wave_direction
 					shockwave.fire(angle)
-				SLEEP_CHECK_DEATH(2)
+				SLEEP_CHECK_DEATH(2, src)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)

@@ -344,7 +344,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	if(sacrificial)
 		playsound(sacrificial, 'sound/magic/disintegrate.ogg', 100, TRUE)
-		sacrificial.gib()
+		sacrificial.gib(TRUE)
 	return TRUE
 
 
