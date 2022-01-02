@@ -1,4 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes: 
-  - refactor: "Mech Fabricator's `output_part_info()` proc is much more optimized."

@@ -21,14 +21,22 @@ export const NumberInputModal = (_, context) => {
   const { large_buttons } = preferences;
   const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   const onClick = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+    = 125
+    + Math.ceil(message.length / 3)
+    + (message.length && large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={270} height={windowHeight}>
@@ -71,9 +79,10 @@ const InputArea = (props, context) => {
     <Stack fill>
       <Stack.Item>
         <Button
+          disabled={input === min_value}
           icon="angle-double-left"
           onClick={() => onClick(min_value || 0)}
-          tooltip="Minimum"
+          tooltip={min_value ? `Min (${min_value})` : 'Min'}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -82,24 +91,26 @@ const InputArea = (props, context) => {
           autoSelect
           fluid
           minValue={min_value}
-          maxValue={max_value}
+          maxValue={max_value ? max_value : 1000000}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || init_value || 0}
+          value={input}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={!max_value || max_value === 0 || input === max_value}
           icon="angle-double-right"
-          onClick={() => onClick(max_value || 10000)}
-          tooltip="Max"
+          onClick={() => onClick(max_value)}
+          tooltip={max_value ? `Max (${max_value})` : 'Max'}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={input === init_value}
           icon="redo"
-          onClick={() => onClick(init_value || 0)}
-          tooltip="Reset"
+          onClick={() => onClick(init_value)}
+          tooltip={init_value ? `Reset (${init_value})` : 'Reset'}
         />
       </Stack.Item>
     </Stack>
