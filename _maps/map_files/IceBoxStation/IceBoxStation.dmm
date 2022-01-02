@@ -7756,15 +7756,13 @@
 /turf/open/floor/iron,
 /area/maintenance/starboard/fore)
 "bsp" = (
-/obj/structure/disposalpipe/junction/flip{
-	dir = 2
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bst" = (
@@ -34096,15 +34094,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
-"nPY" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/hallway/primary/central)
 "nQw" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/layer_manifold/dark,
@@ -87707,7 +87696,7 @@ lUZ
 lUZ
 lUZ
 sJq
-nPY
+lUZ
 lUZ
 lUZ
 lUZ
@@ -87964,7 +87953,7 @@ boV
 aJq
 fGw
 aLY
-aXf
+aJq
 aJq
 rGd
 aJq
