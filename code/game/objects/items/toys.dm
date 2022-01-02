@@ -668,19 +668,12 @@
 /*
 || A Deck of Cards for playing various games of chance ||
 */
-
-//TODO:
-//currently cannot combine two cardhands
-//currently cannot add a flipped card into a cardhand... maybe force flip it?
-// cleanup the code
-// thats it!
-
-
-
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	///The parent deck of the cards
 	var/parentdeck = null
+	///Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
 	var/card_force = 0
@@ -704,12 +697,29 @@
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
-/obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj) // Applies variables for supporting multiple types of card deck
+/**
+ * apply_card_vars
+ *
+ * Applies variables for supporting multiple types of card deck
+ */
+/obj/item/toy/cards/proc/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj)
 	if(!istype(sourceobj))
 		return
 
+/**
+ * add_card
+ *
+ * Adds a card to the deck (or hand of cards).
+ *
+ * Arguments:
+ * mob/user - The user adding the card.
+ * list/cards - The list of cards the user is adding to.
+ * obj/item/toy/cards/card_to_add - The card (or hand of cards) that will be added back into the deck
+ */
 /obj/item/toy/cards/proc/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
+	///Are we adding a hand of cards to the deck?
 	var/from_cardhand = FALSE
+	///Are we adding to a hand of cards?
 	var/to_cardhand = FALSE
 	if (istype(card_to_add, /obj/item/toy/cards/cardhand))
 		from_cardhand = TRUE
@@ -736,6 +746,16 @@
 	user.visible_message(span_notice("[user] adds [from_cardhand ? "the hand of cards" : "a card"] to [to_cardhand ? "[user.p_their()] hand" : "the bottom of the deck"]."), span_notice("You add the [from_cardhand ? "hand of cards" : "card"] to [to_cardhand ? "your hand" : "the bottom of the deck"]."))
 	update_appearance()
 
+/**
+ * draw_card
+ *
+ * Draws a card from the deck (or hand of cards).
+ *
+ * Arguments:
+ * mob/user - The user drawing from the deck.
+ * list/cards - The list of cards the user is drawing from.
+ * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
+ */
 /obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null)
 	if(isliving(user))
 		var/mob/living/living_user = user
@@ -745,9 +765,10 @@
 		to_chat(user, span_warning("There are no more cards to draw!"))
 		return
 
-	var/to_cardhand = FALSE
+	///Are we drawing from a hand of cards?
+	var/from_cardhand = FALSE
 	if (istype(src, /obj/item/toy/cards/cardhand))
-		to_cardhand = TRUE
+		from_cardhand = TRUE
 
 	var/obj/item/toy/cards/singlecard/card_to_draw
 	if (forced_card)
@@ -758,7 +779,7 @@
 	cards -= card_to_draw
 	card_to_draw.pickup(user)
 	user.put_in_hands(card_to_draw)
-	user.visible_message(span_notice("[user] draws a card from [to_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [to_cardhand ? "your hand" : "the deck"]."))
+	user.visible_message(span_notice("[user] draws a card from [from_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [from_cardhand ? "your hand" : "the deck"]."))
 	update_appearance()
 	return card_to_draw
 
@@ -769,8 +790,11 @@
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
+	///Last time since shuffling the deck.
 	var/cooldown = 0
-	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
+	///Tracks holodeck cards, since they shouldn't be infinite
+	var/obj/machinery/computer/holodeck/holo = null
+	///Cards in this deck
 	var/list/cards = list()
 
 /obj/item/toy/cards/deck/Initialize(mapload)
@@ -787,7 +811,11 @@
 	card_to_add.apply_card_vars(card_to_add, src)
 	return card_to_add
 
-///Generates all the cards within the deck.
+/**
+ * populate_deck
+ *
+ * Generates all the cards within the deck.
+ */
 /obj/item/toy/cards/deck/proc/populate_deck()
 	icon_state = "deck_[deckstyle]_full"
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
@@ -827,11 +855,9 @@
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/cards/singlecard))
-		var/obj/item/toy/cards/singlecard/singlecard = item
-		add_card(user, cards, singlecard)
+		add_card(user, cards, item)
 	else if(istype(item, /obj/item/toy/cards/cardhand))
-		var/obj/item/toy/cards/cardhand/cardhand = item
-		add_card(user, cards, cardhand)
+		add_card(user, cards, item)
 	else
 		return ..()
 
@@ -841,6 +867,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
+	///Cards in this hand of cards.
 	var/list/cards = list()
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
@@ -878,6 +905,8 @@
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/card, mob/living/user, params)
 	if(istype(card))
+		if (!card.flipped)
+			card.Flip() // flip so that the card appears properly in the hand
 		add_card(user, cards, card)
 	else
 		return ..()
@@ -896,10 +925,12 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
- * check_menu: Checks if we are allowed to interact with a radial menu
+ * check_menu
+ *
+ * Checks if we are allowed to interact with a radial menu
  *
  * Arguments:
- * * user The mob interacting with a menu
+ * * user - The mob interacting with a menu
  */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	if(!istype(user))
@@ -909,6 +940,8 @@
 	return TRUE
 
 /**
+ * update_sprite
+ *
  * This proc updates the sprite for when you create a hand of cards
  */
 /obj/item/toy/cards/cardhand/proc/update_sprite()
@@ -928,7 +961,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	pixel_x = -5
 	var/cardname = null
-	var/flipped = 0
+	var/flipped = FALSE
 
 /obj/item/toy/cards/singlecard/examine(mob/user)
 	. = ..()
@@ -939,6 +972,11 @@
 		else
 			. += span_warning("You need to have the card in your hand to check it!")
 
+/**
+ * Flip
+ *
+ * flips the card over
+ */
 /obj/item/toy/cards/singlecard/verb/Flip()
 	set name = "Flip Card"
 	set category = "Object"
@@ -946,7 +984,7 @@
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	if(!flipped)
-		src.flipped = 1
+		src.flipped = TRUE
 		if (cardname)
 			src.icon_state = "sc_[cardname]_[deckstyle]"
 			src.name = src.cardname
@@ -955,41 +993,61 @@
 			src.name = "What Card"
 		src.pixel_x = 5
 	else if(flipped)
-		src.flipped = 0
+		src.flipped = FALSE
 		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
 		src.pixel_x = -5
 
-/obj/item/toy/cards/singlecard/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/toy/cards/singlecard/))
-		var/obj/item/toy/cards/singlecard/first_card = I
-		if(first_card.parentdeck == src.parentdeck)
-			var/obj/item/toy/cards/cardhand/new_cardhand = new/obj/item/toy/cards/cardhand(user.loc)
-			user.dropItemToGround(src)
-			user.dropItemToGround(first_card)
-			new_cardhand.cards += first_card
-			new_cardhand.cards += src
-			new_cardhand.parentdeck = first_card.parentdeck
-			new_cardhand.apply_card_vars(new_cardhand, first_card)
-			to_chat(user, span_notice("You combine the [first_card.cardname] and the [src.cardname] into a hand."))
-			first_card.loc = new_cardhand
-			src.loc = new_cardhand
-			new_cardhand.pickup(user)
-			user.put_in_active_hand(new_cardhand)
-
-		else
+/**
+ * do_cardhand: Creates, or adds to an existing hand of cards
+ *
+ * Arguments:
+ * mob/living/user - the user
+ * list/cards - the list of cards being added together (/obj/item/toy/cards/singlecard)
+ * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
+ */
+/obj/item/toy/cards/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
+	if (given_hand && (given_hand?.parentdeck != parentdeck))
+		to_chat(user, span_warning("You can't mix cards from other decks!"))
+		return
+	for (var/obj/item/toy/cards/singlecard/card in cards)
+		if (card.parentdeck != parentdeck)
 			to_chat(user, span_warning("You can't mix cards from other decks!"))
+			return
 
-	if(istype(I, /obj/item/toy/cards/cardhand/))
-		var/obj/item/toy/cards/cardhand/H = I
-		if(H.parentdeck == parentdeck)
-			src.loc = H
-			H.cards += src
-			user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
-			H.interact(user)
-			H.update_sprite()
-		else
-			to_chat(user, span_warning("You can't mix cards from other decks!"))
+	var/obj/item/toy/cards/cardhand/new_cardhand = given_hand
+	var/preexisting = TRUE // does the cardhand already exist, or are we making a new one
+	if (!new_cardhand)
+		preexisting = FALSE
+		new_cardhand = new /obj/item/toy/cards/cardhand(user.loc)
+
+	for (var/obj/item/toy/cards/singlecard/card in cards)
+		user.dropItemToGround(card) // drop them all so the loc will properly update
+		if (!card.flipped)
+			card.Flip() // flip so the card shows up in the cardhand properly
+		new_cardhand.cards += card
+
+	if (preexisting)
+		new_cardhand.interact(user)
+		new_cardhand.update_sprite()
+
+		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
+	else
+		new_cardhand.parentdeck = parentdeck
+		new_cardhand.apply_card_vars(new_cardhand, src)
+		to_chat(user, span_notice("You combine the cards into a hand."))
+
+		new_cardhand.pickup(user)
+		user.put_in_active_hand(new_cardhand)
+
+	for (var/obj/item/toy/cards/singlecard/card in cards)
+		card.loc = new_cardhand // move the cards into the cardhand
+
+/obj/item/toy/cards/singlecard/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/toy/cards/singlecard/))
+		do_cardhand(user, list(src, item))
+	if(istype(item, /obj/item/toy/cards/cardhand/))
+		do_cardhand(user, list(src), item)
 	else
 		return ..()
 
