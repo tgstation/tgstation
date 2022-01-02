@@ -4059,6 +4059,7 @@
 #include "code\modules\wiremod\components\list\foreach.dm"
 #include "code\modules\wiremod\components\list\get_column.dm"
 #include "code\modules\wiremod\components\list\index.dm"
+#include "code\modules\wiremod\components\list\index_setter.dm"
 #include "code\modules\wiremod\components\list\index_table.dm"
 #include "code\modules\wiremod\components\list\list_literal.dm"
 #include "code\modules\wiremod\components\list\select.dm"

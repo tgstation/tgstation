@@ -341,6 +341,15 @@
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
 
+/datum/design/component/index_setter
+	name = "Set List Element By Index"
+	id = "comp_list_index_set"
+	build_path = /obj/item/circuit_component/index_setter
+
+/datum/design/component/index_setter_assoc
+	name = "Set Assoc List Element By Index"
+	id = "comp_list_index_set_assoc"
+	build_path = /obj/item/circuit_component/index_setter/assoc_string
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

@@ -243,6 +243,8 @@
 		"comp_light",
 		"comp_list_literal",
 		"comp_list_assoc_literal",
+		"comp_list_index_set",
+		"comp_list_index_set_assoc",
 		"comp_logic",
 		"comp_matscanner",
 		"comp_mmi",
