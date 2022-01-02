@@ -1,0 +1,49 @@
+2022-01-01:
+  SmArtKar:
+  - bugfix: MODsuits no longer runtime when EMPed with no module selected
+  SuperNovaa41:
+  - bugfix: Bodies will no longer (sometimes) be fully deleted when escaping a disposal
+      pipe trap.
+  TemporalOroboros:
+  - bugfix: Fixes blastcannons not actually having any light range regardless of the
+      bomb they used.
+  - bugfix: Fixes blastcannons being blocked by cigarette butts.
+  - code_imp: Unspaghettis some variable definitions.
+  - code_imp: Brings phasic carbine rounds into compliance with the rest of the projectiles.
+  Whoneedspacee:
+  - refactor: Refactors megafauna abilities to be mob actions which are grantable
+      to any living mob.
+  - admin: Added a verb under admin events which lets you grant mob actions to a marked
+      living mob.
+  jlsnow301:
+  - bugfix: Fixed a clipping issue with the brainwash objective text. Brainwashed
+      victims can now properly lead longer objectives about the clown being a zombie,
+      etc.
+  san7890:
+  - spellcheck: The exosuit fabricator should now spit out (more) grammatically correct
+      messages.
+2022-01-02:
+  Azarak:
+  - bugfix: Fixes field of view handler perceiving the wrong eye
+  JohnFulpWillard:
+  - bugfix: Things on fire moving over a bonfire will now ignite its flame
+  - bugfix: All of service can now access the Service cargo console.
+  MMMiracles:
+  - rscadd: Tramstation has gotten an extension, both in size and layout.
+  - rscadd: Tramstation's medical has been completely overhauled to a new layout,  hopefully
+      a better one!
+  - rscadd: New bits of maintenance and maintenance path have been added on both the
+      top and bottom levels of the map.
+  - rscadd: Cargo now resides over a small bank vault that stores both the station's
+      materials and wealth.
+  Mothblocks:
+  - rscdel: The station name has been removed from the hub entry.
+  - bugfix: Massively decreased initialization times in best case scenarios.
+  SmArtKar:
+  - bugfix: Sacrificing a mindshielded person no longer causes their soul to be left
+      in their brain instead of getting transfered to the soulstone
+  interestingusernam3:
+  - bugfix: Silicons and other mobs that shouldn't be able to lie down now won't lie
+      down no matter what happens.
+  tralezab:
+  - bugfix: fixes pirates not getting their antag status, alongside a non-pirate name

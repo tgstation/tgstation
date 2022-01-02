@@ -5,7 +5,7 @@
 #define TRAITOR_AGENT_ROLE "Syndicate External Affairs Agent"
 
 /datum/antagonist/traitor/internal_affairs
-	name = "Internal Affairs Agent"
+	name = "\improper Internal Affairs Agent"
 	employer = "Nanotrasen"
 	suicide_cry = "FOR THE COMPANY!!"
 	var/special_role = "internal affairs agent"
@@ -227,8 +227,8 @@
 	objectives += escape_objective
 
 /datum/antagonist/traitor/internal_affairs/greet()
+	. = ..()
 	var/crime = pick("distribution of contraband" , "unauthorized erotic action on duty", "embezzlement", "piloting under the influence", "dereliction of duty", "syndicate collaboration", "mutiny", "multiple homicides", "corporate espionage", "receiving bribes", "malpractice", "worship of prohibited life forms", "possession of profane texts", "murder", "arson", "insulting their manager", "grand theft", "conspiracy", "attempting to unionize", "vandalism", "gross incompetence")
-	to_chat(owner.current, span_userdanger("You are the [special_role]."))
 	if(syndicate)
 		to_chat(owner.current, span_userdanger("Your target has been framed for [crime], and you have been tasked with eliminating them to prevent them defending themselves in court."))
 		to_chat(owner.current, "<span class='warningplain'><B><font size=5 color=red>Any damage you cause will be a further embarrassment to Nanotrasen, so you have no limits on collateral damage.</font></B></span>")

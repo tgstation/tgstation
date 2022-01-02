@@ -288,10 +288,11 @@
 			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
 				message_servers += M
 
-			if(message_servers.len > 1)
+			if(length(message_servers) > 1)
 				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
-				message = span_alert("NOTICE: Server selected.")
-			else if(message_servers.len > 0)
+				if(linkedServer)
+					message = span_alert("NOTICE: Server selected.")
+			else if(length(message_servers) > 0)
 				linkedServer = message_servers[1]
 				message = span_notice("NOTICE: Only Single Server Detected - Server selected.")
 			else
@@ -388,7 +389,7 @@
 					if("Recepient")
 						//Get out list of viable PDAs
 						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && GLOB.PDAs.len > 0)
+						if(GLOB.PDAs && length(GLOB.PDAs) > 0)
 							customrecepient = tgui_input_list(usr, "Select a PDA from the list", "PDA Selection", sendPDAs)
 						else
 							customrecepient = null

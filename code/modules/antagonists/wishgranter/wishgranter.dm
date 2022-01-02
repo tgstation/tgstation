@@ -1,5 +1,5 @@
 /datum/antagonist/wishgranter
-	name = "Wishgranter Avatar"
+	name = "\improper Wishgranter Avatar"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //You literally are here to do nothing else. Might as well be fast about it.
@@ -17,6 +17,7 @@
 	give_powers()
 
 /datum/antagonist/wishgranter/greet()
+	. = ..()
 	to_chat(owner, "<B>Your inhibitions are swept away, the bonds of loyalty broken, you are free to murder as you please!</B>")
 	owner.announce_objectives()
 
