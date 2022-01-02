@@ -140,7 +140,7 @@
 				to_chat(user, span_warning("[parent] can't hold any more of [I] sheets."))
 				return
 			//split the amount we don't need off
-			stack_to_split.split_stack(user, stack_to_split.amount - sheets_to_insert)
+			INVOKE_ASYNC(stack_to_split, .proc/split_stack, user, stack_to_split.amount - sheets_to_insert)
 		else
 			to_chat(user, span_warning("[I] contains more materials than [parent] has space to hold."))
 			return
