@@ -657,8 +657,9 @@
 	user.domutcheck()
 
 	// Get rid of any scars from previous Changeling-ing
-	for(var/datum/scar/old_scar in user.all_scars)
+	for(var/datum/scar/old_scar as anything in user.all_scars)
 		if(old_scar.fake)
+			user.all_scars -= old_scar
 			qdel(old_scar)
 
 	// Now, we do skillchip stuff, AFTER DNA code.
@@ -785,7 +786,7 @@
 /datum/changeling_profile/Destroy()
 	qdel(dna)
 	LAZYCLEARLIST(stored_scars)
-	. = ..()
+	return ..()
 
 /*
  * Copy every aspect of this file into a new instance of a profile.
