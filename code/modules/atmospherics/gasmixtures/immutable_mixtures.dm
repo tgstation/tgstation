@@ -21,7 +21,7 @@
 	return FALSE //we're immutable.
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
-	. = ..(sharer, our_coeff, our_coeff) //We want this to be an instant replacement, so hardcode the total transfer
+	. = ..()
 	sharer.temperature = initial_temperature
 	garbage_collect()
 

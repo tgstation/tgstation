@@ -317,8 +317,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gases[path][MOLES] = text2num(gas[id])
 	return 1
 
-///Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
-///Returns: amount of gas exchanged (+ if sharer received)
+/// Performs air sharing calculations between two gas_mixtures
+/// share() is communitive, which means A.share(B) needs to be the same as B.share(A)
+/// If we don't retain this, we will get negative moles. Don't do it
+/// Returns: amount of gas exchanged (+ if sharer received)
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
@@ -357,6 +359,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		if(!delta)
 			continue
 
+		// If we have more gas then they do, gas is moving from us to them
+		// This means we want to scale it by our coeff. Vis versa for their case
 		if(delta > 0)
 			delta = delta * our_coeff
 		else

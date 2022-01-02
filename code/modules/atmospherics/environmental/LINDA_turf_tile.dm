@@ -6,8 +6,6 @@
 
 	///list of turfs adjacent to us that air can flow onto
 	var/list/atmos_adjacent_turfs
-	///The portion we should be sharing to each individual atmos adjacent turf, typically 1/length(atmos_adjacent_turfs)
-	var/share_coeff = 1
 	///bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = NONE
 
@@ -31,7 +29,11 @@
 	var/datum/gas_mixture/turf/air
 
 	var/obj/effect/hotspot/active_hotspot
-	var/planetary_atmos = FALSE //air will revert to initial_gas_mix
+	/// air will slowly revert to initial_gas_mix
+	var/planetary_atmos = FALSE
+	/// once our paired turfs are finished with all other shares, do one 100% share
+	/// exists so things like space can ask to take 100% of a tile's gas
+	var/run_later = FALSE
 
 	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 	var/significant_share_ticker = 0
@@ -245,12 +247,19 @@
 
 	var/datum/gas_mixture/our_air = air
 
+	var/list/share_end
+
 	#ifdef TRACK_MAX_SHARE
 	max_share = 0 //Gotta reset our tracker
 	#endif
 
 	for(var/t in adjacent_turfs)
 		var/turf/open/enemy_tile = t
+
+		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
+		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
+		if(enemy_tile.run_later)
+			LAZYADD(share_end, enemy_tile)
 
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
@@ -313,6 +322,25 @@
 			our_air.temperature_share(G, OPEN_HEAT_TRANSFER_COEFFICIENT, G.temperature_archived, G.heat_capacity() * 5)
 			G.garbage_collect()
 			PLANET_SHARE_CHECK
+
+	for(var/turf/open/enemy_tile as anything in share_end)
+		var/datum/gas_mixture/enemy_mix = enemy_tile.air
+		archive()
+		if(!our_air.compare(enemy_mix))
+			continue
+		if(!our_excited_group)
+			var/datum/excited_group/EG = new
+			EG.add_turf(src)
+			our_excited_group = excited_group
+		// We share 100% of our mix in this step. Let's jive
+		var/difference = our_air.share(enemy_mix, 1, 1)
+		LAST_SHARE_CHECK
+		if(!difference)
+			continue
+		if(difference > 0)
+			consider_pressure_difference(enemy_tile, difference)
+		else
+			enemy_tile.consider_pressure_difference(src, difference)
 
 	our_air.react(src)
 
