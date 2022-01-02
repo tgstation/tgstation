@@ -11,9 +11,14 @@
 	var/list/networks = list("ss13")
 	/// Typepath of the action button we use as "off"
 	/// It's a typepath so subtypes can give it fun new names
-	var/datum/action/inate/camera_off/off_action
-	/// Same as above, but for jumping
+	var/datum/action/innate/camera_off/off_action
+	/// Typepath for jumping
 	var/datum/action/innate/camera_jump/jump_action
+	/// Typepath of the move up action
+	var/datum/action/innate/camera_multiz_up/move_up_action
+	/// Typepath of the move down action
+	var/datum/action/innate/camera_multiz_down/move_down_action
+
 	/// List of all actions to give to a user when they're well, granted actions
 	var/list/actions = list()
 	///Should we supress any view changes?
@@ -39,9 +44,11 @@
 	if(jump_action)
 		actions += new jump_action(src)
 	//Camera action button to move up a Z level
-	actions += new /datum/action/innate/camera_multiz_up(src)
-	//Camera action button to move down a Z level
-	actions += new /datum/action/innate/camera_multiz_down(src)
+	if(move_up_action)
+		actions += new move_up_action(src)
+	//Camera action button to move down a Z level	
+	if(move_down_action)
+		actions += new move_down_action(src)
 
 /obj/machinery/computer/camera_advanced/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in networks)

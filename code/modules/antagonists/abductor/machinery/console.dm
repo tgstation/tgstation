@@ -110,7 +110,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked_target?.resolve() ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -158,8 +158,9 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo?.marked)
-		pad.Retrieve(gizmo.marked)
+	var/mob/living/marked = gizmo.marked_target?.resolve()
+	if(pad && marked)
+		pad.Retrieve(marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
 	if(pad)
