@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "You can now pin MODsuit modules to your action buttons."
+  - bugfix: "ghosts can no longer mess with modsuits"
