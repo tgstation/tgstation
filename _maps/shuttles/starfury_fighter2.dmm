@@ -42,6 +42,7 @@
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile/syndicate_fighter/fighter_two,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc_fighter2)
 "v" = (

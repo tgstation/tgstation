@@ -26,14 +26,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"e" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	dir = 1;
-	max_integrity = 80;
-	
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_corvette)
 "f" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -74,6 +66,7 @@
 	req_access_txt = "150"
 	},
 /obj/docking_port/mobile/syndicate_corvette,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "k" = (
@@ -93,8 +86,7 @@
 /area/shuttle/sbc_corvette)
 "m" = (
 /obj/machinery/porta_turret/syndicate/pod{
-	max_integrity = 80;
-	
+	max_integrity = 80
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
@@ -281,6 +273,7 @@
 	name = "Syndicate Corvette Airlock";
 	req_access_txt = "150"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "F" = (
@@ -536,7 +529,7 @@ b
 M
 "}
 (7,1,1) = {"
-e
+H
 M
 M
 K

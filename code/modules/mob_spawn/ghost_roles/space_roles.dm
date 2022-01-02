@@ -117,6 +117,8 @@
 	mob_mind.add_antag_datum(antag_datum_to_give, antag_team)
 
 /datum/team/battlecruiser
+	name = "Battlecruiser Crew"
+	member_name = "crewmember"
 	/// The central objective of this battlecruiser
 	var/core_objective = /datum/objective/nuclear
 	/// The assigned nuke of this team
@@ -136,6 +138,9 @@
 	antag_hud_name = "battlecruiser_crew"
 	job_rank = ROLE_BATTLECRUISER_CREW
 	var/datum/team/battlecruiser/battlecruiser_team
+
+/datum/antagonist/battlecruiser/get_team()
+	return battlecruiser_team
 
 /datum/antagonist/battlecruiser/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)

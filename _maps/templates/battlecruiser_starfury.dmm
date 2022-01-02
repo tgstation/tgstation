@@ -72,6 +72,7 @@
 	dir = 6
 	},
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -130,6 +131,7 @@
 	dir = 10
 	},
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -527,6 +529,7 @@
 	},
 /obj/machinery/light/directional/west,
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -563,24 +566,23 @@
 "bo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/computer/shuttle/starfury/battlecruiser,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/machinery/computer/communications/syndicate,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "bp" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfury,
 /obj/structure/window/reinforced/survival_pod{
 	dir = 1
 	},
-/obj/item/paper/guides/starfury_pilot,
 /obj/effect/turf_decal/siding/blue{
 	dir = 1
 	},
+/obj/machinery/computer/camera_advanced/syndie,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "bq" = (
@@ -610,6 +612,7 @@
 	},
 /obj/machinery/light/directional/east,
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -1449,6 +1452,7 @@
 	dir = 4
 	},
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -1518,6 +1522,7 @@
 	dir = 8
 	},
 /obj/machinery/shieldgen{
+	active = 1;
 	anchored = 1;
 	locked = 1;
 	req_access = list(150)
@@ -1949,8 +1954,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "eK" = (
-/obj/effect/landmark/starfury_shuttle_dock/fighter_three,
-/obj/effect/fullbright,
+/obj/docking_port/stationary/starfury_fighter/fighter_three,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "eL" = (
@@ -2288,19 +2292,6 @@
 /obj/item/multitool,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
-"fx" = (
-/obj/structure/fans/tiny{
-	desc = "An tenuously thin energy shield only capable of holding in air, but not solid objects or people.";
-	icon = 'icons/effects/effects.dmi';
-	icon_state = "shield-old";
-	light_color = "#6496FA";
-	light_range = 4;
-	name = "Shuttle Bay Shield"
-	},
-/obj/docking_port/stationary/starfury,
-/obj/docking_port/mobile/syndicate_starfury,
-/turf/open/floor/plating,
-/area/shuttle/sbc_starfury)
 "fy" = (
 /obj/machinery/vending/boozeomat{
 	pixel_x = 32
@@ -2393,8 +2384,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "gc" = (
-/obj/effect/landmark/starfury_shuttle_dock/fighter_one,
-/obj/effect/fullbright,
+/obj/docking_port/stationary/starfury_fighter/fighter_one{
+	roundstart_template = /datum/map_template/shuttle/starfury/fighter_one
+	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "gd" = (
@@ -2407,8 +2399,9 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ge" = (
-/obj/effect/landmark/starfury_shuttle_dock/fighter_two,
-/obj/effect/fullbright,
+/obj/docking_port/stationary/starfury_fighter/fighter_two{
+	roundstart_template = /datum/map_template/shuttle/starfury/fighter_two
+	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "gp" = (
@@ -4714,8 +4707,9 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ml" = (
-/obj/effect/landmark/starfury_shuttle_dock/corvette,
-/obj/effect/fullbright,
+/obj/docking_port/stationary/starfury_corvette{
+	roundstart_template = /datum/map_template/shuttle/starfury/corvette
+	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mp" = (
@@ -5038,10 +5032,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/pod/dark,
-/area/shuttle/sbc_starfury)
-"sC" = (
-/obj/effect/fullbright,
-/turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "sY" = (
 /obj/effect/turf_decal/stripes/line{
@@ -5589,9 +5579,6 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "NG" = (
-/obj/machinery/computer/camera_advanced/syndie{
-	dir = 8
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "NV" = (
@@ -6723,21 +6710,21 @@ dO
 dV
 IM
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 eR
 ff
@@ -6792,21 +6779,21 @@ ae
 ae
 el
 qS
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 AQ
 eR
 fg
@@ -6861,21 +6848,21 @@ ae
 dW
 ec
 eA
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 eR
 fh
@@ -6930,21 +6917,21 @@ UB
 dX
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
 gc
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 fi
 fi
@@ -6999,21 +6986,21 @@ UB
 dY
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 ec
@@ -7068,21 +7055,21 @@ ae
 dZ
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 fj
@@ -7137,21 +7124,21 @@ ae
 ae
 ep
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 eX
 ae
@@ -7206,21 +7193,21 @@ cC
 ea
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 fk
@@ -7275,20 +7262,20 @@ ID
 ec
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 ml
 hB
 ST
@@ -7344,21 +7331,21 @@ xG
 ec
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
 ge
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 fm
@@ -7413,21 +7400,21 @@ ID
 ec
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 fn
@@ -7482,21 +7469,21 @@ cC
 ee
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 eY
 fo
@@ -7551,21 +7538,21 @@ ae
 ae
 er
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 eZ
 ae
@@ -7620,21 +7607,21 @@ ae
 dZ
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 fp
@@ -7689,21 +7676,21 @@ xG
 ef
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 ST
 ec
@@ -7758,21 +7745,21 @@ xG
 eg
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
 eK
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 fa
 fq
@@ -7827,21 +7814,21 @@ ae
 dW
 ec
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 fb
 fu
@@ -7896,21 +7883,21 @@ ae
 ae
 es
 pm
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 Ju
 fb
 fv
@@ -7965,21 +7952,21 @@ dS
 dV
 EH
 eB
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
-sC
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 hB
 fb
 fw
@@ -8185,7 +8172,7 @@ eE
 eE
 eE
 eE
-fx
+eE
 eE
 ev
 ae

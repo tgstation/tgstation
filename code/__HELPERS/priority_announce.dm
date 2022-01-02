@@ -15,6 +15,8 @@
 	else if(type == "Captain")
 		announcement += "<h1 class='alert'>Captain Announces</h1>"
 		GLOB.news_network.SubmitArticle(html_encode(text), "Captain's Announcement", "Station Announcements", null)
+	else if(type == "Syndicate Captain")
+		announcement += "<h1 class='alert'>Incoming Syndicate Message</h1>"
 
 	else
 		if(!sender_override)

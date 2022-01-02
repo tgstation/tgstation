@@ -18,14 +18,14 @@ SUBSYSTEM_DEF(communications)
 	else
 		return FALSE
 
-/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input)
+/datum/controller/subsystem/communications/proc/make_announcement(mob/living/user, is_silicon, input, syndicate)
 	if(!can_announce(user, is_silicon))
 		return FALSE
 	if(is_silicon)
 		minor_announce(html_decode(input),"[user.name] Announces:")
 		COOLDOWN_START(src, silicon_message_cooldown, COMMUNICATION_COOLDOWN_AI)
 	else
-		priority_announce(html_decode(user.treat_message(input)), null, 'sound/misc/announce.ogg', "Captain", has_important_message = TRUE)
+		priority_announce(html_decode(user.treat_message(input)), null, syndicate? 'sound/misc/interference.ogg' : 'sound/misc/announce.ogg', "[syndicate? "Syndicate " : ""]Captain", has_important_message = TRUE)
 		COOLDOWN_START(src, nonsilicon_message_cooldown, COMMUNICATION_COOLDOWN)
 	user.log_talk(input, LOG_SAY, tag="priority announcement")
 	message_admins("[ADMIN_LOOKUPFLW(user)] has made a priority announcement.")
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(communications)
 /**
  * Check if a mob can call an emergency meeting
  *
- * Should only really happen during april fools. 
+ * Should only really happen during april fools.
  * Checks to see that it's been at least 5 minutes since the last emergency meeting call.
  * Arguments:
  * * user - Mob who called the meeting
@@ -49,7 +49,7 @@ SUBSYSTEM_DEF(communications)
 /**
  * Call an emergency meeting
  *
- * Communications subsystem wrapper for the call_emergency_meeting world proc. 
+ * Communications subsystem wrapper for the call_emergency_meeting world proc.
  * Checks to make sure the proc can be called, and handles
  * relevant logging and timing. See that proc definition for more detail.
  * Arguments:

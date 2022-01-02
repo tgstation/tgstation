@@ -174,10 +174,6 @@
 	port_id = "snowdin"
 	who_can_purchase = null
 
-/datum/map_template/shuttle/battlecruiser
-	port_id = "battlecruiser"
-	who_can_purchase = null
-
 // Shuttles start here:
 
 /datum/map_template/shuttle/emergency/backup
@@ -696,10 +692,6 @@
 /datum/map_template/shuttle/hunter/bounty
 	suffix = "bounty"
 	name = "Bounty Hunter Ship"
-
-/datum/map_template/shuttle/battlecruiser/starfury
-	suffix = "starfury"
-	name = "SBC Starfury"
 
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"
