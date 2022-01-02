@@ -867,6 +867,15 @@
 	w_class = WEIGHT_CLASS_TINY
 	///Cards in this hand of cards.
 	var/list/cards = list()
+	///List of cards to add into the hand on initialization (used for mapping mostly)
+	var/list/init_cards = list()
+
+/obj/item/toy/cards/cardhand/Initialize()
+	. = ..()
+	if (init_cards.len > 0)
+		for (var/card in init_cards)
+			var/item/toy/cards/singlecard/new_card = new /obj/item/toy/cards/singlecard(cardhand)
+			new_card.cardname = card
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	. = ..()
