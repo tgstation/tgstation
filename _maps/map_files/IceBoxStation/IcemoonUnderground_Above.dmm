@@ -13368,6 +13368,7 @@
 /obj/effect/turf_decal/tile/green,
 /obj/structure/table,
 /obj/item/radio/intercom/directional/east,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "SD" = (
