@@ -17833,7 +17833,6 @@
 /area/medical/virology)
 "aKt" = (
 /obj/structure/table/wood,
-/obj/item/holosign_creator/robot_seat/bar,
 /turf/open/floor/wood,
 /area/service/bar)
 "aKu" = (
@@ -20539,7 +20538,6 @@
 /obj/structure/table,
 /obj/item/clothing/suit/apron/chef,
 /obj/item/kitchen/rollingpin,
-/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/white,
 /area/service/kitchen)
 "aTQ" = (
@@ -23757,7 +23755,6 @@
 	dir = 10
 	},
 /obj/effect/landmark/event_spawn,
-/obj/machinery/destructive_scanner,
 /turf/open/floor/iron/white,
 /area/science/research)
 "che" = (
@@ -28942,7 +28939,6 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/machinery/restaurant_portal/bar,
 /turf/open/floor/iron,
 /area/service/bar)
 "etv" = (
@@ -64276,10 +64272,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/item/storage/secure/safe/caps_spare{
-	pixel_x = 6;
-	pixel_y = 27
-	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "uPi" = (
@@ -64565,7 +64557,6 @@
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "uTG" = (
-/obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/glass,
 /area/service/kitchen)
 "uTR" = (
