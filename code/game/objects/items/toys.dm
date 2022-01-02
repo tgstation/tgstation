@@ -874,13 +874,16 @@
 	. = ..()
 	if (init_cards.len > 0)
 		for (var/card in init_cards)
-			var/item/toy/cards/singlecard/new_card = new /obj/item/toy/cards/singlecard(cardhand)
+			var/obj/item/toy/cards/singlecard/new_card = new /obj/item/toy/cards/singlecard(src)
 			new_card.cardname = card
+			new_card.Flip()
+			cards += new_card
+	update_sprite()
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	. = ..()
 	interact(user)
-	update_sprite(src)
+	update_sprite()
 
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
 	if(ishuman(user))
