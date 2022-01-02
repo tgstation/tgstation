@@ -31,7 +31,8 @@
 	var/list/stored_data = list()
 	var/current_channel
 
-	var/mob/living/simple_animal/bot/active_bot
+	/// Weakref to the currently controlled bot
+	var/datum/weakref/active_bot_ref
 	var/list/botlist = list()
 
 /obj/item/cartridge/engineering
@@ -680,15 +681,16 @@
 		var/parse = emoji_parse(":[href_list["emoji"]]:")
 		to_chat(usr, parse)
 
+	var/mob/living/simple_animal/bot/active_bot = active_bot_ref?.resolve()
+
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.
 	if(href_list["op"])
 		switch(href_list["op"])
 
 			if("control")
-				active_bot = locate(href_list["bot"]) in GLOB.bots_list
-
+				active_bot_ref = WEAKREF(locate(href_list["bot"]) in GLOB.bots_list)
 			if("botlist")
-				active_bot = null
+				active_bot_ref = null
 			if("summon") //Args are in the correct order, they are stated here just as an easy reminder.
 				active_bot.bot_control("summon", usr, host_pda.GetAccess())
 			else //Forward all other bot commands to the bot itself!
@@ -705,45 +707,8 @@
 
 
 /obj/item/cartridge/proc/bot_control()
-	if(active_bot)
-		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
-		menu += "Model: [active_bot.bot_type]<BR>"
-		menu += "Location: [get_area(active_bot)]<BR>"
-		menu += "Mode: [active_bot.get_mode()]"
-		if(active_bot.bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE)
-			menu += "<BR>pAI: "
-			if(active_bot.paicard && active_bot.paicard.pai)
-				menu += "[active_bot.paicard.pai.name]"
-				if(active_bot.check_access(usr))
-					menu += " (<A href='byond://?src=[REF(src)];op=ejectpai'><i>eject</i></A>)"
-			else
-				menu += "<i>none</i>"
-
-		//MULEs!
-		if(active_bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
-			var/atom/Load = MULE.load
-			menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=[REF(src)];mule=unload'><i>unload</i></A>)" ]<BR>"
-			menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=[REF(src)];mule=destination'><i>set</i></A>)<BR>"
-			menu += "Set ID: [MULE.suffix] <A href='byond://?src=[REF(src)];mule=setid'><i> Modify</i></A><BR>"
-			menu += "Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>"
-			menu += "Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>"
-			menu += "Delivery Reporting: <A href='byond://?src=[REF(src)];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Return Home: <A href='byond://?src=[REF(src)];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
-			menu += "Auto Pickup Crate: <A href='byond://?src=[REF(src)];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue.
-
-			menu += "\[<A href='byond://?src=[REF(src)];mule=stop'>Stop</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=go'>Proceed</A>\] "
-			menu += "\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"
-
-		else
-			menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] " //patrolon
-			menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] " //patroloff
-			menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>" //summon
-			menu += "Keep an ID inserted to upload access codes upon summoning."
-
-		menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"
-	else
+	var/mob/living/simple_animal/bot/active_bot = active_bot_ref?.resolve()
+	if(!active_bot)
 		menu += "<BR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(refresh)]Scan for active bots</A><BR><BR>"
 		var/turf/current_turf = get_turf(src)
 		var/zlevel = current_turf.z
@@ -756,8 +721,46 @@
 			botcount++
 		if(!botcount) //No bots at all? Lame.
 			menu += "No bots found.<BR>"
-			return
+		return menu
 
+	menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
+	menu += "Model: [active_bot.bot_type]<BR>"
+	menu += "Location: [get_area(active_bot)]<BR>"
+	menu += "Mode: [active_bot.get_mode()]"
+	if(active_bot.bot_mode_flags & BOT_MODE_PAI_CONTROLLABLE)
+		menu += "<BR>pAI: "
+		if(active_bot.paicard && active_bot.paicard.pai)
+			menu += "[active_bot.paicard.pai.name]"
+			if(active_bot.check_access(usr))
+				menu += " (<A href='byond://?src=[REF(src)];op=ejectpai'><i>eject</i></A>)"
+		else
+			menu += "<i>none</i>"
+
+	//MULEs!
+	if(active_bot.bot_type == MULE_BOT)
+		var/mob/living/simple_animal/bot/mulebot/MULE = active_bot
+		var/atom/Load = MULE.load
+		menu += "<BR>Current Load: [ !Load ? "<i>none</i>" : "[Load.name] (<A href='byond://?src=[REF(src)];mule=unload'><i>unload</i></A>)" ]<BR>"
+		menu += "Destination: [MULE.destination ? MULE.destination : "<i>None</i>"] (<A href='byond://?src=[REF(src)];mule=destination'><i>set</i></A>)<BR>"
+		menu += "Set ID: [MULE.suffix] <A href='byond://?src=[REF(src)];mule=setid'><i> Modify</i></A><BR>"
+		menu += "Power: [MULE.cell ? MULE.cell.percent() : 0]%<BR>"
+		menu += "Home: [!MULE.home_destination ? "<i>none</i>" : MULE.home_destination ]<BR>"
+		menu += "Delivery Reporting: <A href='byond://?src=[REF(src)];mule=report'>[MULE.report_delivery ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
+		menu += "Auto Return Home: <A href='byond://?src=[REF(src)];mule=autoret'>[MULE.auto_return ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR>"
+		menu += "Auto Pickup Crate: <A href='byond://?src=[REF(src)];mule=autopick'>[MULE.auto_pickup ? "(<B>On</B>)": "(<B>Off</B>)"]</A><BR><BR>" //Hue.
+
+		menu += "\[<A href='byond://?src=[REF(src)];mule=stop'>Stop</A>\] "
+		menu += "\[<A href='byond://?src=[REF(src)];mule=go'>Proceed</A>\] "
+		menu += "\[<A href='byond://?src=[REF(src)];mule=home'>Return Home</A>\]<BR>"
+
+	else
+		menu += "<BR>\[<A href='byond://?src=[REF(src)];op=patroloff'>Stop Patrol</A>\] " //patrolon
+		menu += "\[<A href='byond://?src=[REF(src)];op=patrolon'>Start Patrol</A>\] " //patroloff
+		menu += "\[<A href='byond://?src=[REF(src)];op=summon'>Summon Bot</A>\]<BR>" //summon
+		menu += "Keep an ID inserted to upload access codes upon summoning."
+
+	menu += "<HR><A href='byond://?src=[REF(src)];op=botlist'>[PDAIMG(back)]Return to bot list</A>"
+		
 	return menu
 
 //If the cartridge adds a special line to the top of the messaging app
