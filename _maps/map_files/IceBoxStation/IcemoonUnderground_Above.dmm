@@ -987,6 +987,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 8
 	},
+/obj/structure/sign/warning/fire{
+	pixel_x = -32
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/medical/virology)
 "dC" = (
@@ -1015,6 +1018,9 @@
 	},
 /obj/structure/sign/warning/deathsposal{
 	pixel_y = 32
+	},
+/obj/structure/sign/warning/fire{
+	pixel_x = -32
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
@@ -10381,6 +10387,7 @@
 	dir = 9;
 	network = list("ss13","medbay")
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "IY" = (
