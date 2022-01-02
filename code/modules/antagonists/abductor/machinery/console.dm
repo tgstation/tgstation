@@ -34,6 +34,21 @@
 	. = ..()
 	possible_gear = get_abductor_gear()
 
+/obj/machinery/abductor/console/Destroy()
+	if(gizmo)
+		gizmo.console = null
+		gizmo = null
+	if(experiment)
+		experiment.console = null
+		experiment = null
+	if(pad)
+		pad.console = null
+		pad = null
+	if(camera)
+		camera.console = null
+		camera = null
+	return ..()
+	
 /**
  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
  */
@@ -192,6 +207,7 @@
 	for(var/obj/machinery/abductor/pad/p in GLOB.machines)
 		if(p.team_number == team_number)
 			pad = p
+			pad.console = src
 			break
 
 	for(var/obj/machinery/abductor/experiment/e in GLOB.machines)

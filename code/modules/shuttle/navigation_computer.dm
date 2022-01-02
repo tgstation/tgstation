@@ -8,8 +8,6 @@
 	move_up_action = null
 	move_down_action = null
 
-	var/datum/action/innate/shuttledocker_rotate/rotate_action = new
-	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
 	var/shuttlePortName = "custom location"
@@ -29,6 +27,8 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
+	actions += new /datum/action/innate/shuttledocker_rotate/rotate_action = new(src)
+	actions += new /datum/action/innate/shuttledocker_place/place_action = new(src)
 
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
@@ -68,18 +68,8 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
 	if(jumpto_ports.len)
-		jump_action = new /datum/action/innate/camera_jump/shuttle_docker
+		actions += new /datum/action/innate/camera_jump/shuttle_docker(src)
 	..()
-
-	if(rotate_action)
-		rotate_action.target = user
-		rotate_action.Grant(user)
-		actions += rotate_action
-
-	if(place_action)
-		place_action.target = user
-		place_action.Grant(user)
-		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
 	shuttle_port = SSshuttle.getShuttle(shuttleId)
@@ -321,10 +311,9 @@
 	button_icon_state = "mech_cycle_equip_off"
 
 /datum/action/innate/shuttledocker_rotate/Activate()
-	if(QDELETED(target) || !isliving(target))
+	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/living/C = target
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	origin.rotateLandingSpot()
 
@@ -334,22 +323,20 @@
 	button_icon_state = "mech_zoom_off"
 
 /datum/action/innate/shuttledocker_place/Activate()
-	if(QDELETED(target) || !isliving(target))
+	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/living/C = target
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
-	origin.placeLandingSpot(target)
+	origin.placeLandingSpot(owner)
 
 /datum/action/innate/camera_jump/shuttle_docker
 	name = "Jump to Location"
 	button_icon_state = "camera_jump"
 
 /datum/action/innate/camera_jump/shuttle_docker/Activate()
-	if(QDELETED(target) || !isliving(target))
+	if(QDELETED(owner) || !isliving(owner))
 		return
-	var/mob/living/C = target
-	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
+	var/mob/camera/ai_eye/remote/remote_eye = owner.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = remote_eye.origin
 
 	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
@@ -379,7 +366,7 @@
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sort_list(L)
-	if(QDELETED(src) || QDELETED(target) || !isliving(target))
+	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
 		return
 	playsound(src, "terminal_type", 25, FALSE)
 	if(selected)
@@ -387,7 +374,7 @@
 		if(T)
 			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 			remote_eye.setLoc(T)
-			to_chat(target, span_notice("Jumped to [selected]."))
+			to_chat(owner, span_notice("Jumped to [selected]."))
 			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 			C.clear_fullscreen("flash", 3)
 	else
