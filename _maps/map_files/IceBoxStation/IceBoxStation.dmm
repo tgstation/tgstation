@@ -23683,7 +23683,6 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "ivH" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -23694,11 +23693,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/stack/medical/gauze{
-	pixel_x = 1
-	},
-/obj/item/stack/medical/mesh,
-/obj/item/stack/medical/suture,
+/obj/machinery/computer/operating,
 /turf/open/floor/iron,
 /area/medical/treatment_center)
 "ivM" = (
@@ -24793,7 +24788,6 @@
 /turf/open/floor/iron,
 /area/cargo/office)
 "iVu" = (
-/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -24804,7 +24798,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/defibrillator_mount/directional/east,
+/obj/structure/table/optable,
 /turf/open/floor/iron,
 /area/medical/treatment_center)
 "iVO" = (
@@ -34948,11 +34942,21 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
+/obj/item/stack/medical/gauze{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/stack/medical/mesh{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/stack/medical/suture,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6
 	},
 /obj/item/reagent_containers/syringe,
+/obj/machinery/defibrillator_mount/directional/east,
 /turf/open/floor/iron,
 /area/medical/treatment_center)
 "ojs" = (
@@ -93135,8 +93139,8 @@ ruy
 azK
 lgv
 lgv
-lgv
 azK
+lgv
 lgv
 azK
 lgv
