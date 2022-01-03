@@ -93,8 +93,6 @@
 	if(miasma_percentage>=0.25)
 		heal_bodypart_damage(1)
 
-/mob/living/simple_animal/hostile/regalrat/
-
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	if (DOING_INTERACTION(src, "regalrat"))
 		return
