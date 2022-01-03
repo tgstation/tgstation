@@ -113,6 +113,12 @@
 	else
 		..()
 
+/mob/living/simple_animal/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
+	. = ..()
+	for (var/tool in internal_storage)
+		if (istype(item, tool))
+			return FALSE
+
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
 	var/armorval = 0
 
