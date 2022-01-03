@@ -591,6 +591,8 @@
 	..()
 
 /datum/action/item_action/agent_box/proc/suicide_act(datum/source)
+	SIGNAL_HANDLER
+
 	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
 		var/obj/structure/closet/cardboard/agent/box = owner.loc
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)

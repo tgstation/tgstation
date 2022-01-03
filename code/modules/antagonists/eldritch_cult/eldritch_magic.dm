@@ -71,44 +71,44 @@
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(5 SECONDS)
 		C.adjustStaminaLoss(80)
-	var/list/knowledge = cultie.get_all_knowledge()
+	var/list/researched_knowledge = cultie.get_all_knowledge()
 
-	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/EK = knowledge[X]
-		if(EK.on_mansus_grasp(target, user, proximity_flag, click_parameters))
+	for(var/knowledge in researched_knowledge)
+		var/datum/eldritch_knowledge/edlritch_knowledge = researched_knowledge[knowledge]
+		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
 	if(use_charge)
 		return ..()
 
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
-	. = FIRELOSS
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
-	var/mob/living/carbon/C = user	//iscarbon already used in spell's parent
-	var/datum/antagonist/heretic/cultie = C.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/list/knowledge = cultie.get_all_knowledge()
+	var/mob/living/carbon/carbon_user = user	//iscarbon already used in spell's parent
+	var/datum/antagonist/heretic/cultie = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/list/researched_knowledge = cultie.get_all_knowledge()
 	var/escape_our_torment = 0
-	while(C.stat == CONSCIOUS)
+	while(carbon_user.stat == CONSCIOUS)
 		if(QDELETED(src))
 			return SHAME
-		if(escape_our_torment > 20)	//Stops us from infinitely stunning ourselves if we're just not taking the damage
-			return
+		if(escape_our_torment > 20) //Stops us from infinitely stunning ourselves if we're just not taking the damage
+			return FIRELOSS
 
 		if(prob(70))
-			C.adjustFireLoss(20)
-			playsound(C, 'sound/effects/wounds/sizzle1.ogg', 70, TRUE)
+			carbon_user.adjustFireLoss(20)
+			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
 			if(prob(50))
-				C.emote("scream")
-				C.stuttering += 13
+				carbon_user.emote("scream")
+				carbon_user.stuttering += 13
 
-		for(var/X in knowledge)
-			var/datum/eldritch_knowledge/EK = knowledge[X]
-			EK.on_mansus_grasp(C, C)
+		for(var/knowledge in researched_knowledge)
+			var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+			eldritch_knowledge.on_mansus_grasp(C, C)
 
-		C.adjustBruteLoss(10)
-		C.AdjustKnockdown(5 SECONDS)
-		C.adjustStaminaLoss(80)
+		carbon_user.adjustBruteLoss(10)
+		carbon_user.AdjustKnockdown(5 SECONDS)
+		carbon_user.adjustStaminaLoss(80)
 		escape_our_torment++
-		sleep(0.4 SECONDS)
+		stoplag(0.4 SECONDS)
+	return FIRELOSS
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"

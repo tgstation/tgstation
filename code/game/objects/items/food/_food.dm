@@ -108,9 +108,8 @@
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting)
 
-/obj/item/food/suicide_act(mob/user, show_message=TRUE)
-	if(show_message)	//For parents providing their own suicide_act messages
-		user.visible_message(span_suicide("[user] [pick("gobbles up", "consumes", "munches", "devours")] [src] in one bite! It looks like [user.p_theyre()] trying to commit suicide!"))
+/obj/item/food/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] [pick("gobbles up", "consumes", "munches", "devours")] [src] in one bite! It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/datum/reagent/R in reagents.reagent_list)
 		user.reagents.add_reagent(R.type, R.volume)
 	qdel(src)

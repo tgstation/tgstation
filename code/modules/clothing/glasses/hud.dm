@@ -44,9 +44,9 @@
 /obj/item/clothing/glasses/hud/suicide_act(mob/user)
 	if(user.is_blind() || !isliving(user))
 		return ..()
-	var/mob/living/L = user
+	var/mob/living/living_user = user
 	user.visible_message(span_suicide("[user] looks through [src] and looks overwhelmed with the information! It looks like [user.p_theyre()] trying to commit suicide!"))
-	if(L.getOrganLoss(ORGAN_SLOT_BRAIN) >= 150)
+	if(living_user.getOrganLoss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_SEVERE)
 		var/mob/thing = pick((/mob in view()) - user)
 		if(thing)
 			user.say("VALID MAN IS WANTER, ARREST HE!!")

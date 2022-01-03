@@ -37,18 +37,24 @@
 
 /obj/item/storage/briefcase/suicide_act(mob/user)
 	var/list/papers_found = list()
-	var/turf/T = get_turf(src)
-	for(var/atom/A in contents)
-		if(istype(A, /obj/item/paper) || istype(A, /obj/item/paperplane))
-			papers_found += A
-	if(!LAZYLEN(papers_found) || !T)
+	var/turf/item_loc = get_turf(src)
+
+	if(!item_loc)
+		return OXYLOSS
+
+	for(var/obj/item/potentially_paper in contents)
+		if(istype(potentially_paper, /obj/item/paper) || istype(potentially_paper, /obj/item/paperplane))
+			papers_found += potentially_paper
+	if(!papers_found.len || !item_loc)
 		user.visible_message(span_suicide("[user] bashes [user.p_them()]self in the head with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] opens [src] and all of [user.p_their()] papers fly out!"))
-	for(var/obj/item/I in papers_found)
-		I.throw_at(get_ranged_target_turf(T, pick(GLOB.modulo_angle_to_dir), 2))
-	sleep(1 SECONDS)
+	for(var/obj/item/paper in papers_found)	//Throws the papers in a random direction
+		var/turf/turf_to_throw_at = prob(20) ? item_loc : get_ranged_target_turf(item_loc, pick(GLOB.alldirs))
+		paper.throw_at(turf_to_throw_at, 2)
+
+	stoplag(1 SECONDS)
 	user.say("ARGGHH, HOW WILL I GET THIS WORK DONE NOW?!!")
 	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS

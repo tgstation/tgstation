@@ -846,11 +846,11 @@
 		return ..()
 
 /obj/item/storage/box/clown/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [src.p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(user, 'sound/misc/scary_horn.ogg', 70, TRUE)
-	var/obj/item/clothing/head/mob_holder/M = new(src, user)
-	user.loc = M
-	M.desc = "It's [user.real_name]! It looks like they committed suicide!"
+	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
+	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
+	user.loc = consumed
+	consumed.desc = "It's [user.real_name]! It looks [user.p_they()] they committed suicide!"
 	return OXYLOSS
 
 //////

@@ -72,6 +72,8 @@
 		warp_up()
 
 /obj/item/clothing/head/foilhat/suicide_act(mob/living/user)
+	SIGNAL_HANDLER
+
 	user.visible_message(span_suicide("[user] gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
 	var/conspiracy_line = pick(list(
 		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",
@@ -82,10 +84,10 @@
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
 	))
 	user.say(conspiracy_line)
-	var/obj/item/organ/brain/B = user.getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		B.damage = BRAIN_DAMAGE_DEATH
-		user.death(FALSE)
-		user.ghostize(FALSE)
+	var/obj/item/organ/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.damage = BRAIN_DAMAGE_DEATH
+		user.death(gibbed = FALSE)
+		user.ghostize(can_reenter_corpse = FALSE)
 		return MANUAL_SUICIDE
 	return OXYLOSS
