@@ -30,7 +30,7 @@
 
 /obj/machinery/ecto_sniffer/proc/activate(mob/activator)
 	flick("ecto_sniffer_flick", src)
-	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 25)
+	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
 	use_power(10)
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
