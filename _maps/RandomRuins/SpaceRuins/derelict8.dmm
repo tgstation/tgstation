@@ -345,11 +345,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav)
-"TG" = (
-/turf/open/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
-/area/template_noop)
 "UX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -466,7 +461,7 @@ ii
 Cp
 "}
 (6,1,1) = {"
-TG
+Cp
 es
 XC
 SQ
