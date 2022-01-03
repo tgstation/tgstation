@@ -284,20 +284,26 @@
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	chassis.update_icon_state()
 
+#define SEARCH_COOLDOWN 1 MINUTES
+
 /datum/action/vehicle/sealed/mecha/mech_search_ruins
 	name = "Search for Ruins"
-	button_icon_state = "mech_phasing_off"
+	button_icon_state = "mech_search_ruins"
 	COOLDOWN_DECLARE(search_cooldown)
 
 /datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger()
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
+		chassis.balloon_alert(living_owner, "on cooldown!")
 		return
 	if(!isliving(owner))
 		return
 	var/mob/living/living_owner = owner
-	COOLDOWN_START(src, search_cooldown, 1 MINUTES)
+	button_icon_state = "mech_search_ruins_cooldown"
+	UpdateButtonIcon()
+	COOLDOWN_START(src, search_cooldown, SEARCH_COOLDOWN)
+	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), SEARCH_COOLDOWN)
 	var/obj/pinpointed_ruin
 	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		if(ruin_landmark.z != chassis.z)
@@ -313,7 +319,7 @@
 	chassis.balloon_alert(living_owner, "pinpointing nearest ruin")
 
 /datum/status_effect/agent_pinpointer/ruin
-	duration = 30 SECONDS
+	duration = SEARCH_COOLDOWN * 0.5
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
 	tick_interval = 3 SECONDS
 	range_fuzz_factor = 0
@@ -332,3 +338,5 @@
 /atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
 	name = "Ruin Target"
 	desc = "Searching for valuables..."
+
+#undef SEARCH_COOLDOWN
