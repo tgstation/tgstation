@@ -202,7 +202,6 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/storage/box/clown = 1,
 		/obj/item/seeds/kronkus = 1,
 		/obj/item/seeds/odious_puffball = 1,
-		/obj/item/mod/construction/broken_core = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -246,6 +245,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			) = 1,
 		/obj/item/food/monkeycube = 1,
 		) = 8,
+
+	list(//modsuits
+		/obj/item/mod/construction/broken_core = 1,
+		/obj/effect/spawner/random/mod/maint = 3,
+		) = 4,
 
 	list(//music
 		/obj/item/instrument/violin = 5,

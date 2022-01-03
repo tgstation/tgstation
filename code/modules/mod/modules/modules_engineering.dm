@@ -205,3 +205,43 @@
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
+
+//Kinesis
+
+/obj/item/mod/module/kinesis //TODO POST-MERGE MAKE NOT SUCK ASS, MAKE BALLER AS FUCK
+	name = "MOD kinesis module"
+	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
+		despite the suits it used to be mounted on still seeing some circulation. \
+		This piece of technology allows the user to generate precise anti-gravity fields, \
+		letting them move objects as small as a titanium rod to as large as industrial machinery. \
+		Oddly enough, it doesn't seem to work on living creatures."
+	icon_state = "kinesis"
+//	module_type = MODULE_ACTIVE
+	module_type = MODULE_TOGGLE
+//	complexity = 3
+	complexity = 0
+	active_power_cost = DEFAULT_CELL_DRAIN*0.75
+//	use_power_cost = DEFAULT_CELL_DRAIN*3
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/kinesis)
+	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_kinesis"
+	var/has_tk = FALSE
+
+/obj/item/mod/module/kinesis/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(mod.wearer.dna.check_mutation(TK))
+		has_tk = TRUE
+		return
+	mod.wearer.dna.add_mutation(TK_MOD)
+
+/obj/item/mod/module/kinesis/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	if(has_tk)
+		has_tk = FALSE
+		return
+	mod.wearer.dna.remove_mutation(TK_MOD)

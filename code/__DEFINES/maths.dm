@@ -220,3 +220,5 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+#define FLIP_MATRIX 1, 0, 0, 0, -1, 0
