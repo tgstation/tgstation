@@ -319,8 +319,8 @@
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
 	weight = 3
-	cost = 35
-	requirements = list(101,101,80,70,60,60,50,50,40,40)
+	cost = 22
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	required_type = /mob/living/silicon/ai
 	blocking_rules = list(/datum/dynamic_ruleset/roundstart/malf_ai)
 
