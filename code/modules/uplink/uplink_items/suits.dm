@@ -42,3 +42,9 @@
 	item = /obj/item/mod/module/visor/thermal
 	progression_minimum = 20 MINUTES
 	cost = 4
+
+/datum/uplink_item/suits/night
+	name = "MODsuit Night Visor Module"
+	desc = "A visor for a MODsuit. Lets you see clearer in the dark."
+	item = /obj/item/mod/module/visor/night
+	cost = 2
