@@ -212,16 +212,16 @@
 /**
  * #Rust spread datum
  *
- * Simple datum that automatically spreads rust around it
+ * Simple datum that automatically spreads rust around it.
  *
- * Simple implementation of automatically growing entity
+ * Simple implementation of automatically growing entity.
  */
 /datum/rust_spread
 	/// The rate of spread every tick.
 	var/spread_per_sec = 6
 	/// The very center of the spread.
 	var/turf/centre
-	/// Lazylist of turfs at the edge of our rust (but not yet rusted).
+	/// List of turfs at the edge of our rust (but not yet rusted).
 	var/list/edge_turfs = list()
 	/// List of all turfs we've afflicted.
 	var/list/rusted_turfs = list()
@@ -263,7 +263,8 @@
 /**
  * Compile turfs
  *
- * Recreates the edge_turfs list and the rusted_turfs list.
+ * Recreates the edge_turfs list.
+ * Updates the rusted_turfs list, in case any turfs within were un-rusted.
  */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs.Cut()
