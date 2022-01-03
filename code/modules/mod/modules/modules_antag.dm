@@ -206,3 +206,21 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+/obj/item/mod/module/noslip
+	name = "MOD anti slip module"
+	desc = "These are a modified variant of standard magnetic boots, utilizing piezoelectric crystals on the soles. \
+		The two plates on the bottom of the boots automatically extend and magnetize as the user steps; \
+		a pull that's too weak to offer them the ability to affix to a hull, but just strong enough to \
+		protect against the fact that you didn't read the wet floor sign. Honk Co. has come out numerous times \
+		in protest of these modules being legal."
+	icon_state = "noslip"
+	complexity = 1
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/noslip)
+
+/obj/item/mod/module/noslip/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+
+/obj/item/mod/module/noslip/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)

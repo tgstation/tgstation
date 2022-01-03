@@ -47,3 +47,14 @@
       down no matter what happens.
   tralezab:
   - bugfix: fixes pirates not getting their antag status, alongside a non-pirate name
+2022-01-03:
+  Fikou:
+  - qol: You can now pin MODsuit modules to your action buttons.
+  - bugfix: ghosts can no longer mess with modsuits
+  SarmentiCampbell:
+  - bugfix: Russian Revolver can't longer be able to be examined to determine if it
+      has a bullet in it's chamber or not.
+  SuperNovaa41:
+  - admin: Simplemobs attacking objects is now properly logged, when the mob is playercontrolled.
+  Wallem:
+  - qol: Stasis beds put food in stasis as well, preventing decomposition.

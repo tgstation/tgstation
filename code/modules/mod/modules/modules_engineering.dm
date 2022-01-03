@@ -27,7 +27,7 @@
 		A staple of atmospherics work, and counter-smuggling work."
 	icon_state = "tray"
 	module_type = MODULE_TOGGLE
-	complexity = 2
+	complexity = 1
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
