@@ -9,6 +9,7 @@
 	maxHealth = 70
 	health = 70
 	see_in_dark = 5
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/crown = 1,)
 	response_help_continuous = "glares at"
@@ -92,12 +93,11 @@
 	if(miasma_percentage>=0.25)
 		heal_bodypart_damage(1)
 
+/mob/living/simple_animal/hostile/regalrat/
+
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	if (DOING_INTERACTION(src, "regalrat"))
-		return
-
-	. = ..()
-
+		return FALSE
 	if (QDELETED(target))
 		return
 
@@ -108,6 +108,10 @@
 			to_chat(src, span_notice("You finish licking [target]."))
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
+
+	if (DOING_INTERACTION(src, "regalrat")) // check again in case we started interacting
+		return
+	return ..()
 
 /**
  * Conditionally "eat" cheese object and heal, if injured.
@@ -141,15 +145,12 @@
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS
-	cooldown_time = 60
+	cooldown_time = 6 SECONDS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
 
-/datum/action/cooldown/domain/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/domain/proc/domain()
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
@@ -163,6 +164,11 @@
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
+/datum/action/cooldown/domain/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	domain()
+	StartCooldown()
+
 /**
  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
  */
@@ -174,13 +180,10 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 80
+	cooldown_time = 8 SECONDS
 	///Checks to see if there are any nearby mice. Does not count Rats.
 
-/datum/action/cooldown/riot/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
@@ -200,6 +203,11 @@
 		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
 	else
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+	StartCooldown()
+
+/datum/action/cooldown/riot/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	riot()
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/rat
