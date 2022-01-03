@@ -1,7 +1,6 @@
 //Security modules for MODsuits
 
-//Cloaking
-
+///Cloaking - Lowers the user's visibility, can be interrupted by being touched or attacked.
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
 	desc = "A complete retrofitting of the suit, this is a form of visual concealment tech employing esoteric technology \
@@ -74,8 +73,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
-//Holster
-
+///Holster - Instantly holsters any not huge gun.
 /obj/item/mod/module/holster
 	name = "MOD holster module"
 	desc = "Based off typical storage compartments, this system allows the suit to holster a \
@@ -102,12 +100,12 @@
 		if(!istype(holding) || holding.w_class > WEIGHT_CLASS_BULKY)
 			balloon_alert(mod.wearer, "it doesn't fit!")
 			return
-		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
+		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 			drain_power(use_power_cost)
-	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
+	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)

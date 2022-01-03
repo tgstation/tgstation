@@ -1,7 +1,6 @@
 //Antag modules for MODsuits
 
-//Armor Booster
-
+///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection.
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
 	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
@@ -72,8 +71,7 @@
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
 	added_slowdown = -0.25
 
-//Energy Shield
-
+///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
 	desc = "A personal, protective forcefield typically seen in military applications. \
@@ -132,8 +130,7 @@
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
 
-//Magic Nullifier
-
+///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
 	name = "MOD magic nullifier module"
 	desc = "A series of obsidian rods installed into critical points around the suit, \
@@ -167,8 +164,7 @@
 /obj/item/mod/module/anti_magic/wizard/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
-//Insignia
-
+///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
 	name = "MOD insignia module"
 	desc = "Despite the existence of IFF systems, radio communique, and modern methods of deductive reasoning involving \
@@ -207,6 +203,7 @@
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
 
+///Anti Slip - Prevents you from slipping on water.
 /obj/item/mod/module/noslip
 	name = "MOD anti slip module"
 	desc = "These are a modified variant of standard magnetic boots, utilizing piezoelectric crystals on the soles. \

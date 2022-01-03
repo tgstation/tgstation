@@ -1,12 +1,11 @@
 //Maint modules for MODsuits
 
-
 ///Springlock Mechanism - allows your modsuit to activate faster, but reagents are very dangerous.
 /obj/item/mod/module/springlock
 	name = "MOD springlock module"
-	desc = "A module that spans the entire size of the MODsuit, sitting under the outer shell. \
+	desc = "A module that spans the entire size of the MOD unit, sitting under the outer shell. \
 		This mechanical exoskeleton pushes out of the way when the user enters and it helps in booting \
-		up, but was taken out of modern MODsuits because of the springlock's tendency to \"snap\" back \
+		up, but was taken out of modern suits because of the springlock's tendency to \"snap\" back \
 		into place when exposed to humidity. You know what it's like to have an entire exoskeleton enter you?"
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
@@ -49,11 +48,11 @@
 	mod.wearer.emote("scream")
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(500, BRUTE, sharpness = SHARP_POINTY, wound_bonus = -400) //boggers, bogchamp, etc
+	mod.wearer.apply_damage(500, BRUTE, sharpness = SHARP_POINTY, wound_bonus = -50) //boggers, bogchamp, etc
 	mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
-///Rave Visor - Gives you a rainbow visor and plays jukebox music to you,
+///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
 	name = "MOD rave visor module"
 	desc = "A Super Cool Awesome Visor (SCAV), intended for modular suits."
@@ -216,6 +215,8 @@
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
 
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
+	SIGNAL_HANDLER
+
 	var/turf/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))

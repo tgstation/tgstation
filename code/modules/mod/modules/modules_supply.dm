@@ -1,7 +1,6 @@
 //Supply modules for MODsuits
 
-//Internal GPS
-
+///Internal GPS - Extends a GPS you can use.
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
 	desc = "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, \
@@ -21,8 +20,7 @@
 	icon_state = "gps-b"
 	gpstag = "MOD0"
 
-//Hydraulic Clamp
-
+///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
 	name = "MOD hydraulic clamp module"
 	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
@@ -76,8 +74,7 @@
 		crate.forceMove(drop_location())
 		stored_crates -= crate
 
-//Drill
-
+///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
 	name = "MOD drill module"
 	desc = "An integrated drill, typically extending over the user's hand. While useful for drilling through rock, \
@@ -111,6 +108,12 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
+	else if(istype(target, /turf/open/floor/plating/asteroid))
+		var/turf/open/floor/plating/asteroid/sand_turf = target
+		if(!sand_turf.can_dig(mod.wearer))
+			return
+		sand_turf.getDug()
+		drain_power(use_power_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -120,8 +123,7 @@
 	mineral_turf.gets_drilled(mod.wearer)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-//Ore Bag
-
+///Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \

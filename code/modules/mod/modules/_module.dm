@@ -1,3 +1,4 @@
+///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
 	icon_state = "module"

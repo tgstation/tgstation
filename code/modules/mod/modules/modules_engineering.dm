@@ -1,7 +1,6 @@
 //Engineering modules for MODsuits
 
-//Welding Protection
-
+///Welding Protection - Makes the helmet protect from flashes and welding.
 /obj/item/mod/module/welding
 	name = "MOD welding protection module"
 	desc = "A module installed into the visor of the suit, this projects a \
@@ -18,8 +17,7 @@
 /obj/item/mod/module/welding/on_suit_deactivation()
 	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
-//T-Ray Scan
-
+///T-Ray Scan - Scans the terrain for undertile objects.
 /obj/item/mod/module/t_ray
 	name = "MOD t-ray scan module"
 	desc = "A module installed into the visor of the suit, allowing the user to use a pulse of terahertz radiation \
@@ -36,8 +34,7 @@
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
 	t_ray_scan(mod.wearer, 8, range)
 
-//Magnetic Stability
-
+///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
 /obj/item/mod/module/magboot
 	name = "MOD magnetic stability module"
 	desc = "These are powerful electromagnets fitted into the suit's boots, allowing users both \
@@ -78,8 +75,7 @@
 	complexity = 0
 	slowdown_active = 0
 
-//Emergency Tether
-
+///Emergency Tether - Shoots a grappling hook projectile in 0g that throws the user towards it.
 /obj/item/mod/module/tether
 	name = "MOD emergency tether module"
 	desc = "A custom-built grappling-hook powered by a winch capable of hauling the user. \
@@ -137,8 +133,7 @@
 	QDEL_NULL(line)
 	return ..()
 
-//Radiation Protection
-
+///Radiation Protection - Protects the user from radiation, gives them a geiger counter and rad info in the panel.
 /obj/item/mod/module/rad_protection
 	name = "MOD radiation protection module"
 	desc = "A module utilizing polymers and reflective shielding to protect the user against ionizing radiation; \
@@ -177,8 +172,7 @@
 	perceived_threat_level = get_perceived_radiation_danger(pulse_information, insulation_to_target)
 	addtimer(VARSET_CALLBACK(src, perceived_threat_level, null), TIME_WITHOUT_RADIATION_BEFORE_RESET, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-//Constructor
-
+///Constructor - Lets you build quicker and create RCD holograms.
 /obj/item/mod/module/constructor
 	name = "MOD constructor module"
 	desc = "This module entirely occupies the wearer's forearm, notably causing conflict with \
@@ -206,8 +200,7 @@
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
 
-//Kinesis
-
+///Kinesis - Gives you a special form of telekinesis.
 /obj/item/mod/module/kinesis //TODO POST-MERGE MAKE NOT SUCK ASS, MAKE BALLER AS FUCK
 	name = "MOD kinesis module"
 	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \

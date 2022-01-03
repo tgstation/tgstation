@@ -1,7 +1,6 @@
 //General modules for MODsuits
 
-//Storage
-
+///Storage - Adds a storage component to the suit.
 /obj/item/mod/module/storage
 	name = "MOD storage module"
 	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
@@ -64,8 +63,7 @@
 	max_items = 21
 
 
-//Ion Jetpack
-
+///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
 	desc = "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. \
@@ -158,13 +156,12 @@
 	ion_trail.generate_effect()
 	return TRUE
 
-//Eating Apparatus
-
+///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
 	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
-		to allow eating and drinking while retaining protection and atmosphere. \
-		However, it will do nothing to improve the taste of a goliath steak."
+		to allow eating and drinking while retaining protection and atmosphere. However, it won't free you from masks, \
+		and it will do nothing to improve the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
@@ -184,8 +181,7 @@
 	if(!(former_visor_flags & HEADCOVERSMOUTH))
 		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
 
-//EMP Shield
-
+///EMP Shield - Protects the suit from EMPs.
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
@@ -202,8 +198,7 @@
 /obj/item/mod/module/emp_shield/on_uninstall()
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
-//Flashlight
-
+///Flashlight - Gives the suit a customizable flashlight.
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
 	desc = "A simple pair of flashlights installed on the left and right sides of the helmet, \
@@ -274,8 +269,7 @@
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
-//Dispenser
-
+///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
 	desc = "A rare piece of technology reverse-engineered from a prototype found in a Donk Corporation vessel. \
@@ -304,8 +298,7 @@
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 	drain_power(use_power_cost)
 
-//Longfall
-
+///Longfall - Nullifies fall damage, removing charge instead.
 /obj/item/mod/module/longfall
 	name = "MOD longfall module"
 	desc = "Useful for protecting both the suit and the wearer, \
@@ -331,8 +324,7 @@
 	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
 	return NO_Z_IMPACT_DAMAGE
 
-//Thermal Regulator
-
+///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
 	name = "MOD thermal regulator module"
 	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, \
@@ -360,8 +352,7 @@
 /obj/item/mod/module/thermal_regulator/on_active_process(delta_time)
 	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * delta_time))
 
-//Pathfinder
-
+///Pathfinder - Can fly the suit from a long distance to an implant installed in someone.
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
 	desc = "This module, brought to you by Nakamura Engineering, has two components. \
@@ -526,8 +517,7 @@
 	if(implant.recall())
 		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
 
-//DNA Lock
-
+///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock
 	name = "MOD DNA lock module"
 	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
@@ -599,8 +589,7 @@
 	if(!dna_check())
 		return MOD_CANCEL_REMOVAL
 
-//Plasma Stabilizer
-
+///Plasma Stabilizer - Prevents plasmamen from igniting in the suit
 /obj/item/mod/module/plasma_stabilizer
 	name = "MOD plasma stabilizer module"
 	desc = "This system essentially forms an atmosphere of its' own inside the suit, \
