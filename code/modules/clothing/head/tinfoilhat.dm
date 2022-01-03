@@ -24,7 +24,7 @@
 		QDEL_NULL(paranoia)
 	paranoia = new()
 
-	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
+	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, .proc/call_suicide)
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
@@ -72,8 +72,6 @@
 		warp_up()
 
 /obj/item/clothing/head/foilhat/suicide_act(mob/living/user)
-	SIGNAL_HANDLER
-
 	user.visible_message(span_suicide("[user] gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
 	var/conspiracy_line = pick(list(
 		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",
@@ -91,3 +89,7 @@
 		user.ghostize(can_reenter_corpse = FALSE)
 		return MANUAL_SUICIDE
 	return OXYLOSS
+
+/obj/item/clothing/head/foilhat/proc/call_suicide(datum/source)
+	SIGNAL_HANDLER
+	suicide_act(source)

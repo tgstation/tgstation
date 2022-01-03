@@ -87,7 +87,7 @@
 	var/list/researched_knowledge = cultie.get_all_knowledge()
 	var/escape_our_torment = 0
 	while(carbon_user.stat == CONSCIOUS)
-		if(QDELETED(src))
+		if(QDELETED(src) || QDELETED(user))
 			return SHAME
 		if(escape_our_torment > 20) //Stops us from infinitely stunning ourselves if we're just not taking the damage
 			return FIRELOSS

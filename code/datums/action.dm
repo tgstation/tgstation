@@ -593,13 +593,15 @@
 /datum/action/item_action/agent_box/proc/suicide_act(datum/source)
 	SIGNAL_HANDLER
 
-	if(istype(owner.loc, /obj/structure/closet/cardboard/agent))
-		var/obj/structure/closet/cardboard/agent/box = owner.loc
-		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
-		box.open()
-		owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
-		owner.throw_at(get_turf(owner))
-		return OXYLOSS
+	if(!istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		return
+
+	var/obj/structure/closet/cardboard/agent/box = owner.loc
+	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	box.open()
+	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
+	owner.throw_at(get_turf(owner))
+	return OXYLOSS
 
 //Preset for spells
 /datum/action/spell_action
