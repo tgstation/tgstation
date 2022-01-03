@@ -118,7 +118,7 @@
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/organ_thrower)
+	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	var/max_organs = 5
 	var/organ_list = list()
