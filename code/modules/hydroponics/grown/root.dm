@@ -24,6 +24,7 @@
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/carrotjuice = 0)
 	wine_power = 30
+	filling_color = "#FFA500"
 
 /obj/item/food/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
@@ -82,6 +83,7 @@
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40
+	filling_color = "#F4A460"
 
 // Red Beet
 /obj/item/seeds/redbeet

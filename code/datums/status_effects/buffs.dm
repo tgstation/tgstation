@@ -559,3 +559,21 @@
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
 
+/datum/status_effect/reagent_massage
+	id = "reagent_massage"
+	duration = 10 MINUTES
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /atom/movable/screen/alert/status_effect/reagent_massage
+	var/list/reagents_to_apply = list()
+	var/potency = 100
+
+/datum/status_effect/reagent_massage/tick()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		for(var/reagent in reagents_to_apply)
+			human_owner.reagents.add_reagent(reagent, 1*(potency/100))
+
+/atom/movable/screen/alert/status_effect/reagent_massage
+	name = "essential oils massage"
+	desc = "You recieved a relaxing back massage with invigorating chemical additives!"
+	icon_state = "reagent_massage"

@@ -25,6 +25,7 @@
 	juice_results = list(/datum/reagent/consumable/applejuice = 0)
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
+	filling_color = "#FF4500"
 
 // Gold Apple
 /obj/item/seeds/apple/gold
@@ -48,3 +49,4 @@
 	icon_state = "goldapple"
 	distill_reagent = null
 	wine_power = 50
+	filling_color = "#FFD700"

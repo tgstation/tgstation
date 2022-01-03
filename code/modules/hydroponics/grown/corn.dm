@@ -28,6 +28,7 @@
 	juice_results = list(/datum/reagent/consumable/corn_starch = 0)
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
+	filling_color = "#FFFF00"
 
 /obj/item/food/grown/corn/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)

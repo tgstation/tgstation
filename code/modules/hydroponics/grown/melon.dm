@@ -32,6 +32,7 @@
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 0)
 	wine_power = 40
+	filling_color = "#008000"
 
 /obj/item/food/grown/watermelon/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/watermelonslice, 5, 20)
@@ -61,6 +62,7 @@
 	bite_consumption_mod = 2
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
+	filling_color = "#FFD700"
 
 /obj/item/food/grown/holymelon/make_dryable()
 	return //No drying
@@ -115,3 +117,4 @@
 	desc = "The nutriments within this melon have been compressed and fermented into rich alcohol."
 	icon_state = "barrelmelon"
 	distill_reagent = /datum/reagent/medicine/antihol //You can call it a integer overflow.
+	filling_color = "#b47b31"

@@ -58,6 +58,8 @@
 	var/limb_integrity = 0
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
+	/// Was this clothing fitted for someone? If so, it'll have a ref() to the mob wearing it in this var.
+	var/fitted_by_tailor
 
 	/// A lazily initiated "food" version of the clothing for moths
 	var/obj/item/food/clothing/moth_snack
@@ -181,15 +183,25 @@
  * * damage_amount: Incoming damage
  * * damage_type: BRUTE or BURN
  * * armour_penetration: If the attack had armour_penetration
+ * * owner: The mob that is wearing this clothing
  */
-/obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
+/obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration, wearer)
 	if(!def_zone || !limb_integrity || (initial(body_parts_covered) in GLOB.bitflags)) // the second check sees if we only cover one bodypart anyway and don't need to bother with this
 		return
 	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered) // what do we actually cover?
 	if(!(def_zone in covered_limbs))
 		return
 
-	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
+	var/damage_dealt
+
+	if(fitted_by_tailor)
+		if(REF(wearer) == fitted_by_tailor)
+			damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE)
+		else
+			damage_dealt = take_damage(damage_amount, damage_type, armour_penetration, FALSE) // poorly fit clothes = FULL DAMAGE
+	else
+		damage_dealt = take_damage(damage_amount * 0.75, damage_type, armour_penetration, FALSE) * 2.5
+
 	LAZYINITLIST(damage_by_parts)
 	damage_by_parts[def_zone] += damage_dealt
 	if(damage_by_parts[def_zone] > limb_integrity)

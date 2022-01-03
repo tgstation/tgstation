@@ -27,6 +27,7 @@
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
 	var/carved_type = /obj/item/clothing/head/hardhat/pumpkinhead
+	filling_color = "#FFA500"
 
 /obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(W.get_sharpness())
@@ -59,3 +60,4 @@
 	juice_results = list(/datum/reagent/consumable/blumpkinjuice = 0)
 	wine_power = 50
 	carved_type = /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
+	filling_color = "#87CEFA"

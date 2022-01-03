@@ -25,6 +25,7 @@
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
+	filling_color = "#90EE90"
 
 /obj/item/food/grown/aloe/microwave_act(obj/machinery/microwave/M)
 	new /obj/item/stack/medical/aloe(drop_location(), 2)

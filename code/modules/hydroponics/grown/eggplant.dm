@@ -22,6 +22,7 @@
 	icon_state = "eggplant"
 	foodtypes = FRUIT
 	wine_power = 20
+	filling_color = "#800080"
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
@@ -44,3 +45,4 @@
 	trash_type = /obj/item/food/egg
 	foodtypes = MEAT
 	distill_reagent = /datum/reagent/consumable/ethanol/eggnog
+	filling_color = "#F8F8FF"

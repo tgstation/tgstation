@@ -28,6 +28,7 @@
 	var/stacktype = /obj/item/stack/tile/grass
 	var/tile_coefficient = 0.02 // 1/50
 	wine_power = 15
+	filling_color = "#32CD32"
 
 /obj/item/food/grown/grass/attack_self(mob/user)
 	to_chat(user, span_notice("You prepare the astroturf."))
@@ -62,6 +63,7 @@
 	icon_state = "fairygrassclump"
 	bite_consumption_mod = 1
 	stacktype = /obj/item/stack/tile/fairygrass
+	filling_color = "#3399ff"
 
 // Carpet
 /obj/item/seeds/grass/carpet

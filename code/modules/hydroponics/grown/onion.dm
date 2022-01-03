@@ -24,6 +24,7 @@
 	icon_state = "onion"
 	tastes = list("onions" = 1)
 	wine_power = 30
+	filling_color = "#C0C9A0"
 
 /obj/item/food/grown/onion/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice, 2, 15)
@@ -45,6 +46,7 @@
 	desc = "Purple despite the name."
 	icon_state = "onion_red"
 	wine_power = 60
+	filling_color = "#C29ACF"
 
 /obj/item/food/grown/onion/red/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/onion_slice/red, 2, 15)

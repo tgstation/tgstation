@@ -28,6 +28,7 @@
 	foodtypes = FRUIT
 	tastes = list("cocoa" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/creme_de_cacao
+	filling_color = "#FFD700"
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -50,6 +51,7 @@
 	foodtypes = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
+	filling_color = "#FFD700"
 
 /obj/item/seeds/cocoapod/bungotree
 	name = "pack of bungo tree seeds"
@@ -95,6 +97,7 @@
 	throw_range = 7
 	foodtypes = TOXIC
 	tastes = list("acrid bitterness" = 1)
+	filling_color = "#E8C22F"
 
 /obj/item/food/grown/bungopit/Initialize(mapload)
 	. =..()

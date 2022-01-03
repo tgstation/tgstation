@@ -26,6 +26,7 @@
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
 	juice_results = list(/datum/reagent/consumable/tomatojuice = 0)
 	distill_reagent = /datum/reagent/consumable/enzyme
+	filling_color = "#FF6347"
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -49,6 +50,7 @@
 	foodtypes = FRUIT | GROSS
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
+	filling_color = "#FF0000"
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
@@ -74,6 +76,7 @@
 	bite_consumption_mod = 2
 	splat_type = /obj/effect/decal/cleanable/oil
 	distill_reagent = /datum/reagent/consumable/laughter
+	filling_color = "#0000FF"
 
 // Bluespace Tomato
 /obj/item/seeds/tomato/blue/bluespace
@@ -122,3 +125,4 @@
 	desc = "I say to-mah-to, you say tom-mae-to... OH GOD IT'S EATING MY LEGS!!"
 	icon_state = "killertomato"
 	distill_reagent = /datum/reagent/consumable/ethanol/demonsblood
+	filling_color = "#FF0000"

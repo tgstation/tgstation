@@ -2,6 +2,7 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
+	worn_icon = 'icons/mob/clothing/eyes.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = GLASSESCOVERSEYES
 	slot_flags = ITEM_SLOT_EYES
@@ -279,6 +280,11 @@
 	desc = "Why would you wear something so controversial yet so brave?"
 	icon_state = "circle_glasses"
 	inhand_icon_state = "circle_glasses"
+
+/obj/item/clothing/glasses/regular/tailor
+	name = "tailor glasses"
+	desc = "A famous space-sicilian brand. These glasses are more expensive than you."
+	icon_state = "tailor_glasses"
 
 //Here lies green glasses, so ugly they died. RIP
 

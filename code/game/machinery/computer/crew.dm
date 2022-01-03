@@ -138,6 +138,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 68,
 		JOB_LAWYER = 69,
 		JOB_PSYCHOLOGIST = 71,
+		JOB_BARBER = 72,
+		JOB_TAILOR = 73,
 		// 200-229: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,

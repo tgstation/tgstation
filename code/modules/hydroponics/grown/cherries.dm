@@ -31,6 +31,7 @@
 	grind_results = list(/datum/reagent/consumable/cherryjelly = 0)
 	tastes = list("cherry" = 1)
 	wine_power = 30
+	filling_color = "#FF0000"
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
@@ -54,6 +55,7 @@
 	grind_results = list(/datum/reagent/consumable/bluecherryjelly = 0)
 	tastes = list("blue cherry" = 1)
 	wine_power = 50
+	filling_color = "#6495ED"
 
 //Cherry Bulbs
 /obj/item/seeds/cherry/bulb

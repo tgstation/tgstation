@@ -27,6 +27,7 @@
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	wine_power = 20
+	filling_color = "#FF0000"
 
 // Ice Chili
 /obj/item/seeds/chili/ice
@@ -53,6 +54,7 @@
 	bite_consumption_mod = 5
 	foodtypes = FRUIT
 	wine_power = 30
+	filling_color = "#0000CD"
 
 // Ghost Chili
 /obj/item/seeds/chili/ghost
@@ -80,6 +82,7 @@
 	bite_consumption_mod = 5
 	foodtypes = FRUIT
 	wine_power = 50
+	filling_color = "#F8F8FF"
 
 // Bell Pepper
 /obj/item/seeds/chili/bell_pepper

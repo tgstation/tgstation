@@ -205,15 +205,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				return TRUE
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				//handle facial hair (if necessary)
-				if(hairdresser.gender != FEMALE)
+				if(amazed_human.gender != FEMALE)
 					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
 					if(isnull(new_style))
 						return TRUE
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return TRUE //no tele-grooming
-					hairdresser.facial_hairstyle = new_style
+					amazed_human.facial_hairstyle = new_style
 				else
-					hairdresser.facial_hairstyle = "Shaved"
+					amazed_human.facial_hairstyle = "Shaved"
 
 				//handle normal hair
 				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
@@ -221,12 +221,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 					return TRUE
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return TRUE //no tele-grooming
-				if(HAS_TRAIT(hairdresser, TRAIT_BALD))
-					to_chat(hairdresser, span_notice("If only growing back hair were that easy for you..."))
+				if(HAS_TRAIT(amazed_human, TRAIT_BALD))
+					to_chat(amazed_human, span_notice("If only growing back hair were that easy for you..."))
 
-				hairdresser.hairstyle = new_style
+				amazed_human.hairstyle = new_style
 
-				hairdresser.update_hair()
+				amazed_human.update_hair()
 			else
 				var/new_hair_color = input(amazed_human, "Choose your hair color", "Hair Color",amazed_human.hair_color) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

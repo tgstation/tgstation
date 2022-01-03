@@ -8,6 +8,7 @@
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	tastes = list("ambrosia" = 1)
+	filling_color = "#008000"
 
 // Ambrosia Vulgaris
 /obj/item/seeds/ambrosia
@@ -51,6 +52,7 @@
 	desc = "Eating this makes you feel immortal!"
 	icon_state = "ambrosiadeus"
 	wine_power = 50
+	filling_color = "#008B8B"
 
 //Ambrosia Gaia
 /obj/item/seeds/ambrosia/gaia
@@ -76,3 +78,4 @@
 	seed = /obj/item/seeds/ambrosia/gaia
 	wine_power = 70
 	wine_flavor = "the earthmother's blessing"
+	filling_color = rgb(255, 175, 0)

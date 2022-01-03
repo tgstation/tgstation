@@ -32,6 +32,7 @@
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 	greyscale_colors = "#d23838"
+	filling_color = "#FF6347"
 
 // Lily
 /obj/item/seeds/poppy/lily
@@ -48,6 +49,7 @@
 	name = "lily"
 	desc = "A beautiful orange flower."
 	greyscale_colors = "#fe881f"
+	filling_color = "#FFA500"
 
 	//Spacemans's Trumpet
 /obj/item/seeds/poppy/lily/trumpet
@@ -82,6 +84,7 @@
 	icon_state = "spacemanstrumpet"
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
+	filling_color = "#FF6347"
 
 // Geranium
 /obj/item/seeds/poppy/geranium
@@ -98,6 +101,7 @@
 	name = "geranium"
 	desc = "A beautiful blue flower."
 	greyscale_colors = "#1499bb"
+	filling_color = "#008B8B"
 
 ///Fraxinella seeds.
 /obj/item/seeds/poppy/geranium/fraxinella
@@ -121,6 +125,7 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	filling_color = "#008B8B"
 
 // Harebell
 /obj/item/seeds/harebell
@@ -152,6 +157,7 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
+	filling_color = "#E6E6FA"
 
 // Sunflower
 /obj/item/seeds/sunflower
@@ -215,6 +221,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
+	filling_color = "#E6E6FA"
 
 // Novaflower
 /obj/item/seeds/sunflower/novaflower

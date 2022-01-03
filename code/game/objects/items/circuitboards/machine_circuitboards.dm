@@ -1083,6 +1083,41 @@
 		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/essential_oils_machine
+	name = "Essential Oil Machine (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/essential_oils_machine
+	req_components = list(/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/dye_machine
+	name = "Dye Machine (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/dye_machine
+	req_components = list(/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/sewing_machine
+	name = "Sewing Machine (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/sewing_machine
+	req_components = list(/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/loom
+	name = "Loom (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/loom
+	req_components = list(/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/pattern_table
+	name = "Pattern Table (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SERVICE
+	build_path = /obj/machinery/pattern_table
+	req_components = list(/obj/item/stock_parts/manipulator = 1)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SERVICE

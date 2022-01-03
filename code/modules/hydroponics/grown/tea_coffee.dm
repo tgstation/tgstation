@@ -24,6 +24,7 @@
 	grind_results = list(/datum/reagent/toxin/teapowder = 0)
 	dry_grind = TRUE
 	can_distill = FALSE
+	filling_color = "#008000"
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -42,6 +43,7 @@
 	icon_state = "tea_astra_leaves"
 	bite_consumption_mod = 2
 	grind_results = list(/datum/reagent/toxin/teapowder = 0, /datum/reagent/medicine/salglu_solution = 0)
+	filling_color = "#4582B4"
 
 
 // Coffee
@@ -72,6 +74,7 @@
 	dry_grind = TRUE
 	grind_results = list(/datum/reagent/toxin/coffeepowder = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/kahlua
+	filling_color = "#DC143C"
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta

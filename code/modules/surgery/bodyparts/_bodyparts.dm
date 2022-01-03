@@ -484,9 +484,9 @@
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.armor.getRating(WOUND)
 			if(wounding_type == WOUND_SLASH)
-				clothes.take_damage_zone(body_zone, damage, BRUTE)
+				clothes.take_damage_zone(body_zone, damage, BRUTE, wearer=human_owner)
 			else if(wounding_type == WOUND_BURN && damage >= 10) // lazy way to block freezing from shredding clothes without adding another var onto apply_damage()
-				clothes.take_damage_zone(body_zone, damage, BURN)
+				clothes.take_damage_zone(body_zone, damage, BURN, wearer=human_owner)
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus

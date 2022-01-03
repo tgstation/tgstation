@@ -30,6 +30,7 @@
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
+	filling_color = "#FF4500"
 
 // Fly Amanita
 /obj/item/seeds/amanita
@@ -57,6 +58,7 @@
 	name = "fly amanita"
 	desc = "<I>Amanita Muscaria</I>: Learn poisonous mushrooms by heart. Only pick mushrooms you know."
 	icon_state = "amanita"
+	filling_color = "#FF0000"
 
 // Destroying Angel
 /obj/item/seeds/angel
@@ -85,6 +87,7 @@
 	desc = "<I>Amanita Virosa</I>: Deadly poisonous basidiomycete fungus filled with alpha amatoxins."
 	icon_state = "angel"
 	wine_power = 60
+	filling_color = "#C0C0C0"
 
 // Liberty Cap
 /obj/item/seeds/liberty
@@ -111,6 +114,7 @@
 	desc = "<I>Psilocybe Semilanceata</I>: Liberate yourself!"
 	icon_state = "libertycap"
 	wine_power = 80
+	filling_color = "#DAA520"
 
 // Plump Helmet
 /obj/item/seeds/plump
@@ -137,6 +141,7 @@
 	desc = "<I>Plumus Hellmus</I>: Plump, soft and s-so inviting~"
 	icon_state = "plumphelmet"
 	distill_reagent = /datum/reagent/consumable/ethanol/manly_dorf
+	filling_color = "#9370DB"
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom
@@ -163,6 +168,7 @@
 	desc = "<I>Plumus Locomotus</I>: The beginning of the great walk."
 	icon_state = "walkingmushroom"
 	can_distill = FALSE
+	filling_color = "#9370DB"
 
 // Chanterelle
 /obj/item/seeds/chanter
@@ -191,6 +197,7 @@
 	name = "chanterelle cluster"
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
+	filling_color = "#FFA500"
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
@@ -216,6 +223,7 @@
 	name = "jupiter cup"
 	desc = "A strange red mushroom, its surface is moist and slick. You wonder how many tiny worms have met their fate inside."
 	icon_state = "jupitercup"
+	filling_color = "#B5003D"
 
 // Glowshroom
 /obj/item/seeds/glowshroom
@@ -247,6 +255,7 @@
 	icon_state = "glowshroom"
 	var/effect_path = /obj/structure/glowshroom
 	wine_power = 50
+	filling_color = "#00FA9A"
 
 /obj/item/food/grown/mushroom/glowshroom/attack_self(mob/user)
 	if(isspaceturf(user.loc))
@@ -294,6 +303,7 @@
 	icon_state = "glowcap"
 	effect_path = /obj/structure/glowshroom/glowcap
 	tastes = list("glowcap" = 1)
+	filling_color = "#00FA9A"
 
 
 //Shadowshroom

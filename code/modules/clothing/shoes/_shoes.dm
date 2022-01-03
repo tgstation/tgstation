@@ -1,6 +1,7 @@
 /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/clothing/feet.dmi'
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	var/chained = FALSE
@@ -259,7 +260,7 @@
 
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
-	
+
 	if (!can_be_tied)
 		return
 

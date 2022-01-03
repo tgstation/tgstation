@@ -27,11 +27,11 @@
 	name = "Tailor"
 	jobtype = /datum/job/tailor
 
-	id_trim = /datum/id_trim/job/cargo_technician
-	uniform = /obj/item/clothing/under/rank/cargo/tech
-	backpack_contents = list(
-		/obj/item/modular_computer/tablet/preset/cargo = 1,
-		)
-	belt = /obj/item/pda/cargo
-	ears = /obj/item/radio/headset/headset_cargo
-	l_hand = /obj/item/export_scanner
+	id_trim = /datum/id_trim/job/tailor
+	uniform = /obj/item/clothing/under/rank/civilian/tailor
+	belt = /obj/item/pda
+	ears = /obj/item/radio/headset/headset_srv
+	neck = /obj/item/clothing/neck/measuring_tape
+	l_hand = /obj/item/scissors
+	shoes = /obj/item/clothing/shoes/laceup
+	glasses = /obj/item/clothing/glasses/regular/tailor

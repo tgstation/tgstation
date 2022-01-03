@@ -239,3 +239,15 @@
 	desc = "For when all you want in life is to grill for god's sake!"
 	icon_state = "cookjorts"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/tailor
+	name = "tailor's uniform"
+	desc = "An incredibly expensive set of clothes. Crafted only from the finest cloths."
+	icon_state = "tailorsuit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/civilian/barber
+	name = "barber's uniform"
+	desc = "A fancy outfit with an apron to keep customer's hair off of your clothes."
+	icon_state = "barbersuit"
+	can_adjust = FALSE

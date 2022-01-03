@@ -6,7 +6,7 @@
 	icon_state = "lime"
 	foodtypes = FRUIT
 	wine_power = 30
-
+	filling_color = "#00FF00"
 // Lime
 /obj/item/seeds/lime
 	name = "pack of lime seeds"
@@ -57,7 +57,7 @@
 	icon_state = "orange"
 	juice_results = list(/datum/reagent/consumable/orangejuice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/triple_sec
-
+	filling_color = "#FFA500"
 // Lemon
 /obj/item/seeds/lemon
 	name = "pack of lemon seeds"
@@ -82,6 +82,7 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	juice_results = list(/datum/reagent/consumable/lemonjuice = 0)
+	filling_color = "#FFD700"
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon

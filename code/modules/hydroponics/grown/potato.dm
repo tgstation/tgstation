@@ -27,6 +27,7 @@
 	foodtypes = VEGETABLES
 	juice_results = list(/datum/reagent/consumable/potato_juice = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
+	filling_color = "#E9967A"
 
 /obj/item/food/grown/potato/wedges
 	name = "potato wedges"

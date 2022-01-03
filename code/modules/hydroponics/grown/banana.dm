@@ -27,6 +27,7 @@
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/banana = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+	filling_color = "#FFFF00"
 
 /obj/item/food/grown/banana/generate_trash(atom/location)
 	. = ..()
@@ -96,6 +97,7 @@
 	icon_state = "mimana"
 	trash_type = /obj/item/grown/bananapeel/mimanapeel
 	distill_reagent = /datum/reagent/consumable/ethanol/silencer
+	filling_color = "#FFFFEE"
 
 /obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
@@ -129,6 +131,7 @@
 	tastes = list("banana" = 1)
 	wine_power = 60
 	wine_flavor = "slippery hypercubes"
+	filling_color = "#0000FF"
 
 /obj/item/grown/bananapeel/bluespace
 	seed = /obj/item/seeds/banana/bluespace

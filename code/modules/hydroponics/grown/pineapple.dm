@@ -33,7 +33,7 @@
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 0)
 	tastes = list("pineapple" = 1)
 	wine_power = 40
-
+	filling_color = "#F6CB0B"
 
 /obj/item/food/grown/pineapple/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pineappleslice, 3, 15)

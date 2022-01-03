@@ -130,14 +130,6 @@
 	make_reagents = list(/datum/reagent/toxin/pestkiller/organic = 25)
 	category = list("initial","Botany Chemicals")
 
-/datum/design/cloth
-	name = "Roll of Cloth"
-	id = "cloth"
-	build_type = BIOGENERATOR
-	materials = list(/datum/material/biomass= 50)
-	build_path = /obj/item/stack/sheet/cloth
-	category = list("initial","Organic Materials")
-
 /datum/design/cardboard
 	name = "Sheet of Cardboard"
 	id = "cardboard"

@@ -28,6 +28,7 @@
 	juice_results = list(/datum/reagent/consumable/berryjuice = 0)
 	tastes = list("berry" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/gin
+	filling_color = "#FF00FF"
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -52,6 +53,7 @@
 	tastes = list("poison-berry" = 1)
 	distill_reagent = null
 	wine_power = 35
+	filling_color = "#C71585"
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -104,6 +106,7 @@
 	tastes = list("glow-berry" = 1)
 	distill_reagent = null
 	wine_power = 60
+	filling_color = "#7CFC00"
 
 // Grapes
 /obj/item/seeds/grape
@@ -136,6 +139,7 @@
 	juice_results = list(/datum/reagent/consumable/grapejuice = 0)
 	tastes = list("grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
+	filling_color = "#FF1493"
 
 /obj/item/food/grown/grapes/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
@@ -158,6 +162,7 @@
 	bite_consumption_mod = 3
 	tastes = list("green grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac
+	filling_color = "#7FFF00"
 
 // Toechtauese Berries
 /obj/item/seeds/toechtauese

@@ -337,12 +337,19 @@
 	build_path = /obj/item/circuitboard/machine/microwave
 	category = list ("Misc. Machinery")
 
-
 /datum/design/board/gibber
 	name = "Machine Design (Gibber Board)"
 	desc = "The circuit board for a gibber."
 	id = "gibber"
 	build_path = /obj/item/circuitboard/machine/gibber
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/essential_oils_machine
+	name = "Machine Design (Essential Oil Machine Board)"
+	desc = "The circuit board for an essential oil machine."
+	id = "essential_oils_machine"
+	build_path = /obj/item/circuitboard/machine/essential_oils_machine
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

@@ -18,3 +18,4 @@
 	icon_state = "garlic"
 	tastes = list("garlic" = 1)
 	wine_power = 10
+	filling_color = "#C0C9A0"

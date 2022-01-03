@@ -328,6 +328,7 @@
 	human_surname_chance = 0
 	special_name_chance = 100
 	inherent_factions = list("plants", "vines")
+	no_equip = list() // for mannequins
 
 /datum/species/golem/wood/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)

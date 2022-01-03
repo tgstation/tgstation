@@ -938,9 +938,16 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-	var/obj/item/vended_item = new R.product_path(get_turf(src))
-	if(greyscale_colors)
-		vended_item.set_greyscale(colors=greyscale_colors)
+	var/obj/item/vended_item
+	if(ispath(R.product_path, /obj/item/clothing))
+		vended_item = new /obj/item/pattern_kit(get_turf(src))
+		var/obj/item/pattern_kit/pattern = vended_item
+		pattern.clothing_to_make = R.product_path
+		pattern.name = "[R.name] pattern kit"
+	else
+		vended_item = new R.product_path(get_turf(src))
+		if(greyscale_colors)
+			vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [R.name] out of the slot."))

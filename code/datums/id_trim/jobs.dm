@@ -529,7 +529,7 @@
 	assignment = "Barber"
 	trim_state = "trim_barber"
 	extra_access = list(ACCESS_HYDROPONICS)
-	minimal_access = list(ACCESS_BARBER)
+	minimal_access = list(ACCESS_BARBER, ACCESS_MINERAL_STOREROOM, ACCESS_SERVICE)
 	config_job = "barber"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/barber
@@ -538,7 +538,7 @@
 	assignment = "Tailor"
 	trim_state = "trim_tailor"
 	extra_access = list(ACCESS_HYDROPONICS)
-	minimal_access = list(ACCESS_TAILOR)
+	minimal_access = list(ACCESS_TAILOR, ACCESS_MINERAL_STOREROOM, ACCESS_SERVICE)
 	config_job = "tailor"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/tailor

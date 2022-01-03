@@ -26,6 +26,7 @@
 	tastes = list ("peas" = 1, "chalky saltiness" = 1)
 	wine_power = 50
 	wine_flavor = "what is, distressingly, fermented peas."
+	filling_color = "#739122"
 
 // Laughin' Peas
 /obj/item/seeds/peas/laugh
@@ -58,6 +59,7 @@
 	tastes = list ("a prancing rabbit" = 1) //Vib Ribbon sends her regards.. wherever she is.
 	wine_power = 90
 	wine_flavor = "a vector-graphic rabbit dancing on your tongue"
+	filling_color = "#ee7bee"
 
 // World Peas - Peace at last, peace at last...
 /obj/item/seeds/peas/laugh/peace
@@ -81,6 +83,7 @@
 	graft_gene = /datum/plant_gene/trait/glow/blue
 	mutatelist = null
 
+
 /obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace
 	name = "cluster of world peas"
@@ -91,3 +94,4 @@
 	tastes = list ("numbing tranquility" = 2, "warmth" = 1)
 	wine_power = 100
 	wine_flavor = "mind-numbing peace and warmth"
+	filling_color = "#0099CC"

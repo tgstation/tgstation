@@ -185,6 +185,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Psychologist"
 	icon_state = "Psychologist"
 
+/obj/effect/landmark/start/barber
+	name = "Barber"
+	icon_state = "Psychologist"
+
+/obj/effect/landmark/start/tailor
+	name = "Tailor"
+	icon_state = "Psychologist"
+
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
 	icon_state = "Chaplain"

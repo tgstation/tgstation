@@ -44,7 +44,8 @@
 #define STATUS_EFFECT_MAYHEM /datum/status_effect/mayhem //Total bloodbath. Activated by orb of mayhem pickup/bottle of mayhem item.
 ///Has had their health buffed 10% to 30% depending if the effect has been reapplied.
 #define STATUS_EFFECT_HEALTH_BUFFED /datum/status_effect/limited_buff/health_buff
-
+/// Reagent massage
+#define STATUS_EFFECT_REAGENT_MASSAGE /datum/status_effect/reagent_massage
 /////////////
 // DEBUFFS //
 /////////////

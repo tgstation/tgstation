@@ -27,6 +27,7 @@
 	grind_results = list(/datum/reagent/consumable/soymilk = 0)
 	tastes = list("soy" = 1)
 	wine_power = 20
+	filling_color = "#F0E68C"
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -49,3 +50,4 @@
 	foodtypes = VEGETABLES
 	tastes = list("koi" = 1)
 	wine_power = 40
+	filling_color = "#F0E68C"
