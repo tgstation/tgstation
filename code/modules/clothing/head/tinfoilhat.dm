@@ -68,3 +68,22 @@
 	. = ..()
 	if(!warped)
 		warp_up()
+
+/obj/item/clothing/head/foilhat/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] dons [src] and gets a crazed look in [user.p_their()] eyes! [capitalize(user.p_they())] [user.p_have()] witnessed the truth, and try to commit suicide!"))
+	var/static/list/conspiracy_line = list(
+		";THEY'RE HIDING CAMERAS IN THE CEILINGS! THEY WITNESS EVERYTHING WE DO!!",
+		";HOW CAN I LIVE IN A WORLD WHERE MY FATE AND EXISTANCE IS DECIDED BY A GROUP OF INDIVIDUALS?!!",
+		";THEY'RE TOYING WITH ALL OF YOUR MINDS AND TREATING YOU AS EXPERIMENTS!!",
+		";THEY HIRE ASSISTANTS WITHOUT DOING BACKGROUND CHECKS!!",
+		";WE LIVE IN A ZOO AND WE ARE THE ONES BEING OBSERVED!!",
+		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
+	)
+	user.say(pick(conspiracy_line), forced=type)
+	var/obj/item/organ/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.damage = BRAIN_DAMAGE_DEATH
+		user.death(gibbed=FALSE)
+		user.ghostize(can_reenter_corpse = FALSE)
+		return MANUAL_SUICIDE
+	return OXYLOSS
