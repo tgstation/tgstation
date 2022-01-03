@@ -878,7 +878,7 @@
 			new_card.cardname = card
 			new_card.Flip()
 			cards += new_card
-	update_sprite()
+		update_sprite()
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	. = ..()
