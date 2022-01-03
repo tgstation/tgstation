@@ -1969,6 +1969,7 @@
 /mob/living/proc/will_escape_storage()
 	return FALSE
 
+//Used specifically for the clown box suicide act
 /mob/living/carbon/human/will_escape_storage()
 	return TRUE
 
