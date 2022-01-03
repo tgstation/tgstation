@@ -305,7 +305,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/custom_icon
 	name = "Custom Icon Injector"
 	icon_state = "icon"
-	///This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	///This is the var that will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
 	var/target_variable = "icon"
 	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
 	var/icon_url
@@ -345,6 +345,51 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
 	. = ..()
 	. += " | target variable: [target_variable] | icon url: [icon_url]"
+
+///Fetches an external sound and applies to the target object
+/obj/effect/mapping_helpers/atom_injector/custom_sound
+	name = "Custom Sound Injector"
+	icon_state = "sound"
+	///This is the var that will be set with the fetched sound.
+	var/target_variable = "hitsound"
+	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	var/sound_url
+	///The sound file we fetched from the http get request.
+	var/sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/check_validity()
+	var/static/sound_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(sound_cache[sound_url])
+		sound_file = sound_cache[sound_url]
+		return TRUE
+	log_asset("Custom Sound Helper fetching sound from: [sound_url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_sound.ogg"
+	request.prepare(RUSTG_HTTP_METHOD_GET, sound_url, "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom sound from url [sound_url], code: [response.status_code], error: [response.error]")
+	var/sound/new_sound = new(file_name)
+	sound_cache[sound_url] = new_sound
+	query_in_progress = FALSE
+	sound_file = new_sound
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/inject(atom/target)
+	if(IsAdminAdvancedProcCall())
+		return
+	target.vars[target_variable] = sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/generate_stack_trace()
+	. = ..()
+	. += " | target variable: [target_variable] | sound url: [sound_url]"
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
