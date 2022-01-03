@@ -222,7 +222,7 @@
 	/// The very center of the spread.
 	var/turf/centre
 	/// Lazylist of turfs at the edge of our rust (but not yet rusted).
-	var/list/edge_turfs
+	var/list/edge_turfs = list()
 	/// List of all turfs we've afflicted.
 	var/list/rusted_turfs = list()
 	/// Static blacklist of turfs we can't spread to.
@@ -242,7 +242,7 @@
 
 /datum/rust_spread/Destroy(force, ...)
 	centre = null
-	LAZYCLEARLIST(edge_turfs)
+	edge_turfs.Cut()
 	rusted_turfs.Cut()
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
@@ -250,15 +250,14 @@
 /datum/rust_spread/process(delta_time)
 	var/spread_amount = round(spread_per_sec * delta_time)
 
-	if(LAZYLEN(edge_turfs) < spread_amount)
+	if(length(edge_turfs) < spread_amount)
 		compile_turfs()
 
 	for(var/i in 0 to spread_amount)
-		if(!LAZYLEN(edge_turfs))
+		if(!length(edge_turfs))
 			break
-		var/turf/afflicted_turf = pick(edge_turfs)
+		var/turf/afflicted_turf = pick_n_take(edge_turfs)
 		afflicted_turf.rust_heretic_act()
-		LAZYREMOVE(edge_turfs, afflicted_turf)
 		rusted_turfs |= afflicted_turf
 
 /**
@@ -267,7 +266,7 @@
  * Recreates the edge_turfs list and the rusted_turfs list.
  */
 /datum/rust_spread/proc/compile_turfs()
-	LAZYCLEARLIST(edge_turfs)
+	edge_turfs.Cut()
 
 	var/max_dist = 1
 	for(var/turf/found_turf as anything in rusted_turfs)
@@ -281,5 +280,5 @@
 
 		for(var/turf/line_turf as anything in get_line(nearby_turf, centre))
 			if(get_dist(nearby_turf, line_turf) <= 1)
-				LAZYADD(edge_turfs, nearby_turf)
+				edge_turfs |= nearby_turf
 		CHECK_TICK
