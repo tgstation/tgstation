@@ -341,14 +341,13 @@
 
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
-	var/text = "This one is a"
-	if(mutations.len)
-		for(var/A in mutations)
-			var/datum/spacevine_mutation/SM = A
-			text += " [SM.name]"
-	else
-		text += " normal"
-	text += " vine."
+	if(!length(mutations))
+		. += "This vine has no mutations."
+		return
+	var/text = "This vine has the following mutations:\n"
+	for(var/datum/spacevine_mutation/SM as anything in mutations)
+		text += "| [SM.name] "
+	text += "|"dw
 	. += text
 
 /obj/structure/spacevine/Destroy()
