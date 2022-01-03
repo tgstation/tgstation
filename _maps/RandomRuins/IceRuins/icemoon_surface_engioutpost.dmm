@@ -202,7 +202,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "bi" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -452,7 +452,7 @@
 /turf/open/floor/iron,
 /area/ruin/planetengi)
 "ck" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+/obj/machinery/atmospherics/components/binary/volume_pump{
 	dir = 4
 	},
 /turf/open/floor/iron/corner{
@@ -489,6 +489,7 @@
 /area/ruin/planetengi)
 "ct" = (
 /obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/planetengi)
 "cu" = (
@@ -546,6 +547,7 @@
 /obj/effect/decal/remains/human,
 /obj/item/mod/control/pre_equipped/engineering,
 /obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable,
 /turf/open/floor/iron{
 	icon_state = "damaged3"
 	},
@@ -612,11 +614,15 @@
 	},
 /area/ruin/planetengi)
 "cX" = (
-/obj/item/card/id/advanced/engioutpost,
-/turf/open/floor/iron,
+/obj/structure/cable,
+/obj/machinery/power/emitter/welded{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
 /area/ruin/planetengi)
 "cY" = (
 /obj/item/stack/sheet/plasmarglass,
+/obj/item/card/id/advanced/engioutpost,
 /turf/open/floor/iron{
 	icon_state = "damaged4"
 	},
