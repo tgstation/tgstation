@@ -581,14 +581,14 @@
 	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
 /datum/action/item_action/agent_box/Grant(mob/M)
-	..()
+	. = ..()
 	if(owner)
 		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
 
 /datum/action/item_action/agent_box/Remove(mob/M)
 	if(owner)
 		UnregisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT)
-	..()
+	return ..()
 
 /datum/action/item_action/agent_box/proc/suicide_act(datum/source)
 	SIGNAL_HANDLER
