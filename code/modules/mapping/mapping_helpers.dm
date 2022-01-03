@@ -352,7 +352,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "sound"
 	///This is the var that will be set with the fetched sound.
 	var/target_variable = "hitsound"
-	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
 	var/sound_url
 	///The sound file we fetched from the http get request.
 	var/sound_file
