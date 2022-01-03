@@ -636,3 +636,108 @@
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+
+//Special module for the Captain's Magnate suit, and the CC Corporate suit.
+//Literally only a thing so that https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real
+/obj/item/mod/module/hat_stabilizer
+	name = "MOD hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet. Unfortunately, you still need to take off the hat first to deploy the helmet itself. \
+		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
+	icon_state = "hat_holder"
+	module_type = MODULE_PASSIVE //The description says it auto-deploys for certain hats; that's just an excuse to have a whitelist of items.
+	complexity = 0 //Its FREE!
+	active_power_cost = 0 //Yes, thats right, FREE!
+	removable = FALSE
+	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
+	var/obj/item/clothing/head/attached_hat
+	var/attachable_hats_list = list(/obj/item/clothing/head/caphat,)
+
+/obj/item/mod/module/hat_stabilizer/on_equip()
+	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
+	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
+	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	attachable_hats_list = typecacheof(
+		//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
+		//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
+		//Yes, I said it, the captian should have fun.
+		list(
+			/obj/item/clothing/head/caphat,
+			/obj/item/clothing/head/crown,
+			/obj/item/clothing/head/centhat,
+			/obj/item/clothing/head/centcom_cap,
+			/obj/item/clothing/head/pirate,
+			/obj/item/clothing/head/santa,
+			/obj/item/clothing/head/hardhat/reindeer,
+			/obj/item/clothing/head/sombrero,
+			/obj/item/clothing/head/kitty,
+			/obj/item/clothing/head/rabbitears,
+			/obj/item/clothing/head/festive,
+			/obj/item/clothing/head/powdered_wig,
+			/obj/item/clothing/head/weddingveil,
+			/obj/item/clothing/head/that,
+			/obj/item/clothing/head/nursehat,
+			/obj/item/clothing/head/chefhat,
+			)) - /obj/item/clothing/head/caphat/beret
+			//Need to subtract the beret because its annoying
+
+/obj/item/mod/module/hat_stabilizer/on_unequip()
+	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
+		remove_hat()
+	attachable_hats_list = null
+	mod.helmet.desc = initial(mod.helmet.desc)	//Reset this, as our add_examine proc wont be firing any more
+	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+
+/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
+	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
+		remove_hat(src, usr)
+
+/obj/item/mod/module/hat_stabilizer/proc/add_examine()
+	SIGNAL_HANDLER
+	mod.helmet.desc = initial(mod.helmet.desc)	//Reset this to prevent repeatedly adding notices.
+	if(attached_hat)
+		mod.helmet.desc += span_notice("\nThere's [attached_hat.name] placed on the helmet. Right-click to remove it.")
+	else
+		mod.helmet.desc += span_notice("\nThere's nothing placed on the helmet. Yet.")
+
+/obj/item/mod/module/hat_stabilizer/proc/place_hat(src, var/obj/item/hitting_item, var/mob/user)
+	SIGNAL_HANDLER
+	if(!istype(hitting_item, /obj/item/clothing/head))
+		return
+	if(!(mod.active))
+		balloon_alert(user, "suit must be active!")
+		return
+	if(!(is_type_in_list(hitting_item, attachable_hats_list)))
+		balloon_alert(user, "this hat wont fit!")
+		return
+	if(attached_hat)
+		balloon_alert(user, "helmet already has attached hat!")
+		return
+	balloon_alert(user, "hat attached, right click to remove")
+	attached_hat = hitting_item
+	/* REMOVE COMMENT IF UNNEEDED: OPTIONAL OFFSETS FOR JANKY SPRITES
+	if(!(is_type_in_list(attached_hat, list(/obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/powdered_wig, /obj/item/clothing/head/weddingveil, /obj/item/clothing/head/nursehat, /obj/item/clothing/head/chefhat))))	//For hats that DONT have clipping issues, such as the reindeer hardhat and powdered wig
+		attached_hat.worn_y_offset += 1 //The modsuit helmet sprites are a bit chonky, this prevents clipping; it also needs to be done here, so it can be UNdone in attack_hand_secondary
+	*/
+	hitting_item.forceMove(src)
+	generate_worn_overlay()
+
+/obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
+	. = ..()
+	if(attached_hat)
+		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+
+/obj/item/mod/module/hat_stabilizer/proc/remove_hat(src, var/mob/user)
+	SIGNAL_HANDLER
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!attached_hat)
+		return
+	/* REMOVE COMMENT IF UNNEEDED: OPTIONAL OFFSETS FOR JANKY SPRITES
+	attached_hat.worn_y_offset = initial(attached_hat.worn_y_offset)
+	*/
+	user.put_in_active_hand(attached_hat)
+	balloon_alert(user, "hat removed")
+	attached_hat = null
+	generate_worn_overlay()
