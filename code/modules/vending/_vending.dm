@@ -171,6 +171,9 @@
 	/// used for narcing on underages
 	var/obj/item/radio/Radio
 
+	/// Does this vending machine dispense patterns instead of clothes?
+	var/dispenses_patterns = TRUE
+
 
 /**
  * Initialize the vending machine
@@ -939,7 +942,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
-	if(ispath(R.product_path, /obj/item/clothing))
+	if(ispath(R.product_path, /obj/item/clothing) && dispenses_patterns)
 		vended_item = new /obj/item/pattern_kit(get_turf(src))
 		var/obj/item/pattern_kit/pattern = vended_item
 		pattern.clothing_to_make = R.product_path

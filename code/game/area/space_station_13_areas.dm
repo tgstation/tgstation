@@ -707,6 +707,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "bar"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
+/area/service/barber
+	name = "\improper Barber"
+	icon_state = "barber"
+
+/area/service/tailor
+	name = "\improper Tailor"
+	icon_state = "tailor"
+
 /area/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
 	icon_state = "abandoned_m_den"
