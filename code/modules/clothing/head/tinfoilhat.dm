@@ -80,14 +80,11 @@
 		";THEY HIRE ASSISTANTS WITHOUT DOING BACKGROUND CHECKS!!",
 		";WE LIVE IN A ZOO AND WE ARE THE ONES BEING OBSERVED!!",
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
-	))
+	)
 	user.say(pick(conspiracy_line))
 	var/obj/item/organ/brain/brain = user.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.damage = BRAIN_DAMAGE_DEATH
-		user.death(gibbed = FALSE)
-		user.ghostize(can_reenter_corpse = FALSE)
-		return MANUAL_SUICIDE
 	return OXYLOSS
 
 /obj/item/clothing/head/foilhat/proc/call_suicide(datum/source)
