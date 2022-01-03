@@ -80,7 +80,7 @@
 /turf/closed/indestructible/riveted/uranium,
 /area/ruin/powered/gluttony)
 "S" = (
-/obj/machinery/door/airlock/uranium,
+/obj/machinery/door/airlock/uranium/safe,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)

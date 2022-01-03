@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 #define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
 #define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
 
-#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc" = world.timeofday )
 #define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
 #define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
 #define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
-#ifdef REFERENCE_TRACKING_LOG
+#ifdef REFERENCE_TRACKING
 #define log_reftracker(msg) log_world("## REF SEARCH [msg]")
 #else
 #define log_reftracker(msg)
@@ -105,15 +105,29 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
 /proc/log_asset(text)
-	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+	if(CONFIG_GET(flag/log_asset))
+		WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
 
-/proc/log_law(text)
-	if (CONFIG_GET(flag/log_law))
-		WRITE_LOG(GLOB.world_game_log, "LAW: [text]")
+/proc/log_silicon(text)
+	if (CONFIG_GET(flag/log_silicon))
+		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+
+/**
+ * Writes to a special log file if the log_suspicious_login config flag is set,
+ * which is intended to contain all logins that failed under suspicious circumstances.
+ *
+ * Mirrors this log entry to log_access when access_log_mirror is TRUE, so this proc
+ * doesn't need to be used alongside log_access and can replace it where appropriate.
+ */
+/proc/log_suspicious_login(text, access_log_mirror = TRUE)
+	if (CONFIG_GET(flag/log_suspicious_login))
+		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
+	if(access_log_mirror)
+		log_access(text)
 
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))
@@ -131,7 +145,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."
 
 	if(user)
-		user.log_message(bomb_message, LOG_GAME) //let it go to individual logs as well as the game log
+		user.log_message(bomb_message, LOG_ATTACK) //let it go to individual logs as well as the game log
 		bomb_message = "[key_name(user)] at [AREACOORD(user)] [bomb_message]"
 	else
 		log_game(bomb_message)
@@ -156,6 +170,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
 		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+
+/proc/log_radio_emote(text)
+	if (CONFIG_GET(flag/log_emote))
+		WRITE_LOG(GLOB.world_game_log, "RADIOEMOTE: [text]")
 
 /proc/log_prayer(text)
 	if (CONFIG_GET(flag/log_prayer))

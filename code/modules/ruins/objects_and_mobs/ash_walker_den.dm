@@ -19,7 +19,7 @@
 	var/datum/team/ashwalkers/ashies
 	var/datum/linked_objective
 
-/obj/structure/lavaland/ash_walker/Initialize()
+/obj/structure/lavaland/ash_walker/Initialize(mapload)
 	.=..()
 	ashies = new /datum/team/ashwalkers()
 	var/datum/objective/protect_object/objective = new
@@ -82,7 +82,7 @@
 				to_chat(deliverymob, span_warning("<b>The Necropolis is pleased with your sacrifice. You feel confident your existence after death is secure.</b>"))
 				ashies.players_spawned -= deliverykey
 			H.gib()
-			obj_integrity = min(obj_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
+			atom_integrity = min(atom_integrity + max_integrity*0.05,max_integrity)//restores 5% hp of tendril
 			for(var/mob/living/L in view(src, 5))
 				if(L.mind?.has_antag_datum(/datum/antagonist/ashwalker))
 					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "oogabooga", /datum/mood_event/sacrifice_good)
@@ -103,6 +103,6 @@
 
 /obj/structure/lavaland/ash_walker/proc/spawn_mob()
 	if(meat_counter >= ASH_WALKER_SPAWN_THRESHOLD)
-		new /obj/effect/mob_spawn/human/ash_walker(get_step(loc, pick(GLOB.alldirs)), ashies)
+		new /obj/effect/mob_spawn/ghost_role/human/ash_walker(get_step(loc, pick(GLOB.alldirs)), ashies)
 		visible_message(span_danger("One of the eggs swells to an unnatural size and tumbles free. It's ready to hatch!"))
 		meat_counter -= ASH_WALKER_SPAWN_THRESHOLD

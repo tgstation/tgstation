@@ -88,13 +88,13 @@
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish") as null|anything in sortList(list("Power","Wealth","Immortality","Peace"))
+		var/wish = input("You want...","Wish") as null|anything in sort_list(list("Power","Wealth","Immortality","Peace"))
 		switch(wish)
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.dna.add_mutation(LASEREYES)
-				user.dna.add_mutation(SPACEMUT)
+				user.dna.add_mutation(PRESSUREADAPT)
 				user.dna.add_mutation(XRAY)
 				user.set_species(/datum/species/shadow)
 			if("Wealth")
@@ -153,7 +153,7 @@
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		explosion(src, devastation_range = 1)
+		explosion(src, devastation_range = 1, explosion_cause = src)
 		qdel(src)
 
 /////For the Wishgranter///////////

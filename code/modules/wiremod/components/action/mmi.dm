@@ -6,6 +6,8 @@
 /obj/item/circuit_component/mmi
 	display_name = "Man-Machine Interface"
 	desc = "A component that allows MMI to enter shells to send output signals."
+	category = "Action"
+	circuit_flags = CIRCUIT_FLAG_REFUSE_MODULE
 
 	/// The message to send to the MMI in the shell.
 	var/datum/port/input/message
@@ -36,8 +38,7 @@
 	/// Maximum length of the message that can be sent to the MMI
 	var/max_length = 300
 
-/obj/item/circuit_component/mmi/Initialize()
-	. = ..()
+/obj/item/circuit_component/mmi/populate_ports()
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	send = add_input_port("Send Message", PORT_TYPE_SIGNAL)
 	eject = add_input_port("Eject", PORT_TYPE_SIGNAL)
@@ -56,9 +57,6 @@
 	return ..()
 
 /obj/item/circuit_component/mmi/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!brain)
 		return
@@ -66,10 +64,10 @@
 	if(COMPONENT_TRIGGERED_BY(eject, port))
 		remove_current_brain()
 	if(COMPONENT_TRIGGERED_BY(send, port))
-		if(!message.input_value)
+		if(!message.value)
 			return
 
-		var/msg_str = copytext(html_encode(message.input_value), 1, max_length)
+		var/msg_str = copytext(html_encode(message.value), 1, max_length)
 
 		var/mob/living/target = brain.brainmob
 		if(!target)
@@ -151,9 +149,8 @@
 
 	return TRUE
 
-/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/mods)
+/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	var/list/modifiers = params2list(mods)
 	if(modifiers[RIGHT_CLICK])
 		clicked_atom.set_output(target)
 		secondary_attack.set_output(COMPONENT_SIGNAL)

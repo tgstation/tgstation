@@ -65,7 +65,7 @@
 					span_danger("You start slicing [H]'s throat!"), \
 					span_hear("You hear a cutting noise!"), ignored_mobs = H)
 	H.show_message(span_userdanger("Your throat is being slit by [user]!"), MSG_VISUAL, \
-					"<span class = 'userdanger'>Something is cutting into your neck!</span>", NONE)
+					span_userdanger("Something is cutting into your neck!"), NONE)
 	log_combat(user, H, "attempted throat slitting", source)
 
 	playsound(H.loc, butcher_sound, 50, TRUE, -1)
@@ -137,6 +137,7 @@
 ///Special snowflake component only used for the recycler.
 /datum/component/butchering/recycler
 
+
 /datum/component/butchering/recycler/Initialize(_speed, _effectiveness, _bonus_modifier, _butcher_sound, disabled, _can_be_blunt)
 	if(!istype(parent, /obj/machinery/recycler)) //EWWW
 		return COMPONENT_INCOMPATIBLE
@@ -147,7 +148,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 /datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

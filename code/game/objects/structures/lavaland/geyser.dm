@@ -113,7 +113,7 @@
 	true_name = "strange geyser"
 	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
-/obj/structure/geyser/random/Initialize()
+/obj/structure/geyser/random/Initialize(mapload)
 	. = ..()
 	reagent_id = get_random_reagent_id()
 
@@ -142,7 +142,7 @@
 	///Assoc list for possible layers
 	var/list/layers = list("Second Layer" = SECOND_DUCT_LAYER, "Default Layer" = DUCT_LAYER_DEFAULT, "Fourth Layer" = FOURTH_DUCT_LAYER)
 
-/obj/item/plunger/attack_obj(obj/O, mob/living/user, params)
+/obj/item/plunger/attack_atom(obj/O, mob/living/user, params)
 	if(layer_mode)
 		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
 		return ..()
@@ -178,9 +178,10 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 
-	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
-	if(new_layer)
-		target_layer = layers[new_layer]
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
+	if(isnull(new_layer))
+		return
+	target_layer = layers[new_layer]
 
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced

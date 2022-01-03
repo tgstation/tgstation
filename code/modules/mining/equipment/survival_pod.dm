@@ -2,7 +2,7 @@
 /area/survivalpod
 	name = "\improper Emergency Shelter"
 	icon_state = "away"
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	requires_power = FALSE
 	has_gravity = STANDARD_GRAVITY
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
@@ -82,7 +82,7 @@
 //Pod objects
 
 //Window
-/obj/structure/window/shuttle/survival_pod
+/obj/structure/window/reinforced/shuttle/survival_pod
 	name = "pod window"
 	icon = 'icons/obj/smooth_structures/pod_window.dmi'
 	icon_state = "pod_window-0"
@@ -91,13 +91,13 @@
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 	canSmoothWith = list(SMOOTH_GROUP_SURVIVAL_TIANIUM_POD)
 
-/obj/structure/window/shuttle/survival_pod/spawner/north
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/north
 	dir = NORTH
 
-/obj/structure/window/shuttle/survival_pod/spawner/east
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/east
 	dir = EAST
 
-/obj/structure/window/shuttle/survival_pod/spawner/west
+/obj/structure/window/reinforced/shuttle/survival_pod/spawner/west
 	dir = WEST
 
 /obj/structure/window/reinforced/survival_pod
@@ -186,6 +186,10 @@
 	icon = 'icons/obj/lavaland/survival_pod.dmi'
 	icon_state = "bed"
 
+/obj/structure/bed/double/pod
+	icon = 'icons/obj/lavaland/survival_pod.dmi'
+	icon_state = "bed_double"
+
 //Survival Storage Unit
 /obj/machinery/smartfridge/survival_pod
 	name = "survival pod storage"
@@ -210,7 +214,7 @@
 		var/obj/item/food/donkpocket/warm/W = new(src)
 		load(W)
 	if(prob(50))
-		var/obj/item/storage/pill_bottle/dice/D = new(src)
+		var/obj/item/storage/dice/D = new(src)
 		load(D)
 	else
 		var/obj/item/instrument/guitar/G = new(src)
@@ -229,7 +233,7 @@
 	density = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/iron
 	var/buildstackamount = 5
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -302,7 +306,7 @@
 						/obj/item/phylactery,
 						/obj/item/banhammer)
 
-/obj/item/fakeartefact/Initialize()
+/obj/item/fakeartefact/Initialize(mapload)
 	. = ..()
 	var/obj/item/I = pick(possible)
 	name = initial(I.name)
@@ -310,3 +314,6 @@
 	desc = initial(I.desc)
 	icon_state = initial(I.icon_state)
 	inhand_icon_state = initial(I.inhand_icon_state)
+	lefthand_file = initial(I.lefthand_file)
+	righthand_file = initial(I.righthand_file)
+	cut_overlays() //to get rid of the big blue x

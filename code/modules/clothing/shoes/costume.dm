@@ -35,7 +35,7 @@
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 
-/obj/item/clothing/shoes/bronze/Initialize()
+/obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
@@ -63,3 +63,39 @@
 	desc = "They got me for my foams!"
 	icon_state = "SwagShoes"
 	inhand_icon_state = "SwagShoes"
+
+/obj/item/clothing/shoes/phantom
+	name = "phantom shoes"
+	desc = "Excellent for when you need to do cool flashy flips."
+	icon_state = "phantom_shoes"
+	inhand_icon_state = "phantom_shoes"
+
+/obj/item/clothing/shoes/saints
+	name = "saints sneakers"
+	desc = "Officially branded Saints sneakers. Incredibly valuable!"
+	icon_state = "saints_shoes"
+	inhand_icon_state = "saints_shoes"
+
+/obj/item/clothing/shoes/morningstar
+	name = "morningstar boots"
+	desc = "The most expensive boots on this station. Wearing them dropped the value by about 50%."
+	icon_state = "morningstar_shoes"
+	inhand_icon_state = "morningstar_shoes"
+
+/obj/item/clothing/shoes/deckers
+	name = "deckers rollerskates"
+	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
+	icon_state = "decker_shoes"
+	inhand_icon_state = "decker_shoes"
+
+/obj/item/clothing/shoes/sybil_slickers
+	name = "sybil slickers shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_blue"
+	inhand_icon_state = "sneakers_blue"
+
+/obj/item/clothing/shoes/basil_boys
+	name = "basil boys shoes"
+	desc = "FOOTBALL! YEAH!"
+	icon_state = "sneakers_red"
+	inhand_icon_state = "sneakers_red"

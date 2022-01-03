@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
@@ -20,8 +20,10 @@
 	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
 	var/trophy_message = ""
 	var/glass_fix = TRUE
+	///Represents a signel source of screaming when broken
+	var/datum/alarm_handler/alarm_manager
 
-/obj/structure/displaycase/Initialize()
+/obj/structure/displaycase/Initialize(mapload)
 	. = ..()
 	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
@@ -32,6 +34,7 @@
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_appearance()
+	alarm_manager = new(src)
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()
@@ -49,6 +52,7 @@
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
 	QDEL_NULL(showpiece)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
@@ -82,7 +86,7 @@
 			trigger_alarm()
 	qdel(src)
 
-/obj/structure/displaycase/obj_break(damage_flag)
+/obj/structure/displaycase/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		set_density(FALSE)
@@ -98,6 +102,10 @@
 		return
 	var/area/alarmed = get_area(src)
 	alarmed.burglaralert(src)
+
+	alarm_manager.send_alarm(ALARM_BURGLAR)
+	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+
 	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
 /obj/structure/displaycase/update_overlays()
@@ -122,15 +130,15 @@
 			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
-			to_chat(user,  span_alert("Access denied."))
+			to_chat(user, span_alert("Access denied."))
 	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
 				to_chat(user, span_notice("You repair [src]."))
 		else
@@ -159,7 +167,7 @@
 		if(do_after(user, 20, target = src))
 			G.use(2)
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 	else
 		return ..()
@@ -288,7 +296,7 @@
 	integrity_failure = 0
 	openable = FALSE
 
-/obj/structure/displaycase/trophy/Initialize()
+/obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
 	GLOB.trophy_cases += src
 
@@ -325,7 +333,7 @@
 		to_chat(user, span_warning("The case rejects the [W]!"))
 		return
 
-	for(var/a in W.GetAllContents())
+	for(var/a in W.get_all_contents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
 			to_chat(user, span_warning("The case rejects the [W]!"))
 			return
@@ -345,7 +353,7 @@
 
 		trophy_message = W.desc //default value
 
-		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque")
+		var/chosen_plaque = tgui_input_text(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque", trophy_message)
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
@@ -500,14 +508,14 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000, 1)
 			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
 			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
-			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
+			new_price_input = round(new_price_input)
 			sale_price = new_price_input
 			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)
@@ -532,11 +540,11 @@
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_integrity <= (integrity_failure *  max_integrity))
+	if(atom_integrity <= (integrity_failure *  max_integrity))
 		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
 		if(do_after(user, 20, target = src))
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 		return TRUE
 
@@ -573,7 +581,7 @@
 	if(broken)
 		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
 
-/obj/structure/displaycase/forsale/obj_break(damage_flag)
+/obj/structure/displaycase/forsale/atom_break(damage_flag)
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE

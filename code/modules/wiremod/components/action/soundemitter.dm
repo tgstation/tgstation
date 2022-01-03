@@ -6,6 +6,7 @@
 /obj/item/circuit_component/soundemitter
 	display_name = "Sound Emitter"
 	desc = "A component that emits a sound when it receives an input. The frequency is a multiplier which determines the speed at which the sound is played"
+	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	/// Sound to play
@@ -27,8 +28,7 @@
 	. += create_ui_notice("Sound Cooldown: [DisplayTimeText(sound_cooldown)]", "orange", "stopwatch")
 
 
-/obj/item/circuit_component/soundemitter/Initialize()
-	. = ..()
+/obj/item/circuit_component/soundemitter/populate_ports()
 	volume = add_input_port("Volume", PORT_TYPE_NUMBER, default = 35)
 	frequency = add_input_port("Frequency", PORT_TYPE_NUMBER, default = 0)
 
@@ -46,21 +46,18 @@
 	sound_file = add_option_port("Sound Option", component_options)
 	options_map = component_options
 
+/obj/item/circuit_component/soundemitter/pre_input_received(datum/port/input/port)
+	volume.set_value(clamp(volume.value, 0, 100))
+	frequency.set_value(clamp(frequency.value, -100, 100))
 
 /obj/item/circuit_component/soundemitter/input_received(datum/port/input/port)
-	. = ..()
-	volume.set_input(clamp(volume.input_value, 0, 100), FALSE)
-	frequency.set_input(clamp(frequency.input_value, -100, 100), FALSE)
-	if(.)
-		return
-
 	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
-	var/sound_to_play = options_map[sound_file.input_value]
+	var/sound_to_play = options_map[sound_file.value]
 	if(!sound_to_play)
 		return
 
-	playsound(src, sound_to_play, volume.input_value, frequency != 0, frequency = frequency.input_value)
+	playsound(src, sound_to_play, volume.value, frequency != 0, frequency = frequency.value)
 
 	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_SOUNDEMITTER, sound_cooldown)

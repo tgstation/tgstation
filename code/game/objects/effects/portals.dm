@@ -1,4 +1,3 @@
-
 /proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
@@ -43,6 +42,9 @@
 		if(istype(T, /obj/effect/portal))
 			return FALSE
 	return ..()
+
+/obj/effect/portal/newtonian_move() // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+	return TRUE
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))

@@ -105,7 +105,7 @@
 
 /datum/food_processor_process/spaghetti
 	input = /obj/item/food/doughslice
-	output = /obj/item/food/spaghetti
+	output = /obj/item/food/spaghetti/raw
 
 /datum/food_processor_process/corn
 	input = /obj/item/food/grown/corn

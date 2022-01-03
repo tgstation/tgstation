@@ -79,6 +79,7 @@
 	reagents_add = list (/datum/reagent/pax = 0.1, /datum/reagent/drug/happiness = 0.1, /datum/reagent/consumable/nutriment = 0.15)
 	rarity = 50 // This absolutely will make even the most hardened Syndicate Operators relax.
 	graft_gene = /datum/plant_gene/trait/glow/blue
+	mutatelist = null
 
 /obj/item/food/grown/peace
 	seed = /obj/item/seeds/peas/laugh/peace

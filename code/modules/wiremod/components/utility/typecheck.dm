@@ -9,6 +9,7 @@
 /obj/item/circuit_component/compare/typecheck
 	display_name = "Typecheck"
 	desc = "A component that checks the type of its input."
+	category = "Utility"
 
 	input_port_amount = 1
 	var/datum/port/input/option/typecheck_options
@@ -17,7 +18,7 @@
 	var/static/component_options = list(
 		PORT_TYPE_STRING,
 		PORT_TYPE_NUMBER,
-		PORT_TYPE_LIST,
+		PORT_COMPOSITE_TYPE_LIST,
 		PORT_TYPE_ATOM,
 		COMP_TYPECHECK_MOB,
 		COMP_TYPECHECK_HUMAN,
@@ -31,13 +32,13 @@
 
 	// We're only comparing the first port/value. There shouldn't be any more.
 	var/datum/port/input/input_port = ports[1]
-	var/input_val = input_port.input_value
-	switch(typecheck_options.input_value)
+	var/input_val = input_port.value
+	switch(typecheck_options.value)
 		if(PORT_TYPE_STRING)
 			return istext(input_val)
 		if(PORT_TYPE_NUMBER)
 			return isnum(input_val)
-		if(PORT_TYPE_LIST)
+		if(PORT_COMPOSITE_TYPE_LIST)
 			return islist(input_val)
 		if(PORT_TYPE_ATOM)
 			return isatom(input_val)

@@ -30,7 +30,7 @@
 	. = ..()
 	update_desc()
 
-/obj/item/stack/spacecash/use(used, transfer = FALSE)
+/obj/item/stack/spacecash/use(used, transfer = FALSE, check = TRUE)
 	. = ..()
 	update_desc()
 

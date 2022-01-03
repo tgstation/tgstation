@@ -32,7 +32,7 @@
 	name = "lipstick"
 	icon_state = "random_lipstick"
 
-/obj/item/lipstick/random/Initialize()
+/obj/item/lipstick/random/Initialize(mapload)
 	. = ..()
 	icon_state = "lipstick"
 	colour = pick("red","purple","lime","black","green","blue","white")
@@ -140,7 +140,9 @@
 						return
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return
-					var/new_style = input(user, "Select a facial hairstyle", "Grooming")  as null|anything in GLOB.facial_hairstyles_list
+					var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", GLOB.facial_hairstyles_list)
+					if(isnull(new_style))
+						return
 					if(!get_location_accessible(H, location))
 						to_chat(user, span_warning("The mask is in the way!"))
 						return
@@ -186,7 +188,9 @@
 					return
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-				var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
+				var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", GLOB.hairstyles_list)
+				if(isnull(new_style))
+					return
 				if(!get_location_accessible(H, location))
 					to_chat(user, span_warning("The headgear is in the way!"))
 					return

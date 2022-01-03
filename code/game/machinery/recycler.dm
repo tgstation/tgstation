@@ -17,7 +17,7 @@
 	var/eat_victim_items = TRUE
 	var/item_recycle_sound = 'sound/items/welder.ogg'
 
-/obj/machinery/recycler/Initialize()
+/obj/machinery/recycler/Initialize(mapload)
 	var/list/allowed_materials = list(
 		/datum/material/iron,
 		/datum/material/glass,
@@ -120,7 +120,7 @@
 	if(!isturf(AM0.loc))
 		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat = AM0.GetAllContents()
+	var/list/to_eat = AM0.get_all_contents()
 
 	var/living_detected = FALSE //technically includes silicons as well but eh
 	var/list/nom = list()

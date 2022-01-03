@@ -31,26 +31,14 @@
 #define BOMB "bomb"
 /// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
-/// Involves ionizing radiation.
-#define RAD "rad"
 /// Involves fire or temperature extremes.
 #define FIRE "fire"
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involves magic.
-#define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
-
-// Weather immunities //
-#define WEATHER_STORM "storm"
-#define WEATHER_ACID "acid"
-#define WEATHER_ASH "ash"
-#define WEATHER_LAVA "lava"
-#define WEATHER_RAD "rad"
-#define WEATHER_SNOW "snow"
-#define WEATHER_VOID "void"
-#define WEATHER_ALL "all"
+/// Involves being eaten
+#define CONSUME "consume"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS (1<<0)
@@ -66,7 +54,6 @@
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_IRRADIATE "irradiate"
 #define EFFECT_STUTTER "stutter"
 #define EFFECT_SLUR "slur"
 #define EFFECT_EYE_BLUR "eye_blur"
@@ -317,3 +304,11 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
+
+/// Return values used in item/melee/baton/baton_attack.
+/// Does a normal item attack.
+#define BATON_DO_NORMAL_ATTACK 1
+/// The attack has been stopped. Either because the user was clumsy or the attack was blocked.
+#define BATON_ATTACK_DONE 2
+/// The baton attack is still going. baton_effect() is called.
+#define BATON_ATTACKING 3

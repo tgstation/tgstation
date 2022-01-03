@@ -5,10 +5,10 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0, WOUND = 5)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 5)
 	equip_sound = 'sound/items/equip/jumpsuit_equip.ogg'
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
-	pickup_sound =  'sound/items/handling/cloth_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
@@ -62,19 +62,32 @@
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
 
-/obj/item/clothing/under/Initialize()
+/obj/item/clothing/under/Initialize(mapload)
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 
-/obj/item/clothing/under/emp_act()
+/obj/item/clothing/under/emp_act(severity)
 	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(has_sensor > NO_SENSORS)
-		sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
-		if(ismob(loc))
-			var/mob/M = loc
-			to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
+		if(severity <= EMP_HEAVY)
+			has_sensor = BROKEN_SENSORS
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("[src]'s sensors short out!"))
+		else
+			sensor_mode = pick(SENSOR_OFF, SENSOR_OFF, SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS)
+			if(ismob(loc))
+				var/mob/M = loc
+				to_chat(M,span_warning("The sensors on the [src] change rapidly!"))
+		if(ishuman(loc))
+			var/mob/living/carbon/human/ooman = loc
+			if(ooman.w_uniform == src)
+				ooman.update_suit_sensors()
+
 
 /obj/item/clothing/under/visual_equipped(mob/user, slot)
 	..()
@@ -149,7 +162,7 @@
 		to_chat(user, span_notice("You attach [accessory] to [src]."))
 
 	var/accessory_color = attached_accessory.icon_state
-	accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
+	accessory_overlay = mutable_appearance(attached_accessory.worn_icon, "[accessory_color]")
 	accessory_overlay.alpha = attached_accessory.alpha
 	accessory_overlay.color = attached_accessory.color
 
@@ -234,7 +247,9 @@
 		return
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
-	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	var/switchMode = tgui_input_list(M, "Select a sensor mode", "Suit Sensors", modes, modes[sensor_mode + 1])
+	if(isnull(switchMode))
+		return
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, span_warning("You have moved too far away!"))
 		return
@@ -328,6 +343,6 @@
 	accessory_overlay = null
 	update_appearance()
 
-/obj/item/clothing/under/rank/obj_destruction(damage_flag)
+/obj/item/clothing/under/rank/atom_destruction(damage_flag)
 	dump_attachment()
 	return ..()

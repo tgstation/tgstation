@@ -50,7 +50,7 @@
 /turf/open/indestructible/permalube,
 /area/ruin/powered/clownplanet)
 "as" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
@@ -739,7 +739,7 @@
 /turf/open/indestructible/honk,
 /area/ruin/powered/clownplanet)
 "bI" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -829,7 +829,7 @@
 /turf/open/indestructible/honk,
 /area/ruin/powered/clownplanet)
 "bY" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/honk,
 /area/ruin/powered/clownplanet)
@@ -1000,7 +1000,7 @@
 /area/ruin/powered/clownplanet)
 "os" = (
 /obj/effect/mapping_helpers/no_lava,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "pv" = (

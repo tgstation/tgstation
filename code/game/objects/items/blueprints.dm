@@ -115,18 +115,21 @@
 
 	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
 
-/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
+/obj/item/areaeditor/blueprints/proc/get_images(turf/central_turf, viewsize)
 	. = list()
-	for(var/turf/TT in RANGE_TURFS(viewsize, T))
-		if(TT.blueprint_data)
-			. += TT.blueprint_data
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			. += nearby_turf.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user?.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
-		showing = get_images(get_turf(user), viewing.view)
+		showing = get_images(get_turf(viewing.eye || user), viewing.view)
 		viewing.images |= showing
 		if(message)
 			to_chat(user, message)
@@ -187,7 +190,7 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
-	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
+	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

@@ -21,11 +21,13 @@
 	display_results(user, target, span_notice("You start splicing together [target]'s nerves."),
 		span_notice("[user] starts splicing together [target]'s nerves."),
 		span_notice("[user] starts manipulating [target]'s nervous system."))
+	display_pain(target, "Your entire body goes numb!")
 
 /datum/surgery_step/splice_nerves/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, span_notice("You successfully splice [target]'s nervous system!"),
 		span_notice("[user] successfully splices [target]'s nervous system!"),
 		span_notice("[user] finishes manipulating [target]'s nervous system."))
+	display_pain(target, "You regain feeling in your body; It feels like everything's happening around you in slow motion!")
 	new /datum/bioware/spliced_nerves(target)
 	return ..()
 

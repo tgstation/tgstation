@@ -136,6 +136,14 @@
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		var/move_mode = old_turfs[oldT]
+
+		if(move_mode & MOVE_TURF)
+			oldT.onShuttleMove(newT, movement_force, movement_direction) //turfs
+
+		if(move_mode & MOVE_AREA)
+			var/area/shuttle_area = oldT.loc
+			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) //areas
+
 		if(move_mode & MOVE_CONTENTS)
 			for(var/k in oldT)
 				var/atom/movable/moving_atom = k
@@ -144,12 +152,6 @@
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src) //atoms
 				moved_atoms[moving_atom] = oldT
 
-		if(move_mode & MOVE_TURF)
-			oldT.onShuttleMove(newT, movement_force, movement_direction) //turfs
-
-		if(move_mode & MOVE_AREA)
-			var/area/shuttle_area = oldT.loc
-			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) //areas
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
 	underlying_old_area.afterShuttleMove()

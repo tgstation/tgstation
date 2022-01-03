@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Accounting machines now assign the job to the bank account, meaning that new accounts can buy things without being considered budget cards."

@@ -35,7 +35,7 @@
 	emote_taunt = list("growls")
 	taunt_chance = 20
 
-	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 2.5
 	minbodytemp = 0
 	maxbodytemp = 1200
@@ -47,7 +47,7 @@
 
 	var/is_tree = TRUE
 
-/mob/living/simple_animal/hostile/tree/Initialize()
+/mob/living/simple_animal/hostile/tree/Initialize(mapload)
 	. = ..()
 	add_cell_sample()
 
@@ -92,7 +92,7 @@
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
 	faction = list()
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
 
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)

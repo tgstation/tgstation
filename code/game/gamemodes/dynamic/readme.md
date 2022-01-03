@@ -171,6 +171,7 @@ The "Dynamic" key has the following configurable values:
 - `random_event_hijack_minimum` - The minimum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
 - `random_event_hijack_maximum` - The maximum amount of time for antag random events to be hijacked. (See [Random Event Hijacking](#random-event-hijacking))
 - `hijacked_random_event_injection_chance` - The amount of injection chance to give to Dynamic when a random event is hijacked. (See [Random Event Hijacking](#random-event-hijacking))
+- `max_threat_level` - Sets the maximum amount of threat that can be rolled. Defaults to 100. You should only use this to *lower* the maximum threat, as raising it higher will not do anything.
 
 ## Random Event "Hijacking"
 Random events have the potential to be hijacked by Dynamic to keep the pace of midround injections, while also allowing greenshifts to contain some antagonists.

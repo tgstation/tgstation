@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/multitool,
 	/obj/item/weldingtool))
 
-/obj/machinery/deepfryer/Initialize()
+/obj/machinery/deepfryer/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent(/datum/reagent/consumable/cooking_oil, 25)
@@ -85,10 +85,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You put [I] into [src]."))
-			frying = new/obj/item/food/deepfryholder(src, I)
-			icon_state = "fryer_on"
-			fry_loop.start()
+			fry(I, user)
 
 /obj/machinery/deepfryer/process(delta_time)
 	..()
@@ -130,16 +127,43 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, span_warning("You need a better grip to do that!"))
 			return
-		var/mob/living/carbon/C = user.pulling
-		user.visible_message(span_danger("[user] dunks [C]'s face in [src]!"))
-		reagents.expose(C, TOUCH)
-		var/permeability = 1 - C.get_permeability_protection(list(HEAD))
-		C.apply_damage(min(30 * permeability, reagents.total_volume), BURN, BODY_ZONE_HEAD)
+		var/mob/living/carbon/dunking_target = user.pulling
+		log_combat(user, dunking_target, "dunked", null, "into [src]")
+		user.visible_message(span_danger("[user] dunks [dunking_target]'s face in [src]!"))
+		reagents.expose(dunking_target, TOUCH)
+		var/permeability = 1 - dunking_target.get_permeability_protection(list(HEAD))
+		var/target_temp = dunking_target.bodytemperature
+		var/cold_multiplier = 1
+		if(target_temp < TCMB + 10) // a tiny bit of leeway
+			dunking_target.visible_message(span_userdanger("[dunking_target] explodes from the entropic difference! Holy fuck!"))
+			dunking_target.gib()
+			log_combat(user, dunking_target, "blew up", null, "by dunking them into [src]")
+			return
+		else if(target_temp < T0C)
+			cold_multiplier += round(target_temp * 1.5 / T0C, 0.01)
+		dunking_target.apply_damage(min(30 * permeability * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
 			reagents.remove_any((reagents.total_volume/2))
-		C.Paralyze(60)
+		dunking_target.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
+
+/obj/machinery/deepfryer/proc/fry(obj/item/frying_item, mob/user)
+	to_chat(user, span_notice("You put [frying_item] into [src]."))
+	if(istype(frying_item, /obj/item/freeze_cube))
+		log_bomber(user, "put a freeze cube in a", src)
+		visible_message(span_userdanger("[src] starts glowing... Oh no..."))
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 100)
+		add_filter("entropic_ray", 10, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+		addtimer(CALLBACK(src, .proc/blow_up), 5 SECONDS)
+	frying = new /obj/item/food/deepfryholder(src, frying_item)
+	icon_state = "fryer_on"
+	fry_loop.start()
+
+/obj/machinery/deepfryer/proc/blow_up()
+	visible_message(span_userdanger("[src] blows up from the entropic reaction!"))
+	explosion(src, devastation_range = 1, heavy_impact_range = 3, light_impact_range = 5, flame_range = 7)
+	qdel(src)
 
 #undef DEEPFRYER_COOKTIME
 #undef DEEPFRYER_BURNTIME

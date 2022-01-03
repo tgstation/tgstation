@@ -25,6 +25,7 @@
 	desc = "Long-used as a symbol of rest, peace, and death."
 	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
@@ -68,11 +69,11 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "spacemanstrumpet-grow"
 	icon_dead = "spacemanstrumpet-dead"
-	mutatelist = list()
-	genes = list(/datum/plant_gene/reagent/polypyr, /datum/plant_gene/trait/preserved)
+	mutatelist = null
+	genes = list(/datum/plant_gene/reagent/preset/polypyr, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
-	graft_gene = /datum/plant_gene/reagent/polypyr
+	graft_gene = /datum/plant_gene/reagent/preset/polypyr
 
 /obj/item/food/grown/trumpet
 	seed = /obj/item/seeds/poppy/lily/trumpet
@@ -106,7 +107,7 @@
 	species = "fraxinella"
 	plantname = "Fraxinella Plants"
 	product = /obj/item/food/grown/poppy/geranium/fraxinella
-	mutatelist = list()
+	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
 
@@ -148,6 +149,7 @@
 	desc = "\"I'll sweeten thy sad grave: thou shalt not lack the flower that's like thy face, pale primrose, nor the azured hare-bell, like thy veins; no, nor the leaf of eglantine, whom not to slander, out-sweeten'd not thy breath.\""
 	icon_state = "harebell"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	distill_reagent = /datum/reagent/consumable/ethanol/vermouth
 
@@ -181,6 +183,7 @@
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -199,7 +202,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/food/grown/moonflower
 	genes = list(/datum/plant_gene/trait/glow/purple, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
 	graft_gene = /datum/plant_gene/trait/glow/purple
@@ -210,6 +213,7 @@
 	desc = "Store in a location at least 50 yards away from werewolves."
 	icon_state = "moonflower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	distill_reagent = /datum/reagent/consumable/ethanol/absinthe //It's made from flowers.
 
 // Novaflower
@@ -223,7 +227,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/grown/novaflower
 	genes = list(/datum/plant_gene/trait/backfire/novaflower_heat, /datum/plant_gene/trait/attack/novaflower_attack, /datum/plant_gene/trait/preserved)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/condensedcapsaicin = 0.25, /datum/reagent/consumable/capsaicin = 0.3, /datum/reagent/consumable/nutriment = 0)
 	rarity = 20
 
@@ -237,6 +241,7 @@
 	damtype = BURN
 	force = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
@@ -276,6 +281,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES | GROSS
 
@@ -301,13 +307,13 @@
 	potency = 15
 	instability = 3
 	growthstages = 3
-	genes = list(/datum/plant_gene/reagent/carbon, /datum/plant_gene/trait/preserved)
+	genes = list(/datum/plant_gene/reagent/preset/carbon, /datum/plant_gene/trait/preserved)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "carbonrose-grow"
 	icon_dead = "carbonrose-dead"
 	reagents_add = list(/datum/reagent/plastic_polymers = 0.05)
 	rarity = 10
-	graft_gene = /datum/plant_gene/reagent/carbon
+	graft_gene = /datum/plant_gene/reagent/preset/carbon
 
 /obj/item/grown/carbon_rose
 	seed = /obj/item/seeds/carbon_rose
@@ -319,5 +325,6 @@
 	force = 0
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throw_speed = 1
 	throw_range = 3

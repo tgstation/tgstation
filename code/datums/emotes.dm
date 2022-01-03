@@ -97,11 +97,6 @@
 
 	msg = replace_pronoun(user, msg)
 
-	if(isliving(user))
-		var/mob/living/sender = user
-		for(var/obj/item/implant/implant in sender.implants)
-			implant.trigger(key, sender)
-
 	if(!msg)
 		return
 
@@ -109,21 +104,24 @@
 	var/dchatmsg = "<b>[user]</b> [msg]"
 
 	var/tmp_sound = get_sound(user)
-	if(tmp_sound && (!only_forced_audio || !intentional) && !TIMER_COOLDOWN_CHECK(user, type))
+	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
 		playsound(user, tmp_sound, 50, vary)
 
 	var/user_turf = get_turf(user)
-	for(var/mob/ghost in GLOB.dead_mob_list)
-		if(!ghost.client || isnewplayer(ghost))
-			continue
-		if(ghost.stat == DEAD && ghost.client && user.client && (ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(ghost in viewers(user_turf, null)))
-			ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
+	if (user.client)
+		for(var/mob/ghost as anything in GLOB.dead_mob_list)
+			if(!ghost.client || isnewplayer(ghost))
+				continue
+			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(user_turf, null)))
+				ghost.show_message("<span class='emote'>[FOLLOW_LINK(ghost, user)] [dchatmsg]</span>")
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg, deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>", audible_message_flags = EMOTE_MESSAGE)
 	else
 		user.visible_message(msg, blind_message = "<span class='emote'>You hear how <b>[user]</b> [msg]</span>", visible_message_flags = EMOTE_MESSAGE)
+
+	SEND_SIGNAL(user, COMSIG_MOB_EMOTED(key))
 
 /**
  * For handling emote cooldown, return true to allow the emote to happen.
@@ -260,6 +258,20 @@
 			return FALSE
 
 /**
+ * Check to see if the user should play a sound when performing the emote.
+ *
+ * Arguments:
+ * * user - Person that is doing the emote.
+ * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ *
+ * Returns a bool about whether or not the user should play a sound when performing the emote.
+ */
+/datum/emote/proc/should_play_sound(mob/user, intentional = FALSE)
+	if(only_forced_audio && intentional)
+		return FALSE
+	return TRUE
+
+/**
 * Allows the intrepid coder to send a basic emote
 * Takes text as input, sends it out to those who need to know after some light parsing
 * If you need something more complex, make it into a datum emote
@@ -281,10 +293,11 @@
 	var/ghost_text = "<b>[src]</b> [text]"
 
 	var/origin_turf = get_turf(src)
-	for(var/mob/ghost in GLOB.dead_mob_list)
-		if(!ghost.client || isnewplayer(ghost))
-			continue
-		if(ghost.stat == DEAD && ghost.client && (ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(ghost in viewers(origin_turf, null)))
-			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
+	if(client)
+		for(var/mob/ghost as anything in GLOB.dead_mob_list)
+			if(!ghost.client || isnewplayer(ghost))
+				continue
+			if(ghost.client.prefs.chat_toggles & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
+				ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)

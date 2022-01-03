@@ -30,7 +30,7 @@
 	var/cooldownTime = 1800 //3 minutes
 	var/production_time = 30
 	//The item the dispenser will create
-	var/dispense_type = /obj/effect/mob_spawn/drone
+	var/dispense_type = /obj/effect/mob_spawn/ghost_role/drone
 
 	// The maximum number of "idle" drone shells it will make before
 	// ceasing production. Set to 0 for infinite.
@@ -48,7 +48,7 @@
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
 
-/obj/machinery/drone_dispenser/Initialize()
+/obj/machinery/drone_dispenser/Initialize(mapload)
 	. = ..()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(/datum/material/iron, /datum/material/glass), MINERAL_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, allowed_items=/obj/item/stack)
 	materials.insert_amount_mat(starting_amount)
@@ -61,7 +61,7 @@
 /obj/machinery/drone_dispenser/syndrone //Please forgive me
 	name = "syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting."
-	dispense_type = /obj/effect/mob_spawn/drone/syndrone
+	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/syndrone
 	//If we're gonna be a jackass, go the full mile - 10 second recharge timer
 	cooldownTime = 100
 	end_create_message = "dispenses a suspicious drone shell."
@@ -70,14 +70,14 @@
 /obj/machinery/drone_dispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
 	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with iron and glass. Disgusting. This one seems ominous."
-	dispense_type = /obj/effect/mob_spawn/drone/syndrone/badass
+	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/syndrone/badass
 	end_create_message = "dispenses an ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/drone_dispenser/snowflake
 	name = "snowflake drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/drone/snowflake
+	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
 	iron_cost = 2000
@@ -89,7 +89,7 @@
 /obj/machinery/drone_dispenser/derelict
 	name = "derelict drone shell dispenser"
 	desc = "A rusty machine that, when supplied with iron and glass, will periodically create a derelict drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/drone/derelict
+	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/derelict
 	end_create_message = "dispenses a derelict drone shell."
 	iron_cost = 10000
 	glass_cost = 5000
@@ -99,7 +99,7 @@
 /obj/machinery/drone_dispenser/classic
 	name = "classic drone shell dispenser"
 	desc = "A hefty machine that, when supplied with iron and glass, will periodically create a classic drone shell. Does not need to be manually operated."
-	dispense_type = /obj/effect/mob_spawn/drone/classic
+	dispense_type = /obj/effect/mob_spawn/ghost_role/drone/classic
 	end_create_message = "dispenses a classic drone shell."
 
 // An example of a custom drone dispenser.
@@ -226,12 +226,12 @@
 			span_notice("You restore [src] to operation."))
 
 		set_machine_stat(machine_stat & ~BROKEN)
-		obj_integrity = max_integrity
+		atom_integrity = max_integrity
 		update_appearance()
 	else
 		return ..()
 
-/obj/machinery/drone_dispenser/obj_break(damage_flag)
+/obj/machinery/drone_dispenser/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return

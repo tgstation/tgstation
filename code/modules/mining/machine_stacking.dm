@@ -12,7 +12,7 @@
 	/// Direction for which console looks for stacking machine to connect to
 	var/machinedir = SOUTHEAST
 
-/obj/machinery/mineral/stacking_unit_console/Initialize()
+/obj/machinery/mineral/stacking_unit_console/Initialize(mapload)
 	. = ..()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if (machine)
@@ -86,11 +86,13 @@
 	output_dir = WEST
 	var/obj/machinery/mineral/stacking_unit_console/console
 	var/stk_types = list()
-	var/stk_amt   = list()
+	var/stk_amt = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
 	var/stack_amt = 50 //amount to stack before releassing
 	var/datum/component/remote_materials/materials
 	var/force_connect = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()

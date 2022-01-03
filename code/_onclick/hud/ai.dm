@@ -33,7 +33,9 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	var/target_name = input(AI, "Choose who you want to track", "Tracking") as null|anything in AI.trackable_mobs()
+	var/target_name = tgui_input_list(AI, "Select a target", "Tracking", AI.trackable_mobs())
+	if(isnull(target_name))
+		return
 	AI.ai_camera_track(target_name)
 
 /atom/movable/screen/ai/camera_light
@@ -74,7 +76,7 @@
 	if(..())
 		return
 	var/mob/living/silicon/ai/AI = usr
-	AI.ai_alerts()
+	AI.alert_control.ui_interact(AI)
 
 /atom/movable/screen/ai/announcement
 	name = "Make Vox Announcement"

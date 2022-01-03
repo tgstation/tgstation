@@ -15,7 +15,7 @@
 	//render_targets copy the transform of the target as well, but vis_contents also applies the transform
 	//to what's in it. Applying RESET_TRANSFORM here makes vis_contents not apply the transform.
 	//Since only render_target handles transform we don't get any applied transform "stacking"
-	appearance_flags = RESET_TRANSFORM
+	appearance_flags = EMISSIVE_APPEARANCE_FLAGS
 
 /atom/movable/emissive_blocker/Initialize(mapload, source)
 	. = ..()
@@ -37,7 +37,7 @@
 /atom/movable/emissive_blocker/blob_act()
 	return
 
-/atom/movable/emissive_blocker/onTransitZ()
+/atom/movable/emissive_blocker/on_changed_z_level(turf/old_turf, turf/new_turf)
 	return
 
 //Prevents people from moving these after creation, because they shouldn't be.

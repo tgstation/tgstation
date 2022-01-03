@@ -44,7 +44,7 @@
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
 	var/list/mutatelist
-	/// Plant genes are stored here, see plant_genes.dm for more info.
+	/// Starts as a list of paths, is converted to a list of types on init. Plant gene datums are stored here, see plant_genes.dm for more info.
 	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
@@ -90,14 +90,24 @@
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
 		reagents_from_genes() //quality coding
 
+/obj/item/seeds/Destroy()
+	// No AS ANYTHING here, because the list/genes could have typepaths in it.
+	for(var/datum/plant_gene/gene in genes)
+		gene.on_removed(src)
+		qdel(gene)
+
+	genes.Cut()
+	return ..()
+
 /obj/item/seeds/examine(mob/user)
 	. = ..()
 	. += span_notice("Use a pen on it to rename it or change its description.")
 	if(reagents_add && user.can_see_reagents())
 		. += span_notice("- Plant Reagents -")
-		for(var/datum/plant_gene/reagent/G in genes)
-			. += span_notice("- [G.get_name()] -")
+		for(var/datum/plant_gene/reagent/reagent_gene in genes)
+			. += span_notice("- [reagent_gene.get_name()] -")
 
+/// Copy all the variables from one seed to a new instance of the same seed and return it.
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/copy_seed = new type(null, TRUE)
 	// Copy all the stats
@@ -115,10 +125,10 @@
 	copy_seed.desc = desc
 	copy_seed.productdesc = productdesc
 	copy_seed.genes = list()
-	for(var/datum/plant_gene/plant_genes in genes)
-		copy_seed.genes += plant_genes.Copy()
-	for(var/datum/plant_gene/trait/traits in genes)
-		traits.on_new_seed(copy_seed)
+	for(var/datum/plant_gene/gene in genes)
+		var/datum/plant_gene/copied_gene = gene.Copy()
+		copy_seed.genes += copied_gene
+		copied_gene.on_new_seed(copy_seed)
 
 	copy_seed.reagents_add = reagents_add.Copy() // Faster than grabbing the list from genes.
 	return copy_seed
@@ -130,18 +140,6 @@
 	reagents_add = list()
 	for(var/datum/plant_gene/reagent/R in genes)
 		reagents_add[R.reagent_id] = R.rate
-
-///This proc adds a mutability_flag to a gene
-/obj/item/seeds/proc/set_mutability(typepath, mutability)
-	var/datum/plant_gene/g = get_gene(typepath)
-	if(g)
-		g.mutability_flags |=  mutability
-
-///This proc removes a mutability_flag from a gene
-/obj/item/seeds/proc/unset_mutability(typepath, mutability)
-	var/datum/plant_gene/g = get_gene(typepath)
-	if(g)
-		g.mutability_flags &=  ~mutability
 
 /obj/item/seeds/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0, stabmut = 3)
 	adjust_lifespan(rand(-lifemut,lifemut))
@@ -238,7 +236,7 @@
 		product_name = parent.myseed.plantname
 	if(product_count >= 1)
 		SSblackbox.record_feedback("tally", "food_harvested", product_count, product_name)
-	parent.update_tray(user)
+	parent.update_tray(user, product_count)
 
 	return result
 
@@ -449,51 +447,36 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/pen))
-		var/choice = tgui_input_list(usr, "What would you like to change?",, list("Plant Name", "Seed Description", "Product Description", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(stripped_input(user, "Write a new plant name:", name, plantname))
+				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
+				if(isnull(newplantname))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newplantname) > 20)
-					to_chat(user, span_warning("That name is too long!"))
-					return
-				if(!newplantname)
-					to_chat(user, span_warning("That name is invalid."))
-					return
-				else
-					name = "[lowertext(newplantname)]"
-					plantname = newplantname
+				name = "[lowertext(newplantname)]"
+				plantname = newplantname
 			if("Seed Description")
-				var/newdesc = stripped_input(user, "Write a new description:", name, desc)
+				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
+				if(isnull(newdesc))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
-					return
-				if(!newdesc)
-					to_chat(user, span_warning("That description is invalid."))
-					return
-				else
-					desc = newdesc
+				desc = newdesc
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = stripped_input(user, "Write a new description:", name, productdesc)
+				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
+				if(isnull(newproductdesc))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newproductdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
-					return
-				if(!newproductdesc)
-					to_chat(user, span_warning("That description is invalid."))
-					return
-				else
-					productdesc = newproductdesc
-			else
-				return
+				productdesc = newproductdesc
 
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 

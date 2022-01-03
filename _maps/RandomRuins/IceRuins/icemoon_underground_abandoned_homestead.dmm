@@ -1,0 +1,699 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bf" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"cP" = (
+/mob/living/simple_animal/hostile/asteroid/polarbear,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"dy" = (
+/obj/item/grown/log,
+/obj/item/grown/log,
+/obj/item/grown/log,
+/obj/item/hatchet/wooden{
+	pixel_y = -19
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"fd" = (
+/obj/structure/table/bronze{
+	color = "#666666"
+	},
+/obj/structure/sink/kitchen{
+	pixel_y = 24
+	},
+/obj/item/plate,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"ht" = (
+/obj/structure/flora/tree/dead,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"hM" = (
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"kj" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"mq" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 8
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"ng" = (
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"nq" = (
+/obj/item/grown/log{
+	pixel_y = -6
+	},
+/obj/item/grown/log{
+	pixel_y = 6
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"ol" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered/shuttle)
+"pU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"qd" = (
+/mob/living/simple_animal/hostile/tree,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"sF" = (
+/turf/open/openspace/icemoon/keep_below,
+/area/icemoon/underground/explored)
+"tD" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"uc" = (
+/obj/structure/table/bronze{
+	color = "#666666"
+	},
+/obj/item/knife/hunting,
+/obj/item/reagent_containers/food/drinks/mug/coco{
+	desc = "Still hot!";
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"uA" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"uG" = (
+/obj/item/grown/log,
+/obj/item/grown/log{
+	pixel_y = 13
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"uH" = (
+/obj/structure/closet/cabinet,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/ammo_casing/shotgun/buckshot,
+/obj/item/ammo_casing/shotgun/buckshot,
+/obj/item/ammo_casing/shotgun/buckshot,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"vk" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 10
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"vI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood,
+/obj/item/candle{
+	pixel_x = -8;
+	pixel_y = 13
+	},
+/obj/item/food/soup/stew{
+	name = "porridge";
+	pixel_y = 3
+	},
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"wl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/mineral_door/wood,
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"wN" = (
+/turf/open/openspace/icemoon/keep_below,
+/area/ruin/powered/shuttle)
+"ym" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"yO" = (
+/obj/structure/fluff/fokoff_sign{
+	name = "Homestead Sign";
+	pixel_y = 7
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"zd" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"zT" = (
+/obj/structure/bed/dogbed,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Cv" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Ea" = (
+/obj/structure/table/wood{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/book/bible{
+	pixel_y = 5
+	},
+/obj/item/candle{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"El" = (
+/obj/structure/table{
+	color = "#f2ffbd"
+	},
+/obj/item/flashlight/lantern,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Ez" = (
+/obj/structure/railing{
+	color = "#8a7453"
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Fg" = (
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"FS" = (
+/obj/structure/railing{
+	color = "#8a7453"
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Ht" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Hv" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Hy" = (
+/obj/structure/barricade/wooden/crude/snow,
+/turf/open/floor/wood{
+	icon_state = "wood-broken";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"HF" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/innards,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Iz" = (
+/obj/structure/fireplace{
+	pixel_x = -21
+	},
+/obj/item/stack/sheet/animalhide/generic{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Mf" = (
+/obj/structure/railing{
+	color = "#8a7453"
+	},
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Nz" = (
+/obj/structure/bed,
+/obj/item/bedsheet/patriot,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"NP" = (
+/obj/item/wallframe/picture,
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered/shuttle)
+"Of" = (
+/obj/structure/closet/cabinet{
+	name = "Pantry"
+	},
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato/sweet,
+/obj/item/food/grown/potato/sweet,
+/obj/item/seeds/coffee,
+/obj/item/seeds/coffee,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"QI" = (
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Rf" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 1
+	},
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"RO" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/mineral_door/wood,
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Sv" = (
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers)
+"SJ" = (
+/obj/structure/railing{
+	color = "#8a7453";
+	dir = 8
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Tf" = (
+/obj/structure/railing{
+	color = "#8a7453"
+	},
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"TP" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Ux" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Vf" = (
+/obj/structure/barricade/wooden/snowed,
+/turf/open/floor/wood{
+	icon_state = "wood-broken";
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"VV" = (
+/obj/structure/bonfire,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"XZ" = (
+/obj/structure/toilet{
+	dir = 8
+	},
+/turf/open/floor/stone{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+"Zg" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood/large{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
+
+(1,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+"}
+(2,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+ol
+ol
+ol
+hM
+ol
+mq
+mq
+SJ
+vk
+qd
+Sv
+Sv
+"}
+(3,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+ol
+ol
+ol
+NP
+Ea
+Cv
+Cv
+ol
+zd
+Ht
+zd
+Ht
+Ht
+Ht
+Sv
+"}
+(4,1,1) = {"
+Sv
+sF
+Sv
+Sv
+qd
+Ht
+Vf
+El
+zT
+ol
+Iz
+QI
+QI
+wl
+Ht
+zd
+Ht
+Ht
+Ht
+Ht
+Sv
+"}
+(5,1,1) = {"
+Sv
+Sv
+sF
+sF
+sF
+Ht
+ol
+Nz
+ng
+RO
+HF
+ym
+QI
+wl
+Ht
+Ht
+Ht
+FS
+yO
+Ht
+Sv
+"}
+(6,1,1) = {"
+Sv
+Sv
+Sv
+sF
+sF
+sF
+ol
+uH
+ng
+ol
+pU
+vI
+pU
+ol
+Ht
+bf
+bf
+Ez
+Ht
+tD
+Sv
+"}
+(7,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+sF
+sF
+ol
+ol
+ol
+ol
+cP
+Hv
+ng
+uA
+zd
+bf
+bf
+Tf
+ht
+Ht
+Sv
+"}
+(8,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+sF
+sF
+sF
+Hy
+wN
+Zg
+ng
+ng
+ng
+ol
+Ht
+zd
+Ht
+Ht
+Ht
+Ht
+Sv
+"}
+(9,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Ht
+Ht
+Ht
+ol
+XZ
+ol
+fd
+uc
+Of
+ol
+Ht
+bf
+bf
+bf
+Ht
+Sv
+Sv
+"}
+(10,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+VV
+Ht
+ol
+ol
+ol
+Ux
+ol
+ol
+ol
+Ht
+TP
+bf
+Tf
+Sv
+Sv
+Sv
+"}
+(11,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Ht
+Ht
+Mf
+dy
+nq
+uG
+Rf
+ht
+Ht
+Ht
+Ht
+Ht
+Ht
+Sv
+Sv
+Sv
+"}
+(12,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Fg
+Ht
+Ht
+Ht
+Ht
+Ht
+kj
+kj
+kj
+Ht
+Sv
+Sv
+Sv
+Sv
+Sv
+"}
+(13,1,1) = {"
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+Sv
+"}

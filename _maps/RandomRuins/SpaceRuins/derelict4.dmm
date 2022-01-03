@@ -36,7 +36,7 @@
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "k" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/ruin/unpowered)
 "l" = (

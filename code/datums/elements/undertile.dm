@@ -37,7 +37,7 @@
 
 	if(covered)
 		if(invisibility_trait)
-			ADD_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
+			ADD_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 		if(tile_overlay)
 			T.add_overlay(tile_overlay)
 		if(use_alpha)
@@ -47,7 +47,7 @@
 
 	else
 		if(invisibility_trait)
-			REMOVE_TRAIT(source, invisibility_trait, TRAIT_GENERIC)
+			REMOVE_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 		if(tile_overlay)
 			T.overlays -= tile_overlay
 		if(use_alpha)

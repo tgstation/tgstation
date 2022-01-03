@@ -123,7 +123,7 @@
 		return FALSE
 	if(get_dist(A,B) != required_distance)
 		return FALSE
-	for(var/turf/T in getline(get_turf(A),get_turf(B)))
+	for(var/turf/T in get_line(get_turf(A),get_turf(B)))
 		if(T.is_blocked_turf(TRUE))
 			return FALSE
 	return TRUE
@@ -142,7 +142,7 @@
 	var/datum/duel/duel
 	var/mutable_appearance/setting_overlay
 
-/obj/item/gun/energy/dueling/Initialize()
+/obj/item/gun/energy/dueling/Initialize(mapload)
 	. = ..()
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
@@ -183,11 +183,12 @@
 
 /obj/item/gun/energy/dueling/Destroy()
 	. = ..()
-	if(duel.gun_A == src)
-		duel.gun_A = null
-	if(duel.gun_B == src)
-		duel.gun_B = null
-	duel = null
+	if(duel)
+		if(duel.gun_A == src)
+			duel.gun_A = null
+		if(duel.gun_B == src)
+			duel.gun_B = null
+		duel = null
 
 /obj/item/gun/energy/dueling/can_trigger_gun(mob/living/user)
 	. = ..()

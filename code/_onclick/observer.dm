@@ -31,7 +31,10 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			CtrlMiddleClickOn(A)
+		else
+			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK))
 		AltClickNoInteract(src, A)
@@ -55,7 +58,7 @@
 			return TRUE
 		else if(isAdminGhostAI(user))
 			attack_ai(user)
-		else if(user.client.prefs.inquisitive_ghost)
+		else if(user.client.prefs.read_preference(/datum/preference/toggle/inquisitive_ghost))
 			user.examinate(src)
 	return FALSE
 

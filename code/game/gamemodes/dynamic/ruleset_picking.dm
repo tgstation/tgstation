@@ -7,7 +7,7 @@
 		return null
 
 	while (TRUE)
-		var/datum/dynamic_ruleset/rule = pickweight(drafted_rules)
+		var/datum/dynamic_ruleset/rule = pick_weight(drafted_rules)
 		if (!rule)
 			return null
 

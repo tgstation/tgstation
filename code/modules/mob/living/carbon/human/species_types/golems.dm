@@ -2,7 +2,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = SPECIES_GOLEM
-	species_traits = list(NOBLOOD,MUTCOLORS,NO_UNDERWEAR)
+	species_traits = list(NOBLOOD,NOTRANSSTING, MUTCOLORS,NO_UNDERWEAR, NO_DNA_COPY)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
@@ -37,7 +37,7 @@
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
 	limbs_id = "golem"
-	fixed_mut_color = "aaa"
+	fixed_mut_color = "#aaaaaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 	var/random_eligible = TRUE //If false, the golem subtype can't be made through golem mutation toxin
 
@@ -82,7 +82,7 @@
 	id = SPECIES_GOLEM_ADAMANTINE
 	meat = /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
-	fixed_mut_color = "4ed"
+	fixed_mut_color = "#44eedd"
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems. Your unique mineral makeup makes you immune to most types of magic."
 	prefix = "Adamantine"
 	special_names = null
@@ -99,7 +99,7 @@
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = SPECIES_GOLEM_PLASMA
-	fixed_mut_color = "a3d"
+	fixed_mut_color = "#aa33dd"
 	meat = /obj/item/stack/ore/plasma
 	//Can burn and takes damage from heat
 	//no RESISTHEAT, NOFIRE
@@ -134,7 +134,7 @@
 			boom_warning = FALSE
 
 	if(H.bodytemperature > 850 && H.on_fire && prob(25))
-		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5)
+		explosion(H, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 5, explosion_cause = src)
 		if(H)
 			H.gib()
 	if(H.fire_stacks < 2) //flammable
@@ -171,7 +171,7 @@
 /datum/species/golem/diamond
 	name = "Diamond Golem"
 	id = SPECIES_GOLEM_DIAMOND
-	fixed_mut_color = "0ff"
+	fixed_mut_color = "#00ffff"
 	armor = 70 //up from 55
 	meat = /obj/item/stack/ore/diamond
 	info_text = "As a <span class='danger'>Diamond Golem</span>, you are more resistant than the average golem."
@@ -182,7 +182,7 @@
 /datum/species/golem/gold
 	name = "Gold Golem"
 	id = SPECIES_GOLEM_GOLD
-	fixed_mut_color = "cc0"
+	fixed_mut_color = "#cccc00"
 	speedmod = 1
 	armor = 25 //down from 55
 	meat = /obj/item/stack/ore/gold
@@ -194,7 +194,7 @@
 /datum/species/golem/silver
 	name = "Silver Golem"
 	id = SPECIES_GOLEM_SILVER
-	fixed_mut_color = "ddd"
+	fixed_mut_color = "#dddddd"
 	punchstunthreshold = 9 //60% chance, from 40%
 	meat = /obj/item/stack/ore/silver
 	info_text = "As a <span class='danger'>Silver Golem</span>, your attacks have a higher chance of stunning. Being made of silver, your body is immune to most types of magic."
@@ -213,7 +213,7 @@
 /datum/species/golem/plasteel
 	name = "Plasteel Golem"
 	id = SPECIES_GOLEM_PLASTEEL
-	fixed_mut_color = "bbb"
+	fixed_mut_color = "#bbbbbb"
 	stunmod = 0.4
 	punchdamagelow = 12
 	punchdamagehigh = 21
@@ -242,7 +242,7 @@
 /datum/species/golem/titanium
 	name = "Titanium Golem"
 	id = SPECIES_GOLEM_TITANIUM
-	fixed_mut_color = "fff"
+	fixed_mut_color = "#ffffff"
 	meat = /obj/item/stack/ore/titanium
 	info_text = "As a <span class='danger'>Titanium Golem</span>, you are immune to ash storms, and slightly more resistant to burn damage."
 	burnmod = 0.9
@@ -251,17 +251,17 @@
 
 /datum/species/golem/titanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_ASH)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 /datum/species/golem/titanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_ASH)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 //Immune to ash storms and lava
 /datum/species/golem/plastitanium
 	name = "Plastitanium Golem"
 	id = SPECIES_GOLEM_PLASTITANIUM
-	fixed_mut_color = "888"
+	fixed_mut_color = "#888888"
 	meat = /obj/item/stack/ore/titanium
 	info_text = "As a <span class='danger'>Plastitanium Golem</span>, you are immune to both ash storms and lava, and slightly more resistant to burn damage."
 	burnmod = 0.8
@@ -270,19 +270,19 @@
 
 /datum/species/golem/plastitanium/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_LAVA)
-	LAZYOR(C.weather_immunities, WEATHER_ASH)
+	ADD_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
+	ADD_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 /datum/species/golem/plastitanium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_ASH)
-	LAZYREMOVE(C.weather_immunities, WEATHER_LAVA)
+	REMOVE_TRAIT(C, TRAIT_LAVA_IMMUNE, SPECIES_TRAIT)
+	REMOVE_TRAIT(C, TRAIT_ASHSTORM_IMMUNE, SPECIES_TRAIT)
 
 //Fast and regenerates... but can only speak like an abductor
 /datum/species/golem/alloy
 	name = "Alien Alloy Golem"
 	id = SPECIES_GOLEM_ALIEN
-	fixed_mut_color = "333"
+	fixed_mut_color = "#333333"
 	meat = /obj/item/stack/sheet/mineral/abductor
 	mutanttongue = /obj/item/organ/tongue/abductor
 	speedmod = 1 //faster
@@ -302,7 +302,7 @@
 /datum/species/golem/wood
 	name = "Wood Golem"
 	id = SPECIES_GOLEM_WOOD
-	fixed_mut_color = "9E704B"
+	fixed_mut_color = "#9E704B"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
 	inherent_traits = list(
@@ -357,7 +357,7 @@
 /datum/species/golem/uranium
 	name = "Uranium Golem"
 	id = SPECIES_GOLEM_URANIUM
-	fixed_mut_color = "7f0"
+	fixed_mut_color = "#77ff00"
 	meat = /obj/item/stack/ore/uranium
 	info_text = "As an <span class='danger'>Uranium Golem</span>, your very touch burns and irradiates organic lifeforms. You don't hit as hard as most golems, but you are far more durable against blunt force trauma."
 	attack_verb = "burn"
@@ -378,20 +378,12 @@
 	if(!COOLDOWN_FINISHED(src, radiation_emission_cooldown))
 		return
 	else
-		radiation_pulse(H, 50)
+		radiation_pulse(H, max_range = 1, threshold = RAD_VERY_LIGHT_INSULATION, chance = 3)
 		COOLDOWN_START(src, radiation_emission_cooldown, 2 SECONDS)
-
-/datum/species/golem/uranium/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	. = ..()
-	var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
-	var/radiation_block = target.run_armor_check(affecting, RAD)
-	///standard damage roll for use in determining how much you irradiate per punch
-	var/attacker_irradiate_value = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
-	target.apply_effect(attacker_irradiate_value*5, EFFECT_IRRADIATE, radiation_block)
 
 /datum/species/golem/uranium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && M != H &&  M.combat_mode)
+	if(COOLDOWN_FINISHED(src, radiation_emission_cooldown) && M != H && M.combat_mode)
 		radiation_emission(H)
 
 /datum/species/golem/uranium/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
@@ -408,7 +400,7 @@
 /datum/species/golem/sand
 	name = "Sand Golem"
 	id = SPECIES_GOLEM_SAND
-	fixed_mut_color = "ffdc8f"
+	fixed_mut_color = "#ffdc8f"
 	meat = /obj/item/stack/ore/glass //this is sand
 	armor = 0
 	burnmod = 3 //melts easily
@@ -422,7 +414,7 @@
 	H.visible_message(span_danger("[H] turns into a pile of sand!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/ore/glass(get_turf(H))
 	qdel(H)
 
@@ -439,7 +431,7 @@
 /datum/species/golem/glass
 	name = "Glass Golem"
 	id = SPECIES_GOLEM_GLASS
-	fixed_mut_color = "5a96b4aa" //transparent body
+	fixed_mut_color = "#5a96b4aa" //transparent body
 	meat = /obj/item/shard
 	armor = 0
 	brutemod = 3 //very fragile
@@ -454,7 +446,7 @@
 	H.visible_message(span_danger("[H] shatters!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/shard(get_turf(H))
 	qdel(H)
 
@@ -476,7 +468,7 @@
 /datum/species/golem/bluespace
 	name = "Bluespace Golem"
 	id = SPECIES_GOLEM_BLUESPACE
-	fixed_mut_color = "33f"
+	fixed_mut_color = "#3333ff"
 	meat = /obj/item/stack/ore/bluespace_crystal
 	info_text = "As a <span class='danger'>Bluespace Golem</span>, you are spatially unstable: You will teleport when hit, and you can teleport manually at a long distance."
 	attack_verb = "bluespace punch"
@@ -507,7 +499,7 @@
 
 /datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.combat_mode)
+	if(world.time > last_teleport + teleport_cooldown && M != H && M.combat_mode)
 		reactive_teleport(H)
 
 /datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, mob/living/carbon/human/H)
@@ -571,7 +563,7 @@
 /datum/species/golem/bananium
 	name = "Bananium Golem"
 	id = SPECIES_GOLEM_BANANIUM
-	fixed_mut_color = "ff0"
+	fixed_mut_color = "#ffff00"
 	say_mod = "honks"
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
@@ -632,7 +624,7 @@
 
 /datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
 	..()
-	if(COOLDOWN_FINISHED(src, banana_cooldown) && M != H &&  M.combat_mode)
+	if(COOLDOWN_FINISHED(src, banana_cooldown) && M != H && M.combat_mode)
 		new /obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		COOLDOWN_START(src, banana_cooldown, banana_delay)
 
@@ -899,7 +891,7 @@
 	id = SPECIES_GOLEM_BRONZE
 	prefix = "Bronze"
 	special_names = list("Bell")
-	fixed_mut_color = "cd7f32"
+	fixed_mut_color = "#cd7f32"
 	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
 	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
 	mutantears = /obj/item/organ/ears/bronze
@@ -1021,7 +1013,7 @@
 			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
 /datum/species/golem/leather
@@ -1043,7 +1035,7 @@
 		TRAIT_STRONG_GRABBER,
 	)
 	prefix = "Leather"
-	fixed_mut_color = "624a2e"
+	fixed_mut_color = "#624a2e"
 	info_text = "As a <span class='danger'>Leather Golem</span>, you are flammable, but you can grab things with incredible ease, allowing all your grabs to start at a strong level."
 	grab_sound = 'sound/weapons/whipgrab.ogg'
 	attack_sound = 'sound/weapons/whip.ogg'
@@ -1163,7 +1155,7 @@
 
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
-		to_chat(span_warning("You aren't ready yet to rattle your bones again!"))
+		to_chat(owner, span_warning("You aren't ready yet to rattle your bones again!"))
 		return
 	owner.visible_message(span_warning("[owner] rattles [owner.p_their()] bones harrowingly."), span_notice("You rattle your bones"))
 	last_use = world.time
@@ -1218,14 +1210,14 @@
 	H.visible_message(span_danger("[H] turns into a pile of snow!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
 	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)
 
 /datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	LAZYOR(C.weather_immunities, WEATHER_SNOW)
+	ADD_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	ball = new
 	ball.charge_counter = 0
 	C.AddSpell(ball)
@@ -1235,7 +1227,7 @@
 
 /datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	LAZYREMOVE(C.weather_immunities, WEATHER_SNOW)
+	REMOVE_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 	if(ball)
 		C.RemoveSpell(ball)
 	if(cryo)
@@ -1252,7 +1244,7 @@
 /datum/species/golem/mhydrogen
 	name = "Metallic Hydrogen Golem"
 	id = SPECIES_GOLEM_HYDROGEN
-	fixed_mut_color = "ddd"
+	fixed_mut_color = "#dddddd"
 	info_text = "As a <span class='danger'>Metallic Hydrogen Golem</span>, you were forged in the highest pressures and the highest heats. Your unique mineral makeup makes you immune to most types of damages."
 	prefix = "Metallic Hydrogen"
 	special_names = null

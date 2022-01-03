@@ -45,7 +45,7 @@
 					span_userdanger("You are kicked square in the chest by [A], sending you flying!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, A.dir)
-	D.throw_at(throw_target, 7, 14, A)
+	D.throw_at(throw_target, 7, 4, A)
 	D.apply_damage(15, A.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(A, D, "launchkicked (Sleeping Carp)")
 	return
@@ -145,9 +145,9 @@
 	[span_notice("Gnashing Teeth")]: Punch Punch. Deal additional damage every second (consecutive) punch!\n\
 	[span_notice("Crashing Wave Kick")]: Punch Shove. Launch your opponent away from you with incredible force!\n\
 	[span_notice("Keelhaul")]: Punch Grab. Kick an opponent to the floor, knocking them down! If your opponent is already prone, this move will disarm them and deal additional stamina damage to them.\n\
-	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them!\
-	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons.\
-	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and appropriate medical supplies when possible for use during downtime.\
+	<span class='notice'>While in throw mode (and not stunned, not a hulk, and not in a mech), you can reflect all projectiles that come your way, sending them back at the people who fired them! \
+	Also, you are more resilient against suffering wounds in combat, and your limbs cannot be dismembered. This grants you extra staying power during extended combat, especially against slashing and other bleeding weapons. \
+	You are not invincible, however- while you may not suffer debilitating wounds often, you must still watch your health and should have appropriate medical supplies for use during downtime. \
 	In addition, your training has imbued you with a loathing of guns, and you can no longer use them.</span>")
 
 
@@ -169,7 +169,7 @@
 	block_chance = 50
 	var/wielded = FALSE // track wielded status on item
 
-/obj/item/staff/bostaff/Initialize()
+/obj/item/staff/bostaff/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)

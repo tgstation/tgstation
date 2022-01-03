@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -18,7 +19,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -51,35 +52,17 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
@@ -183,9 +166,10 @@
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
 	SIGNAL_HANDLER
-	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(connected_machine.vendors, src)
-	connected_machine = null
+	if(connected_machine)
+		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(connected_machine.vendors, src)
+		connected_machine = null
 	mode = BS_MODE_OFF
 	update_appearance()
 

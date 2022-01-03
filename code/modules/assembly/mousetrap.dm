@@ -7,14 +7,14 @@
 	attachable = TRUE
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
 	var/static/list/holder_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 
-/obj/item/assembly/mousetrap/Initialize()
+/obj/item/assembly/mousetrap/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -47,11 +47,11 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	AddElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	RemoveElement(/datum/element/connect_loc_behalf, holder, holder_connections)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

@@ -99,7 +99,7 @@
 /datum/controller/subsystem/proc/PreInit()
 	return
 
-//This is used so the mc knows when the subsystem sleeps. do not override.
+///This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	set waitfor = FALSE
@@ -114,9 +114,9 @@
 		state = SS_PAUSED
 		queued_time = QT
 
-//previously, this would have been named 'process()' but that name is used everywhere for different things!
-//fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
-//Sleeping in here prevents future fires until returned.
+///previously, this would have been named 'process()' but that name is used everywhere for different things!
+///fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
+///Sleeping in here prevents future fires until returned.
 /datum/controller/subsystem/proc/fire(resumed = FALSE)
 	flags |= SS_NO_FIRE
 	CRASH("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
@@ -125,7 +125,8 @@
 	dequeue()
 	can_fire = 0
 	flags |= SS_NO_FIRE
-	Master.subsystems -= src
+	if (Master)
+		Master.subsystems -= src
 	return ..()
 
 
@@ -153,9 +154,9 @@
 		next_fire = queued_time + wait + (world.tick_lag * (tick_overrun/100))
 
 
-//Queue it to run.
-// (we loop thru a linked list until we get to the end or find the right point)
-// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
+///Queue it to run.
+/// (we loop thru a linked list until we get to the end or find the right point)
+/// (this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
 	var/SS_priority = priority
 	var/SS_flags = flags
@@ -219,9 +220,9 @@
 		queue_next.queue_prev = queue_prev
 	if (queue_prev)
 		queue_prev.queue_next = queue_next
-	if (src == Master.queue_tail)
+	if (Master && (src == Master.queue_tail))
 		Master.queue_tail = queue_prev
-	if (src == Master.queue_head)
+	if (Master && (src == Master.queue_head))
 		Master.queue_head = queue_next
 	queued_time = 0
 	if (state == SS_QUEUED)

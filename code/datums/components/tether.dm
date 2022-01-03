@@ -25,7 +25,7 @@
 
 	var/atom/blocker
 	out:
-		for(var/turf/T in getline(tether_target,newloc))
+		for(var/turf/T in get_line(tether_target,newloc))
 			if (T.density)
 				blocker = T
 				break out

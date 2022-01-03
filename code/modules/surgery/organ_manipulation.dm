@@ -76,7 +76,7 @@
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	target_organ = null
 	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
-		if(!tool.contents.len)
+		if(!length(tool.contents))
 			to_chat(user, span_warning("There is nothing inside [tool]!"))
 			return -1
 		target_organ = tool.contents[1]
@@ -101,13 +101,15 @@
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."))
+		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
+
 
 	else if(implement_type in implements_extract)
 		current_type = "extract"
 		var/list/organs = target.getorganszone(target_zone)
 		if (target_zone == BODY_ZONE_PRECISE_EYES)
 			target_zone = check_zone(target_zone)
-		if(!organs.len)
+		if(!length(organs))
 			to_chat(user, span_warning("There are no removable organs in [target]'s [parse_zone(target_zone)]!"))
 			return -1
 		else
@@ -116,8 +118,11 @@
 				organs -= organ
 				organs[organ.name] = organ
 
-			target_organ = input("Remove which organ?", "Surgery", null, null) as null|anything in sortList(organs)
-			if(target_organ && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
+			var/chosen_organ = tgui_input_list(user, "Remove which organ?", "Surgery", sort_list(organs))
+			if(isnull(chosen_organ))
+				return -1
+			target_organ = chosen_organ
+			if(user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				target_organ = organs[target_organ]
 				if(!target_organ)
 					return -1
@@ -127,6 +132,7 @@
 				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
+				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return -1
 
@@ -148,12 +154,14 @@
 		display_results(user, target, span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
 			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"))
+		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
 		if(target_organ && target_organ.owner == target)
 			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"))
+			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
 			target_organ.forceMove(get_turf(target))

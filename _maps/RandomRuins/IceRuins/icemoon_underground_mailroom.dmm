@@ -3,7 +3,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)
@@ -200,7 +200,7 @@
 /turf/open/floor/carpet/green,
 /area/ruin/powered/mailroom)
 "uA" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)
 "uI" = (
@@ -480,7 +480,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "VG" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/spawner/random/structure/crate_abandoned,
 /obj/effect/turf_decal/stripes/red/box,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/mailroom)

@@ -8,7 +8,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 
-/obj/item/clothing/gloves/butchering/Initialize()
+/obj/item/clothing/gloves/butchering/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 5, 125, null, null, TRUE, TRUE)
 

@@ -81,7 +81,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/yellow/core_effect(mob/living/target, mob/user)
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in target.GetAllContents())
+	for(var/obj/item/stock_parts/cell/C in target.get_all_contents())
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
@@ -150,7 +150,7 @@ Regenerative extracts:
 		to_chat(target, span_danger("The milky goo teleports you somewhere it remembers!"))
 
 
-/obj/item/slimecross/regenerative/bluespace/Initialize()
+/obj/item/slimecross/regenerative/bluespace/Initialize(mapload)
 	. = ..()
 	T = get_turf(src)
 
@@ -159,7 +159,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and stops time."
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
-	to_chat(target, "<span class=notice>You try to forget how you feel.</span>")
+	to_chat(target, span_notice("You try to forget how you feel."))
 	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean

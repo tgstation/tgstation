@@ -1,4 +1,4 @@
-import { Button, Section, Stack, Box } from '../../components';
+import { Button, Stack, Box } from '../../components';
 
 export const CircuitInfo = (props, context) => {
   const {

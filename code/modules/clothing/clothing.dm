@@ -62,7 +62,7 @@
 	/// A lazily initiated "food" version of the clothing for moths
 	var/obj/item/food/clothing/moth_snack
 
-/obj/item/clothing/Initialize()
+/obj/item/clothing/Initialize(mapload)
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
@@ -118,7 +118,7 @@
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
 	if (resolved_clothing)
-		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE)
+		resolved_clothing.take_damage(MOTH_EATING_CLOTHING_DAMAGE, sound_effect = FALSE, damage_flag = CONSUME)
 	else
 		qdel(src)
 
@@ -159,7 +159,7 @@
 /// Set the clothing's integrity back to 100%, remove all damage to bodyparts, and generally fix it up
 /obj/item/clothing/proc/repair(mob/user, params)
 	update_clothes_damaged_state(CLOTHING_PRISTINE)
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
 	slot_flags = initial(slot_flags)
@@ -167,6 +167,7 @@
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, span_notice("You fix the damage on [src]."))
+	update_appearance()
 
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
@@ -203,7 +204,7 @@
  *
  * Arguments:
  * * def_zone: The bodypart zone we're disabling
- * * damage_type: Only really relevant for the verb for describing the breaking, and maybe obj_destruction()
+ * * damage_type: Only really relevant for the verb for describing the breaking, and maybe atom_destruction()
  */
 /obj/item/clothing/proc/disable_zone(def_zone, damage_type)
 	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
@@ -223,7 +224,7 @@
 		body_parts_covered &= ~i
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
-		obj_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
+		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
 	switch(zones_disabled)
@@ -242,13 +243,14 @@
 	QDEL_NULL(moth_snack)
 	return ..()
 
-/obj/item/clothing/dropped(mob/user)
+/obj/item/clothing/dropped(mob/living/user)
 	..()
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -257,7 +259,7 @@
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
-/obj/item/clothing/equipped(mob/user, slot)
+/obj/item/clothing/equipped(mob/living/user, slot)
 	. = ..()
 	if (!istype(user))
 		return
@@ -307,7 +309,7 @@
 		if (pockets.can_hold?.len) // If pocket type can hold anything, vs only specific items
 			how_cool_are_your_threads += "[src] can store [pockets.max_items] <a href='?src=[REF(src)];show_valid_pocket_items=1'>item\s</a>.\n"
 		else
-			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weightclass2text(pockets.max_w_class)] or smaller.\n"
+			how_cool_are_your_threads += "[src] can store [pockets.max_items] item\s that are [weight_class_to_text(pockets.max_w_class)] or smaller.\n"
 		if(pockets.quickdraw)
 			how_cool_are_your_threads += "You can quickly remove an item from [src] using Right-Click.\n"
 		if(pockets.silent)
@@ -327,12 +329,8 @@
 		armor_list += list("ENERGY" = armor.energy)
 	if(armor.laser)
 		armor_list += list("LASER" = armor.laser)
-	if(armor.magic)
-		armor_list += list("MAGIC" = armor.magic)
 	if(armor.melee)
 		armor_list += list("MELEE" = armor.melee)
-	if(armor.rad)
-		armor_list += list("RADIATION" = armor.rad)
 
 	if(LAZYLEN(durability_list))
 		durability_list.Cut()
@@ -372,31 +370,34 @@
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value,10) / 10
+	var/sign = ""
+	if (armor_value < 0)
+		sign = "-"
+	armor_value = round(abs(armor_value), 10) / 10
 	switch (armor_value)
 		if (1)
-			. = "I"
+			. = sign + "I"
 		if (2)
-			. = "II"
+			. = sign + "II"
 		if (3)
-			. = "III"
+			. = sign + "III"
 		if (4)
-			. = "IV"
+			. = sign + "IV"
 		if (5)
-			. = "V"
+			. = sign + "V"
 		if (6)
-			. = "VI"
+			. = sign + "VI"
 		if (7)
-			. = "VII"
+			. = sign + "VII"
 		if (8)
-			. = "VIII"
+			. = sign + "VIII"
 		if (9)
-			. = "IX"
+			. = sign + "IX"
 		if (10 to INFINITY)
-			. = "X"
+			. = sign + "X"
 	return .
 
-/obj/item/clothing/obj_break(damage_flag)
+/obj/item/clothing/atom_break(damage_flag)
 	. = ..()
 	update_clothes_damaged_state(CLOTHING_DAMAGED)
 
@@ -437,7 +438,7 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
 BLIND     // can't see anything
 */
 
-/proc/generate_female_clothing(index,t_color,icon,type)
+/proc/generate_female_clothing(index, t_color, icon, type)
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
 	var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
 	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
@@ -460,6 +461,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
@@ -471,6 +473,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	icon_state = "[initial(icon_state)]"
@@ -485,11 +488,20 @@ BLIND     // can't see anything
 			return 1
 	return 0
 
-/obj/item/clothing/obj_destruction(damage_flag)
+/obj/item/clothing/proc/_spawn_shreds()
+	new /obj/effect/decal/cleanable/shreds(get_turf(src), name)
+
+/obj/item/clothing/atom_destruction(damage_flag)
 	if(damage_flag == BOMB)
-		var/turf/T = get_turf(src)
 		//so the shred survives potential turf change from the explosion.
-		addtimer(CALLBACK_NEW(/obj/effect/decal/cleanable/shreds, list(T, name)), 1)
+		addtimer(CALLBACK(src, .proc/_spawn_shreds), 1)
+		deconstruct(FALSE)
+	if(damage_flag == CONSUME) //This allows for moths to fully consume clothing, rather than damaging it like other sources like brute
+		var/turf/current_position = get_turf(src)
+		new /obj/effect/decal/cleanable/shreds(current_position, name)
+		if(isliving(loc))
+			var/mob/living/possessing_mob = loc
+			possessing_mob.visible_message(span_danger("[src] is consumed until naught but shreds remains!"), span_boldwarning("[src] falls apart into little bits!"))
 		deconstruct(FALSE)
 	else if(!(damage_flag in list(ACID, FIRE)))
 		body_parts_covered = NONE
@@ -497,7 +509,7 @@ BLIND     // can't see anything
 		update_clothes_damaged_state(CLOTHING_SHREDDED)
 		if(isliving(loc))
 			var/mob/living/M = loc
-			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands / eating it if they were a moth.
+			if(src in M.get_equipped_items(FALSE)) //make sure they were wearing it and not attacking the item in their hands
 				M.visible_message(span_danger("[M]'s [src.name] fall[p_s()] off, [p_theyre()] completely shredded!"), span_warning("<b>Your [src.name] fall[p_s()] off, [p_theyre()] completely shredded!</b>"), vision_distance = COMBAT_MESSAGE_RANGE)
 				M.dropItemToGround(src)
 			else

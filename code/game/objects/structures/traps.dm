@@ -105,7 +105,7 @@
 	icon_state = "bounty_trap_on"
 	stun_time = 200
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
-	checks_antimagic  = FALSE
+	checks_antimagic = FALSE
 	var/obj/item/bountytrap/stored_item
 	var/caught = FALSE
 
@@ -130,6 +130,9 @@
 
 /obj/structure/trap/stun/hunter/flare()
 	..()
+	var/turf/our_turf = get_turf(src)
+	if(!our_turf)
+		return
 	stored_item.forceMove(get_turf(src))
 	forceMove(stored_item)
 	if(caught)
@@ -168,7 +171,7 @@
 	var/turf/T = get_turf(src)
 	if(!user || !user.transferItemToLoc(src, T))//visibly unequips
 		return
-	to_chat(user, "<span class=notice>You set up [src]. Examine while close to disarm it.</span>")
+	to_chat(user, span_notice("You set up [src]. Examine while close to disarm it."))
 	stored_trap.forceMove(T)//moves trap to ground
 	forceMove(stored_trap)//moves item into trap
 
@@ -223,7 +226,7 @@
 	density = TRUE
 	time_between_triggers = 1200 //Exists for 2 minutes
 
-/obj/structure/trap/ward/Initialize()
+/obj/structure/trap/ward/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
 

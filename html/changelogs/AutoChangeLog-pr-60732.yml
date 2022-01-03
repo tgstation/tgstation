@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "draws moth antennae when you're wearing helmets again (oops)"

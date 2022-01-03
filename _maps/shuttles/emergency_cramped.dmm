@@ -3,7 +3,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
@@ -79,7 +79,7 @@
 /area/shuttle/escape)
 "o" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/random/maintenance/eight,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -96,7 +96,7 @@
 /area/shuttle/escape)
 "r" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -126,7 +126,7 @@
 /area/shuttle/escape)
 "w" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)

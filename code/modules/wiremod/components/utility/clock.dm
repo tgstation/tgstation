@@ -6,6 +6,7 @@
 /obj/item/circuit_component/clock
 	display_name = "Clock"
 	desc = "A component that repeatedly fires."
+	category = "Utility"
 
 	/// Whether the clock is on or not
 	var/datum/port/input/on
@@ -17,18 +18,14 @@
 	. = ..()
 	. += create_ui_notice("Clock Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
 
-/obj/item/circuit_component/clock/Initialize()
-	. = ..()
+/obj/item/circuit_component/clock/populate_ports()
 	on = add_input_port("On", PORT_TYPE_NUMBER)
 
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/clock/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
-	if(on.input_value)
+	if(on.value)
 		start_process()
 	else
 		stop_process()

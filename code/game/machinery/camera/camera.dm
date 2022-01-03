@@ -13,7 +13,7 @@
 	layer = WALL_OBJ_LAYER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
-	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
 	max_integrity = 100
 	integrity_failure = 0.5
 	var/default_camera_icon = "camera" //the camera's base icon used by update_appearance - icon_state is primarily used for mapping display purposes.
@@ -40,12 +40,22 @@
 	var/upgrades = 0
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
+	///Represents a signel source of camera alarms about movement or camera tampering
+	var/datum/alarm_handler/alarm_manager
+	///Proximity monitor associated with this atom, for motion sensitive cameras.
+	var/datum/proximity_monitor/proximity_monitor
 
-/obj/machinery/camera/preset/toxins //Bomb test site in space
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
+
+/obj/machinery/camera/preset/ordnance //Bomb test site in space
 	name = "Hardened Bomb-Test Camera"
 	desc = "A specially-reinforced camera with a long lasting battery, used to monitor the bomb testing site. An external light is attached to the top."
 	c_tag = "Bomb Testing Site"
-	network = list("rd","toxins")
+	network = list("rd","ordnance")
 	use_power = NO_POWER_USE //Test site is an unpowered area
 	invuln = TRUE
 	light_range = 10
@@ -86,12 +96,14 @@
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
 
+	alarm_manager = new(src)
+
 /obj/machinery/camera/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
 		network -= i
 		network += "[port.id]_[i]"
 
-/obj/machinery/proc/create_prox_monitor()
+/obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
 		proximity_monitor = new(src, 1)
 
@@ -106,7 +118,8 @@
 	GLOB.cameranet.cameras -= src
 	cancelCameraAlarm()
 	if(isarea(myarea))
-		myarea.clear_camera(src)
+		LAZYREMOVE(myarea.cameras, src)
+	QDEL_NULL(alarm_manager)
 	QDEL_NULL(assembly_ref)
 	if(bug)
 		bug.bugged_cameras -= c_tag
@@ -155,7 +168,7 @@
 			addtimer(CALLBACK(src, .proc/post_emp_reset, emped, network), 90 SECONDS)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
-				if (M.client.eye == src)
+				if (M.client?.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
@@ -218,10 +231,12 @@
 		droppable_parts += assembly.emp_module
 	if(assembly.proxy_module)
 		droppable_parts += assembly.proxy_module
-	if(!droppable_parts.len)
+	if(!length(droppable_parts))
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)
@@ -241,7 +256,7 @@
 	if(!panel_open)
 		return
 	toggle_cam(user, 1)
-	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+	atom_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 	set_machine_stat(machine_stat & ~BROKEN)
 	I.play_tool_sound(src)
 	return TRUE
@@ -310,35 +325,39 @@
 
 	// OTHER
 	if((istype(I, /obj/item/paper) || istype(I, /obj/item/pda)) && isliving(user))
-		var/mob/living/U = user
-		var/obj/item/paper/X = null
-		var/obj/item/pda/P = null
+		var/mob/living/paper_user = user
 
 		var/itemname = ""
 		var/info = ""
 		if(istype(I, /obj/item/paper))
-			X = I
-			itemname = X.name
-			info = X.info
+			var/obj/item/paper/pressed_paper = I
+			itemname = pressed_paper.name
+			info = pressed_paper.info
 		else
-			P = I
-			itemname = P.name
-			info = P.notehtml
-		to_chat(U, span_notice("You hold \the [itemname] up to the camera..."))
-		U.changeNext_move(CLICK_CD_MELEE)
-		for(var/mob/O in GLOB.player_list)
-			if(isAI(O))
-				var/mob/living/silicon/ai/AI = O
+			var/obj/item/pda/pressed_pda = I
+			itemname = pressed_pda.name
+			info = pressed_pda.notehtml
+
+		itemname = sanitize(itemname)
+		to_chat(paper_user, span_notice("You hold \the [itemname] up to the camera..."))
+		paper_user.log_talk(itemname, LOG_GAME, log_globally=TRUE, tag="Pressed to camera")
+		paper_user.changeNext_move(CLICK_CD_MELEE)
+
+		for(var/mob/potential_viewer in GLOB.player_list)
+			if(isAI(potential_viewer))
+				var/mob/living/silicon/ai/AI = potential_viewer
 				if(AI.control_disabled || (AI.stat == DEAD))
 					continue
-				if(U.name == "Unknown")
-					to_chat(AI, "[span_name("[U]")] holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+				if(paper_user.name == "Unknown")
+					to_chat(AI, "[span_name(paper_user)] holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
 				else
-					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(U.name)]'>[U]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+					to_chat(AI, "<b><a href='?src=[REF(AI)];track=[html_encode(paper_user.name)]'>[paper_user]</a></b> holds <a href='?_src_=usr;show_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+				AI.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
 				AI.last_paper_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
-			else if (O.client.eye == src)
-				to_chat(O, "[span_name("[U]")] holds \a [itemname] up to one of the cameras ...")
-				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+			else if (potential_viewer.client?.eye == src)
+				to_chat(potential_viewer, "[span_name("[paper_user]")] holds \a [itemname] up to one of the cameras ...")
+				potential_viewer.log_talk(itemname, LOG_VICTIM, tag="Pressed to camera from [key_name(paper_user)]", log_globally=FALSE)
+				potential_viewer << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		return
 
 	else if(istype(I, /obj/item/camera_bug))
@@ -358,12 +377,12 @@
 	return ..()
 
 
-/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(machine_stat & BROKEN)
 		return damage_amount
 	. = ..()
 
-/obj/machinery/camera/obj_break(damage_flag)
+/obj/machinery/camera/atom_break(damage_flag)
 	if(!status)
 		return
 	. = ..()
@@ -436,20 +455,18 @@
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in GLOB.player_list)
-		if (O.client.eye == src)
+		if (O.client?.eye == src)
 			O.unset_machine()
 			O.reset_perspective(null)
 			to_chat(O, span_warning("The screen bursts into static!"))
 
 /obj/machinery/camera/proc/triggerCameraAlarm()
 	alarm_on = TRUE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.triggerAlarm("Camera", get_area(src), list(src), src)
+	alarm_manager.send_alarm(ALARM_CAMERA, src, src)
 
 /obj/machinery/camera/proc/cancelCameraAlarm()
 	alarm_on = FALSE
-	for(var/mob/living/silicon/S in GLOB.silicon_mobs)
-		S.cancelAlarm("Camera", get_area(src), src)
+	alarm_manager.clear_alarm(ALARM_CAMERA)
 
 /obj/machinery/camera/proc/can_use()
 	if(!status)

@@ -2,6 +2,7 @@
 	name = "body egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
+	visual = TRUE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
 
@@ -9,22 +10,22 @@
 	..()
 	to_chat(finder, span_warning("You found an unknown alien organism in [owner]'s [zone]!"))
 
-/obj/item/organ/body_egg/Initialize()
+/obj/item/organ/body_egg/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
 
 /obj/item/organ/body_egg/Insert(mob/living/carbon/M, special = FALSE)
 	..()
-	ADD_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
-	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, TRAIT_GENERIC)
+	ADD_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
+	ADD_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
 /obj/item/organ/body_egg/Remove(mob/living/carbon/M, special = FALSE)
 	if(owner)
-		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, TRAIT_GENERIC)
-		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, TRAIT_GENERIC)
+		REMOVE_TRAIT(owner, TRAIT_XENO_HOST, ORGAN_TRAIT)
+		REMOVE_TRAIT(owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 		owner.med_hud_set_status()
 		INVOKE_ASYNC(src, .proc/RemoveInfectionImages, owner)
 	..()

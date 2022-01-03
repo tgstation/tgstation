@@ -14,10 +14,10 @@
 	var/obj/item/radio/radio
 	var/radio_channel = RADIO_CHANNEL_SUPPLY
 
-/obj/machinery/computer/chef_order/Initialize()
+/obj/machinery/computer/chef_order/Initialize(mapload)
 	. = ..()
 	radio = new(src)
-	radio.frequency = FREQ_SUPPLY
+	radio.set_frequency(FREQ_SUPPLY)
 	radio.subspace_transmission = TRUE
 	radio.canhear_range = 0
 	radio.recalculateChannels()
@@ -33,8 +33,7 @@
 /obj/machinery/computer/chef_order/proc/get_total_cost()
 	. = 0
 	for(var/datum/orderable_item/item as anything in grocery_list)
-		for(var/i in 1 to grocery_list[item]) //for how many times we bought it
-			. += item.cost_per_order //add its price
+		. += grocery_list[item] * item.cost_per_order
 
 /obj/machinery/computer/chef_order/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -71,7 +70,7 @@
 	var/datum/orderable_item/wanted_item = locate(params["target"]) in order_datums
 	switch(action)
 		if("cart_set")
-			grocery_list[wanted_item] = params["amt"]
+			grocery_list[wanted_item] = clamp(params["amt"], 0, 20)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 			update_static_data(chef)

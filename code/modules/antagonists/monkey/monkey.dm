@@ -4,7 +4,7 @@
 #define DISEASE_LIVED 4
 
 /datum/antagonist/monkey
-	name = "Monkey"
+	name = "\improper Monkey"
 	job_rank = ROLE_MONKEY
 	roundend_category = "monkeys"
 	antagpanel_category = "Monkey"
@@ -15,6 +15,16 @@
 
 /datum/antagonist/monkey/can_be_owned(datum/mind/new_owner)
 	return ..() && (!monkey_only || ismonkey(new_owner.current))
+
+/datum/antagonist/monkey/get_preview_icon()
+	// Creating a *real* monkey is fairly involved before atoms init.
+	var/icon/icon = icon('icons/mob/human.dmi', "monkey")
+
+	icon.Crop(4, 9, 28, 33)
+	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	icon.Shift(SOUTH, 10)
+
+	return icon
 
 /datum/antagonist/monkey/get_team()
 	return monkey_team
@@ -30,7 +40,7 @@
 		QDEL_NULL(D)
 
 /datum/antagonist/monkey/greet()
-	to_chat(owner, "<b>You are a monkey now!</b>")
+	. = ..()
 	to_chat(owner, "<b>Bite humans to infect them, follow the orders of the monkey leaders, and help fellow monkeys!</b>")
 	to_chat(owner, "<b>Ensure at least one infected monkey escapes on the Emergency Shuttle!</b>")
 	to_chat(owner, "<b><i>As an intelligent monkey, you know how to use technology and how to ventcrawl while wearing things.</i></b>")
@@ -40,7 +50,7 @@
 /datum/antagonist/monkey/on_removal()
 	owner.special_role = null
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
+	var/datum/disease/transformation/jungle_fever/D = locate() in owner.current.diseases
 	if(D)
 		qdel(D)
 
@@ -91,7 +101,7 @@
 	. = ..()
 
 /datum/antagonist/monkey/leader
-	name = "Monkey Leader"
+	name = "\improper Monkey Leader"
 	monkey_only = FALSE
 
 /datum/antagonist/monkey/leader/admin_add(datum/mind/new_owner,mob/admin)
@@ -113,8 +123,8 @@
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()
-	var/obj/item/organ/heart/freedom/F = new
-	F.Insert(owner.current, drop_if_replaced = FALSE)
+	var/obj/item/organ/heart/freedom/super_heart = new
+	super_heart.Insert(owner.current, drop_if_replaced = FALSE)
 	owner.special_role = "Monkey Leader"
 
 /datum/antagonist/monkey/leader/on_removal()
@@ -124,7 +134,7 @@
 	. = ..()
 
 /datum/antagonist/monkey/leader/greet()
-	to_chat(owner, "<B>[span_notice("You are the Jungle Fever patient zero!!</B>")]")
+	to_chat(owner, "<B>[span_big("You are the Jungle Fever patient zero!!</B>")]")
 	to_chat(owner, "<b>You have been planted onto this station by the Animal Rights Consortium.</b>")
 	to_chat(owner, "<b>Soon the disease will transform you into an ape. Afterwards, you will be able spread the infection to others with a bite.</b>")
 	to_chat(owner, "<b>While your infection strain is undetectable by scanners, any other infectees will show up on medical equipment.</b>")

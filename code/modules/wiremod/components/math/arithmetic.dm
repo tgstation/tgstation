@@ -14,6 +14,7 @@
 /obj/item/circuit_component/arithmetic
 	display_name = "Arithmetic"
 	desc = "General arithmetic component with arithmetic capabilities."
+	category = "Math"
 
 	/// The amount of input ports to have
 	var/input_port_amount = 4
@@ -37,8 +38,7 @@
 	)
 	arithmetic_option = add_option_port("Arithmetic Option", component_options)
 
-/obj/item/circuit_component/arithmetic/Initialize()
-	. = ..()
+/obj/item/circuit_component/arithmetic/populate_ports()
 	arithmetic_ports = list()
 	for(var/port_id in 1 to input_port_amount)
 		var/letter = ascii2text(text2ascii("A") + (port_id-1))
@@ -47,20 +47,17 @@
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/arithmetic/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/list/ports = arithmetic_ports.Copy()
 	var/datum/port/input/first_port = popleft(ports)
-	var/result = first_port.input_value
+	var/result = first_port.value
 
 	for(var/datum/port/input/input_port as anything in ports)
-		var/value = input_port.input_value
+		var/value = input_port.value
 		if(isnull(value))
 			continue
 
-		switch(arithmetic_option.input_value)
+		switch(arithmetic_option.value)
 			if(COMP_ARITHMETIC_ADD)
 				result += value
 			if(COMP_ARITHMETIC_SUBTRACT)

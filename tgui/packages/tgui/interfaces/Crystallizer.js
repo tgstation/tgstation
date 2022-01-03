@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput, Box } from '../components';
+import { Button, LabeledList, ProgressBar, Section, NumberInput, Box } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';

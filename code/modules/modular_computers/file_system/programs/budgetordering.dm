@@ -190,7 +190,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
-			if((pack.hidden && (pack.contraband && !contraband) || pack.DropPodOnly))
+			if(pack.hidden || pack.contraband || pack.DropPodOnly || (pack.special && !pack.special_enabled))
 				return
 
 			var/name = "*None Provided*"
@@ -212,7 +212,7 @@
 					computer.say("No ID card detected.")
 					return
 				if(istype(id_card, /obj/item/card/id/departmental_budget))
-					computer.say("The [src] rejects [id_card].")
+					computer.say("[id_card] cannot be used to make purchases.")
 					return
 				account = id_card.registered_account
 				if(!istype(account))
@@ -221,7 +221,7 @@
 
 			var/reason = ""
 			if((requestonly && !self_paid) || !(card_slot?.GetID()))
-				reason = stripped_input("Reason:", name, "")
+				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
 

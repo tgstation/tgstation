@@ -545,6 +545,7 @@
 			role_flags |= ROLE_VULNERABLE
 
 /datum/mafia_role/hos/proc/internal_affairs(datum/mafia_controller/game)
+	SIGNAL_HANDLER
 	to_chat(body,span_userdanger("You have been killed by Nanotrasen Internal Affairs!"))
 	reveal_role(game, verbose = TRUE)
 	kill(game,src,FALSE) //you technically kill yourself but that shouldn't matter

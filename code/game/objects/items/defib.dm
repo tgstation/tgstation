@@ -16,7 +16,7 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	var/on = FALSE //if the paddles are equipped (1) or on the defib (0)
@@ -24,7 +24,7 @@
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
+	var/combat = FALSE //if true, revive through space suits, allow for combat shocking
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 	/// The icon state for the paddle overlay, not applied if null
 	var/paddle_state = "defibunit-paddles"
@@ -40,13 +40,13 @@
 /obj/item/defibrillator/get_cell()
 	return cell
 
-/obj/item/defibrillator/Initialize() //starts without a cell for rnd
+/obj/item/defibrillator/Initialize(mapload) //starts without a cell for rnd
 	. = ..()
 	paddles = new paddle_type(src)
 	update_power()
 	return
 
-/obj/item/defibrillator/loaded/Initialize() //starts with hicap
+/obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
 	cell = new(src)
 	update_power()
@@ -275,7 +275,7 @@
 	if(slot == user.getBeltSlot())
 		return TRUE
 
-/obj/item/defibrillator/compact/loaded/Initialize()
+/obj/item/defibrillator/compact/loaded/Initialize(mapload)
 	. = ..()
 	cell = new(src)
 	update_power()
@@ -294,7 +294,7 @@
 	powered_state = null
 	emagged_state = null
 
-/obj/item/defibrillator/compact/combat/loaded/Initialize()
+/obj/item/defibrillator/compact/combat/loaded/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell/infinite(src)
 	update_power()
@@ -306,7 +306,7 @@
 
 /obj/item/defibrillator/compact/combat/loaded/nanotrasen
 	name = "elite Nanotrasen defibrillator"
-	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or agressive manner."
+	desc = "A belt-equipped state-of-the-art defibrillator. Can revive through thick clothing, has an experimental self-recharging battery, and can be utilized in combat via applying the paddles in a disarming or aggressive manner."
 	icon_state = "defibnt" //needs defib inhand sprites
 	inhand_icon_state = "defibnt"
 	worn_icon_state = "defibnt"
@@ -400,7 +400,7 @@
 	cooldown = FALSE
 	update_appearance()
 
-/obj/item/shockpaddles/Initialize()
+/obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC) //stops shockpaddles from being inserted in BoH
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
@@ -619,6 +619,8 @@
 						fail_reason = "No intelligence pattern can be detected in patient's brain. Further attempts futile."
 					if (DEFIB_FAIL_NO_BRAIN)
 						fail_reason = "Patient's brain is missing. Further attempts futile."
+					if (DEFIB_FAIL_BLACKLISTED)
+						fail_reason = "Patient has been blacklisted from revival. Further attempts futile."
 
 				if(fail_reason)
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))
@@ -641,7 +643,8 @@
 					user.visible_message(span_notice("[req_defib ? "[defib]" : "[src]"] pings: Resuscitation successful."))
 					playsound(src, 'sound/machines/defib_success.ogg', 50, FALSE)
 					H.set_heartattack(FALSE)
-					H.grab_ghost()
+					if(defib_result == DEFIB_POSSIBLE)
+						H.grab_ghost()
 					H.revive(full_heal = FALSE, admin_revive = FALSE)
 					H.emote("gasp")
 					H.Jitter(100)

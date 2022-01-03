@@ -2,7 +2,7 @@
 	name = "navigation computer"
 	desc = "Used to designate a precise transit location for a spacecraft."
 	jump_action = null
-	should_supress_view_changes  = FALSE
+	should_supress_view_changes = FALSE
 
 	// Docking cameras should only interact with their current z-level.
 	move_up_action = null
@@ -20,7 +20,7 @@
 	var/view_range = 0
 	var/x_offset = 0
 	var/y_offset = 0
-	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava)
+	var/list/whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/open/openspace)
 	var/see_hidden = FALSE
 	var/designate_time = 0
 	var/turf/designating_target_loc
@@ -33,8 +33,7 @@
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-		for(var/port_id in SSshuttle.stationary)
-			var/obj/docking_port/stationary/S = SSshuttle.stationary[port_id]
+		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary)
 			if(S.id == shuttleId)
 				jumpto_ports[S.id] = TRUE
 
@@ -305,7 +304,7 @@
 	src.origin = origin
 	return ..()
 
-/mob/camera/ai_eye/remote/shuttle_docker/setLoc(destination)
+/mob/camera/ai_eye/remote/shuttle_docker/setLoc(turf/destination, force_update = FALSE)
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin
 	console.checkLandingSpot()
@@ -379,17 +378,20 @@
 			L["([L.len]) [nav_beacon.name] locked"] = null
 
 	playsound(console, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/selected = input("Choose location to jump to", "Locations", null) as null|anything in sortList(L)
+	var/selected = tgui_input_list(usr, "Choose location to jump to", "Locations", sort_list(L))
+	if(isnull(selected))
+		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+		return
 	if(QDELETED(src) || QDELETED(target) || !isliving(target))
 		return
 	playsound(src, "terminal_type", 25, FALSE)
-	if(selected)
-		var/turf/T = get_turf(L[selected])
-		if(T)
-			playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
-			remote_eye.setLoc(T)
-			to_chat(target, span_notice("Jumped to [selected]."))
-			C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
-			C.clear_fullscreen("flash", 3)
-	else
-		playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
+	var/turf/T = get_turf(L[selected])
+	if(isnull(T))
+		return
+	playsound(console, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
+	remote_eye.setLoc(T)
+	to_chat(target, span_notice("Jumped to [selected]."))
+	C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
+	C.clear_fullscreen("flash", 3)
+
+

@@ -1,7 +1,10 @@
 /datum/job/research_director
-	title = "Research Director"
+	title = JOB_RESEARCH_DIRECTOR
+	description = "Supervise research efforts, ensure Robotics is in working \
+		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
+		they are"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	head_announce = list("Science")
 	faction = FACTION_STATION
 	total_positions = 1
@@ -37,8 +40,8 @@
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	rpg_title = "Archmagister"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -52,30 +55,32 @@
 	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
+	id_trim = /datum/id_trim/job/research_director
+	uniform = /obj/item/clothing/under/rank/rnd/research_director
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
 	belt = /obj/item/pda/heads/rd
 	ears = /obj/item/radio/headset/heads/rd
-	uniform = /obj/item/clothing/under/rank/rnd/research_director
 	shoes = /obj/item/clothing/shoes/sneakers/brown
-	suit = /obj/item/clothing/suit/toggle/labcoat
-	l_hand = /obj/item/clipboard
 	l_pocket = /obj/item/laser_pointer
-	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
+	l_hand = /obj/item/clipboard
 
 	backpack = /obj/item/storage/backpack/science
-	satchel = /obj/item/storage/backpack/satchel/tox
-	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
-
-	skillchips = list(/obj/item/skillchip/job/research_director)
+	satchel = /obj/item/storage/backpack/satchel/science
+	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 	chameleon_extras = /obj/item/stamp/rd
+	skillchips = list(/obj/item/skillchip/job/research_director)
 
-	id_trim = /datum/id_trim/job/research_director
+/datum/outfit/job/rd/mod
+	name = "Research Director (MODsuit)"
 
-/datum/outfit/job/rd/rig
-	name = "Research Director (Hardsuit)"
-
-	l_hand = null
-	mask = /obj/item/clothing/mask/breath
-	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/research
+	suit = null
+	mask = /obj/item/clothing/mask/breath
+	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE

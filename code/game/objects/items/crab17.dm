@@ -38,7 +38,7 @@
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = LARGE_MOB_LAYER
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
@@ -48,7 +48,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [obj_integrity]</b>.")
+	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [atom_integrity]</b>.")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
@@ -82,13 +82,15 @@
 
 /obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()
+	if(QDELETED(src))
+		return
 	bogdanoff = user
 	add_overlay("flaps")
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(WEAKREF(src), 8 MINUTES) //Self-destruct after 8 min
-	SSeconomy.market_crashing = TRUE
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
+	ADD_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -159,7 +161,7 @@
 	STOP_PROCESSING(SSfastprocess, src)
 	priority_announce("The credit deposit machine at [get_area(src)] has been destroyed. Station funds have stopped draining!", sender_override = "CRAB-17 Protocol")
 	explosion(src, light_impact_range = 1, flame_range = 2)
-	SSeconomy.market_crashing = FALSE
+	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, REF(src))
 	return ..()
 
 /obj/structure/checkoutmachine/proc/start_dumping()

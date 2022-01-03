@@ -9,6 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = FALSE
+	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -24,13 +25,13 @@
 	if(frames == 0)
 		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = alpha / frames
-	for(var/i = 0, i < frames, i++)
+	for(var/i in 1 to frames)
 		alpha -= step
 		if(alpha < 160)
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize()
+/obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -76,7 +77,7 @@
 	if(!t_loc)
 		return
 	var/list/newsmokes = list()
-	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
+	for(var/turf/T in t_loc.get_atmos_adjacent_turfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)
 			continue
@@ -125,7 +126,7 @@
 /obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
-/obj/effect/particle_effect/smoke/bad/Initialize()
+/obj/effect/particle_effect/smoke/bad/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -241,7 +242,7 @@
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
-			if(T.intact && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))
+			if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))
 				continue
 			reagents.expose(AM, TOUCH, fraction)
 

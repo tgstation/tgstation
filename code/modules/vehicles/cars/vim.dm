@@ -9,7 +9,7 @@
 	desc = "An minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer."
 	icon_state = "vim"
 	max_integrity = 50
-	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 70, BULLET = 40, LASER = 40, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 80, ACID = 80)
 	enter_delay = 20
 	movedelay = 0.6
 	engine_sound_length = 0.3 SECONDS
@@ -26,17 +26,17 @@
 	. = ..()
 	. += span_notice("[src] can be repaired with a welder.")
 
-/obj/vehicle/sealed/car/vim/obj_destruction(damage_flag)
+/obj/vehicle/sealed/car/vim/atom_destruction(damage_flag)
 	new /obj/effect/decal/cleanable/oil(get_turf(src))
 	do_sparks(5, TRUE, src)
 	visible_message(span_boldannounce("[src] blows apart!"))
 	return ..()
 
 /obj/vehicle/sealed/car/vim/mob_try_enter(mob/entering)
-	if(!isanimal(entering))
+	if(!isanimal_or_basicmob(entering))
 		return FALSE
-	var/mob/living/simple_animal/animal = entering
-	if(animal.mob_size != MOB_SIZE_TINY)
+	var/mob/living/animal_or_basic = entering
+	if(animal_or_basic.mob_size != MOB_SIZE_TINY)
 		return FALSE
 	return ..()
 
@@ -48,7 +48,7 @@
 	if(being_repaired)
 		user.balloon_alert(user, "already being repaired!")
 		return
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		user.balloon_alert(user, "already fully repaired!")
 		return
 
@@ -61,14 +61,14 @@
 		return
 	being_repaired = FALSE
 
-	obj_integrity = min(obj_integrity + VIM_HEAL_AMOUNT, max_integrity)
-	user.balloon_alert(user, "[obj_integrity == max_integrity ? "fully " : ""]repaired [src]")
+	atom_integrity = min(atom_integrity + VIM_HEAL_AMOUNT, max_integrity)
+	user.balloon_alert(user, "[atom_integrity == max_integrity ? "fully " : ""]repaired [src]")
 
 /obj/vehicle/sealed/car/vim/mob_enter(mob/newoccupant, silent = FALSE)
 	. = ..()
 	update_appearance()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
 
 /obj/vehicle/sealed/car/vim/generate_actions()

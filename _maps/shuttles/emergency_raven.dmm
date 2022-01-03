@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
@@ -371,7 +371,7 @@
 	pixel_y = 3
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -568,7 +568,7 @@
 	},
 /area/shuttle/escape)
 "br" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bs" = (
@@ -936,7 +936,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cd" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emegency Shuttle External Airlock"
 	},
 /turf/open/floor/plating,
@@ -1027,7 +1027,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "cn" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "co" = (
@@ -1082,7 +1082,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ct" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -2052,7 +2052,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "eo" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Emegency Shuttle External Airlock"
 	},
 /obj/docking_port/mobile/emergency{

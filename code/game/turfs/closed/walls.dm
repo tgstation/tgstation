@@ -20,7 +20,8 @@
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 
 	rcd_memory = RCD_MEMORY_WALL
-
+	///bool on whether this wall can be chiselled into
+	var/can_engrave = TRUE
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through.
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -32,9 +33,10 @@
 
 	var/list/dent_decals
 
-
 /turf/closed/wall/Initialize(mapload)
 	. = ..()
+	if(!can_engrave)
+		ADD_TRAIT(src, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT)
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 	if(smoothing_flags & SMOOTH_DIAGONAL_CORNERS && fixed_underlay) //Set underlays for the diagonal walls.
@@ -49,6 +51,8 @@
 		fixed_underlay = string_assoc_list(fixed_underlay)
 		underlays += underlay_appearance
 
+/turf/closed/wall/atom_destruction(damage_flag)
+	dismantle_wall(TRUE, FALSE)
 
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
@@ -83,6 +87,7 @@
 		ChangeTurf(decon_type, flags = CHANGETURF_INHERIT_AIR)
 	else
 		ScrapeAway()
+	QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/closed/wall/proc/break_wall()
 	new sheet_type(src, sheet_amount)
@@ -265,7 +270,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
+/turf/closed/wall/get_dumping_location()
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)

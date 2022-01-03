@@ -6,12 +6,12 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1 | RAD_PROTECT_CONTENTS_1
+	flags_1 = ON_BORDER_1
 	max_integrity = 25
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 100)
-	CanAtmosPass = ATMOS_PASS_PROC
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	can_atmos_pass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
@@ -25,10 +25,10 @@
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
-	var/breaksound = "shatter"
-	var/knocksound = 'sound/effects/Glassknock.ogg'
-	var/bashsound = 'sound/effects/Glassbash.ogg'
-	var/hitsound = 'sound/effects/Glasshit.ogg'
+	var/break_sound = "shatter"
+	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/hit_sound = 'sound/effects/glasshit.ogg'
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
 
@@ -127,6 +127,9 @@
 /obj/structure/window/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
 
+	if(leaving.movement_type & PHASING)
+		return
+
 	if(leaving == src)
 		return // Let's not block ourselves.
 
@@ -144,7 +147,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("Something knocks on [src]."))
 	add_fingerprint(user)
-	playsound(src, knocksound, 50, TRUE)
+	playsound(src, knock_sound, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -164,11 +167,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(src, knocksound, 50, TRUE)
+		playsound(src, knock_sound, 50, TRUE)
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(src, bashsound, 100, TRUE)
+		playsound(src, bash_sound, 100, TRUE)
 
 /obj/structure/window/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -185,13 +188,13 @@
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount = 0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume = 50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_nearby_icons()
 				to_chat(user, span_notice("You repair [src]."))
 		else
@@ -209,8 +212,9 @@
 			to_chat(user, span_notice("You begin to disassemble [src]..."))
 			if(I.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
-				G.add_fingerprint(user)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				if (!QDELETED(G))
+					G.add_fingerprint(user)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, span_notice("You successfully disassemble [src]."))
 				qdel(src)
 			return
@@ -262,18 +266,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hitsound, 75, TRUE)
+				playsound(src, hit_sound, 75, TRUE)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, TRUE)
+		playsound(src, break_sound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
@@ -305,9 +309,8 @@
 	air_update_turf(TRUE, FALSE)
 	add_fingerprint(user)
 
-/obj/structure/window/proc/on_painted(is_dark_color)
+/obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
-
 	if (is_dark_color && fulltile) //Opaque directional windows restrict vision even in directions they are not placed in, please don't do this
 		set_opacity(255)
 	else
@@ -319,14 +322,13 @@
 	update_nearby_icons()
 	return ..()
 
-
 /obj/structure/window/Move()
 	var/turf/T = loc
 	. = ..()
 	if(anchored)
 		move_update_air(T)
 
-/obj/structure/window/CanAtmosPass(turf/T)
+/obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))
@@ -346,7 +348,7 @@
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
 		QUEUE_SMOOTH(src)
 
-	var/ratio = obj_integrity / max_integrity
+	var/ratio = atom_integrity / max_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 	cut_overlay(crack_overlay)
 	if(ratio > 75)
@@ -360,7 +362,7 @@
 /obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
 
-/obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/window/get_dumping_location()
 	return null
 
 /obj/structure/window/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
@@ -392,7 +394,7 @@
 	icon_state = "rwindow"
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 80, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 80, ACID = 100)
 	max_integrity = 75
 	explosion_block = 1
 	damage_deflection = 11
@@ -460,7 +462,11 @@
 			else if (tool.tool_behaviour)
 				to_chat(user, span_warning("The bolts need to be loosened first!"))
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if (tool.tool_behaviour)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return ..()
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
@@ -500,7 +506,7 @@
 	icon_state = "plasmawindow"
 	reinf = FALSE
 	heat_resistance = 25000
-	armor = list(MELEE = 80, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 45, BIO = 100, RAD = 100, FIRE = 99, ACID = 100)
+	armor = list(MELEE = 80, BULLET = 5, LASER = 0, ENERGY = 0, BOMB = 45, BIO = 100, FIRE = 99, ACID = 100)
 	max_integrity = 200
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
@@ -531,92 +537,31 @@
 /obj/structure/window/plasma/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced
+/obj/structure/window/reinforced/plasma
 	name = "reinforced plasma window"
 	desc = "A window made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough to break and is most likely nigh fireproof."
 	icon_state = "plasmarwindow"
 	reinf = TRUE
 	heat_resistance = 50000
-	armor = list(MELEE = 80, BULLET = 20, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 100, RAD = 100, FIRE = 99, ACID = 100)
+	armor = list(MELEE = 80, BULLET = 20, LASER = 0, ENERGY = 0, BOMB = 60, BIO = 100, FIRE = 99, ACID = 100)
 	max_integrity = 500
 	damage_deflection = 21
 	explosion_block = 2
 	glass_type = /obj/item/stack/sheet/plasmarglass
 
-/obj/structure/window/plasma/reinforced/BlockSuperconductivity()
+/obj/structure/window/reinforced/plasma/block_superconductivity()
 	return TRUE
-//entirely copypasted code
-//take this out when construction is made a component or otherwise modularized in some way
-/obj/structure/window/plasma/reinforced/attackby(obj/item/I, mob/living/user, params)
-	switch(state)
-		if(RWINDOW_SECURE)
-			if(I.tool_behaviour == TOOL_WELDER && user.combat_mode)
-				user.visible_message(span_notice("[user] holds \the [I] to the security screws on \the [src]..."),
-										span_notice("You begin heating the security screws on \the [src]..."))
-				if(I.use_tool(src, user, 180, volume = 100))
-					to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
-					state = RWINDOW_BOLTS_HEATED
-					addtimer(CALLBACK(src, .proc/cool_bolts), 300)
-				return
-		if(RWINDOW_BOLTS_HEATED)
-			if(I.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] digs into the heated security screws and starts removing them..."),
-										span_notice("You dig into the heated screws hard and they start turning..."))
-				if(I.use_tool(src, user, 80, volume = 50))
-					state = RWINDOW_BOLTS_OUT
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
-				return
-		if(RWINDOW_BOLTS_OUT)
-			if(I.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [I] into the gap in the frame and starts prying..."),
-										span_notice("You wedge \the [I] into the gap in the frame and start prying..."))
-				if(I.use_tool(src, user, 50, volume = 50))
-					state = RWINDOW_POPPED
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut."))
-				return
-		if(RWINDOW_POPPED)
-			if(I.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the exposed bars on \the [src]..."),
-										span_notice("You start cutting the exposed bars on \the [src]"))
-				if(I.use_tool(src, user, 30, volume = 50))
-					state = RWINDOW_BARS_CUT
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame bolts."))
-				return
-		if(RWINDOW_BARS_CUT)
-			if(I.tool_behaviour == TOOL_WRENCH)
-				user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
-					span_notice("You start unfastening the bolts from the frame..."))
-				if(I.use_tool(src, user, 50, volume = 50))
-					to_chat(user, span_notice("You unfasten the bolts from the frame and the window pops loose."))
-					state = WINDOW_OUT_OF_FRAME
-					set_anchored(FALSE)
-				return
-	return ..()
 
-/obj/structure/window/plasma/reinforced/examine(mob/user)
-	. = ..()
-	switch(state)
-		if(RWINDOW_SECURE)
-			. += span_notice("It's been screwed in with one way screws, you'd need to <b>heat them</b> to have any chance of backing them out.")
-		if(RWINDOW_BOLTS_HEATED)
-			. += span_notice("The screws are glowing white hot, and you'll likely be able to <b>unscrew them</b> now.")
-		if(RWINDOW_BOLTS_OUT)
-			. += span_notice("The screws have been removed, revealing a small gap you could fit a <b>prying tool</b> in.")
-		if(RWINDOW_POPPED)
-			. += span_notice("The main plate of the window has popped out of the frame, exposing some bars that look like they can be <b>cut</b>.")
-		if(RWINDOW_BARS_CUT)
-			. += span_notice("The main pane can be easily moved out of the way to reveal some <b>bolts</b> holding the frame in.")
-
-/obj/structure/window/plasma/reinforced/spawner/east
+/obj/structure/window/reinforced/plasma/spawner/east
 	dir = EAST
 
-/obj/structure/window/plasma/reinforced/spawner/west
+/obj/structure/window/reinforced/plasma/spawner/west
 	dir = WEST
 
-/obj/structure/window/plasma/reinforced/spawner/north
+/obj/structure/window/reinforced/plasma/spawner/north
 	dir = NORTH
 
-/obj/structure/window/plasma/reinforced/unanchored
+/obj/structure/window/reinforced/plasma/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
@@ -628,7 +573,7 @@
 	name = "frosted window"
 	icon_state = "fwindow"
 
-/* Full Tile Windows (more obj_integrity) */
+/* Full Tile Windows (more atom_integrity) */
 
 /obj/structure/window/fulltile
 	icon = 'icons/obj/smooth_structures/window.dmi'
@@ -660,7 +605,7 @@
 /obj/structure/window/plasma/fulltile/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/fulltile
+/obj/structure/window/reinforced/plasma/fulltile
 	icon = 'icons/obj/smooth_structures/rplasma_window.dmi'
 	icon_state = "rplasma_window-0"
 	base_icon_state = "rplasma_window"
@@ -673,7 +618,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE)
 	glass_amount = 2
 
-/obj/structure/window/plasma/reinforced/fulltile/unanchored
+/obj/structure/window/reinforced/plasma/fulltile/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
@@ -712,7 +657,8 @@
 	max_integrity = 150
 	glass_amount = 2
 
-/obj/structure/window/shuttle
+//there is a sub shuttle window in survival_pod.dm for mining pods
+/obj/structure/window/reinforced/shuttle//this is called reinforced because it is reinforced w/titanium
 	name = "shuttle window"
 	desc = "A reinforced, air-locked pod window."
 	icon = 'icons/obj/smooth_structures/shuttle_window.dmi'
@@ -720,11 +666,12 @@
 	base_icon_state = "shuttle_window"
 	max_integrity = 150
 	wtype = "shuttle"
+	reinf = TRUE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	reinf = TRUE
 	heat_resistance = 1600
-	armor = list(MELEE = 90, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 90, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 80, ACID = 100)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE)
@@ -733,16 +680,16 @@
 	glass_amount = 2
 	receive_ricochet_chance_mod = 1.2
 
-/obj/structure/window/shuttle/narsie_act()
+/obj/structure/window/reinforced/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/shuttle/tinted
+/obj/structure/window/reinforced/shuttle/tinted
 	opacity = TRUE
 
-/obj/structure/window/shuttle/unanchored
+/obj/structure/window/reinforced/shuttle/unanchored
 	anchored = FALSE
 
-/obj/structure/window/plasma/reinforced/plastitanium
+/obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
@@ -753,7 +700,7 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	heat_resistance = 1600
-	armor = list(MELEE = 95, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, RAD = 100, FIRE = 80, ACID = 100)
+	armor = list(MELEE = 95, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 80, ACID = 100)
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_SHUTTLE_PARTS, SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
 	canSmoothWith = list(SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM)
@@ -763,7 +710,7 @@
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION
 
-/obj/structure/window/plasma/reinforced/plastitanium/unanchored
+/obj/structure/window/reinforced/plasma/plastitanium/unanchored
 	anchored = FALSE
 	state = WINDOW_OUT_OF_FRAME
 
@@ -784,23 +731,23 @@
 	glass_type = /obj/item/stack/sheet/paperframes
 	heat_resistance = 233
 	decon_speed = 10
-	CanAtmosPass = ATMOS_PASS_YES
+	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
-	knocksound = "pageturn"
-	bashsound = 'sound/weapons/slashmiss.ogg'
-	breaksound = 'sound/items/poster_ripped.ogg'
-	hitsound = 'sound/weapons/slashmiss.ogg'
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	knock_sound = "pageturn"
+	bash_sound = 'sound/weapons/slashmiss.ogg'
+	break_sound = 'sound/items/poster_ripped.ogg'
+	hit_sound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 
-/obj/structure/window/paperframe/Initialize()
+/obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
 /obj/structure/window/paperframe/examine(mob/user)
 	. = ..()
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		. += span_info("It looks a bit damaged, you may be able to fix it with some <b>paper</b>.")
 
 /obj/structure/window/paperframe/spawnDebris(location)
@@ -819,7 +766,7 @@
 
 /obj/structure/window/paperframe/update_appearance(updates)
 	. = ..()
-	set_opacity(obj_integrity >= max_integrity)
+	set_opacity(atom_integrity >= max_integrity)
 
 /obj/structure/window/paperframe/update_icon(updates=ALL)
 	. = ..()
@@ -828,7 +775,7 @@
 
 /obj/structure/window/paperframe/update_overlays()
 	. = ..()
-	. += (obj_integrity < max_integrity) ? torn : paper
+	. += (atom_integrity < max_integrity) ? torn : paper
 
 /obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
 	if(W.get_temperature())
@@ -836,13 +783,13 @@
 		return
 	if(user.combat_mode)
 		return ..()
-	if(istype(W, /obj/item/paper) && obj_integrity < max_integrity)
+	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
 		if(do_after(user, 20, target = src))
-			obj_integrity = min(obj_integrity+4,max_integrity)
+			atom_integrity = min(atom_integrity+4,max_integrity)
 			qdel(W)
 			user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
-			if(obj_integrity == max_integrity)
+			if(atom_integrity == max_integrity)
 				update_appearance()
 			return
 	..()

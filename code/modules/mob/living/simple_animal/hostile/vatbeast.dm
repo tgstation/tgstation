@@ -11,7 +11,7 @@
 	gender = NEUTER
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	speak_emote = list("roars")
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	health = 250
 	maxHealth = 250
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
@@ -25,7 +25,7 @@
 
 	var/obj/effect/proc_holder/tentacle_slap/tentacle_slap
 
-/mob/living/simple_animal/hostile/vatbeast/Initialize()
+/mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
 	. = ..()
 	tentacle_slap = new(src, src)
 	AddAbility(tentacle_slap)
@@ -54,8 +54,16 @@
 	action_icon_state = "tentacle_slap"
 	action_background_icon_state = "bg_revenant"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
+	base_action = /datum/action/cooldown/spell_like
+	///How long cooldown before we can use the ability again
 	var/cooldown = 12 SECONDS
-	var/current_cooldown = 0
+
+/obj/effect/proc_holder/tentacle_slap/Initialize(mapload, mob/living/new_owner)
+	. = ..()
+	if(!action)
+		return
+	var/datum/action/cooldown/our_action = action
+	our_action.cooldown_time = cooldown
 
 /obj/effect/proc_holder/tentacle_slap/Click(location, control, params)
 	. = ..()
@@ -63,14 +71,11 @@
 		return TRUE
 	fire(usr)
 
-/obj/effect/proc_holder/tentacle_slap/fire(mob/living/carbon/user)
-	if(current_cooldown > world.time)
-		to_chat(user, span_notice("This ability is still on cooldown."))
-		return
+/obj/effect/proc_holder/tentacle_slap/fire(mob/living/user)
 	if(active)
 		remove_ranged_ability(span_notice("You stop preparing to tentacle slap."))
 	else
-		add_ranged_ability(user, span_notice("You prepare your pimp-tentacle. <B>Left-click to slap a target!</B>"), TRUE)
+		add_ranged_ability(user, span_notice("You prepare [(IS_WEAKREF_OF(user, owner)) ? "your" : "their"] pimp-tentacle. <B>Left-click to slap a target!</B>"), TRUE)
 
 /obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
@@ -86,7 +91,7 @@
 		remove_ranged_ability()
 		return
 
-	if(!caller.Adjacent(target))
+	if(!beast_owner.Adjacent(target))
 		return
 
 	if(!isliving(target))
@@ -94,11 +99,20 @@
 
 	var/mob/living/living_target = target
 
-	beast_owner.visible_message("<span class='warning>[beast_owner] slaps [living_target] with its tentacle!</span>", span_notice("You slap [living_target] with your tentacle."))
+	if(!action.IsAvailable()) //extra check for safety since the ability is shared
+		remove_ranged_ability()
+		to_chat(caller, span_notice("This ability is still on cooldown."))
+		return
+
+	beast_owner.visible_message("<span class='warning'>[beast_owner] slaps [living_target] with its tentacle!</span>", span_notice("You slap [living_target] with your tentacle."))
 	playsound(beast_owner, 'sound/effects/assslap.ogg', 90)
-	var/atom/throw_target = get_edge_target_turf(target, ranged_ability_user.dir)
+	var/atom/throw_target = get_edge_target_turf(target, beast_owner.dir)
 	living_target.throw_at(throw_target, 6, 4, beast_owner)
 	living_target.apply_damage(30)
-	current_cooldown = world.time + cooldown
 	remove_ranged_ability()
+
+	var/datum/action/cooldown/our_action = action
+	our_action.StartCooldown()
+
 	return TRUE
+

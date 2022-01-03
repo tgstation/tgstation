@@ -59,7 +59,7 @@ DEFINE_BITFIELD(smoothing_junction, list(
 		var/turf/neighbor = get_step(source, direction); \
 		if(!neighbor) { \
 			if(source.smoothing_flags & SMOOTH_BORDER) { \
-				junction |=  direction_flag; \
+				junction |= direction_flag; \
 			}; \
 		}; \
 		else { \

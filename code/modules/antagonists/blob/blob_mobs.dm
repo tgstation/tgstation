@@ -10,7 +10,7 @@
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	unique_name = 1
@@ -28,7 +28,7 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/mob/living/simple_animal/hostile/blob/Initialize()
+/mob/living/simple_animal/hostile/blob/Initialize(mapload)
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		remove_verb(src, /mob/living/verb/pulled)
@@ -72,7 +72,9 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
@@ -271,7 +273,7 @@
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	add_cell_sample()
 

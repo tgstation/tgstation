@@ -134,7 +134,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/broodmother/proc/rage()
 	ranged_cooldown = world.time + 100
-	playsound(src,'sound/spookoween/insane_low_laugh.ogg', 200, 1)
+	playsound(src,'sound/voice/insane_low_laugh.ogg', 200, 1)
 	visible_message(span_warning("[src] starts picking up speed!"))
 	color = "#FF0000"
 	set_varspeed(0)
@@ -257,13 +257,10 @@
 	if(use_time > world.time)
 		to_chat(living_user, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
 		return
-	else if(WEATHER_LAVA in living_user.weather_immunities)
+	else if(HAS_TRAIT(living_user, TRAIT_LAVA_IMMUNE))
 		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
 		return
-	LAZYOR(living_user.weather_immunities, WEATHER_LAVA)
+	ADD_TRAIT(living_user, TRAIT_LAVA_IMMUNE, type)
 	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
-	addtimer(CALLBACK(src, .proc/remove_lavaproofing, living_user), 10 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_LAVA_IMMUNE, type), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
-
-/obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/user)
-	LAZYREMOVE(user.weather_immunities, WEATHER_LAVA)

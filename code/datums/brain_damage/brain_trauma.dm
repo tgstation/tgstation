@@ -41,7 +41,7 @@
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
-	if(!silent)
+	if(!silent && lose_text)
 		to_chat(owner, lose_text)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)

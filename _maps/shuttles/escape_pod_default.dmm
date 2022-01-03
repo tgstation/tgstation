@@ -22,7 +22,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "Q" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "U" = (

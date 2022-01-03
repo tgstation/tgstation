@@ -29,7 +29,6 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-	enable_debugger()
 
 	log_world("World loaded at [time_stamp()]!")
 
@@ -119,6 +118,8 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
 	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
@@ -286,13 +287,15 @@ GLOBAL_VAR(restart_counter)
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<b>[server_name]</b> &#8212; "
+			s += "<b>[server_name]</b> "
 		features += "[CONFIG_GET(flag/norespawn) ? "no " : ""]respawn"
 		if(CONFIG_GET(flag/allow_ai))
 			features += "AI allowed"
 		hostedby = CONFIG_GET(string/hostedby)
 
-	s += "<b>[station_name()]</b>";
+	if (CONFIG_GET(flag/station_name_in_hub_entry))
+		s += " &#8212; <b>[station_name()]</b>"
+
 	s += " ("
 	s += "<a href=\"http://\">" //Change this to wherever you want the hub to link to.
 	s += "Default"  //Replace this with something else. Or ever better, delete it and uncomment the game version.

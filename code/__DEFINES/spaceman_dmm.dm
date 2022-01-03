@@ -37,12 +37,6 @@
 /proc/enable_debugging(mode, port)
 	CRASH("auxtools not loaded")
 
-/world/proc/enable_debugger()
-	var/dll = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
-	if (dll)
-		call(dll, "auxtools_init")()
-		enable_debugging()
-
 /world/Del()
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)

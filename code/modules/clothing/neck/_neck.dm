@@ -184,7 +184,7 @@
 	return ..()
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
-	tagname = sanitize_name(stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN))
+	tagname = sanitize_name(tgui_input_text(user, "Would you like to change the name on the tag?", "Pet Naming", "Spot", MAX_NAME_LEN))
 	name = "[initial(name)] - [tagname]"
 
 //////////////
@@ -213,7 +213,7 @@
 	. = ..()
 	if(!proximity)
 		return
-	var/datum/export_report/ex = export_item_and_contents(I, dry_run=TRUE)
+	var/datum/export_report/ex = export_item_and_contents(I, delete_unsold = selling, dry_run = !selling)
 	var/price = 0
 	for(var/x in ex.total_amount)
 		price += ex.total_value[x]
@@ -223,11 +223,6 @@
 		to_chat(user, span_notice("[selling ? "Sold" : "Getting the price of"] [I], value: <b>[true_price]</b> credits[I.contents.len ? " (exportable contents included)" : ""].[profit_scaling < 1 && selling ? "<b>[round(price-true_price)]</b> credit\s taken as processing fee\s." : ""]"))
 		if(selling)
 			new /obj/item/holochip(get_turf(user),true_price)
-			for(var/i in ex.exported_atoms_ref)
-				var/atom/movable/AM = i
-				if(QDELETED(AM))
-					continue
-				qdel(AM)
 	else
 		to_chat(user, span_warning("There is no export value for [I] or any items within it."))
 
@@ -270,6 +265,11 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
-/obj/item/clothing/neck/beads/Initialize()
+/obj/item/clothing/neck/beads/Initialize(mapload)
 	. = ..()
 	color = color = pick("#ff0077","#d400ff","#2600ff","#00ccff","#00ff2a","#e5ff00","#ffae00","#ff0000", "#ffffff")
+
+/obj/item/clothing/neck/tie/disco
+	name = "horrific necktie"
+	icon_state = "eldritch_tie"
+	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."

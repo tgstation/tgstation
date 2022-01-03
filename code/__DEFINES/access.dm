@@ -12,8 +12,8 @@
 #define ACCESS_MORGUE 6
 /// R&D department and R&D console
 #define ACCESS_RND 7
-/// Toxins lab and burn chamber
-#define ACCESS_TOXINS 8
+/// Ordnance lab and burn chamber
+#define ACCESS_ORDNANCE 8
 /// Genetics access
 #define ACCESS_GENETICS 9
 /// Engineering area, power monitor, power flow control console
@@ -80,10 +80,12 @@
 /// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY 69 ///Nice.
 #define ACCESS_PSYCHOLOGY 70
-/// Toxins tank storage room access
-#define ACCESS_TOXINS_STORAGE 71
+/// Ordnance gas storage room access
+#define ACCESS_ORDNANCE_STORAGE 71
 /// Room and launching.
 #define ACCESS_AUX_BASE 72
+/// Service access, for service hallway and service consoles
+#define ACCESS_SERVICE 73
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -272,24 +274,25 @@
 	ACCESS_FORENSICS_LOCKERS, \
 	ACCESS_BRIG, \
 	ACCESS_SECURITY, \
+	ACCESS_ATMOSPHERICS, \
+	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_ORDNANCE, \
+	ACCESS_SERVICE, \
 )
 
 /// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
-	ACCESS_TOXINS_STORAGE, \
 	ACCESS_MINISAT, \
 	ACCESS_TCOMSAT, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_VAULT, \
-	ACCESS_ATMOSPHERICS, \
 	ACCESS_TECH_STORAGE, \
 	ACCESS_HEADS, \
 	ACCESS_TELEPORTER, \
 	ACCESS_ARMORY, \
 	ACCESS_AI_UPLOAD, \
 	ACCESS_CHANGE_IDS, \
-	ACCESS_TOXINS, \
 	ACCESS_EVA, \
 	ACCESS_GATEWAY, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \
@@ -401,8 +404,8 @@
 #define REGION_ACCESS_RESEARCH list( \
 	ACCESS_RESEARCH, \
 	ACCESS_RND, \
-	ACCESS_TOXINS, \
-	ACCESS_TOXINS_STORAGE, \
+	ACCESS_ORDNANCE, \
+	ACCESS_ORDNANCE_STORAGE, \
 	ACCESS_GENETICS, \
 	ACCESS_ROBOTICS, \
 	ACCESS_XENOBIOLOGY, \
@@ -480,7 +483,7 @@
 	/obj/item/pda/detective = list(REGION_SECURITY), \
 	/obj/item/pda/warden = list(REGION_SECURITY), \
 	/obj/item/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/pda/toxins = list(REGION_RESEARCH), \
+	/obj/item/pda/science = list(REGION_RESEARCH), \
 	/obj/item/pda/heads/hop = list(REGION_COMMAND), \
 	/obj/item/pda/heads/hos = list(REGION_COMMAND), \
 	/obj/item/pda/heads/cmo = list(REGION_COMMAND), \

@@ -100,9 +100,12 @@
 	flashing = flash
 	flashing_factor = flash_fact
 
-/datum/effect_system/reagents_explosion/start()
-	if(explosion_message)
-		location.visible_message(span_danger("The solution violently explodes!"), \
-								span_hear("You hear an explosion!"))
+/// Starts the explosion. The explosion_source is as part of logging and identifying the source of the explosion for logs.
+/datum/effect_system/reagents_explosion/start(atom/explosion_source = null)
+	if(!explosion_source)
+		stack_trace("Reagent explosion triggered without a source atom. This explosion may have incomplete logging.")
 
-	dyn_explosion(location, amount, flash_range = flashing_factor)
+	if(explosion_message)
+		location.visible_message(span_danger("The solution violently explodes!"), span_hear("You hear an explosion!"))
+
+	dyn_explosion(location, amount, flash_range = flashing_factor, explosion_cause = explosion_source)

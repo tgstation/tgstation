@@ -5,6 +5,7 @@
 	desc = "It's watching you closely."
 	icon_state = "necrocrate"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	can_install_electronics = FALSE
 
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously. You need a skeleton key to open it."
@@ -12,7 +13,7 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/Initialize()
+/obj/structure/closet/crate/necropolis/tendril/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
 
@@ -53,7 +54,7 @@
 		if(10)
 			new /obj/item/ship_in_a_bottle(src)
 		if(11)
-			new /obj/item/clothing/suit/space/hardsuit/berserker(src)
+			new /obj/item/clothing/suit/hooded/berserker(src)
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
@@ -111,7 +112,7 @@
 	name = "bubblegum chest"
 
 /obj/structure/closet/crate/necropolis/bubblegum/PopulateContents()
-	new /obj/item/clothing/suit/space/hardsuit/hostile_environment(src)
+	new /obj/item/clothing/suit/hooded/hostile_environment(src)
 	var/loot = rand(1,2)
 	switch(loot)
 		if(1)

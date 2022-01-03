@@ -43,8 +43,10 @@
 	var/color_mode = PHOTO_COLOR
 	/// Indicates whether the printer is currently busy copying or not.
 	var/busy = FALSE
+	/// Variable needed to determine the selected category of forms on Photocopier.js
+	var/category
 
-/obj/machinery/photocopier/Initialize()
+/obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
@@ -59,7 +61,18 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-
+	
+	try
+		var/list/blanks = json_decode(file2text("config/blanks.json"))
+		if (blanks != null)
+			data["blanks"] = blanks
+			data["category"] = category
+			data["forms_exist"] = TRUE
+		else
+			data["forms_exist"] = FALSE
+	catch()
+		data["forms_exist"] = FALSE
+	
 	if(photo_copy)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
@@ -93,7 +106,7 @@
 				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
 				return FALSE
 			if(paper_copy)
-				if(!length(paper_copy.info))
+				if(!paper_copy.get_info_length())
 					to_chat(usr, span_warning("An error message flashes across [src]'s screen: \"The supplied paper is blank. Aborting.\""))
 					return FALSE
 				// Basic paper
@@ -160,6 +173,27 @@
 		if("set_copies")
 			num_copies = clamp(text2num(params["num_copies"]), 1, MAX_COPIES_AT_ONCE)
 			return TRUE
+		// Changes the forms displayed on Photocopier.js when you switch categories
+		if("choose_category")
+			category = params["category"]
+			return TRUE
+		// Called when you press print blank
+		if("print_blank")
+			if(busy)
+				to_chat(usr, span_warning("[src] is currently busy copying something. Please wait until it is finished."))
+				return FALSE
+			if (toner_cartridge.charges - PAPER_TONER_USE < 0)
+				to_chat(usr, span_warning("There is not enough toner in [src] to print the form, please replace the cartridge."))
+				return FALSE
+			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
+			var/obj/item/paper/printblank = new /obj/item/paper (loc)
+			var/printname = params["name"]
+			var/list/printinfo
+			for(var/infoline as anything in params["info"])
+				printinfo += infoline
+			printblank.name = printname
+			printblank.info = printinfo
+			return printblank
 
 /**
  * Determines if the photocopier has enough toner to create `num_copies` amount of copies of the currently inserted item.
@@ -218,8 +252,8 @@
 /obj/machinery/photocopier/proc/make_devil_paper_copy()
 	if(!paper_copy)
 		return
-	var/obj/item/paper/contract/employment/E = paper_copy
-	var/obj/item/paper/contract/employment/C = new(loc, E.target.current)
+	var/obj/item/paper/employment_contract/E = paper_copy
+	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
 	give_pixel_offset(C)
 
 /**
@@ -234,7 +268,10 @@
 	give_pixel_offset(copied_paper)
 
 	//the font color dependant on the amount of toner left.
-	copied_paper.info = "<font color = [toner_cartridge.charges > 10 ? "#101010" : "#808080"]>[copied_paper.info]</font>"
+	var/chosen_color = toner_cartridge.charges > 10 ? "#101010" : "#808080"
+	copied_paper.info = "<font color = [chosen_color]>[copied_paper.info]</font>"
+	for(var/list/style as anything in copied_paper.add_info_style)
+		style[ADD_INFO_COLOR] = chosen_color
 	copied_paper.name = paper_copy.name
 
 	toner_cartridge.charges -= PAPER_TONER_USE
@@ -262,6 +299,12 @@
 	var/obj/item/documents/photocopy/copied_doc = new(loc, document_copy)
 	give_pixel_offset(copied_doc)
 	toner_cartridge.charges -= DOCUMENT_TONER_USE
+
+/**
+ * The procedure is called when printing a blank to write off toner consumption.
+ */
+/obj/machinery/photocopier/proc/make_blank_print()
+	toner_cartridge.charges -= PAPER_TONER_USE
 
 /**
  * Handles the copying of an ass photo.
@@ -373,7 +416,7 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/obj_break(damage_flag)
+/obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner_cartridge.charges)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))

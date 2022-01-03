@@ -36,7 +36,7 @@
 	response_harm_simple = "punch through"
 	unsuitable_atmos_damage = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0) //I don't know how you'd apply those, but revenants no-sell them anyway.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	harm_intent_damage = 0
@@ -72,7 +72,6 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	flags_1 |= RAD_NO_CONTAMINATE_1
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SIXTHSENSE, INNATE_TRAIT)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
@@ -81,6 +80,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
+	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)
@@ -157,9 +157,11 @@
 /mob/living/simple_animal/revenant/med_hud_set_status()
 	return //we use no hud
 
-/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/revenant/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(!message)
 		return
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	src.log_talk(message, LOG_SAY)
 	var/rendered = span_revennotice("<b>[src]</b> says, \"[message]\"")
 	for(var/mob/M in GLOB.mob_list)
@@ -191,15 +193,13 @@
 	return ..()
 
 //damage, gibbing, and dying
-/mob/living/simple_animal/revenant/attackby(obj/item/W, mob/living/user, params)
-	. = ..()
-	if(istype(W, /obj/item/nullrod))
-		visible_message(span_warning("[src] violently flinches!"), \
-						span_revendanger("As \the [W] passes through you, you feel your essence draining away!"))
-		adjustBruteLoss(25) //hella effective
-		inhibited = TRUE
-		update_action_buttons_icon()
-		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
+/mob/living/simple_animal/revenant/proc/on_baned(obj/item/weapon, mob/living/user)
+	SIGNAL_HANDLER
+	visible_message(span_warning("[src] violently flinches!"), \
+		span_revendanger("As [weapon] passes through you, you feel your essence draining away!"))
+	inhibited = TRUE
+	update_action_buttons_icon()
+	addtimer(CALLBACK(src, .proc/reset_inhibit), 3 SECONDS)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	inhibited = FALSE
@@ -398,7 +398,7 @@
 	var/old_key //key of the previous revenant, will have first pick on reform.
 	var/mob/living/simple_animal/revenant/revenant
 
-/obj/item/ectoplasm/revenant/Initialize()
+/obj/item/ectoplasm/revenant/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
@@ -449,7 +449,7 @@
 				break
 	if(!key_of_revenant)
 		message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-		var/list/candidates = pollCandidatesForMob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, ROLE_REVENANT, 50, revenant)
+		var/list/candidates = poll_candidates_for_mob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, ROLE_REVENANT, 5 SECONDS, revenant)
 		if(!LAZYLEN(candidates))
 			qdel(revenant)
 			message_admins("No candidates were found for the new revenant. Oh well!")
@@ -484,7 +484,7 @@
 /obj/item/ectoplasm/revenant/Destroy()
 	if(!QDELETED(revenant))
 		qdel(revenant)
-	..()
+	return ..()
 
 //objectives
 /datum/objective/revenant

@@ -1,11 +1,11 @@
-
+GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 /client/proc/secrets() //Creates a verb for admins to open up the ui
 	set name = "Secrets"
 	set desc = "Abuse harder than you ever have before with this handy dandy semi-misc stuff menu"
 	set category = "Admin.Game"
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Secrets Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	var/datum/secrets_menu/tgui  = new(usr)//create the datum
+	var/datum/secrets_menu/tgui = new(usr)//create the datum
 	tgui.ui_interact(usr)//datum has a tgui component, here we open the window
 
 /datum/secrets_menu
@@ -120,7 +120,7 @@
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
+				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=manifest;size=440x410")
 		if("dna")
@@ -156,7 +156,7 @@
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
@@ -170,6 +170,9 @@
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
+			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
+			if(confirmed != "Yes")
+				return
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
@@ -222,7 +225,7 @@
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					E = DC.runEvent()
 				if("Choose")
-					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sortList(typesof(/datum/disease), /proc/cmp_typepaths_asc)
+					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), /proc/cmp_typepaths_asc)
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
 					DO.virus_type = virus
@@ -346,6 +349,7 @@
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
+				stoplag()
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -353,6 +357,7 @@
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
+				stoplag()
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -396,7 +401,7 @@
 				var/list/candidates = list()
 
 				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = pollGhostCandidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+					candidates = poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
 
 				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
@@ -450,24 +455,16 @@
 			if(!SSticker.HasRoundStarted())
 				tgui_alert(usr,"The game hasn't started yet!")
 				return
-			var/objective = stripped_input(holder, "Enter an objective")
+			if(GLOB.everyone_a_traitor)
+				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
+				return
+			var/objective = tgui_input_text(holder, "Enter an objective", "Objective")
 			if(!objective)
 				return
+			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Traitor All", "[objective]"))
 			for(var/mob/living/player in GLOB.player_list)
-				if(!(ishuman(player)||istype(player, /mob/living/silicon/)))
-					continue
-				if(player.stat == DEAD || !player.mind || ispAI(player))
-					continue
-				if(is_special_character(player))
-					continue
-				var/datum/antagonist/traitor/traitor_datum = new()
-				traitor_datum.give_objectives = FALSE
-				var/datum/objective/new_objective = new
-				new_objective.owner = player
-				new_objective.explanation_text = objective
-				traitor_datum.objectives += new_objective
-				player.mind.add_antag_datum(traitor_datum)
+				GLOB.everyone_a_traitor.make_traitor(null, player)
 			message_admins(span_adminnotice("[key_name_admin(holder)] used everyone is a traitor secret. Objective is [objective]"))
 			log_admin("[key_name(holder)] used everyone is a traitor secret. Objective is [objective]")
 		if("massbraindamage")
@@ -560,7 +557,7 @@
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = pollGhostCandidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+			candidates = poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -614,3 +611,36 @@
 	var/turf/T = get_step(loc, SOUTHWEST)
 	flick_overlay_static(portal_appearance, T, 15)
 	playsound(T, 'sound/magic/lightningbolt.ogg', rand(80, 100), TRUE)
+
+///Makes sure latejoining crewmembers also become traitors.
+/datum/everyone_is_a_traitor_controller
+	var/objective = ""
+
+/datum/everyone_is_a_traitor_controller/New(objective)
+	src.objective = objective
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
+
+/datum/everyone_is_a_traitor_controller/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
+
+/datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)
+	SIGNAL_HANDLER
+	if(player.stat == DEAD || !player.mind)
+		return
+	if(is_special_character(player))
+		return
+	if(ishuman(player))
+		var/datum/antagonist/traitor/traitor_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		traitor_datum.objectives += new_objective
+		player.mind.add_antag_datum(traitor_datum)
+	else if(isAI(player))
+		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		malfunction_datum.objectives += new_objective
+		player.mind.add_antag_datum(malfunction_datum)

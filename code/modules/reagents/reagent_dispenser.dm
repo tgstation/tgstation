@@ -23,7 +23,7 @@
 
 /obj/structure/reagent_dispensers/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
@@ -44,7 +44,7 @@
 	else
 		return ..()
 
-/obj/structure/reagent_dispensers/Initialize()
+/obj/structure/reagent_dispensers/Initialize(mapload)
 	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
@@ -52,7 +52,7 @@
 
 /obj/structure/reagent_dispensers/proc/boom()
 	visible_message(span_danger("\The [src] ruptures!"))
-	chem_splash(loc, 5, list(reagents))
+	chem_splash(loc, null, 5, list(reagents))
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
@@ -142,31 +142,21 @@
 	explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12)
 	qdel(src)
 
-/obj/structure/reagent_dispensers/peppertank
+/// Wall mounted dispeners, like pepper spray or virus food. Not a normal tank, and shouldn't be able to be turned into a plumbed stationary one.
+/obj/structure/reagent_dispensers/wall
+	anchored = TRUE
+	density = FALSE
+	can_be_tanked = FALSE
+
+/obj/structure/reagent_dispensers/wall/peppertank
 	name = "pepper spray refiller"
 	desc = "Contains condensed capsaicin for use in law \"enforcement.\""
 	icon_state = "pepper"
-	anchored = TRUE
-	density = FALSE
 	reagent_id = /datum/reagent/consumable/condensedcapsaicin
 
-/obj/structure/reagent_dispensers/peppertank/directional/north
-	dir = SOUTH
-	pixel_y = 30
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 30)
 
-/obj/structure/reagent_dispensers/peppertank/directional/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/structure/reagent_dispensers/peppertank/directional/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/structure/reagent_dispensers/peppertank/directional/west
-	dir = EAST
-	pixel_x = -30
-
-/obj/structure/reagent_dispensers/peppertank/Initialize()
+/obj/structure/reagent_dispensers/wall/peppertank/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
@@ -212,30 +202,13 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-
-/obj/structure/reagent_dispensers/virusfood
+/obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
 	desc = "A dispenser of low-potency virus mutagenic."
 	icon_state = "virus_food"
-	anchored = TRUE
-	density = FALSE
 	reagent_id = /datum/reagent/consumable/virus_food
 
-/obj/structure/reagent_dispensers/virusfood/directional/north
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/structure/reagent_dispensers/virusfood/directional/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/structure/reagent_dispensers/virusfood/directional/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/structure/reagent_dispensers/virusfood/directional/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30)
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"

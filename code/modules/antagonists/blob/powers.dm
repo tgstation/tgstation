@@ -71,7 +71,11 @@
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
+		if(isnull(node_name))
+			return FALSE
+		if(isnull(nodes[node_name]))
+			return FALSE
 		var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)
@@ -142,7 +146,7 @@
 
 	B.naut = TRUE //temporary placeholder to prevent creation of more than one per factory.
 	to_chat(src, span_notice("You attempt to produce a blobbernaut."))
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as a [blobstrain.name] blobbernaut?", ROLE_BLOB, ROLE_BLOB, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
 		B.modify_max_integrity(initial(B.max_integrity) * 0.25) //factories that produced a blobbernaut have much lower health
 		B.update_appearance()

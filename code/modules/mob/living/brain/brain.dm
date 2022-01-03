@@ -7,7 +7,7 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	speech_span = SPAN_ROBOT
 
-/mob/living/brain/Initialize()
+/mob/living/brain/Initialize(mapload)
 	. = ..()
 	create_dna(src)
 	stored_dna.initialize_dna(random_blood_type())
@@ -23,7 +23,7 @@
 /mob/living/brain/proc/create_dna()
 	stored_dna = new /datum/dna/stored(src)
 	if(!stored_dna.species)
-		var/rando_race = GLOB.species_list[pick(GLOB.roundstart_races)]
+		var/rando_race = pick(get_selectable_species())
 		stored_dna.species = new rando_race()
 
 /mob/living/brain/Destroy()

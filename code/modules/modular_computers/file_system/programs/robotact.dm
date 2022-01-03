@@ -53,13 +53,14 @@
 	data["integrity"] = ((borgo.health + 100) / 2) //Borgo health, as percentage
 	data["lampIntensity"] = borgo.lamp_intensity //Borgo lamp power setting
 	data["sensors"] = "[borgo.sensors_on?"ACTIVE":"DISABLED"]"
-	data["printerPictures"] =  borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
+	data["printerPictures"] = borgo.connected_ai? borgo.connected_ai.aicamera.stored.len : borgo.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = borgo.toner //amount of toner
 	data["printerTonerMax"] = borgo.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = borgo.ionpulse //If we have a thruster uprade
 	data["thrustersStatus"] = "[borgo.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
+	data["selfDestructAble"] = (borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/))
 
-	//DEBUG -- Cover, TRUE for locked
+	//Cover, TRUE for locked
 	data["cover"] = "[borgo.locked? "LOCKED":"UNLOCKED"]"
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
 	data["locomotion"] = "[borgo.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[borgo.lockcharge?"DISABLED":"ENABLED"]"]"
@@ -134,6 +135,12 @@
 		if("lampIntensity")
 			borgo.lamp_intensity = params["ref"]
 			borgo.toggle_headlamp(FALSE, TRUE)
+
+		if("selfDestruct")
+			if(borgo.stat || borgo.lockcharge) //No detonation while stunned or locked down
+				return
+			if(borgo.emagged || istype(borgo, /mob/living/silicon/robot/model/syndicate/)) //This option shouldn't even be showing otherwise
+				borgo.self_destruct(borgo)
 
 /**
  * Forces a full update of the UI, if currently open.

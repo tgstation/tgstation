@@ -24,12 +24,12 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
 	integrity_failure = 0.5
 	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	/// The volume of this tank.
-	var/volume = 70
+	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
+	var/volume = TANK_STANDARD_VOLUME
 	/// Whether the tank is currently leaking.
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
@@ -72,7 +72,7 @@
 	H.update_action_buttons_icon()
 
 
-/obj/item/tank/Initialize()
+/obj/item/tank/Initialize(mapload)
 	. = ..()
 
 	air_contents = new(volume) //liters
@@ -291,7 +291,7 @@
 	return FALSE
 
 /// Handles the tank springing a leak.
-/obj/item/tank/obj_break(damage_flag)
+/obj/item/tank/atom_break(damage_flag)
 	. = ..()
 	if(leaking)
 		return
@@ -299,13 +299,13 @@
 	leaking = TRUE
 	START_PROCESSING(SSobj, src)
 
-	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+	if(atom_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
 	visible_message(span_warning("[src] springs a leak!"))
 	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 
 /// Handles rupturing and fragmenting
-/obj/item/tank/obj_destruction(damage_flag)
+/obj/item/tank/atom_destruction(damage_flag)
 	if(!air_contents)
 		return ..()
 
@@ -317,34 +317,10 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 
-		explosion(src, devastation_range = round(range*0.25), heavy_impact_range = round(range*0.5), light_impact_range = round(range), flash_range = round(range*1.5))
+		// As of writing this this is calibrated to maxcap at 140L and 160atm.
+		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
+		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
-
-/obj/item/tank/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air_contents.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air_contents.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air_contents)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
-
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air_contents)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
-
-	if(gas_change)
-		air_contents.garbage_collect()
-		START_PROCESSING(SSobj, src)
 
 #undef ASSUME_AIR_DT_FACTOR

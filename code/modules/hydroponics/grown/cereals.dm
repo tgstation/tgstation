@@ -34,7 +34,7 @@
 	species = "oat"
 	plantname = "Oat Stalks"
 	product = /obj/item/food/grown/oat
-	mutatelist = list()
+	mutatelist = null
 
 /obj/item/food/grown/oat
 	seed = /obj/item/seeds/wheat/oat
@@ -57,7 +57,7 @@
 	plantname = "Rice Stalks"
 	instability = 1
 	product = /obj/item/food/grown/rice
-	mutatelist = list()
+	mutatelist = null
 	growthstages = 3
 
 /obj/item/food/grown/rice
@@ -80,7 +80,7 @@
 	species = "meatwheat"
 	plantname = "Meatwheat"
 	product = /obj/item/food/grown/meatwheat
-	mutatelist = list()
+	mutatelist = null
 
 /obj/item/food/grown/meatwheat
 	name = "meatwheat"

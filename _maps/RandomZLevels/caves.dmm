@@ -214,7 +214,7 @@
 /turf/closed/wall,
 /area/awaymission/caves/bmp_asteroid/level_three)
 "aI" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -756,7 +756,7 @@
 	},
 /area/awaymission/caves/research)
 "cH" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -791,7 +791,7 @@
 	},
 /area/awaymission/caves/research)
 "cP" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -856,7 +856,7 @@
 /area/awaymission/caves/research)
 "cX" = (
 /obj/structure/table,
-/obj/item/melee/baton,
+/obj/item/melee/baton/security,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -922,7 +922,7 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "dh" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "di" = (
@@ -1390,11 +1390,11 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fi" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/caves/listeningpost)
 "fj" = (
-/obj/effect/mob_spawn/human/skeleton/alive{
+/obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
 	},
 /turf/open/floor/plating/asteroid/basalt{
@@ -1542,7 +1542,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fN" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "fP" = (
@@ -1741,7 +1741,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "gz" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Mess Hall"
 	},
 /turf/open/floor/plating,
@@ -1781,7 +1781,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/bmp_asteroid)
 "gI" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
@@ -17007,7 +17007,7 @@ fy
 gi
 fy
 fy
-nG
+gq
 gy
 fH
 cj
@@ -17777,9 +17777,9 @@ bM
 fy
 fW
 ev
-nG
+gq
 gm
-nG
+gq
 dW
 bL
 bL

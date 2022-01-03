@@ -56,7 +56,7 @@
 	var/obj/structure/chrono_field/field = null
 	var/turf/startpos = null
 
-/obj/item/gun/energy/chrono_gun/Initialize()
+/obj/item/gun/energy/chrono_gun/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
@@ -128,7 +128,7 @@
 	nodamage = TRUE
 	var/obj/item/gun/energy/chrono_gun/gun = null
 
-/obj/projectile/energy/chrono_beam/Initialize()
+/obj/projectile/energy/chrono_beam/Initialize(mapload)
 	. = ..()
 	var/obj/item/ammo_casing/energy/chrono_beam/C = loc
 	if(istype(C))
@@ -151,7 +151,7 @@
 	e_cost = 0
 	var/obj/item/gun/energy/chrono_gun/gun
 
-/obj/item/ammo_casing/energy/chrono_beam/Initialize()
+/obj/item/ammo_casing/energy/chrono_beam/Initialize(mapload)
 	if(istype(loc))
 		gun = loc
 	. = ..()
@@ -188,7 +188,7 @@
 		var/icon/mob_snapshot = getFlatIcon(target)
 		var/icon/cached_icon = new()
 
-		for(var/i=1, i<=CHRONO_FRAME_COUNT, i++)
+		for(var/i in 1 to CHRONO_FRAME_COUNT)
 			var/icon/removing_frame = icon('icons/obj/chronos.dmi', "erasing", SOUTH, i)
 			var/icon/mob_icon = icon(mob_snapshot)
 			mob_icon.Blend(removing_frame, ICON_MULTIPLY)

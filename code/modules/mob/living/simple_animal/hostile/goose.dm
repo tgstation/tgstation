@@ -38,7 +38,7 @@
 	var/message_cooldown = 0
 	var/choking = FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goose/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
 
@@ -91,7 +91,7 @@
 	var/vomitTimeBonus = 0
 	var/datum/action/cooldown/vomit/goosevomit
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize(mapload)
 	. = ..()
 	goosevomit = new
 	goosevomit.Grant(src)

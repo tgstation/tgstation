@@ -10,8 +10,8 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/explorer
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50)
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 50, ACID = 50)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe, /obj/item/storage/bag/ore)
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/head/hooded/explorer
@@ -24,14 +24,14 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 50, FIRE = 50, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 30, BULLET = 10, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 50, ACID = 50, WOUND = 10)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/suit/hooded/explorer/Initialize()
+/obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 
-/obj/item/clothing/head/hooded/explorer/Initialize()
+/obj/item/clothing/head/hooded/explorer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate)
 
@@ -43,8 +43,9 @@
 	visor_flags_inv = HIDEFACIALHAIR
 	visor_flags_cover = MASKCOVERSMOUTH
 	actions_types = list(/datum/action/item_action/adjust)
-	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 50, RAD = 0, FIRE = 20, ACID = 40, WOUND = 5)
+	armor = list(MELEE = 10, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 0, BIO = 50, FIRE = 20, ACID = 40, WOUND = 5)
 	resistance_flags = FIRE_PROOF
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/explorer/attack_self(mob/user)
 	adjustmask(user)
@@ -53,6 +54,6 @@
 	..()
 	w_class = mask_adjusted ? WEIGHT_CLASS_NORMAL : WEIGHT_CLASS_SMALL
 
-/obj/item/clothing/mask/gas/explorer/folded/Initialize()
+/obj/item/clothing/mask/gas/explorer/folded/Initialize(mapload)
 	. = ..()
 	adjustmask()

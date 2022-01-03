@@ -39,7 +39,7 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
@@ -63,8 +63,8 @@
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	/// Amount of damage sustained if hit by a heavy EMP pulse
 	var/heavy_emp_damage = 25
-	/// List of active alarms. See [/mob/living/simple_animal/drone/proc/triggerAlarm] and [/mob/living/simple_animal/drone/proc/cancelAlarm]
-	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 	/// Internal storage slot. Fits any item
 	var/obj/item/internal_storage
 	/// Headwear slot
@@ -154,7 +154,7 @@
 		/obj/item/clothing/mask,
 	)
 
-/mob/living/simple_animal/drone/Initialize()
+/mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -180,6 +180,13 @@
 		diag_hud.add_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
+
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -200,7 +207,8 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	GLOB.drones_list -= src
-	qdel(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(listener)
 	return ..()
 
 /mob/living/simple_animal/drone/Login()
@@ -289,60 +297,13 @@
 		adjustBruteLoss(heavy_emp_damage)
 		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
+/mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
-/**
- * Alerts drones about different priorities of alarms
- *
- * Arguments:
- * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
- * * A - [/area] the alarm occurs
- * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
- * * alarmsource - [/atom] source of the alarm
- */
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[2]
-			if (!(source in sources))
-				sources += source
-			return TRUE
-
-	our_sort[home.name] = list(home, list(source))
-	to_chat(src, "--- [class] alarm detected in [home.name]!")
-
-///This isn't currently needed since drones do jack shit with cameras. I hate this code so much
-/mob/living/simple_animal/drone/proc/freeCamera(area/home, obj/machinery/camera/cam)
-	return
-
-/**
- * Clears alarm and alerts drones
- *
- * Arguments:
- * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
- * * A - [/area] the alarm occurs
- * * alarmsource - [/atom] source of the alarm
- */
-/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat != DEAD)
-		var/list/L = alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs  = alarm[2]
-				if (origin in srcs)
-					srcs -= origin
-				if (srcs.len == 0)
-					cleared = 1
-					L -= I
-		if(cleared)
-			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
+/mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
 /mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
 	SIGNAL_HANDLER
@@ -392,15 +353,6 @@
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
-
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return TRUE
-
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
-
-/mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
-	return
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?

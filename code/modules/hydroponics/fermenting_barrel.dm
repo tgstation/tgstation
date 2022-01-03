@@ -11,7 +11,7 @@
 	var/can_open = TRUE
 	var/speed_multiplier = 1 //How fast it distills. Defaults to 100% (1.0). Lower is better.
 
-/obj/structure/fermenting_barrel/Initialize()
+/obj/structure/fermenting_barrel/Initialize(mapload)
 	// Bluespace beakers, but without the portability or efficiency in circuits.
 	create_reagents(300, DRAINABLE)
 	. = ..()
@@ -89,6 +89,6 @@
 	desc = "A large wooden barrel for holding gunpowder. You'll need to take from this to load the cannons."
 	can_open = FALSE
 
-/obj/structure/fermenting_barrel/gunpowder/Initialize()
+/obj/structure/fermenting_barrel/gunpowder/Initialize(mapload)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/gunpowder, 250)

@@ -71,8 +71,12 @@
 
 /datum/fantasy_affix/vampiric/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.AddComponent(/datum/component/lifesteal, comp.quality)
+	master.AddElement(/datum/element/lifesteal, comp.quality)
 	return "vampiric [newName]"
+
+/datum/fantasy_affix/vampiric/remove(datum/component/fantasy/comp)
+	var/obj/item/master = comp.parent
+	master.RemoveElement(/datum/element/lifesteal, comp.quality)
 
 /datum/fantasy_affix/beautiful
 	name = "beautiful"

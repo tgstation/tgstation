@@ -7,7 +7,7 @@
 /area/shuttle/hunter)
 "c" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "d" = (
@@ -24,7 +24,7 @@
 /area/shuttle/hunter)
 "f" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
@@ -36,7 +36,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "i" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "j" = (
@@ -51,7 +51,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "m" = (
@@ -71,7 +71,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "p" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/hook,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/hook,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "q" = (
@@ -189,7 +189,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/docking_port/stationary{
 	dwidth = 11;
 	height = 16;
@@ -211,7 +211,7 @@
 /turf/open/floor/plating,
 /area/shuttle/hunter)
 "M" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/armor{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/armor{
 	dir = 1
 	},
 /turf/open/floor/pod/light,
@@ -223,7 +223,7 @@
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 "Z" = (
-/obj/effect/mob_spawn/human/fugitive/bounty/synth,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/bounty/synth,
 /turf/open/floor/pod/light,
 /area/shuttle/hunter)
 

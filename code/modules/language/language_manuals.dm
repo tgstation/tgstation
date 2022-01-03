@@ -61,7 +61,7 @@
 
 /obj/item/language_manual/roundstart_species
 
-/obj/item/language_manual/roundstart_species/Initialize()
+/obj/item/language_manual/roundstart_species/Initialize(mapload)
 	. = ..()
 	language = pick( \
 		/datum/language/voltaic, \
@@ -77,14 +77,14 @@
 /obj/item/language_manual/roundstart_species/unlimited
 	charges = INFINITY
 
-/obj/item/language_manual/roundstart_species/unlimited/Initialize()
+/obj/item/language_manual/roundstart_species/unlimited/Initialize(mapload)
 	. = ..()
 	name = "deluxe [initial(language.name)] manual"
 
 /obj/item/language_manual/roundstart_species/five
 	charges = 5
 
-/obj/item/language_manual/roundstart_species/five/Initialize()
+/obj/item/language_manual/roundstart_species/five/Initialize(mapload)
 	. = ..()
 	name = "extended [initial(language.name)] manual"
 

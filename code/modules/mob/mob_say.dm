@@ -1,27 +1,36 @@
 //Speech verbs.
 
-///Say verb
+///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
+	set instant = TRUE
+
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
+
+	//queue this message because verbs are scheduled to process after SendMaps in the tick and speech is pretty expensive when it happens.
+	//by queuing this for next tick the mc can compensate for its cost instead of having speech delay the start of the next tick
 	if(message)
-		say(message)
+		SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_SAY_VERB)
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
+	set instant = TRUE
+
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
-	whisper(message)
+
+	if(message)
+		SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_WHISPER_VERB)
 
 ///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
-	say(message, language) //only living mobs actually whisper, everything else just talks
+	say(message, language = language)
 
 ///The me emote verb
 /mob/verb/me_verb(message as text)
@@ -34,7 +43,7 @@
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message,TRUE)
+	SSspeech_controller.queue_say_for_mob(src, message, SPEECH_CONTROLLER_QUEUE_EMOTE_VERB)
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
@@ -52,8 +61,6 @@
 	if(jb)
 		to_chat(src, span_danger("You have been banned from deadchat."))
 		return
-
-
 
 	if (src.client)
 		if(src.client.prefs.muted & MUTE_DEADCHAT)
@@ -80,7 +87,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(message)
+	var/spanned = say_quote(say_emphasis(message))
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
@@ -103,6 +110,19 @@
 
 ///The amount of items we are looking for in the message
 #define MESSAGE_MODS_LENGTH 6
+
+/mob/proc/check_for_custom_say_emote(message, list/mods)
+	var/customsaypos = findtext(message, "*")
+	if(!customsaypos)
+		return message
+	if (is_banned_from(ckey, "Emote"))
+		return copytext(message, customsaypos + 1)
+	mods[MODE_CUSTOM_SAY_EMOTE] = lowertext(copytext_char(message, 1, customsaypos))
+	message = copytext(message, customsaypos + 1)
+	if (!message)
+		mods[MODE_CUSTOM_SAY_ERASE_INPUT] = TRUE
+		message = "an interesting thing to say"
+	return message
 /**
  * Extracts and cleans message of any extenstions at the begining of the message
  * Inserts the info into the passed list, returns the cleaned message

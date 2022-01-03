@@ -16,14 +16,14 @@
 	// It's a simple purple beam, works well enough for the purple hiero effects.
 	beam_effect = "plasmabeam"
 
-/datum/action/innate/dash/hierophant/Teleport(mob/user, atom/target)
+/datum/action/innate/dash/hierophant/teleport(mob/user, atom/target)
 	var/dist = get_dist(user, target)
 	if(dist > HIEROPHANT_BLINK_RANGE)
-		to_chat(user, span_hierophant_warning("Blink destination out of range."))
+		user.balloon_alert(user, "destination out of range!")
 		return
 	var/turf/target_turf = get_turf(target)
 	if(target_turf.is_blocked_turf_ignore_climbable())
-		to_chat(user, span_hierophant_warning("Blink destination blocked."))
+		user.balloon_alert(user, "destination blocked!")
 		return
 	. = ..()
 	if(!current_charges)
@@ -39,10 +39,13 @@
 		club.update_appearance()
 
 	current_charges = clamp(current_charges + 1, 0, max_charges)
-	owner.update_action_buttons_icon()
 
 	if(recharge_sound)
 		playsound(dashing_item, recharge_sound, 50, TRUE)
+
+	if(!owner)
+		return
+	owner.update_action_buttons_icon()
 	to_chat(owner, span_notice("[src] now has [current_charges]/[max_charges] charges."))
 
 /obj/item/hierophant_club
@@ -74,7 +77,7 @@
 	/// Whether the blink is charged. Set and unset by the blink action. Used as part of setting the appropriate icon states.
 	var/blink_charged = TRUE
 
-/obj/item/hierophant_club/Initialize()
+/obj/item/hierophant_club/Initialize(mapload)
 	. = ..()
 	blink = new(src)
 
@@ -114,7 +117,7 @@
 	if((target == beacon) && target.Adjacent(src))
 		return
 	if(blink_activated)
-		blink.Teleport(user, target)
+		blink.teleport(user, target)
 
 /obj/item/hierophant_club/update_icon_state()
 	icon_state = inhand_icon_state = "hierophant_club[blink_charged ? "_ready":""][(!QDELETED(beacon)) ? "":"_beacon"]"
@@ -257,19 +260,26 @@
 	user.log_message("activated a bottle of mayhem", LOG_ATTACK)
 	qdel(src)
 
-/obj/item/clothing/suit/space/hardsuit/hostile_environment
+/obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
 	icon_state = "hostile_env"
-	inhand_icon_state = "hostile_env"
+	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/hostile_environment
-	slowdown = 0
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	clothing_flags = THICKMATERIAL
+	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/resonator, /obj/item/mining_scanner, /obj/item/t_scanner/adv_mining_scanner, /obj/item/gun/energy/kinetic_accelerator, /obj/item/pickaxe)
 
-/obj/item/clothing/suit/space/hardsuit/hostile_environment/process(delta_time)
+/obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/radiation_protected_clothing)
+
+/obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
 	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(istype(wearer) && DT_PROB(1, delta_time)) //cursed by bubblegum
@@ -279,44 +289,47 @@
 		else
 			to_chat(wearer, span_warning("[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]"))
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment
+/obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environiment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon_state = "hardsuit0-heck"
-	inhand_icon_state = "hostile_env"
-	hardsuit_type = "heck"
+	icon_state = "hostile_env"
 	w_class = WEIGHT_CLASS_NORMAL
+	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	armor = list(MELEE = 70, BULLET = 40, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF
+	clothing_flags = SNUG_FIT|THICKMATERIAL
+	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
 	actions_types = list()
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/Initialize()
+/obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	AddElement(/datum/element/radiation_protected_clothing)
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/equipped(mob/user, slot, initial = FALSE)
+/obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = TRUE
 	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/dropped(mob/user, silent = FALSE)
+/obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = FALSE
 	to_chat(user, span_notice("You lose your bloodlust."))
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/proc/butcher_target(mob/user, atom/target, proximity)
+/obj/item/clothing/head/hooded/hostile_environment/proc/butcher_target(mob/user, atom/target, proximity)
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
 	return SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, target, user)
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
+/obj/item/clothing/head/hooded/hostile_environment/proc/consume(mob/living/user, mob/living/butchered)
 	if(butchered.mob_biotypes & (MOB_ROBOTIC | MOB_SPIRIT))
 		return
 	var/health_consumed = butchered.maxHealth * 0.1
@@ -325,13 +338,13 @@
 	var/datum/client_colour/color = user.add_client_colour(/datum/client_colour/bloodlust)
 	QDEL_IN(color, 1 SECONDS)
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/update_overlays()
+/obj/item/clothing/head/hooded/hostile_environment/update_overlays()
 	. = ..()
 	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "hostile_env_glass")
 	glass_overlay.appearance_flags = RESET_COLOR
 	. += glass_overlay
 
-/obj/item/clothing/head/helmet/space/hardsuit/hostile_environment/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/hooded/hostile_environment/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	if(!isinhands)
 		var/mutable_appearance/glass_overlay = mutable_appearance('icons/mob/clothing/head.dmi', "hostile_env_glass")
@@ -358,6 +371,7 @@
 	sharpness = SHARP_EDGED
 	bare_wound_bonus = 10
 	layer = MOB_LAYER
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	/// Soulscythe mob in the scythe
 	var/mob/living/simple_animal/soulscythe/soul
 	/// Are we grabbing a spirit?
@@ -369,13 +383,13 @@
 	/// Cooldown between attacks
 	COOLDOWN_DECLARE(attack_cooldown)
 
-/obj/item/soulscythe/Initialize()
+/obj/item/soulscythe/Initialize(mapload)
 	. = ..()
 	soul = new(src)
 	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
 	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, .proc/on_secondary_attack)
-	RegisterSignal(src, COMSIG_OBJ_INTEGRITY_CHANGED, .proc/on_integrity_change)
+	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
@@ -411,7 +425,7 @@
 	using = TRUE
 	balloon_alert(user, "you hold the scythe up...")
 	ADD_TRAIT(src, TRAIT_NODROP, type)
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
+	var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [user.real_name]'s soulscythe?", ROLE_PAI, FALSE, 100, POLL_IGNORE_POSSESSED_BLADE)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/picked_ghost = pick(candidates)
 		soul.ckey = picked_ghost.ckey
@@ -622,11 +636,11 @@
 	var/summon_cooldown = 0
 	var/list/mob/dead/observer/spirits
 
-/obj/item/melee/ghost_sword/Initialize()
+/obj/item/melee/ghost_sword/Initialize(mapload)
 	. = ..()
 	spirits = list()
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	AddComponent(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
@@ -660,7 +674,7 @@
 /obj/item/melee/ghost_sword/proc/ghost_check()
 	var/ghost_counter = 0
 	var/turf/T = get_turf(src)
-	var/list/contents = T.GetAllContents()
+	var/list/contents = T.get_all_contents()
 	var/mob/dead/observer/current_spirits = list()
 	for(var/thing in contents)
 		var/atom/A = thing
@@ -706,8 +720,8 @@
 	switch(random)
 		if(1)
 			to_chat(user, span_danger("Your appearance morphs to that of a very small humanoid ash dragon! You get to look like a freak without the cool abilities."))
-			consumer.dna.features = list("mcolor" = "A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
-			consumer.eye_color = "fee5a3"
+			consumer.dna.features = list("mcolor" = "#A02720", "tail_lizard" = "Dark Tiger", "tail_human" = "None", "snout" = "Sharp", "horns" = "Curled", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "Long", "body_markings" = "Dark Tiger Body", "legs" = "Digitigrade Legs")
+			consumer.eye_color = "#FEE5A3"
 			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))
@@ -719,7 +733,7 @@
 				user.mind.AddSpell(dragon_shapeshift)
 		if(4)
 			to_chat(user, span_danger("You feel like you could walk straight through lava now."))
-			LAZYOR(consumer.weather_immunities, WEATHER_LAVA)
+			ADD_TRAIT(user, TRAIT_LAVA_IMMUNE, type)
 
 	playsound(user,'sound/items/drink.ogg', 30, TRUE)
 	qdel(src)
@@ -759,7 +773,7 @@
 		var/turf/open/T = get_turf(target)
 		if(!istype(T))
 			return
-		if(!istype(T, turf_type))
+		if(!istype(T, /turf/open/lava))
 			var/obj/effect/temp_visual/lavastaff/L = new /obj/effect/temp_visual/lavastaff(T)
 			L.alpha = 0
 			animate(L, alpha = 255, time = create_delay)
@@ -794,88 +808,84 @@
 
 //Blood-Drunk Miner: Cleaving Saw
 
-/obj/item/melee/transforming/cleaving_saw
+
+/obj/item/melee/cleaving_saw
 	name = "cleaving saw"
 	desc = "This saw, effective at drawing the blood of beasts, transforms into a long cleaver that makes use of centrifugal force."
-	force = 12
-	force_on = 20 //force when active
-	throwforce = 20
-	throwforce_on = 20
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
+	icon_state = "cleaving_saw"
+	worn_icon_state = "cleaving_saw"
+	attack_verb_continuous = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "saw", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	force = 12
+	throwforce = 20
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	icon_state = "cleaving_saw"
-	icon_state_on = "cleaving_saw_open"
-	worn_icon_state = "cleaving_saw"
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb_off = list("attacks", "saws", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_on = list("cleaves", "swipes", "slashes", "chops")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
-	faction_bonus_force = 30
-	nemesis_factions = list("mining", "boss")
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/transform_cooldown
+	/// Whether the saw is open or not
+	var/is_open = FALSE
+	/// List of factions we deal bonus damage to
+	var/list/nemesis_factions = list("mining", "boss")
+	/// Amount of damage we deal to the above factions
+	var/faction_bonus_force = 30
+	/// Whether the cleaver is actively AoE swiping something.
 	var/swiping = FALSE
+	/// Amount of bleed stacks gained per hit
 	var/bleed_stacks_per_hit = 3
+	/// Force when the saw is opened.
+	var/open_force = 20
+	/// Throwforce when the saw is opened.
+	var/open_throwforce = 20
 
-/obj/item/melee/transforming/cleaving_saw/examine(mob/user)
+/obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
-	. += "<span class='notice'>It is [active ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].\n"+\
-	"Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.\n"+\
-	"Transforming it immediately after an attack causes the next attack to come out faster.</span>"
+	AddComponent(/datum/component/transforming, \
+		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
+		force_on = open_force, \
+		throwforce_on = open_throwforce, \
+		sharpness_on = sharpness, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
+		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/melee/transforming/cleaving_saw/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] is [active ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	transform_cooldown = 0
-	transform_weapon(user, TRUE)
+/obj/item/melee/cleaving_saw/examine(mob/user)
+	. = ..()
+	. += span_notice("It is [is_open ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].")
+	. += span_notice("Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.")
+	. += span_notice("Transforming it immediately after an attack causes the next attack to come out faster.")
+
+/obj/item/melee/cleaving_saw/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is [is_open ? "closing [src] on [user.p_their()] neck" : "opening [src] into [user.p_their()] chest"]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/transforming/cleaving_saw/transform_weapon(mob/living/user, supress_message_text)
-	if(transform_cooldown > world.time)
-		return FALSE
+/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
 	. = ..()
-	if(.)
-		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
-
-/obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
-	if(!supress_message_text)
-		if(active)
-			to_chat(user, span_notice("You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna."))
-		else
-			to_chat(user, span_notice("You close [src]. It will now attack rapidly and cause fauna to bleed."))
-	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
-
-/obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, span_warning("You accidentally cut yourself with [src], like a doofus!"))
-		user.take_bodypart_damage(10)
-
-/obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
-	if(!active)
+	if(!is_open)
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
-/obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
-	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
-		return
-	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
-	if(!B)
-		target.apply_status_effect(STATUS_EFFECT_SAWBLEED,bleed_stacks_per_hit)
-	else
-		B.add_stacks(bleed_stacks_per_hit)
-
-/obj/item/melee/transforming/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
-	if(!active || swiping || !target.density || get_turf(target) == get_turf(user))
-		if(!active)
+/obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
+		if(!is_open)
 			faction_bonus_force = 0
-		..()
-		if(!active)
+		var/is_nemesis_faction = FALSE
+		for(var/found_faction in target.faction)
+			if(found_faction in nemesis_factions)
+				is_nemesis_faction = TRUE
+				force += faction_bonus_force
+				nemesis_effects(user, target)
+				break
+		. = ..()
+		if(is_nemesis_faction)
+			force -= faction_bonus_force
+		if(!is_open)
 			faction_bonus_force = initial(faction_bonus_force)
 	else
 		var/turf/user_turf = get_turf(user)
@@ -888,6 +898,36 @@
 				if(user.Adjacent(living_target) && living_target.body_position != LYING_DOWN)
 					melee_attack_chain(user, living_target)
 		swiping = FALSE
+
+/*
+ * If we're attacking [target]s in our nemesis list, apply unique effects.
+ *
+ * user - the mob attacking with the saw
+ * target - the mob being attacked
+ */
+/obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
+	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
+		return
+	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	if(existing_bleed)
+		existing_bleed.add_stacks(bleed_stacks_per_hit)
+	else
+		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Gives feedback and makes the nextmove after transforming much quicker.
+ */
+/obj/item/melee/cleaving_saw/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	is_open = active
+	user.changeNext_move(CLICK_CD_MELEE * 0.25)
+
+	balloon_alert(user, "[active ? "opened":"closed"] [src]")
+	playsound(user ? user : src, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (is_open * 30000))
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 //Legion: Staff of Storms
 

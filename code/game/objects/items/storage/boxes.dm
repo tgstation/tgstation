@@ -30,7 +30,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/cardboardbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/cardboardbox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
 	var/foldable = /obj/item/stack/sheet/cardboard
 	var/illustration = "writing"
 
@@ -93,7 +93,7 @@
 /obj/item/storage/box/mime/Moved(oldLoc, dir)
 	if (iscarbon(oldLoc))
 		alpha = 0
-	..()
+	return ..()
 
 //Disk boxes
 
@@ -116,14 +116,14 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 
 /obj/item/storage/box/survival/PopulateContents()
-	new mask_type(src)
-	if(!isnull(medipen_type))
-		new medipen_type(src)
-
 	if(!isplasmaman(loc))
+		new mask_type(src)
 		new internal_type(src)
 	else
 		new /obj/item/tank/internals/plasmaman/belt(src)
+
+	if(!isnull(medipen_type))
+		new medipen_type(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
@@ -132,6 +132,15 @@
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
+
+/obj/item/storage/box/survival/proc/wardrobe_removal()
+	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+		return
+	var/obj/item/mask = locate(mask_type) in src
+	var/obj/item/internals = locate(internal_type) in src
+	new /obj/item/tank/internals/plasmaman/belt(src)
+	qdel(mask) // Get rid of the items that shouldn't be
+	qdel(internals)
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -546,7 +555,7 @@
 	var/newcart = pick( /obj/item/cartridge/engineering,
 						/obj/item/cartridge/security,
 						/obj/item/cartridge/medical,
-						/obj/item/cartridge/signal/toxins,
+						/obj/item/cartridge/signal/ordnance,
 						/obj/item/cartridge/quartermaster)
 	new newcart(src)
 
@@ -699,7 +708,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/matchbox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
 	custom_price = PAYCHECK_ASSISTANT * 0.4
 	base_icon_state = "matchbox"
 	illustration = null
@@ -929,7 +938,7 @@
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sortList(list(
+	papersack_designs = sort_list(list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
@@ -1236,7 +1245,7 @@
 	custom_price = PAYCHECK_HARD * 3
 	custom_premium_price = PAYCHECK_HARD * 3
 
-/obj/item/storage/box/gum/happiness/Initialize()
+/obj/item/storage/box/gum/happiness/Initialize(mapload)
 	. = ..()
 	if (prob(25))
 		desc += " You can faintly make out the word 'Hemopagopril' was once scribbled on it."
@@ -1390,7 +1399,7 @@
 	illustration = "fruit"
 	var/theme_name
 
-/obj/item/storage/box/ingredients/Initialize()
+/obj/item/storage/box/ingredients/Initialize(mapload)
 	. = ..()
 	if(theme_name)
 		name = "[name] ([theme_name])"
@@ -1510,7 +1519,7 @@
 	new /obj/item/food/meat/slab/bear(src)
 	new /obj/item/food/meat/slab/spider(src)
 	new /obj/item/food/spidereggs(src)
-	new /obj/item/food/fishmeat/carp(src)
+	new /obj/item/food/meat/slab/penguin(src)
 	new /obj/item/food/meat/slab/xeno(src)
 	new /obj/item/food/meat/slab/corgi(src)
 	new /obj/item/food/meatball(src)
@@ -1525,11 +1534,21 @@
 		new /obj/item/food/grown/cabbage(src)
 	new /obj/item/food/grown/chili(src)
 
+/obj/item/storage/box/ingredients/seafood
+	theme_name = "seafood"
+
+/obj/item/storage/box/ingredients/seafood/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/fishmeat/carp(src)
+		new /obj/item/food/fishmeat/armorfish(src)
+		new /obj/item/food/fishmeat/moonfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish(src)
+
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
 	desc = "This box should not exist, contact the proper authorities."
 
-/obj/item/storage/box/ingredients/random/Initialize()
+/obj/item/storage/box/ingredients/random/Initialize(mapload)
 	.=..()
 	var/chosen_box = pick(subtypesof(/obj/item/storage/box/ingredients) - /obj/item/storage/box/ingredients/random)
 	new chosen_box(loc)
@@ -1571,9 +1590,9 @@
 	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
-	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
+	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
 	new /obj/item/clothing/mask/gas/carp(src)
-	new /obj/item/kitchen/knife/hunting(src)
+	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
 
 /obj/item/storage/box/holy/clock
@@ -1627,3 +1646,19 @@
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
+
+/obj/item/storage/box/mothic_rations
+	name = "Mothic Rations Pack"
+	desc = "A box containing a few rations and some Activin gum, for keeping a starving moth going."
+	icon_state = "moth_package"
+	illustration = null
+
+/obj/item/storage/box/mothic_rations/PopulateContents()
+	for(var/i in 1 to 3)
+		var/randomFood = pick_weight(list(/obj/item/food/sustenance_bar = 10,
+							  /obj/item/food/sustenance_bar/cheese = 5,
+							  /obj/item/food/sustenance_bar/mint = 5,
+							  /obj/item/food/sustenance_bar/neapolitan = 5,
+							  /obj/item/food/sustenance_bar/wonka = 1))
+		new randomFood(src)
+	new /obj/item/storage/box/gum/wake_up(src)

@@ -11,7 +11,7 @@
 		/datum/eldritch_knowledge/base_void
 	)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
-	required_atoms = list(/obj/item/kitchen/knife, /obj/item/match)
+	required_atoms = list(/obj/item/knife, /obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
 	route = PATH_ASH
@@ -104,7 +104,7 @@
 /datum/eldritch_knowledge/spell/flame_birth
 	name = "Flame Birth"
 	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
-	desc = "Short range spell that allows you to curse someone with massive sanity loss."
+	desc = "A spell that steals some health from every burning person around you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	next_knowledge = list(
@@ -137,7 +137,7 @@
 /datum/eldritch_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
-	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of blood, a heart, left arm and a right arm, and an item that the victim touched  with their bare hands."
+	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of vomit, a heart and an item that the victim touched  with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/wirecutters,/obj/effect/decal/cleanable/vomit,/obj/item/organ/heart)
 	next_knowledge = list(

@@ -39,4 +39,4 @@
 		if(5)
 			to_chat(affected_mob, span_danger("Your body is unable to contain the Rhumba Beat..."))
 			if(DT_PROB(29, delta_time))
-				explosion(affected_mob, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE) // This is equivalent to a lvl 1 fireball
+				explosion(affected_mob, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src) // This is equivalent to a lvl 1 fireball

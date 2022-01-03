@@ -5,7 +5,7 @@
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=50)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 	var/timing = FALSE
 	var/time = 10
@@ -24,7 +24,7 @@
 	user.adjustOxyLoss(200)
 	user.death(0)
 
-/obj/item/assembly/timer/Initialize()
+/obj/item/assembly/timer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

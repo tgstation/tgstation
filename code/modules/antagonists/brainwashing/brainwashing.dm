@@ -26,10 +26,11 @@
 		L.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 
 /datum/antagonist/brainwashed
-	name = "Brainwashed Victim"
+	name = "\improper Brainwashed Victim"
 	job_rank = ROLE_BRAINWASHED
 	roundend_category = "brainwashed victims"
 	show_in_antagpanel = TRUE
+	antag_hud_name = "brainwashed"
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoBrainwashed"
@@ -48,6 +49,11 @@
 		var/mob/living/owner_mob = owner.current
 		owner_mob.log_message("is no longer brainwashed with the objectives: [english_list(objectives)].", LOG_ATTACK)
 	owner.announce_objectives()
+	return ..()
+
+/datum/antagonist/brainwashed/on_mindshield(mob/implanter)
+	owner.remove_antag_datum(/datum/antagonist/brainwashed)
+	return COMPONENT_MINDSHIELD_DECONVERTED
 
 /datum/antagonist/brainwashed/admin_add(datum/mind/new_owner,mob/admin)
 	var/mob/living/carbon/C = new_owner.current
@@ -55,10 +61,10 @@
 		return
 	var/list/objectives = list()
 	do
-		var/objective = stripped_input(admin, "Add an objective, or leave empty to finish.", "Brainwashing", null, MAX_MESSAGE_LEN)
+		var/objective = tgui_input_text(admin, "Add an objective", "Brainwashing")
 		if(objective)
 			objectives += objective
-	while(tgui_alert(admin,"Add another objective?","More Brainwashing",list("Yes","No")) == "Yes")
+	while(tgui_alert(admin, "Add another objective?", "More Brainwashing", list("Yes","No")) == "Yes")
 
 	if(tgui_alert(admin,"Confirm Brainwashing?","Are you sure?",list("Yes","No")) == "No")
 		return
@@ -73,7 +79,7 @@
 	brainwash(C, objectives)
 	var/obj_list = english_list(objectives)
 	message_admins("[key_name_admin(admin)] has brainwashed [key_name_admin(C)] with the following objectives: [obj_list].")
-	C.log_message("has been force-brainwashed with the objective '[obj_list]' by admin [key_name(admin)]", LOG_ATTACK, log_globally = FALSE)
+	C.log_message("has been force-brainwashed with the objective '[obj_list]' by admin [key_name(admin)]", LOG_VICTIM, log_globally = FALSE)
 	log_admin("[key_name(admin)] has brainwashed [key_name(C)] with the following objectives: [obj_list].")
 
 /datum/objective/brainwashing

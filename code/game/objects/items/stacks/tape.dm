@@ -12,7 +12,7 @@
 	max_amount = 5
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 5)
-	splint_factor = 0.8
+	splint_factor = 0.65
 	merge_type = /obj/item/stack/sticky_tape
 	var/list/conferred_embed = EMBED_HARMLESS
 
@@ -58,7 +58,7 @@
 	icon_state = "tape_y"
 	prefix = "super sticky"
 	conferred_embed = EMBED_HARMLESS_SUPERIOR
-	splint_factor = 0.6
+	splint_factor = 0.4
 	merge_type = /obj/item/stack/sticky_tape/super
 
 /obj/item/stack/sticky_tape/pointy
@@ -86,6 +86,6 @@
 	//icon_state = "tape_spikes"
 	prefix = "surgical"
 	conferred_embed = list("embed_chance" = 30, "pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)
-	splint_factor = 0.4
+	splint_factor = 0.5
 	custom_price = PAYCHECK_MEDIUM
 	merge_type = /obj/item/stack/sticky_tape/surgical

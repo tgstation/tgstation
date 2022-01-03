@@ -7,7 +7,7 @@
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
-/obj/structure/window/shuttle/tinted,
+/obj/structure/window/reinforced/shuttle/tinted,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -132,7 +132,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "at" = (

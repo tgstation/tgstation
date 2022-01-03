@@ -80,7 +80,7 @@
 	for(var/holochassis_option in possible_chassis)
 		var/image/item_image = image(icon = src.icon, icon_state = holochassis_option)
 		skins += list("[holochassis_option]" = item_image)
-	sortList(skins)
+	sort_list(skins)
 
 	var/atom/anchor = get_atom_on_turf(src)
 	var/choice = show_radial_menu(src, anchor, skins, custom_check = CALLBACK(src, .proc/check_menu, anchor), radius = 40, require_near = TRUE)

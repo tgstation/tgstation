@@ -84,7 +84,7 @@
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
 /obj/item/storage/bag/trash/bluespace
@@ -121,7 +121,6 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -322,8 +321,9 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.max_w_class = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
+		/obj/item/plate,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
 		/obj/item/clothing/mask/cigarette,

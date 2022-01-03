@@ -6,6 +6,7 @@
 /obj/item/circuit_component/random
 	display_name = "Random"
 	desc = "A component that returns random values."
+	category = "Math"
 
 	/// The minimum value that the random number can be
 	var/datum/port/input/minimum
@@ -17,20 +18,16 @@
 	/// The result from the output
 	var/datum/port/output/output
 
-/obj/item/circuit_component/random/Initialize()
-	. = ..()
-	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, FALSE)
-	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, FALSE)
+/obj/item/circuit_component/random/populate_ports()
+	minimum = add_input_port("Minimum", PORT_TYPE_NUMBER, trigger = null)
+	maximum = add_input_port("Maximum", PORT_TYPE_NUMBER, trigger = null)
 
 	output = add_output_port("Output", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/random/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
-	var/min_val = minimum.input_value || 0
-	var/max_val = maximum.input_value || 0
+	var/min_val = minimum.value || 0
+	var/max_val = maximum.value || 0
 
 	if(max_val < min_val)
 		output.set_output(0)

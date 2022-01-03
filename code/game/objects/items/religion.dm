@@ -86,7 +86,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
-/obj/item/banner/security/Initialize()
+/obj/item/banner/security/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
 
@@ -110,7 +110,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "No wounds cannot be healed!"
 
-/obj/item/banner/medical/Initialize()
+/obj/item/banner/medical/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -142,7 +142,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "For Cuban Pete!"
 
-/obj/item/banner/science/Initialize()
+/obj/item/banner/science/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
 
@@ -150,7 +150,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/science/check_inspiration(mob/living/carbon/human/H)
-	return H.on_fire //Sciencia is pleased by dedication to the art of Toxins
+	return H.on_fire //Sciencia is pleased by dedication to the art of Ordnance
 
 /datum/crafting_recipe/science_banner
 	name = "Sciencia Banner"
@@ -169,7 +169,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "Hail Cargonia!"
 
-/obj/item/banner/cargo/Initialize()
+/obj/item/banner/cargo/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_CARGO
 
@@ -193,7 +193,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "All hail lord Singuloth!!"
 
-/obj/item/banner/engineering/Initialize()
+/obj/item/banner/engineering/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
 
@@ -201,7 +201,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
+	qdel(H.GetComponent(/datum/component/irradiated))
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -217,7 +217,7 @@
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 
-/obj/item/banner/command/Initialize()
+/obj/item/banner/command/Initialize(mapload)
 	. = ..()
 	job_loyalties = DEPARTMENT_BITFLAG_COMMAND
 
@@ -252,7 +252,7 @@
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "bannerpack"
 
-/obj/item/storage/backpack/bannerpack/Initialize()
+/obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
@@ -275,7 +275,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -289,7 +289,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -303,7 +303,7 @@
 	desc = "A religious-looking hat."
 	icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, RAD = 50, FIRE = 60, ACID = 60) //religion protects you from disease and radiation, honk.
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
 	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
@@ -362,7 +362,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

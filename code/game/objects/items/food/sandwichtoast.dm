@@ -49,7 +49,7 @@
 
 /obj/item/food/jellysandwich/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/toxin/slimejelly = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
-	foodtypes  = GRAIN | TOXIC
+	foodtypes = GRAIN | TOXIC
 
 /obj/item/food/jellysandwich/cherry
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/cherryjelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
@@ -121,3 +121,15 @@
 
 /obj/item/food/hotdog/debug
 	eat_time = 0
+
+/obj/item/food/blt
+	name = "\improper BLT"
+	desc = "A classic bacon, lettuce, and tomato sandwich."
+	icon = 'icons/obj/food/burgerbread.dmi'
+	icon_state = "blt"
+	bite_consumption = 4
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
+	tastes = list("bacon" = 3, "lettuce" = 2, "tomato" = 2, "bread" = 2)
+	foodtypes = GRAIN | MEAT | VEGETABLES | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
+	w_class = WEIGHT_CLASS_SMALL

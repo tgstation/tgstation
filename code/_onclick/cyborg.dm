@@ -68,6 +68,10 @@
 			to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
 			return
 
+		//if your "hands" are blocked you shouldn't be able to use modules
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+			return
+
 		if(W == A)
 			W.attack_self(src)
 			return

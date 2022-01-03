@@ -24,7 +24,7 @@
 	/// If we give warnings before base is launched
 	var/launch_warning = TRUE
 	/// List of connected turrets
-	var/list/turrets = list()
+	var/list/datum/weakref/turrets
 	/// List of all possible destinations
 	var/possible_destinations
 	/// ID of the currently selected destination of the attached base
@@ -32,25 +32,17 @@
 	/// If blind drop option is available
 	var/blind_drop_ready = TRUE
 
-/obj/machinery/computer/auxiliary_base/directional/north
-	dir = SOUTH
-	pixel_y = 32
+	density = FALSE //this is a wallmount
 
-/obj/machinery/computer/auxiliary_base/directional/south
-	dir = NORTH
-	pixel_y = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
-/obj/machinery/computer/auxiliary_base/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/auxiliary_base/directional/west
-	dir = EAST
-	pixel_x = -32
-
-/obj/machinery/computer/auxiliary_base/Initialize()
+/obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "NT_AUX")
+
+/obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable... but just in case
+	LAZYCLEARLIST(turrets)
+	return ..()
 
 /obj/machinery/computer/auxiliary_base/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -70,28 +62,31 @@
 	data["destination"] = destination
 	data["blind_drop"] = blind_drop_ready
 	data["turrets"] = list()
-	if(LAZYLEN(turrets))
-		for(var/turret in turrets)
-			var/obj/machinery/porta_turret/aux_base/base_turret = turret
-			var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
-			var/turret_status
-			if(base_turret.machine_stat & BROKEN)
-				turret_status = "ERROR"
-			else if(!base_turret.on)
-				turret_status = "Disabled"
-			else if(base_turret.raised)
-				turret_status = "Firing"
-			else
-				turret_status = "All Clear"
-			var/list/turret_data = list(
-				name = base_turret.name,
-				integrity = turret_integrity,
-				status = turret_status,
-				direction = dir2text(get_dir(src, base_turret)),
-				distance = get_dist(src, base_turret),
-				ref = REF(base_turret)
-			)
-			data["turrets"] += list(turret_data)
+	for(var/datum/weakref/turret_ref as anything in turrets)
+		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+		if(!istype(base_turret)) // null or invalid in turrets list? axe it
+			LAZYREMOVE(turrets, turret_ref)
+			continue
+
+		var/turret_integrity = max((base_turret.get_integrity() - base_turret.integrity_failure * base_turret.max_integrity) / (base_turret.max_integrity - base_turret.integrity_failure * max_integrity) * 100, 0)
+		var/turret_status
+		if(base_turret.machine_stat & BROKEN)
+			turret_status = "ERROR"
+		else if(!base_turret.on)
+			turret_status = "Disabled"
+		else if(base_turret.raised)
+			turret_status = "Firing"
+		else
+			turret_status = "All Clear"
+		var/list/turret_data = list(
+			name = base_turret.name,
+			integrity = turret_integrity,
+			status = turret_status,
+			direction = dir2text(get_dir(src, base_turret)),
+			distance = get_dist(src, base_turret),
+			ref = REF(base_turret)
+		)
+		data["turrets"] += list(turret_data)
 	if(!M)
 		data["status"] = "Missing"
 		return data
@@ -183,13 +178,19 @@
 			destination = target_destination
 			return TRUE
 		if("turrets_power")
-			for(var/obj/machinery/porta_turret/aux_base/base_turret in turrets)
+			for(var/datum/weakref/turret_ref as anything in turrets)
+				var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
+				if(!istype(base_turret)) // null or invalid in turrets list
+					LAZYREMOVE(turrets, turret_ref)
+					continue
+
 				base_turret.toggle_on()
 			return TRUE
 		if("single_turret_power")
-			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"]) in turrets
-			if(!istype(base_turret))
+			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"])
+			if(!istype(base_turret) || !(WEAKREF(base_turret) in turrets))
 				return
+
 			base_turret.toggle_on()
 			return TRUE
 
@@ -248,7 +249,6 @@
 	minor_announce("Auxiliary base landing zone coordinates locked in for [A]. Launch command now available!")
 	to_chat(user, span_notice("Landing zone set."))
 	return ZONE_SET
-
 
 /obj/item/assault_pod/mining
 	name = "Landing Field Designator"

@@ -12,7 +12,7 @@
 	name = "burrito"
 	desc = "Tortilla wrapped goodness."
 	icon_state = "burrito"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 2,/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("torilla" = 2, "beans" = 3)
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL

@@ -12,6 +12,10 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
+	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+		return FALSE
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
@@ -105,7 +109,7 @@
 		if(advance && !repeatable)
 			surgery.status++
 			if(surgery.status > surgery.steps.len)
-				surgery.complete()
+				surgery.complete(user)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
 		user.client.give_award(/datum/award/achievement/misc/sandman, user)
@@ -175,3 +179,16 @@
 	if(!target_detailed)
 		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
 		target.show_message(vague_message, MSG_VISUAL, span_notice("You feel [you_feel] as you are operated on."))
+/**
+ * Sends a pain message to the target, including a chance of screaming.
+ *
+ * Arguments:
+ * * target - Who the message will be sent to
+ * * pain_message - The message to be displayed
+ * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
+ */
+/datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+	if(target.stat < UNCONSCIOUS)
+		to_chat(target, span_userdanger(pain_message))
+		if(prob(30) && !mechanical_surgery)
+			target.emote("scream")

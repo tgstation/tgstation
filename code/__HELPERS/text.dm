@@ -20,32 +20,10 @@
  * Text sanitization
  */
 
-//Simply removes < and > and limits the length of the message
-/proc/strip_html_simple(t,limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">")
-	t = copytext(t,1,limit)
-	for(var/char in strip_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
-
-//Removes a few problematic characters
-/proc/sanitize_simple(t,list/repl_chars = list("\n"="#","\t"="#"))
-	for(var/char in repl_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index + length(char))
-			index = findtext(t, char, index + length(char))
-	return t
-
-/proc/sanitize_filename(t)
-	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
 ///returns nothing with an alert instead of the message if it contains something in the ic filter, and sanitizes normally if the name is fine. It returns nothing so it backs out of the input the same way as if you had entered nothing.
 /proc/sanitize_name(t,allow_numbers=FALSE)
-	if(CHAT_FILTER_CHECK(t))
+	if(is_ic_filtered(t) || is_soft_ic_filtered(t))
 		tgui_alert(usr, "You cannot set a name that contains a word prohibited in IC chat!")
 		return ""
 	var/r = reject_bad_name(t,allow_numbers=allow_numbers,strict=TRUE)
@@ -54,19 +32,22 @@
 		return ""
 	return sanitize(r)
 
-//Runs byond's sanitization proc along-side sanitize_simple
-/proc/sanitize(t,list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
 
-//Runs sanitize and strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
-/proc/strip_html(t,limit=MAX_MESSAGE_LEN)
-	return copytext((sanitize(strip_html_simple(t))),1,limit)
+/// Runs byond's html encoding sanitization proc, after replacing new-lines and tabs for the # character.
+/proc/sanitize(text)
+	var/static/regex/regex = regex(@"[\n\t]", "g")
+	return html_encode(regex.Replace(text, "#"))
 
-//Runs byond's sanitization proc along-side strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
-/proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
-	return copytext((html_encode(strip_html_simple(t))),1,limit)
+
+/// Runs STRIP_HTML_SIMPLE and sanitize.
+/proc/strip_html(text, limit = MAX_MESSAGE_LEN)
+	return sanitize(STRIP_HTML_SIMPLE(text, limit))
+
+
+/// Runs STRIP_HTML_SIMPLE and byond's sanitization proc.
+/proc/adminscrub(text, limit = MAX_MESSAGE_LEN)
+	return html_encode(STRIP_HTML_SIMPLE(text, limit))
+
 
 /**
  * Perform a whitespace cleanup on the text, similar to what HTML renderers do
@@ -91,31 +72,34 @@
 
 	return t
 
-//Returns null if there is any bad text in the string
+
+/**
+ * Returns the text if properly formatted, or null else.
+ *
+ * Things considered improper:
+ * * Larger than max_length.
+ * * Presence of non-ASCII characters if asci_only is set to TRUE.
+ * * Only whitespaces, tabs and/or line breaks in the text.
+ * * Presence of the <, >, \ and / characters.
+ * * Presence of ASCII special control characters (horizontal tab and new line not included).
+ * */
 /proc/reject_bad_text(text, max_length = 512, ascii_only = TRUE)
-	var/char_count = 0
-	var/non_whitespace = FALSE
-	var/lenbytes = length(text)
-	var/char = ""
-	for(var/i = 1, i <= lenbytes, i += length(char))
-		char = text[i]
-		char_count++
-		if(char_count > max_length)
-			return
-		switch(text2ascii(char))
-			if(62, 60, 92, 47) // <, >, \, /
-				return
-			if(0 to 31)
-				return
-			if(32)
-				continue
-			if(127 to INFINITY)
-				if(ascii_only)
-					return
-			else
-				non_whitespace = TRUE
-	if(non_whitespace)
-		return text //only accepts the text if it has some non-spaces
+	if(ascii_only)
+		if(length(text) > max_length)
+			return null
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n]")
+		if(non_ascii.Find(text))
+			return null
+	else if(length_char(text) > max_length)
+		return null
+	var/static/regex/non_whitespace = regex(@"\S")
+	if(!non_whitespace.Find(text))
+		return null
+	var/static/regex/bad_chars = regex(@"[\\<>/\x00-\x08\x11-\x1F]")
+	if(bad_chars.Find(text))
+		return null
+	return text
+
 
 /// Used to get a properly sanitized input, of max_length
 /// no_trim is self explanatory but it prevents the input from being trimed if you intend to parse newlines or whitespace.
@@ -237,7 +221,7 @@
 			return //(not case sensitive)
 
 	// Protects against names containing IC chat prohibited words.
-	if(CHAT_FILTER_CHECK(t_out))
+	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
 		return
 
 	return t_out
@@ -389,12 +373,12 @@ GLOBAL_LIST_INIT(space, list(" "))
 GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/random_string(length, list/characters)
 	. = ""
-	for(var/i=1, i<=length, i++)
+	for(var/i in 1 to length)
 		. += pick(characters)
 
 /proc/repeat_string(times, string="")
 	. = ""
-	for(var/i=1, i<=times, i++)
+	for(var/i in 1 to times)
 		. += string
 
 /proc/random_short_color()
@@ -496,7 +480,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/tlistlen = tlist.len
 		var/listlevel = -1
 		var/singlespace = -1 // if 0, double spaces are used before asterisks, if 1, single are
-		for(var/i = 1, i <= tlistlen, i++)
+		for(var/i in 1 to tlistlen)
 			var/line = tlist[i]
 			var/count_asterisk = length(replacetext(line, regex("\[^\\*\]+", "g"), ""))
 			if(count_asterisk % 2 == 1 && findtext(line, regex("^\\s*\\*", "g"))) // there is an extra asterisk in the beggining
@@ -529,7 +513,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		// end for
 
 		t = tlist[1]
-		for(var/i = 2, i <= tlistlen, i++)
+		for(var/i in 2 to tlistlen)
 			t += "\n" + tlist[i]
 
 		while(listlevel >= 0)
@@ -672,7 +656,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		var/punctbuffer = ""
 		var/cutoff = 0
 		lentext = length_char(buffer)
-		for(var/pos = 1, pos <= lentext, pos++)
+		for(var/pos in 1 to lentext)
 			let = copytext_char(buffer, -pos, -pos + 1)
 			if(!findtext(let, GLOB.is_punctuation)) //This won't handle things like Nyaaaa!~ but that's fine
 				break
@@ -728,7 +712,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	var/list/finalized = list()
 	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
-	listclearnulls(finalized)
+	list_clear_nulls(finalized)
 	if(length(finalized) > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
@@ -953,3 +937,101 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			continue
 		out += prob(replaceprob)? pick(replacementchars) : char
 	return out.Join("")
+
+///runs `piglatin_word()` proc on each word in a sentence. preserves caps and punctuation
+/proc/piglatin_sentence(text)
+	var/text_length = length(text)
+
+	//remove caps since words will be shuffled
+	text = lowertext(text)
+	//remove punctuation for same reasons as above
+	var/punctuation = ""
+	var/punctuation_hit_list = list("!","?",".","-")
+	for(var/letter_index in text_length to 1 step -1)
+		var/letter = text[letter_index]
+		if(!(letter in punctuation_hit_list))
+			break
+		punctuation += letter
+	punctuation = reverse_text(punctuation)
+	text = copytext(text, 1, ((text_length + 1) - length(punctuation)))
+
+	//now piglatin each word
+	var/list/old_words = splittext(text, " ")
+	var/list/new_words = list()
+	for(var/word in old_words)
+		new_words += piglatin_word(word)
+	text = new_words.Join(" ")
+	//replace caps and punc
+	text = capitalize(text)
+	text += punctuation
+	return text
+
+///takes "word", and returns it piglatinized.
+/proc/piglatin_word(word)
+	if(length(word) == 1)
+		return word
+	var/first_letter = copytext(word, 1, 2)
+	var/first_two_letters = copytext(word, 1, 3)
+	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
+	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	//If a word starts with a vowel add the word "way" at the end of the word.
+	if(first_word_is_vowel)
+		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
+	//If a word starts with a consonant and a vowel, put the first letter of the word at the end of the word and add "ay."
+	if(!first_word_is_vowel && second_word_is_vowel)
+		word = copytext(word, 2)
+		word += first_letter
+		return word + "ay"
+	//If a word starts with two consonants move the two consonants to the end of the word and add "ay."
+	if(!first_word_is_vowel && !second_word_is_vowel)
+		word = copytext(word, 3)
+		word += first_two_letters
+		return word + "ay"
+	//otherwise unmutated
+	return word
+
+/**
+ * The procedure to check the text of the entered text on ntnrc_client.dm
+ *
+ * This procedure is designed to check the text you type into the chat client.
+ * It checks for invalid characters and the size of the entered text.
+ */
+/proc/reject_bad_chattext(text, max_length = 256)
+	var/non_whitespace = FALSE
+	var/char = ""
+	if (length(text) > max_length)
+		return
+	else
+		for(var/i = 1, i <= length(text), i += length(char))
+			char = text[i]
+			switch(text2ascii(char))
+				if(0 to 31)
+					return
+				if(32)
+					continue
+				else
+					non_whitespace = TRUE
+		if (non_whitespace)
+			return text
+
+///Properly format a string of text by using replacetext()
+/proc/format_text(text)
+	return replacetext(replacetext(text,"\proper ",""),"\improper ","")
+
+///Returns a string based on the weight class define used as argument
+/proc/weight_class_to_text(w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY)
+			. = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			. = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			. = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			. = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			. = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			. = "gigantic"
+		else
+			. = ""

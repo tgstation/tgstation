@@ -12,13 +12,13 @@
 	name = "circuit airlock"
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/shell/Initialize()
+/obj/machinery/door/airlock/shell/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/shell, \
-		unremovable_circuit_components = list(new /obj/item/circuit_component/airlock), \
+		unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event), \
 		capacity = SHELL_CAPACITY_LARGE, \
-		shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION \
+		shell_flags = SHELL_FLAG_ALLOW_FAILURE_ACTION|SHELL_FLAG_REQUIRE_ANCHOR \
 	)
 
 /obj/machinery/door/airlock/shell/check_access(obj/item/I)
@@ -37,7 +37,7 @@
 	display_name = "Airlock"
 	desc = "The general interface with an airlock. Includes general statuses of the airlock"
 
-	/// Called when attack_hand is called on the shell.
+	/// The shell, if it is an airlock.
 	var/obj/machinery/door/airlock/attached_airlock
 
 	/// Bolts the airlock (if possible)
@@ -64,8 +64,7 @@
 	/// Called when the airlock is unbolted
 	var/datum/port/output/unbolted
 
-/obj/item/circuit_component/airlock/Initialize()
-	. = ..()
+/obj/item/circuit_component/airlock/populate_ports()
 	// Input Signals
 	bolt = add_input_port("Bolt", PORT_TYPE_SIGNAL)
 	unbolt = add_input_port("Unbolt", PORT_TYPE_SIGNAL)
@@ -116,9 +115,6 @@
 	closed.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/airlock/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	if(!attached_airlock)
 		return
@@ -131,3 +127,65 @@
 		INVOKE_ASYNC(attached_airlock, /obj/machinery/door/airlock.proc/open)
 	if(COMPONENT_TRIGGERED_BY(close, port) && !attached_airlock.density)
 		INVOKE_ASYNC(attached_airlock, /obj/machinery/door/airlock.proc/close)
+
+
+/obj/item/circuit_component/airlock_access_event
+	display_name = "Airlock Access Event"
+	desc = "An event that can be handled through circuit components to determine if the door should open or not for an entity that might be trying to access it."
+	circuit_flags = CIRCUIT_FLAG_INSTANT
+
+	/// The shell, if it is an airlock.
+	var/obj/machinery/door/airlock/attached_airlock
+
+	/// Tells the event to open the airlock.
+	var/datum/port/input/open_airlock
+
+	/// The person trying to open the airlock.
+	var/datum/port/output/accessing_entity
+
+	/// The signal sent when this event is triggered
+	var/datum/port/output/event_triggered
+
+
+/obj/item/circuit_component/airlock_access_event/register_shell(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/door/airlock))
+		attached_airlock = shell
+		RegisterSignal(shell, COMSIG_OBJ_ALLOWED, .proc/handle_allowed)
+
+/obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
+	attached_airlock = null
+	UnregisterSignal(shell, list(
+		COMSIG_OBJ_ALLOWED,
+	))
+	return ..()
+
+
+/obj/item/circuit_component/airlock_access_event/populate_ports()
+	open_airlock = add_input_port("Should Open Airlock", PORT_TYPE_RESPONSE_SIGNAL, trigger = .proc/should_open_airlock)
+	accessing_entity = add_output_port("Accessing Entity", PORT_TYPE_ATOM)
+	event_triggered = add_output_port("Event Triggered", PORT_TYPE_INSTANT_SIGNAL)
+
+
+/obj/item/circuit_component/airlock_access_event/proc/should_open_airlock(datum/port/input/port, list/return_values)
+	CIRCUIT_TRIGGER
+	if(!return_values)
+		return
+	return_values["should_open"] = TRUE
+
+/obj/item/circuit_component/airlock_access_event/proc/handle_allowed(datum/source, mob/accesser)
+	SIGNAL_HANDLER
+	if(!attached_airlock)
+		return
+
+	SScircuit_component.queue_instant_run()
+	accessing_entity.set_output(accesser)
+	event_triggered.set_output(COMPONENT_SIGNAL)
+	var/list/result = SScircuit_component.execute_instant_run()
+
+	if(!result)
+		attached_airlock.visible_message(span_warning("[attached_airlock]'s circuitry overheats!"))
+		return
+
+	if(result["should_open"])
+		return COMPONENT_OBJ_ALLOW

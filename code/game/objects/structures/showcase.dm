@@ -17,7 +17,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
 
-/obj/structure/showcase/fakeid/Initialize()
+/obj/structure/showcase/fakeid/Initialize(mapload)
 	. = ..()
 	add_overlay("id")
 	add_overlay("id_key")

@@ -83,7 +83,7 @@
 /datum/disease/transformation/proc/replace_banned_player(mob/living/new_mob) // This can run well after the mob has been transferred, so need a handle on the new mob to kill it if needed.
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 50, affected_mob)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [affected_mob.real_name]?", bantype, bantype, 5 SECONDS, affected_mob)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
@@ -179,7 +179,7 @@
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
-	bantype = "Cyborg"
+	bantype = JOB_CYBORG
 
 
 /datum/disease/transformation/robot/stage_act(delta_time, times_fired)

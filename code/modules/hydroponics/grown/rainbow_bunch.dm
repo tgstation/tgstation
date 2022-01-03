@@ -25,6 +25,7 @@
 	desc = "A beautiful flower capable of being used for most dyeing processes."
 	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
+	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -35,7 +36,7 @@
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
-/obj/item/food/grown/rainbow_flower/Initialize()
+/obj/item/food/grown/rainbow_flower/Initialize(mapload)
 	. = ..()
 	if(greyscale_colors)
 		return

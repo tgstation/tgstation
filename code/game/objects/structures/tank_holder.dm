@@ -17,7 +17,7 @@
 	/// The stored tank. If this is a path, it gets created into contents at Initialize.
 	var/obj/item/tank
 
-/obj/structure/tank_holder/Initialize()
+/obj/structure/tank_holder/Initialize(mapload)
 	. = ..()
 	if(tank)
 		var/obj/item/tank_ = new tank(null)

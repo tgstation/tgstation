@@ -22,23 +22,9 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/mob/triggerer = null
 	var/waiting = FALSE
 
-/obj/machinery/keycard_auth/directional/north
-	dir = SOUTH
-	pixel_y = 26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 
-/obj/machinery/keycard_auth/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/keycard_auth/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/keycard_auth/directional/west
-	dir = EAST
-	pixel_x = -26
-
-/obj/machinery/keycard_auth/Initialize()
+/obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
 	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
@@ -66,11 +52,14 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
-	if(isanimal(user))
-		var/mob/living/simple_animal/A = user
-		if(!A.dextrous)
-			to_chat(user, span_warning("You are too primitive to use this device!"))
-			return UI_CLOSE
+	if(isdrone(user))
+		return UI_CLOSE
+	if(!isanimal(user))
+		return ..()
+	var/mob/living/simple_animal/A = user
+	if(!A.dextrous)
+		to_chat(user, span_warning("You are too primitive to use this device!"))
+		return UI_CLOSE
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)

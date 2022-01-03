@@ -220,7 +220,7 @@ new /datum/disease_ability/symptom/powerful/youth
 		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
 
 		for(var/mob/living/M in oview(4, SD.affected_mob))
-			if(is_A_facing_B(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
+			if(is_source_facing_target(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
 				M.AirborneContractDisease(SD, TRUE)
 
 	StartCooldown()

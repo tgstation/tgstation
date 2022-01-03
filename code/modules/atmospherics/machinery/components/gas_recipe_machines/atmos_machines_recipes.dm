@@ -38,6 +38,16 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 /datum/gas_recipe/crystallizer
 	machine_type = "Crystallizer"
 
+/datum/gas_recipe/crystallizer/hypern_crystalium
+	id = "hyper_crystalium"
+	name = "Hypernoblium Crystal"
+	min_temp = 3
+	max_temp = 250
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 250000
+	requirements = list(/datum/gas/oxygen = 2000, /datum/gas/hypernoblium = 175)
+	products = list(/obj/item/hypernoblium_crystal = 1)
+
 /datum/gas_recipe/crystallizer/metallic_hydrogen
 	id = "metal_h"
 	name = "Metallic hydrogen"
@@ -55,7 +65,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	max_temp = 400
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 2000000
-	requirements = list(/datum/gas/healium = 100, /datum/gas/freon = 120, /datum/gas/plasma = 50)
+	requirements = list(/datum/gas/healium = 100, /datum/gas/oxygen = 120, /datum/gas/plasma = 50)
 	products = list(/obj/item/grenade/gas_crystal/healium_crystal = 1)
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
@@ -170,5 +180,23 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 	name = "exotic fuel pellet"
 	reaction_type = ENDOTHERMIC_REACTION
 	energy_release = 6000000
-	requirements = list(/datum/gas/hypernoblium = 100, /datum/gas/stimulum = 100)
+	requirements = list(/datum/gas/hypernoblium = 100, /datum/gas/nitrium = 100)
 	products = list(/obj/item/fuel_pellet/exotic = 1)
+
+/datum/gas_recipe/crystallizer/crystal_foam
+	id = "crystal_foam"
+	name = "Crystal foam grenade"
+	reaction_type = EXOTHERMIC_REACTION
+	energy_release = 140000
+	requirements = list(/datum/gas/carbon_dioxide = 150, /datum/gas/nitrous_oxide = 100, /datum/gas/water_vapor = 25)
+	products = list(/obj/item/grenade/gas_crystal/crystal_foam = 1)
+
+/datum/gas_recipe/crystallizer/crystallized_nitrium
+	id = "crystallized_nitrium"
+	name = "Nitrium crystal"
+	min_temp = 10
+	max_temp = 25
+	reaction_type = ENDOTHERMIC_REACTION
+	energy_release = 45000
+	requirements = list(/datum/gas/nitrium = 150, /datum/gas/oxygen = 70, /datum/gas/bz = 50)
+	products = list(/obj/item/nitrium_crystal = 1)

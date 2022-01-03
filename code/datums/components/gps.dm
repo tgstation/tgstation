@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		signal["coords"] = "[pos.x], [pos.y], [pos.z]"
 		if(pos.z == curr.z) //Distance/Direction calculations for same z-level only
 			signal["dist"] = max(get_dist(curr, pos), 0) //Distance between the src and remote GPS turfs
-			signal["degrees"] = round(Get_Angle(curr, pos)) //0-360 degree directional bearing, for more precision.
+			signal["degrees"] = round(get_angle(curr, pos)) //0-360 degree directional bearing, for more precision.
 		signals += list(signal) //Add this signal to the list of signals
 	data["signals"] = signals
 	return data
@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/atom/parentasatom = parent
-			var/a = stripped_input(usr, "Please enter desired tag.", parentasatom.name, gpstag, 20)
+			var/a = tgui_input_text(usr, "Enter the desired tag", "GPS Tag", gpstag, 20)
 
 			if (!a)
 				return

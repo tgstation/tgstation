@@ -19,7 +19,7 @@
 	var/boom_sizes = list(0, 0, 3)
 	var/full_damage_on_mobs = FALSE
 
-/obj/item/grenade/c4/Initialize()
+/obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
 	plastic_overlay = mutable_appearance(icon, "[inhand_icon_state]2", HIGH_OBJ_LAYER)
 	wires = new /datum/wires/explosive/c4(src)
@@ -59,9 +59,9 @@
 	if(location)
 		if(directional && target?.density)
 			var/turf/turf = get_step(location, aim_dir)
-			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
+			explosion(get_step(turf, aim_dir), devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
 		else
-			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3])
+			explosion(location, devastation_range = boom_sizes[1], heavy_impact_range = boom_sizes[2], light_impact_range = boom_sizes[3], explosion_cause = src)
 	qdel(src)
 
 //assembly stuff
@@ -69,20 +69,20 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
-
+	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", 10, 60000, 10)
 	if (isnull(newtime))
 		return
-
 	if(user.get_active_held_item() == src)
-		newtime = clamp(newtime, 10, 60000)
-		det_time = newtime
+		det_time = round(newtime)
 		to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
-	aim_dir = get_dir(user,bomb_target)
+	aim_dir = get_dir(user, bomb_target)
 	if(!flag)
+		return
+	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
+		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
 
 	to_chat(user, span_notice("You start planting [src]. The timer is set to [det_time]..."))
@@ -133,7 +133,7 @@
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
 	user.visible_message(span_suicide("[user] activates [src] and holds it above [user.p_their()] head! It looks like [user.p_theyre()] going out with a bang!"))
 	shout_syndicate_crap(user)
-	explosion(user, heavy_impact_range = 2) //Cheap explosion imitation because putting detonate() here causes runtimes
+	explosion(user, heavy_impact_range = 2, explosion_cause = src) //Cheap explosion imitation because putting detonate() here causes runtimes
 	user.gib(1, 1)
 	qdel(src)
 

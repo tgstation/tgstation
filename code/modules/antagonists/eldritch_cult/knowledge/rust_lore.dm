@@ -4,7 +4,7 @@
 	gain_text = "'Let me tell you a story', said the Blacksmith, as he gazed deep into his rusty blade."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/ash_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
 	next_knowledge = list(/datum/eldritch_knowledge/rust_fist)
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/trash)
+	required_atoms = list(/obj/item/knife,/obj/item/trash)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	cost = 1
 	route = PATH_RUST
@@ -41,13 +41,13 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/victim = target
-		var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh)  || victim.has_status_effect(/datum/status_effect/eldritch/void)
+		var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
 		if(effect)
 			effect.on_effect()
 			victim.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
 
 /datum/eldritch_knowledge/spell/area_conversion
-	name = "Agressive Spread"
+	name = "Aggressive Spread"
 	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to touch the Bound King."
 	cost = 1
@@ -274,7 +274,7 @@
 
 		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
 			continue
-		for(var/line_turfie_owo in getline(turfie,centre))
+		for(var/line_turfie_owo in get_line(turfie,centre))
 			if(get_dist(turfie,line_turfie_owo) <= 1)
 				edge_turfs += turfie
 		CHECK_TICK

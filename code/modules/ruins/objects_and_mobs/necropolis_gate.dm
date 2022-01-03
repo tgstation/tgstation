@@ -23,7 +23,7 @@
 	var/obj/structure/opacity_blocker/sight_blocker
 	var/sight_blocker_distance = 1
 
-/obj/structure/necropolis_gate/Initialize()
+/obj/structure/necropolis_gate/Initialize(mapload)
 	. = ..()
 	setDir(SOUTH)
 	var/turf/sight_blocker_turf = get_turf(src)
@@ -69,6 +69,9 @@
 
 /obj/structure/necropolis_gate/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
+
+	if(leaving.movement_type & PHASING)
+		return
 
 	if(leaving == src)
 		return // Let's not block ourselves.
@@ -153,7 +156,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	desc = "A tremendous, impossibly large gateway, set into a massive tower of stone."
 	sight_blocker_distance = 2
 
-/obj/structure/necropolis_gate/legion_gate/Initialize()
+/obj/structure/necropolis_gate/legion_gate/Initialize(mapload)
 	. = ..()
 	GLOB.necropolis_gate = src
 
@@ -227,7 +230,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	var/open = FALSE
 	var/static/mutable_appearance/top_overlay
 
-/obj/structure/necropolis_arch/Initialize()
+/obj/structure/necropolis_arch/Initialize(mapload)
 	. = ..()
 	icon_state = "arch_bottom"
 	top_overlay = mutable_appearance('icons/effects/160x160.dmi', "arch_top")

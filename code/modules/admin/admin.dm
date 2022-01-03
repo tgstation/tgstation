@@ -1,13 +1,13 @@
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins,
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
 		confidential = TRUE)
 
 /proc/relay_msg_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message linkify\">[msg]</span></span>"
+	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(GLOB.admins,
 		type = MESSAGE_TYPE_ADMINLOG,
 		html = msg,
@@ -138,20 +138,28 @@
 	for(var/i in GLOB.silicon_mobs)
 		var/mob/living/silicon/S = i
 		ai_number++
+
+		var/message = ""
+
 		if(isAI(S))
-			to_chat(usr, "<b>AI [key_name(S, usr)]'s laws:</b>", confidential = TRUE)
+			message += "<b>AI [key_name(S, usr)]'s laws:</b>"
 		else if(iscyborg(S))
 			var/mob/living/silicon/robot/R = S
-			to_chat(usr, "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [key_name(R.connected_ai)])":"(Independent)"]: laws:</b>", confidential = TRUE)
+			message += "<b>CYBORG [key_name(S, usr)] [R.connected_ai?"(Slaved to: [key_name(R.connected_ai)])":"(Independent)"]: laws:</b>"
 		else if (ispAI(S))
-			to_chat(usr, "<b>pAI [key_name(S, usr)]'s laws:</b>", confidential = TRUE)
+			message += "<b>pAI [key_name(S, usr)]'s laws:</b>"
 		else
-			to_chat(usr, "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>", confidential = TRUE)
+			message += "<b>SOMETHING SILICON [key_name(S, usr)]'s laws:</b>"
+
+		message += "<br>"
 
 		if (S.laws == null)
-			to_chat(usr, "[key_name(S, usr)]'s laws are null?? Contact a coder.", confidential = TRUE)
+			message += "[key_name(S, usr)]'s laws are null?? Contact a coder."
 		else
-			S.laws.show_laws(usr)
+			message += jointext(S.laws.get_law_list(include_zeroth = TRUE), "<br>")
+
+		to_chat(usr, message, confidential = TRUE)
+
 	if(!ai_number)
 		to_chat(usr, "<b>No AIs located</b>" , confidential = TRUE)
 
@@ -233,7 +241,7 @@
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
 
-	tomob.ckey = frommob.ckey
+	tomob.key = frommob.key
 	tomob.client?.init_verbs()
 	qdel(frommob)
 

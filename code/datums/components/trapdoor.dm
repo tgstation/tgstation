@@ -74,6 +74,7 @@
 
 ///called by linking remotes to tie an assembly to the trapdoor
 /datum/component/trapdoor/proc/on_link_requested(datum/source, obj/item/assembly/trapdoor/assembly)
+	SIGNAL_HANDLER
 	if(get_dist(parent, assembly) > TRAPDOOR_LINKING_SEARCH_RANGE)
 		return
 	. = LINKED_UP
@@ -264,6 +265,6 @@
 ///subtype with internals already included. If you're giving a department a roundstart trapdoor, this is what you want
 /obj/item/trapdoor_remote/preloaded
 
-/obj/item/trapdoor_remote/preloaded/Initialize()
+/obj/item/trapdoor_remote/preloaded/Initialize(mapload)
 	. = ..()
 	internals = new(src)

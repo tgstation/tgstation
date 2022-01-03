@@ -96,6 +96,7 @@
 		if(1)
 			if(M.health >= 0)
 				if(ishuman(M))
+					M.adjust_status_effects_on_shake_up()
 					if(M.body_position == LYING_DOWN)
 						user.visible_message(span_notice("[user] shakes [M] trying to get [M.p_them()] up!"), \
 										span_notice("You shake [M] trying to get [M.p_them()] up!"))
@@ -541,10 +542,10 @@
 	nodamage = FALSE
 	embed_falloff_tile = 0
 
-/obj/projectile/bullet/reusable/lollipop/Initialize()
+/obj/projectile/bullet/reusable/lollipop/Initialize(mapload)
 	. = ..()
 	var/obj/item/food/lollipop/S = new ammo_type(src)
-	color2 = S.headcolor
+	color2 = S.head_color
 	var/mutable_appearance/head = mutable_appearance('icons/obj/guns/projectiles.dmi', "lollipop_2")
 	head.color = color2
 	add_overlay(head)
@@ -583,7 +584,7 @@
 	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
-	var/datum/proximity_monitor/advanced/dampening_field
+	var/datum/proximity_monitor/advanced/peaceborg_dampener/dampening_field
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
@@ -601,7 +602,7 @@
 	energy = 50000
 	energy_recharge = 5000
 
-/obj/item/borg/projectile_dampen/Initialize()
+/obj/item/borg/projectile_dampen/Initialize(mapload)
 	. = ..()
 	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
 	tracked = list()
@@ -641,10 +642,9 @@
 /obj/item/borg/projectile_dampen/proc/activate_field()
 	if(istype(dampening_field))
 		QDEL_NULL(dampening_field)
-	dampening_field = make_field(/datum/proximity_monitor/advanced/peaceborg_dampener, list("current_range" = field_radius, "host" = src, "projector" = src))
 	var/mob/living/silicon/robot/owner = get_host()
-	if(owner)
-		owner.model.allow_riding = FALSE
+	dampening_field = new(owner, field_radius, TRUE, src)
+	owner?.model.allow_riding = FALSE
 	active = TRUE
 
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
@@ -681,11 +681,6 @@
 /obj/item/borg/projectile_dampen/process(delta_time)
 	process_recharge(delta_time)
 	process_usage(delta_time)
-	update_location()
-
-/obj/item/borg/projectile_dampen/proc/update_location()
-	if(dampening_field)
-		dampening_field.HandleMove()
 
 /obj/item/borg/projectile_dampen/proc/process_usage(delta_time)
 	var/usage = 0
@@ -764,7 +759,7 @@
 	name = "medical hud"
 	icon_state = "healthhud"
 
-/obj/item/borg/sight/hud/med/Initialize()
+/obj/item/borg/sight/hud/med/Initialize(mapload)
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/health(src)
 
@@ -773,7 +768,7 @@
 	name = "security hud"
 	icon_state = "securityhud"
 
-/obj/item/borg/sight/hud/sec/Initialize()
+/obj/item/borg/sight/hud/sec/Initialize(mapload)
 	. = ..()
 	hud = new /obj/item/clothing/glasses/hud/security(src)
 
@@ -791,7 +786,7 @@
 	var/obj/item/stored
 	var/list/storable = list()
 
-/obj/item/borg/apparatus/Initialize()
+/obj/item/borg/apparatus/Initialize(mapload)
 	. = ..()
 	RegisterSignal(loc.loc, COMSIG_BORG_SAFE_DECONSTRUCT, .proc/safedecon)
 
@@ -885,7 +880,7 @@
 	storable = list(/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/glass/bottle)
 
-/obj/item/borg/apparatus/beaker/Initialize()
+/obj/item/borg/apparatus/beaker/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/reagent_containers/glass/beaker/large(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -947,7 +942,7 @@
 	storable = list(/obj/item/reagent_containers/food/drinks,
 					/obj/item/reagent_containers/food/condiment)
 
-/obj/item/borg/apparatus/beaker/service/Initialize()
+/obj/item/borg/apparatus/beaker/service/Initialize(mapload)
 	. = ..()
 	stored = new /obj/item/reagent_containers/food/drinks/drinkingglass(src)
 	RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, .proc/on_stored_updated_icon)
@@ -1015,7 +1010,7 @@
 	storable = list(/obj/item/circuitboard,
 				/obj/item/electronics)
 
-/obj/item/borg/apparatus/circuit/Initialize()
+/obj/item/borg/apparatus/circuit/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

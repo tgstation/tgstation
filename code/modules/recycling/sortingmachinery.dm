@@ -10,7 +10,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/structure/big_delivery/Initialize()
+/obj/structure/big_delivery/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
@@ -63,7 +63,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
-		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
+		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -114,7 +114,7 @@
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
 
-		var/list/wrap_contents = src.GetAllContents()
+		var/list/wrap_contents = src.get_all_contents()
 		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
@@ -133,7 +133,7 @@
 			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
-		var/list/wrap_contents = src.GetAllContents()
+		var/list/wrap_contents = src.get_all_contents()
 		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
@@ -167,7 +167,7 @@
 /obj/structure/big_delivery/proc/unwrap_contents()
 	if(!sticker)
 		return
-	for(var/obj/I in src.GetAllContents())
+	for(var/obj/I in src.get_all_contents())
 		SEND_SIGNAL(I, COMSIG_STRUCTURE_UNWRAPPED)
 
 /obj/structure/big_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
@@ -186,7 +186,7 @@
 	var/obj/item/paper/note
 	var/obj/item/barcode/sticker
 
-/obj/item/small_delivery/Initialize()
+/obj/item/small_delivery/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
@@ -256,7 +256,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
-		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
+		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -307,7 +307,7 @@
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.cut_multiplier = tagger.cut_multiplier	//as above, as before.
 
-		var/list/wrap_contents = src.GetAllContents()
+		var/list/wrap_contents = src.get_all_contents()
 		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
@@ -327,7 +327,7 @@
 			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
-		var/list/wrap_contents = src.GetAllContents()
+		var/list/wrap_contents = src.get_all_contents()
 		for(var/obj/I in wrap_contents)
 			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
@@ -338,7 +338,7 @@
 /obj/item/small_delivery/proc/unwrap_contents()
 	if(!sticker)
 		return
-	for(var/obj/I in src.GetAllContents())
+	for(var/obj/I in src.get_all_contents())
 		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
 
 /obj/item/small_delivery/proc/disposal_handling(disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
@@ -354,7 +354,7 @@
 	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
-	w_class =  WEIGHT_CLASS_TINY
+	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
@@ -374,32 +374,43 @@
 	playsound(src, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 	return BRUTELOSS
 
-/obj/item/dest_tagger/proc/openwindow(mob/user)
-	var/dat = "<tt><center><h1><b>TagMaster 2.2</b></h1></center>"
+/** Standard TGUI actions */
+/obj/item/dest_tagger/ui_interact(mob/user, datum/tgui/ui)
+	add_fingerprint(user)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DestinationTagger", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
 
-	dat += "<table style='width:100%; padding:4px;'><tr>"
-	for (var/i = 1, i <= GLOB.TAGGERLOCATIONS.len, i++)
-		dat += "<td><a href='?src=[REF(src)];nextTag=[i]'>[GLOB.TAGGERLOCATIONS[i]]</a></td>"
+/** If the user dropped the tagger */
+/obj/item/dest_tagger/ui_state(mob/user)
+	return GLOB.inventory_state
 
-		if(i%4==0)
-			dat += "</tr><tr>"
-
-	dat += "</tr></table><br>Current Selection: [currTag ? GLOB.TAGGERLOCATIONS[currTag] : "None"]</tt>"
-
-	user << browse(dat, "window=destTagScreen;size=450x350")
-	onclose(user, "destTagScreen")
-
+/** User activates in hand */
 /obj/item/dest_tagger/attack_self(mob/user)
 	if(!locked_destination)
-		openwindow(user)
+		ui_interact(user)
 		return
 
-/obj/item/dest_tagger/Topic(href, href_list)
-	add_fingerprint(usr)
-	if(href_list["nextTag"])
-		var/n = text2num(href_list["nextTag"])
-		currTag = n
-	openwindow(usr)
+/** Data sent to TGUI window */
+/obj/item/dest_tagger/ui_data(mob/user)
+	var/list/data = list()
+	data["locations"] = GLOB.TAGGERLOCATIONS
+	data["currentTag"] = currTag
+	return data
+
+/** User clicks a button on the tagger */
+/obj/item/dest_tagger/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	if(action != "change")
+		return
+	if(round(text2num(params["index"])) == currTag)
+		return
+	currTag = round(text2num(params["index"]))
+	return TRUE
 
 /obj/item/sales_tagger
 	name = "sales tagger"
@@ -446,10 +457,10 @@
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 	if(istype(I, /obj/item/paper))
-		if (!(paper_count >=  max_paper_count))
+		if (!(paper_count >= max_paper_count))
 			paper_count += 10
 			qdel(I)
-			if (paper_count >=  max_paper_count)
+			if (paper_count >= max_paper_count)
 				paper_count = max_paper_count
 				to_chat(user, span_notice("[src]'s paper supply is now full."))
 				return
@@ -461,7 +472,7 @@
 
 /obj/item/sales_tagger/attack_self(mob/user)
 	. = ..()
-	if(paper_count <=  0)
+	if(paper_count <= 0)
 		to_chat(user, span_warning("You're out of paper!'."))
 		return
 	if(!payments_acc)

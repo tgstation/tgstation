@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	var/cursed ///if it's a cursed mask variant.
 	var/curse_spawn_sound ///sound to play when the cursed mask variant is spawned.
 
-/obj/item/clothing/mask/animal/Initialize()
+/obj/item/clothing/mask/animal/Initialize(mapload)
 	. = ..()
 	if(cursed)
 		make_cursed()

@@ -35,7 +35,7 @@
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
@@ -209,7 +209,7 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "Q" = (
 /obj/structure/closet/crate/bin,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "R" = (

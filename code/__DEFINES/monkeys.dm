@@ -14,8 +14,6 @@
 #define MONKEY_SYRINGE_RETALIATION_PROB 20
 
 // Probability per Life tick that the monkey will:
-/// probability that monkey resist out of restraints
-#define MONKEY_RESIST_PROB 50
 ///  probability that monkey aggro against the mob pulling it
 #define MONKEY_PULL_AGGRO_PROB 5
 /// probability that monkey will get into mischief, i.e. finding/stealing items

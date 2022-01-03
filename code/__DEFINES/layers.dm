@@ -1,13 +1,19 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
+//NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
+#define LOWEST_EVER_PLANE -200
+
+#define FIELD_OF_VISION_BLOCKER_PLANE -199
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
+
 #define CLICKCATCHER_PLANE -99
 
 #define PLANE_SPACE -95
-#define PLANE_SPACE_RENDER_TARGET "PLANE_SPACE"
 #define PLANE_SPACE_PARALLAX -90
-#define PLANE_SPACE_PARALLAX_RENDER_TARGET "PLANE_SPACE_PARALLAX"
 
+#define GRAVITY_PULSE_PLANE -11
+#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
 #define OPENSPACE_LAYER 600 //Openspace layer over all
 #define OPENSPACE_PLANE -9 //Openspace plane below all turfs
@@ -15,18 +21,9 @@
 
 
 #define FLOOR_PLANE -7
-#define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
-#define OVER_TILE_PLANE -6
-#define WALL_PLANE -5
 #define GAME_PLANE -4
-#define GAME_PLANE_RENDER_TARGET "GAME_PLANE"
-#define UNDER_FRILL_PLANE -3
-#define UNDER_FRILL_RENDER_TARGET "UNDER_FRILL_PLANE"
-#define FRILL_PLANE -2
-#define FRILL_PLANE_RENDER_TARGET "FRILL_PLANE"
-#define OVER_FRILL_PLANE -1
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
-#define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
+#define GAME_PLANE_FOV_HIDDEN -3
+#define ABOVE_GAME_PLANE -2
 
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
@@ -50,12 +47,14 @@
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
 #define LOW_OBJ_LAYER 2.5
-///catwalk overlay of /turf/open/floor/plating/plating_catwalk
+///catwalk overlay of /turf/open/floor/plating/catwalk_floor
 #define CATWALK_LAYER 2.51
 #define LOW_SIGIL_LAYER 2.52
-#define SIGIL_LAYER 2.54
-#define HIGH_PIPE_LAYER 2.55
-#define HIGH_SIGIL_LAYER 2.56
+#define SIGIL_LAYER 2.53
+#define HIGH_PIPE_LAYER 2.54
+// Anything aboe this layer is not "on" a turf for the purposes of washing
+// I hate this life of ours
+#define FLOOR_CLEAN_LAYER 2.55
 
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
@@ -97,10 +96,8 @@
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
 
-#define LANDMARK_PLANE 50
-#define LOW_LANDMARK_LAYER 1
-#define MID_LANDMARK_LAYER 2
-#define HIGH_LANDMARK_LAYER 3
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
 
 #define AREA_PLANE 60
 #define MASSIVE_OBJ_PLANE 70
@@ -109,13 +106,9 @@
 
 #define RAD_TEXT_PLANE 90
 
-#define FRILL_MASK_PLANE 95
-#define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
-
 //---------- LIGHTING -------------
 ///Normal 1 per turf dynamic lighting underlays
 #define LIGHTING_PLANE 100
-#define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
 
 ///Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 110
@@ -123,11 +116,14 @@
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 120
-#define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
+
+#define LIGHTING_PRIMARY_LAYER 15	//The layer for the main lights of the station
+#define LIGHTING_PRIMARY_DIMMER_LAYER 15.1	//The layer that dims the main lights of the station
+#define LIGHTING_SECONDARY_LAYER 16	//The colourful, usually small lights that go on top
+
 
 ///visibility + hiding of things outside of light source range
 #define BYOND_LIGHTING_PLANE 130
-#define BYOND_LIGHTING_RENDER_TARGET "BYOND_LIGHTING_PLANE"
 
 
 //---------- EMISSIVES -------------
@@ -145,42 +141,50 @@
 
 ///AI Camera Static
 #define CAMERA_STATIC_PLANE 200
-#define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
-
-///Popup Chat Messages
-#define RUNECHAT_PLANE 250
-
-/// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 251
 
 ///Debug Atmos Overlays
 #define ATMOS_GROUP_PLANE 450
 
 ///--------------- FULLSCREEN IMAGES ------------
+
 #define FULLSCREEN_PLANE 500
-#define FULLSCREEN_RENDER_TARGET "FULLSCREEN_PLANE"
 #define FLASH_LAYER 1
 #define FULLSCREEN_LAYER 2
 #define UI_DAMAGE_LAYER 3
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
+#define FOV_EFFECTS_LAYER 10000 //Blindness effects are not layer 4, they lie to you
 
+///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
+
+///Popup Chat Messages
+#define RUNECHAT_PLANE 501
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 502
+
+//-------------------- Rendering ---------------------
+#define RENDER_PLANE_GAME 990
+#define RENDER_PLANE_NON_GAME 995
+#define RENDER_PLANE_MASTER 999
 
 //-------------------- HUD ---------------------
 //HUD layer defines
 #define HUD_PLANE 1000
-#define HUD_RENDER_TARGET "HUD_PLANE"
 #define ABOVE_HUD_PLANE 1100
-#define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_PLANE"
 
 #define RADIAL_BACKGROUND_LAYER 0
 ///1000 is an unimportant number, it's just to normalize copied layers
 #define RADIAL_CONTENT_LAYER 1000
 
+#define ADMIN_POPUP_LAYER 1
+
+
 ///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
 #define SPLASHSCREEN_PLANE 9999
-#define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_PLANE"
+
+#define LOBBY_BACKGROUND_LAYER 3
+#define LOBBY_BUTTON_LAYER 4
 
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1

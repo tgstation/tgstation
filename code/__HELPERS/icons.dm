@@ -903,16 +903,16 @@ world
 	var/icon/alpha_mask = getIconMask(src)//getFlatIcon(src) is accurate but SLOW. Not designed for running each tick. This is also a little slow since it's blending a bunch of icons together but good enough.
 	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
-	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
+	for(var/i in 1 to 5)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)
-				I.pixel_x--
 			if(2)
-				I.pixel_x++
+				I.pixel_x--
 			if(3)
-				I.pixel_y--
+				I.pixel_x++
 			if(4)
+				I.pixel_y--
+			if(5)
 				I.pixel_y++
 		add_overlay(I)//And finally add the overlay.
 
@@ -1120,7 +1120,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
-			var/name = sanitize_filename("[generate_asset_name(thing)].png")
+			var/name = SANITIZE_FILENAME("[generate_asset_name(thing)].png")
 			if (!SSassets.cache[name])
 				SSassets.transport.register_asset(name, thing)
 			for (var/thing2 in targets)
@@ -1266,5 +1266,58 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	GLOB.transformation_animation_objects -= src
 	if(filters && length(filters) >= filter_index)
 		filters -= filters[filter_index]
-	//else
-	// filters = null
+
+/**
+ * Center's an image.
+ * Requires:
+ * The Image
+ * The x dimension of the icon file used in the image
+ * The y dimension of the icon file used in the image
+ * eg: center_image(image_to_center, 32,32)
+ * eg2: center_image(image_to_center, 96,96)
+**/
+/proc/center_image(image/image_to_center, x_dimension = 0, y_dimension = 0)
+	if(!image_to_center)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return image_to_center
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
+	var/y_offset = -((y_dimension / world.icon_size) - 1) * (world.icon_size * 0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	image_to_center.pixel_x = x_offset
+	image_to_center.pixel_y = y_offset
+
+	return image_to_center
+
+///Flickers an overlay on an atom
+/proc/flick_overlay_static(overlay_image, atom/source, duration)
+	set waitfor = FALSE
+	if(!source || !overlay_image)
+		return
+	source.add_overlay(overlay_image)
+	sleep(duration)
+	source.cut_overlay(overlay_image)
+
+///Perform a shake on an atom, resets its position afterwards
+/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+	var/initialpixelx = pixel_x
+	var/initialpixely = pixel_y
+	var/shiftx = rand(-pixelshiftx,pixelshiftx)
+	var/shifty = rand(-pixelshifty,pixelshifty)
+	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
+	pixel_x = initialpixelx
+	pixel_y = initialpixely

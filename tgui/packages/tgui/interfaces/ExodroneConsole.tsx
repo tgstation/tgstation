@@ -75,35 +75,72 @@ type DroneBasicData = {
 }
 
 export type AdventureDataProvider = {
-  adventure_data?: AdventureData;
+  adventure_data: AdventureData,
 }
 
-type ExodroneConsoleData = AdventureDataProvider & {
-  signal_lost: boolean,
-  drone: boolean,
-  all_drones?: Array<DroneBasicData>
-  drone_status?: DroneStatusEnum,
-  drone_name?: string,
-  drone_integrity?: number,
-  drone_max_integrity?: number,
-  drone_travel_coefficent?: number,
-  drone_log?: Array<string>,
-  configurable?: boolean,
-  cargo?: Array<CargoData>,
-  can_travel?: boolean,
+type DroneAdventure = AdventureDataProvider & {
+  drone_status: DroneStatusEnum.Adventure,
+};
+
+type DroneData = {
+  drone_name: string,
+  drone_integrity: number,
+  drone_max_integrity: number,
+  drone_travel_coefficent: number,
+  drone_log: Array<string>,
+  configurable: boolean,
+  cargo: Array<CargoData>,
+  can_travel: boolean,
   travel_error: string,
-  sites?: Array<SiteData>,
-  site?: SiteData,
-  travel_time?: number,
-  travel_time_left?: number,
-  wait_time_left?: number,
-  wait_message?: string,
+};
+
+type DroneBusy = {
+  drone_status: DroneStatusEnum.Busy,
+  wait_time_left: number,
+  wait_message: string,
+};
+
+type DroneExploration = {
+  drone_status: DroneStatusEnum.Exploration,
+  sites: Array<SiteData>,
+  site: SiteData,
   event?: FullEventData,
-  adventure_data?: AdventureData,
+};
+
+type DroneIdle = {
+  drone_status: DroneStatusEnum.Idle,
+  sites: Array<SiteData>,
+  site: null,
+};
+
+type DroneTravel = {
+  drone_status: DroneStatusEnum.Travel,
+  travel_time: number,
+  travel_time_left: number,
+};
+
+type ActiveDrone = DroneAdventure
+  | DroneBusy
+  | DroneExploration
+  | DroneIdle
+  | DroneTravel;
+
+type ExodroneConsoleData = {
+  signal_lost: boolean;
+
   // ui_static_data
-  all_tools: Record<string, ToolData>,
-  all_bands: Record<string, string>
-}
+  all_tools: Record<string, ToolData>;
+  all_bands: Record<string, string>;
+} & (
+  | (({
+      drone: true;
+    } & DroneData) &
+      ActiveDrone)
+  | {
+      all_drones: Array<DroneBasicData>;
+      drone: undefined;
+    }
+);
 
 type ToolData = {
   description: string,
@@ -122,7 +159,7 @@ export const ExodroneConsole = (props, context) => {
   ] = useLocalState(context, 'choosingTools', false);
 
   return (
-    <Window width={650} height={500}>
+    <Window width={750} height={600}>
       {!!signal_lost && <SignalLostModal />}
       {!!choosingTools && <ToolSelectionModal />}
       <Window.Content>
@@ -170,18 +207,18 @@ const SignalLostModal = (props, context) => {
   );
 };
 
-const DroneSelectionSection = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    all_drones,
-  } = data;
+const DroneSelectionSection = (props: {
+  all_drones: Array<DroneBasicData>,
+}, context) => {
+  const { act } = useBackend<ExodroneConsoleData>(context);
+  const { all_drones } = props;
 
   return (
-    <Section scrollable fill title="Exploration Drone Listing">
+    <Section fill scrollable title="Exploration Drone Listing">
       <Stack vertical>
         {all_drones.map(drone => (
           <Fragment key={drone.ref}>
-            <Stack.Item grow>
+            <Stack.Item>
               <Stack fill>
                 <Stack.Item basis={10} fontFamily="monospace" fontSize="18px">
                   {drone.name}
@@ -197,9 +234,10 @@ const DroneSelectionSection = (props, context) => {
                     "Controlled by another console."
                   ) || (
                     <Button
-                      content="Assume Control"
                       icon="plug"
-                      onClick={() => act("select_drone", { "drone_ref": drone.ref })} />
+                      onClick={() => act("select_drone", { "drone_ref": drone.ref })}>
+                      Assume Control
+                    </Button>
                   )}
                 </Stack.Item>
               </Stack>
@@ -266,12 +304,13 @@ const ToolSelectionModal = (props, context) => {
   );
 };
 
-const EquipmentBox = (props, context) => {
+const EquipmentBox = (props: {
+  cargo: CargoData,
+  drone: DroneData,
+}, context) => {
   const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    configurable,
-    all_tools = {},
-  } = data;
+  const { all_tools = {} } = data;
+  const { configurable } = props.drone;
   const cargo = props.cargo;
   const boxContents = cargo => {
     switch (cargo.type) {
@@ -294,7 +333,7 @@ const EquipmentBox = (props, context) => {
               </Button>
             </Stack.Item>
             {!!configurable && (
-              <Stack.Item mt={-9.4} textAlign="right">
+              <Stack.Item textAlign="right">
                 <Button
                   onClick={() => act("remove_tool", { tool_type: cargo.name })}
                   color="danger"
@@ -349,12 +388,14 @@ const EquipmentBox = (props, context) => {
   );
 };
 
-const EquipmentGrid = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const EquipmentGrid = (props: {
+  drone: ActiveDrone & DroneData,
+}, context) => {
+  const { act } = useBackend<ExodroneConsoleData>(context);
   const {
     cargo,
     configurable,
-  } = data;
+  } = props.drone;
   const [
     choosingTools,
     setChoosingTools,
@@ -385,40 +426,45 @@ const EquipmentGrid = (props, context) => {
       </Stack.Item>
       <Stack.Item>
         <Section title="Cargo">
-          <Stack.Item>
-            {!!configurable && (
-              <Button
-                fluid
-                color="average"
-                icon="wrench"
-                content="Install Tool"
-                onClick={() => setChoosingTools(true)} />
-            )}
-          </Stack.Item>
-          <Stack.Item>
-            <Stack wrap="wrap" width={10}>
-              {cargo.map(cargo_element => (
-                <EquipmentBox
-                  key={cargo_element.name}
-                  cargo={cargo_element} />
-              ))}
-            </Stack>
-          </Stack.Item>
+          <Stack fill vertical>
+            <Stack.Item>
+              {!!configurable && (
+                <Button
+                  fluid
+                  color="average"
+                  icon="wrench"
+                  content="Install Tool"
+                  onClick={() => setChoosingTools(true)} />
+              )}
+            </Stack.Item>
+            <Stack.Item>
+              <Stack wrap="wrap" width={10}>
+                {cargo.map(cargo_element => (
+                  <EquipmentBox
+                    drone={props.drone}
+                    key={cargo_element.name}
+                    cargo={cargo_element} />
+                ))}
+              </Stack>
+            </Stack.Item>
+          </Stack>
         </Section>
       </Stack.Item>
     </Stack>
   );
 };
 
-const DroneStatus = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const DroneStatus = (props: {
+  drone_integrity: number,
+  drone_max_integrity: number,
+}, context) => {
   const {
     drone_integrity,
     drone_max_integrity,
-  } = data;
+  } = props;
 
   return (
-    <Stack ml={-40}>
+    <Stack ml={-45}>
       <Stack.Item color="label" mt={0.2}>
         Integrity:
       </Stack.Item>
@@ -459,18 +505,22 @@ const NoSiteDimmer = () => {
   );
 };
 
-const TravelTargetSelectionScreen = (props, context) => {
+const TravelTargetSelectionScreen = (props: {
+  drone: (DroneExploration | DroneIdle | DroneTravel) & DroneData,
+  showCancelButton?: boolean,
+}, context) => {
   // List of sites and eta travel times to each
   const { act, data } = useBackend<ExodroneConsoleData>(context);
+  const { drone } = props;
+  const { all_bands } = data;
   const {
-    sites,
-    site,
     can_travel,
     travel_error,
     drone_travel_coefficent,
-    all_bands,
-    drone_status,
-  } = data;
+  } = drone;
+
+  const site = ("site" in drone) ? drone.site : null;
+  const sites = ("sites" in drone) ? drone.sites : null;
 
   const travel_cost = target_site => {
     if (site) {
@@ -500,12 +550,12 @@ const TravelTargetSelectionScreen = (props, context) => {
       && dest.band_info[s] !== 0;
     return Object.keys(all_bands).filter(band_check);
   };
-  const valid_destinations = !!sites && sites.filter(destination => (
+  const valid_destinations = sites && sites.filter(destination => (
     !site || destination.ref !== site.ref
   ));
   return (
-    drone_status === "travel" && (
-      <TravelDimmer />
+    drone.drone_status === DroneStatusEnum.Travel && (
+      <TravelDimmer drone={drone} />
     ) || (
       <Section
         title="Travel Destinations"
@@ -521,7 +571,10 @@ const TravelTargetSelectionScreen = (props, context) => {
                 onClick={() => setTravelDimmerShown(false)} />
             )}
             <Box mt={props.showCancelButton && -3.5}>
-              <DroneStatus />
+              <DroneStatus
+                drone_integrity={drone.drone_integrity}
+                drone_max_integrity={drone.drone_max_integrity}
+              />
             </Box>
           </>
         }>
@@ -544,7 +597,7 @@ const TravelTargetSelectionScreen = (props, context) => {
             }
           />
         )}
-        {valid_destinations.map(destination => (
+        {valid_destinations?.map(destination => (
           <Section
             key={destination.ref}
             title={destination.name}
@@ -581,12 +634,10 @@ const TravelTargetSelectionScreen = (props, context) => {
   );
 };
 
-const TravelDimmer = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    travel_time,
-    travel_time_left,
-  } = data;
+const TravelDimmer = (props: {
+  drone: DroneTravel,
+}, context) => {
+  const { travel_time_left } = props.drone;
   return (
     <Section fill>
       <Dimmer>
@@ -607,12 +658,14 @@ const TravelDimmer = (props, context) => {
   );
 };
 
-const TimeoutScreen = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const TimeoutScreen = (props: {
+  drone: DroneBusy,
+}) => {
   const {
     wait_time_left,
     wait_message,
-  } = data;
+  } = props.drone;
+
   return (
     <Section fill>
       <Dimmer>
@@ -633,13 +686,12 @@ const TimeoutScreen = (props, context) => {
   );
 };
 
-const ExplorationScreen = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    site,
-    event,
-    sites,
-  } = data;
+const ExplorationScreen = (props: {
+  drone: DroneExploration & DroneData,
+}, context) => {
+  const { act } = useBackend(context);
+  const { drone } = props;
+  const { site } = drone;
 
   const [
     TravelDimmerShown,
@@ -647,14 +699,20 @@ const ExplorationScreen = (props, context) => {
   ] = useLocalState(context, 'TravelDimmerShown', false);
 
   if (TravelDimmerShown) {
-    return (<TravelTargetSelectionScreen showCancelButton />);
+    return (<TravelTargetSelectionScreen
+      drone={drone}
+      showCancelButton
+    />);
   }
   return (
     <Section
       fill
       title="Exploration"
       buttons={
-        <DroneStatus />
+        <DroneStatus
+          drone_integrity={drone.drone_integrity}
+          drone_max_integrity={drone.drone_max_integrity}
+        />
       }>
       <Stack vertical fill>
         <Stack.Item grow>
@@ -688,22 +746,23 @@ const ExplorationScreen = (props, context) => {
   );
 };
 
-const EventScreen = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    drone_status,
-    event,
-  } = data;
+const EventScreen = (props: {
+  drone: DroneData,
+  event: FullEventData,
+}, context) => {
+  const { act } = useBackend(context);
+  const { drone, event } = props;
+
   return (
     <Section
       fill
       title="Exploration"
       buttons={
-        <DroneStatus />
+        <DroneStatus
+          drone_integrity={drone.drone_integrity}
+          drone_max_integrity={drone.drone_max_integrity}
+        />
       }>
-      {(drone_status && drone_status === "busy") && (
-        <TimeoutScreen />
-      )}
       <Stack vertical fill textAlign="center">
         <Stack.Item>
           <Stack fill>
@@ -747,23 +806,28 @@ const EventScreen = (props, context) => {
   );
 };
 
-
-type AdventureScreenProps = {
-  hide_status?: boolean
-}
-
-export const AdventureScreen = (props: AdventureScreenProps, context) => {
-  const { act, data } = useBackend<AdventureDataProvider>(context);
+export const AdventureScreen = (props: {
+  adventure_data: AdventureData,
+  drone_integrity: number,
+  drone_max_integrity: number,
+  hide_status?: boolean,
+}, context) => {
+  const { act } = useBackend(context);
   const {
     adventure_data,
-  } = data;
+    drone_integrity,
+    drone_max_integrity,
+  } = props;
   const rawData = adventure_data.raw_image;
   const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
   return (
     <Section
       fill
       title="Exploration"
-      buttons={!props.hide_status && <DroneStatus />}>
+      buttons={!props.hide_status && <DroneStatus
+        drone_integrity={drone_integrity}
+        drone_max_integrity={drone_max_integrity}
+      />}>
       <Stack>
         <Stack.Item>
           <BlockQuote preserveWhitespace>
@@ -799,41 +863,41 @@ export const AdventureScreen = (props: AdventureScreenProps, context) => {
   );
 };
 
-const DroneScreen = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    drone_status,
-    event,
-  } = data;
-  switch (drone_status) {
-    case "busy":
-      return <TimeoutScreen />;
-    case "idle":
-    case "travel":
-      return <TravelTargetSelectionScreen />;
-    case "adventure":
-      return <AdventureScreen />;
-    case "exploration":
-      if (event) {
-        return <EventScreen />;
+const DroneScreen = (props: {
+  drone: ActiveDrone & DroneData,
+}) => {
+  const { drone } = props;
+
+  switch (drone.drone_status) {
+    case DroneStatusEnum.Busy:
+      return <TimeoutScreen drone={drone} />;
+    case DroneStatusEnum.Idle:
+    case DroneStatusEnum.Travel:
+      return <TravelTargetSelectionScreen drone={drone} />;
+    case DroneStatusEnum.Adventure:
+      return (<AdventureScreen
+        adventure_data={drone.adventure_data}
+        drone_integrity={drone.drone_integrity}
+        drone_max_integrity={drone.drone_max_integrity}
+      />);
+    case DroneStatusEnum.Exploration:
+      if (drone.event) {
+        return <EventScreen drone={drone} event={drone.event} />;
       }
       else {
-        return <ExplorationScreen />;
+        return <ExplorationScreen drone={drone} />;
       }
   }
 };
 
 const ExodroneConsoleContent = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
-  const {
-    drone,
-    drone_name,
-    drone_log,
-  } = data;
+  const { data } = useBackend<ExodroneConsoleData>(context);
 
-  if (!drone) {
-    return <DroneSelectionSection />;
+  if (!data.drone) {
+    return <DroneSelectionSection all_drones={data.all_drones} />;
   }
+
+  const { drone_log } = data;
 
   return (
     <Stack fill vertical>
@@ -842,10 +906,10 @@ const ExodroneConsoleContent = (props, context) => {
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item>
-                <EquipmentGrid />
+                <EquipmentGrid drone={data} />
               </Stack.Item>
               <Stack.Item grow basis={0}>
-                <DroneScreen />
+                <DroneScreen drone={data} />
               </Stack.Item>
             </Stack>
           </Stack.Item>

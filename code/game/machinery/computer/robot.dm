@@ -51,7 +51,7 @@
 			charge = R.cell ? round(R.cell.percent()) : null,
 			module = R.model ? "[R.model.name] Model" : "No Model Detected",
 			synchronization = R.connected_ai,
-			emagged =  R.emagged,
+			emagged = R.emagged,
 			ref = REF(R)
 		)
 		data["cyborgs"] += list(cyborg_data)
@@ -81,14 +81,7 @@
 			if(allowed(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
-					var/turf/T = get_turf(R)
-					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(R, R.client)] at [ADMIN_VERBOSEJMP(T)]!"))
-					log_game("[key_name(usr)] detonated [key_name(R)]!")
-					log_combat(usr, R, "detonated cyborg")
-
-					if(R.connected_ai)
-						to_chat(R.connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [R.name]")]<br>")
-					R.self_destruct()
+					R.self_destruct(usr)
 			else
 				to_chat(usr, span_danger("Access Denied."))
 		if("stopbot")
@@ -96,7 +89,7 @@
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(can_control(usr, R) && !..())
 					message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] [!R.lockcharge ? "locked down" : "released"] [ADMIN_LOOKUPFLW(R)]!"))
-					log_game("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
+					log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)]!")
 					log_combat(usr, R, "[!R.lockcharge ? "locked down" : "released"] cyborg")
 					R.SetLockdown(!R.lockcharge)
 					to_chat(R, !R.lockcharge ? span_notice("Your lockdown has been lifted!") : span_alert("You have been locked down!"))
@@ -109,7 +102,7 @@
 			if((istype(S) && S.hack_software) || isAdminGhostAI(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
 				if(istype(R) && !R.emagged && (R.connected_ai == usr || isAdminGhostAI(usr)) && !R.scrambledcodes && can_control(usr, R))
-					log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
+					log_silicon("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 					message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 					R.SetEmagged(TRUE)
 					R.logevent("WARN: root privleges granted to PID [num2hex(rand(1,65535), -1)][num2hex(rand(1,65535), -1)].") //random eight digit hex value. Two are used because rand(1,4294967295) throws an error
@@ -121,7 +114,7 @@
 				else
 					var/turf/T = get_turf(D)
 					message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)] at [ADMIN_VERBOSEJMP(T)]!")
-					log_game("[key_name(usr)] detonated [key_name(D)]!")
+					log_silicon("[key_name(usr)] detonated [key_name(D)]!")
 					var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 					s.set_up(3, TRUE, D)
 					s.start()

@@ -269,7 +269,7 @@ So then, what does superconduction do, and what do all these damn vars mean.
 
 As I mentioned above, superconduction shares heat where heat can't normally travel. It does this by heating up the turf the heat is in, not the gasmix, the turf itself. This temperature is then shared with adjacent turfs, based on `thermal_conductivity`, a value between 0 and 1 that slows the heat share. Turfs also have a `heat_capacity`, which is how hard it is to heat, along with providing a threshold for the lowest temperature that can melt the turf.
 
-There's one more, and it's a doozy. `atmos_superconductivity` is a set of directions that we cannot share with. I know. It's set in CanAtmosPass(), a rather heady set of procs that build `atmos_adjacent_turfs`, and also modify `atmos_superconductivity`.
+There's one more, and it's a doozy. `atmos_superconductivity` is a set of directions that we cannot share with. I know. It's set in can_atmos_pass(), a rather heady set of procs that build `atmos_adjacent_turfs`, and also modify `atmos_superconductivity`.
 
 So then, a review.
 

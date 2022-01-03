@@ -16,7 +16,7 @@
 	var/max_signs = 4
 
 
-/obj/structure/janitorialcart/Initialize()
+/obj/structure/janitorialcart/Initialize(mapload)
 	. = ..()
 	create_reagents(100, OPENCONTAINER)
 
@@ -115,7 +115,7 @@
 
 	if(!length(items))
 		return
-	items = sortList(items)
+	items = sort_list(items)
 	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return

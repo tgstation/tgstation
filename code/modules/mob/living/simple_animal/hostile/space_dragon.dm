@@ -59,7 +59,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, its life extinguished."
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	faction = list("carp")
@@ -90,12 +90,17 @@
 	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
+	/// Minimum devastation damage dealt coefficient based on max health
+	var/devastation_damage_min_percentage = 0.4
+	/// Maximum devastation damage dealt coefficient based on max health
+	var/devastation_damage_max_percentage = 0.75
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
 	rift = new
 	rift.Grant(src)
 
@@ -104,6 +109,10 @@
 	if(!chosen_color)
 		dragon_name()
 		color_selection()
+
+/mob/living/simple_animal/hostile/space_dragon/ex_act_devastate()
+	var/damage_coefficient = rand(devastation_damage_min_percentage, devastation_damage_max_percentage)
+	adjustBruteLoss(initial(maxHealth)*damage_coefficient)
 
 /mob/living/simple_animal/hostile/space_dragon/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
@@ -205,7 +214,7 @@
  * If the name is invalid, will re-prompt the dragon until a proper name is chosen.
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/dragon_name()
-	var/chosen_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!chosen_name)
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		dragon_name()
@@ -275,7 +284,7 @@
 		if(!check)
 			break
 		T = check
-	return (getline(src, T) - get_turf(src))
+	return (get_line(src, T) - get_turf(src))
 
 /**
  * Spawns fire at each position in a line from the source to the target.
@@ -532,7 +541,7 @@
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	max_integrity = 300
 	icon = 'icons/obj/carp_rift.dmi'
 	icon_state = "carp_rift_carpspawn"
@@ -560,7 +569,22 @@
 
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
+
+	AddComponent( \
+		/datum/component/aura_healing, \
+		range = 0, \
+		simple_heal = 5, \
+		limit_to_trait = TRAIT_HEALS_FROM_CARP_RIFTS, \
+		healing_color = COLOR_BLUE, \
+	)
+
 	START_PROCESSING(SSobj, src)
+
+// Carp rifts always take heavy explosion damage. Discourages the use of maxcaps
+// and favours more weaker explosives to destroy the portal
+// as they have the same effect on the portal.
+/obj/structure/carp_rift/ex_act(severity, target)
+	return ..(min(EXPLODE_HEAVY, severity))
 
 /obj/structure/carp_rift/examine(mob/user)
 	. = ..()
@@ -584,13 +608,6 @@
 	return ..()
 
 /obj/structure/carp_rift/process(delta_time)
-	// Heal carp on our loc.
-	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
-		if("carp" in hostilehere.faction)
-			hostilehere.adjustHealth(-5 * delta_time)
-			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
-			H.color = "#0000FF"
-
 	// If we're fully charged, just start mass spawning carp and move around.
 	if(charge_state == CHARGE_COMPLETED)
 		if(DT_PROB(1.25, delta_time))
@@ -637,11 +654,11 @@
 		charge_state = CHARGE_COMPLETED
 		var/area/A = get_area(src)
 		priority_announce("Spatial object has reached peak energy charge in [initial(A.name)], please stand-by.", "Central Command Wildlife Observations")
-		obj_integrity = INFINITY
+		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_YELLOW)
 		update_light()
-		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+		armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
@@ -682,7 +699,11 @@
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
 		return FALSE
+
 	var/mob/living/simple_animal/hostile/carp/newcarp = new /mob/living/simple_animal/hostile/carp(loc)
+	newcarp.AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
+	newcarp.AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
+
 	if(!is_listed)
 		ckey_list += user.ckey
 	newcarp.key = user.key

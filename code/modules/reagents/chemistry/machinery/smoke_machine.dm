@@ -31,7 +31,7 @@
 	opaque = FALSE
 	alpha = 100
 
-/obj/machinery/smoke_machine/Initialize()
+/obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
 	AddComponent(/datum/component/plumbing/simple_demand)

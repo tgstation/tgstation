@@ -16,19 +16,26 @@
 	/// A weak ref in case an admin removes the component to preserve the functionality.
 	var/datum/weakref/singularity_component
 
+	///Current singularity size, from 1 to 6
 	var/current_size = 1
+	///Current allowed size for the singulo
 	var/allowed_size = 1
-	var/energy = 100 //How strong are we?
-	var/dissipate = TRUE //Do we lose energy over time?
+	///How strong are we?
+	var/energy = 100
+	///Do we lose energy over time?
+	var/dissipate = TRUE
 	/// How long should it take for us to dissipate in seconds?
 	var/dissipate_delay = 20
 	/// How much energy do we lose every dissipate_delay?
 	var/dissipate_strength = 1
 	/// How long its been (in seconds) since the last dissipation
 	var/time_since_last_dissipiation = 0
-	var/event_chance = 10 //Prob for event each tick
+	///Prob for event each tick
+	var/event_chance = 10
+	///Can i move by myself?
 	var/move_self = TRUE
-	var/consumed_supermatter = FALSE //If the singularity has eaten a supermatter shard and can go to stage six
+	///If the singularity has eaten a supermatter shard and can go to stage six
+	var/consumed_supermatter = FALSE
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -40,7 +47,7 @@
 	energy = starting_energy
 
 	START_PROCESSING(SSobj, src)
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
 		/datum/component/singularity, \
@@ -51,13 +58,22 @@
 
 	expand(current_size)
 
-	for (var/obj/machinery/power/singularity_beacon/singubeacon in GLOB.machines)
-		if (singubeacon.active)
-			new_component.target = singubeacon
+	for (var/obj/machinery/power/singularity_beacon/singu_beacon in GLOB.machines)
+		if (singu_beacon.active)
+			new_component.target = singu_beacon
 			break
 
 	if (!mapload)
-		notify_ghosts("IT'S LOOSE", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, ghost_sound = 'sound/machines/warning-buzzer.ogg', header = "IT'S LOOSE", notify_volume = 75)
+		notify_ghosts(
+			"IT'S LOOSE",
+			source = src,
+			action = NOTIFY_ORBIT,
+			flashwindow = FALSE,
+			ghost_sound = 'sound/machines/warning-buzzer.ogg',
+			header = "IT'S LOOSE",
+			notify_volume = 75
+		)
+
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -86,7 +102,6 @@
 		return
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_two, jedi), 0.1 SECONDS)
 
-
 /obj/singularity/proc/carbon_tk_part_two(mob/living/carbon/jedi)
 	if(QDELETED(jedi))
 		return
@@ -102,7 +117,6 @@
 			qdel(rip_u)
 		return
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/carbon_tk_part_three, jedi), 0.1 SECONDS)
-
 
 /obj/singularity/proc/carbon_tk_part_three(mob/living/carbon/jedi)
 	if(QDELETED(jedi))
@@ -133,7 +147,7 @@
 
 /obj/singularity/process(delta_time)
 	if(current_size >= STAGE_TWO)
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(prob(event_chance))
 			event()
 	dissipate(delta_time)
 	check_energy()
@@ -150,7 +164,7 @@
 		time_since_last_dissipiation -= dissipate_delay
 
 /obj/singularity/proc/expand(force_size)
-	var/temp_allowed_size = src.allowed_size
+	var/temp_allowed_size = allowed_size
 
 	if(force_size)
 		temp_allowed_size = force_size
@@ -244,7 +258,6 @@
 	else
 		return FALSE
 
-
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
 		investigate_log("collapsed.", INVESTIGATE_SINGULO)
@@ -307,12 +320,12 @@
 	else
 		steps = step
 	var/list/turfs = list()
-	var/turf/T = src.loc
-	for(var/i = 1 to steps)
-		T = get_step(T,direction)
-	if(!isturf(T))
+	var/turf/considered_turf = loc
+	for(var/i in 1 to steps)
+		considered_turf = get_step(considered_turf,direction)
+	if(!isturf(considered_turf))
 		return FALSE
-	turfs.Add(T)
+	turfs.Add(considered_turf)
 	var/dir2 = 0
 	var/dir3 = 0
 	switch(direction)
@@ -322,40 +335,38 @@
 		if(EAST||WEST)
 			dir2 = 1
 			dir3 = 2
-	var/turf/T2 = T
+	var/turf/other_turf = considered_turf
 	for(var/j = 1 to steps-1)
-		T2 = get_step(T2,dir2)
-		if(!isturf(T2))
+		other_turf = get_step(other_turf,dir2)
+		if(!isturf(other_turf))
 			return FALSE
-		turfs.Add(T2)
+		turfs.Add(other_turf)
 	for(var/k = 1 to steps-1)
-		T = get_step(T,dir3)
-		if(!isturf(T))
+		considered_turf = get_step(considered_turf,dir3)
+		if(!isturf(considered_turf))
 			return FALSE
-		turfs.Add(T)
-	for(var/turf/T3 in turfs)
-		if(isnull(T3))
+		turfs.Add(considered_turf)
+	for(var/turf/check_turf in turfs)
+		if(isnull(check_turf))
 			continue
-		if(!can_move(T3))
+		if(!can_move(check_turf))
 			return FALSE
 	return TRUE
 
-
-/obj/singularity/proc/can_move(turf/T)
-	if(!T)
+/obj/singularity/proc/can_move(turf/considered_turf)
+	if(!considered_turf)
 		return FALSE
-	if((locate(/obj/machinery/field/containment) in T)||(locate(/obj/machinery/shieldwall) in T))
+	if((locate(/obj/machinery/field/containment) in considered_turf)||(locate(/obj/machinery/shieldwall) in considered_turf))
 		return FALSE
-	else if(locate(/obj/machinery/field/generator) in T)
-		var/obj/machinery/field/generator/G = locate(/obj/machinery/field/generator) in T
-		if(G?.active)
+	else if(locate(/obj/machinery/field/generator) in considered_turf)
+		var/obj/machinery/field/generator/check_generator = locate(/obj/machinery/field/generator) in considered_turf
+		if(check_generator?.active)
 			return FALSE
-	else if(locate(/obj/machinery/power/shieldwallgen) in T)
-		var/obj/machinery/power/shieldwallgen/S = locate(/obj/machinery/power/shieldwallgen) in T
-		if(S?.active)
+	else if(locate(/obj/machinery/power/shieldwallgen) in considered_turf)
+		var/obj/machinery/power/shieldwallgen/check_shield = locate(/obj/machinery/power/shieldwallgen) in considered_turf
+		if(check_shield?.active)
 			return FALSE
 	return TRUE
-
 
 /obj/singularity/proc/event()
 	var/numb = rand(1,4)
@@ -372,35 +383,40 @@
 			return FALSE
 	return TRUE
 
-
 /obj/singularity/proc/combust_mobs()
-	for(var/mob/living/carbon/C in urange(20, src, 1))
-		C.visible_message(span_warning("[C]'s skin bursts into flame!"), \
-						  span_userdanger("You feel an inner fire as your skin bursts into flames!"))
-		C.adjust_fire_stacks(5)
-		C.IgniteMob()
+	for(var/mob/living/carbon/burned_mob in urange(20, src, 1))
+		burned_mob.visible_message(
+			span_warning("[burned_mob]'s skin bursts into flame!"),
+			span_userdanger("You feel an inner fire as your skin bursts into flames!")
+		)
+		burned_mob.adjust_fire_stacks(5)
+		burned_mob.IgniteMob()
 	return
-
 
 /obj/singularity/proc/mezzer()
-	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(isbrain(M)) //Ignore brains
+	for(var/mob/living/carbon/stunned_mob in oviewers(8, src))
+		if(stunned_mob.stat == DEAD || stunned_mob.is_blind())
 			continue
 
-		if(M.stat == CONSCIOUS)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(istype(H.glasses, /obj/item/clothing/glasses/meson))
-					var/obj/item/clothing/glasses/meson/MS = H.glasses
-					if(MS.vision_flags == SEE_TURFS)
-						to_chat(H, span_notice("You look directly into the [src.name], good thing you had your protective eyewear on!"))
-						return
+		if(!ishuman(stunned_mob))
+			apply_stun(stunned_mob)
+			continue
 
-		M.apply_effect(60, EFFECT_STUN)
-		M.visible_message(span_danger("[M] stares blankly at the [src.name]!"), \
-						span_userdanger("You look directly into the [src.name] and feel weak."))
-	return
+		var/mob/living/carbon/human/stunned_human = stunned_mob
+		if(istype(stunned_human.glasses, /obj/item/clothing/glasses/meson))
+			var/obj/item/clothing/glasses/meson/check_meson = stunned_human.glasses
+			if(check_meson.vision_flags == SEE_TURFS)
+				to_chat(stunned_human, span_notice("You look directly into the [name], good thing you had your protective eyewear on!"))
+				continue
 
+		apply_stun(stunned_mob)
+
+/obj/singularity/proc/apply_stun(mob/living/carbon/stunned_mob)
+	stunned_mob.apply_effect(60, EFFECT_STUN)
+	stunned_mob.visible_message(
+		span_danger("[stunned_mob] stares blankly at the [name]!"),
+		span_userdanger("You look directly into the [name] and feel weak.")
+	)
 
 /obj/singularity/proc/emp_area()
 	empulse(src, 8, 10)
@@ -409,7 +425,12 @@
 	var/gain = (energy/2)
 	var/dist = max((current_size - 2),1)
 	investigate_log("has been destroyed by another singularity.", INVESTIGATE_SINGULO)
-	explosion(src, devastation_range = (dist), heavy_impact_range = (dist*2), light_impact_range = (dist*4))
+	explosion(
+		src,
+		devastation_range = dist,
+		heavy_impact_range = dist * 2,
+		light_impact_range = dist * 4
+	)
 	qdel(src)
 	return gain
 
@@ -427,4 +448,3 @@
 /obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
 	. = ..()
 	deadchat_plays(mode = DEMOCRACY_MODE)
-

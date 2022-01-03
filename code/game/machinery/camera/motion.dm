@@ -51,20 +51,16 @@
 		cancelAlarm()
 
 /obj/machinery/camera/proc/cancelAlarm()
-	if (detectTime == -1)
-		for (var/i in GLOB.silicon_mobs)
-			var/mob/living/silicon/aiPlayer = i
-			if (status)
-				aiPlayer.cancelAlarm("Motion", get_area(src), src)
+	if (detectTime == -1 && status)
+		alarm_manager.clear_alarm(ALARM_MOTION)
 	detectTime = 0
 	return TRUE
 
 /obj/machinery/camera/proc/triggerAlarm()
 	if (!detectTime)
 		return FALSE
-	for (var/mob/living/silicon/aiPlayer in GLOB.player_list)
-		if (status)
-			aiPlayer.triggerAlarm("Motion", get_area(src), list(src), src)
+	if(status)
+		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
 			visible_message(span_warning("A red light flashes on the [src]!"))
 	detectTime = -1
 	return TRUE
@@ -81,9 +77,9 @@
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
-/obj/machinery/camera/motion/thunderdome/Initialize()
+/obj/machinery/camera/motion/thunderdome/Initialize(mapload)
 	. = ..()
-	proximity_monitor.SetRange(7)
+	proximity_monitor.set_range(7)
 
 /obj/machinery/camera/motion/thunderdome/HasProximity(atom/movable/AM as mob|obj)
 	if (!isliving(AM) || get_area(AM) != get_area(src))

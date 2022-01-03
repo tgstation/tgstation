@@ -5,7 +5,7 @@
 	custom_materials = list(/datum/material/iron=1000, /datum/material/glass=500)
 	is_position_sensitive = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	var/on = FALSE
 	var/visible = FALSE
 	var/maxlength = 8
@@ -14,7 +14,7 @@
 	var/turf/listeningTo
 	var/hearing_range = 3
 
-/obj/item/assembly/infra/Initialize()
+/obj/item/assembly/infra/Initialize(mapload)
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
@@ -155,7 +155,7 @@
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
 		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	next_activate =  world.time + 30
+	next_activate = world.time + 30
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
 	if(listeningTo == newloc)

@@ -13,9 +13,9 @@
 /datum/element/volatile_gas_storage/Attach(datum/target, minimum_explosive_pressure=5000, max_explosive_pressure=100000, max_explosive_force=9)
 	. = ..()
 	if(istype(target, /obj/machinery/atmospherics/components))
-		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/AtmosComponentBreak)
+		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/AtmosComponentBreak)
 	else if(isobj(target))
-		RegisterSignal(target, COMSIG_OBJ_BREAK, .proc/ObjBreak)
+		RegisterSignal(target, COMSIG_ATOM_BREAK, .proc/ObjBreak)
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -25,7 +25,7 @@
 
 /datum/element/volatile_gas_storage/Detach(datum/source, ...)
 	. = ..()
-	UnregisterSignal(source, COMSIG_OBJ_BREAK)
+	UnregisterSignal(source, COMSIG_ATOM_BREAK)
 
 /datum/element/volatile_gas_storage/proc/Break(atom/origin, datum/gas_mixture/released_gas)
 	var/expelled_pressure = min(released_gas?.return_pressure(), max_explosive_pressure)
@@ -36,7 +36,7 @@
 	var/explosive_force = CEILING((expelled_pressure / max_explosive_pressure) * max_explosive_force , 1)
 	// This is supposed to represent only shrapnel and no fire
 	// Maybe one day we'll get something a bit better
-	explosion(get_turf(origin), light_impact_range=explosive_force, smoke=FALSE)
+	explosion(get_turf(origin), light_impact_range=explosive_force, smoke=FALSE, explosion_cause = origin)
 
 /datum/element/volatile_gas_storage/proc/AtmosComponentBreak(obj/machinery/atmospherics/components/owner)
 	SIGNAL_HANDLER

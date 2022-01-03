@@ -312,7 +312,7 @@
 	text += "Maximum reagent capacity: [scanned_plant.reagents.maximum_volume]\n"
 	var/chem_cap = 0
 	for(var/_reagent in scanned_plant.reagents.reagent_list)
-		var/datum/reagent/reagent  = _reagent
+		var/datum/reagent/reagent = _reagent
 		var/amount = reagent.volume
 		chem_cap += reagent.volume
 		reagents_text += "\n- [reagent.name]: [amount]"
@@ -417,7 +417,7 @@
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Initialize()
+/obj/item/cultivator/rake/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
@@ -457,7 +457,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
-/obj/item/hatchet/Initialize()
+/obj/item/hatchet/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 70, 100)
 
@@ -491,7 +491,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
 
-/obj/item/scythe/Initialize()
+/obj/item/scythe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 90, 105)
 
@@ -553,7 +553,6 @@
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	material_flags = MATERIAL_NO_EFFECTS
 	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
@@ -571,7 +570,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
-/obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
+/obj/item/reagent_containers/glass/bottle/nutrient/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

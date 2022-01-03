@@ -26,7 +26,7 @@
 	var/transmit_enabled = TRUE
 	var/list/dish_drive_contents
 
-/obj/machinery/dish_drive/Initialize()
+/obj/machinery/dish_drive/Initialize(mapload)
 	. = ..()
 	RefreshParts()
 
@@ -36,6 +36,7 @@
 		. += span_notice("Alt-click it to beam its contents to any nearby disposal bins.")
 
 /obj/machinery/dish_drive/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
 	if(!LAZYLEN(dish_drive_contents))
 		to_chat(user, span_warning("There's nothing in [src]!"))
 		return
@@ -64,22 +65,19 @@
 	..()
 
 /obj/machinery/dish_drive/RefreshParts()
-	idle_power_usage = initial(idle_power_usage)
-	active_power_usage = initial(active_power_usage)
-	use_power = initial(use_power)
 	var/total_rating = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		total_rating += S.rating
 	if(total_rating >= 9)
-		active_power_usage = 0
-		use_power = NO_POWER_USE
+		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
-		idle_power_usage = max(0, idle_power_usage - total_rating)
-		active_power_usage = max(0, active_power_usage - total_rating)
+		update_mode_power_usage(IDLE_POWER_USE, max(0, initial(idle_power_usage) - total_rating))
+		update_mode_power_usage(ACTIVE_POWER_USE, max(0, initial(active_power_usage) - total_rating))
 	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
 	if(board)
 		suction_enabled = board.suction
 		transmit_enabled = board.transmit
+
 
 /obj/machinery/dish_drive/process()
 	if(time_since_dishes <= world.time && transmit_enabled)

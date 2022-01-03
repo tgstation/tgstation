@@ -241,7 +241,7 @@ export const Filteriffic = (props, context) => {
   const { act, data } = useBackend(context);
   const name = data.target_name || "Unknown Object";
   const filters = data.target_filter_data || {};
-  const hasFilters = filters !== {};
+  const hasFilters = Object.keys(filters).length !== 0;
   const filterDefaults = data["filter_info"];
   const [massApplyPath, setMassApplyPath] = useLocalState(context, 'massApplyPath', '');
   const [hiddenSecret, setHiddenSecret] = useLocalState(context, 'hidden', false);

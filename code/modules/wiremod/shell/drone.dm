@@ -11,7 +11,7 @@
 	light_system = MOVABLE_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
-/mob/living/circuit_drone/Initialize()
+/mob/living/circuit_drone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bot_circuit()
@@ -44,17 +44,13 @@
 	/// Delay between each movement
 	var/move_delay = 0.2 SECONDS
 
-/obj/item/circuit_component/bot_circuit/Initialize()
-	. = ..()
+/obj/item/circuit_component/bot_circuit/populate_ports()
 	north = add_input_port("Move North", PORT_TYPE_SIGNAL)
 	east = add_input_port("Move East", PORT_TYPE_SIGNAL)
 	south = add_input_port("Move South", PORT_TYPE_SIGNAL)
 	west = add_input_port("Move West", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bot_circuit/input_received(datum/port/input/port)
-	. = ..()
-	if(.)
-		return
 
 	var/mob/living/shell = parent.shell
 	if(!istype(shell) || shell.stat)

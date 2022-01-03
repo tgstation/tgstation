@@ -147,15 +147,15 @@
 	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
 	icon_state = "too_much_co2"
 
-/atom/movable/screen/alert/not_enough_tox
+/atom/movable/screen/alert/not_enough_plas
 	name = "Choking (No Plasma)"
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
-	icon_state = "not_enough_tox"
+	icon_state = "not_enough_plas"
 
-/atom/movable/screen/alert/too_much_tox
+/atom/movable/screen/alert/too_much_plas
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "too_much_tox"
+	icon_state = "too_much_plas"
 
 /atom/movable/screen/alert/not_enough_n2o
 	name = "Choking (No N2O)"
@@ -305,35 +305,28 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
-	var/mob/living/carbon/giver
+	var/mob/living/carbon/offerer
 	var/obj/item/receiving
 
 /**
  * Handles assigning most of the variables for the alert that pops up when an item is offered
  *
  * Handles setting the name, description and icon of the alert and tracking the person giving
- * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the giver
+ * and the item being offered, also registers a signal that removes the alert from anyone who moves away from the offerer
  * Arguments:
  * * taker - The person receiving the alert
- * * giver - The person giving the alert and item
- * * receiving - The item being given by the giver
+ * * offerer - The person giving the alert and item
+ * * receiving - The item being given by the offerer
  */
-/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/receiving)
-	name = "[giver] is offering [receiving]"
-	desc = "[giver] is offering [receiving]. Click this alert to take it."
+/atom/movable/screen/alert/give/proc/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering [receiving]"
+	desc = "[offerer] is offering [receiving]. Click this alert to take it."
 	icon_state = "template"
 	cut_overlays()
 	add_overlay(receiving)
 	src.receiving = receiving
-	src.giver = giver
+	src.offerer = offerer
 	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
-
-/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
-	SIGNAL_HANDLER
-
-	if (!giver.CanReach(taker))
-		to_chat(owner, span_warning("You moved out of range of [giver]!"))
-		owner.clear_alert("[giver]")
 
 /atom/movable/screen/alert/give/Click(location, control, params)
 	. = ..()
@@ -343,31 +336,81 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!iscarbon(usr))
 		CRASH("User for [src] is of type \[[usr.type]\]. This should never happen.")
 
-	var/mob/living/carbon/C = owner
-	C.take(giver, receiving)
+	handle_transfer()
 
-/atom/movable/screen/alert/highfive
-	icon_state = "default"
-	var/mob/living/carbon/giver
-	var/obj/item/slapper/slapper_item
+/// An overrideable proc used simply to hand over the item when claimed, this is a proc so that high-fives can override them since nothing is actually transferred
+/atom/movable/screen/alert/give/proc/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	taker.take(offerer, receiving)
 
-/atom/movable/screen/alert/highfive/proc/setup(mob/living/carbon/taker, mob/living/carbon/giver, obj/item/slapper/slap)
-	name = "[giver] is offering a high-five"
-	desc = "[giver] wants a high-five! Click this alert to take it."
-	icon_state = "template"
-	cut_overlays()
-	add_overlay(slap)
-	src.slapper_item = slap
-	src.giver = giver
+/// Simply checks if the other person is still in range
+/atom/movable/screen/alert/give/proc/check_in_range(atom/taker)
+	SIGNAL_HANDLER
 
-/atom/movable/screen/alert/highfive/Click(location, control, params)
+	if(!offerer.CanReach(taker))
+		to_chat(owner, span_warning("You moved out of range of [offerer]!"))
+		owner.clear_alert("[offerer]")
+
+/atom/movable/screen/alert/give/highfive/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
 	. = ..()
-	if(!.)
+	name = "[offerer] is offering a high-five!"
+	desc = "[offerer] is offering a high-five! Click this alert to slap it."
+	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+
+/atom/movable/screen/alert/give/highfive/handle_transfer()
+	var/mob/living/carbon/taker = owner
+	if(receiving && (receiving in offerer.held_items))
+		receiving.on_offer_taken(offerer, taker)
 		return
 
-	var/datum/status_effect/high_fiving/high_five_effect = giver.has_status_effect(STATUS_EFFECT_HIGHFIVE)
-	if(high_five_effect)
-		high_five_effect.we_did_it(owner)
+	too_slow_p1()
+
+/// If the person who offered the high five no longer has it when we try to accept it, we get pranked hard
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p1()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !offerer)
+		qdel(src)
+		return
+
+	offerer.visible_message(span_notice("[rube] rushes in to high-five [offerer], but-"), span_nicegreen("[rube] falls for your trick just as planned, lunging for a high-five that no longer exists! Classic!"), ignored_mobs=rube)
+	to_chat(rube, span_nicegreen("You go in for [offerer]'s high-five, but-"))
+	addtimer(CALLBACK(src, .proc/too_slow_p2, offerer, rube), 0.5 SECONDS)
+
+/// Part two of the ultimate prank
+/atom/movable/screen/alert/give/highfive/proc/too_slow_p2()
+	var/mob/living/carbon/rube = owner
+	if(!rube || !offerer)
+		qdel(src)
+		return
+
+	offerer.visible_message(span_danger("[offerer] pulls away from [rube]'s slap at the last second, dodging the high-five entirely!"), span_nicegreen("[rube] fails to make contact with your hand, making an utter fool of [rube.p_them()]self!"), span_hear("You hear a disappointing sound of flesh not hitting flesh!"), ignored_mobs=rube)
+	var/all_caps_for_emphasis = uppertext("NO! [offerer] PULLS [offerer.p_their()] HAND AWAY FROM YOURS! YOU'RE TOO SLOW!")
+	to_chat(rube, span_userdanger("[all_caps_for_emphasis]"))
+	playsound(offerer, 'sound/weapons/thudswoosh.ogg', 100, TRUE, 1)
+	rube.Knockdown(1 SECONDS)
+	SEND_SIGNAL(offerer, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/down_low)
+	SEND_SIGNAL(rube, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/too_slow)
+	qdel(src)
+
+/// If someone examine_more's the offerer while they're trying to pull a too-slow, it'll tip them off to the offerer's trickster ways
+/atom/movable/screen/alert/give/highfive/proc/check_fake_out(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!receiving)
+		examine_list += "[span_warning("[offerer]'s arm appears tensed up, as if [offerer.p_they()] plan on pulling it back suddenly...")]\n"
+
+/atom/movable/screen/alert/give/secret_handshake
+	icon_state = "default"
+
+/atom/movable/screen/alert/give/secret_handshake/setup(mob/living/carbon/taker, mob/living/carbon/offerer, obj/item/receiving)
+	name = "[offerer] is offering a Handshake"
+	desc = "[offerer] wants to teach you the Secret Handshake for their Family and induct you! Click on this alert to accept."
+	icon_state = "template"
+	cut_overlays()
+	add_overlay(receiving)
+	src.receiving = receiving
+	src.offerer = offerer
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/check_in_range, override = TRUE) //Override to prevent runtimes when people offer a item multiple times
 
 /// Gives the player the option to succumb while in critical condition
 /atom/movable/screen/alert/succumb
@@ -381,7 +424,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	var/mob/living/living_owner = owner
-	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
 	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
 		return
 
@@ -392,10 +435,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //ALIENS
 
-/atom/movable/screen/alert/alien_tox
+/atom/movable/screen/alert/alien_plas
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
-	icon_state = "alien_tox"
+	icon_state = "alien_plas"
 	alerttooltipstyle = "alien"
 
 /atom/movable/screen/alert/alien_fire
@@ -430,7 +473,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/angle = 0
 	var/mob/living/simple_animal/hostile/construct/Cviewer = null
 
-/atom/movable/screen/alert/bloodsense/Initialize()
+/atom/movable/screen/alert/bloodsense/Initialize(mapload)
 	. = ..()
 	narnar = new('icons/hud/screen_alert.dmi', "mini_nar")
 	START_PROCESSING(SSprocessing, src)
@@ -493,7 +536,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		desc = "You are currently tracking [real_target.real_name] in [get_area_name(blood_target)]."
 	else
 		desc = "You are currently tracking [blood_target] in [get_area_name(blood_target)]."
-	var/target_angle = Get_Angle(Q, P)
+	var/target_angle = get_angle(Q, P)
 	var/target_dist = get_dist(P, Q)
 	cut_overlays()
 	switch(target_dist)
@@ -745,10 +788,10 @@ so as to remain in compliance with the most up-to-date laws."
 		return
 	var/list/alerts = mymob.alerts
 	if(!hud_shown)
-		for(var/i = 1, i <= alerts.len, i++)
+		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
 		return 1
-	for(var/i = 1, i <= alerts.len, i++)
+	for(var/i in 1 to alerts.len)
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]
 		if(alert.icon_state == "template")
 			alert.icon = ui_style

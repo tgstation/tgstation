@@ -10,9 +10,9 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE
-	flags_1 = CONDUCT_1 | RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	flags_1 = CONDUCT_1
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
 	max_integrity = 50
 	integrity_failure = 0.4
 	var/rods_type = /obj/item/stack/rods
@@ -40,7 +40,7 @@
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((obj_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
@@ -114,7 +114,7 @@
 	to_chat(user, span_notice("You move [unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"] out of the way."))
 
 	if(unanchored_items_on_tile - CLEAR_TILE_MOVE_LIMIT > 0)
-		to_chat(user, "<span class ='warning'>There's still too much stuff in the way!</span>")
+		to_chat(user, span_warning("There's still too much stuff in the way!"))
 		return FALSE
 
 	return TRUE
@@ -220,15 +220,15 @@
 					return
 				var/obj/structure/window/WD
 				if(istype(W, /obj/item/stack/sheet/plasmarglass))
-					WD = new/obj/structure/window/plasma/reinforced/fulltile(drop_location()) //reinforced plasma window
+					WD = new/obj/structure/window/reinforced/plasma/fulltile(drop_location()) //reinforced plasma window
 				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
 					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
 				else if(istype(W, /obj/item/stack/sheet/rglass))
 					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
 				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
-					WD = new/obj/structure/window/shuttle(drop_location())
+					WD = new/obj/structure/window/reinforced/shuttle(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/plasma/reinforced/plastitanium(drop_location())
+					WD = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
 				else if(istype(W, /obj/item/stack/sheet/bronze))
 					WD = new/obj/structure/window/bronze/fulltile(drop_location())
 				else
@@ -264,12 +264,12 @@
 		qdel(src)
 	..()
 
-/obj/structure/grille/obj_break()
+/obj/structure/grille/atom_break()
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		icon_state = "brokengrille"
 		set_density(FALSE)
-		obj_integrity = 20
+		atom_integrity = 20
 		broken = TRUE
 		rods_amount = 1
 		rods_broken = FALSE
@@ -280,7 +280,7 @@
 	if(broken)
 		icon_state = "grille"
 		set_density(TRUE)
-		obj_integrity = max_integrity
+		atom_integrity = max_integrity
 		broken = FALSE
 		rods_amount = 2
 		rods_broken = TRUE
@@ -324,11 +324,11 @@
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
 					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-					tesla_zap(src, 3, C.newavail() * 0.01, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
+					tesla_zap(src, 3, C.newavail() * 0.01, ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)
+/obj/structure/grille/get_dumping_location()
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement

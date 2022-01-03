@@ -26,7 +26,7 @@
 		to_chat(user, span_boldnotice("You can no longer speak like a pirate."))
 
 /obj/item/clothing/head/pirate/armored
-	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 
@@ -43,6 +43,6 @@
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/bandana/armored
-	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, RAD = 30, FIRE = 60, ACID = 75)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)
 	strip_delay = 40
 	equip_delay_other = 20
