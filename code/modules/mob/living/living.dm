@@ -1001,7 +1001,8 @@
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
 				flipped_matrix.e = -flipped_matrix.e
-				animate(src, transform = flipped_matrix, pixel_y = 4, time = 0.5 SECONDS, easing = EASE_OUT)
+				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
+				base_pixel_y += 4
 		if(WEIGHTLESS_RANGE)
 			throw_alert("gravity", /atom/movable/screen/alert/weightless)
 			if(!was_weightless)
@@ -1018,7 +1019,8 @@
 		var/matrix/flipped_matrix = transform
 		flipped_matrix.b = -flipped_matrix.b
 		flipped_matrix.e = -flipped_matrix.e
-		animate(src, transform = flipped_matrix, pixel_y = 0, time = 0.5 SECONDS, easing = EASE_OUT)
+		animate(src, transform = flipped_matrix, pixel_y = pixel_y-4, time = 0.5 SECONDS, easing = EASE_OUT)
+		base_pixel_y -= 4
 
 /mob/living/singularity_pull(S, current_size)
 	..()
