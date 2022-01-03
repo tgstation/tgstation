@@ -172,6 +172,7 @@
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/Destroy()
+	lose_hearing_sensitivity(ROUNDSTART_TRAIT)
 	owner = null
 	return ..()
 
