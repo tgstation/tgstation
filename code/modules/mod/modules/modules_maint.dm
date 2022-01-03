@@ -19,10 +19,10 @@
 	mod.activation_step_time /= 0.75
 
 /obj/item/mod/module/springlock/on_suit_activation()
-    RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
+	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
 
 /obj/item/mod/module/springlock/on_suit_deactivation()
-    UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 ///Signal fired when wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
@@ -30,7 +30,7 @@
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	playsound(mod, 'sound/items/springlock.ogg', 75, TRUE)
+	playsound(src, 'sound/items/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
 
@@ -45,7 +45,7 @@
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		return
-	mod.wearer.visible_message("[src] inside [mod.wearer]'s MODsuit snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
+	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
@@ -134,7 +134,8 @@
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
 	name = "MOD tanning module"
-	desc = "A tanning module for MODsuits!"
+	desc = "A tanning module for modular suits. Skin cancer functionality has not been ever proven, \
+		although who knows with the rumors..."
 	icon_state = "tanning"
 	module_type = MODULE_USABLE
 	complexity = 1
@@ -146,9 +147,36 @@
 	. = ..()
 	if(!.)
 		return
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, TRUE)
 	var/datum/reagents/holder = new()
 	holder.add_reagent(/datum/reagent/spraytan, 10)
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
+	if(prob(5))
+		SSradiation.irradiate(mod.wearer)
+	drain_power(use_power_cost)
+
+///Balloon Blower - Blows a balloon.
+/obj/item/mod/module/balloon
+	name = "MOD balloon blower module"
+	desc = "A strange module invented years ago by some ingenious mimes. It blows balloons."
+	icon_state = "bloon"
+	module_type = MODULE_USABLE
+	complexity = 1
+	use_power_cost = DEFAULT_CELL_DRAIN*0.5
+	incompatible_modules = list(/obj/item/mod/module/balloon)
+	cooldown_time = 15 SECONDS
+
+/obj/item/mod/module/balloon/on_use()
+	. = ..()
+	if(!.)
+		return
+	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
+		return FALSE
+	mod.wearer.adjustOxyLoss(20)
+	playsound(src, 'sound/items/inflate_bloon.ogg', 50, TRUE)
+	var/obj/item/toy/balloon/balloon = new(get_turf(src))
+	mod.wearer.put_in_hands(balloon)
+	drain_power(use_power_cost)
 
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
@@ -158,25 +186,31 @@
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/atrocinator)
+	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
+	var/step_count = 0
 
 /obj/item/mod/module/atrocinator/on_activation()
 	. = ..()
 	if(!.)
 		return
+	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
+	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation()
 	. = ..()
 	if(!.)
 		return
+	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	step_count = 0
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
+	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
@@ -186,3 +220,6 @@
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
 		current_turf.zFall(mod.wearer)
+	else if(!(step_count % 2))
+		playsound(current_turf, 'sound/items/atrocinator_step.ogg', 50)
+	step_count++

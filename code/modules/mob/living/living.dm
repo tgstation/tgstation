@@ -998,7 +998,10 @@
 		if(NEGATIVE_GRAVITY_RANGE)
 			throw_alert("gravity", /atom/movable/screen/alert/negative)
 			if(!was_negative)
-				transform = matrix(1, 0, 0, 0, -1, 0)
+				var/matrix/flipped_matrix = transform
+				flipped_matrix.b = -flipped_matrix.b
+				flipped_matrix.e = -flipped_matrix.e
+				animate(src, transform = flipped_matrix, pixel_y = 4, time = 0.5 SECONDS, easing = EASE_OUT)
 		if(WEIGHTLESS_RANGE)
 			throw_alert("gravity", /atom/movable/screen/alert/weightless)
 			if(!was_weightless)
@@ -1012,7 +1015,10 @@
 	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
-		transform = matrix()
+		var/matrix/flipped_matrix = transform
+		flipped_matrix.b = -flipped_matrix.b
+		flipped_matrix.e = -flipped_matrix.e
+		animate(src, transform = flipped_matrix, pixel_y = 0, time = 0.5 SECONDS, easing = EASE_OUT)
 
 /mob/living/singularity_pull(S, current_size)
 	..()

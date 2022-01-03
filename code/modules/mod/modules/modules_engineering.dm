@@ -48,7 +48,7 @@
 	module_type = MODULE_TOGGLE
 	complexity = 2
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
-	incompatible_modules = list(/obj/item/mod/module/magboot)
+	incompatible_modules = list(/obj/item/mod/module/magboot, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	var/slowdown_active = 0.5
 

@@ -9,6 +9,7 @@
 		/obj/item/mod/module/springlock,
 		/obj/item/mod/module/visor/rave,
 		/obj/item/mod/module/tanner,
+		/obj/item/mod/module/balloon,
 	)
 
 /obj/effect/spawner/random/mod/maint/Initialize(mapload)

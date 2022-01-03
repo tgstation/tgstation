@@ -297,7 +297,7 @@
 		return
 	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		return
+		return FALSE
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
