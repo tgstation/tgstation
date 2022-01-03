@@ -143,7 +143,7 @@
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "Aggressive spreading"
-	hue = "#1F441E"
+	hue = "#316b2f"
 	severity = 3
 	quality = NEGATIVE
 
@@ -251,7 +251,7 @@
 
 /datum/spacevine_mutation/plasma_eater
 	name = "Plasma consuming"
-	hue = "#54436B"
+	hue = "#9074b6"
 	severity = 3
 	quality = POSITIVE
 
