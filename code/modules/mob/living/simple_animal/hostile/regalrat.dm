@@ -97,7 +97,7 @@
 
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
 	if (DOING_INTERACTION(src, "regalrat"))
-		return FALSE
+		return
 	if (QDELETED(target))
 		return
 
