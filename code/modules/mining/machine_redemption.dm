@@ -284,7 +284,7 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt")
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", 1, stored_amount, 1)
 					if(isnull(desired))
 						return
 					desired = round(desired)
@@ -334,7 +334,7 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt")
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", 1, smelt_amount, 1)
 					if(isnull(desired))
 						return
 					desired = round(desired)

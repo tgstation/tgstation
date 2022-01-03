@@ -28,7 +28,7 @@
 		new /datum/data/mining_equipment("Explorer's Webbing", /obj/item/storage/belt/mining, 500),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/card/mining_point_card, 500),
 		new /datum/data/mining_equipment("Survival Medipen", /obj/item/reagent_containers/hypospray/medipen/survival, 500),
-		new /datum/data/mining_equipment("Mining Plates", /obj/item/mod/construction/armor/mining, 500),
+		new /datum/data/mining_equipment("Mining MOD Plating", /obj/item/mod/construction/armor/mining, 500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit", /obj/item/storage/firstaid/brute, 600),
 		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker, 600),
 		new /datum/data/mining_equipment("Jaunter", /obj/item/wormhole_jaunter, 750),
@@ -169,8 +169,10 @@
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator Kit", "Minebot Kit", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
-	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in sort_list(items)
-	if(!selection || !Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
+	var/selection = tgui_input_list(redeemer, "Pick your equipment", "Mining Voucher Redemption", sort_list(items))
+	if(isnull(selection))
+		return
+	if(!Adjacent(redeemer) || QDELETED(voucher) || voucher.loc != redeemer)
 		return
 	var/drop_location = drop_location()
 	switch(selection)

@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - bugfix: "Cardboard boxes and Body bags no longer claim to be welded together when examined."
