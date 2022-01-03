@@ -333,12 +333,6 @@
 	for(var/turf/open/enemy_tile as anything in share_end)
 		var/datum/gas_mixture/enemy_mix = enemy_tile.air
 		archive()
-		if(!our_air.compare(enemy_mix))
-			continue
-		if(!our_excited_group)
-			var/datum/excited_group/EG = new
-			EG.add_turf(src)
-			our_excited_group = excited_group
 		// We share 100% of our mix in this step. Let's jive
 		var/difference = our_air.share(enemy_mix, 1, 1)
 		LAST_SHARE_CHECK
