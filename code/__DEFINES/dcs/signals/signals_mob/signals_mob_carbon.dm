@@ -80,5 +80,11 @@
 #define COMSIG_HUMAN_CHECK_SHIELDS "human_check_shields"
 	#define SHIELD_BLOCK (1<<0)
 
+// Mob transformation signals
+///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
+#define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
+///Called when a monkey turns into a human, from /mob/living/carbon/proc/finish_humanize(species)
+#define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+
 ///From mob/living/carbon/human/suicide()
 #define COMSIG_HUMAN_SUICIDE "human_suicide_act"

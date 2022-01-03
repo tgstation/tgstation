@@ -1,3 +1,4 @@
+#define ASSET_CROSS_ROUND_CACHE_DIRECTORY "tmp/assets"
 
 //These datums are used to populate the asset cache, the proc "register()" does this.
 //Place any asset datums you create in asset_list_items.dm
@@ -15,6 +16,11 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	/// Whether or not this asset should be loaded in the "early assets" SS
 	var/early = FALSE
+
+	/// Whether or not this asset can be cached across rounds of the same commit under the `CACHE_ASSETS` config.
+	/// This is not a *guarantee* the asset will be cached. Not all asset subtypes respect this field, and the
+	/// config can, of course, be disabled.
+	var/cross_round_cachable = FALSE
 
 /datum/asset/New()
 	GLOB.asset_datums[type] = src
@@ -36,6 +42,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/proc/send(client)
 	return
 
+/// Returns whether or not the asset should attempt to read from cache
+/datum/asset/proc/should_refresh()
+	return !cross_round_cachable || !CONFIG_GET(flag/cache_assets)
 
 /// If you don't need anything complicated.
 /datum/asset/simple
@@ -105,10 +114,33 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
+	var/list/cached_spritesheets_needed
+	var/generating_cache = FALSE
+
+/datum/asset/spritesheet/should_refresh()
+	if (..())
+		return TRUE
+
+	// Static so that the result is the same, even when the files are created, for this run
+	var/static/should_refresh = null
+
+	if (isnull(should_refresh))
+		// `fexists` seems to always fail on static-time
+		should_refresh = !fexists("[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[name].css")
+
+	return should_refresh
 
 /datum/asset/spritesheet/register()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if (!name)
 		CRASH("spritesheet [type] cannot register without a name")
+
+	if (!should_refresh() && read_from_cache())
+		return
+
+	create_spritesheets()
+
 	ensure_stripped()
 	for(var/size_id in sizes)
 		var/size = sizes[size_id]
@@ -120,22 +152,31 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	SSassets.transport.register_asset(res_name, fcopy_rsc(fname))
 	fdel(fname)
 
-/datum/asset/spritesheet/send(client/C)
+	if (CONFIG_GET(flag/cache_assets) && cross_round_cachable)
+		write_to_cache()
+
+/datum/asset/spritesheet/send(client/client)
 	if (!name)
 		return
+
+	if (!should_refresh())
+		return send_from_cache(client)
+
 	var/all = list("spritesheet_[name].css")
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
-	. = SSassets.transport.send_assets(C, all)
+	. = SSassets.transport.send_assets(client, all)
 
 /datum/asset/spritesheet/get_url_mappings()
 	if (!name)
 		return
+
+	if (!should_refresh())
+		return get_cached_url_mappings()
+
 	. = list("spritesheet_[name].css" = SSassets.transport.get_asset_url("spritesheet_[name].css"))
 	for(var/size_id in sizes)
 		.["[name]_[size_id].png"] = SSassets.transport.get_asset_url("[name]_[size_id].png")
-
-
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -158,7 +199,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[SSassets.transport.get_asset_url("[name]_[size_id].png")]') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[get_background_url("[name]_[size_id].png")]') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]
@@ -175,6 +216,64 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		out += ".[name][size_id].[sprite_id]{background-position:-[x]px -[y]px;}"
 
 	return out.Join("\n")
+
+/datum/asset/spritesheet/proc/read_from_cache()
+	var/replaced_css = file2text("[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[name].css")
+
+	var/regex/find_background_urls = regex(@"background:url\('%(.+?)%'\)", "g")
+	while (find_background_urls.Find(replaced_css))
+		var/asset_id = find_background_urls.group[1]
+		var/asset_cache_item = SSassets.transport.register_asset(asset_id, "[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[asset_id]")
+		var/asset_url = SSassets.transport.get_asset_url(asset_cache_item = asset_cache_item)
+		replaced_css = replacetext(replaced_css, find_background_urls.match, "background:url('[asset_url]')")
+		LAZYADD(cached_spritesheets_needed, asset_id)
+
+	var/replaced_css_filename = "data/spritesheets/spritesheet_[name].css"
+	rustg_file_write(replaced_css, replaced_css_filename)
+	SSassets.transport.register_asset("spritesheet_[name].css", replaced_css_filename)
+
+	fdel(replaced_css_filename)
+
+	return TRUE
+
+/datum/asset/spritesheet/proc/send_from_cache(client/client)
+	if (isnull(cached_spritesheets_needed))
+		stack_trace("cached_spritesheets_needed was null when sending assets from [type] from cache")
+		cached_spritesheets_needed = list()
+
+	return SSassets.transport.send_assets(client, cached_spritesheets_needed + "spritesheet_[name].css")
+
+/// Returns the URL to put in the background:url of the CSS asset
+/datum/asset/spritesheet/proc/get_background_url(asset)
+	if (generating_cache)
+		return "%[asset]%"
+	else
+		return SSassets.transport.get_asset_url(asset)
+
+/datum/asset/spritesheet/proc/write_to_cache()
+	for (var/size_id in sizes)
+		fcopy(SSassets.cache["[name]_[size_id].png"].resource, "[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[name]_[size_id].png")
+
+	generating_cache = TRUE
+	var/mock_css = generate_css()
+	generating_cache = FALSE
+
+	rustg_file_write(mock_css, "[ASSET_CROSS_ROUND_CACHE_DIRECTORY]/spritesheet.[name].css")
+
+/datum/asset/spritesheet/proc/get_cached_url_mappings()
+	var/list/mappings = list()
+	mappings["spritesheet_[name].css"] = SSassets.transport.get_asset_url("spritesheet_[name].css")
+
+	for (var/asset_name in cached_spritesheets_needed)
+		mappings[asset_name] = SSassets.transport.get_asset_url(asset_name)
+
+	return mappings
+
+/// Override this in order to start the creation of the spritehseet.
+/// This is where all your Insert, InsertAll, etc calls should be inside.
+/datum/asset/spritesheet/proc/create_spritesheets()
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("create_spritesheets() not implemented for [type]!")
 
 /datum/asset/spritesheet/proc/Insert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
@@ -281,10 +380,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	_abstract = /datum/asset/spritesheet/simple
 	var/list/assets
 
-/datum/asset/spritesheet/simple/register()
+/datum/asset/spritesheet/simple/create_spritesheets()
 	for (var/key in assets)
 		Insert(key, assets[key])
-	..()
 
 //Generates assets based on iconstates of a single icon
 /datum/asset/simple/icon_states
@@ -393,3 +491,5 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/json/proc/generate()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("generate() not implemented for [type]!")
+
+#undef ASSET_CROSS_ROUND_CACHE_DIRECTORY

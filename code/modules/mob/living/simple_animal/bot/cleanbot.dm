@@ -386,6 +386,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("clean_blood")
 			blood = !blood
@@ -396,4 +397,3 @@
 		if("clean_graffiti")
 			drawn = !drawn
 	get_targets()
-	return

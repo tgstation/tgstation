@@ -613,7 +613,9 @@
 	if(!originator?.linked_mobs[living_owner])
 		CRASH("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it.")
 
-	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
+	var/message = sanitize(tgui_input_text(living_owner, "Enter your message", "Telepathy from the Manse"))
+	if(!message)
+		return
 
 	if(QDELETED(living_owner))
 		return
@@ -622,14 +624,14 @@
 		to_chat(living_owner, span_warning("The link seems to have been severed..."))
 		Remove(living_owner)
 		return
-	if(message)
-		var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
-		log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
-		to_chat(originator.linked_mobs, msg)
 
-		for(var/dead_mob in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(dead_mob, living_owner)
-			to_chat(dead_mob, "[link] [msg]")
+	var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
+	log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
+	to_chat(originator.linked_mobs, msg)
+
+	for(var/dead_mob in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(dead_mob, living_owner)
+		to_chat(dead_mob, "[link] [msg]")
 
 /obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch
 	range = 10

@@ -66,7 +66,7 @@
 			arm.force_wound_upwards(/datum/wound/blunt/moderate)
 
 /datum/mutation/human/hulk/on_life(delta_time, times_fired)
-	if(owner.health < 0)
+	if(owner.health < owner.crit_threshold)
 		on_losing(owner)
 		to_chat(owner, span_danger("You suddenly feel very weak."))
 

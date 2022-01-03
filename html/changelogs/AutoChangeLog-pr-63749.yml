@@ -1,0 +1,11 @@
+author: "Fikou, modified sprites from Onule, descriptions by Nerevar and Halcyon"
+delete-after: True
+changes: 
+  - expansion: "cosmohonk suits now start with a waddling module!"
+  - expansion: "noslip, nvg and thermal modules can now be bought from the uplink"
+  - expansion: "you can see extended descriptions of modsuit themes by examining them closely
+grammar: All MODsuits now have an extended description viewable by examining them closely"
+  - balance: "MODsuits no longer slow you down when undeployed in backpack form"
+  - balance: "tray modules cost less complexity, organ thrower is incompatible with microwave beam"
+  - balance: "nukie suits no longer start with the thermal module"
+  - qol: "the recall module automatically tries to deploy the suit, without sealing it"
