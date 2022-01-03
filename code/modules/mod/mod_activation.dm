@@ -188,7 +188,6 @@
 /// Finishes the suit's activation, starts processing
 /obj/item/mod/control/proc/finish_activation(on)
 	active = on
-	icon_state = "[skin]-control[active ? "-sealed" : ""]"
 	if(active)
 		for(var/obj/item/mod/module/module as anything in modules)
 			module.on_suit_activation()
@@ -198,7 +197,12 @@
 			module.on_suit_deactivation()
 		STOP_PROCESSING(SSobj, src)
 	update_speed()
+	update_icon_state()
 	wearer.update_inv_back()
+
+/obj/item/mod/control/update_icon_state()
+	icon_state = "[skin]-control[active ? "-sealed" : ""]"
+	return ..()
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()
