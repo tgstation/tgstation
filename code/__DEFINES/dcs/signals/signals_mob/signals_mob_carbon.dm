@@ -87,4 +87,4 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 ///From mob/living/carbon/human/suicide()
-#define COMSIG_HUMAN_SUICIDE "human_suicide_act"
+#define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"

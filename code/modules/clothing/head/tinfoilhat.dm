@@ -24,7 +24,7 @@
 		QDEL_NULL(paranoia)
 	paranoia = new()
 
-	RegisterSignal(user, COMSIG_HUMAN_SUICIDE, .proc/suicide_act)
+	RegisterSignal(user, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
 
 	user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 	to_chat(user, span_warning("As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. "))
@@ -51,7 +51,7 @@
 	if(!isliving(loc) || !paranoia)
 		return
 	var/mob/living/target = loc
-	UnregisterSignal(target, COMSIG_HUMAN_SUICIDE)
+	UnregisterSignal(target, COMSIG_HUMAN_SUICIDE_ACT)
 	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
