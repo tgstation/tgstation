@@ -53,7 +53,7 @@
 	mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
-///Rave Visor
+///Rave Visor - Gives you a rainbow visor and plays jukebox music to you,
 /obj/item/mod/module/visor/rave
 	name = "MOD rave visor module"
 	desc = "A Super Cool Awesome Visor (SCAV), intended for modular suits."
@@ -131,7 +131,7 @@
 				return
 			selection = songs[value]
 
-///Tanner
+///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
 	name = "MOD tanning module"
 	desc = "A tanning module for MODsuits!"
@@ -150,7 +150,7 @@
 	holder.add_reagent(/datum/reagent/spraytan, 10)
 	holder.trans_to(mod.wearer, 10, methods = VAPOR)
 
-///atrocinator
+///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
 	name = "MOD atrocinator module"
 	desc = "A mysterious orb that has mysterious effects when inserted in a MODsuit."
@@ -168,7 +168,7 @@
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
-	check_upstairs()
+	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation()
 	. = ..()

@@ -998,12 +998,7 @@
 		if(NEGATIVE_GRAVITY_RANGE)
 			throw_alert("gravity", /atom/movable/screen/alert/negative)
 			if(!was_negative)
-				var/matrix/flip_matrix = matrix(1, 0, 0, 0, -1, 0)
-				var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-				for(var/plane_number in game_plane_master_controller.controlled_planes)
-					var/atom/movable/screen/plane_master/plane_master = game_plane_master_controller.controlled_planes[plane_number]
-					plane_master.transform = flip_matrix
-				transform = flip_matrix
+				transform = matrix(1, 0, 0, 0, -1, 0)
 		if(WEIGHTLESS_RANGE)
 			throw_alert("gravity", /atom/movable/screen/alert/weightless)
 			if(!was_weightless)
@@ -1017,10 +1012,6 @@
 	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
-		var/atom/movable/plane_master_controller/game_plane_master_controller = hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
-		for(var/plane_number in game_plane_master_controller.controlled_planes)
-			var/atom/movable/screen/plane_master/plane_master = game_plane_master_controller.controlled_planes[plane_number]
-			plane_master.transform = matrix()
 		transform = matrix()
 
 /mob/living/singularity_pull(S, current_size)
