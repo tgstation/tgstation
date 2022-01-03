@@ -132,6 +132,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		radio.set_frequency(FREQ_MEDICAL)
 		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
 
+		remove_radio_all(radio)//so we dont keep transmitting sec and medical comms
+
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation

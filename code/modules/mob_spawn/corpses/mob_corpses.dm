@@ -56,11 +56,6 @@
 	id = /obj/item/card/id/advanced/chameleon
 	id_trim = /datum/id_trim/chameleon/operative
 
-/obj/effect/mob_spawn/human/clown/corpse
-	skin_tone = "caucasian1"
-	hairstyle = "Bald"
-	facial_hairstyle = "Shaved"
-
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"
 	skin_tone = "caucasian1" //all pirates are white because it's easier that way
