@@ -88,8 +88,11 @@
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/escape_our_torment = 0
 	while(C.stat == CONSCIOUS)
+		if(QDELETED(src))
+			return SHAME
 		if(escape_our_torment > 20)	//Stops us from infinitely stunning ourselves if we're just not taking the damage
 			return
+
 		if(prob(70))
 			C.adjustFireLoss(20)
 			playsound(C, 'sound/effects/wounds/sizzle1.ogg', 70, TRUE)
