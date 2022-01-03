@@ -353,6 +353,38 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/board/loom_tailor
+	name = "Machine Design (Loom Board)"
+	desc = "The circuit board for a loom."
+	id = "loom_tailor"
+	build_path = /obj/item/circuitboard/machine/loom
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/dye_machine
+	name = "Machine Design (Dye Machine Board)"
+	desc = "The circuit board for a Dye Machine."
+	id = "dye_machine"
+	build_path = /obj/item/circuitboard/machine/dye_machine
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/pattern_table
+	name = "Machine Design (Pattern Table Board)"
+	desc = "The circuit board for a Pattern Table."
+	id = "pattern_table"
+	build_path = /obj/item/circuitboard/machine/pattern_table
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/sewing_machine
+	name = "Machine Design (Sewing Machine Board)"
+	desc = "The circuit board for a Sewing Machine."
+	id = "sewing_machine"
+	build_path = /obj/item/circuitboard/machine/sewing_machine
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /datum/design/board/smartfridge
 	name = "Machine Design (Smartfridge Board)"
 	desc = "The circuit board for a smartfridge."

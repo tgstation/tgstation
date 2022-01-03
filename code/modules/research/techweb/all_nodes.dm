@@ -314,6 +314,22 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	required_experiments = list(/datum/experiment/dissection/human)
 
+/datum/techweb_node/tailor_barber
+	id = "tailor_barber"
+	display_name = "Tailoring and Barbering"
+	description = "Everything you need to prepare for that hot date."
+	prereq_ids = list("biotech")
+	design_ids = list(
+		"scissors",
+		"tattoo_kit",
+		"essential_oils_machine",
+		"loom_tailor",
+		"dye_machine",
+		"pattern_table",
+		"sewing_machine",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"
 	display_name = "Advanced Biotechnology"

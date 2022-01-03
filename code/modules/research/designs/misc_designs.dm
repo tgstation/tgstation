@@ -699,3 +699,23 @@
 	build_path = /obj/item/plate/oven_tray
 	category = list("initial","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/scissors
+	name = "Scissors"
+	desc = "Cut your hair with these!"
+	id = "scissors"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/scissors
+	category = list("initial","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/tattoo_kit
+	name = "Tattoo Kit"
+	desc = "Get sick tattoos with this!"
+	id = "tattoo_kit"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 500)
+	build_path = /obj/item/tattoo_kit
+	category = list("initial","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
