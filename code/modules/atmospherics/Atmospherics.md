@@ -157,6 +157,36 @@ As for react(), it is where all the behavior of the reaction is defined. The pro
 
 This is a rather large subject, we will need to cover gas flow, turf sleeping, superconduction, and much more. Strap in and enjoy the ride!
 
+### A Word On `Share()`
+
+The key logic of FEA, the core sharing system we use is that neighboring cells should average out their contents.
+So taken on a line, you'd have two sharing partners, the cells to your left and right
+
+There's an equation for this averaging which we do not use, because it means each pair of turfs needs to talk to
+each other twice. This relies on gasmixtures not changing between talks, which isn't possible because of how we yield.
+It also just adds a lot of proc overhead.
+
+So instead of a complex form of averaging, we portion up tiles. So if you have two neighbors and you have
+something they don't, you can give them access to a third. Have to keep one for ourselves mind, because otherwise
+we'll run out of gas.
+
+The math for this looks like `(totaldeltagas)/(neighborcount + 1)`
+You'll notice part of this equation, `1/(neighborcount+1)`, shows up in `process_cell()`
+
+Back in the FEA days `neighborcount` was hardcoded to 4. This means that turf A -> turf B is the same as turf B ->
+turf A, because they're each portioning up the gas in the same way.
+
+However, we can't hardcode our neighbor count, not really, makes tiles next to walls behave strangely. Plus, multiz exists.
+
+The fix for this is to use our neighbor count when moving gas from our tile to someone elses, and use the
+sharer's neighbor count when taking from it.
+
+This makes sense intuitively if you think of it like portioning up a tile.
+
+I'll repeat for the folks in the back. tile to tile sharing needs to be communitive. Otherwise we may end up trying to take more gas then we're owed from a tile's archived gas list.
+
+This is why space tiles do their sucking after all other tiles are finished by the by, if they didn't we'd have negative moles flying around.
+
 ### Active Turfs
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/FlowVisuals.png)
 
@@ -164,7 +194,7 @@ This is a rather large subject, we will need to cover gas flow, turf sleeping, s
 
 Active turfs are the backbone of how gas moves from tile to tile. While most of `process_cell()` should be easy enough to understand, I am going to go into some detail about archiving, since I think it's a common source of hiccups.
 
-* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` ought to be similar in form to addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs. This additive behavior isn't strictly the case unfortunately, but it's minor enough that we can ignore the effects.
+* *`archived_cycle`* this var stores the last cycle of the atmos loop that the turf processed on. The key point to notice here is that when processing a turf, we don't share with all its neighbors, we only talk to those who haven't processed yet. This is because the remainder of `process_cell()` and especially `share()` are like addition. We can add in any order we like, and we only need to add once. This is what archived gases are for by the way, they store the state of the relevant tile before any processing occurs.
 
 Alright then, with that out of the way, what is an active turf.
 
