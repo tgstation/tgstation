@@ -74,7 +74,7 @@
 	var/list/researched_knowledge = cultie.get_all_knowledge()
 
 	for(var/knowledge in researched_knowledge)
-		var/datum/eldritch_knowledge/edlritch_knowledge = researched_knowledge[knowledge]
+		var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
 		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
 	if(use_charge)
@@ -101,7 +101,7 @@
 
 		for(var/knowledge in researched_knowledge)
 			var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
-			eldritch_knowledge.on_mansus_grasp(C, C)
+			eldritch_knowledge.on_mansus_grasp(carbon_user, carbon_user)
 
 		carbon_user.adjustBruteLoss(10)
 		carbon_user.AdjustKnockdown(5 SECONDS)
