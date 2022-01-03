@@ -1023,8 +1023,8 @@
 	category = list("MOD Construction")
 
 /datum/design/mod_armor
-	name = "MOD armor"
-	desc = "External armor for a Modular Suit."
+	name = "MOD external plating"
+	desc = "External plating for a MODsuit."
 	id = "mod_armor_standard"
 	build_type = MECHFAB|PROTOLATHE
 	materials = list(/datum/material/iron = 6000, /datum/material/glass = 3000, /datum/material/plasma = 1000)
@@ -1039,7 +1039,7 @@
 	var/obj/item/mod/construction/armor/armor_type = build_path
 	var/datum/mod_theme/theme = GLOB.mod_themes[initial(armor_type.theme)]
 	name = "MOD [theme.name] armor"
-	desc = "External armor for a Modular Suit. [theme.desc]"
+	desc = "External plating for a MODsuit. [theme.desc]"
 
 /datum/design/mod_armor/engineering
 	id = "mod_armor_engineering"
@@ -1139,6 +1139,7 @@
 	id = "mod_welding"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/welding
+	department_type = MODULE_ENGINEERING
 
 /datum/design/module/mod_t_ray
 	name = "MOD Module: T-Ray Scanner"
@@ -1218,7 +1219,7 @@
 	id = "mod_reagent_scanner"
 	materials = list(/datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/reagent_scanner
-	department_type = MODULE_MEDICAL
+	department_type = MODULE_SCIENCE
 
 /datum/design/module/mod_gps
 	name = "MOD Module: Internal GPS"

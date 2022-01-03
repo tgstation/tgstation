@@ -159,9 +159,9 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sort_key(keys)
+		var/client/selection = tgui_input_list(user, "Select a player", "Team member", sort_key(keys))
 		//Could be freeform if you want to add disconnected i guess
-		if(!selection)
+		if(isnull(selection))
 			return
 		key = selection.ckey
 	if(!team_keys[team])
