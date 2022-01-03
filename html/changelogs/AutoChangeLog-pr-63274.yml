@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "When inserting too many sheets for the autolathe to hold, it will take what it can instead of rejecting the whole stack"
