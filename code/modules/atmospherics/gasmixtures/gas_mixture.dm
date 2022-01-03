@@ -403,12 +403,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	else if (initial(sharer.gc_share))
 		sharer.garbage_collect()
 
-	for(var/id in gases)
-		if(gases[id][MOLES] < 0)
-			testing("[type] sharing with [sharer.type] made negative moles for [id] [gases[id][MOLES]]")
-	for(var/id in sharer_gases)
-		if(sharer_gases[id][MOLES] < 0)
-			testing("[type] sharing with [sharer.type] made negative moles for [id] [sharer_gases[id][MOLES]]")
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
