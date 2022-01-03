@@ -209,9 +209,11 @@
 
 /obj/item/mod/module/noslip
 	name = "MOD anti slip module"
-	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
-		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
-		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+	desc = "These are a modified variant of standard magnetic boots, utilizing piezoelectric crystals on the soles. \
+		The two plates on the bottom of the boots automatically extend and magnetize as the user steps; \
+		a pull that's too weak to offer them the ability to affix to a hull, but just strong enough to \
+		protect against the fact that you didn't read the wet floor sign. Honk Co. has come out numerous times \
+		in protest of these modules being legal."
 	icon_state = "noslip"
 	complexity = 1
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.1

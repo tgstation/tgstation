@@ -61,9 +61,11 @@
 
 /obj/item/mod/module/waddle
 	name = "MOD waddle module"
-	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
-		electromagnetic pulses that would otherwise damage the electronic systems of the suit or devices on the wearer. \
-		However, it will take from the suit's power to do so. Luckily, your PDA already has one of these."
+	desc = "Some of the most primitive technology in use by HonkCo. This module works off an automatic intention system, \
+		utilizing its sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
+		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
+		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
+		to waddle around, bouncing to and fro with a pep in their step."
 	icon_state = "waddle"
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	removable = FALSE
