@@ -2820,18 +2820,3 @@
 	. = ..()
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
-
-// Ionized bluespace dust. Teleports you more rapidly than basic bluespace dust. Nothing personal, kid
-/datum/reagent/ionized_bluespace
-	name = "Ionized Bluespace Dust"
-	description = "Microscopic, ionized bluespace crystals. They blink in and out of spacetime."
-	reagent_state = SOLID
-	color = "#00cccc"
-	material = /datum/material/bluespace
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/ionized_bluespace/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	to_chat(M, span_warning("You feel very unstable..."))
-	M.Jitter(2)
-	addtimer(CALLBACK(M, /mob/living/proc/bluespace_shuffle), 2)
-	..()
