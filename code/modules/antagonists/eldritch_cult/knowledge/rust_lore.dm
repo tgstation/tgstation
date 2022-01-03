@@ -281,5 +281,5 @@
 
 		for(var/turf/line_turf as anything in get_line(nearby_turf, centre))
 			if(get_dist(nearby_turf, line_turf) <= 1)
-				LAZYADD(edge_turfs, line_turf)
+				LAZYADD(edge_turfs, nearby_turf)
 		CHECK_TICK
