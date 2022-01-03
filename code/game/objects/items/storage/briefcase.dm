@@ -49,7 +49,6 @@
 	for(var/obj/item/I in papers_found)
 		I.throw_at(get_ranged_target_turf(T, pick(GLOB.modulo_angle_to_dir), 2))
 	sleep(1 SECONDS)
-	user.set_suicide(FALSE)	//Just temporary, because say() whispers if you're trying to suicide for some reason
 	user.say("ARGGHH, HOW WILL I GET THIS WORK DONE NOW?!!")
 	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
