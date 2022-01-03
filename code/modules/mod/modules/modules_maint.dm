@@ -30,7 +30,7 @@
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	playsound(mod, 'sound/items/modsuits/springlock.ogg')
+	playsound(mod, 'sound/items/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
 
