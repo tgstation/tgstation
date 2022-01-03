@@ -295,7 +295,7 @@
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	if(!COOLDOWN_FINISHED(src, search_cooldown))
-		chassis.balloon_alert(living_owner, "on cooldown!")
+		chassis.balloon_alert(owner, "on cooldown!")
 		return
 	if(!isliving(owner))
 		return
