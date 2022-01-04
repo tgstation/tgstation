@@ -10,7 +10,9 @@
 	name = "spider charge"
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
 	boom_sizes = list(4, 8, 12)
+	///The mob that has planted the charge
 	var/mob/detonator = null
+	///The only area that the charge is allowed to be planted, and detonated in
 	var/detonation_area = null
 
 /obj/item/grenade/c4/ninja/Initialize(mapload)
@@ -53,6 +55,14 @@
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective.completed = TRUE
 
+/**
+ * check_loc
+ *
+ * Checks to see if the c4 is in the correct place when being planted.
+ *
+ * Arguments
+ * * mob/user - The planter of the c4
+ */
 /obj/item/grenade/c4/ninja/proc/check_loc(mob/user)
 	if(!detonation_area)
 		to_chat(user, span_notice("You can't seem to activate the charge.  It's location-locked, but you don't know where to detonate it."))
