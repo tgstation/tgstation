@@ -58,3 +58,53 @@
   - admin: Simplemobs attacking objects is now properly logged, when the mob is playercontrolled.
   Wallem:
   - qol: Stasis beds put food in stasis as well, preventing decomposition.
+2022-01-04:
+  AndrewL97:
+  - server: MS13 is the best
+  Deek-Za:
+  - imageadd: Added sprites for cargo cap when flipped
+  Fikou, modified sprites from Onule, descriptions by Nerevar and Halcyon:
+  - expansion: cosmohonk suits now start with a waddling module!
+  - expansion: noslip, nvg and thermal modules can now be bought from the uplink
+  - expansion: 'you can see extended descriptions of modsuit themes by examining them
+      closely grammar: All MODsuits now have an extended description viewable by examining
+      them closely'
+  - balance: MODsuits no longer slow you down when undeployed in backpack form
+  - balance: tray modules cost less complexity, organ thrower is incompatible with
+      microwave beam
+  - balance: nukie suits no longer start with the thermal module
+  - qol: the recall module automatically tries to deploy the suit, without sealing
+      it
+  GoldenAlpharex:
+  - bugfix: Admin deadsay will now properly be sent to admins that are on the lobby
+      screen, with their deadchat toggle turned on.
+  - code_imp: Admin deadsay shouldn't be as prone to cause small runtimes anymore.
+  JenqaDev:
+  - imageadd: Adds the trash bag of holding icon to the janicart
+  JohnFulpWillard:
+  - admin: RD server controllers now log remotely shutting off/turning on RD servers.
+  Mothblocks:
+  - balance: For servers with Blood Brothers enabled, their cost and weight are now
+      lower.
+  SuperNovaa41:
+  - bugfix: You can no longer delete your cult eyes or halo by transforming into a
+      monkey, and then into a human.
+  - bugfix: You can no longer delete your cult eyes or halo by transforming as a changeling.
+  - bugfix: Simplemobs now receive glowing eyes and a cult halo.
+  - refactor: Turns cult eyes and cult halos into elements, and improves the code
+      a touch.
+  - bugfix: Spidercharge ACTUALLY can't be used anywhere now.
+  TemporalOroboros:
+  - bugfix: Stuffing bread full of weed and such will no longer consign some of the
+      reagents to the void.
+  cacogen:
+  - qol: When inserting too many sheets for the autolathe to hold, it will take what
+      it can instead of rejecting the whole stack
+  neopythagorean:
+  - bugfix: Cardboard boxes and Body bags no longer claim to be welded together when
+      examined.
+  tastyfish:
+  - bugfix: Centcom and CTF headsets now work properly again.
+  the-orange-cow:
+  - qol: The fraxinella flower is now more willing to share its protection against
+      the insect menace.
