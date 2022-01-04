@@ -220,6 +220,7 @@
 	incompatible_modules = list(/obj/item/mod/module/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
+	overlay_state_active = "module_kinesis_on"
 	var/has_tk = FALSE
 
 /obj/item/mod/module/kinesis/on_activation()

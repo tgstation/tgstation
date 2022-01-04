@@ -174,7 +174,7 @@
 	icon_state = "insignia"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
-	overlay_state_inactive = "insignia"
+	overlay_state_inactive = "module_insignia"
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
