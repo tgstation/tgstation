@@ -191,7 +191,7 @@
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "captainsaid_off"
-	var/current_mode = 1
+	/// List of modes it can cycle through
 	var/list/modes = list(
 		"off",
 		"port",
@@ -199,6 +199,8 @@
 		"fore",
 		"aft",
 	)
+	/// Current mode of the item, changed when cycling through modes
+	var/current_mode = 1
 
 /obj/item/toy/captainsaid/examine_more(mob/user)
 	. = ..()
