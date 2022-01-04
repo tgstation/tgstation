@@ -20,7 +20,15 @@
 	detonation_area = null
 	return ..()
 
-/obj/item/grenade/c4/ninja/proc/set_area(datum/antagonist/ninja/ninja_antag)
+/**
+ * set_detonation_area
+ *
+ * Proc used to set the allowed location for charge detonation
+ *
+ * Arguments
+ * * datum/antagonist/ninja/ninja_antag - The antag datum for the owner of the c4
+ */
+/obj/item/grenade/c4/ninja/proc/set_detonation_area(datum/antagonist/ninja/ninja_antag)
 	if (!ninja_antag)
 		return
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives

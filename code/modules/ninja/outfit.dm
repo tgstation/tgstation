@@ -22,4 +22,4 @@
 			ninja_suit.energyKatana = human.belt
 	if(istype(human.l_store, l_pocket))
 		var/obj/item/grenade/c4/ninja/charge = human.l_store
-		charge.set_area(human.mind?.has_antag_datum(/datum/antagonist/ninja))
+		charge.set_detonation_area(human.mind?.has_antag_datum(/datum/antagonist/ninja))
