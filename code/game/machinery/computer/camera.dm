@@ -93,8 +93,8 @@
 /obj/machinery/computer/security/ui_status(mob/user)
 	. = ..()
 	if(!.)
-		return UI_CLOSE;
-	return ..();
+		return UI_CLOSE
+	return ..()
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()

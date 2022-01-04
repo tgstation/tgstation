@@ -85,8 +85,8 @@
 /datum/computer_file/program/secureye/ui_status(mob/user)
 	. = ..()
 	if(!.)
-		return UI_CLOSE;
-	return ..();
+		return UI_CLOSE
+	return ..()
 
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = get_header_data()
