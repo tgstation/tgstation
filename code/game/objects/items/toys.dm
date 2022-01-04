@@ -186,6 +186,8 @@
 /*
 * Captain's Aid
 */
+#define CAPTAINSAID_MODE_OFF 1
+
 /obj/item/toy/captainsaid
 	name = "\improper Captain's Aid"
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
@@ -200,7 +202,7 @@
 		"aft",
 	)
 	/// Current mode of the item, changed when cycling through modes
-	var/current_mode = 1
+	var/current_mode = CAPTAINSAID_MODE_OFF
 
 /obj/item/toy/captainsaid/examine_more(mob/user)
 	. = ..()
@@ -213,13 +215,16 @@
 		to_chat(user, span_notice("You set \the [src] to [modes[current_mode]]"))
 	else
 		to_chat(user, span_notice("You turn off \the [src] "))
-		current_mode = 1
+		current_mode = CAPTAINSAID_MODE_OFF
 	icon_state = "captainsaid_[modes[current_mode]]"
 	update_appearance(UPDATE_ICON)
+
+#undef CAPTAINSAID_MODE_OFF
 
 /obj/item/toy/captainsaid/collector
 	name = "\improper Collector's Edition Captain's Aid"
 	desc = "A copy of the first run of Captain's Aid ever released. Functionally the same as the later batches, just more expensive. For the truly aristocratic."
+
 /*
  * Fake singularity
  */
