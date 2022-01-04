@@ -59,10 +59,15 @@
 	icon_state = "rave_visor"
 	complexity = 1
 	overlay_state_inactive = "module_rave"
+	/// The client colors applied to the wearer.
 	var/datum/client_colour/rave_screen
+	/// The current element in the rainbow_order list we are on.
 	var/rave_number = 1
+	/// The track we selected to play.
 	var/datum/track/selection
+	/// A list of all the songs we can play.
 	var/list/songs = list()
+	/// A list of the colors the module can take.
 	var/static/list/rainbow_order = list(
 		"#FF6666",
 		"#FFAA66",
@@ -188,7 +193,9 @@
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
+	/// How many steps the user has taken since turning the suit on, used for footsteps.
 	var/step_count = 0
+	/// If you use the module on a planetary turf, you fly up. To the sky.
 	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()

@@ -15,9 +15,13 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
+	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
+	/// Slowdown added to the suit.
 	var/added_slowdown = -0.5
+	/// Armor values added to the suit parts.
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
+	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
@@ -83,14 +87,23 @@
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	/// Max charges of the shield.
 	var/max_charges = 3
+	/// The time it takes for the first charge to recover.
 	var/recharge_start_delay = 20 SECONDS
+	/// How much time it takes for charges to recover after they started recharging.
 	var/charge_increment_delay = 1 SECONDS
+	/// How much charge is recovered per recovery.
 	var/charge_recovery = 1
+	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
+	/// The item path to recharge this shielkd.
 	var/recharge_path = null
+	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
+	/// The icon_state of the shield.
 	var/shield_icon = "shield-red"
+	/// Charges the shield should start with.
 	var/charges
 
 /obj/item/mod/module/energy_shield/Initialize(mapload)

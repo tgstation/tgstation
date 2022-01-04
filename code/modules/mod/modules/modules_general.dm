@@ -8,9 +8,13 @@
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage)
+	/// The storage component of the module.
 	var/datum/component/storage/concrete/storage
+	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
+	/// Max combined weight of all items in the storage.
 	var/max_combined_w_class = 15
+	/// Max amount of items in the storage.
 	var/max_items = 7
 
 /obj/item/mod/module/storage/Initialize(mapload)
@@ -78,8 +82,11 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
+	/// Do we stop the wearer from gliding in space.
 	var/stabilizers = FALSE
+	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
+	/// The ion trail particles left after the jetpack.
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -166,14 +173,18 @@
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	overlay_state_inactive = "module_apparatus"
+	/// Former flags of the helmet.
 	var/former_flags = NONE
+	/// Former visor flags of the helmet.
 	var/former_visor_flags = NONE
 
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
+	if(!(former_flags & HEADCOVERSMOUTH))
+		mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
+	if(!(former_visor_flags & HEADCOVERSMOUTH))
+		mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
 
 /obj/item/mod/module/mouthhole/on_uninstall()
 	if(!(former_flags & HEADCOVERSMOUTH))
@@ -216,8 +227,11 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
+	/// Cell drain per range amount.
 	var/base_power = DEFAULT_CELL_DRAIN * 0.1
+	/// Minimum range we can set.
 	var/min_range = 2
+	/// Maximum range we can set.
 	var/max_range = 5
 
 /obj/item/mod/module/flashlight/on_activation()
@@ -282,7 +296,9 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
+	/// Path we dispense.
 	var/dispense_type = /obj/item/food/burger/plain
+	/// Time it takes for us to dispense.
 	var/dispense_time = 0 SECONDS
 
 /obj/item/mod/module/dispenser/on_use()
@@ -336,8 +352,11 @@
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
+	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
+	/// Minimum temperature we can set.
 	var/min_temp = 293.15
+	/// Maximum temperature we can set.
 	var/max_temp = 318.15
 
 /obj/item/mod/module/thermal_regulator/get_configuration()
@@ -367,6 +386,7 @@
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
+	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
 
 /obj/item/mod/module/pathfinder/Initialize(mapload)
@@ -420,7 +440,9 @@
 	name = "MOD pathfinder implant"
 	desc = "Lets you recall a MODsuit to you at any time."
 	actions_types = list(/datum/action/item_action/mod_recall)
+	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
+	/// The jet icon we apply to the MOD.
 	var/image/jet_icon
 
 /obj/item/implant/mod/Initialize(mapload)
@@ -500,7 +522,9 @@
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
+	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)
+	/// The implant we are linked to.
 	var/obj/item/implant/mod/implant
 
 /datum/action/item_action/mod_recall/New(Target)
@@ -529,6 +553,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 3
 	incompatible_modules = list(/obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
+	/// The DNA we lock with.
 	var/dna = null
 
 /obj/item/mod/module/dna_lock/on_install()

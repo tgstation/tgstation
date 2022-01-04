@@ -101,7 +101,7 @@
 	desc = "An engineer-fit suit with heat and shock resistance. Nakamura Engineering's classic."
 	extended_desc = "A classic by Nakamura Engineering, and surely their claim to fame. This model is an \
 		improvement upon the first-generation prototype models from before the Void War, boasting an array of features. \
-		The modular flexibility of the base design has been combined with an blast-dampening insulated inner layer and \
+		The modular flexibility of the base design has been combined with a blast-dampening insulated inner layer and \
 		a shock-resistant outer layer, making the suit nigh-invulnerable against even the extremes of high-voltage electricity. \
 		However, the capacity for modification remains the same as civilian-grade suits."
 	default_skin = "engineering"

@@ -29,10 +29,11 @@
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
+	/// T-ray scan range.
 	var/range = 2
 
 /obj/item/mod/module/t_ray/on_active_process(delta_time)
-	t_ray_scan(mod.wearer, 8, range)
+	t_ray_scan(mod.wearer, 0.8 SECONDS, range)
 
 ///Magnetic Stability - Gives the user a slowdown but makes them negate gravity and be immune to slips.
 /obj/item/mod/module/magboot
@@ -47,6 +48,7 @@
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/magboot, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
+	/// Slowdown added onto the suit.
 	var/slowdown_active = 0.5
 
 /obj/item/mod/module/magboot/on_activation()
@@ -102,6 +104,7 @@
 	var/obj/projectile/tether = new /obj/projectile/tether(mod.wearer.loc)
 	tether.preparePixelProjectile(target, mod.wearer)
 	tether.firer = mod.wearer
+	playsound(src, 'sound/weapons/batonextend.ogg', 25, TRUE)
 	INVOKE_ASYNC(tether, /obj/projectile.proc/fire)
 	drain_power(use_power_cost)
 
@@ -144,6 +147,7 @@
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
+	/// Radiation threat level being perceived.
 	var/perceived_threat_level
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
@@ -221,6 +225,7 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
 	overlay_state_active = "module_kinesis_on"
+	/// Whether the user had TK previously or not.
 	var/has_tk = FALSE
 
 /obj/item/mod/module/kinesis/on_activation()

@@ -13,7 +13,9 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
+	/// Whether or not the cloak turns off on bumping.
 	var/bumpoff = TRUE
+	/// The alpha applied when the cloak is on.
 	var/stealth_alpha = 50
 
 /obj/item/mod/module/stealth/on_activation()
@@ -86,6 +88,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
+	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()

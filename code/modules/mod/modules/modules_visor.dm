@@ -9,7 +9,9 @@
 	active_power_cost = DEFAULT_CELL_DRAIN*0.3
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
+	/// The HUD type given by the visor.
 	var/hud_type
+	/// The traits given by the visor.
 	var/list/visor_traits = list()
 
 /obj/item/mod/module/visor/on_activation()
