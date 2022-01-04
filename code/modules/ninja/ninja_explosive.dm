@@ -10,26 +10,23 @@
 	name = "spider charge"
 	desc = "A modified C-4 charge supplied to you by the Spider Clan.  Its explosive power has been juiced up, but only works in one specific area."
 	boom_sizes = list(4, 8, 12)
-	///The mob that has planted the charge
-	var/mob/detonator = null
+	///Weakref to the mob that has planted the charge
+	var/datum/weakref/detonator
 	///The only area that the charge is allowed to be planted, and detonated in
-	var/detonation_area = null
+	var/area/detonation_area
 
-/obj/item/grenade/c4/ninja/Initialize(mapload)
-	. = ..()
-	var/mob/living/user = loc
-	var/datum/antagonist/ninja/ninja_antag = user?.mind.has_antag_datum(/datum/antagonist/ninja)
-	if(!ninja_antag)
+/obj/item/grenade/c4/ninja/Destroy()
+	detonator = null
+	detonation_area = null
+	return ..()
+
+/obj/item/grenade/c4/ninja/proc/set_area(datum/antagonist/ninja/ninja_antag)
+	if (!ninja_antag)
 		return
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	if (!objective)
 		return
 	detonation_area = objective.detonation_location
-
-/obj/item/grenade/c4/ninja/Destroy()
-	. = ..()
-	detonator = null
-	detonation_area = null
 
 /obj/item/grenade/c4/ninja/afterattack(atom/movable/AM, mob/ninja, flag)
 	if(!IS_SPACE_NINJA(ninja))
@@ -37,13 +34,14 @@
 		return
 	if (!check_loc(ninja))
 		return
-	detonator = ninja
+	detonator = WEAKREF(ninja)
 	return ..()
 
 /obj/item/grenade/c4/ninja/detonate(mob/living/lanced_by)
-	if(!check_loc(detonator)) // if its moved, deactivate the c4
+	if(!check_loc(detonator.resolve())) // if its moved, deactivate the c4
 		var/obj/item/grenade/c4/ninja/new_c4 = new /obj/item/grenade/c4/ninja(target.loc)
 		new_c4.detonation_area = detonation_area
+		new_c4.say("Invalid location!")
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
 		return
@@ -51,7 +49,8 @@
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return
-	var/datum/antagonist/ninja/ninja_antag = detonator.mind.has_antag_datum(/datum/antagonist/ninja)
+	var/mob/ninja = detonator.resolve()
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
 	objective.completed = TRUE
 
@@ -68,9 +67,7 @@
 		to_chat(user, span_notice("You can't seem to activate the charge.  It's location-locked, but you don't know where to detonate it."))
 		return FALSE
 	if((get_area(target) != detonation_area) && (get_area(src) != detonation_area))
-		if (active)
-			say("Invalid location!") // TODO: make c4 code not be complete shit and actually set active to true
-		else
+		if (!active)
 			to_chat(user, span_notice("This isn't the location you're supposed to use this!"))
 		return FALSE
 	return TRUE

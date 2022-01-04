@@ -91,6 +91,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = bomb_target
+		active = TRUE
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")
