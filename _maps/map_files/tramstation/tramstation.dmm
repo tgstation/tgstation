@@ -12447,6 +12447,16 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"cVi" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/central)
 "cVm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33972,9 +33982,9 @@
 	},
 /area/command/heads_quarters/rd)
 "kLV" = (
-/mob/living/carbon/human/species/monkey,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/leafybush,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
 "kMb" = (
@@ -35479,6 +35489,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
+"lnj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/central)
 "lnr" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -39135,9 +39153,9 @@
 /area/service/hydroponics)
 "mGS" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/mob/living/carbon/human/species/monkey,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
 "mGV" = (
@@ -53111,6 +53129,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
+"rIc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/central)
 "rIn" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
@@ -65266,8 +65294,8 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/radio/intercom/directional/north,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "wly" = (
@@ -115956,7 +115984,7 @@ aeu
 aeu
 aeu
 aeu
-dUI
+cVi
 dUI
 iUp
 sIh
@@ -116208,12 +116236,12 @@ sAN
 adS
 cIN
 upf
-cRk
-cRk
-cRk
-cRk
-cRk
-cRk
+lnj
+lnj
+lnj
+lnj
+lnj
+rIc
 adS
 oZh
 adS
