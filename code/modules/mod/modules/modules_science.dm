@@ -161,12 +161,14 @@
 		return
 	wearer.set_output(attached_module.mod.wearer)
 
-///Anomaly Locked - Causes the module to not function without an anomaly
+///Anomaly Locked - Causes the module to not function without an anomaly.
 /obj/item/mod/module/anomaly_locked
 	name = "MOD anomaly locked module"
 	desc = "A form of a module, locked behind an anomalous core to function."
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
+	/// The core item the module runs off.
 	var/obj/item/assembly/signaler/anomaly/core
+	/// Accepted types of anomaly cores
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
 
 /obj/item/mod/module/anomaly_locked/examine(mob/user)
