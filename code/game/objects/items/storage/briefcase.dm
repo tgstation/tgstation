@@ -50,7 +50,7 @@
 		return BRUTELOSS
 
 	user.visible_message(span_suicide("[user] opens [src] and all of [user.p_their()] papers fly out!"))
-	for(var/obj/item/paper in papers_found)	//Throws the papers in a random direction
+	for(var/obj/item/paper as anything in papers_found)	//Throws the papers in a random direction
 		var/turf/turf_to_throw_at = prob(20) ? item_loc : get_ranged_target_turf(item_loc, pick(GLOB.alldirs))
 		paper.throw_at(turf_to_throw_at, 2)
 

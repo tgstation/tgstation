@@ -474,7 +474,7 @@
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
 	metabolization_amount = REAGENTS_METABOLISM
-	//What the player hears from the bubblegum hallucination, and also says one of these when suiciding
+	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
 	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
 
 /obj/item/food/bubblegum/bubblegum/process()
