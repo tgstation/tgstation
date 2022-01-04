@@ -32,7 +32,9 @@
 	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
-	var/max_crates = 5
+	/// The max amount of crates you can carry.
+	var/max_crates = 3
+	/// The crates stored in the module.
 	var/list/stored_crates = list()
 
 /obj/item/mod/module/clamp/on_select_use(atom/target)
@@ -135,6 +137,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
+	/// The ores stored in the bag.
 	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()
