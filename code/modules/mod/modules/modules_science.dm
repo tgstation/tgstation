@@ -168,8 +168,17 @@
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
 	/// The core item the module runs off.
 	var/obj/item/assembly/signaler/anomaly/core
-	/// Accepted types of anomaly cores
+	/// Accepted types of anomaly cores.
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
+	/// If this one starts with a core in.
+	var/prebuilt = FALSE
+
+/obj/item/mod/module/anomaly_locked/Initialize(mapload)
+	. = ..()
+	if(!prebuilt || !length(accepted_anomalies))
+		return
+	var/core_path = pick(accepted_anomalies)
+	core = new core_path(src)
 
 /obj/item/mod/module/anomaly_locked/examine(mob/user)
 	. = ..()
@@ -194,6 +203,16 @@
 		balloon_alert(mod.wearer, "no core!")
 		return
 	return ..()
+
+/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+	. = ..()
+	if(!core)
+		return FALSE
+
+/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+	if(!core)
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
 	if(item.type in accepted_anomalies)
@@ -254,6 +273,9 @@
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
+/obj/item/mod/module/anomaly_locked/antigrav/prebuilt
+	prebuilt = TRUE
+
 #define TELEPORT_TIME 3 SECONDS
 
 ///Teleporter - Lets the user teleport to a nearby location.
@@ -288,3 +310,6 @@
 	drain_power(use_power_cost)
 
 #undef TELEPORT_TIME
+
+/obj/item/mod/module/anomaly_locked/teleporter/prebuilt
+	prebuilt = TRUE
