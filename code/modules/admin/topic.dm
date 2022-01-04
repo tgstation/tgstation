@@ -743,13 +743,15 @@
 	else if(href_list["adminplayerobservecoodjump"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
+		if(!isnewplayer(usr))
+			return
 
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
 		var/z = text2num(href_list["Z"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr) && !isnewplayer(usr))
+		if(!isobserver(usr))
 			C.admin_ghost()
 		sleep(2)
 		C.jumptocoord(x,y,z)
