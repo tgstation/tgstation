@@ -76,7 +76,7 @@
 
 /datum/spacevine_mutation/light
 	name = "Light"
-	hue = "#FFEAC9"
+	hue = "#B2EA70"
 	quality = POSITIVE
 	severity = 4
 
@@ -345,9 +345,9 @@
 		. += "This vine has no mutations."
 		return
 	var/text = "This vine has the following mutations:\n"
-	for(var/datum/spacevine_mutation/mutation in mutations)
+	for(var/datum/spacevine_mutation/mutation as anything in mutations)
 		if(mutation.name == "transparent") /// Transparent has no hue
-			text += "<font color='#F7F7E8'>Transparent</font> "
+			text += "<font color='#346751'>Transparent</font> "
 		else
 			text += "<font color='[mutation.hue]'>[mutation.name]</font> "
 	. += text
