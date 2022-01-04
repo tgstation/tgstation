@@ -218,7 +218,7 @@
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
-	. += extended_desc
+	. += "<i>[extended_desc]</i>"
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
