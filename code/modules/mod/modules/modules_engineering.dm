@@ -164,6 +164,7 @@
 	. = ..()
 	.["userradiated"] = mod.wearer ? HAS_TRAIT(mod.wearer, TRAIT_IRRADIATED) : 0
 	.["usertoxins"] = mod.wearer ? mod.wearer.getToxLoss() : 0
+	.["usermaxtoxins"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
 	.["threatlevel"] = perceived_threat_level
 
 /obj/item/mod/module/rad_protection/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)

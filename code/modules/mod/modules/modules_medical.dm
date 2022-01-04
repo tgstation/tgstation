@@ -25,6 +25,7 @@
 /obj/item/mod/module/health_analyzer/add_ui_data()
 	. = ..()
 	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
+	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
 	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
 	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
 	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0

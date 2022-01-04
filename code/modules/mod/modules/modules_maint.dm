@@ -188,6 +188,7 @@
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot)
 	cooldown_time = 0.5 SECONDS
 	var/step_count = 0
+	var/you_fucked_up = FALSE
 
 /obj/item/mod/module/atrocinator/on_activation()
 	. = ..()
@@ -201,6 +202,9 @@
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation()
+	if(you_fucked_up)
+		to_chat(mod.wearer, span_danger("It's too late."))
+		return FALSE
 	. = ..()
 	if(!.)
 		return
@@ -217,10 +221,26 @@
 /obj/item/mod/module/atrocinator/proc/check_upstairs()
 	SIGNAL_HANDLER
 
-	var/turf/current_turf = get_turf(mod.wearer)
+	if(you_fucked_up || mod.wearer.has_gravity() != NEGATIVE_GRAVITY)
+		return
+	var/turf/open/current_turf = get_turf(mod.wearer)
 	var/turf/open/openspace/turf_above = get_step_multiz(mod.wearer, UP)
 	if(current_turf && istype(turf_above))
 		current_turf.zFall(mod.wearer)
+	else if(istype(current_turf) && current_turf.planetary_atmos)
+		INVOKE_ASYNC(src, .proc/fly_away)
 	else if(!(step_count % 2))
 		playsound(current_turf, 'sound/items/atrocinator_step.ogg', 50)
 	step_count++
+
+#define FLY_TIME 5 SECONDS
+
+/obj/item/mod/module/atrocinator/proc/fly_away()
+	you_fucked_up = TRUE
+	playsound(src, 'sound/effects/whirthunk.ogg', 75)
+	to_chat(mod.wearer, span_userdanger("That was stupid."))
+	mod.wearer.Stun(FLY_TIME, ignore_canstun = TRUE)
+	animate(mod.wearer, FLY_TIME, pixel_y = 256, alpha = 0)
+	QDEL_IN(mod.wearer, FLY_TIME)
+
+#undef FLY_TIME
