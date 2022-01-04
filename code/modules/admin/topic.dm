@@ -749,7 +749,7 @@
 		var/z = text2num(href_list["Z"])
 
 		var/client/C = usr.client
-		if(!isobserver(usr))
+		if(!isobserver(usr) && !isnewplayer(usr))
 			C.admin_ghost()
 		sleep(2)
 		C.jumptocoord(x,y,z)
