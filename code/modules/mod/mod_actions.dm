@@ -97,7 +97,7 @@
 	var/mob/pinner
 
 /datum/action/item_action/mod/pinned_module/New(Target, obj/item/mod/module/linked_module, mob/user)
-	if(user == mod.ai)
+	if(user == mod?.ai)
 		ai_action = TRUE
 	..()
 	module = linked_module
