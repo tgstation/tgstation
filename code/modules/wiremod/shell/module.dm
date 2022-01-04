@@ -74,16 +74,16 @@
 
 	/// The name of the module to select
 	var/datum/port/input/module_to_select
-	
+
 	/// The signal to toggle the suit
 	var/datum/port/input/toggle_suit
-	
+
 	/// The signal to select a module
 	var/datum/port/input/select_module
 
 	/// A reference to the wearer of the MODsuit
 	var/datum/port/output/wearer
-	
+
 	/// The name of the last selected module
 	var/datum/port/output/selected_module
 
@@ -106,6 +106,8 @@
 	attached_module = null
 
 /obj/item/circuit_component/mod_adapter_core/input_received(datum/port/input/port)
+	if(!attached_module?.mod)
+		return
 	var/obj/item/mod/module/module
 	for(var/obj/item/mod/module/potential_module as anything in attached_module.mod.modules)
 		if(potential_module.name == module_to_select.value)
