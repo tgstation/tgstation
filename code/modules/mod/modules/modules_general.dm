@@ -637,8 +637,8 @@
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
 
-//Special module for the Captain's Magnate suit, and the CC Corporate suit.
-//Literally only a thing so that https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real
+//Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
+///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
 	desc = "A simple set of deployable stands, directly atop one's head; these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet.\
@@ -647,11 +647,11 @@
 	icon_state = "hat_holder"
 	module_type = MODULE_PASSIVE //The description says it auto-deploys for certain hats; that's just an excuse to have a whitelist of items.
 	complexity = 0 //Its FREE!
-	removable = FALSE
+	removable = FALSE //Inbuilt into the Captain's Magnate suit, and the CC Corporate suit.
 	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
 	///Whitelist of attachable hats; read note in Initialize() below this line
-	var/attachable_hats_list
+	var/list/attachable_hats_list
 
 /obj/item/mod/module/hat_stabilizer/Initialize()
 	. = ..()
@@ -695,7 +695,7 @@
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, usr)
 
-/obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, user, base_examine)
+/obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
 	if(attached_hat)
 		base_examine += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
@@ -715,14 +715,14 @@
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
-	balloon_alert(user, "hat attached, right click to remove")
-	attached_hat = hitting_item
 	/* REMOVE COMMENT IF UNNEEDED: OPTIONAL OFFSETS FOR JANKY SPRITES
 	if(!(is_type_in_list(attached_hat, list(/obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/powdered_wig, /obj/item/clothing/head/weddingveil, /obj/item/clothing/head/nursehat, /obj/item/clothing/head/chefhat))))	//For hats that DONT have clipping issues, such as the reindeer hardhat and powdered wig
 		attached_hat.worn_y_offset += 1 //The modsuit helmet sprites are a bit chonky, this prevents clipping; it also needs to be done here, so it can be UNdone in attack_hand_secondary
 	*/
-	hitting_item.forceMove(src)
-	mod.update_overlays()
+	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
+		attached_hat = hitting_item
+		balloon_alert(user, "hat attached, right click to remove")
+	mod.wearer.update_inv_back()
 
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
@@ -740,4 +740,4 @@
 	user.put_in_active_hand(attached_hat)
 	balloon_alert(user, "hat removed")
 	attached_hat = null
-	mod.update_overlays()
+	mod.wearer.update_inv_back()
