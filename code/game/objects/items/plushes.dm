@@ -615,7 +615,7 @@
 		return ..()
 	if(splat)
 		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return	
+		return
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
@@ -696,3 +696,23 @@
 	attack_verb_continuous = list("slashes", "bites", "charges")
 	attack_verb_simple = list("slash", "bite", "charge")
 	squeak_override = list('sound/items/intents/Help.ogg' = 1)
+
+/obj/item/toy/plush/fumo
+	name = "fumo plushie"
+	desc = "Holy fucking shit, it's a fumo!"
+	icon_state = "plushie_fumo"
+	inhand_icon_state = "fumo"
+	attack_verb_continuous = list("boom", "thud", "wham")
+	attack_verb_simple = list("booms", "thuds", "whams")
+	squeak_override = list('sound/weapons/boom.ogg' = 1)
+	var/speen = FALSE
+
+/obj/item/toy/plush/fumo/attack_self(mob/user)
+	. = ..()
+	if(!speen)
+		icon_state = "plushie_fumo_spin"
+		speen = TRUE
+	else
+		icon_state = "plushie_fumo"
+		speen = FALSE
+
