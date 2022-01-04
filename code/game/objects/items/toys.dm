@@ -192,7 +192,13 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "captainsaid_off"
 	var/current_mode = 1
-	var/list/modes= list("off", "port", "starboard", "fore", "aft")
+	var/list/modes = list(
+		"off",
+		"port",
+		"starboard",
+		"fore",
+		"aft",
+	)
 
 /obj/item/toy/captainsaid/examine_more(mob/user)
 	. = ..()
