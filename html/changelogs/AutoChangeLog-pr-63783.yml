@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Papers pinned to airlocks will now visibly show if it has anything written on it."
