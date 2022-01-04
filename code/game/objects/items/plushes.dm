@@ -715,4 +715,3 @@
 	else
 		icon_state = "plushie_fumo"
 		speen = FALSE
-
