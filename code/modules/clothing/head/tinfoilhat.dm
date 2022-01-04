@@ -74,7 +74,7 @@
 
 /obj/item/clothing/head/foilhat/proc/call_suicide(datum/source)
 	SIGNAL_HANDLER
-	suicide_act(source)
+	return suicide_act(source)
 
 /obj/item/clothing/head/foilhat/suicide_act(mob/living/user)
 	INVOKE_ASYNC(src, /obj/item/clothing/head/foilhat/proc/suicide_user, user)	//SIGNAL_HANDLER doesn't like to wait, so i decided to move it to a proc in INVOKE_ASYNC
