@@ -91,7 +91,8 @@
 		ui.open()
 
 /obj/machinery/computer/security/ui_status(mob/user)
-	if(!issilicon(user) && get_dist(user, src) > 3)
+	. = ..()
+	if(!.)
 		return UI_CLOSE;
 	return ..();
 
