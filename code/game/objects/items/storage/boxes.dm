@@ -850,7 +850,7 @@
 	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
 	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
 	user.loc = consumed
-	consumed.desc = "It's [user.real_name]! It looks [user.p_they()] they committed suicide!"
+	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
 	return OXYLOSS
 
 //////
