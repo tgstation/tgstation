@@ -2457,6 +2457,17 @@
 		cardpacktype = pick(subtypesof(/obj/item/cardpack))
 		new cardpacktype(C)
 
+/datum/supply_pack/costumes_toys/fumo
+	name = "Fumo Crate"
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/toy/plush/fumo,
+					/obj/item/toy/plush/fumo,
+					/obj/item/toy/plush/fumo,
+					/obj/item/toy/plush/fumo)
+	crate_name = "fumo crate"
+	desc = "A limited edition Fumo-brand variety (terms and conditions apply) pack, containing 4 fumo plushies!"
+	crate_type = /obj/structure/closet/crate/wooden
+
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
