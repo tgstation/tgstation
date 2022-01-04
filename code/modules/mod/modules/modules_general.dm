@@ -715,14 +715,10 @@
 	if(attached_hat)
 		balloon_alert(user, "hat already attached!")
 		return
-	/* REMOVE COMMENT IF UNNEEDED: OPTIONAL OFFSETS FOR JANKY SPRITES
-	if(!(is_type_in_list(attached_hat, list(/obj/item/clothing/head/hardhat/reindeer, /obj/item/clothing/head/powdered_wig, /obj/item/clothing/head/weddingveil, /obj/item/clothing/head/nursehat, /obj/item/clothing/head/chefhat))))	//For hats that DONT have clipping issues, such as the reindeer hardhat and powdered wig
-		attached_hat.worn_y_offset += 1 //The modsuit helmet sprites are a bit chonky, this prevents clipping; it also needs to be done here, so it can be UNdone in attack_hand_secondary
-	*/
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
 		balloon_alert(user, "hat attached, right click to remove")
-	mod.wearer.update_inv_back()
+		mod.wearer.update_inv_back()
 
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
@@ -734,9 +730,6 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
 		return
-	/* REMOVE COMMENT IF UNNEEDED: OPTIONAL OFFSETS FOR JANKY SPRITES
-	attached_hat.worn_y_offset = initial(attached_hat.worn_y_offset)
-	*/
 	user.put_in_active_hand(attached_hat)
 	balloon_alert(user, "hat removed")
 	attached_hat = null
