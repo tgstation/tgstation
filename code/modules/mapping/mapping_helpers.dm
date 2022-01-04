@@ -579,13 +579,40 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ztrait_injector
 	name = "ztrait injector"
 	icon_state = "ztrait"
+	late = TRUE
 	/// List of traits to add to this Z-level.
 	var/list/traits_to_add = list()
 
-/obj/effect/mapping_helpers/ztrait_injector/Initialize()
-	. = ..()
+/obj/effect/mapping_helpers/ztrait_injector/LateInitialize()
 	var/datum/space_level/level = SSmapping.z_list[z]
 	if(!level || !length(traits_to_add))
 		return
 	level.traits |= traits_to_add
 	SSweather.update_z_level(level) //in case of someone adding a weather for the level, we want SSweather to update for that
+
+/obj/effect/mapping_helpers/circuit_spawner
+	name = "circuit spawner"
+	icon_state = "circuit"
+	/// The shell for the circuit.
+	var/atom/movable/circuit_shell
+	/// The json data for the circuit in text form.
+	var/json_data
+
+/obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
+	. = ..()
+	var/list/errors = list()
+	var/obj/item/integrated_circuit/loaded/new_circuit = new(loc)
+	new_circuit.load_circuit_data(json_data, errors)
+	if(!circuit_shell)
+		return
+	circuit_shell = new(loc)
+	var/datum/component/shell/shell_component = circuit_shell.GetComponent(/datum/component/shell)
+	if(shell_component)
+	 	shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
+		shell_component.attach_circuit(new_circuit)
+	else
+		shell_component = circuit_shell.AddComponent(/datum/component/shell, \
+			capacity = shell_capacity, \
+			shell_flags = SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
+			starting_circuit = new_circuit, \
+			)
