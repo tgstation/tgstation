@@ -3901,7 +3901,6 @@
 #include "code\modules\tgui\tgui_window.dm"
 #include "code\modules\tgui\states\admin.dm"
 #include "code\modules\tgui\states\always.dm"
-#include "code\modules\tgui\states\cameras.dm"
 #include "code\modules\tgui\states\conscious.dm"
 #include "code\modules\tgui\states\contained.dm"
 #include "code\modules\tgui\states\debug.dm"

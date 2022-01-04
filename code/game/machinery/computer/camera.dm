@@ -90,8 +90,10 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
-/obj/machinery/computer/security/ui_state(mob/user)
-	return GLOB.camera_state
+/obj/machinery/computer/security/ui_status(mob/user)
+	if(!issilicon(user) && get_dist(user, src) > 3)
+		return UI_CLOSE;
+	return ..();
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
