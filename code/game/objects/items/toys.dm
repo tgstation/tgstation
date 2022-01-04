@@ -189,8 +189,8 @@
 /obj/item/toy/captainsaid
 	name = "\improper Captain's Aid"
 	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
-	icon = 'icons/obj/captainsaid.dmi'
-	icon_state = "off"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "captainsaid_off"
 	var/current_mode = 1
 	var/list/modes= list("off", "port", "starboard", "fore", "aft")
 
@@ -206,7 +206,7 @@
 	else
 		to_chat(user, span_notice("You turn off \the [src] "))
 		current_mode = 1
-	icon_state = modes[current_mode]
+	icon_state = "captainsaid_[modes[current_mode]]"
 	update_appearance(UPDATE_ICON)
 /obj/item/toy/captainsaid/collector
 	name = "\improper Collector's Edition Captain's Aid"
