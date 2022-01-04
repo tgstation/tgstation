@@ -170,3 +170,11 @@
 #define SECBOT_CHECK_RECORDS (1<<3)
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
+
+//MedBOT defines
+///Whether to declare if someone (we are healing) is in critical condition
+#define MEDBOT_DECLARE_CRIT (1<<0)
+///If the bot will stand still, only healing those next to it.
+#define MEDBOT_STATIONARY_MODE (1<<1)
+///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
+#define MEDBOT_SPEAK_MODE (1<<2)

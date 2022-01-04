@@ -1,8 +1,8 @@
 /datum/job/chief_medical_officer
-	title = "Chief Medical Officer"
+	title = JOB_CHIEF_MEDICAL_OFFICER
 	description = "Coordinate doctors and other medbay employees, ensure they \
 		know how to save lives, check for injuries on the crew monitor."
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = FACTION_STATION
@@ -79,10 +79,12 @@
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-/datum/outfit/job/cmo/hardsuit
-	name = "Chief Medical Officer (Hardsuit)"
+/datum/outfit/job/cmo/mod
+	name = "Chief Medical Officer (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/rescue
+	suit = null
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic
+	internals_slot = ITEM_SLOT_SUITSTORE

@@ -32,7 +32,9 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sort_list(extract.activate_reagents, /proc/cmp_typepaths_asc)
+	var/reagentselect = tgui_input_list(user, "Reagent the extract will produce.", "Self-sustaining Reaction", sort_list(extract.activate_reagents, /proc/cmp_typepaths_asc))
+	if(isnull(reagentselect))
+		return
 	var/amount = 5
 	var/secondary
 

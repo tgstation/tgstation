@@ -15,8 +15,8 @@
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
 		names += "[prof.name]"
 
-	var/chosen_name = input("Select the target DNA: ", "Target DNA", null) as null|anything in sort_list(names)
-	if(!chosen_name)
+	var/chosen_name = tgui_input_list(user, "Target DNA", "Transformation", sort_list(names))
+	if(isnull(chosen_name))
 		return
 
 	var/datum/changelingprofile/chosen_prof = changeling.get_dna(chosen_name)

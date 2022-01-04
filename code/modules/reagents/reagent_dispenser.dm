@@ -52,7 +52,7 @@
 
 /obj/structure/reagent_dispensers/proc/boom()
 	visible_message(span_danger("\The [src] ruptures!"))
-	chem_splash(loc, 5, list(reagents))
+	chem_splash(loc, null, 5, list(reagents))
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)

@@ -5,6 +5,7 @@
 	savefile_identifier = PREFERENCE_PLAYER
 
 /datum/preference/toggle/ambient_occlusion/apply_to_client(client/client, value)
+	/// Backdrop for the game world plane.
 	var/atom/movable/screen/plane_master/game_world/plane_master = locate() in client?.screen
 	if (!plane_master)
 		return

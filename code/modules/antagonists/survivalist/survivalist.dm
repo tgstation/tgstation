@@ -1,5 +1,5 @@
 /datum/antagonist/survivalist
-	name = "Survivalist"
+	name = "\improper Survivalist"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR MYSELF!!"
@@ -16,7 +16,8 @@
 	. = ..()
 
 /datum/antagonist/survivalist/greet()
-	to_chat(owner, "<B>You are the survivalist![greet_message]</B>")
+	. = ..()
+	to_chat(owner, "<B>[greet_message]</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/survivalist/guns
@@ -33,7 +34,7 @@
 	greet_message = "Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way."
 
 /datum/antagonist/survivalist/magic/greet()
-	..()
+	. = ..()
 	to_chat(owner, span_notice("As a wonderful magician, you should remember that spellbooks don't mean anything if they are used up."))
 
 /datum/antagonist/survivalist/magic/forge_objectives()

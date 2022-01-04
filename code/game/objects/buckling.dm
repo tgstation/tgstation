@@ -18,8 +18,10 @@
 	if(.)
 		return
 	if(can_buckle && has_buckled_mobs())
-		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
+		if(length(buckled_mobs) > 1)
+			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			if(isnull(unbuckled))
+				return
 			if(user_unbuckle_mob(unbuckled,user))
 				return TRUE
 		else
@@ -44,8 +46,10 @@
 	if(.)
 		return
 	if(Adjacent(user) && can_buckle && has_buckled_mobs())
-		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
+		if(length(buckled_mobs) > 1)
+			var/mob/living/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+			if(isnull(unbuckled))
+				return
 			return user_unbuckle_mob(unbuckled,user)
 		else
 			return user_unbuckle_mob(buckled_mobs[1], user)
@@ -71,7 +75,7 @@
 /atom/movable/proc/has_buckled_mobs()
 	if(!buckled_mobs)
 		return FALSE
-	if(buckled_mobs.len)
+	if(length(buckled_mobs))
 		return TRUE
 
 /**
@@ -216,6 +220,11 @@
 
 	// Check if the target to buckle isn't INSIDE OF A WALL
 	if(!isopenturf(loc) || !isopenturf(target.loc))
+		return FALSE
+
+	// Check if the target to buckle isn't A SOLID OBJECT (not including vehicles)
+	var/turf/ground = get_turf(src)
+	if(ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
 		return FALSE
 
 	// Check if this atom can have things buckled to it.

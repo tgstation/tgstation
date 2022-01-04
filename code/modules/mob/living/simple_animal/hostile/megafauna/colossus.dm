@@ -1,3 +1,5 @@
+#define COLOSSUS_ENRAGED (health < maxHealth/3)
+
 /**
  * COLOSSUS
  *
@@ -51,80 +53,83 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
 	deathsound = 'sound/magic/demon_dies.ogg'
-	attack_action_types = list(/datum/action/innate/megafauna_attack/spiral_attack,
-							   /datum/action/innate/megafauna_attack/aoe_attack,
-							   /datum/action/innate/megafauna_attack/shotgun,
-							   /datum/action/innate/megafauna_attack/alternating_cardinals)
 	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
+	/// Spiral shots ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/spiral_shots
+	/// Random shots ablity
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe/random_shots
+	/// Shotgun blast ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/shotgun_blast
+	/// Directional shots ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating/dir_shots
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT) //we don't want this guy to float, messes up his animations.
+	spiral_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots()
+	random_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/random_aoe()
+	shotgun_blast = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast()
+	dir_shots = new /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/alternating()
+	spiral_shots.Grant(src)
+	random_shots.Grant(src)
+	shotgun_blast.Grant(src)
+	dir_shots.Grant(src)
+	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
 
-/datum/action/innate/megafauna_attack/spiral_attack
-	name = "Spiral Shots"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "sniper_zoom"
-	chosen_message = "<span class='colossus'>You are now firing in a spiral.</span>"
-	chosen_attack_num = 1
-
-/datum/action/innate/megafauna_attack/aoe_attack
-	name = "All Directions"
-	icon_icon = 'icons/effects/effects.dmi'
-	button_icon_state = "at_shield2"
-	chosen_message = "<span class='colossus'>You are now firing in all directions.</span>"
-	chosen_attack_num = 2
-
-/datum/action/innate/megafauna_attack/shotgun
-	name = "Shotgun Fire"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
-	button_icon_state = "shotgun"
-	chosen_message = "<span class='colossus'>You are now firing shotgun shots where you aim.</span>"
-	chosen_attack_num = 3
-
-/datum/action/innate/megafauna_attack/alternating_cardinals
-	name = "Alternating Shots"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
-	button_icon_state = "pistol"
-	chosen_message = "<span class='colossus'>You are now firing in alternating cardinal directions.</span>"
-	chosen_attack_num = 4
+/mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
+	QDEL_NULL(spiral_shots)
+	QDEL_NULL(random_shots)
+	QDEL_NULL(shotgun_blast)
+	QDEL_NULL(dir_shots)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/OpenFire()
 	anger_modifier = clamp(((maxHealth - health)/50),0,20)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 12 SECONDS))
 
 	if(client)
-		switch(chosen_attack)
-			if(1)
-				select_spiral_attack()
-			if(2)
-				random_shots()
-			if(3)
-				blast()
-			if(4)
-				alternating_dir_shots()
 		return
 
 	if(enrage(target))
 		if(move_to_delay == initial(move_to_delay))
 			visible_message(span_colossus("\"<b>You can't dodge.</b>\""))
-		update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
+		ranged_cooldown = world.time + 30
 		telegraph()
-		dir_shots(GLOB.alldirs)
+		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
 		move_to_delay = 3
 		return
 	else
 		move_to_delay = initial(move_to_delay)
 
 	if(prob(20+anger_modifier)) //Major attack
-		select_spiral_attack()
+		spiral_shots.Trigger(target)
 	else if(prob(20))
-		random_shots()
+		random_shots.Trigger(target)
 	else
 		if(prob(70))
-			blast()
+			shotgun_blast.Trigger(target)
 		else
-			alternating_dir_shots()
+			dir_shots.Trigger(target)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
+	for(var/mob/M in range(10,src))
+		if(M.client)
+			flash_color(M.client, "#C80000", 1)
+			shake_camera(M, 4, 3)
+	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
+	SIGNAL_HANDLER
+	if(activated == spiral_shots)
+		spiral_shots.enraged = COLOSSUS_ENRAGED
+		telegraph()
+		icon_state = "eva_attack"
+		visible_message(COLOSSUS_ENRAGED ? span_colossus("\"<b>Die.</b>\"") : span_colossus("\"<b>Judgement.</b>\""))
+
+/mob/living/simple_animal/hostile/megafauna/colossus/proc/finished_attack(mob/living/owner, datum/action/cooldown/finished)
+	SIGNAL_HANDLER
+	if(finished == spiral_shots)
+		icon_state = initial(icon_state)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
@@ -134,95 +139,6 @@
 				. = TRUE
 		if (is_species(H, /datum/species/golem/sand))
 			. = TRUE
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 4 SECONDS))
-	dir_shots(GLOB.diagonals)
-	SLEEP_CHECK_DEATH(10)
-	dir_shots(GLOB.cardinals)
-	SLEEP_CHECK_DEATH(10)
-	dir_shots(GLOB.diagonals)
-	SLEEP_CHECK_DEATH(10)
-	dir_shots(GLOB.cardinals)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/select_spiral_attack()
-	telegraph()
-	icon_state = "eva_attack"
-	if(health < maxHealth/3)
-		return double_spiral()
-	visible_message(span_colossus("\"<b>Judgement.</b>\""))
-	return spiral_shoot()
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
-	visible_message(span_colossus("\"<b>Die.</b>\""))
-
-	SLEEP_CHECK_DEATH(10)
-	INVOKE_ASYNC(src, .proc/spiral_shoot, FALSE)
-	INVOKE_ASYNC(src, .proc/spiral_shoot, TRUE)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/spiral_shoot(negative = pick(TRUE, FALSE), counter_start = 8)
-	var/turf/start_turf = get_step(src, pick(GLOB.alldirs))
-	var/counter = counter_start
-	for(var/i in 1 to 80)
-		if(negative)
-			counter--
-		else
-			counter++
-		if(counter > 16)
-			counter = 1
-		if(counter < 1)
-			counter = 16
-		shoot_projectile(start_turf, counter * 22.5)
-		playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
-		SLEEP_CHECK_DEATH(1)
-	icon_state = initial(icon_state)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/shoot_projectile(turf/marker, set_angle)
-	if(!isnum(set_angle) && (!marker || marker == loc))
-		return
-	var/turf/startloc = get_turf(src)
-	var/obj/projectile/P = new /obj/projectile/colossus(startloc)
-	P.preparePixelProjectile(marker, startloc)
-	P.firer = src
-	if(target)
-		P.original = target
-	P.fire(set_angle)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/random_shots()
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 3 SECONDS))
-	var/turf/U = get_turf(src)
-	playsound(U, 'sound/magic/clockwork/invoke_general.ogg', 300, TRUE, 5)
-	for(var/T in RANGE_TURFS(12, U) - U)
-		if(prob(5))
-			shoot_projectile(T)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/blast(set_angle)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
-	var/turf/target_turf = get_turf(target)
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
-	newtonian_move(get_dir(target_turf, src))
-	var/angle_to_target = get_angle(src, target_turf)
-	if(isnum(set_angle))
-		angle_to_target = set_angle
-	var/static/list/colossus_shotgun_shot_angles = list(12.5, 7.5, 2.5, -2.5, -7.5, -12.5)
-	for(var/i in colossus_shotgun_shot_angles)
-		shoot_projectile(target_turf, angle_to_target + i)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/dir_shots(list/dirs)
-	if(!islist(dirs))
-		dirs = GLOB.alldirs.Copy()
-	playsound(src, 'sound/magic/clockwork/invoke_general.ogg', 200, TRUE, 2)
-	for(var/d in dirs)
-		var/turf/E = get_step(src, d)
-		shoot_projectile(E)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
-	for(var/mob/M in range(10,src))
-		if(M.client)
-			flash_color(M.client, "#C80000", 1)
-			shake_camera(M, 4, 3)
-	playsound(src, 'sound/magic/clockwork/narsie_attack.ogg', 200, TRUE)
-
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message(span_colossus("[src] disintegrates [L]!"))
@@ -263,6 +179,7 @@
 	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
+	plane = GAME_PLANE
 	var/explode_hit_objects = TRUE
 
 /obj/projectile/colossus/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
