@@ -3,6 +3,7 @@
 /obj/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
+	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
 	damage = 70
 	paralyze = 100
 	dismemberment = 50
