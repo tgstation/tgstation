@@ -221,6 +221,7 @@
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list(
 		"circuit_multitool",
+		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_binary_convert",
 		"comp_clock",
@@ -236,6 +237,9 @@
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
+		"comp_id_access_reader",
+		"comp_id_getter",
+		"comp_id_info_reader",
 		"comp_index",
 		"comp_index_assoc",
 		"comp_index_table",

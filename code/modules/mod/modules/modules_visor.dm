@@ -1,7 +1,6 @@
 //Visor modules for MODsuits
 
-//Base Visor
-
+///Base Visor - Adds a specific HUD and traits to you.
 /obj/item/mod/module/visor
 	name = "MOD visor module"
 	desc = "A heads-up display installed into the visor of the suit. They say these also let you see behind you."
@@ -10,7 +9,9 @@
 	active_power_cost = DEFAULT_CELL_DRAIN*0.3
 	incompatible_modules = list(/obj/item/mod/module/visor)
 	cooldown_time = 0.5 SECONDS
+	/// The HUD type given by the visor.
 	var/hud_type
+	/// The traits given by the visor.
 	var/list/visor_traits = list()
 
 /obj/item/mod/module/visor/on_activation()
@@ -36,7 +37,6 @@
 	mod.wearer.update_sight()
 
 //Medical Visor
-
 /obj/item/mod/module/visor/medhud
 	name = "MOD medical visor module"
 	desc = "A heads-up display installed into the visor of the suit. This cross-references suit sensor data with a modern \
@@ -47,7 +47,6 @@
 	visor_traits = list(TRAIT_MEDICAL_HUD)
 
 //Diagnostic Visor
-
 /obj/item/mod/module/visor/diaghud
 	name = "MOD diagnostic visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a series of advanced sensors to access data \
@@ -58,7 +57,6 @@
 	visor_traits = list(TRAIT_DIAGNOSTIC_HUD)
 
 //Security Visor
-
 /obj/item/mod/module/visor/sechud
 	name = "MOD security visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is a heavily-retrofitted targeting system, \
@@ -69,7 +67,6 @@
 	visor_traits = list(TRAIT_SECURITY_HUD)
 
 //Meson Visor
-
 /obj/item/mod/module/visor/meson
 	name = "MOD meson visor module"
 	desc = "A heads-up display installed into the visor of the suit. This module is based off well-loved meson scanner \
@@ -79,7 +76,6 @@
 	visor_traits = list(TRAIT_MESON_VISION, TRAIT_SUPERMATTER_MADNESS_IMMUNE)
 
 //Thermal Visor
-
 /obj/item/mod/module/visor/thermal
 	name = "MOD thermal visor module"
 	desc = "A heads-up display installed into the visor of the suit. This uses a small IR scanner to detect and identify \
@@ -89,7 +85,6 @@
 	visor_traits = list(TRAIT_THERMAL_VISION)
 
 //Night Visor
-
 /obj/item/mod/module/visor/night
 	name = "MOD night visor module"
 	desc = "A heads-up display installed into the visor of the suit. Typical for both civilian and military applications, \

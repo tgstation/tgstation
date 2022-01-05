@@ -1,5 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Admin deadsay will now properly be sent to admins that are on the lobby screen, with their deadchat toggle turned on."
-  - code_imp: "Admin deadsay shouldn't be as prone to cause small runtimes anymore."

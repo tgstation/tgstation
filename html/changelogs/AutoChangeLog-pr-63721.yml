@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - admin: "RD server controllers now log remotely shutting off/turning on RD servers."

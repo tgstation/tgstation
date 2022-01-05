@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Changeling abilities unusable in lesser form are unusuable as a monkey again."
+  - bugfix: "Changelings can no longer unintentionally take DNA from monkeys."
+  - bugfix: "Changeling lesser form now toggles between \"lesser form\" and \"human form\" when used."
