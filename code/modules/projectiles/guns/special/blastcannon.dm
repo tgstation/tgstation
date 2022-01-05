@@ -1,5 +1,3 @@
-/// How much to scale the ranges of the explosion for blastcannon shots.
-#define BLASTCANNON_RANGE_SCALE (1/10)
 /// How much to scale the explosion ranges for blastcannon shots.
 #define BLASTCANNON_RANGE_EXP (1 / GLOB.DYN_EX_SCALE)
 
@@ -152,9 +150,9 @@
 	SIGNAL_HANDLER
 	. = COMSIG_CANCEL_EXPLOSION
 
-	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
-	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
-	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
+	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP)
+	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP)
+	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP)
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
 		visible_message(span_warning("[src] lets out a little \"phut\"."))
@@ -345,5 +343,4 @@
 /obj/projectile/blastwave/ex_act()
 	return FALSE
 
-#undef BLASTCANNON_RANGE_SCALE
 #undef BLASTCANNON_RANGE_EXP
