@@ -7,8 +7,10 @@
 	density = TRUE
 	anchored = TRUE
 	var/active = FALSE
-	var/turf/target // this will be where the output objects are 'thrown' to.
-	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
+	/// this will be where the output objects are 'thrown' to.
+	var/turf/target
+	/// the attached pipe trunk
+	var/obj/structure/disposalpipe/trunk/trunk
 	var/obj/structure/disposalconstruct/stored
 	var/start_eject = 0
 	var/eject_range = 2
@@ -28,7 +30,7 @@
 
 	var/turf/turf_loc = get_turf(src)
 
-	trunk = locate() in turf_loc?.nullspaced_contents
+	trunk = locate() in (turf_loc?.nullspaced_contents | turf_loc.contents)
 	if(trunk)
 		trunk.linked = src // link the pipe trunk to self
 

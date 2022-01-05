@@ -11,14 +11,20 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
 
-	var/datum/gas_mixture/air_contents // internal reservoir
+	/// internal reservoir
+	var/datum/gas_mixture/air_contents
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
-	var/flush = 0 // true if flush handle is pulled
-	var/obj/structure/disposalpipe/trunk/trunk = null // the attached pipe trunk
-	var/flushing = 0 // true if flushing in progress
-	var/flush_every_ticks = 30 //Every 30 ticks it will look whether it is ready to flush
-	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	/// true if flush handle is pulled
+	var/flush = 0
+	/// the attached pipe trunk
+	var/obj/structure/disposalpipe/trunk/trunk = null
+	/// true if flushing in progress
+	var/flushing = 0
+	///Every 30 ticks it will look whether it is ready to flush
+	var/flush_every_ticks = 30
+	///this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
+	var/flush_count = 0
 	var/last_sound = 0
 	var/obj/structure/disposalconstruct/stored
 	// create a new disposal
