@@ -7,29 +7,94 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OFFLINE
 	var/wait = 0
 	var/piping_layer = PIPING_LAYER_DEFAULT
+	///color of pipe
+	var/paint_color = "green"
+	///type of dispenser
+	var/category = 0
+	///smart pipe directions
+	var/p_init_dir = ALL_CARDINALS
 
 /obj/machinery/pipedispenser/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/machinery/pipedispenser/ui_interact(mob/user)
-	. = ..()
-	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
+/obj/machinery/pipedispenser/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/pipes),
+	)
 
-	var/recipes = GLOB.atmos_pipe_recipes
+/obj/machinery/pipedispenser/ui_static_data(mob/user)
+	var/list/data = list("paint_colors" = GLOB.pipe_paint_colors)
+	return data
 
-	for(var/category in recipes)
-		var/list/cat_recipes = recipes[category]
-		dat += "<b>[category]:</b><ul>"
+/obj/machinery/pipedispenser/ui_data()
+	var/list/data = list(
+		"category" = category,
+		"piping_layer" = piping_layer,
+		"categories" = list(),
+		"selected_color" = paint_color,
+	)
 
-		for(var/i in cat_recipes)
-			var/datum/pipe_info/I = i
-			dat += I.Render(src)
+	// The get the recipies for this dispenser
+	var/list/recipes
+	switch(category)
+		if(0) // TODO: Remove magic number
+			recipes = GLOB.atmos_pipe_recipes
+	// Generate pipe categories
+	for(var/c in recipes)
+		var/list/cat = recipes[c]
+		var/list/r = list()
+		for(var/i in 1 to cat.len)
+			var/datum/pipe_info/info = cat[i]
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "all_layers" = info.all_layers))
+		data["categories"] += list(list("cat_name" = c, "recipes" = r))
+	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
+	for(var/direction in GLOB.cardinals)
+		if(p_init_dir & direction)
+			init_directions[dir2text(direction)] = TRUE
+	data["init_directions"] = init_directions
+	return data
 
-		dat += "</ul>"
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	onclose(user, "pipedispenser")
-	return
+/obj/machinery/pipedispenser/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("color")
+			paint_color = params["paint_color"]
+		if("pipe_type")
+			say("Making [params["pipe_type"]]")
+			if(wait < world.time)
+				var/p_type = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].id
+				if (!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
+					say("Type [p_type] not found!")
+					return
+				//var/p_dir = text2num(href_list["dir"])
+				var/p_dir = NORTH
+				var/obj/item/pipe/P = new (loc, p_type, p_dir)
+				P.p_init_dir = p_init_dir
+				P.pipe_color = GLOB.pipe_paint_colors[paint_color]
+				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+				P.set_piping_layer(piping_layer)
+				P.add_fingerprint(usr)
+				wait = world.time + 10
+		if("piping_layer")
+			piping_layer = text2num(params["piping_layer"])
+		if("init_dir_setting")
+			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
+			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
+			if (ISNOTSTUB(target_dir))
+				p_init_dir = target_dir
+			else
+				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+		if("init_reset")
+			p_init_dir = ALL_CARDINALS
+	return TRUE
+
+/obj/machinery/pipedispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PipeDispenser")
+		ui.open()
 
 /obj/machinery/pipedispenser/Topic(href, href_list)
 	if(..())
