@@ -225,7 +225,7 @@
 	assignment = "Detective"
 	trim_state = "trim_detective"
 	extra_access = list()
-	minimal_access = list(ACCESS_COURT, ACCESS_FORENSICS_LOCKERS, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM, ACCESS_SERVICE)
+	minimal_access = list(ACCESS_COURT, ACCESS_FORENSICS_LOCKERS, ACCESS_SEC_DOORS, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_MINERAL_STOREROOM, ACCESS_WEAPONS, ACCESS_SERVICE)
 	config_job = "detective"
 	template_access = list(ACCESS_CAPTAIN, ACCESS_HOP, ACCESS_CHANGE_IDS)
 	job = /datum/job/detective
