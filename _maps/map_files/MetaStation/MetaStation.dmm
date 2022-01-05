@@ -60448,6 +60448,10 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/service/janitor)
+"thJ" = (
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark,
+/area/security/office)
 "thR" = (
 /obj/machinery/food_cart,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -105053,7 +105057,7 @@ jLR
 mVh
 lyV
 nnS
-cpe
+thJ
 cpe
 cVD
 eCu
