@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an incorrect calculation in the crystallizer preventing most crystallizer recipes from ever producing high quality products."
