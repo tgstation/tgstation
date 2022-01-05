@@ -322,7 +322,7 @@
 		var/atom/location = loc
 		if(location.density || !isturf(location))
 			decrement += location.explosion_block
-		for(var/atom/movable/thing as anything in location)
+		for(var/obj/thing in location)
 			if (thing == src)
 				continue
 			var/the_block = thing.explosion_block
