@@ -249,7 +249,7 @@
 	update_icon_state()
 
 /obj/item/mod/module/anomaly_locked/update_icon_state()
-	icon_state = "[initial(icon_state) + core ? "-core" : ""]"
+	icon_state = initial(icon_state) + (core ? "-core" : "")
 	return ..()
 
 ///Anti-Gravity - Makes the user weightless.
