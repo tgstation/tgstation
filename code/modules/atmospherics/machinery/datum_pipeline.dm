@@ -265,6 +265,5 @@
 
 	if(total_gas_mixture.volume > 0)
 		//Update individual gas_mixtures by volume ratio
-		for(var/mixture in gas_mixture_list)
-			var/datum/gas_mixture/gas_mixture = mixture
+		for(var/datum/gas_mixture/gas_mixture as anything in gas_mixture_list)
 			gas_mixture.copy_from(total_gas_mixture, gas_mixture.volume / total_gas_mixture.volume)

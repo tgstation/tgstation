@@ -69,10 +69,9 @@
  * Returns TRUE if there are mobs buckled to this atom and FALSE otherwise
  */
 /atom/movable/proc/has_buckled_mobs()
-	if(!buckled_mobs)
-		return FALSE
-	if(buckled_mobs.len)
+	if(length(buckled_mobs))
 		return TRUE
+	return FALSE
 
 /**
  * Set a mob as buckled to src

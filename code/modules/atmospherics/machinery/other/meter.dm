@@ -15,7 +15,7 @@
 	///To connect to the ntnet
 	var/frequency = 0
 	///The pipe we are attaching to
-	var/atom/target
+	var/obj/machinery/atmospherics/pipe/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
 
@@ -44,7 +44,9 @@
 /obj/machinery/meter/Initialize(mapload, new_piping_layer)
 	if(!isnull(new_piping_layer))
 		target_layer = new_piping_layer
+
 	SSair.start_processing_machine(src)
+
 	if(!target)
 		reattach_to_layer()
 	return ..()
@@ -62,11 +64,14 @@
 	target_layer = new_layer
 	PIPING_LAYER_DOUBLE_SHIFT(src, target_layer)
 
-/obj/machinery/meter/process_atmos()
-	if(machine_stat & (BROKEN|NOPOWER))
+/obj/machinery/meter/on_set_is_operational(old_value)
+	if(is_operational)
+		SSair.start_processing_machine(src)//dont set icon_state here because it will be reset on next process() if it ever happens
+	else
 		icon_state = "meter"
-		return FALSE
+		SSair.stop_processing_machine(src)
 
+/obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target.return_air()
 	if(!pipe_air)
 		icon_state = "meter0"
@@ -88,25 +93,31 @@
 		icon_state = "meter4"
 
 	var/env_temperature = pipe_air.temperature
+
+	var/new_greyscale = greyscale_colors
+
 	if(env_pressure == 0 || env_temperature == 0)
-		greyscale_colors = COLOR_GRAY
+		new_greyscale = COLOR_GRAY
 	else
 		switch(env_temperature)
 			if(BODYTEMP_HEAT_WARNING_3 to INFINITY)
-				greyscale_colors = COLOR_RED
+				new_greyscale = COLOR_RED
 			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
-				greyscale_colors = COLOR_ORANGE
+				new_greyscale = COLOR_ORANGE
 			if(BODYTEMP_HEAT_WARNING_1 to BODYTEMP_HEAT_WARNING_2)
-				greyscale_colors = COLOR_YELLOW
+				new_greyscale = COLOR_YELLOW
 			if(BODYTEMP_COLD_WARNING_1 to BODYTEMP_HEAT_WARNING_1)
-				greyscale_colors = COLOR_VIBRANT_LIME
+				new_greyscale = COLOR_VIBRANT_LIME
 			if(BODYTEMP_COLD_WARNING_2 to BODYTEMP_COLD_WARNING_1)
-				greyscale_colors = COLOR_CYAN
+				new_greyscale = COLOR_CYAN
 			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
-				greyscale_colors = COLOR_BLUE
+				new_greyscale = COLOR_BLUE
 			else
-				greyscale_colors = COLOR_VIOLET
-	set_greyscale(colors=greyscale_colors)
+				new_greyscale = COLOR_VIOLET
+
+	if(new_greyscale != greyscale_colors)//dont update if nothing has changed since last update
+		greyscale_colors = new_greyscale
+		set_greyscale(greyscale_colors)
 
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
