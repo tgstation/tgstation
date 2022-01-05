@@ -14,7 +14,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	slowdown = 1.25
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
@@ -62,12 +61,16 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
+	/// Extended description of the theme.
+	var/extended_desc
 	/// MOD cell.
 	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
-	var/obj/item/clothing/head/helmet/space/mod/helmet
+	var/obj/item/clothing/head/mod/helmet
 	/// MOD chestplate.
-	var/obj/item/clothing/suit/armor/mod/chestplate
+	var/obj/item/clothing/suit/mod/chestplate
 	/// MOD gauntlets.
 	var/obj/item/clothing/gloves/mod/gauntlets
 	/// MOD boots.
@@ -94,9 +97,9 @@
 	if(new_theme)
 		theme = new_theme
 	theme = GLOB.mod_themes[theme]
+	extended_desc = theme.extended_desc
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
-	slowdown = slowdown_inactive
 	complexity_max = theme.complexity_max
 	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
@@ -107,11 +110,12 @@
 		locked = TRUE
 	if(ispath(cell))
 		cell = new cell(src)
-	helmet = new /obj/item/clothing/head/helmet/space/mod(src)
+	helmet = new /obj/item/clothing/head/mod(src)
 	helmet.mod = src
 	mod_parts += helmet
-	chestplate = new /obj/item/clothing/suit/armor/mod(src)
+	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
+	chestplate.allowed = theme.allowed.Copy()
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src
@@ -133,6 +137,7 @@
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	update_flags()
+	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
@@ -211,6 +216,10 @@
 		else
 			. += span_notice("You could install an AI with an <b>intellicard</b>.")
 
+/obj/item/mod/control/examine_more(mob/user)
+	. = ..()
+	. += "<i>[extended_desc]</i>"
+
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
@@ -244,17 +253,16 @@
 		return TRUE
 
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
-	var/mob/living/carbon/carbon_user = user
-	if(!istype(carbon_user) || src != carbon_user.back)
+	if(user != wearer)
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
-			balloon_alert(carbon_user, "retract parts first!")
+			balloon_alert(user, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
 /obj/item/mod/control/MouseDrop(atom/over_object)
-	if(src != wearer?.back || !istype(over_object, /atom/movable/screen/inventory/hand))
+	if(usr != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
 		return ..()
 	for(var/obj/item/part in mod_parts)
 		if(part.loc != src)
@@ -418,8 +426,6 @@
 
 /obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	. = ..()
-	if(!active)
-		return
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_icons = module.generate_worn_overlay(standing)
 		if(!length(module_icons))
@@ -593,6 +599,11 @@
 		else
 			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
 
+/obj/item/mod/control/proc/update_speed()
+	for(var/obj/item/part as anything in mod_parts)
+		part.slowdown = (active ? slowdown_active : slowdown_inactive) / length(mod_parts)
+	wearer?.update_equipment_speed_mods()
+
 /obj/item/mod/control/proc/power_off()
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
@@ -641,6 +652,6 @@
 		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
 	slowdown_inactive = 0
 	slowdown_active = 0
-	slowdown = 0
+	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_SUCCESSFUL

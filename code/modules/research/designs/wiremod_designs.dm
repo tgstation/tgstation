@@ -346,6 +346,26 @@
 	id = "comp_mod_action"
 	build_path = /obj/item/circuit_component/equipment_action/mod
 
+/datum/design/component/id_getter
+	name = "ID Getter Component"
+	id = "comp_id_getter"
+	build_path = /obj/item/circuit_component/id_getter
+
+/datum/design/component/id_info_reader
+	name = "ID Getter Component"
+	id = "comp_id_info_reader"
+	build_path = /obj/item/circuit_component/id_info_reader
+
+/datum/design/component/id_access_reader
+	name = "ID Access Reader Component"
+	id = "comp_id_access_reader"
+	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/access_checker
+	name = "Access Checker Component"
+	id = "comp_access_checker"
+	build_path = /obj/item/circuit_component/compare/access
+
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
 	desc = "A handheld shell with one big button."

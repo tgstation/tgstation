@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Fixes admins being able to sucessfully JMP as a new player mob."

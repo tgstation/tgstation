@@ -8,7 +8,7 @@
 	button_icon_state = "strained_muscles"
 	chemical_cost = 0
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
 	active = FALSE //Whether or not you are a hedgehog
 
