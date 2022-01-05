@@ -666,16 +666,7 @@
 		switch(type)
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
-				output += "<br><font color='red'>[text]</font><br>"
-				var/datum/db_query/query_message_read = SSdbcore.NewQuery(
-					"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = :id",
-					list("id" = message_id)
-				)
-				if(!query_message_read.warn_execute())
-					qdel(query_get_message_output)
-					qdel(query_message_read)
-					return
-				qdel(query_message_read)
+				output += "<br><font color='red'>[text] <A href='?_src_=holder;[HrefToken()];messageread=[message_id]'>(Click here to verify you have read this message)</A></font><br>"
 			if("note")
 				output += "<font color='red' size='3'><b>Note left by [span_prefix("[admin_key]")] on [timestamp]</b></font>"
 				output += "<br><font color='red'>[text]</font><br>"
