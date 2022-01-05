@@ -785,67 +785,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
-//HF blade
-/obj/item/vibro_weapon
-	icon_state = "hfrequency0"
-	base_icon_state = "hfrequency"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	name = "vibro sword"
-	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
-	armour_penetration = 100
-	block_chance = 40
-	force = 20
-	throwforce = 20
-	throw_speed = 4
-	sharpness = SHARP_EDGED
-	attack_verb_continuous = list("cuts", "slices", "dices")
-	attack_verb_simple = list("cut", "slice", "dice")
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	var/wielded = FALSE // track wielded status on item
-
-/obj/item/vibro_weapon/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
-/obj/item/vibro_weapon/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/butchering, 20, 105)
-	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="[base_icon_state]1")
-
-/// triggered on wield of two handed item
-/obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/vibro_weapon/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
-
-/obj/item/vibro_weapon/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
-
-/obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(wielded)
-		final_block_chance *= 2
-	if(wielded || attack_type != PROJECTILE_ATTACK)
-		if(prob(final_block_chance))
-			if(attack_type == PROJECTILE_ATTACK)
-				owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
-				return TRUE
-			else
-				owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-				return TRUE
-	return FALSE
-
 /obj/item/melee/moonlight_greatsword
 	name = "moonlight greatsword"
 	desc = "Don't tell anyone you put any points into dex, though."
@@ -863,3 +802,118 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+
+//High Frequency Blade
+
+/obj/item/highfrequencyblade
+	name = "high frequency blade"
+	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
+		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
+	icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
+	worn_icon_state = "hfrequency0"
+	force = 10
+	sharpness = SHARP_EDGED
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	var/wielded = FALSE
+	var/atom/previous_target
+	var/previous_x
+	var/previous_y
+
+/obj/item/highfrequencyblade/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/highfrequencyblade/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, icon_wielded="[base_icon_state]1")
+
+/// triggered on wield of two handed item
+/obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+
+/obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(wielded)
+		final_block_chance *= 2
+	if(attack_type != PROJECTILE_ATTACK && prob(final_block_chance))
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		return TRUE
+	if(wielded && attack_type == PROJECTILE_ATTACK && prob(final_block_chance))
+		owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+		return TRUE
+
+/obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
+	if(!wielded)
+		return ..()
+	if(!isliving(target))
+		return
+	slash(target, user, params)
+
+/obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
+	if(!wielded)
+		return ..()
+	if(isobj(target) && !(isitem(target) || ismachinery(target) || isstructure(target)))
+		return
+	slash(target, user, params)
+
+/obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
+	if(!wielded)
+		return ..()
+	if(!proximity_flag || !isclosedturf(target))
+		return
+	slash(target, user, params)
+
+/obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)
+	user.changeNext_move(0.1 SECONDS)
+	user.do_attack_animation(target, "nothing")
+	var/list/modifiers = params2list(params)
+	var/damage_mod = 1
+	var/x_slashed = text2num(modifiers["icon-x"])
+	var/y_slashed = text2num(modifiers["icon-y"])
+	if(target == previous_target) //if the same target, we calculate a damage multiplier if you swing your mouse around
+		var/x_mod = previous_x - x_slashed
+		var/y_mod = previous_y - y_slashed
+		damage_mod = max(1, round((sqrt(x_mod ** 2 + y_mod ** 2) / 10), 0.1))
+	previous_target = target
+	previous_x = x_slashed
+	previous_y = y_slashed
+	var/atom/slash = new /obj/effect/temp_visual/slash(get_turf(target))
+	slash.pixel_x = x_slashed - world.icon_size/2 + target.pixel_x
+	slash.pixel_y = y_slashed - world.icon_size/2 + target.pixel_y
+	playsound(src, 'sound/weapons/bladeslice.ogg', 75, vary = TRUE)
+	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = 50, def_zone = user.zone_selected)
+		if(living_target.stat == DEAD && prob(5*damage_mod))
+			living_target.gib()
+	else if(target.uses_integrity)
+		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
+	else if(iswallturf(target) && prob(5*damage_mod))
+		var/turf/closed/wall/wall_target = target
+		wall_target.dismantle_wall()
+
+/obj/effect/temp_visual/slash
+	icon_state = "highfreq_slash"
+	alpha = 150
+	duration = 0.5 SECONDS
+	plane = ABOVE_GAME_PLANE
+
+/obj/effect/temp_visual/slash/Initialize(mapload)
+	. = ..()
+	var/matrix/matrix = matrix(transform)
+	transform = matrix.Turn(rand(1, 360))
+	animate(src, duration*0.5, color = COLOR_BLUE, transform = matrix.Scale(2), alpha = 255)
