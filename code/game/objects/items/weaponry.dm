@@ -840,7 +840,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
-	if(attack_type = PROJECTILE_ATTACK && (wielded || prob(final_block_chance)))
+	if(attack_type == PROJECTILE_ATTACK && (wielded || prob(final_block_chance)))
 		owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
