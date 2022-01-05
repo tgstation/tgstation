@@ -58,7 +58,7 @@
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/gun/ballistic/revolver/detective = 1,
-		/obj/item/ammo_box/c38 = 2,
+		/obj/item/ammo_box/c38/match/bouncy = 2,
 	),src)
 
 /obj/item/storage/belt/holster/detective/full/ert
