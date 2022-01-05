@@ -1,3 +1,7 @@
+#define ATMOS_PIPEDISPENSER 0
+#define DISPOSAL_PIPEDISPENSER 1
+#define TRANSIT_PIPEDISPENSER 2
+
 /obj/machinery/pipedispenser
 	name = "pipe dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -10,17 +14,12 @@
 	///color of pipe
 	var/paint_color = "green"
 	///type of dispenser
-	var/category = 0
+	var/category = ATMOS_PIPEDISPENSER
 	///smart pipe directions
 	var/p_init_dir = ALL_CARDINALS
 
 /obj/machinery/pipedispenser/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
-
-/obj/machinery/pipedispenser/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/pipes),
-	)
 
 /obj/machinery/pipedispenser/ui_static_data(mob/user)
 	var/list/data = list("paint_colors" = GLOB.pipe_paint_colors)
@@ -37,11 +36,11 @@
 	// The get the recipies for this dispenser
 	var/list/recipes
 	switch(category)
-		if(0) // TODO: Remove magic number
+		if(ATMOS_PIPEDISPENSER)
 			recipes = GLOB.atmos_pipe_recipes
-		if(1)
+		if(DISPOSAL_PIPEDISPENSER)
 			recipes = GLOB.disposal_pipe_recipes
-		if(2)
+		if(TRANSIT_PIPEDISPENSER)
 			recipes = GLOB.transit_tube_recipes
 	// Generate pipe categories
 	for(var/c in recipes)
@@ -49,7 +48,10 @@
 		var/list/r = list()
 		for(var/i in 1 to cat.len)
 			var/datum/pipe_info/info = cat[i]
-			r += list(list("pipe_name" = info.name, "pipe_index" = i, "all_layers" = info.all_layers))
+			r += list(list("pipe_name" = info.name, "pipe_index" = i, "all_layers" = info.all_layers, "dir" = NORTH))
+			// if this is bendable, add the bent version of the pipe (disposals)
+			if (info.dirtype == PIPE_BENDABLE)
+				r += list(list("pipe_name" = "Bent " + info.name, "pipe_index" = i, "all_layers" = info.all_layers, "dir" = NORTHEAST))
 		data["categories"] += list(list("cat_name" = c, "recipes" = r))
 	var/list/init_directions = list("north" = FALSE, "south" = FALSE, "east" = FALSE, "west" = FALSE)
 	for(var/direction in GLOB.cardinals)
@@ -64,6 +66,7 @@
 	switch(action)
 		if("color")
 			paint_color = params["paint_color"]
+		
 		if("pipe_type")
 			if(wait < world.time)
 				var/rec = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].type
@@ -80,16 +83,18 @@
 					return
 				
 				// Otherwise, make a pipe/device
-				var/p_dir = NORTH
-				var/obj/item/pipe/P = new (loc, p_type, p_dir)
-				P.p_init_dir = p_init_dir
-				P.pipe_color = GLOB.pipe_paint_colors[paint_color]
-				P.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-				P.set_piping_layer(piping_layer)
-				P.add_fingerprint(usr)
+				var/p_dir = params["pipe_dir"]
+				var/obj/item/pipe/pipe_out = new (loc, p_type, p_dir)
+				pipe_out.p_init_dir = p_init_dir
+				pipe_out.pipe_color = GLOB.pipe_paint_colors[paint_color]
+				pipe_out.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+				pipe_out.set_piping_layer(piping_layer)
+				pipe_out.add_fingerprint(usr)
 				wait = world.time + 1 SECONDS
+		
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
+		
 		if("init_dir_setting")
 			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
 			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
@@ -97,8 +102,10 @@
 				p_init_dir = target_dir
 			else
 				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+		
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
+		
 	return TRUE
 
 /obj/machinery/pipedispenser/ui_interact(mob/user, datum/tgui/ui)
@@ -139,7 +146,7 @@
 	icon_state = "pipe_d"
 	desc = "Dispenses pipes that will ultimately be used to move trash around."
 	density = TRUE
-	category = 1
+	category = DISPOSAL_PIPEDISPENSER
 
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
@@ -158,11 +165,10 @@
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/ui_act(action, params)
+/obj/machinery/pipedispenser/disposal/ui_act(action, params)
 	switch(action)
 		if("pipe_type")
 			if(wait < world.time)
-				var/rec = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]].type
 				var/p_type = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]].id
 				
 				// No spawning arbitrary paths (literally 1984)
@@ -177,6 +183,7 @@
 				
 				C.add_fingerprint(usr)
 				C.update_appearance()
+				C.setDir(params["pipe_dir"])
 				
 				wait = world.time + 1 SECONDS
 	return TRUE
@@ -189,55 +196,24 @@
 	icon_state = "pipe_d"
 	density = TRUE
 	desc = "Dispenses pipes that will move beings around."
-
-/obj/machinery/pipedispenser/disposal/transit_tube/interact(mob/user)
-
-	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
-<b>Station Equipment:</b><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
-<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
-"}
-
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	return
+	category = TRANSIT_PIPEDISPENSER
 
 
-/obj/machinery/pipedispenser/disposal/transit_tube/Topic(href, href_list)
-	if(..())
-		return 1
-	usr.set_machine(src)
-	add_fingerprint(usr)
-	if(wait < world.time)
-		if(href_list["tube"])
-			var/tube_type = text2num(href_list["tube"])
-			var/obj/structure/C
-			switch(tube_type)
-				if(TRANSIT_TUBE_STRAIGHT)
-					C = new /obj/structure/c_transit_tube(loc)
-				if(TRANSIT_TUBE_STRAIGHT_CROSSING)
-					C = new /obj/structure/c_transit_tube/crossing(loc)
-				if(TRANSIT_TUBE_CURVED)
-					C = new /obj/structure/c_transit_tube/curved(loc)
-				if(TRANSIT_TUBE_DIAGONAL)
-					C = new /obj/structure/c_transit_tube/diagonal(loc)
-				if(TRANSIT_TUBE_DIAGONAL_CROSSING)
-					C = new /obj/structure/c_transit_tube/diagonal/crossing(loc)
-				if(TRANSIT_TUBE_JUNCTION)
-					C = new /obj/structure/c_transit_tube/junction(loc)
-				if(TRANSIT_TUBE_STATION)
-					C = new /obj/structure/c_transit_tube/station(loc)
-				if(TRANSIT_TUBE_TERMINUS)
-					C = new /obj/structure/c_transit_tube/station/reverse(loc)
-				if(TRANSIT_TUBE_POD)
-					C = new /obj/structure/c_transit_tube_pod(loc)
-			if(C)
-				C.add_fingerprint(usr)
-			wait = world.time + 15
-	return
+/obj/machinery/pipedispenser/disposal/transit_tube/ui_act(action, params)
+	switch(action)
+		if("pipe_type")
+			if(wait < world.time)
+				var/p_type = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]].id
+				
+				// No spawning arbitrary paths (literally 1984)
+				if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
+					return
+				
+				var/obj/structure/c_transit_tube/tube = new p_type(loc)
+				tube.add_fingerprint(usr)
+				tube.update_appearance()
+				tube.setDir(params["pipe_dir"])
+				
+				wait = world.time + 1 SECONDS
+	return TRUE
+

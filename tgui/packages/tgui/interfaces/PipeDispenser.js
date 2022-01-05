@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs } from '../components';
@@ -18,9 +17,7 @@ const ICON_BY_CATEGORY_NAME = {
 const ColorSection = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    category: rootCategoryIndex,
-    selected_color,
-    mode,
+    selected_color
   } = data;
   return (
     <Section>
@@ -52,7 +49,6 @@ const ColorSection = (props, context) => {
 const LayerSection = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    category: rootCategoryIndex,
     piping_layer,
   } = data;
   return (
@@ -108,6 +104,7 @@ const PipeTypeSection = (props, context) => {
           title={recipe.pipe_name}
           onClick={() => act('pipe_type', {
             pipe_type: recipe.pipe_index,
+            pipe_dir: recipe.dir,
             category: shownCategory.cat_name,
           })} />
       ))}
@@ -118,9 +115,6 @@ const PipeTypeSection = (props, context) => {
 const SmartPipeBlockSection = (props, context) => {
   const { act, data } = useBackend(context);
   const init_directions = data.init_directions || [];
-  const {
-    category: rootCategoryIndex,
-  } = data;
   return (
     <Section height={7.5}>
       <Stack fill vertical textAlign="center">
