@@ -810,18 +810,18 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A sword reinforced by a powerful alternating current and resonating at extremely high vibration frequencies. \
 		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
 	icon_state = "hfrequency0"
-	base_icon_state = "hfrequency"
 	worn_icon_state = "hfrequency0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 10
+	block_chance = 25
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	var/wielded = FALSE
-	var/atom/previous_target
 	var/previous_x
 	var/previous_y
+	var/atom/previous_target
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
@@ -832,27 +832,19 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	AddComponent(/datum/component/two_handed, icon_wielded="[base_icon_state]1")
 
-/// triggered on wield of two handed item
-/obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
-
-/// triggered on unwield of two handed item
-/obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
+/obj/item/dualsaber/update_icon_state()
+	icon_state = "hfrequency[wielded]"
+	return ..()
 
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
 		final_block_chance *= 2
-	if(attack_type != PROJECTILE_ATTACK && prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
-		return TRUE
-	if(wielded && attack_type == PROJECTILE_ATTACK && prob(final_block_chance))
+	if(attack_type = PROJECTILE_ATTACK && (wielded || prob(final_block_chance)))
 		owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+		return TRUE
+	if(prob(final_block_chance))
+		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
@@ -863,18 +855,30 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
-	if(!wielded)
-		return ..()
-	if(isobj(target) && !(isitem(target) || ismachinery(target) || isstructure(target)))
+	if(wielded)
 		return
-	slash(target, user, params)
+	return ..()
 
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
 	if(!wielded)
 		return ..()
-	if(!proximity_flag || !isclosedturf(target))
+	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target)))
 		return
 	slash(target, user, params)
+
+/// triggered on wield of two handed item
+/obj/item/highfrequencyblade/proc/on_wield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = TRUE
+	update_icon_state()
+
+/// triggered on unwield of two handed item
+/obj/item/highfrequencyblade/proc/on_unwield(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	wielded = FALSE
+	update_icon_state()
 
 /obj/item/highfrequencyblade/proc/slash(atom/target, mob/living/user, params)
 	user.changeNext_move(0.1 SECONDS)
