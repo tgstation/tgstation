@@ -31,6 +31,8 @@
 	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
+		return TRUE
 	return isAdminGhostAI(user)
 
 /obj/machinery/door/airlock/shell/set_wires()
