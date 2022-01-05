@@ -17,7 +17,7 @@ const ICON_BY_CATEGORY_NAME = {
 const ColorSection = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    selected_color
+    selected_color,
   } = data;
   return (
     <Section>
