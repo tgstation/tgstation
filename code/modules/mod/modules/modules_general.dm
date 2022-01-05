@@ -647,7 +647,7 @@
 	icon_state = "hat_holder"
 	module_type = MODULE_PASSIVE //The description says it auto-deploys for certain hats; that's just an excuse to have a whitelist of items.
 	complexity = 0 //Its FREE!
-	removable = FALSE //Inbuilt into the Captain's Magnate suit, and the CC Corporate suit.
+	removable = TRUE //Inbuilt into the Captain's Magnate suit, and the CC Corporate suit; BUT also avaliable as a maint module.
 	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
 	///Whitelist of attachable hats; read note in Initialize() below this line
