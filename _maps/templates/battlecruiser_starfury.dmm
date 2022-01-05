@@ -2384,9 +2384,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "gc" = (
-/obj/docking_port/stationary/starfury_fighter/fighter_one{
-	roundstart_template = /datum/map_template/shuttle/starfury/fighter_one
-	},
+/obj/docking_port/stationary/starfury_fighter/fighter_one,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "gd" = (
@@ -2399,9 +2397,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ge" = (
-/obj/docking_port/stationary/starfury_fighter/fighter_two{
-	roundstart_template = /datum/map_template/shuttle/starfury/fighter_two
-	},
+/obj/docking_port/stationary/starfury_fighter/fighter_two,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "gp" = (
@@ -4707,9 +4703,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "ml" = (
-/obj/docking_port/stationary/starfury_corvette{
-	roundstart_template = /datum/map_template/shuttle/starfury/corvette
-	},
+/obj/docking_port/stationary/starfury_corvette,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mp" = (

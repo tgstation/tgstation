@@ -11,6 +11,23 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
+"h" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = -32;
+	pixel_y = 26;
+	req_access = list(150)
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
 "j" = (
 /obj/machinery/button/door{
 	id = "SBC_fighter2_bolt";
@@ -35,7 +52,14 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
-"u" = (
+"v" = (
+/obj/machinery/computer/security{
+	dir = 8;
+	network = list("SBC_Fighter2")
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter2)
+"A" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_fighter2_bolt";
 	name = "Syndicate Fighter Airlock";
@@ -44,13 +68,6 @@
 /obj/docking_port/mobile/syndicate_fighter/fighter_two,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
-/area/shuttle/sbc_fighter2)
-"v" = (
-/obj/machinery/computer/security{
-	dir = 8;
-	network = list("SBC_Fighter2")
-	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 "D" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -63,23 +80,6 @@
 	pixel_y = -11
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_fighter2)
-"F" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	pixel_x = -32;
-	pixel_y = 26;
-	req_access = 150
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 "H" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -143,10 +143,10 @@ q
 I
 V
 o
-F
+h
 W
 j
-u
+A
 "}
 (4,1,1) = {"
 a

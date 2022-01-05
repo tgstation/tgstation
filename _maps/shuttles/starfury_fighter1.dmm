@@ -40,23 +40,6 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter1)
-"z" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	pixel_x = -32;
-	pixel_y = 26;
-	req_access = 150
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_fighter1)
 "C" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -101,11 +84,7 @@
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter1)
-"Q" = (
-/obj/machinery/computer/shuttle/starfury/fighter/fighter_one,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_fighter1)
-"V" = (
+"L" = (
 /obj/machinery/door/airlock/external{
 	id_tag = "SBC_fighter1_bolt";
 	name = "Syndicate Fighter Airlock";
@@ -114,6 +93,27 @@
 /obj/docking_port/mobile/syndicate_fighter/fighter_one,
 /obj/structure/fans/tiny,
 /turf/open/floor/plating,
+/area/shuttle/sbc_fighter1)
+"O" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = -32;
+	pixel_y = 26;
+	req_access = list(150)
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/sbc_fighter1)
+"Q" = (
+/obj/machinery/computer/shuttle/starfury/fighter/fighter_one,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter1)
 "W" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_one{
@@ -144,10 +144,10 @@ q
 D
 f
 Q
-z
+O
 h
 H
-V
+L
 "}
 (4,1,1) = {"
 a

@@ -41,6 +41,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
+"g" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile/syndicate_corvette,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
 "h" = (
 /obj/structure/closet/emcloset{
 	anchored = 1
@@ -59,16 +69,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_corvette)
-"j" = (
-/obj/machinery/door/airlock/external{
-	id_tag = "SBC_corvette_bolt";
-	name = "Syndicate Corvette Airlock";
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile/syndicate_corvette,
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
-/area/shuttle/sbc_corvette)
 "k" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -83,12 +83,6 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_corvette)
-"m" = (
-/obj/machinery/porta_turret/syndicate/pod{
-	max_integrity = 80
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
 "n" = (
 /obj/structure/table,
@@ -114,26 +108,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "tactical chair"
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"p" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	pixel_x = 32;
-	pixel_y = -2;
-	req_access = 150
-	},
-/obj/machinery/button/door{
-	id = "SBC_corvette_blast";
-	name = "Corvette Blast Doors";
-	pixel_x = 32;
-	pixel_y = 8;
-	req_access_txt = "151"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
@@ -177,6 +151,15 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
+"u" = (
+/obj/machinery/door/airlock/external{
+	id_tag = "SBC_corvette_bolt";
+	name = "Syndicate Corvette Airlock";
+	req_access_txt = "150"
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/sbc_corvette)
 "v" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
@@ -214,6 +197,12 @@
 	},
 /obj/item/storage/box/zipties,
 /turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
+"y" = (
+/obj/machinery/porta_turret/syndicate/pod{
+	max_integrity = 80
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_corvette)
 "z" = (
 /obj/effect/turf_decal/stripes/line,
@@ -266,15 +255,6 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"E" = (
-/obj/machinery/door/airlock/external{
-	id_tag = "SBC_corvette_bolt";
-	name = "Syndicate Corvette Airlock";
-	req_access_txt = "150"
-	},
-/obj/structure/fans/tiny,
-/turf/open/floor/plating,
 /area/shuttle/sbc_corvette)
 "F" = (
 /obj/effect/turf_decal/stripes/line{
@@ -389,6 +369,26 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
+"S" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = 32;
+	pixel_y = -2;
+	req_access = list(150)
+	},
+/obj/machinery/button/door{
+	id = "SBC_corvette_blast";
+	name = "Corvette Blast Doors";
+	pixel_x = 32;
+	pixel_y = 8;
+	req_access_txt = "151"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
 "T" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -490,7 +490,7 @@ t
 t
 t
 t
-m
+y
 "}
 (3,1,1) = {"
 M
@@ -535,16 +535,16 @@ M
 K
 M
 M
-m
+y
 "}
 (8,1,1) = {"
-E
+u
 s
 T
 Z
 U
 J
-j
+g
 "}
 (9,1,1) = {"
 Q
@@ -578,7 +578,7 @@ O
 I
 c
 W
-p
+S
 f
 O
 "}

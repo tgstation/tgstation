@@ -26,13 +26,6 @@
 	var/turf/designating_target_loc
 	var/jammed = FALSE
 
-	/// Whether we can rotate this ship or not.
-	var/can_rotate = TRUE
-	/// How much buffer space we require between the world edge vertically
-	var/world_y_max = 10
-	/// How much buffer space we require between the world edge horizontally
-	var/world_x_max = 10
-
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
 	GLOB.navigation_computers += src
@@ -78,7 +71,7 @@
 		jump_action = new /datum/action/innate/camera_jump/shuttle_docker
 	..()
 
-	if(can_rotate && rotate_action)
+	if(rotate_action)
 		rotate_action.target = user
 		rotate_action.Grant(user)
 		actions += rotate_action
@@ -256,7 +249,7 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T, list/overlappers)
 	// Too close to the map edge is never allowed
-	if(!T || T.x <= world_x_max || T.y <= world_y_max || T.x >= world.maxx - world_x_max || T.y >= world.maxy - world_y_max)
+	if(!T || T.x <= 10 || T.y <= 10 || T.x >= world.maxx - 10 || T.y >= world.maxy - 10)
 		return SHUTTLE_DOCKER_BLOCKED
 	// If it's one of our shuttle areas assume it's ok to be there
 	if(shuttle_port.shuttle_areas[T.loc])
@@ -400,5 +393,3 @@
 	to_chat(target, span_notice("Jumped to [selected]."))
 	C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 	C.clear_fullscreen("flash", 3)
-
-
