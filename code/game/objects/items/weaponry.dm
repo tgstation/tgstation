@@ -911,6 +911,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	else if(iswallturf(target) && prob(5*damage_mod))
 		var/turf/closed/wall/wall_target = target
 		wall_target.dismantle_wall()
+	else if(ismineralturf(target) && prob(10*damage_mod))
+		var/turf/closed/mineral/mineral_target = target
+		mineral_target.gets_drilled()
 
 /obj/effect/temp_visual/slash
 	icon_state = "highfreq_slash"
