@@ -903,8 +903,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(isliving(target))
 		var/mob/living/living_target = target
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = 50, def_zone = user.zone_selected)
+		log_combat(user, living_target, "slashed", src)
 		if(living_target.stat == DEAD && prob(5*damage_mod))
+			living_target.visible_message("[living_target] explodes in a shower of gore!", blind_message = span_hear("You hear organic matter ripping and tearing!"))
 			living_target.gib()
+			log_combat(user, living_target, "gibbed", src)
 	else if(target.uses_integrity)
 		target.take_damage(force*damage_mod*3, BRUTE, MELEE, FALSE, null, 50)
 	else if(iswallturf(target) && prob(5*damage_mod))
