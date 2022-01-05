@@ -182,7 +182,7 @@
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_power_cost)
 
-/// Paper dispenser - dispenses (sometimes burning) paper sheets
+/// Paper Dispenser - Dispenses (sometimes burning) paper sheets.
 /obj/item/mod/module/paper_dispenser
 	name = "MOD paper dispenser module"
 	desc = "A simple module designed by the bureaucrats of Torch Bay. \
@@ -200,7 +200,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!do_after(mod.wearer, 1 SECONDS))
+	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
 		return FALSE
 
 	var/obj/item/paper/crisp_paper = new(get_turf(src))
