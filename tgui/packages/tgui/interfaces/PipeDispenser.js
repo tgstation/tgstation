@@ -57,20 +57,18 @@ const LayerSection = (props, context) => {
   } = data;
   return (
     <Section fill width={7.5}>
-      {rootCategoryIndex === 0 && (
-        <Stack vertical mb={1}>
-          {[1, 2, 3, 4, 5].map(layer => (
-            <Stack.Item my={0} key={layer}>
-              <Button.Checkbox
-                checked={layer === piping_layer}
-                content={'Layer ' + layer}
-                onClick={() => act('piping_layer', {
-                  piping_layer: layer,
-                })} />
-            </Stack.Item>
-          ))}
-        </Stack>
-      )}
+      <Stack vertical mb={1}>
+        {[1, 2, 3, 4, 5].map(layer => (
+          <Stack.Item my={0} key={layer}>
+            <Button.Checkbox
+              checked={layer === piping_layer}
+              content={'Layer ' + layer}
+              onClick={() => act('piping_layer', {
+                piping_layer: layer,
+              })} />
+          </Stack.Item>
+        ))}
+      </Stack>
     </Section>
   );
 };
