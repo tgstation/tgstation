@@ -852,14 +852,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
 	var/turf/local_turf = loc
-	var/is_kiss = istype(projectile, /obj/projectile/kiss)
+	var/kiss_power = istype(projectile, /obj/projectile/kiss/death) ? 20000 : istype(projectile, /obj/projectile/kiss) ? 100 : 0
 	if(!istype(local_turf))
 		return FALSE
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
-	if(projectile.flag != BULLET || is_kiss)
+	if(projectile.flag != BULLET || kiss_power)
+		if(kiss_power)
+			psyCoeff = 1
+			psy_overlay = TRUE
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy + is_kiss * 100
+			power += projectile.damage * bullet_energy + kiss_power
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
