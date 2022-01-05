@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - qol: "disable combat mode defaults to 1. enable combat mode defaults to 4."
