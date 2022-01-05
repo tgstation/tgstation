@@ -16,11 +16,12 @@
 	shift_underlay_only = FALSE
 	pipe_state = "scrubber"
 	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
+	processing_flags = NONE
 
 	///The mode of the scrubber (SCRUBBING or SIPHONING)
 	var/scrubbing = SCRUBBING //0 = siphoning, 1 = scrubbing
 	///The list of gases we are filtering
-	var/filter_types = list(/datum/gas/carbon_dioxide)
+	var/list/filter_types = list(/datum/gas/carbon_dioxide)
 	///Rate of the scrubber to remove gases from the air
 	var/volume_rate = 200
 	///is this scrubber acting on the 3x3 area around it.
@@ -151,7 +152,7 @@
 	if(!changed_gas)
 		return FALSE
 
-	if(length(filter_types & changed_gas))
+	if(scrubbing == SIPHONING || length(filter_types & changed_gas))
 		return TRUE
 
 	return FALSE
@@ -167,6 +168,7 @@
 		return
 	scrub(us)
 	if(widenet)
+		check_turfs()
 		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)
 	return TRUE
@@ -221,12 +223,6 @@
 		update_parents()
 
 	return TRUE
-
-//There is no easy way for an object to be notified of changes to atmos can pass flags
-// So we check every machinery process (2 seconds)
-/obj/machinery/atmospherics/components/unary/vent_scrubber/process()
-	if(widenet)
-		check_turfs()
 
 ///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
 /// diagonal turfs that can share atmos with *both* of the cardinal turfs

@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return TRUE
 
-///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
+///Merges all air from giver into self. Deletes giver. Returns: TRUE if we are mutable and the merge is sucessful, FALSE otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return FALSE

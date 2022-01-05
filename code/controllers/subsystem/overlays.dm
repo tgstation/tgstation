@@ -39,21 +39,20 @@ SUBSYSTEM_DEF(overlays)
 		count = 0 //so if we runtime on the Cut, we don't try again.
 		queue.Cut(1,c+1)
 
-	for (var/thing in queue)
+	for (var/atom/atom_to_compile as anything in queue)
 		count++
-		if(thing)
-			var/atom/A = thing
-			if(A.overlays.len >= MAX_ATOM_OVERLAYS)
+		if(atom_to_compile)
+			if(length(atom_to_compile.overlays) >= MAX_ATOM_OVERLAYS)
 				//Break it real GOOD
-				stack_trace("Too many overlays on [A.type] - [A.overlays.len], refusing to update and cutting")
-				A.overlays.Cut()
+				stack_trace("Too many overlays on [atom_to_compile.type] - [length(atom_to_compile.overlays)], refusing to update and cutting")
+				atom_to_compile.overlays.Cut()
 				continue
 			STAT_START_STOPWATCH
-			COMPILE_OVERLAYS(A)
-			UNSETEMPTY(A.add_overlays)
-			UNSETEMPTY(A.remove_overlays)
+			COMPILE_OVERLAYS(atom_to_compile)
+			UNSETEMPTY(atom_to_compile.add_overlays)
+			UNSETEMPTY(atom_to_compile.remove_overlays)
 			STAT_STOP_STOPWATCH
-			STAT_LOG_ENTRY(stats, A.type)
+			STAT_LOG_ENTRY(stats, atom_to_compile.type)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
