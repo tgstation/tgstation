@@ -2,12 +2,11 @@
 	title = JOB_DETECTIVE
 	description = "Investigate crimes, gather evidence, perform interrogations, \
 		look badass, smoke cigarettes."
-	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list(JOB_HEAD_OF_SECURITY)
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = "the head of personnel"
 	selection_color = "#ffeeee"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -17,14 +16,11 @@
 	outfit = /datum/outfit/job/detective
 	plasmaman_outfit = /datum/outfit/plasmaman/detective
 	departments_list = list(
-		/datum/job_department/security,
+		/datum/job_department/service,
 		)
 
 	paycheck = PAYCHECK_MEDIUM
-	paycheck_department = ACCOUNT_SEC
-
-	mind_traits = list(TRAIT_DONUT_LOVER)
-	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
+	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_DETECTIVE
 
@@ -53,12 +49,10 @@
 	suit = /obj/item/clothing/suit/det_suit
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
-		/obj/item/melee/baton = 1,
-		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
 	belt = /obj/item/pda/detective
-	ears = /obj/item/radio/headset/headset_sec/alt
+	ears = /obj/item/radio/headset/headset_srvsec
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
 	mask = /obj/item/clothing/mask/cigarette
@@ -70,8 +64,7 @@
 	chameleon_extras = list(
 		/obj/item/clothing/glasses/sunglasses,
 		/obj/item/gun/ballistic/revolver/detective,
-		)
-	implants = list(/obj/item/implant/mindshield)
+	)
 
 /datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
