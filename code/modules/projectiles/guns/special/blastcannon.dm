@@ -319,7 +319,6 @@
 	var/decrement = 1
 	var/atom/location = loc
 	if (reactionary)
-		var/atom/location = loc
 		if(location.density || !isturf(location))
 			decrement += location.explosion_block
 		for(var/obj/thing in location)
