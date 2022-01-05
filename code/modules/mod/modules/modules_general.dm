@@ -676,6 +676,7 @@
 			/obj/item/clothing/head/that,
 			/obj/item/clothing/head/nursehat,
 			/obj/item/clothing/head/chefhat,
+			/obj/item/clothing/head/papersack,
 			)) - /obj/item/clothing/head/caphat/beret
 			//Need to subtract the beret because its annoying
 
