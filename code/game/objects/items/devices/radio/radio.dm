@@ -97,6 +97,12 @@
 	QDEL_NULL(keyslot)
 	return ..()
 
+/**
+ * set_frequency
+ *
+ * Sets the current frequency of the radio to new_frequency.
+ * * new_frequency - The frequency the radio is being changed to.
+*/
 /obj/item/radio/proc/set_frequency(new_frequency)
 	SEND_SIGNAL(src, COMSIG_RADIO_NEW_FREQUENCY, args)
 	remove_radio(src, frequency)
@@ -106,6 +112,11 @@
 	if(listening && on)
 		add_radio(src, new_frequency)
 
+/**
+ * recalculateChannels
+ *
+ * Resets a radio's channels and secure radio connections, and re-adds them based on the inserted encryption keys.
+*/
 /obj/item/radio/proc/recalculateChannels()
 	resetChannels()
 
@@ -124,7 +135,11 @@
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
-// Used for cyborg override
+/**
+ * resetChannels
+ *
+ * Removes channels/connections whether the related encryption keys are inserted or not.
+*/
 /obj/item/radio/proc/resetChannels()
 	channels = list()
 	secure_radio_connections = list()
@@ -132,7 +147,14 @@
 	syndie = FALSE
 	independent = FALSE
 
-/obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
+/**
+ * make_syndie
+ *
+ * Gives a radio a Syndicate encryption key, in doing so deleting any current encryption keys, along with access to the Syndicate channel.
+ *
+ * Calls recalculateChannels()
+*/
+/obj/item/radio/proc/make_syndie()
 	qdel(keyslot)
 	keyslot = new /obj/item/encryptionkey/syndicate
 	syndie = TRUE
@@ -330,7 +352,12 @@
 
 	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
-/// Checks if this radio can receive on the given frequency.
+/**
+ * can_receive
+ *
+ * Checks if this radio can receive on the input frequency.
+ * * input_frequency - The frequency this proc checks.
+*/
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)
 	// deny checks
 	if (levels != RADIO_NO_Z_LEVEL_RESTRICTION)
@@ -473,6 +500,12 @@
 	QDEL_NULL(keyslot)
 	return ..()
 
+/**
+ * end_emp_effect
+ *
+ * Removes a radio's current EMP effect.
+ * * curremp - The currently tracked EMP, based on the radio's emp variable.
+*/
 /obj/item/radio/proc/end_emp_effect(curremp)
 	if(emped != curremp) //Don't fix it if it's been EMP'd again
 		return FALSE
