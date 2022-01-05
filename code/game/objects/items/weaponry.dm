@@ -831,9 +831,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/highfrequencyblade/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed)
 
-/obj/item/dualsaber/update_icon_state()
+/obj/item/highfrequencyblade/update_icon_state()
 	icon_state = "hfrequency[wielded]"
 	return ..()
 
