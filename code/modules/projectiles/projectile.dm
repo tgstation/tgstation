@@ -862,10 +862,10 @@
 
 /**
  * Aims the projectile at a target.
- * 
+ *
  * Must be passed at least one of a target or a list of click parameters.
  * If only passed the click modifiers the source atom must be a mob with a client.
- * 
+ *
  * Arguments:
  * - [target][/atom]: (Optional) The thing that the projectile will be aimed at.
  * - [source][/atom]: The initial location of the projectile or the thing firing it.
@@ -890,6 +890,8 @@
 	trajectory_ignore_forcemove = FALSE
 
 	starting = source_loc
+	pixel_x = source.pixel_x
+	pixel_y = source.pixel_y
 	original = target
 	if(length(modifiers))
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
@@ -911,7 +913,7 @@
 
 /**
  * Calculates the pixel offsets and angle that a projectile should be launched at.
- * 
+ *
  * Arguments:
  * - [source][/atom]: The thing that the projectile is being shot from.
  * - [target][/atom]: (Optional) The thing that the projectile is being shot at.
@@ -919,26 +921,26 @@
  * - [modifiers][/list]: A list of click parameters used to modify the shot angle.
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
-	var/p_x = 0
-	var/p_y = 0
+	var/p_x = world.icon_size / 2
+	var/p_y = world.icon_size / 2
 	var/angle = 0
 	if(LAZYACCESS(modifiers, ICON_X))
-		p_x += text2num(LAZYACCESS(modifiers, ICON_X))
+		p_x = text2num(LAZYACCESS(modifiers, ICON_X))
 	if(LAZYACCESS(modifiers, ICON_Y))
-		p_y += text2num(LAZYACCESS(modifiers, ICON_Y))
+		p_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 
 	if(target)
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
-		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + target.pixel_x
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + target.pixel_y
+		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
+		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_x) + (p_x - (world.icon_size / 2))
 
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)
 
 	if(!ismob(source) || !LAZYACCESS(modifiers, SCREEN_LOC))
 		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
-	
+
 	var/mob/user = source
 	if(!user.client)
 		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
