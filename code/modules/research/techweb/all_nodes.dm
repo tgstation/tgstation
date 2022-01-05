@@ -58,7 +58,7 @@
 		"gas_filter",
 		"plasmaman_gas_filter",
 		"oven_tray",
-		"c38_rubber"
+		"c38_rubber",
 	)
 
 /datum/techweb_node/mmi
