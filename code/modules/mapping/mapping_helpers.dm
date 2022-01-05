@@ -595,20 +595,26 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "circuit"
 	/// The shell for the circuit.
 	var/atom/movable/circuit_shell
-	/// The json data for the circuit in text form.
-	var/json_data
+	/// Capacity of the shell.
+	var/shell_capacity = SHELL_CAPACITY_VERY_LARGE
+	/// The url for the json. Example: "https://pastebin.com/raw/eH7VnP9d"
+	var/json_url
 
 /obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/spawn_circuit)
+
+/obj/effect/mapping_helpers/circuit_spawner/proc/spawn_circuit()
 	var/list/errors = list()
 	var/obj/item/integrated_circuit/loaded/new_circuit = new(loc)
+	var/json_data = load_data()
 	new_circuit.load_circuit_data(json_data, errors)
 	if(!circuit_shell)
 		return
 	circuit_shell = new(loc)
 	var/datum/component/shell/shell_component = circuit_shell.GetComponent(/datum/component/shell)
 	if(shell_component)
-	 	shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
+		shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
 		shell_component.attach_circuit(new_circuit)
 	else
 		shell_component = circuit_shell.AddComponent(/datum/component/shell, \
@@ -616,3 +622,25 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			shell_flags = SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
 			starting_circuit = new_circuit, \
 			)
+
+/obj/effect/mapping_helpers/circuit_spawner/proc/load_data()
+	var/static/json_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(json_cache[json_url])
+		return json_cache[json_url]
+	log_asset("Circuit Spawner fetching json from: [json_url]")
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, json_url, "")
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
+	var/json_data = response["body"]
+	json_cache[json_url] = json_data
+	query_in_progress = FALSE
+	return json_data
