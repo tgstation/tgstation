@@ -178,6 +178,11 @@
 		return
 	var/core_path = pick(accepted_anomalies)
 	core = new core_path(src)
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/Destroy()
+	QDEL_NULL(core)
+	return ..()
 
 /obj/item/mod/module/anomaly_locked/examine(mob/user)
 	. = ..()
@@ -223,6 +228,7 @@
 		core = item
 		balloon_alert(user, "core installed")
 		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		update_icon_state()
 	else
 		return ..()
 
@@ -240,6 +246,11 @@
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(core)
 	core = null
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/update_icon_state()
+	icon_state = "[initial(icon_state) + core ? "-core" : ""]"
+	return ..()
 
 ///Anti-Gravity - Makes the user weightless.
 /obj/item/mod/module/anomaly_locked/antigrav
