@@ -851,8 +851,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/highfrequencyblade/attack(mob/living/target, mob/living/user, params)
 	if(!wielded)
 		return ..()
-	if(!isliving(target))
-		return
 	slash(target, user, params)
 
 /obj/item/highfrequencyblade/attack_atom(atom/target, mob/living/user, params)
