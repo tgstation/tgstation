@@ -508,14 +508,14 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000, 1)
 			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
 			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
-			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
+			new_price_input = round(new_price_input)
 			sale_price = new_price_input
 			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)

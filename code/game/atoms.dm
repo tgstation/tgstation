@@ -1940,7 +1940,7 @@
 	if(!forced_gravity.len)
 		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
 	if(forced_gravity.len)
-		var/max_grav
+		var/max_grav = forced_gravity[1]
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
 		return max_grav
@@ -1969,6 +1969,9 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return
+
 	AddElement(/datum/element/rust)
 
 /**

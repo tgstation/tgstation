@@ -146,6 +146,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("place_custom")
 			replacetiles = !replacetiles
@@ -161,7 +162,9 @@
 			if(tilestack)
 				tilestack.forceMove(drop_location())
 		if("line_mode")
-			var/setdir = input("Select construction direction:") as null|anything in list("north","east","south","west","disable")
+			var/setdir = tgui_input_list(usr, "Select construction direction", "Direction", list("north", "east", "south", "west", "disable"))
+			if(isnull(setdir))
+				return
 			switch(setdir)
 				if("north")
 					targetdirection = 1
@@ -173,7 +176,6 @@
 					targetdirection = 8
 				if("disable")
 					targetdirection = null
-	return
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())
@@ -246,7 +248,7 @@
 				addtimer(CALLBACK(src, .proc/go_idle), 0.5 SECONDS)
 			path = list()
 			return
-		if(path.len == 0)
+		if(!length(path))
 			if(!isturf(target))
 				var/turf/TL = get_turf(target)
 				path = get_path_to(src, TL, 30, id=access_card,simulated_only = FALSE)

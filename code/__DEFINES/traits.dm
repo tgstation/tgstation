@@ -311,6 +311,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DUFFEL_CURSE_PROOF "duffel_cursed"
 /// Revenants draining you only get a very small benefit.
 #define TRAIT_WEAK_SOUL "weak_soul"
+/// This mob has no soul
+#define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE "cant_ride"
 /// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
@@ -331,6 +333,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMABURNT "plasma_burnt"
 /// Addictions don't tick down, basically they're permanently addicted
 #define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
+/// This mob has a cult halo.
+#define TRAIT_CULT_HALO "cult_halo"
 /// Their eyes glow an unnatural red colour. Currently used to set special examine text on humans. Does not guarantee the mob's eyes are coloured red, nor that there is any visible glow on their character sprite.
 #define TRAIT_UNNATURAL_RED_GLOWY_EYES "unnatural_red_glowy_eyes"
 /// Their eyes are bloodshot. Currently used to set special examine text on humans. Examine text is overridden by TRAIT_UNNATURAL_RED_GLOWY_EYES.
@@ -610,6 +614,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ADMIN_TRAIT "admin"
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
+#define LICH_TRAIT "lich"
 /// The item is magically cursed
 #define CURSED_ITEM_TRAIT(item_type) "cursed_item_[item_type]"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"

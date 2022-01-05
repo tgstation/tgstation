@@ -24,8 +24,8 @@
 	options += "Delete Shuttle"
 	options += "Into The Sunset (delete & greentext 'escape')"
 
-	var/selection = input(user, "Select where to fly [name || id]:", "Fly Shuttle") as null|anything in options
-	if(!selection)
+	var/selection = tgui_input_list(user, "Select where to fly [name || id]:", "Fly Shuttle", options)
+	if(isnull(selection))
 		return
 
 	switch(selection)
@@ -67,8 +67,8 @@
 		if (canDock(S) == SHUTTLE_CAN_DOCK)
 			options[S.name || S.id] = S
 
-	var/selection = input(user, "Select the new arrivals destination:", "Fly Shuttle") as null|anything in options
-	if(!selection)
+	var/selection = tgui_input_list(user, "New arrivals destination", "Fly Shuttle", options)
+	if(isnull(selection))
 		return
 	target_dock = options[selection]
 	if(!QDELETED(target_dock))
