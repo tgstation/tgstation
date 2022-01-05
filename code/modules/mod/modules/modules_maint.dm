@@ -207,15 +207,18 @@
 	crisp_paper.desc = "It's crisp and warm to the touch. Must be fresh."
 
 	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
-	to_chat(mod.wearer, span_notice("You dispense a sheet of [crisp_paper.name] [nearby_table ? "onto [nearby_table]":"into your hands"]. It's warm, almost steaming."))
 	playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
 
 	mod.wearer.put_in_hands(crisp_paper)
 	if(nearby_table)
 		mod.wearer.transferItemToLoc(crisp_paper, nearby_table.drop_location(), silent = FALSE)
 
-	// Up to a 30% chance per sheet to set on fire, 2% per sheet made
+	// Up to a 30% chance to set the sheet on fire, +2% per sheet made
 	if(prob(min(num_sheets_dispensed * 2, 30)))
+		if(crisp_paper in mod.wearer.held_items)
+			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
+		crisp_paper.balloon_alert(mod.wearer, "PC LOAD LETTER!")
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
 		crisp_paper.fire_act(1000, 100)
 
