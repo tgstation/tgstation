@@ -60449,7 +60449,7 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "thJ" = (
-/obj/machinery/holopad,
+/obj/machinery/holopad/secure,
 /turf/open/floor/iron/dark,
 /area/security/office)
 "thR" = (
