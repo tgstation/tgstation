@@ -68,30 +68,62 @@
 			paint_color = params["paint_color"]
 		
 		if("pipe_type")
-			if(wait < world.time)
-				var/rec = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].type
-				var/p_type = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].id
-				
-				// No spawning arbitrary paths (literally 1984)
-				if(!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
-					return
-				
-				// If this is a meter, make that.
-				if(rec == /datum/pipe_info/meter)
-					new /obj/item/pipe_meter(loc)
-					wait = world.time + 1 SECONDS
-					return
-				
-				// Otherwise, make a pipe/device
-				var/p_dir = params["pipe_dir"]
-				var/obj/item/pipe/pipe_out = new (loc, p_type, p_dir)
-				pipe_out.p_init_dir = p_init_dir
-				pipe_out.pipe_color = GLOB.pipe_paint_colors[paint_color]
-				pipe_out.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-				pipe_out.set_piping_layer(piping_layer)
-				pipe_out.add_fingerprint(usr)
-				wait = world.time + 1 SECONDS
-		
+			switch(category)
+				if(ATMOS_PIPEDISPENSER)
+					if(wait < world.time)
+						var/rec = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].type
+						var/p_type = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].id
+						
+						// No spawning arbitrary paths (literally 1984)
+						if(!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
+							return
+						
+						// If this is a meter, make that.
+						if(rec == /datum/pipe_info/meter)
+							new /obj/item/pipe_meter(loc)
+							wait = world.time + 1 SECONDS
+							return
+						
+						// Otherwise, make a pipe/device
+						var/p_dir = params["pipe_dir"]
+						var/obj/item/pipe/pipe_out = new (loc, p_type, p_dir)
+						pipe_out.p_init_dir = p_init_dir
+						pipe_out.pipe_color = GLOB.pipe_paint_colors[paint_color]
+						pipe_out.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+						pipe_out.set_piping_layer(piping_layer)
+						pipe_out.add_fingerprint(usr)
+						wait = world.time + 1 SECONDS
+				if(DISPOSAL_PIPEDISPENSER)
+					if(wait < world.time)
+						var/p_type = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]].id
+						
+						// No spawning arbitrary paths (literally 1984)
+						if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
+							return
+						
+						var/obj/structure/disposalconstruct/C = new (loc, p_type)
+						if(!C.can_place())
+							to_chat(usr, span_warning("There's not enough room to build that here!"))
+							qdel(C)
+							return
+						
+						C.add_fingerprint(usr)
+						C.update_appearance()
+						C.setDir(params["pipe_dir"])
+						wait = world.time + 1 SECONDS
+				if(TRANSIT_PIPEDISPENSER)
+					if(wait < world.time)
+						var/p_type = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]].id
+						
+						// No spawning arbitrary paths (literally 1984)
+						if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
+							return
+						
+						var/obj/structure/c_transit_tube/tube = new p_type(loc)
+						tube.add_fingerprint(usr)
+						tube.update_appearance()
+						tube.setDir(params["pipe_dir"])
+						wait = world.time + 1 SECONDS
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
 		
@@ -165,28 +197,6 @@
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/ui_act(action, params)
-	switch(action)
-		if("pipe_type")
-			if(wait < world.time)
-				var/p_type = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]].id
-				
-				// No spawning arbitrary paths (literally 1984)
-				if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
-					return
-				
-				var/obj/structure/disposalconstruct/C = new (loc, p_type)
-				if(!C.can_place())
-					to_chat(usr, span_warning("There's not enough room to build that here!"))
-					qdel(C)
-					return
-				
-				C.add_fingerprint(usr)
-				C.update_appearance()
-				C.setDir(params["pipe_dir"])
-				
-				wait = world.time + 1 SECONDS
-	return TRUE
 
 //transit tube dispenser
 //inherit disposal for the dragging proc
@@ -198,22 +208,4 @@
 	desc = "Dispenses pipes that will move beings around."
 	category = TRANSIT_PIPEDISPENSER
 
-
-/obj/machinery/pipedispenser/disposal/transit_tube/ui_act(action, params)
-	switch(action)
-		if("pipe_type")
-			if(wait < world.time)
-				var/p_type = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]].id
-				
-				// No spawning arbitrary paths (literally 1984)
-				if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
-					return
-				
-				var/obj/structure/c_transit_tube/tube = new p_type(loc)
-				tube.add_fingerprint(usr)
-				tube.update_appearance()
-				tube.setDir(params["pipe_dir"])
-				
-				wait = world.time + 1 SECONDS
-	return TRUE
 
