@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes: 
+  - bugfix: "Modsuits DNA lock module will no longer stop you from changing up the suit's modules while not worn, even if you are it's rightfull owner."
