@@ -602,6 +602,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/status_display{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
 "cE" = (
@@ -15046,13 +15049,6 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
-"Sz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron,
-/area/centcom/supplypod/loading/ert)
 "SD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -52865,7 +52861,7 @@ px
 mD
 pD
 pX
-Sz
+pX
 pX
 rb
 oe
