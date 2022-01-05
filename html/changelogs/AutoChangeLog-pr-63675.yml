@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - bugfix: "The assembly shell can now be attached to wires as intended"

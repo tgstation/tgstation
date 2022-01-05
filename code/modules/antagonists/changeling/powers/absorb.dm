@@ -4,7 +4,7 @@
 	button_icon_state = "absorb_dna"
 	chemical_cost = 0
 	dna_cost = 0
-	req_human = 1
+	req_human = TRUE
 	///if we're currently absorbing, used for sanity
 	var/is_absorbing = FALSE
 

@@ -11,6 +11,12 @@
 
 		var/atom/movable/movable_pawn = controller.pawn
 
+		// Check if this controller can actually run, so we don't chase people with corpses
+		if(!controller.able_to_run())
+			walk(controller.pawn, 0) //stop moving
+			controller.CancelActions()
+			continue
+
 		var/can_move = TRUE
 
 		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)

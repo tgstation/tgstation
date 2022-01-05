@@ -76,7 +76,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_combat_mode
-	hotkey_keys = list("F", "4")
+	hotkey_keys = list("F")
 	name = "toggle_combat_mode"
 	full_name = "Toggle Combat Mode"
 	description = "Toggles combat mode. Like Help/Harm but cooler."
@@ -91,7 +91,7 @@
 	user_mob.set_combat_mode(!user_mob.combat_mode, FALSE)
 
 /datum/keybinding/living/enable_combat_mode
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("4")
 	name = "enable_combat_mode"
 	full_name = "Enable Combat Mode"
 	description = "Enable combat mode."
@@ -105,7 +105,7 @@
 	user_mob.set_combat_mode(TRUE, silent = FALSE)
 
 /datum/keybinding/living/disable_combat_mode
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("1")
 	name = "disable_combat_mode"
 	full_name = "Disable Combat Mode"
 	description = "Disable combat mode."

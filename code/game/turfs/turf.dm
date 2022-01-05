@@ -262,7 +262,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Precipitates a movable (plus whatever buckled to it) to lower z levels if possible and then calls zImpact()
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, falling_from_move = FALSE)
-	var/turf/target = get_step_multiz(src, DOWN)
+	var/direction = DOWN
+	if(falling.has_gravity() == NEGATIVE_GRAVITY)
+		direction = UP
+	var/turf/target = get_step_multiz(src, direction)
 	if(!target)
 		return FALSE
 	var/isliving = isliving(falling)
@@ -275,7 +278,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			falling = falling_living.buckled
 	if(!falling_from_move && falling.currently_z_moving)
 		return
-	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
+	if(!force && !falling.can_z_move(direction, src, target, ZMOVE_FALL_FLAGS))
 		falling.set_currently_z_moving(FALSE, TRUE)
 		return FALSE
 
