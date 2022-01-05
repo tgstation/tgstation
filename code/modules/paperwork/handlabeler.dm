@@ -72,7 +72,7 @@
 	if(mode)
 		to_chat(user, span_notice("You turn on [src]."))
 		//Now let them chose the text.
-		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", max_length = 64))
+		var/str = reject_bad_text(tgui_input_text(user, "Label text", "Set Label", label, MAX_NAME_LEN))
 		if(!str)
 			to_chat(user, span_warning("Invalid text!"))
 			return
@@ -87,6 +87,9 @@
 		to_chat(user, span_notice("You insert [I] into [src]."))
 		qdel(I)
 		labels_left = initial(labels_left) //Yes, it's capped at its initial value
+
+/obj/item/hand_labeler/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	return !mode
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"

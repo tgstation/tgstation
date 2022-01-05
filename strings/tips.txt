@@ -29,7 +29,7 @@ The P2P chat function found on tablet computers allows for a stealthy way to com
 Experiment with different setups of the supermatter engine to maximize output, but don't risk the crew's safety to do so!
 We were all new once, be patient and guide new players in the right direction.
 On most clothing items that go in the exosuit slot, you can put certain small items into your suit storage, such as a spraycan, your emergency oxygen tank, or a flashlight.
-Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's hardsuit/winter coat holding an RPD, or labcoats holding most medicine.
+Most job-related exosuit clothing can fit job-related items into it, such as the atmospheric technician's winter coat holding an RPD, or labcoats holding most medicine.
 If you're using hotkey mode, you can stop pulling things using H.
 The station's self-destruct terminal is invincible. Go find the disk instead of trying to destroy it.
 If there's something you need from another department, try asking! This game isn't singleplayer and you'd be surprised what you can get accomplished together!
@@ -42,7 +42,6 @@ As the Captain, you have absolute access and control over the station, but this 
 As the Captain, you can purchase a new emergency shuttle using a communications console. Some require cash, while others give you cash in exchange. Keep in mind that purchasing dangerous shuttles may instigate the ire of your crew.
 As the Chief Medical Officer, your hypospray is like a refillable instant injection syringe that can hold 30 units as opposed to the standard 15.
 As the Chief Medical Officer, coordinate and communicate with your doctors, chemists, and paramedics during a nuclear emergency, blob infestation, or some other crisis to keep people alive and fighting.
-As the Chief Medical Officer, your hardsuit can hold an entire medkit in its suit storage!
 As a Medical Doctor, you can attempt to drain blood from a husk with a syringe to determine the cause. If you can extract blood, it was caused by extreme temperatures or lasers, if there is no blood to extract, you have confirmed the presence of changelings.
 As a Medical Doctor, you can surgically implant or extract things from people's chests. This can range from putting in a bomb to pulling out an alien larva.
 As a Medical Doctor, you must target the correct limb and not be in combat mode when trying to perform surgery on someone. Right clicking your patient will intentionally fail the surgery step.
@@ -92,9 +91,7 @@ As an Engineering Cyborg, you can attach air alarm/fire alarm/APC frames to wall
 As a Medical Cyborg, you can fully perform surgery and even augment people.
 As a Janitor Cyborg, you are the bane of all slaughter demons and even Bubblegum himself. Cleaning up blood stains will severely gimp them.
 As the Chief Engineer, you can rename areas or create entirely new ones using your station blueprints.
-As the Chief Engineer, your hardsuit is significantly better than everybody else's. It has the best features of both engineering and atmospherics hardsuits - boasting nigh-invulnerability to radiation and all atmospheric conditions.
 As the Chief Engineer, you can spy on and even forge PDA communications with the message monitor console! The key is in your office.
-As the Chief Engineer, your locker contains a jetpack upgrade that can be attached to hardsuits.
 As the Chief Engineer, the power flow control console in your office will show you APC infos and lets you control them remotely.
 As an Engineer, the supermatter shard is an extremely dangerous piece of equipment: touching it will disintegrate you. So will touching it with telepathy.
 As an Engineer, you can electrify grilles by placing powered cables beneath them.
@@ -110,7 +107,7 @@ As an Engineer, your RCD can be reloaded with iron, glass or plasteel sheets ins
 As an Engineer, the Supermatter Monitoring Program on modular computers give you a detailed report on the Supermatter's condition, and the contents of the air inside of the chamber, allowing you to both diagnose and monitor programs from afar!
 As an Atmospheric Technician, you can unwrench a pipe regardless of the pressures of the gases inside, but if they're too high they can burst out and injure you!
 As an Atmospheric Technician, look into replacing your gas pumps with volumetric gas pumps, as those move air in flat numerical amounts, rather than percentages which leave trace gases.
-As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits, backpack firefighter tanks, and a completely heat and fire proof hardsuit.
+As an Atmospheric Technician, you are better suited to fighting fires than anyone else. As such, you have access to better firesuits or backpack firefighter tanks.
 As an Atmospheric Technician, your backpack firefighter tank can launch resin. This resin will extinguish fires and replace any gases with a safe, room-temperature airmix.
 As an Atmospheric Technician, your ATMOS holofan projector blocks gases while allowing objects to pass through. With it, you can quickly contain gas spills, fires and hull breaches.
 As an Atmospheric Technician, burning a plasma/oxygen mix inside the incinerator will not only produce power, but also gases such as tritium, water vapor and carbon dioxide.
@@ -168,7 +165,7 @@ As the Quartermaster, be sure to check the manifests on crates you receive to ma
 As the Quartermaster, you can construct an express supply console that instantly delivers crates by drop pod. The impact will cause a small explosion as well.
 As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals than on the south.
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
-As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit and mining hardsuits, greatly reducing incoming melee damage.
+As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, greatly reducing incoming melee damage.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
 As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
 As a Traitor, the cryptographic sequencer (emag) can not only open lockers, crates, APCs and more. It can also do things like hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even contact the Syndicate. Experiment!

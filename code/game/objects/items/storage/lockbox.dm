@@ -228,7 +228,7 @@
 		add_fingerprint(user)
 
 	if(id_card.registered_account != buyer_account)
-		to_chat(user, "<span class='notice'>Bank account does not match with buyer!</span")
+		to_chat(user, span_warning("Bank account does not match with buyer!"))
 		return
 
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !privacy_lock)

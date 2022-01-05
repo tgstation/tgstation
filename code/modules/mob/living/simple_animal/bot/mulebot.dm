@@ -130,6 +130,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
+/mob/living/simple_animal/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
+		wires.interact(user)
+		return
+	if(wires.is_cut(WIRE_RX) && isAI(user))
+		return
+
+	. = ..()
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -224,14 +232,6 @@
 			visible_message(span_danger("Something shorts out inside [src]!"))
 			wires.cut_random()
 
-/mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
-		wires.interact(user)
-	else
-		if(wires.is_cut(WIRE_RX) && isAI(user))
-			return
-		ui_interact(user)
-
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -240,8 +240,8 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["on"] = get_bot_flag(BOT_MODE_ON)
-	data["locked"] = get_bot_flag(BOT_COVER_LOCKED)
+	data["on"] = bot_mode_flags & BOT_MODE_ON
+	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
@@ -267,7 +267,6 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
-
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 
@@ -288,7 +287,7 @@
 					return
 			. = TRUE
 		else
-			bot_control(action, usr, params) // Kill this later.
+			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
 			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)

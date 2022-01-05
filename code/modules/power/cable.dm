@@ -109,7 +109,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				neighbor_cable.update_appearance()
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
+	if(associated_loc && !loc)
+		loc = associated_loc
 	Disconnect_cable()
+
+	if(associated_loc)
+		LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	if(powernet)
 		cut_cable_from_powernet() // update the powernets
@@ -118,13 +123,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
-	if(associated_loc && !loc)
-		loc = associated_loc
 
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/stack/cable_coil(drop_location(), 1)
-
-	LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	qdel(src)
 

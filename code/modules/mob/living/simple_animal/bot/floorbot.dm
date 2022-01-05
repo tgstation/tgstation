@@ -146,6 +146,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("place_custom")
 			replacetiles = !replacetiles
@@ -173,7 +174,6 @@
 					targetdirection = 8
 				if("disable")
 					targetdirection = null
-	return
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
 	if(!..())
@@ -384,7 +384,7 @@
 
 /mob/living/simple_animal/bot/floorbot/update_icon_state()
 	. = ..()
-	icon_state = "[toolbox_color]floorbot[get_bot_flag(BOT_MODE_ON)]"
+	icon_state = "[toolbox_color]floorbot[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
 	bot_mode_flags &= ~BOT_MODE_ON
