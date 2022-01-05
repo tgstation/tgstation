@@ -71,15 +71,16 @@
 			switch(category)
 				if(ATMOS_PIPEDISPENSER)
 					if(wait < world.time)
-						var/rec = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].type
-						var/p_type = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]].id
+						var/datum/pipe_info/info = GLOB.atmos_pipe_recipes[params["category"]][params["pipe_type"]]
+						var/recipe_type = info.type
+						var/p_type = info.id
 						
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.atmos_pipe_recipes, p_type))
 							return
 						
 						// If this is a meter, make that.
-						if(rec == /datum/pipe_info/meter)
+						if(recipe_type == /datum/pipe_info/meter)
 							new /obj/item/pipe_meter(loc)
 							wait = world.time + 1 SECONDS
 							return
@@ -95,7 +96,8 @@
 						wait = world.time + 1 SECONDS
 				if(DISPOSAL_PIPEDISPENSER)
 					if(wait < world.time)
-						var/p_type = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]].id
+						var/datum/pipe_info/info = GLOB.disposal_pipe_recipes[params["category"]][params["pipe_type"]]
+						var/p_type = info.id
 						
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
@@ -113,7 +115,8 @@
 						wait = world.time + 1 SECONDS
 				if(TRANSIT_PIPEDISPENSER)
 					if(wait < world.time)
-						var/p_type = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]].id
+						var/datum/pipe_info/info = GLOB.transit_tube_recipes[params["category"]][params["pipe_type"]]
+						var/p_type = info.id
 						
 						// No spawning arbitrary paths (literally 1984)
 						if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
