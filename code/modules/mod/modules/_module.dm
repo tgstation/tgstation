@@ -1,3 +1,4 @@
+///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
 	icon_state = "module"
@@ -233,6 +234,8 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
+	if(!mod.active)
+		return
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		used_overlay = overlay_state_use

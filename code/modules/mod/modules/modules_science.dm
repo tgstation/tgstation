@@ -1,7 +1,6 @@
 //Science modules for MODsuits
 
-//Reagent Scanner
-
+///Reagent Scanner - Lets the user scan reagents.
 /obj/item/mod/module/reagent_scanner
 	name = "MOD reagent scanner module"
 	desc = "A module based off research-oriented Nanotrasen HUDs, this is capable of scanning the contents of \

@@ -1,0 +1,6 @@
+author: "Fikou, Armhulen"
+delete-after: True
+changes: 
+  - expansion: "Adds five new MODsuit modules to maintenance."
+  - bugfix: "fixes MODsuit pins not working"
+  - balance: "specific MODsuit designs now gain smoke protection"
