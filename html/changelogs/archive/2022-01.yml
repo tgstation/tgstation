@@ -59,8 +59,6 @@
   Wallem:
   - qol: Stasis beds put food in stasis as well, preventing decomposition.
 2022-01-04:
-  AndrewL97:
-  - server: MS13 is the best
   Deek-Za:
   - imageadd: Added sprites for cargo cap when flipped
   Fikou, modified sprites from Onule, descriptions by Nerevar and Halcyon:
@@ -108,3 +106,23 @@
   the-orange-cow:
   - qol: The fraxinella flower is now more willing to share its protection against
       the insect menace.
+2022-01-05:
+  Fikou:
+  - qol: disable combat mode defaults to 1. enable combat mode defaults to 4.
+  Fikou, Armhulen:
+  - expansion: Adds five new MODsuit modules to maintenance.
+  - bugfix: fixes MODsuit pins not working
+  - balance: specific MODsuit designs now gain smoke protection
+  JohnFulpWillard:
+  - bugfix: Papers pinned to airlocks will now visibly show if it has anything written
+      on it.
+  Melbert:
+  - bugfix: Fixes cult dagger error with holywater purging.
+  - bugfix: Rust heretic ascension spread rusts everywhere again.
+  SuperNovaa41:
+  - bugfix: Fixes crates duplicating materials with the recycler.
+  TemporalOroboros:
+  - bugfix: Fixed an incorrect calculation in the crystallizer preventing most crystallizer
+      recipes from ever producing high quality products.
+  axietheaxolotl:
+  - imageadd: Brand new sabre and sheath sprites!

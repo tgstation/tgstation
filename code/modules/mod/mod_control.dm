@@ -61,6 +61,8 @@
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
 	var/slowdown_active = 0.75
+	/// How long this MOD takes each part to seal.
+	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Extended description of the theme.
 	var/extended_desc
 	/// MOD cell.
@@ -216,7 +218,7 @@
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
-	. += extended_desc
+	. += "<i>[extended_desc]</i>"
 
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -424,8 +426,6 @@
 
 /obj/item/mod/control/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
 	. = ..()
-	if(!active)
-		return
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_icons = module.generate_worn_overlay(standing)
 		if(!length(module_icons))

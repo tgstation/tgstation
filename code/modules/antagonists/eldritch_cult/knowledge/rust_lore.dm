@@ -212,14 +212,20 @@
 /**
  * #Rust spread datum
  *
- * Simple datum that automatically spreads rust around it
+ * Simple datum that automatically spreads rust around it.
  *
- * Simple implementation of automatically growing entity
+ * Simple implementation of automatically growing entity.
  */
 /datum/rust_spread
-	var/list/edge_turfs = list()
-	var/list/turfs = list()
+	/// The rate of spread every tick.
+	var/spread_per_sec = 6
+	/// The very center of the spread.
 	var/turf/centre
+	/// List of turfs at the edge of our rust (but not yet rusted).
+	var/list/edge_turfs = list()
+	/// List of all turfs we've afflicted.
+	var/list/rusted_turfs = list()
+	/// Static blacklist of turfs we can't spread to.
 	var/static/list/blacklisted_turfs = typecacheof(list(
 		/turf/open/indestructible,
 		/turf/closed/indestructible,
@@ -227,54 +233,53 @@
 		/turf/open/lava,
 		/turf/open/chasm
 	))
-	var/spread_per_sec = 6
-
 
 /datum/rust_spread/New(loc)
-	. = ..()
 	centre = get_turf(loc)
 	centre.rust_heretic_act()
-	turfs += centre
-	START_PROCESSING(SSprocessing,src)
+	rusted_turfs += centre
+	START_PROCESSING(SSprocessing, src)
 
 /datum/rust_spread/Destroy(force, ...)
-	STOP_PROCESSING(SSprocessing,src)
+	centre = null
+	edge_turfs.Cut()
+	rusted_turfs.Cut()
+	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /datum/rust_spread/process(delta_time)
-	var/spread_am = round(spread_per_sec * delta_time)
+	var/spread_amount = round(spread_per_sec * delta_time)
 
-	if(edge_turfs.len < spread_am)
+	if(length(edge_turfs) < spread_amount)
 		compile_turfs()
 
-	var/turf/rust_affected
-	for(var/i in 0 to spread_am)
-		if(!edge_turfs.len)
-			continue
-		rust_affected = pick(edge_turfs - turfs)
-		rust_affected.rust_heretic_act()
-		turfs += rust_affected
-
+	for(var/i in 0 to spread_amount)
+		if(!length(edge_turfs))
+			break
+		var/turf/afflicted_turf = pick_n_take(edge_turfs)
+		afflicted_turf.rust_heretic_act()
+		rusted_turfs |= afflicted_turf
 
 /**
  * Compile turfs
  *
- * Recreates all edge_turfs as well as normal turfs.
+ * Recreates the edge_turfs list.
+ * Updates the rusted_turfs list, in case any turfs within were un-rusted.
  */
 /datum/rust_spread/proc/compile_turfs()
-	edge_turfs = list()
-	var/list/removal_list = list()
-	var/max_dist = 1
-	for(var/atom/turfie as anything in turfs)
-		if(!HAS_TRAIT(turfie, TRAIT_RUSTY))
-			removal_list += turfie
-		max_dist = max(max_dist, get_dist(turfie,centre) +1)
-	turfs -= removal_list
-	for(var/turfie in spiral_range_turfs(max_dist,centre,FALSE))
+	edge_turfs.Cut()
 
-		if(turfie in turfs || is_type_in_typecache(turfie,blacklisted_turfs))
+	var/max_dist = 1
+	for(var/turf/found_turf as anything in rusted_turfs)
+		if(!HAS_TRAIT(found_turf, TRAIT_RUSTY))
+			rusted_turfs -= found_turf
+		max_dist = max(max_dist, get_dist(found_turf, centre) + 1)
+
+	for(var/turf/nearby_turf as anything in spiral_range_turfs(max_dist, centre, FALSE))
+		if(nearby_turf in rusted_turfs || is_type_in_typecache(nearby_turf, blacklisted_turfs))
 			continue
-		for(var/line_turfie_owo in get_line(turfie,centre))
-			if(get_dist(turfie,line_turfie_owo) <= 1)
-				edge_turfs += turfie
+
+		for(var/turf/line_turf as anything in get_line(nearby_turf, centre))
+			if(get_dist(nearby_turf, line_turf) <= 1)
+				edge_turfs |= nearby_turf
 		CHECK_TICK
