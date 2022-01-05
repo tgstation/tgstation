@@ -345,7 +345,7 @@
 	color = "#596479";
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
@@ -1739,10 +1739,10 @@
 "hE" = (
 /obj/structure/chair/comfy/black,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
-/obj/machinery/light/directional/west,
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
 "hG" = (
@@ -5580,7 +5580,7 @@
 /area/syndicate_mothership/control)
 "ri" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
 /turf/open/floor/iron/grimy,
@@ -6301,7 +6301,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
 "tl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1
 	},
 /turf/open/floor/wood,
@@ -14131,7 +14131,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
 	dir = 1
 	},
-/obj/machinery/meter,
 /turf/open/floor/iron/dark,
 /area/centcom/admin/storage)
 "Os" = (
@@ -14631,9 +14630,6 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/three)
 "QN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -14642,6 +14638,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -15128,7 +15127,7 @@
 	name = "Shower"
 	},
 /obj/item/soap/deluxe,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/vent_pump,
 /turf/open/floor/iron/white,
 /area/centcom/admin)
 "SP" = (
@@ -15471,24 +15470,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/briefing/storage)
-"Ub" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
-	dir = 1
-	},
-/obj/machinery/meter,
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/centcom/admin/storage)
 "Ud" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -16365,7 +16346,7 @@
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
 "XS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -56194,7 +56175,7 @@ Ur
 aZ
 YU
 GB
-Ub
+Ow
 aw
 YU
 uY
