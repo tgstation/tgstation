@@ -18,16 +18,18 @@
 	surplus = 0
 	illegal_tech = FALSE
 
-// Medium progression cost
+// Low progression cost
 
 /datum/uplink_item/ammo/pistol
 	name = "9mm Handgun Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 10 MINUTES
 	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
 	purchasable_from = ~UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
+
+// Medium progression cost
 
 /datum/uplink_item/ammo/pistolap
 	name = "9mm Armour Piercing Magazine"
