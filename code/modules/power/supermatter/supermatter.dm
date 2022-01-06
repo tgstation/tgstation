@@ -852,7 +852,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
 	var/turf/local_turf = loc
-	var/kiss_power = istype(projectile, /obj/projectile/kiss/death) ? 20000 : istype(projectile, /obj/projectile/kiss) ? 100 : 0
+	var/kiss_power = 0
+	switch(projectile.type)
+		if(/obj/projectile/kiss)
+			kiss_power = 100
+		if(/obj/projectile/kiss/death)
+			kiss_power = 20000
 	if(!istype(local_turf))
 		return FALSE
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
