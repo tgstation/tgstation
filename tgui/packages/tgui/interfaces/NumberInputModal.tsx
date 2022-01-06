@@ -1,6 +1,6 @@
 import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
-import { KEY_ENTER } from 'common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -9,7 +9,7 @@ type NumberInputData = {
   max_value: number | null;
   message: string;
   min_value: number | null;
-  placeholder: number;
+  init_value: number;
   preferences: Preferences;
   timeout: number;
   title: string;
@@ -17,20 +17,26 @@ type NumberInputData = {
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, placeholder, preferences, timeout, title } = data;
+  const { message, init_value, preferences, timeout, title } = data;
   const { large_buttons } = preferences;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   const onClick = (value: number) => {
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
-  // NumberInput basically handles everything here
-  const defaultValidState = { isValid: true, error: null };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+    = 125
+    + Math.ceil(message.length / 3)
+    + (message.length && large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={270} height={windowHeight}>
@@ -40,6 +46,9 @@ export const NumberInputModal = (_, context) => {
           const keyCode = window.event ? event.which : event.keyCode;
           if (keyCode === KEY_ENTER) {
             act('submit', { entry: input });
+          }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
           }
         }}>
         <Section fill>
@@ -51,7 +60,7 @@ export const NumberInputModal = (_, context) => {
               <InputArea input={input} onClick={onClick} onChange={onChange} />
             </Stack.Item>
             <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
-              <InputButtons input={input} inputIsValid={defaultValidState} />
+              <InputButtons input={input} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -62,42 +71,46 @@ export const NumberInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { act, data } = useBackend<NumberInputData>(context);
-  const { min_value, max_value, placeholder } = data;
+  const { data } = useBackend<NumberInputData>(context);
+  const { min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
   return (
     <Stack fill>
       <Stack.Item>
         <Button
+          disabled={input === min_value}
           icon="angle-double-left"
           onClick={() => onClick(min_value || 0)}
-          tooltip="Minimum"
+          tooltip={min_value ? `Min (${min_value})` : 'Min'}
         />
       </Stack.Item>
       <Stack.Item grow>
         <NumberInput
           autoFocus
+          autoSelect
           fluid
           minValue={min_value}
-          maxValue={max_value}
+          maxValue={max_value ? max_value : 1000000}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || placeholder || 0}
+          value={input}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={!max_value || max_value === 0 || input === max_value}
           icon="angle-double-right"
-          onClick={() => onClick(max_value || 10000)}
-          tooltip="Max"
+          onClick={() => onClick(max_value)}
+          tooltip={max_value ? `Max (${max_value})` : 'Max'}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
+          disabled={input === init_value}
           icon="redo"
-          onClick={() => onClick(placeholder || 0)}
-          tooltip="Reset"
+          onClick={() => onClick(init_value)}
+          tooltip={init_value ? `Reset (${init_value})` : 'Reset'}
         />
       </Stack.Item>
     </Stack>

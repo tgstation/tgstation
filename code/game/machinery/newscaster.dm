@@ -553,7 +553,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in sort_list(available_channels)
+			var/channel_choice = tgui_input_list(usr, "Choose receiving Feed Channel", "Network Channel Handler", sort_list(available_channels))
+			if(isnull(channel_choice))
+				return
+			channel_name = channel_choice
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
 			var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", msg, multiline = TRUE)

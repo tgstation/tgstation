@@ -76,11 +76,11 @@
 
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	var/new_volume = input(user, "Enter new activation threshold", "Beepityboop", activation_volume) as num|null
-	if(!new_volume)
+	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
+	if(isnull(new_volume))
 		return
 
-	activation_volume = round(clamp(new_volume, 0, buffer))
+	activation_volume = round(new_volume)
 	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
 	return
 

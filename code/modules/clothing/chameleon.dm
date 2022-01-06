@@ -93,12 +93,14 @@
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
 	if(!user || !IsAvailable())
 		return FALSE
-	var/selected = input("Select outfit to change into", "Chameleon Outfit") as null|anything in outfit_options
+	var/selected = tgui_input_list(user, "Select outfit to change into", "Chameleon Outfit", outfit_options)
+	if(isnull(selected))
+		return FALSE
 	if(!IsAvailable() || QDELETED(src) || QDELETED(user))
 		return FALSE
-	var/outfit_type = outfit_options[selected]
-	if(!outfit_type)
+	if(isnull(outfit_options[selected]))
 		return FALSE
+	var/outfit_type = outfit_options[selected]
 	var/datum/outfit/job/O = new outfit_type()
 	var/list/outfit_types = O.get_chameleon_disguise_info()
 	var/datum/job/job_datum = SSjob.GetJobType(O.jobtype)
@@ -117,19 +119,15 @@
 			if(done)
 				break
 
-	//hardsuit helmets/suit hoods
-	if(O.toggle_helmet && (ispath(O.suit, /obj/item/clothing/suit/space/hardsuit) || ispath(O.suit, /obj/item/clothing/suit/hooded)) && ishuman(user))
+	//suit hoods
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		//make sure they are actually wearing the suit, not just holding it, and that they have a chameleon hat
 		if(istype(H.wear_suit, /obj/item/clothing/suit/chameleon) && istype(H.head, /obj/item/clothing/head/chameleon))
 			var/helmet_type
-			if(ispath(O.suit, /obj/item/clothing/suit/space/hardsuit))
-				var/obj/item/clothing/suit/space/hardsuit/hardsuit = O.suit
-				helmet_type = initial(hardsuit.helmettype)
-			else
+			if(ispath(O.suit, /obj/item/clothing/suit/hooded))
 				var/obj/item/clothing/suit/hooded/hooded = O.suit
 				helmet_type = initial(hooded.hoodtype)
-
 			if(helmet_type)
 				var/obj/item/clothing/head/chameleon/hat = H.head
 				hat.chameleon_action.update_look(user, helmet_type)
@@ -181,13 +179,12 @@
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
-	var/picked_name
-	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in sort_list(chameleon_list, /proc/cmp_typepaths_asc)
-	if(!picked_name)
+	var/picked_name = tgui_input_list(user, "Select [chameleon_name] to change into", "Chameleon Settings", sort_list(chameleon_list, /proc/cmp_typepaths_asc))
+	if(isnull(picked_name))
+		return
+	if(isnull(chameleon_list[picked_name]))
 		return
 	picked_item = chameleon_list[picked_name]
-	if(!picked_item)
-		return
 	update_look(user, picked_item)
 
 /datum/action/item_action/chameleon/change/proc/random_look(mob/user)

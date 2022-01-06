@@ -4,11 +4,19 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 
 The latest database version is 5.21; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 21);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 22);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 21);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 22);
 
 In any query remember to add a prefix to the table names if you use one.
+
+Version 5.22, 22 December 2021, by Mothblocks
+Fixes a bug in `telemetry_connections` that limited the range of IPs.
+
+```
+ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT NULL;
+```
+-----------------------------------------------------
 
 Version 5.21, 15 December 2021, by Mothblocks
 Adds `telemetry_connections` table for tracking tgui telemetry.

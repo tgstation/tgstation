@@ -181,8 +181,10 @@
 
 	locations["None (Dangerous)"] = PORTAL_LOCATION_DANGEROUS
 
-	var/teleport_location_key = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") as null|anything in locations
-	if (!teleport_location_key || user.get_active_held_item() != src || user.incapacitated())
+	var/teleport_location_key = tgui_input_list(user, "Teleporter to lock on", "Hand Teleporter", sort_list(locations))
+	if (isnull(teleport_location_key))
+		return
+	if(user.get_active_held_item() != src || user.incapacitated())
 		return
 
 	// Not always a datum, but needed for IS_WEAKREF_OF to cast properly.
@@ -205,7 +207,7 @@
 
 /// Takes either PORTAL_LOCATION_DANGEROUS or an /obj/machinery/computer/teleport/computer.
 /obj/item/hand_tele/proc/try_create_portal_to(mob/user, teleport_location)
-	if (active_portal_pairs.len >= max_portal_pairs)
+	if (length(active_portal_pairs) >= max_portal_pairs)
 		user.show_message(span_notice("[src] is recharging!"))
 		return
 

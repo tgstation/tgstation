@@ -14955,7 +14955,7 @@
 /area/centcom/supplypod/loading/two)
 "Sh" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/deathsquad{
+/obj/item/mod/control/pre_equipped/corporate{
 	pixel_y = 5
 	},
 /obj/item/clothing/gloves/combat,

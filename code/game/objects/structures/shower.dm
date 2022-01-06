@@ -84,7 +84,7 @@
 		return
 
 	can_refill = !can_refill
-	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
+	to_chat(user, span_notice("You [can_refill ? "en" : "dis"]able the shower's water recycler."))
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	return TRUE
 

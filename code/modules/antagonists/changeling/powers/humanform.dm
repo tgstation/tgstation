@@ -16,7 +16,7 @@
 		names += "[prof.name]"
 
 	var/chosen_name = tgui_input_list(user, "Target DNA", "Transformation", sort_list(names))
-	if(!chosen_name)
+	if(isnull(chosen_name))
 		return
 
 	var/datum/changelingprofile/chosen_prof = changeling.get_dna(chosen_name)
@@ -27,8 +27,28 @@
 	to_chat(user, span_notice("We transform our appearance."))
 	..()
 	changeling.purchasedpowers -= src
+	Remove(user)
 
 	var/newmob = user.humanize()
 
 	changeling.transform(newmob, chosen_prof)
+	return TRUE
+
+// Subtype used when a changeling uses lesser form.
+/datum/action/changeling/humanform/from_monkey
+	desc = "We change back into a human. Costs 5 chemicals."
+
+/datum/action/changeling/humanform/from_monkey/sting_action(mob/living/carbon/user)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/action/changeling/lesserform/monkey_form_ability = new()
+	changeling.purchasedpowers += monkey_form_ability
+
+	monkey_form_ability.Grant(user)
+
+	// Delete ourselves when we're done.
+	qdel(src)
 	return TRUE

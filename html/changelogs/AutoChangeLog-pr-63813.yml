@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a hard-deletion related to the void hood."

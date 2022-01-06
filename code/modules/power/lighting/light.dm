@@ -130,12 +130,12 @@
 
 	var/area/local_area = get_area(src)
 	if(emergency_mode || (local_area?.fire))
-		. += mutable_appearance(overlay_icon, "[base_state]_emergency", layer, plane)
+		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
 		return
 	if(nightshift_enabled)
-		. += mutable_appearance(overlay_icon, "[base_state]_nightshift", layer, plane)
+		. += mutable_appearance(overlay_icon, "[base_state]_nightshift")
 		return
-	. += mutable_appearance(overlay_icon, base_state, layer, plane)
+	. += mutable_appearance(overlay_icon, base_state)
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)

@@ -5,6 +5,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	pass_flags_self = PASSITEM
 
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
 
@@ -408,7 +409,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		affixes.Add(suffixes)
 
 		//admin picks, cleanup the ones we didn't do and handle chosen
-		var/picked_affix_name = input(usr, "Choose an affix to add to [src]...", "Enchant [src]") as null|anything in affixes
+		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
+		if(isnull(picked_affix_name))
+			return
 		if(!affixes[picked_affix_name] || QDELETED(src))
 			return
 		var/datum/fantasy_affix/affix = affixes[picked_affix_name]
@@ -816,8 +819,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if (obj_flags & CAN_BE_HIT)
 		return ..()
 	return 0
-
-attack_basic_mob
 
 /obj/item/burn()
 	if(!QDELETED(src))
@@ -1247,3 +1248,11 @@ attack_basic_mob
 /obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
+
+/// Special stuff you want to do when an outfit equips this item.
+/obj/item/proc/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	return
+
+/// Whether or not this item can be put into a storage item through attackby
+/obj/item/proc/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	return TRUE

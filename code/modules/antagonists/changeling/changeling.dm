@@ -3,7 +3,7 @@
 #define LING_ABSORB_RECENT_SPEECH 8 //The amount of recent spoken lines to gain on absorbing a mob
 
 /datum/antagonist/changeling
-	name = "Changeling"
+	name = "\improper Changeling"
 	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
@@ -202,7 +202,7 @@
 	thepower.on_purchase(owner.current)//Grant() is ran in this proc, see changeling_powers.dm
 
 /datum/antagonist/changeling/proc/readapt()
-	if(!ishuman(owner.current))
+	if(!ishuman(owner.current) || ismonkey(owner.current))
 		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
 		return
 	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
@@ -265,7 +265,7 @@
 		if(verbose)
 			to_chat(user, span_warning("[target]'s body is ruined beyond usability!"))
 		return
-	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
+	if(!ishuman(target) || ismonkey(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
 			to_chat(user, span_warning("We could gain no benefit from absorbing a lesser creature."))
 		return
@@ -714,7 +714,7 @@
 
 // Changelings spawned from non-changeling headslugs (IE, due to being transformed into a headslug as a non-ling). Weaker than a normal changeling.
 /datum/antagonist/changeling/headslug
-	name = "Headslug Changeling"
+	name = "\improper Headslug Changeling"
 	show_in_antagpanel = FALSE
 	give_objectives = FALSE
 	soft_antag = TRUE
