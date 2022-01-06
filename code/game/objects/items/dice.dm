@@ -1,3 +1,6 @@
+#define DICE_NOT_RIGGED 1
+#define DICE_BASICALLY_RIGGED 2
+#define DICE_TOTALLY_RIGGED 3
 
 ///holding bag for dice
 /obj/item/storage/dice
@@ -232,3 +235,7 @@
 		rigged = DICE_BASICALLY_RIGGED
 		rigged_value = result
 	..(M)
+
+#undef DICE_NOT_RIGGED
+#undef DICE_BASICALLY_RIGGED
+#undef DICE_TOTALLY_RIGGED
