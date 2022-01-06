@@ -6,6 +6,7 @@
 	status = ORGAN_ROBOTIC
 	organ_flags = NONE
 	beating = TRUE
+	/// Shows name of the gland as well as a description of what it does upon examination by abductor scientists and observers.
 	var/abductor_hint = "baseline placebo referencer"
 
 	/// The minimum time between activations
