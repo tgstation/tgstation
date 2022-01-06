@@ -132,7 +132,7 @@
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/Destroy()
 	if(original)
 		original.copies -= src
-		original - null
+		original = null
 	return ..()
 
 //Hit a fake? eat pain!
