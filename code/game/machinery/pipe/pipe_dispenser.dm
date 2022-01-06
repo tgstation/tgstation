@@ -103,15 +103,15 @@
 						if(!verify_recipe(GLOB.disposal_pipe_recipes, p_type))
 							return
 						
-						var/obj/structure/disposalconstruct/C = new (loc, p_type)
-						if(!C.can_place())
+						var/obj/structure/disposalconstruct/disposal_out = new (loc, p_type)
+						if(!disposal_out.can_place())
 							to_chat(usr, span_warning("There's not enough room to build that here!"))
-							qdel(C)
+							qdel(disposal_out)
 							return
 						
-						C.add_fingerprint(usr)
-						C.update_appearance()
-						C.setDir(params["pipe_dir"])
+						disposal_out.add_fingerprint(usr)
+						disposal_out.update_appearance()
+						disposal_out.setDir(params["pipe_dir"])
 						wait = world.time + 1 SECONDS
 				if(TRANSIT_PIPEDISPENSER)
 					if(wait < world.time)
@@ -122,10 +122,10 @@
 						if(!verify_recipe(GLOB.transit_tube_recipes, p_type))
 							return
 						
-						var/obj/structure/c_transit_tube/tube = new p_type(loc)
-						tube.add_fingerprint(usr)
-						tube.update_appearance()
-						tube.setDir(params["pipe_dir"])
+						var/obj/structure/c_transit_tube/tube_out = new p_type(loc)
+						tube_out.add_fingerprint(usr)
+						tube_out.update_appearance()
+						tube_out.setDir(params["pipe_dir"])
 						wait = world.time + 1 SECONDS
 		if("piping_layer")
 			piping_layer = text2num(params["piping_layer"])
@@ -211,4 +211,6 @@
 	desc = "Dispenses pipes that will move beings around."
 	category = TRANSIT_PIPEDISPENSER
 
-
+#undef ATMOS_PIPEDISPENSER
+#undef DISPOSAL_PIPEDISPENSER
+#undef TRANSIT_PIPEDISPENSER
