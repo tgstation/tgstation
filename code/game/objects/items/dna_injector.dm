@@ -10,7 +10,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 
-	var/damage_coeff  = 1
+	var/damage_coeff = 1
 	var/list/fields
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
@@ -22,7 +22,6 @@
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
 			M.dna.remove_mutation(HM)
@@ -176,14 +175,24 @@
 	remove_mutations = list(NERVOUS)
 
 /obj/item/dnainjector/antifire
-	name = "\improper DNA injector (Anti-Fire)"
+	name = "\improper DNA injector (Anti-Temp Adaptation)"
 	desc = "Cures fire."
-	remove_mutations = list(SPACEMUT)
+	remove_mutations = list(TEMPADAPT)
 
 /obj/item/dnainjector/firemut
-	name = "\improper DNA injector (Fire)"
+	name = "\improper DNA injector (Temp Adaptation)"
 	desc = "Gives you fire."
-	add_mutations = list(SPACEMUT)
+	add_mutations = list(TEMPADAPT)
+
+/obj/item/dnainjector/antipressure
+	name = "\improper DNA injector (Anti-Pressure Adaptation)"
+	desc = "Cures fire."
+	remove_mutations = list(PRESSUREADAPT)
+
+/obj/item/dnainjector/pressuremut
+	name = "\improper DNA injector (Pressure Adaptation)"
+	desc = "Gives you fire."
+	add_mutations = list(PRESSUREADAPT)
 
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
@@ -461,7 +470,6 @@
 		return FALSE
 
 	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_BADDNA)))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
 		for(var/mutation in remove_mutations)
@@ -530,7 +538,6 @@
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/pref = ""
 		var/suff = ""

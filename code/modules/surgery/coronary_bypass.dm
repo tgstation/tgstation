@@ -9,6 +9,7 @@
 		/datum/surgery_step/coronary_bypass,
 		/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
+	organ_to_manipulate = ORGAN_SLOT_HEART
 
 /datum/surgery/coronary_bypass/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/heart/target_heart = target.getorganslot(ORGAN_SLOT_HEART)
@@ -24,7 +25,7 @@
 	implements = list(
 		TOOL_SCALPEL = 90,
 		/obj/item/melee/energy/sword = 45,
-		/obj/item/kitchen/knife = 45,
+		/obj/item/knife = 45,
 		/obj/item/shard = 25)
 	time = 16
 

@@ -14,7 +14,7 @@
 	var/contraband = FALSE
 	var/self_paid = FALSE
 	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, mail \
+		cannot transport live organisms, human remains, classified nuclear weaponry, mail, \
 		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	/// radio used by the console to send messages on supply channel
@@ -121,7 +121,8 @@
 			"cost" = SO.pack.get_cost(),
 			"id" = SO.id,
 			"orderer" = SO.orderer,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+			"paid" = !isnull(SO.paying_account), //paid by requester
+			"dep_order" = SO.department_destination ? TRUE : FALSE
 		))
 
 	data["requests"] = list()
@@ -138,7 +139,6 @@
 
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
 	var/list/data = list()
-	data["requestonly"] = requestonly
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
@@ -207,7 +207,7 @@
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				CRASH("Unknown supply pack id given by order console ui. ID: [params["id"]]")
-			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly)
+			if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.DropPodOnly || (pack.special && !pack.special_enabled))
 				return
 
 			var/name = "*None Provided*"
@@ -238,7 +238,7 @@
 
 			var/reason = ""
 			if(requestonly && !self_paid)
-				reason = stripped_input("Reason:", name, "")
+				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
 
@@ -257,7 +257,7 @@
 					break
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, applied_coupon)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, null, applied_coupon)
 			SO.generateRequisition(T)
 			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
@@ -272,15 +272,22 @@
 		if("remove")
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
-				if(SO.id == id)
-					if(SO.applied_coupon)
-						say("Coupon refunded.")
-						SO.applied_coupon.forceMove(get_turf(src))
-					SSshuttle.shoppinglist -= SO
-					. = TRUE
-					break
+				if(SO.id != id)
+					continue
+				if(SO.department_destination)
+					say("Only the department that ordered this item may cancel it.")
+					return
+				if(SO.applied_coupon)
+					say("Coupon refunded.")
+					SO.applied_coupon.forceMove(get_turf(src))
+				SSshuttle.shoppinglist -= SO
+				. = TRUE
+				break
 		if("clear")
-			SSshuttle.shoppinglist.Cut()
+			for(var/datum/supply_order/cancelled_order in SSshuttle.shoppinglist)
+				if(cancelled_order.department_destination)
+					continue //don't cancel other department's orders
+				SSshuttle.shoppinglist -= cancelled_order
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])

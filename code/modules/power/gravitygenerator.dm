@@ -26,7 +26,11 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	move_resist = INFINITY
 	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+	var/datum/proximity_monitor/advanced/gravity/gravity_field
+
 	var/sprite_number = 0
+
 	///Audio for when the gravgen is on
 	var/datum/looping_sound/gravgen/soundloop
 
@@ -35,8 +39,9 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	soundloop = new(src, TRUE)
 
 /obj/machinery/gravity_generator/main/Destroy()
-	. = ..()
+	QDEL_NULL(gravity_field)
 	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/machinery/gravity_generator/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	return FALSE
@@ -186,7 +191,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	charge_count = 0
 	breaker = FALSE
 	set_power()
-	set_state(0)
+	disable()
 	investigate_log("has broken down.", INVESTIGATE_GRAVITY)
 
 /obj/machinery/gravity_generator/main/set_fix()
@@ -290,43 +295,71 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	investigate_log("is now [charging_state == POWER_UP ? "charging" : "discharging"].", INVESTIGATE_GRAVITY)
 	update_appearance()
 
+/obj/machinery/gravity_generator/main/proc/enable()
+	charging_state = POWER_IDLE
+	on = TRUE
+	update_use_power(ACTIVE_POWER_USE)
+
+	if (!SSticker.IsRoundInProgress())
+		return
+
+	soundloop.start()
+	if (!gravity_in_level())
+		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
+		message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
+		shake_everyone()
+	gravity_field = new(src, 2, TRUE, 6)
+
+	complete_state_update()
+
+/obj/machinery/gravity_generator/main/proc/disable()
+	charging_state = POWER_IDLE
+	on = FALSE
+	update_use_power(IDLE_POWER_USE)
+
+	if (!SSticker.IsRoundInProgress())
+		return
+
+	soundloop.stop()
+	if (gravity_in_level())
+		investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
+		message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
+		shake_everyone()
+
+	QDEL_NULL(gravity_field)
+	complete_state_update()
+
+/obj/machinery/gravity_generator/main/proc/complete_state_update()
+	update_appearance()
+	update_list()
+	updateUsrDialog()
+
 // Set the state of the gravity.
 /obj/machinery/gravity_generator/main/proc/set_state(new_state)
-	charging_state = POWER_IDLE
+
 	on = new_state
 	update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 	// Sound the alert if gravity was just enabled or disabled.
 	var/alert = FALSE
 	if(SSticker.IsRoundInProgress())
 		if(on) // If we turned on and the game is live.
-			soundloop.start()
-			if(gravity_in_level() == FALSE)
-				alert = TRUE
-				investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
-				message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
-		else
-			soundloop.stop()
-			if(gravity_in_level() == TRUE)
-				alert = TRUE
-				investigate_log("was brought offline and there is now no gravity for this level.", INVESTIGATE_GRAVITY)
-				message_admins("The gravity generator was brought offline with no backup generator. [ADMIN_VERBOSEJMP(src)]")
 
-	update_appearance()
-	update_list()
-	src.updateUsrDialog()
+		else
+
+
+
 	if(alert)
 		shake_everyone()
 
 // Charge/Discharge and turn on/off gravity when you reach 0/100 percent.
-// Also emit radiation and handle the overlays.
 /obj/machinery/gravity_generator/main/process()
 	if(machine_stat & BROKEN)
 		return
 	if(charging_state != POWER_IDLE)
 		if(charging_state == POWER_UP && charge_count >= 100)
-			set_state(1)
+			enable()
 		else if(charging_state == POWER_DOWN && charge_count <= 0)
-			set_state(0)
+			disable()
 		else
 			if(charging_state == POWER_UP)
 				charge_count += 2
@@ -337,8 +370,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 				playsound(src.loc, 'sound/effects/empulse.ogg', 100, TRUE)
 
 			updateDialog()
-			if(prob(25)) // To help stop "Your clothes feel warm." spam.
-				pulse_radiation()
 
 			var/overlay_state = null
 			switch(charge_count)
@@ -360,10 +391,6 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 						middle.add_overlay(overlay_state)
 					current_overlay = overlay_state
 
-
-/obj/machinery/gravity_generator/main/proc/pulse_radiation()
-	radiation_pulse(src, 200)
-
 // Shake everyone on the z level to let them know that gravity was enagaged/disenagaged.
 /obj/machinery/gravity_generator/main/proc/shake_everyone()
 	var/turf/T = get_turf(src)
@@ -372,7 +399,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		var/mob/M = i
 		if(M.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(M.z, ZTRAITS_STATION)))
 			continue
-		M.update_gravity(M.mob_has_gravity())
+		M.update_gravity(M.has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
@@ -414,8 +441,8 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 	name = "paper- 'Generate your own gravity!'"
 	info = {"<h1>Gravity Generator Instructions For Dummies</h1>
 	<p>Surprisingly, gravity isn't that hard to make! All you have to do is inject deadly radioactive minerals into a ball of
-	energy and you have yourself gravity! You can turn the machine on or off when required but you must remember that the generator
-	will EMIT RADIATION when charging or discharging, you can tell it is charging or discharging by the noise it makes, so please WEAR PROTECTIVE CLOTHING.</p>
+	energy and you have yourself gravity! You can turn the machine on or off when required.
+	The generator produces a very harmful amount of gravity when enabled, so don't stay close for too long.</p>
 	<br>
 	<h3>It blew up!</h3>
 	<p>Don't panic! The gravity generator was designed to be easily repaired. If, somehow, the sturdy framework did not survive then

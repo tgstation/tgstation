@@ -68,7 +68,7 @@
 				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
 				return TRUE
 
-			active_channel =  new_target
+			active_channel = new_target
 			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
 			if((!(src in channel.active_clients) && !(src in channel.offline_clients)) && !channel.password)
 				channel.add_client(src)
@@ -91,8 +91,7 @@
 		if("PRG_toggleadmin")
 			if(netadmin_mode)
 				netadmin_mode = FALSE
-				if(channel)
-					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
+				channel?.add_client(src)
 				return TRUE
 			var/mob/living/user = usr
 			if(can_run(user, TRUE, ACCESS_NETWORK))

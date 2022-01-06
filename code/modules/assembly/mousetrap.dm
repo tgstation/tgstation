@@ -7,7 +7,7 @@
 	attachable = TRUE
 	var/armed = FALSE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
 	///if we are attached to an assembly holder, we attach a connect_loc element to ourselves that listens to this from the holder
 	var/static/list/holder_connections = list(

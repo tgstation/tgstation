@@ -2,12 +2,16 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/shiv
+	r_pocket = /obj/item/knife/shiv
 
-/datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visualsOnly=FALSE)
+	// This outfit is used by the assets SS, which is ran before the atoms SS
+	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
+		prisoner.w_uniform?.update_greyscale()
+		prisoner.update_inv_w_uniform()
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
@@ -30,12 +34,12 @@
 	if(visualsOnly)
 		return
 	equipped_on.fully_replace_character_name(null,"Waldo")
-	equipped_on.eye_color = "000"
+	equipped_on.eye_color = "#000000"
 	equipped_on.gender = MALE
 	equipped_on.skin_tone = "caucasian3"
 	equipped_on.hairstyle = "Business Hair 3"
 	equipped_on.facial_hairstyle = "Shaved"
-	equipped_on.hair_color = "000"
+	equipped_on.hair_color = "#000000"
 	equipped_on.facial_hair_color = equipped_on.hair_color
 	equipped_on.update_body()
 	if(equipped_on.mind)
@@ -101,7 +105,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
-	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	glasses = /obj/item/clothing/glasses/sunglasses/gar
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	id = /obj/item/card/id/advanced

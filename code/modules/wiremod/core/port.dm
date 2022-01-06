@@ -46,9 +46,13 @@
  * Casts to the port's datatype (e.g. number -> string), and assumes this can be done.
  */
 /datum/port/proc/set_value(value, force = FALSE)
+	if(isweakref(value))
+		var/datum/weakref/reference_to_obj = value
+		value = reference_to_obj.resolve()
+
 	if(src.value != value || force)
-		if(isatom(value))
-			UnregisterSignal(value, COMSIG_PARENT_QDELETING)
+		if(isatom(src.value))
+			UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
 		src.value = datatype_handler.convert_value(src, value, force)
 		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
@@ -105,7 +109,7 @@
 /**
  * Returns the data from the datatype
  */
-/datum/port/proc/datatype_ui_data()
+/datum/port/proc/datatype_ui_data(mob/user)
 	return datatype_handler.datatype_ui_data(src)
 
 /**
@@ -133,6 +137,7 @@
 		disconnect(output)
 
 /datum/port/input/proc/disconnect(datum/port/output/output)
+	SIGNAL_HANDLER
 	connected_ports -= output
 	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
 	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)

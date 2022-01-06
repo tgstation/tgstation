@@ -174,16 +174,15 @@
 
 				// if is anchored, don't let through
 				if(ROI.anchored)
-					if(isliving(ROI))
-						var/mob/living/L = ROI
-						//only TP living mobs buckled to non anchored items
-						if(!L.buckled || L.buckled.anchored)
-							continue
-					//Don't TP ghosts
-					else if(!isobserver(ROI))
+					continue
+
+				if(isliving(ROI))
+					var/mob/living/living_subject = ROI
+					//only TP living mobs buckled to non anchored items
+					if(living_subject.buckled && living_subject.buckled.anchored)
 						continue
 
-				do_teleport(ROI, get_turf(target_pad),null,TRUE,null,null,null,null,TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+				do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 				CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()

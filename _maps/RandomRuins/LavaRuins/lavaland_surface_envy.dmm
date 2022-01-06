@@ -45,7 +45,7 @@
 /obj/structure/mirror/directional/north{
 	icon_state = "mirror_broke"
 	},
-/obj/item/kitchen/knife/envy,
+/obj/item/knife/envy,
 /turf/open/floor/plating,
 /area/ruin/unpowered)
 "l" = (

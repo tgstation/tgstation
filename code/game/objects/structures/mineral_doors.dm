@@ -7,14 +7,16 @@
 	anchored = TRUE
 	opacity = TRUE
 	layer = CLOSED_DOOR_LAYER
+	material_flags = MATERIAL_EFFECTS
 
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 	max_integrity = 200
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 50, ACID = 50)
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
+	material_flags = MATERIAL_EFFECTS
+	material_modifier = 0.25
 	generic_can_allow_through = FALSE
 
 	var/door_opened = FALSE //if it's open or not.
@@ -25,10 +27,13 @@
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
 
 	var/sheetType = /obj/item/stack/sheet/iron //what we're made of
-	var/sheetAmount = 7 //how much we drop when deconstructed
+	var/sheetAmount = 10 //how much it takes to construct us.
 
 /obj/structure/mineral_door/Initialize(mapload)
 	. = ..()
+	var/obj/item/stack/initialized_mineral = new sheetType // Okay this kinda sucks.
+	set_custom_materials(initialized_mineral.mats_per_unit, sheetAmount)
+	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/mineral_door/Destroy()
@@ -207,6 +212,7 @@
 /obj/structure/mineral_door/iron
 	name = "iron door"
 	max_integrity = 300
+	sheetAmount = 20
 
 /obj/structure/mineral_door/silver
 	name = "silver door"
@@ -249,32 +255,6 @@
 	name = "plasma door"
 	icon_state = "plasma"
 	sheetType = /obj/item/stack/sheet/mineral/plasma
-
-/obj/structure/mineral_door/transparent/plasma/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/mineral_door/transparent/plasma/welder_act(mob/living/user, obj/item/I)
-	return
-
-/obj/structure/mineral_door/transparent/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature())
-		var/turf/T = get_turf(src)
-		message_admins("Plasma mineral door ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma mineral door ignited by [key_name(user)] in [AREACOORD(T)]")
-		TemperatureAct()
-	else
-		return ..()
-
-/obj/structure/mineral_door/transparent/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/mineral_door/transparent/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	TemperatureAct()
-
-/obj/structure/mineral_door/transparent/plasma/proc/TemperatureAct()
-	atmos_spawn_air("plasma=500;TEMP=1000")
-	deconstruct(FALSE)
 
 /obj/structure/mineral_door/transparent/diamond
 	name = "diamond door"

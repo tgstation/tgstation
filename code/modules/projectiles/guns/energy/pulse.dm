@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	modifystate = TRUE
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	cell_type = "/obj/item/stock_parts/cell/pulse"

@@ -1,6 +1,7 @@
 /datum/job/bartender
-	title = "Bartender"
-	department_head = list("Head of Personnel")
+	title = JOB_BARTENDER
+	description = "Serve booze, mix drinks, keep the crew drunk."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -46,14 +47,16 @@
 	name = "Bartender"
 	jobtype = /datum/job/bartender
 
-	glasses = /obj/item/clothing/glasses/sunglasses/reagent
-	belt = /obj/item/pda/bar
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/bartender
 	uniform = /obj/item/clothing/under/rank/civilian/bartender
 	suit = /obj/item/clothing/suit/armor/vest
-	backpack_contents = list(/obj/item/storage/box/beanbag=1)
+	backpack_contents = list(
+		/obj/item/storage/box/beanbag = 1,
+		)
+	belt = /obj/item/pda/bar
+	ears = /obj/item/radio/headset/headset_srv
+	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup
-	id_trim = /datum/id_trim/job/bartender
 
 /datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

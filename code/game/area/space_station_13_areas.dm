@@ -623,12 +623,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
-/area/commons/cryopods
-	name = "\improper Cryopod Room"
-	icon_state = "cryopod"
-
 // Commons - Vacant Rooms
-
 /area/commons/vacant_room
 	name = "\improper Vacant Room"
 	icon_state = "vacant_room"
@@ -691,6 +686,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/kitchen/diner
 	name = "\improper Diner"
 
+/area/service/kitchen/abandoned
+	name = "\improper Abandoned Kitchen"
+
 /area/service/bar
 	name = "\improper Bar"
 	icon_state = "bar"
@@ -718,6 +716,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "abandoned_g_den"
 
 /area/service/abandoned_gambling_den/secondary
+	icon_state = "abandoned_g_den_2"
+
+/area/service/abandoned_gambling_den/gaming
+	name = "\improper Abandoned Gaming Den"
 	icon_state = "abandoned_g_den_2"
 
 /area/service/theater
@@ -1210,7 +1212,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
-	icon_state =  "interrogation"
+	icon_state = "interrogation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/security/warden
@@ -1306,6 +1308,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Warehouse"
 	icon_state = "cargo_warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/cargo/drone_bay
+	name = "\improper Drone Bay"
+	icon_state = "cargo_drone"
 
 /area/cargo/warehouse/upper
 	name = "\improper Upper Warehouse"

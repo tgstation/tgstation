@@ -4,10 +4,10 @@
 	gender = PLURAL
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
-	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 100, RAD = 100, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 100, BULLET = 80, LASER = 80, ENERGY = 100, BOMB = 50, BIO = 100, FIRE = 50, ACID = 50)
 	density = FALSE
 	anchored = TRUE
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	generic_can_allow_through = FALSE
 
 /obj/structure/plasticflaps/opaque
@@ -42,7 +42,7 @@
 
 ///Update the flaps behaviour to gases, if not anchored will let air pass through
 /obj/structure/plasticflaps/proc/update_atmos_behaviour()
-	CanAtmosPass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
+	can_atmos_pass = anchored ? ATMOS_PASS_YES : ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/wirecutter_act(mob/living/user, obj/item/W)
 	. = ..()
@@ -53,7 +53,8 @@
 				return TRUE
 			to_chat(user, span_notice("You cut apart [src]."))
 			var/obj/item/stack/sheet/plastic/five/P = new(loc)
-			P.add_fingerprint(user)
+			if (!QDELETED(P))
+				P.add_fingerprint(user)
 			qdel(src)
 		return TRUE
 

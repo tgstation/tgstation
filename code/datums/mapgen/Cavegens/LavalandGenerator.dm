@@ -1,6 +1,6 @@
 /datum/map_generator/cave_generator/lavaland
 	open_turf_types = list(/turf/open/floor/plating/asteroid/basalt/lava_land_surface = 1)
-	closed_turf_types =  list(/turf/closed/mineral/random/volcanic = 1)
+	closed_turf_types = list(/turf/closed/mineral/random/volcanic = 1)
 
 
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \

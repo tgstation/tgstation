@@ -115,6 +115,11 @@
 	mutant_bodyparts["tail_lizard"] = tail
 	human_mob.update_body()
 
+/datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
+	return pick('sound/voice/lizard/lizard_scream_1.ogg',
+				'sound/voice/lizard/lizard_scream_2.ogg',
+				'sound/voice/lizard/lizard_scream_3.ogg')
+
 /*
 Lizard subspecies: ASHWALKERS
 */
@@ -161,8 +166,8 @@ Lizard subspecies: SILVER SCALED
 	var/mob/living/carbon/human/new_silverscale = C
 	old_mutcolor = C.dna.features["mcolor"]
 	old_eyecolor = new_silverscale.eye_color
-	new_silverscale.dna.features["mcolor"] = "eeeeee"
-	new_silverscale.eye_color = "0000a0"
+	new_silverscale.dna.features["mcolor"] = "#eeeeee"
+	new_silverscale.eye_color = "#0000a0"
 	..()
 	new_silverscale.add_filter("silver_glint", 2, list("type" = "outline", "color" = "#ffffff63", "size" = 2))
 

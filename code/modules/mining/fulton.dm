@@ -19,23 +19,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/B in GLOB.total_extraction_beacons)
-		var/obj/structure/extraction_point/EP = B
-		if(EP.beacon_network in beacon_networks)
-			possible_beacons += EP
-
-	if(!possible_beacons.len)
+	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
+		if(extraction_point.beacon_network in beacon_networks)
+			possible_beacons += extraction_point
+	if(!length(possible_beacons))
 		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
-
 	else
-		var/A
-
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sort_names(possible_beacons)
-
-		if(!A)
+		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+		if(isnull(chosen_beacon))
 			return
-		beacon = A
+		beacon = chosen_beacon
 		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
@@ -113,7 +107,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetUnconscious(0)
-				L.drowsyness = 0
+				L.set_drowsyness(0)
 				L.SetSleeping(0)
 			sleep(30)
 			var/list/flooring_near_beacon = list()

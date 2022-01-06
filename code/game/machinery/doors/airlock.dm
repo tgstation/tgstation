@@ -139,7 +139,7 @@
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1 | HTML_USE_INITAL_ICON_1
+	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 	network_id = NETWORK_DOOR_AIRLOCKS
@@ -383,19 +383,6 @@
 			if(!C.wearing_shock_proof_gloves())
 				new /datum/hallucination/shock(C)
 				return
-	if(close_others)
-		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			if(!shuttledocked && !emergency && !otherlock.shuttledocked && !otherlock.emergency && allowed(user))
-				if(otherlock.operating)
-					otherlock.delayed_close_requested = TRUE
-				else
-					addtimer(CALLBACK(otherlock, .proc/close), 2)
-	if(cyclelinkedairlock)
-		if(!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
-			if(cyclelinkedairlock.operating)
-				cyclelinkedairlock.delayed_close_requested = TRUE
-			else
-				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
 	..()
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -611,7 +598,7 @@
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
 	if(seal)
-		. += "It's been braced with a pneumatic seal."
+		. += "It's been braced with \a [seal]."
 	if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
@@ -907,9 +894,12 @@
 		C.play_tool_sound(src)
 		update_appearance()
 	else if((C.tool_behaviour == TOOL_WIRECUTTER) && note)
-		user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		else //telekinesis
+			visible_message(span_notice("[C] cuts down [note] from [src]."))
 		C.play_tool_sound(src)
-		note.forceMove(get_turf(user))
+		note.forceMove(C.drop_location())
 		note = null
 		update_appearance()
 	else if(is_wire_tool(C) && panel_open)
@@ -1093,9 +1083,6 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, TRUE)
-
-		if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock/) && !closeOther.density)
-			closeOther.close()
 	else
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
@@ -1104,6 +1091,25 @@
 
 	if(!density)
 		return TRUE
+
+	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock))
+		addtimer(CALLBACK(closeOther, .proc/close), 2)
+
+	if(close_others)
+		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
+			if(!shuttledocked && !emergency && !otherlock.shuttledocked && !otherlock.emergency)
+				if(otherlock.operating)
+					otherlock.delayed_close_requested = TRUE
+				else
+					addtimer(CALLBACK(otherlock, .proc/close), 2)
+
+	if(cyclelinkedairlock)
+		if(!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency)
+			if(cyclelinkedairlock.operating)
+				cyclelinkedairlock.delayed_close_requested = TRUE
+			else
+				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
+
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
@@ -1192,8 +1198,8 @@
 		return
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
-	var/current_paintjob = input(user, "Please select a paintjob for this airlock.") as null|anything in sort_list(painter.available_paint_jobs)
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
+	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
+	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
@@ -1343,7 +1349,7 @@
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
 				gen_access()
-				if(req_one_access.len)
+				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access
 				else
@@ -1378,7 +1384,12 @@
 	if(!note)
 		return
 	else if(istype(note, /obj/item/paper))
-		return "note"
+		var/obj/item/paper/pinned_paper = note
+		if(pinned_paper.info && pinned_paper.show_written_words)
+			return "note_words"
+		else
+			return "note"
+
 	else if(istype(note, /obj/item/photo))
 		return "photo"
 

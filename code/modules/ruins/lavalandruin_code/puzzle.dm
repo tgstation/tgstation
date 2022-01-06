@@ -206,7 +206,7 @@
 	var/icon/puzzle_icon
 
 /obj/structure/puzzle_element/Move(nloc, dir)
-	if(!isturf(nloc) ||  moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
+	if(!isturf(nloc) || moving_diagonally || get_dist(get_step(src,dir),get_turf(source)) > 1)
 		return 0
 	else
 		return ..()
@@ -295,7 +295,7 @@
 
 //Some armor so it's harder to kill someone by mistake.
 /obj/structure/puzzle_element/prison
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, RAD = 50, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 50, BIO = 50, FIRE = 50, ACID = 50)
 
 /obj/structure/puzzle_element/prison/relaymove(mob/living/user, direction)
 	return

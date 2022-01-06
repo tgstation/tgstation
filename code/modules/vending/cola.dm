@@ -3,6 +3,7 @@
 	name = "\improper Robust Softdrinks"
 	desc = "A softdrink vendor provided by Robust Industries, LLC."
 	icon_state = "Cola_Machine"
+	panel_type = "panel2"
 	product_slogans = "Robust Softdrinks: More robust than a toolbox to the head!"
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(
@@ -67,11 +68,13 @@
 	name = "\improper Star-kist Vendor"
 	desc = "The taste of a star in liquid form."
 	product_slogans = "Drink the stars! Star-kist!"
+	panel_type = "panel7"
 	light_mask = "starkist-light-mask"
 	light_color = COLOR_LIGHT_ORANGE
 
 /obj/machinery/vending/cola/sodie
 	icon_state = "soda"
+	panel_type = "panel7"
 	light_mask = "soda-light-mask"
 	light_color = COLOR_WHITE
 

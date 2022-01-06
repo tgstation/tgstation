@@ -97,10 +97,14 @@
 		choice_list[memory_iter.name] = memory_iter
 
 	var/choice = tgui_input_list(usr, "Select a memory to [verbage]", "Memory Selection?", choice_list)
+	if(isnull(choice))
+		return FALSE
+	if(isnull(choice_list[choice]))
+		return FALSE
 	var/datum/memory/memory_choice = choice_list[choice]
 
 	return memory_choice
 
 ///small helper to clean out memories
 /datum/mind/proc/wipe_memory()
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)

@@ -5,18 +5,10 @@
 
 /obj/structure/closet/secure_closet/research_director/PopulateContents()
 	..()
-	new /obj/item/clothing/neck/cloak/rd(src)
+
 	new /obj/item/clothing/suit/bio_suit/scientist(src)
 	new /obj/item/clothing/head/bio_hood/scientist(src)
-	new /obj/item/clothing/suit/toggle/labcoat(src)
-	new /obj/item/clothing/under/rank/rnd/research_director(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/alt/skirt(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck(src)
-	new /obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt(src)
-	new /obj/item/clothing/head/beret/science(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
+	new /obj/item/storage/bag/garment/research_director(src)
 	new /obj/item/cartridge/rd(src)
 	new /obj/item/radio/headset/heads/rd(src)
 	new /obj/item/megaphone/command(src)
@@ -28,7 +20,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/science(src)
 	new /obj/item/storage/photo_album/rd(src)
 	new /obj/item/storage/box/skillchips/science(src)
-	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
+
 
 
 /obj/structure/closet/secure_closet/cytology

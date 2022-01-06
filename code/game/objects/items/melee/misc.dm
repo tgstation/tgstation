@@ -84,15 +84,15 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight
 	return ..()
 
-/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/S)
-	var/obj/item/storage/belt/sabre/B = S.real_location()
-	if(istype(B))
-		playsound(B, 'sound/items/unsheath.ogg', 25, TRUE)
+/obj/item/melee/sabre/on_exit_storage(datum/component/storage/concrete/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+	if(istype(sabre))
+		playsound(sabre, 'sound/items/unsheath.ogg', 25, TRUE)
 
-/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/S)
-	var/obj/item/storage/belt/sabre/B = S.real_location()
-	if(istype(B))
-		playsound(B, 'sound/items/sheath.ogg', 25, TRUE)
+/obj/item/melee/sabre/on_enter_storage(datum/component/storage/concrete/container)
+	var/obj/item/storage/belt/sabre/sabre = container.real_location()
+	if(istype(sabre))
+		playsound(sabre, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))
@@ -163,8 +163,8 @@
 		return
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(iscarbon(target))
-		var/mob/living/carbon/H = target
-		H.reagents.add_reagent(/datum/reagent/toxin, 4)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
 
 /obj/item/melee/beesword/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is stabbing [user.p_them()]self in the throat with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -183,9 +183,9 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
 	armour_penetration = 1000
+	force_string = "INFINITE"
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
-	force_string = "INFINITE"
 
 /obj/item/melee/supermatter_sword/Initialize(mapload)
 	. = ..()
@@ -203,9 +203,9 @@
 		forceMove(target.loc)
 		consume_everything(target)
 	else
-		var/turf/T = get_turf(src)
-		if(!isspaceturf(T))
-			consume_turf(T)
+		var/turf/turf = get_turf(src)
+		if(!isspaceturf(turf))
+			consume_turf(turf)
 
 /obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
 	. = ..()
@@ -217,9 +217,9 @@
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(ismob(hit_atom))
-		var/mob/M = hit_atom
-		if(src.loc == M)
-			M.dropItemToGround(src)
+		var/mob/mob = hit_atom
+		if(src.loc == mob)
+			mob.dropItemToGround(src)
 	consume_everything(hit_atom)
 
 /obj/item/melee/supermatter_sword/pickup(user)
@@ -239,10 +239,10 @@
 	consume_everything()
 	return TRUE
 
-/obj/item/melee/supermatter_sword/bullet_act(obj/projectile/P)
-	visible_message(span_danger("[P] smacks into [src] and rapidly flashes to ash."),\
+/obj/item/melee/supermatter_sword/bullet_act(obj/projectile/projectile)
+	visible_message(span_danger("[projectile] smacks into [src] and rapidly flashes to ash."),\
 	span_hear("You hear a loud crack as you are washed with a wave of heat."))
-	consume_everything(P)
+	consume_everything(projectile)
 	return BULLET_ACT_HIT
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
@@ -258,14 +258,16 @@
 	else
 		consume_turf(target)
 
-/obj/item/melee/supermatter_sword/proc/consume_turf(turf/T)
-	var/oldtype = T.type
-	var/turf/newT = T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+/obj/item/melee/supermatter_sword/proc/consume_turf(turf/turf)
+	var/oldtype = turf.type
+	var/turf/newT = turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(newT.type == oldtype)
 		return
-	playsound(T, 'sound/effects/supermatter.ogg', 50, TRUE)
-	T.visible_message(span_danger("[T] smacks into [src] and rapidly flashes to ash."),\
-	span_hear("You hear a loud crack as you are washed with a wave of heat."))
+	playsound(turf, 'sound/effects/supermatter.ogg', 50, TRUE)
+	turf.visible_message(
+		span_danger("[turf] smacks into [src] and rapidly flashes to ash."),
+		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+	)
 	shard.Consume()
 
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
@@ -289,9 +291,9 @@
 /obj/item/melee/curator_whip/afterattack(target, mob/user, proximity_flag)
 	. = ..()
 	if(ishuman(target) && proximity_flag)
-		var/mob/living/carbon/human/H = target
-		H.drop_all_held_items()
-		H.visible_message(span_danger("[user] disarms [H]!"), span_userdanger("[user] disarmed you!"))
+		var/mob/living/carbon/human/human_target = target
+		human_target.drop_all_held_items()
+		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
 
 /obj/item/melee/roastingstick
 	name = "advanced roasting stick"
@@ -386,32 +388,31 @@
 	. = ..()
 	if (!extended)
 		return
-	if (is_type_in_typecache(target, ovens))
-		if (held_sausage?.roasted)
-			to_chat(user, span_warning("Your [held_sausage] has already been cooked!"))
-			return
-		if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
-			to_chat(user, span_notice("You send [held_sausage] towards [target]."))
-			playsound(src, 'sound/items/rped.ogg', 50, TRUE)
-			beam = user.Beam(target,icon_state="rped_upgrade", time = 10 SECONDS)
-		else if (user.Adjacent(target))
-			to_chat(user, span_notice("You extend [src] towards [target]."))
-			playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
-		else
-			return
-		if(do_after(user, 100, target = user))
-			finish_roasting(user, target)
-		else
-			QDEL_NULL(beam)
-			playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	if (!is_type_in_typecache(target, ovens))
+		return
+	if (istype(target, /obj/singularity) && get_dist(user, target) < 10)
+		to_chat(user, span_notice("You send [held_sausage] towards [target]."))
+		playsound(src, 'sound/items/rped.ogg', 50, TRUE)
+		beam = user.Beam(target, icon_state = "rped_upgrade", time = 10 SECONDS)
+	else if (user.Adjacent(target))
+		to_chat(user, span_notice("You extend [src] towards [target]."))
+		playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
+	else
+		return
+	finish_roasting(user, target)
 
 /obj/item/melee/roastingstick/proc/finish_roasting(user, atom/target)
-	to_chat(user, span_notice("You finish roasting [held_sausage]."))
-	playsound(src,'sound/items/welder2.ogg',50,TRUE)
-	held_sausage.add_atom_colour(rgb(103,63,24), FIXED_COLOUR_PRIORITY)
-	held_sausage.name = "[target.name]-roasted [held_sausage.name]"
-	held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
-	update_appearance()
+	if(do_after(user, 100, target = user))
+		to_chat(user, span_notice("You finish roasting [held_sausage]."))
+		playsound(src, 'sound/items/welder2.ogg', 50, TRUE)
+		held_sausage.add_atom_colour(rgb(103, 63, 24), FIXED_COLOUR_PRIORITY)
+		held_sausage.name = "[target.name]-roasted [held_sausage.name]"
+		held_sausage.desc = "[held_sausage.desc] It has been cooked to perfection on \a [target]."
+		update_appearance()
+	else
+		QDEL_NULL(beam)
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, TRUE)
+		to_chat(user, span_notice("You put [src] away."))
 
 /obj/item/melee/cleric_mace
 	name = "cleric mace"

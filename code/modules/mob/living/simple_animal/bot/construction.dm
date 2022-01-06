@@ -17,7 +17,7 @@
 		return
 
 /obj/item/bot_assembly/proc/rename_bot()
-	var/t = sanitize_name(stripped_input(usr, "Enter new robot name", name, created_name,MAX_NAME_LEN), allow_numbers = TRUE)
+	var/t = sanitize_name(tgui_input_text(usr, "Enter a new robot name", "Robot Rename", created_name, MAX_NAME_LEN), allow_numbers = TRUE)
 	if(!t)
 		return
 	if(!in_range(src, usr) && loc != usr)
@@ -118,7 +118,7 @@
 				icon_state = "ed209_hat"
 				build_step++
 
-		if(5)
+		if(ASSEMBLY_SIXTH_STEP)
 			if(isprox(W))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -129,7 +129,7 @@
 				inhand_icon_state = "ed209_prox"
 				icon_state = "ed209_prox"
 
-		if(6)
+		if(ASSEMBLY_SEVENTH_STEP)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
 				if(coil.get_amount() < 1)
@@ -137,13 +137,13 @@
 					return
 				to_chat(user, span_notice("You start to wire [src]..."))
 				if(do_after(user, 40, target = src))
-					if(coil.get_amount() >= 1 && build_step == 6)
+					if(coil.get_amount() >= 1 && build_step == ASSEMBLY_SEVENTH_STEP)
 						coil.use(1)
 						to_chat(user, span_notice("You wire [src]."))
 						name = "wired ED-209 assembly"
 						build_step++
 
-		if(7)
+		if(ASSEMBLY_EIGHTH_STEP)
 			if(istype(W, /obj/item/gun/energy/disabler))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
@@ -154,7 +154,7 @@
 				qdel(W)
 				build_step++
 
-		if(8)
+		if(ASSEMBLY_NINTH_STEP)
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, span_notice("You start attaching the gun to the frame..."))
 				if(W.use_tool(src, user, 40, volume=100))

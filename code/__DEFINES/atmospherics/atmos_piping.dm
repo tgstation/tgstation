@@ -39,6 +39,8 @@
 #define TANK_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE*3)
 /// The default initial value gas tanks release valves are set to. (At least the ones containing pure plasma/oxygen.)
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
+/// The default initial value gas plasmamen tanks releases valves are set to.
+#define TANK_PLASMAMAN_RELEASE_PRESSURE 4
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.

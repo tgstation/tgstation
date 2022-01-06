@@ -1,5 +1,6 @@
 /datum/job/prisoner
-	title = "Prisoner"
+	title = JOB_PRISONER
+	description = "Keep yourself occupied in permabrig."
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
 	total_positions = 0
@@ -13,6 +14,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+	department_for_prefs = /datum/job_department/security
 
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
@@ -28,13 +30,12 @@
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner
 
-	uniform = /obj/item/clothing/under/rank/prisoner
-	shoes = /obj/item/clothing/shoes/sneakers/orange
 	id = /obj/item/card/id/advanced/prisoner
-	ears = null
-	belt = null
-
 	id_trim = /datum/id_trim/job/prisoner
+	uniform = /obj/item/clothing/under/rank/prisoner
+	belt = null
+	ears = null
+	shoes = /obj/item/clothing/shoes/sneakers/orange
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()

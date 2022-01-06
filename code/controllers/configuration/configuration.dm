@@ -33,6 +33,15 @@
 	/// A regex that matches words blocked IC, but not in PDAs
 	var/static/regex/ic_outside_pda_filter_regex
 
+	/// A regex that matches words soft blocked IC
+	var/static/regex/soft_ic_filter_regex
+
+	/// A regex that matches words soft blocked OOC
+	var/static/regex/soft_ooc_filter_regex
+
+	/// A regex that matches words soft blocked IC, but not in PDAs
+	var/static/regex/soft_ic_outside_pda_filter_regex
+
 	/// An assoc list of blocked IC words to their reasons
 	var/static/list/ic_filter_reasons
 
@@ -41,6 +50,15 @@
 
 	/// An assoc list of words that are blocked both IC and OOC to their reasons
 	var/static/list/shared_filter_reasons
+
+	/// An assoc list of soft blocked IC words to their reasons
+	var/static/list/soft_ic_filter_reasons
+
+	/// An assoc list of words that are soft blocked IC, but not in PDAs, to their reasons
+	var/static/list/soft_ic_outside_pda_filter_reasons
+
+	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
+	var/static/list/soft_shared_filter_reasons
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -330,7 +348,7 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config("_maps/[data].json")
+				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
 					log_config("Failed to load map config for [data]!")
 					currentmap = null
@@ -370,6 +388,9 @@ Example config:
 	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
 	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
 	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
+	soft_ic_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic")
+	soft_ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic_outside_pda")
+	soft_shared_filter_reasons = try_extract_from_word_filter(word_filter, "soft_shared")
 
 	update_chat_filter_regexes()
 
@@ -382,6 +403,9 @@ Example config:
 	ic_filter_reasons = list()
 	ic_outside_pda_filter_reasons = list()
 	shared_filter_reasons = list()
+	soft_ic_filter_reasons = list()
+	soft_ic_outside_pda_filter_reasons = list()
+	soft_shared_filter_reasons = list()
 
 	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
 		if (!line)
@@ -398,6 +422,9 @@ Example config:
 	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
 	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
 	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
+	soft_ic_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_ic_outside_pda_filter_reasons + soft_shared_filter_reasons)
+	soft_ic_outside_pda_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_shared_filter_reasons)
+	soft_ooc_filter_regex = compile_filter_regex(soft_shared_filter_reasons)
 
 /datum/controller/configuration/proc/try_extract_from_word_filter(list/word_filter, key)
 	var/list/banned_words = word_filter[key]
@@ -410,7 +437,11 @@ Example config:
 		DelayedMessageAdmins(message)
 		return list()
 
-	return banned_words
+	var/list/formatted_banned_words = list()
+
+	for (var/banned_word in banned_words)
+		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+	return formatted_banned_words
 
 /datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
 	if (isnull(banned_words) || banned_words.len == 0)
@@ -429,9 +460,11 @@ Example config:
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
-	var/whitespace_split = @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))"
+	// We don't want a whitespace_split part if there's no stuff that requires it
+	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
-	return regex("([whitespace_split]|[word_bounds])", "i")
+	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
+	return regex(regex_filter, "i")
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)

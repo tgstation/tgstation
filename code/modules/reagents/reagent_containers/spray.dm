@@ -359,7 +359,7 @@
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T,T1,T2)
 
-	for(var/i=1, i<=3, i++) // intialize sprays
+	for(var/i in 1 to 3) // intialize sprays
 		if(reagents.total_volume < 1)
 			return
 		..(the_targets[i], user)

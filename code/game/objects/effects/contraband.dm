@@ -438,6 +438,26 @@
 	desc = "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
 	icon_state = "poster48"
 
+/obj/structure/sign/poster/contraband/got_wood
+	name = "Got Wood?"
+	desc = "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
+	icon_state = "poster49"
+
+/obj/structure/sign/poster/contraband/moffuchis_pizza
+	name = "Moffuchi's Pizza"
+	desc = "Moffuchi's Pizzeria: family style pizza for 2 centuries."
+	icon_state = "poster50"
+
+/obj/structure/sign/poster/contraband/donk_co
+	name = "DONK CO. BRAND MICROWAVEABLE FOOD"
+	desc = "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
+	icon_state = "poster51"
+
+/obj/structure/sign/poster/contraband/syndiemoth	//Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982); original art credit to AspEv
+	name = "Syndie Moth - Nuclear Operation"
+	desc = "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
+	icon_state = "poster_aspev_syndie"	//Syndies mark the end of an era; down with numbered poster icon_states
+
 /obj/structure/sign/poster/official
 	poster_item_name = "motivational poster"
 	poster_item_desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
@@ -634,5 +654,34 @@
 	desc = "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
 	// And yet people still believe...
 	icon_state = "poster37_legit"
+
+//SafetyMoth Original PR at https://github.com/BeeStation/BeeStation-Hornet/pull/1747 (Also pull/1982)
+//SafetyMoth art credit goes to AspEv
+/obj/structure/sign/poster/official/moth_hardhat
+	name = "Safety Moth - Hardhats"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
+	icon_state = "poster_legit_aspev_hardhat"
+
+/obj/structure/sign/poster/official/moth_piping
+	name = "Safety Moth - Piping"
+	desc = "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
+	icon_state = "poster_legit_aspev_piping"
+
+/obj/structure/sign/poster/official/moth_meth
+	name = "Safety Moth - Methamphetamine"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
+	icon_state = "poster_legit_aspev_meth"
+
+/obj/structure/sign/poster/official/moth_epi
+	name = "Safety Moth - Epinephrine"
+	desc = "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
+	icon_state = "poster_legit_aspev_epi"
+
+/obj/structure/sign/poster/official/moth_delam
+	name = "Safety Moth - Delamination Safety Precautions"
+	desc = "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
+	icon_state = "poster_legit_aspev_delam"
+//End of AspEv posters
+
 
 #undef PLACE_SPEED

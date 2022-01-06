@@ -2,6 +2,7 @@
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
+	visual = FALSE
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
@@ -433,11 +434,10 @@
 //Sign Language Tongue - yep, that's how you speak sign language.
 /obj/item/organ/tongue/tied
 	name = "tied tongue"
-	desc = "If only one had a sword so we may finally untie this knot. If you're seeing this, then it's coded wrong."
+	desc = "If only one had a sword so we may finally untie this knot."
 	say_mod = "signs"
 	icon_state = "tonguetied"
 	modifies_speech = TRUE
-	organ_flags = ORGAN_UNREMOVABLE
 
 /obj/item/organ/tongue/tied/Insert(mob/living/carbon/signer)
 	. = ..()

@@ -103,7 +103,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "au" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -315,8 +315,8 @@
 	name = "kitty bed"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/damaged{
-	head = /obj/item/clothing/head/kitty
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head" = /obj/item/clothing/head/kitty)
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -440,7 +440,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bt" = (
 /obj/structure/table/optable,
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/item/organ/ears/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
@@ -665,8 +665,8 @@
 /obj/structure/bed/dogbed{
 	name = "kitty bed"
 	},
-/obj/effect/mob_spawn/human/corpse/damaged{
-	head = /obj/item/clothing/head/kitty
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head" = /obj/item/clothing/head/kitty)
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -893,19 +893,19 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "Bl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "RT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "Sl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

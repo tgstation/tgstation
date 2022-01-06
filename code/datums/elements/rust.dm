@@ -14,7 +14,7 @@
 		return COMPONENT_INCOMPATIBLE
 	if(!rust_overlay)
 		rust_overlay = image(rust_icon, rust_icon)
-	ADD_TRAIT(target, TRAIT_RUSTY, src)
+	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
 	RegisterSignal(target, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)), .proc/secondary_tool_act)
@@ -26,7 +26,7 @@
 	UnregisterSignal(source, COMSIG_ATOM_UPDATE_OVERLAYS)
 	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(source, list(COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WELDER), COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_RUSTSCRAPER)))
-	REMOVE_TRAIT(source, TRAIT_RUSTY, src)
+	REMOVE_TRAIT(source, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	source.update_icon(UPDATE_OVERLAYS)
 
 /datum/element/rust/proc/handle_examine(datum/source, mob/user, list/examine_text)

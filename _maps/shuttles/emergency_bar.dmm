@@ -166,7 +166,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool/directional/east{
+/obj/structure/chair/stool/directional/west{
 	can_buckle = 1
 	},
 /turf/open/floor/iron/grimy,

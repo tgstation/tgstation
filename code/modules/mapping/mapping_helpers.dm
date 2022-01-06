@@ -186,56 +186,210 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
 
-//This helper applies components to things on the map directly.
-/obj/effect/mapping_helpers/component_injector
-	name = "Component Injector"
-	icon_state = "component"
+///Helpers used for injecting stuff into atoms on the map.
+/obj/effect/mapping_helpers/atom_injector
+	name = "Atom Injector"
+	icon_state = "injector"
 	late = TRUE
-	var/all = FALSE //Will inject into all fitting the criteria if true, otherwise first found
-	var/target_type //Will inject into atoms of this type
-	var/target_name //Will inject into atoms with this name
-	var/component_type
+	///Will inject into all fitting the criteria if false, otherwise first found.
+	var/first_match_only = TRUE
+	///Will inject into atoms of this type.
+	var/target_type
+	///Will inject into atoms with this name.
+	var/target_name
 
 //Late init so everything is likely ready and loaded (no warranty)
-/obj/effect/mapping_helpers/component_injector/LateInitialize()
-	if(!ispath(component_type,/datum/component))
-		CRASH("Wrong component type in [type] - [component_type] is not a component")
-	var/turf/T = get_turf(src)
-	for(var/atom/A in T.get_all_contents())
-		if(A == src)
+/obj/effect/mapping_helpers/atom_injector/LateInitialize()
+	if(!check_validity())
+		return
+	var/turf/target_turf = get_turf(src)
+	var/matches_found = 0
+	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
+		if(atom_on_turf == src)
 			continue
-		if(target_name && A.name != target_name)
+		if(target_name && atom_on_turf.name != target_name)
 			continue
-		if(target_type && !istype(A,target_type))
+		if(target_type && !istype(atom_on_turf, target_type))
 			continue
-		var/cargs = build_args()
-		A._AddComponent(cargs)
-		if(!all)
+		inject(atom_on_turf)
+		matches_found++
+		if(first_match_only)
 			qdel(src)
 			return
-	if(all)
-		qdel(src)
+	if(!matches_found)
+		stack_trace(generate_stack_trace())
+	qdel(src)
 
-/obj/effect/mapping_helpers/component_injector/proc/build_args()
-	return list(component_type)
+///Checks if whatever we are trying to inject with is valid
+/obj/effect/mapping_helpers/atom_injector/proc/check_validity()
+	return TRUE
 
-/obj/effect/mapping_helpers/component_injector/infective
-	name = "Infective Injector"
-	icon_state = "component_infective"
-	component_type = /datum/component/infective
-	var/disease_type
+///Injects our stuff into the atom
+/obj/effect/mapping_helpers/atom_injector/proc/inject(atom/target)
+	return
 
-/obj/effect/mapping_helpers/component_injector/infective/build_args()
-	if(!ispath(disease_type,/datum/disease))
-		CRASH("Wrong disease type passed in.")
-	var/datum/disease/D = new disease_type()
-	return list(component_type,D)
+///Generates text for our stack trace
+/obj/effect/mapping_helpers/atom_injector/proc/generate_stack_trace()
+	. = "[name] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]"
 
-/obj/effect/mapping_helpers/component_injector/areabound
-	name = "Areabound Injector"
-	icon_state = "component_areabound"
-	component_type = /datum/component/areabound
-	target_type = /atom/movable
+///This helper applies components to things on the map directly.
+/obj/effect/mapping_helpers/atom_injector/component_injector
+	name = "Component Injector"
+	icon_state = "component"
+	///Typepath of the component.
+	var/component_type
+	///Arguments for the component.
+	var/list/component_args = list()
+
+/obj/effect/mapping_helpers/atom_injector/component_injector/check_validity()
+	if(!ispath(component_type, /datum/component))
+		CRASH("Wrong component type in [type] - [component_type] is not a component")
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/component_injector/inject(atom/target)
+	var/arguments = list(component_type)
+	arguments += component_args
+	target._AddComponent(arguments)
+
+/obj/effect/mapping_helpers/atom_injector/component_injector/generate_stack_trace()
+	. = ..()
+	. += " | component type: [component_type] | component arguments: [list2params(component_args)]"
+
+///This helper applies elements to things on the map directly.
+/obj/effect/mapping_helpers/atom_injector/element_injector
+	name = "Element Injector"
+	icon_state = "element"
+	///Typepath of the element.
+	var/element_type
+	///Arguments for the element.
+	var/list/element_args = list()
+
+/obj/effect/mapping_helpers/atom_injector/element_injector/check_validity()
+	if(!ispath(element_type, /datum/element))
+		CRASH("Wrong element type in [type] - [element_type] is not a element")
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/element_injector/inject(atom/target)
+	var/arguments = list(element_type)
+	arguments += element_args
+	target._AddElement(arguments)
+
+/obj/effect/mapping_helpers/atom_injector/element_injector/generate_stack_trace()
+	. = ..()
+	. += " | element type: [element_type] | element arguments: [list2params(element_args)]"
+
+///This helper applies traits to things on the map directly.
+/obj/effect/mapping_helpers/atom_injector/trait_injector
+	name = "Trait Injector"
+	icon_state = "trait"
+	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
+	var/trait_name
+
+/obj/effect/mapping_helpers/atom_injector/trait_injector/check_validity()
+	if(!istext(trait_name))
+		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
+	if(!GLOB.trait_name_map)
+		GLOB.trait_name_map = generate_trait_name_map()
+	if(!GLOB.trait_name_map.Find(trait_name))
+		stack_trace("Possibly wrong trait in [type] - [trait_name] is not a trait in the global trait list")
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/trait_injector/inject(atom/target)
+	ADD_TRAIT(target, trait_name, MAPPING_HELPER_TRAIT)
+
+/obj/effect/mapping_helpers/atom_injector/trait_injector/generate_stack_trace()
+	. = ..()
+	. += " | trait name: [trait_name]"
+
+///Fetches an external dmi and applies to the target object
+/obj/effect/mapping_helpers/atom_injector/custom_icon
+	name = "Custom Icon Injector"
+	icon_state = "icon"
+	///This is the var that will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	var/target_variable = "icon"
+	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
+	var/icon_url
+	///The icon file we fetched from the http get request.
+	var/icon_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/check_validity()
+	var/static/icon_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(icon_cache[icon_url])
+		icon_file = icon_cache[icon_url]
+		return TRUE
+	log_asset("Custom Icon Helper fetching dmi from: [icon_url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_icon.dmi"
+	request.prepare(RUSTG_HTTP_METHOD_GET, icon_url, "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom icon from url [icon_url], code: [response.status_code], error: [response.error]")
+	var/icon/new_icon = new(file_name)
+	icon_cache[icon_url] = new_icon
+	query_in_progress = FALSE
+	icon_file = new_icon
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/inject(atom/target)
+	if(IsAdminAdvancedProcCall())
+		return
+	target.vars[target_variable] = icon_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
+	. = ..()
+	. += " | target variable: [target_variable] | icon url: [icon_url]"
+
+///Fetches an external sound and applies to the target object
+/obj/effect/mapping_helpers/atom_injector/custom_sound
+	name = "Custom Sound Injector"
+	icon_state = "sound"
+	///This is the var that will be set with the fetched sound.
+	var/target_variable = "hitsound"
+	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
+	var/sound_url
+	///The sound file we fetched from the http get request.
+	var/sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/check_validity()
+	var/static/sound_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(sound_cache[sound_url])
+		sound_file = sound_cache[sound_url]
+		return TRUE
+	log_asset("Custom Sound Helper fetching sound from: [sound_url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_sound.ogg"
+	request.prepare(RUSTG_HTTP_METHOD_GET, sound_url, "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom sound from url [sound_url], code: [response.status_code], error: [response.error]")
+	var/sound/new_sound = new(file_name)
+	sound_cache[sound_url] = new_sound
+	query_in_progress = FALSE
+	sound_file = new_sound
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/inject(atom/target)
+	if(IsAdminAdvancedProcCall())
+		return
+	target.vars[target_variable] = sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/generate_stack_trace()
+	. = ..()
+	. += " | target variable: [target_variable] | sound url: [sound_url]"
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
@@ -297,7 +451,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	//cake + knife to cut it!
 	if(length(table))
 		var/turf/food_turf = get_turf(pick(table))
-		new /obj/item/kitchen/knife(food_turf)
+		new /obj/item/knife/kitchen(food_turf)
 		var/obj/item/food/cake/birthday/iancake = new(food_turf)
 		iancake.desc = "Happy birthday, Ian!"
 
@@ -404,106 +558,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
-//This helper applies traits to things on the map directly.
-/obj/effect/mapping_helpers/trait_injector
-	name = "Trait Injector"
-	icon_state = "trait"
-	late = TRUE
-	///Will inject into all fitting the criteria if false, otherwise first found.
-	var/first_match_only = TRUE
-	///Will inject into atoms of this type.
-	var/target_type
-	///Will inject into atoms with this name.
-	var/target_name
-	///Name of the trait, in the lower-case text (NOT the upper-case define) form.
-	var/trait_name
-
-//Late init so everything is likely ready and loaded (no warranty)
-/obj/effect/mapping_helpers/trait_injector/LateInitialize()
-	if(!GLOB.trait_name_map)
-		GLOB.trait_name_map = generate_trait_name_map()
-	if(!GLOB.trait_name_map.Find(trait_name))
-		CRASH("Wrong trait in [type] - [trait_name] is not a trait")
-	var/turf/target_turf = get_turf(src)
-	var/matches_found = 0
-	for(var/a in target_turf.get_all_contents())
-		var/atom/atom_on_turf = a
-		if(atom_on_turf == src)
-			continue
-		if(target_name && atom_on_turf.name != target_name)
-			continue
-		if(target_type && !istype(atom_on_turf,target_type))
-			continue
-		ADD_TRAIT(atom_on_turf, trait_name, MAPPING_HELPER_TRAIT)
-		matches_found++
-		if(first_match_only)
-			qdel(src)
-			return
-	if(!matches_found)
-		stack_trace("Trait mapper found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name] | trait name: [trait_name]")
-	qdel(src)
-
-/// Fetches an external dmi and applies to the target object
-/obj/effect/mapping_helpers/custom_icon
-	name = "Custom Icon Helper"
-	icon_state = "trait"
-	late = TRUE
-	///Will inject into all fitting the criteria if false, otherwise first found.
-	var/first_match_only = TRUE
-	///Will inject into atoms of this type.
-	var/target_type
-	///Will inject into atoms with this name.
-	var/target_name
-	/// This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
-	var/target_variable = "icon"
-	/// This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
-	var/icon_url
-
-/obj/effect/mapping_helpers/custom_icon/LateInitialize()
-	///TODO put this injector stuff under common root
-	var/I = fetch_icon(icon_url)
-	var/turf/target_turf = get_turf(src)
-	var/matches_found = 0
-	for(var/a in target_turf.get_all_contents())
-		var/atom/atom_on_turf = a
-		if(atom_on_turf == src)
-			continue
-		if(target_name && atom_on_turf.name != target_name)
-			continue
-		if(target_type && !istype(atom_on_turf,target_type))
-			continue
-		atom_on_turf.vars[target_variable] = I
-		matches_found++
-		if(first_match_only)
-			qdel(src)
-			return
-	if(!matches_found)
-		stack_trace("[src] found no targets at ([x], [y], [z]). First Match Only: [first_match_only ? "true" : "false"] target type: [target_type] | target name: [target_name]")
-	qdel(src)
-
-/obj/effect/mapping_helpers/custom_icon/proc/fetch_icon(url)
-	var/static/icon_cache = list()
-	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
-	if(query_in_progress)
-		UNTIL(!query_in_progress)
-	if(icon_cache[url])
-		return icon_cache[url]
-	log_asset("Custom Icon Helper fetching dmi from: [url]")
-	var/datum/http_request/request = new()
-	var/file_name = "tmp/custom_map_icon.dmi"
-	request.prepare(RUSTG_HTTP_METHOD_GET, url , "", "", file_name)
-	query_in_progress = TRUE
-	request.begin_async()
-	UNTIL(request.is_complete())
-	var/datum/http_response/response = request.into_response()
-	if(response.errored || response.status_code != 200)
-		query_in_progress = FALSE
-		CRASH("Failed to fetch mapped custom icon from url [url], code: [response.status_code], error: [response.error]")
-	var/icon/I = new(file_name)
-	icon_cache[url] = I
-	query_in_progress = FALSE
-	return I
-
 /**
  * ## trapdoor placer!
  *
@@ -525,7 +579,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ztrait_injector
 	name = "ztrait injector"
 	icon_state = "ztrait"
-	/// List of traits to add to this.
+	/// List of traits to add to this Z-level.
 	var/list/traits_to_add = list()
 
 /obj/effect/mapping_helpers/ztrait_injector/Initialize()

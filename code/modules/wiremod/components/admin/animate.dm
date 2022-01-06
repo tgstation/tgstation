@@ -4,6 +4,7 @@
 /obj/item/circuit_component/begin_animation
 	display_name = "Begin Animation"
 	desc = "Begins an animation on the target. Create animation steps by chaining \"Animation Step\" components off of the \"Perform Animation\" port."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_INSTANT|CIRCUIT_FLAG_ADMIN
 
 	/// Whether we are animating an atom or a filter on the atom
@@ -95,6 +96,7 @@
 /obj/item/circuit_component/animation_step
 	display_name = "Animation Step"
 	desc = "Perform a single animation step. The input of this component should be connected, directly or indirectly, to the \"Perform Animation\" port of a \"Begin Animation\" component."
+	category = "Admin"
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 

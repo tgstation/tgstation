@@ -9,14 +9,17 @@
 #define PREFERENCE_PRIORITY_GENDER 3
 
 /// The priority at which body type is decided, applied after gender so we can
-/// make sure they're non-binary.
+/// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 4
 
 /// The priority at which names are decided, needed for proper randomization.
 #define PREFERENCE_PRIORITY_NAMES 5
 
+/// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 6
+
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAMES
+#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"
@@ -424,31 +427,19 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	return data
 
-/// A preference that represents an RGB color of something, crunched down to 3 hex numbers.
-/// Was used heavily in the past, but doesn't provide as much range and only barely conserves space.
-/datum/preference/color_legacy
-	abstract_type = /datum/preference/color_legacy
-
-/datum/preference/color_legacy/deserialize(input, datum/preferences/preferences)
-	return sanitize_hexcolor(input)
-
-/datum/preference/color_legacy/create_default_value()
-	return random_short_color()
-
-/datum/preference/color_legacy/is_valid(value)
-	var/static/regex/is_legacy_color = regex(@"^[0-9a-fA-F]{3}$")
-	return findtext(value, is_legacy_color)
-
 /// A preference that represents an RGB color of something.
 /// Will give the value as 6 hex digits, without a hash.
 /datum/preference/color
 	abstract_type = /datum/preference/color
 
 /datum/preference/color/deserialize(input, datum/preferences/preferences)
-	return sanitize_color(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/create_default_value()
 	return random_color()
+
+/datum/preference/color/serialize(input)
+	return sanitize_hexcolor(input)
 
 /datum/preference/color/is_valid(value)
 	return findtext(value, GLOB.is_color)
@@ -510,6 +501,8 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	abstract_type = /datum/preference/numeric
 
 /datum/preference/numeric/deserialize(input, datum/preferences/preferences)
+	if(istext(input)) // Sometimes TGUI will return a string instead of a number, so we take that into account.
+		input = text2num(input) // Worst case, it's null, it'll just use create_default_value()
 	return sanitize_float(input, minimum, maximum, step, create_default_value())
 
 /datum/preference/numeric/serialize(input)

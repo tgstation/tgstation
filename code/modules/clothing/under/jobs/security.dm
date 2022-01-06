@@ -12,9 +12,8 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 30, ACID = 30, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 30, ACID = 30, WOUND = 10)
 	strip_delay = 50
-	alt_covers_chest = TRUE
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
@@ -51,6 +50,7 @@
 	desc = "The latest in fashionable security outfits."
 	icon_state = "officerblueclothes"
 	inhand_icon_state = "officerblueclothes"
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/constable
 	name = "constable outfit"
@@ -59,6 +59,7 @@
 	inhand_icon_state = "constable"
 	can_adjust = FALSE
 	custom_price = PAYCHECK_HARD
+
 
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"
@@ -86,6 +87,7 @@
 	name = "warden's formal uniform"
 	icon_state = "wardenblueclothes"
 	inhand_icon_state = "wardenblueclothes"
+	alt_covers_chest = TRUE
 
 /*
  * Detective
@@ -95,6 +97,7 @@
 	desc = "Someone who wears this means business."
 	icon_state = "detective"
 	inhand_icon_state = "det"
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/skirt
 	name = "detective's suitskirt"
@@ -104,12 +107,14 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey
 	name = "noir suit"
 	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
 	icon_state = "greydet"
 	inhand_icon_state = "greydet"
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/grey/skirt
 	name = "noir suitskirt"
@@ -119,6 +124,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
+	alt_covers_chest = TRUE
 
 /*
  * Head of Security
@@ -128,7 +134,7 @@
 	desc = "A security jumpsuit decorated for those few with the dedication to achieve the position of Head of Security."
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
 	strip_delay = 60
 
 /obj/item/clothing/under/rank/security/head_of_security/skirt
@@ -151,6 +157,7 @@
 	desc = "A stylish alternative to the normal head of security jumpsuit, complete with tactical pants."
 	icon_state = "hosalt"
 	inhand_icon_state = "bl_suit"
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/head_of_security/alt/skirt
 	name = "head of security's turtleneck skirt"
@@ -160,6 +167,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
+	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
@@ -181,6 +189,7 @@
 	name = "head of security's formal uniform"
 	icon_state = "hosblueclothes"
 	inhand_icon_state = "hosblueclothes"
+	alt_covers_chest = TRUE
 
 /*
  *Spacepol
@@ -225,4 +234,18 @@
 	desc = "A police uniform often found in the lines at donut shops."
 	icon_state = "spacepolice_families"
 	inhand_icon_state = "spacepolice_families"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/detective/disco
+	name = "superstar cop uniform"
+	desc = "Flare cut trousers and a dirty shirt that might have been classy before someone took a piss in the armpits. It's the dress of a superstar."
+	icon_state = "jamrock_suit"
+	inhand_icon_state = "jamrock_suit"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/security/detective/kim
+	name = "aerostatic suit"
+	desc = "A crisp and well-pressed suit; professional, comfortable and curiously authoritative."
+	icon_state = "aerostatic_suit"
+	inhand_icon_state = "aerostatic_suit"
 	can_adjust = FALSE

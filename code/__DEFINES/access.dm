@@ -84,6 +84,8 @@
 #define ACCESS_ORDNANCE_STORAGE 71
 /// Room and launching.
 #define ACCESS_AUX_BASE 72
+/// Service access, for service hallway and service consoles
+#define ACCESS_SERVICE 73
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -272,24 +274,25 @@
 	ACCESS_FORENSICS_LOCKERS, \
 	ACCESS_BRIG, \
 	ACCESS_SECURITY, \
+	ACCESS_ATMOSPHERICS, \
+	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_ORDNANCE, \
+	ACCESS_SERVICE, \
 )
 
 /// Command staff/secure accesses, think bridge/armoury, AI upload, notably access to modify ID cards themselves. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMAND)
 #define COMMAND_ACCESS list( \
-	ACCESS_ORDNANCE_STORAGE, \
 	ACCESS_MINISAT, \
 	ACCESS_TCOMSAT, \
 	ACCESS_KEYCARD_AUTH, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_VAULT, \
-	ACCESS_ATMOSPHERICS, \
 	ACCESS_TECH_STORAGE, \
 	ACCESS_HEADS, \
 	ACCESS_TELEPORTER, \
 	ACCESS_ARMORY, \
 	ACCESS_AI_UPLOAD, \
 	ACCESS_CHANGE_IDS, \
-	ACCESS_ORDNANCE, \
 	ACCESS_EVA, \
 	ACCESS_GATEWAY, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \

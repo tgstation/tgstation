@@ -3,7 +3,9 @@
 	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
 	product_ads = "Escape to a fantasy world!;Fuel your gambling addiction!;Ruin your friendships!;Roll for initiative!;Elves and dwarves!;Paranoid computers!;Totally not satanic!;Fun times forever!"
 	icon_state = "games"
+	panel_type = "panel4"
 	products = list(
+		/obj/item/storage/crayons = 2,
 		/obj/item/toy/cards/deck = 5,
 		/obj/item/storage/dice = 10,
 		/obj/item/toy/cards/deck/cas = 3,
@@ -14,6 +16,9 @@
 		/obj/item/hourglass = 2,
 		/obj/item/instrument/piano_synth/headphones = 4,
 		/obj/item/camera = 3,
+		/obj/item/camera_film = 5,
+		/obj/item/chisel = 3,
+		/obj/item/stack/pipe_cleaner_coil/random = 10,
 		/obj/item/cardpack/series_one = 10,
 		/obj/item/cardpack/resin = 10,
 		/obj/item/storage/card_binder = 10,
@@ -24,6 +29,10 @@
 		/obj/item/skillchip/useless_adapter=5,
 		/obj/item/dyespray=3,
 		/obj/item/razor=3,
+		/obj/item/canvas/nineteen_nineteen = 5,
+		/obj/item/canvas/twentythree_nineteen = 5,
+		/obj/item/canvas/twentythree_twentythree = 5,
+		/obj/item/paint_palette = 3
 	)
 	contraband = list(
 		/obj/item/dice/fudge = 9,
@@ -31,6 +40,11 @@
 		/obj/item/instrument/musicalmoth=1
 	)
 	premium = list(
+		/obj/item/disk/holodisk = 5,
+		/obj/item/toy/crayon/spraycan = 3,
+		/obj/item/canvas/twentyfour_twentyfour = 5,
+		/obj/item/rcl = 2,
+		/obj/item/airlock_painter = 1,
 		/obj/item/melee/skateboard/pro = 3,
 		/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 		/obj/item/melee/skateboard/hoverboard = 1,

@@ -7,6 +7,7 @@ GLOBAL_LIST_EMPTY(facial_hairstyles_list) //stores /datum/sprite_accessory/facia
 GLOBAL_LIST_EMPTY(facial_hairstyles_male_list) //stores only hair names
 GLOBAL_LIST_EMPTY(facial_hairstyles_female_list) //stores only hair names
 GLOBAL_LIST_EMPTY(hair_gradients_list) //stores /datum/sprite_accessory/hair_gradient indexed by name
+GLOBAL_LIST_EMPTY(facial_hair_gradients_list) //stores /datum/sprite_accessory/facial_hair_gradient indexed by name
 	//Underwear
 GLOBAL_LIST_EMPTY(underwear_list) //stores /datum/sprite_accessory/underwear indexed by name
 GLOBAL_LIST_EMPTY(underwear_m) //stores only underwear name
@@ -41,25 +42,25 @@ GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_EMPTY(tails_list_monkey)
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
-	"Red" = "ff4d4d",
-	"Faint Red" = "ffb3b3",
-	"Dark Red" = "9c3030",
-	"Orange" = "ffa64d",
-	"Burnt Orange" = "cc4400",
-	"Bright Yellow" = "ffff99",
-	"Dull Yellow" = "fbdf56",
-	"Faint Green" = "ddff99",
-	"Green" = "97ee63",
-	"Seafoam Green" = "00fa9a",
-	"Dark Green" = "37835b",
-	"Cyan Blue" = "00ffff",
-	"Faint Blue" = "b3d9ff",
-	"Blue" = "3399ff",
-	"Dark Blue" = "6666ff",
-	"Purple" = "ee82ee",
-	"Dark Fuschia" = "cc0066",
-	"Pink" = "ff99cc",
-	"White" = "f2f2f2",))
+	"Red" = "#ff4d4d",
+	"Faint Red" = "#ffb3b3",
+	"Dark Red" = "#9c3030",
+	"Orange" = "#ffa64d",
+	"Burnt Orange" = "#cc4400",
+	"Bright Yellow" = "#ffff99",
+	"Dull Yellow" = "#fbdf56",
+	"Faint Green" = "#ddff99",
+	"Green" = "#97ee63",
+	"Seafoam Green" = "#00fa9a",
+	"Dark Green" = "#37835b",
+	"Cyan Blue" = "#00ffff",
+	"Faint Blue" = "#b3d9ff",
+	"Blue" = "#3399ff",
+	"Dark Blue" = "#6666ff",
+	"Purple" = "#ee82ee",
+	"Dark Fuschia" = "#cc0066",
+	"Pink" = "#ff99cc",
+	"White" = "#f2f2f2",))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"ghost",

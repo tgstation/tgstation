@@ -51,7 +51,7 @@
 
 	var/plas = open_turf_gases[/datum/gas/plasma][MOLES]
 	var/oxy = open_turf_gases[/datum/gas/oxygen][MOLES]
-	var/n2  = open_turf_gases[/datum/gas/nitrogen][MOLES]
+	var/n2 = open_turf_gases[/datum/gas/nitrogen][MOLES]
 	var/co2 = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
 
 	open_turf.air.garbage_collect()

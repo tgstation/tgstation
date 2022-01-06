@@ -101,7 +101,7 @@ export const GenericUplink = (props, context) => {
             </Tabs>
           </Flex.Item>
         )}
-        <Flex.Item grow={1} basis={0}>
+        <Flex.Item ml={2} grow basis={0}>
           {items.length === 0 && (
             <NoticeBox>
               {searchText.length === 0

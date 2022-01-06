@@ -1,0 +1,15 @@
+{
+	"bench_corner": [
+		{
+			"type": "icon_state",
+			"icon_state": "bench_corner_base",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bench_corner_cover",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

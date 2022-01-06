@@ -1,6 +1,7 @@
 GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
+///talking in OOC uses this
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -28,13 +29,23 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = trim(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	var/raw_msg = msg
 
 	var/list/filter_result = is_ooc_filtered(msg)
-	if (filter_result)
+	if (!CAN_BYPASS_FILTER(usr) && filter_result)
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
 		return
+
+	// Protect filter bypassers from themselves.
+	// Demote hard filter results to soft filter results if necessary due to the danger of accidentally speaking in OOC.
+	var/list/soft_filter_result = filter_result || is_soft_ooc_filtered(msg)
+
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
 
 	if(!msg)
 		return
@@ -240,7 +251,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			players[displayed_key] = displayed_key
 
 	// Check if the list is empty
-	if(!players.len)
+	if(!length(players))
 		// Express that there are no players we can ignore in chat
 		to_chat(src, "<span class='infoplain'>There are no other players you can ignore!</span>")
 
@@ -251,10 +262,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	players = sort_list(players)
 
 	// Request the player to ignore
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in players
+	var/selection = tgui_input_list(src, "Select a player", "Ignore", players)
 
 	// Stop running if we didn't receieve a valid selection
-	if(!selection || !(selection in players))
+	if(isnull(selection) || !(selection in players))
 		return
 
 	// Store the selected player
@@ -284,7 +295,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set desc = "Stop ignoring a player's messages on the OOC channel"
 
 	// Check if we've ignored any players
-	if(!prefs.ignoring.len)
+	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
 		to_chat(src, "<span class='infoplain'>You haven't ignored any players!</span>")
 
@@ -292,10 +303,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	// Request the player to unignore
-	var/selection = input("Please, select a player!", "Unignore", null, null) as null|anything in prefs.ignoring
+	var/selection = tgui_input_list(src, "Select a player", "Unignore", prefs.ignoring)
 
 	// Stop running if we didn't receive a selection
-	if(!selection)
+	if(isnull(selection))
 		return
 
 	// Check if the selected player is not on our ignore list

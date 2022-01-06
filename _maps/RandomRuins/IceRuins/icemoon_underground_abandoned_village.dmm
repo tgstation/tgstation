@@ -98,7 +98,7 @@
 /area/icemoon/underground/explored)
 "ks" = (
 /obj/structure/flora/rock/icy,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kY" = (
@@ -107,7 +107,7 @@
 /area/ruin/powered)
 "la" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /mob/living/simple_animal/hostile/skeleton/eskimo{
 	name = "Village Hunter"
 	},
@@ -311,7 +311,7 @@
 /obj/item/restraints/legcuffs/beartrap,
 /obj/item/reagent_containers/glass/bottle/venom,
 /obj/item/reagent_containers/glass/bottle/curare,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/meat/slab/human,
 /obj/item/food/meat/slab/human,
@@ -331,7 +331,7 @@
 "Cl" = (
 /obj/structure/sacrificealtar,
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/bloodletter,
+/obj/item/knife/bloodletter,
 /turf/open/floor/engine/cult,
 /area/ruin/powered)
 "Dm" = (

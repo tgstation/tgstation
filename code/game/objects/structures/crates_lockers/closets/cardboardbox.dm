@@ -21,6 +21,7 @@
 	var/move_speed_multiplier = 1
 	var/move_delay = FALSE
 	var/egged = 0
+	can_install_electronics = FALSE
 
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))

@@ -83,7 +83,14 @@
 			if(isobserver(C.mob))
 				msg += " - Observing"
 			else if(isnewplayer(C.mob))
-				msg += " - Lobby"
+				if(SSticker.current_state <= GAME_STATE_PREGAME)
+					var/mob/dead/new_player/lobbied_admin = C.mob
+					if(lobbied_admin.ready == PLAYER_READY_TO_PLAY)
+						msg += " - Lobby (Readied)"
+					else
+						msg += " - Lobby (Not readied)"
+				else
+					msg += " - Lobby"
 			else
 				msg += " - Playing"
 

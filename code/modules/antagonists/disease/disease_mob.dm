@@ -111,7 +111,7 @@ the new instance inside the host to be updated to the template's stats.
 		for(var/datum/disease_ability/ability in purchased_abilities)
 			. += span_notice("[ability.name]")
 
-/mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/disease/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(!message)
 		return
 	if(sanitize)
@@ -133,6 +133,9 @@ the new instance inside the host to be updated to the template's stats.
 		if(world.time > (last_move_tick + move_delay))
 			follow_next(Dir & NORTHWEST)
 			last_move_tick = world.time
+
+/mob/camera/disease/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	return FALSE
 
 /mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -169,7 +172,7 @@ the new instance inside the host to be updated to the template's stats.
 			taken_names[initial(D.name)] = TRUE
 	var/set_name
 	while(!set_name)
-		var/input = sanitize_name(stripped_input(src, "Select a name for your disease", "Select Name", "", MAX_NAME_LEN))
+		var/input = sanitize_name(tgui_input_text(src, "Select a name for your disease", "Select Name", max_length = MAX_NAME_LEN))
 		if(!input)
 			set_name = "Sentient Virus"
 			break
@@ -209,7 +212,7 @@ the new instance inside the host to be updated to the template's stats.
 		possible_hosts.Cut(1, 2)
 
 	if(del_on_fail)
-		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
+		to_chat(src, span_warning("No hosts were available for your disease to infect."))
 		qdel(src)
 	return FALSE
 

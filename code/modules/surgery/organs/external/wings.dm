@@ -15,6 +15,10 @@
 		return TRUE
 	return FALSE
 
+///Checks if the wings can soften short falls
+/obj/item/organ/external/wings/proc/can_soften_fall()
+	return TRUE
+
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
 	///The flight action object
@@ -186,6 +190,9 @@
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
+
+/obj/item/organ/external/wings/moth/can_soften_fall()
+	return !burnt
 
 ///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/update_float_move()

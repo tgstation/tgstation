@@ -18,6 +18,7 @@
 
 /obj/item/ammo_casing/energy/wiremod_gun
 	projectile_type = /obj/projectile/energy/wiremod_gun
+	harmful = FALSE
 	select_name = "circuit"
 	fire_sound = 'sound/weapons/blaster.ogg'
 

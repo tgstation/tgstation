@@ -181,7 +181,7 @@ PROPORTIONAL_FONT_FAMILY = ("MS", "Sans", "Serif")
 MONOSPACE_FONT_FAMILY    = ("Courier")
 
 PROPORTIONAL_FONT_SIZE  = 10
-MONOSPACE_FONT_SIZE     =  9  #a little smaller, because it it more legible at a smaller size
+MONOSPACE_FONT_SIZE     = 9  #a little smaller, because it it more legible at a smaller size
 TEXT_ENTRY_FONT_SIZE    = 12  # a little larger makes it easier to see
 
 #STANDARD_SELECTION_EVENTS = ["Return", "Button-1"]
@@ -2130,7 +2130,7 @@ def egdemo():
 
         elif reply[0] == "indexbox":
             title = reply[0]
-            msg   =  "Demo of " + reply[0]
+            msg   = "Demo of " + reply[0]
             choices = ["Choice1", "Choice2", "Choice3", "Choice4"]
             reply = indexbox(msg, title, choices)
             writeln("Reply was: %s" % repr(reply))

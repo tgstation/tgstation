@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -469,7 +469,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if (S.dir == ALL_CARDINALS)
 				to_chat(user, span_warning("\The [S] has no unconnected directions!"))
 				return
-			var/old_init_dir = S.GetInitDirections()
+			var/old_init_dir = S.get_init_directions()
 			if (old_init_dir == p_init_dir)
 				to_chat(user, span_warning("\The [S] is already in this configuration!"))
 				return
@@ -492,7 +492,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
 				return
 			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
-			var/current_init_dir = S.GetInitDirections()
+			var/current_init_dir = S.get_init_directions()
 			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
 			// and have it reflected in the final result. Reprogramming should be similarly consistent.
 			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
@@ -500,7 +500,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			if (ISSTUB(new_init_dir))
 				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
 				return
-			S.SetInitDirections(new_init_dir)
+			S.set_init_directions(new_init_dir)
 			// We're now reconfigured.
 			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
 			var/newly_permitted_connections = new_init_dir & ~current_init_dir
@@ -516,11 +516,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					node.disconnect(S)
 					S.nodes[i] = null
 				// Get our new connections
-				S.atmosinit()
+				S.atmos_init()
 				// Connect to our new connections
 				for (var/obj/machinery/atmospherics/O in S.nodes)
-					O.atmosinit()
-					O.addMember(src)
+					O.atmos_init()
+					O.add_member(src)
 				SSair.add_to_rebuild_queue(S)
 			// Finally, update our internal state - update_pipe_icon also updates dir and connections
 			S.update_pipe_icon()
@@ -573,7 +573,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						pipe_type.update()
 						pipe_type.add_fingerprint(usr)
-						pipe_type.setPipingLayer(piping_layer)
+						pipe_type.set_piping_layer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
 							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
@@ -611,6 +611,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))

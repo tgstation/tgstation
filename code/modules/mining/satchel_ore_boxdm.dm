@@ -18,10 +18,6 @@
 	else
 		return ..()
 
-/obj/structure/ore_box/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
-
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
 		user.visible_message(span_notice("[user] pries \the [src] apart."),
@@ -93,7 +89,7 @@
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
 	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
-	if(user)
+	if(user && !QDELETED(WD))
 		WD.add_fingerprint(user)
 	dump_box_contents()
 	qdel(src)

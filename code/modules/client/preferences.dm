@@ -248,14 +248,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (isnull(requested_preference))
 				return FALSE
 
-			if (!istype(requested_preference, /datum/preference/color) \
-				&& !istype(requested_preference, /datum/preference/color_legacy) \
-			)
+			if (!istype(requested_preference, /datum/preference/color))
 				return FALSE
 
 			var/default_value = read_preference(requested_preference.type)
-			if (istype(requested_preference, /datum/preference/color_legacy))
-				default_value = expand_three_digit_color(default_value)
 
 			// Yielding
 			var/new_color = input(
@@ -491,6 +487,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	character.dna.real_name = character.real_name
 
 	if(icon_updates)
+		character.icon_render_key = null //turns out if you don't set this to null update_body_parts does nothing, since it assumes the operation was cached
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()

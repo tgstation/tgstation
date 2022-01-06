@@ -5,12 +5,14 @@
 	custom_materials = list(/datum/material/iron=800, /datum/material/glass=200)
 	attachable = TRUE
 	drop_sound = 'sound/items/handling/component_drop.ogg'
-	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 	var/scanning = FALSE
 	var/timing = FALSE
 	var/time = 20
 	var/sensitivity = 1
 	var/hearing_range = 3
+	///Proximity monitor associated with this atom, needed for it to work.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/item/assembly/prox_sensor/Initialize(mapload)
 	. = ..()
@@ -40,19 +42,19 @@
 	if(!.)
 		return
 	else
-		proximity_monitor.SetHost(src,src)
+		proximity_monitor.set_host(src, src)
 
 /obj/item/assembly/prox_sensor/toggle_secure()
 	secured = !secured
 	if(!secured)
 		if(scanning)
 			toggle_scan()
-			proximity_monitor.SetHost(src,src)
+			proximity_monitor.set_host(src, src)
 		timing = FALSE
 		STOP_PROCESSING(SSobj, src)
 	else
 		START_PROCESSING(SSobj, src)
-		proximity_monitor.SetHost(loc,src)
+		proximity_monitor.set_host(loc,src)
 	update_appearance()
 	return secured
 
@@ -84,13 +86,13 @@
 	if(!secured)
 		return FALSE
 	scanning = scan
-	proximity_monitor.SetRange(scanning ? sensitivity : 0)
+	proximity_monitor.set_range(scanning ? sensitivity : 0)
 	update_appearance()
 
 /obj/item/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	sensitivity = sense
-	if(scanning && proximity_monitor.SetRange(sense))
+	if(scanning && proximity_monitor.set_range(sense))
 		sense()
 
 /obj/item/assembly/prox_sensor/update_appearance()

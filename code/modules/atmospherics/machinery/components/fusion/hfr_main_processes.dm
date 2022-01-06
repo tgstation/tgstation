@@ -57,7 +57,7 @@
 		waste_remove = FALSE
 		iron_content += 0.02 * power_level * delta_time
 
-	update_temperature_status()
+	update_temperature_status(delta_time)
 
 	//Store the temperature of the gases after one cicle of the fusion reaction
 	var/archived_heat = internal_fusion.temperature
@@ -129,13 +129,13 @@
 	// Gases that decrease the amount of energy
 	energy_modifiers -= scaled_moderator_list[/datum/gas/hypernoblium] * 10 + \
 								scaled_moderator_list[/datum/gas/water_vapor] * 0.75 + \
-								scaled_moderator_list[/datum/gas/nitryl] * 0.15 + \
+								scaled_moderator_list[/datum/gas/nitrium] * 0.15 + \
 								scaled_moderator_list[/datum/gas/healium] * 0.45 + \
 								scaled_moderator_list[/datum/gas/freon] * 1.15
 	///Between 0.25 and 100, this value is used to modify the behaviour of the internal energy and the core temperature based on the gases present in the mix
 	var/power_modifier = scaled_moderator_list[/datum/gas/oxygen] * 0.55 + \
 								scaled_moderator_list[/datum/gas/carbon_dioxide] * 0.95 + \
-								scaled_moderator_list[/datum/gas/nitryl] * 1.45 + \
+								scaled_moderator_list[/datum/gas/nitrium] * 1.45 + \
 								scaled_moderator_list[/datum/gas/zauker] * 5.55 + \
 								scaled_moderator_list[/datum/gas/plasma] * 0.05 - \
 								scaled_moderator_list[/datum/gas/nitrous_oxide] * 0.05 - \
@@ -204,9 +204,9 @@
 	//Hotter air is easier to heat up and cool down
 	heat_limiter_modifier = 10 * (10 ** power_level) * (heating_conductor / 100)
 	//The amount of heat that is finally emitted, based on the power output. Min and max are variables that depends of the modifier
-	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, \
-					- heat_limiter_modifier * 0.01 * negative_temperature_multiplier, \
-					heat_limiter_modifier * positive_temperature_multiplier)
+	heat_output_min = - heat_limiter_modifier * 0.01 * negative_temperature_multiplier
+	heat_output_max = heat_limiter_modifier * positive_temperature_multiplier
+	heat_output = clamp(internal_instability * power_output * heat_modifier / 100, heat_output_min, heat_output_max)
 
 	// Is the fusion process actually going to run?
 	// Note we have to always perform the above calculations to keep the UI updated, so we can't use this to early return.
@@ -301,21 +301,21 @@
 			if(moderator_list[/datum/gas/proto_nitrate] > 20)
 				radiation *= 1.55
 				heat_output *= 1.025
-				internal_output.assert_gases(/datum/gas/stimulum)
-				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+				internal_output.assert_gases(/datum/gas/nitrium)
+				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 		if(3, 4)
 			if(moderator_list[/datum/gas/plasma] > 10)
-				internal_output.assert_gases(/datum/gas/freon, /datum/gas/stimulum)
+				internal_output.assert_gases(/datum/gas/freon, /datum/gas/nitrium)
 				internal_output.gases[/datum/gas/freon][MOLES] += scaled_production * 0.15
-				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.05
+				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.05
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 0.45)
 			if(moderator_list[/datum/gas/freon] > 50)
 				heat_output *= 0.9
 				radiation *= 0.8
 			if(moderator_list[/datum/gas/proto_nitrate]> 15)
-				internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/halon)
-				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.25
+				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/halon)
+				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.25
 				internal_output.gases[/datum/gas/halon][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.55)
 				radiation *= 1.95
@@ -334,8 +334,8 @@
 				heat_output *= 0.5
 				radiation *= 0.2
 			if(moderator_list[/datum/gas/proto_nitrate] > 50)
-				internal_output.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
-				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 1.95
+				internal_output.assert_gases(/datum/gas/nitrium, /datum/gas/pluoxium)
+				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 1.95
 				internal_output.gases[/datum/gas/pluoxium][MOLES] += scaled_production
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 1.35)
 				radiation *= 1.95
@@ -357,9 +357,9 @@
 				moderator_internal.gases[/datum/gas/bz][MOLES] += scaled_production * 1.15
 				moderator_internal.gases[/datum/gas/plasma][MOLES] -= min(moderator_internal.gases[/datum/gas/plasma][MOLES], scaled_production * 1.45)
 			if(moderator_list[/datum/gas/proto_nitrate])
-				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/stimulum)
+				internal_output.assert_gases(/datum/gas/zauker, /datum/gas/nitrium)
 				internal_output.gases[/datum/gas/zauker][MOLES] += scaled_production * 5.35
-				internal_output.gases[/datum/gas/stimulum][MOLES] += scaled_production * 2.15
+				internal_output.gases[/datum/gas/nitrium][MOLES] += scaled_production * 2.15
 				moderator_internal.gases[/datum/gas/proto_nitrate][MOLES] -= min(moderator_internal.gases[/datum/gas/proto_nitrate][MOLES], scaled_production * 3.35)
 				radiation *= 2
 				heat_output *= 2.25
@@ -403,7 +403,7 @@
 
 	check_gravity_pulse(delta_time)
 
-	emit_rads(radiation)
+	emit_rads()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
 	// Don't evaporate if the reaction is dead

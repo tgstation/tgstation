@@ -9,7 +9,7 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 300
-	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/on = FALSE
@@ -69,21 +69,7 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/machinery/sparker/directional/north
-	dir = SOUTH
-	pixel_y = 26
-
-/obj/machinery/sparker/directional/south
-	dir = NORTH
-	pixel_y = -26
-
-/obj/machinery/sparker/directional/east
-	dir = WEST
-	pixel_x = 26
-
-/obj/machinery/sparker/directional/west
-	dir = EAST
-	pixel_x = -26
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
 /obj/machinery/sparker/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER

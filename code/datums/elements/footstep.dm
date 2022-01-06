@@ -1,3 +1,5 @@
+#define SHOULD_DISABLE_FOOTSTEPS(source) ((SSlag_switch.measures[DISABLE_FOOTSTEPS] && !(HAS_TRAIT(source, TRAIT_BYPASS_MEASURES))) || HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS))
+
 ///Footstep element. Plays footsteps at parents location when it is appropriate.
 /datum/element/footstep
 	element_flags = ELEMENT_DETACH|ELEMENT_BESPOKE
@@ -92,6 +94,9 @@
 /datum/element/footstep/proc/play_simplestep(mob/living/source)
 	SIGNAL_HANDLER
 
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/open/source_loc = prepare_step(source)
 	if(!source_loc)
 		return
@@ -112,10 +117,10 @@
 		return
 	playsound(source_loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
-/datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source)
+/datum/element/footstep/proc/play_humanstep(mob/living/carbon/human/source, atom/oldloc, direction)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS))
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
 		return
 
 	var/volume_multiplier = 1
@@ -132,6 +137,7 @@
 	///cache for sanic speed (lists are references anyways)
 	var/static/list/cached_footsteps = GLOB.footstep
 
+	play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE)
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 
@@ -154,7 +160,12 @@
 /datum/element/footstep/proc/play_simplestep_machine(atom/movable/source)
 	SIGNAL_HANDLER
 
+	if (SHOULD_DISABLE_FOOTSTEPS(source))
+		return
+
 	var/turf/open/source_loc = get_turf(source)
 	if(!istype(source_loc))
 		return
 	playsound(source_loc, footstep_sounds, 50, falloff_distance = 1, vary = sound_vary)
+
+#undef SHOULD_DISABLE_FOOTSTEPS

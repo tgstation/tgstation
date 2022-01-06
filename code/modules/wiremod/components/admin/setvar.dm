@@ -6,6 +6,7 @@
 /obj/item/circuit_component/set_variable
 	display_name = "Set Variable"
 	desc = "A component that sets a variable on an object."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL|CIRCUIT_FLAG_ADMIN
 
 	/// Entity to set variable of
@@ -29,4 +30,9 @@
 	if(!var_name || !object)
 		return
 
-	object.vv_edit_var(var_name, new_value.value)
+	var/resolved_new_value = new_value.value
+	if(islist(resolved_new_value))
+		var/list/to_resolve = resolved_new_value
+		resolved_new_value = recursive_list_resolve(to_resolve)
+
+	object.vv_edit_var(var_name, resolved_new_value)

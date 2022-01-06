@@ -344,9 +344,9 @@
 				name_default = reagents.get_master_reagent_name()
 			if (name_has_units)
 				name_default += " ([vol_each]u)"
-			name = stripped_input(usr,
-				"Name:",
+			name = tgui_input_text(usr,
 				"Give it a name!",
+				"Name",
 				name_default,
 				MAX_NAME_LEN)
 		if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
@@ -362,8 +362,8 @@
 				if(STRB)
 					drop_threshold = STRB.max_items - bottle.contents.len
 					target_loc = bottle
-			for(var/i = 0; i < amount; i++)
-				if(i < drop_threshold)
+			for(var/i in 1 to amount)
+				if(i-1 < drop_threshold)
 					P = new/obj/item/reagent_containers/pill(target_loc)
 				else
 					P = new/obj/item/reagent_containers/pill(drop_location())
@@ -379,7 +379,7 @@
 			return TRUE
 		if(item_type == "patch")
 			var/obj/item/reagent_containers/pill/patch/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i in 1 to amount)
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
@@ -387,7 +387,7 @@
 			return TRUE
 		if(item_type == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i in 1 to amount)
 				P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 				P.name = trim("[name] bottle")
 				adjust_item_drop_location(P)
@@ -395,7 +395,7 @@
 			return TRUE
 		if(item_type == "condimentPack")
 			var/obj/item/reagent_containers/food/condiment/pack/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i in 1 to amount)
 				P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 				P.originalname = name
 				P.name = trim("[name] pack")
@@ -404,7 +404,7 @@
 			return TRUE
 		if(item_type == "condimentBottle")
 			var/obj/item/reagent_containers/food/condiment/P
-			for(var/i = 0; i < amount; i++)
+			for(var/i in 1 to amount)
 				P = new/obj/item/reagent_containers/food/condiment(drop_location())
 				if (style)
 					apply_condi_style(P, style)

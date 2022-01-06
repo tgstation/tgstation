@@ -179,7 +179,7 @@
 	stage5 = list("<span class='danger'>Your skin feels as if it's about to burst off!</span>")
 	new_form = /mob/living/silicon/robot
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
-	bantype = "Cyborg"
+	bantype = JOB_CYBORG
 
 
 /datum/disease/transformation/robot/stage_act(delta_time, times_fired)

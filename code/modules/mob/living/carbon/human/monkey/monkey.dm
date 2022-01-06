@@ -1,4 +1,5 @@
 /mob/living/carbon/human/species/monkey
+	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
 	ai_controller = /datum/ai_controller/monkey
 	faction = list("neutral", "monkey")

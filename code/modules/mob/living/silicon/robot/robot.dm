@@ -164,11 +164,13 @@
 		to_chat(src,span_userdanger("ERROR: Model installer reply timeout. Please check internal connections."))
 		return
 
-	var/list/model_list = list("Engineering" = /obj/item/robot_model/engineering, \
-	"Medical" = /obj/item/robot_model/medical, \
-	"Miner" = /obj/item/robot_model/miner, \
-	"Janitor" = /obj/item/robot_model/janitor, \
-	"Service" = /obj/item/robot_model/service)
+	var/list/model_list = list(
+		"Engineering" = /obj/item/robot_model/engineering,
+		"Medical" = /obj/item/robot_model/medical,
+		"Miner" = /obj/item/robot_model/miner,
+		"Janitor" = /obj/item/robot_model/janitor,
+		"Service" = /obj/item/robot_model/service,
+	)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		model_list["Peacekeeper"] = /obj/item/robot_model/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
@@ -353,6 +355,7 @@
 	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
 	log_game("[key_name(usr)] detonated [key_name(src)]!")
 	log_combat(usr, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
@@ -368,6 +371,7 @@
 	lawupdate = FALSE
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
+	log_silicon("CYBORG: [key_name(src)] has been unlinked from an AI.")
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
@@ -478,6 +482,8 @@
 
 /mob/living/silicon/robot/proc/deconstruct()
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
+	if(shell)
+		undeploy()
 	var/turf/T = get_turf(src)
 	if (robot_suit)
 		robot_suit.forceMove(T)
@@ -524,15 +530,15 @@
 	if(!connected_ai)
 		return
 	switch(notifytype)
-		if(NEW_BORG) //New Cyborg
+		if(AI_NOTIFICATION_NEW_BORG) //New Cyborg
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg connection detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
-		if(NEW_MODEL) //New Model
+		if(AI_NOTIFICATION_NEW_MODEL) //New Model
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg model change detected: [name] has loaded the [designation] model.")]<br>")
-		if(RENAME) //New Name
+		if(AI_NOTIFICATION_CYBORG_RENAMED) //New Name
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].")]<br>")
-		if(AI_SHELL) //New Shell
+		if(AI_NOTIFICATION_AI_SHELL) //New Shell
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - New cyborg shell detected: <a href='?src=[REF(connected_ai)];track=[html_encode(name)]'>[name]</a>")]<br>")
-		if(DISCONNECT) //Tampering with the wires
+		if(AI_NOTIFICATION_CYBORG_DISCONNECTED) //Tampering with the wires
 			to_chat(connected_ai, "<br><br>[span_notice("NOTICE - Remote telemetry lost with [name].")]<br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, need_hands = FALSE, floor_okay=FALSE)
@@ -587,8 +593,6 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		sight = null
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
@@ -649,7 +653,7 @@
 			builtInCamera.toggle_cam(src,0)
 		if(admin_revive)
 			locked = TRUE
-		notify_ai(NEW_BORG)
+		notify_ai(AI_NOTIFICATION_NEW_BORG)
 		. = TRUE
 		toggle_headlamp(FALSE, TRUE) //This will reenable borg headlamps if doomsday is currently going on still.
 
@@ -658,7 +662,7 @@
 	. = ..()
 	if(!.)
 		return
-	notify_ai(RENAME, oldname, newname)
+	notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, newname)
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	custom_name = newname
@@ -668,6 +672,11 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	uneq_all()
 	shown_robot_modules = FALSE
+
+	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
+		for(var/obj/item in bag)
+			item.forceMove(drop_location())
+
 	if(hud_used)
 		hud_used.update_robot_modules_display()
 
@@ -676,6 +685,7 @@
 		hasExpanded = FALSE
 		update_transform()
 	logevent("Chassis model has been reset.")
+	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
 	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.
@@ -713,7 +723,6 @@
 
 	hat_offset = model.hat_offset
 
-	magpulse = model.magpulsing
 	INVOKE_ASYNC(src, .proc/updatename)
 
 

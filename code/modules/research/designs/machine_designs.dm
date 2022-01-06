@@ -671,7 +671,7 @@
 	name = "Machine Design (Account Registration Device)"
 	desc = "The circuit board for a Account Registration Device."
 	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
 	build_path = /obj/item/circuitboard/machine/accounting
 	category = list ("Misc. Machinery")
 

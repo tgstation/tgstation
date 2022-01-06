@@ -20,8 +20,8 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	combat_mode = TRUE
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian,
-				/obj/item/kitchen/knife)
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian,
+				/obj/item/knife/kitchen)
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
 	faction = list("russian")
@@ -34,7 +34,7 @@
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
 	icon_living = "russianranged"
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged,
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged,
 				/obj/item/gun/ballistic/revolver/nagant)
 	ranged = 1
 	retreat_distance = 5
@@ -44,7 +44,7 @@
 
 
 /mob/living/simple_animal/hostile/russian/ranged/mosin
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged,
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged,
 				/obj/item/gun/ballistic/rifle/boltaction)
 	casingtype = /obj/item/ammo_casing/a762
 
@@ -54,7 +54,7 @@
 	maxHealth = 150
 	health = 150
 	casingtype = /obj/item/ammo_casing/shotgun/buckshot
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper,
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged/trooper,
 				/obj/item/gun/ballistic/shotgun/lethal)
 
 /mob/living/simple_animal/hostile/russian/ranged/officer
@@ -65,7 +65,7 @@
 	health = 65
 	rapid = 3
 	casingtype = /obj/item/ammo_casing/c9mm
-	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/officer,
+	loot = list(/obj/effect/mob_spawn/corpse/human/russian/ranged/officer,
 				/obj/item/gun/ballistic/automatic/pistol/aps)
 
 /mob/living/simple_animal/hostile/russian/ranged/officer/Aggro()

@@ -106,8 +106,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/beer/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.05))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 0.7))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.05))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 0.7))
 
 /datum/reagent/consumable/ethanol/beer/light
 	name = "Light Beer"
@@ -164,7 +164,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
 		M.Jitter(5)
@@ -196,7 +196,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/whiskey/candycorn
-	name = "candy corn liquor"
+	name = "Candy Corn Liquor"
 	description = "Like they drank in 2D speakeasies."
 	color = "#ccb800" // rgb: 204, 184, 0
 	taste_description = "pancake syrup"
@@ -225,7 +225,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time), 0)
+	M.adjust_drowsyness(-7 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
@@ -286,10 +286,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassclear"
 	ph = 8.1
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation = max(M.radiation - (2 * REM * delta_time),0)
-	return ..()
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -406,7 +402,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return ..()
 
 /datum/reagent/consumable/ethanol/lizardwine
-	name = "Lizard wine"
+	name = "Lizard Wine"
 	description = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol."
 	color = "#7E4043" // rgb: 126, 64, 67
 	boozepwr = 45
@@ -503,6 +499,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of delicious Ale."
 	ph = 4.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
@@ -669,8 +666,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
-		// Engineers lose radiation poisoning at a massive rate.
-		M.radiation = max(M.radiation - (25 * REM * delta_time), 0)
+		ADD_TRAIT(M, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+		if (HAS_TRAIT(M, TRAIT_IRRADIATED))
+			M.adjustToxLoss(-2 * REM * delta_time)
+
+	return ..()
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 	return ..()
 
 /datum/reagent/consumable/ethanol/booger
@@ -2150,7 +2153,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	var/minimum_percent = 0.15 //Percentages measured between 0 and 1.
+	// BYOND's compiler fails to catch non-consts in a ranged switch case, and it causes incorrect behavior. So this needs to explicitly be a constant.
+	var/const/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
 	glass_name = "glass of [name]"
@@ -2171,9 +2175,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			name += "[fruit_name] "
 			named = TRUE
 	if(named)
-		name += "wine"
+		name += "Wine"
 	else
-		name = "mixed [names_in_order[1]] wine"
+		name = "Mixed [names_in_order[1]] Wine"
 
 	var/alcohol_description
 	switch(boozepwr)
@@ -2326,8 +2330,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(DT_PROB(10, delta_time) && istype(metabolizer))
 		metabolizer.age += 1
 		if(metabolizer.age > 70)
-			metabolizer.facial_hair_color = "ccc"
-			metabolizer.hair_color = "ccc"
+			metabolizer.facial_hair_color = "#cccccc"
+			metabolizer.hair_color = "#cccccc"
 			metabolizer.update_hair()
 			if(metabolizer.age > 100)
 				metabolizer.become_nearsighted(type)
@@ -2471,7 +2475,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 
 /datum/reagent/consumable/ethanol/pruno // pruno mix is in drink_reagents
-	name = "pruno"
+	name = "Pruno"
 	color = "#E78108"
 	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	boozepwr = 85
@@ -2656,3 +2660,136 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(prophet_trauma)
 		QDEL_NULL(prophet_trauma)
 	return ..()
+
+//Moth Drinks
+/datum/reagent/consumable/ethanol/curacao
+	name = "Curaçao"
+	description = "Made with laraha oranges, for an aromatic finish."
+	boozepwr = 30
+	color = "#1a5fa1"
+	quality = DRINK_NICE
+	taste_description = "blue orange"
+	glass_icon_state = "curacao"
+	glass_name = "glass of curaçao"
+	glass_desc = "It's blue, da ba dee."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/navy_rum //IN THE NAVY
+	name = "Navy Rum"
+	description = "Rum as the finest sailors drink."
+	boozepwr = 90 //the finest sailors are often drunk
+	color = "#d8e8f0"
+	quality = DRINK_NICE
+	taste_description = "a life on the waves"
+	glass_icon_state = "ginvodkaglass"
+	glass_name = "glass of navy rum"
+	glass_desc = "Splice the mainbrace, and God save the King."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/bitters //why do they call them bitters, anyway? they're more spicy than anything else
+	name = "Andromeda Bitters"
+	description = "A bartender's best friend, often used to lend a delicate spiciness to any drink. Produced in New Trinidad, now and forever."
+	boozepwr = 70
+	color = "#1c0000"
+	quality = DRINK_NICE
+	taste_description = "spiced alcohol"
+	glass_icon_state = "bitters"
+	glass_name = "glass of bitters"
+	glass_desc = "Typically you'd want to mix this with something- but you do you."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/admiralty //navy rum, vermouth, fernet
+	name = "Admiralty"
+	description = "A refined, bitter drink made with navy rum, vermouth and fernet."
+	boozepwr = 100
+	color = "#1F0001"
+	quality = DRINK_VERYGOOD
+	taste_description = "haughty arrogance"
+	glass_icon_state = "admiralty"
+	glass_name = "Admiralty"
+	glass_desc = "Hail to the Admiral, for he brings fair tidings, and rum too."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/long_haul //Rum, Curacao, Sugar, dash of bitters, lengthened with soda water
+	name = "Long Haul"
+	description = "A favourite amongst freighter pilots, unscrupulous smugglers, and nerf herders."
+	boozepwr = 35
+	color = "#003153"
+	quality = DRINK_VERYGOOD
+	taste_description = "companionship"
+	glass_icon_state = "long_haul"
+	glass_name = "Long Haul"
+	glass_desc = "A perfect companion for a lonely long haul flight."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/long_john_silver //navy rum, bitters, lemonade
+	name = "Long John Silver"
+	description = "A long drink of navy rum, bitters, and lemonade. Particularly popular aboard the Mothic Fleet as it's light on ration credits and heavy on flavour."
+	boozepwr = 50
+	color = "#c4b35c"
+	quality = DRINK_VERYGOOD
+	taste_description = "rum and spices"
+	glass_icon_state = "long_john_silver"
+	glass_name = "Long John Silver"
+	glass_desc = "Named for a famous pirate, who may or may not have been fictional. But hey, why let the truth get in the way of a good yarn?" //Chopper Reid says "How the fuck are ya?"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/tropical_storm //dark rum, pineapple juice, triple citrus, curacao
+	name = "Tropical Storm"
+	description = "A taste of the Caribbean in one glass."
+	boozepwr = 40
+	color = "#00bfa3"
+	quality = DRINK_VERYGOOD
+	taste_description = "the tropics"
+	glass_icon_state = "tropical_storm"
+	glass_name = "Tropical Storm"
+	glass_desc = "Less destructive than the real thing."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/dark_and_stormy //rum and ginger beer- simple and classic
+	name = "Dark and Stormy"
+	description = "A classic drink arriving to thunderous applause." //thank you, thank you, I'll be here forever
+	boozepwr = 50
+	color = "#8c5046"
+	quality = DRINK_GOOD
+	taste_description = "ginger and rum"
+	glass_icon_state = "dark_and_stormy"
+	glass_name = "Dark and Stormy"
+	glass_desc = "Thunder and lightning, very very frightening."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/salt_and_swell //navy rum, tochtause syrup, egg whites, dash of saline-glucose solution
+	name = "Salt and Swell"
+	description = "A bracing sour with an interesting salty taste."
+	boozepwr = 60
+	color = "#b4abd0"
+	quality = DRINK_FANTASTIC
+	taste_description = "salt and spice"
+	glass_icon_state = "salt_and_swell"
+	glass_name = "Salt and Swell"
+	glass_desc = "Ah, I do like to be beside the seaside."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/tiltaellen //yoghurt, salt, vinegar
+	name = "Tiltällen"
+	description = "A lightly fermented yoghurt drink with salt and a light dash of vinegar. Has a distinct sour cheesy flavour."
+	boozepwr = 10
+	color = "#F4EFE2"
+	quality = DRINK_NICE
+	taste_description = "sour cheesy yoghurt"
+	glass_icon_state = "tiltaellen"
+	glass_name = "glass of tiltällen"
+	glass_desc = "Eww... it's curdled."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/tich_toch
+	name = "Tich Toch"
+	description = "A mix of Tiltällen, Töchtaüse Syrup, and vodka. It's not exactly to everyones' tastes."
+	boozepwr = 75
+	color = "#b4abd0"
+	quality = DRINK_VERYGOOD
+	taste_description = "spicy sour cheesy yoghurt"
+	glass_icon_state = "tich_toch"
+	glass_name = "Tich Toch"
+	glass_desc = "Oh god."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

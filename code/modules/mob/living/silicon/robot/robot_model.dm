@@ -37,8 +37,6 @@
 	var/list/model_traits = null
 	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
-	///Do we have a magboot effect
-	var/magpulsing = FALSE
 	///Do we clean when we move
 	var/clean_on_move = FALSE
 	///Whether the borg loses tool slots with damage.
@@ -124,6 +122,8 @@
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/cyborg = loc
+	if (!istype(cyborg))
+		return
 	var/list/held_modules = cyborg.held_items.Copy()
 	var/active_module = cyborg.module_active
 	cyborg.uneq_all()
@@ -186,6 +186,11 @@
 	new_model.rebuild_modules()
 	cyborg.radio.recalculateChannels()
 	cyborg.set_modularInterface_theme()
+	cyborg.diag_hud_set_health()
+	cyborg.diag_hud_set_status()
+	cyborg.diag_hud_set_borgcell()
+	cyborg.diag_hud_set_aishell()
+	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
 	qdel(src)
@@ -250,7 +255,7 @@
 	cyborg.notransform = FALSE
 	cyborg.updatehealth()
 	cyborg.update_icons()
-	cyborg.notify_ai(NEW_MODEL)
+	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)
 	if(cyborg.hud_used)
 		cyborg.hud_used.update_robot_modules_display()
 	SSblackbox.record_feedback("tally", "cyborg_modules", 1, cyborg.model)
@@ -314,7 +319,6 @@
 		/obj/item/multitool/cyborg,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
-		/obj/item/geiger_counter/cyborg,
 		/obj/item/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/electroadaptive_pseudocircuit,
@@ -328,7 +332,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	model_select_icon = "engineer"
-	magpulsing = TRUE
+	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 
 /obj/item/robot_model/janitor
@@ -629,8 +633,7 @@
 
 	cyborg_base_icon = "synd_engi"
 	model_select_icon = "malf"
-	model_traits = list(TRAIT_PUSHIMMUNE)
-	magpulsing = TRUE
+	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = -4
 	canDispose = TRUE
 

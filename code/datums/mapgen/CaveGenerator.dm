@@ -3,7 +3,7 @@
 	///Weighted list of the types that spawns if the turf is open
 	var/open_turf_types = list(/turf/open/floor/plating/asteroid/airless = 1)
 	///Weighted list of the types that spawns if the turf is closed
-	var/closed_turf_types =  list(/turf/closed/mineral/random = 1)
+	var/closed_turf_types = list(/turf/closed/mineral/random = 1)
 
 
 	///Weighted list of mobs that can spawn in the area.

@@ -9,7 +9,7 @@
 /area/ruin/unpowered/no_grav)
 "ac" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "fire" = 100, "acid" = 100);
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
@@ -23,7 +23,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ae" = (
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -36,7 +36,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ag" = (
-/obj/effect/mob_spawn/human/syndicatespace/captain,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
@@ -79,7 +79,7 @@
 "ar" = (
 /obj/machinery/camera/xray{
 	c_tag = "Medbay";
-	dir = 9;
+	dir = 6;
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -121,7 +121,7 @@
 "ay" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -262,7 +262,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aU" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -317,7 +317,7 @@
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -453,7 +453,7 @@
 "bw" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -494,7 +494,8 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/clothing/suit/space/hardsuit/cybersun,
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/syndicate/black/engie,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
@@ -515,11 +516,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bE" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bF" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -565,7 +566,7 @@
 "bM" = (
 /obj/structure/cable,
 /obj/structure/fans/tiny,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Syndicate ship airlock";
 	req_one_access_txt = "150"
 	},
@@ -584,7 +585,8 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bP" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -636,7 +638,7 @@
 "bY" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -675,7 +677,7 @@
 "ce" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -695,7 +697,7 @@
 "cg" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -718,7 +720,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ci" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "fire" = 100, "acid" = 100);
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
@@ -762,7 +764,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cp" = (
 /obj/machinery/door/window{
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100);
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "fire" = 70, "acid" = 100);
 	name = "Control room";
 	req_one_access_txt = "150"
 	},
@@ -1039,16 +1041,15 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cX" = (
-/obj/machinery/camera/xray{
+/obj/machinery/camera/xray/directional/east{
 	c_tag = "Conference room";
-	dir = 8;
 	network = list("fsc");
 	screen_loc = ""
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cY" = (
-/obj/effect/mob_spawn/human/syndicatespace,
+/obj/effect/mob_spawn/ghost_role/human/syndicatespace,
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1093,7 +1094,7 @@
 "df" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -1110,7 +1111,7 @@
 "dg" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";
@@ -1129,7 +1130,7 @@
 "dh" = (
 /obj/machinery/camera/xray{
 	c_tag = "Cargo pod";
-	dir = 6;
+	dir = 9;
 	network = list("fsci");
 	screen_loc = ""
 	},
@@ -1151,7 +1152,7 @@
 	},
 /obj/structure/fans/tiny,
 /obj/machinery/door/airlock/grunge{
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90);
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "fire" = 90, "acid" = 90);
 	desc = "Vault airlock preventing air from going out.";
 	name = "Syndicate Vault Airlock";
 	req_one_access_txt = "150"
@@ -1215,7 +1216,7 @@
 "kY" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
-	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 60);
+	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 30, "bomb" = 30, "bio" = 0, "fire" = 70, "acid" = 60);
 	desc = "A basic closet for all your villainous needs.";
 	locked = 1;
 	name = "Closet";

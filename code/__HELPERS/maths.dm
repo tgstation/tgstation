@@ -30,34 +30,44 @@
  * Uses the ultra-fast [Bresenham Line-Drawing Algorithm](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm).
  */
 /proc/get_line(atom/starting_atom, atom/ending_atom)
-	var/px = starting_atom.x //starting x
-	var/py = starting_atom.y
-	var/line[] = list(locate(px, py, starting_atom.z))
-	var/dx = ending_atom.x - px //x distance
-	var/dy = ending_atom.y - py
-	var/dxabs = abs(dx)//Absolute value of x distance
-	var/dyabs = abs(dy)
-	var/sdx = SIGN(dx) //Sign of x distance (+ or -)
-	var/sdy = SIGN(dy)
-	var/x = dxabs >> 1 //Counters for steps taken, setting to distance/2
-	var/y = dyabs >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
-	var/j //Generic integer for counting
-	if(dxabs >= dyabs) //x distance is greater than y
-		for(j = 0; j < dxabs; j++)//It'll take dxabs steps to get there
-			y += dyabs
-			if(y >= dxabs) //Every dyabs steps, step once in y direction
-				y -= dxabs
-				py += sdy
-			px += sdx //Step on in x direction
-			line += locate(px, py, starting_atom.z)//Add the turf to the list
+	var/current_x_step = starting_atom.x//start at x and y, then add 1 or -1 to these to get every turf from starting_atom to ending_atom
+	var/current_y_step = starting_atom.y
+	var/starting_z = starting_atom.z
+
+	var/list/line = list(get_turf(starting_atom))//get_turf(atom) is faster than locate(x, y, z)
+
+	var/x_distance = ending_atom.x - current_x_step //x distance
+	var/y_distance = ending_atom.y - current_y_step
+
+	var/abs_x_distance = abs(x_distance)//Absolute value of x distance
+	var/abs_y_distance = abs(y_distance)
+
+	var/x_distance_sign = SIGN(x_distance) //Sign of x distance (+ or -)
+	var/y_distance_sign = SIGN(y_distance)
+
+	var/x = abs_x_distance >> 1 //Counters for steps taken, setting to distance/2
+	var/y = abs_y_distance >> 1 //Bit-shifting makes me l33t.  It also makes get_line() unnessecarrily fast.
+
+	if(abs_x_distance >= abs_y_distance) //x distance is greater than y
+		for(var/distance_counter in 0 to (abs_x_distance - 1))//It'll take abs_x_distance steps to get there
+			y += abs_y_distance
+
+			if(y >= abs_x_distance) //Every abs_y_distance steps, step once in y direction
+				y -= abs_x_distance
+				current_y_step += y_distance_sign
+
+			current_x_step += x_distance_sign //Step on in x direction
+			line += locate(current_x_step, current_y_step, starting_z)//Add the turf to the list
 	else
-		for(j=0 ;j < dyabs; j++)
-			x += dxabs
-			if(x >= dyabs)
-				x -= dyabs
-				px += sdx
-			py += sdy
-			line += locate(px, py, starting_atom.z)
+		for(var/distance_counter in 0 to (abs_y_distance - 1))
+			x += abs_x_distance
+
+			if(x >= abs_y_distance)
+				x -= abs_y_distance
+				current_x_step += x_distance_sign
+
+			current_y_step += y_distance_sign
+			line += locate(current_x_step, current_y_step, starting_z)
 	return line
 
 ///Format a power value in W, kW, MW, or GW.
@@ -80,13 +90,19 @@
 		return "[round(units * 0.000001, 0.001)] MJ"
 	return "[round(units * 0.000000001, 0.0001)] GJ"
 
+/proc/joules_to_energy(joules)
+	return joules * (1 SECONDS) / SSmachines.wait
+
+/proc/energy_to_joules(energy_units)
+	return energy_units * SSmachines.wait / (1 SECONDS)
+
 ///Format an energy value measured in Power Cell units.
 /proc/display_energy(units)
 	// APCs process every (SSmachines.wait * 0.1) seconds, and turn 1 W of
 	// excess power into watts when charging cells.
 	// With the current configuration of wait=20 and CELLRATE=0.002, this
 	// means that one unit is 1 kJ.
-	return display_joules(units * SSmachines.wait * 0.1 WATTS)
+	return display_joules(energy_to_joules(units) WATTS)
 
 ///chances are 1:value. anyprob(1) will always return true
 /proc/anyprob(value)

@@ -12,7 +12,7 @@
 	name = "reshape face"
 	implements = list(
 		TOOL_SCALPEL = 100,
-		/obj/item/kitchen/knife = 50,
+		/obj/item/knife = 50,
 		TOOL_WIRECUTTER = 35)
 	time = 64
 
@@ -39,8 +39,8 @@
 			for(var/_i in 1 to 9)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
 			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
-		var/chosen_name = input(user, "Choose a new name to assign.", "Plastic Surgery") as null|anything in names
-		if(!chosen_name)
+		var/chosen_name = tgui_input_list(user, "New name to assign", "Plastic Surgery", names)
+		if(isnull(chosen_name))
 			return
 		var/oldname = target.real_name
 		target.real_name = chosen_name

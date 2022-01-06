@@ -1,12 +1,5 @@
 /datum/config_entry/number_list/repeated_mode_adjust
 
-/datum/config_entry/keyed_list/probability
-	key_mode = KEY_MODE_TEXT
-	value_mode = VALUE_MODE_NUM
-
-/datum/config_entry/keyed_list/probability/ValidateListEntry(key_name)
-	return key_name in config.modes
-
 /datum/config_entry/keyed_list/max_pop
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
@@ -106,9 +99,23 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 
+/datum/config_entry/keyed_list/roundstart_races/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
+
 /datum/config_entry/keyed_list/roundstart_no_hard_check // Species contained in this list will not cause existing characters with no-longer-roundstart species set to be resetted to the human race.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
+
+/datum/config_entry/keyed_list/roundstart_no_hard_check/ValidateListEntry(key_name, key_value)
+	if(key_name in GLOB.species_list)
+		return TRUE
+
+	log_config("ERROR: [key_name] is not a valid race ID.")
+	return FALSE
 
 /datum/config_entry/flag/no_summon_guns //No
 
@@ -285,7 +292,7 @@
 	min_val = -1
 
 /datum/config_entry/string/overflow_job
-	default = "Assistant"
+	default = JOB_ASSISTANT
 
 /datum/config_entry/flag/starlight
 /datum/config_entry/flag/grey_assistants
@@ -370,3 +377,5 @@
 	integer = FALSE // It is in hours, but just in case one wants to specify minutes.
 
 /datum/config_entry/flag/sdql_spells
+
+/datum/config_entry/flag/native_fov

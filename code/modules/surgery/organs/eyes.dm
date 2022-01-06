@@ -2,6 +2,7 @@
 	name = BODY_ZONE_PRECISE_EYES
 	icon_state = "eyeballs"
 	desc = "I see you!"
+	visual = TRUE
 	zone = BODY_ZONE_PRECISE_EYES
 	slot = ORGAN_SLOT_EYES
 	gender = PLURAL
@@ -41,7 +42,6 @@
 		old_eye_color = human_owner.eye_color
 		if(eye_color)
 			human_owner.eye_color = eye_color
-			human_owner.regenerate_icons()
 		else
 			eye_color = human_owner.eye_color
 		if(HAS_TRAIT(human_owner, TRAIT_NIGHT_VISION) && !lighting_alpha)
@@ -57,7 +57,6 @@
 		old_eye_color = affected_human.eye_color
 		if(eye_color)
 			affected_human.eye_color = eye_color
-			affected_human.regenerate_icons()
 		else
 			eye_color = affected_human.eye_color
 		if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_alpha)
@@ -74,7 +73,7 @@
 	if(ishuman(eye_owner) && eye_color)
 		var/mob/living/carbon/human/human_owner = eye_owner
 		human_owner.eye_color = old_eye_color
-		human_owner.regenerate_icons()
+		human_owner.update_body()
 	eye_owner.cure_blind(EYE_DAMAGE)
 	eye_owner.cure_nearsighted(EYE_DAMAGE)
 	eye_owner.set_blindness(0)
@@ -82,6 +81,10 @@
 	eye_owner.clear_fullscreen("eye_damage", 0)
 	eye_owner.update_sight()
 
+//Gotta reset the eye color, because that persists
+/obj/item/organ/eyes/enter_wardrobe()
+	. = ..()
+	eye_color = initial(eye_color)
 
 /obj/item/organ/eyes/on_life(delta_time, times_fired)
 	. = ..()
@@ -381,6 +384,7 @@
 
 /obj/item/organ/eyes/robotic/glow/proc/start_visuals()
 	if(!islist(eye_lighting))
+		eye_lighting = list()
 		regenerate_light_effects()
 	if((eye_lighting.len < light_beam_distance) || !on_mob)
 		regenerate_light_effects()

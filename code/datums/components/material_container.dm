@@ -129,8 +129,21 @@
 		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [parent]."))
 		return
 	if(!has_space(material_amount))
-		to_chat(user, span_warning("[parent] is full. Please remove materials from [parent] in order to insert more."))
-		return
+		if(istype(I, /obj/item/stack))
+			//figure out how much space is left
+			var/space_left = max_amount - total_amount
+			//figure out the amount of sheets that can fit that space
+			var/obj/item/stack/stack_to_split = I
+			var/material_per_sheet = material_amount / stack_to_split.amount
+			var/sheets_to_insert = round(space_left / material_per_sheet)
+			if(!sheets_to_insert)
+				to_chat(user, span_warning("[parent] can't hold any more of [I] sheets."))
+				return
+			//split the amount we don't need off
+			INVOKE_ASYNC(stack_to_split, /obj/item/stack.proc/split_stack, user, stack_to_split.amount - sheets_to_insert)
+		else
+			to_chat(user, span_warning("[I] contains more materials than [parent] has space to hold."))
+			return
 	user_insert(I, user, mat_container_flags)
 
 /// Proc used for when player inserts materials
@@ -141,7 +154,7 @@
 	if(istype(I, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
 		var/obj/item/stack/S = I
-		requested_amount = input(user, "How much do you want to insert?", "Inserting [S.singular_name]s") as num|null
+		requested_amount = round(tgui_input_number(user, "How much do you want to insert?", "Inserting [S.singular_name]s"))
 		if(isnull(requested_amount) || (requested_amount <= 0))
 			return
 		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)

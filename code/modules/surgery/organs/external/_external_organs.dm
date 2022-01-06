@@ -9,6 +9,7 @@
 
 	///Unremovable is until the features are completely finished
 	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
 	var/layers
@@ -50,7 +51,7 @@
 	limb.external_organs.Add(src)
 	ownerlimb = limb
 
-	. =  ..()
+	. = ..()
 
 	limb.contents.Add(src)
 
@@ -140,7 +141,7 @@
 
 	var/list/feature_list = get_global_feature_list()
 
-	set_sprite(feature_list[deconstruct_block(getblock(features, dna_block), feature_list.len)])
+	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns

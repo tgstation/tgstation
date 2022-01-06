@@ -164,7 +164,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
@@ -185,7 +185,7 @@
 /area/ruin/space/has_grav/gasthelizard)
 "y" = (
 /obj/structure/table/reinforced,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /obj/item/restraints/handcuffs,
 /obj/item/reagent_containers/spray/pepper,
 /turf/open/floor/iron/dark/airless,
@@ -334,7 +334,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/gasthelizard)
 "V" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
@@ -342,7 +342,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
 "Z" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},

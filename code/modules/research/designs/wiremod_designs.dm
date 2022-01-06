@@ -48,6 +48,11 @@
 	id = "comp_arithmetic"
 	build_path = /obj/item/circuit_component/arithmetic
 
+/datum/design/component/trigonometry
+	name = "Trigonometry Component"
+	id = "comp_trigonometry"
+	build_path = /obj/item/circuit_component/trigonometry
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -97,6 +102,16 @@
 	name = "Random Component"
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
+
+/datum/design/component/binary_conversion
+	name = "Binary Conversion Component"
+	id = "comp_binary_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+
+/datum/design/component/decimal_conversion
+	name = "Decimal Conversion Component"
+	id = "comp_decimal_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
 
 /datum/design/component/species
 	name = "Get Species Component"
@@ -168,10 +183,20 @@
 	id = "comp_direction"
 	build_path = /obj/item/circuit_component/direction
 
+/datum/design/component/reagentscanner
+	name = "Reagents Scanner"
+	id = "comp_reagents"
+	build_path = /obj/item/circuit_component/reagentscanner
+
 /datum/design/component/health
 	name = "Health Component"
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
+
+/datum/design/component/matscanner
+	name = "Material Scanner"
+	id = "comp_matscanner"
+	build_path = /obj/item/circuit_component/matscanner
 
 /datum/design/component/split
 	name = "Split Component"
@@ -258,10 +283,20 @@
 	id = "comp_list_literal"
 	build_path = /obj/item/circuit_component/list_literal
 
+/datum/design/component/list_assoc_literal
+	name = "Associative List Literal"
+	id = "comp_list_assoc_literal"
+	build_path = /obj/item/circuit_component/list_literal/assoc_literal
+
 /datum/design/component/typecast
 	name = "Typecast Component"
 	id = "comp_typecast"
 	build_path = /obj/item/circuit_component/typecast
+
+/datum/design/component/printer
+	name = "Printer Component"
+	id = "comp_printer"
+	build_path = /obj/item/circuit_component/printer
 
 /datum/design/component/pinpointer
 	name = "Proximity Pinpointer Component"
@@ -304,8 +339,27 @@
 /datum/design/component/filter_list
 	name = "Filter List Component"
 	id = "comp_filter_list"
-	build_path = /obj/item/circuit_component/foreach
+	build_path = /obj/item/circuit_component/filter_list
 
+/datum/design/component/id_getter
+	name = "ID Getter Component"
+	id = "comp_id_getter"
+	build_path = /obj/item/circuit_component/id_getter
+
+/datum/design/component/id_info_reader
+	name = "ID Getter Component"
+	id = "comp_id_info_reader"
+	build_path = /obj/item/circuit_component/id_info_reader
+
+/datum/design/component/id_access_reader
+	name = "ID Access Reader Component"
+	id = "comp_id_access_reader"
+	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/access_checker
+	name = "Access Checker Component"
+	id = "comp_access_checker"
+	build_path = /obj/item/circuit_component/compare/access
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -442,3 +496,12 @@
 	build_path = /obj/item/circuitboard/machine/bci_implanter
 	build_type = IMPRINTER | COMPONENT_PRINTER
 	category = list("Circuitry", "Core")
+
+/datum/design/assembly_shell
+	name = "Assembly Shell"
+	desc = "An assembly shell that can be attached to wires and other assemblies."
+	id = "assembly_shell"
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	build_path = /obj/item/assembly/wiremod
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")

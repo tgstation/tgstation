@@ -64,7 +64,7 @@
 /datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
 	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
 	var/obj/item/bodypart/consumed_limb
-	if(!limbs_to_consume.len)
+	if(!length(limbs_to_consume))
 		H.losebreath++
 		return
 	if(H.num_legs) //Legs go before arms
@@ -88,7 +88,7 @@
 		return
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
-	if(limbs_to_heal.len < 1)
+	if(!length(limbs_to_heal))
 		return FALSE
 	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
 		return TRUE
@@ -96,13 +96,13 @@
 /datum/action/innate/regenerate_limbs/Activate()
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
-	if(limbs_to_heal.len < 1)
+	if(!length(limbs_to_heal))
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
-	to_chat(H, span_notice("You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]..."))
-	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
+	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
+	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 40*limbs_to_heal.len
+		H.blood_volume -= 40*length(limbs_to_heal)
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
 		return
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
@@ -124,7 +124,6 @@
 	id = SPECIES_SLIMEPERSON
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
-	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
@@ -151,7 +150,7 @@
 		swap_body = new
 		swap_body.Grant(C)
 
-		if(!bodies || !bodies.len)
+		if(!bodies || !length(bodies))
 			bodies = list(C)
 		else
 			bodies |= C
@@ -232,7 +231,7 @@
 
 	spare.underwear = "Nude"
 	H.dna.transfer_identity(spare, transfer_SE=1)
-	spare.dna.features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	spare.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
 	spare.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
@@ -299,8 +298,7 @@
 			continue
 
 		var/list/L = list()
-		// HTML colors need a # prefix
-		L["htmlcolor"] = "#[body.dna.features["mcolor"]]"
+		L["htmlcolor"] = body.dna.features["mcolor"]
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
@@ -409,7 +407,6 @@
 /datum/species/jelly/luminescent
 	name = "Luminescent"
 	id = SPECIES_LUMINESCENT
-	say_mod = "says"
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -693,7 +690,7 @@
 		to_chat(human_user, span_warning("The link seems to have been severed..."))
 		return
 
-	var/message = sanitize(input("Message:", "Slime Telepathy") as text|null)
+	var/message = sanitize(tgui_input_text(human_user, "Enter a message", "Slime Telepathy"))
 
 	if(!message)
 		return
@@ -720,35 +717,35 @@
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/project_thought/Activate()
-	var/mob/living/carbon/human/H = owner
-	if(H.stat == DEAD)
+	var/mob/living/carbon/human/telepath = owner
+	if(telepath.stat == DEAD)
 		return
-	if(!is_species(H, /datum/species/jelly/stargazer))
+	if(!is_species(telepath, /datum/species/jelly/stargazer))
 		return
-
-	var/list/options = list()
-	for(var/mob/living/Ms in oview(H))
-		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sort_names(options)
-	if(!M)
+	var/list/recipient_options = list()
+	for(var/mob/living/recipient in oview(telepath))
+		recipient_options.Add(recipient)
+	if(!length(recipient_options))
+		to_chat(telepath, span_warning("You don't see anyone to send your thought to."))
 		return
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(H, span_notice("As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+	var/mob/living/recipient = tgui_input_list(telepath, "Choose a telepathic message recipient", "Telepathy", sort_names(recipient_options))
+	if(isnull(recipient))
 		return
-	var/msg = sanitize(input("Message:", "Telepathy") as text|null)
-	if(msg)
-		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(H, span_notice("As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
-			return
-		log_directed_talk(H, M, msg, LOG_SAY, "slime telepathy")
-		to_chat(M, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")
-		to_chat(H, span_notice("You telepathically said: \"[msg]\" to [M]"))
-		for(var/dead in GLOB.dead_mob_list)
-			if(!isobserver(dead))
-				continue
-			var/follow_link_user = FOLLOW_LINK(dead, H)
-			var/follow_link_target = FOLLOW_LINK(dead, M)
-			to_chat(dead, "[follow_link_user] [span_name("[H]")] [span_alertalien("Slime Telepathy --> ")] [follow_link_target] [span_name("[M]")] [span_noticealien("[msg]")]")
+	var/msg = tgui_input_text(telepath, title = "Telepathy")
+	if(isnull(msg))
+		return
+	if(recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+		return
+	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")
+	to_chat(recipient, "[span_notice("You hear an alien voice in your head... ")]<font color=#008CA2>[msg]</font>")
+	to_chat(telepath, span_notice("You telepathically said: \"[msg]\" to [recipient]"))
+	for(var/dead in GLOB.dead_mob_list)
+		if(!isobserver(dead))
+			continue
+		var/follow_link_user = FOLLOW_LINK(dead, telepath)
+		var/follow_link_target = FOLLOW_LINK(dead, recipient)
+		to_chat(dead, "[follow_link_user] [span_name("[telepath]")] [span_alertalien("Slime Telepathy --> ")] [follow_link_target] [span_name("[recipient]")] [span_noticealien("[msg]")]")
 
 /datum/action/innate/link_minds
 	name = "Link Minds"

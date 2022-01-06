@@ -1,6 +1,7 @@
 /datum/job/cook
-	title = "Cook"
-	department_head = list("Head of Personnel")
+	title = JOB_COOK
+	description = "Serve food, cook meat, keep the crew fed."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 1
@@ -37,7 +38,7 @@
 	if(!length(job_changes))
 		return
 
-	var/list/cook_changes = job_changes["cook"]
+	var/list/cook_changes = job_changes[JOB_COOK]
 
 	if(!length(cook_changes))
 		return
@@ -66,8 +67,8 @@
 		/obj/item/reagent_containers/food/condiment/rice = 20,
 		/obj/item/reagent_containers/food/condiment/enzyme = 15,
 		/obj/item/reagent_containers/food/condiment/soymilk = 15,
-		/obj/item/kitchen/knife = 4,
-		/obj/item/kitchen/knife/butcher = 2
+		/obj/item/knife/kitchen = 4,
+		/obj/item/knife/butcher = 2
 	)
 
 
@@ -86,19 +87,19 @@
 	name = "Cook"
 	jobtype = /datum/job/cook
 
-	belt = /obj/item/pda/cook
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/cook
 	uniform = /obj/item/clothing/under/rank/civilian/chef
 	suit = /obj/item/clothing/suit/toggle/chef
+	backpack_contents = list(
+		/obj/item/choice_beacon/ingredient = 1,
+		/obj/item/sharpener = 1,
+	)
+	belt = /obj/item/pda/cook
+	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
-	backpack_contents = list(
-		/obj/item/sharpener = 1,
-		/obj/item/choice_beacon/ingredient = 1
-	)
-	skillchips = list(/obj/item/skillchip/job/chef)
 
-	id_trim = /datum/id_trim/job/cook
+	skillchips = list(/obj/item/skillchip/job/chef)
 
 /datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -109,3 +110,8 @@
 			head = /obj/item/clothing/head/soft/mime
 		if(!visualsOnly)
 			J.cooks++
+
+/datum/outfit/job/cook/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/suit/apron/chef
+	. += /obj/item/clothing/head/soft/mime

@@ -516,10 +516,11 @@
 	if(is_zero_amount(delete_if_zero = TRUE))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
-	max = get_amount()
+	var/stackmaterial = round(tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max))
+	if(isnull(stackmaterial))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	stackmaterial = min(max, stackmaterial)
-	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
@@ -557,7 +558,7 @@
 	add_blood_DNA(from.return_blood_DNA())
 	add_fingerprint_list(from.return_fingerprints())
 	add_hiddenprint_list(from.return_hiddenprints())
-	fingerprintslast  = from.fingerprintslast
+	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)

@@ -1,5 +1,8 @@
 /datum/job/captain
-	title = "Captain"
+	title = JOB_CAPTAIN
+	description = "Be responsible for the station, manage your Heads of Staff, \
+		keep the crew alive, be prepared to do anything and everything or die \
+		horribly trying."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	department_head = list("CentCom")
 	faction = FACTION_STATION
@@ -23,9 +26,10 @@
 	liver_traits = list(TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CAPTAIN
+	department_for_prefs = /datum/job_department/captain
 	departments_list = list(
 		/datum/job_department/command,
-		)
+	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/flask/gold)
 
@@ -50,28 +54,33 @@
 	jobtype = /datum/job/captain
 
 	id = /obj/item/card/id/advanced/gold
-	belt = /obj/item/pda/captain
-	glasses = /obj/item/clothing/glasses/sunglasses
-	ears = /obj/item/radio/headset/heads/captain/alt
-	gloves = /obj/item/clothing/gloves/color/captain
-	uniform =  /obj/item/clothing/under/rank/captain
+	id_trim = /datum/id_trim/job/captain
+	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/station_charter = 1,
+		)
+	belt = /obj/item/pda/captain
+	ears = /obj/item/radio/headset/heads/captain/alt
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/color/captain
 	head = /obj/item/clothing/head/caphat
-	backpack_contents = list(/obj/item/melee/baton/telescopic=1, /obj/item/station_charter=1)
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 
-	skillchips = list(/obj/item/skillchip/disk_verifier)
 
 	backpack = /obj/item/storage/backpack/captain
 	satchel = /obj/item/storage/backpack/satchel/cap
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
 
-	implants = list(/obj/item/implant/mindshield)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
+	chameleon_extras = list(
+		/obj/item/gun/energy/e_gun,
+		/obj/item/stamp/captain,
+		)
+	implants = list(/obj/item/implant/mindshield)
+	skillchips = list(/obj/item/skillchip/disk_verifier)
 
-	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)
-
-	id_trim = /datum/id_trim/job/captain
 	var/special_charter
 
 /datum/outfit/job/captain/pre_equip(mob/living/carbon/human/H, visualsOnly)
@@ -95,9 +104,11 @@
 		return
 	celestial_charter.name_type = special_charter
 
-/datum/outfit/job/captain/hardsuit
-	name = "Captain (Hardsuit)"
+/datum/outfit/job/captain/mod
+	name = "Captain (MODsuit)"
 
-	mask = /obj/item/clothing/mask/gas/atmos/captain
-	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/magnate
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/atmos/captain

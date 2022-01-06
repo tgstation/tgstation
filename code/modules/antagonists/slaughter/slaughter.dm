@@ -194,7 +194,7 @@
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	attack_vis_effect = null
-	feast_sound = 'sound/spookoween/scary_horn2.ogg'
+	feast_sound = 'sound/misc/scary_horn.ogg'
 	deathsound = 'sound/misc/sadtrombone.ogg'
 
 	icon_state = "bowmon"

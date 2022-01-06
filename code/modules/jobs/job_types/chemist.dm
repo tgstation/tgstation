@@ -1,5 +1,7 @@
 /datum/job/chemist
-	title = "Chemist"
+	title = JOB_CHEMIST
+	description = "Supply the doctors with chemicals, make medicine, as well as \
+		less likable substances in the comfort of a fully reinforced room."
 	department_head = list("Chief Medical Officer")
 	faction = FACTION_STATION
 	total_positions = 2
@@ -40,19 +42,19 @@
 	name = "Chemist"
 	jobtype = /datum/job/chemist
 
-	glasses = /obj/item/clothing/glasses/science
+	id_trim = /datum/id_trim/job/chemist
+	uniform = /obj/item/clothing/under/rank/medical/chemist
+	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
 	belt = /obj/item/pda/chemist
+	ears = /obj/item/radio/headset/headset_med
+	glasses = /obj/item/clothing/glasses/science
+	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/reagent_containers/glass/bottle/random_buffer
 	r_pocket = /obj/item/reagent_containers/dropper
-	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/chemist
-	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
+
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/chemistry
+
 	box = /obj/item/storage/box/survival/medical
-
 	chameleon_extras = /obj/item/gun/syringe
-
-	id_trim = /datum/id_trim/job/chemist

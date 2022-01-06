@@ -1,6 +1,8 @@
 /datum/job/chaplain
-	title = "Chaplain"
-	department_head = list("Head of Personnel")
+	title = JOB_CHAPLAIN
+	description = "Hold services and funerals, cremate people, preach your \
+		religion, protect the crew against cults."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -112,19 +114,17 @@
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/pda/chaplain
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/chaplain
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
+		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
-		/obj/item/camera/spooky = 1
 		)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
-
-	id_trim = /datum/id_trim/job/chaplain
+	skillchips = list(/obj/item/skillchip/entrails_reader)

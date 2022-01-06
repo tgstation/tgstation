@@ -157,7 +157,7 @@
 		return !H.bee_friendly()
 	if(istype(A, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = A
-		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
+		if(Hydro.myseed && Hydro.plant_status != HYDROTRAY_PLANT_DEAD && !Hydro.recent_bee_visit)
 			wanted_objects |= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 			return TRUE
 	return FALSE
@@ -195,7 +195,7 @@
 		generate_bee_visuals()
 
 /mob/living/simple_animal/hostile/bee/proc/pollinate(obj/machinery/hydroponics/Hydro)
-	if(!istype(Hydro) || !Hydro.myseed || Hydro.dead || Hydro.recent_bee_visit)
+	if(!istype(Hydro) || !Hydro.myseed || Hydro.plant_status == HYDROTRAY_PLANT_DEAD || Hydro.recent_bee_visit)
 		LoseTarget()
 		return
 
@@ -206,9 +206,9 @@
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
-	Hydro.adjustHealth(growth*0.5)
+	Hydro.adjust_plant_health(growth*0.5)
 	if(prob(BEE_POLLINATE_PEST_CHANCE))
-		Hydro.adjustPests(-10)
+		Hydro.adjust_pestlevel(-10)
 	if(prob(BEE_POLLINATE_YIELD_CHANCE))
 		Hydro.myseed.adjust_yield(1)
 		Hydro.yieldmod = 2

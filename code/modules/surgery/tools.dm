@@ -57,8 +57,8 @@
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
 
-/obj/item/cautery/ignition_effect(atom/A, mob/user)
-	. = span_notice("[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.")
+/obj/item/cautery/ignition_effect(atom/ignitable_atom, mob/user)
+	. = span_notice("[user] touches the end of [src] to \the [ignitable_atom], igniting it with a puff of smoke.")
 
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
@@ -69,6 +69,7 @@
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "e_cautery"
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
@@ -188,7 +189,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	mob_throw_hit_sound =  'sound/weapons/pierce.ogg'
+	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -240,20 +241,20 @@
 	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
 
-/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/surgical_processor/afterattack(obj/item/design_holder, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(O, /obj/item/disk/surgery))
-		to_chat(user, span_notice("You load the surgery protocol from [O] into [src]."))
-		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = O))
-			advanced_surgeries |= D.surgeries
+	if(istype(design_holder, /obj/item/disk/surgery))
+		to_chat(user, span_notice("You load the surgery protocol from [design_holder] into [src]."))
+		var/obj/item/disk/surgery/surgery_disk = design_holder
+		if(do_after(user, 10, target = design_holder))
+			advanced_surgeries |= surgery_disk.surgeries
 		return TRUE
-	if(istype(O, /obj/machinery/computer/operating))
-		to_chat(user, span_notice("You copy surgery protocols from [O] into [src]."))
-		var/obj/machinery/computer/operating/OC = O
-		if(do_after(user, 10, target = O))
+	if(istype(design_holder, /obj/machinery/computer/operating))
+		to_chat(user, span_notice("You copy surgery protocols from [design_holder] into [src]."))
+		var/obj/machinery/computer/operating/OC = design_holder
+		if(do_after(user, 10, target = design_holder))
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
@@ -263,6 +264,7 @@
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "e_scalpel"
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
@@ -310,6 +312,7 @@
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/surgery.dmi'
+	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
 	icon_state = "adv_retractor"
 	toolspeed = 0.7
 
@@ -347,7 +350,7 @@
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	toolspeed  = 1
+	toolspeed = 1
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 6
@@ -359,14 +362,14 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-/obj/item/shears/attack(mob/living/M, mob/living/user)
-	if(!iscarbon(M) || user.combat_mode)
+/obj/item/shears/attack(mob/living/amputee, mob/living/user)
+	if(!iscarbon(amputee) || user.combat_mode)
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)
 		return ..()
 
-	var/mob/living/carbon/patient = M
+	var/mob/living/carbon/patient = amputee
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
 		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))

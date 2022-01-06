@@ -9,6 +9,7 @@
 /obj/item/circuit_component/signal_handler
 	display_name = "Signal Handler"
 	desc = "A component that listens for signals on an object."
+	category = "Admin"
 	circuit_flags = CIRCUIT_FLAG_ADMIN|CIRCUIT_FLAG_INSTANT
 
 	/// Whether it is a global or object signal

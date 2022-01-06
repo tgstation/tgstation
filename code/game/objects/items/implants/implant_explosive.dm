@@ -36,11 +36,13 @@
 	. = ..()
 	if(!cause || !imp_in || active)
 		return 0
-	if(cause == "action_button" && !popup)
+	if(cause == "action_button")
+		if(popup)
+			return FALSE
 		popup = TRUE
 		var/response = tgui_alert(imp_in, "Are you sure you want to activate your [name]? This will cause you to explode!", "[name] Confirmation", list("Yes", "No"))
 		popup = FALSE
-		if(response == "No")
+		if(response != "Yes")
 			return 0
 	heavy = round(heavy)
 	medium = round(medium)
@@ -72,6 +74,11 @@
 	. = ..()
 	if(.)
 		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+
+/obj/item/implant/explosive/removed(mob/target, silent = FALSE, special = FALSE)
+	. = ..()
+	if(.)
+		UnregisterSignal(target, COMSIG_LIVING_DEATH)
 
 /obj/item/implant/explosive/proc/timed_explosion()
 	imp_in.visible_message(span_warning("[imp_in] starts beeping ominously!"))

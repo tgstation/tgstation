@@ -8,20 +8,21 @@
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	hide = TRUE
-
+	layer = GAS_SCRUBBER_LAYER
+	pipe_state = "injector"
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
-	var/injecting = 0
-
+	///Variable used for radio frequency injection
+	var/injecting = FALSE
+	///Rate of operation of the device
 	var/volume_rate = 50
 
+	///Frequency id for connecting to the NTNet
 	var/frequency = 0
-	var/id = null
+	///Reference to the radio datum
 	var/datum/radio_frequency/radio_connection
-
-	layer = GAS_SCRUBBER_LAYER
-
-	pipe_state = "injector"
+	///Id of the radio connection
+	var/id = null
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
@@ -46,7 +47,7 @@
 	cut_overlays()
 	if(showpipe)
 		// everything is already shifted so don't shift the cap
-		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions, pipe_color))
+		add_overlay(get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color))
 
 	if(!nodes[1] || !on || !is_operational)
 		icon_state = "inje_off"
@@ -120,7 +121,7 @@
 	))
 	radio_connection.post_signal(src, signal)
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos_init()
 	set_frequency(frequency)
 	broadcast_status()
 	..()
@@ -220,12 +221,6 @@
 	on = TRUE
 	volume_rate = MAX_TRANSFER_RATE
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/atmos_waste
-	name = "atmos waste outlet injector"
-	id =  ATMOS_GAS_MONITOR_WASTE_ATMOS
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste
-	name = "engine outlet injector"
-	id = ATMOS_GAS_MONITOR_WASTE_ENGINE
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input
 	name = "plasma tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PLAS
@@ -268,18 +263,15 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/miasma_input
 	name = "miasma tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitryl_input
-	name = "nitryl tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_NO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrium_input
+	name = "nitrium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/pluoxium_input
 	name = "pluoxium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/proto_nitrate_input
 	name = "proto-nitrate tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/stimulum_input
-	name = "stimulum tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_STIMULUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/tritium_input
 	name = "tritium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_TRITIUM

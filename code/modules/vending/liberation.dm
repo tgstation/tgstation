@@ -5,6 +5,7 @@
 	product_slogans = "Liberation Station: Your one-stop shop for all things second amendment!;Be a patriot today, pick up a gun!;Quality weapons for cheap prices!;Better dead than red!"
 	product_ads = "Float like an astronaut, sting like a bullet!;Express your second amendment today!;Guns don't kill people, but you can!;Who needs responsibilities when you have guns?"
 	vend_reply = "Remember the name: Liberation Station!"
+	panel_type = "panel17"
 	products = list(
 		/obj/item/food/burger/plain = 5, //O say can you see, by the dawn's early light
 		/obj/item/food/burger/baseball = 3, //What so proudly we hailed at the twilight's last gleaming
@@ -32,7 +33,7 @@
 		/obj/item/bedsheet/patriot = 5,
 		/obj/item/food/burger/superbite = 3
 	) //U S A
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	default_price = PAYCHECK_HARD * 2.5
 	extra_price = PAYCHECK_COMMAND * 2.5

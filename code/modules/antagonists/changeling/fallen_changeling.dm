@@ -1,11 +1,10 @@
 ///a changeling that has lost their powers. does nothing, other than signify they suck
 /datum/antagonist/fallen_changeling
-	name = "Fallen Changeling"
-	roundend_category  = "changelings"
+	name = "\improper Fallen Changeling"
+	roundend_category = "changelings"
 	antagpanel_category = "Changeling"
 	job_rank = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/fallen_changeling
-	antag_hud_type = ANTAG_HUD_CHANGELING
 	antag_hud_name = "changeling"
 
 /datum/mood_event/fallen_changeling

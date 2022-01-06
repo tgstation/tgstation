@@ -147,6 +147,9 @@
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
 		return
+	if(HAS_TRAIT(M, TRAIT_NO_SOUL))
+		to_chat(user, span_warning("This body does not possess a soul to capture."))
+		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	capture_soul(M, user)
 
@@ -377,19 +380,16 @@
 	newstruct.cancel_camera()
 
 
-/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/dusted_victim, mob/user, message_user = FALSE, mob/shade_controller)
+/obj/item/soulstone/proc/init_shade(mob/living/carbon/human/victim, mob/user, message_user = FALSE, mob/shade_controller)
 	if(!shade_controller)
-		shade_controller = dusted_victim
-	new /obj/effect/decal/remains/human(dusted_victim.loc) //Spawns a skeleton
-	dusted_victim.stop_sound_channel(CHANNEL_HEARTBEAT)
-	dusted_victim.invisibility = INVISIBILITY_ABSTRACT
-	dusted_victim.dust_animation()
+		shade_controller = victim
+	victim.stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/mob/living/simple_animal/shade/soulstone_spirit = new /mob/living/simple_animal/shade(src)
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
-	soulstone_spirit.name = "Shade of [dusted_victim.real_name]"
-	soulstone_spirit.real_name = "Shade of [dusted_victim.real_name]"
+	soulstone_spirit.name = "Shade of [victim.real_name]"
+	soulstone_spirit.real_name = "Shade of [victim.real_name]"
 	soulstone_spirit.key = shade_controller.key
-	soulstone_spirit.copy_languages(dusted_victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
+	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
 	soulstone_spirit.update_atom_languages()
@@ -399,7 +399,7 @@
 	if(user && IS_CULTIST(user))
 		soulstone_spirit.mind.add_antag_datum(/datum/antagonist/cult)
 	soulstone_spirit.cancel_camera()
-	name = "soulstone: Shade of [dusted_victim.real_name]"
+	name = "soulstone: Shade of [victim.real_name]"
 	switch(theme)
 		if(THEME_HOLY)
 			icon_state = "purified_soulstone2"
@@ -413,7 +413,8 @@
 		else if(role_check(user))
 			to_chat(soulstone_spirit, "Your soul has been captured! You are now bound to [user.real_name]'s will. Help [user.p_them()] succeed in [user.p_their()] goals at all costs.")
 		if(message_user)
-			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [dusted_victim.real_name]'s soul has been ripped from [dusted_victim.p_their()] body and stored within [src].")
+			to_chat(user, "[span_info("<b>Capture successful!</b>:")] [victim.real_name]'s soul has been ripped from [victim.p_their()] body and stored within [src].")
+	victim.dust()
 
 
 /obj/item/soulstone/proc/getCultGhost(mob/living/carbon/victim, mob/user)
@@ -434,5 +435,4 @@
 		return FALSE
 	victim.unequip_everything()
 	init_shade(victim, user, shade_controller = chosen_ghost)
-	qdel(victim)
 	return TRUE

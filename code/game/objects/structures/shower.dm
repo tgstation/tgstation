@@ -84,7 +84,7 @@
 		return
 
 	can_refill = !can_refill
-	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
+	to_chat(user, span_notice("You [can_refill ? "en" : "dis"]able the shower's water recycler."))
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	return TRUE
 
@@ -143,8 +143,7 @@
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
-	target.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
-	target.wash(CLEAN_WASH)
+	target.wash(CLEAN_RAD | CLEAN_WASH)
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(isliving(target))

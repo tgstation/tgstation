@@ -10,6 +10,7 @@
 	name = "processor unit"
 	icon_state = "processor"
 	desc = "This machine is used to process large quantities of information."
+	telecomms_type = /obj/machinery/telecomms/processor
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 30

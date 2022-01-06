@@ -24,7 +24,6 @@
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
 	var/list/nametemp = list()
-	var/find
 	if(!stored.len)
 		to_chat(usr, "<span class='infoplain'><font color=red><b>No images saved</b></font></span>")
 		return
@@ -33,8 +32,10 @@
 		var/datum/picture/p = i
 		nametemp += p.picture_name
 		temp[p.picture_name] = p
-	find = input(user, "Select image") in nametemp|null
-	if(!find)
+	var/find = tgui_input_list(user, "Select image", "Storage", nametemp)
+	if(isnull(find))
+		return
+	if(isnull(temp[find]))
 		return
 	return temp[find]
 
@@ -43,7 +44,7 @@
 	if(istype(selection))
 		show_picture(user, selection)
 
-/obj/item/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
+/obj/item/camera/siliconcam/ai_camera/after_picture(mob/user, datum/picture/picture)
 	var/number = stored.len
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
@@ -53,7 +54,7 @@
 	name = "Cyborg photo camera"
 	var/printcost = 2
 
-/obj/item/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture, proximity_flag)
+/obj/item/camera/siliconcam/robot_camera/after_picture(mob/user, datum/picture/picture)
 	var/mob/living/silicon/robot/C = loc
 	if(istype(C) && istype(C.connected_ai))
 		var/number = C.connected_ai.aicamera.stored.len
@@ -87,5 +88,13 @@
 	p.pixel_x = p.base_pixel_x + rand(-10, 10)
 	p.pixel_y = p.base_pixel_y + rand(-10, 10)
 	C.toner -= printcost  //All fun allowed.
-	visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."))
-	to_chat(usr, span_notice("You print a photograph."))
+	user.visible_message(span_notice("[C.name] spits out a photograph from a narrow slot on its chassis."),span_notice("You print a photograph."))
+
+/obj/item/camera/siliconcam/proc/paiprint(mob/user)
+	var/mob/living/silicon/pai/paimob = loc
+	var/datum/picture/selection = selectpicture(user)
+	if(!istype(selection))
+		to_chat(user, span_warning("Invalid Image."))
+		return
+	printpicture(user,selection)
+	user.visible_message(span_notice("A picture appears on top of the chassis of [paimob.name]!"),span_notice("You print a photograph."))

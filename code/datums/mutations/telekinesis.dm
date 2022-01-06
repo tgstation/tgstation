@@ -31,4 +31,18 @@
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Usually handles stuff like picking up items at range.
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
+	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
+		source.balloon_alert(source, "can't TK, too far!")
+		return
 	return target.attack_tk(source)
+
+/datum/mutation/human/telekinesis/mod
+	name = "Kinesis"
+	desc = "A modification that allows the wearer of a MODsuit to interact with objects through thought with the kinesis module."
+	locked = TRUE
+	text_gain_indication = null
+	limb_req = null
+	instability = 0
+
+/datum/mutation/human/telekinesis/mod/get_visual_indicator()
+	return

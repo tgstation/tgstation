@@ -3,7 +3,7 @@
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight."
 	icon_state = "hardhat0_yellow"
 	inhand_icon_state = "hardhat0_yellow"
-	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 10, RAD = 20, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
+	armor = list(MELEE = 15, BULLET = 5, LASER = 20, ENERGY = 10, BOMB = 20, BIO = 10, FIRE = 100, ACID = 50, WOUND = 10) // surprisingly robust against head trauma
 	flags_inv = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
@@ -106,6 +106,11 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
+/obj/item/clothing/head/hardhat/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
+
 /obj/item/clothing/head/hardhat/weldhat
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
@@ -180,11 +185,12 @@
 	hat_type = "pumpkin"
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_range = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
 	light_color = "#fff2bf"
 	worn_y_offset = 1
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
 /obj/item/clothing/head/hardhat/pumpkinhead/set_light_on(new_value)
 	. = ..()
@@ -202,6 +208,14 @@
 	if(light_on && !isinhands)
 		. += emissive_appearance(icon_file, "carved_pumpkin-emissive", alpha = src.alpha)
 
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
+
 /obj/item/clothing/head/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
 	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
@@ -209,6 +223,15 @@
 	inhand_icon_state = "hardhat0_blumpkin"
 	hat_type = "blumpkin"
 	light_color = "#76ff8e"
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
+
+/obj/item/clothing/head/hardhat/pumpkinhead/blumpkin/turn_off(mob/user)
+	. = ..()
+	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"
@@ -217,7 +240,7 @@
 	inhand_icon_state = "hardhat0_reindeer"
 	hat_type = "reindeer"
 	flags_inv = 0
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	light_range = 1 //luminosity when on
 	dynamic_hair_suffix = ""
 

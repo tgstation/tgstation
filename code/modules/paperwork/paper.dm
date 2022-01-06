@@ -11,6 +11,10 @@
 #define MODE_WRITING 1
 #define MODE_STAMPING 2
 
+#define DEFAULT_ADD_INFO_COLOR "black"
+#define DEFAULT_ADD_INFO_FONT "Verdana"
+#define DEFAULT_ADD_INFO_SIGN "signature"
+
 /**
  * Paper is now using markdown (like in github pull notes) for ALL rendering
  * so we do loose a bit of functionality but we gain in easy of use of
@@ -35,11 +39,20 @@
 	max_integrity = 50
 	dog_fashion = /datum/dog_fashion/head
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
-	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = "white"
 	/// What's actually written on the paper.
 	var/info = ""
+	/**
+	 * What's been written on the paper by things other than players.
+	 * Will be sanitized by the UI, and finally
+	 * added to info when the user edits the paper text.
+	 */
+	var/list/add_info
+	/// The font color, face and the signature of the above.
+	var/list/add_info_style
+
 	var/show_written_words = TRUE
 
 	/// The (text for the) stamps on the paper.
@@ -70,9 +83,13 @@
 	if(colored)
 		new_paper.color = color
 		new_paper.info = info
+		new_paper.add_info_style = add_info_style.Copy()
 	else //This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-		var/static/greyscale_info = regex("<font face=\"([PEN_FONT]|[CRAYON_FONT])\" color=", "i")
-		new_paper.info = replacetext(info, greyscale_info, "<font face=\"$1\" nocolor=")
+		var/static/greyscale_info = regex("(?<=<font style=\")color=(.*)?>", "i")
+		new_paper.info = replacetext(info, greyscale_info, "nocolor=$1>")
+		for(var/list/style as anything in add_info_style)
+			LAZYADD(new_paper.add_info_style, list(list(DEFAULT_ADD_INFO_COLOR, style[ADD_INFO_FONT], style[ADD_INFO_SIGN])))
+	new_paper.add_info = add_info?.Copy()
 	new_paper.stamps = stamps?.Copy()
 	new_paper.stamped = stamped?.Copy()
 	new_paper.form_fields = form_fields.Copy()
@@ -86,11 +103,14 @@
  * icons.  You can modify the pen_color after if need
  * be.
  */
-/obj/item/paper/proc/setText(text)
+/obj/item/paper/proc/setText(text, update_icon = TRUE)
 	info = text
+	add_info = null
+	add_info_style = null
 	form_fields = null
 	field_counter = 0
-	update_icon_state()
+	if(update_icon)
+		update_appearance()
 
 /obj/item/paper/pickup(user)
 	if(contact_poison && ishuman(user))
@@ -108,7 +128,7 @@
 	update_appearance()
 
 /obj/item/paper/update_icon_state()
-	if(info && show_written_words)
+	if((info || add_info) && show_written_words)
 		icon_state = "[initial(icon_state)]_words"
 	return ..()
 
@@ -126,7 +146,7 @@
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
-	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
+	var/n_name = tgui_input_text(usr, "Enter a paper label", "Paper Labelling", max_length = MAX_NAME_LEN)
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
@@ -136,7 +156,7 @@
 	return (BRUTELOSS)
 
 /obj/item/paper/proc/clearpaper()
-	info = ""
+	setText("", update_icon = FALSE)
 	stamps = null
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
@@ -196,6 +216,21 @@
 	add_fingerprint(user)
 	fire_act(I.get_temperature())
 
+/obj/item/paper/proc/add_info(text, color = DEFAULT_ADD_INFO_COLOR, font = DEFAULT_ADD_INFO_FONT, signature = DEFAULT_ADD_INFO_SIGN)
+	LAZYADD(add_info, text)
+	LAZYADD(add_info_style, list(list(color, font, signature)))
+
+/obj/item/paper/proc/get_info_length()
+	. = length_char(info)
+	for(var/index in 1 to length(add_info))
+		var/style = LAZYACCESS(add_info_style, index)
+		if(style)
+			var/static/regex/sign_regex = regex("%s(?:ign)?(?=\\s|$)?", "igm")
+			var/signed_text = sign_regex.Replace(add_info[index], style[ADD_INFO_SIGN])
+			. += length_char(PAPER_MARK_TEXT(signed_text, style[ADD_INFO_COLOR], style[ADD_INFO_FONT]))
+		else
+			. += length_char(add_info[index])
+
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(burn_paper_product_attackby_check(P, user))
 		SStgui.close_uis(src)
@@ -206,7 +241,7 @@
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-		if(length(info) >= MAX_PAPER_LENGTH) // Sheet must have less than 1000 charaters
+		if(get_info_length() >= MAX_PAPER_LENGTH) // Sheet must have less than 5000 charaters
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
 		ui_interact(user)
@@ -226,6 +261,8 @@
 	. = ..()
 	if(.)
 		info = "[stars(info)]"
+		for(var/index in 1 to length(add_info))
+			add_info[index] = "[stars(add_info[index])]"
 
 /obj/item/paper/ui_assets(mob/user)
 	return list(
@@ -239,15 +276,28 @@
 		ui = new(user, src, "PaperSheet", name)
 		ui.open()
 
-
 /obj/item/paper/ui_static_data(mob/user)
 	. = list()
 	.["text"] = info
+	if(length(add_info))
+		.["add_text"] = add_info
+		.["add_color"] = list()
+		.["add_font"] = list()
+		.["add_sign"] = list()
+		for(var/index in 1 to length(add_info))
+			var/list/style = LAZYACCESS(add_info_style, index)
+			if(!islist(index) || length(style) < ADD_INFO_SIGN) // failsafe for malformed add_info_style.
+				var/list/corrected_style = list(DEFAULT_ADD_INFO_COLOR, DEFAULT_ADD_INFO_FONT, DEFAULT_ADD_INFO_SIGN)
+				LAZYADD(add_info_style, corrected_style)
+				style = corrected_style
+			.["add_color"] += style[ADD_INFO_COLOR]
+			.["add_font"] += style[ADD_INFO_FONT]
+			.["add_sign"] += style[ADD_INFO_SIGN]
+
 	.["max_length"] = MAX_PAPER_LENGTH
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
 	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
-
 
 
 /obj/item/paper/ui_data(mob/user)
@@ -355,8 +405,9 @@
 				if(info != in_paper)
 					to_chat(ui.user, "You have added to your paper masterpiece!");
 					info = in_paper
+					add_info = null
+					add_info_style = null
 					update_static_data(usr,ui)
-
 
 			update_appearance()
 			. = TRUE
@@ -400,3 +451,6 @@
 #undef MODE_READING
 #undef MODE_WRITING
 #undef MODE_STAMPING
+#undef DEFAULT_ADD_INFO_COLOR
+#undef DEFAULT_ADD_INFO_FONT
+#undef DEFAULT_ADD_INFO_SIGN

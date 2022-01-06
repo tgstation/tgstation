@@ -57,7 +57,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/solar_control)
 "au" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /obj/structure/cable,
@@ -99,13 +99,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aL" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Air Bridge Access"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "aM" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Air Bridge Access"
 	},
 /turf/open/floor/plating,
@@ -145,7 +145,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "aV" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /turf/open/floor/plating,
@@ -401,7 +401,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "ca" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
 "cd" = (
@@ -531,7 +531,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cQ" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -1137,7 +1137,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fw" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1603,7 +1603,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/medical)
 "hB" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "External Engineering"
 	},
 /turf/open/floor/plating/airless,
@@ -1762,7 +1762,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
@@ -2051,12 +2051,12 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jy" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
@@ -2154,7 +2154,7 @@
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
 "jU" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Arrivals Docking Bay 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2249,7 +2249,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kr" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
@@ -2364,7 +2364,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "la" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2387,10 +2387,6 @@
 "lf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"lg" = (
-/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lh" = (
@@ -2538,7 +2534,9 @@
 	},
 /area/ruin/space/derelict/atmospherics)
 "lO" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/engine_waste,
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
+	name = "engine outlet injector"
+	},
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
@@ -2581,7 +2579,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "lZ" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -2813,11 +2811,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"mX" = (
-/obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/secondary)
 "mY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -2832,7 +2825,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nc" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -2966,7 +2959,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nD" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /turf/open/floor/plating/airless,
@@ -3039,7 +3032,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -3118,7 +3111,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "ok" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
@@ -3305,7 +3298,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "zB" = (
 /obj/structure/table,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -3358,7 +3351,7 @@
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
 "DE" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3382,7 +3375,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "El" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "Ev" = (
@@ -3505,7 +3498,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
 "Le" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Arrivals Docking Bay 1"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3550,7 +3543,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "Ni" = (
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
@@ -7122,7 +7115,7 @@ go
 gc
 kP
 go
-lg
+sd
 lr
 lr
 lr
@@ -10301,7 +10294,7 @@ mI
 mI
 mI
 mI
-mX
+mI
 mI
 mU
 mZ

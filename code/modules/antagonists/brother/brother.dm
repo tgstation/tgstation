@@ -1,9 +1,8 @@
 /datum/antagonist/brother
-	name = "Brother"
+	name = "\improper Brother"
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
-	antag_hud_type = ANTAG_HUD_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
 	suicide_cry = "FOR MY BROTHER!!"
@@ -27,18 +26,8 @@
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	if(owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [special_role]!"))
 	owner.special_role = null
 	return ..()
-
-/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/brother/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]"

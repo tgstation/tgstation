@@ -15,11 +15,16 @@
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
 	reflect_sect_in_icons()
+	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons))
+
+/obj/structure/altar_of_gods/Destroy()
+	GLOB.chaplain_altars -= src
+	return ..()
 
 /obj/structure/altar_of_gods/update_overlays()
 	. = ..()
@@ -34,7 +39,7 @@
 	if(pushed_mob.buckled)
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
-	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
+	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)

@@ -47,7 +47,7 @@
 		//Entrance here
 		else
 			var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
-			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmosmch))
+			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
 				visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
 				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target))
 					return
@@ -92,9 +92,9 @@
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 		var/list/total_members = list()
 		var/obj/machinery/atmospherics/current_location = loc
-		for(var/datum/pipeline/location_pipeline in current_location.returnPipenets())
+		for(var/datum/pipeline/location_pipeline in current_location.return_pipenets())
 			total_members += location_pipeline.members
-			total_members += location_pipeline.other_atmosmch
+			total_members += location_pipeline.other_atmos_machines
 
 		if(!total_members.len)
 			return

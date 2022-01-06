@@ -17,23 +17,29 @@
 	layer = GAS_SCRUBBER_LAYER
 	hide = TRUE
 	shift_underlay_only = FALSE
+	pipe_state = "uvent"
+	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
+	///Direction of pumping the gas (RELEASING or SIPHONING)
 	var/pump_direction = RELEASING
-
+	///Should we check internal pressure, external pressure, both or none? (EXT_BOUND, INT_BOUND, NO_BOUND)
 	var/pressure_checks = EXT_BOUND
+	///The external pressure threshold (default 101 kPa)
 	var/external_pressure_bound = ONE_ATMOSPHERE
+	///The internal pressure threshold (default 0 kPa)
 	var/internal_pressure_bound = 0
 	// EXT_BOUND: Do not pass external_pressure_bound
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
+	///Frequency id for connecting to the NTNet
 	var/frequency = FREQ_ATMOS_CONTROL
+	///Reference to the radio datum
 	var/datum/radio_frequency/radio_connection
+	///Radio connection to the air alarm
 	var/radio_filter_out
+	///Radio connection from the air alarm
 	var/radio_filter_in
-
-	pipe_state = "uvent"
-	vent_movement = VENTCRAWL_ALLOWED | VENTCRAWL_CAN_SEE | VENTCRAWL_ENTRANCE_ALLOWED
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	if(!id_tag)
@@ -53,7 +59,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
+		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	else
 		PIPING_LAYER_SHIFT(src, PIPING_LAYER_DEFAULT)
@@ -111,7 +117,7 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
-				var/transfer_moles = (pressure_delta*environment.volume)/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(!removed || !removed.total_moles())
@@ -175,12 +181,14 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
-	..()
+	. = ..()
+	if(override_naming)
+		return
 	var/area/vent_area = get_area(src)
 	name = "\proper [vent_area.name] [name] [id_tag]"
 
 
-/obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/unary/vent_pump/atmos_init()
 	//some vents work his own spesial way
 	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
@@ -260,12 +268,12 @@
 	broadcast_status()
 	update_appearance()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/I)
+/obj/machinery/atmospherics/components/unary/vent_pump/welder_act(mob/living/user, obj/item/welder)
 	..()
-	if(!I.tool_start_check(user, amount=0))
+	if(!welder.tool_start_check(user, amount=0))
 		return TRUE
 	to_chat(user, span_notice("You begin welding the vent..."))
-	if(I.use_tool(src, user, 20, volume=50))
+	if(welder.use_tool(src, user, 20, volume=50))
 		if(!welded)
 			user.visible_message(span_notice("[user] welds the vent shut."), span_notice("You weld the vent shut."), span_hear("You hear welding."))
 			welded = TRUE
@@ -405,18 +413,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/miasma_output
 	name = "miasma tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitryl_output
-	name = "nitryl tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrium_output
+	name = "nitrium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/pluoxium_output
 	name = "pluoxium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/proto_nitrate_output
 	name = "proto-nitrate tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/stimulum_output
-	name = "stimulum tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_STIMULUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/tritium_output
 	name = "tritium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TRITIUM

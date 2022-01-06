@@ -449,10 +449,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ch" = (
-/obj/structure/chair/stool/directional/east,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ci" = (
@@ -486,7 +484,7 @@
 /turf/open/floor/plating,
 /area/awaymission/academy/headmaster)
 "cp" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/academy/headmaster)
 "ct" = (
@@ -702,7 +700,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dp" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/academy/classrooms)
 "dq" = (
 /obj/machinery/computer/mech_bay_power_console{
@@ -772,10 +770,8 @@
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dG" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/machinery/chem_master/condimaster,
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/academy/classrooms)
 "dH" = (
@@ -981,7 +977,7 @@
 /area/awaymission/academy)
 "eA" = (
 /obj/machinery/door/airlock/public/glass,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1365,9 +1361,7 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "fX" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "fY" = (
@@ -1601,10 +1595,8 @@
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
 "gQ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /mob/living/simple_animal/hostile/bear,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/awaymission/academy/classrooms)
 "gR" = (
@@ -2429,7 +2421,7 @@
 /area/awaymission/academy/academycellar)
 "kT" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/ritual,
+/obj/item/knife/ritual,
 /obj/item/candle/infinite,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
@@ -2501,7 +2493,7 @@
 "lk" = (
 /obj/structure/safe/floor,
 /obj/item/gun/magic/wand/fireball,
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "ll" = (
@@ -11469,9 +11461,9 @@ ab
 ah
 ah
 ah
-ax
+rl
 ah
-ax
+rl
 ah
 ah
 ah

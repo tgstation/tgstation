@@ -162,7 +162,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive/lifeguard,
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
@@ -237,7 +237,7 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
 	},
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/sepia,
 /area/ruin/powered/beach)
 "cR" = (
@@ -312,7 +312,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "gs" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "gC" = (
@@ -371,7 +371,7 @@
 "hC" = (
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "hF" = (
@@ -1016,7 +1016,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/chair/stool/directional/north,
+/obj/structure/chair/stool/directional/south,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/red,
 /obj/item/clothing/glasses/sunglasses,
@@ -1273,7 +1273,7 @@
 /area/ruin/powered/beach)
 "Rb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/chair/stool/bar/directional/north,
+/obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Rk" = (
@@ -1347,7 +1347,7 @@
 	},
 /area/ruin/powered/beach)
 "TC" = (
-/obj/effect/mob_spawn/human/beach/alive{
+/obj/effect/mob_spawn/ghost_role/human/beach{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1508,7 +1508,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
 	},
-/obj/effect/mob_spawn/human/bartender/alive{
+/obj/effect/mob_spawn/corpse/human/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1701,7 +1701,7 @@ aj
 NJ
 Bg
 Ti
-rn
+Fa
 zv
 aC
 Zi

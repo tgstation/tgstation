@@ -149,4 +149,5 @@
  * * new_value - A boolean that determines if the circuit is locked or not.
  **/
 /obj/item/circuit_component/money_bot/proc/on_set_locked(datum/source, new_value)
+	SIGNAL_HANDLER
 	attached_bot.locked = new_value

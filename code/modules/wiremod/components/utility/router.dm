@@ -6,6 +6,7 @@
 /obj/item/circuit_component/router
 	display_name = "Router"
 	desc = "Copies the input chosen by \"Input Selector\" to the output chosen by \"Output Selector\"."
+	category = "Utility"
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	var/datum/port/input/option/router_options

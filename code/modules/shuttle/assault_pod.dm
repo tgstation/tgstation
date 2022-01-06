@@ -34,9 +34,10 @@
 
 
 /obj/item/assault_pod/attack_self(mob/living/user)
-	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) as null|anything in GLOB.teleportlocs
-	if(!target_area)
+	var/target_area = tgui_input_list(user, "Area to land", "Landing Zone", GLOB.teleportlocs)
+	if(isnull(target_area))
+		return
+	if(isnull(GLOB.teleportlocs[target_area]))
 		return
 	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))

@@ -4,7 +4,7 @@
 //Though it could easily be expanded to cover other senders/revievers
 //The system as a whole differs from reading off a global list in a few ways.
 //In that A, it allows us to send cameras for ais/borgs/potentially others to jump to
-//And B, it's not like we're giving you all the alarms that have been sent, because of the seperate listing for each reviever
+//And B, it's not like we're giving you all the alarms that have been sent, because of the separate listing for each reviever
 //You only recieve alarms sent after you start to listen
 //Also of note, due to an optimzation done on areas, one alarm handler will only ever send one "on" or "off" alarm
 //So the whole only receving stuff sent post creation thing actually matters
@@ -122,6 +122,8 @@
 ///Adds an alarm to our alarms list, you shouldn't be calling this manually
 ///It should all be handled by the signal listening we do, unless you want to only send an alarm to one listener
 /datum/alarm_listener/proc/add_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area, source_z, optional_camera)
+	SIGNAL_HANDLER
+
 	if (!accepting_alarm_changes)
 		return
 
@@ -156,6 +158,8 @@
 ///Removes an alarm to our alarms list, you probably shouldn't be calling this manually
 ///It should all be handled by the signal listening we do, unless you want to only remove an alarm to one listener
 /datum/alarm_listener/proc/clear_alarm(datum/source, datum/alarm_handler/handler, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+
 	if(!accepting_alarm_changes)
 		return
 

@@ -46,6 +46,10 @@
 
 /datum/hud/proc/apply_parallax_pref(mob/viewmob)
 	var/mob/screenmob = viewmob || mymob
+
+	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(viewmob, TRAIT_BYPASS_MEASURES))
+		return FALSE
+
 	var/client/C = screenmob.client
 	if(C.prefs)
 		var/pref = C.prefs.read_preference(/datum/preference/choiced/parallax)
@@ -227,10 +231,9 @@
 		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x,1)],CENTER-7:[round(parallax_layer.offset_y,1)]"
 
 /atom/movable/proc/update_parallax_contents()
-	if(length(client_mobs_in_contents))
-		for(var/mob/client_mob as anything in client_mobs_in_contents)
-			if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)
-				client_mob.hud_used.update_parallax()
+	for(var/mob/client_mob as anything in client_mobs_in_contents)
+		if(length(client_mob?.client?.parallax_layers) && client_mob.hud_used)
+			client_mob.hud_used.update_parallax()
 
 /mob/proc/update_parallax_teleport() //used for arrivals shuttle
 	if(client?.eye && hud_used && length(client.parallax_layers))

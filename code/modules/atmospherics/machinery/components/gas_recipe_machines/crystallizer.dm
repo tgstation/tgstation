@@ -11,7 +11,7 @@
 	layer = ABOVE_MOB_LAYER
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	circuit = /obj/item/circuitboard/machine/crystallizer
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	vent_movement = NONE
@@ -49,7 +49,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	SetInitDirections()
+	set_init_directions()
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
 	if(node1)
@@ -62,19 +62,19 @@
 		nodes[2] = null
 
 	if(parents[1])
-		nullifyPipenet(parents[1])
+		nullify_pipenet(parents[1])
 	if(parents[2])
-		nullifyPipenet(parents[2])
+		nullify_pipenet(parents[2])
 
-	atmosinit()
+	atmos_init()
 	node1 = nodes[1]
 	if(node1)
-		node1.atmosinit()
-		node1.addMember(src)
+		node1.atmos_init()
+		node1.add_member(src)
 	node2 = nodes[2]
 	if(node2)
-		node2.atmosinit()
-		node2.addMember(src)
+		node2.atmos_init()
+		node2.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
@@ -99,7 +99,7 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/attackby_secondary(mob/user)
 	if(!can_interact(user))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	on = !on
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	update_icon()
@@ -138,16 +138,12 @@
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
 		quality_loss = min(quality_loss + 1.5, 100)
 
-	var/median_temperature = (selected_recipe.max_temp - selected_recipe.min_temp) * 0.5
+	var/median_temperature = (selected_recipe.max_temp + selected_recipe.min_temp) / 2
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
 		quality_loss = max(quality_loss - 5.5, -100)
 
-	if(selected_recipe.reaction_type == "endothermic")
-		internal.temperature = max(internal.temperature - (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
-	else if(selected_recipe.reaction_type == "exothermic")
-		internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
-		update_parents()
+	internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
+	update_parents()
 
 ///Conduction between the internal gasmix and the moderating (cooling/heating) gasmix.
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_conduction()
@@ -291,7 +287,7 @@
 			var/amount_consumed = selected_recipe.requirements[gas_type]
 			requirements += "-[amount_consumed] moles of [initial(gas_required.name)]"
 		requirements += "In a temperature range between [selected_recipe.min_temp] K and [selected_recipe.max_temp] K"
-		requirements += "The crystallization reaction will be [selected_recipe.reaction_type]"
+		requirements += "The crystallization reaction will be [selected_recipe.energy_release ? (selected_recipe.energy_release > 0 ? "exothermic" : "endothermic") : "thermally neutral"]"
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature

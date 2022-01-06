@@ -1,6 +1,8 @@
 /datum/job/chief_medical_officer
-	title = "Chief Medical Officer"
-	department_head = list("Captain")
+	title = JOB_CHIEF_MEDICAL_OFFICER
+	description = "Coordinate doctors and other medbay employees, ensure they \
+		know how to save lives, check for injuries on the crew monitor."
+	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = FACTION_STATION
@@ -52,31 +54,37 @@
 	jobtype = /datum/job/chief_medical_officer
 
 	id = /obj/item/card/id/advanced/silver
-	belt = /obj/item/pda/heads/cmo
-	l_pocket = /obj/item/pinpointer/crew
-	ears = /obj/item/radio/headset/heads/cmo
+	id_trim = /datum/id_trim/job/chief_medical_officer
 	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
-	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen/paramedic
-	backpack_contents = list(/obj/item/melee/baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced/command=1)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	backpack_contents = list(
+		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/modular_computer/tablet/preset/advanced/command = 1,
+		)
+	belt = /obj/item/pda/heads/cmo
+	ears = /obj/item/radio/headset/heads/cmo
+	shoes = /obj/item/clothing/shoes/sneakers/blue
+	l_pocket = /obj/item/pinpointer/crew
+	l_hand = /obj/item/storage/firstaid/medical
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+
 	box = /obj/item/storage/box/survival/medical
+	chameleon_extras = list(
+		/obj/item/gun/syringe,
+		/obj/item/stamp/cmo,
+		)
+	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-	chameleon_extras = list(/obj/item/gun/syringe, /obj/item/stamp/cmo)
+/datum/outfit/job/cmo/mod
+	name = "Chief Medical Officer (MODsuit)"
 
-	id_trim = /datum/id_trim/job/chief_medical_officer
-
-/datum/outfit/job/cmo/hardsuit
-	name = "Chief Medical Officer (Hardsuit)"
-
-	mask = /obj/item/clothing/mask/breath/medical
-	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/rescue
+	suit = null
+	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic
+	internals_slot = ITEM_SLOT_SUITSTORE

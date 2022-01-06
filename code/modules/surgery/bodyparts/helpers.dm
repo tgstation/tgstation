@@ -190,31 +190,31 @@
 	. = 0
 	switch(skin_tone)
 		if("caucasian1")
-			. = "ffe0d1"
+			. = "#ffe0d1"
 		if("caucasian2")
-			. = "fcccb3"
+			. = "#fcccb3"
 		if("caucasian3")
-			. = "e8b59b"
+			. = "#e8b59b"
 		if("latino")
-			. = "d9ae96"
+			. = "#d9ae96"
 		if("mediterranean")
-			. = "c79b8b"
+			. = "#c79b8b"
 		if("asian1")
-			. = "ffdeb3"
+			. = "#ffdeb3"
 		if("asian2")
-			. = "e3ba84"
+			. = "#e3ba84"
 		if("arab")
-			. = "c4915e"
+			. = "#c4915e"
 		if("indian")
-			. = "b87840"
+			. = "#b87840"
 		if("african1")
-			. = "754523"
+			. = "#754523"
 		if("african2")
-			. = "471c18"
+			. = "#471c18"
 		if("albino")
-			. = "fff4e6"
+			. = "#fff4e6"
 		if("orange")
-			. = "ffc905"
+			. = "#ffc905"
 
 /mob/living/carbon/proc/Digitigrade_Leg_Swap(swap_back)
 	var/body_plan_changed = FALSE
@@ -247,5 +247,5 @@
 				else
 					uniform.adjusted = DIGITIGRADE_STYLE
 				leg_owner.update_inv_w_uniform()
-		if(leg_owner.shoes && !swap_back)
+		if(leg_owner.shoes && !(leg_owner.shoes.item_flags & IGNORE_DIGITIGRADE) && !swap_back)
 			leg_owner.dropItemToGround(leg_owner.shoes)

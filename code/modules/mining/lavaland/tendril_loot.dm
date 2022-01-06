@@ -293,7 +293,7 @@
 /obj/item/warp_cube/Destroy()
 	if(!QDELETED(linked))
 		qdel(linked)
-	linked =  null
+	linked = null
 	return ..()
 
 /obj/item/warp_cube/attack_self(mob/user)
@@ -554,7 +554,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, BIO = 0, RAD = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
+	armor = list(MELEE = 15, BULLET = 25, LASER = 15, ENERGY = 15, BOMB = 100, BIO = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()
@@ -581,28 +581,24 @@
 	A.attackby(src, H)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/item/clothing/suit/space/hardsuit/berserker
-	name = "berserker hardsuit"
-	desc = "Voices echo from the hardsuit, driving the user insane."
-	icon_state = "hardsuit-berserker"
-	inhand_icon_state = "hardsuit-berserker"
-	slowdown = 0
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/berserker
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+/obj/item/clothing/suit/hooded/berserker
+	name = "berserker armor"
+	desc = "Voices echo from the armor, driving the user insane. Is not space-proof."
+	icon_state = "berserker"
+	hoodtype = /obj/item/clothing/head/hooded/berserker
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/kitchen/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
+	clothing_flags = THICKMATERIAL
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/pickaxe, /obj/item/spear, /obj/item/organ/regenerative_core/legion, /obj/item/knife, /obj/item/kinetic_crusher, /obj/item/resonator, /obj/item/melee/cleaving_saw)
 
-
-/obj/item/clothing/suit/space/hardsuit/berserker/Initialize(mapload)
+/obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, TRUE, ITEM_SLOT_OCLOTHING)
-
-/obj/item/clothing/suit/space/hardsuit/berserker/RemoveHelmet()
-	var/obj/item/clothing/head/helmet/space/hardsuit/berserker/helm = helmet
-	if(helm?.berserk_active)
-		return
-	return ..()
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
@@ -611,30 +607,32 @@
 #define BERSERK_MELEE_ARMOR_ADDED 50
 #define BERSERK_ATTACK_SPEED_MODIFIER 0.25
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker
+/obj/item/clothing/head/hooded/berserker
 	name = "berserker helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
-	icon_state = "hardsuit0-berserker"
-	inhand_icon_state = "hardsuit0-berserker"
-	hardsuit_type = "berserker"
-	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, RAD = 10, FIRE = 100, ACID = 100)
+	icon_state = "berserker"
+	armor = list(MELEE = 30, BULLET = 30, LASER = 10, ENERGY = 20, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100)
 	actions_types = list(/datum/action/item_action/berserk_mode)
+	cold_protection = HEAD
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
+	clothing_flags = SNUG_FIT|THICKMATERIAL
 	/// Current charge of berserk, goes from 0 to 100
 	var/berserk_charge = 0
 	/// Status of berserk
 	var/berserk_active = FALSE
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/Initialize(mapload)
+/obj/item/clothing/head/hooded/berserker/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/examine()
+/obj/item/clothing/head/hooded/berserker/examine()
 	. = ..()
 	. += span_notice("Berserk mode is [berserk_charge]% charged.")
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/process(delta_time)
+/obj/item/clothing/head/hooded/berserker/process(delta_time)
 	. = ..()
 	if(berserk_active)
 		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
@@ -642,11 +640,11 @@
 		if(ishuman(loc))
 			end_berserk(loc)
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/dropped(mob/user)
+/obj/item/clothing/head/hooded/berserker/dropped(mob/user)
 	. = ..()
 	end_berserk(user)
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/clothing/head/hooded/berserker/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(berserk_active)
 		return
 	var/berserk_value = damage * DAMAGE_TO_CHARGE_SCALE
@@ -657,12 +655,12 @@
 		to_chat(owner, span_notice("Berserk mode is fully charged."))
 		balloon_alert(owner, "berserk charged")
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/IsReflect()
+/obj/item/clothing/head/hooded/berserker/IsReflect()
 	if(berserk_active)
 		return TRUE
 
 /// Starts berserk, giving the wearer 50 melee armor, doubled attacking speed, NOGUNS trait, adding a color and giving them the berserk movespeed modifier
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/berserk_mode(mob/living/carbon/human/user)
+/obj/item/clothing/head/hooded/berserker/proc/berserk_mode(mob/living/carbon/human/user)
 	to_chat(user, span_warning("You enter berserk mode."))
 	playsound(user, 'sound/magic/staff_healing.ogg', 50)
 	user.add_movespeed_modifier(/datum/movespeed_modifier/berserk)
@@ -672,10 +670,14 @@
 	ADD_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	ADD_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
 	berserk_active = TRUE
+	START_PROCESSING(SSobj, src)
 
 /// Ends berserk, reverting the changes from the proc [berserk_mode]
-/obj/item/clothing/head/helmet/space/hardsuit/berserker/proc/end_berserk(mob/living/carbon/human/user)
+/obj/item/clothing/head/hooded/berserker/proc/end_berserk(mob/living/carbon/human/user)
 	if(!berserk_active)
+		return
+	berserk_active = FALSE
+	if(QDELETED(user))
 		return
 	to_chat(user, span_warning("You exit berserk mode."))
 	playsound(user, 'sound/magic/summonitems_generic.ogg', 50)
@@ -685,7 +687,7 @@
 	user.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BUBBLEGUM_RED)
 	REMOVE_TRAIT(user, TRAIT_NOGUNS, BERSERK_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_NODROP, BERSERK_TRAIT)
-	berserk_active = FALSE
+	STOP_PROCESSING(SSobj, src)
 
 #undef MAX_BERSERK_CHARGE
 #undef PROJECTILE_HIT_MULTIPLIER

@@ -31,14 +31,10 @@
 #define BOMB "bomb"
 /// Involved in checking wheter a disease can infect or spread. Also involved in xeno neurotoxin.
 #define BIO "bio"
-/// Involves ionizing radiation.
-#define RAD "rad"
 /// Involves fire or temperature extremes.
 #define FIRE "fire"
 /// Involves corrosive substances.
 #define ACID "acid"
-/// Involves magic.
-#define MAGIC "magic"
 /// Involved in checking the likelyhood of applying a wound to a mob.
 #define WOUND "wound"
 /// Involves being eaten
@@ -58,7 +54,6 @@
 #define EFFECT_UNCONSCIOUS "unconscious"
 #define EFFECT_PARALYZE "paralyze"
 #define EFFECT_IMMOBILIZE "immobilize"
-#define EFFECT_IRRADIATE "irradiate"
 #define EFFECT_STUTTER "stutter"
 #define EFFECT_SLUR "slur"
 #define EFFECT_EYE_BLUR "eye_blur"

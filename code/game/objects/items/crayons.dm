@@ -248,7 +248,7 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)
@@ -722,7 +722,7 @@
 		. += "It has [charges_left] use\s left."
 	else
 		. += "It is empty."
-	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"].")
+	. += span_notice("Alt-click [src] to [ is_capped ? "take the cap off" : "put the cap on"]. Right-click a colored object to match its existing color.")
 
 /obj/item/toy/crayon/spraycan/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -767,6 +767,12 @@
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			if(isliving(target.loc))
+				var/mob/living/holder = target.loc
+				if(holder.is_holding(target))
+					holder.update_inv_hands()
+				else
+					holder.regenerate_icons()
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -800,6 +806,13 @@
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.icon = style_list_icons[choice]
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target.color)
+		paint_color = target.color
+		to_chat(user, span_notice("You adjust the color of [src] to match [target]."))
+		update_appearance()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	else
+		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 

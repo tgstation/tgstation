@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 100
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	material_modifier = 0.5
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
@@ -95,52 +95,6 @@
 /obj/structure/statue/plasma/xeno
 	name = "statue of a xenomorph"
 	icon_state = "xeno"
-
-/obj/structure/statue/plasma/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
-	var/burn = FALSE
-	if(!(Proj.nodamage) && Proj.damage_type == BURN && !QDELETED(src))
-		burn = TRUE
-	if(burn)
-		var/turf/T = get_turf(src)
-		if(Proj.firer)
-			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_VERBOSEJMP(T)]")
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [AREACOORD(T)]")
-		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
-			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
-		PlasmaBurn(2500)
-	. = ..()
-
-/obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
-		var/turf/T = get_turf(src)
-		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
-		ignite(W.get_temperature())
-	else
-		return ..()
-
-/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/statue/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	PlasmaBurn(exposed_temperature)
-
-/obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
-	if(QDELETED(src))
-		return
-	if(custom_materials[/datum/material/plasma])
-		var/plasma_amount = round(custom_materials[/datum/material/plasma]/MINERAL_MATERIAL_AMOUNT)
-		atmos_spawn_air("plasma=[plasma_amount*10];TEMP=[temperature]")
-	deconstruct(FALSE)
-
-/obj/structure/statue/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
 
 //////////////////////gold///////////////////////////////////////
 
@@ -315,7 +269,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	drop_sound = 'sound/items/handling/screwdriver_drop.ogg'
-	pickup_sound =  'sound/items/handling/screwdriver_pickup.ogg'
+	pickup_sound = 'sound/items/handling/screwdriver_pickup.ogg'
 	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_RUSTSCRAPER
 	toolspeed = 3 // You're gonna have a bad time

@@ -5,7 +5,7 @@
 	helptext = "Will turn your voice into the name that you enter. We must constantly expend chemicals to maintain our form like this."
 	chemical_cost = 0//constant chemical drain hardcoded
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 // Fake Voice
 /datum/action/changeling/mimicvoice/sting_action(mob/user)
@@ -16,7 +16,7 @@
 		to_chat(user, span_notice("We return our vocal glands to their original position."))
 		return
 
-	var/mimic_voice = sanitize_name(stripped_input(user, "Enter a name to mimic.", "Mimic Voice", null, MAX_NAME_LEN))
+	var/mimic_voice = sanitize_name(tgui_input_text(user, "Enter a name to mimic", "Mimic Voice", max_length = MAX_NAME_LEN))
 	if(!mimic_voice)
 		return
 	..()

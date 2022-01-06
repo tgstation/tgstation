@@ -1,24 +1,40 @@
 
 /datum/antagonist/fugitive
-	name = "Fugitive"
+	name = "\improper Fugitive"
 	roundend_category = "Fugitive"
+	job_rank = ROLE_FUGITIVE
 	silent = TRUE //greet called by the event
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
-	antag_hud_type = ANTAG_HUD_FUGITIVE
 	antag_hud_name = "fugitive"
 	suicide_cry = "FOR FREEDOM!!"
+	preview_outfit = /datum/outfit/prisoner
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 	var/backstory = "error"
 
-/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
+/datum/antagonist/fugitive/get_preview_icon()
+	//start with prisoner at the front
+	var/icon/final_icon = render_preview_outfit(preview_outfit)
 
-/datum/antagonist/fugitive/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
+	//then to the left add cultists of yalp elor
+	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/yalp_cultist), ICON_UNDERLAY, -8, 0)
+	//to the right add waldo (we just had to, okay?)
+	final_icon.Blend(make_background_fugitive_icon(/datum/outfit/waldo), ICON_UNDERLAY, 8, 0)
+
+	final_icon.Scale(64, 64)
+
+	return finish_preview_icon(final_icon)
+
+/datum/antagonist/fugitive/proc/make_background_fugitive_icon(datum/outfit/fugitive_fit)
+	var/mob/living/carbon/human/dummy/consistent/fugitive = new
+
+	var/icon/fugitive_icon = render_preview_outfit(fugitive_fit, fugitive)
+	fugitive_icon.ChangeOpacity(0.5)
+	qdel(fugitive)
+
+	return fugitive_icon
+
 
 /datum/antagonist/fugitive/on_gain()
 	forge_objectives()
@@ -31,7 +47,7 @@
 	objectives += survive
 
 /datum/antagonist/fugitive/greet(back_story)
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Fugitive!</B></font></span>")
+	. = ..()
 	backstory = back_story
 	var/message = "<span class='warningplain'>"
 	switch(backstory)
@@ -74,6 +90,9 @@
 
 /datum/antagonist/fugitive/get_team()
 	return fugitive_team
+
+/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
+	add_team_hud(mob_override || owner.current)
 
 /datum/team/fugitive/roundend_report() //shows the number of fugitives, but not if they won in case there is no security
 	var/list/fugitives = list()

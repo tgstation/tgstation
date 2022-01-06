@@ -18,6 +18,8 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 
 /proc/generate_circuit_signal_list()
 	var/cancel_attack = circuit_signal_response("Cancel Attack", COMPONENT_CANCEL_ATTACK_CHAIN)
+	var/secondary_cancel_attack = circuit_signal_response("Cancel Attack", COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+	var/secondary_continue_attack = circuit_signal_response("Continue Attack", COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
 	var/target = circuit_signal_param("Target", PORT_TYPE_ATOM)
 	var/user = circuit_signal_param("User", PORT_TYPE_ATOM)
 	var/item = circuit_signal_param("Item", PORT_TYPE_ATOM)
@@ -37,7 +39,9 @@ GLOBAL_LIST_INIT(integrated_circuit_signal_ids, generate_circuit_signal_list())
 		COMSIG_ITEM_ATTACK = list(cancel_attack, target, user),
 		COMSIG_ITEM_PRE_ATTACK = list(cancel_attack, target, user),
 		COMSIG_ITEM_AFTERATTACK = list(cancel_attack, target, user),
-		COMSIG_ITEM_ATTACK_SECONDARY = list(circuit_signal_response("Cancel Attack", COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN), target, user),
+		COMSIG_ITEM_ATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
+		COMSIG_ITEM_PRE_ATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
+		COMSIG_ITEM_AFTERATTACK_SECONDARY = list(secondary_cancel_attack, secondary_continue_attack, target, user),
 		COMSIG_ITEM_ATTACK_SELF = list(cancel_attack, user),
 		COMSIG_ITEM_ATTACK_SELF_SECONDARY = list(cancel_attack, user),
 	)

@@ -14,10 +14,23 @@
 	/// The techweb the printer will get researched designs from
 	var/datum/techweb/techweb
 
+	/// The current unlocked circuit component designs. Used by integrated circuits to print off circuit components remotely.
+	var/list/current_unlocked_designs = list()
+
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
 
 	techweb = SSresearch.science_tech
+
+	for (var/researched_design_id in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
+			continue
+
+		current_unlocked_designs[design.build_path] = design.id
+
+	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
+	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \
@@ -25,6 +38,19 @@
 		mapload, \
 		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
 	)
+
+/obj/machinery/component_printer/proc/on_research(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs[added_design.build_path] = added_design.id
+
+/obj/machinery/component_printer/proc/on_removed(datum/source, datum/design/added_design, custom)
+	SIGNAL_HANDLER
+	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
+		return
+	current_unlocked_designs -= added_design.build_path
+
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -36,6 +62,23 @@
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
 	)
+
+/obj/machinery/component_printer/proc/print_component(typepath)
+	var/design_id = current_unlocked_designs[typepath]
+
+	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	if (!(design.build_type & COMPONENT_PRINTER))
+		return
+
+	if (materials.on_hold())
+		return
+
+	if (!materials.mat_container?.has_materials(design.materials))
+		return
+
+	materials.mat_container.use_materials(design.materials)
+	materials.silo_log(src, "printed", -1, design.name, design.materials)
+	return new design.build_path(drop_location())
 
 /obj/machinery/component_printer/ui_act(action, list/params)
 	. = ..()
@@ -104,6 +147,14 @@
 	data["designs"] = designs
 
 	return data
+
+/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
+		var/obj/item/integrated_circuit/circuit = weapon
+		circuit.linked_component_printer = WEAKREF(src)
+		balloon_alert(user, "successfully linked to the integrated circuit")
+		return
+	return ..()
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
 	if(..())
@@ -292,45 +343,65 @@
 	addtimer(CALLBACK(src, .proc/finish_module_print, design), 1.6 SECONDS)
 
 /obj/machinery/module_duplicator/proc/finish_module_print(list/design)
-	var/obj/item/circuit_component/module/module = new(drop_location())
-	module.load_data_from_list(design["dupe_data"])
-	module.pixel_x = module.base_pixel_x + rand(-5, 5)
-	module.pixel_y = module.base_pixel_y + rand(-5, 5)
+	var/atom/movable/created_atom
+	if(design["integrated_circuit"])
+		var/obj/item/integrated_circuit/circuit = new(drop_location())
+		var/list/errors = list()
+		circuit.load_circuit_data(design["dupe_data"], errors)
+		if(length(errors))
+			stack_trace("Error loading user saved circuit [errors.Join(", ")].")
+		created_atom = circuit
+	else
+		var/obj/item/circuit_component/module/module = new(drop_location())
+		module.load_data_from_list(design["dupe_data"])
+		created_atom = module
+	created_atom.pixel_x = created_atom.base_pixel_x + rand(-5, 5)
+	created_atom.pixel_y = created_atom.base_pixel_y + rand(-5, 5)
 
 /obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/circuit_component/module))
+	var/list/data = list()
+
+	if(istype(weapon, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = weapon
+		if(HAS_TRAIT(module, TRAIT_CIRCUIT_UNDUPABLE))
+			balloon_alert(user, "integrated circuit cannot be saved!")
+			return ..()
+
+		data["dupe_data"] = list()
+		module.save_data_to_list(data["dupe_data"])
+
+		data["name"] = module.display_name
+		data["desc"] = "A module that has been loaded in by [user]."
+		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
+	else if(istype(weapon, /obj/item/integrated_circuit))
+		var/obj/item/integrated_circuit/integrated_circuit = weapon
+		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
+			balloon_alert(user, "integrated circuit cannot be saved!")
+			return ..()
+		data["dupe_data"] = integrated_circuit.convert_to_json()
+
+		data["name"] = integrated_circuit.display_name
+		data["desc"] = "An integrated circuit that has been loaded in by [user]."
+
+		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_design_by_id("integrated_circuit")
+		var/materials = list(GET_MATERIAL_REF(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
+		for(var/material_type in circuit_design.materials)
+			materials[material_type] += circuit_design.materials[material_type]
+
+		data["materials"] = materials
+		data["integrated_circuit"] = TRUE
+
+	if(!length(data))
 		return ..()
 
-	var/obj/item/circuit_component/module/module = weapon
-	if(module.circuit_flags & CIRCUIT_FLAG_UNDUPEABLE)
-		balloon_alert(user, "module cannot be saved!")
-		return ..()
-
-	if(module.display_name == initial(module.display_name))
-		balloon_alert(user, "module needs a name!")
+	if(!data["name"])
+		balloon_alert(user, "it needs a name!")
 		return ..()
 
 	for(var/list/component_data as anything in scanned_designs)
-		if(component_data["name"] == module.display_name)
-			balloon_alert(user, "module name already exists!")
+		if(component_data["name"] == data["name"])
+			balloon_alert(user, "name already exists!")
 			return ..()
-
-	var/total_cost = 0
-	for(var/obj/item/circuit_component/component as anything in module.internal_circuit.attached_components)
-		if(component.circuit_flags & CIRCUIT_FLAG_UNDUPEABLE)
-			balloon_alert(user, "module contains prohibited components!")
-			return ..()
-
-		total_cost += cost_per_component
-
-	var/list/data = list()
-
-	data["dupe_data"] = list()
-	module.save_data_to_list(data["dupe_data"])
-
-	data["name"] = module.display_name
-	data["desc"] = "A module that has been loaded in by [user]."
-	data["materials"] = list(/datum/material/glass = total_cost)
 
 	flick("module-fab-scan", src)
 	addtimer(CALLBACK(src, .proc/finish_module_scan, user, data), 1.4 SECONDS)

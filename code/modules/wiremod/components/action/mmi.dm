@@ -6,6 +6,7 @@
 /obj/item/circuit_component/mmi
 	display_name = "Man-Machine Interface"
 	desc = "A component that allows MMI to enter shells to send output signals."
+	category = "Action"
 	circuit_flags = CIRCUIT_FLAG_REFUSE_MODULE
 
 	/// The message to send to the MMI in the shell.
@@ -148,9 +149,8 @@
 
 	return TRUE
 
-/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/mods)
+/obj/item/circuit_component/mmi/proc/handle_mmi_attack(mob/living/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	var/list/modifiers = params2list(mods)
 	if(modifiers[RIGHT_CLICK])
 		clicked_atom.set_output(target)
 		secondary_attack.set_output(COMPONENT_SIGNAL)

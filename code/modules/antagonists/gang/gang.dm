@@ -1,8 +1,7 @@
 /datum/antagonist/gang
-	name = "Family Member"
+	name = "\improper Family Member"
 	roundend_category = "gangsters"
 	ui_name = "AntagInfoGangmember"
-	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
 	antagpanel_category = "Family"
 	show_in_antagpanel = FALSE // i don't *think* this base class is buggy but it's too worthless to test
@@ -41,7 +40,17 @@
 
 /datum/antagonist/gang/get_admin_commands()
 	. = ..()
-	.["Give extra equipment"] = CALLBACK(src,.proc/equip_gangster_in_inventory)
+	.["Give extra equipment"] = CALLBACK(src, .proc/equip_gangster_in_inventory)
+	if(!starter_gangster)
+		.["Make Leader"] = CALLBACK(src, .proc/make_gangster_leader)
+
+/datum/antagonist/gang/proc/make_gangster_leader()
+	if(starter_gangster)
+		return
+	starter_gangster = TRUE
+	package_spawner.Grant(owner.current)
+	package_spawner.my_gang_datum = src
+	my_gang.rename_gangster(owner, original_name, TRUE) // gives them the leader name
 
 /datum/antagonist/gang/create_team(team_given) // gets called whenever add_antag_datum() is called on a mind
 	if(team_given)
@@ -80,9 +89,8 @@
 	my_gang.rename_gangster(owner, original_name, starter_gangster) // fully_replace_character_name
 	if(starter_gangster)
 		equip_gangster_in_inventory()
-	var/datum/atom_hud/gang_hud = GLOB.huds[ANTAG_HUD_GANGSTER]
-	gang_hud.add_hud_to(owner.current)
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	add_objectives()
 	..()
 
 /datum/antagonist/gang/on_removal()
@@ -95,8 +103,6 @@
 		have that datum onhand. it would be easier if all of the code the gang team calls on its my_gang_datum was
 		just in the team datum itself, and there were different types of teams instead of different types of gangster
 		that imprint on generic teams, but i'm too lazy to refactor THAT too */
-	var/datum/atom_hud/gang_hud = GLOB.huds[ANTAG_HUD_GANGSTER]
-	gang_hud.remove_hud_from(owner.current)
 	..()
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
@@ -104,15 +110,18 @@
 	if(starter_gangster)
 		package_spawner.Grant(owner.current)
 		package_spawner.my_gang_datum = src
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	add_team_hud(mob_override || owner.current, /datum/antagonist/gang)
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	if(starter_gangster)
 		package_spawner.Remove(owner.current)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	..()
+
+/// Used to display gang objectives in the player's traitor panel
+/datum/antagonist/gang/proc/add_objectives()
+	var/datum/objective/objective = new ()
+	objective.explanation_text = my_gang.current_theme.gang_objectives[type]
+	objectives.Add(objective)
 
 /// Gives a gangster their equipment in their backpack and / or pockets.
 /datum/antagonist/gang/proc/equip_gangster_in_inventory()
@@ -245,7 +254,7 @@
 
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
-	name = "Mafioso"
+	name = "\improper Mafioso"
 	roundend_category = "The mafiosos"
 	gang_name = "Mafia"
 	gang_id = "RM"
@@ -282,9 +291,9 @@
 		/obj/item/clothing/under/suit/checkered,
 		/obj/item/toy/crayon/spraycan)
 	antag_hud_name = "Italian"
-	gang_team_type = /datum/team/gang/russian_mafia
+	gang_team_type = /datum/team/gang/italian_mob
 
-/datum/team/gang/russian_mafia/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
+/datum/team/gang/italian_mob/rename_gangster(datum/mind/gangster, original_name, starter_gangster)
 	var/static/regex/last_name = new("\[^\\s-\]+$") //First word before whitespace or "-"
 	last_name.Find(original_name)
 	if(starter_gangster)
@@ -294,7 +303,7 @@
 
 /datum/antagonist/gang/tunnel_snakes
 	show_in_antagpanel = TRUE
-	name = "Tunnel Snake"
+	name = "\improper Tunnel Snake"
 	roundend_category = "The Tunnel Snakes"
 	gang_name = "Tunnel Snakes"
 	gang_id = "TS"
@@ -342,7 +351,7 @@
 
 /datum/antagonist/gang/yakuza
 	show_in_antagpanel = TRUE
-	name = "Tojo Clan Member"
+	name = "\improper Tojo Clan Member"
 	roundend_category = "The Yakuza"
 	gang_name = "Tojo Clan"
 	gang_id = "YAK"
@@ -372,7 +381,7 @@
 
 /datum/antagonist/gang/jackbros
 	show_in_antagpanel = TRUE
-	name = "Jack Bro"
+	name = "\improper Jack Bro"
 	roundend_category = "The Hee-hos"
 	gang_name = "Jack Bros"
 	gang_id = "JB"
@@ -426,7 +435,7 @@
 
 /datum/antagonist/gang/irs
 	show_in_antagpanel = TRUE
-	name = "Internal Revenue Service Agent"
+	name = "\improper Internal Revenue Service Agent"
 	roundend_category = "IRS Agents"
 	gang_name = "Internal Revenue Service"
 	gang_id = "IRS"
@@ -450,7 +459,7 @@
 
 /datum/antagonist/gang/osi
 	show_in_antagpanel = TRUE
-	name = "Office of Secret Intelligence Agent"
+	name = "\improper Office of Secret Intelligence Agent"
 	roundend_category = "O.S.I. Agents"
 	gang_name = "Office of Secret Intelligence"
 	gang_id = "OSI"
@@ -474,7 +483,7 @@
 
 /datum/antagonist/gang/tmc
 	show_in_antagpanel = TRUE
-	name = "Lost M.C. Biker"
+	name = "\improper Lost M.C. Biker"
 	roundend_category = "Lost M.C. Bikers"
 	gang_name = "The Lost M.C."
 	gang_id = "TMC"
@@ -498,7 +507,7 @@
 
 /datum/antagonist/gang/pg
 	show_in_antagpanel = TRUE
-	name = "Powder Ganger"
+	name = "\improper Powder Ganger"
 	roundend_category = "Powder Gangers"
 	gang_name = "Powder Gangers"
 	gang_id = "PG"
@@ -523,7 +532,7 @@
 
 /datum/antagonist/gang/driscoll
 	show_in_antagpanel = TRUE
-	name = "O'Driscoll Gangster"
+	name = "\improper O'Driscoll Gangster"
 	roundend_category = "O'Driscoll's Gangsters"
 	gang_name = "O'Driscoll's Gang"
 	gang_id = "DB"
@@ -549,7 +558,7 @@
 
 /datum/antagonist/gang/deckers
 	show_in_antagpanel = TRUE
-	name = "Decker"
+	name = "\improper Decker"
 	roundend_category = "Deckers"
 	gang_name = "Deckers"
 	gang_id = "DK"
@@ -576,7 +585,7 @@
 
 /datum/antagonist/gang/morningstar
 	show_in_antagpanel = TRUE
-	name = "Morningstar Member"
+	name = "\improper Morningstar Member"
 	roundend_category = "Morningstar Member"
 	gang_name = "Morningstar"
 	gang_id = "MS"
@@ -602,7 +611,7 @@
 
 /datum/antagonist/gang/saints
 	show_in_antagpanel = TRUE
-	name = "Third Street Saints Gangster"
+	name = "\improper Third Street Saints Gangster"
 	roundend_category = "Third Street Saints Gangsters"
 	gang_name = "Third Street Saints"
 	gang_id = "TSS"
@@ -629,7 +638,7 @@
 
 /datum/antagonist/gang/phantom
 	show_in_antagpanel = TRUE
-	name = "Phantom Thief"
+	name = "\improper Phantom Thief"
 	roundend_category = "Phantom Thieves"
 	gang_name = "Phantom Thieves of Hearts"
 	gang_id = "PT"
@@ -655,7 +664,7 @@
 
 /datum/antagonist/gang/allies
 	show_in_antagpanel = TRUE
-	name = "Allies G.I."
+	name = "\improper Allies G.I."
 	roundend_category = "Allies"
 	gang_name = "Allies"
 	gang_id = "ALLIES"
@@ -678,7 +687,7 @@
 
 /datum/antagonist/gang/soviet
 	show_in_antagpanel = TRUE
-	name = "Soviet Conscript"
+	name = "\improper Soviet Conscript"
 	roundend_category = "Soviets"
 	gang_name = "Soviets"
 	gang_id = "SOV"
@@ -701,7 +710,7 @@
 
 /datum/antagonist/gang/yuri
 	show_in_antagpanel = TRUE
-	name = "Yuri Initiate"
+	name = "\improper Yuri Initiate"
 	roundend_category = "Yuri's Army"
 	gang_name = "Yuri's Army"
 	gang_id = "YR"
@@ -724,7 +733,7 @@
 
 /datum/antagonist/gang/sybil_slickers
 	show_in_antagpanel = TRUE
-	name = "Sybil Slicker"
+	name = "\improper Sybil Slicker"
 	roundend_category = "Sybil Slickers"
 	gang_name = "Sybil Slickers"
 	gang_id = "SS"
@@ -747,7 +756,7 @@
 
 /datum/antagonist/gang/basil_boys
 	show_in_antagpanel = TRUE
-	name = "Basil Boy"
+	name = "\improper Basil Boy"
 	roundend_category = "Basil Boys"
 	gang_name = "Basil Boys"
 	gang_id = "BB"
