@@ -3,7 +3,7 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(id, cost, mapload)
+/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost)
 	. = ..()
 	order_id = id
 	order_cost = cost
