@@ -1,0 +1,15 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - refactor: "Refactored Dullahans in many areas to fix many, many of their bugs and glitches and ensure an actually functional experience playing as one, while also improving as much code as I could along the way."
+  - bugfix: "Dullahans only hear speech through their head (not sounds, sadly, someone else would have to tell me how to do that because I otherwise really wouldn't know how to do it in a sane way), they speak through their head, runechat-included."
+  - bugfix: "When you spawn a Dullahan, you're set to look through the Dullahan's eyes (so from their head), and that doesn't reset when you log off and back in, or admin-ghost and come back in your body."
+  - bugfix: "When you're looking through your head, your view will no longer be reset to your body upon entering a locker, which is nice to avoid not being blind while looking through your body."
+  - bugfix: "Dullahan heads no longer look completely lifeless and without organs. They have eyes that don't look dead and that even match the player's intended eye color."
+  - bugfix: "Dullahan can now properly examine things from their head's view."
+  - bugfix: "Dullahan heads now speak with the proper name of their owner, instead of having a random name attached to it at round-start."
+  - bugfix: "Dullahan heads are also now properly named too."
+  - bugfix: "Dullahans can now properly whisper, sing and do all these funny things that they were unable to do before.
+fix; Dullahan whispers will now properly respect the range of the whisper."
+  - bugfix: "Dullahans can now succumb in hardcrit by whispering, as intended. This potentially fixes other species that worked similarly not being able to succumb, like abductors."
+  - bugfix: "When switching from Dullahans to a different species, your old head will no longer stay behind."
