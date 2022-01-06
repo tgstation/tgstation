@@ -646,6 +646,7 @@
 	\n	You still need to take the hat off your head while the helmet deploys, though.\
 	\n	This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
+	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
