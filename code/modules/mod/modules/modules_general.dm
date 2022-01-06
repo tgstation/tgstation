@@ -651,7 +651,7 @@
 	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
 	///Whitelist of attachable hats; read note in Initialize() below this line
-	var/list/static/attachable_hats_list
+	var/static/list/attachable_hats_list
 
 /obj/item/mod/module/hat_stabilizer/Initialize()
 	. = ..()
