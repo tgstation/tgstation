@@ -26,6 +26,26 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
+"e" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = 32;
+	pixel_y = -2;
+	req_access = list(150)
+	},
+/obj/machinery/button/door{
+	id = "SBC_corvette_blast";
+	name = "Corvette Blast Doors";
+	pixel_x = 32;
+	pixel_y = 8;
+	req_access_txt = "151"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/sbc_corvette)
 "f" = (
 /obj/structure/table,
 /obj/machinery/recharger,
@@ -114,26 +134,6 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1;
 	name = "tactical chair"
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/sbc_corvette)
-"p" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	pixel_x = 32;
-	pixel_y = -2;
-	req_access = 150
-	},
-/obj/machinery/button/door{
-	id = "SBC_corvette_blast";
-	name = "Corvette Blast Doors";
-	pixel_x = 32;
-	pixel_y = 8;
-	req_access_txt = "151"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
@@ -560,7 +560,7 @@ O
 I
 c
 W
-p
+e
 f
 O
 "}

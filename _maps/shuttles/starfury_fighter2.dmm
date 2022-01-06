@@ -21,6 +21,18 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
+"k" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"l" = (
+/obj/machinery/porta_turret/syndicate/energy{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
 "o" = (
 /obj/machinery/computer/shuttle/starfury/fighter/fighter_two,
 /turf/open/floor/mineral/plastitanium/red,
@@ -28,6 +40,23 @@
 "q" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/sbc_fighter2)
+"r" = (
+/obj/machinery/turretid{
+	ailock = 1;
+	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
+	icon_state = "control_kill";
+	lethal = 1;
+	name = "Ship Turret Control";
+	pixel_x = -32;
+	pixel_y = 26;
+	req_access = list(150)
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 1;
+	name = "tactical chair"
+	},
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
 "t" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_two{
@@ -52,36 +81,7 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_fighter2)
-"D" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_fighter2)
-"F" = (
-/obj/machinery/turretid{
-	ailock = 1;
-	desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing.";
-	icon_state = "control_kill";
-	lethal = 1;
-	name = "Ship Turret Control";
-	pixel_x = -32;
-	pixel_y = 26;
-	req_access = 150
-	},
-/obj/structure/chair/comfy/shuttle{
-	dir = 1;
-	name = "tactical chair"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/sbc_fighter2)
-"H" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_fighter2)
-"I" = (
+"x" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
 	dir = 1
 	},
@@ -106,7 +106,7 @@
 (1,1,1) = {"
 a
 a
-D
+l
 V
 V
 q
@@ -122,10 +122,10 @@ V
 q
 "}
 (3,1,1) = {"
-I
+x
 V
 o
-F
+r
 W
 j
 u
@@ -142,7 +142,7 @@ q
 (5,1,1) = {"
 a
 a
-H
+k
 V
 V
 q

@@ -364,9 +364,6 @@
 	///if this shuttle can move docking ports other than the one it is docked at
 	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
-	/// Whether if we, when moving, find the FIRST baseturf or the LAST baseturf.
-	/// Set to TRUE if you are docking this shuttle onto another shuttle.
-	var/find_deepest_baseturf = FALSE
 
 /obj/docking_port/mobile/register(replace = FALSE)
 	. = ..()
