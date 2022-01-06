@@ -19,10 +19,6 @@
 	var/obj/item/card/id/inserted_scan_id
 	circuit = /obj/item/circuitboard/computer/bountypad
 
-/obj/machinery/computer/piratepad_control/civilian/Initialize(mapload)
-	. = ..()
-	pad = /obj/machinery/piratepad/civilian
-
 /obj/machinery/computer/piratepad_control/civilian/attackby(obj/item/I, mob/living/user, params)
 	if(isidcard(I))
 		if(id_insert(user, I, inserted_scan_id))
@@ -33,7 +29,7 @@
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
 		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad = I.buffer
+		pad_ref = WEAKREF(I.buffer)
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/civilian/LateInitialize()
@@ -41,10 +37,11 @@
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/civilian/C in GLOB.machines)
 			if(C.cargo_hold_id == cargo_hold_id)
-				pad = C
+				pad_ref = WEAKREF(C)
 				return
 	else
-		pad = locate() in range(4,src)
+		var/obj/machinery/piratepad/civilian/pad = locate() in range(4,src)
+		pad_ref = WEAKREF(pad)
 
 /obj/machinery/computer/piratepad_control/civilian/recalc()
 	if(sending)
@@ -58,6 +55,7 @@
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
 		return FALSE
 	status_report = "Civilian Bounty: "
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -83,6 +81,7 @@
 		return FALSE
 	var/datum/bounty/curr_bounty = inserted_scan_id.registered_account.civilian_bounty
 	var/active_stack = 0
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
@@ -152,7 +151,7 @@
 /obj/machinery/computer/piratepad_control/civilian/ui_data(mob/user)
 	var/list/data = list()
 	data["points"] = points
-	data["pad"] = pad ? TRUE : FALSE
+	data["pad"] = pad_ref?.resolve() ? TRUE : FALSE
 	data["sending"] = sending
 	data["status_report"] = status_report
 	data["id_inserted"] = inserted_scan_id
@@ -178,7 +177,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!pad)
+	if(!pad_ref?.resolve())
 		return
 	if(!usr.canUseTopic(src, BE_CLOSE) || (machine_stat & (NOPOWER|BROKEN)))
 		return
