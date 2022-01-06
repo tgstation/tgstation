@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/slime
-	true_name = "gastric animation galvanizer. The abductee occasionally vomits slimes. Slimes will no longer attack the abductee"
+	abductor_hint = "gastric animation galvanizer. The abductee occasionally vomits slimes. Slimes will no longer attack the abductee."
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1

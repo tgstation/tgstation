@@ -6,7 +6,7 @@
 	status = ORGAN_ROBOTIC
 	organ_flags = NONE
 	beating = TRUE
-	var/true_name = "baseline placebo referencer"
+	var/abductor_hint = "baseline placebo referencer"
 
 	/// The minimum time between activations
 	var/cooldown_low = 30 SECONDS
@@ -30,7 +30,7 @@
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
 	if((user.mind && HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)) || isobserver(user))
-		. += span_notice("It is \a [true_name].")
+		. += span_notice("It is \a [abductor_hint]")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))

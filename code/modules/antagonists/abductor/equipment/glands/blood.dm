@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/blood
-	true_name = "pseudonuclear hemo-destabilizer. Periodically randomizes the abductee's bloodtype into a random reagent"
+	abductor_hint = "pseudonuclear hemo-destabilizer. Periodically randomizes the abductee's bloodtype into a random reagent."
 	cooldown_low = 1200
 	cooldown_high = 1800
 	uses = -1

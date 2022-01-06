@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/heal
-	true_name = "organic replicator. If organs, chest or or limbs are too damaged or robotic, they will be forcefully rejected and replacements will grow out instead. If having low blood, moderate toxin damage, or at least mild toxins in bloodstream, the blood will be rejected (by vomit) and replaced with healthy blood. Also rejects implants such as mindshield implants"
+	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/transform
-	true_name = "anthropmorphic transmorphosizer. Makes the abductee occasionally change appearance and species"
+	abductor_hint = "anthropmorphic transmorphosizer. The abductee will occasionally change appearance and species."
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1

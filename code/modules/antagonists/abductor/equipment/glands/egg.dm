@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/egg
-	true_name = "roe/enzymatic synthesizer. Makes the abductee lay eggs filled with random reagents"
+	abductor_hint = "roe/enzymatic synthesizer. The abductee will periodically lay eggs filled with random reagents."
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
