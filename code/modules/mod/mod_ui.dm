@@ -4,7 +4,7 @@
 		ui = new(user, src, "MODsuit", name)
 		ui.open()
 
-/obj/item/mod/control/ui_data()
+/obj/item/mod/control/ui_data(mob/user)
 	var/data = list()
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
@@ -25,6 +25,7 @@
 			description = module.desc,
 			module_type = module.module_type,
 			active = module.active,
+			pinned = module.pinned_to[user],
 			idle_power = module.idle_power_cost,
 			active_power = module.active_power_cost,
 			use_power = module.use_power_cost,
@@ -77,4 +78,9 @@
 			if(!module)
 				return
 			module.configure_edit(params["key"], params["value"])
+		if("pin")
+			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			if(!module)
+				return
+			module.pin(usr)
 	return TRUE

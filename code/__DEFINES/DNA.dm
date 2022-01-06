@@ -64,6 +64,8 @@
 #define BURDENED /datum/mutation/human/burdened
 #define HONORBOUND /datum/mutation/human/honorbound
 
+#define TK_MOD /datum/mutation/human/telekinesis/mod
+
 #define UE_CHANGED "ue changed"
 #define UI_CHANGED "ui changed"
 #define UF_CHANGED "uf changed"

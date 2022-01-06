@@ -1,3 +1,4 @@
+///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
 	icon_state = "module"
@@ -33,6 +34,8 @@
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
+	/// List of mobs we are pinned to, linked with their action buttons
+	var/list/pinned_to = list()
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -230,6 +233,8 @@
 /// Generates an icon to be used for the suit's worn overlays
 /obj/item/mod/module/proc/generate_worn_overlay(mutable_appearance/standing)
 	. = list()
+	if(!mod.active)
+		return
 	var/used_overlay
 	if(overlay_state_use && !COOLDOWN_FINISHED(src, cooldown_timer))
 		used_overlay = overlay_state_use
@@ -250,3 +255,14 @@
 		if(ALT_CLICK)
 			mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
 	RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
+
+/// Pins the module to the user's action buttons
+/obj/item/mod/module/proc/pin(mob/user)
+	var/datum/action/item_action/mod/pinned_module/action = pinned_to[user]
+	if(action)
+		qdel(action)
+		pinned_to[user] = null
+	else
+		action = new(mod, src, user)
+		action.Grant(user)
+		pinned_to[user] = action
