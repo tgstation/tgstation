@@ -1065,7 +1065,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(tilted || !istype(L) || !prob(20 * (throwingdatum.speed - L.throw_speed))) // hulk throw = +20%, neckgrab throw = +20%
 		return
 
-	tilt(L)
+	if (!QDELETED(src))
+		tilt(L)
 
 /obj/machinery/vending/attack_tk_grab(mob/user)
 	to_chat(user, span_warning("[src] seems to resist your mental grasp!"))
