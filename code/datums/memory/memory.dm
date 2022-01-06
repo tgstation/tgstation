@@ -27,7 +27,7 @@
 	//You can feed atoms in, but they're gonna be reduced to text
 	for(var/key in extra_info)
 		var/thing = extra_info[key]
-		if(!isproperdatum(thing))
+		if(!isdatum(thing))
 			continue
 		var/datum/reduce_to_string = thing
 		extra_info[key] = "[reduce_to_string]"

@@ -7,7 +7,7 @@
 
 #define isatom(A) (isloc(A))
 
-#define isproperdatum(thing) (istype(thing, /datum) || istype(thing, /client))
+#define isdatum(thing) (istype(thing, /datum))
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
