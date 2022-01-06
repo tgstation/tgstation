@@ -641,17 +641,17 @@
 ///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
-	desc = "A simple set of deployable stands, directly atop one's head; these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet.\
-	\nYou still need to take the hat off your head while the helmet deploys, though.\
-	\nThis is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
+	desc = "A simple set of deployable stands, directly atop one's head; \
+	these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet.\
+	\n	You still need to take the hat off your head while the helmet deploys, though.\
+	\n	This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
-	module_type = MODULE_PASSIVE //The description says it auto-deploys for certain hats; that's just an excuse to have a whitelist of items.
-	complexity = 0 //Its FREE!
-	removable = TRUE //Inbuilt into the Captain's Magnate suit, and the CC Corporate suit; BUT also avaliable as a maint module.
+	/*Intentionally left inheriting 0 complexity and removable = TRUE;
+	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
 	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
 	var/obj/item/clothing/head/attached_hat
 	///Whitelist of attachable hats; read note in Initialize() below this line
-	var/list/attachable_hats_list
+	var/list/static/attachable_hats_list
 
 /obj/item/mod/module/hat_stabilizer/Initialize()
 	. = ..()
@@ -680,21 +680,17 @@
 			)) - /obj/item/clothing/head/caphat/beret
 			//Need to subtract the beret because its annoying
 
-/obj/item/mod/module/hat_stabilizer/on_equip()
+/obj/item/mod/module/hat_stabilizer/on_suit_activation()
 	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
 	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
 	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
 
-/obj/item/mod/module/hat_stabilizer/on_unequip()
+/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
-		remove_hat()
+		remove_hat(src, mod.wearer)
 	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
 	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
 	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
-
-/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
-	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
-		remove_hat(src, usr)
 
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
@@ -707,10 +703,10 @@
 	SIGNAL_HANDLER
 	if(!istype(hitting_item, /obj/item/clothing/head))
 		return
-	if(!(mod.active))
+	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
-	if(!(is_type_in_list(hitting_item, attachable_hats_list)))
+	if(!is_type_in_list(hitting_item, attachable_hats_list))
 		balloon_alert(user, "this hat won't fit!")
 		return
 	if(attached_hat)
@@ -724,7 +720,7 @@
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
 	if(attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
 
 /obj/item/mod/module/hat_stabilizer/proc/remove_hat(datum/source, mob/user)
 	SIGNAL_HANDLER
