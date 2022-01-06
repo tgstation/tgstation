@@ -790,7 +790,7 @@
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
-	///Last time since shuffling the deck.
+	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite
 	var/obj/machinery/computer/holodeck/holo = null
