@@ -1,3 +1,9 @@
+//how fast a disposal machinery thing is ejecting things
+#define EJECT_SPEED_SLOW 1
+#define EJECT_SPEED_MED 2
+#define EJECT_SPEED_FAST 4
+#define EJECT_SPEED_YEET 6
+
 // the disposal outlet machine
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
@@ -111,3 +117,8 @@
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+
+#undef EJECT_SPEED_SLOW
+#undef EJECT_SPEED_MED
+#undef EJECT_SPEED_FAST
+#undef EJECT_SPEED_YEET
