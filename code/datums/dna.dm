@@ -116,7 +116,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	// Let's do a proper copy
 	for(var/datum/mutation/human/mutation in mutations)
 		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
-	new_dna.mutations = mutations.Copy()
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
