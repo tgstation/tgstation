@@ -141,7 +141,7 @@
 	button_icon_state = "armblade"
 	chemical_cost = 20
 	dna_cost = 2
-	req_human = 1
+	req_human = TRUE
 	weapon_type = /obj/item/melee/arm_blade
 	weapon_name_simple = "blade"
 
@@ -227,7 +227,7 @@
 	button_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
-	req_human = 1
+	req_human = TRUE
 	weapon_type = /obj/item/gun/magic/tentacle
 	weapon_name_simple = "tentacle"
 	silent = TRUE
@@ -406,7 +406,7 @@
 	button_icon_state = "organic_shield"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
@@ -460,7 +460,7 @@
 	button_icon_state = "organic_suit"
 	chemical_cost = 20
 	dna_cost = 2
-	req_human = 1
+	req_human = TRUE
 
 	suit_type = /obj/item/clothing/suit/space/changeling
 	helmet_type = /obj/item/clothing/head/helmet/space/changeling
@@ -521,7 +521,7 @@
 	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 	recharge_slowdown = 0.125
 
 	suit_type = /obj/item/clothing/suit/armor/changeling
