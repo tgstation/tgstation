@@ -8,7 +8,7 @@
 	limb_req = BODY_ZONE_HEAD
 	instability = 30
 	///Typecache of atoms that TK shouldn't interact with
-	var/list/whitelisted_atoms = list(
+	var/list/blacklisted_atoms = list(
 		/atom/movable/screen,
 	)
 
@@ -36,7 +36,7 @@
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
 
-	for (var/type in whitelisted_atoms)
+	for (var/type in blacklisted_atoms)
 		if (istype(target, type))
 			return
 	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
