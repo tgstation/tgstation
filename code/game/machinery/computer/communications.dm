@@ -79,6 +79,13 @@
 /obj/machinery/computer/communications/syndicate/authenticated_as_silicon_or_captain(mob/user)
 	return FALSE
 
+/obj/machinery/computer/communications/syndicate/get_communication_players()
+	var/list/targets = list()
+	for(var/mob/target in GLOB.player_list)
+		if(!isnewplayer(target) && (target.stat == DEAD || target.z == z || target.mind?.has_antag_datum(/datum/antagonist/battlecruiser)))
+			targets += target
+	return targets
+
 /obj/machinery/computer/communications/Initialize(mapload)
 	. = ..()
 	GLOB.shuttle_caller_list += src
@@ -715,8 +722,16 @@
 		to_chat(user, span_warning("You find yourself unable to speak."))
 	else
 		input = user.treat_message(input) //Adds slurs and so on. Someone should make this use languages too.
-	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED))
+	var/list/players = get_communication_players()
+	SScommunications.make_announcement(user, is_ai, input, syndicate || (obj_flags & EMAGGED), players)
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
+
+/obj/machinery/computer/communications/proc/get_communication_players()
+	var/list/targets = list()
+	for(var/mob/target in GLOB.player_list)
+		if(!isnewplayer(target))
+			targets += target
+	return targets
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
