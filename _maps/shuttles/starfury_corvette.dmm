@@ -137,15 +137,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"q" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Exterior View B";
-	network = list("SBC_Corvette");
-	pixel_x = 11;
-	pixel_y = -32
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_corvette)
 "r" = (
 /obj/machinery/computer/security{
 	network = list("SBC_Corvette")
@@ -370,15 +361,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_corvette)
-"Q" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Exterior View A";
-	network = list("SBC_Corvette");
-	pixel_x = 11;
-	pixel_y = 32
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/sbc_corvette)
 "R" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -547,13 +529,13 @@ J
 j
 "}
 (9,1,1) = {"
-Q
+M
 n
 A
 l
 l
 h
-q
+M
 "}
 (10,1,1) = {"
 M

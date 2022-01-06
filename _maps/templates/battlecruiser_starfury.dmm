@@ -724,11 +724,6 @@
 /area/shuttle/sbc_starfury)
 "bG" = (
 /obj/structure/table/reinforced,
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Bridge";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 8
@@ -1148,11 +1143,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "Syndicate Battlecruiser Medbay";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /obj/effect/turf_decal/bot_white{
 	color = "#00A2FF"
@@ -1235,10 +1225,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "cL" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Syndicate Battlecruiser Bridge Hallway West";
-	network = list("SBC")
-	},
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -1259,11 +1245,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
-/obj/machinery/camera/directional/north{
-	c_tag = "Syndicate Battlecruiser Medbay Operating Theatre";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/machinery/airalarm/directional/north{
 	req_access_txt = "150"
 	},
@@ -1329,10 +1310,6 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/sbc_starfury)
 "cX" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Syndicate Battlecruiser Bridge Hallway East";
-	network = list("SBC")
-	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -1788,11 +1765,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "el" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Syndicate Battlecruiser Shuttle Bay NW";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/dark,
@@ -1809,11 +1781,6 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "es" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Syndicate Battlecruiser Shuttle Bay NE";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/pod/dark,
@@ -2124,11 +2091,6 @@
 /area/shuttle/sbc_starfury)
 "fg" = (
 /obj/structure/rack,
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Shuttle Bay SW";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -2266,11 +2228,6 @@
 /area/shuttle/sbc_starfury)
 "fv" = (
 /obj/structure/rack,
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Shuttle Bay SE";
-	network = list("SBC");
-	pixel_x = 22
-	},
 /obj/item/crowbar,
 /obj/item/wrench,
 /obj/item/weldingtool,
@@ -2491,10 +2448,6 @@
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "gG" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Syndicate Battlecruiser Mech Storage";
-	network = list("SBC")
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -2509,10 +2462,6 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "gI" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Syndicate Battlecruiser Bar";
-	network = list("SBC")
-	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -3039,10 +2988,6 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/sbc_starfury)
 "hM" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Crew Quarters";
-	network = list("SBC")
-	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
@@ -3095,10 +3040,6 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "hT" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser E.V.A. Equipment";
-	network = list("SBC")
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3603,10 +3544,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Armory";
-	network = list("SBC")
-	},
 /turf/open/floor/pod/light,
 /area/shuttle/sbc_starfury)
 "iN" = (
@@ -3952,10 +3889,6 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/sbc_starfury)
 "jC" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Syndicate Battlecruiser Engineering SMES Room";
-	network = list("SBC")
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
@@ -4047,19 +3980,6 @@
 /obj/item/inducer/syndicate,
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"jU" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/camera/directional/west{
-	c_tag = "Syndicate Battlecruiser Engineering West";
-	network = list("SBC")
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/sbc_starfury)
 "jY" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/mineral/uranium{
@@ -4080,10 +4000,6 @@
 	pixel_x = 32
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/camera/directional/east{
-	c_tag = "Syndicate Battlecruiser Engineering East";
-	network = list("SBC")
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/mineral/plastitanium,
@@ -6879,7 +6795,7 @@ ae
 iX
 Pa
 jE
-jU
+jE
 ke
 Ta
 kv

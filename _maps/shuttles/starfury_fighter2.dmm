@@ -56,12 +56,6 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 9
 	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Left Side";
-	network = list("SBC_Fighter2");
-	pixel_x = -32;
-	pixel_y = -11
-	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "F" = (
@@ -85,23 +79,11 @@
 /obj/machinery/porta_turret/syndicate/energy{
 	dir = 5
 	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Right Side";
-	network = list("SBC_Fighter2");
-	pixel_x = 32;
-	pixel_y = -11
-	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
 "I" = (
 /obj/machinery/porta_turret/syndicate/energy/heavy{
 	dir = 1
-	},
-/obj/machinery/camera/directional/south{
-	c_tag = "Front Side";
-	network = list("SBC_Fighter2");
-	pixel_x = 11;
-	pixel_y = 32
 	},
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/sbc_fighter2)
