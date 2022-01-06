@@ -2,7 +2,7 @@
 	name = "Final Objective"
 	objectives = list(
 		/datum/traitor_objective/final/romerol = 1,
-		///datum/traitor_objective/final/battlecruiser = 1, - when ready, untick battlecruiser.dm and uncomment this
+		/datum/traitor_objective/final/battlecruiser = 1,
 	)
 	weight = 100
 
