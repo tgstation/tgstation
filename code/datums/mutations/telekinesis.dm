@@ -32,7 +32,6 @@
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
 	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
-		source.balloon_alert(source, "can't TK, too far!")
 		return
 	return target.attack_tk(source)
 
