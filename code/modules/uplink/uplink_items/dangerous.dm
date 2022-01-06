@@ -20,6 +20,15 @@
 
 // Low progression cost
 
+/datum/uplink_item/dangerous/pistol
+	name = "Makarov Pistol"
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
+			with suppressors."
+	progression_minimum = 10 MINUTES
+	item = /obj/item/gun/ballistic/automatic/pistol
+	cost = 7
+	purchasable_from = ~UPLINK_CLOWN_OPS
+
 /datum/uplink_item/dangerous/throwingweapons
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
@@ -81,15 +90,6 @@
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	restricted = TRUE
-
-/datum/uplink_item/dangerous/pistol
-	name = "Makarov Pistol"
-	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
-			with suppressors."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/gun/ballistic/automatic/pistol
-	cost = 7
-	purchasable_from = ~UPLINK_CLOWN_OPS
 
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
