@@ -873,5 +873,5 @@
 	
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
 	quirk_holder.losebreath += 0.25 // miss a breath one in four times
-	if(prob(25))
+	if(DT_PROB(25, delta_time))
 		to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
