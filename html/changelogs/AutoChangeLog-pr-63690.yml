@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Windoor exam text now properly displays whether the panel is open."
-  - refactor: "Windoor tool_act code is updated to the latest century."

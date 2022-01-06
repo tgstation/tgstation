@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Exploding paper no longer causes a runtime."

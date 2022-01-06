@@ -126,3 +126,47 @@
       recipes from ever producing high quality products.
   axietheaxolotl:
   - imageadd: Brand new sabre and sheath sprites!
+2022-01-06:
+  Arturlang:
+  - bugfix: Modsuits DNA lock module will no longer stop you from changing up the
+      suit's modules while not worn, even if you are it's rightfull owner.
+  Jackraxxus:
+  - bugfix: The gladiator helmet is no longer a missing texture.
+  JohnFulpWillard:
+  - bugfix: After being broken again, magic mirrors have been RE-fixed and will ONCE
+      again change your species.
+  - bugfix: Revenants (and any other non human) will no longer turn red/blue from
+      the medieval shuttle teambuilding machines.
+  Melbert:
+  - bugfix: Changeling abilities unusable in lesser form are unusuable as a monkey
+      again.
+  - bugfix: Changelings can no longer unintentionally take DNA from monkeys.
+  - bugfix: Changeling lesser form now toggles between "lesser form" and "human form"
+      when used.
+  Mothblocks:
+  - qol: Restored the original manual refresh for the orbit menu.
+  OrionTheFox:
+  - bugfix: Icebox telecomms control is no longer frozen. Rejoice, to the 2 people
+      who actually go in there. The catwalks are nicer all around too.
+  ReinaCoder:
+  - qol: Adjusted security jumpsuits/skirts no longer cover the chest
+  SuperNovaa41:
+  - bugfix: Pen's can update an item's description again.
+  - bugfix: Fixes admins being able to sucessfully JMP as a new player mob.
+  - bugfix: Silicons can disable holodeck safeties again.
+  TemporalOroboros:
+  - bugfix: If you aim at something through cameras you will now aim at the thing
+      you aimed at from the perspective of yourself instead of the camera you were
+      using to aim.
+  Y0SH1M4S73R:
+  - expansion: Adds four new circuit components designed to analyze the data on ID
+      cards - Get ID, Read ID Info, Read ID Access, and Access Checker.
+  - bugfix: The assembly shell can now be attached to wires as intended
+  dragomagol:
+  - bugfix: stools on the main station are now facing the correct directions
+  jlsnow301:
+  - bugfix: Windoor exam text now properly displays whether the panel is open.
+  - refactor: Windoor tool_act code is updated to the latest century.
+  - bugfix: Exploding paper no longer causes a runtime.
+  san7890:
+  - bugfix: 'Cargonians and Janitors Rejoice: Disposals on TramStation have been fixed!'
