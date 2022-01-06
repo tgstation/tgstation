@@ -130,11 +130,11 @@
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/Destroy()
-	if(origional)
-		origional.copies -= src
-		origional - null
+	if(original)
+		original.copies -= src
+		original - null
 	return ..()
-	
+
 //Hit a fake? eat pain!
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage

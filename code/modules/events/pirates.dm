@@ -287,7 +287,7 @@
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P in GLOB.machines)
 			if(P.cargo_hold_id == cargo_hold_id)
-				pad = WEAKREF(P)
+				pad_ref = WEAKREF(P)
 				return
 	else
 		var/obj/machinery/piratepad/pad = locate() in range(4, src)
