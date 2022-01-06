@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "Malfunctioning AI should now happen more frequently."

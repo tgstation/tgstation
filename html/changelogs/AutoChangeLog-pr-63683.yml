@@ -1,7 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer delete your cult eyes or halo by transforming into a monkey, and then into a human."
-  - bugfix: "You can no longer delete your cult eyes or halo by transforming as a changeling."
-  - bugfix: "Simplemobs now receive glowing eyes and a cult halo."
-  - refactor: "Turns cult eyes and cult halos into elements, and improves the code a touch."
