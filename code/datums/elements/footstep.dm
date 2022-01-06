@@ -136,24 +136,27 @@
 
 	///cache for sanic speed (lists are references anyways)
 	var/static/list/cached_footsteps = GLOB.footstep
+	var/list/heard_clients
 
-	play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE)
 	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 
-		playsound(source_loc, pick(cached_footsteps[source_loc.footstep][1]),
+		heard_clients = playsound(source_loc, pick(cached_footsteps[source_loc.footstep][1]),
 			cached_footsteps[source_loc.footstep][2] * volume * volume_multiplier,
 			TRUE,
 			cached_footsteps[source_loc.footstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 	else
 		if(source.dna.species.special_step_sounds)
-			playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
+			heard_clients = playsound(source_loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
 			var/static/list/cached_barefootsteps = GLOB.barefootstep
-			playsound(source_loc, pick(cached_barefootsteps[source_loc.barefootstep][1]),
+			heard_clients = playsound(source_loc, pick(cached_barefootsteps[source_loc.barefootstep][1]),
 				cached_barefootsteps[source_loc.barefootstep][2] * volume * volume_multiplier,
 				TRUE,
 				cached_barefootsteps[source_loc.barefootstep][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+
+	if(heard_clients)
+		play_fov_effect(source, 5, "footstep", direction, ignore_self = TRUE, override_list = heard_clients)
 
 
 ///Prepares a footstep for machine walking
