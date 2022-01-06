@@ -50,6 +50,20 @@
 	add_filter("second_stage_openspace", 2, drop_shadow_filter(color = "#04080FAA", size = -15))
 	add_filter("third_stage_openspace", 3, drop_shadow_filter(color = "#04080FAA", size = -20))
 
+///For any transparent multi-z tiles we want to render
+/atom/movable/screen/plane_master/transparent
+	name = "transparent plane master"
+	plane = TRANSPARENT_FLOOR_PLANE
+	appearance_flags = PLANE_MASTER
+	//blend_mode = BLEND_MULTIPLY
+	//alpha = 255
+	//render_relay_plane = RENDER_PLANE_GAME
+
+/atom/movable/screen/plane_master/openspace
+	name = "open space plane master"
+	plane = OPENSPACE_PLANE
+	appearance_flags = PLANE_MASTER
+
 ///Contains just the floor
 /atom/movable/screen/plane_master/floor
 	name = "floor plane master"
