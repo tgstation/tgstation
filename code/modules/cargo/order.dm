@@ -1,3 +1,9 @@
+#define MANIFEST_ERROR_CHANCE 5
+// cargo error bitflags
+#define MANIFEST_ERROR_NAME (1 << 1)
+#define MANIFEST_ERROR_CONTENTS (1 << 2)
+#define MANIFEST_ERROR_ITEM (1 << 3)
+
 /obj/item/paper/fluff/jobs/cargo/manifest
 	var/order_cost = 0
 	var/order_id = 0
@@ -128,3 +134,8 @@
 		new I(miscbox)
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
+
+#undef MANIFEST_ERROR_CHANCE
+#undef MANIFEST_ERROR_NAME
+#undef MANIFEST_ERROR_CONTENTS
+#undef MANIFEST_ERROR_ITEM
