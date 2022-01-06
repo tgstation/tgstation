@@ -1,0 +1,4 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - qol: "Adds descriptions to abductor glands upon shiftclick."
