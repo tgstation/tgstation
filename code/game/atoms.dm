@@ -1964,7 +1964,7 @@
  * * otherwise no gravity
  */
 /atom/proc/has_gravity(turf/gravity_turf)
-	if(!gravity_turf || !isturf(gravity_turf))
+	if(!isturf(gravity_turf))
 		gravity_turf = get_turf(src)
 
 	if(!gravity_turf)
@@ -1972,9 +1972,9 @@
 
 	var/list/forced_gravity = list()
 	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, gravity_turf, forced_gravity)
-	if(!forced_gravity.len)
+	if(!length(forced_gravity))
 		SEND_SIGNAL(gravity_turf, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
+	if(length(forced_gravity))
 		var/max_grav
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
@@ -1990,10 +1990,12 @@
 	if(turf_area.has_gravity) // Areas which always has gravity
 		return turf_area.has_gravity
 	else
+		///cache for sanic speed (lists are references anyways)
+		var/static/list/cached_grav_gens = GLOB.gravity_generators
 		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[gravity_turf.z]"])
+		if(cached_grav_gens["[gravity_turf.z]"])
 			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/main_grav_gen as anything in GLOB.gravity_generators["[gravity_turf.z]"])
+			for(var/obj/machinery/gravity_generator/main/main_grav_gen as anything in cached_grav_gens["[gravity_turf.z]"])
 				max_grav = max(main_grav_gen.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(gravity_turf.z, ZTRAIT_GRAVITY)

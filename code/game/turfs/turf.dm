@@ -340,6 +340,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if((mover.movement_type & PHASING) || canPassSelf)
 
 		for(var/atom/movable/contents_movable as anything in bumpable_contents)//buckled is automatically excluded
+			if(QDELETED(contents_movable))
+				LAZYREMOVE(bumpable_contents, contents_movable)
+				stack_trace("a movable in bumpable_contents was qdeleted or null! this is cringe")
+				continue
+
 			if(contents_movable == mover || contents_movable == mover.loc || (mover in contents_movable.buckled_mobs)) // Multi tile objects and moving out of other objects
 				continue
 

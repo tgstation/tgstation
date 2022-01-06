@@ -375,7 +375,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		M.update_gravity(M.mob_has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
-			M.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)
+			M.playsound_local(T, null, 100, 1, 0.5, sound_to_use = alert_sound)
 
 /obj/machinery/gravity_generator/main/proc/gravity_in_level()
 	var/turf/T = get_turf(src)

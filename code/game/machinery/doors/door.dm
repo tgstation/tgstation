@@ -178,7 +178,7 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
-	add_fingerprint(user)
+	add_fingerprint(user)//add_fingerprint() is slow as fuck ahhhhhhhh
 	if(!requiresID())
 		user = null
 
@@ -266,7 +266,7 @@
 		try_to_weld_secondary(weapon, user)
 
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		
+
 	if (weapon.tool_behaviour == TOOL_CROWBAR)
 		var/forced_open = FALSE
 		if(istype(weapon, /obj/item/crowbar))
