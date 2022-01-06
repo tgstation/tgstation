@@ -932,8 +932,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		else //rotation
 			var/sine = target.transform.b
 			var/cosine = cos(arcsin(target.transform.b))
-			pixel_x = (cosine*x_offset + sine*y_offset + target.pixel_x + target.transform.c)
-			pixel_y = (-sine*x_offset + cosine*y_offset + target.pixel_y + target.transform.f)
+			pixel_x = cosine*x_offset + sine*y_offset + target.pixel_x + target.transform.c
+			pixel_y = -sine*x_offset + cosine*y_offset + target.pixel_y + target.transform.f
 	else //we cant calculate scaling + rotation, just give up on looking good
 		pixel_x = x_offset + target.pixel_x + target.transform.c
 		pixel_y = y_offset + target.pixel_y + target.transform.f
