@@ -482,10 +482,6 @@ GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
 #define AREASELECT_CORNERA "corner A"
 #define AREASELECT_CORNERB "corner B"
 
-#define DICE_NOT_RIGGED 1
-#define DICE_BASICALLY_RIGGED 2
-#define DICE_TOTALLY_RIGGED 3
-
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
 
