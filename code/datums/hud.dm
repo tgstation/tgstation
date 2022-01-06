@@ -161,7 +161,8 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!their_turf)
 		return
 
-	if (absolute || !--hud_users[their_turf.z][former_hud_user])
+	hud_users[their_turf.z][former_hud_user] -= 1 //decrement number of sources for this hud on this user (bad way to track i know)
+	if (absolute || hud_users[their_turf.z][former_hud_user] <= 0)//either force remove or if there arent any sources for this hud left
 		UnregisterSignal(former_hud_user, COMSIG_PARENT_QDELETING)
 		if(!hud_atoms_all_z_levels[former_hud_user])//make sure we arent removing a mob that also has its own hud atoms
 			UnregisterSignal(former_hud_user, COMSIG_MOVABLE_Z_CHANGED)
@@ -282,7 +283,7 @@ GLOBAL_LIST_INIT(huds, list(
 		if(hud_atoms_all_z_levels[moved_atom])
 			hud_atoms[old_turf.z] -= moved_atom
 
-			for(var/mob/formerly_seeing as anything in get_hud_users_for_z_level(old_turf.z))
+			for(var/mob/formerly_seeing as anything in get_hud_users_for_z_level(old_turf.z))//this wont include moved_atom since its removed
 				remove_atom_from_single_hud(formerly_seeing, moved_atom)
 
 	if(new_turf)
