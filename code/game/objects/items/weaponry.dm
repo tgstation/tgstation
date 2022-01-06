@@ -884,8 +884,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.do_attack_animation(target, "nothing")
 	var/list/modifiers = params2list(params)
 	var/damage_mod = 1
-	var/x_slashed = text2num(modifiers["icon-x"])
-	var/y_slashed = text2num(modifiers["icon-y"])
+	var/x_slashed = text2num(modifiers[ICON_X])
+	var/y_slashed = text2num(modifiers[ICON_Y])
+	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed)
 	if(target == previous_target) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
 		var/y_mod = previous_y - y_slashed
@@ -893,9 +894,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_target = target
 	previous_x = x_slashed
 	previous_y = y_slashed
-	var/atom/slash = new /obj/effect/temp_visual/slash(get_turf(target))
-	slash.pixel_x = x_slashed - world.icon_size/2 + target.pixel_x
-	slash.pixel_y = y_slashed - world.icon_size/2 + target.pixel_y
 	playsound(src, 'sound/weapons/bladeslice.ogg', 75, vary = TRUE)
 	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
@@ -921,8 +919,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	duration = 0.5 SECONDS
 	plane = ABOVE_GAME_PLANE
 
-/obj/effect/temp_visual/slash/Initialize(mapload)
+/obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed)
 	. = ..()
-	var/matrix/matrix = matrix(transform)
-	transform = matrix.Turn(rand(1, 360))
-	animate(src, duration*0.5, color = COLOR_BLUE, transform = matrix.Scale(2), alpha = 255)
+	var/x_offset = x_slashed - world.icon_size/2
+	var/y_offset = y_slashed - world.icon_size/2
+	if((target.transform.b in -1 to 1) && (target.transform.d in -1 to 1))
+		if(!target.transform.b && !target.transform.d)
+			pixel_x = (x_offset + target.pixel_x + target.transform.c) * target.transform.a
+			pixel_y = (y_offset + target.pixel_y + target.transform.f) * target.transform.e
+		else
+			var/sine = target.transform.b
+			var/cosine = cos(arcsin(target.transform.b))
+			pixel_x = (cosine*x_offset + sine*y_offset + target.pixel_x + target.transform.c)
+			pixel_y = (-sine*x_offset + cosine*y_offset + target.pixel_y + target.transform.f)
+	else
+		pixel_x = x_offset + target.pixel_x + target.transform.c
+		pixel_y = y_offset + target.pixel_y + target.transform.f
+	transform = transform.Turn(rand(1, 360))
+	animate(src, duration*0.5, color = COLOR_BLUE, transform = transform.Scale(2), alpha = 255)
