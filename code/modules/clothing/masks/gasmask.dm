@@ -306,6 +306,7 @@
 	icon_state = "death"
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
