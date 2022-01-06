@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Eigenstasium will no longer teleport undroppable items out of your inventory."
