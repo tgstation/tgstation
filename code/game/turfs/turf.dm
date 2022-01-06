@@ -365,23 +365,24 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/canPassSelf = CanPass(mover, get_dir(src, mover))
-	if(canPassSelf || (mover.movement_type & PHASING))
-		for(var/atom/movable/thing as anything in contents)
-			if(QDELETED(mover))
-				return FALSE //We were deleted, do not attempt to proceed with movement.
-			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
+	var/movement_direction = get_dir(src, mover)
+	var/canPassSelf = CanPass(mover, movement_direction)
+	if((mover.movement_type & PHASING) || canPassSelf)
+
+		for(var/atom/movable/contents_movable as anything in bumpable_contents)//buckled is automatically excluded
+			if(QDELETED(contents_movable))
+				LAZYREMOVE(bumpable_contents, contents_movable)
+				stack_trace("a movable in bumpable_contents was qdeleted or null! this is cringe")
 				continue
-			if(!thing.Cross(mover))
-				if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
-					return FALSE
-				if((mover.movement_type & PHASING))
-					mover.Bump(thing)
-					continue
-				else
-					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
-						firstbump = thing
-	if(QDELETED(mover)) //Mover deleted from Cross/CanPass/Bump, do not proceed.
+
+			if(contents_movable == mover || contents_movable == mover.loc || (mover in contents_movable.buckled_mobs)) // Multi tile objects and moving out of other objects
+				continue
+
+			if(!contents_movable.CanPass(mover, movement_direction))
+				if(!firstbump || ((contents_movable.layer > firstbump.layer || contents_movable.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
+					firstbump = contents_movable
+
+	if(QDELETED(mover))
 		return FALSE
 	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
 		firstbump = src
@@ -389,14 +390,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		mover.Bump(firstbump)
 		return (mover.movement_type & PHASING)
 	return TRUE
-
-/turf/open/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	//melting
-	if(isobj(arrived) && air && air.temperature > T0C)
-		var/obj/O = arrived
-		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

@@ -42,7 +42,6 @@
 	var/moving_diagonally = 0
 	///attempt to resume grab after moving instead of before.
 	var/atom/movable/moving_from_pull
-	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))

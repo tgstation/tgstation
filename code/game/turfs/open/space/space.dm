@@ -270,29 +270,14 @@
 	return TRUE
 
 /turf/open/space/openspace/zPassIn(atom/movable/A, direction, turf/source)
-	if(direction == DOWN)
-		for(var/obj/contained_object in contents)
-			if(contained_object.obj_flags & BLOCK_Z_IN_DOWN)
-				return FALSE
-		return TRUE
-	if(direction == UP)
-		for(var/obj/contained_object in contents)
-			if(contained_object.obj_flags & BLOCK_Z_IN_UP)
-				return FALSE
-		return TRUE
-	return FALSE
+	if(SEND_SIGNAL(src, COMSIG_TURF_PRE_ZMOVE_CHECK_IN, A, direction, source) & direction)
+		return FALSE
+	return TRUE
 
 /turf/open/space/openspace/zPassOut(atom/movable/A, direction, turf/destination)
 	if(A.anchored)
 		return FALSE
-	if(direction == DOWN)
-		for(var/obj/contained_object in contents)
-			if(contained_object.obj_flags & BLOCK_Z_OUT_DOWN)
-				return FALSE
-		return TRUE
-	if(direction == UP)
-		for(var/obj/contained_object in contents)
-			if(contained_object.obj_flags & BLOCK_Z_OUT_UP)
-				return FALSE
-		return TRUE
-	return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_TURF_PRE_ZMOVE_CHECK_OUT, A, direction, destination) & direction)
+		return FALSE
+	return TRUE

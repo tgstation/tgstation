@@ -78,7 +78,7 @@
 
 ///Called when we bump onto a mob
 /mob/living/proc/MobBump(mob/living/bumping_mob)
-	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
+	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, bumping_mob)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(bumping_mob)
 

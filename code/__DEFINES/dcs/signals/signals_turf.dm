@@ -21,3 +21,13 @@
 
 ///from /datum/element/decal/Detach(): (description, cleanable, directional, mutable_appearance/pic)
 #define COMSIG_TURF_DECAL_DETACHED "turf_decal_detached"
+
+/// from base /turf/zPassIn(): (atom/movable/A, direction, turf/source)
+#define COMSIG_TURF_PRE_ZMOVE_CHECK_IN "turf_pre_zmove_check_in"
+	#define COMPONENT_BLOCK_Z_IN_DOWN DOWN
+	#define COMPONENT_BLOCK_Z_IN_UP UP
+
+/// from base /turf/zPassOut(): (atom/movable/A, direction, turf/destination)
+#define COMSIG_TURF_PRE_ZMOVE_CHECK_OUT "turf_pre_zmove_check_out"
+	#define COMPONENT_BLOCK_Z_OUT_DOWN DOWN
+	#define COMPONENT_BLOCK_Z_OUT_UP UP
