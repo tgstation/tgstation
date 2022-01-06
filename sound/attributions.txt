@@ -22,3 +22,5 @@ champagne_pop.ogg is credited to ultradust on freesound https://freesound.org/pe
 
 can_open.ogg adapted from https://freesound.org/people/MaxDemianAGL/sounds/130031/
 can_shake.ogg adapted from https://freesound.org/people/mcmast/sounds/456703/
+
+hohoho.ogg and hehe.ogg are cut from a recording by Nanakisan on freesound: https://freesound.org/people/Nanakisan/sounds/253534/
