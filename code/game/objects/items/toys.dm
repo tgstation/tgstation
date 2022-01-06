@@ -698,7 +698,7 @@
 	return BRUTELOSS
 
 /**
- * apply_card_vars
+ * ## apply_card_vars
  *
  * Applies variables for supporting multiple types of card deck
  */
@@ -707,7 +707,7 @@
 		return
 
 /**
- * add_card
+ * ## add_card
  *
  * Adds a card to the deck (or hand of cards).
  *
@@ -747,7 +747,7 @@
 	update_appearance()
 
 /**
- * draw_card
+ * ## draw_card
  *
  * Draws a card from the deck (or hand of cards).
  *
@@ -791,7 +791,7 @@
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	///Last time since shuffling the deck.
-	var/cooldown = 0
+	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite
 	var/obj/machinery/computer/holodeck/holo = null
 	///Cards in this deck
@@ -802,6 +802,14 @@
 	AddElement(/datum/element/drag_pickup)
 	populate_deck()
 
+/**
+ * ## generate_card
+ *
+ * Generates a new playing card, and assigns all of the necessary variables.
+ *
+ * Arguments:
+ * * name - The name of the playing card.
+ */
 /obj/item/toy/cards/deck/proc/generate_card(name)
 	var/obj/item/toy/cards/singlecard/card_to_add = new/obj/item/toy/cards/singlecard()
 	if(holo)
@@ -812,7 +820,7 @@
 	return card_to_add
 
 /**
- * populate_deck
+ * ## populate_deck
  *
  * Generates all the cards within the deck.
  */
@@ -845,12 +853,12 @@
 
 #define DECK_SHUFFLE_COOLDOWN 5 SECONDS
 /obj/item/toy/cards/deck/attack_self(mob/user)
-	if(cooldown >= world.time - DECK_SHUFFLE_COOLDOWN)
+	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
 		return
+	COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
 	cards = shuffle(cards)
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
-	cooldown = world.time
 #undef DECK_SHUFFLE_COOLDOWN
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
@@ -935,7 +943,7 @@
 	newobj.resistance_flags = sourceobj.resistance_flags
 
 /**
- * check_menu
+ * ## check_menu
  *
  * Checks if we are allowed to interact with a radial menu
  *
@@ -950,7 +958,7 @@
 	return TRUE
 
 /**
- * update_sprite
+ * ## update_sprite
  *
  * This proc updates the sprite for when you create a hand of cards
  */
@@ -986,7 +994,7 @@
 			. += span_warning("You need to have the card in your hand to check it!")
 
 /**
- * Flip
+ * ## Flip
  *
  * flips the card over
  */
@@ -1012,7 +1020,9 @@
 		src.pixel_x = -5
 
 /**
- * do_cardhand: Creates, or adds to an existing hand of cards
+ * ## do_cardhand
+ *
+ * Creates, or adds to an existing hand of cards
  *
  * Arguments:
  * * mob/living/user - the user
