@@ -921,18 +921,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed)
 	. = ..()
+	if(!target)
+		return
 	var/x_offset = x_slashed - world.icon_size/2
 	var/y_offset = y_slashed - world.icon_size/2
-	if((target.transform.b in -1 to 1) && (target.transform.d in -1 to 1))
-		if(!target.transform.b && !target.transform.d)
+	if((target.transform.b in -1 to 1) && (target.transform.d in -1 to 1)) //im sorry to whoever sees this
+		if(!target.transform.b && !target.transform.d) //only scaling
 			pixel_x = (x_offset + target.pixel_x + target.transform.c) * target.transform.a
 			pixel_y = (y_offset + target.pixel_y + target.transform.f) * target.transform.e
-		else
+		else //rotation
 			var/sine = target.transform.b
 			var/cosine = cos(arcsin(target.transform.b))
 			pixel_x = (cosine*x_offset + sine*y_offset + target.pixel_x + target.transform.c)
 			pixel_y = (-sine*x_offset + cosine*y_offset + target.pixel_y + target.transform.f)
-	else
+	else //we cant calculate scaling + rotation, just give up on looking good
 		pixel_x = x_offset + target.pixel_x + target.transform.c
 		pixel_y = y_offset + target.pixel_y + target.transform.f
 	transform = transform.Turn(rand(1, 360))
