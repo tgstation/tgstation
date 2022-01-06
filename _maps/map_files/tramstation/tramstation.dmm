@@ -13871,11 +13871,11 @@
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
 "dyS" = (
-/obj/machinery/computer/security/labor{
-	dir = 4
-	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 4
+	},
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 4
 	},
 /turf/open/floor/iron,
