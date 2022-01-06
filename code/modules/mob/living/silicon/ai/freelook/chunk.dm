@@ -83,6 +83,13 @@
 	///turfs that we could see last update but cant see now
 	var/list/newly_obscured_turfs = visibleTurfs - updated_visible_turfs
 
+	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
+		var/client/client = client_eye.ai?.client || client_eye.client
+		if(!client)
+			continue
+
+		client.images -= active_static_images
+
 	for(var/turf/visible_turf as anything in newly_visible_turfs)
 		var/image/static_image_to_deallocate = obscuredTurfs[visible_turf]
 		if(!static_image_to_deallocate)
@@ -95,7 +102,7 @@
 		obscuredTurfs -= visible_turf
 
 	for(var/turf/obscured_turf as anything in newly_obscured_turfs)
-		if(!obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
+		if(obscuredTurfs[obscured_turf] || istype(obscured_turf, /turf/open/ai_visible))
 			continue
 
 		var/image/static_image_to_allocate = inactive_static_images[length(inactive_static_images)]
@@ -112,6 +119,14 @@
 	visibleTurfs = updated_visible_turfs
 
 	changed = FALSE
+
+	for(var/mob/camera/ai_eye/client_eye as anything in seenby)
+		var/client/client = client_eye.ai?.client || client_eye.client
+		if(!client)
+			continue
+
+		client.images += active_static_images
+
 
 /// Create a new camera chunk, since the chunks are made as they are needed.
 /datum/camerachunk/New(x, y, z)
