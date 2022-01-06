@@ -855,7 +855,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/kiss_power = 0
 	switch(projectile.type)
 		if(/obj/projectile/kiss)
-			kiss_power = 100
+			kiss_power = 60
 		if(/obj/projectile/kiss/death)
 			kiss_power = 20000
 	if(!istype(local_turf))
