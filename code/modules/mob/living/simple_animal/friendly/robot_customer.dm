@@ -43,8 +43,10 @@
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	if(attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]])
-		attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
+	var/datum/weakref/seat_ref = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/our_seat = seat_ref?.resolve()
+	if(attending_venue.linked_seats[our_seat]])
+		attending_venue.linked_seats[our_seat] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 
