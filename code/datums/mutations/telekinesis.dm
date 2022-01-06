@@ -36,7 +36,7 @@
 /datum/mutation/human/telekinesis/proc/on_ranged_attack(mob/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(is_type_in_list(target, blacklisted_atoms)
+	if(is_type_in_list(target, blacklisted_atoms))
 		return
 	if(!tkMaxRangeCheck(source, target) || source.z != target.z)
 		return
