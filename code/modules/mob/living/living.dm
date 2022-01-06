@@ -59,26 +59,23 @@
 	if(buckled || now_pushing)
 		return
 	if(ismob(A))
-		var/mob/M = A
-		if(MobBump(M))
+		if(MobBump(A))
 			return
 	if(isobj(A))
-		var/obj/O = A
-		if(ObjBump(O))
+		if(ObjBump(A))
 			return
 	if(ismovable(A))
-		var/atom/movable/AM = A
-		if(PushAM(AM, move_force))
+		if(PushAM(A, move_force))
 			return
 
 /mob/living/Bumped(atom/movable/AM)
 	..()
 	last_bumped = world.time
 
-//Called when we bump onto a mob
-/mob/living/proc/MobBump(mob/M)
+///Called when we bump onto a mob
+/mob/living/proc/MobBump(mob/living/bumping_mob)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
-	spreadFire(M)
+	spreadFire(bumping_mob)
 
 	if(now_pushing)
 		return TRUE
@@ -86,77 +83,74 @@
 	var/they_can_move = TRUE
 	var/their_combat_mode = FALSE
 
-	if(isliving(M))
-		var/mob/living/L = M
-		their_combat_mode = L.combat_mode
-		they_can_move = L.mobility_flags & MOBILITY_MOVE
-		//Also spread diseases
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				L.ContactContractDisease(D)
+	their_combat_mode = bumping_mob.combat_mode
+	they_can_move = bumping_mob.mobility_flags & MOBILITY_MOVE
 
-		for(var/thing in L.diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
+	//Also spread diseases
+	for(var/datum/disease/our_disease in diseases)
+		if(our_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			bumping_mob.ContactContractDisease(our_disease)
 
-		//Should stop you pushing a restrained person out of the way
-		if(L.pulledby && L.pulledby != src && HAS_TRAIT(L, TRAIT_RESTRAINED))
+	for(var/datum/disease/their_disease as anything in bumping_mob.diseases)
+		if(their_disease.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+			ContactContractDisease(their_disease)
+
+	//Should stop you pushing a restrained person out of the way
+	if(bumping_mob.pulledby && bumping_mob.pulledby != src && HAS_TRAIT(bumping_mob, TRAIT_RESTRAINED))
+		if(!(world.time % 5)) //?????????
+			to_chat(src, span_warning("[bumping_mob] is restrained, you cannot push past."))
+		return TRUE
+
+	if(ismob(bumping_mob.pulling))
+		var/mob/pulled_mob = bumping_mob.pulling
+		if(HAS_TRAIT(pulled_mob, TRAIT_RESTRAINED))
 			if(!(world.time % 5))
-				to_chat(src, span_warning("[L] is restrained, you cannot push past."))
+				to_chat(src, span_warning("[bumping_mob] is restraining [pulled_mob], you cannot push past."))
 			return TRUE
-
-		if(L.pulling)
-			if(ismob(L.pulling))
-				var/mob/P = L.pulling
-				if(HAS_TRAIT(P, TRAIT_RESTRAINED))
-					if(!(world.time % 5))
-						to_chat(src, span_warning("[L] is restraining [P], you cannot push past."))
-					return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
 		return TRUE
 
-	if(!M.buckled && !M.has_buckled_mobs())
+	if(!bumping_mob.buckled && !length(bumping_mob.buckled_mobs))
 		var/mob_swap = FALSE
-		var/too_strong = (M.move_resist > move_force) //can't swap with immovable objects unless they help us
+		var/too_strong = (bumping_mob.move_resist > move_force) //can't swap with immovable objects unless they help us
 		if(!they_can_move) //we have to physically move them
 			if(!too_strong)
 				mob_swap = TRUE
 		else
 			//You can swap with the person you are dragging on grab intent, and restrained people in most cases
-			if(M.pulledby == src && !too_strong)
+			if(bumping_mob.pulledby == src && !too_strong)
 				mob_swap = TRUE
 			else if(
-				!(HAS_TRAIT(M, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))&&\
-				((HAS_TRAIT(M, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
+				!(HAS_TRAIT(bumping_mob, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP)) && \
+				((HAS_TRAIT(bumping_mob, TRAIT_RESTRAINED) && !too_strong) || !their_combat_mode) &&\
 				(HAS_TRAIT(src, TRAIT_RESTRAINED) || !combat_mode)
 			)
 				mob_swap = TRUE
+
 		if(mob_swap)
-			//switch our position with M
-			if(loc && !loc.Adjacent(M.loc))
+			//switch our position with bumping_mob
+			if(get_dist(src, bumping_mob) > 1)
 				return TRUE
 			now_pushing = TRUE
-			var/oldloc = loc
-			var/oldMloc = M.loc
+			var/our_old_loc = loc
+			var/their_old_loc = bumping_mob.loc
 
-
-			var/M_passmob = (M.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
-			var/src_passmob = (pass_flags & PASSMOB)
-			M.pass_flags |= PASSMOB
+			var/we_can_pass_them = (bumping_mob.pass_flags & PASSMOB) // we give PASSMOB to both mobs to avoid bumping other mobs during swap.
+			var/they_can_pass_us = (pass_flags & PASSMOB)
+			bumping_mob.pass_flags |= PASSMOB
 			pass_flags |= PASSMOB
 
 			var/move_failed = FALSE
-			if(!M.Move(oldloc) || !Move(oldMloc))
-				M.forceMove(oldMloc)
-				forceMove(oldloc)
+			if(!bumping_mob.Move(our_old_loc) || !Move(their_old_loc))
+				bumping_mob.abstract_move(their_old_loc)
+				abstract_move(our_old_loc)
 				move_failed = TRUE
-			if(!src_passmob)
+
+			if(!they_can_pass_us)
 				pass_flags &= ~PASSMOB
-			if(!M_passmob)
-				M.pass_flags &= ~PASSMOB
+			if(!we_can_pass_them)
+				bumping_mob.pass_flags &= ~PASSMOB
 
 			now_pushing = FALSE
 
@@ -165,27 +159,22 @@
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
-	if(!(M.status_flags & CANPUSH))
+	if(!(bumping_mob.status_flags & CANPUSH))
 		return TRUE
-	if(isliving(M))
-		var/mob/living/L = M
-		if(HAS_TRAIT(L, TRAIT_PUSHIMMUNE))
-			return TRUE
-	//If they're a human, and they're not in help intent, block pushing
-	if(ishuman(M))
-		var/mob/living/carbon/human/human = M
-		if(human.combat_mode)
-			return TRUE
-	//if they are a cyborg, and they're alive and in combat mode, block pushing
-	if(iscyborg(M))
-		var/mob/living/silicon/robot/borg = M
-		if(borg.combat_mode && borg.stat != DEAD)
-			return TRUE
+
+	if(HAS_TRAIT(bumping_mob, TRAIT_PUSHIMMUNE))
+		return TRUE
+
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!istype(M, /obj/item/clothing))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/held_item in bumping_mob.held_items)
+		if(prob(held_item.block_chance * 2))
+			return TRUE
+
+	if(!istype(bumping_mob))
+		return FALSE
+
+	if(bumping_mob.combat_mode)
+		return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()
@@ -207,8 +196,8 @@
 /mob/living/proc/ObjBump(obj/O)
 	return
 
-//Called when we want to push an atom/movable
-/mob/living/proc/PushAM(atom/movable/AM, force = move_force)
+///Called when we want to push an atom/movable
+/mob/living/proc/PushAM(atom/movable/movable_to_push, force = move_force)
 	if(now_pushing)
 		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
@@ -216,8 +205,8 @@
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
 	now_pushing = TRUE
-	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, AM)
-	var/dir_to_target = get_dir(src, AM)
+	SEND_SIGNAL(src, COMSIG_LIVING_PUSHING_MOVABLE, movable_to_push)
+	var/dir_to_target = get_dir(src, movable_to_push)
 
 	// If there's no dir_to_target then the player is on the same turf as the atom they're trying to push.
 	// This can happen when a player is stood on the same turf as a directional window. All attempts to push
@@ -229,39 +218,48 @@
 		dir_to_target = dir
 
 	var/push_anchored = FALSE
-	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
-		if(move_crush(AM, move_force, dir_to_target))
+	if((movable_to_push.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
+		if(move_crush(movable_to_push, move_force, dir_to_target))
 			push_anchored = TRUE
-	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force) //trigger move_crush and/or force_push regardless of if we can push it normally
-		if(force_push(AM, move_force, dir_to_target, push_anchored))
+
+	if((movable_to_push.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force) //trigger move_crush and/or force_push regardless of if we can push it normally
+		if(force_push(movable_to_push, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
-	if(ismob(AM))
-		var/mob/mob_to_push = AM
+
+	if(ismob(movable_to_push))//TODOKYLER: put this in pushMob
+		var/mob/mob_to_push = movable_to_push
 		var/atom/movable/mob_buckle = mob_to_push.buckled
 		// If we can't pull them because of what they're buckled to, make sure we can push the thing they're buckled to instead.
 		// If neither are true, we're not pushing anymore.
 		if(mob_buckle && (mob_buckle.buckle_prevents_pull || (force < (mob_buckle.move_resist * MOVE_FORCE_PUSH_RATIO))))
 			now_pushing = FALSE
 			return
-	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
+
+	if((movable_to_push.anchored && !push_anchored) || (force < (movable_to_push.move_resist * MOVE_FORCE_PUSH_RATIO)))
 		now_pushing = FALSE
 		return
-	if(istype(AM, /obj/structure/window))
-		var/obj/structure/window/W = AM
+
+	if(istype(movable_to_push, /obj/structure/window))
+		var/obj/structure/window/W = movable_to_push
 		if(W.fulltile)
 			for(var/obj/structure/window/win in get_step(W, dir_to_target))
 				now_pushing = FALSE
 				return
-	if(pulling == AM)
+
+	if(pulling == movable_to_push)
 		stop_pulling()
+
 	var/current_dir
-	if(isliving(AM))
-		current_dir = AM.dir
-	if(AM.Move(get_step(AM.loc, dir_to_target), dir_to_target, glide_size))
-		AM.add_fingerprint(src)
+	if(isliving(movable_to_push))
+		current_dir = movable_to_push.dir
+
+	if(movable_to_push.Move(get_step(movable_to_push.loc, dir_to_target), dir_to_target, glide_size))
+		movable_to_push.add_fingerprint(src)
 		Move(get_step(loc, dir_to_target), dir_to_target)
+
 	if(current_dir)
-		AM.setDir(current_dir)
+		movable_to_push.setDir(current_dir)
+
 	now_pushing = FALSE
 
 /mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
@@ -1440,7 +1438,7 @@
 		extinguish_mob()
 
 //Share fire evenly between the two mobs
-//Called in MobBump() and Crossed()
+//Called in MobBump()
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return

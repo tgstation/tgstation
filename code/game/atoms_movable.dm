@@ -35,9 +35,14 @@
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
+	///if FALSE this movable has special rules for blocking/allowing other movables onto the same turf so CanAllowThrough() gets called.
+	///in this case the movable gets added to a bumpable_contents list on the turf when entering it. density also adds this movable to that list.
+	///if TRUE this movable has the normal rules for blocking, so
 	var/generic_can_allow_through = TRUE
-	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
+	///0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/moving_diagonally = 0
+	///attempt to resume grab after moving instead of before.
+	var/atom/movable/moving_from_pull
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
@@ -597,7 +602,7 @@
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
-///do not call
+///do not call, deprecated in lieu of CanPass()
 /atom/movable/Cross(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	CRASH("/atom/movable/Cross() was called as a deprecated proc! dont do this")
