@@ -62,7 +62,6 @@
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-
 //Security levels
 #define SEC_LEVEL_GREEN 0
 #define SEC_LEVEL_BLUE 1
@@ -123,12 +122,6 @@
 #define SHOES_UNTIED 0
 #define SHOES_TIED 1
 #define SHOES_KNOTTED 2
-
-//how fast a disposal machinery thing is ejecting things
-#define EJECT_SPEED_SLOW 1
-#define EJECT_SPEED_MED 2
-#define EJECT_SPEED_FAST 4
-#define EJECT_SPEED_YEET 6
 
 //Cache of bloody footprint images
 //Key:
