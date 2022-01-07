@@ -1,4 +1,4 @@
-#define FIREALARM_COOLDOWN 95 // This define is based on the current FireAlarm.ogg, where the soundfile itself just graces 11 seconds, but the actual contents we want (with appropriate gapping) sticks squarely (and arbitrarily) at 9 seconds 500 milliseconds (9.5 seconds)
+#define FIREALARM_COOLDOWN 96 // This define is based on the current FireAlarm.ogg, and is placed arbitrarily set at 9 seconds 600 milliseconds (9.6 seconds)
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
