@@ -1,12 +1,12 @@
-/// The chance for a manifest to create errors 
+/// The chance for a manifest or crate to be created with errors 
 #define MANIFEST_ERROR_CHANCE 5
 
-// Manifest bitflags 
-/// Determines if a manifest will generate the incorrect station name on the paper
+// MANIFEST BITFLAGS
+/// Determines if the station name will be incorrect on the manifest
 #define MANIFEST_ERROR_NAME (1 << 0)
-/// Determines if a manifest will incorrectly list the items in the crate
+/// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from a crate but still be present on the manifest 
+/// Determines if contents will be deleted from the crate but still be present in the manifest 
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
