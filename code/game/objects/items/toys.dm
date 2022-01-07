@@ -214,7 +214,7 @@
 	if (current_mode <= modes.len)
 		balloon_alert(user, "set to [current_mode]")
 	else
-		to_chat(user, span_notice("You turn off \the [src] "))
+		balloon_alert(user, "turned off")
 		current_mode = CAPTAINSAID_MODE_OFF
 	icon_state = "captainsaid_[modes[current_mode]]"
 	update_appearance(UPDATE_ICON)
