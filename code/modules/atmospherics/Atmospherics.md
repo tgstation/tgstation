@@ -159,33 +159,75 @@ This is a rather large subject, we will need to cover gas flow, turf sleeping, s
 
 ### A Word On `Share()`
 
-The key logic of FEA, the core sharing system we use is that neighboring cells should average out their contents.
-So taken on a line, you'd have two sharing partners, the cells to your left and right
+Each pair of turfs will only ever call `share()` on each other once. They use an archived cycle to keep track of
+this ordering
 
-There's an equation for this averaging which we do not use, because it means each pair of turfs needs to talk to
-each other twice. This relies on gasmixtures not changing between talks, which isn't possible because of how we yield.
-It also just adds a lot of proc overhead.
+That means turf A calling share on turf B should work the same as turf B calling share on turf A
 
-So instead of a complex form of averaging, we portion up tiles. So if you have two neighbors and you have
-something they don't, you can give them access to a third. Have to keep one for ourselves mind, because otherwise
-we'll run out of gas.
+The key idea of FEA, the core sharing system we use is that neighboring cells should effectively equalize with each other.
+So taken on a line, you'd have two sharing partners, the cells to your left and right. The end goal of the simulation is for all the tiles on the line to have the same mix. But we can't just jump to that. So each "tick" we take our mix and average it with the mixes of the two tiles next to us.
 
-The math for this looks like `(totaldeltagas)/(neighborcount + 1)`
-You'll notice part of this equation, `1/(neighborcount+1)`, shows up in `process_cell()`
+There's an equation for this that's considered standard in heat simulation. (Watch this video: https://www.youtube.com/watch?v=ly4S0oi3Yz8)
+We can't use it because means each pair of turfs needs to talk to each other twice, which is pain expensive. That and I'm pretty sure it would prevent us from yielding
 
-Back in the FEA days `neighborcount` was hardcoded to 4. This means that turf A -> turf B is the same as turf B ->
-turf A, because they're each portioning up the gas in the same way.
+So instead of a complex form of averaging, we portion up tiles. So if you have two neighbors and you have something they don't, you can give them each a third. Have to keep one for ourselves mind, because otherwise we'll run out of gas. They can then act on this portion however they like, and we can likewise act on a portion of them to our liking.
 
-However, we can't hardcode our neighbor count, not really, makes tiles next to walls behave strangely. Plus, multiz exists.
+We know how much gas a tile had at the outset because of the archived moles list index. If we take more then we're owed in any shares before all other turfs have had their say, we could end up with negative moles. We expend a lot of effort to avoid this.
 
-The fix for this is to use our neighbor count when moving gas from our tile to someone elses, and use the
-sharer's neighbor count when taking from it.
+The math for this looks like (totaldeltagas)/(neighborcount + 1)
 
-This makes sense intuitively if you think of it like portioning up a tile.
+You may notice something like this in `process_cell()`. It's not quite the same though.
 
-I'll repeat for the folks in the back. tile to tile sharing needs to be communitive. Otherwise we may end up trying to take more gas then we're owed from a tile's archived gas list.
+Back in the old FEA days, neighbor count was hardcoded to 4 (Likely because this is what cell sharing on an infinite grid would look like). This means that turf A -> turf B is the same as turf B -> turf A, because they're each portioning up the gas in the same way.
 
-This is why space tiles do their sucking after all other tiles are finished by the by, if they didn't we'd have negative moles flying around.
+But when we moved to LINDA, we started using the length of our atmos_adjacent_turfs list (or an analog). 
+We need this so things like multiz can work, and so tiles in a corner share in a way that makes sense.
+
+Because of this, turf A -> turf B was no longer the same as turf B -> turf A, assuming one of those turfs had a different neighbor count, from I DON'T KNOW WALLS?
+
+The fix for this was to use our neighbor count when moving gas from our tile to someone else's, and use the sharer's neighbor count when taking from it.
+
+This makes sense intuitively if you think of it like portioning up a tile, but I've included a rundown to make
+it a bit easier to prove to yourself.
+
+<details open>
+<summary>Take a look</summary>
+
+I have 10
+You have 20
+let's share
+I've got 2 partners
+you've got 3 partners
+so you want to give me 1/4th of your gas
+I want to give you 1/3rd of my gas
+
+the total gas diff between me and you is -10
+since it's negative you get to decide how to portion it
+so the total amount to share is -2.5
+I end up with 12.5
+you end up with 17.5
+
+again
+
+total diff is -5
+to share is 1.25
+I end up with 13.75
+you end up with 16.25
+
+again
+
+total diff is -2.5
+to share is 0.3125
+I end up with 14.0625
+you end up with 15.9375
+
+</details>
+
+We need to do this because if the portions get mixed up, our archived gas list ends up lying about how much of each gas type we have available to share.
+This can lead to negative moles, which the system is not prepared for.
+
+This is also why we queue space's sucking till the end of a tile's `process_cell()` btw, by that point we can ensure that no other tile will need to check for our mix, so we can freely violate our portioning.
+
 
 ### Active Turfs
 ![](https://raw.githubusercontent.com/tgstation/documentation-assets/main/atmos/FlowVisuals.png)
