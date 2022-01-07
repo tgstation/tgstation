@@ -1,6 +1,7 @@
 /* Toys!
  * Contains
  * Balloons
+ * Captain's Aid
  * Fake singularity
  * Toy gun
  * Toy swords
@@ -181,6 +182,48 @@
 	random_color = FALSE
 
 #undef BALLOON_COLORS
+
+/*
+* Captain's Aid
+*/
+#define CAPTAINSAID_MODE_OFF 1
+
+/obj/item/toy/captainsaid
+	name = "\improper Captain's Aid"
+	desc = "Every captain's greatest ally when exploring the vast emptiness of space, now with a color display!"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "captainsaid_off"
+	/// List of modes it can cycle through
+	var/list/modes = list(
+		"off",
+		"port",
+		"starboard",
+		"fore",
+		"aft",
+	)
+	/// Current mode of the item, changed when cycling through modes
+	var/current_mode = CAPTAINSAID_MODE_OFF
+
+/obj/item/toy/captainsaid/examine_more(mob/user)
+	. = ..()
+	. += span_notice("You could swear you've been hearing advertisments for the 'soon upcoming' release of a tablet version for the better part of 3 years...")
+
+/obj/item/toy/captainsaid/attack_self(mob/living/user)
+	current_mode++
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, vary = TRUE)
+	if (current_mode <= modes.len)
+		balloon_alert(user, "set to [current_mode]")
+	else
+		balloon_alert(user, "turned off")
+		current_mode = CAPTAINSAID_MODE_OFF
+	icon_state = "captainsaid_[modes[current_mode]]"
+	update_appearance(UPDATE_ICON)
+
+#undef CAPTAINSAID_MODE_OFF
+
+/obj/item/toy/captainsaid/collector
+	name = "\improper Collector's Edition Captain's Aid"
+	desc = "A copy of the first run of Captain's Aid ever released. Functionally the same as the later batches, just more expensive. For the truly aristocratic."
 
 /*
  * Fake singularity
