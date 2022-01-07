@@ -9617,7 +9617,6 @@
 /area/medical/storage)
 "bQS" = (
 /obj/structure/table/glass,
-/obj/machinery/defibrillator_mount/directional/north,
 /obj/item/reagent_containers/chem_pack{
 	pixel_x = 10;
 	pixel_y = 10
@@ -11381,9 +11380,6 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/port/fore)
 "cEs" = (
-/obj/structure/table/glass,
-/obj/item/stack/medical/mesh,
-/obj/item/stack/medical/gauze,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -11395,6 +11391,12 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	dir = 4;
+	name = "medical bed"
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "cEM" = (
@@ -13028,7 +13030,6 @@
 /area/construction/mining/aux_base)
 "dhq" = (
 /obj/machinery/airalarm/directional/east,
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -13043,6 +13044,8 @@
 	c_tag = "Medical - Treatment Wing North-West";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/stasis,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "dhH" = (
@@ -13993,6 +13996,7 @@
 	pixel_x = -6;
 	pixel_y = -3
 	},
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "dAu" = (
@@ -25743,10 +25747,13 @@
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
 "hJM" = (
-/obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/trimline/red/filled/line,
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/computer/med_data,
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "hJQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -33394,7 +33401,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -37466,12 +37472,6 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "lYw" = (
-/obj/structure/table/glass,
-/obj/item/book/manual/wiki/surgery{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/book/manual/wiki/medicine,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -37483,7 +37483,11 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	name = "medical bed"
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "lYN" = (
@@ -40140,7 +40144,6 @@
 /area/security/prison/mess)
 "mXX" = (
 /obj/structure/table/glass,
-/obj/machinery/defibrillator_mount/directional/north,
 /obj/item/storage/box/beakers,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -48509,9 +48512,6 @@
 /turf/open/floor/iron/dark,
 /area/security/brig)
 "pUu" = (
-/obj/machinery/stasis{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -48523,6 +48523,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/structure/table/glass,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "pUB" = (
@@ -49922,6 +49923,7 @@
 	c_tag = "Medical - Chemistry Airlock";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "qyn" = (
@@ -52050,10 +52052,6 @@
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "rmU" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	name = "medical bed"
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -52064,6 +52062,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/glass,
+/obj/item/stack/medical/mesh,
+/obj/item/stack/medical/gauze,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "rna" = (
@@ -52936,14 +52937,6 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "rEZ" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/table/glass,
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/bodybags{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -52953,10 +52946,14 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/effect/turf_decal/tile/blue,
 /obj/machinery/camera/directional/north{
 	c_tag = "Medical - Treatment Wing North-East";
 	network = list("ss13","medbay")
+	},
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/stasis{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -63809,12 +63806,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/security/brig)
-"vIc" = (
-/obj/machinery/power/apc/auto_name/directional/south,
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/checkpoint/medical)
 "vIe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/chair,
@@ -64122,10 +64113,12 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "vMO" = (
-/obj/machinery/defibrillator_mount/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/computer/crew,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "vNB" = (
@@ -65316,7 +65309,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/central)
 "wlZ" = (
-/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -65328,6 +65320,12 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers,
+/obj/item/storage/box/bodybags{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "wmb" = (
@@ -68927,11 +68925,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "xAT" = (
-/obj/structure/bed/pod{
-	desc = "An old medical bed, just waiting for replacement with something up to date.";
-	dir = 4;
-	name = "medical bed"
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -68942,6 +68935,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table/glass,
+/obj/item/book/manual/wiki/surgery{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/book/manual/wiki/medicine,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "xBm" = (
@@ -69482,13 +69481,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/office)
-"xKJ" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/white,
-/area/medical/treatment_center)
 "xKX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/head/cone{
@@ -167931,7 +167923,7 @@ eWK
 kwQ
 bGq
 tlg
-vIc
+pdQ
 uht
 dhq
 wNH
@@ -169220,7 +169212,7 @@ bRg
 uht
 uht
 uht
-vMO
+hJM
 aIM
 gKY
 uVN
@@ -169473,10 +169465,10 @@ eWK
 kwQ
 bpm
 hdu
-hJM
+pdQ
 uht
 rEZ
-xKJ
+bZn
 kza
 fdc
 gKY
