@@ -9,7 +9,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	opacity = FALSE
-	plane = ABOVE_FOV_PLANE
+	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

@@ -203,6 +203,7 @@
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pixel_x = -16
 	duration = 10
 	randomdir = FALSE

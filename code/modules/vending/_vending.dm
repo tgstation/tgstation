@@ -521,7 +521,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = ABOVE_FOV_PLANE
+	plane = GAME_PLANE_UPPER
 
 	var/crit_case
 	if(crit)

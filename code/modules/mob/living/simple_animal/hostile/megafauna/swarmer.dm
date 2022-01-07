@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(AISwarmerCapsByType, list(/mob/living/simple_animal/hostile/swa
 	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	stop_automated_movement = TRUE
 	wander = FALSE
-	layer = BELOW_MOB_LAYER
+	layer = LOW_MOB_LAYER
 	AIStatus = AI_OFF
 	del_on_death = TRUE
 	var/swarmer_spawn_cooldown = 0

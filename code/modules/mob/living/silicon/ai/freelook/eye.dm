@@ -222,4 +222,4 @@
 	icon_state = ""
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE
+	plane = ABOVE_GAME_PLANE

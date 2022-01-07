@@ -35,6 +35,7 @@
 	panel.icon = icon
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
+	panel.plane = ABOVE_GAME_PLANE
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)

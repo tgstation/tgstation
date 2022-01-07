@@ -137,4 +137,4 @@
 	icon = 'icons/obj/3x3.dmi'
 	icon_state = "stand"
 	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool
-	plane = ABOVE_FOV_PLANE
+	plane = GAME_PLANE_UPPER

@@ -10,7 +10,7 @@
 	desc = "A generic pAI mobile hard-light holographics emitter. It seems to be deactivated."
 	health = 500
 	maxHealth = 500
-	layer = BELOW_MOB_LAYER
+	layer = LOW_MOB_LAYER
 	can_be_held = TRUE
 	move_force = 0
 	pull_force = 0

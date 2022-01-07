@@ -8,6 +8,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = RIPPLE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	alpha = 0
 

@@ -19,6 +19,7 @@
 	icon = 'icons/obj/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/effect/decal/chempuff/blob_act(obj/structure/blob/B)
 	return

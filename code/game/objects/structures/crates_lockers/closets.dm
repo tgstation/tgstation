@@ -149,26 +149,22 @@
 		var/matrix/door_transform = get_door_transform(angle)
 		var/door_state
 		var/door_layer
-		var/door_plane
 
 		if (angle >= 90)
 			door_state = "[icon_state]_back"
 			door_layer = FLOAT_LAYER
-			door_plane = FLOAT_PLANE
 		else
 			door_state = default_door_icon
 			door_layer = ABOVE_MOB_LAYER
-			door_plane = ABOVE_FOV_PLANE
 
 		if(step == 0)
 			door_obj.transform = door_transform
 			door_obj.icon_state = door_state
 			door_obj.layer = door_layer
-			door_obj.plane = door_plane
 		else if(step == 1)
-			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, plane = door_plane, time = world.tick_lag, flags = ANIMATION_END_NOW)
+			animate(door_obj, transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag, flags = ANIMATION_END_NOW)
 		else
-			animate(transform = door_transform, icon_state = door_state, layer = door_layer, plane = door_plane, time = world.tick_lag)
+			animate(transform = door_transform, icon_state = door_state, layer = door_layer, time = world.tick_lag)
 	addtimer(CALLBACK(src, .proc/end_door_animation), door_anim_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_CLIENT_TIME)
 
 /// Ends the door animation and removes the animated overlay

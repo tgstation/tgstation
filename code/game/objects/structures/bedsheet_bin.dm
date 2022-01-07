@@ -45,7 +45,7 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		plane = ABOVE_FOV_PLANE
+		plane = GAME_PLANE_UPPER
 		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0

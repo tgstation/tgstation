@@ -113,7 +113,7 @@
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
-	water_falling.plane = ABOVE_FOV_PLANE
+	water_falling.plane = GAME_PLANE_UPPER
 	. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
@@ -217,6 +217,7 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

@@ -23,6 +23,7 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	sentience_type = SENTIENCE_BOSS
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	var/doing_move_loop = FALSE
 	var/mob/living/set_target
 	var/timerid

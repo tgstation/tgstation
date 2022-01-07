@@ -97,6 +97,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "forcefield"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	pass_flags_self = PASSGLASS
 	density = TRUE

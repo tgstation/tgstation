@@ -175,7 +175,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = ..()
 	if(!top_layer)
 		top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
-		top_layer.plane = ABOVE_FOV_PLANE
+		top_layer.plane = GAME_PLANE_UPPER
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)

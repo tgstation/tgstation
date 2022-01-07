@@ -51,7 +51,7 @@
 			turret.pixel_x = base_pixel_x
 			turret.pixel_y = base_pixel_y + 4
 			turret.layer = ABOVE_MOB_LAYER
-			turret.plane = ABOVE_FOV_PLANE
+			turret.plane = GAME_PLANE_UPPER
 		if(EAST)
 			turret.pixel_x = base_pixel_x - 12
 			turret.pixel_y = base_pixel_y + 4

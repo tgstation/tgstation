@@ -8,7 +8,7 @@
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
-	armrest.plane = ABOVE_FOV_PLANE
+	armrest.plane = GAME_PLANE_UPPER
 	return ..()
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)

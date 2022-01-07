@@ -29,7 +29,7 @@
 	icon_state = "explosion"
 	opacity = TRUE
 	anchored = TRUE
-	plane = ABOVE_FOV_PLANE
+	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32

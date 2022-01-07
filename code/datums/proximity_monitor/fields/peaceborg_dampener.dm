@@ -55,7 +55,7 @@
 	effect.icon_state = overlay.icon_state
 	effect.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	effect.layer = ABOVE_ALL_MOB_LAYER
-	effect.plane = ABOVE_FOV_PLANE
+	effect.plane = ABOVE_GAME_PLANE
 	LAZYSET(edgeturf_effects, target, effect)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/cleanup_edge_turf(turf/target)

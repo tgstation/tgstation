@@ -10,6 +10,7 @@
 	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
@@ -306,7 +307,7 @@
 	icon_state = "plant-01"
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
-	plane = ABOVE_FOV_PLANE
+	plane = GAME_PLANE_UPPER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
 	throwforce = 13
@@ -491,6 +492,7 @@
 	pixel_x = -16
 	pixel_y = -12
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 /obj/structure/flora/rock/pile/largejungle
 	name = "rocks"

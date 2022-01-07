@@ -160,7 +160,7 @@
 	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 	layer = ABOVE_MOB_LAYER
-	plane = ABOVE_FOV_PLANE
+	plane = GAME_PLANE_UPPER
 
 
 /obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes
