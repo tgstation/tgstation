@@ -81,7 +81,7 @@
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 			. = REACTING
 
-//tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
+//Nitrous oxide decomposition.
 /datum/gas_reaction/nitrous_decomp
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Nitrous Oxide Decomposition"
@@ -140,12 +140,7 @@
 	var/temperature = air.temperature
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
-	var/turf/open/location
-	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
-		var/datum/pipeline/pipenet = holder
-		location = get_turf(pick(pipenet.members))
-	else
-		location = get_turf(holder)
+	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
 
 	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
