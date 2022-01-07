@@ -926,21 +926,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(!target)
 		return
-	//scale_x and scale_y give their best shot at calculating the scale of the matrix
-	//if we fail, just apply the sizes of -d and b so we dont divide by 0
-	//then we scale our calculation by the inverse of scaling, essentialy dividing its size
-	//x_offset and y_offset simply calculate the relative position from the center of the tile to where you clicked
-	//in a 2d transform matrix, b is the sine and a the cosine of the matrix
-	//with that we can calculate the offset and then scale it by our scaling, finally adding pixel_x and translation
-	//only way i found it breaking was objects that scaled and turned in weird ways multiple times
-	//so this should handle 99% of the cases. why would someone spend 9 hours on coding an admin-only item? no idea.
-	var/matrix/target_matrix = matrix(target.transform)
-	var/scale_x = SIGN(target_matrix.a)*sqrt((target_matrix.a**2)+(target_matrix.d**2)) || -target_matrix.d
-	var/scale_y = SIGN(target_matrix.e)*sqrt((target_matrix.e**2)+(target_matrix.b**2)) || target_matrix.b
-	target_matrix = target_matrix.Scale(1/scale_x, 1/scale_y)
-	var/x_offset = x_slashed - world.icon_size/2
-	var/y_offset = y_slashed - world.icon_size/2
-	pixel_x = (target_matrix.a*x_offset + target_matrix.b*y_offset) * scale_x + target.pixel_x + target.transform.c
-	pixel_y = (-target_matrix.b*x_offset + target_matrix.a*y_offset) * scale_y + target.pixel_y + target.transform.f
-	transform = transform.Turn(rand(1, 360))
-	animate(src, duration*0.5, color = COLOR_BLUE, transform = transform.Scale(2), alpha = 255)
+	var/matrix/new_transform = matrix()
+	new_transform.Turn(rand(1, 360)) // Random slash angle
+
+	var/datum/decompose_matrix/decomp = target.transform.decompose()
+	new_transform.Translate((x_slashed - world.icon_size/2) * decomp.scale_x, (y_slashed - world.icon_size/2) * decomp.scale_y) // Move to where we clicked
+	// Follow target's transform while ignoring scaling
+	new_transform.Turn(decomp.rotation)
+	new_transform.Translate(decomp.shift_x, decomp.shift_y)
+
+	new_transform.Translate(target.pixel_x, target.pixel_y) // Follow target's pixel offsets
+	transform = new_transform
+	// Double the scale of the matrix by doubling the 2x2 part without touching the translation part
+	var/matrix/scaled_transform = new_transform + matrix(new_transform.a, new_transform.b, 0, new_transform.d, new_transform.e, 0)
+	animate(src, duration*0.5, color = COLOR_BLUE, transform = scaled_transform, alpha = 255)
