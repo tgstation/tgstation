@@ -88,7 +88,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_RUINS (1<<4)
 
 ////////////////Area flags\\\\\\\\\\\\\\
-/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+/// If it's a valid territory for cult summoning
 #define VALID_TERRITORY (1<<0)
 /// If blobs can spawn there and if it counts towards their score.
 #define BLOBS_ALLOWED (1<<1)
