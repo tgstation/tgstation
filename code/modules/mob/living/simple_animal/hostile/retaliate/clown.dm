@@ -86,7 +86,7 @@
 	health = 120
 	speed = -1
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
-	//Our peel dropping ability
+	///Our peel dropping ability
 	var/datum/action/cooldown/rustle/banana_rustle
 	///Our banana bunch spawning ability
 	var/datum/action/cooldown/exquisite_bunch/banana_bunch
@@ -123,9 +123,9 @@
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
 	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 100)
-	animate(owner, time =1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
+	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
 	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
-	animate(time =  1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
+	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
 	StartCooldown()
 
 ///spawns a plumb bunch of bananas imbued with mystical power.
