@@ -62,12 +62,6 @@
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
 
-//Security levels
-#define SEC_LEVEL_GREEN 0
-#define SEC_LEVEL_BLUE 1
-#define SEC_LEVEL_RED 2
-#define SEC_LEVEL_DELTA 3
-
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26 //Used to trigger removal from a processing list
 
