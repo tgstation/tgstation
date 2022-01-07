@@ -191,16 +191,11 @@
 	if(core)
 		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
 	else
-		var/core_string = ""
+		var/list/core_list = list()
 		for(var/path in accepted_anomalies)
 			var/atom/core_path = path
-			if(path == accepted_anomalies[1])
-				core_string += initial(core_path.name)
-			else if(path == accepted_anomalies[length(accepted_anomalies)])
-				core_string += "or [initial(core_path.name)]"
-			else
-				core_string += ", [initial(core_path.name)]"
-		. += span_notice("You need to insert \a [core_string] for this module to function.")
+			core_list += initial(core_path.name)
+		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
 
 /obj/item/mod/module/anomaly_locked/on_select()
 	if(!core)
@@ -286,8 +281,6 @@
 /obj/item/mod/module/anomaly_locked/antigrav/prebuilt
 	prebuilt = TRUE
 
-#define TELEPORT_TIME 3 SECONDS
-
 ///Teleporter - Lets the user teleport to a nearby location.
 /obj/item/mod/module/anomaly_locked/teleporter
 	name = "MOD teleporter module"
@@ -298,6 +291,8 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	cooldown_time = 5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
+	/// Time it takes to teleport
+	var/teleport_time = 3 SECONDS
 
 /obj/item/mod/module/anomaly_locked/teleporter/on_select_use(atom/target)
 	. = ..()
@@ -309,17 +304,15 @@
 		return
 	balloon_alert(mod.wearer, "teleporting...")
 	var/matrix/user_matrix = matrix(mod.wearer.transform)
-	animate(mod.wearer, TELEPORT_TIME, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
-	if(!do_after(mod.wearer, TELEPORT_TIME, target = mod))
+	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
+	if(!do_after(mod.wearer, teleport_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		animate(mod.wearer, TELEPORT_TIME, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+		animate(mod.wearer, teleport_time, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
 		return
-	animate(mod.wearer, TELEPORT_TIME*0.1, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
 	drain_power(use_power_cost)
-
-#undef TELEPORT_TIME
 
 /obj/item/mod/module/anomaly_locked/teleporter/prebuilt
 	prebuilt = TRUE
