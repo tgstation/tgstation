@@ -121,6 +121,7 @@
 
 /*
  * Set up and populate our list of options.
+ * Overriden by subtypes.
  *
  * The list of options is a associated list of format:
  *   item_name = list(
@@ -129,7 +130,7 @@
  *   )
  */
 /obj/structure/destructible/cult/item_dispenser/proc/setup_options()
-	CRASH("[type] did not set any item options in proc setup_options!")
+	return
 
 /*
  * Get all items that this cult building will spawn when interacted with.
@@ -138,6 +139,8 @@
  * Return a list: A list of typepaths to items that this building will spawn, chosen by the user.
  */
 /obj/structure/destructible/cult/item_dispenser/proc/get_items_to_spawn(mob/living/user)
+	if(!LAZYLEN(options))
+		CRASH("[type] did not set any options via setup_options!")
 
 	var/list/choices = list()
 	for(var/item in options)
