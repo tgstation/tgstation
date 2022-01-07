@@ -32,6 +32,8 @@
 	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_clamp"
+	overlay_state_active = "module_clamp_on"
 	/// The max amount of crates you can carry.
 	var/max_crates = 3
 	/// The crates stored in the module.

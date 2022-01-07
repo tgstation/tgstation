@@ -53,15 +53,34 @@
 	name = "Activate MODsuit"
 	desc = "Activate/Deactivate the MODsuit."
 	button_icon_state = "activate"
+	/// First time clicking this will set it to TRUE, second time will activate it.
+	var/ready = FALSE
 
 /datum/action/item_action/mod/activate/Trigger()
 	. = ..()
 	if(!.)
 		return
+	if(!ready)
+		ready = TRUE
+		button_icon_state = "activate-ready"
+		if(!ai_action)
+			background_icon_state = "bg_tech"
+		UpdateButtonIcon()
+		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
+		return
+	reset_ready()
 	mod.toggle_activate(usr)
 
 /datum/action/item_action/mod/activate/pai
 	pai_action = TRUE
+
+/// Resets the state requiring to be doubleclicked again.
+/datum/action/item_action/mod/activate/proc/reset_ready()
+	ready = FALSE
+	button_icon_state = initial(button_icon_state)
+	if(!pai_action)
+		background_icon_state = initial(background_icon_state)
+	UpdateButtonIcon()
 
 /datum/action/item_action/mod/module
 	name = "Toggle Module"
@@ -105,6 +124,8 @@
 	icon_icon = linked_module.icon
 	button_icon_state = linked_module.icon_state
 	pinner = user
+	RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
 
 /datum/action/item_action/mod/pinned_module/Grant(mob/user)
 	if(user != pinner)
@@ -116,3 +137,24 @@
 	if(!.)
 		return
 	module.on_select()
+
+/datum/action/item_action/mod/pinned_module/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
+	. = ..(current_button, force = TRUE)
+	if(module == mod.selected_module)
+		current_button.add_overlay(image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected", layer = FLOAT_LAYER-0.1))
+	else if(module.active)
+		current_button.add_overlay(image(icon = 'icons/hud/radial.dmi', icon_state = "module_active", layer = FLOAT_LAYER-0.1))
+
+/// When the module is selected, we update the icon.
+/datum/action/item_action/mod/pinned_module/proc/on_module_select(datum/source, obj/item/mod/module/selected_module)
+	SIGNAL_HANDLER
+
+	if(selected_module != mod.selected_module && selected_module != module)
+		return
+	UpdateButtonIcon()
+
+/// When the suit is being activated, we update the icon.
+/datum/action/item_action/mod/pinned_module/proc/on_mod_activation(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	UpdateButtonIcon()
