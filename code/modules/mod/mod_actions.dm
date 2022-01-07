@@ -2,7 +2,7 @@
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
-	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
+	/// Whether this action is intended for the inserted pAI. Stuff breaks a lot if this is done differently.
 	var/pai_action = FALSE
 	/// The MODsuit linked to this action
 	var/obj/item/mod/control/mod
@@ -63,7 +63,7 @@
 	if(!ready)
 		ready = TRUE
 		button_icon_state = "activate-ready"
-		if(!ai_action)
+		if(!pai_action)
 			background_icon_state = "bg_tech"
 		UpdateButtonIcon()
 		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
