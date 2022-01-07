@@ -923,19 +923,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	if(!target)
 		return
+	//scale_x and scale_y give their best shot at calculating the scale of the matrix
+	//if we fail, just apply the sizes of -d and b so we dont divide by 0
+	//then we scale our calculation by the inverse of scaling, essentialy dividing its size
+	//x_offset and y_offset simply calculate the relative position from the center of the tile to where you clicked
+	//in a 2d transform matrix, b is the sine and a the cosine of the matrix
+	//with that we can calculate the offset and then scale it by our scaling, finally adding pixel_x and translation
+	//only way i found it breaking was objects that scaled and turned in weird ways multiple times
+	//so this should handle 99% of the cases. why would someone spend 9 hours on coding an admin-only item? no idea.
+	var/matrix/target_matrix = matrix(target.transform)
+	var/scale_x = SIGN(target_matrix.a)*sqrt((target_matrix.a**2)+(target_matrix.d**2)) || -target_matrix.d
+	var/scale_y = SIGN(target_matrix.e)*sqrt((target_matrix.e**2)+(target_matrix.b**2)) || target_matrix.b
+	target_matrix = target_matrix.Scale(1/scale_x, 1/scale_y)
 	var/x_offset = x_slashed - world.icon_size/2
 	var/y_offset = y_slashed - world.icon_size/2
-	if((target.transform.b in -1 to 1) && (target.transform.d in -1 to 1)) //im sorry to whoever sees this
-		if(!target.transform.b && !target.transform.d) //only scaling
-			pixel_x = (x_offset + target.pixel_x + target.transform.c) * target.transform.a
-			pixel_y = (y_offset + target.pixel_y + target.transform.f) * target.transform.e
-		else //rotation
-			var/sine = target.transform.b
-			var/cosine = cos(arcsin(target.transform.b))
-			pixel_x = cosine*x_offset + sine*y_offset + target.pixel_x + target.transform.c
-			pixel_y = -sine*x_offset + cosine*y_offset + target.pixel_y + target.transform.f
-	else //we cant calculate scaling + rotation, just give up on looking good
-		pixel_x = x_offset + target.pixel_x + target.transform.c
-		pixel_y = y_offset + target.pixel_y + target.transform.f
+	pixel_x = (target_matrix.a*x_offset + target_matrix.b*y_offset) * scale_x + target.pixel_x + target.transform.c
+	pixel_y = (-target_matrix.b*x_offset + target_matrix.a*y_offset) * scale_y + target.pixel_y + target.transform.f
 	transform = transform.Turn(rand(1, 360))
 	animate(src, duration*0.5, color = COLOR_BLUE, transform = transform.Scale(2), alpha = 255)
