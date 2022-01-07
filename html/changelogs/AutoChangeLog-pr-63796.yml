@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - bugfix: "Spiders no longer cause runtimes when coming into contact with spider webs. Also their AI no longer breaks due to this."
