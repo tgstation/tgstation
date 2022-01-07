@@ -12,8 +12,6 @@
 	should_give_codewords = FALSE
 	///List of all targets we have stolen thus far.
 	var/list/datum/mind/targets_stolen = list()
-	///The crime we've committed, used for flavortext.
-	var/crime
 
 /datum/antagonist/traitor/internal_affairs/on_gain()
 	. = ..()
@@ -51,7 +49,7 @@
 
 /datum/antagonist/traitor/internal_affairs/greet()
 	. = ..()
-	crime = pick(
+	var/crime = pick(
 		"distribution of contraband",
 		"unauthorized erotic action on duty",
 		"embezzlement",
