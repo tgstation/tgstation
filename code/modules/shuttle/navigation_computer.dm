@@ -33,11 +33,11 @@
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
-		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary)
+		for(var/obj/docking_port/stationary/S as anything in SSshuttle.stationary_docking_ports)
 			if(S.id == shuttleId)
 				jumpto_ports[S.id] = TRUE
 
-	for(var/V in SSshuttle.stationary)
+	for(var/V in SSshuttle.stationary_docking_ports)
 		if(!V)
 			continue
 		var/obj/docking_port/stationary/S = V
@@ -355,9 +355,9 @@
 	playsound(console, 'sound/machines/terminal_prompt_deny.ogg', 25, FALSE)
 
 	var/list/L = list()
-	for(var/V in SSshuttle.stationary)
+	for(var/V in SSshuttle.stationary_docking_ports)
 		if(!V)
-			stack_trace("SSshuttle.stationary have null entry!")
+			stack_trace("SSshuttle.stationary_docking_ports have null entry!")
 			continue
 		var/obj/docking_port/stationary/S = V
 		if(console.z_lock.len && !(S.z in console.z_lock))
@@ -365,9 +365,9 @@
 		if(console.jumpto_ports[S.id])
 			L["([L.len])[S.name]"] = S
 
-	for(var/V in SSshuttle.beacons)
+	for(var/V in SSshuttle.beacon_list)
 		if(!V)
-			stack_trace("SSshuttle.beacons have null entry!")
+			stack_trace("SSshuttle.beacon_list have null entry!")
 			continue
 		var/obj/machinery/spaceship_navigation_beacon/nav_beacon = V
 		if(!nav_beacon.z || SSmapping.level_has_any_trait(nav_beacon.z, console.locked_traits))
