@@ -13,22 +13,23 @@
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The forge breaks apart into shards with a howling scream!</span>"
 
-/obj/structure/destructible/cult/item_dispenser/forge/get_items_to_spawn(mob/living/user)
-	. = list()
+/obj/structure/destructible/cult/item_dispenser/forge/setup_options()
+	var/static/list/forge_items = list(
+		NARSIE_ARMOR = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
+			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/hardened),
+			),
+		FLAGELLANT_ARMOR = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes"),
+			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/berserker),
+			),
+		ELDRITCH_SWORD = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cultblade"),
+			OUTPUT_ITEMS = list(/obj/item/melee/cultblade),
+			),
+	)
 
-	var/list/items = list(
-		"Nar'Sien Hardened Armor" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
-		"Flagellant's Robe" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes"),
-		"Eldritch Longsword" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cultblade")
-		)
-	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	switch(choice)
-		if(NARSIE_ARMOR)
-			. += /obj/item/clothing/suit/hooded/cultrobes/hardened
-		if(FLAGELLANT_ARMOR)
-			. += /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if(ELDRITCH_SWORD)
-			. += /obj/item/melee/cultblade
+	options = forge_items
 
 /obj/structure/destructible/cult/item_dispenser/forge/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cultitalic("You work [src] as dark knowledge guides your hands, creating [spawned_item]!"))

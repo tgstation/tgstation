@@ -11,22 +11,23 @@
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
 
-/obj/structure/destructible/cult/item_dispenser/altar/get_items_to_spawn(mob/living/user)
-	. = list()
+/obj/structure/destructible/cult/item_dispenser/altar/setup_options()
+	var/static/list/altar_items = list(
+		ELDRITCH_WHETSTONE = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
+			OUTPUT_ITEMS = list(/obj/item/sharpener/cult),
+			),
+		CONSTRUCT_SHELL = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct_cult"),
+			OUTPUT_ITEMS = list(/obj/structure/constructshell),
+			),
+		UNHOLY_WATER = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask"),
+			OUTPUT_ITEMS = list(/obj/item/reagent_containers/glass/beaker/unholywater),
+			),
+	)
 
-	var/list/items = list(
-		ELDRITCH_WHETSTONE = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
-		CONSTRUCT_SHELL = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct_cult"),
-		UNHOLY_WATER = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask")
-		)
-	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	switch(choice)
-		if(ELDRITCH_WHETSTONE)
-			. += /obj/item/sharpener/cult
-		if(CONSTRUCT_SHELL)
-			. += /obj/structure/constructshell
-		if(UNHOLY_WATER)
-			. += /obj/item/reagent_containers/glass/beaker/unholywater
+	options = altar_items
 
 /obj/structure/destructible/cult/item_dispenser/altar/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cultitalic("You kneel before [src] and your faith is rewarded with [spawned_item]!"))

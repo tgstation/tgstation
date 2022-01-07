@@ -13,23 +13,23 @@
 	light_color = LIGHT_COLOR_FIRE
 	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
 
-/obj/structure/destructible/cult/item_dispenser/archives/get_items_to_spawn(mob/living/user)
-	. = list()
+/obj/structure/destructible/cult/item_dispenser/archives/setup_options()
+	var/static/list/archive_items = list(
+		CULT_BLINDFOLD = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold"),
+			OUTPUT_ITEMS = list(/obj/item/clothing/glasses/hud/health/night/cultblind),
+			),
+		CURSE_ORB = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/cult.dmi', icon_state = "shuttlecurse"),
+			OUTPUT_ITEMS = list(/obj/item/shuttle_curse),
+			),
+		VEIL_WALKER = list(
+			PREVIEW_IMAGE = image(icon = 'icons/obj/cult.dmi', icon_state = "shifter"),
+			OUTPUT_ITEMS = list(/obj/item/cult_shift, /obj/item/flashlight/flare/culttorch),
+			),
+	)
 
-	var/list/items = list(
-		CULT_BLINDFOLD = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold"),
-		CURSE_ORB = image(icon = 'icons/obj/cult.dmi', icon_state = "shuttlecurse"),
-		VEIL_WALKER = image(icon = 'icons/obj/cult.dmi', icon_state = "shifter")
-		)
-	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
-	switch(choice)
-		if(CULT_BLINDFOLD)
-			. += /obj/item/clothing/glasses/hud/health/night/cultblind
-		if(CURSE_ORB)
-			. += /obj/item/shuttle_curse
-		if(VEIL_WALKER)
-			. += /obj/item/cult_shift
-			. += /obj/item/flashlight/flare/culttorch
+	options = archive_items
 
 /obj/structure/destructible/cult/item_dispenser/archives/succcess_message(mob/living/user, obj/item/spawned_item)
 	to_chat(user, span_cultitalic("You summon [spawned_item] from [src]!"))

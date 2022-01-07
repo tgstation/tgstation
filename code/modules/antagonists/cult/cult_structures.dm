@@ -72,12 +72,18 @@
 
 // Cult buildings that dispense items to cultists.
 /obj/structure/destructible/cult/item_dispenser
+	/// An associated list of options this structure can make. See setup_options() for format.
+	var/list/options
 	/// Length of the cooldown between item dispenses.
 	var/use_cooldown_duration = 5 MINUTES
 	/// If provided, a bonus tip displayed to cultists on examined.
 	var/cult_examine_tip
 	/// The cooldown for when items can be dispensed.
 	COOLDOWN_DECLARE(use_cooldown)
+
+/obj/structure/destructible/cult/item_dispenser/Initialize(mapload)
+	. = ..()
+	setup_options()
 
 /obj/structure/destructible/cult/item_dispenser/examine(mob/user)
 	. = ..()
@@ -112,16 +118,44 @@
 		var/obj/item/made_item = new item_to_make(get_turf(src))
 		succcess_message(user, made_item)
 
+
 /*
- * Get all items that this cult building spawns when interacted with.
- * Override on a subtype basis to do things like open a radial
- * to give the user a list of options of items to chose from.
+ * Set up and populate our list of options.
  *
- * Return a list: A list of typepaths to items that this building spawns when interacted with.
+ * The list of options is a associated list of format:
+ *   item_name = list(
+ *     preview = image(),
+ *     output = list(paths),
+ *   )
+ */
+/obj/structure/destructible/cult/item_dispenser/proc/setup_options()
+	CRASH("[type] did not set any item options in proc setup_options!")
+
+/*
+ * Get all items that this cult building will spawn when interacted with.
+ * Opens a radial menu for the user and shows them the list of options, which they can choose from.
+ *
+ * Return a list: A list of typepaths to items that this building will spawn, chosen by the user.
  */
 /obj/structure/destructible/cult/item_dispenser/proc/get_items_to_spawn(mob/living/user)
-	RETURN_TYPE(/list)
-	CRASH("[type] - get_items_to_spawn() not implemented.")
+
+	var/list/choices = list()
+	for(var/item in options)
+		choices[item] = options[item][PREVIEW_IMAGE]
+
+	var/picked_choice = show_radial_menu(
+		user,
+		src,
+		choices,
+		custom_check = CALLBACK(src, .proc/check_menu, user),
+		require_near = TRUE,
+		tooltips = TRUE,
+		)
+
+	if(!picked_choice)
+		return
+
+	return options[picked_choice][OUTPUT_ITEMS]
 
 /*
  * Gives feedback to [user] after creating a [spawned_item].
