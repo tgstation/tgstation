@@ -887,8 +887,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.do_attack_animation(target, "nothing")
 	var/list/modifiers = params2list(params)
 	var/damage_mod = 1
-	var/x_slashed = text2num(modifiers[ICON_X])
-	var/y_slashed = text2num(modifiers[ICON_Y])
+	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
+	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
 	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed)
 	if(target == previous_target) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
@@ -897,7 +897,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	previous_target = target
 	previous_x = x_slashed
 	previous_y = y_slashed
-	playsound(src, 'sound/weapons/bladeslice.ogg', 75, vary = TRUE)
+	playsound(src, 'sound/weapons/bladeslice.ogg', 100, vary = TRUE)
 	playsound(src, 'sound/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
 		var/mob/living/living_target = target
