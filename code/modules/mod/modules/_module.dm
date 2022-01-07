@@ -85,7 +85,7 @@
 /obj/item/mod/module/proc/on_unequip()
 	return
 
-/// Called when the module is selected from the TGUI
+/// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
 		return
@@ -96,7 +96,7 @@
 			on_activation()
 	else
 		on_use()
-	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED)
+	SEND_SIGNAL(mod, COMSIG_MOD_MODULE_SELECTED, src)
 
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
@@ -145,6 +145,7 @@
 /// Called when the module is used
 /obj/item/mod/module/proc/on_use()
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
+		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!check_power(use_power_cost))
 		return FALSE
