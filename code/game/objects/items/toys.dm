@@ -210,7 +210,7 @@
 
 /obj/item/toy/captainsaid/attack_self(mob/living/user)
 	current_mode++
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
+	playsound(src, 'sound/items/screwdriver2.ogg', 50, vary = TRUE)
 	if (current_mode <= modes.len)
 		balloon_alert(user, "set to [current_mode]")
 	else
