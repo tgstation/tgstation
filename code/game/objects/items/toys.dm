@@ -212,7 +212,7 @@
 	current_mode++
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 	if (current_mode <= modes.len)
-		to_chat(user, span_notice("You set \the [src] to [modes[current_mode]]"))
+		balloon_alert(user, "set to [current_mode]")
 	else
 		to_chat(user, span_notice("You turn off \the [src] "))
 		current_mode = CAPTAINSAID_MODE_OFF
