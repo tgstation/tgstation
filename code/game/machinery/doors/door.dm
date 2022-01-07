@@ -246,7 +246,8 @@
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user, params)
 		return TRUE
-	else if((!(I.item_flags & NOBLUDGEON) && !user.combat_mode) && try_to_activate_door(user))
+	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
+		try_to_activate_door(user)
 		return TRUE
 	return ..()
 
