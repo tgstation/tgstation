@@ -253,24 +253,24 @@
 	if((IS_HERETIC(local_user) || IS_HERETIC_MONSTER(local_user)) && HAS_TRAIT(src,TRAIT_NODROP))
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
-	for(var/mob/living/carbon/human/human_in_range in spiral_range(9,local_user))
-		if(IS_HERETIC(human_in_range) || IS_HERETIC_MONSTER(human_in_range))
+	for(var/mob/living/carbon/human/human_in_view in view(6,local_user))
+		if(IS_HERETIC(human_in_view) || IS_HERETIC_MONSTER(human_in_view) || human_in_view.is_blind())
 			continue
 
-		SEND_SIGNAL(human_in_range,COMSIG_VOID_MASK_ACT,rand(-2,-20)*delta_time)
+		SEND_SIGNAL(human_in_view,COMSIG_VOID_MASK_ACT,rand(-2,-20)*delta_time)
 
 		if(DT_PROB(60,delta_time))
-			human_in_range.hallucination += 5
-
-		if(DT_PROB(40,delta_time))
-			human_in_range.Jitter(5)
+			human_in_view.hallucination += 5
 
 		if(DT_PROB(30,delta_time))
-			human_in_range.emote(pick("giggle","laugh"))
-			human_in_range.adjustStaminaLoss(10)
+			human_in_view.Jitter(5)
 
-		if(DT_PROB(25,delta_time))
-			human_in_range.Dizzy(5)
+		if(DT_PROB(30,delta_time))
+			human_in_view.emote(pick("giggle","laugh"))
+			human_in_view.adjustStaminaLoss(8)
+
+		if(DT_PROB(20,delta_time))
+			human_in_view.Dizzy(5)
 
 /obj/item/melee/rune_carver
 	name = "Carving Knife"

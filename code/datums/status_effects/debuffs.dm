@@ -448,7 +448,7 @@
 
 /datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 5)
 	. = ..()
-	repetitions = min(1,_repetition)
+	repetitions = max(1,_repetition)
 
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
