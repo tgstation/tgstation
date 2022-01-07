@@ -713,12 +713,12 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
+		"comp_mod_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
 		"module_shell",
-		"comp_mod_action",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",

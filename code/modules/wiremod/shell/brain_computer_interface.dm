@@ -48,17 +48,17 @@
 
 /obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
+	if(istype(bci))
+		bci_action = new(src)
+		update_action()
 
-	bci_action = new(src)
-	update_action()
-
-	bci.actions += list(bci_action)
+		bci.actions += list(bci_action)
 
 /obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
-
-	bci.actions -= bci_action
-	QDEL_NULL(bci_action)
+	if(istype(bci))
+		bci.actions -= bci_action
+		QDEL_NULL(bci_action)
 
 /obj/item/circuit_component/equipment_action/bci/input_received(datum/port/input/port)
 	if (!isnull(bci_action))

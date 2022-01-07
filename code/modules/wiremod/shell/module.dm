@@ -6,6 +6,8 @@
 	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
+
+	/// A reference to the shell component, used to access the shell and its attached circuit
 	var/datum/component/shell/shell
 
 /obj/item/mod/module/circuit/Initialize(mapload)
@@ -87,6 +89,9 @@
 	/// The name of the last selected module
 	var/datum/port/output/selected_module
 
+	/// The signal that is triggered when a module is selected
+	var/datum/port/output/on_module_selected
+
 /obj/item/circuit_component/mod_adapter_core/populate_ports()
 	// Input Signals
 	module_to_select = add_input_port("Module to Select", PORT_TYPE_STRING)
@@ -95,6 +100,8 @@
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_ATOM)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
+	// Output Signals
+	on_module_selected = add_output_port("On Module Selected", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/mod/module))
@@ -128,9 +135,10 @@
 		selected_module.set_output(null)
 		wearer.set_output(null)
 
-/obj/item/circuit_component/mod_adapter_core/proc/on_module_select()
+/obj/item/circuit_component/mod_adapter_core/proc/on_module_select(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
-	selected_module.set_output(attached_module.mod.selected_module.name)
+	selected_module.set_output(module.name)
+	on_module_selected.set_output(COMPONENT_SIGNAL)
 
 
 /obj/item/circuit_component/mod_adapter_core/proc/equip_check()
