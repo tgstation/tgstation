@@ -99,6 +99,13 @@
 	SIGNAL_HANDLER
 	spreadFire(AM)
 
+/mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
+	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
+		update_fullscreen()
+		return
+	return ..()
+
+
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
 		var/slot = text2num(href_list["item"])

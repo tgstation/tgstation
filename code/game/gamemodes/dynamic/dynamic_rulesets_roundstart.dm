@@ -57,7 +57,7 @@
 	required_candidates = 1
 	weight = 3
 	cost = 18
-	requirements = list(101,101,80,70,60,60,50,50,40,40)
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	antag_cap = 1
 	flags = HIGH_IMPACT_RULESET
 
