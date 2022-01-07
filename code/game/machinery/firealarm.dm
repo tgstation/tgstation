@@ -1,4 +1,4 @@
-#define FIREALARM_COOLDOWN 96 // This define is based on the current FireAlarm.ogg, and is placed arbitrarily set at 9 seconds 600 milliseconds (9.6 seconds)
+#define FIREALARM_COOLDOWN 96 // This define is based on the current FireAlarm.ogg, and is placed to match the running time at 9 seconds 600 milliseconds (9.6 seconds)
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
