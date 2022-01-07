@@ -595,7 +595,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		name = "lit [packeditem]-packed [initial(name)]"
 	else
-		packeditem ? "[packeditem]-packed [initial(name)]" : "empty [initial(name)]"
+		name = packeditem ? "[packeditem]-packed [initial(name)]" : "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/put_out(mob/user, done_early = FALSE)
 	lit = FALSE
