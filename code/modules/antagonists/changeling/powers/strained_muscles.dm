@@ -29,8 +29,15 @@
 
 	return TRUE
 
+/datum/action/changeling/strained_muscles/Remove(mob/user)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+	return ..()
+
 /datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
+		if(QDELETED(src) || QDELETED(user))
+			return
+
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
@@ -49,5 +56,8 @@
 		sleep(40)
 
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
+		if(QDELETED(src) || QDELETED(user))
+			return
+
 		stacks--
 		sleep(20)

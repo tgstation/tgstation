@@ -1,0 +1,6 @@
+author: "timothymtorres, TheBonded"
+delete-after: True
+changes: 
+  - expansion: "Adds Claustrophobia quirk that causes suffocation if a player enters any type of container object. (lockers, crates, machinery, disposals, etc.)"
+  - expansion: "Adds Blood Phobia that is triggered from seeing gibs, blood, bloody clothes or weapons, and blood related objects like IV drips and blood bags."
+  - bugfix: "Fixed some quirks to not process if player is sleeping or unconscious."

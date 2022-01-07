@@ -47,6 +47,8 @@
 	base_pixel_x = -32
 	pixel_y = -16
 	base_pixel_y = -16
+	maptext_height = 96
+	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
