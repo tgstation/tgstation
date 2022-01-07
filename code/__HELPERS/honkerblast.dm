@@ -19,8 +19,8 @@
 			lightly_honked += victim
 
 	for(var/mob/living/carbon/victim in severely_honked)
-		victim.Unconscious(4 SECONDS)
-		victim.Stun(10 SECONDS)
+		victim.Unconscious(40)
+		victim.Stun(100)
 		victim.stuttering += 15
 		victim.Jitter(500)
 		var/obj/item/organ/ears/ears = victim.getorganslot(ORGAN_SLOT_EARS)
@@ -32,15 +32,15 @@
 		victim_shoes.adjust_laces(SHOES_KNOTTED)
 
 	for(var/mob/living/carbon/victim in properly_honked)
-		victim.Paralyze(2 SECONDS)
-		victim.Stun(5 SECONDS)
+		victim.Paralyze(20)
+		victim.Stun(50)
 		victim.Jitter(250)
 		var/obj/item/organ/ears/ears = victim.getorganslot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(7, 10)
 		to_chat(victim, "<font color='red' size='5'>HONK</font>")
 
 	for(var/mob/living/carbon/victim in lightly_honked)
-		victim.Knockdown(2 SECONDS)
+		victim.Knockdown(20)
 		victim.Jitter(100)
 		var/obj/item/organ/ears/ears = victim.getorganslot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(4, 5)

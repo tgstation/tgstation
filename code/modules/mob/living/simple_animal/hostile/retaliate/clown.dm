@@ -52,6 +52,7 @@
 		return ..()
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = attacked_target
 	unripe_bunch.start_ripening()
+	log_combat(src, attacked:_target, "honksposivley ripened")
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -84,7 +85,7 @@
 	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
 	maxHealth = 120
 	health = 120
-	speed = -10
+	speed = -1
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
 	//Our peel dropping ability
 	var/datum/action/cooldown/rustle/banana_rustle
@@ -100,12 +101,13 @@
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle
-	name = "rustle"
+	name = "Rustle"
+	desc = "Shake loose a few banana peels."
 	///which type of peel to spawn
 	var/banana_type = /obj/item/grown/bananapeel
 	///How many peels to spawn
 	var/peel_amount = 3
-	cooldown_time = 6 SECONDS
+	cooldown_time = 8 SECONDS
 	button_icon_state = "rustle"
 	icon_icon = 'icons/mob/actions/actions_clown.dmi'
 	background_icon_state = "bg_nature"
@@ -114,7 +116,7 @@
 	. = ..()
 	var/list/reachable_turfs = list()
 	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
-		if(adjacent_turf == owner.loc || owner.CanReach(adjacent_turf))
+		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
 			continue
 		reachable_turfs += adjacent_turf
 
@@ -122,26 +124,40 @@
 	for(var/i in 1 to peels_to_spawn)
 		new banana_type(pick_n_take(reachable_turfs))
 	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 100)
+	animate(owner, time =1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
+	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
+	animate(time =  1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
+	StartCooldown()
 
 ///spawns a plumb bunch of bananas imbued with mystical power.
 /datum/action/cooldown/exquisite_bunch
-	name = "exquisite bunch"
+	name = "Exquisite Bunch"
+	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
 	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
 	cooldown_time = 60 SECONDS
 	button_icon_state = "banana_bunch"
 	background_icon_state = "bg_nature"
+	///If we are currently activating our ability.
+	var/activating = FALSE
 
 /datum/action/cooldown/exquisite_bunch/Trigger(atom/target)
+	if(activating)
+		return
 	var/bunch_turf = get_step(owner.loc, owner.dir)
 	if(!bunch_turf)
 		return
 	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
 		owner.balloon_alert("can't do that here!")
 		return
-
-	if(!do_after(owner, 1.5 SECONDS))
+	activating = TRUE
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
 		return
 	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
+		return
+	activating = FALSE
 	return ..()
 
 /datum/action/cooldown/exquisite_bunch/Activate(atom/target)
@@ -149,6 +165,7 @@
 	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
 	playsound(owner, 'sound/items/bikehorn.ogg', 60)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	StartCooldown()
 
 /obj/item/food/grown/banana/bunch
 	name = "banana bunch"
@@ -165,22 +182,20 @@
 /obj/item/food/grown/banana/bunch/proc/start_ripening()
 	if(is_ripening)
 		return
-	animate(src, time = 1, pixel_z = 8, easing = ELASTIC_EASING)
-	animate(src, time = 1, pixel_z = 0, easing = BOUNCE_EASING)
 	playsound(src, 'sound/effects/fuse.ogg', 80)
-	var/redden = TRUE
-	for(var/i in 1 to 8)
-		if(redden)
-			animate(src, color = "#ff3939", time = 0)
-		else
-			animate(src, color = "#ffffff", time = 5, easing = BOUNCE_EASING | EASE_IN)
-		redden = !redden
-	addtimer(CALLBACK(src, .proc/explosive_ripening), 2 SECONDS)
+
+	animate(src, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
+	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
+	addtimer(CALLBACK(src, .proc/explosive_ripening), 3 SECONDS)
+	for(var/i in 1 to 32)
+		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
 
 /obj/item/food/grown/banana/bunch/proc/explosive_ripening()
 	honkerblast(src, light_range = 3, medium_range = 1)
+	for(var/mob/shook_boi in range(6, loc))
+		shake_camera(shook_boi, 3, 5)
 	var/obj/effect/decal/cleanable/food/plant_smudge/banana_smudge = new(loc)
-	banana_smudge.color = "#fcff57"
+	banana_smudge.color = "#ffe02f"
 	qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling

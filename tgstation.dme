@@ -264,6 +264,7 @@
 #include "code\__HELPERS\guid.dm"
 #include "code\__HELPERS\heap.dm"
 #include "code\__HELPERS\hearted.dm"
+#include "code\__HELPERS\honkerblast.dm"
 #include "code\__HELPERS\icon_smoothing.dm"
 #include "code\__HELPERS\icons.dm"
 #include "code\__HELPERS\jatum.dm"
