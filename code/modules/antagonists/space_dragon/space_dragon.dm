@@ -1,5 +1,5 @@
 /datum/antagonist/space_dragon
-	name = "Space Dragon"
+	name = "\improper Space Dragon"
 	roundend_category = "space dragons"
 	antagpanel_category = "Space Dragon"
 	job_rank = ROLE_SPACE_DRAGON
@@ -9,6 +9,7 @@
 	var/list/datum/mind/carp = list()
 
 /datum/antagonist/space_dragon/greet()
+	. = ..()
 	to_chat(owner, "<b>Through endless time and space we have moved. We do not remember from where we came, we do not know where we will go.  All of space belongs to us.\n\
 					It is an empty void, of which our kind was the apex predator, and there was little to rival our claim to this title.\n\
 					But now, we find intruders spread out amongst our claim, willing to fight our teeth with magics unimaginable, their dens like lights flickering in the depths of space.\n\

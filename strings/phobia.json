@@ -391,5 +391,23 @@
 	"shell",
 	"dart",
 	"armory"
+	],
+"blood": [
+	"blood",
+	"bloody",
+	"bloodloss",
+	"bleeding",
+	"bleed",
+	"bled",
+	"hemorrhaged",
+	"hemorrhage",
+	"hemorrhaging",
+	"transfusion",
+	"dialysis",
+	"iv",
+	"gore",
+	"gib",
+	"gibs",
+	"gibbed"
 	]
 }

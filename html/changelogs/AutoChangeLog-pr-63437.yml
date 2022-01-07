@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - spellcheck: "Fixed a small typo in Cargo's mail console, saying mail had homing beacons in them."

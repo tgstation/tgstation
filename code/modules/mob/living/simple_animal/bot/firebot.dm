@@ -135,6 +135,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("extinguish_fires")
 			extinguish_fires = !extinguish_fires
@@ -143,7 +144,6 @@
 		if("stationary_mode")
 			stationary_mode = !stationary_mode
 			update_appearance()
-	return
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))

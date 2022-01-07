@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
-	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
+	to_chat(user, span_notice("You turn the card over."))
 	if(!flipped)
 		name = "Trading Card"
 		desc = "It's the back of a trading card... no peeking!"
@@ -381,11 +381,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
-	to_chat(user, "<span_class='notice'>Wow! Check out these cards!</span>")
+	to_chat(user, span_notice("Wow! Check out these cards!"))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
-		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
+		to_chat(user, span_notice("...and it came with a flipper, too!"))
 		new /obj/item/coin/thunderdome(get_turf(user))
 	qdel(src)
 

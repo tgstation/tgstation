@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Placing tiny fans in the aux base gives feedback"
-  - bugfix: "Breaking / deconstructing aux base turrets no longer brick the console"
