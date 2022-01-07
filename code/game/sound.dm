@@ -77,13 +77,13 @@ falloff_distance - Distance at which falloff begins. Sound is at peak volume (in
 				. += listening_mob
 
 	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(maxdistance, turf_source)
+		listeners = hearers(maxdistance, turf_source)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(maxdistance, above_turf)
+			listeners += hearers(maxdistance, above_turf)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(maxdistance, below_turf)
+			listeners += hearers(maxdistance, below_turf)
 
 		for(var/mob/listening_mob as anything in listeners | SSmobs.dead_players_by_zlevel[source_z])
 			if(get_dist(listening_mob, turf_source) <= maxdistance)
