@@ -1,8 +1,8 @@
 #define MANIFEST_ERROR_CHANCE 5
 // cargo error bitflags
-#define MANIFEST_ERROR_NAME (1 << 1)
-#define MANIFEST_ERROR_CONTENTS (1 << 2)
-#define MANIFEST_ERROR_ITEM (1 << 3)
+#define MANIFEST_ERROR_NAME (1 << 0)
+#define MANIFEST_ERROR_CONTENTS (1 << 1)
+#define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
 	var/order_cost = 0
