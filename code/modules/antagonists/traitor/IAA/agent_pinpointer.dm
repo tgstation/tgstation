@@ -13,9 +13,13 @@
 	duration = -1
 	tick_interval = PINPOINTER_PING_TIME
 	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer
+	///The minimum range to start pointing towards your target.
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
+	///How fuzzy will the pinpointer be, messing with it pointing to your target.
 	var/range_fuzz_factor = PINPOINTER_EXTRA_RANDOM_RANGE
+	///The range until you're considered 'close'
 	var/range_mid = 8
+	///The range until you're considered 'too far away'
 	var/range_far = 16
 	///The target we are pointing towards, refreshes every tick.
 	var/mob/scan_target
