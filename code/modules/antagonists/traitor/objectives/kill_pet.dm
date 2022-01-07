@@ -71,8 +71,10 @@
 				break
 	else
 		target_pet = locate(pet_type) in GLOB.mob_living_list
+	if(target_pet.stat == DEAD)
+		return FALSE
 	if(!target_pet)
-		return
+		return FALSE
 	AddComponent(/datum/component/traitor_objective_register, target_pet, \
 		succeed_signals = list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	replace_in_name("%DEPARTMENT HEAD%", target.title)
