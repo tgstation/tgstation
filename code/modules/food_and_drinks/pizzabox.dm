@@ -150,12 +150,12 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = input(user, "Set the [bomb] timer from [bomb_timer_min] to [bomb_timer_max].", bomb, bomb_timer) as num|null
+				bomb_timer = tgui_input_number(user, "Set the timer for [bomb].", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
 
 				if (isnull(bomb_timer))
 					return
 
-				bomb_timer = clamp(CEILING(bomb_timer, 1), bomb_timer_min, bomb_timer_max)
+				bomb_timer = round(bomb_timer)
 				bomb_defused = FALSE
 
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
@@ -224,7 +224,7 @@
 				to_chat(user, span_notice("You scribble illegibly on [src]!"))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
+			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			to_chat(user, span_notice("You write with [I] on [src]."))

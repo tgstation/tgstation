@@ -1,5 +1,3 @@
-/mob/var/suiciding = FALSE
-
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
