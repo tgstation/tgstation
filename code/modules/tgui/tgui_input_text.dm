@@ -32,7 +32,10 @@
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default) as text|null
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout)
 	text_input.ui_interact(user)
 	text_input.wait()
