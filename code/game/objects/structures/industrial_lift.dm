@@ -6,7 +6,8 @@
 ///Collect and command
 /datum/lift_master
 	var/list/lift_platforms
-	var/list/ignored_smashthroughs = list(	//Typepath list of what to ignore smashing through, controls all lifts. Could be admemery?
+	/// Typepath list of what to ignore smashing through, controls all lifts
+	var/list/ignored_smashthroughs = list(
 		/obj/machinery/power/supermatter_crystal,
 		/obj/structure/holosign
 	)
