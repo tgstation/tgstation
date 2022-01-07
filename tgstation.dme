@@ -1362,7 +1362,6 @@
 #include "code\game\objects\items\control_wand.dm"
 #include "code\game\objects\items\cosmetics.dm"
 #include "code\game\objects\items\courtroom.dm"
-#include "code\game\objects\items\crab17.dm"
 #include "code\game\objects\items\crayons.dm"
 #include "code\game\objects\items\credit_holochip.dm"
 #include "code\game\objects\items\debug_items.dm"
