@@ -1,0 +1,6 @@
+author: "Fikou, sprites from Azlan"
+delete-after: True
+changes: 
+  - expansion: "Adds Anomalocks, anomaly core locked MODsuit modules. You can obtain the anti-gravity and teleporter module from R&D."
+  - qol: "activating a suit now should be accidental click-proof"
+  - bugfix: "fixes mouth hole not working"
