@@ -96,16 +96,16 @@
 	update_fov()
 
 //did you know you can subtype /image and /mutable_appearance?
-/mutable_appearance/fov_image
+/image/fov_image
 	icon = 'icons/effects/fov/fov_effects.dmi'
-	plane = FULLSCREEN_PLANE
 	layer = FOV_EFFECTS_LAYER
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM
+	plane = FULLSCREEN_PLANE
 
 /// Plays a visual effect representing a sound cue for people with vision obstructed by FOV or blindness
 /proc/play_fov_effect(atom/center, range, icon_state, dir = SOUTH, ignore_self = FALSE, angle = 0, list/override_list)
 	var/turf/anchor_point = get_turf(center)
-	var/mutable_appearance/fov_image/fov_image
+	var/image/fov_image/fov_image
 	var/list/clients_shown
 
 	for(var/mob/living/living_mob in override_list || get_hearers_in_view(range, center))
