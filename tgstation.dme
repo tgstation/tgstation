@@ -161,6 +161,7 @@
 #include "code\__DEFINES\tgui.dm"
 #include "code\__DEFINES\time.dm"
 #include "code\__DEFINES\tools.dm"
+#include "code\__DEFINES\toys.dm"
 #include "code\__DEFINES\traits.dm"
 #include "code\__DEFINES\turfs.dm"
 #include "code\__DEFINES\typeids.dm"
