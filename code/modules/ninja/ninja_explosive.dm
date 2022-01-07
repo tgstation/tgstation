@@ -57,6 +57,8 @@
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return
+	if (isnull(ninja))
+		return
 	var/mob/ninja = detonator.resolve()
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 	var/datum/objective/plant_explosive/objective = locate() in ninja_antag.objectives
