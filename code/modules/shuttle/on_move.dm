@@ -59,6 +59,7 @@ All ShuttleMove procs go here
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
+
 	air_update_turf(TRUE, TRUE)
 	if(isopenturf(newT))
 		var/turf/open/new_open = newT
@@ -121,6 +122,10 @@ All ShuttleMove procs go here
 		shuttleRotate(rotation)
 
 	update_parallax_contents()
+
+	if(density || !generic_can_allow_through)
+		LAZYREMOVE(oldT.bumpable_contents, src)
+		LAZYADD(newT.bumpable_contents, src)
 
 	return TRUE
 
