@@ -53,12 +53,29 @@
 	name = "Activate MODsuit"
 	desc = "Activate/Deactivate the MODsuit."
 	button_icon_state = "activate"
+	var/ready = FALSE
 
 /datum/action/item_action/mod/activate/Trigger()
 	. = ..()
 	if(!.)
 		return
+	if(!ready)
+		ready = TRUE
+		button_icon_state = "activate-ready"
+		if(!ai_action)
+			background_icon_state = "bg_tech"
+		UpdateButtonIcon()
+		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
+		return
 	mod.toggle_activate(usr)
+	reset_ready()
+
+/datum/action/item_action/mod/activate/proc/reset_ready()
+	ready = FALSE
+	button_icon_state = initial(button_icon_state)
+	if(!ai_action)
+		background_icon_state = initial(background_icon_state)
+	UpdateButtonIcon()
 
 /datum/action/item_action/mod/activate/ai
 	ai_action = TRUE
