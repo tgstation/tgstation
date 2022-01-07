@@ -904,7 +904,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = 50, def_zone = user.zone_selected)
 		log_combat(user, living_target, "slashed", src)
 		if(living_target.stat == DEAD && prob(5*damage_mod))
-			living_target.visible_message("[living_target] explodes in a shower of gore!", blind_message = span_hear("You hear organic matter ripping and tearing!"))
+			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
 			living_target.gib()
 			log_combat(user, living_target, "gibbed", src)
 	else if(target.uses_integrity)
@@ -928,15 +928,13 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 	var/matrix/new_transform = matrix()
 	new_transform.Turn(rand(1, 360)) // Random slash angle
-
 	var/datum/decompose_matrix/decomp = target.transform.decompose()
 	new_transform.Translate((x_slashed - world.icon_size/2) * decomp.scale_x, (y_slashed - world.icon_size/2) * decomp.scale_y) // Move to where we clicked
-	// Follow target's transform while ignoring scaling
+	//Follow target's transform while ignoring scaling
 	new_transform.Turn(decomp.rotation)
 	new_transform.Translate(decomp.shift_x, decomp.shift_y)
-
 	new_transform.Translate(target.pixel_x, target.pixel_y) // Follow target's pixel offsets
 	transform = new_transform
-	// Double the scale of the matrix by doubling the 2x2 part without touching the translation part
+	//Double the scale of the matrix by doubling the 2x2 part without touching the translation part
 	var/matrix/scaled_transform = new_transform + matrix(new_transform.a, new_transform.b, 0, new_transform.d, new_transform.e, 0)
 	animate(src, duration*0.5, color = COLOR_BLUE, transform = scaled_transform, alpha = 255)
