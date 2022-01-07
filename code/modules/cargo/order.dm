@@ -2,7 +2,6 @@
 #define MANIFEST_ERROR_CHANCE 5
 
 // Manifest bitflags 
-
 /// Determines if a manifest will generate the incorrect station name on the paper
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if a manifest will incorrectly list the items in the crate
