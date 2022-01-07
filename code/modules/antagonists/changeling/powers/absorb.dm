@@ -41,7 +41,7 @@
 
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
-		changeling.trueabsorbs++
+		changeling.true_absorbs++
 
 	if(owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		owner.set_nutrition(min((owner.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))

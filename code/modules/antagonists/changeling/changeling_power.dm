@@ -75,7 +75,7 @@ the same goes for Remove(). if you override Remove(), call parent or else your p
 	if(c.absorbed_count < req_dna)
 		to_chat(user, span_warning("We require at least [req_dna] sample\s of compatible DNA."))
 		return FALSE
-	if(c.trueabsorbs < req_absorbs)
+	if(c.true_absorbs < req_absorbs)
 		to_chat(user, span_warning("We require at least [req_absorbs] sample\s of DNA gained through our Absorb ability."))
 		return FALSE
 	if(req_stat < user.stat)

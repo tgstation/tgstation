@@ -34,8 +34,8 @@
 	var/dna_max = 6
 	/// The amount of DNA gained. Includes DNA sting.
 	var/absorbed_count = 0
-	/// The amount of DMA gained using absorb, not DMA sting.
-	var/trueabsorbs = 0
+	/// The amount of DMA gained using absorb, not DNA sting. Start with one (your original DNA)
+	var/true_absorbs = 0
 	/// The number of chemicals the changeling currently has.
 	var/chem_charges = 20
 	/// The max chemical storage the changeling currently has.
@@ -52,7 +52,7 @@
 	var/total_genetic_points = 10
 	/// List of all powers we start with.
 	var/list/innate_powers = list()
-	/// List of all powers we have evolved / bought from the emporium.
+	/// Associated list of all powers we have evolved / bought from the emporium. [path] = [instance of path]
 	var/list/purchased_powers = list()
 
 	/// The voice we're mimicing via the changeling voice ability.
@@ -252,15 +252,9 @@
 	if(chosen_sting)
 		chosen_sting.unset_sting(owner.current)
 
-	for(var/datum/action/changeling/power as anything in purchased_powers)
-		purchased_powers -= power
-		power.Remove(owner.current)
-		qdel(power)
+	QDEL_LIST_ASSOC_VAL(purchased_powers)
 	if(include_innate)
-		for(var/datum/action/changeling/power as anything in innate_powers)
-			innate_powers -= power
-			power.Remove(owner.current)
-			qdel(power)
+		QDEL_LIST(innate_powers)
 
 	genetic_points = total_genetic_points
 	chem_charges = min(chem_charges, total_chem_storage)
@@ -273,9 +267,11 @@
 /datum/antagonist/changeling/proc/regain_powers()
 	emporium_action.Grant(owner.current)
 	for(var/datum/action/changeling/power as anything in innate_powers)
-		if(istype(power) && power.needs_button)
+		if(power.needs_button)
 			power.Grant(owner.current)
-	for(var/datum/action/changeling/power as anything in purchased_powers)
+
+	for(var/power_path in purchased_powers)
+		var/datum/action/changeling/power = purchased_powers[power_path]
 		if(istype(power) && power.needs_button)
 			power.Grant(owner.current)
 
@@ -285,11 +281,32 @@
  * [sting_path] - the power that's being purchased / evolved.
  */
 /datum/antagonist/changeling/proc/purchase_power(datum/action/changeling/sting_path)
-	if(!ispath(sting_path) || !is_type_in_typecache(sting_path, all_powers))
+	if(!ispath(sting_path))
 		CRASH("Changeling purchase_power attempted to purchase an invalid typepath!")
 
-	if(is_path_in_list_of_types(sting_path, purchased_powers))
+	if(purchased_powers[sting_path])
 		to_chat(owner.current, span_warning("We have already evolved this ability!"))
+		return FALSE
+
+	if(genetic_points < initial(sting_path.dna_cost))
+		to_chat(owner.current, span_warning("We have reached our capacity for abilities!"))
+		return FALSE
+
+	if(absorbed_count < initial(sting_path.req_dna))
+		to_chat(owner.current, span_warning("We lack the DNA to evolve this ability!"))
+		return FALSE
+
+	if(true_absorbs < initial(sting_path.req_absorbs))
+		to_chat(owner.current, span_warning("We lack the absorbed DNA to evolve this ability!"))
+		return FALSE
+
+	if(initial(sting_path.dna_cost) < 0)
+		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
+		return FALSE
+
+	//To avoid potential exploits by buying new powers while in stasis, which clears your verblist. // Probably not a problem anymore, but whatever.
+	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA))
+		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
 		return FALSE
 
 	var/datum/action/changeling/new_action = new sting_path()
@@ -298,29 +315,10 @@
 		to_chat(owner.current, "This is awkward. Changeling power purchase failed, please report this bug to a coder!")
 		CRASH("Changeling purchase_power was unable to create a new changeling action for path [sting_path]!")
 
-	if(absorbed_count < new_action.req_dna)
-		to_chat(owner.current, span_warning("We lack the energy to evolve this ability!"))
-		qdel(new_action)
-		return FALSE
-
-	if(new_action.dna_cost < 0)
-		to_chat(owner.current, span_warning("We cannot evolve this ability!"))
-		qdel(new_action)
-		return FALSE
-
-	if(genetic_points < new_action.dna_cost)
-		to_chat(owner.current, span_warning("We have reached our capacity for abilities!"))
-		qdel(new_action)
-		return FALSE
-
-	if(HAS_TRAIT(owner.current, TRAIT_DEATHCOMA)) //To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
-		to_chat(owner.current, span_warning("We lack the energy to evolve new abilities right now!"))
-		qdel(new_action)
-		return FALSE
-
 	genetic_points -= new_action.dna_cost
-	purchased_powers += new_action
+	purchased_powers[sting_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
+	return TRUE
 
 /*
  * Changeling's ability to re-adapt all of their learned powers.
