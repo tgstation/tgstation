@@ -1,0 +1,18 @@
+{
+	"Internal Affairs Agent": {
+		"introduction": "You are the Internal Affairs Agent.",
+		"allies": "Eliminate your targets by any means necessary to avoid a costly and embarrassing public trial.",
+		"goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
+		"uplink": "For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink.",
+		"roundend_report": "was an Internal Affairs Agent.",
+		"ui_theme": "ntos"
+	},
+	"External Affairs Agent": {
+		"introduction": "You are the External Affairs Agent.",
+		"allies": "Eliminate your targets by any means necessary to deny them a chance at defending themselves in court.",
+		"goal": "Any damage you cause will be a further embarrassment to Nanotrasen, so you have no limits on collateral damage.",
+		"uplink": "You have been provided with a standard uplink to accomplish your task.",
+		"roundend_report": "was an External Affairs Agent!",
+		"ui_theme": "syndicate"
+	}
+}

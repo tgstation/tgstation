@@ -192,8 +192,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/assassinate
 	name = "assasinate"
-	var/target_role_type=FALSE
 	martyr_compatible = TRUE
+	var/target_role_type = FALSE
 
 
 /datum/objective/assassinate/check_completion()
@@ -210,12 +210,15 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	admin_simple_target_pick(admin)
 
 /datum/objective/assassinate/internal
-	var/stolen = FALSE //Have we already eliminated this target?
+	///Have we already eliminated this target?
+	var/stolen = FALSE
 
 /datum/objective/assassinate/internal/update_explanation_text()
 	..()
-	if(target && !target.current)
-		explanation_text = "Assassinate [target.name], who was obliterated"
+	if(target && target.current)
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
+	else
+		explanation_text = "Assassinate [target.name], who has been obliterated."
 
 /datum/objective/mutiny
 	name = "mutiny"

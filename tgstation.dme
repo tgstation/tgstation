@@ -2046,6 +2046,7 @@
 #include "code\modules\antagonists\traitor\equipment\contractor.dm"
 #include "code\modules\antagonists\traitor\equipment\Malf_Modules.dm"
 #include "code\modules\antagonists\traitor\equipment\module_picker.dm"
+#include "code\modules\antagonists\traitor\IAA\agent_pinpointer.dm"
 #include "code\modules\antagonists\traitor\IAA\internal_affairs.dm"
 #include "code\modules\antagonists\valentines\heartbreaker.dm"
 #include "code\modules\antagonists\valentines\valentine.dm"

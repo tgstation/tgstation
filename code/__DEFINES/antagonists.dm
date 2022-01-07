@@ -114,6 +114,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 ///File to the malf flavor
 #define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
+///File to the IAA flavor
+#define IAA_FLAVOR_FILE "antagonist_flavor/internalaffair_flavor.json"
+
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",
@@ -131,7 +134,6 @@ GLOBAL_LIST_INIT(nanotrasen_employers, list(
 	"Champions of Evil",
 	"Corporate Climber",
 	"Gone Postal",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 ))
 
@@ -151,7 +153,6 @@ GLOBAL_LIST_INIT(normal_employers, list(
 	"Cybersun Industries",
 	"Donk Corporation",
 	"Gorlex Marauders",
-	"Internal Affairs Agent",
 	"Legal Trouble",
 	"MI13",
 	"Waffle Corporation",
