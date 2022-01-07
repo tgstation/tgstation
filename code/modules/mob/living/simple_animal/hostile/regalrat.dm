@@ -72,7 +72,7 @@
 	if(key || stat)
 		return
 	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
-	if(rat_ask == "No" || QDELETED(src))
+	if(rat_ask != "Yes" || QDELETED(src))
 		return
 	if(key)
 		to_chat(user, span_warning("Someone else already took the rat!"))
@@ -119,24 +119,25 @@
 	if(miasma_percentage>=0.25)
 		heal_bodypart_damage(1)
 
+#define REGALRAT_INTERACTION "regalrat"
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (DOING_INTERACTION(src, "regalrat"))
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return
 	if (QDELETED(target))
 		return
 
 	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
-		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
+		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
-	if (DOING_INTERACTION(src, "regalrat")) // check again in case we started interacting
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
 		return
 	return ..()
-
+#undef REGALRAT_INTERACTION
 /**
  * Conditionally "eat" cheese object and heal, if injured.
  *
