@@ -748,21 +748,6 @@
 	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
 
-/datum/reagent/serotrotium
-	name = "Serotrotium"
-	description = "A chemical compound that promotes concentrated production of the serotonin neurotransmitter in humans."
-	color = "#202040" // rgb: 20, 20, 40
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	taste_description = "bitterness"
-	ph = 10
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/serotrotium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M))
-		if(DT_PROB(3.5, delta_time))
-			M.emote(pick("twitch","drool","moan","gasp"))
-	..()
-
 /datum/reagent/oxygen
 	name = "Oxygen"
 	description = "A colorless, odorless gas. Grows on trees but is still pretty valuable."

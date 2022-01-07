@@ -413,20 +413,6 @@
 	C.blur_eyes(3 * REM * delta_time)
 	return ..()
 
-/datum/reagent/toxin/spore_burning
-	name = "Burning Spore Toxin"
-	description = "A natural toxin produced by blob spores that induces combustion in its victim."
-	color = "#9ACD32"
-	toxpwr = 0.5
-	taste_description = "burning"
-	ph = 13
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/toxin/spore_burning/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_fire_stacks(2 * REM * delta_time)
-	M.IgniteMob()
-	return ..()
-
 /datum/reagent/toxin/chloralhydrate
 	name = "Chloral Hydrate"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
@@ -1081,26 +1067,6 @@
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustFireLoss((volume/10) * REM * normalise_creation_purity() * delta_time, FALSE) //here you go nervar
 	. = TRUE
-	..()
-
-/datum/reagent/toxin/delayed
-	name = "Toxin Microcapsules"
-	description = "Causes heavy toxin damage after a brief time of inactivity."
-	reagent_state = LIQUID
-	metabolization_rate = 0 //stays in the system until active.
-	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
-	toxpwr = 0
-	var/actual_toxpwr = 5
-	var/delay = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
-
-/datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(current_cycle > delay)
-		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency * delta_time)
-		M.adjustToxLoss(actual_toxpwr * REM * delta_time, 0)
-		if(DT_PROB(5, delta_time))
-			M.Paralyze(20)
-		. = TRUE
 	..()
 
 /datum/reagent/toxin/mimesbane
