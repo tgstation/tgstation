@@ -186,6 +186,24 @@
 			placement = corner
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
+/datum/map_template/proc/discover_offset(var/obj/marker)
+	var/key
+	var/list/models = cached_map.grid_models
+	for(key in models)
+		if(findtext(models[key], "[marker]")) // Yay compile time checks
+			break // This works by assuming there will ever only be one mobile dock in a template at most
+
+	for(var/i in cached_map.gridSets)
+		var/datum/grid_set/gset = i
+		var/ycrd = gset.ycrd
+		for(var/line in gset.gridLines)
+			var/xcrd = gset.xcrd
+			for(var/j in 1 to length(line) step cached_map.key_len)
+				if(key == copytext(line, j, j + cached_map.key_len))
+					return list(xcrd, ycrd)
+				++xcrd
+			--ycrd
+
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss

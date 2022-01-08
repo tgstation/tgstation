@@ -5,6 +5,12 @@
 	cost = 1
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/space/test
+	id = "test"
+	suffix = "testruin.dmm"
+	name = "Le Teste"
+	description = "Blurgle."
+
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
 	suffix = "abandonedzoo.dmm"

@@ -36,30 +36,13 @@
 	if(!cached_map)
 		return
 
-	discover_port_offset()
+	var/offset = discover_offset(/obj/docking_port/mobile)
+
+	port_x_offset = offset[1]
+	port_y_offset = offset[2]
 
 	if(!cache)
 		cached_map = null
-
-/datum/map_template/shuttle/proc/discover_port_offset()
-	var/key
-	var/list/models = cached_map.grid_models
-	for(key in models)
-		if(findtext(models[key], "[/obj/docking_port/mobile]")) // Yay compile time checks
-			break // This works by assuming there will ever only be one mobile dock in a template at most
-
-	for(var/i in cached_map.gridSets)
-		var/datum/grid_set/gset = i
-		var/ycrd = gset.ycrd
-		for(var/line in gset.gridLines)
-			var/xcrd = gset.xcrd
-			for(var/j in 1 to length(line) step cached_map.key_len)
-				if(key == copytext(line, j, j + cached_map.key_len))
-					port_x_offset = xcrd
-					port_y_offset = ycrd
-					return
-				++xcrd
-			--ycrd
 
 /datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
 	. = ..()

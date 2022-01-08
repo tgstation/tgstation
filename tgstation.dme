@@ -3726,6 +3726,7 @@
 #include "code\modules\research\xenobiology\vatgrowing\samples\cell_lines\common.dm"
 #include "code\modules\research\xenobiology\vatgrowing\samples\viruses\_virus.dm"
 #include "code\modules\ruins\lavaland_ruin_code.dm"
+#include "code\modules\ruins\modular_map_loader.dm"
 #include "code\modules\ruins\icemoonruin_code\hotsprings.dm"
 #include "code\modules\ruins\icemoonruin_code\library.dm"
 #include "code\modules\ruins\icemoonruin_code\mailroom.dm"
