@@ -43,7 +43,7 @@
 			delay += 0.1 SECONDS
 
 		if(delay)
-			addtimer(CALLBACK(null, /proc/chatter_speak_word, speaker, letter_count, phomeme, length), delay)
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/chatter_speak_word, speaker, letter_count, phomeme, length), delay)
 			return
 		chatter_speak_word(speaker, current_context, phomeme, length)
 		return
