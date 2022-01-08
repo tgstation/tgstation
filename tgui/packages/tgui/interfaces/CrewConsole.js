@@ -130,12 +130,15 @@ const CrewTableEntry = (props, context) => {
         {name}{assignment !== undefined ? ` (${assignment})` : ""}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
-        {(life_status ? <ColorBox color={healthToColor(
-          oxydam,
-          toxdam,
-          burndam,
-          brutedam)} />
-          : <ColorBox color={'#ed2814'} />)}
+        {life_status ? (
+          <ColorBox color={healthToColor(
+            oxydam,
+            toxdam,
+            burndam,
+            brutedam)} />
+         ) : (
+           <ColorBox color={'#ed2814'} />
+         )}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
