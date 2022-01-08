@@ -222,6 +222,8 @@
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
@@ -256,6 +258,8 @@
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
 	inhand_icon_state = "infiltrator_case"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	force = 15
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
