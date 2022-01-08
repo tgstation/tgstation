@@ -489,7 +489,8 @@
 	. = ..()
 
 	for(var/mob/living/carbon/human/future_pancake in loc)
-		run_over(future_pancake)
+	 if(has_gravity(src))
+		 run_over(future_pancake)
 
 	diag_hud_set_mulebotcell()
 
