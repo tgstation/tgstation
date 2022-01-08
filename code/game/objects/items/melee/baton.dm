@@ -626,12 +626,9 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/security/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin = 1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(active)
-		if(ishuman(thrower))
-			var/mob/living/carbon/human/human_thrower = thrower
-			human_thrower.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
-	return ..()
+/obj/item/melee/baton/security/boomerang/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!active)

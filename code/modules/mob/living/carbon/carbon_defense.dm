@@ -66,6 +66,7 @@
 			visible_message(span_warning("[src] catches [I]!"), \
 							span_userdanger("You catch [I] in mid-air!"))
 			throw_mode_off(THROW_MODE_TOGGLE)
+			SEND_SIGNAL(I, COMSIG_CARBON_SUCCESSFUL_CATCH, src)
 			return TRUE
 	return ..()
 
