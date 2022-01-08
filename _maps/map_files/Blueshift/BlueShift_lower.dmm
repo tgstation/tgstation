@@ -24583,7 +24583,7 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/skyrat;
+	roundstart_template = /datum/map_template/shuttle/mining;
 	width = 7
 	},
 /turf/open/floor/plating,
