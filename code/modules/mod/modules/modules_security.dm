@@ -1,7 +1,6 @@
 //Security modules for MODsuits
 
-//Cloaking
-
+///Cloaking - Lowers the user's visibility, can be interrupted by being touched or attacked.
 /obj/item/mod/module/stealth
 	name = "MOD prototype cloaking module"
 	desc = "A complete retrofitting of the suit, this is a form of visual concealment tech employing esoteric technology \
@@ -14,7 +13,9 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
+	/// Whether or not the cloak turns off on bumping.
 	var/bumpoff = TRUE
+	/// The alpha applied when the cloak is on.
 	var/stealth_alpha = 50
 
 /obj/item/mod/module/stealth/on_activation()
@@ -74,8 +75,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
-//Holster
-
+///Holster - Instantly holsters any not huge gun.
 /obj/item/mod/module/holster
 	name = "MOD holster module"
 	desc = "Based off typical storage compartments, this system allows the suit to holster a \
@@ -88,6 +88,7 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
+	/// Gun we have holstered.
 	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()
@@ -102,12 +103,12 @@
 		if(!istype(holding) || holding.atom_size > ITEM_SIZE_BULKY)
 			balloon_alert(mod.wearer, "it doesn't fit!")
 			return
-		if(mod.wearer.transferItemToLoc(holding, src, FALSE, FALSE))
+		if(mod.wearer.transferItemToLoc(holding, src, force = FALSE, silent = TRUE))
 			holstered = holding
 			balloon_alert(mod.wearer, "weapon holstered")
 			playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)
 			drain_power(use_power_cost)
-	else if(mod.wearer.put_in_active_hand(holstered, FALSE, TRUE))
+	else if(mod.wearer.put_in_active_hand(holstered, forced = FALSE, ignore_animation = TRUE))
 		balloon_alert(mod.wearer, "weapon drawn")
 		holstered = null
 		playsound(src, 'sound/weapons/gun/revolver/empty.ogg', 100, TRUE)

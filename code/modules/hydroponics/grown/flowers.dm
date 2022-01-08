@@ -110,6 +110,7 @@
 	mutatelist = null
 	rarity = 15
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/fuel/oil = 0.05)
+	graft_gene = /datum/plant_gene/trait/preserved
 
 ///Fraxinella Flowers.
 /obj/item/food/grown/poppy/geranium/fraxinella

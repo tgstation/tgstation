@@ -273,6 +273,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	atom_size = ITEM_SIZE_NORMAL
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 	var/range_heavy = 3

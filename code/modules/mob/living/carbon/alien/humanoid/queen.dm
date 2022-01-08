@@ -4,6 +4,8 @@
 	status_flags = 0
 	pixel_x = -16
 	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	bubble_icon = "alienroyal"
 	atom_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles

@@ -14,6 +14,7 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
+	cutting_tool = null // Bodybags are not deconstructed by cutting
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
 	has_closed_overlay = FALSE

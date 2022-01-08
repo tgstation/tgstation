@@ -906,6 +906,9 @@
 	. = ..()
 	if(!isitem(storage_holder))
 		return
+	if(istype(storage_holder, /obj/item/mod/control))
+		var/obj/item/mod/control/mod = storage_holder
+		return mod.slowdown_inactive <= 0
 	var/obj/item/storage_item = storage_holder
 	return storage_item.slowdown <= 0
 

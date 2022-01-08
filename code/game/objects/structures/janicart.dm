@@ -177,7 +177,10 @@
 /obj/structure/janitorialcart/update_overlays()
 	. = ..()
 	if(mybag)
-		. += "cart_garbage"
+		if(istype(mybag, /obj/item/storage/bag/trash/bluespace))
+			. += "cart_bluespace_garbage"
+		else
+			. += "cart_garbage"
 	if(mymop)
 		. += "cart_mop"
 	if(mybroom)

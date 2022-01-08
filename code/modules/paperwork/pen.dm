@@ -167,7 +167,7 @@
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
 				O.renamedByPlayer = TRUE
 
-		if(penchoice == "Change description")
+		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))

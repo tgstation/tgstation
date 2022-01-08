@@ -10,12 +10,16 @@
 	var/flame_range = 0
 	/// The flash range of the resulting explosion.
 	var/flash_range = 3
+	/// Whether this explosion ignores the bombcap.
+	var/uncapped
+	/// Whether we always delete. Useful for nukes turned plasma and such, so they don't default delete and can survive
+	var/delete_after
 	/// For items, lets us determine where things should be hit.
 	var/equipped_slot
-	/// Whether we always delete. Useful for nukes turned plasma and such, so they don't default delete and can survive
-	var/always_delete
+	/// Whether this component is currently in the process of exploding.
+	var/tmp/exploding = FALSE
 
-/datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flame_range_override, flash_range_override, _always_delete = TRUE)
+/datum/component/explodable/Initialize(devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, uncapped = FALSE, delete_after = EXPLODABLE_DELETE_PARENT)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -31,19 +35,18 @@
 			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
-
-
-	if(devastation_range_override)
-		devastation_range = devastation_range_override
-	if(heavy_impact_range_override)
-		heavy_impact_range = heavy_impact_range_override
-	if(light_impact_range_override)
-		light_impact_range = light_impact_range_override
-	if(flame_range_override)
-		flame_range = flame_range_override
-	if(flash_range_override)
-		flash_range = flash_range_override
-	always_delete = _always_delete
+	if (devastation_range)
+		src.devastation_range = devastation_range
+	if (heavy_impact_range)
+		src.heavy_impact_range = heavy_impact_range
+	if (light_impact_range)
+		src.light_impact_range = light_impact_range
+	if (flame_range)
+		src.flame_range = flame_range
+	if (flash_range)
+		src.flash_range = flash_range
+	src.uncapped = uncapped
+	src.delete_after = delete_after
 
 /datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
@@ -134,11 +137,28 @@
 /// Explode and remove the object
 /datum/component/explodable/proc/detonate()
 	SIGNAL_HANDLER
+	if (exploding)
+		return // If we don't do this and this doesn't delete it can lock the MC into only processing Input, Timers, and Explosions.
 
-	var/atom/A = parent
+	var/atom/bomb = parent
 	var/log = TRUE
 	if(light_impact_range < 1)
 		log = FALSE
-	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, log) //epic explosion time
-	if(always_delete)
-		qdel(A)
+
+	exploding = TRUE
+	explosion(bomb, devastation_range, heavy_impact_range, light_impact_range, flame_range, flash_range, log, uncapped) //epic explosion time
+
+	switch(delete_after)
+		if(EXPLODABLE_DELETE_SELF)
+			qdel(src)
+		if(EXPLODABLE_DELETE_PARENT)
+			qdel(bomb)
+		else
+			addtimer(CALLBACK(src, .proc/reset_exploding), 0.1 SECONDS)
+
+/**
+ * Resets the expoding flag
+ */
+/datum/component/explodable/proc/reset_exploding()
+	SIGNAL_HANDLER
+	src.exploding = FALSE
