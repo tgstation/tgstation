@@ -19,8 +19,10 @@
 	true_parent = parent
 
 	//Assignments
-	boomerang_throw_range = _boomerang_throw_range
-	thrower_easy_catch_enabled = _thrower_easy_catch_enabled
+	if(_boomerang_throw_range)
+		boomerang_throw_range = _boomerang_throw_range
+	if(_thrower_easy_catch_enabled)
+		thrower_easy_catch_enabled = _thrower_easy_catch_enabled
 
 /datum/component/boomerang/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/PrepareThrow) ///Collect data on current thrower and the throwing datum
