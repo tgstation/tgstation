@@ -7055,7 +7055,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "chem-airlock"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/snowed/icemoon,
 /area/medical/chemistry)
 "xG" = (
 /obj/structure/railing/corner,
