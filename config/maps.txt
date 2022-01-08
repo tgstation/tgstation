@@ -39,6 +39,11 @@ map tramstation
 	votable
 endmap
 
+map blueshift
+	minplayers 25
+	votable
+endmap
+
 map runtimestation
 endmap
 
