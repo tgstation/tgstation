@@ -1,5 +1,5 @@
 /datum/unit_test/traitor/Run()
-	var/datum/dynamic_ruleset/roundstart/traitor/traitor_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor/)
+	var/datum/dynamic_ruleset/roundstart/traitor/traitor_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor)
 	var/list/possible_jobs = SSjob.station_jobs.Copy()
 	possible_jobs -= traitor_ruleset.protected_roles
 	possible_jobs -= traitor_ruleset.restricted_roles
