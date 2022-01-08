@@ -22668,7 +22668,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron{
 	desc = "It's a pool for swimming in!";
-	icon_state = ;
 	name = "pool"
 	},
 /area/command/heads_quarters/captain/private)
@@ -49529,7 +49528,6 @@
 "rXU" = (
 /turf/open/floor/iron{
 	desc = "It's a pool for swimming in!";
-	icon_state = ;
 	name = "pool"
 	},
 /area/command/heads_quarters/captain/private)
