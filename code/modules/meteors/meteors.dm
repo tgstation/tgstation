@@ -324,7 +324,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 		new /obj/effect/decal/cleanable/blood(T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
-	A.ex_act(hitpwr)
+	EX_ACT(A, hitpwr)
 	get_hit()
 
 //Meaty Ore Xeno edition

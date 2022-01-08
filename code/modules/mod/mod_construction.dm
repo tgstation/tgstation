@@ -6,17 +6,33 @@
 	name = "MOD helmet"
 	icon_state = "helmet"
 
+/obj/item/mod/construction/helmet/examine(mob/user)
+	. = ..()
+	. += span_notice("You could insert it into a <b>MOD shell</b>...")
+
 /obj/item/mod/construction/chestplate
 	name = "MOD chestplate"
 	icon_state = "chestplate"
+
+/obj/item/mod/construction/chestplate/examine(mob/user)
+	. = ..()
+	. += span_notice("You could insert it into a <b>MOD shell</b>...")
 
 /obj/item/mod/construction/gauntlets
 	name = "MOD gauntlets"
 	icon_state = "gauntlets"
 
+/obj/item/mod/construction/gauntlets/examine(mob/user)
+	. = ..()
+	. += span_notice("You could insert these into a <b>MOD shell</b>...")
+
 /obj/item/mod/construction/boots
 	name = "MOD boots"
 	icon_state = "boots"
+
+/obj/item/mod/construction/boots/examine(mob/user)
+	. = ..()
+	. += span_notice("You could insert these into a <b>MOD shell</b>...")
 
 /obj/item/mod/construction/core
 	name = "MOD core"
@@ -44,15 +60,15 @@
 	qdel(src)
 
 /obj/item/mod/construction/armor
-	name = "MOD armor plates"
-	desc = "Armor plates used to finish a MOD."
+	name = "MOD external plating"
+	desc = "External plating used to finish a MOD control unit."
 	icon_state = "standard-armor"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
 /obj/item/mod/construction/armor/Initialize(mapload)
 	. = ..()
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
-	name = "MOD [used_theme.name] armor plates"
+	name = "MOD [used_theme.name] external plating"
 	desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-armor"
 

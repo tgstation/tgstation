@@ -1,4 +1,4 @@
-/obj/item/clothing/head/helmet/space/mod
+/obj/item/clothing/head/mod
 	name = "MOD helmet"
 	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
@@ -10,29 +10,31 @@
 	cold_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
+	clothing_flags = THICKMATERIAL|SNUG_FIT
 	resistance_flags = NONE
 	flash_protect = FLASH_PROTECTION_NONE
-	clothing_flags = SNUG_FIT
+	dynamic_hair_suffix = ""
+	dynamic_fhair_suffix = ""
 	flags_inv = HIDEFACIALHAIR
 	flags_cover = NONE
 	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
+	item_flags = IMMUTABLE_SLOW
 	var/alternate_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 
-/obj/item/clothing/head/helmet/space/mod/Destroy()
+/obj/item/clothing/head/mod/Destroy()
 	if(!QDELETED(mod))
 		mod.helmet = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
 	return ..()
 
-/obj/item/clothing/head/helmet/space/mod/atom_destruction(damage_flag)
+/obj/item/clothing/head/mod/atom_destruction(damage_flag)
 	return mod.atom_destruction(damage_flag)
 
-/obj/item/clothing/suit/armor/mod
+/obj/item/clothing/suit/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/mod.dmi'
@@ -48,18 +50,19 @@
 	clothing_flags = THICKMATERIAL
 	visor_flags = STOPSPRESSUREDAMAGE
 	visor_flags_inv = HIDEJUMPSUIT
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	resistance_flags = NONE
+	item_flags = IMMUTABLE_SLOW
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	var/obj/item/mod/control/mod
 
-/obj/item/clothing/suit/armor/mod/Destroy()
+/obj/item/clothing/suit/mod/Destroy()
 	if(!QDELETED(mod))
 		mod.chestplate = null
 		mod.mod_parts -= src
 		QDEL_NULL(mod)
 	return ..()
 
-/obj/item/clothing/suit/armor/mod/atom_destruction(damage_flag)
+/obj/item/clothing/suit/mod/atom_destruction(damage_flag)
 	return mod.atom_destruction(damage_flag)
 
 /obj/item/clothing/gloves/mod
@@ -76,6 +79,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
+	item_flags = IMMUTABLE_SLOW
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 
@@ -113,7 +117,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	clothing_flags = THICKMATERIAL
 	resistance_flags = NONE
-	item_flags = IGNORE_DIGITIGRADE
+	item_flags = IMMUTABLE_SLOW|IGNORE_DIGITIGRADE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 

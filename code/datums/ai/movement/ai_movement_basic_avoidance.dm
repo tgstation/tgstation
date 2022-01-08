@@ -19,8 +19,14 @@
 	source.distance = controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE]
 
 	var/can_move = TRUE
-	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
+	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby)
 		can_move = FALSE
+
+	// Check if this controller can actually run, so we don't chase people with corpses
+	if(!controller.able_to_run())
+		controller.CancelActions()
+		qdel(source) //stop moving
+		return MOVELOOP_SKIP_STEP
 
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE

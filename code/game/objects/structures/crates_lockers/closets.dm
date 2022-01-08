@@ -86,7 +86,6 @@
 	return
 
 /obj/structure/closet/Destroy()
-	dump_contents()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
@@ -187,7 +186,7 @@
 		. += span_notice("It's welded shut.")
 	if(anchored)
 		. += span_notice("It is <b>bolted</b> to the ground.")
-	if(opened)
+	if(opened && cutting_tool == /obj/item/weldingtool)
 		. += span_notice("The parts are <b>welded</b> together.")
 	else if(secure && !opened)
 		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
@@ -353,6 +352,7 @@
 			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
 			electronics_ref.forceMove(drop_location())
+	dump_contents()
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)

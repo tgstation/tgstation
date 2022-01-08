@@ -214,8 +214,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///List of visual overlays created by handle_body()
 	var/list/body_vis_overlays = list()
 
-	//Should we preload this species's organs?
+	/// Should we preload this species's organs?
 	var/preload = TRUE
+
+	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
+	var/prevent_perspective_change = FALSE
 
 ///////////
 // PROCS //
@@ -2165,3 +2168,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_store += mutantappendix
 	//We don't cache mutant hands because it's not constrained enough, too high a potential for failure
 	return to_store
+
+
+/**
+ * Owner login
+ */
+
+/**
+ * A simple proc to be overwritten if something needs to be done when a mob logs in. Does nothing by default.
+ *
+ * Arguments:
+ * * owner - The owner of our species.
+ */
+/datum/species/proc/on_owner_login(mob/living/carbon/human/owner)
+	return

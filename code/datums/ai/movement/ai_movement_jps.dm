@@ -36,6 +36,12 @@
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE
 
+	// Check if this controller can actually run, so we don't chase people with corpses
+	if(!controller.able_to_run())
+		controller.CancelActions()
+		qdel(source) //stop moving
+		return MOVELOOP_SKIP_STEP
+
 	if(can_move)
 		return
 	increment_pathing_failures(controller)
