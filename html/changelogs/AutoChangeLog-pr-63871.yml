@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Tram medical: Adds some missing white medkits."
+  - bugfix: "Tram medical: Cryo freezer actually works."
+  - bugfix: "Tram medical: Adds some missing wall mounts and firelocks."
+  - bugfix: "Tram medical: You can reach the corner table in the chem lab"
+  - bugfix: "Tram medical: Changes windoor directions in the pharmacy, fixes access on shutters"
+  - bugfix: "Tram medical: Privacy shutters for the CMO's office"
