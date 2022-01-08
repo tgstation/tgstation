@@ -216,8 +216,7 @@
 /obj/item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
-		if(human_slapped.dna?.species)
-			human_slapped.dna.species.stop_wagging_tail(slapped)
+		human_slapped.dna?.species?.stop_wagging_tail(slapped)
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
