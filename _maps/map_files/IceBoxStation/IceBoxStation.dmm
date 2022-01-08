@@ -19372,6 +19372,12 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white,
 /area/science/research)
+"fZb" = (
+/obj/structure/disposalpipe/trunk/multiz/down{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "fZp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -33988,6 +33994,15 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"nCk" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "nCo" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -70768,7 +70783,7 @@ aSg
 aWl
 heu
 rSa
-aSg
+fZb
 wpt
 aSg
 aSg
@@ -71025,7 +71040,7 @@ bff
 bff
 bff
 bhO
-bhO
+nCk
 bhO
 oNG
 rXf
