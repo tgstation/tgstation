@@ -164,7 +164,7 @@
  * Notice that this is the opposite priority of [/proc/typecacheof].
  *
  * Arguments:
- * - [type_to_check][/atom]: An instance to check.
+ * - [type_to_check][/datum]: An instance to check.
  * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
  * - zebra: Whether to use the value of the mathing type in the list instead of just returning true when a match is found.
  */
