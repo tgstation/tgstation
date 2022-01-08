@@ -39,6 +39,9 @@
 		announcement += "<br>[span_alert("[html_encode(text)]")]<br>"
 	announcement += "<br>"
 
+	if(!players)
+		players = GLOB.player_list
+
 	var/sound_to_play = sound(sound)
 	for(var/mob/target in players)
 		if(target.can_hear())

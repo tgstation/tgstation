@@ -346,7 +346,7 @@ const PageMain = (props, context) => {
     <Box>
       {!syndicate && (
         <Section title="Emergency Shuttle">
-          {shuttleCalled && (
+          {!!shuttleCalled && (
             <Button.Confirm
               icon="space-shuttle"
               content="Recall Emergency Shuttle"
@@ -476,7 +476,7 @@ const PageMain = (props, context) => {
             onClick={() => setRequestingNukeCodes(true)}
           />}
 
-          {(emagged && !syndicate) && <Button
+          {(!!emagged && !syndicate) && <Button
             icon="undo"
             content="Restore Backup Routing Data"
             onClick={() => act("restoreBackupRoutingData")}
