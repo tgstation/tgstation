@@ -23543,7 +23543,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "AIsatexternal
+	cycle_id = "AIsatexternal"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
@@ -27849,7 +27849,7 @@
 	req_one_access_txt = "32;19"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "AIsatexternal
+	cycle_id = "AIsatexternal"
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/aisat/exterior)
@@ -47909,7 +47909,6 @@
 "rtg" = (
 /mob/living/simple_animal/drone/snowflake/bardrone{
 	desc = "A barkeeping drone, this one is made to serve centrall command staff only.";
-	ghost_controllable = 1;
 	name = "Personal Bardrone"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
