@@ -104,11 +104,13 @@
 	on_module_selected = add_output_port("On Module Selected", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_adapter_core/register_shell(atom/movable/shell)
+	. = ..()
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
 	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
+	. = ..()
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
 	attached_module = null
 

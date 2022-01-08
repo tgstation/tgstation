@@ -47,6 +47,7 @@
 	return ..()
 
 /obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
+	. = ..()
 	var/obj/item/organ/cyberimp/bci/bci = shell
 	if(istype(bci))
 		bci_action = new(src)
@@ -55,6 +56,7 @@
 		bci.actions += list(bci_action)
 
 /obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
+	. = ..()
 	var/obj/item/organ/cyberimp/bci/bci = shell
 	if(istype(bci))
 		bci.actions -= bci_action
