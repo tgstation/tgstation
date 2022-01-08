@@ -126,19 +126,6 @@
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
-//Wet floor type flags. Stronger ones should be higher in number.
-#define TURF_DRY (0)
-#define TURF_WET_WATER (1<<0)
-#define TURF_WET_PERMAFROST (1<<1)
-#define TURF_WET_ICE (1<<2)
-#define TURF_WET_LUBE (1<<3)
-#define TURF_WET_SUPERLUBE (1<<4)
-
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
-
-//Maximum amount of time, (in deciseconds) a tile can be wet for.
-#define MAXIMUM_WET_TIME 5 MINUTES
-
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
