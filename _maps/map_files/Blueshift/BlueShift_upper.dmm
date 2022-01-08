@@ -1420,7 +1420,6 @@
 /obj/structure/transit_tube/crossing/horizontal,
 /turf/open/floor/engine/hull{
 	initial_gas_mix = "TEMP=2.7";
-	turf_height = 0
 	},
 /area/space/nearstation)
 "alB" = (
@@ -43511,7 +43510,6 @@
 	},
 /turf/open/floor/engine/hull{
 	initial_gas_mix = "TEMP=2.7";
-	turf_height = 0
 	},
 /area/space/nearstation)
 "pGw" = (
@@ -52124,7 +52122,6 @@
 "sTI" = (
 /turf/open/floor/engine/hull{
 	initial_gas_mix = "TEMP=2.7";
-	turf_height = 0
 	},
 /area/space/nearstation)
 "sTM" = (
