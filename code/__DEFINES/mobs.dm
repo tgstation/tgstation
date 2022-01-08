@@ -503,3 +503,85 @@
 #define SIGN_ARMLESS 2
 #define SIGN_TRAIT_BLOCKED 3
 #define SIGN_CUFFED 4
+
+// Mob Overlays Indexes
+/// Mutations layer - Tk headglows, cold resistance glow, etc
+#define MUTATIONS_LAYER 31 
+/// Mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODY_BEHIND_LAYER 30
+/// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODYPARTS_LAYER 29
+/// Mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_ADJ_LAYER 28
+/// Underwear, undershirts, socks, eyes, lips(makeup)
+#define BODY_LAYER 27
+/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define FRONT_MUTATIONS_LAYER 26
+/// Damage indicators (cuts and burns)
+#define DAMAGE_LAYER 25
+/// Jumpsuit clothing layer
+#define UNIFORM_LAYER 24
+/// ID card layer (might be deprecated)
+#define ID_LAYER 23
+/// ID card layer
+#define ID_CARD_LAYER 22
+/// Hands body part layer (or is this for the arm? not sure...)
+#define HANDS_PART_LAYER 21
+/// Gloves layer
+#define GLOVES_LAYER 20
+/// Shoes layer
+#define SHOES_LAYER 19
+/// Ears layer (Spessmen have ears? Wow)
+#define EARS_LAYER 18
+/// Suit layer (armor, hardsuits, etc.)
+#define SUIT_LAYER 17
+/// Glasses layer
+#define GLASSES_LAYER 16
+/// Belt layer
+#define BELT_LAYER 15 //Possible make this an overlay of somethign required to wear a belt?
+/// Suit storage layer (tucking a gun or baton underneath your armor)
+#define SUIT_STORE_LAYER 14
+/// Neck layer (for wearing ties and bedsheets)
+#define NECK_LAYER 13
+/// Back layer (for backpacks and equipment on your back)
+#define BACK_LAYER 12
+/// Hair layer (mess with the fro and you got to go!)
+#define HAIR_LAYER 11 //TODO: make part of head layer?
+/// Facemask layer (gas masks, breath masks, etc.)
+#define FACEMASK_LAYER 10
+/// Head layer (hats, helmets, etc.)
+#define HEAD_LAYER 9
+/// Handcuff layer (when your hands are cuffed)
+#define HANDCUFF_LAYER 8
+/// Legcuff layer (when your feet are cuffed)
+#define LEGCUFF_LAYER 7
+/// Hands layer (for the actual hand, not the arm... I think?)
+#define HANDS_LAYER 6
+/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
+#define BODY_FRONT_LAYER 5
+/// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
+#define ABOVE_BODY_FRONT_GLASSES_LAYER 4
+/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
+#define ABOVE_BODY_FRONT_HEAD_LAYER 3
+/// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
+#define HALO_LAYER 2
+/// Fire layer when you're on fire
+#define FIRE_LAYER 1
+/// Total number of layers for mob overlays
+#define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+
+//Bitflags for the layers an external organ can draw on
+#define EXTERNAL_FRONT (1 << 1)
+#define EXTERNAL_ADJACENT (1 << 2)
+#define EXTERNAL_BEHIND (1 << 3)
+#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+
+//Human Overlay Index Shortcuts for alternate_worn_layer, layers
+//Because I *KNOW* somebody will think layer+1 means "above"
+//IT DOESN'T OK, IT MEANS "UNDER"
+#define UNDER_SUIT_LAYER (SUIT_LAYER+1)
+#define UNDER_HEAD_LAYER (HEAD_LAYER+1)
+
+//AND -1 MEANS "ABOVE", OK?, OK!?!
+#define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
+#define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
