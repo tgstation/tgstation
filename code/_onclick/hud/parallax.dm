@@ -206,27 +206,15 @@
 			parallax_layer.offset_x -= offset_x * parallax_layer.speed
 			parallax_layer.offset_y -= offset_y * parallax_layer.speed
 
-			switch(parallax_layer.offset_x)
-				if(240 to INFINITY)
-					parallax_layer.offset_x -= 480
-				if(-INFINITY to -240)
-					parallax_layer.offset_x += 480
-
-			switch(parallax_layer.offset_y)
-				if(240 to INFINITY)
-					parallax_layer.offset_y -= 480
-				if(-INFINITY to -240)
-					parallax_layer.offset_y += 480
-			/*
 			if(parallax_layer.offset_x > 240)
 				parallax_layer.offset_x -= 480
-			if(parallax_layer.offset_x < -240)
+			else if(parallax_layer.offset_x < -240)
 				parallax_layer.offset_x += 480
+
 			if(parallax_layer.offset_y > 240)
 				parallax_layer.offset_y -= 480
-			if(parallax_layer.offset_y < -240)
+			else if(parallax_layer.offset_y < -240)
 				parallax_layer.offset_y += 480
-			*/
 
 		parallax_layer.screen_loc = "CENTER-7:[round(parallax_layer.offset_x,1)],CENTER-7:[round(parallax_layer.offset_y,1)]"
 
