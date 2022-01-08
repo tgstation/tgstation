@@ -4,7 +4,7 @@
 	icon_screen = "tram"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/tram_controls
-	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1 //What fun is it if we get consumed by the SM and can't move the tram anymore?
+	flags_1 = NODECONSTRUCT_1 | SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	light_color = LIGHT_COLOR_GREEN
