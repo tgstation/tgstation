@@ -214,3 +214,46 @@
   vincentiusvin:
   - code_imp: Some code changes to thermomachine ports and appearance. No gameplay
       changes expected though.
+2022-01-08:
+  FernandoJ8:
+  - rscadd: Adds the captain's aid
+  Fikou, sprites from Azlan:
+  - expansion: Adds Anomalocks, anomaly core locked MODsuit modules. You can obtain
+      the anti-gravity and teleporter module from R&D.
+  - qol: activating a suit now should be accidental click-proof
+  - bugfix: fixes mouth hole not working
+  Melbert:
+  - bugfix: You can no longer override the ling DNA you're currently disguised as.
+      This was apparently always intended but broken for ages.
+  - code_imp: Modernized much of ling code.
+  - refactor: Also refactored part of ling code. The ling chemical hud element should
+      be a bit snappier now.
+  - bugfix: You can see rust again
+  SmArtKar:
+  - bugfix: Spiders no longer cause runtimes when coming into contact with spider
+      webs. Also their AI no longer breaks due to this.
+  SuperNovaa41:
+  - bugfix: The regal rat has full access to it's abilities again.
+  Triiodine, TetraZeta, PositiveEntropy:
+  - imageadd: Resprites the labcoats, removing the asbestos and charcoal grime from
+      them!
+  Watermelon914:
+  - bugfix: Fixed having a limited vision whilst in the abductor ship.
+  san7890:
+  - spellcheck: Nanotrasen has undergone a corporate reorganization, reallocating
+      powers previously gone to Central Command back into their own fold.
+  theOOZ:
+  - qol: Runechat offsets correctly on larger mobs
+  timothymtorres:
+  - bugfix: Fix open/space/openspace to have dark shadow borders to indicate it's
+      openspace
+  timothymtorres, TheBonded:
+  - expansion: Adds Claustrophobia quirk that causes suffocation if a player enters
+      any type of container object. (lockers, crates, machinery, disposals, etc.)
+  - expansion: Adds Blood Phobia that is triggered from seeing gibs, blood, bloody
+      clothes or weapons, and blood related objects like IV drips and blood bags.
+  - bugfix: Fixed some quirks to not process if player is sleeping or unconscious.
+  tralezab:
+  - rscdel: Removed monkey mode from the code, when admins ran it it was broken anyways
+  - rscdel: Jungle fever no longer spreads via monkey bites after conversion, and
+      it is now jungle flu.

@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - rscdel: "Removed monkey mode from the code, when admins ran it it was broken anyways"
-  - rscdel: "Jungle fever no longer spreads via monkey bites after conversion, and it is now jungle flu."
