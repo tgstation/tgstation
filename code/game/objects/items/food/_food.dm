@@ -107,10 +107,3 @@
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting)
-
-/obj/item/food/suicide_act(mob/user)
-	user.visible_message(span_suicide("[user] [pick("gobbles up", "consumes", "munches", "devours")] [src] in one bite! It looks like [user.p_theyre()] trying to commit suicide!"))
-	for(var/datum/reagent/found_reagent as anything in reagents.reagent_list)
-		user.reagents.add_reagent(found_reagent.type, found_reagent.volume)
-	qdel(src)
-	return OXYLOSS

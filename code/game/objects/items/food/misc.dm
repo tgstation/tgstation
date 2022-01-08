@@ -445,7 +445,7 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
-/obj/item/food/bubblegum/suicide_act(mob/user, show_message=FALSE)
+/obj/item/food/bubblegum/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	qdel(src)
 	return TOXLOSS
@@ -510,7 +510,7 @@
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
 
-/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user, show_message=FALSE)
+/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
 	user.say(";[pick(hallucination_lines)]")
 	return ..()
 

@@ -297,11 +297,10 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/burger/superbite/suicide_act(mob/user, show_message=TRUE)
+/obj/item/food/burger/superbite/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
 	var/datum/component/edible/component = GetComponent(/datum/component/edible)
-	if(component)
-		component.TakeBite(user, user)
+	component?.TakeBite(user, user)
 	return OXYLOSS
 
 /obj/item/food/burger/fivealarm
