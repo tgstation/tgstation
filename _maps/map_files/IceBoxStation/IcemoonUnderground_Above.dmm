@@ -1037,6 +1037,9 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/cargo/drone_bay)
+"eE" = (
+/turf/open/floor/iron,
+/area/icemoon/underground/unexplored)
 "eF" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -3963,6 +3966,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"qk" = (
+/obj/structure/stairs/south{
+	dir = 1
+	},
+/turf/open/genturf,
+/area/icemoon/underground/unexplored/rivers)
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9988,6 +9997,9 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/medical)
+"Nw" = (
+/turf/open/floor/iron,
+/area/icemoon/underground/unexplored/rivers)
 "Nz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -31348,10 +31360,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-wS
+qk
+Nw
+Nw
+eE
 ak
 ak
 ak
@@ -31605,10 +31617,10 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
+qk
+Nw
+Nw
+Nw
 ak
 ak
 ak
