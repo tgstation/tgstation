@@ -465,7 +465,9 @@
 	PRESET /datum/preset_holoimage/engineer/mod
 	SAY Fuck, fuck, fuck!
 	DELAY 20
-	SAY It's loose! CALL THE FUCKING SHUTT-
+	NAME Maria Dell
+	PRESET /datum/preset_holoimage/engineer/atmos
+	SAY GEORGE, WAIT-
 	DELAY 10
 	PRESET /datum/preset_holoimage/corgi
 	NAME Blackbox Automated Message

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "The status screen in the ERT Bay in CentComm has been moved to the other side of the wall because we accidentally kept sending them down and the crew would keep selling them."
