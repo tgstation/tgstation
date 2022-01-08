@@ -178,7 +178,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STRIP, src)
+	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -337,7 +337,7 @@
 		if(!rune_ref.resolve())
 			current_runes -= rune_ref
 
-	if(current_runes.len >= max_rune_amt)
+	if(length(current_runes) >= max_rune_amt)
 		to_chat(user,span_notice("The blade cannot support more runes!"))
 		return
 
@@ -349,7 +349,7 @@
 	drawing = TRUE
 
 	var/type = pick_list[tgui_input_list(user, "Choose the rune", "Rune", pick_list) ]
-	if(!type)
+	if(isnull(type))
 		drawing = FALSE
 		return
 

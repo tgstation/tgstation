@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix transparent floors clipping objects from bottom z-level to above z-level."

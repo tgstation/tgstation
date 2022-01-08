@@ -54,9 +54,6 @@
 		return FALSE
 	. = ..()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/get_node_connects()
-	return list(dir, turn(dir, 180))
-
 /obj/machinery/atmospherics/components/binary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
@@ -150,20 +147,19 @@
  * E is the efficiency variable. At E=1 and M=0 it works out to be ((C1*T1)+(C2*T2))/(C1+C2).
  */
 /obj/machinery/atmospherics/components/binary/thermomachine/process_atmos()
-	if(!is_operational || !on)  //if it has no power or its switched off, dont process atmos
-		on = FALSE
-		update_appearance()
+	if(!on)
 		return
 
 	var/turf/local_turf = get_turf(src)
-	if(!local_turf)
+
+	if(!is_operational || !local_turf)
 		on = FALSE
 		update_appearance()
 		return
 
 	// The gas we want to cool/heat
-	var/datum/gas_mixture/main_port = airs[1]
-	var/datum/gas_mixture/exchange_target = airs[2]
+	var/datum/gas_mixture/main_port = airs[2]
+	var/datum/gas_mixture/exchange_target = airs[1]
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
@@ -199,7 +195,7 @@
 		if(use_enviroment_heat)
 			exchange_target = local_turf.return_air()
 		else
-			exchange_target = airs[2]
+			exchange_target = airs[1]
 
 		if(exchange_target.total_moles() < 5)
 			mole_eff_thermal_port = 0.1
@@ -261,7 +257,6 @@
 		power_usage = idle_power_usage
 
 	use_power(power_usage)
-	update_appearance()
 	update_parents()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
@@ -389,8 +384,8 @@
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/explode()
 	explosion(loc, 0, 0, 3, 3, TRUE, explosion_cause = src)
-	var/datum/gas_mixture/main_port = airs[1]
-	var/datum/gas_mixture/exchange_target = airs[2]
+	var/datum/gas_mixture/main_port = airs[2]
+	var/datum/gas_mixture/exchange_target = airs[1]
 	if(main_port)
 		loc.assume_air(main_port.remove_ratio(1))
 	if(exchange_target)
@@ -420,9 +415,9 @@
 	data["target"] = target_temperature
 	data["initial"] = initial(target_temperature)
 
-	var/datum/gas_mixture/air1 = airs[1]
-	data["temperature"] = air1.temperature
-	data["pressure"] = air1.return_pressure()
+	var/datum/gas_mixture/main_port = airs[2]
+	data["temperature"] = main_port.temperature
+	data["pressure"] = main_port.return_pressure()
 	data["efficiency"] = efficiency
 
 	data["use_env_heat"] = use_enviroment_heat

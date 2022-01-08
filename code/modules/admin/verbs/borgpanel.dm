@@ -84,11 +84,12 @@
 		return
 	switch (action)
 		if ("set_charge")
-			var/newcharge = input("New charge (0-[borg.cell.maxcharge]):", borg.name, borg.cell.charge) as num|null
-			if (newcharge)
-				borg.cell.charge = clamp(newcharge, 0, borg.cell.maxcharge)
-				message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
-				log_silicon("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
+			var/newcharge = tgui_input_number(usr, "Set new charge", borg.name, borg.cell.charge, borg.cell.maxcharge)
+			if (isnull(newcharge))
+				return
+			borg.cell.charge = clamp(newcharge, 0, borg.cell.maxcharge)
+			message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
+			log_silicon("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
 		if ("remove_cell")
 			QDEL_NULL(borg.cell)
 			message_admins("[key_name_admin(user)] deleted the cell of [ADMIN_LOOKUPFLW(borg)].")

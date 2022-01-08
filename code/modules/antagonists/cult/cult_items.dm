@@ -162,8 +162,8 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/cult_bastard/examine(mob/user)
 	. = ..()
-	if(contents.len)
-		. += "<b>There are [contents.len] souls trapped within the sword's core.</b>"
+	if(length(contents))
+		. += "<b>There are [length(contents)] souls trapped within the sword's core.</b>"
 	else
 		. += "The sword appears to be quite lifeless."
 
@@ -227,7 +227,7 @@ Striking a noncultist, however, will tear their flesh."}
 			stone.attack(human_target, user)
 			if(!LAZYLEN(stone.contents))
 				qdel(stone)
-	if(istype(target, /obj/structure/constructshell) && contents.len)
+	if(istype(target, /obj/structure/constructshell) && length(contents))
 		var/obj/item/soulstone/stone = contents[1]
 		if(!istype(stone))
 			stone.forceMove(drop_location())
@@ -583,7 +583,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 		if(totalcurses >= MAX_SHUTTLE_CURSES && (world.time < first_curse_time + SHUTTLE_CURSE_OMFG_TIMESPAN))
 			var/omfg_message = pick_list(CULT_SHUTTLE_CURSE, "omfg_announce") || "LEAVE US ALONE!"
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, omfg_message, "Priority Alert", 'sound/misc/notice1.ogg', null, "Central Command Division of Transportation"), rand(2 SECONDS, 6 SECONDS))
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, omfg_message, "Priority Alert", 'sound/misc/notice1.ogg', null, "Nanotrasen Department of Transportation: Central Command"), rand(2 SECONDS, 6 SECONDS))
 			for(var/mob/iter_player as anything in GLOB.player_list)
 				if(IS_CULTIST(iter_player))
 					iter_player.client?.give_award(/datum/award/achievement/misc/cult_shuttle_omfg, iter_player)
@@ -665,41 +665,39 @@ Striking a noncultist, however, will tear their flesh."}
 		to_chat(user, "That doesn't seem to do anything useful.")
 		return
 
-	if(istype(A, /obj/item))
-
-		var/list/cultists = list()
-		for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
-			if(M.current && M.current.stat != DEAD)
-				cultists |= M.current
-		var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
-		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
-			return
-		if(!cultist_to_receive)
-			to_chat(user, "<span class='cult italic'>You require a destination!</span>")
-			log_game("Void torch failed - no target")
-			return
-		if(cultist_to_receive.stat == DEAD)
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-			log_game("Void torch failed - target died")
-			return
-		if(!IS_CULTIST(cultist_to_receive))
-			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
-			log_game("Void torch failed - target was deconverted")
-			return
-		if(A in user.get_all_contents())
-			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
-			return
-		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
-		cultist_to_receive.put_in_hands(A)
-		charges--
-		to_chat(user, "\The [src] now has [charges] charge\s.")
-		if(charges == 0)
-			qdel(src)
-
-	else
+	if(!istype(A, /obj/item))
 		..()
 		to_chat(user, span_warning("\The [src] can only transport items!"))
+		return
 
+	var/list/cultists = list()
+	for(var/datum/mind/M as anything in get_antag_minds(/datum/antagonist/cult))
+		if(M.current && M.current.stat != DEAD)
+			cultists |= M.current
+	var/mob/living/cultist_to_receive = tgui_input_list(user, "Who do you wish to call to [src]?", "Followers of the Geometer", (cultists - user))
+	if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
+		return
+	if(isnull(cultist_to_receive))
+		to_chat(user, "<span class='cult italic'>You require a destination!</span>")
+		log_game("Void torch failed - no target")
+		return
+	if(cultist_to_receive.stat == DEAD)
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
+		log_game("Void torch failed - target died")
+		return
+	if(!IS_CULTIST(cultist_to_receive))
+		to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
+		log_game("Void torch failed - target was deconverted")
+		return
+	if(A in user.get_all_contents())
+		to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
+		return
+	to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!</span>")
+	cultist_to_receive.put_in_hands(A)
+	charges--
+	to_chat(user, "\The [src] now has [charges] charge\s.")
+	if(charges == 0)
+		qdel(src)
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"

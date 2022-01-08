@@ -172,6 +172,9 @@
 				transfer_fingerprints_to(stored)
 				stored.setDir(dir)
 				stored = null
+			if (contents.len > 1) // if there is actually something in the pipe
+				var/obj/structure/disposalholder/holder = locate() in src
+				expel(holder, loc, dir)
 		else
 			for(var/direction in GLOB.cardinals)
 				if(direction & dpdir)

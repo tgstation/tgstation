@@ -1,11 +1,10 @@
 //Medical modules for MODsuits
 
-//Health Analyzer
-
 #define HEALTH_SCAN "Health"
 #define WOUND_SCAN "Wound"
 #define CHEM_SCAN "Chemical"
 
+///Health Analyzer - Gives the user a ranged health analyzer and their health status in the panel.
 /obj/item/mod/module/health_analyzer
 	name = "MOD health analyzer module"
 	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
@@ -18,8 +17,20 @@
 	use_power_cost = DEFAULT_CELL_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
+	tgui_id = "health_analyzer"
+	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
+	/// List of all scanning modes.
 	var/static/list/modes = list(HEALTH_SCAN, WOUND_SCAN, CHEM_SCAN)
+
+/obj/item/mod/module/health_analyzer/add_ui_data()
+	. = ..()
+	.["userhealth"] = mod.wearer ? mod.wearer.health : 0
+	.["usermaxhealth"] = mod.wearer ? mod.wearer.getMaxHealth() : 0
+	.["userbrute"] = mod.wearer ? mod.wearer.getBruteLoss() : 0
+	.["userburn"] = mod.wearer ? mod.wearer.getFireLoss() : 0
+	.["usertoxin"] = mod.wearer ? mod.wearer.getToxLoss() : 0
+	.["useroxy"] = mod.wearer ? mod.wearer.getOxyLoss() : 0
 
 /obj/item/mod/module/health_analyzer/on_select_use(atom/target)
 	. = ..()
@@ -49,8 +60,7 @@
 #undef WOUND_SCAN
 #undef CHEM_SCAN
 
-//Quick Carry
-
+///Quick Carry - Lets the user carry bodies quicker.
 /obj/item/mod/module/quick_carry
 	name = "MOD quick carry module"
 	desc = "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; \
@@ -79,8 +89,7 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_QUICKER_CARRY, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_FASTMED, MOD_TRAIT)
 
-//Injector
-
+///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
 	name = "MOD injector module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-capacity syringe, \
@@ -105,8 +114,7 @@
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
 
-//Organ Thrower
-
+///Organ Thrower - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organ_thrower
 	name = "MOD organ thrower module"
 	desc = "A device recovered from a crashed Interdyne Pharmaceuticals vessel, \
@@ -118,7 +126,7 @@
 	module_type = MODULE_ACTIVE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/organ_thrower)
+	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	var/max_organs = 5
 	var/organ_list = list()

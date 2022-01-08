@@ -14,7 +14,9 @@
 	var/random_appearance
 
 /datum/smite/custom_imaginary_friend/configure(client/user)
-	friend_candidate_client = tgui_input_list(user, "Pick the player to put in control.", "New Imaginary Friend", sort_list(GLOB.clients))
+	friend_candidate_client = tgui_input_list(user, "Pick the player to put in control", "New Imaginary Friend", sort_list(GLOB.clients))
+	if(isnull(friend_candidate_client))
+		return
 
 	if(QDELETED(friend_candidate_client))
 		to_chat(user, span_notice("Selected player no longer has a client, aborting."))
