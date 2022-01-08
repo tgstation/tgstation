@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes: 
-  - expansion: "Adds four new circuit components designed to analyze the data on ID cards - Get ID, Read ID Info, Read ID Access, and Access Checker."
