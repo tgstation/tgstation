@@ -170,7 +170,7 @@
 		cached_results["fire"] += burned_fuel * 10
 
 	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * air.volume / 2500) //Reduces chances of radiation getting released from the tritium getting formed from oxygen rich plasmafires in waste.
-		radiation_pulse(location, max_range = min(7 + sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 4, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 100 * (1 - 0.5 ** (energy_released / (600 * FIRE_HYDROGEN_ENERGY_RELEASED))))
+		radiation_pulse(location, max_range = min(6 + sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 4, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 100 * (1 - 0.5 ** (energy_released / (600 * FIRE_HYDROGEN_ENERGY_RELEASED))))
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
