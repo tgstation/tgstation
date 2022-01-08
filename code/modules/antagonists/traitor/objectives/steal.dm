@@ -14,6 +14,7 @@
 			/datum/traitor_objective/destroy_item/very_risky = 1,
 			/datum/traitor_objective/steal_item/risky = 1,
 		) = 1,
+		/datum/traitor_objective/steal_item/very_risky = 1,
 		/datum/traitor_objective/steal_item/most_risky = 1
 	)
 
