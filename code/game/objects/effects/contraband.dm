@@ -421,7 +421,7 @@
 	desc = "A poster advertising a movie about some masked men."
 	icon_state = "masked_men"
 
-//annoyingly, poster45 is in another file.
+//don't forget, you're here forever
 
 /obj/structure/sign/poster/contraband/free_key
 	name = "Free Syndicate Encryption Key"
