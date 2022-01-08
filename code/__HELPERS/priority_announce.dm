@@ -44,7 +44,7 @@
 
 	var/sound_to_play = sound(sound)
 	for(var/mob/target in players)
-		if(target.can_hear())
+		if(!isnewplayer(target) && target.can_hear())
 			to_chat(target, announcement)
 			if(target.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				SEND_SOUND(target, sound_to_play)

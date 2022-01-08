@@ -82,7 +82,7 @@
 /obj/machinery/computer/communications/syndicate/get_communication_players()
 	var/list/targets = list()
 	for(var/mob/target in GLOB.player_list)
-		if(!isnewplayer(target) && (target.stat == DEAD || target.z == z || target.mind?.has_antag_datum(/datum/antagonist/battlecruiser)))
+		if(target.stat == DEAD || target.z == z || target.mind?.has_antag_datum(/datum/antagonist/battlecruiser))
 			targets += target
 	return targets
 
@@ -727,11 +727,7 @@
 	deadchat_broadcast(" made a priority announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
 
 /obj/machinery/computer/communications/proc/get_communication_players()
-	var/list/targets = list()
-	for(var/mob/target in GLOB.player_list)
-		if(!isnewplayer(target))
-			targets += target
-	return targets
+	return GLOB.player_list
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
