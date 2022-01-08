@@ -14,6 +14,8 @@
 	our_turf.layer = OPENSPACE_LAYER
 	if(is_openspace)
 		our_turf.plane = OPENSPACE_PLANE
+	else
+		our_turf.plane = TRANSPARENT_FLOOR_PLANE
 
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
 	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
