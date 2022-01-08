@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(vote)
 			// No delay in case the restart is due to lag
 			SSticker.Reboot("Restart vote successful.", "restart vote", 1)
 		else
-			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
+			to_chat(world, span_boldannounce("Notice: Restart vote will not restart the server automatically because there are active admins on."))
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 	return .

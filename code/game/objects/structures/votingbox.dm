@@ -154,11 +154,11 @@
 	for(var/obj/item/paper/P in contents)
 		options += P
 	if(!length(options))
-		to_chat(user,"<span class='warning>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 	else
 		var/obj/item/paper/P = pick(options)
 		user.put_in_hands(P)
-		to_chat(user,span_notice("[src] pops out random vote."))
+		to_chat(user, span_notice("[src] pops out random vote."))
 
 /obj/structure/votebox/proc/print_tally(mob/user)
 	var/list/results = list()

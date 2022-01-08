@@ -246,6 +246,11 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//modsuits
+		/obj/item/mod/construction/broken_core = 1,
+		/obj/effect/spawner/random/mod/maint = 3,
+		) = 4,
+
 	list(//music
 		/obj/item/instrument/violin = 5,
 		/obj/item/instrument/banjo = 5,

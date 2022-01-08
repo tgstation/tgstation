@@ -602,6 +602,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
 "cE" = (
@@ -824,11 +825,10 @@
 /turf/open/floor/stone,
 /area/centcom/holding)
 "dr" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
 	name = "Hijikata";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/wood/large,
 /area/centcom/holding)
@@ -1595,11 +1595,10 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "gV" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Momo";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -14934,11 +14933,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
 "Sa" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Hattori";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -14958,7 +14956,7 @@
 /area/centcom/supplypod/loading/two)
 "Sh" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/deathsquad{
+/obj/item/mod/control/pre_equipped/corporate{
 	pixel_y = 5
 	},
 /obj/item/clothing/gloves/combat,
@@ -15049,13 +15047,6 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
-"Sz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron,
-/area/centcom/supplypod/loading/ert)
 "SD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -44151,7 +44142,7 @@ es
 bu
 fO
 Pf
-hb
+Sa
 cH
 fO
 Oe
@@ -44408,7 +44399,7 @@ AG
 AG
 Up
 hb
-Sa
+hb
 ge
 fO
 UC
@@ -52868,7 +52859,7 @@ px
 mD
 pD
 pX
-Sz
+pX
 pX
 rb
 oe

@@ -46,9 +46,10 @@
 		var/obj/item/assembly/timer/T = S
 		G.det_time = T.saved_time*10
 	else if(istype(S,/obj/item/assembly/prox_sensor))
-		var/obj/item/grenade/chem_grenade/G = holder
-		G.landminemode = S
-		S.proximity_monitor.wire = TRUE
+		var/obj/item/assembly/prox_sensor/sensor = S
+		var/obj/item/grenade/chem_grenade/grenade = holder
+		grenade.landminemode = sensor
+		sensor.proximity_monitor.set_ignore_if_not_on_turf(FALSE)
 	fingerprint = S.fingerprintslast
 	return ..()
 

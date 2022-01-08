@@ -278,8 +278,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	..()
 
 /datum/reagent/inverse/hercuri/on_new(data)
+	. = ..()
+	if(!data)
+		return
 	method |= data["method"]
-	..()
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	var/heating = rand(creation_purity * REM * 3, creation_purity * REM * 6)
@@ -680,7 +682,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	to_chat(owner, "<span class='userdanger'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
+	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
@@ -718,7 +720,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
 		original_heart.Insert(carbon_mob, special = TRUE)
 	qdel(manual_heart)
-	to_chat(owner, "<span class='userdanger'>You feel your heart start beating normally again!</spans>")
+	to_chat(owner, span_userdanger("You feel your heart start beating normally again!"))
 	..()
 
 /datum/reagent/inverse/antihol
@@ -755,14 +757,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
 		owner.become_blind(IMPURE_OCULINE)
-		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
+		to_chat(owner, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
 	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
 	owner.cure_blind(IMPURE_OCULINE)
 	if(headache)
-		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
+		to_chat(owner, span_notice("Your headache clears up!"))
 	..()
 
 /datum/reagent/impurity/inacusiate
@@ -781,12 +783,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
-	to_chat(owner, "<span class='notice'>Your hearing seems to be a bit off...!</spans>")
+	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
 	..()
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	to_chat(owner, "<span class='notice'>You start hearing things normally again.</spans>")
+	to_chat(owner, span_notice("You start hearing things normally again."))
 	..()
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)
