@@ -126,9 +126,6 @@
 #define HAS_SENSORS 1
 #define LOCKED_SENSORS 2
 
-//subtypesof(), typesof() without the parent path
-#define subtypesof(typepath) ( typesof(typepath) - typepath )
-
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE "circle"
 #define GHOST_ORBIT_TRIANGLE "triangle"
