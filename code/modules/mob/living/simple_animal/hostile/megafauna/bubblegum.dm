@@ -124,62 +124,7 @@ Difficulty: Hard
 	else if(prob(50 + anger_modifier))
 		hallucination_charge.Trigger(target)
 	else
-		surround_with_hallucinations()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/triple_charge()
-	charge(delay = 6)
-	charge(delay = 4)
-	charge(delay = 2)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge()
-	if(!BUBBLEGUM_SMASH || prob(33))
-		hallucination_charge_around(times = 6, delay = 8)
-		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1 SECONDS))
-	else
-		hallucination_charge_around(times = 4, delay = 9)
-		hallucination_charge_around(times = 4, delay = 8)
-		hallucination_charge_around(times = 4, delay = 7)
-		triple_charge()
-		update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/surround_with_hallucinations()
-	for(var/i = 1 to 5)
-		INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 8, 2, 0, 4)
-		if(ismob(target))
-			charge(delay = 6)
-		else
-			SLEEP_CHECK_DEATH(6)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 2 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(atom/chargeat = target, delay = 3, chargepast = 2)
-	if(!chargeat)
-		return
-	var/chargeturf = get_turf(chargeat)
-	if(!chargeturf)
-		return
-	var/dir = get_dir(src, chargeturf)
-	var/turf/T = get_ranged_target_turf(chargeturf, dir, chargepast)
-	if(!T)
-		return
-	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
-	charging = TRUE
-	revving_charge = TRUE
-	DestroySurroundings()
-	setDir(dir)
-	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
-	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	SLEEP_CHECK_DEATH(delay)
-	revving_charge = FALSE
-	var/datum/move_loop/new_loop = SSmove_manager.home_onto(src, T, timeout = get_dist(src, T), priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	if(new_loop)
-		charging = TRUE //Set it again in case this is an override
-		RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/reset_charge)
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/reset_charge()
-	SIGNAL_HANDLER
-	charging = FALSE
-	try_bloodattack()
+		hallucination_charge_surround.Trigger(target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)
