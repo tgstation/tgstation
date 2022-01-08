@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
-	flags = SS_BACKGROUND|SS_NO_INIT|SS_KEEP_TIMING
+	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER|SS_KEEP_TIMING
 	wait = 1 //Fire each tick
 	///The list of datums we're processing
 	var/list/processing = list()
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(movement)
 	var/datum/controller/subsystem/movement/old_version = global.vars["SS[our_name]"]
 	processing = old_version.processing
 	currentrun = old_version.currentrun
-	
+
 /datum/controller/subsystem/movement/fire(resumed)
 	if(!resumed)
 		canonical_time = world.time

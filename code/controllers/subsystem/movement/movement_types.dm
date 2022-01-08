@@ -36,7 +36,7 @@
 	if(!ismovable(moving) || !owner)
 		return FALSE
 
-	src.delay = max(delay, 1) //Please...
+	src.delay = max(delay, world.tick_lag) //Please...
 	src.lifetime = timeout
 	return TRUE
 
@@ -69,7 +69,7 @@
 
 ///Exists as a helper so outside code can modify delay while also modifying timer
 /datum/move_loop/proc/set_delay(new_delay)
-	delay = new_delay
+	delay =  max(new_delay, world.tick_lag)
 	timer = world.time + delay
 
 /datum/move_loop/process()
