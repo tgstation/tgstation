@@ -1,14 +1,11 @@
 /datum/unit_test/traitor/Run()
-	var/datum/dynamic_ruleset/roundstart/traitor/traitor = allocate(/datum/dynamic_ruleset/roundstart/traitor/)
-	var/list/protected_roles = traitor.protected_roles
-	var/list/restricted_roles = traitor.restricted_roles
-
+	var/datum/dynamic_ruleset/roundstart/traitor/traitor_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor/)
 	var/list/possible_jobs = SSjob.station_jobs.Copy()
-	possible_jobs -= protected_roles
-	possible_jobs -= restricted_roles
+	possible_jobs -= traitor_ruleset.protected_roles
+	possible_jobs -= traitor_ruleset.restricted_roles
 
-	for(var/job in possible_jobs)
-		var/datum/job/job = SSjob.GetJob(job)
+	for(var/job_name in possible_jobs)
+		var/datum/job/job = SSjob.GetJob(job_name)
 		var/mob/living/player = allocate(job.spawn_type)
 		player.mind_initialize()
 		var/datum/mind/mind = player.mind
@@ -16,11 +13,14 @@
 			var/mob/living/carbon/human/human = player
 			human.equipOutfit(job.outfit)
 		mind.set_assigned_role(job)
+		var/datum/antagonist/traitor/traitor = mind.add_antag_datum(/datum/antagonist/traitor)
+		if(!traitor.uplink_handler)
+			Fail("[job_name] when made traitor does not have a proper uplink created when spawned in!")
 		for(var/datum/traitor_objective/objective_typepath as anything in subtypesof(/datum/traitor_objective))
 			if(initial(objective_typepath.abstract_type) == objective_typepath)
 				continue
-			var/datum/traitor_objective/objective = allocate(objective_typepath)
+			var/datum/traitor_objective/objective = allocate(objective_typepath, traitor.uplink_handler)
 			try
-				var/failed = objective.generate_objective(mind, list())
+				objective.generate_objective(mind, list())
 			catch(var/exception/exception)
 				Fail("[objective_typepath] failed to generate their objective. Reason: [exception.name] [exception.file]:[exception.line]\n[exception.desc]")

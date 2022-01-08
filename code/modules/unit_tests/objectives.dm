@@ -7,8 +7,7 @@
 			if(islist(value))
 				recursive_check_list(category.type, value, objectives_that_exist)
 			else
-				var/datum/datum = value
-				objectives_that_exist += datum.type
+				objectives_that_exist += value
 
 	for(var/datum/traitor_objective/objective_typepath as anything in subtypesof(/datum/traitor_objective))
 		if(initial(objective_typepath.abstract_type) == objective_typepath)
@@ -22,5 +21,4 @@
 		if(islist(value))
 			recursive_check_list(base_type, value, to_add_to)
 		else
-			var/datum/datum = value
-			to_add_to += datum.type
+			to_add_to += value

@@ -24,7 +24,8 @@
 
 /datum/component/traitor_objective_mind_tracker/UnregisterFromParent()
 	UnregisterSignal(target, COMSIG_MIND_TRANSFERRED)
-	parent.UnregisterSignal(target.current, signals)
+	if(target.current)
+		parent.UnregisterSignal(target.current, signals)
 
 /datum/component/traitor_objective_mind_tracker/proc/handle_mind_transferred(datum/source, mob/previous_body)
 	SIGNAL_HANDLER
