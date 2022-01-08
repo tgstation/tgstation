@@ -137,9 +137,9 @@ const CrewTableEntry = (props, context) => {
               toxdam,
               burndam,
               brutedam)} />
-         ) : (
-           <ColorBox color={'#ed2814'} />
-         )}
+        ) : (
+          <ColorBox color={'#ed2814'} />
+        )}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
