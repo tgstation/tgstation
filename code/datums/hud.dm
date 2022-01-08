@@ -25,15 +25,15 @@ GLOBAL_LIST_INIT(huds, list(
 	///the hud images that they can actually see.
 	var/list/atom/hud_atoms = list()
 
-	///associative list of the form: list(z level = list(hud user client mob = number of times this hud has been added to that mob)).
+	///associative list of the form: list(z level = list(hud user client mobs)).
 	///tracks users of this hud by z level so when they change z's we can adjust what images they see from this hud.
 	var/list/hud_users = list()
-	//TODOKYLER: make the mob users by z level list only contain client mobs!
 
 	///used for signal tracking purposes, associative list of the form: list(hud atom = TRUE) that isnt separated by z level
 	var/list/atom/hud_atoms_all_z_levels = list()
 
-	///used for signal tracking purposes, associative list of the form: list(hud user = TRUE) that isnt separated by z level
+	///used for signal tracking purposes, associative list of the form: list(hud user = number of times this hud was added to this user).
+	///that isnt separated by z level
 	var/list/mob/hud_users_all_z_levels = list()
 
 	///these will be the indexes for the atom's hud_list
@@ -44,7 +44,7 @@ GLOBAL_LIST_INIT(huds, list(
 	///mobs that have triggered the cooldown and are queued to see the hud, but do not yet
 	var/list/queued_to_see = list()
 	/// huduser = list(atoms with their hud hidden) - aka everyone hates targeted invisiblity
-	var/hud_exceptions = list()
+	var/list/hud_exceptions = list()
 
 /datum/atom_hud/New()
 	GLOB.all_huds += src
@@ -134,10 +134,10 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 
 	if(!hud_users[their_turf.z][new_mob_user])
-		hud_users[their_turf.z][new_mob_user] = 1
-		hud_users_all_z_levels[new_mob_user] = TRUE
+		hud_users[their_turf.z][new_mob_user] = TRUE
+		hud_users_all_z_levels[new_mob_user] = 1
 
-		RegisterSignal(new_mob_user, COMSIG_PARENT_QDELETING, .proc/unregister_mob)
+		RegisterSignal(new_mob_user, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud users and hud atoms use these signals
 		RegisterSignal(new_mob_user, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
 
 		if(next_time_allowed[new_mob_user] > world.time)
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(huds, list(
 			for(var/atom/hud_atom_to_add as anything in get_hud_atoms_for_z_level(their_turf.z))
 				add_atom_to_single_mob_hud(new_mob_user, hud_atom_to_add)
 	else
-		hud_users[their_turf.z][new_mob_user]++
+		hud_users_all_z_levels[new_mob_user] += 1 //increment the number of times this hud has been added to this hud user
 
 ///removes everyone of this hud's atom images from former_hud_user
 /datum/atom_hud/proc/remove_hud_from_mob(mob/former_hud_user, absolute = FALSE)
@@ -161,11 +161,13 @@ GLOBAL_LIST_INIT(huds, list(
 	if(!their_turf)
 		return
 
-	hud_users[their_turf.z][former_hud_user] -= 1 //decrement number of sources for this hud on this user (bad way to track i know)
-	if (absolute || hud_users[their_turf.z][former_hud_user] <= 0)//either force remove or if there arent any sources for this hud left
-		UnregisterSignal(former_hud_user, COMSIG_PARENT_QDELETING)
-		if(!hud_atoms_all_z_levels[former_hud_user])//make sure we arent removing a mob that also has its own hud atoms
+	hud_users_all_z_levels[former_hud_user] -= 1//decrement number of sources for this hud on this user (bad way to track i know)
+
+	if (absolute || hud_users_all_z_levels[former_hud_user] <= 0)//if forced or there arent any sources left, remove the user
+
+		if(!hud_atoms_all_z_levels[former_hud_user])//make sure we arent unregistering changes on a mob thats also a hud atom for this hud
 			UnregisterSignal(former_hud_user, COMSIG_MOVABLE_Z_CHANGED)
+			UnregisterSignal(former_hud_user, COMSIG_PARENT_QDELETING)
 
 		hud_users[their_turf.z] -= former_hud_user
 		hud_users_all_z_levels -= former_hud_user
@@ -189,6 +191,7 @@ GLOBAL_LIST_INIT(huds, list(
 		return
 
 	RegisterSignal(new_hud_atom, COMSIG_MOVABLE_Z_CHANGED, .proc/on_atom_or_user_z_level_changed, override = TRUE)
+	RegisterSignal(new_hud_atom, COMSIG_PARENT_QDELETING, .proc/unregister_atom, override = TRUE) //both hud atoms and hud users use these signals
 
 	hud_atoms[atom_turf.z] |= new_hud_atom
 	hud_atoms_all_z_levels[new_hud_atom] = TRUE
@@ -198,13 +201,6 @@ GLOBAL_LIST_INIT(huds, list(
 			add_atom_to_single_mob_hud(mob_to_show, new_hud_atom)
 	return TRUE
 
-/mob/proc/add_images()
-	var/list/thing = list()
-	for(var/i in 1 to 1000)
-		thing += new/image(loc = src)
-
-	client.images |= thing
-
 /// remove this atom from this hud completely
 /datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)
 	if(!hud_atom_to_remove)
@@ -213,6 +209,7 @@ GLOBAL_LIST_INIT(huds, list(
 	//make sure we arent unregistering a hud atom thats also a hud user mob
 	if(!hud_users_all_z_levels[hud_atom_to_remove])
 		UnregisterSignal(hud_atom_to_remove, COMSIG_MOVABLE_Z_CHANGED)
+		UnregisterSignal(hud_atom_to_remove, COMSIG_PARENT_QDELETING)
 
 	for(var/mob/mob_to_remove as anything in hud_users_all_z_levels)
 		remove_atom_from_single_hud(mob_to_remove, hud_atom_to_remove)
@@ -288,13 +285,13 @@ GLOBAL_LIST_INIT(huds, list(
 
 	if(new_turf)
 		if(hud_users_all_z_levels[moved_atom])
-			hud_users[new_turf.z] += moved_atom
+			hud_users[new_turf.z] |= moved_atom
 
 			for(var/atom/newly_seen_hud_atom as anything in get_hud_atoms_for_z_level(new_turf.z))
 				add_atom_to_single_mob_hud(moved_atom, newly_seen_hud_atom)
 
 		if(hud_atoms_all_z_levels[moved_atom])
-			hud_atoms[new_turf.z] += moved_atom
+			hud_atoms[new_turf.z] |= moved_atom
 
 			for(var/mob/newly_seeing as anything in get_hud_users_for_z_level(new_turf.z))
 				add_atom_to_single_mob_hud(newly_seeing, moved_atom)
@@ -315,9 +312,10 @@ GLOBAL_LIST_INIT(huds, list(
 	for(var/hud_image in hud_icons)
 		client_mob.client.images -= atom_to_remove.active_hud_list[hud_image]
 
-/datum/atom_hud/proc/unregister_mob(datum/source, force)
+/datum/atom_hud/proc/unregister_atom(datum/source, force)
 	SIGNAL_HANDLER
 	remove_hud_from_mob(source, TRUE)
+	remove_atom_from_hud(source)
 
 /datum/atom_hud/proc/hide_single_atomhud_from(mob/hud_user, atom/hidden_atom)
 
