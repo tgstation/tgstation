@@ -101,18 +101,20 @@
 /obj/item/holochip/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
-	var/split_amount = round(input(user,"How many credits do you want to extract from the holochip?") as null|num)
-	if(split_amount == null || split_amount <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip?", "Holochip", 1, credits, 1)
+	if(isnull(split_amount))
 		return
-	else
-		var/new_credits = spend(split_amount, TRUE)
-		var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)
-		if(user)
-			if(!user.put_in_hands(H))
-				H.forceMove(user.drop_location())
-			add_fingerprint(user)
-		H.add_fingerprint(user)
-		to_chat(user, span_notice("You extract [split_amount] credits into a new holochip."))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		return
+	split_amount = round(split_amount)
+	var/new_credits = spend(split_amount, TRUE)
+	var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)
+	if(user)
+		if(!user.put_in_hands(H))
+			H.forceMove(user.drop_location())
+		add_fingerprint(user)
+	H.add_fingerprint(user)
+	to_chat(user, span_notice("You extract [split_amount] credits into a new holochip."))
 
 /obj/item/holochip/emp_act(severity)
 	. = ..()

@@ -106,7 +106,6 @@
 
 
 /atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 
@@ -171,7 +170,7 @@
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
 	if(message)
-		visible_message("<span class='danger'>[src] crashes into [impacted_turf]!</span>")
+		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
 	var/atom/highest = impacted_turf
 	for(var/atom/hurt_atom as anything in impacted_turf.contents)
 		if(!hurt_atom.density)
@@ -254,20 +253,20 @@
 		destination = get_step_multiz(start, direction)
 		if(!destination)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(rider || src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			if(rider)
-				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.<span>")
+				to_chat(rider, span_warning("[src] is is not capable of flight."))
 			else
-				to_chat(src, "<span class='notice'>You are not Superman.<span>")
+				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
 	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
@@ -937,6 +936,9 @@
  * * movement_dir - 0 when stopping or any dir when trying to move
  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+		return TRUE
+
 	if(has_gravity(src))
 		return TRUE
 

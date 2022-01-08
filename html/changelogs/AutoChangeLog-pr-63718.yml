@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "The supermatter will once again emit radiation when it is about to explode."

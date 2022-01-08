@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "TGUI list input will now respond to having large/swapped buttons in preferences."
-  - bugfix: "BYOND functionality restored in TGUI input lists - keyboard support. Up/Down, type a letter to jump to it (while search is not visible)."

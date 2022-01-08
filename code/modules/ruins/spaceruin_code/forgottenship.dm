@@ -125,31 +125,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	ambientsounds = list('sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
 	area_flags = NOTELEPORT | UNIQUE_AREA
 
-	//Cybersun hardsuit
-
-/obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	name = "Cybersun hardsuit helmet"
-	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	icon_state = "cybersun"
-	inhand_icon_state = "cybersun"
-	hardsuit_type = "cybersun"
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
-	strip_delay = 600
-	actions_types = list()
-
-
-/obj/item/clothing/suit/space/hardsuit/cybersun
-	icon_state = "cybersun"
-	inhand_icon_state = "cybersun"
-	hardsuit_type = "cybersun"
-	name = "Cybersun hardsuit"
-	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
-	slowdown = 0
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
-	jetpack = /obj/item/tank/jetpack/suit
-
 //Special NT NPCs
 
 /mob/living/simple_animal/hostile/nanotrasen/ranged/assault

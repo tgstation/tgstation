@@ -257,7 +257,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
-		smeared_mob.ex_act(EXPLODE_HEAVY)
+		EX_ACT(smeared_mob, EXPLODE_HEAVY)
 
 /obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

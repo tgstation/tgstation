@@ -19,7 +19,7 @@
 	. = ..()
 
 /datum/antagonist/disease/greet()
-	to_chat(owner.current, span_notice("You are the [owner.special_role]!"))
+	. = ..()
 	to_chat(owner.current, span_notice("Infect members of the crew to gain adaptation points, and spread your infection further."))
 	owner.announce_objectives()
 

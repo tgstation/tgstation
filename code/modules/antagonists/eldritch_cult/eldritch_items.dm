@@ -176,6 +176,10 @@
 	item_flags = EXAMINE_SKIP
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
 
+/obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
+
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you loose comprehension of what you are seeing."
@@ -190,9 +194,12 @@
 	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
+	if (!HAS_TRAIT(src, TRAIT_NO_STRIP))
+		return ..()
 	var/mob/living/carbon/carbon_user = loc
-	to_chat(carbon_user,span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
+	to_chat(carbon_user, span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
@@ -204,6 +211,7 @@
 		. = ..()
 		to_chat(carbon_user,span_notice("The light shifts around you making the cloak invisible!"))
 		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_NO_STRIP, src)
 		return
 
 	to_chat(carbon_user,span_danger("You can't force the hood onto your head!"))
@@ -329,7 +337,7 @@
 		if(!rune_ref.resolve())
 			current_runes -= rune_ref
 
-	if(current_runes.len >= max_rune_amt)
+	if(length(current_runes) >= max_rune_amt)
 		to_chat(user,span_notice("The blade cannot support more runes!"))
 		return
 
@@ -341,7 +349,7 @@
 	drawing = TRUE
 
 	var/type = pick_list[tgui_input_list(user, "Choose the rune", "Rune", pick_list) ]
-	if(!type)
+	if(isnull(type))
 		drawing = FALSE
 		return
 
