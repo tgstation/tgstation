@@ -63,14 +63,6 @@
         "ui_theme": "syndicate",
         "uplink": "You have been provided with a standard uplink to accomplish your task."
     },
-    "Internal Affairs Agent": {
-        "allies": "Death to the Syndicate. Killing infiltrators is a whole different kind of internal affair we fully approve of dealing with.",
-        "goal": "While you have a license to kill, unneeded property damage or loss of employee life will lead to your contract being terminated.",
-        "introduction": "You are the Internal Affairs Agent.",
-        "roundend_report": "was part of Nanotrasen Internal Affairs.",
-        "ui_theme": "ntos",
-        "uplink": "For the sake of plausible deniability, you have been equipped with an array of captured Syndicate weaponry available via uplink."
-    },
     "Legal Trouble": {
         "allies": "Death to the Syndicate.",
         "goal": "Try to finish your to-do list, and don't get caught. If they find out what you're actually doing, this scandal will go galactic.",
