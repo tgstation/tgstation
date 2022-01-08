@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 	hud_icons = list(appearance_key)
 	add_atom_to_hud(target, I)
+	target.set_hud_image_active(appearance_key)
+
 	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
 		add_hud_to_mob(target)
 	if(add_ghost_version)
