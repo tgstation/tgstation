@@ -21,8 +21,6 @@
 	GLOB.alive_mob_list -= src
 	if(client)
 		remove_from_current_living_players()
-	if(LAZYLEN(mind?.antag_datums))
-		remove_from_current_living_antags()
 
 ///Adds a mob reference to the list of all suicided mobs
 /mob/proc/add_to_mob_suicide_list()
@@ -120,6 +118,9 @@
 	if(!SSticker?.mode)
 		return
 	GLOB.alive_player_list -= src
+	if(LAZYLEN(mind?.antag_datums))
+		remove_from_current_living_antags()
+
 
 ///Adds the cliented mob reference to the list of living antag player-mobs.
 /mob/proc/add_to_current_living_antags()
