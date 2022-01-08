@@ -40,7 +40,7 @@ map tramstation
 endmap
 
 map blueshift
-	minplayers 25
+	minplayers 50
 	votable
 endmap
 
