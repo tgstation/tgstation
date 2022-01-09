@@ -1,0 +1,5 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - refactor: "Decks of cards are actual lists of cards now + other improvements."
+  - bugfix: "You can now put X4/C4 onto playing cards, and put them into decks without deleting your explosive."
