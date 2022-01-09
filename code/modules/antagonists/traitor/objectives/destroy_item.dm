@@ -38,11 +38,6 @@
 		/datum/objective_item/steal/reflector,
 	)
 
-/datum/traitor_objective/destroy_item/very_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/destroy_item/low_risk))
-		return FALSE
-	return ..()
-
 /datum/traitor_objective/destroy_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	var/datum/job/role = generating_for.assigned_role
 	for(var/datum/traitor_objective/destroy_item/objective as anything in possible_duplicates)
