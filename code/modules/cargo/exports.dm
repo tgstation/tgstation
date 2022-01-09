@@ -44,7 +44,7 @@ Then the player gets the profit from selling his own wasted time.
 		for(var/datum/export/export as anything in GLOB.exports_list)
 			if(export.applies_to(thing, apply_elastic))
 				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
-					continue
+					break
 				sold = export.sell_object(thing, report, dry_run, apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
