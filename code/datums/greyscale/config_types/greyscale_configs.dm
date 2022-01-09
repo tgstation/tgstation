@@ -325,11 +325,6 @@
 	icon_file = 'icons/obj/clothing/belts.dmi'
 	json_config = 'code/datums/greyscale/json_configs/suspenders.json'
 
-/datum/greyscale_config/suspenders/worn
-	name = "Worn Suspenders"
-	icon_file = 'icons/mob/clothing/suit.dmi'
-	json_config = 'code/datums/greyscale/json_configs/suspenders_worn.json'
-
 /datum/greyscale_config/giftdeliverybox
 	name = "Gift Box"
 	icon_file = 'icons/obj/storage.dmi'
@@ -432,3 +427,12 @@
 	name = "Worn CTF Light Vest"
 	icon_file = 'icons/mob/clothing/suits/ctf.dmi'
 	json_config = 'code/datums/greyscale/json_configs/ctf_light_worn.json'
+
+/datum/greyscale_config/mothcoat
+	name = "Moth Coat"
+	icon_file = 'icons/obj/clothing/suits.dmi'
+	json_config = 'code/datums/greyscale/json_configs/moth_clothes.json'
+
+/datum/greyscale_config/mothcoat/worn
+	name = "Moth Coat Worn"
+	json_config = 'code/datums/greyscale/json_configs/moth_clothes_worn.json'

@@ -1,0 +1,28 @@
+{
+	"mothcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_details",
+			"blend_mode": "overlay"
+		}
+	],
+	"mothcoat_winter": [
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_winter",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_winter_details",
+			"blend_mode": "overlay"
+		}
+	]
+}
