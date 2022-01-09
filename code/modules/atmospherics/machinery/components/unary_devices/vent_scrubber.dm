@@ -62,6 +62,65 @@
 	adjacent_turfs.Cut()
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
+	if(!islist(filter_or_filters))
+		filter_or_filters = list(filter_or_filters)
+
+	for(var/gas_to_filter in filter_or_filters)
+		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
+
+		if(ispath(translated_gas, /datum/gas))
+			filter_types |= translated_gas
+			continue
+
+	var/turf/open/our_turf = get_turf(src)
+	var/datum/gas_mixture/turf_gas = our_turf?.air
+	if(!our_turf || !turf_gas)
+		return FALSE
+
+	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/remove_filters(filter_or_filters)
+	if(!islist(filter_or_filters))
+		filter_or_filters = list(filter_or_filters)
+
+	for(var/gas_to_filter in filter_or_filters)
+		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
+
+		if(ispath(translated_gas, /datum/gas))
+			filter_types -= translated_gas
+			continue
+
+	var/turf/open/our_turf = get_turf(src)
+	var/datum/gas_mixture/turf_gas = our_turf?.air
+	if(!our_turf || !turf_gas)
+		return FALSE
+
+	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	return TRUE
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/toggle_filters(filter_or_filters)
+	if(!islist(filter_or_filters))
+		filter_or_filters = list(filter_or_filters)
+
+	for(var/gas_to_filter in filter_or_filters)
+		var/translated_gas = istext(gas_to_filter) ? gas_id2path(gas_to_filter) : gas_to_filter
+
+		if(ispath(translated_gas, /datum/gas))
+			if(translated_gas in filter_types)
+				filter_types -= translated_gas
+			else
+				filter_types |= translated_gas
+
+	var/turf/open/our_turf = get_turf(src)
+	var/datum/gas_mixture/turf_gas = our_turf?.air
+	if(!our_turf || !turf_gas)
+		return FALSE
+
+	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	return TRUE
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
@@ -259,12 +318,11 @@
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
 	if("toggle_filter" in signal.data)
-		filter_types ^= gas_id2path(signal.data["toggle_filter"])
+		toggle_filters(signal.data["toggle_filter"])
 
 	if("set_filters" in signal.data)
 		filter_types = list()
-		for(var/gas in signal.data["set_filters"])
-			filter_types += gas_id2path(gas)
+		add_filters(signal.data["set_filters"])
 
 	if("init" in signal.data)
 		name = signal.data["init"]
