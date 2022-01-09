@@ -80,11 +80,6 @@
 		/datum/objective_item/steal/blueprints,
 	)
 
-/datum/traitor_objective/steal_item/somewhat_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/low_risk))
-		return FALSE
-	return ..()
-
 /datum/traitor_objective/steal_item/risky
 	progression_minimum = 30 MINUTES
 	progression_reward = 13 MINUTES
@@ -97,11 +92,6 @@
 		/datum/objective_item/steal/documents,
 	)
 
-/datum/traitor_objective/steal_item/risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/somewhat_risky))
-		return FALSE
-	return ..()
-
 /datum/traitor_objective/steal_item/very_risky
 	progression_minimum = 40 MINUTES
 	progression_reward = 17 MINUTES
@@ -113,11 +103,6 @@
 		/datum/objective_item/steal/nuke_core,
 		/datum/objective_item/steal/supermatter,
 	)
-
-/datum/traitor_objective/steal_item/very_risky/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	if(!handler.get_completion_count(/datum/traitor_objective/steal_item/risky))
-		return FALSE
-	return ..()
 
 /datum/traitor_objective/steal_item/most_risky
 	progression_minimum = 50 MINUTES
