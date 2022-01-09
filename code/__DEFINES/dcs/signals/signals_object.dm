@@ -199,12 +199,12 @@
 // /obj/item signals for economy
 ///called before an item is sold by the exports system.
 #define COMSIG_ITEM_PRE_EXPORT "item_pre_sold"
-	/// Stops the item from exporting, so you can handle it manually.
+	/// Stops the export from calling sell_object() on the item, so you can handle it manually.
 	#define COMPONENT_STOP_EXPORT (1<<0)
 ///called when an item is sold by the exports subsystem
 #define COMSIG_ITEM_EXPORTED "item_sold"
-	/// The item was added to the report manually via signal and shouldn't be done in sell_object()
-	#define COMPONENT_ADDED_TO_REPORT (1<<0)
+	/// Stops the export from adding the export information to the report, so you can handle it manually.
+	#define COMPONENT_STOP_REPORT (1<<0)
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand

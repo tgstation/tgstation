@@ -151,7 +151,7 @@ Then the player gets the profit from selling his own wasted time.
 		export_result = SEND_SIGNAL(sold_item, COMSIG_ITEM_EXPORTED, src, report, export_value)
 
 	// If the signal handled adding it to the report, don't do it now
-	if(!(export_result & COMPONENT_ADDED_TO_REPORT))
+	if(!(export_result & COMPONENT_STOP_REPORT))
 		report.total_value[src] += export_value
 		report.total_amount[src] += export_amount * amount_report_multiplier
 
