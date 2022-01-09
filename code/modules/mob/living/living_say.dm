@@ -237,9 +237,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
 
-	var/list/speech_arguments = args + message_range
 	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, speech_arguments)
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
 	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
 		message = uppertext(message)
 	if(!message)
