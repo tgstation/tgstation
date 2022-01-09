@@ -869,7 +869,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!user.CanReach(parent))
 		to_chat(user, span_alert("You can't quite reach into [parent]!"))
 		return FALSE
-	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
+	if(!isliving(user) || user.incapacitated())
 		return FALSE
 	if(locked)
 		to_chat(user, span_warning("[parent] seems to be locked!"))
