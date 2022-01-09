@@ -45,7 +45,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/proc/move_loop(move_target, delay)
 	if(our_loop)
 		return
-	our_loop = SSmove_manager.force_move(src, move_target, delay)
+	our_loop = SSmove_manager.force_move(src, move_target, delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!our_loop)
 		return
 	RegisterSignal(move_target, COMSIG_MOB_STATCHANGE, .proc/stat_change)
@@ -83,7 +83,7 @@
 		return TRUE
 	if(set_target.z != z)
 		return TRUE
-		
+
 /mob/living/simple_animal/hostile/asteroid/curseblob/GiveTarget(new_target)
 	if(check_for_target())
 		return

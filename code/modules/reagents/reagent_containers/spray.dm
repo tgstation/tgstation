@@ -81,7 +81,7 @@
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST)
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	reagent_puff.user = user
 	reagent_puff.sprayer = src
 	reagent_puff.lifetime = puff_reagent_left

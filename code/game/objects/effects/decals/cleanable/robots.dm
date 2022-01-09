@@ -31,7 +31,7 @@
 				break
 		return
 
-	var/datum/move_loop/loop = SSmove_manager.move_to_dir(src, get_step(src, direction), delay = delay, timeout = range * delay)
+	var/datum/move_loop/loop = SSmove_manager.move_to_dir(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/spread_movement_effects)
 
 /obj/effect/decal/cleanable/robot_debris/proc/spread_movement_effects(datum/move_loop/has_target/source)

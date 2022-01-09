@@ -317,7 +317,7 @@
 		log_game("[key_name(user)] used Resin Launcher at [AREACOORD(user)].")
 		playsound(src,'sound/items/syringeproj.ogg',40,TRUE)
 		var/delay = 2
-		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5)
+		var/datum/move_loop/loop = SSmove_manager.move_towards(resin, target, delay, timeout = delay * 5, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/resin_stop_check)
 		RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/resin_landed)
 		return
