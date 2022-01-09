@@ -35,6 +35,7 @@
 	show_name_in_check_antagonists = TRUE
 	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
+	replace_banned = TRUE
 
 /datum/antagonist/brainwashed/ui_static_data(mob/user)
 	. = ..()
