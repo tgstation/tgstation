@@ -1,3 +1,4 @@
+///The cooldown period between last_boomerang_throw and it's methods of implementing a rebound proc.
 #define BOOMERANG_REBOUND_INTERVAL (1 SECONDS)
 /**
  * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting it's target, or landing on the thrown tile.
