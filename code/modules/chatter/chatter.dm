@@ -16,11 +16,12 @@
 			letter_count += R.group[2]
 	chatter_speak(speaker, letter_count, phomeme)
 
-///We're going to take a list that dictates the pace of speech, and a sentence fragment to say
-///Then say() that fragment at that pace
-/proc/chatter_speak(atom/speaker, list/letter_count, phomeme)
+/// We're going to take a list that dictates the pace of speech, and a sentence fragment to say
+/// Then say() that fragment at that pace
+/// You can pass in a starting delay to wait before speaking the next sound
+/proc/chatter_speak(atom/speaker, list/letter_count, phomeme, extra_delay = 0)
 	var/static/list/punctuation = list(",",":",";",".","?","!","\'","-")
-	var/delay = 0
+	var/delay = extra_delay
 	for(var/i in 1 to length(letter_count))
 		var/item = letter_count[i]
 		if (item in punctuation)
@@ -43,10 +44,10 @@
 			delay += 0.1 SECONDS
 
 		if(delay)
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/chatter_speak_word, speaker, letter_count, phomeme, length), delay)
-			return
-		chatter_speak_word(speaker, current_context, phomeme, length)
-		return
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/chatter_speak_word, speaker, letter_count, phomeme, length), delay, flags = TIMER_CLIENT_TIME)
+		else
+			chatter_speak_word(speaker, current_context, phomeme, length)
+		break //We use the loop as a handy way of dealing with punctuation, the actual looping operation here happens in timers that call timers
 
 /proc/chatter_speak_word(atom/speaker, list/letter_count, phomeme, length)
 	var/path = "sound/runtime/chatter/[phomeme]_[length].ogg"
@@ -55,7 +56,7 @@
 		vol = 40, vary = 0, extrarange = 3)
 
 	var/delay = (length + 1) * chatter_get_delay_multiplier(phomeme)
-	addtimer(CALLBACK(null, /proc/chatter_speak, speaker, letter_count, phomeme), delay)
+	chatter_speak(speaker, letter_count, phomeme, delay)
 
 /proc/chatter_get_delay_multiplier(phomeme)
 	. = 0.1 SECONDS
