@@ -10,6 +10,7 @@
 	job_rank = ROLE_INTERNAL_AFFAIRS
 	preview_outfit = /datum/outfit/internal_affair_agent
 	should_give_codewords = FALSE
+
 	///List of all targets we have stolen thus far.
 	var/list/datum/mind/targets_stolen = list()
 
