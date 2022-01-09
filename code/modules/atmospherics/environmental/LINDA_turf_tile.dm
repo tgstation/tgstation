@@ -328,7 +328,7 @@
 	our_air.react(src)
 
 	update_visuals()
-	if(!consider_superconductivity(TRUE) && !active_hotspot) //Might need to include the return of react() here
+	if(!consider_superconductivity(starting = TRUE) && !active_hotspot) //Might need to include the return of react() here
 		if(!our_excited_group) //If nothing of interest is happening, kill the active turf
 			SSair.remove_from_active(src) //This will kill any connected excited group, be careful (This broke atmos for 4 years)
 		if(cached_ticker > EXCITED_GROUP_DISMANTLE_CYCLES) //If you're stalling out, take a rest
@@ -528,18 +528,6 @@
 		wrapping_id++ //We do this after because lists index at 1
 		display_id = wrapping_id
 	thing.vis_contents += GLOB.colored_turfs[display_id]
-
-/datum/excited_group/proc/debug_total_moles()
-	var/moles = 0
-	for(var/turf/open/contained_turf as anything in turf_list)
-		var/delta_moles = 0
-		if(!contained_turf.air || !istype(contained_turf.air, /datum/gas_mixture/turf))
-			continue
-
-		TOTAL_MOLES(contained_turf.air.gases, delta_moles)
-		moles += delta_moles
-
-	message_admins("this excited group contained [length(turf_list)] turfs, the combined total of which contained [moles] moles of gas")
 
 ////////////////////////SUPERCONDUCTIVITY/////////////////////////////
 

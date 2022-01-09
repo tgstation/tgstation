@@ -347,9 +347,9 @@
 	update_appearance()
 
 	if(!our_turf || !turf_gas)
-		can_possibly_start_processing = FALSE
+		try_start_processing = FALSE
 
-	if(can_possibly_start_processing)//check if our changes should make us start processing
+	if(try_start_processing)//check if our changes should make us start processing
 		check_atmos_process(src, turf_gas, turf_gas.temperature)
 
 	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)

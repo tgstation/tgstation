@@ -342,7 +342,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
 
-	var/temperature_delta = abs(temperature_archived - sharer.temperature_archived)
+	var/temperature_delta = temperature_archived - sharer.temperature_archived
+	var/abs_temperature_delta = abs(temperature_delta)
+
+	var/old_self_heat_capacity = 0
+	var/old_sharer_heat_capacity = 0
+	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		old_self_heat_capacity = heat_capacity()
+		old_sharer_heat_capacity = sharer.heat_capacity()
 
 	var/heat_capacity_self_to_sharer = 0 //heat capacity of the moles transferred from us to the sharer
 	var/heat_capacity_sharer_to_self = 0 //heat capacity of the moles transferred from the sharer to us
@@ -362,7 +369,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		///the amount of gas that gets moved between the mixtures.
 		var/gas_delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE]) / (atmos_adjacent_turfs + 1)
 
-		if(gas_delta && temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		if(gas_delta && abs_temperature_delta  > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 			var/gas_heat_capacity = gas_delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
 			if(gas_delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
@@ -377,9 +384,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	last_share = abs_moved_moles
 
 	//THERMAL ENERGY TRANSFER
-	if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/old_self_heat_capacity = heat_capacity(ARCHIVE)
-		var/old_sharer_heat_capacity = sharer.heat_capacity(ARCHIVE)
+	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
