@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(movement)
 		var/datum/move_loop/loop = running[running.len]
 		running.len--
 		if(loop.timer <= canonical_time)
-			loop.process(wait) //This shouldn't get nulls, if it does, runtime
+			loop.process() //This shouldn't get nulls, if it does, runtime
 		if (MC_TICK_CHECK)
 			return
 	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))

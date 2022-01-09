@@ -136,8 +136,10 @@
 	direction = dir
 
 /datum/move_loop/move/move()
-	. = moving.Move(get_step(moving, direction), direction)
-
+	var/atom/old_loc = moving.loc
+	moving.Move(get_step(moving, direction), direction)
+	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
+	return old_loc != moving.loc
 
 /**
  * Like move(), but it uses byond's pathfinding on a step by step basis
@@ -160,7 +162,9 @@
 /datum/move_loop/move/move_to
 
 /datum/move_loop/move/move_to/move()
-	. = step_to(moving, get_step(moving, direction))
+	var/atom/old_loc = moving.loc
+	step_to(moving, get_step(moving, direction))
+	return old_loc != moving.loc
 
 
 /**
@@ -184,7 +188,9 @@
 /datum/move_loop/move/force
 
 /datum/move_loop/move/force/move()
-	. = moving.forceMove(get_step(moving, direction))
+	var/atom/old_loc = moving.loc
+	moving.forceMove(get_step(moving, direction))
+	return old_loc != moving.loc
 
 
 /datum/move_loop/has_target
@@ -235,7 +241,10 @@
 /datum/move_loop/has_target/force_move
 
 /datum/move_loop/has_target/force_move/move()
-	return moving.forceMove(get_step(moving, get_dir(moving, target)))
+	var/atom/old_loc = moving.loc
+	moving.forceMove(get_step(moving, get_dir(moving, target)))
+	return old_loc != moving.loc
+
 
 /**
  * Used for following jps defined paths. The proc signature here's a bit long, I'm sorry
@@ -353,7 +362,9 @@
 			return FALSE
 
 	var/turf/next_step = movement_path[1]
-	. = moving.Move(next_step, get_dir(moving, next_step))
+	var/atom/old_loc = moving.loc
+	moving.Move(next_step, get_dir(moving, next_step))
+	. = (old_loc != moving.loc)
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
@@ -414,8 +425,9 @@
 	. = ..()
 	if(!.)
 		return
-	return step_to(moving, target)
-
+	var/atom/old_loc = moving.loc
+	step_to(moving, target)
+	return old_loc != moving.loc
 
 /**
  * Wrapper around walk_away()
@@ -446,7 +458,9 @@
 	. = ..()
 	if(!.)
 		return
-	return step_away(moving, target)
+	var/atom/old_loc = moving.loc
+	step_away(moving, target)
+	return old_loc != moving.loc
 
 
 /**
@@ -541,7 +555,9 @@
 		x_ticker -= 1
 	if(y_ticker >= 1)
 		y_ticker -= 1
-	return moving.Move(moving_towards, get_dir(moving, moving_towards))
+	var/atom/old_loc = moving.loc
+	moving.Move(moving_towards, get_dir(moving, moving_towards))
+	return old_loc != moving.loc
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
@@ -615,7 +631,9 @@
 
 /datum/move_loop/has_target/move_towards_budget/move()
 	var/turf/target_turf = get_step_towards(moving, target)
-	return moving.Move(target_turf, get_dir(moving, target_turf))
+	var/atom/old_loc = moving.loc
+	moving.Move(target_turf, get_dir(moving, target_turf))
+	return old_loc != moving.loc
 
 
 /**
@@ -659,7 +677,9 @@
 	while(potential_dirs.len)
 		var/testdir = pick(potential_dirs)
 		var/turf/moving_towards = get_step(moving, testdir)
-		if(moving.Move(moving_towards, testdir)) //If it worked, we're done
+		var/atom/old_loc = moving.loc
+		moving.Move(moving_towards, testdir)
+		if(old_loc != moving.loc)  //If it worked, we're done
 			return TRUE
 		potential_dirs -= testdir
 	return FALSE
@@ -685,4 +705,43 @@
 /datum/move_loop/move_to_rand
 
 /datum/move_loop/move_to_rand/move()
-	return step_rand(moving)
+	var/atom/old_loc = moving.loc
+	step_rand(moving)
+	return old_loc != moving.loc
+
+/**
+ * Snowflake disposal movement. Moves a disposal holder along a chain of disposal pipes
+ *
+ * Returns TRUE if the loop sucessfully started, or FALSE if it failed
+ *
+ * Arguments:
+ * moving - The atom we want to move
+ * delay - How many deci-seconds to wait between fires. Defaults to the lowest value, 0.1
+ * timeout - Time in deci-seconds until the moveloop self expires. Defaults to infinity
+ * subsystem - The movement subsystem to use. Defaults to SSmovement. Only one loop can exist for any one subsystem
+ * priority - Defines how different move loops override each other. Lower numbers beat higher numbers, equal defaults to what currently exists. Defaults to MOVEMENT_DEFAULT_PRIORITY
+ * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
+ *
+**/
+/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
+
+/// Disposal holders need to move through a chain of pipes
+/// Rather then through the world. This supports this
+/// If this ever changes, get rid of this, add drift component like logic to the holder
+/// And move them to move()
+/datum/move_loop/disposal_holder
+
+/datum/move_loop/disposal_holder/setup(delay = 1, timeout = INFINITY)
+	// This is a horrible pattern.
+	// Move loops should almost never need to be one offs. Please don't do this if you can help it
+	if(!istype(moving, /obj/structure/disposalholder))
+		stack_trace("You tried to make a [moving.type] object move like a disposals holder, stop that!")
+		return FALSE
+	return ..()
+
+/datum/move_loop/disposal_holder/move()
+	var/obj/structure/disposalholder/holder = moving
+	var/atom/old_loc = moving.loc
+	holder.current_pipe.transfer(holder)
+	return old_loc != moving.loc
