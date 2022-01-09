@@ -102,8 +102,11 @@
 		title = html_encode(title)
 		message = html_encode(message)
 
+	if(!players)
+		players = GLOB.player_list
+
 	for(var/mob/target in players)
-		if(target.can_hear())
+		if(!isnewplayer(target) && target.can_hear())
 			to_chat(target, "[span_minorannounce("<font color = red>[title]</font color><BR>[message]")]<BR>")
 			if(target.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
