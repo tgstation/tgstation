@@ -60,7 +60,7 @@
 	)
 	restricted_roles = list(
 		JOB_AI,
-		JOB_CYBORG
+		JOB_CYBORG,
 	)
 	required_candidates = 1
 	weight = 7
