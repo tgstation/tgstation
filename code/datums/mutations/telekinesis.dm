@@ -8,9 +8,7 @@
 	limb_req = BODY_ZONE_HEAD
 	instability = 30
 	///Typecache of atoms that TK shouldn't interact with
-	var/list/blacklisted_atoms = list(
-		/atom/movable/screen,
-	)
+	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
 
 /datum/mutation/human/telekinesis/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
