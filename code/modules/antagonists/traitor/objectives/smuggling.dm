@@ -28,12 +28,7 @@
 	)
 
 /datum/traitor_objective/smuggle/is_duplicate(datum/traitor_objective/smuggle/objective_to_compare)
-	if(objective_to_compare.contraband_type == contraband_type)
-		return TRUE
-	//it's too similar if its from the same area
-	if(objective_to_compare.smuggle_spawn_type == smuggle_spawn_type)
-		return TRUE
-	return FALSE
+	return TRUE // You can only have 1 objective of this type.
 
 /datum/traitor_objective/smuggle/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -66,6 +61,9 @@
 					penalty = telecrystal_penalty)
 
 /datum/traitor_objective/smuggle/generate_objective(datum/mind/generating_for, list/possible_duplicates)
+	if(length(possible_duplicates))
+		return FALSE
+
 	//anyone working cargo should not get almost free objectives by having direct access to the cargo shuttle
 	if(generating_for.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_CARGO)
 		return FALSE
