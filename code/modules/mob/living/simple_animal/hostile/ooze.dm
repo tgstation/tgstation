@@ -153,10 +153,16 @@
 	return (ooze.ooze_nutrition >= nutrition_cost && !active)
 
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
-/datum/action/cooldown/metabolicboost/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/metabolicboost/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_boost()
+	StartCooldown()
+	return TRUE
+
+/*
+ * Actually trigger the boost.
+ */
+/datum/action/cooldown/metabolicboost/proc/trigger_boost()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
