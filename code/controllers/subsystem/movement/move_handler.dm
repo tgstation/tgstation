@@ -1,3 +1,25 @@
+/**
+ * Acts as a namespace for movement packet/type related procs
+ *
+ * Exists to provide an in code implementation of movement looping
+ * Replaces things like walk() or walk_to(), among others
+ *
+ * Because we're doing things in engine, we have a lot more control over how different operations are performed
+ * We also get more say in when things happen, so we can subject movements to the whims of the master controller
+ * Rather then using a fuck ton of cpu just moving mobs or meteors
+ *
+ * The goal is to keep the loops themselves reasonably barebone, and implement more advanced behavior and control via the signals
+ *
+ * This may be bypassed in cases where snowflakes are nessesary, or where performance is important. S not a hard and fast thing
+ *
+ * Every atom can have a movement packet, which contains information and behavior about currently active loops, and queuing info
+ * Loops control how movement actually happens. So there's a "move in this direction" loop, a "move randomly" loop
+ *
+ * You can find the logic for this control in this file
+ *
+ * Specifics of how different loops operate can be found in the movement_types.dm file, alongside the [add to loop][/datum/controller/subsystem/move_manager/proc/add_to_loop] helper procs that use them
+ *
+**/
 SUBSYSTEM_DEF(move_manager)
 	name = "Movement Handler"
 	flags = SS_NO_INIT | SS_NO_FIRE
@@ -111,7 +133,7 @@ SUBSYSTEM_DEF(move_manager)
 
 	if(!favorite) //This isn't an error state, since some loops ignore the concept of a running loop
 		return
-		
+
 	var/datum/controller/subsystem/movement/favorite_subsystem = favorite.controller
 
 	running_loop = favorite
