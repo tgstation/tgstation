@@ -18,21 +18,21 @@
 ///
 /// Negative scales are now supported. =)
 /matrix/proc/decompose()
-    var/datum/decompose_matrix/decompose_matrix = new
-    . = decompose_matrix
-    var/flip_sign = (a*e - b*d < 0)? -1 : 1 // Det < 0 => only 1 axis is flipped - start doing some sign flipping
-    // If both axis are flipped, nothing bad happens and Det >= 0, it just treats it like a 180° rotation
-    // If only 1 axis is flipped, we need to flip one direction - in this case X, so we flip a, b and the x scaling
-    decompose_matrix.scale_x = sqrt(a * a + d * d) * flip_sign
-    decompose_matrix.scale_y = sqrt(b * b + e * e)
-    decompose_matrix.shift_x = c
-    decompose_matrix.shift_y = f
-    if(!decompose_matrix.scale_x || !decompose_matrix.scale_y)
-        return
-    // If only translated, scaled and rotated, a/xs == e/ys and -d/xs == b/xy
-    var/cossine = (a/decompose_matrix.scale_x + e/decompose_matrix.scale_y) / 2
-    var/sine = (b/decompose_matrix.scale_y - d/decompose_matrix.scale_x) / 2 * flip_sign
-    decompose_matrix.rotation = arctan(cossine, sine) * flip_sign
+	var/datum/decompose_matrix/decompose_matrix = new
+	. = decompose_matrix
+	var/flip_sign = (a*e - b*d < 0)? -1 : 1 // Det < 0 => only 1 axis is flipped - start doing some sign flipping
+	// If both axis are flipped, nothing bad happens and Det >= 0, it just treats it like a 180° rotation
+	// If only 1 axis is flipped, we need to flip one direction - in this case X, so we flip a, b and the x scaling
+	decompose_matrix.scale_x = sqrt(a * a + d * d) * flip_sign
+	decompose_matrix.scale_y = sqrt(b * b + e * e)
+	decompose_matrix.shift_x = c
+	decompose_matrix.shift_y = f
+	if(!decompose_matrix.scale_x || !decompose_matrix.scale_y)
+		return
+	// If only translated, scaled and rotated, a/xs == e/ys and -d/xs == b/xy
+	var/cossine = (a/decompose_matrix.scale_x + e/decompose_matrix.scale_y) / 2
+	var/sine = (b/decompose_matrix.scale_y - d/decompose_matrix.scale_x) / 2 * flip_sign
+	decompose_matrix.rotation = arctan(cossine, sine) * flip_sign
 
 /matrix/proc/TurnTo(old_angle, new_angle)
 	. = new_angle - old_angle
