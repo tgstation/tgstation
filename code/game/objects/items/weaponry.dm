@@ -823,10 +823,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	/// Wielding status.
 	var/wielded = FALSE
+	/// Previous x position of where we clicked on the target's icon
 	var/previous_x
+	/// Previous y position of where we clicked on the target's icon
 	var/previous_y
-	var/atom/previous_target
+	/// The previous target we attacked
+	var/datum/weakref/previous_target
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
@@ -892,11 +896,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
 	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
 	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed)
-	if(target == previous_target) //if the same target, we calculate a damage multiplier if you swing your mouse around
+	if(target == previous_target?.resolve()) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
 		var/y_mod = previous_y - y_slashed
 		damage_mod = max(1, round((sqrt(x_mod ** 2 + y_mod ** 2) / 10), 0.1))
-	previous_target = target
+	previous_target = WEAKREF(target)
 	previous_x = x_slashed
 	previous_y = y_slashed
 	playsound(src, 'sound/weapons/bladeslice.ogg', 100, vary = TRUE)
@@ -951,4 +955,5 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
 	if(!IS_WIZARD(user))
 		balloon_alert(user, "you're too weak!")
+		return
 	return ..()
