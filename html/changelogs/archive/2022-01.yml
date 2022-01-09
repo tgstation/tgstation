@@ -257,3 +257,35 @@
   - rscdel: Removed monkey mode from the code, when admins ran it it was broken anyways
   - rscdel: Jungle fever no longer spreads via monkey bites after conversion, and
       it is now jungle flu.
+2022-01-09:
+  Capsandi:
+  - rscadd: 3 new space ruins, 2 chunks of a blown up space station and a NEW asteroid!
+  Melbert:
+  - bugfix: 'Tram medical: Adds some missing white medkits.'
+  - bugfix: 'Tram medical: Cryo freezer actually works.'
+  - bugfix: 'Tram medical: Adds some missing wall mounts and firelocks.'
+  - bugfix: 'Tram medical: You can reach the corner table in the chem lab'
+  - bugfix: 'Tram medical: Changes windoor directions in the pharmacy, fixes access
+      on shutters'
+  - bugfix: 'Tram medical: Privacy shutters for the CMO''s office'
+  Nari Harimoto:
+  - expansion: Centcom has approved the funds to re-arrange Icebox's medbay department
+      with a new design that better facilitates multiple level functionality
+  SuperNovaa41:
+  - refactor: The spider charge has slightly less shit-code now.
+  TemporalOroboros:
+  - bugfix: The supermatter will once again emit radiation when it is about to explode.
+  san7890:
+  - bugfix: The status screen in the ERT Bay in CentComm has been moved to the other
+      side of the wall because we accidentally kept sending them down and the crew
+      would keep selling them.
+  - bugfix: Wardens and Heads of Security Rejoice! You are now able to send tiders
+      to the gulag to labor for the better of the station after they steal your third
+      baton (on TramStation)!
+  - bugfix: The holopad is now back in Security's meeting room on MetaStation! Silicon
+      lovers and cold-callers rejoice!
+  timothymtorres:
+  - bugfix: Fix transparent floors clipping objects from bottom z-level to above z-level.
+  unit0016:
+  - rscadd: The Icemoon Engineering Outpost has been remapped, and received an /area/
+      to go with!
