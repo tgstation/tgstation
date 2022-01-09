@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(air)
 		src.currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	while(length(currentrun))
+	while(currentrun.len)
 		var/datum/thing = currentrun[length(currentrun)]
 		currentrun.len--
 		if(thing)

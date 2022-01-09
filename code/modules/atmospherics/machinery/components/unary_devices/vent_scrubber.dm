@@ -298,12 +298,20 @@
 	var/old_scrubbing = scrubbing
 	var/old_filter_length = length(filter_types)
 
+	///whether we should attempt to start processing due to settings allowing us to take gas out of our environment
+	var/try_start_processing = FALSE
+
+	var/turf/open/our_turf = get_turf(src)
+	var/datum/gas_mixture/turf_gas = our_turf?.air
+
 	var/atom/signal_sender = signal.data["user"]
 
 	if("power" in signal.data)
 		on = text2num(signal.data["power"])
+		try_start_processing = TRUE
 	if("power_toggle" in signal.data)
 		on = !on
+		try_start_processing = TRUE
 
 	if("widenet" in signal.data)
 		widenet = text2num(signal.data["widenet"])
@@ -312,8 +320,11 @@
 
 	if("scrubbing" in signal.data)
 		scrubbing = text2num(signal.data["scrubbing"])
+		try_start_processing = TRUE
 	if("toggle_scrubbing" in signal.data)
 		scrubbing = !scrubbing
+		try_start_processing = TRUE
+
 	if(scrubbing != old_scrubbing)
 		investigate_log(" was toggled to [scrubbing ? "scrubbing" : "siphon"] mode by [key_name(signal_sender)]",INVESTIGATE_ATMOS)
 
@@ -334,6 +345,12 @@
 
 	broadcast_status()
 	update_appearance()
+
+	if(!our_turf || !turf_gas)
+		can_possibly_start_processing = FALSE
+
+	if(can_possibly_start_processing)//check if our changes should make us start processing
+		check_atmos_process(src, turf_gas, turf_gas.temperature)
 
 	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
 		return
