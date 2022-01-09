@@ -279,7 +279,7 @@
 			layer_icon = GenerateLayerGroup(colors, layer, render_steps)
 			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
-			layer_icon = layer.Generate(colors, render_steps)
+			layer_icon = layer.Generate(colors, render_steps, new_icon)
 
 		if(!new_icon)
 			new_icon = layer_icon
