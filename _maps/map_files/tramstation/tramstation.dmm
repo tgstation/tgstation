@@ -3765,12 +3765,14 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "ahV" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/machinery/door/poddoor/preopen{
+	id = "briglockdown";
+	name = "brig shutters"
 	},
-/turf/open/floor/iron,
-/area/service/bar)
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/warden)
 "ahW" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -6810,8 +6812,8 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "aof" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/brig)
 "aog" = (
@@ -20654,8 +20656,14 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "aUE" = (
-/turf/open/floor/glass,
-/area/service/kitchen)
+/obj/machinery/door/poddoor/preopen{
+	id = "briglockdown";
+	name = "brig shutters"
+	},
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/brig)
 "aUL" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -92687,12 +92695,12 @@ akf
 aeK
 abX
 etq
-ahV
-ahV
+etq
+etq
 aZE
 aGg
 pwc
-ahV
+etq
 ayW
 aKD
 aej
@@ -92943,13 +92951,13 @@ aQB
 akf
 aeK
 abX
-ahV
+etq
 adh
 aFR
-ahV
-ahV
+etq
+etq
 pwc
-ahV
+etq
 aQz
 auo
 evv
@@ -93206,8 +93214,8 @@ xim
 lRL
 lRL
 pmm
-ahV
-ahV
+etq
+etq
 axf
 aVH
 amZ
@@ -93715,13 +93723,13 @@ acU
 amm
 aej
 ack
-ahV
-ahV
+etq
+etq
 ayI
 atF
 pwc
-ahV
-ahV
+etq
+etq
 ahU
 aTa
 amZ
@@ -93972,12 +93980,12 @@ aSs
 abN
 uNV
 pUl
-ahV
+etq
 qUt
 ayI
 aja
 pwc
-ahV
+etq
 aGN
 aIV
 auW
@@ -94229,12 +94237,12 @@ fbn
 abR
 acc
 acq
-ahV
+etq
 pkI
 szq
 hzh
 oUJ
-ahV
+etq
 anV
 adH
 aej
@@ -94486,7 +94494,7 @@ awI
 aNR
 aej
 agP
-ahV
+etq
 reZ
 aej
 aej
@@ -158742,8 +158750,8 @@ axa
 ayY
 aYR
 aeH
-aUE
-aUE
+uTG
+uTG
 aOx
 aid
 aqB
@@ -158998,10 +159006,10 @@ aRR
 axQ
 pco
 jya
-aUE
+uTG
 gyC
 uTG
-aUE
+uTG
 aDI
 aqB
 avd
@@ -159256,8 +159264,8 @@ axa
 aIj
 anr
 aPc
-aUE
-aUE
+uTG
+uTG
 amF
 aKb
 aqB
@@ -167463,7 +167471,7 @@ anz
 aof
 amT
 anz
-amn
+aUE
 apL
 bMN
 arU
@@ -168741,7 +168749,7 @@ jMY
 aoJ
 goY
 cbN
-alq
+ahV
 amT
 hgt
 anJ
@@ -168998,7 +169006,7 @@ dMF
 lVS
 tAn
 ouE
-alq
+ahV
 amT
 cHB
 anz
@@ -169512,7 +169520,7 @@ xaR
 kIA
 mke
 qAs
-alq
+ahV
 amT
 cHB
 anz
@@ -169769,7 +169777,7 @@ aoU
 stX
 rtb
 uoC
-alq
+ahV
 amT
 hgt
 anQ
@@ -171058,10 +171066,10 @@ amn
 anc
 ybc
 anz
-amn
+aUE
 amT
 anz
-amn
+aUE
 apY
 ffq
 asc

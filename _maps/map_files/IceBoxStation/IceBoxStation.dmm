@@ -1897,7 +1897,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "agW" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "agX" = (
@@ -2198,7 +2198,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "aij" = (
@@ -2321,8 +2321,8 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "aiJ" = (
@@ -3866,7 +3866,7 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "amr" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "amt" = (
@@ -4036,8 +4036,8 @@
 	id = "Secure Gate";
 	name = "brig shutters"
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/brig)
 "amR" = (
@@ -4074,8 +4074,8 @@
 	id = "briggate";
 	name = "security blast door"
 	},
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/brig)
 "amV" = (
@@ -6422,8 +6422,8 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "avB" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "avE" = (
@@ -8960,8 +8960,8 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aIF" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "aIG" = (
@@ -39310,6 +39310,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/locker)
+"lNK" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/brig)
 "lOw" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -86920,7 +86925,7 @@ aiM
 adV
 aek
 otz
-vad
+lNK
 alB
 amn
 amV
@@ -87691,10 +87696,10 @@ agn
 ajd
 ajD
 tuC
-vad
+lNK
 tuC
 tuC
-vad
+lNK
 anz
 agD
 aoz
