@@ -41,7 +41,7 @@
 		var/list/interpreted_row = list()
 		if(!istype(row) || length(row) != 4)
 			stack_trace("Expected list to contain further row lists with exactly 4 entries")
-			interpreted_row = list(0, 0, 0, 0, 0)
+			interpreted_row = list(0, 0, 0, 0)
 			continue
 		for(var/number in row)
 			if(!isnum(number))
