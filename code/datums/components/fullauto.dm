@@ -230,7 +230,8 @@
 		stop_autofiring() //Elvis has left the building.
 		return FALSE
 	shooter.face_atom(target)
-	COOLDOWN_START(src, next_shot_cd, autofire_shot_delay)
+	var/next_delay = autofire_shot_delay * (HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP) ? 0.5 : 1)
+	COOLDOWN_START(src, next_shot_cd, next_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
 	stop_autofiring()

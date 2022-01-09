@@ -170,6 +170,14 @@
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
 
+/obj/item/reagent_containers/food/drinks/bottle/rootbeer
+	name = "Two-Time root beer"
+	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
+	foodtype = SUGAR | JUNKFOOD
+	custom_price = PAYCHECK_HARD * 1.5
+
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
