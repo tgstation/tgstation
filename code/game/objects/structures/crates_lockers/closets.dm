@@ -393,7 +393,7 @@
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 		if(user.combat_mode)
-			return
+			return FALSE
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
