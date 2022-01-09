@@ -10,32 +10,35 @@
 	var/datum/thrownthing/thrown_boomerang
 	///If this boomerang is thrown, does it re-enable the throwers throw mode?
 	var/thrower_easy_catch_enabled = FALSE
-	///The object the component's being applied to.
-	var/obj/item/true_parent
+	///This cooldown prevents our 2 throwing signals from firing too often based on how we implement those signals within thrown impacts.
 	COOLDOWN_DECLARE(last_boomerang_throw)
 
-/datum/component/boomerang/Initialize(_boomerang_throw_range, _thrower_easy_catch_enabled)
+/datum/component/boomerang/Initialize(boomerang_throw_range, thrower_easy_catch_enabled)
 	. = ..()
 	if(!isitem(parent)) //Only items support being thrown around like a boomerang, feel free to make this apply to humans later on.
 		return COMPONENT_INCOMPATIBLE
-	true_parent = parent
 
 	//Assignments
-	if(_boomerang_throw_range)
-		boomerang_throw_range = _boomerang_throw_range
-	if(_thrower_easy_catch_enabled)
-		thrower_easy_catch_enabled = _thrower_easy_catch_enabled
+	if(boomerang_throw_range)
+		src.boomerang_throw_range = boomerang_throw_range
+	if(thrower_easy_catch_enabled)
+		src.thrower_easy_catch_enabled = thrower_easy_catch_enabled
 
 /datum/component/boomerang/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/PrepareThrow) ///Collect data on current thrower and the throwing datum
 	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, .proc/ReturnMissedThrow)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/ReturnHitThrow)
-	//RegisterSignal(parent, COMSIG_CARBON_SUCCESSFUL_CATCH, .proc/BoomerangCooldown)
 
 /datum/component/boomerang/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
 
+/**
+ * Proc'd before the thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.
+ * * source: Datum src from original signal call.
+ * * thrown_thing: The atom that has had the boomerang component added to it. Updates thrown_boomerang.
+ * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
+ */
 /datum/component/boomerang/proc/PrepareThrow(datum/source, atom/thrown_thing, spin)
 	SIGNAL_HANDLER
 	thrown_boomerang = thrown_thing //Here we update our "thrownthing" datum with that of the original throw for each boomerang. We save it for the return throw.
@@ -45,32 +48,48 @@
 			Carbon.throw_mode_on(THROW_MODE_TOGGLE)
 	return
 
+/**
+ * Proc that triggers when the thrown boomerang hits an object, then rebounds the boomerang.
+ * * source: Datum src from original signal call.
+ * * hit_atom: The atom that has been hit by the boomerang component.
+ * * init_throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
+ */
 /datum/component/boomerang/proc/ReturnHitThrow(datum/source, atom/hit_atom, datum/thrownthing/init_throwing_datum)
 	SIGNAL_HANDLER
 	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
+	var/obj/item/true_parent = parent
 	var/caught = hit_atom.hitby(true_parent, FALSE, FALSE, throwingdatum=init_throwing_datum)
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
-	true_parent.visible_message(span_danger("[true_parent] has been ReturnHitThrow!"))
 	AerodynamicSwing(init_throwing_datum)
 	if(thrown_by && !caught)
 		addtimer(CALLBACK(true_parent, /atom/movable.proc/throw_at, thrown_by, boomerang_throw_range, init_throwing_datum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
 	return
 
+/**
+ * Proc that triggers when the thrown boomerang does not hit a target, then rebounds the boomerang.
+ * * source: Datum src from original signal call.
+ * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
+ */
 /datum/component/boomerang/proc/ReturnMissedThrow(datum/source, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
-	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
+	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
+	var/obj/item/true_parent = parent
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
-	true_parent.visible_message(span_danger("[true_parent] has been ReturnMissedThrow!"))
 	AerodynamicSwing(throwing_datum)
 	if(thrown_by)
 		addtimer(CALLBACK(true_parent, /atom/movable.proc/throw_at, thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
 	return
 
+/**
+ * Proc that triggers when the thrown boomerang has rebounded, for visual_input.
+ * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
+ */
 /datum/component/boomerang/proc/AerodynamicSwing(datum/thrownthing/throwing_datum)
+	var/obj/item/true_parent = parent
 	true_parent.visible_message(span_danger("[true_parent] is flying back at [throwing_datum.thrower]!"), \
 						span_danger("You see [true_parent] fly back at you!"), \
 						span_hear("You hear an aerodynamic woosh!"))
