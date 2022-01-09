@@ -1,40 +1,77 @@
+/// Pricetag components, used when exporting items.
 /datum/component/pricetag
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	///Payee gets 100% of the value if no ratio has been set.
 	var/default_profit_ratio = 1
 	///List of bank accounts this pricetag pays out to. Format is payees[bank_account] = profit_ratio.
 	var/list/payees = list()
 
-/datum/component/pricetag/Initialize(_owner,_profit_ratio)
+/datum/component/pricetag/Initialize(pay_to_account, profit_ratio)
 	if(!isobj(parent)) //Has to account for both objects and sellable structures like crates.
 		return COMPONENT_INCOMPATIBLE
 
-	if(_profit_ratio)
-		payees[_owner] = _profit_ratio
-	else
-		payees[_owner] = default_profit_ratio
+	payees[pay_to_account] = isnum(profit_ratio) ? profit_ratio : default_profit_ratio
 
-	RegisterSignal(parent, list(COMSIG_ITEM_SOLD), .proc/split_profit)
-	RegisterSignal(parent, list(COMSIG_STRUCTURE_UNWRAPPED, COMSIG_ITEM_UNWRAPPED), .proc/Unwrapped)
-	RegisterSignal(parent, list(COMSIG_ITEM_SPLIT_PROFIT, COMSIG_ITEM_SPLIT_PROFIT_DRY), .proc/return_ratio)
+/datum/component/pricetag/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_ITEM_EXPORTED, .proc/on_parent_sold)
+	RegisterSignal(parent, list(COMSIG_STRUCTURE_UNWRAPPED, COMSIG_ITEM_UNWRAPPED), .proc/on_parent_unwrap)
 
-/datum/component/pricetag/proc/Unwrapped()
+/datum/component/pricetag/UnregisterFromParent()
+	UnregisterSignal(parent, list(
+		COMSIG_ITEM_EXPORTED,
+		COMSIG_STRUCTURE_UNWRAPPED,
+		COMSIG_ITEM_UNWRAPPED,
+		))
+
+/*
+ * Adding a new version of price tag:
+ *
+ * If the account passed in the new version is already in our list,
+ * only override it if the ratio is better for the payee
+ *
+ * If the account passed in the new version is not in our list,
+ * add it like normal
+ */
+/datum/component/pricetag/InheritComponent(datum/component/pricetag/new_comp, i_am_original, pay_to_account, profit_ratio)
+	if(!isnull(payees[pay_to_account]) && payees[pay_to_account] >= profit_ratio) // They're already getting a better ratio, don't scam them
+		return
+	payees[pay_to_account] = isnum(profit_ratio) ? profit_ratio : default_profit_ratio
+
+/*
+ * Signal proc for [COMSIG_STRUCTURE_UNWRAPPED] and [COMSIG_ITEM_UNWRAPPED].
+ *
+ * Once it leaves it's wrapped container, the the parent should lose its pricetag component.
+ */
+/datum/component/pricetag/proc/on_parent_unwrap(obj/source)
 	SIGNAL_HANDLER
 
-	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.
+	qdel(src)
 
-/datum/component/pricetag/proc/split_profit(item_value)
+/*
+ * Signal proc for [COMSIG_ITEM_EXPORTED].
+ *
+ * Pays out money to everyone in the payees list.
+ */
+/datum/component/pricetag/proc/on_parent_sold(obj/source, datum/export/export, datum/export_report/report, item_value)
 	SIGNAL_HANDLER
 
-	var/price = item_value
-	if(price)
-		for(var/datum/bank_account/payee in payees)
-			var/profit_ratio = payees[payee]
-			var/adjusted_value = price * profit_ratio
-			var/datum/bank_account/bank_account = payee
-			bank_account.adjust_money(adjusted_value)
-			bank_account.bank_card_talk("Sale of [parent] recorded. [adjusted_value] credits added to account.")
-		return TRUE
+	if(!isnum(item_value))
+		return
 
-/datum/component/pricetag/proc/return_ratio()
-	SIGNAL_HANDLER
-	return default_profit_ratio
+	// Gotta see how much money we've lost by the end of things.
+	var/overall_item_price = item_value
+
+	for(var/datum/bank_account/payee as anything in payees)
+		// Every payee with a ratio gets a cut based on the item's total value
+		var/payee_cut = round(item_value * payees[payee])
+		overall_item_price -= payee_cut
+
+		payee.adjust_money(payee_cut)
+		payee.bank_card_talk("Sale of [source] recorded. [payee_cut] credits added to account.")
+
+	// Update the report with the modified value here
+	report.total_value[export] += overall_item_price
+	report.total_amount[export] += export.get_amount(source) * export.amount_report_multiplier
+
+	// And ensure we don't double-add to the report
+	return COMPONENT_ADDED_TO_REPORT

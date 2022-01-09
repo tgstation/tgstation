@@ -197,13 +197,18 @@
 #define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
 
 // /obj/item signals for economy
+///called before an item is sold by the exports system.
+#define COMSIG_ITEM_PRE_EXPORT "item_pre_sold"
+	/// Stops the item from exporting, so you can handle it manually.
+	#define COMPONENT_STOP_EXPORT (1<<0)
 ///called when an item is sold by the exports subsystem
-#define COMSIG_ITEM_SOLD "item_sold"
+#define COMSIG_ITEM_EXPORTED "item_sold"
+	/// The item was added to the report manually via signal and shouldn't be done in sell_object()
+	#define COMPONENT_ADDED_TO_REPORT (1<<0)
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
-	#define COMSIG_ITEM_SPLIT_VALUE  (1<<0)
 ///called when getting the item's exact ratio for cargo's profit.
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.

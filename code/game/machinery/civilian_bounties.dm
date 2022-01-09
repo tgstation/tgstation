@@ -279,8 +279,10 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
+	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
+	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
 	QDEL_NULL(radio)
 	. = ..()
 
@@ -290,6 +292,17 @@
 		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
+
+/*
+ * Signal proc for [COMSIG_ITEM_EXPORTED].
+ *
+ * Deletes the internal radio before it's sold - no free 4 credits for you!
+ */
+/obj/item/bounty_cube/proc/on_export(datum/source)
+	SIGNAL_HANDLER
+
+	QDEL_NULL(radio)
+	return COMPONENT_STOP_EXPORT // deletes the radio and stops it from bring counted as an export
 
 /obj/item/bounty_cube/process(delta_time)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
