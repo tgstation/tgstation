@@ -116,6 +116,7 @@ const InputDisplay = (props) => {
 const ButtonsDisplay = (props, context) => {
   const { act } = useBackend<CandidateData>(context);
   const { input } = props;
+
   return (
     <Section fill>
       <Stack>

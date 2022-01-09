@@ -1531,6 +1531,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 			L.update(FALSE)
 		CHECK_TICK
 
+/obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE)
+	// APC being at 0 integrity doesnt delete it outright. Combined with take_damage this might cause runtimes.
+	if(machine_stat & BROKEN && atom_integrity <= 0)
+		if(sound_effect)
+			play_attack_sound(damage_amount, damage_type, damage_flag)
+		return
+	return ..()
 
 #undef APC_CHANNEL_OFF
 #undef APC_CHANNEL_AUTO_OFF

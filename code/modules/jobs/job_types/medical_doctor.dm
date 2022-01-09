@@ -1,6 +1,8 @@
 /datum/job/doctor
-	title = "Medical Doctor"
-	department_head = list("Chief Medical Officer")
+	title = JOB_MEDICAL_DOCTOR
+	description = "Save lives, run around the station looking for victims, \
+		scan everyone in sight"
+	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -57,3 +59,13 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+/datum/outfit/job/doctor/mod
+	name = "Medical Doctor (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/medical
+	suit = null
+	mask = /obj/item/clothing/mask/breath/medical
+	r_pocket = /obj/item/flashlight/pen
+	internals_slot = ITEM_SLOT_SUITSTORE

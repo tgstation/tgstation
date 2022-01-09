@@ -6,13 +6,12 @@
 $department_map: (
   'Assistant': colors.$grey,
   'Captain': colors.fg(colors.$blue),
+  'Cargo': colors.$brown,
   'Command': colors.$yellow,
   'Security': colors.$red,
   'Engineering': #f1a839,
   'Medical': colors.$teal,
-  'Misc': colors.$white,
   'Science': colors.fg(colors.$purple),
-  'Supply': colors.$brown,
   'Service': colors.$green,
   'Silicon': colors.$pink,
 );

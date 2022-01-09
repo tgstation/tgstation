@@ -132,7 +132,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	if(screen?.ai)
 		return screen.ai.client
 
-/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination)
+/mob/camera/ai_eye/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
 	if (destination)
 		abstract_move(destination)
 	else

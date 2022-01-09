@@ -45,6 +45,7 @@
 		/obj/item/clothing/neck/tie/red = 3,
 		/obj/item/clothing/neck/tie/black = 3,
 		/obj/item/clothing/neck/tie/horrible = 3,
+		/obj/item/clothing/accessory/pride = 15,
 		/obj/item/storage/belt/fannypack = 3,
 		/obj/item/storage/belt/fannypack/blue = 3,
 		/obj/item/storage/belt/fannypack/red = 3,

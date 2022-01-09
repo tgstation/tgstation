@@ -128,7 +128,7 @@
 	return TRUE
 
 ///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
-/obj/machinery/griddle/get_dumping_location(obj/item/storage/source, mob/user)
+/obj/machinery/griddle/get_dumping_location()
 	return
 
 /obj/machinery/griddle/process(delta_time)

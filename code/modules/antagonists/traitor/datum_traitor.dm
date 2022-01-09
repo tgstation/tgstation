@@ -14,7 +14,7 @@
 #define MAROON_PROB 30
 
 /datum/antagonist/traitor
-	name = "Traitor"
+	name = "\improper Traitor"
 	roundend_category = "traitors"
 	antagpanel_category = "Traitor"
 	job_rank = ROLE_TRAITOR
@@ -45,6 +45,10 @@
 	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
 	var/datum/objective/ending_objective
 
+/datum/antagonist/traitor/New(give_objectives = TRUE)
+	. = ..()
+	src.give_objectives = give_objectives
+
 /datum/antagonist/traitor/on_gain()
 	owner.special_role = job_rank
 
@@ -68,11 +72,7 @@
 	return ..()
 
 /datum/antagonist/traitor/on_removal()
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
-
 	owner.special_role = null
-
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer(faction)

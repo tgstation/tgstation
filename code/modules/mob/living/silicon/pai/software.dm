@@ -99,9 +99,11 @@
 		if("camera_zoom")
 			aicamera.adjust_zoom(usr)
 		if("change_image")
-			var/newImage = tgui_input_list(usr, "Select your new display image.", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses")))
+			var/newImage = tgui_input_list(usr, "Select your new display image", "Display Image", sort_list(list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What", "Sunglasses", "None")))
+			if(isnull(newImage))
+				return FALSE
 			switch(newImage)
-				if(null)
+				if("None")
 					card.emotion_icon = "null"
 				if("Extremely Happy")
 					card.emotion_icon = "extremely-happy"
@@ -141,7 +143,7 @@
 			if(params["scan"] == "wounds")
 				hostscan.attack_self(usr)
 			if(params["scan"] == "limbs")
-				hostscan.toggle_mode()
+				hostscan.AltClick(usr)
 		if("internal_gps")
 			if(!internal_gps)
 				internal_gps = new(src)
@@ -277,6 +279,8 @@
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress in [turf.loc].</b></font>")
 		else
 			to_chat(AI, "<font color = red><b>Network Alert: Brute-force security override in progress. Unable to pinpoint location.</b></font>")
+	if(!hackbar)
+		hackbar = new(src, HACK_COMPLETE, hacking_cable.machine)
 	hacking = TRUE
 
 /**
