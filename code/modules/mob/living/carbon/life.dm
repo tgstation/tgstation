@@ -455,8 +455,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			var/pixel_y_diff = 0
 
 			var/amplitude = old_dizzy*(sin(old_dizzy * (time)) + 1) // This shit is annoying at high strengthvar/pixel_x_diff = 0
-			var/x_diff = amplitude * sin(old_dizzy * (time))
-			var/y_diff = amplitude * cos(old_dizzy * (time))
+			var/x_diff = amplitude * sin(old_dizzy * time)
+			var/y_diff = amplitude * cos(old_dizzy * time)
 			pixel_x_diff += x_diff
 			pixel_y_diff += y_diff
 			// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
