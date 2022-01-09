@@ -479,7 +479,7 @@
 	..()
 
 /datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(current_cycle == 3) // takes a few seconds for the bonus to kick in
+	if(current_cycle == 3) // takes a few seconds for the bonus to kick in to prevent microdosing
 		to_chat(M, span_notice("You feel your trigger finger getting itchy..."))
 		ADD_TRAIT(M, TRAIT_DOUBLE_TAP, type)
 

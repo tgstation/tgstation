@@ -177,6 +177,7 @@
 	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
 	foodtype = SUGAR | JUNKFOOD
 	custom_price = PAYCHECK_HARD * 1.5
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
