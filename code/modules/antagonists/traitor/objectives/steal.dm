@@ -39,6 +39,8 @@
 	var/obj/item/traitor_bug/bug
 	/// Any special equipment that may be needed
 	var/list/special_equipment
+	/// Telecrystal reward increase per unit of time.
+	var/minutes_per_telecrystal = 3
 
 	abstract_type = /datum/traitor_objective/steal_item
 
@@ -152,6 +154,7 @@
 		special_equipment = target_item.special_equipment
 	hold_time_required = rand(hold_time_required[1], hold_time_required[2])
 	progression_reward += hold_time_required * (1 MINUTES)
+	telecrystal_reward += round(hold_time_required / max(minutes_per_telecrystal, 0.1))
 	replace_in_name("%ITEM%", target_item.name)
 	replace_in_name("%TIME%", hold_time_required)
 	return TRUE
