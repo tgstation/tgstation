@@ -204,7 +204,7 @@
 ///called when an item is sold by the exports subsystem
 #define COMSIG_ITEM_EXPORTED "item_sold"
 	/// Stops the export from adding the export information to the report, so you can handle it manually.
-	#define COMPONENT_STOP_REPORT (1<<0)
+	#define COMPONENT_STOP_EXPORT_REPORT (1<<0)
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand

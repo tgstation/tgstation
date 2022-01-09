@@ -75,4 +75,4 @@
 	report.total_amount[export] += export.get_amount(source) * export.amount_report_multiplier
 
 	// And ensure we don't double-add to the report
-	return COMPONENT_STOP_REPORT
+	return COMPONENT_STOP_EXPORT_REPORT
