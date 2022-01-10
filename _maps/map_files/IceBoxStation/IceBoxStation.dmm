@@ -15253,6 +15253,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
+"enR" = (
+/obj/effect/temp_visual/swarmer,
+/turf/closed/wall/r_wall,
+/area/command/heads_quarters/captain)
 "enS" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -25219,6 +25223,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/temp_visual/swarmer,
 /turf/open/floor/iron,
 /area/command/bridge)
 "jtr" = (
@@ -36684,6 +36689,12 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/chemist,
+/obj/machinery/button/door/directional/north{
+	id = "pharmacy_shutters";
+	name = "Pharmacy Shutter Controls";
+	pixel_y = 55;
+	req_access_txt = "69"
+	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "pmz" = (
@@ -44480,11 +44491,6 @@
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
-	},
-/obj/machinery/button/door/directional/north{
-	id = "pharmacy_shutters";
-	name = "Pharmacy Shutter Controls";
-	req_access_txt = "69"
 	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
@@ -87289,7 +87295,7 @@ olj
 olj
 olj
 olj
-olj
+enR
 olj
 vtF
 vtF
@@ -95253,7 +95259,7 @@ alP
 iaK
 bDd
 aYV
-ect
+ibn
 ibn
 ibn
 vtr
@@ -96028,11 +96034,11 @@ hPg
 ibn
 mqH
 kbM
-ibn
+yaz
 yaz
 ssC
 yaz
-ibn
+yaz
 gTV
 wxv
 qLp
@@ -96044,7 +96050,7 @@ bzs
 bzs
 bzs
 bzs
-gbO
+bzs
 oNz
 ref
 bGR
