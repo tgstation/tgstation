@@ -39,10 +39,10 @@
 				if(!mind.current.say(message))
 					to_chat(src, span_warning("Your linked body was unable to speak!"))
 		return
-	if(sanitize(message)[1] == "*")
-		message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
-		if(check_emote(message, forced))
-			return
+
+	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
+	if(message[1] == "*" && check_emote(message, forced))
+		return
 
 	. = say_dead(message)
 
