@@ -570,13 +570,6 @@
 /// Fire layer when you're on fire
 #define FIRE_LAYER 1
 
-if(EXTERNAL_BEHIND)
-			return BODY_BEHIND_LAYER
-		if(EXTERNAL_ADJACENT)
-			return BODY_ADJ_LAYER
-		if(EXTERNAL_FRONT)
-			return BODY_FRONT_LAYER
-
 //Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
 /// Draws organ on the BODY_FRONT_LAYER
 #define EXTERNAL_FRONT (1 << 1)
