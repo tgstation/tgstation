@@ -71016,9 +71016,6 @@
 /area/service/abandoned_gambling_den/gaming)
 "oto" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/eastright{
-	name = "Hydroponics Desk"
-	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
 /obj/item/pen,
@@ -93595,9 +93592,6 @@
 /obj/machinery/door/window/westright{
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
-	},
-/obj/machinery/door/window/eastleft{
-	name = "Hydroponics Desk"
 	},
 /turf/open/floor/plating,
 /area/service/hydroponics)
