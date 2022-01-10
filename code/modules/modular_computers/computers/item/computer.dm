@@ -487,7 +487,7 @@
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(!length(all_components))
-		user.balloon_alert(user, "This device doesn't have any components installed.")
+		user.balloon_alert(user, "this device doesn't have any components installed")
 		return
 	var/list/component_names = list()
 	for(var/h in all_components)
