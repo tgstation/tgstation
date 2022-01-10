@@ -8048,6 +8048,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "bAi" = (
@@ -9894,6 +9895,10 @@
 "cbc" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 28;
+	pixel_y = 57
+	},
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "cbh" = (
@@ -10172,6 +10177,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
 "ceU" = (
@@ -14376,6 +14382,7 @@
 	name = "Medbay Storage";
 	req_access_txt = "5"
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "dTz" = (
@@ -15388,6 +15395,7 @@
 	dir = 4
 	},
 /obj/machinery/plumbing/receiver,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/plating,
 /area/medical/treatment_center)
 "ese" = (
@@ -17711,6 +17719,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay)
 "fHz" = (
@@ -18204,7 +18213,10 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "fVf" = (
-/obj/item/radio/intercom/directional/west,
+/obj/machinery/newscaster/security_unit/directional/west,
+/obj/item/radio/intercom/directional/west{
+	pixel_y = -31
+	},
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "fVt" = (
@@ -20661,6 +20673,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "hek" = (
@@ -21037,7 +21050,6 @@
 /turf/open/floor/plating,
 /area/engineering/lobby)
 "hoD" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -21174,6 +21186,10 @@
 /obj/item/paper/monitorkey,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
+"hrh" = (
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/openspace,
+/area/medical/medbay/aft)
 "hrk" = (
 /obj/item/crowbar/large,
 /obj/structure/rack,
@@ -22024,6 +22040,7 @@
 /obj/effect/turf_decal/trimline/blue/line{
 	dir = 9
 	},
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/medical/treatment_center)
 "hNs" = (
@@ -22348,6 +22365,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 30
+	},
 /turf/open/floor/iron/white,
 /area/medical/break_room)
 "hYi" = (
@@ -26295,6 +26315,7 @@
 	network = list("ss13","medbay");
 	pixel_y = -22
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "jVr" = (
@@ -28306,6 +28327,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
 "kVZ" = (
@@ -33415,6 +33437,10 @@
 "nKX" = (
 /obj/structure/cable,
 /obj/effect/landmark/start/medical_doctor,
+/obj/machinery/firealarm/directional/south{
+	pixel_x = 28;
+	pixel_y = -58
+	},
 /turf/open/floor/iron/white,
 /area/medical/surgery/room_b)
 "nLX" = (
@@ -33979,6 +34005,7 @@
 /obj/structure/bed/dogbed/runtime,
 /mob/living/simple_animal/pet/cat/runtime,
 /obj/item/toy/cattoy,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "nXD" = (
@@ -34905,6 +34932,7 @@
 	},
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
 "osW" = (
@@ -37346,6 +37374,7 @@
 	red_alert_access = 1;
 	req_access_txt = "5"
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
 /area/maintenance/department/medical)
 "pCg" = (
@@ -44988,6 +45017,7 @@
 /obj/item/cartridge/chemistry{
 	pixel_y = 6
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "tqV" = (
@@ -51543,6 +51573,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/storage)
 "wKY" = (
@@ -52893,6 +52924,7 @@
 /obj/structure/chair/sofa/right{
 	dir = 1
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/break_room)
 "xtd" = (
@@ -94459,7 +94491,7 @@ wil
 uxJ
 oTp
 hHI
-rbI
+hrh
 nYn
 uaG
 qFq
