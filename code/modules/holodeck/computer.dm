@@ -73,6 +73,11 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	var/list/spawned = list()
 	var/list/effects = list() //like above, but for holo effects
 
+	///special locs that can mess with derez'ing holo spawned objects
+	var/list/special_locs = list(
+		/obj/item/clothing/head/mob_holder,
+	)
+
 	///TRUE if the holodeck is using extra power because of a program, FALSE otherwise
 	var/active = FALSE
 	///increases the holodeck cooldown if TRUE, causing the holodeck to take longer to allow loading new programs
@@ -313,6 +318,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
 
+	if(is_type_in_list(holo_atom.loc, special_locs))
+		qdel(holo_atom.loc)
 	qdel(holo_atom)
 
 /obj/machinery/computer/holodeck/proc/remove_from_holo_lists(datum/to_remove, _forced)

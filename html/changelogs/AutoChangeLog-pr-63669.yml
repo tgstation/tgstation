@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer override the ling DNA you're currently disguised as. This was apparently always intended but broken for ages."
-  - code_imp: "Modernized much of ling code."
-  - refactor: "Also refactored part of ling code. The ling chemical hud element should be a bit snappier now."

@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes: 
+  - bugfix: "Stray pixel on the drop pod sign removed."
