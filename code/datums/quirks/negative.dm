@@ -875,8 +875,8 @@
 			break
 
 	if(!nick_spotted && isturf(quirk_holder.loc))
-			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
-			return
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
+		return
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
 	quirk_holder.losebreath += 0.25 // miss a breath one in four times
