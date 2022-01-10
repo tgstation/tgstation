@@ -289,3 +289,22 @@
   unit0016:
   - rscadd: The Icemoon Engineering Outpost has been remapped, and received an /area/
       to go with!
+2022-01-10:
+  DragonTrance:
+  - rscadd: Various items provide special texts when suiciding with them.
+  - rscadd: Unique text is shown when suiciding with food, a clown box, bubblegum,
+      bubblegum bubblegum, bees, tinfoil hats, suitcases, Magnus's Grasp, and even
+      when inside a stealth implant box.
+  - rscadd: Crayons now color you when suiciding with them.
+  Fikou:
+  - balance: Clarke can now attack in all directions
+  - balance: Clarke can now search for ruins
+  - balance: Clarke no longer gets a diagnostic HUD
+  SuperNovaa41:
+  - refactor: Decks of cards are actual lists of cards now + other improvements.
+  - bugfix: You can now put X4/C4 onto playing cards, and put them into decks without
+      deleting your explosive.
+  - bugfix: Sholean Grapes can use their gel cocoon ability again.
+  - bugfix: TK will no longer try to interact with your HUD (again).
+  fikou & urumasi (with stackoverflows send by shaps):
+  - rscadd: the wizard now has a new flashy weapon.
