@@ -23,6 +23,7 @@
 	if(!isatom(tracked) || isarea(tracked) || range < 0)
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
+	src.range = range
 	set_tracked(tracked)
 	src.works_in_containers = works_in_containers
 
