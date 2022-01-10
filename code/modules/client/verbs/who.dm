@@ -105,5 +105,6 @@
 				msg += "\t[C] is a [C.holder.rank]\n"
 		msg += span_info("Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game adminhelp anyways and an admin will see it and respond.")
 	to_chat(src, msg)
+	message_admins("[key_name(src)] just checked adminwho.")
 
 #undef DEFAULT_WHO_CELLS_PER_ROW
