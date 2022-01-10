@@ -585,11 +585,25 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
+	trash_type = /obj/item/paper
+	///This is the fortune in the cookie
+	var/obj/item/paper/fortune
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/fortunecookie/proc/get_fortune()
+	// If a fortune exists, use that.
+	if (fortune)
+		return fortune
+	// Otherwise, make a blank page.
+	var/obj/item/paper/out_paper = new ()
+	return out_paper
+
+/obj/item/food/fortunecookie/MakeLeaveTrash()
+	AddElement(/datum/element/food_trash, trash_type, food_flags, /obj/item/food/fortunecookie/proc/get_fortune)
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"

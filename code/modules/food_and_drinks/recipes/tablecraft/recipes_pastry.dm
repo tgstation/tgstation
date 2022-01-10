@@ -499,8 +499,17 @@
 	parts = list(
 		/obj/item/paper = 1
 	)
+	/// The paper to put in the cookie
+	var/obj/item/paper/fortune
 	result = /obj/item/food/fortunecookie
 	subcategory = CAT_PASTRY
+
+/datum/crafting_recipe/food/fortunecookie/check_requirements(mob/user, list/collected_requirements)
+	fortune = collected_requirements[/obj/item/paper][1]
+	return TRUE
+
+/datum/crafting_recipe/food/fortunecookie/on_craft_completion(mob/user, obj/item/food/fortunecookie/result)
+	result.fortune = fortune
 
 /datum/crafting_recipe/food/poppypretzel
 	time = 15
