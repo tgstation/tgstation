@@ -5067,6 +5067,7 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/trimline/green/filled/line,
+/obj/structure/reagent_dispensers/wall/virusfood/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "qX" = (

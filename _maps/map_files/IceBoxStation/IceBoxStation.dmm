@@ -13677,6 +13677,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/red/filled/end,
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -21;
+	pixel_y = -25
+	},
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/medical)
 "dxt" = (
@@ -14790,6 +14794,12 @@
 	dir = 9
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/button/door/directional/east{
+	id = "medsecprivacy";
+	name = "Privacy Shutters Control";
+	pixel_x = 0;
+	pixel_y = 56
+	},
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/medical)
 "eeh" = (
@@ -23238,11 +23248,15 @@
 	departmentType = 5;
 	name = "Chief Medical Officer's Requests Console"
 	},
-/obj/machinery/computer/med_data/laptop,
 /obj/item/toy/figure/cmo{
-	pixel_x = -19;
-	pixel_y = -2
+	pixel_x = -17;
+	pixel_y = -1
 	},
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "iuO" = (
@@ -27449,7 +27463,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/medical/cryo)
 "kCi" = (
 /obj/structure/rack,
@@ -28590,14 +28604,14 @@
 /turf/open/floor/engine,
 /area/science/genetics)
 "ldW" = (
-/obj/machinery/computer/cargo/request{
-	dir = 1
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline/brown/filled/end{
 	dir = 4
+	},
+/obj/machinery/computer/department_orders/medical{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/aft)
@@ -31778,15 +31792,6 @@
 /obj/machinery/computer/secure_data{
 	dir = 1
 	},
-/obj/machinery/button/door/directional/west{
-	id_tag = "MedbayFoyer";
-	pixel_x = -5;
-	pixel_y = -26
-	},
-/obj/machinery/light_switch/directional/south{
-	pixel_x = 6;
-	pixel_y = -25
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -32118,7 +32123,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/dark,
 /area/medical/cryo)
 "nbT" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -35483,12 +35488,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "oJH" = (
-/obj/machinery/button/door/directional/east{
-	id = "medsecprivacy";
-	name = "Privacy Shutters Control";
-	pixel_x = 0;
-	pixel_y = 24
-	},
 /obj/machinery/computer/med_data,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -37167,7 +37166,7 @@
 "pwS" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/medical/medbay/aft)
 "pwU" = (
 /obj/structure/chair/office/light{
@@ -50127,7 +50126,7 @@
 /area/service/kitchen)
 "vVN" = (
 /obj/machinery/door/firedoor,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/medical/cryo)
 "vWf" = (
 /obj/effect/turf_decal/stripes/line,
@@ -51579,11 +51578,15 @@
 /obj/machinery/button/door/directional/east{
 	id = "cmoprivacy";
 	name = "CMO Shutter Control";
-	pixel_y = 7;
+	pixel_y = 23;
 	req_access_txt = "40"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/cmo{
+	dir = 8;
+	pixel_x = 27
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
@@ -53813,6 +53816,11 @@
 	dir = 10
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/machinery/button/door/directional/west{
+	id_tag = "MedbayFoyer";
+	pixel_x = -5;
+	pixel_y = -56
+	},
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/medical)
 "xNq" = (
@@ -54470,11 +54478,6 @@
 /area/command/gateway)
 "yfN" = (
 /obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/pen,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -54485,9 +54488,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/computer/security/telescreen/cmo{
-	pixel_y = 26
-	},
+/obj/machinery/computer/med_data/laptop,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "yfZ" = (
