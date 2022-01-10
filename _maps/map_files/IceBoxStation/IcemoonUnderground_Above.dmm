@@ -6931,8 +6931,8 @@
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
 "xl" = (
-/obj/effect/mapping_helpers/dead_body_placer,
 /obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "xm" = (
