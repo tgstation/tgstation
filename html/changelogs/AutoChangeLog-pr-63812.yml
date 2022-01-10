@@ -1,0 +1,6 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - code_imp: "Space vine code is cleaned up slightly."
+  - refactor: "Space vines now use more flowery, easier to see colors."
+  - refactor: "Space vine examination text is now easier to read."

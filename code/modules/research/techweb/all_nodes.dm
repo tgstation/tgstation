@@ -16,6 +16,7 @@
 		"basic_scanning",
 		"bepis",
 		"bucket",
+		"c38_rubber",
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
@@ -28,9 +29,11 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"gas_filter",
 		"handlabel",
 		"mechfab",
 		"micro_mani",
+		"oven_tray",
 		"packagewrap",
 		"paystand",
 		"plasmaglass",
@@ -41,6 +44,7 @@
 		"plastic_spoon",
 		"plastitanium",
 		"plastitaniumglass",
+		"plasmaman_gas_filter",
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
@@ -55,9 +59,6 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
-		"gas_filter",
-		"plasmaman_gas_filter",
-		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -221,6 +222,7 @@
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list(
 		"circuit_multitool",
+		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_binary_convert",
 		"comp_clock",
@@ -236,6 +238,9 @@
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
+		"comp_id_access_reader",
+		"comp_id_getter",
+		"comp_id_info_reader",
 		"comp_index",
 		"comp_index_assoc",
 		"comp_index_table",
@@ -1529,6 +1534,17 @@
 		"mod_microwave_beam",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly
+	id = "mod_anomaly"
+	display_name = "Anomalock Modular Suits"
+	description = "Modules for modular suits that require anomaly cores to function."
+	prereq_ids = list("mod_advanced", "anomaly_research")
+	design_ids = list(
+		"mod_antigrav",
+		"mod_teleporter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha

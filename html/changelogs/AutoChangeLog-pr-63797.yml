@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes: 
+  - rscadd: "Ectoscopic sniffers are now louder, and explain their purpose on examine."
