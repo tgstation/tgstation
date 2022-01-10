@@ -20,7 +20,6 @@
 #define BOSS_MEDAL_HIEROPHANT "Hierophant Killer"
 #define BOSS_MEDAL_LEGION	  "Legion Killer"
 #define BOSS_MEDAL_TENDRIL	  "Tendril Exterminator"
-#define BOSS_MEDAL_SWARMERS   "Swarmer Beacon Killer"
 
 #define BOSS_MEDAL_MINER_CRUSHER	  	"Blood-drunk Miner Crusher"
 #define BOSS_MEDAL_BUBBLEGUM_CRUSHER  	"Bubblegum Crusher"
@@ -28,7 +27,6 @@
 #define BOSS_MEDAL_DRAKE_CRUSHER	  	"Drake Crusher"
 #define BOSS_MEDAL_HIEROPHANT_CRUSHER 	"Hierophant Crusher"
 #define BOSS_MEDAL_LEGION_CRUSHER	 	"Legion Crusher"
-#define BOSS_MEDAL_SWARMERS_CRUSHER		"Swarmer Beacon Crusher"
 
 // Medal hub IDs for boss-kill scores
 #define BOSS_SCORE 	         "Bosses Killed"
@@ -38,7 +36,6 @@
 #define DRAKE_SCORE 	     "Drakes Killed"
 #define HIEROPHANT_SCORE 	 "Hierophants Killed"
 #define LEGION_SCORE 	     "Legion Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacs Killed"
 #define TENDRIL_CLEAR_SCORE	 "Tendrils Killed"
 
 
@@ -68,14 +65,12 @@
 						BOSS_MEDAL_HIEROPHANT,
 						BOSS_MEDAL_LEGION,
 						BOSS_MEDAL_TENDRIL,
-						BOSS_MEDAL_SWARMERS,
 						BOSS_MEDAL_MINER_CRUSHER,
 						BOSS_MEDAL_BUBBLEGUM_CRUSHER,
 						BOSS_MEDAL_COLOSSUS_CRUSHER,
 						BOSS_MEDAL_DRAKE_CRUSHER,
 						BOSS_MEDAL_HIEROPHANT_CRUSHER,
-						BOSS_MEDAL_LEGION_CRUSHER,
-						BOSS_MEDAL_SWARMERS_CRUSHER)
+						BOSS_MEDAL_LEGION_CRUSHER)
 
 	var/list/valid_scores = list(
 						BOSS_SCORE,
@@ -85,7 +80,6 @@
 						DRAKE_SCORE,
 						HIEROPHANT_SCORE,
 						LEGION_SCORE,
-						SWARMER_BEACON_SCORE,
 						TENDRIL_CLEAR_SCORE)
 
 	var/ach = "achievements" //IMPORTANT : ADD PREFIX HERE IF YOU'RE USING PREFIXED SCHEMA

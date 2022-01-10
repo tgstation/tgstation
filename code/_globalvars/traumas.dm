@@ -61,7 +61,6 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/silicon/robot,
 		/mob/living/simple_animal/bot,
 		/mob/living/simple_animal/drone,
-		/mob/living/simple_animal/hostile/swarmer,
 	)),
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"the supernatural" = typecacheof(list(
@@ -159,7 +158,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"robots" = typecacheof(list(/obj/machinery/computer/upload, /obj/item/ai_module, /obj/machinery/recharge_station,
-		/obj/item/aicard, /obj/structure/swarmer_beacon, /obj/item/toy/figure/borg, /obj/item/toy/talking/ai,
+		/obj/item/aicard, /obj/item/toy/figure/borg, /obj/item/toy/talking/ai,
 		/obj/structure/statue/silver/medborg, /obj/structure/statue/silver/secborg, /obj/structure/statue/diamond/ai1,
 		/obj/structure/statue/diamond/ai2,
 	)),
