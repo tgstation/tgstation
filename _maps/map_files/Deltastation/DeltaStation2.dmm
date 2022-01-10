@@ -12422,7 +12422,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "aZL" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/prison)
 "aZM" = (
@@ -15875,9 +15875,9 @@
 /turf/closed/wall,
 /area/hallway/primary/central)
 "btb" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
 "btd" = (
@@ -18170,12 +18170,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bFG" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/warning/electricshock{
 	pixel_x = -32
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
 "bFH" = (
@@ -18197,9 +18197,9 @@
 /turf/open/floor/iron,
 /area/security/execution/transfer)
 "bFI" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
 "bFJ" = (
@@ -18465,12 +18465,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bHw" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "brigwindows";
 	name = "Brig Front Blast door"
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/brig)
 "bHx" = (
@@ -20667,8 +20667,8 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "bPw" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "bPx" = (
@@ -23400,11 +23400,11 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "bXI" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "bXJ" = (
@@ -24886,7 +24886,7 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "cbG" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "cbH" = (
@@ -31239,6 +31239,11 @@
 	heat_capacity = 1e+006
 	},
 /area/maintenance/port)
+"cDy" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/office)
 "cEj" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/decal/cleanable/dirt,
@@ -65138,6 +65143,11 @@
 	},
 /turf/open/floor/iron,
 /area/security/office)
+"fXa" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/execution/transfer)
 "fXi" = (
 /obj/structure/table/wood,
 /obj/item/clothing/gloves/color/fyellow,
@@ -69704,6 +69714,11 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"hJL" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/prison)
 "hJN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69912,6 +69927,15 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
+"hPj" = (
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "brigprison";
+	name = "Prison Blast door"
+	},
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/prison)
 "hPs" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "evashutters";
@@ -83542,6 +83566,11 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"mPU" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/brig)
 "mQm" = (
 /obj/structure/table,
 /obj/structure/cable,
@@ -96196,6 +96225,11 @@
 	},
 /turf/open/floor/carpet,
 /area/command/bridge)
+"riU" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/warden)
 "riX" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -102656,12 +102690,12 @@
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "tKS" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosspace";
 	name = "HoS Space Blast door"
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
 "tLk" = (
@@ -106430,12 +106464,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "vef" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosroom";
 	name = "HoS Room Blast door"
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
 "vem" = (
@@ -163152,13 +163186,13 @@ aaa
 aaa
 aaa
 aaa
-bnD
+fXa
 buz
-bnD
+fXa
 aaa
-bnD
+fXa
 bAd
-bnD
+fXa
 aaa
 aaa
 bHr
@@ -163411,9 +163445,9 @@ aad
 aad
 btb
 buA
-bnD
+fXa
 aad
-bnD
+fXa
 buA
 btb
 aad
@@ -163663,16 +163697,16 @@ aad
 aaa
 aaa
 aad
-bnD
-bnD
+fXa
+fXa
 bnG
-bnD
+fXa
 buB
-bnD
+fXa
 bnG
-bnD
+fXa
 bAf
-bnD
+fXa
 bDV
 bDV
 bHr
@@ -163920,7 +163954,7 @@ aad
 aad
 aad
 aad
-bnD
+fXa
 bpd
 bre
 btd
@@ -164177,7 +164211,7 @@ aaa
 aaa
 aaa
 aad
-bnD
+fXa
 bpe
 brf
 bte
@@ -164425,15 +164459,15 @@ aFm
 aFm
 aFm
 aFm
-aFn
-aFn
+hJL
+hJL
 aFm
 aFm
 aaa
 bgZ
-biy
-biy
-biy
+mPU
+mPU
+mPU
 bnG
 bpf
 brg
@@ -165439,10 +165473,10 @@ abj
 aad
 aFm
 aFm
-pff
-pff
-pff
-pff
+hPj
+hPj
+hPj
+hPj
 aFm
 aFm
 aFm
@@ -165483,7 +165517,7 @@ bRp
 biy
 bNj
 bXE
-biy
+mPU
 cbz
 bNj
 biy
@@ -165694,7 +165728,7 @@ qYo
 qYo
 qYo
 aaa
-pff
+hPj
 epN
 reP
 reP
@@ -165951,7 +165985,7 @@ aaa
 aaa
 uHd
 aaa
-aFn
+hPj
 tqQ
 rvg
 rwB
@@ -165969,7 +166003,7 @@ wjf
 aXK
 yfC
 bbf
-aFn
+hJL
 beq
 bfO
 bhb
@@ -166505,14 +166539,14 @@ bFL
 bHD
 bFL
 bFL
-bFP
+riU
 bPs
-bFP
+riU
 bFL
 bFL
 bXI
 bZQ
-bFP
+riU
 bFL
 cfi
 biy
@@ -166761,7 +166795,7 @@ tuZ
 tyx
 bHE
 bJz
-bFP
+riU
 bNm
 bPt
 bRq
@@ -166770,7 +166804,7 @@ bVl
 bXJ
 bZR
 cbD
-bFP
+riU
 cfj
 cgZ
 ciI
@@ -167256,7 +167290,7 @@ aZo
 niD
 aFm
 aFm
-aFn
+hJL
 tuZ
 lze
 rMx
@@ -167275,7 +167309,7 @@ tuZ
 bFN
 bHG
 bFM
-bFP
+riU
 bNo
 bPv
 bRs
@@ -167284,7 +167318,7 @@ bVn
 bXL
 bZT
 cbF
-bFP
+riU
 bav
 chb
 ciK
@@ -168028,7 +168062,7 @@ niD
 bcQ
 aFm
 aaa
-eMy
+cDy
 bki
 hrI
 jHe
@@ -168558,7 +168592,7 @@ bKh
 mBI
 tuZ
 bFL
-bFP
+riU
 bFL
 bLs
 bNs
@@ -169085,7 +169119,7 @@ bLs
 bLs
 bLs
 bgZ
-biy
+mPU
 bgZ
 bgZ
 aaa

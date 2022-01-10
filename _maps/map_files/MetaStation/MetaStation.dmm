@@ -2656,7 +2656,7 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "ajo" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/brig)
 "ajp" = (
@@ -6406,7 +6406,7 @@
 /area/security/warden)
 "axi" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "axj" = (
@@ -6713,7 +6713,7 @@
 /area/security/warden)
 "ayC" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/iron,
 /area/security/brig)
 "ayE" = (
@@ -7190,12 +7190,12 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "aBc" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "briglockdown";
 	name = "brig shutters"
 	},
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "aBd" = (
@@ -7468,12 +7468,12 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "aCp" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "briglockdown";
 	name = "brig shutters"
 	},
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/iron,
 /area/security/brig)
 "aCq" = (
@@ -41423,15 +41423,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
-"hyY" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/machinery/door/poddoor/preopen{
-	id = "hosspace";
-	name = "Space Shutters"
-	},
-/turf/open/floor/plating,
-/area/command/heads_quarters/hos)
 "hza" = (
 /obj/structure/table/wood,
 /obj/item/folder/white{
@@ -44994,6 +44985,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"jcl" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
+/turf/open/floor/plating,
+/area/security/brig)
 "jcC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -47548,7 +47544,7 @@
 /area/cargo/sorting)
 "kel" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/office)
 "kex" = (
@@ -52236,12 +52232,12 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "mdV" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosprivacy";
 	name = "privacy shutters"
 	},
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
 "mee" = (
@@ -68223,11 +68219,11 @@
 /area/medical/chemistry)
 "src" = (
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "hosspace";
 	name = "Space Shutters"
 	},
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/command/heads_quarters/hos)
 "srk" = (
@@ -82072,12 +82068,12 @@
 /turf/open/floor/iron/dark,
 /area/science/nanite)
 "yej" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "briglockdown";
 	name = "brig shutters"
 	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/plasma,
 /turf/open/floor/plating,
 /area/security/warden)
 "yes" = (
@@ -107533,10 +107529,10 @@ adf
 adV
 aaw
 hyP
-aiq
+jcl
 rpQ
 ege
-aiq
+jcl
 awp
 awp
 aky
@@ -109091,7 +109087,7 @@ ass
 ahI
 adY
 axi
-ajx
+axi
 adY
 ajx
 ajx
@@ -109603,7 +109599,7 @@ apN
 cZk
 asu
 ahI
-ajx
+axi
 awf
 aDE
 aDE
@@ -110117,7 +110113,7 @@ aoy
 anl
 asw
 ahI
-ajx
+axi
 awg
 axh
 dCh
@@ -110360,8 +110356,8 @@ aaf
 aaf
 lMJ
 qrP
-fNA
-fNA
+kel
+kel
 qrP
 rmG
 aeq
@@ -110376,10 +110372,10 @@ agU
 ahI
 adY
 ayE
-ajx
+axi
 adY
-ajx
-ajx
+axi
+axi
 adY
 aDB
 aHA
@@ -110628,7 +110624,7 @@ sdC
 rVj
 kyo
 nxb
-fNA
+kel
 ahC
 atS
 aaD
@@ -110872,7 +110868,7 @@ aaa
 aaa
 aaf
 aaa
-fNA
+kel
 nge
 ruv
 jHW
@@ -111142,7 +111138,7 @@ tVp
 iMT
 eRF
 cQz
-fNA
+kel
 asz
 fjF
 anB
@@ -111394,13 +111390,13 @@ qrP
 rmG
 rmG
 rwn
-fNA
+kel
 tum
 wZI
-fNA
+kel
 wZI
 hbe
-fNA
+kel
 wZI
 ave
 awl
@@ -111915,7 +111911,7 @@ rcM
 pwX
 hVM
 cpe
-fNA
+kel
 ahC
 awh
 aws
@@ -112686,7 +112682,7 @@ lsL
 gMs
 dHm
 mAi
-fNA
+kel
 asw
 awp
 axr
@@ -113961,7 +113957,7 @@ aaa
 lMJ
 aaa
 lMJ
-fNA
+kel
 nhv
 iKy
 sxR
@@ -113971,7 +113967,7 @@ dqB
 sUd
 dtO
 qOR
-fNA
+kel
 avi
 awt
 axv
@@ -114216,7 +114212,7 @@ aaf
 lMJ
 jVV
 jVV
-hyY
+src
 jVV
 jVV
 rDC
