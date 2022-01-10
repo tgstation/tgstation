@@ -531,8 +531,9 @@
 		if(length(all_components))
 			to_chat(user, span_warning("Remove all components from \the [src] before disassembling it."))
 			return
+		W.play_tool_sound(src, user, 20, volume=20)
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message(span_notice("\The [src] is disassembled by [user]."))
+		user.balloon_alert(user,"You disassemble \the [src].")
 		relay_qdel()
 		qdel(src)
 		return
