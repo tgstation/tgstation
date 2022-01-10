@@ -768,7 +768,7 @@
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 3
-	cost = 10
+	cost = 20
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	repeatable = TRUE
 
