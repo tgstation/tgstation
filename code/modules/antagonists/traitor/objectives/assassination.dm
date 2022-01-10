@@ -171,6 +171,9 @@
 			continue
 		if(possible_target.current.stat == DEAD)
 			continue
+		var/datum/antagonist/traitor/traitor = possible_target.has_antag_datum(/datum/antagonist/traitor)
+		if(traitor && traitor.uplink_handler.telecrystals >= 0)
+			continue
 		if(!HAS_TRAIT(SSstation, STATION_TRAIT_LATE_ARRIVALS) && istype(target_area, /area/shuttle/arrival))
 			continue
 		//removes heads of staff from being targets from non heads of staff assassinations, and vice versa

@@ -48,7 +48,7 @@
 			/mob/living/simple_animal/hostile/carp/lia,
 			/mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus
 		),
-		"Warden" = list(
+		JOB_WARDEN = list(
 			/mob/living/simple_animal/pet/dog/pug/mcgriff
 		)
 	)

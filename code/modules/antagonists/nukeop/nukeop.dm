@@ -59,7 +59,7 @@
 		if(!nuke_team.team_discounts)
 			var/list/uplink_items = list()
 			for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag))
+				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag) && item.cost > 1)
 					uplink_items += item
 			nuke_team.team_discounts = list()
 			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)

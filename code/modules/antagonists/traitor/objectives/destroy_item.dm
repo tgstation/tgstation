@@ -1,6 +1,6 @@
 /datum/traitor_objective/destroy_item
 	name = "Steal %ITEM% and destroy it"
-	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests. You need to hold the %ITEM% in your hands once before you destroy it so that we can confirm you actually destroyed it."
+	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests. <b>You need to hold the %ITEM% in your hands once before you destroy it so that we can confirm you actually destroyed it.</b>"
 
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES

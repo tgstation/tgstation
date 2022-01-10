@@ -243,7 +243,7 @@
 	if(!uplink_handler.has_objectives)
 		return TRUE
 
-	if(uplink_handler.owner.current != ui.user)
+	if(uplink_handler.owner?.current != ui.user || !uplink_handler.can_take_objectives)
 		return TRUE
 
 	switch(action)

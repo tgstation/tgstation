@@ -22,6 +22,8 @@
 	var/list/extra_purchasable = list()
 	/// Whether this uplink handler has objectives.
 	var/has_objectives = TRUE
+	/// Whether this uplink handler can TAKE objectives.
+	var/can_take_objectives = TRUE
 	/// The maximum number of objectives that can be taken
 	var/maximum_active_objectives = 2
 	/// The maximum number of potential objectives that can exist.

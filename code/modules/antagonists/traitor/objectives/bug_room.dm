@@ -172,7 +172,7 @@
 
 /obj/structure/traitor_bug
 	name = "suspicious device"
-	desc = "It looks dangerous"
+	desc = "It looks dangerous. Best you leave this alone"
 
 	anchored = TRUE
 
@@ -187,5 +187,5 @@
 	animate(src, alpha = 30, time = seconds)
 
 /obj/structure/traitor_bug/deconstruct(disassembled)
-	explosion(src, light_impact_range = 3, flame_range = 5, explosion_cause = src) // Pretty god damn dangerous
+	explosion(src, light_impact_range = 2, flame_range = 5, explosion_cause = src) // Pretty god damn dangerous
 	return ..()

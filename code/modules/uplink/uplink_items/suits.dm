@@ -36,7 +36,7 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 	progression_minimum = 20 MINUTES
 
-/datum/uplink_item/device_tools/thermal
+/datum/uplink_item/suits/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
 	item = /obj/item/mod/module/visor/thermal
