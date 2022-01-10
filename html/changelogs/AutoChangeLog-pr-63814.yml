@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue where cancelling out of tgui input text didn't count as null/no entry. You can now properly cancel out of succumb, etc."
+  - bugfix: "Pressing enter on tgui input text will no longer briefly create a new line."
