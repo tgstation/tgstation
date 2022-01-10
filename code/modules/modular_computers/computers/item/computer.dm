@@ -530,11 +530,11 @@
 
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(length(all_components))
-			user.balloon_alert(user, "\The [src] still has components to remove")
+			user.balloon_alert(user, "\the [src] still has components to remove")
 			return
 		W.play_tool_sound(src, user, 20, volume=20)
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
-		user.balloon_alert(user,"You disassemble \the [src]")
+		user.balloon_alert(user,"you disassemble \the [src]")
 		relay_qdel()
 		qdel(src)
 		return
