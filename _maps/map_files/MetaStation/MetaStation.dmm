@@ -6813,14 +6813,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"bqp" = (
-/obj/structure/destructible/cult/tome,
-/obj/machinery/newscaster/directional/north,
-/obj/item/clothing/under/suit/red,
-/obj/effect/decal/cleanable/cobweb,
-/obj/item/book/codex_gigas,
-/turf/open/floor/engine/cult,
-/area/service/library)
 "bqw" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -17116,6 +17108,14 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
+"dXw" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/obj/machinery/newscaster/directional/north,
+/obj/item/clothing/under/suit/red,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/book/codex_gigas,
+/turf/open/floor/engine/cult,
+/area/service/library)
 "dXG" = (
 /obj/structure/table,
 /obj/item/stack/wrapping_paper,
@@ -34459,6 +34459,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/break_room)
+"kai" = (
+/obj/machinery/holopad/secure,
+/turf/open/floor/iron/dark,
+/area/security/office)
 "kaj" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -60448,10 +60452,6 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron,
 /area/service/janitor)
-"thJ" = (
-/obj/machinery/holopad/secure,
-/turf/open/floor/iron/dark,
-/area/security/office)
 "thR" = (
 /obj/machinery/food_cart,
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -95859,7 +95859,7 @@ vkc
 oMN
 xBd
 eMW
-bqp
+dXw
 ofl
 fVK
 eMW
@@ -105057,7 +105057,7 @@ jLR
 mVh
 lyV
 nnS
-thJ
+kai
 cpe
 cVD
 eCu
