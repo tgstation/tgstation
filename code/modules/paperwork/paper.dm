@@ -249,6 +249,7 @@
 	else if(istype(P, /obj/item/stamp))
 		to_chat(user, span_notice("You ready your stamp over the paper! "))
 		if(!ui_interact(user))
+			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
@@ -353,6 +354,18 @@
 
 	return data
 
+/**
+ * ##stamp
+ *
+ * Proc used to place a stamp onto a piece of paper
+ *
+ * Arguments:
+ * * x - The x coord of the stamp
+ * * y - The y coord of the stamp
+ * * r - The rotation in degrees, of the stamp
+ * * icon_state - The stamp icon to be placed on the paper
+ * * class - (Optional) A string needed for the list of stamps on the page
+ */
 /obj/item/paper/proc/stamp(x, y, r, icon_state, class = "paper121x54 [icon_state]")
 	if (isnull(stamps))
 		stamps = list()
