@@ -366,10 +366,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -415,10 +412,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

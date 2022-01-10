@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "Removes non-functioning reagent tanks from Metastation's plumbing room."
