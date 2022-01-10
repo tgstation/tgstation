@@ -1597,6 +1597,7 @@
 #include "code\game\objects\structures\aliens.dm"
 #include "code\game\objects\structures\barsigns.dm"
 #include "code\game\objects\structures\bedsheet_bin.dm"
+#include "code\game\objects\structures\billboard.dm"
 #include "code\game\objects\structures\bonfire.dm"
 #include "code\game\objects\structures\chess.dm"
 #include "code\game\objects\structures\deployable_turret.dm"
