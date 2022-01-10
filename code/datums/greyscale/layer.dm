@@ -149,8 +149,8 @@
 	var/icon/generated_icon
 	if(render_steps)
 		var/list/reference_data = list()
-		generated_icon = reference_type.GenerateBundle(colors, reference_data)
+		generated_icon = reference_type.GenerateBundle(colors, reference_data, new_icon)
 		render_steps += reference_data[icon_state]
 	else
-		generated_icon = reference_type.Generate(colors.Join())
+		generated_icon = reference_type.Generate(colors.Join(), new_icon)
 	return icon(generated_icon, icon_state)

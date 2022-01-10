@@ -231,20 +231,21 @@
 	fcopy(icon_output, "tmp/gags_debug_output.dmi")
 
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(color_string)
+/datum/greyscale_config/proc/Generate(color_string, icon/last_external_icon)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon)
 		return icon(new_icon)
 
-	var/icon/icon_bundle = GenerateBundle(color_string)
+	var/icon/icon_bundle = GenerateBundle(color_string, last_external_icon=last_external_icon)
 	icon_bundle = fcopy_rsc(icon_bundle)
-	icon_cache[key] = icon_bundle
+	if(!nocache)
+		icon_cache[key] = icon_bundle
 	var/icon/output = icon(icon_bundle)
 	return output
 
 /// Handles the actual icon manipulation to create the spritesheet
-/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
+/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps, icon/last_external_icon)
 	if(!istype(colors))
 		colors = SSgreyscale.ParseColorString(colors)
 	if(length(colors) != expected_colors)
@@ -255,7 +256,7 @@
 		var/list/icon_state_steps
 		if(render_steps)
 			icon_state_steps = render_steps[icon_state] = list()
-		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], icon_state_steps)
+		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], icon_state_steps, last_external_icon)
 		// We read a pixel to force the icon to be fully generated before we let it loose into the world
 		// I hate this
 		generated_icon.GetPixel(1, 1)
@@ -271,15 +272,15 @@
 	return icon_bundle
 
 /// Internal recursive proc to handle nested layer groups
-/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
+/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps, icon/last_external_icon)
 	var/icon/new_icon
 	for(var/datum/greyscale_layer/layer as anything in group)
 		var/icon/layer_icon
 		if(islist(layer))
-			layer_icon = GenerateLayerGroup(colors, layer, render_steps)
+			layer_icon = GenerateLayerGroup(colors, layer, render_steps, new_icon || last_external_icon)
 			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
-			layer_icon = layer.Generate(colors, render_steps, new_icon)
+			layer_icon = layer.Generate(colors, render_steps, new_icon || last_external_icon)
 
 		if(!new_icon)
 			new_icon = layer_icon
