@@ -1,6 +1,3 @@
-//some arbitrary defines to be used by self-pruning global lists. (see master_controller)
-#define PROCESS_KILL 26 //Used to trigger removal from a processing list
-
 #define TRANSITIONEDGE 7 //Distance from edge to move to another z-level
 
 //used by canUseTopic()
