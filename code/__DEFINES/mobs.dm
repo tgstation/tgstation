@@ -593,3 +593,13 @@
 #define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
 /// The layer above mutant body parts
 #define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+
+//used by canUseTopic()
+/// If silicons need to be next to the atom to use this
+#define BE_CLOSE TRUE 
+/// If other mobs (monkeys, aliens, etc) can use this 
+#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
+// If telekinesis you can use it from a distance
+#define NO_TK TRUE
+/// If mobs can use this while resting
+#define FLOOR_OKAY TRUE
