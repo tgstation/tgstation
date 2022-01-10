@@ -728,7 +728,7 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
 		return
-	user.dropItemToGround(attached_hat, force, silent = TRUE)
+	attached_hat.forceMove(drop_location())
 	if(user.put_in_active_hand(attached_hat))
 		balloon_alert(user, "hat removed")
 	else
