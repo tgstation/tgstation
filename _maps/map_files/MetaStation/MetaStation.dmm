@@ -39417,7 +39417,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/structure/reagent_dispensers/plumbed/storage,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "lPb" = (
@@ -72593,7 +72592,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/reagent_dispensers/plumbed/storage,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "xyl" = (
