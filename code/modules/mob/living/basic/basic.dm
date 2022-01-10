@@ -146,3 +146,7 @@
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 	SEND_SIGNAL(src, POST_BASIC_MOB_UPDATE_VARSPEED)
 
+/mob/living/basic/relaymove(mob/living/user, direction)
+	if(user.incapacitated())
+		return
+	return relaydrive(user, direction)

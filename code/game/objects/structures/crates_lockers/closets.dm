@@ -86,7 +86,6 @@
 	return
 
 /obj/structure/closet/Destroy()
-	dump_contents()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
@@ -353,6 +352,7 @@
 			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
 			electronics_ref.forceMove(drop_location())
+	dump_contents()
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)

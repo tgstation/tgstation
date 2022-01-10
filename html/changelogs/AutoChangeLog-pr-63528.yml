@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - refactor: "Refactored cult buildings to exorcise some copy+paste. Some cosmetic cult buildings won't drop metal now (but still work for cultists!)."
