@@ -19097,7 +19097,7 @@
 "fnX" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Medical Maintenance";
-	req_one_access_txt = "12;5;28"
+	req_one_access_txt = "12;5;28;6"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -39479,7 +39479,7 @@
 "mNb" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Morgue External Access";
-	req_one_access_txt = "5;28"
+	req_one_access_txt = "5;28;6"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
