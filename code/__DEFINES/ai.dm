@@ -21,7 +21,7 @@
 ///Does finishing this task not null the current movement target?
 #define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
 ///Does finishing this task make the AI stop moving towards the target?
-#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
