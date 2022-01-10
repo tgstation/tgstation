@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "The pig, cow, and horse masks were not available for purchase in the AutoDrobe like the other animal masks are. This oversight has been corrected."
+  - bugfix: "The toggleable voice modification boxes of animal masks that don't cover your mouth now actually work."
