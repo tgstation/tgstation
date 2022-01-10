@@ -37,7 +37,7 @@
 	progression_minimum = 20 MINUTES
 
 /datum/uplink_item/suits/thermal
-	name = "Thermal Imaging Glasses"
+	name = "MODsuit Thermal Visor Module"
 	desc = "A visor for a MODsuit. Lets you see living beings through walls."
 	item = /obj/item/mod/module/visor/thermal
 	progression_minimum = 20 MINUTES
@@ -47,4 +47,5 @@
 	name = "MODsuit Night Visor Module"
 	desc = "A visor for a MODsuit. Lets you see clearer in the dark."
 	item = /obj/item/mod/module/visor/night
+	progression_minimum = 20 MINUTES
 	cost = 2
