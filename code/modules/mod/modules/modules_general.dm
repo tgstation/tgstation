@@ -659,7 +659,7 @@
 	attachable_hats_list = typecacheof(
 	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
 	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
-	//Yes, I said it, the captian should have fun.
+	//Yes, I said it, the captain should have fun.
 		list(
 			/obj/item/clothing/head/caphat,
 			/obj/item/clothing/head/crown,
@@ -696,7 +696,7 @@
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER
 	if(attached_hat)
-		base_examine += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
+		base_examine += span_notice("There's \a [attached_hat] placed on the helmet. Right-click to remove it.")
 	else
 		base_examine += span_notice("There's nothing placed on the helmet. Yet.")
 
@@ -707,7 +707,7 @@
 	if(!mod.active)
 		balloon_alert(user, "suit must be active!")
 		return
-	if(!is_type_in_list(hitting_item, attachable_hats_list))
+	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
 		balloon_alert(user, "this hat won't fit!")
 		return
 	if(attached_hat)
@@ -728,7 +728,10 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
 		return
-	user.put_in_active_hand(attached_hat)
-	balloon_alert(user, "hat removed")
+	user.dropItemToGround(attached_hat, force, silent = TRUE)
+	if(user.put_in_active_hand(attached_hat))
+		balloon_alert(user, "hat removed")
+	else
+		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
 	mod.wearer.update_inv_back()
