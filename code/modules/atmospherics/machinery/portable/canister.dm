@@ -9,19 +9,18 @@
 GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /proc/init_gas_id_to_canister()
-	return sortList(list(
+	return sort_list(list(
 		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"plasma" = /obj/machinery/portable_atmospherics/canister/plasma,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
+		"nitrium" = /obj/machinery/portable_atmospherics/canister/nitrium,
 		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
 		"air" = /obj/machinery/portable_atmospherics/canister/air,
 		"water_vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
 		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
 		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
@@ -44,7 +43,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_colors = "#ffff00#000000"
 	density = TRUE
 	volume = 1000
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 80, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 80, ACID = 50)
 	max_integrity = 250
 	integrity_failure = 0.4
 	pressure_resistance = 7 * ONE_ATMOSPHERE
@@ -216,10 +215,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#c63e3b#f7d5d3"
 
-/obj/machinery/portable_atmospherics/canister/nitryl
-	name = "Nitryl canister"
-	desc = "Nitryl gas. Feels great 'til the acid eats your lungs."
-	gas_type = /datum/gas/nitryl
+/obj/machinery/portable_atmospherics/canister/nitrium
+	name = "Nitrium canister"
+	desc = "Nitrium gas. Feels great 'til the acid eats your lungs."
+	gas_type = /datum/gas/nitrium
 	greyscale_config = /datum/greyscale_config/canister
 	greyscale_colors = "#7b4732"
 
@@ -252,14 +251,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	greyscale_config = /datum/greyscale_config/canister/double_stripe
 	greyscale_colors = "#008200#33cc33"
 
-/obj/machinery/portable_atmospherics/canister/stimulum
-	name = "Stimulum canister"
-	desc = "Stimulum. High energy gas, high energy people."
-	gas_type = /datum/gas/stimulum
-	greyscale_config = /datum/greyscale_config/canister
-	greyscale_colors = "#9b5d7f"
-
-/obj/machinery/portable_atmospherics/canister/toxins
+/obj/machinery/portable_atmospherics/canister/plasma
 	name = "Plasma canister"
 	desc = "Plasma gas. The reason YOU are here. Highly toxic."
 	gas_type = /datum/gas/plasma
@@ -428,7 +420,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	if(!air_contents)
 		return
 	var/static/alpha_filter
-	if(!alpha_filter) // Gotta do this seperate since the icon may not be correct at world init
+	if(!alpha_filter) // Gotta do this separate since the icon may not be correct at world init
 		alpha_filter = filter(type="alpha", icon=icon(icon, "window-base"))
 
 	cut_overlay(window)
@@ -487,7 +479,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	. = ..()
 	if(user.combat_mode)
 		return FALSE
-	if(obj_integrity >= max_integrity)
+	if(atom_integrity >= max_integrity)
 		return TRUE
 	if(machine_stat & BROKEN)
 		return TRUE
@@ -495,8 +487,8 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return TRUE
 	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
-		obj_integrity = min(obj_integrity + 25, max_integrity)
-		if(obj_integrity >= max_integrity)
+		atom_integrity = min(atom_integrity + 25, max_integrity)
+		if(atom_integrity >= max_integrity)
 			to_chat(user, span_notice("You've finished repairing [src]."))
 			return TRUE
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
@@ -508,7 +500,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	SSair.start_processing_machine(src)
 
-/obj/machinery/portable_atmospherics/canister/obj_break(damage_flag)
+/obj/machinery/portable_atmospherics/canister/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return
@@ -523,7 +515,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	var/turf/T = get_turf(src)
 	T.assume_air(expelled_gas)
 
-	obj_break()
+	atom_break()
 
 	set_density(FALSE)
 	playsound(src.loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
@@ -628,8 +620,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in GLOB.gas_id_to_canister
-			if(label && !..())
+			var/label = tgui_input_list(usr, "New canister label", "Canister", GLOB.gas_id_to_canister)
+			if(isnull(label))
+				return
+			if(!..())
 				var/newtype = GLOB.gas_id_to_canister[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
@@ -658,7 +652,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
+				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, can_max_release_pressure, can_min_release_pressure)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
@@ -667,28 +661,35 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 			if(.)
 				release_pressure = clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
-		if("valve")
+		if("valve")		//logging for openning canisters
 			var/logmsg
+			var/admin_msg
+			var/danger = FALSE
+			var/n = 0
 			valve_open = !valve_open
 			if(valve_open)
 				SSair.start_processing_machine(src)
 				logmsg = "Valve was <b>opened</b> by [key_name(usr)], starting a transfer into \the [holding || "air"].<br>"
 				if(!holding)
-					var/list/danger = list()
+					var/list/gaseslog = list() //list for logging all gases in canister
 					for(var/id in air_contents.gases)
 						var/gas = air_contents.gases[id]
+						gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES]	//adds gases to gaseslog
 						if(!gas[GAS_META][META_GAS_DANGER])
 							continue
 						if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
-							danger[gas[GAS_META][META_GAS_NAME]] = gas[MOLES] //ex. "plasma" = 20
-
-					if(danger.len)
-						message_admins("[ADMIN_LOOKUPFLW(usr)] opened a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:")
-						log_admin("[key_name(usr)] opened a canister that contains the following at [AREACOORD(src)]:")
-						for(var/name in danger)
-							var/msg = "[name]: [danger[name]] moles."
-							log_admin(msg)
-							message_admins(msg)
+							danger = TRUE //at least 1 danger gas
+					logmsg = "[key_name(usr)] <b>opened</b> a canister that contains the following:"
+					admin_msg = "[key_name(usr)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
+					for(var/name in gaseslog)
+						n = n + 1
+						logmsg += "\n[name]: [gaseslog[name]] moles."
+						if(n <= 5) //the first five gases added
+							admin_msg += "\n[name]: [gaseslog[name]] moles."
+						if(n == 5 && length(gaseslog) > 5) //message added if more than 5 gases
+							admin_msg += "\nToo many gases to log. Check investigate log."
+					if(danger) //sent to admin's chat if contains dangerous gases
+						message_admins(admin_msg)
 			else
 				logmsg = "Valve was <b>closed</b> by [key_name(usr)], stopping the transfer into \the [holding || "air"].<br>"
 			investigate_log(logmsg, INVESTIGATE_ATMOS)
@@ -704,13 +705,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				if("increase")
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
-					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
-					if(!user_input)
+					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
+					if(isnull(user_input))
 						return
-					var/N = text2num(user_input)
-					if(!N)
-						return
-					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = clamp(user_input, minimum_timer_set, maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")
@@ -723,3 +721,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/canister/unregister_holding()
+	valve_open = FALSE
+	return ..()

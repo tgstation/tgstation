@@ -4,7 +4,7 @@
 	implements = list(
 		TOOL_SCREWDRIVER = 100,
 		TOOL_SCALPEL = 75, // med borgs could try to unskrew shell with scalpel
-		/obj/item/kitchen/knife = 50,
+		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
 
@@ -12,6 +12,7 @@
 	display_results(user, target, span_notice("You begin to unscrew the shell of [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to unscrew the shell of [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "You can feel your [parse_zone(target_zone)] grow numb as the sensory panel is unscrewed.", TRUE)
 
 /datum/surgery_step/mechanic_open/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -25,7 +26,7 @@
 	implements = list(
 		TOOL_SCREWDRIVER = 100,
 		TOOL_SCALPEL = 75,
-		/obj/item/kitchen/knife = 50,
+		/obj/item/knife = 50,
 		/obj/item = 10) // 10% success with any sharp item.
 	time = 24
 
@@ -33,6 +34,7 @@
 	display_results(user, target, span_notice("You begin to screw the shell of [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to screw the shell of [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to screw the shell of [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "You feel the faint pricks of sensation return as your [parse_zone(target_zone)]'s panel is screwed in.", TRUE)
 
 /datum/surgery_step/mechanic_close/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -52,6 +54,7 @@
 	display_results(user, target, span_notice("You begin to prepare electronics in [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to prepare electronics in [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to prepare electronics in [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "You can feel a faint buzz in your [parse_zone(target_zone)] as the electronics reboot.", TRUE)
 
 //unwrench
 /datum/surgery_step/mechanic_unwrench
@@ -65,6 +68,7 @@
 	display_results(user, target, span_notice("You begin to unwrench some bolts in [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to unwrench some bolts in [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "You feel a jostle in your [parse_zone(target_zone)] as the bolts begin to loosen.", TRUE)
 
 //wrench
 /datum/surgery_step/mechanic_wrench
@@ -78,6 +82,7 @@
 	display_results(user, target, span_notice("You begin to wrench some bolts in [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] begins to wrench some bolts in [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "You feel a jostle in your [parse_zone(target_zone)] as the bolts begin to tighten.", TRUE)
 
 //open hatch
 /datum/surgery_step/open_hatch
@@ -89,3 +94,4 @@
 	display_results(user, target, span_notice("You begin to open the hatch holders in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to open the hatch holders in [target]'s [parse_zone(target_zone)]."))
+	display_pain(target, "The last faint pricks of tactile sensation fade from your [parse_zone(target_zone)] as the hatch is opened.", TRUE)

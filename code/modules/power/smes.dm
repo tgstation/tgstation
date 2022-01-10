@@ -44,7 +44,7 @@
 	if(!terminal)
 		. += span_warning("This SMES has no power terminal!")
 
-/obj/machinery/power/smes/Initialize()
+/obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
 	dir_loop:
 		for(var/d in GLOB.cardinals)
@@ -55,7 +55,7 @@
 					break dir_loop
 
 	if(!terminal)
-		obj_break()
+		atom_break()
 		return
 	terminal.master = src
 	update_appearance()
@@ -116,7 +116,7 @@
 			return
 
 		var/turf/T = get_turf(user)
-		if (T.intact) //is the floor plating removed ?
+		if (T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE) //can we get to the underfloor?
 			to_chat(user, span_warning("You must first remove the floor plating!"))
 			return
 
@@ -200,7 +200,7 @@
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		obj_break()
+		atom_break()
 
 
 /obj/machinery/power/smes/update_overlays()
@@ -323,13 +323,13 @@
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
-		"inputLevel_text" = DisplayPower(input_level),
+		"inputLevel_text" = display_power(input_level),
 		"inputLevelMax" = input_level_max,
 		"inputAvailable" = input_available,
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
-		"outputLevel_text" = DisplayPower(output_level),
+		"outputLevel_text" = display_power(output_level),
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = output_used,
 	)

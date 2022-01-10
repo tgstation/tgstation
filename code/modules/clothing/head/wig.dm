@@ -6,7 +6,7 @@
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
-	color = "#000"
+	color = "#000000"
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -44,12 +44,10 @@
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.
-	var/mutable_appearance/hair_blocker = mutable_appearance(hair.icon, hair.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-	hair_blocker.color = GLOB.em_block_color
-	hair_overlay.overlays += hair_blocker
+	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
@@ -79,7 +77,7 @@
 		selected_hairstyle_color = wig.color
 	else if((HAIR in target.dna.species.species_traits) && target.hairstyle != "Bald")
 		selected_hairstyle = target.hairstyle
-		selected_hairstyle_color = "#[target.hair_color]"
+		selected_hairstyle_color = "[target.hair_color]"
 
 	if(selected_hairstyle)
 		to_chat(user, span_notice("You adjust the [src] to look just like [target.name]'s [selected_hairstyle]."))
@@ -95,7 +93,7 @@
 /obj/item/clothing/head/wig/natural
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
-	color = "#FFF"
+	color = "#FFFFFF"
 	adjustablecolor = FALSE
 	custom_price = PAYCHECK_HARD
 
@@ -106,7 +104,7 @@
 /obj/item/clothing/head/wig/natural/visual_equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(ishuman(user) && slot == ITEM_SLOT_HEAD)
-		if (color != "#[user.hair_color]") // only update if necessary
-			add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+		if (color != user.hair_color) // only update if necessary
+			add_atom_colour(user.hair_color, FIXED_COLOUR_PRIORITY)
 			update_appearance()
 		user.update_inv_head()

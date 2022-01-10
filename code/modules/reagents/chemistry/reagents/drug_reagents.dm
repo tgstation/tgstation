@@ -9,7 +9,7 @@
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
-	name = "Space drugs"
+	name = "Space Drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -76,8 +76,8 @@
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type)))
-		mytray.adjustPests(-rand(1,2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(0.5, delta_time))
@@ -355,7 +355,6 @@
 	color = "#ffffff"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
 
@@ -676,8 +675,11 @@
 		return
 	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
 		return
+	if(invisible_man.has_status_effect(STATUS_EFFECT_STASIS))
+		return
 
 	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+	ADD_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
 
 	var/datum/dna/druggy_dna = invisible_man.has_dna()
 	if(druggy_dna?.species)
@@ -693,6 +695,7 @@
 	if(HAS_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN))
 		invisible_man.add_to_all_human_data_huds() //Is this safe, what do you think, Floyd?
 		REMOVE_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
+		REMOVE_TRAIT(invisible_man, TRAIT_HIDE_EXTERNAL_ORGANS, name)
 		to_chat(invisible_man, span_notice("As you sober up, opacity once again returns to your body meats."))
 
 		var/datum/dna/druggy_dna = invisible_man.has_dna()
@@ -719,7 +722,7 @@
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
 /datum/reagent/drug/kronkaine
-	name = "kronkaine"
+	name = "Kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"
@@ -754,7 +757,7 @@
 	kronkaine_fiend.adjustOrganLoss(ORGAN_SLOT_HEART, 0.4 * REM * delta_time)
 	kronkaine_fiend.Jitter(10 * REM * delta_time)
 	kronkaine_fiend.AdjustSleeping(-20 * REM * delta_time)
-	kronkaine_fiend.drowsyness = max(kronkaine_fiend.drowsyness - (5 * REM * delta_time), 0)
+	kronkaine_fiend.adjust_drowsyness(-5 * REM * delta_time)
 	if(volume < 10)
 		return
 	for(var/possible_purger in kronkaine_fiend.reagents.reagent_list)

@@ -41,7 +41,7 @@
 	if(!weapon.chambered || HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 
-	var/backwards_angle = Get_Angle(target, user)
+	var/backwards_angle = get_angle(target, user)
 	var/starting_angle = SIMPLIFY_DEGREES(backwards_angle-(angle_spread * 0.5))
 	var/iter_offset = angle_spread / plumes // how much we increment the angle for each plume
 
@@ -57,7 +57,7 @@
 	if(!weapon.chambered || HAS_TRAIT(user, TRAIT_PACIFISM))
 		return
 
-	var/backwards_angle = Get_Angle(target, user)
+	var/backwards_angle = get_angle(target, user)
 	var/turf/target_turf = get_turf_in_angle(backwards_angle, get_turf(user), 10)
 	INVOKE_ASYNC(src, .proc/pew, target_turf, weapon, user)
 

@@ -18,7 +18,7 @@
 	/// What we're implanting
 	var/obj/item/skillchip/inserted_skillchip
 
-/obj/machinery/skill_station/Initialize()
+/obj/machinery/skill_station/Initialize(mapload)
 	. = ..()
 	update_appearance()
 

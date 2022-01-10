@@ -6,8 +6,10 @@
 	var/hoodtype = /obj/item/clothing/head/hooded/winterhood //so the chaplain hoodie or other hoodies can override this
 	///Alternative mode for hiding the hood, instead of storing the hood in the suit it qdels it, useful for when you deal with hooded suit with storage.
 	var/alternative_mode = FALSE
+	///Whether the hood is flipped up
+	var/hood_up = FALSE
 
-/obj/item/clothing/suit/hooded/Initialize()
+/obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if(!alternative_mode)
 		MakeHood()
@@ -37,7 +39,7 @@
 
 /obj/item/clothing/suit/hooded/proc/RemoveHood()
 	src.icon_state = "[initial(icon_state)]"
-	suittoggled = FALSE
+	hood_up = FALSE
 
 	if(hood)
 		if(ishuman(hood.loc))
@@ -57,7 +59,7 @@
 	RemoveHood()
 
 /obj/item/clothing/suit/hooded/proc/ToggleHood()
-	if(!suittoggled)
+	if(!hood_up)
 		if(!ishuman(loc))
 			return
 		var/mob/living/carbon/human/H = loc
@@ -74,7 +76,7 @@
 				if(alternative_mode)
 					RemoveHood()
 				return
-			suittoggled = TRUE
+			hood_up = TRUE
 			icon_state = "[initial(icon_state)]_t"
 			H.update_inv_wear_suit()
 			update_action_buttons()
@@ -102,113 +104,13 @@
 		else
 			qdel(src)
 
-//Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
+// Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
+// Pretty much just a holder for `/datum/component/toggle_icon`.
 
-/obj/item/clothing/suit/toggle/AltClick(mob/user)
-	..()
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
-	else
-		suit_toggle(user)
+/obj/item/clothing/suit/toggle
+	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".
+	var/toggle_noun = "buttons"
 
-/obj/item/clothing/suit/toggle/ui_action_click()
-	suit_toggle()
-
-/obj/item/clothing/suit/toggle/proc/suit_toggle()
-	set src in usr
-
-	if(!can_use(usr))
-		return 0
-
-	to_chat(usr, span_notice("You toggle [src]'s [togglename]."))
-	if(src.suittoggled)
-		src.icon_state = "[initial(icon_state)]"
-		src.suittoggled = FALSE
-	else if(!src.suittoggled)
-		src.icon_state = "[initial(icon_state)]_t"
-		src.suittoggled = TRUE
-	usr.update_inv_wear_suit()
-	update_action_buttons()
-
-/obj/item/clothing/suit/toggle/examine(mob/user)
+/obj/item/clothing/suit/toggle/Initialize(mapload)
 	. = ..()
-	. += "Alt-click on [src] to toggle the [togglename]."
-
-//Hardsuit toggle code
-/obj/item/clothing/suit/space/hardsuit/Initialize()
-	MakeHelmet()
-	. = ..()
-
-/obj/item/clothing/suit/space/hardsuit/Destroy()
-	if(!QDELETED(helmet))
-		helmet.suit = null
-		qdel(helmet)
-		helmet = null
-	QDEL_NULL(jetpack)
-	return ..()
-
-/obj/item/clothing/head/helmet/space/hardsuit/Destroy()
-	if(suit)
-		suit.helmet = null
-	return ..()
-
-/obj/item/clothing/suit/space/hardsuit/proc/MakeHelmet()
-	if(!helmettype)
-		return
-	if(!helmet)
-		var/obj/item/clothing/head/helmet/space/hardsuit/W = new helmettype(src)
-		W.suit = src
-		helmet = W
-
-/obj/item/clothing/suit/space/hardsuit/ui_action_click()
-	..()
-	ToggleHelmet()
-
-/obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
-	if(!helmettype)
-		return
-	if(slot != ITEM_SLOT_OCLOTHING)
-		RemoveHelmet()
-	..()
-
-/obj/item/clothing/suit/space/hardsuit/proc/RemoveHelmet()
-	if(!helmet)
-		return
-	suittoggled = FALSE
-	if(ishuman(helmet.loc))
-		var/mob/living/carbon/H = helmet.loc
-		if(helmet.on)
-			helmet.attack_self(H)
-		H.transferItemToLoc(helmet, src, TRUE)
-		H.update_inv_wear_suit()
-		to_chat(H, span_notice("The helmet on the hardsuit disengages."))
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	else
-		helmet.forceMove(src)
-
-/obj/item/clothing/suit/space/hardsuit/dropped()
-	..()
-	RemoveHelmet()
-
-/obj/item/clothing/suit/space/hardsuit/proc/ToggleHelmet()
-	var/mob/living/carbon/human/H = src.loc
-	if(!helmettype)
-		return
-	if(!helmet)
-		to_chat(H, span_warning("The helmet's lightbulb seems to be damaged! You'll need a replacement bulb."))
-		return
-	if(!suittoggled)
-		if(ishuman(src.loc))
-			if(H.wear_suit != src)
-				to_chat(H, span_warning("You must be wearing [src] to engage the helmet!"))
-				return
-			if(H.head)
-				to_chat(H, span_warning("You're already wearing something on your head!"))
-				return
-			else if(H.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
-				to_chat(H, span_notice("You engage the helmet on the hardsuit."))
-				suittoggled = TRUE
-				H.update_inv_wear_suit()
-				playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	else
-		RemoveHelmet()
+	AddComponent(/datum/component/toggle_icon, toggle_noun)

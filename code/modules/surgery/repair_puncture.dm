@@ -52,6 +52,7 @@
 	display_results(user, target, span_notice("You begin to realign the torn blood vessels in [target]'s [parse_zone(user.zone_selected)]..."),
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [parse_zone(user.zone_selected)] with [tool]."),
 		span_notice("[user] begins to realign the torn blood vessels in [target]'s [parse_zone(user.zone_selected)]."))
+	display_pain(target, "You feel a horrible stabbing pain in your [parse_zone(user.zone_selected)]!")
 
 /datum/surgery_step/repair_innards/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
@@ -98,6 +99,7 @@
 	display_results(user, target, span_notice("You begin to meld some of the split blood vessels in [target]'s [parse_zone(user.zone_selected)]..."),
 		span_notice("[user] begins to meld some of the split blood vessels in [target]'s [parse_zone(user.zone_selected)] with [tool]."),
 		span_notice("[user] begins to meld some of the split blood vessels in [target]'s [parse_zone(user.zone_selected)]."))
+	display_pain(target, "You're being burned inside your [parse_zone(user.zone_selected)]!")
 
 /datum/surgery_step/seal_veins/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
@@ -112,7 +114,7 @@
 	pierce_wound.blood_flow -= 0.5
 	if(pierce_wound.blood_flow > 0)
 		surgery.status = REALIGN_INNARDS
-		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...<i>"))
+		to_chat(user, span_notice("<i>There still seems to be misaligned blood vessels to finish...</i>"))
 	else
 		to_chat(user, span_green("You've repaired all the internal damage in [target]'s [parse_zone(target_zone)]!"))
 	return ..()

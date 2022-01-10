@@ -20,9 +20,9 @@
 		if(in_range(living_pawn, interact_target) && (isturf(interact_target.loc)))
 			controller.current_movement_target = interact_target
 			if(IS_EDIBLE(interact_target))
-				LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/eat_snack))
+				controller.queue_behavior(/datum/ai_behavior/eat_snack)
 			else if(isitem(interact_target))
-				LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/simple_equip))
+				controller.queue_behavior(/datum/ai_behavior/simple_equip)
 			else
 				controller.blackboard[BB_FETCH_TARGET] = null
 				controller.blackboard[BB_FETCH_DELIVER_TO] = null
@@ -36,5 +36,5 @@
 			controller.blackboard[BB_FETCH_DELIVER_TO] = null
 			return
 		controller.current_movement_target = return_target
-		LAZYADD(controller.current_behaviors, GET_AI_BEHAVIOR(/datum/ai_behavior/deliver_item))
+		controller.queue_behavior(/datum/ai_behavior/deliver_item)
 		return

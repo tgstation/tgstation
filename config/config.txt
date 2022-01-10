@@ -90,6 +90,9 @@ LOG_ADMIN
 ## log admin chat
 LOG_ADMINCHAT
 
+## log asset debug logs
+#LOG_ASSET
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 
@@ -123,13 +126,13 @@ LOG_TELECOMMS
 ## log prayers
 LOG_PRAYER
 
-## log lawchanges
-LOG_LAW
+## log silicons
+LOG_SILICON
 
 ## log economy actions
 LOG_ECON
 
-## log crew manifest to seperate file
+## log crew manifest to separate file
 LOG_MANIFEST
 
 ## log job divide debugging information
@@ -143,7 +146,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-# LOG_PICTURES
+LOG_PICTURES
 
 ## log mecha actions
 # LOG_MECHA
@@ -286,9 +289,9 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
-## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-#POPUP_ADMIN_PM
+## Uncomment to give admins the ability to send a maptext popup to players.
+## Only fires when an admin requests it, not every ahelp.
+POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
@@ -555,3 +558,40 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
 #HARD_DELETES_OVERRUN_LIMIT 0
+
+## The URL to the webhook for adminhelps to relay the urgent ahelp message to
+## If not set, will disable urgent ahelps.
+#ADMINHELP_WEBHOOK_URL
+
+## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
+URGENT_AHELP_COOLDOWN 300
+
+## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
+#URGENT_AHELP_MESSAGE Ban ban ban ban
+
+## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
+#URGENT_AHELP_USER_PROMPT This'll ping the admins!
+
+## The URL for the pfp of the webhook
+#ADMINHELP_WEBHOOK_PFP
+
+## The name of the webhook
+#ADMINHELP_WEBHOOK_NAME
+
+## Sets an MOTD of the server.
+## You can use this multiple times, and the MOTDs will be appended in order.
+## Based on config directory, so "motd.txt" points to "config/motd.txt"
+MOTD motd.txt
+#MOTD motd_extra.txt
+
+## Assets can opt-in to caching their results into `tmp`.
+## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## This should be disabled (through `CACHE_ASSETS 0`) on development,
+## but enabled on production (the default).
+CACHE_ASSETS 0
+
+## Uncomment to allow the station name to be in the hub entry.
+## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
+## BYOND staff have gotten upset at us in the past for inappropriate station names.
+#STATION_NAME_IN_HUB_ENTRY

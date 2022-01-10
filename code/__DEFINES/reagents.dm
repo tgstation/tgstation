@@ -80,6 +80,8 @@
 #define REAGENT_CAN_BE_SYNTHESIZED (1<<5)
 ///Allows a reagent to work on a mob regardless of stasis
 #define REAGENT_IGNORE_STASIS (1<<6)
+///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
+#define REAGENT_NO_RANDOM_RECIPE (1<<7)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
@@ -175,3 +177,6 @@
 
 #define BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT 3
 #define BLASTOFF_DANCE_MOVES_PER_SUPER_MOVE 3
+
+///This is the center of a 1 degree deadband in which water will neither freeze to ice nor melt to liquid
+#define WATER_MATTERSTATE_CHANGE_TEMP 274.5

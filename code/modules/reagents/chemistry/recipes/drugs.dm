@@ -73,7 +73,7 @@
 	log_game("Reagent explosion reaction occurred at [AREACOORD(T)]. Last Fingerprint: [lastkey ? lastkey : "N/A"]." )
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(power, T, 0, 0)
-	e.start()
+	e.start(holder.my_atom)
 	holder.clear_reagents()
 
 /datum/chemical_reaction/bath_salts
@@ -128,7 +128,7 @@
 
 /datum/chemical_reaction/moon_rock/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		var/obj/item/food/drug/moon_rock/new_rock = new(location)
 		new_rock.pixel_x = rand(-6, 6)
 		new_rock.pixel_y = rand(-6, 6)
@@ -140,7 +140,7 @@
 
 /datum/chemical_reaction/blastoff_ampoule/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/iteration = 1, iteration <= created_volume, iteration++)
+	for(var/iteration in 1 to created_volume)
 		var/obj/item/reagent_containers/glass/blastoff_ampoule/new_ampoule = new(location)
 		new_ampoule.pixel_x = rand(-6, 6)
 		new_ampoule.pixel_y = rand(-6, 6)
@@ -152,7 +152,7 @@
 
 /datum/chemical_reaction/saturnx_glob/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/iteration = 1, iteration <= created_volume, iteration++)
+	for(var/iteration in 1 to created_volume)
 		var/obj/item/food/drug/saturnx/new_glob = new(location)
 		new_glob.pixel_x = rand(-6, 6)
 		new_glob.pixel_y = rand(-6, 6)

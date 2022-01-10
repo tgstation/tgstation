@@ -47,6 +47,8 @@
 	base_pixel_x = -32
 	pixel_y = -16
 	base_pixel_y = -16
+	maptext_height = 96
+	maptext_width = 96
 	loot = list(/obj/item/stack/sheet/bone = 3)
 	vision_range = 13
 	wander = FALSE
@@ -264,7 +266,7 @@
 	anchored = TRUE
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
-	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 100,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
@@ -274,7 +276,7 @@
 	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
 	var/faction = list("mining")
 
-/obj/structure/legionturret/Initialize()
+/obj/structure/legionturret/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/set_up_shot), initial_firing_time)
 
@@ -296,7 +298,7 @@
 	if(!T || !T1)
 		return
 	//Now we generate the tracer.
-	var/angle = Get_Angle(T1, T)
+	var/angle = get_angle(T1, T)
 	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
 	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)

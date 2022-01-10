@@ -23,12 +23,10 @@
 
 /obj/item/gun/ballistic/bow/proc/drop_arrow()
 	drawn = FALSE
-	if(!chambered)
-		chambered = magazine.get_round(keep = FALSE)
-		return
-	if(!chambered)
-		return
-	chambered.forceMove(drop_location())
+	if(chambered)
+		chambered.forceMove(drop_location())
+		magazine.get_round(keep = FALSE)
+		chambered = null
 	update_appearance()
 
 /obj/item/gun/ballistic/bow/chamber_round(keep_bullet = FALSE, spin_cylinder, replace_new_round)
@@ -48,7 +46,7 @@
 	if(!chambered)
 		return
 	if(!drawn)
-		to_chat(user, "<span clasas='warning'>Without drawing the bow, the arrow uselessly falls to the ground.</span>")
+		to_chat(user, span_warning("Without drawing the bow, the arrow uselessly falls to the ground."))
 		drop_arrow()
 		update_appearance()
 		return

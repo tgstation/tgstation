@@ -103,7 +103,7 @@
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "x" = (
-/obj/effect/mob_spawn/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "y" = (
@@ -116,7 +116,7 @@
 /area/ruin/powered)
 "A" = (
 /obj/structure/table,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/plating,
 /area/ruin/powered)
 "B" = (
@@ -162,7 +162,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
 "J" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

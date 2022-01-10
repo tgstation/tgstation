@@ -20,7 +20,7 @@
 	layer = TABLE_LAYER//so that deliveries dont appear underneath it
 	loot = list(/obj/effect/decal/cleanable/blood/gibs, /obj/item/stack/sheet/animalhide/gondola = 2, /obj/item/food/meat/slab/gondola = 2)
 	//Gondolas aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 	maxHealth = 200
@@ -30,6 +30,9 @@
 	var/obj/structure/closet/supplypod/centcompod/linked_pod
 
 /mob/living/simple_animal/pet/gondola/gondolapod/Initialize(mapload, pod)
+	if(!pod)
+		stack_trace("Gondola pod created with no pod")
+		return INITIALIZE_HINT_QDEL
 	linked_pod = pod
 	name = linked_pod.name
 	desc = linked_pod.desc
@@ -73,6 +76,6 @@
 	update_appearance()
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()
-	qdel(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
+	QDEL_NULL(linked_pod) //Will cause the open() proc for the linked supplypod to be called with the "broken" parameter set to true, meaning that it will dump its contents on death
 	qdel(src)
 	..()

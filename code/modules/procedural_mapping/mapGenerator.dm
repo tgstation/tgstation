@@ -69,13 +69,13 @@
 	if(bigZ % 2 == 0)
 		offByOneOffset = 0
 
-	for(var/i = lilZ, i <= bigZ+offByOneOffset, i++)
+	for(var/i in lilZ to bigZ+offByOneOffset)
 		var/theRadius = radius
 		if(i != sphereMagic)
 			theRadius = max(radius/max((2*abs(sphereMagic-i)),1),1)
 
 
-		map |= circlerange(locate(centerX,centerY,i),theRadius)
+		map |= circle_range(locate(centerX,centerY,i),theRadius)
 
 
 	return map
@@ -191,7 +191,7 @@
 			return
 		theCluster = clusters[moduleClusters]
 	else
-		theCluster =  CLUSTER_CHECK_NONE
+		theCluster = CLUSTER_CHECK_NONE
 
 	if(theCluster)
 		for(var/datum/map_generator_module/M in N.modules)

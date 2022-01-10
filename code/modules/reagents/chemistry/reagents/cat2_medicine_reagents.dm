@@ -52,7 +52,7 @@
 			helbent = TRUE
 		to_chat(M, span_hierophant("Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?"))
 		var/timeisticking = world.time
-		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
+		var/RPSchoice = tgui_alert(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors", RockPaperScissors, 60)
 		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
@@ -135,7 +135,7 @@
 /datum/reagent/medicine/c2/probital/overdose_process(mob/living/M, delta_time, times_fired)
 	M.adjustStaminaLoss(3 * REM * delta_time, 0)
 	if(M.getStaminaLoss() >= 80)
-		M.drowsyness += 1 * REM * delta_time
+		M.adjust_drowsyness(1 * REM * delta_time)
 	if(M.getStaminaLoss() >= 100)
 		to_chat(M,span_warning("You feel more tired than you usually do, perhaps if you rest your eyes for a bit..."))
 		M.adjustStaminaLoss(-100, TRUE)
@@ -144,7 +144,7 @@
 	. = TRUE
 
 /datum/reagent/medicine/c2/probital/on_transfer(atom/A, methods=INGEST, trans_volume)
-	if(!(methods & INGEST) || !iscarbon(A))
+	if(!(methods & INGEST) || (!iscarbon(A) && !istype(A, /obj/item/organ/stomach)) )
 		return
 
 	A.reagents.remove_reagent(/datum/reagent/medicine/c2/probital, trans_volume * 0.05)
@@ -282,7 +282,7 @@
 	M.adjustOxyLoss(-3 * REM * delta_time * normalise_creation_purity())
 	M.adjustStaminaLoss(2 * REM * delta_time)
 	if(drowsycd && COOLDOWN_FINISHED(src, drowsycd))
-		M.drowsyness += 10
+		M.adjust_drowsyness(10)
 		COOLDOWN_START(src, drowsycd, 45 SECONDS)
 	else if(!drowsycd)
 		COOLDOWN_START(src, drowsycd, 15 SECONDS)
@@ -299,7 +299,7 @@
 
 /datum/reagent/medicine/c2/seiver //a bit of a gray joke
 	name = "Seiver"
-	description = "A medicine that shifts functionality based on temperature. Colder temperatures incurs radiation removal while hotter temperatures promote antitoxicity. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
+	description = "A medicine that shifts functionality based on temperature. Hotter temperatures will remove amounts of toxins, while coder temperatures will heal larger amounts of toxins only while the patient is irradiated. Damages the heart." //CHEM HOLDER TEMPS, NOT AIR TEMPS
 	var/radbonustemp = (T0C - 100) //being below this number gives you 10% off rads.
 	inverse_chem_val = 0.3
 	ph = 3.7
@@ -325,13 +325,13 @@
 
 	//and you're cold
 	var/radcalc = round((T0C-chemtemp) / 6, 0.1) * REM * delta_time //max ~45 rad loss unless you've hit below 0K. if so, wow.
-	if(radcalc > 0)
-		//no cost percent healing if you are SUPER cold (on top of cost healing)
-		if(chemtemp < radbonustemp*0.1) //if you're super chilly, it takes off 25% of your current rads
-			M.radiation = round(M.radiation * (0.75**(REM * delta_time)))
-		else if(chemtemp < radbonustemp)//else if you're under the chill-zone, it takes off 10% of your current rads
-			M.radiation = round(M.radiation * (0.90**(REM * delta_time)))
-		M.radiation -= radcalc * normalise_creation_purity()
+	if(radcalc > 0 && HAS_TRAIT(M, TRAIT_IRRADIATED))
+		radcalc *= normalise_creation_purity()
+		// no cost percent healing if you are SUPER cold (on top of cost healing)
+		if(chemtemp < radbonustemp*0.1)
+			M.adjustToxLoss(-radcalc * (0.9**(REM * delta_time)))
+		else if(chemtemp < radbonustemp)
+			M.adjustToxLoss(-radcalc * (0.75**(REM * delta_time)))
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!
@@ -373,7 +373,7 @@
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/c2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjustToxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
+	mytray.adjust_toxic(-(round(chems.get_reagent_amount(type) * 2)*normalise_creation_purity())) //0-2.66, 2 by default (0.75 purity).
 
 #define issyrinormusc(A) (istype(A,/datum/reagent/medicine/c2/syriniver) || istype(A,/datum/reagent/medicine/c2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
@@ -514,13 +514,13 @@
 	failed_chem = null //We don't want to accidentally crash it out (see reaction)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
-	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
-	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	ADD_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+	user.balloon_alert(user, "your heart beats with a great force")
+	ADD_TRAIT(user, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	ADD_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/H, delta_time, times_fired)
 	H.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.25 * REM * delta_time)
@@ -549,11 +549,12 @@
 		volume = 0
 	. = ..()
 
-/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/M)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
-	REMOVE_TRAIT(M, TRAIT_NOCRITDAMAGE,type)
+/datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/user)
+	user.balloon_alert(user, "your heart relaxes")
+	REMOVE_TRAIT(user, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(user, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOSOFTCRIT,type)
+	REMOVE_TRAIT(user, TRAIT_NOCRITDAMAGE,type)
 	. = ..()
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/H, delta_time, times_fired)

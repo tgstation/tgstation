@@ -12,9 +12,9 @@
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_tiziran_sausage/Initialize()
+/obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/tiziran_sausage)
+	AddElement(/datum/element/dryable, /obj/item/food/tiziran_sausage)
 
 /obj/item/food/tiziran_sausage
 	name = "\improper Tiziran blood sausage"
@@ -36,7 +36,7 @@
 	foodtypes = MEAT | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_headcheese/Initialize()
+/obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dryable,  /obj/item/food/headcheese)
 
@@ -100,7 +100,7 @@
 	icon_state = "moonfish_eggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("caviar" = 1)
-	foodtypes = MEAT
+	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/moonfish_caviar
@@ -110,7 +110,7 @@
 	icon_state = "moonfish_caviar"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("caviar" = 1)
-	foodtypes = MEAT
+	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_escargot
@@ -171,7 +171,7 @@
 	icon_state = "picoss_skewer"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/vinegar= 1, /datum/reagent/consumable/capsaicin = 1)
 	tastes = list("fish" = 1, "acid" = 1, "onion" = 1, "heat" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/nectar_larvae
@@ -202,7 +202,7 @@
 	icon_state = "grilled_moonfish"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("fish" = 1)
-	foodtypes = MEAT
+	foodtypes = SEAFOOD
 	burns_on_grill = TRUE
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -213,7 +213,7 @@
 	icon_state = "moonfish_demiglace"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment = 3)
 	tastes = list("fish" = 1)
-	foodtypes = MEAT
+	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/lizard_surf_n_turf
@@ -223,7 +223,7 @@
 	icon_state = "surf_n_turf"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/nutriment/protein = 10, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("surf" = 1, "turf" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT | SEAFOOD | VEGETABLES
 	w_class = WEIGHT_CLASS_BULKY
 
 //Spaghetti Dishes
@@ -357,7 +357,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	burns_in_oven = TRUE
 
-/obj/item/food/bread/root/Initialize()
+/obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
@@ -374,7 +374,7 @@
 	foodtypes = VEGETABLES | NUTS
 	venue_value = FOOD_PRICE_TRASH
 
-/obj/item/food/breadslice/root/Initialize()
+/obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
@@ -420,7 +420,7 @@
 	icon_state = "emperor_roll"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 7, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("bread" = 1, "cheese" = 1, "liver" = 1, "caviar" = 1)
-	foodtypes = VEGETABLES | NUTS | MEAT | GROSS
+	foodtypes = VEGETABLES | NUTS | MEAT | GROSS | SEAFOOD
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -577,17 +577,17 @@
 /obj/item/food/canned_jellyfish
 	name = "canned gunner jellyfish"
 	desc = "A can of gunner jellyfish packed in brine. Contains a mild hallucinogen which is destroyed by cooking."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_jellyfish"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/mindbreaker = 2, /datum/reagent/consumable/salt = 1)
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
-	foodtypes = MEAT | GROSS
+	foodtypes = SEAFOOD | GROSS
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/desert_snails
 	name = "canned desert snails"
 	desc = "Giant snails from the Tiziran desert, packaged in brine. Shells included. Probably best not eaten raw, unless you're a lizard."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_snails"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/salt = 2)
 	tastes = list("snails" = 1)
@@ -597,7 +597,7 @@
 /obj/item/food/larvae
 	name = "canned bee larva"
 	desc = "A can of bee larva packaged in honey. Probably appetizing to someone."
-	icon = 'icons/obj/food/lizard.dmi'
+	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "canned_larvae"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/consumable/honey = 2)
 	tastes = list("sweet bugs" = 1)

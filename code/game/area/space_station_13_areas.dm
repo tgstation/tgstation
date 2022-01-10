@@ -25,7 +25,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "space"
 	requires_power = TRUE
 	always_unpowered = TRUE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
+
+	base_lighting_alpha = 255
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -37,13 +39,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/space/nearstation
 	icon_state = "space_near"
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
+	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
 
 /area/start
 	name = "start area"
 	icon_state = "start"
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	static_lighting = FALSE
 	has_gravity = STANDARD_GRAVITY
 
 
@@ -68,7 +70,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	max_ambience_cooldown = 220 SECONDS
 
 /area/asteroid/nearstation
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	ambience_index = AMBIENCE_RUINS
 	always_unpowered = FALSE
 	requires_power = TRUE
@@ -103,7 +105,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	var/ai_will_not_hear_this = list('sound/ambience/ambimalf.ogg')
 	airlock_wires = /datum/wires/airlock/ai
 
-/area/ai_monitored/turret_protected/Initialize()
+/area/ai_monitored/turret_protected/Initialize(mapload)
 	. = ..()
 	if(ai_will_not_hear_this)
 		ambientsounds += ai_will_not_hear_this
@@ -166,7 +168,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/maintenance
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 	airlock_wires = /datum/wires/airlock/maint
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED
 
@@ -621,12 +623,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
-/area/commons/cryopods
-	name = "\improper Cryopod Room"
-	icon_state = "cryopod"
-
 // Commons - Vacant Rooms
-
 /area/commons/vacant_room
 	name = "\improper Vacant Room"
 	icon_state = "vacant_room"
@@ -689,6 +686,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/kitchen/diner
 	name = "\improper Diner"
 
+/area/service/kitchen/abandoned
+	name = "\improper Abandoned Kitchen"
+
 /area/service/bar
 	name = "\improper Bar"
 	icon_state = "bar"
@@ -718,9 +718,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/abandoned_gambling_den/secondary
 	icon_state = "abandoned_g_den_2"
 
+/area/service/abandoned_gambling_den/gaming
+	name = "\improper Abandoned Gaming Den"
+	icon_state = "abandoned_g_den_2"
+
 /area/service/theater
 	name = "\improper Theater"
-	icon_state = "Theater"
+	icon_state = "theatre"
 	sound_environment = SOUND_AREA_WOODFLOOR
 
 /area/service/theater/abandoned
@@ -923,8 +927,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/solars
 	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_IFSTARLIGHT
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
 	flags_1 = NONE
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
@@ -1156,6 +1159,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/prison
 	name = "\improper Prison Wing"
 	icon_state = "sec_prison"
+	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED | PERSISTENT_ENGRAVINGS
 
 /area/security/prison/toilet //radproof
 	name = "\improper Prison Toilet"
@@ -1208,7 +1212,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/interrogation
 	name = "\improper Interrogation Room"
-	icon_state =  "interrogation"
+	icon_state = "interrogation"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/security/warden
@@ -1305,6 +1309,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "cargo_warehouse"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/cargo/drone_bay
+	name = "\improper Drone Bay"
+	icon_state = "cargo_drone"
+
 /area/cargo/warehouse/upper
 	name = "\improper Upper Warehouse"
 
@@ -1353,21 +1361,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "cytology"
 
 /area/science/storage
-	name = "Toxins Storage"
-	icon_state = "tox_storage"
+	name = "Ordnance Storage"
+	icon_state = "ord_storage"
 
 /area/science/test_area
-	name = "\improper Toxins Test Area"
-	icon_state = "tox_test"
+	name = "\improper Ordnance Test Area"
+	icon_state = "ord_test"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/mixing
-	name = "\improper Toxins Mixing Lab"
-	icon_state = "tox_mix"
+	name = "\improper Ordnance Mixing Lab"
+	icon_state = "ord_mix"
 
 /area/science/mixing/chamber
-	name = "\improper Toxins Mixing Chamber"
-	icon_state = "tox_mix_chamber"
+	name = "\improper Ordnance Mixing Chamber"
+	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 /area/science/genetics
@@ -1376,11 +1384,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/science/misc_lab
 	name = "\improper Testing Lab"
-	icon_state = "tox_misc"
+	icon_state = "ord_misc"
 
 /area/science/misc_lab/range
 	name = "\improper Research Testing Range"
-	icon_state = "tox_range"
+	icon_state = "ord_range"
 
 /area/science/server
 	name = "\improper Research Division Server Room"

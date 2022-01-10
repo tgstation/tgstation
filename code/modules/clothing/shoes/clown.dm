@@ -9,7 +9,7 @@
 	lace_time = 20 SECONDS // how the hell do these laces even work??
 	species_exception = list(/datum/species/golem/bananium)
 
-/obj/item/clothing/shoes/clown_shoes/Initialize()
+/obj/item/clothing/shoes/clown_shoes/Initialize(mapload)
 	. = ..()
 	LoadComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)

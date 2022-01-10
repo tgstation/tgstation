@@ -1,9 +1,8 @@
 /datum/antagonist/brother
-	name = "Brother"
+	name = "\improper Brother"
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
-	antag_hud_type = ANTAG_HUD_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
 	suicide_cry = "FOR MY BROTHER!!"
@@ -27,21 +26,39 @@
 	return ..()
 
 /datum/antagonist/brother/on_removal()
-	if(owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [special_role]!"))
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/brother/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
-
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]"
+
+/datum/antagonist/brother/get_preview_icon()
+	var/mob/living/carbon/human/dummy/consistent/brother1 = new
+	var/mob/living/carbon/human/dummy/consistent/brother2 = new
+
+	brother1.dna.features["ethcolor"] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.set_species(/datum/species/ethereal)
+
+	brother2.dna.features["moth_antennae"] = "Plain"
+	brother2.dna.features["moth_markings"] = "None"
+	brother2.dna.features["moth_wings"] = "Plain"
+	brother2.set_species(/datum/species/moth)
+
+	var/icon/brother1_icon = render_preview_outfit(/datum/outfit/job/quartermaster, brother1)
+	brother1_icon.Blend(icon('icons/effects/blood.dmi', "maskblood"), ICON_OVERLAY)
+	brother1_icon.Shift(WEST, 8)
+
+	var/icon/brother2_icon = render_preview_outfit(/datum/outfit/job/scientist, brother2)
+	brother2_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+	brother2_icon.Shift(EAST, 8)
+
+	var/icon/final_icon = brother1_icon
+	final_icon.Blend(brother2_icon, ICON_OVERLAY)
+
+	qdel(brother1)
+	qdel(brother2)
+
+	return finish_preview_icon(final_icon)
 
 /datum/antagonist/brother/proc/get_brother_names()
 	var/list/brothers = team.members - owner
@@ -79,7 +96,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sortNames(candidates)
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sort_names(candidates)
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]

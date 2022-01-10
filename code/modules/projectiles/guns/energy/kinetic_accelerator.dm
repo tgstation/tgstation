@@ -2,6 +2,7 @@
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
 	icon_state = "kineticgun"
+	base_icon_state = "kineticgun"
 	inhand_icon_state = "kineticgun"
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	cell_type = /obj/item/stock_parts/cell/emproof
@@ -74,6 +75,7 @@
 		M.modify_projectile(K)
 
 /obj/item/gun/energy/kinetic_accelerator/cyborg
+	icon_state = "kineticgun_b"
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	max_mod_capacity = 80
@@ -84,7 +86,7 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 
-/obj/item/gun/energy/kinetic_accelerator/Initialize()
+/obj/item/gun/energy/kinetic_accelerator/Initialize(mapload)
 	. = ..()
 	if(!holds_charge)
 		empty()
@@ -127,7 +129,7 @@
 
 	var/carried = 0
 	if(!unique_frequency)
-		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.GetAllContents())
+		for(var/obj/item/gun/energy/kinetic_accelerator/K in loc.get_all_contents())
 			if(!K.unique_frequency)
 				carried++
 
@@ -153,7 +155,7 @@
 /obj/item/gun/energy/kinetic_accelerator/update_overlays()
 	. = ..()
 	if(!can_shoot())
-		. += "[icon_state]_empty"
+		. += "[base_icon_state]_empty"
 
 //Casing
 /obj/item/ammo_casing/energy/kinetic
@@ -565,11 +567,19 @@
 	. = ..()
 	if(.)
 		KA.icon_state = chassis_icon
+		KA.inhand_icon_state = chassis_icon
 		KA.name = chassis_name
+		if(iscarbon(KA.loc))
+			var/mob/living/carbon/holder = KA.loc
+			holder.update_inv_hands()
 
 /obj/item/borg/upgrade/modkit/chassis_mod/uninstall(obj/item/gun/energy/kinetic_accelerator/KA)
 	KA.icon_state = initial(KA.icon_state)
+	KA.inhand_icon_state = initial(KA.inhand_icon_state)
 	KA.name = initial(KA.name)
+	if(iscarbon(KA.loc))
+		var/mob/living/carbon/holder = KA.loc
+		holder.update_inv_hands()
 	..()
 
 /obj/item/borg/upgrade/modkit/chassis_mod/orange

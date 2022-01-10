@@ -17,7 +17,7 @@
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
-/obj/item/chameleon/Initialize()
+/obj/item/chameleon/Initialize(mapload)
 	. = ..()
 	var/obj/item/cigbutt/butt = /obj/item/cigbutt
 	saved_appearance = initial(butt.appearance)
@@ -143,7 +143,6 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/ex_act(S, T)
-	contents_explosion(S, T)
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/bullet_act()
@@ -173,5 +172,7 @@
 	return
 
 /obj/effect/dummy/chameleon/Destroy()
-	master.disrupt(0)
+	if(master)
+		master.disrupt(0)
+		master = null
 	return ..()

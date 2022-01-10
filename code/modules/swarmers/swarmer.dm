@@ -33,7 +33,7 @@
 	harm_intent_damage = 5
 	minbodytemp = 0
 	maxbodytemp = 500
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	melee_damage_lower = 30
 	melee_damage_upper = 30
@@ -75,7 +75,7 @@
 	var/swarmer_flags = NONE
 
 
-/mob/living/simple_animal/hostile/swarmer/Initialize()
+/mob/living/simple_animal/hostile/swarmer/Initialize(mapload)
 	. = ..()
 	remove_verb(src, /mob/living/verb/pulled)
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -418,7 +418,7 @@
  * Proc which is used for a swarmer to input a message on a pop-up box, then attempt to send that message to the other swarmers
  */
 /mob/living/simple_animal/hostile/swarmer/proc/contact_swarmers()
-	var/message = stripped_input(src, "Announce to other swarmers", "Swarmer contact")
+	var/message = tgui_input_text(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
 	if(message)
 		swarmer_chat(message)

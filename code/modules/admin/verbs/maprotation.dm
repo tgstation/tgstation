@@ -32,8 +32,8 @@
 			mapname += "\]"
 
 		maprotatechoices[mapname] = VM
-	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sortList(maprotatechoices)|"Custom")
-	if (!chosenmap)
+	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sort_list(maprotatechoices)|"Custom")
+	if (isnull(chosenmap))
 		return
 
 	if(chosenmap == "Custom")
@@ -80,9 +80,9 @@
 					continue
 				VM.shuttles[s] = shuttle
 
-		VM.map_path = "custom"
+		VM.map_path = CUSTOM_MAP_PATH
 		VM.map_file = "[map_file]"
-		VM.config_filename = "data/next_map.json"
+		VM.config_filename = PATH_TO_NEXT_MAP_JSON
 		var/json_value = list(
 			"version" = MAP_CURRENT_VERSION,
 			"map_name" = VM.map_name,
@@ -92,9 +92,9 @@
 		)
 
 		// If the file isn't removed text2file will just append.
-		if(fexists("data/next_map.json"))
-			fdel("data/next_map.json")
-		text2file(json_encode(json_value), "data/next_map.json")
+		if(fexists(PATH_TO_NEXT_MAP_JSON))
+			fdel(PATH_TO_NEXT_MAP_JSON)
+		text2file(json_encode(json_value), PATH_TO_NEXT_MAP_JSON)
 
 		if(SSmapping.changemap(VM))
 			message_admins("[key_name_admin(usr)] has changed the map to [VM.map_name]")

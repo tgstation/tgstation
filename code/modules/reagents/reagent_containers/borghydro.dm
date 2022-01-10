@@ -35,7 +35,7 @@ Borg Hypospray
 	var/list/reagent_names = list()
 
 
-/obj/item/reagent_containers/borghypo/Initialize()
+/obj/item/reagent_containers/borghypo/Initialize(mapload)
 	. = ..()
 
 	for(var/R in reagent_ids)
@@ -64,10 +64,10 @@ Borg Hypospray
 	RG.my_atom = src
 	reagent_list += RG
 
-	var/datum/reagents/R = reagent_list[reagent_list.len]
+	var/datum/reagents/R = reagent_list[length(reagent_list)]
 	R.add_reagent(reagent, 30, reagtemp = dispensed_temperature)
 
-	modes[reagent] = modes.len + 1
+	modes[reagent] = length(modes) + 1
 
 	if(initial(reagent.harmful))
 		reagent_names[C2NAMEREAGENT] = reagent
@@ -82,7 +82,7 @@ Borg Hypospray
 		reagent_names -= initial(reagent.name)
 	var/datum/reagents/RG
 	var/datum/reagents/TRG
-	for(var/i in 1 to reagent_ids.len)
+	for(var/i in 1 to length(reagent_ids))
 		TRG = reagent_list[i]
 		if (TRG.has_reagent(reagent))
 			RG = TRG
@@ -91,13 +91,13 @@ Borg Hypospray
 		reagent_list -= RG
 		RG.del_reagent(reagent)
 
-		modes[reagent] = modes.len - 1
+		modes[reagent] = length(modes) - 1
 
 /obj/item/reagent_containers/borghypo/proc/regenerate_reagents()
 	if(iscyborg(src.loc))
 		var/mob/living/silicon/robot/R = src.loc
 		if(R?.cell)
-			for(var/i in 1 to reagent_ids.len)
+			for(var/i in 1 to length(reagent_ids))
 				var/datum/reagents/RG = reagent_list[i]
 				if(RG.total_volume < RG.maximum_volume) //Don't recharge reagents and drain power if the storage is full.
 					R.cell.use(charge_cost) //Take power from borg...
@@ -123,9 +123,12 @@ Borg Hypospray
 	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
-	var/chosen_reagent = modes[reagent_names[input(user, "What reagent do you want to dispense?") as null|anything in sortList(reagent_names)]]
-	if(!chosen_reagent)
+	var/choice = tgui_input_list(user, "Reagent to dispense", "Medical Hypospray", sort_list(reagent_names))
+	if(isnull(choice))
 		return
+	if(isnull(reagent_names[choice]))
+		return
+	var/chosen_reagent = modes[reagent_names[choice]]
 	mode = chosen_reagent
 	playsound(loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/datum/reagent/R = GLOB.chemical_reagents_list[reagent_ids[mode]]
@@ -206,7 +209,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
-	dispensed_temperature = T0C + 1.35
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP //Water stays wet, ice stays ice
 
 	reagent_ids = list(/datum/reagent/consumable/applejuice, /datum/reagent/consumable/banana, /datum/reagent/consumable/coffee,
 	/datum/reagent/consumable/cream, /datum/reagent/consumable/dr_gibb, /datum/reagent/consumable/grenadine,
@@ -274,7 +277,7 @@ Borg Shaker
 	charge_cost = 20 //Lots of reagents all regenerating at once, so the charge cost is lower. They also regenerate faster.
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
-	dispensed_temperature = T0C + 1.35
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 	reagent_ids = list(/datum/reagent/toxin/fakebeer, /datum/reagent/consumable/ethanol/fernet)
 

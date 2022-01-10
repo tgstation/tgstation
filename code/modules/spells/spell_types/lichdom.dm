@@ -70,6 +70,7 @@
 
 		// you only get one phylactery.
 		M.mind.RemoveSpell(src)
+		ADD_TRAIT(M, TRAIT_NO_SOUL, LICH_TRAIT)
 
 
 /obj/item/phylactery
@@ -89,11 +90,21 @@
 
 /obj/item/phylactery/Initialize(mapload, datum/mind/newmind)
 	. = ..()
+	if(!mind)
+		stack_trace("A phylactery was created with no target mind")
+		return INITIALIZE_HINT_QDEL
 	mind = newmind
 	name = "phylactery of [mind.name]"
+	
+	if(iscarbon(mind.current))
+		var/mob/living/carbon/immortal_mob = mind.current
+		var/obj/item/organ/brain/B = immortal_mob.getorganslot(ORGAN_SLOT_BRAIN)
+		if(B) // this prevents MMIs being used
+			B.organ_flags &= ~ORGAN_VITAL
+			B.decoy_override = TRUE
 
 	active_phylacteries++
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/phylactery/Destroy(force=FALSE)
@@ -119,6 +130,11 @@
 
 	var/mob/living/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
+	
+	var/obj/item/organ/brain/B = lich.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B) // this prevents MMIs being used
+		B.organ_flags &= ~ORGAN_VITAL
+		B.decoy_override = TRUE
 
 	lich.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(lich), ITEM_SLOT_FEET)
 	lich.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(lich), ITEM_SLOT_ICLOTHING)
@@ -147,6 +163,4 @@
 			old_body.visible_message(span_warning("Suddenly [old_body.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!"))
 			body_turf.Beam(item_turf,icon_state="lichbeam", time = 10 + 10 * resurrections)
 		old_body.dust()
-
-
 	return "Respawn of [mind] successful."

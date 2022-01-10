@@ -38,7 +38,7 @@
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
 
 
-/obj/machinery/computer/slot_machine/Initialize()
+/obj/machinery/computer/slot_machine/Initialize(mapload)
 	. = ..()
 	jackpots = rand(1, 4) //false hope
 	plays = rand(75, 200)
@@ -46,7 +46,7 @@
 	INVOKE_ASYNC(src, .proc/toggle_reel_spin, TRUE)//The reels won't spin unless we activate them
 
 	var/list/reel = reels[1]
-	for(var/i = 0, i < reel.len, i++) //Populate the reels.
+	for(var/i in 1 to reel.len) //Populate the reels.
 		randomize_reels()
 
 	INVOKE_ASYNC(src, .proc/toggle_reel_spin, FALSE)
@@ -269,7 +269,7 @@
 		if(paymode == HOLOCHIP)
 			new /obj/item/holochip(loc,JACKPOT)
 		else
-			for(var/i = 0, i < 5, i++)
+			for(var/i in 1 to 5)
 				cointype = pick(subtypesof(/obj/item/coin))
 				var/obj/item/coin/C = new cointype(loc)
 				random_step(C, 2, 50)
@@ -293,7 +293,7 @@
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame
 
-	for(var/i = 1, i <= 3, i++)
+	for(var/i in 1 to 3)
 		var/inputtext = reels[1][i] + reels[2][i] + reels[3][i] + reels[4][i] + reels[5][i]
 		for(var/symbol in symbols)
 			var/j = 3 //The lowest value we have to check for.

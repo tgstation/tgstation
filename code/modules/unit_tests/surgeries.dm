@@ -77,6 +77,20 @@
 	INVOKE_ASYNC(surgery_step, /datum/surgery_step/proc/initiate, user, patient_one, BODY_ZONE_CHEST, scalpel, surgery_for_one)
 	TEST_ASSERT(surgery_for_one.step_in_progress, "Surgery on patient one was not initiated, despite having rod of asclepius")
 
+/// Ensures that the tend wounds surgery can be started
+/datum/unit_test/start_tend_wounds
+
+/datum/unit_test/start_tend_wounds/Run()
+	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human)
+
+	var/datum/surgery/surgery = new /datum/surgery/healing/brute/basic
+
+	if (!surgery.can_start(user, patient))
+		Fail("Can't start basic tend wounds!")
+
+	qdel(surgery)
+
 /datum/unit_test/tend_wounds/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human)
 	patient.take_overall_damage(100, 100)

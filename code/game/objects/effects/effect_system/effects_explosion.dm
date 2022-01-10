@@ -4,7 +4,7 @@
 	opacity = TRUE
 	anchored = TRUE
 
-/obj/effect/particle_effect/expl_particles/Initialize()
+/obj/effect/particle_effect/expl_particles/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -29,11 +29,12 @@
 	icon_state = "explosion"
 	opacity = TRUE
 	anchored = TRUE
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32
 
-/obj/effect/explosion/Initialize()
+/obj/effect/explosion/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 10)
 

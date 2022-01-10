@@ -17,7 +17,7 @@
 	var/list/allowed_projectile_typecache = list(/obj/projectile/beam)
 	var/rotation_angle = -1
 
-/obj/structure/reflector/Initialize()
+/obj/structure/reflector/Initialize(mapload)
 	. = ..()
 	icon_state = "reflector_base"
 	allowed_projectile_typecache = typecacheof(allowed_projectile_typecache)
@@ -93,7 +93,7 @@
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
@@ -101,7 +101,7 @@
 								span_notice("You begin repairing [src]..."),
 								span_hear("You hear welding."))
 			if(W.use_tool(src, user, 40, volume=40))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				user.visible_message(span_notice("[user] repairs [src]."), \
 									span_notice("You finish repairing [src]."))
 
@@ -156,11 +156,13 @@
 	if (!can_rotate || admin)
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
-	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
+	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
+	if(isnull(new_angle))
+		return FALSE
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
-	if(!isnull(new_angle))
-		set_angle(SIMPLIFY_DEGREES(new_angle))
+		return FALSE
+	new_angle = round(new_angle)
+	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)

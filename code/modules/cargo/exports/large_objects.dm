@@ -71,15 +71,10 @@
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field/generator)
 
-/datum/export/large/collector
-	cost = CARGO_CRATE_VALUE * 2
-	unit_name = "radiation collector"
-	export_types = list(/obj/machinery/power/rad_collector)
-
 /datum/export/large/tesla_coil
 	cost = CARGO_CRATE_VALUE * 2.25
 	unit_name = "tesla coil"
-	export_types = list(/obj/machinery/power/tesla_coil)
+	export_types = list(/obj/machinery/power/energy_accumulator/tesla_coil)
 
 /datum/export/large/supermatter
 	cost = CARGO_CRATE_VALUE * 16
@@ -89,7 +84,7 @@
 /datum/export/large/grounding_rod
 	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "grounding rod"
-	export_types = list(/obj/machinery/power/grounding_rod)
+	export_types = list(/obj/machinery/power/energy_accumulator/grounding_rod)
 
 /datum/export/large/iv
 	cost = CARGO_CRATE_VALUE * 0.25
@@ -114,7 +109,7 @@
 	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
 								/datum/gas/bz,
-								/datum/gas/stimulum,
+								/datum/gas/nitrium,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
 								/datum/gas/tritium,

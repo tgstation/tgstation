@@ -23,7 +23,7 @@
 	var/protected = FALSE
 	var/undertile_pressureplate = TRUE
 
-/obj/item/pressure_plate/Initialize()
+/obj/item/pressure_plate/Initialize(mapload)
 	. = ..()
 	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)

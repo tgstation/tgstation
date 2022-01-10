@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(meteors_catastrophic, list(/obj/effect/meteor/medium=5, /obj/ef
 
 GLOBAL_LIST_INIT(meteorsB, list(/obj/effect/meteor/meaty=5, /obj/effect/meteor/meaty/xeno=1)) //for meaty ore event
 
-GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
+GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust event
 
 
 ///////////////////////////////
@@ -24,7 +24,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 ///////////////////////////////
 
 /proc/spawn_meteors(number = 10, list/meteortypes)
-	for(var/i = 0; i < number; i++)
+	for(var/i in 1 to number)
 		spawn_meteor(meteortypes)
 
 /proc/spawn_meteor(list/meteortypes)
@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		max_i--
 		if(max_i<=0)
 			return
-	var/Me = pickweight(meteortypes)
+	var/Me = pick_weight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart, pickedgoal)
 	M.dest = pickedgoal
 
@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	..()
 	explosion(src, light_impact_range = 4, flash_range = 3, adminlog = FALSE)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
-	radiation_pulse(src, 500)
+	radiation_pulse(src, max_range = 3, threshold = RAD_MEDIUM_INSULATION, chance = 80)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -292,7 +292,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/meteorgibs = /obj/effect/gibspawner/generic
 	threat = 2
 
-/obj/effect/meteor/meaty/Initialize()
+/obj/effect/meteor/meaty/Initialize(mapload)
 	for(var/path in meteordrop)
 		if(path == /obj/item/food/meat/slab/human/mutant)
 			meteordrop -= path
@@ -314,7 +314,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		new /obj/effect/decal/cleanable/blood(T)
 
 /obj/effect/meteor/meaty/Bump(atom/A)
-	A.ex_act(hitpwr)
+	EX_ACT(A, hitpwr)
 	get_hit()
 
 //Meaty Ore Xeno edition
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 
-/obj/effect/meteor/meaty/xeno/Initialize()
+/obj/effect/meteor/meaty/xeno/Initialize(mapload)
 	meteordrop += subtypesof(/obj/item/organ/alien)
 	return ..()
 
@@ -374,7 +374,7 @@ GLOBAL_LIST_INIT(meteorsSPOOKY, list(/obj/effect/meteor/pumpkin))
 	meteordrop = list(/obj/item/clothing/head/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
 	threat = 100
 
-/obj/effect/meteor/pumpkin/Initialize()
+/obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
 	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
 //////////////////////////

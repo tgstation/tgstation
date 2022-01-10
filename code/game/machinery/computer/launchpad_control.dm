@@ -9,7 +9,7 @@
 	var/list/obj/machinery/launchpad/launchpads
 	var/maximum_pads = 4
 
-/obj/machinery/computer/launchpad/Initialize()
+/obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
 	. = ..()
 	AddComponent(/datum/component/usb_port, list(
@@ -46,9 +46,8 @@
 	. += create_ui_notice("Minimum Range: [-the_pad.range]", "orange", "minus")
 	. += create_ui_notice("Maximum Range: [the_pad.range]", "orange", "plus")
 
-/obj/item/circuit_component/bluespace_launchpad/Initialize()
-	. = ..()
-	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, FALSE, default = 1)
+/obj/item/circuit_component/bluespace_launchpad/populate_ports()
+	launchpad_id = add_input_port("Launchpad ID", PORT_TYPE_NUMBER, trigger = null, default = 1)
 	x_pos = add_input_port("X offset", PORT_TYPE_NUMBER)
 	y_pos = add_input_port("Y offset", PORT_TYPE_NUMBER)
 	send_trigger = add_input_port("Send", PORT_TYPE_SIGNAL)
@@ -59,21 +58,16 @@
 	why_fail = add_output_port("Fail reason", PORT_TYPE_STRING)
 	on_fail = add_output_port("Failed", PORT_TYPE_SIGNAL)
 
-/obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/bluespace_launchpad/register_usb_parent(atom/movable/shell)
 	. = ..()
-	if(istype(parent, /obj/machinery/computer/launchpad))
-		attached_console = parent
+	if(istype(shell, /obj/machinery/computer/launchpad))
+		attached_console = shell
 
-/obj/item/circuit_component/bluespace_launchpad/unregister_usb_parent(atom/movable/parent)
+/obj/item/circuit_component/bluespace_launchpad/unregister_usb_parent(atom/movable/shell)
 	attached_console = null
 	return ..()
 
 /obj/item/circuit_component/bluespace_launchpad/input_received(datum/port/input/port)
-	. = ..()
-
-	if(.)
-		return
-
 	if(!attached_console || length(attached_console.launchpads) == 0)
 		why_fail.set_output("No launchpads connected!")
 		on_fail.set_output(COMPONENT_SIGNAL)
@@ -106,11 +100,11 @@
 		return
 
 	if(COMPONENT_TRIGGERED_BY(send_trigger, port))
-		the_pad.doteleport(null, TRUE, alternate_log_name = parent.get_creator())
+		INVOKE_ASYNC(the_pad, /obj/machinery/launchpad.proc/doteleport, null, TRUE, parent.get_creator())
 		sent.set_output(COMPONENT_SIGNAL)
 
 	if(COMPONENT_TRIGGERED_BY(retrieve_trigger, port))
-		the_pad.doteleport(null, FALSE, alternate_log_name = parent.get_creator())
+		INVOKE_ASYNC(the_pad, /obj/machinery/launchpad.proc/doteleport, null, FALSE, parent.get_creator())
 		retrieved.set_output(COMPONENT_SIGNAL)
 
 /obj/machinery/computer/launchpad/attack_paw(mob/user, list/modifiers)
@@ -221,7 +215,7 @@
 				return
 			current_pad.display_name = new_name
 		if("remove")
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) != "Abort")
+			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
 				launchpads -= current_pad
 				selected_id = null
 			. = TRUE

@@ -249,9 +249,10 @@
 		RegisterSignal(new_holder, COMSIG_LIGHT_EATER_QUEUE, .proc/on_light_eater)
 		if(directional)
 			RegisterSignal(new_holder, COMSIG_ATOM_DIR_CHANGE, .proc/on_holder_dir_change)
+			set_direction(new_holder.dir)
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update()
 		add_dynamic_lumi()
+		make_luminosity_update()
 
 
 ///Used to determine the new valid current_holder from the parent's loc.

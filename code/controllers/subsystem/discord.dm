@@ -113,7 +113,7 @@ SUBSYSTEM_DEF(discord)
  * * lookup_id The discord id as a string
  */
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/discord_link_record/link  = find_discord_link_by_discord_id(lookup_id)
+	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id)
 	if(link)
 		return link.ckey
 

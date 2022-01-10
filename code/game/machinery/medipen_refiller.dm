@@ -16,7 +16,7 @@
 	/// var to prevent glitches in the animation
 	var/busy = FALSE
 
-/obj/machinery/medipen_refiller/Initialize()
+/obj/machinery/medipen_refiller/Initialize(mapload)
 	. = ..()
 	create_reagents(100, TRANSPARENT)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)

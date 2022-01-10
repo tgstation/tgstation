@@ -1,6 +1,7 @@
 GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwise, use a custom colour.
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
+///talking in OOC uses this
 /client/verb/ooc(msg as text)
 	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
@@ -28,8 +29,23 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = trim(copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN))
 	var/raw_msg = msg
+
+	var/list/filter_result = is_ooc_filtered(msg)
+	if (!CAN_BYPASS_FILTER(usr) && filter_result)
+		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		return
+
+	// Protect filter bypassers from themselves.
+	// Demote hard filter results to soft filter results if necessary due to the danger of accidentally speaking in OOC.
+	var/list/soft_filter_result = filter_result || is_soft_ooc_filtered(msg)
+
+	if (soft_filter_result)
+		if(tgui_alert(usr,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to say it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
+			return
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
+		log_admin_private("[key_name(usr)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term. Message: \"[msg]\"")
 
 	if(!msg)
 		return
@@ -58,7 +74,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/keyname = key
 	if(prefs.unlock_content)
 		if(prefs.toggles & MEMBER_PUBLIC)
-			keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
+			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/member_content.dmi', world, "blag")][keyname]</font>"
 	if(prefs.hearted)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
@@ -74,7 +90,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(holder)
 			if(!holder.fakekey || receiver.holder)
 				if(check_rights_for(src, R_ADMIN))
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
+					var/ooc_color = prefs.read_preference(/datum/preference/color/ooc_color)
+					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
 				else
 					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight)
 			else
@@ -123,7 +140,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		message_admins("[usr.key] has attempted to use the Set Player OOC Color verb!")
 		log_admin("[key_name(usr)] tried to set player ooc color without authorization.")
 		return
-	var/new_color = sanitize_ooccolor(newColor)
+	var/new_color = sanitize_color(newColor)
 	message_admins("[key_name_admin(usr)] has set the players' ooc color to [new_color].")
 	log_admin("[key_name_admin(usr)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
@@ -144,36 +161,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	message_admins("[key_name_admin(usr)] has reset the players' ooc color.")
 	log_admin("[key_name_admin(usr)] has reset player ooc color.")
 	GLOB.OOC_COLOR = null
-
-
-/client/verb/colorooc()
-	set name = "Set Your OOC Color"
-	set category = "Preferences"
-
-	if(!holder || !check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-
-	var/new_ooccolor = input(src, "Please select your OOC color.", "OOC color", prefs.ooccolor) as color|null
-	if(isnull(new_ooccolor))
-		return
-	new_ooccolor = sanitize_ooccolor(new_ooccolor)
-	prefs.ooccolor = new_ooccolor
-	prefs.save_preferences()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set OOC Color") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-/client/verb/resetcolorooc()
-	set name = "Reset Your OOC Color"
-	set desc = "Returns your OOC Color to default"
-	set category = "Preferences"
-
-	if(!holder || !check_rights_for(src, R_ADMIN))
-		if(!is_content_unlocked())
-			return
-
-		prefs.ooccolor = initial(prefs.ooccolor)
-		prefs.save_preferences()
 
 //Checks admin notice
 /client/verb/admin_notice()
@@ -264,7 +251,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			players[displayed_key] = displayed_key
 
 	// Check if the list is empty
-	if(!players.len)
+	if(!length(players))
 		// Express that there are no players we can ignore in chat
 		to_chat(src, "<span class='infoplain'>There are no other players you can ignore!</span>")
 
@@ -272,13 +259,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	// Sort the list
-	players = sortList(players)
+	players = sort_list(players)
 
 	// Request the player to ignore
-	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in players
+	var/selection = tgui_input_list(src, "Select a player", "Ignore", players)
 
 	// Stop running if we didn't receieve a valid selection
-	if(!selection || !(selection in players))
+	if(isnull(selection) || !(selection in players))
 		return
 
 	// Store the selected player
@@ -308,7 +295,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set desc = "Stop ignoring a player's messages on the OOC channel"
 
 	// Check if we've ignored any players
-	if(!prefs.ignoring.len)
+	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
 		to_chat(src, "<span class='infoplain'>You haven't ignored any players!</span>")
 
@@ -316,10 +303,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	// Request the player to unignore
-	var/selection = input("Please, select a player!", "Unignore", null, null) as null|anything in prefs.ignoring
+	var/selection = tgui_input_list(src, "Select a player", "Unignore", prefs.ignoring)
 
 	// Stop running if we didn't receive a selection
-	if(!selection)
+	if(isnull(selection))
 		return
 
 	// Check if the selected player is not on our ignore list

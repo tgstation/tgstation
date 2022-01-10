@@ -209,7 +209,7 @@
 	var/mob/living/crosser = arrived
 	if(crosser.movement_type & FLYING)
 		return
-	if(crosser.m_intent & MOVE_INTENT_WALK)
+	if(crosser.m_intent == MOVE_INTENT_WALK)
 		return
 	if(prob(60))
 		return

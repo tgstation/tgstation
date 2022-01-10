@@ -7,6 +7,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE //Redundant, there's already an autolathe version.
 
 /datum/design/c38_trac
 	name = "Speed Loader (.38 TRAC)"
@@ -38,29 +39,43 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/c38_rubber
+	name = "Speed Loader (.38 Rubber)"
+	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
+	id = "c38_rubber"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 20000)
+	build_path = /obj/item/ammo_box/c38/match/bouncy
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE //Redundant
 
 /datum/design/beanbag_slug/sec
 	id = "sec_beanbag_slug"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/shotgun_dart/sec
 	id = "sec_dart"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/incendiary_slug/sec
 	id = "sec_Islug"
 	build_type = PROTOLATHE | AWAY_LATHE
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/pin_testing
 	name = "Test-Range Firing Pin"
@@ -101,6 +116,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/tesla
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun Part Kit"
@@ -111,6 +127,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/nuclear
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/tele_shield
 	name = "Telescopic Riot Shield"
@@ -121,6 +138,7 @@
 	build_path = /obj/item/shield/riot/tele
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/beamrifle
 	name = "Beam Marksman Rifle Part Kit"
@@ -131,6 +149,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/beam_rifle
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/decloner
 	name = "Decloner Part Kit"
@@ -141,6 +160,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/decloner
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
@@ -161,6 +181,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/temperature
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
@@ -221,6 +242,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/xray
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/ioncarbine
 	name = "Ion Carbine Part Kit"
@@ -231,6 +253,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/ion
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/wormhole_projector
 	name = "Bluespace Wormhole Projector"
@@ -319,6 +342,7 @@
 	build_path = /obj/item/weaponcrafting/gunkit/ebow
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/cleric_mace
 	name = "Cleric Mace"
@@ -335,6 +359,6 @@
 	id = "stun_boomerang"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
-	build_path = /obj/item/melee/baton/boomerang
+	build_path = /obj/item/melee/baton/security/boomerang
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

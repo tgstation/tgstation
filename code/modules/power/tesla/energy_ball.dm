@@ -192,7 +192,7 @@
 			return
 	if(!iscarbon(A))
 		return
-	for(var/obj/machinery/power/grounding_rod/GR in orange(src, 2))
+	for(var/obj/machinery/power/energy_accumulator/grounding_rod/GR in orange(src, 2))
 		if(GR.anchored)
 			return
 	var/mob/living/carbon/C = A
@@ -253,8 +253,8 @@
 		else if(closest_type >= COIL)
 			continue //no need checking these other things
 
-		else if(istype(A, /obj/machinery/power/tesla_coil))
-			var/obj/machinery/power/tesla_coil/C = A
+		else if(istype(A, /obj/machinery/power/energy_accumulator/tesla_coil))
+			var/obj/machinery/power/energy_accumulator/tesla_coil/C = A
 			if(!(C.obj_flags & BEING_SHOCKED))
 				closest_type = COIL
 				closest_atom = C
@@ -262,7 +262,7 @@
 		else if(closest_type >= ROD)
 			continue
 
-		else if(istype(A, /obj/machinery/power/grounding_rod))
+		else if(istype(A, /obj/machinery/power/energy_accumulator/grounding_rod))
 			closest_type = ROD
 			closest_atom = A
 

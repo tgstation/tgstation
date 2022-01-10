@@ -31,7 +31,7 @@
 */
 /datum/component/sound_player/proc/play_sound()
 	SIGNAL_HANDLER
-	playsound(parent, pickweight(sounds), volume, TRUE)
+	playsound(parent, pick_weight(sounds), volume, TRUE)
 	switch(amount_left)
 		if(-1)
 			return

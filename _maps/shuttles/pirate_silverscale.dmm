@@ -46,7 +46,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "de" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -70,7 +70,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "em" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/shuttle/engine/heater{
 	dir = 4
 	},
@@ -113,7 +113,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "hu" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "hW" = (
@@ -131,7 +131,7 @@
 /turf/template_noop,
 /area/template_noop)
 "jm" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/docking_port/stationary{
@@ -155,7 +155,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "jo" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
@@ -210,7 +210,7 @@
 /area/shuttle/pirate)
 "lu" = (
 /obj/item/storage/secure/safe/directional/north,
-/obj/effect/mob_spawn/human/pirate/silverscale/captain{
+/obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/captain{
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,
@@ -250,7 +250,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/pirate)
 "nY" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "pirateportexternal"
 	},
 /turf/open/floor/pod/dark,
@@ -344,7 +344,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "xs" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "xO" = (
@@ -358,14 +358,14 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_y = 12
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 8;
 	pixel_y = 7
 	},
-/obj/item/melee/transforming/energy/sword/saber/purple{
+/obj/item/melee/energy/sword/saber/purple{
 	pixel_x = 17
 	},
 /turf/open/floor/pod/dark,
@@ -385,7 +385,7 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "zQ" = (
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	id_tag = "piratestarboardexternal"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -408,7 +408,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "AE" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/structure/shuttle/engine/heater{
 	dir = 8
 	},
@@ -507,7 +507,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "HD" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "silverbridge"
 	},
@@ -661,7 +661,9 @@
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "QI" = (
-/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "QO" = (
@@ -674,7 +676,7 @@
 /area/shuttle/pirate)
 "QU" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 4
@@ -691,7 +693,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 9
 	},
-/obj/effect/mob_spawn/human/pirate/silverscale/gunner{
+/obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
@@ -852,7 +854,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "YL" = (
-/obj/effect/mob_spawn/human/pirate/silverscale{
+/obj/effect/mob_spawn/ghost_role/human/pirate/silverscale{
 	dir = 8
 	},
 /turf/open/floor/carpet/royalblack,

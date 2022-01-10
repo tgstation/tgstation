@@ -53,7 +53,7 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/pirate/skeleton/gunner,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "am" = (
@@ -66,7 +66,7 @@
 	dir = 5
 	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -154,7 +154,7 @@
 	dir = 5
 	},
 /obj/structure/closet/cabinet,
-/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/dutchmen,
 /obj/item/stack/sheet/mineral/gold{
 	amount = 3;
 	pixel_x = -2;
@@ -304,7 +304,7 @@
 "gP" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/mob_spawn/human/pirate/skeleton/captain,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "gQ" = (
@@ -386,7 +386,7 @@
 /turf/open/space/basic,
 /area/shuttle/pirate/flying_dutchman)
 "pG" = (
-/obj/structure/window/shuttle/survival_pod,
+/obj/structure/window/reinforced/shuttle/survival_pod,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "rd" = (
@@ -591,29 +591,11 @@
 	icon_state = "minibar";
 	name = "skeletal minibar"
 	},
-/obj/item/coin/silver{
-	name = "doubloon"
+/obj/item/reagent_containers/food/condiment/milk{
+	pixel_x = -5
 	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/silver{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
-	},
-/obj/item/coin/gold{
-	name = "doubloon"
+/obj/item/reagent_containers/food/condiment/milk{
+	pixel_x = 5
 	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
@@ -961,7 +943,7 @@
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ys" = (
-/obj/effect/mob_spawn/human/pirate/skeleton,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "ZL" = (

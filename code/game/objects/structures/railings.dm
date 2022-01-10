@@ -8,7 +8,7 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	/// armor more or less consistent with grille. max_integrity about one time and a half that of a grille.
-	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 70, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 0, ACID = 0)
 	max_integrity = 75
 
 	var/climbable = TRUE
@@ -20,7 +20,7 @@
 	density = FALSE
 	climbable = FALSE
 
-/obj/structure/railing/Initialize()
+/obj/structure/railing/Initialize(mapload)
 	. = ..()
 	ini_dir = dir
 	if(climbable)
@@ -39,13 +39,13 @@
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
 			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume=50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				to_chat(user, span_notice("You repair [src]."))
 		else
 			to_chat(user, span_warning("[src] is already in good condition!"))
@@ -81,6 +81,11 @@
 	if(border_dir & dir)
 		return . || mover.throwing || mover.movement_type & (FLYING | FLOATING)
 	return TRUE
+
+/obj/structure/railing/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
+	if (to_dir & dir)
+		return FALSE
+	return ..()
 
 /obj/structure/railing/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

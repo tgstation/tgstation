@@ -24,7 +24,7 @@
 	opacity = FALSE
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
 	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
 	var/load_random_books = FALSE
@@ -113,7 +113,7 @@
 				if(!user.is_literate())
 					to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 					return
-				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
+				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if(!newname)
@@ -121,7 +121,7 @@
 				else
 					name = "bookcase ([sanitize(newname)])"
 			else if(I.tool_behaviour == TOOL_CROWBAR)
-				if(contents.len)
+				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))
 				else
 					I.play_tool_sound(src, 100)
@@ -142,17 +142,19 @@
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
 		load_random_books = FALSE
-	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
-		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
-				return
-			if(ishuman(user))
-				if(!user.get_active_held_item())
-					user.put_in_hands(choice)
-			else
-				choice.forceMove(drop_location())
-			update_appearance()
+	if(!length(contents))
+		return
+	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
+	if(isnull(choice))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
+		return
+	if(ishuman(user))
+		if(!user.get_active_held_item())
+			user.put_in_hands(choice)
+	else
+		choice.forceMove(drop_location())
+	update_appearance()
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
@@ -169,7 +171,7 @@
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
-	var/amount = contents.len
+	var/amount = length(contents)
 	if(load_random_books)
 		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
@@ -179,12 +181,11 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/Initialize()
+/obj/structure/bookcase/manuals/engineering/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
 	new /obj/item/book/manual/wiki/engineering_guide(src)
-	new /obj/item/book/manual/wiki/engineering_singulo_tesla(src)
 	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_appearance()
 
@@ -192,7 +193,7 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/Initialize()
+/obj/structure/bookcase/manuals/research_and_development/Initialize(mapload)
 	. = ..()
 	new /obj/item/book/manual/wiki/research_and_development(src)
 	update_appearance()
@@ -214,7 +215,7 @@
 	attack_verb_simple = list("bash", "whack", "educate")
 	resistance_flags = FLAMMABLE
 	drop_sound = 'sound/items/handling/book_drop.ogg'
-	pickup_sound =  'sound/items/handling/book_pickup.ogg'
+	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 	var/dat //Actual page content
 	var/due_date = 0 //Game time in 1/10th seconds
 	var/author //Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -250,12 +251,14 @@
 		if(!literate)
 			to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 			return
-		var/choice = tgui_input_list(usr, "What would you like to change?",,list("Title", "Contents", "Author", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
+				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length_char(newtitle) > 30)
@@ -268,7 +271,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",8192)
+				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = 8192, multiline = TRUE)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
@@ -277,7 +280,7 @@
 				else
 					dat += content
 			if("Author")
-				var/newauthor = stripped_input(user, "Write the author's name:")
+				var/newauthor = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!newauthor)
@@ -318,7 +321,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, span_notice("[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
-	else if((istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
+	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [title]..."))
 		if(do_after(user, 30, target = src))
 			to_chat(user, span_notice("You carve out the pages from [title]! You didn't want to read it anyway."))

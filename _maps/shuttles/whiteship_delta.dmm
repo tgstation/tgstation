@@ -15,7 +15,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/crew)
 "ad" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/docking_port/mobile{
 	callTime = 250;
@@ -36,7 +36,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/bar)
 "af" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -84,7 +84,7 @@
 /obj/item/bedsheet/centcom,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -96,7 +96,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /turf/open/floor/wood,
@@ -120,30 +120,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
-"aq" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/table,
-/obj/item/toy/cards/deck{
-	pixel_x = 4;
-	pixel_y = 12
-	},
-/obj/item/toy/cards/cardhand{
-	currenthand = list("2 of Diamonds","3 of Clubs");
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
 "ar" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/chair/stool/bar/directional/east,
+/obj/structure/chair/stool/bar/directional/west,
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -164,7 +143,7 @@
 "at" = (
 /obj/machinery/light/small/built/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -296,7 +275,7 @@
 /turf/open/floor/wood,
 /area/shuttle/abandoned/crew)
 "aG" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -331,7 +310,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	name = "E.V.A Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -400,6 +379,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/machinery/firealarm/directional/south,
@@ -415,7 +395,7 @@
 /area/shuttle/abandoned/crew)
 "aU" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -440,7 +420,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	name = "E.V.A Access"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -608,7 +588,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -706,7 +686,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -820,7 +799,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "bI" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -850,30 +829,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
 /obj/item/storage/fancy/donut_box,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/shuttle/abandoned/bar)
-"bL" = (
-/obj/machinery/airalarm/all_access{
-	dir = 1;
-	pixel_y = -24
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/secure_closet/freezer{
-	locked = 0;
-	name = "fridge"
-	},
-/obj/item/food/sausage,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/food/sandwich,
-/obj/structure/spider/stickyweb,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -959,7 +914,7 @@
 /area/shuttle/abandoned/bridge)
 "bT" = (
 /obj/machinery/door/firedoor,
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_bridge"
 	},
@@ -969,7 +924,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/light/small/built/directional/east,
@@ -1087,7 +1042,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/west,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -1154,7 +1109,7 @@
 /area/shuttle/abandoned/engine)
 "cl" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1169,7 +1124,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1310,7 +1265,7 @@
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/cargo)
 "cz" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
@@ -1371,69 +1326,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
-"cH" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/box/white/corners{
-	dir = 1
-	},
-/obj/structure/closet/crate,
-/obj/item/grenade/chem_grenade/metalfoam,
-/obj/item/relic,
-/obj/item/t_scanner,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/cargo)
 "cI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet,
 /obj/item/storage/toolbox/emergency,
 /obj/structure/spider/stickyweb,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/cargo)
-"cJ" = (
-/obj/item/storage/toolbox/emergency,
-/obj/item/storage/toolbox/emergency,
-/obj/item/flashlight/flare{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/flashlight/flare{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/crowbar,
-/obj/item/wrench,
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/item/extinguisher,
-/obj/item/extinguisher,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/airalarm/all_access{
-	pixel_y = 24
-	},
-/obj/effect/turf_decal/box/white/corners{
-	dir = 4
-	},
-/obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1474,7 +1371,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/spider/stickyweb,
@@ -1568,6 +1465,7 @@
 	},
 /obj/item/radio/off,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -1603,25 +1501,6 @@
 "cZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/cargo)
-"da" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/turf_decal/box/white/corners,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/three,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1783,7 +1662,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	name = "E.V.A Access"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1799,7 +1678,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/door/airlock/external/glass{
+/obj/machinery/door/airlock/external/glass/ruin{
 	name = "E.V.A Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1939,7 +1818,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/built/directional/east,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/spider/stickyweb,
@@ -1970,7 +1849,7 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/medbay)
 "dI" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -1978,7 +1857,7 @@
 "dJ" = (
 /obj/machinery/light/small/built/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/cargo)
@@ -2045,7 +1924,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,
@@ -2063,7 +1941,7 @@
 /obj/machinery/iv_drip,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/bot,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/spider/stickyweb,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
@@ -2141,24 +2019,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
-"dX" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/cargo)
 "dY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/turf_decal/box/white/corners,
@@ -2198,7 +2058,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "eb" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -2216,22 +2076,162 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/crew)
+"so" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 1
+	},
+/obj/structure/closet/crate,
+/obj/item/grenade/chem_grenade/metalfoam,
+/obj/item/relic,
+/obj/item/t_scanner,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
 "vm" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned/medbay)
+"xO" = (
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
+/obj/item/flashlight/flare{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/flashlight/flare{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/crowbar,
+/obj/item/wrench,
+/obj/effect/spawner/random/maintenance,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/box/white/corners{
+	dir = 4
+	},
+/obj/structure/closet/crate/internals,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
+"yR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
 "DZ" = (
 /obj/effect/turf_decal/delivery/white,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/medbay)
+"FO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table,
+/obj/item/toy/cards/deck{
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/obj/item/toy/cards/cardhand{
+	init_cards = list("2 of Diamonds","3 of Clubs");
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
+"La" = (
+/obj/machinery/airalarm/all_access{
+	pixel_y = -24
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/secure_closet/freezer{
+	locked = 0;
+	name = "fridge"
+	},
+/obj/item/food/sausage,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/food/sandwich,
+/obj/structure/spider/stickyweb,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/shuttle/abandoned/bar)
 "SY" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "whiteship_windows"
 	},
 /turf/open/floor/plating,
 /area/shuttle/abandoned/medbay)
+"XP" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box/white/corners,
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
 
 (1,1,1) = {"
 aa
@@ -2596,7 +2596,7 @@ cy
 "}
 (20,1,1) = {"
 af
-aq
+FO
 aH
 bb
 bu
@@ -2606,7 +2606,7 @@ aa
 aa
 aa
 cz
-cH
+so
 cY
 ds
 dL
@@ -2629,7 +2629,7 @@ cI
 cZ
 du
 cZ
-dX
+yR
 cy
 "}
 (22,1,1) = {"
@@ -2638,14 +2638,14 @@ as
 aK
 be
 be
-bL
+La
 ae
 aa
 aa
 aa
 cy
-cJ
-da
+xO
+XP
 dC
 dK
 dY

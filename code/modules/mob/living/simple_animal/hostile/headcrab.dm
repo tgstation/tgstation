@@ -24,7 +24,7 @@
 	var/datum/mind/origin
 	var/egg_lain = 0
 
-/mob/living/simple_animal/hostile/headcrab/Initialize()
+/mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -84,7 +84,7 @@
 			changeling_datum.add_new_profile(owner)
 
 		var/datum/action/changeling/humanform/hf = new
-		changeling_datum.purchasedpowers += hf
+		changeling_datum.purchased_powers += hf
 		changeling_datum.regain_powers()
 	owner.gib()
 

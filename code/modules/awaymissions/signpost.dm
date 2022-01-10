@@ -7,7 +7,7 @@
 	var/question = "Travel back?"
 	var/list/zlevels
 
-/obj/structure/signpost/Initialize()
+/obj/structure/signpost/Initialize(mapload)
 	. = ..()
 	set_light(2)
 	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -63,7 +63,7 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/Initialize()
+/obj/structure/signpost/exit/Initialize(mapload)
 	. = ..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)

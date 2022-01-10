@@ -48,21 +48,23 @@
 	. = ..()
 
 /// Signal to see if the mutation allows us to attack a target
-/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, params)
+/datum/mutation/human/honorbound/proc/attack_honor(mob/living/carbon/human/honorbound, atom/clickingon, list/modifiers)
 	SIGNAL_HANDLER
 
-	var/obj/item/weapon = honorbound.get_active_held_item()
-	var/list/modifiers = params2list(params)
-
+	if(modifiers[ALT_CLICK] || modifiers[SHIFT_CLICK] || modifiers[CTRL_CLICK] || modifiers[MIDDLE_CLICK])
+		return
 	if(!isliving(clickingon))
 		return
-	if(!honorbound.DirectAccess(clickingon) && !isgun(weapon))
-		return
-	if(weapon.item_flags & NOBLUDGEON)
-		return
-	if(!honorbound.combat_mode && ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK)))
-		return
+
 	var/mob/living/clickedmob = clickingon
+	var/obj/item/weapon = honorbound.get_active_held_item()
+
+	if(!honorbound.DirectAccess(clickedmob) && !isgun(weapon))
+		return
+	if(weapon?.item_flags & NOBLUDGEON)
+		return
+	if(!honorbound.combat_mode && (HAS_TRAIT(clickedmob, TRAIT_ALLOWED_HONORBOUND_ATTACK) || ((!weapon || !weapon.force) && !LAZYACCESS(modifiers, RIGHT_CLICK))))
+		return
 	if(!is_honorable(honorbound, clickedmob))
 		return (COMSIG_MOB_CANCEL_CLICKON)
 
@@ -198,15 +200,6 @@
 			to_chat(user, span_userdanger("[GLOB.deity] is angered by your use of [school] magic!"))
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/holy_smite)//permanently lose your moodlet after this
-
-/datum/mutation/human/honorbound/proc/lightningbolt(mob/living/user)
-	var/turf/lightning_source = get_step(get_step(user, NORTH), NORTH)
-	lightning_source.Beam(user, icon_state="lightning[rand(1,12)]", time = 5)
-	user.adjustFireLoss(LIGHTNING_BOLT_DAMAGE)
-	playsound(get_turf(user), 'sound/magic/lightningbolt.ogg', 50, TRUE)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_target = user
-		human_target.electrocution_animation(LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH)
 
 /obj/effect/proc_holder/spell/pointed/declare_evil
 	name = "Declare Evil"

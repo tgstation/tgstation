@@ -6,6 +6,7 @@
 	extra_price = PAYCHECK_HARD
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
+	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
 /obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
@@ -183,8 +184,8 @@
 	vend_reply = "Thank you for using the SciDrobe!"
 	products = list(/obj/item/clothing/accessory/pocketprotector = 3,
 					/obj/item/storage/backpack/science = 3,
-					/obj/item/storage/backpack/satchel/tox = 3,
-					/obj/item/storage/backpack/duffelbag/toxins = 3,
+					/obj/item/storage/backpack/satchel/science = 3,
+					/obj/item/storage/backpack/duffelbag/science = 3,
 					/obj/item/clothing/head/beret/science = 3,
 					/obj/item/clothing/head/beret/science/fancy = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
@@ -273,7 +274,7 @@
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
 					/obj/item/clothing/neck/petcollar = 1,
 					/obj/item/storage/belt/bandolier = 1,
-					/obj/item/storage/pill_bottle/dice/hazard = 1,
+					/obj/item/storage/dice/hazard = 1,
 					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -356,8 +357,8 @@
 					/obj/item/clothing/under/suit/black = 1,
 					/obj/item/clothing/under/suit/black/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
-					/obj/item/clothing/under/rank/civilian/lawyer/female = 1,
-					/obj/item/clothing/under/rank/civilian/lawyer/female/skirt = 1,
+					/obj/item/clothing/under/rank/civilian/lawyer/beige = 1,
+					/obj/item/clothing/under/rank/civilian/lawyer/beige/skirt = 1,
 					/obj/item/clothing/under/suit/black_really = 1,
 					/obj/item/clothing/under/suit/black_really/skirt = 1,
 					/obj/item/clothing/under/rank/civilian/lawyer/blue = 1,
@@ -437,14 +438,16 @@
 	icon_state = "genedrobe"
 	product_ads = "Perfect for the mad scientist in you!"
 	vend_reply = "Thank you for using the GeneDrobe!"
-	products = list(/obj/item/clothing/under/rank/rnd/geneticist = 2,
-					/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
-					/obj/item/clothing/shoes/sneakers/white = 2,
-					/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
-					/obj/item/clothing/suit/hooded/wintercoat/science/genetics = 2,
-					/obj/item/storage/backpack/genetics = 2,
-					/obj/item/storage/backpack/satchel/gen = 2,
-					/obj/item/storage/backpack/duffelbag/genetics = 2)
+	products = list(
+		/obj/item/clothing/under/rank/rnd/geneticist = 2,
+		/obj/item/clothing/under/rank/rnd/geneticist/skirt = 2,
+		/obj/item/clothing/shoes/sneakers/white = 2,
+		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/science/genetics = 2,
+		/obj/item/storage/backpack/genetics = 2,
+		/obj/item/storage/backpack/satchel/gen = 2,
+		/obj/item/storage/backpack/duffelbag/genetics = 2
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -491,6 +494,15 @@
 					/obj/item/clothing/head/fedora = 2,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/gloves/color/latex = 2,
+					/obj/item/clothing/under/rank/security/detective/disco = 1,
+					/obj/item/clothing/suit/det_suit/disco = 1,
+					/obj/item/clothing/shoes/discoshoes = 1,
+					/obj/item/clothing/neck/tie/disco = 1,
+					/obj/item/clothing/under/rank/security/detective/kim = 1,
+					/obj/item/clothing/suit/det_suit/kim = 1,
+					/obj/item/clothing/shoes/kim = 1,
+					/obj/item/clothing/gloves/kim = 1,
+					/obj/item/clothing/glasses/regular/kim = 1,
 					/obj/item/reagent_containers/food/drinks/flask/det = 2,
 					/obj/item/storage/fancy/cigarettes = 5)
 	premium = list(/obj/item/clothing/head/flatcap = 1)

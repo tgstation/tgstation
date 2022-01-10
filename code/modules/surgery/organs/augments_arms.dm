@@ -18,7 +18,7 @@
 	/// Sound played when retracting
 	var/retract_sound = 'sound/mecha/mechmove03.ogg'
 
-/obj/item/organ/cyberimp/arm/Initialize()
+/obj/item/organ/cyberimp/arm/Initialize(mapload)
 	. = ..()
 	if(ispath(active_item))
 		active_item = new active_item(src)
@@ -234,17 +234,17 @@
 /obj/item/organ/cyberimp/arm/toolset/emag_act(mob/user)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
-		if(istype(/obj/item/kitchen/knife/combat/cyborg, potential_knife))
+		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
 	to_chat(user, span_notice("You unlock [src]'s integrated knife!"))
-	items_list += WEAKREF(new /obj/item/kitchen/knife/combat/cyborg(src))
+	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/esword
 	name = "arm-mounted energy blade"
 	desc = "An illegal and highly dangerous cybernetic implant that can project a deadly blade of concentrated energy."
-	items_to_create = list(/obj/item/melee/transforming/energy/blade/hardlight)
+	items_to_create = list(/obj/item/melee/energy/blade/hardlight)
 
 /obj/item/organ/cyberimp/arm/medibeam
 	name = "integrated medical beamgun"
@@ -257,7 +257,7 @@
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
 	items_to_create = list(/obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/flash/Initialize()
+/obj/item/organ/cyberimp/arm/flash/Initialize(mapload)
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
@@ -283,9 +283,9 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	items_to_create = list(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
+	items_to_create = list(/obj/item/melee/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
-/obj/item/organ/cyberimp/arm/combat/Initialize()
+/obj/item/organ/cyberimp/arm/combat/Initialize(mapload)
 	. = ..()
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()

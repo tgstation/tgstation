@@ -29,6 +29,7 @@
 /area/shuttle/caravan/freighter1)
 "bg" = (
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -130,12 +131,12 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer{
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -170,7 +171,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark{
@@ -331,7 +332,7 @@
 /area/shuttle/caravan/freighter1)
 "qM" = (
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -356,6 +357,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -366,7 +368,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravantrade1_bolt"
 	},
 /turf/open/floor/plating,
@@ -398,7 +400,7 @@
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -706,6 +708,7 @@
 "Ib" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -762,7 +765,7 @@
 /turf/open/floor/iron/airless,
 /area/shuttle/caravan/freighter1)
 "LM" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/door/poddoor{
 	id = "caravantrade1_bridge"
 	},
@@ -881,7 +884,7 @@
 /obj/item/bedsheet,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -914,7 +917,7 @@
 /area/shuttle/caravan/freighter1)
 "Qs" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -988,7 +991,7 @@
 /area/shuttle/caravan/freighter1)
 "UW" = (
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -999,7 +1002,7 @@
 "VD" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	id_tag = "caravantrade1_bolt"
 	},
 /obj/docking_port/mobile{
@@ -1052,12 +1055,12 @@
 /area/shuttle/caravan/freighter1)
 "WU" = (
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,

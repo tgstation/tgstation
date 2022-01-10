@@ -30,7 +30,7 @@
 
 	var/list/vines = list()
 
-/obj/structure/alien/resin/flower_bud/Initialize()
+/obj/structure/alien/resin/flower_bud/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
 	var/list/anchors = list()
@@ -121,7 +121,7 @@
 	deathsound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 //note that venus human traps do not take cold damage, only heat damage- this is because space vines can cause hull breaches
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
@@ -161,7 +161,7 @@
 			return
 	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
 		return
-	for(var/turf/T in getline(src,target))
+	for(var/turf/T in get_line(src,target))
 		if (T.density)
 			return
 		for(var/obj/O in T)

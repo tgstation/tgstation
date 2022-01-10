@@ -47,7 +47,8 @@
 				return
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
-			P.setPipingLayer(piping_layer)
+			P.p_init_dir = ALL_CARDINALS
+			P.set_piping_layer(piping_layer)
 			P.add_fingerprint(usr)
 			wait = world.time + 10
 	if(href_list["makemeter"])

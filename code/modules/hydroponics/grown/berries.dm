@@ -63,7 +63,7 @@
 	product = /obj/item/food/grown/berries/death
 	lifespan = 30
 	potency = 50
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/toxin/coniine = 0.08, /datum/reagent/toxin/staminatoxin = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 30
 
@@ -88,7 +88,7 @@
 	product = /obj/item/food/grown/berries/glow
 	lifespan = 30
 	endurance = 25
-	mutatelist = list()
+	mutatelist = null
 	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
@@ -149,6 +149,7 @@
 	plantname = "Green-Grape Vine"
 	product = /obj/item/food/grown/grapes/green
 	reagents_add = list( /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/medicine/c2/aiuri = 0.2)
+	mutatelist = null
 
 /obj/item/food/grown/grapes/green
 	seed = /obj/item/seeds/grape/green
@@ -157,3 +158,33 @@
 	bite_consumption_mod = 3
 	tastes = list("green grape" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/cognac
+
+// Toechtauese Berries
+/obj/item/seeds/toechtauese
+	name = "pack of töchtaüse berry seeds"
+	desc = "These seeds grow into töchtaüse bushes."
+	icon_state = "seed-toechtauese"
+	species = "toechtauese"
+	plantname = "Töchtaüse Bush"
+	product = /obj/item/food/grown/toechtauese
+	lifespan = 20
+	maturation = 5
+	production = 5
+	yield = 2
+	instability = 30
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "toechtauese-grow"
+	icon_dead = "toechtauese-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list(/datum/reagent/consumable/toechtauese_juice = 0.1, /datum/reagent/toxin/itching_powder = 0.04)
+
+/obj/item/food/grown/toechtauese
+	seed = /obj/item/seeds/toechtauese
+	name = "töchtaüse berries"
+	desc = "A branch with töchtaüse berries on it. They're a favourite on the Mothic Fleet, but not in this form."
+	icon_state = "toechtauese_branch"
+	foodtypes = FRUIT
+	grind_results = list(/datum/reagent/consumable/toechtauese_juice = 0, /datum/reagent/toxin/itching_powder = 0)
+	juice_results = list(/datum/reagent/consumable/toechtauese_juice = 0, /datum/reagent/toxin/itching_powder = 0)
+	tastes = list("fiery itchy pain" = 1)
+	distill_reagent = /datum/reagent/toxin/itching_powder

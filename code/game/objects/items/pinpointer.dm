@@ -21,7 +21,7 @@
 	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
 	var/icon_suffix = "" // for special pinpointer icons
 
-/obj/item/pinpointer/Initialize()
+/obj/item/pinpointer/Initialize(mapload)
 	. = ..()
 	GLOB.pinpointer_list += src
 
@@ -139,15 +139,17 @@
 		names[crewmember_name] = H
 		name_counts[crewmember_name] = 1
 
-	if(!names.len)
+	if(!length(names))
 		user.visible_message(span_notice("[user]'s pinpointer fails to detect a signal."), span_notice("Your pinpointer fails to detect a signal."))
 		return
-
-	var/A = input(user, "Person to track", "Pinpoint") in sortList(names)
-	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	var/pinpoint_target = tgui_input_list(user, "Person to track", "Pinpoint", sort_list(names))
+	if(isnull(pinpoint_target))
 		return
-
-	target = names[A]
+	if(isnull(names[pinpoint_target]))
+		return
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+		return
+	target = names[pinpoint_target]
 	toggle_on()
 	user.visible_message(span_notice("[user] activates [user.p_their()] pinpointer."), span_notice("You activate your pinpointer."))
 

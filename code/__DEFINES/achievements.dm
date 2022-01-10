@@ -35,6 +35,8 @@
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
+#define MEDAL_CULT_SHUTTLE_OMFG "WHAT JUST HAPPENED"
+#define MEDAL_CLICKBAIT "Clickbait"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"

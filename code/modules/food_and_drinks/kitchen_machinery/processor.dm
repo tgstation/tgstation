@@ -23,7 +23,7 @@
 	 */
 	var/static/list/processor_inputs
 
-/obj/machinery/processor/Initialize()
+/obj/machinery/processor/Initialize(mapload)
 	. = ..()
 	if(processor_inputs)
 		return
@@ -174,7 +174,7 @@
 /obj/machinery/processor/dump_inventory_contents()
 	. = ..()
 	if(!LAZYLEN(processor_contents))
-		processor_contents.Cut()
+		processor_contents = null
 
 /obj/machinery/processor/container_resist_act(mob/living/user)
 	user.forceMove(drop_location())

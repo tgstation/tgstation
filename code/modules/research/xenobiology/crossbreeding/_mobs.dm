@@ -17,10 +17,10 @@ Slimecrossing Mobs
 	convert_damage_type = CLONE
 	var/remove_on_restore = FALSE
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/Restore(mob/living/M)
+/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/restore_form(mob/living/shape)
 	if(remove_on_restore)
-		if(M.mind)
-			M.mind.RemoveSpell(src)
+		if(shape.mind)
+			shape.mind.RemoveSpell(src)
 	return ..()
 
 //Transformed slime - Burning Black

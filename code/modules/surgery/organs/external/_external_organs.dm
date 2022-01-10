@@ -9,14 +9,19 @@
 
 	///Unremovable is until the features are completely finished
 	organ_flags = ORGAN_UNREMOVABLE | ORGAN_EDIBLE
+	visual = TRUE
 
 	///Sometimes we need multiple layers, for like the back, middle and front of the person
 	var/layers
 	///Convert the bitflag define into the actual layer define
 	var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND)
 
-	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_firemoth_mothwings'. 'mothwings' would then be preference
-	var/preference = ""
+	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_firemoth_mothwings'. 'mothwings' would then be feature_key
+	var/feature_key = ""
+
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+
 	///Sprite datum we use to draw on the bodypart
 	var/datum/sprite_accessory/sprite_datum
 	///Key of the icon states of all the sprite_datums for easy caching
@@ -34,11 +39,8 @@
 */
 /obj/item/organ/external/Initialize(mapload, mob_sprite)
 	. = ..()
-
 	if(mob_sprite)
 		set_sprite(mob_sprite)
-
-	cache_key = generate_icon_cache()
 
 /obj/item/organ/external/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	var/obj/item/bodypart/limb = reciever.get_bodypart(zone)
@@ -49,7 +51,7 @@
 	limb.external_organs.Add(src)
 	ownerlimb = limb
 
-	. =  ..()
+	. = ..()
 
 	limb.contents.Add(src)
 
@@ -75,10 +77,9 @@
 /obj/item/organ/external/proc/get_overlays(list/overlay_list, image_dir, image_layer, body_type, image_color)
 	if(!sprite_datum)
 		return
-	if(HAS_TRAIT(owner, TRAIT_INVISIBLE_MAN))
-		return
+
 	var/gender = (body_type == FEMALE) ? "f" : "m"
-	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + preference + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
+	var/finished_icon_state = (sprite_datum.gender_specific ? gender : "m") + "_" + feature_key + "_" + sprite_datum.icon_state + mutant_bodyparts_layertext(image_layer)
 	var/mutable_appearance/appearance = mutable_appearance(sprite_datum.icon, finished_icon_state, layer = -image_layer)
 	appearance.dir = image_dir
 
@@ -96,7 +97,7 @@
 
 ///Generate a unique key based on our sprites. So that if we've aleady drawn these sprites, they can be found in the cache and wont have to be drawn again (blessing and curse)
 /obj/item/organ/external/proc/generate_icon_cache()
-	return "[sprite_datum.icon_state]_[preference]"
+	return "[sprite_datum.icon_state]_[feature_key]"
 
 /**This exists so sprite accessories can still be per-layer without having to include that layer's
 *  number in their sprite name, which causes issues when those numbers change.
@@ -140,7 +141,7 @@
 
 	var/list/feature_list = get_global_feature_list()
 
-	set_sprite(feature_list[deconstruct_block(getblock(features, dna_block), feature_list.len)])
+	set_sprite(feature_list[deconstruct_block(get_uni_feature_block(features, dna_block), feature_list.len)])
 
 ///The horns of a lizard!
 /obj/item/organ/external/horns
@@ -148,7 +149,8 @@
 	slot = ORGAN_SLOT_EXTERNAL_HORNS
 	layers = EXTERNAL_ADJACENT
 
-	preference = "horns"
+	feature_key = "horns"
+	preference = "feature_lizard_horns"
 
 	dna_block = DNA_HORNS_BLOCK
 
@@ -166,7 +168,8 @@
 	slot = ORGAN_SLOT_EXTERNAL_FRILLS
 	layers = EXTERNAL_ADJACENT
 
-	preference = "frills"
+	feature_key = "frills"
+	preference = "feature_lizard_frills"
 
 	dna_block = DNA_FRILLS_BLOCK
 
@@ -185,7 +188,8 @@
 	slot = ORGAN_SLOT_EXTERNAL_SNOUT
 	layers = EXTERNAL_ADJACENT
 
-	preference = "snout"
+	feature_key = "snout"
+	preference = "feature_lizard_snout"
 
 	dna_block = DNA_SNOUT_BLOCK
 
@@ -203,7 +207,8 @@
 	slot = ORGAN_SLOT_EXTERNAL_ANTENNAE
 	layers = EXTERNAL_FRONT | EXTERNAL_BEHIND
 
-	preference = "moth_antennae"
+	feature_key = "moth_antennae"
+	preference = "feature_moth_antennae"
 
 	dna_block = DNA_MOTH_ANTENNAE_BLOCK
 
@@ -228,13 +233,6 @@
 
 /obj/item/organ/external/antennae/can_draw_on_bodypart(mob/living/carbon/human/human)
 	return TRUE
-
-///For moth antennae and wings we make an exception. If their features are burnt, we only update our original sprite
-/obj/item/organ/external/antennae/set_sprite(sprite)
-	if(!burnt)
-		return ..() //no one listens to the return value, I just need to call the parent proc and end the code
-
-	original_sprite = sprite
 
 ///check if our antennae can burn off ;_;
 /obj/item/organ/external/antennae/proc/try_burn_antennae(mob/living/carbon/human/human)

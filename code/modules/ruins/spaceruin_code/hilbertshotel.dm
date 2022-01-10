@@ -16,7 +16,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	//Lore Stuff
 	var/ruinSpawned = FALSE
 
-/obj/item/hilbertshotel/Initialize()
+/obj/item/hilbertshotel/Initialize(mapload)
 	. = ..()
 	//Load templates
 	INVOKE_ASYNC(src, .proc/prepare_rooms)
@@ -120,11 +120,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		var/datum/turf_reservation/roomReservation = SSmapping.RequestBlockReservation(hotelRoomTemp.width, hotelRoomTemp.height)
 		hotelRoomTempEmpty.load(locate(roomReservation.bottom_left_coords[1], roomReservation.bottom_left_coords[2], roomReservation.bottom_left_coords[3]))
 		var/turfNumber = 1
-		for(var/i=0, i<hotelRoomTemp.width, i++)
-			for(var/j=0, j<hotelRoomTemp.height, j++)
+		for(var/x in 0 to hotelRoomTemp.width-1)
+			for(var/y in 0 to hotelRoomTemp.height-1)
 				for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
 					if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
-						A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
+						A.forceMove(locate(roomReservation.bottom_left_coords[1] + x, roomReservation.bottom_left_coords[2] + y, roomReservation.bottom_left_coords[3]))
 				turfNumber++
 		for(var/obj/item/abstracthotelstorage/S in storageTurf)
 			if((S.roomNumber == roomNumber) && (S.parentSphere == src))
@@ -165,8 +165,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(activeRooms.len)
 		for(var/x in activeRooms)
 			var/datum/turf_reservation/room = activeRooms[x]
-			for(var/i=0, i<hotelRoomTemp.width, i++)
-				for(var/j=0, j<hotelRoomTemp.height, j++)
+			for(var/i in 0 to hotelRoomTemp.width-1)
+				for(var/j in 0 to hotelRoomTemp.height-1)
 					for(var/atom/movable/A in locate(room.bottom_left_coords[1] + i, room.bottom_left_coords[2] + j, room.bottom_left_coords[3]))
 						if(ismob(A))
 							var/mob/M = A
@@ -253,7 +253,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	explosion_block = INFINITY
 	var/obj/item/hilbertshotel/parentSphere
 
-/turf/open/space/bluespace/Initialize()
+/turf/open/space/bluespace/Initialize(mapload)
 	. = ..()
 	update_icon_state()
 
@@ -351,7 +351,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	requires_power = FALSE
 	has_gravity = TRUE
 	area_flags = NOTELEPORT | HIDDEN_AREA
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	static_lighting = TRUE
 	ambientsounds = list('sound/ambience/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
@@ -417,10 +417,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	storageObj.roomNumber = roomnumber
 	storageObj.parentSphere = parentSphere
 	storageObj.name = "Room [roomnumber] Storage"
-	for(var/i=0, i<parentSphere.hotelRoomTemp.width, i++)
-		for(var/j=0, j<parentSphere.hotelRoomTemp.height, j++)
+	for(var/x in 0 to parentSphere.hotelRoomTemp.width-1)
+		for(var/y in 0 to parentSphere.hotelRoomTemp.height-1)
 			var/list/turfContents = list()
-			for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + i, reservation.bottom_left_coords[2] + j, reservation.bottom_left_coords[3]))
+			for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + x, reservation.bottom_left_coords[2] + y, reservation.bottom_left_coords[3]))
 				if(ismob(A) && !isliving(A))
 					continue //Don't want to store ghosts
 				turfContents += A
@@ -488,15 +488,11 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		else
 			to_chat(user, "No vacated rooms.")
 
-/obj/effect/mob_spawn/human/doctorhilbert
+/obj/effect/mob_spawn/corpse/human/doctorhilbert
 	name = "Doctor Hilbert"
 	mob_name = "Doctor Hilbert"
-	mob_gender = "male"
-	spawner_job_path = /datum/job/ghost_role
-	ghost_usable = FALSE
 	oxy_damage = 500
 	mob_species = /datum/species/skeleton
-	instant = TRUE
 	outfit = /datum/outfit/doctorhilbert
 
 /datum/outfit/doctorhilbert
@@ -507,10 +503,16 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	id_trim = /datum/id_trim/away/hilbert
 
+/datum/outfit/doctorhilbert/pre_equip(mob/living/carbon/human/hilbert, visualsOnly)
+	. = ..()
+	if(!visualsOnly)
+		hilbert.gender = MALE
+		hilbert.update_body()
+
 /obj/item/paper/crumpled/docslogs
 	name = "Research Logs"
 
-/obj/item/paper/crumpled/docslogs/Initialize()
+/obj/item/paper/crumpled/docslogs/Initialize(mapload)
 	. = ..()
 	info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
@@ -576,4 +578,4 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	<i>Choose a room, and enter the sphere<br>
 	Lay your head to rest, it soon becomes clear<br>
 	There's always more room around every bend<br>
-	Not all that's countable has an end...<i>"}
+	Not all that's countable has an end...</i>"}

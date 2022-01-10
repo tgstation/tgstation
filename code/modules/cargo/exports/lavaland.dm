@@ -16,10 +16,10 @@
 						/obj/item/ship_in_a_bottle,
 						/obj/item/clothing/shoes/clown_shoes/banana_shoes,
 						/obj/item/gun/magic/staff/honk,
-						/obj/item/kitchen/knife/envy,
+						/obj/item/knife/envy,
 						/obj/item/gun/ballistic/revolver/russian/soul,
 						/obj/item/veilrender/vealrender,
-						/obj/item/clothing/suit/space/hardsuit/berserker,
+						/obj/item/clothing/suit/hooded/berserker,
 						/obj/item/freeze_cube,
 						/obj/item/soulstone/anybody/mining,
 						/obj/item/clothing/gloves/gauntlets,
@@ -42,13 +42,13 @@
 	cost = CARGO_CRATE_VALUE * 80
 	unit_name = "major lava planet artifact"
 	export_types = list(/obj/item/hierophant_club,
-						/obj/item/melee/transforming/cleaving_saw,
+						/obj/item/melee/cleaving_saw,
 						/obj/item/organ/vocal_cords/colossus,
 						/obj/machinery/anomalous_crystal,
 						/obj/item/mayhem,
 						/obj/item/gun/magic/staff/spellblade,
 						/obj/item/storm_staff,
-						/obj/item/clothing/suit/space/hardsuit/hostile_environment,
+						/obj/item/clothing/suit/hooded/hostile_environment,
 						)
 
 /datum/export/lavaland/megafauna/total_printout(datum/export_report/ex, notes = TRUE) //in the unlikely case a miner feels like selling megafauna loot

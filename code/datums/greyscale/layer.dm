@@ -20,6 +20,10 @@
 /datum/greyscale_layer/proc/Initialize(icon_file)
 	return
 
+/// Override this if you need to do something during a full config refresh from disk, return TRUE if something was changed
+/datum/greyscale_layer/proc/DiskRefresh()
+	return FALSE
+
 /// Handles the processing of the json data and conversion to correct value types.
 /// Will error on incorrect, missing, or unexpected values.
 /datum/greyscale_layer/proc/ReadJsonData(list/json_data)
@@ -117,13 +121,21 @@
 	optional_values[NAMEOF(src, icon_state)] = /datum/json_reader/text
 	required_values[NAMEOF(src, reference_type)] = /datum/json_reader/greyscale_config
 
+/datum/greyscale_layer/reference/DiskRefresh()
+	. = ..()
+	return reference_type.Refresh(loadFromDisk=TRUE)
+
 /datum/greyscale_layer/reference/CrossVerify()
 	. = ..()
 	if(!reference_type.icon_states[icon_state])
 		CRASH("[src] expects icon_state '[icon_state]' but referenced configuration '[reference_type]' does not have it.")
 
 /datum/greyscale_layer/reference/InternalGenerate(list/colors, list/render_steps)
+	var/icon/generated_icon
 	if(render_steps)
-		return reference_type.GenerateBundle(colors, render_steps)
+		var/list/reference_data = list()
+		generated_icon = reference_type.GenerateBundle(colors, reference_data)
+		render_steps += reference_data[icon_state]
 	else
-		return reference_type.Generate(colors.Join())
+		generated_icon = reference_type.Generate(colors.Join())
+	return icon(generated_icon, icon_state)

@@ -55,39 +55,6 @@
 	SSresearch.techweb_nodes -= id
 	return ..()
 
-/datum/techweb_node/serialize_list(list/options)
-	. = list()
-	VARSET_TO_LIST(., id)
-	VARSET_TO_LIST(., display_name)
-	VARSET_TO_LIST(., hidden)
-	VARSET_TO_LIST(., starting_node)
-	VARSET_TO_LIST(., assoc_list_strip_value(prereq_ids))
-	VARSET_TO_LIST(., assoc_list_strip_value(design_ids))
-	VARSET_TO_LIST(., assoc_list_strip_value(unlock_ids))
-	VARSET_TO_LIST(., boost_item_paths)
-	VARSET_TO_LIST(., autounlock_by_boost)
-	VARSET_TO_LIST(., research_costs)
-	VARSET_TO_LIST(., category)
-	VARSET_TO_LIST(., required_experiments)
-
-/datum/techweb_node/deserialize_list(list/input, list/options)
-	if(!input["id"])
-		return
-	VARSET_FROM_LIST(input, id)
-	VARSET_FROM_LIST(input, display_name)
-	VARSET_FROM_LIST(input, hidden)
-	VARSET_FROM_LIST(input, starting_node)
-	VARSET_FROM_LIST(input, prereq_ids)
-	VARSET_FROM_LIST(input, design_ids)
-	VARSET_FROM_LIST(input, unlock_ids)
-	VARSET_FROM_LIST(input, boost_item_paths)
-	VARSET_FROM_LIST(input, autounlock_by_boost)
-	VARSET_FROM_LIST(input, research_costs)
-	VARSET_FROM_LIST(input, category)
-	VARSET_FROM_LIST(input, required_experiments)
-	Initialize()
-	return src
-
 /datum/techweb_node/proc/on_design_deletion(datum/design/D)
 	prune_design_id(D.id)
 
@@ -103,7 +70,7 @@
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
 	if(host)
-		var/list/actual_costs = research_costs
+		var/list/actual_costs = research_costs.Copy()
 		if(host.boosted_nodes[id])
 			var/list/boostlist = host.boosted_nodes[id]
 			for(var/booster in boostlist)
@@ -111,7 +78,7 @@
 					actual_costs[booster] -= boostlist[booster]
 		for(var/cost_type in actual_costs)
 			for(var/experiment_type in discount_experiments)
-				if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked?
+				if(host.completed_experiments[experiment_type]) //do we have this discount_experiment unlocked AND it wasn't applied already?
 					actual_costs[cost_type] -= discount_experiments[experiment_type]
 		return actual_costs
 	else

@@ -38,7 +38,7 @@
 	if(prob(probability))
 		zone = check_zone(zone)
 	else
-		zone = pickweight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
+		zone = pick_weight(list(BODY_ZONE_HEAD = 1, BODY_ZONE_CHEST = 1, BODY_ZONE_L_ARM = 4, BODY_ZONE_R_ARM = 4, BODY_ZONE_L_LEG = 4, BODY_ZONE_R_LEG = 4))
 	return zone
 
 ///Would this zone be above the neck
@@ -351,8 +351,9 @@
 		if(source)
 			var/atom/movable/screen/alert/notify_action/A = O.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action)
 			if(A)
-				if(O.client.prefs && O.client.prefs.UI_style)
-					A.icon = ui_style2icon(O.client.prefs.UI_style)
+				var/ui_style = O.client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
+				if(ui_style)
+					A.icon = ui_style2icon(ui_style)
 				if (header)
 					A.name = header
 				A.desc = message
@@ -407,7 +408,7 @@
 /**
  * Offer control of the passed in mob to dead player
  *
- * Automatic logging and uses pollCandidatesForMob, how convenient
+ * Automatic logging and uses poll_candidates_for_mob, how convenient
  */
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
@@ -423,7 +424,7 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
@@ -455,7 +456,7 @@
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
-	var/smessage_type = num2text(message_type)
+	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
 
 	if(client)
 		if(!islist(client.player_details.logging[smessage_type]))
@@ -481,6 +482,8 @@
 			colored_message = "(ASAY) [colored_message]"
 		if(LOG_EMOTE)
 			colored_message = "(EMOTE) [colored_message]"
+		if(LOG_RADIO_EMOTE)
+			colored_message = "(RADIOEMOTE) [colored_message]"
 
 	var/list/timestamped_message = list("\[[time_stamp()]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
@@ -501,15 +504,6 @@
  * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
  */
 /mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src, TRAIT_DISSECTED))
-		var/dissectionmsg = ""
-		if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Extraterrestrial Dissection"))
-			dissectionmsg = " via Extraterrestrial Dissection. It is no longer worth experimenting on"
-		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Experimental Dissection"))
-			dissectionmsg = " via Experimental Dissection"
-		else if(HAS_TRAIT_FROM(src, TRAIT_DISSECTED,"Thorough Dissection"))
-			dissectionmsg = " via Thorough Dissection"
-		. += "[span_notice("This body has been dissected and analyzed[dissectionmsg].")]<br>"
 	if(HAS_TRAIT(src,TRAIT_HUSK))
 		. += span_warning("This body has been reduced to a grotesque husk.")
 
@@ -531,7 +525,7 @@
 
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
-	return stat == DEAD || has_unlimited_silicon_privilege //Dead guys and silicons can always see reagents
+	return stat == DEAD || has_unlimited_silicon_privilege || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)

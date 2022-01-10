@@ -15,7 +15,7 @@
 	var/datum/data/record/temporary_record = null
 
 
-/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize()
+/obj/machinery/computer/prisoner/gulag_teleporter_computer/Initialize(mapload)
 	. = ..()
 	scan_machinery()
 
@@ -90,6 +90,8 @@
 				id_insert(usr)
 			return TRUE
 		if("set_goal")
+			if(!contained_id)
+				return
 			var/new_goal = text2num(params["value"])
 			if(!isnum(new_goal))
 				return

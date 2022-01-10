@@ -1,5 +1,5 @@
 //IMPORTANT: Multiple animate() calls do not stack well, so try to do them all at once if you can.
-/mob/living/carbon/update_transform()
+/mob/living/carbon/perform_update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
@@ -169,9 +169,7 @@
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "handcuff1", -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive)
-			var/mutable_appearance/handcuff_blocker = mutable_appearance('icons/mob/mob.dmi', "handcuff1", plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-			handcuff_blocker.color = GLOB.em_block_color
-			handcuff_overlay.overlays += handcuff_blocker
+			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
@@ -216,9 +214,7 @@
 	if(!blocks_emissive)
 		return
 
-	var/mutable_appearance/blocker_overlay = mutable_appearance(standing.icon, standing.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
-	blocker_overlay.color = GLOB.em_block_color
-	. += blocker_overlay
+	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
 
 /mob/living/carbon/update_body()
 	update_body_parts()
@@ -248,9 +244,10 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
+	var/draw_features = !HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		new_limbs += BP.get_limb_icon()
+		new_limbs += BP.get_limb_icon(draw_external_organs = draw_features)
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs

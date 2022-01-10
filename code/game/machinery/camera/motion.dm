@@ -77,9 +77,9 @@
 	c_tag = "Arena"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
-/obj/machinery/camera/motion/thunderdome/Initialize()
+/obj/machinery/camera/motion/thunderdome/Initialize(mapload)
 	. = ..()
-	proximity_monitor.SetRange(7)
+	proximity_monitor.set_range(7)
 
 /obj/machinery/camera/motion/thunderdome/HasProximity(atom/movable/AM as mob|obj)
 	if (!isliving(AM) || get_area(AM) != get_area(src))

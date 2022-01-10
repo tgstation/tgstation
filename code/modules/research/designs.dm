@@ -59,6 +59,8 @@ other types of metals and chemistry for reagents).
 	var/icon_cache
 	/// Optional string that interfaces can use as part of search filters. See- item/borg/upgrade/ai and the Exosuit Fabs.
 	var/search_metadata
+	/// For protolathe designs that don't require reagents: If they can be exported to autolathes with a design disk or not.
+	var/autolathe_exportable = TRUE
 
 /datum/design/error_design
 	name = "ERROR"
@@ -73,7 +75,7 @@ other types of metals and chemistry for reagents).
 	for(var/i in materials) //Go through all of our materials, get the subsystem instance, and then replace the list.
 		var/amount = materials[i]
 		if(!istext(i)) //Not a category, so get the ref the normal way
-			var/datum/material/M =  GET_MATERIAL_REF(i)
+			var/datum/material/M = GET_MATERIAL_REF(i)
 			temp_list[M] = amount
 		else
 			temp_list[i] = amount
@@ -96,7 +98,7 @@ other types of metals and chemistry for reagents).
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
-/obj/item/disk/design_disk/Initialize()
+/obj/item/disk/design_disk/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)

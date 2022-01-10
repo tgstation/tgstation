@@ -108,7 +108,13 @@
 	if(wielded)
 		unwield(user)
 	if(source == offhand_item && !QDELETED(source))
+		offhand_item = null
 		qdel(source)
+
+/// Triggered on destroy of the component's offhand
+/datum/component/two_handed/proc/on_destroy(datum/source)
+	SIGNAL_HANDLER
+	offhand_item = null
 
 /// Triggered on attack self of the item containing the component
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
@@ -181,6 +187,7 @@
 	offhand_item.desc = "Your second grip on [parent_item]."
 	offhand_item.wielded = TRUE
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	RegisterSignal(offhand_item, COMSIG_PARENT_QDELETING, .proc/on_destroy)
 	user.put_in_inactive_hand(offhand_item)
 
 /**
@@ -245,7 +252,7 @@
 
 	// Remove the object in the offhand
 	if(offhand_item)
-		UnregisterSignal(offhand_item, COMSIG_ITEM_DROPPED)
+		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
@@ -328,7 +335,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/wielded = FALSE // Off Hand tracking of wielded status
 
-/obj/item/offhand/Initialize()
+/obj/item/offhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 

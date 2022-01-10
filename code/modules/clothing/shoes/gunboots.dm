@@ -11,7 +11,7 @@
 	/// Each step, this is the chance we fire a shot
 	var/shot_prob = 50
 
-/obj/item/clothing/shoes/gunboots/Initialize()
+/obj/item/clothing/shoes/gunboots/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
 

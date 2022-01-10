@@ -13,7 +13,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -91,7 +91,7 @@
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		to_chat(user, span_notice("You try prying [src] off your hand..."))
-		if(do_after(user, 7 SECONDS, target=src))
+		if(do_after(user, 7 SECONDS, target = src))
 			to_chat(user, span_notice("You manage to remove [src] from your hand."))
 			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 		return
@@ -115,8 +115,10 @@
 			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
 	if(shrapnel_type && shrapnel_radius)
 		shrapnel_initialized = TRUE
-		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
+		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
+	if(istype(user))
+		user.mind?.add_memory(MEMORY_BOMB_PRIMED, list(DETAIL_BOMB_TYPE = src), story_value = STORY_VALUE_OKAY)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
@@ -131,7 +133,7 @@
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
-		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
+		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
 
 	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
@@ -147,12 +149,17 @@
 		return ..()
 
 	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		var/newtime = text2num(stripped_input(user, "Please enter a new detonation time", name))
-		if (newtime != null && user.canUseTopic(src, BE_CLOSE))
-			if(change_det_time(newtime))
-				to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
-				if (round(newtime * 10) != det_time)
-					to_chat(user, span_warning("The new value is out of bounds. The lowest possible time is 3 seconds and highest is 5 seconds. Instant detonations are also possible."))
+		var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+		if (isnull(newtime))
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(newtime == "Instant" && change_det_time(0))
+			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+			return
+		newtime = round(newtime)
+		if(change_det_time(newtime))
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 		return
 	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
 		if(change_det_time())
@@ -160,9 +167,7 @@
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE
-	if(time != null)
-		if(time < 3)
-			time = 3
+	if(!isnull(time))
 		det_time = round(clamp(time * 10, 0, 5 SECONDS))
 	else
 		var/previous_time = det_time
@@ -187,6 +192,9 @@
 		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
+
+		if(!QDELETED(src)) // some grenades don't detonate but we want them destroyed
+			qdel(src)
 		return TRUE //It hit the grenade, not them
 
 /obj/item/grenade/afterattack(atom/target, mob/user)

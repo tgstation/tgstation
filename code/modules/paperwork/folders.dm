@@ -13,7 +13,7 @@
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/folder/Initialize()
+/obj/item/folder/Initialize(mapload)
 	update_icon()
 	. = ..()
 
@@ -26,7 +26,7 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(contents)
+	if(length(contents))
 		. += span_notice("Right-click to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user)
@@ -34,7 +34,7 @@
 		to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 		return
 
-	var/inputvalue = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", "", MAX_NAME_LEN)
+	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
 
 	if(!inputvalue)
 		return
@@ -50,7 +50,7 @@
 		update_icon()
 
 /obj/item/folder/attack_hand(mob/user, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(length(contents) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		remove_item(contents[1], user)
 		return TRUE
 	. = ..()

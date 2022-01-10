@@ -1,9 +1,13 @@
 #define IV_TAKING 0
 #define IV_INJECTING 1
+
+#define MIN_IV_TRANSFER_RATE 0.1
+#define MAX_IV_TRANSFER_RATE 5
+
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate. Right-Click to change the transfer rate."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container. Alt-Click to change the transfer rate to the maximum possible."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -14,7 +18,7 @@
 	///Are we donating or injecting?
 	var/mode = IV_INJECTING
 	///whether we feed slower
-	var/dripfeed = FALSE
+	var/transfer_rate = MAX_IV_TRANSFER_RATE
 	///Internal beaker
 	var/obj/item/reagent_container
 	///Set false to block beaker use and instead use an internal reagent holder
@@ -24,6 +28,8 @@
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass,
 									/obj/item/reagent_containers/chem_pack))
+	// If the blood draining tab should be greyed out
+	var/inject_only = FALSE
 
 /obj/machinery/iv_drip/Initialize(mapload)
 	. = ..()
@@ -35,6 +41,43 @@
 	attached = null
 	QDEL_NULL(reagent_container)
 	return ..()
+
+/obj/machinery/iv_drip/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "IVDrip")
+		ui.open()
+
+/obj/machinery/iv_drip/ui_data(mob/user)
+	var/list/data = list()
+	data["transferRate"] = transfer_rate
+	data["injectOnly"] = inject_only ? TRUE : FALSE
+	data["maxInjectRate"] = MAX_IV_TRANSFER_RATE
+	data["minInjectRate"] = MIN_IV_TRANSFER_RATE
+	data["mode"] = mode == IV_INJECTING ? TRUE : FALSE
+	data["connected"] = attached ? TRUE : FALSE
+	data["beakerAttached"] = reagent_container ? TRUE : FALSE
+	data["useInternalStorage"] = use_internal_storage
+	return data
+
+/obj/machinery/iv_drip/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("changeMode")
+			toggle_mode()
+			. = TRUE
+		if("eject")
+			eject_beaker()
+			. = TRUE
+		if("changeRate")
+			var/target_rate = params["rate"]
+			if(text2num(target_rate) != null)
+				target_rate = text2num(target_rate)
+				transfer_rate = round(clamp(target_rate, MIN_IV_TRANSFER_RATE, MAX_IV_TRANSFER_RATE), 0.1)
+				. = TRUE
+	update_appearance()
 
 /obj/machinery/iv_drip/update_icon_state()
 	if(attached)
@@ -126,8 +169,11 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you!"))
-		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		to_chat(attached, span_userdanger("The IV drip needle is ripped out of you, leaving an open bleeding wound!"))
+		var/list/arm_zones = shuffle(list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		var/obj/item/bodypart/chosen_limb = attached.get_bodypart(arm_zones[1]) || attached.get_bodypart(arm_zones[2]) || attached.get_bodypart(BODY_ZONE_CHEST)
+		chosen_limb.receive_damage(3)
+		chosen_limb.force_wound_upwards(/datum/wound/pierce/moderate)
 		detach_iv()
 		return PROCESS_KILL
 
@@ -136,13 +182,11 @@
 		// Give blood
 		if(mode)
 			if(target_reagents.total_volume)
-				var/transfer_amount = 5
-				if (dripfeed)
-					transfer_amount = 1
+				var/real_transfer_amount = transfer_rate
 				if(istype(reagent_container, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
-					transfer_amount *= 2
-				target_reagents.trans_to(attached, transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
+					real_transfer_amount *= 2
+				target_reagents.trans_to(attached, real_transfer_amount * delta_time * 0.5, methods = INJECT, show_message = FALSE) //make reagents reacts, but don't spam messages
 				update_appearance()
 
 		// Take blood
@@ -163,9 +207,9 @@
 			attached.transfer_blood_to(target, amount)
 			update_appearance()
 
-/obj/machinery/iv_drip/attack_hand(mob/user, list/modifiers)
+/obj/machinery/iv_drip/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(!ishuman(user))
 		return
@@ -177,22 +221,19 @@
 		eject_beaker(user)
 	else
 		toggle_mode()
-
-/obj/machinery/iv_drip/attack_hand_secondary(mob/user, modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-
-	if(dripfeed)
-		dripfeed = FALSE
-		to_chat(usr, span_notice("You loosen the valve to speed up the [src]."))
-	else
-		dripfeed = TRUE
-		to_chat(usr, span_notice("You tighten the valve to slowly drip-feed the contents of [src]."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/iv_drip/AltClick(mob/user)
+	if(can_interact(user))
+		transfer_rate = MAX_IV_TRANSFER_RATE
+		to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
+	return ..()
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
+	user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
+	if(!do_after(usr, 1 SECONDS, target))
+		return
 	usr.visible_message(span_warning("[usr] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	var/datum/reagents/container = get_reagent_holder()
 	log_combat(usr, target, "attached", src, "containing: ([container.log_list()])")
@@ -226,6 +267,9 @@
 	if(usr.incapacitated())
 		return
 	if(reagent_container)
+		if(attached)
+			visible_message(span_warning("[attached] is detached from [src]."))
+			detach_iv()
 		reagent_container.forceMove(drop_location())
 		reagent_container = null
 		update_appearance()
@@ -272,6 +316,7 @@
 	icon_state = "saline"
 	base_icon_state = "saline"
 	density = TRUE
+	inject_only = TRUE
 
 /obj/machinery/iv_drip/saline/Initialize(mapload)
 	. = ..()
@@ -297,7 +342,7 @@
 	density = TRUE
 	use_internal_storage = TRUE
 
-/obj/machinery/iv_drip/plumbing/Initialize()
+/obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()
 
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
@@ -314,3 +359,6 @@
 
 #undef IV_TAKING
 #undef IV_INJECTING
+
+#undef MIN_IV_TRANSFER_RATE
+#undef MAX_IV_TRANSFER_RATE

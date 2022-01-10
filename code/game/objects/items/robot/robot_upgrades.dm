@@ -40,7 +40,7 @@
 	one_use = TRUE
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
-	heldname = sanitize_name(stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
+	heldname = sanitize_name(tgui_input_text(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN), allow_numbers = TRUE)
 	log_game("[key_name(user)] have set \"[heldname]\" as a name in a cyborg reclassification board at [loc_name(user)]")
 
 /obj/item/borg/upgrade/rename/action(mob/living/silicon/robot/R, user = usr)
@@ -51,27 +51,8 @@
 		R.custom_name = heldname
 		R.updatename()
 		if(oldname == R.real_name)
-			R.notify_ai(RENAME, oldname, R.real_name)
+			R.notify_ai(AI_NOTIFICATION_CYBORG_RENAMED, oldname, R.real_name)
 		log_game("[key_name(user)] have used a cyborg reclassification board to rename [oldkeyname] to [key_name(R)] at [loc_name(user)]")
-
-/obj/item/borg/upgrade/restart
-	name = "cyborg emergency reboot module"
-	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
-	icon_state = "cyborg_upgrade1"
-	one_use = TRUE
-
-/obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R, user = usr)
-	if(R.health < 0)
-		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
-		return FALSE
-
-	if(R.mind)
-		R.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
-
-	R.revive(full_heal = FALSE, admin_revive = FALSE)
-	R.logevent("WARN -- System recovered from unexpected shutdown.")
-	R.logevent("System brought online.")
 
 /obj/item/borg/upgrade/disablercooler
 	name = "cyborg rapid disabler cooling module"
@@ -296,12 +277,12 @@
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		LAZYADD(R.weather_immunities, WEATHER_LAVA)
+		ADD_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/lavaproof/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		LAZYREMOVE(R.weather_immunities, WEATHER_LAVA)
+		REMOVE_TRAIT(R, TRAIT_LAVA_IMMUNE, type)
 
 /obj/item/borg/upgrade/selfrepair
 	name = "self-repair module"
@@ -504,10 +485,11 @@
 /obj/item/borg/upgrade/defib/backpack/proc/on_defib_instance_qdel_or_moved(obj/item/defibrillator/D)
 	SIGNAL_HANDLER
 	defib_instance = null
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/borg/upgrade/defib/backpack/Destroy()
-	if(defib_instance)
+	if(!QDELETED(defib_instance))
 		QDEL_NULL(defib_instance)
 	return ..()
 
@@ -561,7 +543,7 @@
 	if (.)
 		if(R.shell)
 			R.undeploy()
-			R.notify_ai(DISCONNECT)
+			R.notify_ai(AI_NOTIFICATION_AI_SHELL)
 
 /obj/item/borg/upgrade/expand
 	name = "borg expander"
@@ -773,3 +755,36 @@
 	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
 	if (BR)
 		R.model.remove_module(BR, TRUE)
+
+///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
+//A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
+/obj/item/borg_restart_board
+	name = "cyborg emergency reboot module"
+	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/obj/module.dmi'
+	icon_state = "cyborg_upgrade1"
+
+/obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)
+	if(!istype(borgo))
+		return ..()
+	if(!borgo.opened)
+		to_chat(user, span_warning("You must access the cyborg's internals!"))
+		return ..()
+	if(borgo.health < 0)
+		to_chat(user, span_warning("You have to repair the cyborg before using this module!"))
+		return ..()
+	if(!(borgo.stat & DEAD))
+		to_chat(user, span_warning("This cyborg is already operational!"))
+		return ..()
+
+	if(borgo.mind)
+		borgo.mind.grab_ghost()
+		playsound(loc, 'sound/voice/liveagain.ogg', 75, TRUE)
+	else
+		playsound(loc, 'sound/machines/ping.ogg', 75, TRUE)
+
+	borgo.revive(full_heal = FALSE, admin_revive = FALSE)
+	borgo.logevent("WARN -- System recovered from unexpected shutdown.")
+	borgo.logevent("System brought online.")
+	return ..()

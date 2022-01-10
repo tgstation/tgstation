@@ -17,7 +17,7 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return ..()
 
-/obj/item/storage/cans/Initialize()
+/obj/item/storage/cans/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -29,8 +29,8 @@
 	STR.max_items = 6
 	STR.set_holdable(list(
 		/obj/item/reagent_containers/food/drinks/soda_cans,
-		/obj/item/reagent_containers/food/drinks/beer,
-		/obj/item/reagent_containers/food/drinks/ale,
+		/obj/item/reagent_containers/food/drinks/bottle/beer,
+		/obj/item/reagent_containers/food/drinks/bottle/ale,
 		/obj/item/reagent_containers/food/drinks/waterbottle
 		))
 
@@ -48,4 +48,4 @@
 
 /obj/item/storage/cans/sixbeer/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/food/drinks/beer(src)
+		new /obj/item/reagent_containers/food/drinks/bottle/beer(src)

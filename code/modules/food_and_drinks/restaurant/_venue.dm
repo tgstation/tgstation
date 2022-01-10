@@ -48,7 +48,7 @@
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
-		customer_type = pickweight(customer_types_to_choose)
+		customer_type = pick_weight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
 		if (customer.can_use(src))
@@ -120,7 +120,7 @@
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
-/obj/machinery/restaurant_portal/Initialize()
+/obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]
@@ -212,7 +212,7 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+/obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null

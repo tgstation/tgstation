@@ -16,7 +16,7 @@
 	var/list/active_tables = list()
 	var/tables_required = 2
 
-/obj/machinery/power/emitter/energycannon/magical/Initialize()
+/obj/machinery/power/emitter/energycannon/magical/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		desc = "Oh no, not again."
@@ -142,8 +142,9 @@
 		3. Don't get messed up in their affairs."
 	unique_name = FALSE // disables the (123) number suffix
 	initial_language_holder = /datum/language_holder/universal
+	default_storage = null
 
-/mob/living/simple_animal/drone/snowflake/bardrone/Initialize()
+/mob/living/simple_animal/drone/snowflake/bardrone/Initialize(mapload)
 	. = ..()
 	access_card.add_access(list(ACCESS_CENT_BAR))
 	become_area_sensitive(ROUNDSTART_TRAIT)
@@ -160,7 +161,7 @@
 	stop_automated_movement = TRUE
 	initial_language_holder = /datum/language_holder/universal
 
-/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize()
+/mob/living/simple_animal/hostile/alien/maid/barmaid/Initialize(mapload)
 	. = ..()
 	// Simple bot ID card that can hold all accesses. Someone turn access into a component at some point, please.
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -229,8 +230,9 @@
 	name = "luxury shuttle ticket field"
 	density = FALSE //allows shuttle airlocks to close, nothing but an approved passenger gets past CanPass
 	locked = TRUE
-	use_power = FALSE
+	use_power = NO_POWER_USE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	speech_span = SPAN_ROBOT
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
@@ -245,7 +247,7 @@
 			var/obj/vehicle/vehicle = mover
 			for(var/mob/living/rat in vehicle.occupants)
 				if(!(rat in approved_passengers))
-					say(span_robot("Stowaway detected. Please exit the vehicle first."))
+					say("Stowaway detected. Please exit the vehicle first.")
 					return FALSE
 		return TRUE
 	if(isitem(mover))
@@ -253,7 +255,7 @@
 	if(isstructure(mover))
 		var/obj/structure/struct = mover
 		for(var/mob/living/rat in struct.contents)
-			say(span_robot("Stowaway detected. Please exit the structure first."))
+			say("Stowaway detected. Please exit the structure first.")
 			return FALSE
 		return TRUE
 
@@ -272,7 +274,7 @@
 /obj/machinery/scanner_gate/luxury_shuttle/Bumped(atom/movable/AM)
 	///If the atom entering the gate is a vehicle, we store it here to add to the approved list to enter/leave the scanner gate.
 	var/obj/vehicle/vehicle
-	///We store the driver of vehicles seperately so that we can add them to the approved list once payment is fully processed.
+	///We store the driver of vehicles separately so that we can add them to the approved list once payment is fully processed.
 	var/mob/living/driver_holdout
 	if(!isliving(AM) && !isvehicle(AM))
 		alarm_beep()
@@ -313,17 +315,17 @@
 
 	//Here is all the possible paygate payment methods.
 	var/list/counted_money = list()
-	for(var/obj/item/coin/C in AM.GetAllContents()) //Coins.
+	for(var/obj/item/coin/C in AM.get_all_contents()) //Coins.
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += C.value
 		counted_money += C
-	for(var/obj/item/stack/spacecash/S in AM.GetAllContents()) //Paper Cash
+	for(var/obj/item/stack/spacecash/S in AM.get_all_contents()) //Paper Cash
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += S.value * S.amount
 		counted_money += S
-	for(var/obj/item/holochip/H in AM.GetAllContents()) //Holocredits
+	for(var/obj/item/holochip/H in AM.get_all_contents()) //Holocredits
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += H.credits
@@ -378,7 +380,7 @@
 				AM.pulling = HC
 			payees[AM] -= payees[AM]
 
-		say(span_robot("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]"))
+		say("Welcome to first class, [driver_holdout ? "[driver_holdout]" : "[AM]" ]![change ? " Here is your change." : ""]")
 		approved_passengers |= AM
 		if(vehicle)
 			approved_passengers |= vehicle

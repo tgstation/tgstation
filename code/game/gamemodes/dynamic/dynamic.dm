@@ -152,6 +152,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	/// What is the higher bound of when the roundstart annoucement is sent out?
 	var/waittime_h = 1800
 
+	/// Maximum amount of threat allowed to generate.
+	var/max_threat_level = 100
+
+
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</a><BR>"
@@ -218,7 +222,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else if (href_list["stacking_limit"])
 		GLOB.dynamic_stacking_limit = input(usr,"Change the threat limit at which round-endings rulesets will start to stack.", "Change stacking limit", null) as num
 	else if(href_list["force_latejoin_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/latejoin))
+		var/added_rule = input(usr,"What ruleset do you want to force upon the next latejoiner? This will bypass threat level and population restrictions.", "Rigging Latejoin", null) as null|anything in sort_names(init_rulesets(/datum/dynamic_ruleset/latejoin))
 		if (!added_rule)
 			return
 		forced_latejoin_rule = added_rule
@@ -229,7 +233,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		log_admin("[key_name(usr)] cleared the forced latejoin ruleset.")
 		message_admins("[key_name(usr)] cleared the forced latejoin ruleset.")
 	else if(href_list["force_midround_rule"])
-		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sortNames(init_rulesets(/datum/dynamic_ruleset/midround))
+		var/added_rule = input(usr,"What ruleset do you want to force right now? This will bypass threat level and population restrictions.", "Execute Ruleset", null) as null|anything in sort_names(init_rulesets(/datum/dynamic_ruleset/midround))
 		if (!added_rule)
 			return
 		log_admin("[key_name(usr)] executed the [added_rule] ruleset.")
@@ -308,7 +312,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/game_mode/dynamic/proc/generate_threat()
 	var/relative_threat = LORENTZ_DISTRIBUTION(threat_curve_centre, threat_curve_width)
-	threat_level = round(lorentz_to_amount(relative_threat), 0.1)
+	threat_level = clamp(round(lorentz_to_amount(relative_threat), 0.1), 0, max_threat_level)
 
 	peaceful_percentage = round(LORENTZ_CUMULATIVE_DISTRIBUTION(relative_threat, threat_curve_centre, threat_curve_width), 0.01)*100
 
@@ -466,7 +470,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/round_start_budget_left = round_start_budget
 
 	while (round_start_budget_left > 0)
-		var/datum/dynamic_ruleset/roundstart/ruleset = pickweightAllowZero(drafted_rules)
+		var/datum/dynamic_ruleset/roundstart/ruleset = pick_weight(drafted_rules)
 		if (isnull(ruleset))
 			log_game("DYNAMIC: No more rules can be applied, stopping with [round_start_budget] left.")
 			break

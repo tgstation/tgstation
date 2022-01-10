@@ -111,17 +111,6 @@
 	. = ..()
 	. += "[dna.species.type]"
 
-/mob/living/carbon/human/can_see_reagents()
-	. = ..()
-	if(.) //No need to run through all of this if it's already true.
-		return
-	if(isclothing(glasses) && (glasses.clothing_flags & SCAN_REAGENTS))
-		return TRUE
-	if(isclothing(head) && (head.clothing_flags & SCAN_REAGENTS))
-		return TRUE
-	if(isclothing(wear_mask) && (wear_mask.clothing_flags & SCAN_REAGENTS))
-		return TRUE
-
 /// When we're joining the game in [/mob/dead/new_player/proc/create_character], we increment our scar slot then store the slot in our mind datum.
 /mob/living/carbon/human/proc/increment_scar_slot()
 	var/check_ckey = ckey || client?.ckey
@@ -241,50 +230,12 @@
 
 
 /// Fully randomizes everything according to the given flags.
-/mob/living/carbon/human/proc/randomize_human_appearance(randomise_flags = ALL)
-	if(randomise_flags & RANDOMIZE_GENDER)
-		gender = pick(MALE, FEMALE, PLURAL)
-		switch(gender)
-			if(MALE, FEMALE)
-				body_type = gender
-			else
-				body_type = pick(MALE, FEMALE)
-	if(randomise_flags & RANDOMIZE_SPECIES)
-		set_species(GLOB.species_list[pick(GLOB.roundstart_races)], FALSE)
-	if(randomise_flags & RANDOMIZE_NAME)
-		var/new_name = dna.species.random_name(gender, TRUE)
-		name = new_name
-		real_name = new_name
-	if(randomise_flags & RANDOMIZE_AGE)
-		age = rand(AGE_MIN, AGE_MAX)
-	if(randomise_flags & RANDOMIZE_UNDERWEAR)
-		underwear = random_underwear(gender)
-	if(randomise_flags & RANDOMIZE_UNDERWEAR_COLOR)
-		underwear_color = random_short_color()
-	if(randomise_flags & RANDOMIZE_UNDERSHIRT)
-		undershirt = random_undershirt(gender)
-	if(randomise_flags & RANDOMIZE_SOCKS)
-		socks = random_socks()
-	if(randomise_flags & RANDOMIZE_BACKPACK)
-		backpack = random_backpack()
-	if(randomise_flags & RANDOMIZE_JUMPSUIT_STYLE)
-		jumpsuit_style = pick(GLOB.jumpsuitlist)
-	if(randomise_flags & RANDOMIZE_HAIRSTYLE)
-		hairstyle = random_hairstyle(gender)
-	if(randomise_flags & RANDOMIZE_FACIAL_HAIRSTYLE)
-		facial_hairstyle = random_facial_hairstyle(gender)
-	if(randomise_flags & RANDOMIZE_HAIR_COLOR)
-		hair_color = random_short_color()
-	if(randomise_flags & RANDOMIZE_FACIAL_HAIR_COLOR)
-		facial_hair_color = random_short_color()
-	if(randomise_flags & RANDOMIZE_SKIN_TONE)
-		skin_tone = random_skin_tone()
-	if(randomise_flags & RANDOMIZE_EYE_COLOR)
-		eye_color = random_eye_color()
-		var/obj/item/organ/eyes/organ_eyes = getorgan(/obj/item/organ/eyes)
-		if(organ_eyes)
-			if(!initial(organ_eyes.eye_color))
-				organ_eyes.eye_color = eye_color
-			organ_eyes.old_eye_color = eye_color
-	if(randomise_flags & RANDOMIZE_FEATURES)
-		dna.features = random_features()
+/mob/living/carbon/human/proc/randomize_human_appearance(randomize_flags = ALL)
+	var/datum/preferences/preferences = new
+
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (!preference.included_in_randomization_flags(randomize_flags))
+			continue
+
+		if (preference.is_randomizable())
+			preference.apply_to_human(src, preference.create_random_value(preferences))

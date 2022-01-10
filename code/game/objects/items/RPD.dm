@@ -10,7 +10,7 @@ RPD
 #define BUILD_MODE (1<<0)
 #define WRENCH_MODE (1<<1)
 #define DESTROY_MODE (1<<2)
-
+#define REPROGRAM_MODE (1<<3)
 
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
@@ -196,7 +196,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Is the device of the flipped type?
 	var/p_flipped = FALSE
 	///Color of the device we are going to spawn
-	var/paint_color = "grey"
+	var/paint_color = "green"
 	///Speed of building atmos devices
 	var/atmos_build_speed = 0.5 SECONDS
 	///Speed of building disposal devices
@@ -216,6 +216,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/transit_build_speed = 0.5 SECONDS
 	///Speed of removal of unwrenched devices
 	var/destroy_speed = 0.5 SECONDS
+	///Speed of reprogramming connectable directions of smart pipes
+	var/reprogram_speed = 0.5 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
 	///Piping layer we are going to spawn the atmos device in
@@ -231,11 +233,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	///Stores the first transit device
 	var/static/datum/pipe_info/first_transit
 	///The modes that are allowed for the RPD
-	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE
+	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
-/obj/item/pipe_dispenser/Initialize()
+/obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
 	spark_system = new
 	spark_system.set_up(5, 0, src)
@@ -409,12 +411,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			playeffect = FALSE
 		if("mode")
 			var/n = text2num(params["mode"])
-			if(mode & n)
-				mode &= ~n
-			else
-				mode |= n
+			mode ^= n
 		if("init_dir_setting")
-			p_init_dir ^= text2dir(params["dir_flag"])
+			var/target_dir = p_init_dir ^ text2dir(params["dir_flag"])
+			// Refuse to create a smart pipe that can only connect in one direction (it would act weirdly and lack an icon)
+			if (ISNOTSTUB(target_dir))
+				p_init_dir = target_dir
+			else
+				to_chat(usr, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				playeffect = FALSE
 		if("init_reset")
 			p_init_dir = ALL_CARDINALS
 	if(playeffect)
@@ -457,6 +462,77 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			qdel(attack_target)
 		return
 
+	if(mode & REPROGRAM_MODE)
+		// If this is a placed smart pipe, try to reprogram it
+		var/obj/machinery/atmospherics/pipe/smart/S = attack_target
+		if(istype(S))
+			if (S.dir == ALL_CARDINALS)
+				to_chat(user, span_warning("\The [S] has no unconnected directions!"))
+				return
+			var/old_init_dir = S.get_init_directions()
+			if (old_init_dir == p_init_dir)
+				to_chat(user, span_warning("\The [S] is already in this configuration!"))
+				return
+			// Check for differences in unconnected directions
+			var/target_differences = (p_init_dir ^ old_init_dir) & ~S.connections
+			if (!target_differences)
+				to_chat(user, span_warning("\The [S] is already in this configuration for its unconnected directions!"))
+				return
+
+			to_chat(user, span_notice("You start reprogramming \the [S]..."))
+			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+			if(!do_after(user, reprogram_speed, target = S))
+				return
+
+			// Something else could have changed the target's state while we were waiting in do_after
+			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
+
+			// Double check to make sure that nothing has changed. If anything we were about to change was connected during do_after, abort
+			if (target_differences & S.connections)
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe in a currently connected direction."))
+				return
+			// Grab the current initializable directions, which may differ from old_init_dir if someone else was working on the same pipe at the same time
+			var/current_init_dir = S.get_init_directions()
+			// Access p_init_dir directly. The RPD can change target layer and initializable directions (though not pipe type or dir) while working to dispense and connect a component,
+			// and have it reflected in the final result. Reprogramming should be similarly consistent.
+			var/new_init_dir = (current_init_dir & ~target_differences) | (p_init_dir & target_differences)
+			// Don't make a smart pipe with only one connection
+			if (ISSTUB(new_init_dir))
+				to_chat(user, span_warning("\The [src]'s screen flashes a warning: Can't configure a pipe to only connect in one direction."))
+				return
+			S.set_init_directions(new_init_dir)
+			// We're now reconfigured.
+			// We can never disconnect from existing connections, but we can connect to previously unconnected directions, and should immediately do so
+			var/newly_permitted_connections = new_init_dir & ~current_init_dir
+			if(newly_permitted_connections)
+				// We're allowed to connect in new directions. Recompute our nodes
+				// Disconnect from everything that is currently connected
+				for (var/i in 1 to S.device_type)
+					// This is basically pipe.nullifyNode, but using it here would create a pitfall for others attempting to
+					// copy and paste disconnection code for other components. Welcome to the atmospherics subsystem
+					var/obj/machinery/atmospherics/node = S.nodes[i]
+					if (!node)
+						continue
+					node.disconnect(S)
+					S.nodes[i] = null
+				// Get our new connections
+				S.atmos_init()
+				// Connect to our new connections
+				for (var/obj/machinery/atmospherics/O in S.nodes)
+					O.atmos_init()
+					O.add_member(src)
+				SSair.add_to_rebuild_queue(S)
+			// Finally, update our internal state - update_pipe_icon also updates dir and connections
+			S.update_pipe_icon()
+			user.visible_message(span_notice("[user] reprograms the \the [S]."),span_notice("You reprogram \the [S]."))
+			return
+		// If this is an unplaced smart pipe, try to reprogram it
+		var/obj/item/pipe/quaternary/I = attack_target
+		if(istype(I) && ispath(I.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+			// An unplaced pipe never has any existing connections, so just directly assign the new configuration
+			I.p_init_dir = p_init_dir
+			I.update()
+
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
@@ -497,7 +573,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						pipe_type.update()
 						pipe_type.add_fingerprint(usr)
-						pipe_type.setPipingLayer(piping_layer)
+						pipe_type.set_piping_layer(piping_layer)
 						if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
 							pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 						if(mode & WRENCH_MODE)
@@ -535,6 +611,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(isclosedturf(attack_target))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
+
+				var/turf/target_turf = get_turf(attack_target)
+				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
+					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
+					return
+
 				to_chat(user, span_notice("You start building a transit tube..."))
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
@@ -584,6 +666,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 #undef BUILD_MODE
 #undef DESTROY_MODE
 #undef WRENCH_MODE
+#undef REPROGRAM_MODE
 
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"

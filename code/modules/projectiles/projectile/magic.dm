@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = MAGIC
+	flag = NONE
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -165,7 +165,7 @@
 	..()
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -203,7 +203,6 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -222,8 +221,6 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 0
-	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -240,13 +237,12 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
 	var/datum/weakref/locker_ref
 
-/obj/projectile/magic/locker/Initialize()
+/obj/projectile/magic/locker/Initialize(mapload)
 	. = ..()
 	var/obj/structure/closet/decay/locker_temp_instance = new(src)
 	locker_ref = WEAKREF(locker_temp_instance)
@@ -280,6 +276,7 @@
 
 /obj/projectile/magic/locker/Destroy()
 	locker_suck = FALSE
+	RemoveElement(/datum/element/connect_loc, projectile_connections) //We do this manually so the forcemoves don't "hit" us. This behavior is kinda dumb, someone refactor this
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
@@ -291,7 +288,7 @@
 	var/weakened_icon = "decursed"
 	var/auto_destroy = TRUE
 
-/obj/structure/closet/decay/Initialize()
+/obj/structure/closet/decay/Initialize(mapload)
 	. = ..()
 	if(auto_destroy)
 		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
@@ -436,7 +433,7 @@
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
 			poll_message = "[poll_message] Status:[A.name]."
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, FALSE, 100, M)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
 	if(M.stat == DEAD)//boo.
 		return
 	if(LAZYLEN(candidates))
@@ -474,11 +471,10 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 	var/chain
 	var/mob/living/caster
 
@@ -501,7 +497,7 @@
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
 	zap_range = 4
-	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
+	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
@@ -529,7 +525,7 @@
 			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
-	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE)
+	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
 
 
 //still magic related, but a different path
@@ -542,7 +538,6 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

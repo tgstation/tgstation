@@ -13,7 +13,7 @@
 	range = MECHA_RANGED
 	var/teleport_range = 7
 
-/obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/teleporter/action(mob/source, atom/target, list/modifiers)
 	var/area/ourarea = get_area(src)
 	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
@@ -35,7 +35,7 @@
 	range = MECHA_RANGED
 
 
-/obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/wormhole_generator/action(mob/source, atom/target, list/modifiers)
 	var/area/ourarea = get_area(src)
 	if(!action_checks(target) || ourarea.area_flags & NOTELEPORT)
 		return
@@ -81,7 +81,7 @@
 	var/mode = GRAVSLING_MODE
 
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/action(mob/source, atom/movable/target, params)
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/action(mob/source, atom/movable/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	switch(mode)
@@ -220,13 +220,15 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [name] - <a href='?src=[REF(src)];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [name] - <a href='?src=[REF(src)];toggle_repairs=1'>[equip_ready?"Deactivate":"Activate"]</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
 	if(href_list["toggle_repairs"])
 		chassis.cut_overlay(droid_overlay)
+		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		update_equip_info()
 		if(equip_ready)
 			START_PROCESSING(SSobj, src)
 			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
@@ -310,6 +312,8 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Topic(href, href_list)
 	..()
 	if(href_list["toggle_relay"])
+		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		update_equip_info()
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
@@ -320,7 +324,7 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis)
 		return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[equip_ready?"Deactivate":"Activate"]</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process(delta_time)
@@ -360,7 +364,7 @@
 	/// Energy recharged per second
 	var/rechargerate = 10
 
-/obj/item/mecha_parts/mecha_equipment/generator/Initialize()
+/obj/item/mecha_parts/mecha_equipment/generator/Initialize(mapload)
 	. = ..()
 	generator_init()
 
@@ -378,6 +382,8 @@
 /obj/item/mecha_parts/mecha_equipment/generator/Topic(href, href_list)
 	..()
 	if(href_list["toggle"])
+		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		update_equip_info()
 		if(equip_ready) //inactive
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
@@ -388,9 +394,9 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"Deactivate":"Activate"]</a>"
 
-/obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, params)
+/obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, list/modifiers)
 	if(!chassis)
 		return
 	if(load_fuel(target, source))
@@ -435,26 +441,6 @@
 	fuel.amount -= min(delta_time * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
 	update_equip_info()
 
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	name = "exonuclear reactor"
-	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
-	icon_state = "tesla"
-	max_fuel = 50000
-	fuelrate_idle = 5
-	fuelrate_active = 15
-	rechargerate = 25
-	var/radrate = 15
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/process(delta_time)
-	. = ..()
-	if(!.) //process wasnt killed
-		radiation_pulse(get_turf(src), radrate * delta_time)
-
-
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 
 /obj/item/mecha_parts/mecha_equipment/thrusters
@@ -487,15 +473,17 @@
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/Topic(href,href_list)
 	..()
-	if(!chassis)
-		return
-	if(href_list["mode"])
-		var/isactive = text2num(href_list["mode"])
-		switch(isactive)
-			if(FALSE)
-				enable()
-			if(TRUE)
-				disable()
+	if(href_list["toggle"])
+		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		update_equip_info()
+		if(equip_ready) //inactive
+			START_PROCESSING(SSobj, src)
+			enable()
+			log_message("Activated.", LOG_MECHA)
+		else
+			STOP_PROCESSING(SSobj, src)
+			disable()
+			log_message("Deactivated.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/enable()
 	if (chassis.active_thrusters == src)
@@ -510,7 +498,9 @@
 	to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[src] disabled.")]")
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/get_equip_info()
-	return "[..()] \[<a href='?src=[REF(src)];isactive=0'>Enable</a>|<a href='?src=[REF(src)];isactive=1'>Disable</a>\]"
+	var/output = ..()
+	if(output)
+		return "[output] <a href='?src=[REF(src)];toggle=1'>[equip_ready?"Deactivate":"Activate"]</a>"
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/thrust(movement_dir)
 	if(!chassis)

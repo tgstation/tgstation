@@ -37,7 +37,7 @@
 		return
 
 	//Focus Chat failsafe. Overrides movement checks to prevent WASD.
-	if(!prefs.hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
+	if(!hotkeys && length(_key) == 1 && _key != "Alt" && _key != "Ctrl" && _key != "Shift")
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
@@ -67,7 +67,7 @@
 			else
 				full_key = _key
 	var/keycount = 0
-	for(var/kb_name in prefs.key_bindings[full_key])
+	for(var/kb_name in prefs.key_bindings_by_key[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
 		if(kb.can_use(src) && kb.down(src) && keycount >= MAX_COMMANDS_PER_KEY)
@@ -99,7 +99,7 @@
 
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
-	for (var/kb_name in prefs.key_bindings[_key])
+	for (var/kb_name in prefs.key_bindings_by_key[_key])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
 		if(kb.can_use(src) && kb.up(src))
 			break

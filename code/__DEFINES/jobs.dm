@@ -4,12 +4,99 @@
 #define JOB_UNAVAILABLE_PLAYTIME 3
 #define JOB_UNAVAILABLE_ACCOUNTAGE 4
 #define JOB_UNAVAILABLE_SLOTFULL 5
+/// Job unavailable due to incompatibility with an antag role.
+#define JOB_UNAVAILABLE_ANTAG_INCOMPAT 6
 
 #define DEFAULT_RELIGION "Christianity"
 #define DEFAULT_DEITY "Space Jesus"
 #define DEFAULT_BIBLE "Default Bible Name"
 
 #define JOB_DISPLAY_ORDER_DEFAULT 0
+
+
+/**
+ * =======================
+ * WARNING WARNING WARNING
+ * WARNING WARNING WARNING
+ * WARNING WARNING WARNING
+ * =======================
+ * These names are used as keys in many locations in the database
+ * you cannot change them trivially without breaking job bans and
+ * role time tracking, if you do this and get it wrong you will die
+ * and it will hurt the entire time
+ */
+
+//No department
+#define JOB_ASSISTANT "Assistant"
+#define JOB_PRISONER "Prisoner"
+//Command
+#define JOB_CAPTAIN "Captain"
+#define JOB_HEAD_OF_PERSONNEL "Head of Personnel"
+#define JOB_HEAD_OF_SECURITY "Head of Security"
+#define JOB_RESEARCH_DIRECTOR "Research Director"
+#define JOB_CHIEF_ENGINEER "Chief Engineer"
+#define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
+//Silicon
+#define JOB_AI "AI"
+#define JOB_CYBORG "Cyborg"
+//Security
+#define JOB_WARDEN "Warden"
+#define JOB_DETECTIVE "Detective"
+#define JOB_SECURITY_OFFICER "Security Officer"
+#define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
+#define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
+#define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
+#define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
+//Engineering
+#define JOB_STATION_ENGINEER "Station Engineer"
+#define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
+//Medical
+#define JOB_MEDICAL_DOCTOR "Medical Doctor"
+#define JOB_PARAMEDIC "Paramedic"
+#define JOB_CHEMIST "Chemist"
+#define JOB_VIROLOGIST "Virologist"
+//Science
+#define JOB_SCIENTIST "Scientist"
+#define JOB_ROBOTICIST "Roboticist"
+#define JOB_GENETICIST "Geneticist"
+//Supply
+#define JOB_QUARTERMASTER "Quartermaster"
+#define JOB_CARGO_TECHNICIAN "Cargo Technician"
+#define JOB_SHAFT_MINER "Shaft Miner"
+//Service
+#define JOB_BARTENDER "Bartender"
+#define JOB_BOTANIST "Botanist"
+#define JOB_COOK "Cook"
+#define JOB_JANITOR "Janitor"
+#define JOB_CLOWN "Clown"
+#define JOB_MIME "Mime"
+#define JOB_CURATOR "Curator"
+#define JOB_LAWYER "Lawyer"
+#define JOB_CHAPLAIN "Chaplain"
+#define JOB_PSYCHOLOGIST "Psychologist"
+//ERTs
+#define JOB_ERT_COMMANDER "Emergency Response Team Commander"
+#define JOB_ERT_OFFICER "Security Response Officer"
+#define JOB_ERT_ENGINEER "Engineering Response Officer"
+#define JOB_ERT_MEDICAL_DOCTOR "Medical Response Officer"
+#define JOB_ERT_CLOWN "Entertainment Response Officer"
+#define JOB_ERT_CHAPLAIN "Religious Response Officer"
+#define JOB_ERT_JANITOR "Janitorial Response Officer"
+#define JOB_ERT_DEATHSQUAD "Death Commando"
+//CentCom
+#define JOB_CENTCOM "Central Command"
+#define JOB_CENTCOM_OFFICIAL "CentCom Official"
+#define JOB_CENTCOM_ADMIRAL "Admiral"
+#define JOB_CENTCOM_COMMANDER "CentCom Commander"
+#define JOB_CENTCOM_VIP "VIP Guest"
+#define JOB_CENTCOM_BARTENDER "CentCom Bartender"
+#define JOB_CENTCOM_CUSTODIAN "Custodian"
+#define JOB_CENTCOM_THUNDERDOME_OVERSEER "Thunderdome Overseer"
+#define JOB_CENTCOM_MEDICAL_DOCTOR "Medical Officer"
+#define JOB_CENTCOM_RESEARCH_OFFICER "Research Officer"
+#define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
+#define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
+
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
@@ -49,6 +136,7 @@
 
 
 #define DEPARTMENT_UNASSIGNED "No department assigned"
+
 #define DEPARTMENT_BITFLAG_SECURITY (1<<0)
 #define DEPARTMENT_SECURITY "Security"
 #define DEPARTMENT_BITFLAG_COMMAND (1<<1)
@@ -65,6 +153,10 @@
 #define DEPARTMENT_MEDICAL "Medical"
 #define DEPARTMENT_BITFLAG_SILICON (1<<7)
 #define DEPARTMENT_SILICON "Silicon"
+#define DEPARTMENT_BITFLAG_ASSISTANT (1<<8)
+#define DEPARTMENT_ASSISTANT "Assistant"
+#define DEPARTMENT_BITFLAG_CAPTAIN (1<<9)
+#define DEPARTMENT_CAPTAIN "Captain"
 
 /* Job datum job_flags */
 /// Whether the mob is announced on arrival.
@@ -81,6 +173,9 @@
 #define JOB_BOLD_SELECT_TEXT (1<<5)
 /// Reopens this position if we lose the player at roundstart.
 #define JOB_REOPEN_ON_ROUNDSTART_LOSS (1<<6)
+/// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
+#define JOB_ASSIGN_QUIRKS (1<<7)
+
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"

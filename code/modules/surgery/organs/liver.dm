@@ -4,6 +4,7 @@
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
+	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
@@ -23,7 +24,7 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY
 	var/filterToxins = TRUE //whether to filter toxins
 
-/obj/item/organ/liver/Initialize()
+/obj/item/organ/liver/Initialize(mapload)
 	. = ..()
 	// If the liver handles foods like a clown, it honks like a bike horn
 	// Don't think about it too much.
@@ -114,20 +115,20 @@
 
 	switch(failure_time/LIVER_FAILURE_STAGE_SECONDS)
 		if(1)
-			to_chat(owner,"<span class='danger'>You feel stabbing pain in your abdomen!</danger>")
+			to_chat(owner, span_userdanger("You feel stabbing pain in your abdomen!"))
 		if(2)
-			to_chat(owner,"<span class='danger'>You feel a burning sensation in your gut!</danger>")
+			to_chat(owner, span_userdanger("You feel a burning sensation in your gut!"))
 			owner.vomit()
 		if(3)
-			to_chat(owner,"<span class='danger'>You feel painful acid in your throat!</danger>")
+			to_chat(owner, span_userdanger("You feel painful acid in your throat!"))
 			owner.vomit(blood = TRUE)
 		if(4)
-			to_chat(owner,"<span class='danger'>Overwhelming pain knocks you out!</danger>")
+			to_chat(owner, span_userdanger("Overwhelming pain knocks you out!"))
 			owner.vomit(blood = TRUE, distance = rand(1,2))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(5)
-			to_chat(owner,"<span class='danger'>You feel as if your guts are about to melt!</danger>")
+			to_chat(owner, span_userdanger("You feel as if your guts are about to melt!"))
 			owner.vomit(blood = TRUE,distance = rand(1,3))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)
@@ -140,13 +141,13 @@
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.4 * delta_time,forced = TRUE)
-			owner.drowsyness += 0.25 * delta_time
+			owner.adjust_drowsyness(0.25 * delta_time)
 			owner.adjust_disgust(0.3 * delta_time)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjustToxLoss(0.6 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * delta_time)
-			owner.drowsyness += 0.5 * delta_time
+			owner.adjust_drowsyness(0.5 * delta_time)
 			owner.adjust_disgust(0.6 * delta_time)
 
 			if(DT_PROB(1.5, delta_time))
@@ -155,7 +156,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjustToxLoss(0.8 * delta_time,forced = TRUE)
 			owner.adjustOrganLoss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * delta_time)
-			owner.drowsyness += 0.8 * delta_time
+			owner.adjust_drowsyness(0.8 * delta_time)
 			owner.adjust_disgust(1.2 * delta_time)
 
 			if(DT_PROB(3, delta_time))

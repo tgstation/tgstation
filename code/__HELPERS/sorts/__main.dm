@@ -119,7 +119,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 				left = mid+1
 
 		//ASSERT(left == right)
-		moveElement(L, start, left) //move pivot element to correct location in the sorted range
+		move_element(L, start, left) //move pivot element to correct location in the sorted range
 
 	/*
 	Returns the length of the run beginning at the specified position and reverses the run if it is back-to-front
@@ -150,7 +150,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			if(call(cmp)(current, last) >= 0)
 				break
 			++runHi
-		reverseRange(L, lo, runHi)
+		reverse_range(L, lo, runHi)
 	else
 		while(runHi < hi)
 			last = current
@@ -371,16 +371,16 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 	//degenerate cases
 	if(len2 == 1)
-		moveElement(L, cursor2, cursor1)
+		move_element(L, cursor2, cursor1)
 		return
 
 	if(len1 == 1)
-		moveElement(L, cursor1, cursor2+len2)
+		move_element(L, cursor1, cursor2+len2)
 		return
 
 
 	//Move first element of second run
-	moveElement(L, cursor2++, cursor1++)
+	move_element(L, cursor2++, cursor1++)
 	--len2
 
 	outer:
@@ -393,7 +393,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			do
 				//ASSERT(len1 > 1 && len2 > 0)
 				if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-					moveElement(L, cursor2++, cursor1++)
+					move_element(L, cursor2++, cursor1++)
 					--len2
 
 					++count2
@@ -426,7 +426,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 					if(len1 <= 1)
 						break outer
 
-				moveElement(L, cursor2, cursor1)
+				move_element(L, cursor2, cursor1)
 				++cursor2
 				++cursor1
 				if(--len2 == 0)
@@ -434,7 +434,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 				count2 = gallopLeft(fetchElement(L,cursor1), cursor2, len2, 0)
 				if(count2)
-					moveRange(L, cursor2, cursor1, count2)
+					move_range(L, cursor2, cursor1, count2)
 
 					cursor2 += count2
 					cursor1 += count2
@@ -458,7 +458,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 	if(len1 == 1)
 		//ASSERT(len2 > 0)
-		moveElement(L, cursor1, cursor2+len2)
+		move_element(L, cursor1, cursor2+len2)
 
 	//else
 		//ASSERT(len2 == 0)
@@ -473,14 +473,14 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 
 	//degenerate cases
 	if(len2 == 1)
-		moveElement(L, base2, base1)
+		move_element(L, base2, base1)
 		return
 
 	if(len1 == 1)
-		moveElement(L, base1, cursor2+1)
+		move_element(L, base1, cursor2+1)
 		return
 
-	moveElement(L, cursor1--, cursor2-- + 1)
+	move_element(L, cursor1--, cursor2-- + 1)
 	--len1
 
 	outer:
@@ -492,7 +492,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 			do
 				//ASSERT(len1 > 0 && len2 > 1)
 				if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
-					moveElement(L, cursor1--, cursor2-- + 1)
+					move_element(L, cursor1--, cursor2-- + 1)
 					--len1
 
 					++count1
@@ -520,7 +520,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 				if(count1)
 					cursor1 -= count1
 
-					moveRange(L, cursor1+1, cursor2+1, count1) //cursor1+1 == cursor2 by definition
+					move_range(L, cursor1+1, cursor2+1, count1) //cursor1+1 == cursor2 by definition
 
 					cursor2 -= count1
 					len1 -= count1
@@ -541,7 +541,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 					if(len2 <= 1)
 						break outer
 
-				moveElement(L, cursor1--, cursor2-- + 1)
+				move_element(L, cursor1--, cursor2-- + 1)
 				--len1
 
 				if(len1 == 0)
@@ -558,7 +558,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 		//ASSERT(len1 > 0)
 
 		cursor1 -= len1
-		moveRange(L, cursor1+1, cursor2+1, len1)
+		move_range(L, cursor1+1, cursor2+1, len1)
 
 	//else
 		//ASSERT(len1 == 0)
@@ -625,7 +625,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sort_instance, new())
 				break
 			val1 = fetchElement(L,cursor1)
 		else
-			moveElement(L,cursor2,cursor1)
+			move_element(L,cursor2,cursor1)
 
 			if(++cursor2 >= end2)
 				break

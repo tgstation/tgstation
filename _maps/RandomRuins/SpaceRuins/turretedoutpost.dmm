@@ -30,7 +30,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ai" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -71,7 +71,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ar" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "as" = (
@@ -82,7 +82,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
@@ -159,7 +159,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -221,7 +221,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aM" = (
@@ -325,7 +325,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
@@ -334,7 +334,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (
@@ -357,7 +357,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "Nu" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

@@ -137,10 +137,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 			manifest_inject(N.new_character, N.client)
 		CHECK_TICK
 
-/datum/datacore/proc/manifest_modify(name, assignment)
+/datum/datacore/proc/manifest_modify(name, assignment, trim)
 	var/datum/data/record/foundrecord = find_record("name", name, GLOB.data_core.general)
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
+		foundrecord.fields["trim"] = trim
 
 
 /datum/datacore/proc/get_manifest()
@@ -153,8 +154,9 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	var/list/departments_by_type = SSjob.joinable_departments_by_type
 	for(var/datum/data/record/record as anything in GLOB.data_core.general)
 		var/name = record.fields["name"]
-		var/rank = record.fields["rank"]
-		var/datum/job/job = SSjob.GetJob(rank)
+		var/rank = record.fields["rank"] // user-visible job
+		var/trim = record.fields["trim"] // internal jobs by trim type
+		var/datum/job/job = SSjob.GetJob(trim)
 		if(!job || !(job.job_flags & JOB_CREW_MANIFEST) || !LAZYLEN(job.departments_list)) // In case an unlawful custom rank is added.
 			var/list/misc_list = manifest_out[DEPARTMENT_UNASSIGNED]
 			misc_list[++misc_list.len] = list(
@@ -184,7 +186,6 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 			manifest_out -= department
 
 	return manifest_out
-
 
 /datum/datacore/proc/get_manifest_html(monochrome = FALSE)
 	var/list/manifest = get_manifest()
@@ -243,6 +244,8 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		G.fields["id"] = id
 		G.fields["name"] = H.real_name
 		G.fields["rank"] = assignment
+		G.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
 		G.fields["age"] = H.age
 		G.fields["species"] = H.dna.species.name
 		G.fields["fingerprint"] = md5(H.dna.unique_identity)
@@ -250,11 +253,11 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		G.fields["m_stat"] = "Stable"
 		G.fields["gender"] = H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"] = "Male"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"] = "Female"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"] = "Other"
 		G.fields["photo_front"] = photo_front
 		G.fields["photo_side"] = photo_side
 		general += G
@@ -290,14 +293,16 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		L.fields["id"] = md5("[H.real_name][assignment]") //surely this should just be id, like the others?
 		L.fields["name"] = H.real_name
 		L.fields["rank"] = assignment
+		L.fields["trim"] = assignment
+		G.fields["initial_rank"] = assignment
 		L.fields["age"] = H.age
 		L.fields["gender"] = H.gender
 		if(H.gender == "male")
-			G.fields["gender"]  = "Male"
+			G.fields["gender"] = "Male"
 		else if(H.gender == "female")
-			G.fields["gender"]  = "Female"
+			G.fields["gender"] = "Female"
 		else
-			G.fields["gender"]  = "Other"
+			G.fields["gender"] = "Other"
 		L.fields["blood_type"] = H.dna.blood_type
 		L.fields["b_dna"] = H.dna.unique_enzymes
 		L.fields["identity"] = H.dna.unique_identity
@@ -307,6 +312,51 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		L.fields["mindref"] = H.mind
 		locked += L
 	return
+
+/**
+ * Supporing proc for getting general records
+ * and using them as pAI ui data. This gets
+ * medical information - or what I would deem
+ * medical information - and sends it as a list.
+ *
+ * @return - list(general_records_out)
+ */
+/datum/datacore/proc/get_general_records()
+	if(!GLOB.data_core.general)
+		return list()
+	/// The array of records
+	var/list/general_records_out = list()
+	for(var/datum/data/record/gen_record as anything in GLOB.data_core.general)
+		/// The object containing the crew info
+		var/list/crew_record = list()
+		crew_record["ref"] = REF(gen_record)
+		crew_record["name"] = gen_record.fields["name"]
+		crew_record["physical_health"] = gen_record.fields["p_stat"]
+		crew_record["mental_health"] = gen_record.fields["m_stat"]
+		general_records_out += list(crew_record)
+	return general_records_out
+
+/**
+ * Supporing proc for getting secrurity records
+ * and using them as pAI ui data. Sends it as a
+ * list.
+ *
+ * @return - list(security_records_out)
+ */
+/datum/datacore/proc/get_security_records()
+	if(!GLOB.data_core.security)
+		return list()
+	/// The array of records
+	var/list/security_records_out = list()
+	for(var/datum/data/record/sec_record as anything in GLOB.data_core.security)
+		/// The object containing the crew info
+		var/list/crew_record = list()
+		crew_record["ref"] = REF(sec_record)
+		crew_record["name"] = sec_record.fields["name"]
+		crew_record["status"] = sec_record.fields["criminal"] // wanted status
+		crew_record["crimes"] = length(sec_record.fields["crim"])
+		security_records_out += list(crew_record)
+	return security_records_out
 
 /datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = H.mind.assigned_role

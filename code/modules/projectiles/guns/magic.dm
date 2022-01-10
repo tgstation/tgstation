@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	fire_sound = 'sound/weapons/emitter.ogg'
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
@@ -45,15 +45,16 @@
 	if (charges && chambered && !chambered.loaded_projectile)
 		chambered.newshot()
 
-/obj/item/gun/magic/process_chamber()
+/obj/item/gun/magic/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //if BB is null, i.e the shot has been fired...
 		charges--//... drain a charge
 		recharge_newshot()
 
-/obj/item/gun/magic/Initialize()
+/obj/item/gun/magic/Initialize(mapload)
 	. = ..()
 	charges = max_charges
-	chambered = new ammo_type(src)
+	if(ammo_type)
+		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)

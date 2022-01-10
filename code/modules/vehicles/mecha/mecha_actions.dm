@@ -56,12 +56,14 @@
 
 	if(available_equipment.len == 0)
 		chassis.balloon_alert(owner, "no equipment available")
+		playsound(chassis,'sound/machines/terminal_error.ogg', 40, FALSE)
 		return
 	if(!chassis.selected)
 		chassis.selected = available_equipment[1]
 		chassis.balloon_alert(owner, "[chassis.selected] selected")
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
+		playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
 		UpdateButtonIcon()
 		return
 	var/number = 0
@@ -73,10 +75,12 @@
 			chassis.selected = null
 			chassis.balloon_alert(owner, "switched to no equipment")
 			button_icon_state = "mech_cycle_equip_off"
+			playsound(chassis,'sound/machines/piston_lower.ogg', 40, TRUE)
 		else
 			chassis.selected = available_equipment[number+1]
 			chassis.balloon_alert(owner, "switched to [chassis.selected]")
 			button_icon_state = "mech_cycle_equip_on"
+			playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		UpdateButtonIcon()
 		return
@@ -100,6 +104,7 @@
 		button_icon_state = "mech_lights_off"
 	chassis.set_light_on(chassis.mecha_flags & LIGHTS_ON)
 	chassis.balloon_alert(owner, "toggled lights [chassis.mecha_flags & LIGHTS_ON ? "on":"off"]")
+	playsound(chassis,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
 	UpdateButtonIcon()
 
@@ -278,3 +283,61 @@
 		chassis.remove_control_flags(owner, VEHICLE_CONTROL_MELEE|VEHICLE_CONTROL_EQUIPMENT)
 		chassis.add_control_flags(owner, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_SETTINGS)
 	chassis.update_icon_state()
+
+#define SEARCH_COOLDOWN 1 MINUTES
+
+/datum/action/vehicle/sealed/mecha/mech_search_ruins
+	name = "Search for Ruins"
+	button_icon_state = "mech_search_ruins"
+	COOLDOWN_DECLARE(search_cooldown)
+
+/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger()
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+	if(!COOLDOWN_FINISHED(src, search_cooldown))
+		chassis.balloon_alert(owner, "on cooldown!")
+		return
+	if(!isliving(owner))
+		return
+	var/mob/living/living_owner = owner
+	button_icon_state = "mech_search_ruins_cooldown"
+	UpdateButtonIcon()
+	COOLDOWN_START(src, search_cooldown, SEARCH_COOLDOWN)
+	addtimer(VARSET_CALLBACK(src, button_icon_state, "mech_search_ruins"), SEARCH_COOLDOWN)
+	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), SEARCH_COOLDOWN)
+	var/obj/pinpointed_ruin
+	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
+		if(ruin_landmark.z != chassis.z)
+			continue
+		if(!pinpointed_ruin || get_dist(ruin_landmark, chassis) < get_dist(pinpointed_ruin, chassis))
+			pinpointed_ruin = ruin_landmark
+	if(!pinpointed_ruin)
+		chassis.balloon_alert(living_owner, "no ruins!")
+		return
+	var/datum/status_effect/agent_pinpointer/ruin_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/ruin)
+	ruin_pinpointer.RegisterSignal(living_owner, COMSIG_MOVABLE_MOVED, /datum/status_effect/agent_pinpointer/ruin.proc/cancel_self)
+	ruin_pinpointer.scan_target = pinpointed_ruin
+	chassis.balloon_alert(living_owner, "pinpointing nearest ruin")
+
+/datum/status_effect/agent_pinpointer/ruin
+	duration = SEARCH_COOLDOWN * 0.5
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
+	tick_interval = 3 SECONDS
+	range_fuzz_factor = 0
+	minimum_range = 5
+	range_mid = 20
+	range_far = 50
+
+/datum/status_effect/agent_pinpointer/ruin/scan_for_target()
+	return
+
+/datum/status_effect/agent_pinpointer/ruin/proc/cancel_self(datum/source, atom/old_loc)
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
+	name = "Ruin Target"
+	desc = "Searching for valuables..."
+
+#undef SEARCH_COOLDOWN

@@ -23,7 +23,7 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/bundle_a/PopulateContents()
-	switch (pickweight(list(
+	switch (pick_weight(list(
 		KIT_RECON = 2,
 		KIT_BLOODY_SPAI = 3,
 		KIT_STEALTHY = 2,
@@ -89,7 +89,7 @@
 			new /obj/item/encryptionkey/syndicate(src)
 
 		if(KIT_MURDER)
-			new /obj/item/melee/transforming/energy/sword/saber(src)
+			new /obj/item/melee/energy/sword/saber(src)
 			new /obj/item/clothing/glasses/thermal/syndi(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
@@ -142,7 +142,7 @@
 			new /obj/item/clothing/under/suit/black_really(src)
 
 		if(KIT_NUKEOPS_METAGAME)
-			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
+			new /obj/item/mod/control/pre_equipped/nuclear(src) // 8 tc
 			new /obj/item/gun/ballistic/shotgun/bulldog/unrestricted(src) // 8 tc
 			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
@@ -153,7 +153,7 @@
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 
 /obj/item/storage/box/syndicate/bundle_b/PopulateContents()
-	switch (pickweight(list(
+	switch (pick_weight(list(
 		KIT_JAMES_BOND = 2,
 		KIT_NINJA = 1,
 		KIT_DARK_LORD = 1,
@@ -193,7 +193,7 @@
 		if(KIT_WHITE_WHALE_HOLY_GRAIL) //Unique items that don't appear anywhere else
 			new /obj/item/gun/ballistic/rifle/boltaction/harpoon(src)
 			new /obj/item/storage/bag/harpoon_quiver(src)
-			new /obj/item/clothing/suit/space/hardsuit/carp(src)
+			new /obj/item/clothing/suit/hooded/carp_costume/spaceproof(src)
 			new /obj/item/clothing/mask/gas/carp(src)
 			new /obj/item/grenade/spawnergrenade/spesscarp(src)
 
@@ -236,7 +236,7 @@
 			new /obj/item/dnainjector/geladikinesis(src)
 			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/gun/energy/temperature/security(src)
-			new /obj/item/melee/transforming/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
+			new /obj/item/melee/energy/sword/saber/blue(src) //see see it fits the theme bc its blue and ice is blue
 
 		if(KIT_TRAITOR_2006) //A kit so old, it's probably older than you. //This bundle is filled with the entire unlink contents traitors had access to in 2006, from OpenSS13. Notably the esword was not a choice but existed in code.
 			new /obj/item/storage/toolbox/emergency/old/ancientbundle(src) //Items fit neatly into a classic toolbox just to remind you what the theme is.
@@ -267,7 +267,7 @@
 /obj/item/paper/contractor_guide
 	name = "Contractor Guide"
 
-/obj/item/paper/contractor_guide/Initialize()
+/obj/item/paper/contractor_guide/Initialize(mapload)
 	info = {"<p>Welcome agent, congratulations on your new position as contractor. On top of your already assigned objectives,
 			this kit will provide you contracts to take on for TC payments.</p>
 
@@ -322,7 +322,7 @@
 /obj/item/storage/box/syndicate/contract_kit/PopulateContents()
 	new /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink(src)
 	new /obj/item/storage/box/syndicate/contractor_loadout(src)
-	new /obj/item/melee/classic_baton/telescopic/contractor_baton(src)
+	new /obj/item/melee/baton/telescopic/contractor_baton(src)
 
 	// All about 4 TC or less - some nukeops only items, but fit nicely to the theme.
 	var/list/item_list = list(
@@ -481,7 +481,8 @@
 	new /obj/item/reagent_containers/syringe(src)
 
 /obj/item/storage/box/syndie_kit/nuke
-	name = "box"
+	name = "nuke core extraction kit"
+	desc = "A box containing the equipment and instructions for extracting the plutonium cores of most Nanotrasen nuclear explosives."
 
 /obj/item/storage/box/syndie_kit/nuke/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -489,7 +490,8 @@
 	new /obj/item/paper/guides/antag/nuke_instructions(src)
 
 /obj/item/storage/box/syndie_kit/supermatter
-	name = "box"
+	name = "supermatter sliver extraction kit"
+	desc = "A box containing the equipment and instructions for extracting a sliver of supermatter."
 
 /obj/item/storage/box/syndie_kit/supermatter/PopulateContents()
 	new /obj/item/scalpel/supermatter(src)

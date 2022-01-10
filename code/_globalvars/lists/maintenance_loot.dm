@@ -94,7 +94,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
 		/obj/item/clothing/gloves/color/fyellow = 1,
-		/obj/effect/spawner/lootdrop/gloves = 1,
+		/obj/effect/spawner/random/clothing/gloves = 1,
 		/obj/item/storage/wallet/random = 1,
 		/obj/item/clothing/glasses/science = 1,
 		/obj/item/clothing/glasses/meson = 1,
@@ -136,7 +136,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		) = 1,
 
 	list(//food
-		/obj/item/reagent_containers/food/drinks/beer = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/beer = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 		) = 1,
 
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 
 		//light sources
 		/obj/item/flashlight = 1,
-		/obj/effect/spawner/lootdrop/glowstick = 1,
+		/obj/effect/spawner/random/decoration/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
 		/obj/item/flashlight/flare = 1,
 		) = 1,
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/restraints/handcuffs/cable = 1,
 		/obj/item/spear = 1,
 		/obj/item/grenade/iedcasing/spawned = 1,
-		/obj/item/melee/baton/cattleprod = 1,
+		/obj/item/melee/baton/security/cattleprod = 1,
 		/obj/item/pen/fountain = 1,
 		) = 8,
 
@@ -180,11 +180,12 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/clothing/glasses/hud/diagnostic = 1,
 		/obj/item/storage/belt/utility = 1,
 		/obj/item/storage/belt/medical = 1,
-		/obj/item/clothing/suit/armor/vest/old  = 1,
+		/obj/item/clothing/suit/armor/vest/old = 1,
 		/obj/item/clothing/head/helmet/old = 1,
 		/obj/item/clothing/mask/muzzle = 1,
 		/obj/item/clothing/ears/earmuffs = 1,
 		/obj/item/clothing/gloves/tackler/offbrand = 1,
+		/obj/item/clothing/glasses/salesman = 1,
 		) = 8,
 
 	list(//strange objects
@@ -200,6 +201,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/plaque = 1,
 		/obj/item/storage/box/clown = 1,
 		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/odious_puffball = 1,
 		) = 8,
 
 	list(//medical and chemicals
@@ -236,8 +238,18 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/storage/box/donkpockets/donkpocketberry = 1,
 			/obj/item/storage/box/donkpockets/donkpockethonk = 1,
 			) = 1,
+		list(//Donk-dinner Varieties
+			/obj/item/food/ready_donk = 1,
+			/obj/item/food/ready_donk/mac_n_cheese = 1,
+			/obj/item/food/ready_donk/donkhiladas = 1,
+			) = 1,
 		/obj/item/food/monkeycube = 1,
 		) = 8,
+
+	list(//modsuits
+		/obj/item/mod/construction/broken_core = 1,
+		/obj/effect/spawner/random/mod/maint = 3,
+		) = 4,
 
 	list(//music
 		/obj/item/instrument/violin = 5,
@@ -267,10 +279,10 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 	list(//tools
 		/obj/item/weldingtool/hugetank = 1,
-		/obj/item/kitchen/knife = 1,
+		/obj/item/knife/kitchen = 1,
 		/obj/item/restraints/handcuffs = 1,
 		/obj/item/shield/riot/buckler = 1,
-		/obj/item/melee/baton/cattleprod/teleprod = 1,
+		/obj/item/melee/baton/security/cattleprod/teleprod = 1,
 		/obj/item/throwing_star = 1,
 		/obj/item/pen/survival = 1,
 		/obj/item/flashlight/flashdark = 1,
@@ -317,6 +329,8 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/disk/nuclear/fake = 1,
 		/obj/item/book/granter/crafting_recipe/pipegun_prime = 1,
 		/obj/item/book/granter/crafting_recipe/trash_cannon = 1,
+		/obj/item/tattoo_kit = 1,
+		/obj/item/skillchip/brainwashing = 1,
 		) = 1,
 
 ))

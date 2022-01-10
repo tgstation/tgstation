@@ -18,7 +18,7 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
-/obj/machinery/rnd/Initialize()
+/obj/machinery/rnd/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	wires = new /datum/wires/rnd(src)
@@ -40,19 +40,44 @@
 		return FALSE
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user, params)
-	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
-		return
-	if(default_deconstruction_crowbar(O))
-		return
-	if(panel_open && is_wire_tool(O))
-		wires.interact(user)
-		return TRUE
 	if(is_refillable() && O.is_drainable())
 		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return TRUE
-	else
-		return ..()
+
+	return ..()
+
+/obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/multitool_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
 
 //proc used to handle inserting items or reagents into rnd machines
 /obj/machinery/rnd/proc/Insert_Item(obj/item/I, mob/user)

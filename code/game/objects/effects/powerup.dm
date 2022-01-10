@@ -15,7 +15,7 @@
 	/// Cooldown for the powerup to respawn after it's been used
 	COOLDOWN_DECLARE(respawn_cooldown)
 
-/obj/effect/powerup/Initialize()
+/obj/effect/powerup/Initialize(mapload)
 	. = ..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
@@ -95,7 +95,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/gun in target.GetAllContents())
+	for(var/obj/item/gun in target.get_all_contents())
 		if(!isgun(gun) && !istype(gun, /obj/item/flamethrower))
 			continue
 		SEND_SIGNAL(gun, COMSIG_ITEM_RECHARGED)

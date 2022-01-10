@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/bundles_tc/firestarter
 	name = "Spetsnaz Pyro bundle"
-	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
+	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite MODsuit, \
 			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Bananium Energy Sword"
 	desc = "An energy sword that deals no damage, but will slip anyone it contacts, be it by melee attack, thrown \
 	impact, or just stepping on it. Beware friendly fire, as even anti-slip shoes will not protect against it."
-	item = /obj/item/melee/transforming/energy/sword/bananium
+	item = /obj/item/melee/energy/sword/bananium
 	cost = 3
 	surplus = 0
 	purchasable_from = UPLINK_CLOWN_OPS
@@ -415,7 +415,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Energy Sword"
 	desc = "The energy sword is an edged weapon with a blade of pure energy. The sword is small enough to be \
 			pocketed when inactive. Activating it produces a loud, distinctive noise."
-	item = /obj/item/melee/transforming/energy/sword/saber
+	item = /obj/item/melee/energy/sword/saber
 	cost = 8
 	purchasable_from = ~UPLINK_CLOWN_OPS
 
@@ -430,7 +430,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
-	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen \
+	desc = "A flamethrower, fueled by a portion of highly flammable plasma stolen previously from Nanotrasen \
 			stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
@@ -611,6 +611,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+
+/datum/uplink_item/stealthy_weapons/crossbow/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+		desc += " Happy Halloween!"
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
@@ -988,11 +994,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/explosives/detomatix
 	name = "Detomatix PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you four opportunities to \
-			detonate PDAs of crewmembers who have their message feature enabled. \
+	desc = "When inserted into a personal digital assistant, this cartridge gives you the opportunity to \
+			send up to six forged messages that will make PDAs of crewmembers explode when they try to reply to them. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
 	item = /obj/item/cartridge/virus/syndicate
-	cost = 6
+	cost = 4
 	restricted = TRUE
 
 /datum/uplink_item/explosives/emp
@@ -1263,7 +1269,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 30
 	illegal_tech = FALSE
 
-//Space Suits and Hardsuits
+//Space Suits and MODsuits
 /datum/uplink_item/suits
 	category = "Space Suits"
 	surplus = 40
@@ -1271,7 +1277,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/suits/infiltrator_bundle
 	name = "Infiltrator Case"
 	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
-			this suit proves to be cheaper than your standard issue hardsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
+			this suit proves to be cheaper than your standard issue MODsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
 			Comes with an armor vest, helmet, sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava. The case is also rather useful as a storage container."
 	item = /obj/item/storage/toolbox/infiltrator
 	cost = 6
@@ -1286,32 +1292,50 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/space
 	cost = 4
 
-/datum/uplink_item/suits/hardsuit
-	name = "Syndicate Hardsuit"
-	desc = "The feared suit of a Syndicate nuclear agent. Features slightly better armoring and a built in jetpack \
-			that runs off standard atmospheric tanks. Toggling the suit in and out of \
-			combat mode will allow you all the mobility of a loose fitting uniform without sacrificing armoring. \
-			Additionally the suit is collapsible, making it small enough to fit within a backpack. \
-			Nanotrasen crew who spot these suits are known to panic."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi
+/datum/uplink_item/suits/modsuit
+	name = "Syndicate MODsuit"
+	desc = "The feared MODsuit of a Syndicate agent. Features armoring and a set of inbuilt modules."
+	item = /obj/item/mod/control/pre_equipped/traitor
 	cost = 8
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //you can't buy it in nuke, because the elite modsuit costs the same while being better
 
-/datum/uplink_item/suits/hardsuit/elite
-	name = "Elite Syndicate Hardsuit"
-	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
-			provides the user with superior armor and mobility compared to the standard Syndicate hardsuit."
-	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	cost = 8
+/datum/uplink_item/suits/modsuit/elite
+	name = "Elite Syndicate MODsuit"
+	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
+	item = /obj/item/mod/control/pre_equipped/elite
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/hardsuit/shielded
-	name = "Shielded Syndicate Hardsuit"
-	desc = "An upgraded version of the standard Syndicate hardsuit. It features a built-in energy shielding system. \
-			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
-	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
-	cost = 30
+/datum/uplink_item/suits/energy_shield
+	name = "MODsuit Energy Shield Module"
+	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
+			within a short duration and will rapidly recharge while not under fire."
+	item = /obj/item/mod/module/energy_shield
+	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/thermal
+	name = "MODsuit Thermal Visor Module"
+	desc = "A visor for a MODsuit. Lets you see living beings through walls."
+	item = /obj/item/mod/module/visor/thermal
+	cost = 3
+
+/datum/uplink_item/suits/night
+	name = "MODsuit Night Visor Module"
+	desc = "A visor for a MODsuit. Lets you see clearer in the dark."
+	item = /obj/item/mod/module/visor/night
+	cost = 2
+
+/datum/uplink_item/suits/noslip
+	name = "MODsuit Anti-Slip Module"
+	desc = "A MODsuit module preventing the user from slipping on water."
+	item = /obj/item/mod/module/noslip
+	cost = 4
+	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+
+/datum/uplink_item/suits/noslip/traitor
+	cost = 2
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 // Devices and Tools
 /datum/uplink_item/device_tools
@@ -1382,6 +1406,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/card/emag
 	cost = 4
 
+/datum/uplink_item/device_tools/emag/New()
+	. = ..()
+	if(SSevents.holidays?[HALLOWEEN])
+		item = /obj/item/card/emag/halloween
+		desc += " This one is fitted to support the Halloween season. Candle not included."
+
 /datum/uplink_item/device_tools/syndie_jaws_of_life
 	name = "Syndicate Jaws of Life"
 	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
@@ -1430,9 +1460,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		return
 	U.failsafe_code = U.generate_code()
 	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
-	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]."))
-	if(user.mind)
-		user.mind.store_memory("Failsafe code for [U.parent] : [code]")
+	to_chat(user, span_warning("The new failsafe code for this uplink is now : [code]. You may check your antagonist info to recall this."))
 	return U.parent //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -1721,7 +1749,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you."
 	item = /obj/item/clothing/under/color/grey/ancient
 	cost = 20
-	restricted_roles = list("Assistant")
+	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/oldtoolboxclean
@@ -1729,7 +1757,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An iconic toolbox design notorious with Assistants everywhere, this design was especially made to become more robust the more telecrystals it has inside it! Tools and insulated gloves included."
 	item = /obj/item/storage/toolbox/mechanical/old/clean
 	cost = 2
-	restricted_roles = list("Assistant")
+	restricted_roles = list(JOB_ASSISTANT)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/pie_cannon
@@ -1737,7 +1765,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
 	cost = 10
 	item = /obj/item/pneumatic_cannon/pie/selfcharge
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	surplus = 0 //No fun unless you're the clown!
 
 /datum/uplink_item/role_restricted/blastcannon
@@ -1748,7 +1776,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			disallows explosive ranges above a certain distance, allowing for the device to use the theoretical yield of a transfer valve bomb, instead of the factual yield. It's simple design makes it easy to conceal."
 	item = /obj/item/gun/blastcannon
 	cost = 14 //High cost because of the potential for extreme damage in the hands of a skilled scientist.
-	restricted_roles = list("Research Director", "Scientist")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 
 /datum/uplink_item/role_restricted/gorillacubes
 	name = "Box of Gorilla Cubes"
@@ -1756,14 +1784,17 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_GENETICIST)
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
+	restricted_roles = list(
+		JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR,
+		JOB_ROBOTICIST,
+	)
 	cost = 5
 
 /datum/uplink_item/role_restricted/clown_bomb
@@ -1775,14 +1806,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			be defused, and some crew may attempt to do so."
 	item = /obj/item/sbeacondrop/clownbomb
 	cost = 15
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
 	name = "Clumsiness Injector"
 	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clowns who wish to reconnect with their former clownish nature or for clowns who wish to torment and play with their prey before killing them."
 	item = /obj/item/dnainjector/clumsymut
 	cost = 1
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/spider_injector
@@ -1793,7 +1824,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			also give them a bit of sentience though."
 	item = /obj/item/reagent_containers/syringe/spider_extract
 	cost = 10
-	restricted_roles = list("Research Director", "Scientist", "Roboticist")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST)
 
 /datum/uplink_item/role_restricted/clowncar
 	name = "Clown Car"
@@ -1805,7 +1836,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Premium features can be unlocked with a cryptographic sequencer!"
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
@@ -1814,7 +1845,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Only one can fit on a mecha."
 	item = /obj/item/mecha_parts/concealed_weapon_bay
 	cost = 3
-	restricted_roles = list("Roboticist", "Research Director")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_ROBOTICIST)
+
+/datum/uplink_item/role_restricted/syndimmi
+	name = "Syndicate Brand MMI"
+	desc = "An MMI modified to give cyborgs laws to serve the Syndicate without having their interface damaged by Cryptographic Sequencers, this will not unlock their hidden modules."
+	item = /obj/item/mmi/syndie
+	cost = 2
+	restricted_roles = list(
+		JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST,
+		JOB_CHIEF_MEDICAL_OFFICER, JOB_MEDICAL_DOCTOR,
+	)
+	surplus = 0
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
@@ -1833,7 +1875,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	To activate His Grace, simply unlatch Him."
 	item = /obj/item/his_grace
 	cost = 20
-	restricted_roles = list("Chaplain")
+	restricted_roles = list(JOB_CHAPLAIN)
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
 /datum/uplink_item/role_restricted/explosive_hot_potato
@@ -1843,7 +1885,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/hot_potato/syndicate
 	cost = 4
 	surplus = 0
-	restricted_roles = list("Cook", "Botanist", "Clown", "Mime")
+	restricted_roles = list(JOB_COOK, JOB_BOTANIST, JOB_CLOWN, JOB_MIME)
 
 /datum/uplink_item/role_restricted/ez_clean_bundle
 	name = "EZ Clean Grenade Bundle"
@@ -1852,7 +1894,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/ez_clean
 	cost = 6
 	surplus = 20
-	restricted_roles = list("Janitor")
+	restricted_roles = list(JOB_JANITOR)
 
 /datum/uplink_item/role_restricted/mimery
 	name = "Guide to Advanced Mimery Series"
@@ -1860,7 +1902,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Obviously only works for Mimes."
 	cost = 12
 	item = /obj/item/storage/box/syndie_kit/mimery
-	restricted_roles = list("Mime")
+	restricted_roles = list(JOB_MIME)
 	surplus = 0
 
 /datum/uplink_item/role_restricted/pressure_mod
@@ -1870,7 +1912,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/borg/upgrade/modkit/indoors
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
-	restricted_roles = list("Shaft Miner")
+	restricted_roles = list(JOB_SHAFT_MINER)
 
 /datum/uplink_item/role_restricted/magillitis_serum
 	name = "Magillitis Serum Autoinjector"
@@ -1878,21 +1920,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_GENETICIST)
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
-	name = "Modified Syringe Gun"
-	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	name = "Modified  Compact Syringe Gun"
+	desc = "A compact version of the syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list("Geneticist", "Research Director")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_GENETICIST)
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
 	desc = "A heavily modified syringe gun which is capable of synthesizing its own chemical darts using input reagents. Can hold 100u of reagents."
 	item = /obj/item/gun/chem
 	cost = 12
-	restricted_roles = list("Chemist", "Chief Medical Officer", "Botanist")
+	restricted_roles = list(
+		JOB_CHIEF_MEDICAL_OFFICER, JOB_CHEMIST,
+		JOB_BOTANIST,
+	)
 
 /datum/uplink_item/role_restricted/reverse_bear_trap
 	name = "Reverse Bear Trap"
@@ -1901,7 +1946,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	head after three seconds uninterrupted."
 	cost = 5
 	item = /obj/item/reverse_bear_trap
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/reverse_revolver
 	name = "Reverse Revolver"
@@ -1909,14 +1954,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	The revolver itself is actually real. Only clumsy people, and clowns, can fire it normally. Comes in a box of hugs. Honk."
 	cost = 14
 	item = /obj/item/storage/box/hug/reverse_revolver
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
 	desc = "A firing pin that, when inserted into a gun, makes that gun only usable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
 	cost = 4
 	item = /obj/item/firing_pin/clown/ultra
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/clownsuperpin
@@ -1924,7 +1969,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
 	cost = 7
 	item = /obj/item/firing_pin/clown/ultra/selfdestruct
-	restricted_roles = list("Clown")
+	restricted_roles = list(JOB_CLOWN)
 	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/laser_arm
@@ -1932,7 +1977,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/organ/syndicate/laser_arm
-	restricted_roles = list("Roboticist", "Research Director")
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_ROBOTICIST)
 
 /datum/uplink_item/role_restricted/bureaucratic_error_remote
 	name = "Organic Resources Disturbance Inducer"
@@ -1940,21 +1985,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	limited_stock = 1
 	item = /obj/item/devices/bureaucratic_error_remote
-	restricted_roles = list("Head of Personnel", "Quartermaster")
+	restricted_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_QUARTERMASTER)
 
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
 	desc = "A brutal cleaver on a long chain, it allows you to pull people to your location."
 	item = /obj/item/gun/magic/hook
 	cost = 11
-	restricted_roles = list("Cook")
+	restricted_roles = list(JOB_COOK)
 
 /datum/uplink_item/role_restricted/turretbox
 	name = "Disposable Sentry Gun"
 	desc = "A disposable sentry gun deployment system cleverly disguised as a toolbox, apply wrench for functionality."
 	item = /obj/item/storage/toolbox/emergency/turret
 	cost = 11
-	restricted_roles = list("Station Engineer")
+	restricted_roles = list(JOB_STATION_ENGINEER)
 
 // Pointless
 /datum/uplink_item/badass
@@ -2036,3 +2081,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	purchasable_from = UPLINK_CLOWN_OPS
 	illegal_tech = FALSE
 
+// Special equipment (Dynamically fills in uplink component)
+/datum/uplink_item/special_equipment
+	category = "Objective-Specific Equipment"
+	name = "Objective-Specific Equipment"
+	desc = "Equipment necessary for accomplishing specific objectives. If you are seeing this, something has gone wrong."
+	limited_stock = 1
+	illegal_tech = FALSE
+
+/datum/uplink_item/special_equipment/purchase(mob/user, datum/component/uplink/U)
+	..()
+	if(user?.mind?.failed_special_equipment)
+		user.mind.failed_special_equipment -= item

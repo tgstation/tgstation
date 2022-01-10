@@ -26,7 +26,7 @@
 	if (prob(40))
 		new /obj/item/storage/toolbox/emergency(src)
 
-	switch (pickweight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
+	switch (pick_weight(list("small" = 35, "aid" = 30, "tank" = 20, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
 			new /obj/item/tank/internals/emergency_oxygen(src)
 			new /obj/item/tank/internals/emergency_oxygen(src)
@@ -49,7 +49,7 @@
 		if ("nothing")
 			// doot
 
-		// teehee
+		// teehee //Fuck you
 		if ("delete")
 			qdel(src)
 

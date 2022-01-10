@@ -20,6 +20,7 @@
 	INVOKE_ASYNC(limb_owner, /mob.proc/emote, "scream")
 	playsound(get_turf(limb_owner), 'sound/effects/dismember.ogg', 80, TRUE)
 	SEND_SIGNAL(limb_owner, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
+	limb_owner.mind?.add_memory(MEMORY_DISMEMBERED, list(DETAIL_LOST_LIMB = src, DETAIL_PROTAGONIST = limb_owner), story_value = STORY_VALUE_AMAZING)
 	drop_limb()
 
 	limb_owner.update_equipment_speed_mods() // Update in case speed affecting item unequipped by dismemberment

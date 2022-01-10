@@ -46,8 +46,8 @@
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))
 		var/mob/living/carbon/human/carl = eater
-		var/datum/disease/P = new /datum/disease/parasite()
-		carl.ForceContractDisease(P, make_copy=FALSE, del_on_fail=TRUE)
+		var/datum/disease/disease = new /datum/disease/parasite()
+		carl.ForceContractDisease(disease, make_copy = FALSE, del_on_fail = TRUE)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()
@@ -90,6 +90,16 @@
 /obj/item/food/chips/MakeLeaveTrash()
 	if(trash_type)
 		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+
+/obj/item/food/chips/shrimp
+	name = "shrimp chips"
+	desc = "Deep-fried, shrimp flavored chips. A favorite junkfood among seafood connoisseurs!"
+	icon_state = "shrimp_chips"
+	trash_type = /obj/item/trash/shrimp_chips
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3, /datum/reagent/consumable/salt = 1)
+	tastes = list("salt" = 1, "shrimp" = 1)
+	foodtypes = JUNKFOOD | FRIED | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
 	name = "4no raisins"
@@ -230,7 +240,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 			continue
 		. += peanut_type
 
-/obj/item/food/peanuts/random/Initialize()
+/obj/item/food/peanuts/random/Initialize(mapload)
 	// Generate a sample p
 	var/peanut_type = pick(GLOB.safe_peanut_types)
 	var/obj/item/food/sample = new peanut_type(loc)
@@ -289,7 +299,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	name = "mystery filled C&Ds"
 	desc = "Filled with one of four delicious flavours!"
 
-/obj/item/food/cnds/random/Initialize()
+/obj/item/food/cnds/random/Initialize(mapload)
 	var/random_flavour = pick(subtypesof(/obj/item/food/cnds) - /obj/item/food/cnds/random)
 
 	var/obj/item/food/sample = new random_flavour(loc)

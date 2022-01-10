@@ -63,34 +63,14 @@
 		return FALSE
 	return TRUE
 
-/datum/saymode/monkey
-	key = "k"
-	mode = MODE_MONKEY
-
-/datum/saymode/monkey/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mind/mind = user.mind
-	if(!mind)
-		return TRUE
-	if(IS_MONKEY_LEADER(mind) || (ismonkey(user) && IS_INFECTED_MONKEY(mind)))
-		user.log_talk(message, LOG_SAY, tag=SPECIES_MONKEY)
-		if(prob(75) && ismonkey(user))
-			user.visible_message(span_notice("\The [user] chimpers."))
-		var/msg = "<span class='[IS_MONKEY_LEADER(mind) ? "monkeylead" : "monkeyhive"]'><b><font size=2>\[[IS_MONKEY_LEADER(mind) ? "Monkey Leader" : "Monkey"]\]</font> [user]</b>: [message]</span>"
-		for(var/_M in GLOB.mob_list)
-			var/mob/M = _M
-			if(M in GLOB.dead_mob_list)
-				var/link = FOLLOW_LINK(M, user)
-				to_chat(M, "[link] [msg]")
-			if((IS_MONKEY_LEADER(M.mind) || ismonkey(M)) && IS_INFECTED_MONKEY(M.mind))
-				to_chat(M, msg)
-		return FALSE
-
 /datum/saymode/mafia
 	key = "j"
 	mode = MODE_MAFIA
 
 /datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
 	var/datum/mafia_controller/MF = GLOB.mafia_game
+	if (!MF)
+		return TRUE
 	var/datum/mafia_role/R = MF.player_role_lookup[user]
 	if(!R || R.team != "mafia")
 		return TRUE

@@ -132,11 +132,10 @@ export class ByondUi extends Component {
 
   render() {
     const { params, ...rest } = this.props;
-    const boxProps = computeBoxProps(rest);
     return (
       <div
         ref={this.containerRef}
-        {...boxProps}>
+        {...computeBoxProps(rest)}>
         {/* Filler */}
         <div style={{ 'min-height': '22px' }} />
       </div>

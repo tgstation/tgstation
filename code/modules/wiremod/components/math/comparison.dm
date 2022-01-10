@@ -6,6 +6,7 @@
 /obj/item/circuit_component/compare/comparison
 	display_name = "Comparison"
 	desc = "A component that compares two objects."
+	category = "Math"
 
 	var/datum/port/input/option/comparison_option
 
@@ -23,7 +24,7 @@
 	)
 	comparison_option = add_option_port("Comparison Option", component_options)
 
-/obj/item/circuit_component/compare/comparison/input_received(datum/port/input/port)
+/obj/item/circuit_component/compare/comparison/pre_input_received(datum/port/input/port)
 	switch(comparison_option.value)
 		if(COMP_COMPARISON_EQUAL, COMP_COMPARISON_NOT_EQUAL)
 			if(current_type != PORT_TYPE_ANY)
@@ -35,7 +36,6 @@
 				current_type = PORT_TYPE_NUMBER
 				compare_ports[1].set_datatype(PORT_TYPE_NUMBER)
 				compare_ports[2].set_datatype(PORT_TYPE_NUMBER)
-	return ..()
 
 
 /obj/item/circuit_component/compare/comparison/do_comparisons(list/ports)

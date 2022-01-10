@@ -11,8 +11,10 @@
 
 // Atomic classes
 @include meta.load-css('./atomic/candystripe.scss');
+@include meta.load-css('./atomic/centered-image.scss');
 @include meta.load-css('./atomic/color.scss');
 @include meta.load-css('./atomic/debug-layout.scss');
+@include meta.load-css('./atomic/fit-text.scss');
 @include meta.load-css('./atomic/links.scss');
 @include meta.load-css('./atomic/outline.scss');
 @include meta.load-css('./atomic/text.scss');
@@ -50,12 +52,16 @@
 @include meta.load-css('./interfaces/Changelog.scss');
 @include meta.load-css('./interfaces/CrewManifest.scss');
 @include meta.load-css('./interfaces/ExperimentConfigure.scss');
+@include meta.load-css('./interfaces/HellishRunes.scss');
+@include meta.load-css('./interfaces/Hypertorus.scss');
 @include meta.load-css('./interfaces/NuclearBomb.scss');
 @include meta.load-css('./interfaces/Paper.scss');
+@include meta.load-css('./interfaces/PreferencesMenu.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 @include meta.load-css('./interfaces/Safe.scss');
 @include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
+@include meta.load-css('./interfaces/RequestManager.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

@@ -38,7 +38,7 @@
 	friendly_verb_simple = "bear hug"
 
 	//Space bears aren't affected by cold.
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
 
@@ -48,7 +48,7 @@
 
 	var/armored = FALSE
 
-/mob/living/simple_animal/hostile/bear/Initialize()
+/mob/living/simple_animal/hostile/bear/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	add_cell_sample()
@@ -82,7 +82,7 @@
 	icon_living = "snowbear"
 	icon_dead = "snowbear_dead"
 	desc = "It's a polar bear, in space, but not actually in space."
-	weather_immunities = list(WEATHER_SNOW)
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
@@ -134,8 +134,9 @@
 	desc = "I can't believe its not a bear!"
 	faction = list("neutral", "russian")
 	obj_damage = 11
-	melee_damage_lower = 1
-	melee_damage_upper = 1
+	melee_damage_lower = 0
+	melee_damage_upper = 0
+	sharpness = NONE //it's made of butter
 	armour_penetration = 0
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
@@ -171,15 +172,16 @@
 	to_chat(src, "<span class='big bold'>You are a butter bear!</span><b> You're a mostly harmless bear/butter hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free butter to the station!</b>")
-	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Terrygold.", "Name Change")
+	var/new_name = sanitize_name(tgui_input_text(src, "Enter your name, or press \"Cancel\" to stick with Terrygold.", "Name Change"))
 	if(new_name)
 		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
-/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some attacks by the butter bear slip those who dare cross its path.
-	if(isliving(target))
+/mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes the butter bear's attacks against vertical targets slip said targets
+	. = ..()
+	if(isliving(target)) //we don't check for . here, since attack_animal() (and thus AttackingTarget()) will return false if your damage dealt is 0
 		var/mob/living/L = target
 		if((L.body_position == STANDING_UP))
 			L.Knockdown(20)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
-			L.visible_message(span_danger("[L] slips on butter!"))
+			L.visible_message(span_danger("[L] slips on [src]'s butter!"))

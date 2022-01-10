@@ -1,5 +1,4 @@
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
-GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective
 	var/datum/mind/owner //The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
@@ -15,13 +14,11 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(text)
-	GLOB.objectives += src
 	if(text)
 		explanation_text = text
 
 //Apparently objectives can be qdel'd. Learn a new thing every day
 /datum/objective/Destroy()
-	GLOB.objectives -= src
 	return ..()
 
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
@@ -40,7 +37,7 @@ GLOBAL_LIST_EMPTY(objectives)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	possible_targets = list("Free objective", "Random") + sortNames(possible_targets)
+	possible_targets = list("Free objective", "Random") + sort_names(possible_targets)
 
 
 	if(target?.current)
@@ -159,11 +156,39 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/datum/mind/receiver = pick(get_owners())
 	if(receiver?.current)
 		if(ishuman(receiver.current))
-			var/mob/living/carbon/human/H = receiver.current
+			var/mob/living/carbon/human/receiver_current = receiver.current
 			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
-			for(var/eq_path in special_equipment)
-				var/obj/O = new eq_path
-				H.equip_in_one_of_slots(O, slots)
+			for(var/obj/equipment_path as anything in special_equipment)
+				var/obj/equipment_object = new equipment_path
+				if(!receiver_current.equip_in_one_of_slots(equipment_object, slots))
+					LAZYINITLIST(receiver.failed_special_equipment)
+					receiver.failed_special_equipment += equipment_path
+					receiver.try_give_equipment_fallback()
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback
+	name = "Request Objective-specific Equipment"
+	desc = "Call down a supply pod containing the equipment required for specific objectives."
+	action_icon = 'icons/obj/device.dmi'
+	action_icon_state = "beacon"
+	charge_max = 0
+	clothes_req = FALSE
+	nonabstract_req = TRUE
+	phase_allowed = TRUE
+	antimagic_allowed = TRUE
+	invocation_type = "none"
+
+/obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
+	var/datum/mind/mind = user.mind
+	if(!mind)
+		CRASH("[src] has no owner!")
+	if(mind.failed_special_equipment?.len)
+		podspawn(list(
+			"target" = get_turf(user),
+			"style" = STYLE_SYNDICATE,
+			"spawn" = mind.failed_special_equipment
+		))
+		mind.failed_special_equipment = null
+	mind.RemoveSpell(src)
 
 /datum/objective/assassinate
 	name = "assasinate"
@@ -218,7 +243,13 @@ GLOBAL_LIST_EMPTY(objectives)
 
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	if (!target)
+		return TRUE
+	if (!considered_alive(target))
+		return TRUE
+	if (!target.current.onCentCom() && !target.current.onSyndieBase())
+		return TRUE
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
@@ -269,9 +300,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/protect/check_completion()
 	var/obj/item/organ/brain/brain_target
 	if(human_check)
-		brain_target = target.current.getorganslot(ORGAN_SLOT_BRAIN)
+		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || considered_alive(target, enforce_human = human_check) || (human_check == TRUE && brain_target) ? brain_target.suicided : FALSE
+	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -366,21 +397,21 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/block
 	name = "no organics on shuttle"
-	explanation_text = "Do not allow any organic lifeforms to escape on the shuttle alive."
+	explanation_text = "Do not allow any organic lifeforms with sapience to escape on the shuttle alive."
 	martyr_compatible = 1
 
 /datum/objective/block/check_completion()
 	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
 		return TRUE
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.mind && player.stat != DEAD && !issilicon(player))
+		if(player.mind && player.stat != DEAD && (player.mob_biotypes & MOB_ORGANIC))
 			if(get_area(player) in SSshuttle.emergency.shuttle_areas)
 				return FALSE
 	return TRUE
 
 /datum/objective/purge
 	name = "no mutants on shuttle"
-	explanation_text = "Ensure no mutant humanoid species are present aboard the escape shuttle."
+	explanation_text = "Ensure no nonhuman humanoid species with sapience are present aboard the escape shuttle."
 	martyr_compatible = TRUE
 
 /datum/objective/purge/check_completion()
@@ -567,7 +598,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/steal/admin_edit(mob/admin)
 	var/list/possible_items_all = GLOB.possible_items
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sortNames(possible_items_all)+"custom"
+	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sort_names(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
@@ -594,7 +625,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		if(!isliving(M.current))
 			continue
 
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 
 		for(var/obj/I in all_items) //Check for items
 			if(istype(I, steal_target))
@@ -620,40 +651,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
-
-/datum/objective/download
-	name = "download"
-
-/datum/objective/download/proc/gen_amount_goal()
-	target_amount = rand(20,40)
-	update_explanation_text()
-	return target_amount
-
-/datum/objective/download/update_explanation_text()
-	..()
-	explanation_text = "Download [target_amount] research node\s."
-
-/datum/objective/download/check_completion()
-	var/datum/techweb/checking = new
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/owner in owners)
-		if(ismob(owner.current))
-			var/mob/M = owner.current //Yeah if you get morphed and you eat a quantum tech disk with the RD's latest backup good on you soldier.
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H && (H.stat != DEAD) && istype(H.wear_suit, /obj/item/clothing/suit/space/space_ninja))
-					var/obj/item/clothing/suit/space/space_ninja/S = H.wear_suit
-					S.stored_research.copy_research_to(checking)
-			var/list/otherwise = M.GetAllContents()
-			for(var/obj/item/disk/tech_disk/TD in otherwise)
-				TD.stored_research.copy_research_to(checking)
-	return checking.researched_nodes.len >= target_amount
-
-/datum/objective/download/admin_edit(mob/admin)
-	var/count = input(admin,"How many nodes ?","Nodes",target_amount) as num|null
-	if(count)
-		target_amount = count
-	update_explanation_text()
 
 /datum/objective/capture
 	name = "capture"
@@ -755,15 +752,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbed_count = 0
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling || !changeling.stored_profiles)
 			continue
-		absorbedcount += changeling.absorbedcount
-	return absorbedcount >= target_amount
+		absorbed_count += changeling.absorbed_count
+	return absorbed_count >= target_amount
 
 /datum/objective/absorb_most
 	name = "absorb most"
@@ -771,17 +768,17 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb_most/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbed_count = 0
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling || !changeling.stored_profiles)
 			continue
-		absorbedcount += changeling.absorbedcount
+		absorbed_count += changeling.absorbed_count
 
 	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
-		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbed_count < absorbed_count)
 			continue
 		return FALSE
 	return TRUE
@@ -798,12 +795,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling)
 			continue
-		var/total_genetic_points = changeling.geneticpoints
+		var/total_genetic_points = changeling.genetic_points
 
-		for(var/datum/action/changeling/p in changeling.purchasedpowers)
+		for(var/datum/action/changeling/p in changeling.purchased_powers)
 			total_genetic_points += p.dna_cost
 
-		if(total_genetic_points > initial(changeling.geneticpoints))
+		if(total_genetic_points > initial(changeling.genetic_points))
 			return TRUE
 	return FALSE
 
@@ -835,7 +832,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sort_names(possible_targets)
 		target = new_target.mind
 	else
 		to_chat(admin, span_boldwarning("No active AIs with minds."))
@@ -859,7 +856,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
@@ -885,7 +882,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/book/granter/spell))
 				var/obj/item/book/granter/spell/spellbook = I
@@ -908,7 +905,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sortList(list(
+	var/list/allowed_types = sort_list(list(
 		/datum/objective/assassinate,
 		/datum/objective/maroon,
 		/datum/objective/debrain,
@@ -921,7 +918,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/survive,
 		/datum/objective/martyr,
 		/datum/objective/steal,
-		/datum/objective/download,
 		/datum/objective/nuclear,
 		/datum/objective/capture,
 		/datum/objective/absorb,
@@ -942,7 +938,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/found = FALSE
 	while (!found)
 		var/area/dropoff_area = pick(GLOB.sortedAreas)
-		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
+		if(dropoff_area && (dropoff_area.type in GLOB.the_station_areas) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE
 

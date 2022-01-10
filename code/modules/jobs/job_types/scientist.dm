@@ -1,6 +1,7 @@
 /datum/job/scientist
-	title = "Scientist"
-	department_head = list("Research Director")
+	title = JOB_SCIENTIST
+	description = "Do experiments, perform research, feed the slimes, make bombs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -29,28 +30,33 @@
 		/obj/item/disk/tech_disk/spaceloot = 2,
 		/obj/item/camera_bug = 1
 	)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	rpg_title = "Thaumaturgist"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 
 /datum/outfit/job/scientist
 	name = "Scientist"
 	jobtype = /datum/job/scientist
 
-	belt = /obj/item/pda/toxins
-	ears = /obj/item/radio/headset/headset_sci
+	id_trim = /datum/id_trim/job/scientist
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
-	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/science = 1,
+		)
+	belt = /obj/item/pda/science
+	ears = /obj/item/radio/headset/headset_sci
+	shoes = /obj/item/clothing/shoes/sneakers/white
 
 	backpack = /obj/item/storage/backpack/science
-	satchel = /obj/item/storage/backpack/satchel/tox
-	duffelbag = /obj/item/storage/backpack/duffelbag/toxins
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/science=1)
-
-	id_trim = /datum/id_trim/job/scientist
+	satchel = /obj/item/storage/backpack/satchel/science
+	duffelbag = /obj/item/storage/backpack/duffelbag/science
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/neck/tie/horrible

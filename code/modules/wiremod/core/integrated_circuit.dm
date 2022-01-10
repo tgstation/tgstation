@@ -69,14 +69,20 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
-/obj/item/integrated_circuit/Initialize()
+	/// The current size of the circuit.
+	var/current_size = 0
+
+	/// The current linked component printer. Lets you remotely print off circuit components and places them in the integrated circuit.
+	var/datum/weakref/linked_component_printer
+
+/obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
 	GLOB.integrated_circuits += src
 
 	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
-/obj/item/integrated_circuit/loaded/Initialize()
+/obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
 	set_cell(new /obj/item/stock_parts/cell/high(src))
 
@@ -84,7 +90,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	for(var/obj/item/circuit_component/to_delete in attached_components)
 		remove_component(to_delete)
 		qdel(to_delete)
-	QDEL_LIST(circuit_variables)
+	QDEL_LIST_ASSOC_VAL(circuit_variables)
 	attached_components.Cut()
 	shell = null
 	examined_component = null
@@ -100,9 +106,30 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	else
 		. += span_notice("There is no power cell installed.")
 
+/obj/item/integrated_circuit/drop_location()
+	if(shell)
+		return shell.drop_location()
+	return ..()
+
+/**
+ * Sets the cell of the integrated circuit.
+ *
+ * Arguments:
+ * * cell_to_set - The new cell of the circuit. Can be null.
+ **/
 /obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/cell_to_set)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
 	cell = cell_to_set
+
+/**
+ * Sets the locked status of the integrated circuit.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is locked or not.
+ **/
+/obj/item/integrated_circuit/proc/set_locked(new_value)
+	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
+	locked = new_value
 
 /obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -153,7 +180,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		attached_component.register_shell(shell)
 		// Their input ports may be updated with user values, but the outputs haven't updated
 		// because on is FALSE
-		TRIGGER_CIRCUIT_COMPONENT(attached_component, null)
+		attached_component.trigger_component()
 
 /**
  * Unregisters the current shell attached to this circuit.
@@ -170,6 +197,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	set_on(FALSE)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SHELL_REMOVED)
 
+/**
+ * Sets the on status of the integrated circuit.
+ *
+ * Arguments:
+ * * new_value - A boolean that determines if the circuit is on or not.
+ **/
 /obj/item/integrated_circuit/proc/set_on(new_value)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_ON, new_value)
 	on = new_value
@@ -202,6 +235,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
 	to_add.parent = src
 	attached_components += to_add
+	current_size += to_add.circuit_size
 	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
 
@@ -233,6 +267,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		to_remove.unregister_shell(shell)
 
 	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
+	current_size -= to_remove.circuit_size
 	attached_components -= to_remove
 	to_remove.disconnect()
 	to_remove.parent = null
@@ -245,7 +280,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/simple/circuit_assets)
+		get_asset_datum(/datum/asset/simple/circuit_assets),
+		get_asset_datum(/datum/asset/json/circuit_components)
 	)
 
 /obj/item/integrated_circuit/ui_static_data(mob/user)
@@ -253,6 +289,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["global_basic_types"] = GLOB.wiremod_basic_types
 	.["screen_x"] = screen_x
 	.["screen_y"] = screen_y
+
+	var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+	if(!printer)
+		return
+	.["stored_designs"] = printer.current_unlocked_designs
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
@@ -278,7 +319,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"connected_to" = connected_to,
 				"color" = port.color,
 				"current_data" = current_data,
-				"datatype_data" = port.datatype_ui_data(user),
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 		component_data["output_ports"] = list()
 		for(var/datum/port/output/port as anything in component.output_ports)
@@ -287,12 +328,15 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				"type" = port.datatype,
 				"ref" = REF(port),
 				"color" = port.color,
+				"datatype_data" = port.datatype_ui_data(user)
 			))
 
 		component_data["name"] = component.display_name
 		component_data["x"] = component.rel_x
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
+		component_data["color"] = component.ui_color
+		component_data["ui_buttons"] = component.ui_buttons
 		.["components"] += list(component_data)
 
 	.["variables"] = list()
@@ -357,7 +401,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 #define WITHIN_RANGE(id, table) (id >= 1 && id <= length(table))
 
-/obj/item/integrated_circuit/ui_act(action, list/params)
+/obj/item/integrated_circuit/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -438,9 +482,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return TRUE
 
 			if(params["marked_atom"])
-				if(port.datatype != PORT_TYPE_ATOM && port.datatype != PORT_TYPE_ANY)
+				if(!(port.datatype_handler.datatype_flags & DATATYPE_FLAG_ALLOW_ATOM_INPUT))
 					return
 				var/obj/item/multitool/circuit/marker = usr.get_active_held_item()
+				// Let's admins upload marked datums to an entity port.
 				if(!istype(marker))
 					var/client/user = usr.client
 					if(!check_rights_for(user, R_VAREDIT))
@@ -521,7 +566,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/variable_datatype = params["variable_datatype"]
 			if(!(variable_datatype in GLOB.wiremod_basic_types))
 				return
-
+			if(params["is_list"])
+				variable_datatype = PORT_TYPE_LIST(variable_datatype)
 			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
 			. = TRUE
 		if("remove_variable")
@@ -538,18 +584,57 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(setter_and_getter_count >= max_setters_and_getters)
 				balloon_alert(usr, "setter and getter count at maximum capacity")
 				return
-			var/designated_type = /obj/item/circuit_component/getter
+			var/designated_type = /obj/item/circuit_component/variable/getter
 			if(params["is_setter"])
-				designated_type = /obj/item/circuit_component/setter
-			var/obj/item/circuit_component/component = new designated_type(src)
+				designated_type = /obj/item/circuit_component/variable/setter
+			var/obj/item/circuit_component/variable/component = new designated_type(src)
 			if(!add_component(component, usr))
 				qdel(component)
 				return
+			component.variable_name.set_input(params["variable"])
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
 			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
 			setter_and_getter_count++
+			return TRUE
 		if("move_screen")
 			screen_x = text2num(params["screen_x"])
 			screen_y = text2num(params["screen_y"])
+		if("perform_action")
+			var/component_id = text2num(params["component_id"])
+			if(!WITHIN_RANGE(component_id, attached_components))
+				return
+			var/obj/item/circuit_component/component = attached_components[component_id]
+			component.ui_perform_action(ui.user, params["action_name"])
+		if("print_component")
+			var/component_path = text2path(params["component_to_print"])
+			var/obj/item/circuit_component/component
+			if(!check_rights_for(ui.user.client, R_SPAWN))
+				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+				if(!printer)
+					balloon_alert(ui.user, "linked printer not found!")
+					return
+				component = printer.print_component(component_path)
+				if(!component)
+					balloon_alert(ui.user, "failed to make the component!")
+					return
+			else
+				if(!ispath(component_path, /obj/item/circuit_component))
+					return
+				component = new component_path(drop_location())
+				component.datum_flags |= DF_VAR_EDITED
+			if(!add_component(component))
+				return
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
+			return TRUE
+
+#undef WITHIN_RANGE
+
+/obj/item/integrated_circuit/balloon_alert(mob/viewer, text)
+	if(shell)
+		return shell.balloon_alert(viewer, text)
+	return ..()
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
 	SIGNAL_HANDLER
@@ -562,8 +647,6 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SIGNAL_HANDLER
 	usb_cable.balloon_alert(user, "circuit needs to be in a compatible shell")
 	return COMSIG_CANCEL_USB_CABLE_ATTACK
-
-#undef WITHIN_RANGE
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)

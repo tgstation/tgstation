@@ -14,7 +14,7 @@
 	var/boxtag = ""
 
 /obj/item/food/pizza/raw
-	foodtypes =  GRAIN | DAIRY | VEGETABLES | RAW
+	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -33,6 +33,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtypes = GRAIN | DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	decomp_type = /obj/item/food/pizzaslice/moldy
 
 /obj/item/food/pizzaslice/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/stack/sheet/pizza, 1, 10)
@@ -52,7 +53,7 @@
 /obj/item/food/pizza/margherita/raw
 	name = "raw pizza margherita"
 	icon_state = "pizzamargherita_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -69,7 +70,7 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 
-/obj/item/food/pizzaslice/margherita/Initialize()
+/obj/item/food/pizzaslice/margherita/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
 
@@ -85,7 +86,7 @@
 /obj/item/food/pizza/meat/raw
 	name = "raw meatpizza"
 	icon_state = "meatpizza_raw"
-	foodtypes =  GRAIN | VEGETABLES| DAIRY | MEAT | RAW
+	foodtypes = GRAIN | VEGETABLES| DAIRY | MEAT | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -112,7 +113,7 @@
 /obj/item/food/pizza/mushroom/raw
 	name = "raw mushroom pizza"
 	icon_state = "mushroompizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -141,7 +142,7 @@
 /obj/item/food/pizza/vegetable/raw
 	name = "raw vegetable pizza"
 	icon_state = "vegetablepizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -169,7 +170,7 @@
 /obj/item/food/pizza/donkpocket/raw
 	name = "raw donkpocket pizza"
 	icon_state = "donkpocketpizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -197,7 +198,7 @@
 /obj/item/food/pizza/dank/raw
 	name = "raw dank pizza"
 	icon_state = "dankpizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -225,7 +226,7 @@
 /obj/item/food/pizza/sassysage/raw
 	name = "raw sassysage pizza"
 	icon_state = "sassysagepizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | MEAT | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -253,7 +254,7 @@
 /obj/item/food/pizza/pineapple/raw
 	name = "raw Hawaiian pizza"
 	icon_state = "pineapplepizza_raw"
-	foodtypes =  GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -277,10 +278,15 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/peptides = 3, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/toxin/amatoxin = 2)
 	tastes = list("stale crust" = 1, "rancid cheese" = 2, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | GROSS
+	preserved_food = TRUE
 
-/obj/item/food/pizzaslice/moldy/Initialize()
+/obj/item/food/pizzaslice/moldy/bacteria
+	name = "bacteria rich moldy pizza slice"
+	desc = "Not only is this once delicious pizza encrusted with a layer of spore-spewing fungus, it also seems to shift and slide when unattended, teeming with new life."
+
+/obj/item/food/pizzaslice/moldy/bacteria/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
 
 
 // Arnold Pizza
@@ -297,7 +303,7 @@
 /obj/item/food/pizza/arnold/raw
 	name = "raw Arnold pizza"
 	icon_state = "arnoldpizza_raw"
-	foodtypes =  GRAIN | DAIRY | VEGETABLES | RAW
+	foodtypes = GRAIN | DAIRY | VEGETABLES | RAW
 	burns_in_oven = FALSE
 	slice_type = null
 
@@ -305,8 +311,8 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/arnold, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 //fuck it, i will leave this at the food level for now.
-/obj/item/food/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
-	if(prob(50) || (M != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
+/obj/item/food/proc/try_break_off(mob/living/attacker, mob/living/user) //maybe i give you a pizza maybe i break off your arm
+	if(prob(50) || (attacker != user) || !iscarbon(user) || HAS_TRAIT(user, TRAIT_NODISMEMBER))
 		return
 	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
 	var/obj/item/bodypart/r_arm = user.get_bodypart(BODY_ZONE_R_ARM)
@@ -317,21 +323,21 @@
 	user.visible_message(span_warning("\The [src] breaks off [user]'s arm!"), span_warning("\The [src] breaks off your arm!"))
 	playsound(user, "desecration", 50, TRUE, -1)
 
-/obj/item/food/proc/i_kill_you(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/food/pineappleslice))
+/obj/item/food/proc/i_kill_you(obj/item/item, mob/living/user)
+	if(istype(item, /obj/item/food/pineappleslice))
 		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
 		user.gib() //if you want something crazy like pineapple, i'll kill you
-	else if(istype(I, /obj/item/food/grown/mushroom) && iscarbon(user))
+	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
 		to_chat(user, span_userdanger("So, if you want mushroom, shut up.")) //not as large as the pineapple text, because you could in theory spam it
 		var/mob/living/carbon/shutup = user
 		shutup.gain_trauma(/datum/brain_trauma/severe/mute)
 
-/obj/item/food/pizza/arnold/attack(mob/living/M, mob/living/user)
+/obj/item/food/pizza/arnold/attack(mob/living/target, mob/living/user)
 	. = ..()
-	try_break_off(M, user)
+	try_break_off(target, user)
 
-/obj/item/food/pizza/arnold/attackby(obj/item/I, mob/user)
-	i_kill_you(I, user)
+/obj/item/food/pizza/arnold/attackby(obj/item/item, mob/user)
+	i_kill_you(item, user)
 	. = ..()
 
 /obj/item/food/pizzaslice/arnold
@@ -341,12 +347,12 @@
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 
-/obj/item/food/pizzaslice/arnold/attack(mob/living/M, mob/living/user)
+/obj/item/food/pizzaslice/arnold/attack(mob/living/target, mob/living/user)
 	. =..()
-	try_break_off(M, user)
+	try_break_off(target, user)
 
-/obj/item/food/pizzaslice/arnold/attackby(obj/item/I, mob/user)
-	i_kill_you(I, user)
+/obj/item/food/pizzaslice/arnold/attackby(obj/item/item, mob/user)
+	i_kill_you(item, user)
 	. = ..()
 
 // Ant Pizza, now with more ants.

@@ -3,7 +3,7 @@
 	var/list/datum/gas_mixture/other_airs
 
 	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/components/other_atmosmch
+	var/list/obj/machinery/atmospherics/components/other_atmos_machines
 
 	///Should we equalize air amoung all our members?
 	var/update = TRUE
@@ -13,7 +13,7 @@
 /datum/pipeline/New()
 	other_airs = list()
 	members = list()
-	other_atmosmch = list()
+	other_atmos_machines = list()
 	SSair.networks += src
 
 /datum/pipeline/Destroy()
@@ -27,8 +27,8 @@
 		if(QDELETED(considered_pipe))
 			continue
 		SSair.add_to_rebuild_queue(considered_pipe)
-	for(var/obj/machinery/atmospherics/components/considered_component in other_atmosmch)
-		considered_component.nullifyPipenet(src)
+	for(var/obj/machinery/atmospherics/components/considered_component in other_atmos_machines)
+		considered_component.nullify_pipenet(src)
 	return ..()
 
 /datum/pipeline/process()
@@ -50,7 +50,7 @@
 			air = considered_pipe.air_temporary
 			considered_pipe.air_temporary = null
 	else
-		addMachineryMember(base)
+		add_machinery_member(base)
 
 	if(!air)
 		air = new
@@ -69,7 +69,7 @@
 			air = considered_pipe.air_temporary
 			considered_pipe.air_temporary = null
 	else
-		addMachineryMember(base)
+		add_machinery_member(base)
 
 	if(!air)
 		air = new
@@ -82,8 +82,8 @@
 				continue
 			for(var/obj/machinery/atmospherics/considered_device in result)
 				if(!istype(considered_device, /obj/machinery/atmospherics/pipe))
-					considered_device.setPipenet(src, borderline)
-					addMachineryMember(considered_device)
+					considered_device.set_pipenet(src, borderline)
+					add_machinery_member(considered_device)
 					continue
 				var/obj/machinery/atmospherics/pipe/item = considered_device
 				if(members.Find(item))
@@ -119,18 +119,18 @@
 	 *	This parents list is populated when a machinery calls update_parents and is then added into the queue by the controller.
 	 */
 
-/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/considered_component)
-	other_atmosmch |= considered_component
-	var/list/returned_airs = considered_component.returnPipenetAirs(src)
+/datum/pipeline/proc/add_machinery_member(obj/machinery/atmospherics/components/considered_component)
+	other_atmos_machines |= considered_component
+	var/list/returned_airs = considered_component.return_pipenet_airs(src)
 	if (!length(returned_airs) || (null in returned_airs))
 		stack_trace("addMachineryMember: Nonexistent (empty list) or null machinery gasmix added to pipeline datum from [considered_component] \
 		which is of type [considered_component.type]. Nearby: ([considered_component.x], [considered_component.y], [considered_component.z])")
 	other_airs |= returned_airs
 
-/datum/pipeline/proc/addMember(obj/machinery/atmospherics/reference_device, obj/machinery/atmospherics/device_to_add)
+/datum/pipeline/proc/add_member(obj/machinery/atmospherics/reference_device, obj/machinery/atmospherics/device_to_add)
 	if(!istype(reference_device, /obj/machinery/atmospherics/pipe))
-		reference_device.setPipenet(src, device_to_add)
-		addMachineryMember(reference_device)
+		reference_device.set_pipenet(src, device_to_add)
+		add_machinery_member(reference_device)
 	else
 		var/obj/machinery/atmospherics/pipe/reference_pipe = reference_device
 		if(reference_pipe.parent)
@@ -154,26 +154,26 @@
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in parent_pipeline.members)
 		reference_pipe.parent = src
 	air.merge(parent_pipeline.air)
-	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmosmch)
-		reference_component.replacePipenet(parent_pipeline, src)
-	other_atmosmch |= parent_pipeline.other_atmosmch
+	for(var/obj/machinery/atmospherics/components/reference_component in parent_pipeline.other_atmos_machines)
+		reference_component.replace_pipenet(parent_pipeline, src)
+	other_atmos_machines |= parent_pipeline.other_atmos_machines
 	other_airs |= parent_pipeline.other_airs
 	parent_pipeline.members.Cut()
-	parent_pipeline.other_atmosmch.Cut()
+	parent_pipeline.other_atmos_machines.Cut()
 	update = TRUE
 	qdel(parent_pipeline)
 
-/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/considered_device)
+/obj/machinery/atmospherics/proc/add_member(obj/machinery/atmospherics/considered_device)
 	return
 
-/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/considered_device)
-	parent.addMember(considered_device, src)
+/obj/machinery/atmospherics/pipe/add_member(obj/machinery/atmospherics/considered_device)
+	parent.add_member(considered_device, src)
 
-/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/considered_device)
-	var/datum/pipeline/device_pipeline = returnPipenet(considered_device)
+/obj/machinery/atmospherics/components/add_member(obj/machinery/atmospherics/considered_device)
+	var/datum/pipeline/device_pipeline = return_pipenet(considered_device)
 	if(!device_pipeline)
-		CRASH("null.addMember() called by [type] on [COORD(src)]")
-	device_pipeline.addMember(considered_device, src)
+		CRASH("null.add_member() called by [type] on [COORD(src)]")
+	device_pipeline.add_member(considered_device, src)
 
 
 /datum/pipeline/proc/temporarily_store_air()
@@ -218,7 +218,7 @@
 	. = other_airs + air
 	if(null in .)
 		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
-		return removeNullsFromList(.)
+		return remove_nulls_from_list(.)
 
 /// Called when the pipenet needs to update and mix together all the air mixes
 /datum/pipeline/proc/reconcile_air()
@@ -232,11 +232,11 @@
 			continue
 		gas_mixture_list += pipeline.other_airs
 		gas_mixture_list += pipeline.air
-		for(var/obj/machinery/atmospherics/components/atmosmch as anything in pipeline.other_atmosmch)
-			if(!atmosmch.custom_reconcilation)
+		for(var/obj/machinery/atmospherics/components/atmos_machine as anything in pipeline.other_atmos_machines)
+			if(!atmos_machine.custom_reconcilation)
 				continue
-			pipeline_list |= atmosmch.returnPipenetsForReconcilation(src)
-			gas_mixture_list |= atmosmch.returnAirsForReconcilation(src)
+			pipeline_list |= atmos_machine.return_pipenets_for_reconcilation(src)
+			gas_mixture_list |= atmos_machine.return_airs_for_reconcilation(src)
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0

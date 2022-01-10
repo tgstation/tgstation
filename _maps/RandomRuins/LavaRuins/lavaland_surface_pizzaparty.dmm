@@ -57,7 +57,7 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
@@ -66,7 +66,7 @@
 "l" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/wood{
@@ -151,7 +151,7 @@
 /area/ruin/unpowered)
 "x" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/pizzaparty,
+/obj/effect/spawner/random/food_or_drink/pizzaparty,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
@@ -266,7 +266,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "O" = (
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood{
 	initial_gas_mix = "LAVALAND_ATMOS"

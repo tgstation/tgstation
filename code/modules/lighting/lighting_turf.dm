@@ -14,10 +14,6 @@
 	if (lighting_object)
 		qdel(lighting_object, force=TRUE) //Shitty fix for lighting objects persisting after death
 
-	var/area/our_area = loc
-	if (!IS_DYNAMIC_LIGHTING(our_area) && !light_sources)
-		return
-
 	new/datum/lighting_object(src)
 
 // Used to get a scaled lumcount.
@@ -97,11 +93,16 @@
 
 /turf/proc/change_area(area/old_area, area/new_area)
 	if(SSlighting.initialized)
-		if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-			if (new_area.dynamic_lighting)
+		if (new_area.static_lighting != old_area.static_lighting)
+			if (new_area.static_lighting)
 				lighting_build_overlay()
 			else
 				lighting_clear_overlay()
+	//Inherit overlay of new area
+	if(old_area.lighting_effect)
+		cut_overlay(old_area.lighting_effect)
+	if(new_area.lighting_effect)
+		add_overlay(new_area.lighting_effect)
 
 /turf/proc/generate_missing_corners()
 	if (!lighting_corner_NE)

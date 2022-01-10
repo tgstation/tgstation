@@ -52,7 +52,7 @@
 	var/datum/chemical_reaction/edit_recipe
 
 ///Create reagents datum
-/obj/machinery/chem_recipe_debug/Initialize()
+/obj/machinery/chem_recipe_debug/Initialize(mapload)
 	. = ..()
 	create_reagents(9000)//I want to make sure everything fits
 	end_processing()
@@ -112,9 +112,9 @@
 
 /obj/machinery/chem_recipe_debug/proc/relay_all_reactions()
 	say("Completed testing, missing reactions products (may have exploded) are:")
-	say("[problem_string]")
+	say("[problem_string]", sanitize=FALSE)
 	say("Problem with results are:")
-	say("[impure_string]")
+	say("[impure_string]", sanitize=FALSE)
 	say("Reactions with minor impurity: [minorImpurity], reactions with major impurity: [majorImpurity]")
 	processing = FALSE
 	problem_string = null
@@ -129,7 +129,7 @@
 		say("Reaction completed for [cached_reactions[index]] final temperature = [reagents.chem_temp], ph = [reagents.ph], time taken = [react_time]s.")
 		var/datum/chemical_reaction/reaction = cached_reactions[index]
 		for(var/reagent_type in reaction.results)
-			var/datum/reagent/reagent =  reagents.get_reagent(reagent_type)
+			var/datum/reagent/reagent = reagents.get_reagent(reagent_type)
 			if(!reagent)
 				say(span_warning("Unable to find product [reagent_type] in holder after reaction! reagents found are:"))
 				for(var/other_reagent in reagents.reagent_list)
@@ -321,7 +321,7 @@
 			beaker_spawn = !beaker_spawn
 			return TRUE
 		if("setTargetList")
-			var/text = stripped_input(usr,"List","Enter a list of Recipe product names separated by commas", "Recipe", MAX_MESSAGE_LEN)
+			var/text = tgui_input_text(usr, "Enter a list of Recipe product names separated by commas", "Recipe List", multiline = TRUE)
 			reaction_names = list()
 			if(!text)
 				say("Could not find reaction")

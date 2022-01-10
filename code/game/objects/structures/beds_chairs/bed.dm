@@ -36,12 +36,13 @@
 /obj/structure/bed/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
 
-/obj/structure/bed/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
-		W.play_tool_sound(src)
-		deconstruct(TRUE)
-	else
-		return ..()
+/obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if(flags_1&NODECONSTRUCT_1)
+		return TRUE
+	..()
+	weapon.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return TRUE
 
 /*
  * Roller beds
@@ -53,6 +54,11 @@
 	anchored = FALSE
 	resistance_flags = NONE
 	var/foldabletype = /obj/item/roller
+
+
+/obj/structure/bed/roller/examine(mob/user)
+	. = ..()
+	. += span_notice("You can fold it up by <b>dragging</b> it onto you.")
 
 /obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/roller/robo))
@@ -146,7 +152,7 @@
 	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
 	var/obj/structure/bed/roller/loaded = null
 
-/obj/item/roller/robo/Initialize()
+/obj/item/roller/robo/Initialize(mapload)
 	. = ..()
 	loaded = new(src)
 
@@ -215,17 +221,31 @@
 	. = ..()
 	update_owner(M)
 
-/obj/structure/bed/alien
-	name = "resting contraption"
-	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
-	icon_state = "abed"
-
-
 /obj/structure/bed/maint
 	name = "dirty mattress"
 	desc = "An old grubby mattress. You try to not think about what could be the cause of those stains."
 	icon_state = "dirty_mattress"
 
-/obj/structure/bed/maint/Initialize()
+/obj/structure/bed/maint/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 25)
+
+//Double Beds, for luxurious sleeping, i.e. the captain and maybe heads- if people use this for ERP, send them to skyrat
+/obj/structure/bed/double
+	name = "double bed"
+	desc = "A luxurious double bed, for those too important for small dreams."
+	icon_state = "bed_double"
+	buildstackamount = 4
+	max_buckled_mobs = 2
+	///The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
+	var/mob/living/goldilocks
+
+/obj/structure/bed/double/post_buckle_mob(mob/living/target)
+	if(buckled_mobs.len > 1 && !goldilocks) //Push the second buckled mob a bit higher from the normal lying position
+		target.pixel_y = target.base_pixel_y + 6
+		goldilocks = target
+
+/obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
+	target.pixel_y = target.base_pixel_y + target.body_position_pixel_y_offset
+	if(target == goldilocks)
+		goldilocks = null

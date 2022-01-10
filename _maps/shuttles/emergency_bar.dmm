@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "ac" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -166,7 +166,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/chair/stool/directional/east{
+/obj/structure/chair/stool/directional/west{
 	can_buckle = 1
 	},
 /turf/open/floor/iron/grimy,
@@ -307,7 +307,7 @@
 /area/shuttle/escape)
 "ba" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/effect/spawner/lootdrop/gambling,
+/obj/effect/spawner/random/entertainment/gambling,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bc" = (

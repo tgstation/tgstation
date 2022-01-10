@@ -22,9 +22,13 @@
 	var/lava_firestacks = 20
 	/// How much temperature we expose objects with
 	var/temperature_damage = 10000
+	/// mobs with this trait won't burn.
+	var/immunity_trait = TRAIT_LAVA_IMMUNE
+	/// objects with these flags won't burn.
+	var/immunity_resistance_flags = LAVA_PROOF
 
 /turf/open/lava/ex_act(severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -121,68 +125,99 @@
 			LAZYREMOVE(found_safeties, S)
 	return LAZYLEN(found_safeties)
 
+///Generic return value of the can_burn_stuff() proc. Does nothing.
+#define LAVA_BE_IGNORING 0
+/// Another. Won't burn the target but will make the turf start processing.
+#define LAVA_BE_PROCESSING 1
+/// Burns the target and makes the turf process (depending on the return value of do_burn()).
+#define LAVA_BE_BURNING 2
 
-/turf/open/lava/proc/burn_stuff(AM, delta_time = 1)
-	. = 0
-
+///Proc that sets on fire something or everything on the turf that's not immune to lava. Returns TRUE to make the turf start processing.
+/turf/open/lava/proc/burn_stuff(atom/movable/to_burn, delta_time = 1)
 	if(is_safe())
 		return FALSE
 
 	var/thing_to_check = src
-	if (AM)
-		thing_to_check = list(AM)
-	for(var/thing in thing_to_check)
-		if(isobj(thing))
-			var/obj/O = thing
-			if((O.resistance_flags & (LAVA_PROOF|INDESTRUCTIBLE)) || O.throwing)
+	if (to_burn)
+		thing_to_check = list(to_burn)
+	for(var/atom/movable/burn_target as anything in thing_to_check)
+		switch(can_burn_stuff(burn_target))
+			if(LAVA_BE_IGNORING)
 				continue
-			. = 1
-			if((O.resistance_flags & (ON_FIRE)))
-				continue
-			if(!(O.resistance_flags & FLAMMABLE))
-				O.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
-			if(O.resistance_flags & FIRE_PROOF)
-				O.resistance_flags &= ~FIRE_PROOF
-			if(O.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
-				O.armor = O.armor.setRating(fire = 50)
-			O.fire_act(temperature_damage, 1000 * delta_time)
-			if(istype(O, /obj/structure/closet))
-				var/obj/structure/closet/C = O
-				for(var/I in C.contents)
-					burn_stuff(I)
-		else if (isliving(thing))
-			. = 1
-			var/mob/living/L = thing
-			if(L.movement_type & FLYING)
-				continue //YOU'RE FLYING OVER IT
-			var/buckle_check = L.buckled
-			if(isobj(buckle_check))
-				var/obj/O = buckle_check
-				if(O.resistance_flags & LAVA_PROOF)
+			if(LAVA_BE_BURNING)
+				if(!do_burn(burn_target, delta_time))
 					continue
-			else if(isliving(buckle_check))
-				var/mob/living/live = buckle_check
-				if(WEATHER_LAVA in live.weather_immunities)
-					continue
+		. = TRUE
 
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				var/obj/item/clothing/S = C.get_item_by_slot(ITEM_SLOT_OCLOTHING)
-				var/obj/item/clothing/H = C.get_item_by_slot(ITEM_SLOT_HEAD)
+/turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
+	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
+		return LAVA_BE_IGNORING
 
-				if(S && H && S.clothing_flags & LAVAPROTECT && H.clothing_flags & LAVAPROTECT)
-					return
+	if(isobj(burn_target))
+		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.
+			return LAVA_BE_IGNORING
+		var/obj/burn_obj = burn_target
+		if((burn_obj.resistance_flags & immunity_resistance_flags))
+			return LAVA_BE_PROCESSING
+		return LAVA_BE_BURNING
 
-			if(WEATHER_LAVA in L.weather_immunities)
-				continue
+	if (!isliving(burn_target))
+		return LAVA_BE_IGNORING
 
-			ADD_TRAIT(L, TRAIT_PERMANENTLY_ONFIRE,TURF_TRAIT)
-			L.update_fire()
+	if(HAS_TRAIT(burn_target, immunity_trait))
+		return LAVA_BE_PROCESSING
+	var/mob/living/burn_living = burn_target
+	var/atom/movable/burn_buckled = burn_living.buckled
+	if(burn_buckled)
+		if(burn_buckled.movement_type & (FLYING|FLOATING))
+			return LAVA_BE_PROCESSING
+		if(isobj(burn_buckled))
+			var/obj/burn_buckled_obj = burn_buckled
+			if(burn_buckled_obj.resistance_flags & immunity_resistance_flags)
+				return LAVA_BE_PROCESSING
+		else if(HAS_TRAIT(burn_buckled, immunity_trait))
+			return LAVA_BE_PROCESSING
 
-			L.adjustFireLoss(lava_damage * delta_time)
-			if(L) //mobs turning into object corpses could get deleted here.
-				L.adjust_fire_stacks(lava_firestacks * delta_time)
-				L.IgniteMob()
+	if(iscarbon(burn_living))
+		var/mob/living/carbon/burn_carbon = burn_living
+		var/obj/item/clothing/burn_suit = burn_carbon.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+		var/obj/item/clothing/burn_helmet = burn_carbon.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(burn_suit?.clothing_flags & LAVAPROTECT && burn_helmet?.clothing_flags & LAVAPROTECT)
+			return LAVA_BE_PROCESSING
+
+	return LAVA_BE_BURNING
+
+#undef LAVA_BE_IGNORING
+#undef LAVA_BE_PROCESSING
+#undef LAVA_BE_BURNING
+
+/turf/open/lava/proc/do_burn(atom/movable/burn_target, delta_time = 1)
+	. = TRUE
+	if(isobj(burn_target))
+		var/obj/burn_obj = burn_target
+		if(burn_obj.resistance_flags & ON_FIRE) // already on fire; skip it.
+			return
+		if(!(burn_obj.resistance_flags & FLAMMABLE))
+			burn_obj.resistance_flags |= FLAMMABLE //Even fireproof things burn up in lava
+		if(burn_obj.resistance_flags & FIRE_PROOF)
+			burn_obj.resistance_flags &= ~FIRE_PROOF
+		if(burn_obj.armor.fire > 50) //obj with 100% fire armor still get slowly burned away.
+			burn_obj.armor = burn_obj.armor.setRating(fire = 50)
+		burn_obj.fire_act(temperature_damage, 1000 * delta_time)
+		if(istype(burn_obj, /obj/structure/closet))
+			var/obj/structure/closet/burn_closet = burn_obj
+			for(var/burn_content in burn_closet.contents)
+				burn_stuff(burn_content)
+		return
+
+	var/mob/living/burn_living = burn_target
+	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	burn_living.update_fire()
+
+	burn_living.adjustFireLoss(lava_damage * delta_time)
+	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
+		burn_living.adjust_fire_stacks(lava_firestacks * delta_time)
+		burn_living.IgniteMob()
 
 /turf/open/lava/smooth
 	name = "lava"

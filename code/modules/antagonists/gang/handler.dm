@@ -15,6 +15,8 @@
 
 
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
+///Forces the Families theme to be the one in this variable via variable editing. Used for debugging.
+GLOBAL_VAR(families_override_theme)
 
 /**
  * # Families gamemode / dynamic ruleset handler
@@ -68,6 +70,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/antag_candidates = list()
 	/// List of jobs not eligible for starting family member / undercover cop. Set externally (passed by reference) by gamemode / ruleset; used internally.
 	var/list/restricted_jobs
+	/// The current chosen gamemode theme. Decides the available Gangs, objectives, and equipment.
+	var/datum/gang_theme/current_theme
 
 /**
  * Sets antag_candidates and restricted_jobs.
@@ -105,7 +109,15 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
  * Takes no arguments.
  */
 /datum/gang_handler/proc/pre_setup_analogue()
-	for(var/j = 0, j < gangs_to_generate, j++)
+	if(!GLOB.families_override_theme)
+		var/theme_to_use = pick(subtypesof(/datum/gang_theme))
+		current_theme = new theme_to_use
+	else
+		current_theme = new GLOB.families_override_theme
+	message_admins("Families has chosen the theme: [current_theme.name]")
+	log_game("FAMILIES: The following theme has been chosen: [current_theme.name]")
+	var/gangsters_to_make = length(current_theme.involved_gangs) * current_theme.starting_gangsters
+	for(var/i in 1 to gangsters_to_make)
 		if (!antag_candidates.len)
 			break
 		var/taken = pick_n_take(antag_candidates) // original used antag_pick, but that's local to game_mode and rulesets use pick_n_take so this is fine maybe
@@ -120,21 +132,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		if(!midround_ruleset)
 			GLOB.pre_setup_antags += gangbanger
-	for(var/j = 0, j < gangs_to_generate, j++)
-		if(!antag_candidates.len)
-			break
-		var/taken = pick_n_take(antag_candidates)
-		var/datum/mind/undercover_cop
-		if(istype(taken, /mob))
-			var/mob/T = taken
-			undercover_cop = T.mind
-		else
-			undercover_cop = taken
-		undercover_cops += undercover_cop
-		undercover_cop.restricted_roles = restricted_jobs
-		log_game("[key_name(undercover_cop)] has been selected as a starting undercover cop!")
-		if(!midround_ruleset)
-			GLOB.pre_setup_antags += undercover_cop
 	deaths_during_shift_at_beginning = GLOB.deaths_during_shift // don't want to mix up pre-families and post-families deaths
 	start_time = world.time
 	end_time = start_time + ((60 MINUTES) / (midround_ruleset ? 2 : 1)) // midround families rounds end quicker
@@ -157,70 +154,25 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
  * * return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.
  */
 /datum/gang_handler/proc/post_setup_analogue(return_if_no_gangs = FALSE)
-	var/replacement_gangsters = 0
-	var/replacement_cops = 0
-	for(var/datum/mind/gangbanger in gangbangers)
-		if(!ishuman(gangbanger.current))
-			if(!midround_ruleset)
-				GLOB.pre_setup_antags -= gangbanger
-			gangbangers.Remove(gangbanger)
-			log_game("[gangbanger] was not a human, and thus has lost their gangster role.")
-			replacement_gangsters++
-	if(replacement_gangsters)
-		for(var/j = 0, j < replacement_gangsters, j++)
-			if(!antag_candidates.len)
-				log_game("Unable to find more replacement gangsters. Not all of the gangs will spawn.")
-				break
-			var/taken = pick_n_take(antag_candidates)
-			var/datum/mind/gangbanger
-			if(istype(taken, /mob)) // boilerplate needed because antag_candidates might not contain minds
-				var/mob/T = taken
-				gangbanger = T.mind
-			else
-				gangbanger = taken
-			gangbangers += gangbanger
-			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	for(var/datum/mind/undercover_cop in undercover_cops)
-		if(!ishuman(undercover_cop.current))
-			undercover_cops.Remove(undercover_cop)
-			if(!midround_ruleset)
-				GLOB.pre_setup_antags -= undercover_cop
-			log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
-			replacement_cops++
-	if(replacement_cops)
-		for(var/j = 0, j < replacement_cops, j++)
-			if(!antag_candidates.len)
-				log_game("Unable to find more replacement undercover cops. Not all of the cops will spawn.")
-				break
-			var/taken = pick_n_take(antag_candidates)
-			var/datum/mind/undercover_cop
-			if(istype(taken, /mob))
-				var/mob/T = taken
-				undercover_cop = T.mind
-			else
-				undercover_cop = taken
-			undercover_cops += undercover_cop
-			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
-
-	if(!gangbangers.len)
-		if(return_if_no_gangs)
-			return FALSE // ending early is bad if we're not in dynamic
-
-	for(var/datum/mind/undercover_cop in undercover_cops)
-		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
-		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-
-	var/list/gangs_to_use = subtypesof(/datum/antagonist/gang)
-	for(var/datum/mind/gangbanger in gangbangers)
-		var/gang_to_use = pick_n_take(gangs_to_use)
+	var/list/gangs_to_use = current_theme.involved_gangs.Copy()
+	var/amount_of_gangs = gangs_to_use.len
+	var/amount_of_gangsters = amount_of_gangs * current_theme.starting_gangsters
+	for(var/_ in 1 to amount_of_gangsters)
+		if(!gangbangers.len) // We ran out of candidates!
+			break
+		if(!gangs_to_use.len)
+			gangs_to_use = current_theme.involved_gangs.Copy()
+		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes Leaders among the gangs
+		var/datum/mind/gangster_mind = pick_n_take(gangbangers)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()
 		new_gangster.handler = src
 		new_gangster.starter_gangster = TRUE
-		gangbanger.add_antag_datum(new_gangster)
+		gangster_mind.add_antag_datum(new_gangster)
+
+
 		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
-	SSshuttle.registerHostileEnvironment(src)
 	return TRUE
 
 /**
@@ -235,18 +187,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
  * Takes no arguments.
  */
 /datum/gang_handler/proc/process_analogue()
-	check_wanted_level()
-	check_counter++
-	if(check_counter >= 5)
-		if(world.time > (end_time - 5 MINUTES) && !sent_second_announcement)
-			five_minute_warning()
-			addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
-
-		check_counter = 0
-
-		check_tagged_turfs()
-		check_gang_clothes()
-		check_rollin_with_crews()
 
 /**
  * set_round_result() or round_result() equivalent.
@@ -258,45 +198,14 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
  * Takes no arguments.
  */
 /datum/gang_handler/proc/set_round_result_analogue()
-	var/alive_gangsters = 0
-	var/alive_cops = 0
-	for(var/datum/mind/gangbanger in gangbangers)
-		if(!ishuman(gangbanger.current))
-			continue
-		var/mob/living/carbon/human/H = gangbanger.current
-		if(H.stat)
-			continue
-		alive_gangsters++
-	for(var/datum/mind/bacon in get_antag_minds(/datum/antagonist/ert/families))
-		if(!ishuman(bacon.current)) // always returns false
-			continue
-		var/mob/living/carbon/human/H = bacon.current
-		if(H.stat)
-			continue
-		alive_cops++
-	if(alive_gangsters > alive_cops)
-		SSticker.mode_result = "win - gangs survived"
-		SSticker.news_report = GANG_OPERATING
-		return TRUE
-	SSticker.mode_result = "loss - police destroyed the gangs"
-	SSticker.news_report = GANG_DESTROYED
-	return FALSE
+	SSticker.mode_result = "win - gangs survived"
+	SSticker.news_report = GANG_OPERATING
+	return TRUE
 
 /// Internal. Announces the presence of families to the entire station and sets sent_announcement to true to allow other checks to occur.
 /datum/gang_handler/proc/announce_gang_locations()
-	var/list/readable_gang_names = list()
-	for(var/GG in gangs)
-		var/datum/team/gang/G = GG
-		readable_gang_names += "[G.name]"
-	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the [use_dynamic_timing ? "half-hour" : "hour"] 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait [use_dynamic_timing ? "thirty minutes" : "an hour"]. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce(current_theme.description, current_theme.name, 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
-	check_wanted_level() // i like it when the wanted level updates at the same time as the announcement
-
-/// Internal. Announces that space cops will arrive in 5 minutes and sets sent_second_announcement to true to freeze
-/datum/gang_handler/proc/five_minute_warning()
-	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
-	sent_second_announcement = TRUE
 
 /// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.
 /datum/gang_handler/proc/check_wanted_level()
@@ -460,7 +369,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				announcer = "Spinward Stellar Coalition National Guard"
 
 	priority_announce(announcement_message, announcer, 'sound/effects/families_police.ogg')
-	var/list/candidates = pollGhostCandidates("Do you want to help clean up crime on this station?", "deathsquad")
+	var/list/candidates = poll_ghost_candidates("Do you want to help clean up crime on this station?", "deathsquad")
 
 
 	if(candidates.len)
@@ -495,122 +404,4 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			numagents--
 	cops_arrived = TRUE
 	update_wanted_level(wanted_level) // gotta make sure everyone's wanted level display looks nice
-	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 	return TRUE
-
-/// Internal. Clears the hostile environment, letting the shuttle leave.
-/datum/gang_handler/proc/end_hostile_sit()
-	SSshuttle.clearHostileEnvironment(src)
-
-/// Internal. Assigns points to families according to gang tags.
-/datum/gang_handler/proc/check_tagged_turfs()
-	for(var/T in GLOB.gang_tags)
-		var/obj/effect/decal/cleanable/crayon/gang/tag = T
-		if(tag.my_gang)
-			tag.my_gang.adjust_points(50)
-		CHECK_TICK
-
-/// Internal. Assigns points to families according to clothing of all currently living humans.
-/datum/gang_handler/proc/check_gang_clothes() // TODO: make this grab the sprite itself, average out what the primary color would be, then compare how close it is to the gang color so I don't have to manually fill shit out for 5 years for every gang type
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(!H.mind || !H.client)
-			continue
-		var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
-		for(var/clothing in list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.back, H.gloves, H.shoes, H.belt, H.s_store, H.glasses, H.ears, H.wear_id))
-			if(is_gangster)
-				if(is_type_in_list(clothing, is_gangster.acceptable_clothes))
-					is_gangster.add_gang_points(10)
-			else
-				for(var/G in gangs)
-					var/datum/team/gang/gang_clothes = G
-					if(is_type_in_list(clothing, gang_clothes.acceptable_clothes))
-						gang_clothes.adjust_points(5)
-
-		CHECK_TICK
-
-/// Internal. Assigns points to families according to groups of nearby family members.
-/datum/gang_handler/proc/check_rollin_with_crews()
-	var/list/areas_to_check = list()
-	for(var/G in gangbangers)
-		var/datum/mind/gangster = G
-		areas_to_check += get_area(gangster.current)
-	for(var/AA in areas_to_check)
-		var/area/A = AA
-		var/list/gang_members = list()
-		for(var/mob/living/carbon/human/H in A)
-			if(H.stat || !H.mind || !H.client)
-				continue
-			var/datum/antagonist/gang/is_gangster = H.mind.has_antag_datum(/datum/antagonist/gang)
-			if(is_gangster)
-				gang_members[is_gangster.my_gang]++
-			CHECK_TICK
-		if(gang_members.len)
-			for(var/datum/team/gang/gangsters in gang_members)
-				if(gang_members[gangsters] >= CREW_SIZE_MIN)
-					if(gang_members[gangsters] >= CREW_SIZE_MAX)
-						gangsters.adjust_points(5) // Discourage larger clumps, spread ur people out
-					else
-						gangsters.adjust_points(10)
-
-
-/// Hijacks the space cops' roundend results to say if cops / a gang won the round. Included in the same file as the gang_handler as it's far more related to the gamemode than it is to the beat cop datum; it's kind of hacky.
-/datum/antagonist/ert/families/beatcop/roundend_report_footer()
-	var/list/all_gangs = list()
-	for(var/datum/team/gang/G in GLOB.antagonist_teams)
-		all_gangs += G
-	if(!all_gangs.len)
-		return ..()
-	var/list/all_gangsters = get_antag_minds(/datum/antagonist/gang)
-	var/list/all_cops = get_antag_minds(/datum/antagonist/ert/families)
-	var/report
-	var/highest_point_value = 0
-	var/highest_gang = "Leet Like Jeff K"
-	var/objective_failures = TRUE
-
-	for(var/G in all_gangs)
-		var/datum/team/gang/GG = G
-		if(GG.my_gang_datum.check_gang_objective())
-			objective_failures = FALSE
-			break
-	for(var/G in all_gangs)
-		var/datum/team/gang/GG = G
-		if(!objective_failures)
-			if(GG.points >= highest_point_value && GG.members.len && GG.my_gang_datum.check_gang_objective())
-				highest_point_value = GG.points
-				highest_gang = GG.name
-		else
-			if(GG.points >= highest_point_value && GG.members.len)
-				highest_point_value = GG.points
-				highest_gang = GG.name
-	var/alive_gangsters = 0
-	var/alive_cops = 0
-	for(var/M in all_gangsters)
-		var/datum/mind/gangbanger = M
-		if(gangbanger.current)
-			if(!ishuman(gangbanger.current))
-				continue
-			var/mob/living/carbon/human/H = gangbanger.current
-			if(H.stat)
-				continue
-			alive_gangsters++
-	for(var/M in all_cops)
-		var/datum/mind/bacon = M
-		if(bacon.current)
-			if(!ishuman(bacon.current)) // always returns false
-				continue
-			var/mob/living/carbon/human/H = bacon.current
-			if(H.stat)
-				continue
-			alive_cops++
-
-	if(alive_gangsters > alive_cops)
-		if(!objective_failures)
-			report = "<span class='header greentext'>[highest_gang] won the round by completing their objective and having the most points!</span>"
-		else
-			report = "<span class='header greentext'>[highest_gang] won the round by having the most points!</span>"
-	else if(alive_gangsters == alive_cops)
-		report = "<span class='header redtext'>Legend has it the police and the families are still duking it out to this day!</span>"
-	else
-		report = "<span class='header greentext'>The police put the boots to the families, medium style!</span>"
-
-	return "</div><div class='panel redborder'>[report]" // </div> at the front not the back because this proc is intended for normal text not a whole new panel

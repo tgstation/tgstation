@@ -6,7 +6,7 @@
 	show_in_roundend = FALSE /// We're already adding them in to the contractor's roundend.
 	give_objectives = TRUE /// We give them their own custom objective.
 	show_in_antagpanel = FALSE /// Not a proper/full antag.
-	should_equip = FALSE /// Don't give them an uplink.
+	give_uplink = FALSE /// Don't give them an uplink.
 
 	var/datum/team/contractor_team/contractor_team
 
@@ -77,7 +77,7 @@
 		start_index = assigned_contracts.len + 1
 
 	// Generate contracts, and find the lowest paying.
-	for (var/i = 1; i <= to_generate.len; i++)
+	for(var/i in 1 to to_generate.len)
 		var/datum/syndicate_contract/contract_to_add = new(owner, assigned_targets, to_generate[i])
 		var/contract_payout_total = contract_to_add.contract.payout + contract_to_add.contract.payout_bonus
 
@@ -165,7 +165,7 @@
 	if (.)
 		to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
 
-		var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as the Contractor Support Unit for [user.real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_CONTRACTOR_SUPPORT)
 
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/C = pick(candidates)

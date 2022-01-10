@@ -1,6 +1,6 @@
 /obj/item/modular_computer/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	. = ..()
-	var/component_probability = min(50, max(damage_amount*0.1, 1 - obj_integrity/max_integrity))
+	var/component_probability = min(50, max(damage_amount*0.1, 1 - atom_integrity/max_integrity))
 	switch(damage_flag)
 		if(BULLET)
 			component_probability = damage_amount * 0.5

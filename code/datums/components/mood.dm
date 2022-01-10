@@ -36,14 +36,15 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
-	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
+	var/atom/movable/movable_parent = parent
+	movable_parent.lose_area_sensitivity(MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
 	return ..()
 
 /datum/component/mood/proc/register_job_signals(datum/source, job)
 	SIGNAL_HANDLER
 
-	if(job in list("Research Director", "Scientist", "Roboticist"))
+	if(job in list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST))
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
@@ -221,6 +222,7 @@
 		return
 	sanity = amount
 	var/mob/living/master = parent
+	SEND_SIGNAL(master, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
@@ -265,6 +267,8 @@
 	SIGNAL_HANDLER
 
 	var/datum/mood_event/the_event
+	if(!ispath(type, /datum/mood_event))
+		return
 	if(!istext(category))
 		category = REF(category)
 	if(mood_events[category])

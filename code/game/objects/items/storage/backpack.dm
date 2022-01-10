@@ -56,7 +56,7 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
@@ -81,7 +81,7 @@
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/backpack/santabag/Initialize()
+/obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
 
@@ -181,8 +181,8 @@
 /obj/item/storage/backpack/science
 	name = "science backpack"
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
-	icon_state = "toxpack"
-	inhand_icon_state = "toxpack"
+	icon_state = "scipack"
+	inhand_icon_state = "scipack"
 
 /obj/item/storage/backpack/virology
 	name = "virology backpack"
@@ -274,11 +274,11 @@
 	icon_state = "satchel-gen"
 	inhand_icon_state = "satchel-gen"
 
-/obj/item/storage/backpack/satchel/tox
+/obj/item/storage/backpack/satchel/science
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
-	icon_state = "satchel-tox"
-	inhand_icon_state = "satchel-tox"
+	icon_state = "satchel-sci"
+	inhand_icon_state = "satchel-sci"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
@@ -361,7 +361,7 @@
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/Initialize()
+/obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
 	var/add_dropdel = TRUE //clarified boolean
 	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
@@ -406,11 +406,11 @@
 	icon_state = "duffel-genetics"
 	inhand_icon_state = "duffel-genetics"
 
-/obj/item/storage/backpack/duffelbag/toxins
+/obj/item/storage/backpack/duffelbag/science
 	name = "scientist's duffel bag"
 	desc = "A large duffel bag for holding extra scientific components."
-	icon_state = "duffel-toxins"
-	inhand_icon_state = "duffel-toxins"
+	icon_state = "duffel-sci"
+	inhand_icon_state = "duffel-sci"
 
 /obj/item/storage/backpack/duffelbag/virology
 	name = "virologist's duffel bag"
@@ -642,12 +642,12 @@
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
-	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite hardsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
+	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/watertank/op(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/mod/control/pre_equipped/elite(src)
 	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
@@ -680,3 +680,4 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+

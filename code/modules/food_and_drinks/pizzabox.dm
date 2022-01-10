@@ -35,7 +35,7 @@
 	/// Max bomb timer allower in seconds
 	var/bomb_timer_max = 20
 
-/obj/item/pizzabox/Initialize()
+/obj/item/pizzabox/Initialize(mapload)
 	. = ..()
 	if(pizza)
 		pizza = new pizza
@@ -150,12 +150,12 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = input(user, "Set the [bomb] timer from [bomb_timer_min] to [bomb_timer_max].", bomb, bomb_timer) as num|null
+				bomb_timer = tgui_input_number(user, "Set the timer for [bomb].", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
 
 				if (isnull(bomb_timer))
 					return
 
-				bomb_timer = clamp(CEILING(bomb_timer, 1), bomb_timer_min, bomb_timer_max)
+				bomb_timer = round(bomb_timer)
 				bomb_defused = FALSE
 
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
@@ -224,7 +224,7 @@
 				to_chat(user, span_notice("You scribble illegibly on [src]!"))
 				return
 			var/obj/item/pizzabox/box = boxes.len ? boxes[boxes.len] : src
-			box.boxtag += stripped_input(user, "Write on [box]'s tag:", box, "", 30)
+			box.boxtag += tgui_input_text(user, "Write on [box]'s tag:", box, max_length = 30)
 			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			to_chat(user, span_notice("You write with [I] on [src]."))
@@ -296,7 +296,7 @@
 	wires = null
 	update_appearance()
 
-/obj/item/pizzabox/bomb/Initialize()
+/obj/item/pizzabox/bomb/Initialize(mapload)
 	. = ..()
 	if(!pizza)
 		var/randompizza = pick(subtypesof(/obj/item/food/pizza))
@@ -348,7 +348,7 @@
 	///List of ckeys and their favourite pizzas. e.g. pizza_preferences[ckey] = /obj/item/food/pizza/meat
 	var/static/list/pizza_preferences
 
-/obj/item/pizzabox/infinite/Initialize()
+/obj/item/pizzabox/infinite/Initialize(mapload)
 	. = ..()
 	if(!pizza_preferences)
 		pizza_preferences = list()
@@ -376,11 +376,11 @@
 		else if(nommer.has_quirk(/datum/quirk/pineapple_hater))
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
 			pineapple_pizza_liker -= /obj/item/food/pizza/pineapple
-			pizza_preferences[nommer.ckey] = pickweight(pineapple_pizza_liker)
+			pizza_preferences[nommer.ckey] = pick_weight(pineapple_pizza_liker)
 		else if(nommer.mind?.assigned_role.title == /datum/job/botanist)
 			pizza_preferences[nommer.ckey] = /obj/item/food/pizza/dank
 		else
-			pizza_preferences[nommer.ckey] = pickweight(pizza_types)
+			pizza_preferences[nommer.ckey] = pick_weight(pizza_types)
 	if(pizza)
 		//if the pizza isn't our favourite, delete it
 		if(pizza.type != pizza_preferences[nommer.ckey])

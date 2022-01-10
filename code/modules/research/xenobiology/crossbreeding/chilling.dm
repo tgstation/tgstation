@@ -9,7 +9,7 @@ Chilling extracts:
 	effect = "chilling"
 	icon_state = "chilling"
 
-/obj/item/slimecross/chilling/Initialize()
+/obj/item/slimecross/chilling/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
@@ -290,7 +290,7 @@ Chilling extracts:
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
-	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10) //Large radius, but mostly light damage, and no flash.
+	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 10, explosion_cause = src) //Large radius, but mostly light damage, and no flash.
 	qdel(src)
 
 /obj/item/slimecross/chilling/black

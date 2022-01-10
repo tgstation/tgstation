@@ -2,16 +2,24 @@
 	name = "Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
+	ui_name = "AntagInfoHeretic"
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
-	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic"
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
+	preview_outfit = /datum/outfit/heretic
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
 	var/ascended = FALSE
+
+/datum/antagonist/heretic/ui_static_data(mob/user)
+	var/list/data = list()
+	data["total_sacrifices"] = total_sacrifices
+	data["ascended"] = ascended
+	data["objectives"] = get_objectives()
+	return data
 
 /datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
@@ -20,8 +28,9 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic/greet()
+	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Heretic!</B></font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
+	to_chat(owner, "</font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
 	to_chat(owner, span_cult("<span class='warningplain'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>"))
 	var/policy = get_policy(ROLE_HERETIC)
@@ -31,6 +40,27 @@
 /datum/antagonist/heretic/farewell()
 	to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
 	owner.announce_objectives()
+
+/datum/antagonist/heretic/get_preview_icon()
+	var/icon/icon = render_preview_outfit(preview_outfit)
+
+	// MOTHBLOCKS TOOD: Copied and pasted from cult, make this its own proc
+
+	// The sickly blade is 64x64, but getFlatIcon crunches to 32x32.
+	// So I'm just going to add it in post, screw it.
+
+	// Center the dude, because item icon states start from the center.
+	// This makes the image 64x64.
+	icon.Crop(-15, -15, 48, 48)
+
+	var/obj/item/melee/sickly_blade/blade = new
+	icon.Blend(icon(blade.lefthand_file, blade.inhand_icon_state), ICON_OVERLAY)
+	qdel(blade)
+
+	// Move the guy back to the bottom left, 32x32.
+	icon.Crop(17, 17, 48, 48)
+
+	return finish_preview_icon(icon)
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
@@ -152,7 +182,6 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	add_antag_hud(antag_hud_type, antag_hud_name, current)
 	handle_clown_mutation(current, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "heretics"
 
@@ -161,7 +190,6 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	remove_antag_hud(antag_hud_type, current)
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 
@@ -253,3 +281,14 @@
 	if(!cultie)
 		return FALSE
 	return cultie.total_sacrifices >= target_amount
+
+/datum/outfit/heretic
+	name = "Heretic (Preview only)"
+
+	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
+	r_hand = /obj/item/melee/touch_attack/mansus_fist
+
+/datum/outfit/heretic/post_equip(mob/living/carbon/human/H, visualsOnly)
+	var/obj/item/clothing/suit/hooded/hooded = locate() in H
+	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
+	hooded.ToggleHood()

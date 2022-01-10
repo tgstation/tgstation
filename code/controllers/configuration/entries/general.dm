@@ -62,7 +62,13 @@
 
 /datum/config_entry/flag/log_prayer // log prayers
 
-/datum/config_entry/flag/log_law // log lawchanges
+/datum/config_entry/flag/log_silicon // log silicons
+
+/datum/config_entry/flag/log_law
+	deprecated_by = /datum/config_entry/flag/log_silicon
+
+/datum/config_entry/flag/log_law/DeprecationUpdate(value)
+	return value
 
 /datum/config_entry/flag/log_game // log game events
 
@@ -71,6 +77,8 @@
 /datum/config_entry/flag/log_virus // log virology data
 
 /datum/config_entry/flag/log_cloning // log cloning actions.
+
+/datum/config_entry/flag/log_asset //asset logging
 
 /datum/config_entry/flag/log_vote // log voting
 
@@ -95,7 +103,7 @@
 
 /datum/config_entry/flag/log_world_topic // log all world.Topic() calls
 
-/datum/config_entry/flag/log_manifest // log crew manifest to seperate file
+/datum/config_entry/flag/log_manifest // log crew manifest to separate file
 
 /datum/config_entry/flag/log_job_debug // log roundstart divide occupations debug information to a file
 
@@ -125,7 +133,8 @@
 
 /datum/config_entry/flag/no_dead_vote // dead people can't vote
 
-/datum/config_entry/flag/popup_admin_pm // adminPMs to non-admins show in a pop-up 'reply' window when set
+/// Gives the ability to send players a maptext popup.
+/datum/config_entry/flag/popup_admin_pm
 
 /datum/config_entry/number/fps
 	default = 20
@@ -532,3 +541,26 @@
 /datum/config_entry/number/hard_deletes_overrun_limit
 	default = 0
 	min_val = 0
+
+/datum/config_entry/str_list/motd
+
+/datum/config_entry/number/urgent_ahelp_cooldown
+	default = 300
+
+/datum/config_entry/string/urgent_ahelp_message
+	default = "This ahelp is urgent!"
+
+/datum/config_entry/string/urgent_ahelp_user_prompt
+	default = "There are no admins currently on. Do not press the button below if your ahelp is a joke, a request or a question. Use it only for cases of obvious grief."
+
+/datum/config_entry/string/adminhelp_webhook_url
+
+/datum/config_entry/string/adminhelp_webhook_pfp
+
+/datum/config_entry/string/adminhelp_webhook_name
+
+/datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/station_name_in_hub_entry
+	default = FALSE

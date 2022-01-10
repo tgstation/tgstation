@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Dropdown, Input, NumberInput, Section, Stack, Tooltip } from '../components';
+import { Box, Button, Collapsible, Dropdown, Input, LabeledList, Modal, NumberInput, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 /**
@@ -16,6 +16,12 @@ const typevars = (type) => {
     { name: 'name', type: 'string', options: null, default_value: '' },
     { name: 'desc', type: 'string', options: null, default_value: '' },
     { name: 'query', type: 'string', options: null, default_value: '' },
+    {
+      name: 'suppress_message_admins',
+      type: 'bool',
+      options: null,
+      default_value: false,
+    },
     { name: 'action_icon', type: 'string', options: null, default_value: '' },
     {
       name: 'action_icon_state',
@@ -38,7 +44,7 @@ const typevars = (type) => {
     },
     { name: 'charge_max', type: 'int', options: null, default_value: 100 },
     {
-      name: 'still_recharging_message',
+      name: 'still_recharging_msg',
       type: 'string',
       options: null,
       default_value: '',
@@ -56,7 +62,6 @@ const typevars = (type) => {
       default_value: '',
     },
     { name: 'clothes_req', type: 'bool', options: null, default_value: false },
-    { name: 'cult_req', type: 'bool', options: null, default_value: false },
     { name: 'human_req', type: 'bool', options: null, default_value: false },
     {
       name: 'nonabstract_req',
@@ -232,6 +237,12 @@ const typevars = (type) => {
           default_value: '',
         },
         {
+          name: 'projectile_type',
+          type: 'path',
+          options: null,
+          default_value: '/obj/projectile',
+        },
+        {
           name: 'projectile_amount',
           type: 'int',
           options: null,
@@ -247,7 +258,7 @@ const typevars = (type) => {
           name: 'projectile_var_overrides',
           type: 'list',
           options: null,
-          default_value: [],
+          default_value: {},
         }
       );
       break;
@@ -336,10 +347,16 @@ const typevars = (type) => {
           default_value: '',
         },
         {
+          name: 'hand_path',
+          type: 'path',
+          options: null,
+          default_value: '/obj/item/melee/touch_attack',
+        },
+        {
           name: 'hand_var_overrides',
           type: 'list',
           options: null,
-          default_value: [],
+          default_value: {},
         }
       );
       break;
@@ -357,10 +374,10 @@ const typevars = (type) => {
 
 export const SDQLSpellMenu = (props, context) => {
   const { act, data } = useBackend(context);
-  const { type, types, alert } = data;
+  const { type, types, fixed_type, alert, parse_errors } = data;
 
   return (
-    <Window width={800} height={600}>
+    <Window width={800} height={600} theme="admin">
       <Window.Content>
         <Stack fill>
           <Stack.Item grow={1} basis={0}>
@@ -369,6 +386,7 @@ export const SDQLSpellMenu = (props, context) => {
                 <Dropdown
                   width="100%"
                   options={types}
+                  disabled={fixed_type}
                   displayText={type || 'Select a Spell Type'}
                   onSelected={(value) => act('type', { path: value })}
                 />
@@ -408,6 +426,7 @@ export const SDQLSpellMenu = (props, context) => {
           </Stack.Item>
         </Stack>
       </Window.Content>
+      {parse_errors && <SDQLSpellParseErrorModal />}
     </Window>
   );
 };
@@ -472,6 +491,8 @@ const WrapInTooltip = (props, context) => {
         {children}
       </Tooltip>
     );
+  } else {
+    return children;
   }
 };
 
@@ -559,8 +580,15 @@ const SDQLSpellInput = (props, context) => {
             act('variable', { name, value: options.indexOf(value) })}
         />
       );
+    case 'path':
+      return (
+        <Button
+          content={saved_vars[name] ?? default_value}
+          onClick={() => act('path_variable', { name, root_path: default_value })}
+        />
+      );
     case 'list':
-      return <SDQLSpellListEntry list={name} />;
+      return <SDQLSpellListEntry list={name} default_value={default_value} />;
   }
 };
 
@@ -572,56 +600,57 @@ const SDQLSpellInput = (props, context) => {
 const SDQLSpellListEntry = (props, context) => {
   const { act, data } = useBackend(context);
   const { list_vars } = data;
-  const { list } = props;
+  const { list, default_value, is_input } = props;
   return (
     <Collapsible>
-      {Object.entries(list_vars[list]).map(([name, { type, value, flags }]) => (
-        <Stack key={name} fill mb="6px">
-          <Stack.Item grow>
-            {
+      {Object.entries(list_vars[list] || default_value)
+        .map(([name, { type, value, flags }]) => (
+          <Stack key={name} fill mb="6px">
+            <Stack.Item grow>
+              {
               // Can be renamed?
-              (flags & 2) === 0 ? (
-                <Input
-                  value={name}
-                  onChange={(e, value) =>
-                    act('list_variable_rename', { list, name, new_name: value })}
-                />
-              ) : (
-                <Box inline bold color="label" mr="6px">
-                  {name}:
-                </Box>
-              )
-            }
-          </Stack.Item>
-          <Stack.Item>
-            {
+                (flags & 2) === 0 ? (
+                  <Input
+                    value={name}
+                    onChange={(e, value) =>
+                      act('list_variable_rename', { list, name, new_name: value })}
+                  />
+                ) : (
+                  <Box inline bold color="label" mr="6px">
+                    {name}:
+                  </Box>
+                )
+              }
+            </Stack.Item>
+            <Stack.Item>
+              {
               // Can type be changed?
-              (flags & 1) === 0 && (
-                <Dropdown
-                  options={['num', 'bool', 'string', 'path', 'icon', 'list']}
-                  displayText={type}
-                  onSelected={(value) =>
-                    act('list_variable_change_type', { list, name, value })}
-                />
-              )
-            }
-          </Stack.Item>
-          <Stack.Item shrink basis="100%">
-            <SDQLSpellListVarInput
-              list={list}
-              name={name}
-              type={type}
-              value={value}
-            />
-            <Button
-              icon="minus-circle"
-              color="red"
-              title="remove"
-              onClick={() => act('list_variable_remove', { list, name })}
-            />
-          </Stack.Item>
-        </Stack>
-      ))}
+                (flags & 1) === 0 && (
+                  <Dropdown
+                    options={['num', 'bool', 'string', 'path', 'ref', 'icon', 'list']}
+                    displayText={type}
+                    onSelected={(value) =>
+                      act('list_variable_change_type', { list, name, value })}
+                  />
+                )
+              }
+            </Stack.Item>
+            <Stack.Item shrink basis="100%">
+              <SDQLSpellListVarInput
+                list={list}
+                name={name}
+                type={type}
+                value={value}
+              />
+              <Button
+                icon="minus-circle"
+                color="red"
+                title="remove"
+                onClick={() => act('list_variable_remove', { list, name })}
+              />
+            </Stack.Item>
+          </Stack>
+        ))}
       <Button
         icon="plus-circle"
         color="blue"
@@ -673,6 +702,19 @@ const SDQLSpellListVarInput = (props, context) => {
       );
     case 'list':
       return <SDQLSpellListEntry list={list + '/' + name} />;
+    case 'ref':
+      return (
+        <>
+          <Box inline bold color="label" mr="6px">
+            {value}
+          </Box>
+          <Button
+            icon="upload"
+            color="blue"
+            title="set to marked datum"
+            onClick={() => act('list_variable_set_ref', { list, name })} />
+        </>
+      );
     default:
       return (
         <Box bold textColor="bad">
@@ -681,6 +723,8 @@ const SDQLSpellListVarInput = (props, context) => {
       );
   }
 };
+
+
 
 const SDQLSpellIcons = (props, context) => {
   const { data } = useBackend(context);
@@ -773,5 +817,119 @@ const SDQLSpellIcons = (props, context) => {
         )}
       </Stack>
     </Section>
+  );
+};
+
+const SDQLSpellParseErrorModal = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    parse_errors,
+    parsed_type,
+    parsed_vars,
+    parsed_list_vars } = data;
+  const multiple_errors = parse_errors.length > 1;
+  return (
+    <Modal>
+      <Stack fill vertical>
+        <Stack.Item>
+          Parse error{multiple_errors ? "s" : ""} occured while loading from file.
+        </Stack.Item>
+        <Stack.Item>
+          <Section scrollable maxWidth="600px" maxHeight="200px">
+            {parse_errors.map((error, i) => {
+              return (
+                <>
+                  <Box key={`error_${i}`}>
+                    {error}
+                  </Box>
+                  {i<parse_errors.length-1 && (
+                    <hr />
+                  )}
+                </>
+              );
+            })}
+          </Section>
+        </Stack.Item>
+        {(parsed_type || parsed_vars || parsed_list_vars) && (
+          <>
+            <Stack.Item>
+              <Box>
+                Some data could be correctly parsed. Click below to view.
+              </Box>
+            </Stack.Item>
+            <Stack.Item>
+              <Collapsible title="Parsed Data">
+                <Section scrollable maxWidth="600px" maxHeight="200px">
+                  <LabeledList>
+                    <LabeledList.Item label="type">
+                      {parsed_type}
+                    </LabeledList.Item>
+                    {Object.entries(parsed_vars).map(([name, value]) => {
+                      return (
+                        <LabeledList.Item key={name} label={name}>
+                          {value}
+                        </LabeledList.Item>
+                      );
+                    })}
+                  </LabeledList>
+                  {Object.entries(parsed_list_vars).filter(([name]) => {
+                    return !/\//.test(name);
+                  }).map(([name]) => {
+                    return (
+                      <SDQLSpellParsedList
+                        key={name}
+                        list={name}
+                        name={name}
+                        recursive_props={{
+                          mx: "10px",
+                        }} />
+                    );
+                  })}
+                  <Button.Confirm
+                    content="Load Anyways"
+                    confirmContent="Are you sure?"
+                    onClick={() => act('load_despite_error')} />
+                </Section>
+              </Collapsible>
+            </Stack.Item>
+          </>
+        )}
+        <Stack.Item>
+          <Button onClick={() => act('close_error')}>
+            Ok
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </Modal>
+  );
+};
+
+const SDQLSpellParsedList = (props, context) => {
+  const { list, name, recursive_props } = props;
+  const { act, data } = useBackend(context);
+  const { parsed_list_vars } = data;
+  return (
+    <Collapsible title={name}>
+      <Box {...recursive_props}>
+        <LabeledList>
+          {Object.entries(parsed_list_vars[list])
+            .sort(([, { type_1 }], [, { type_2 }]) => {
+              return (type_1 === "list" ? 1 : 0) - (type_2 === "list" ? 1 : 0);
+            }).map(([name, { type, value }]) => {
+              return type === "list" ? (
+                <SDQLSpellParsedList
+                  key={name}
+                  list={`${list}/${name}`}
+                  name={name}
+                  recursive_props={recursive_props} />
+              ) : (
+                <LabeledList.Item key={name} label={name}>
+                  {value}
+                </LabeledList.Item>
+              );
+            })}
+        </LabeledList>
+      </Box>
+    </Collapsible>
   );
 };

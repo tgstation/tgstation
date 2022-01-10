@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackmarket)
-	name  = "Blackmarket"
-	flags  = SS_BACKGROUND
-	init_order  = INIT_ORDER_DEFAULT
+	name = "Blackmarket"
+	flags = SS_BACKGROUND
+	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(

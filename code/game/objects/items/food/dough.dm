@@ -42,7 +42,7 @@
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
 
-/obj/item/food/pizzabread/Initialize()
+/obj/item/food/pizzabread/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 12)
 
@@ -70,7 +70,7 @@
 	foodtypes = GRAIN
 	burns_in_oven = TRUE
 
-/obj/item/food/bun/Initialize()
+/obj/item/food/bun/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/burger/empty, CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 

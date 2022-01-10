@@ -1,10 +1,10 @@
 // An assoc list of all the possible datatypes.
-GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
+GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circuit_datatypes())
 
 /proc/generate_circuit_datatypes()
 	var/list/datatypes_by_key = list()
 	for(var/datum/circuit_datatype/type as anything in subtypesof(/datum/circuit_datatype))
-		if(!initial(type.datatype))
+		if(!initial(type.datatype) || initial(type.abstract))
 			continue
 		datatypes_by_key[initial(type.datatype)] = new type()
 	return datatypes_by_key
@@ -22,13 +22,19 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
 	/// The flags of the circuit datatype
 	var/datatype_flags = 0
 
+	/// The datatypes that this datatype can receive from.
+	var/list/can_receive_from = list()
+
+	/// Whether this datatype should be loaded into the global circuit_datatypes list.
+	var/abstract = FALSE
+
 /**
  * Returns the value to be set for the port
  *
  * Used for implicit conversions between outputs and inputs (e.g. number -> string)
  * and applying/removing signals on inputs
  */
-/datum/circuit_datatype/proc/convert_value(datum/port/port, value_to_convert)
+/datum/circuit_datatype/proc/convert_value(datum/port/port, value_to_convert, force = FALSE)
 	return value_to_convert
 
 /**
@@ -40,7 +46,7 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
  * * datatype_to_check - The datatype to check
  */
 /datum/circuit_datatype/proc/can_receive_from_datatype(datatype_to_check)
-	return datatype == datatype_to_check // This is already done by default on the input port.
+	return datatype == datatype_to_check || (datatype_to_check in can_receive_from)
 
 /**
  * Called when the datatype is given to a port.
@@ -89,3 +95,9 @@ GLOBAL_LIST_INIT(circuit_datatypes, generate_circuit_datatypes())
  */
 /datum/circuit_datatype/proc/handle_manual_input(datum/port/input/port, mob/user, user_input)
 	return user_input
+
+/**
+ * Used by composite datatypes. Returns all the datatypes that build this datatype up.
+ */
+/datum/circuit_datatype/proc/get_datatypes()
+	return list()

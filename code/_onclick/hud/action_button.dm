@@ -12,8 +12,13 @@
 	var/ordered = TRUE //If the button gets placed into the default bar
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
-	if (linked_action)
-		return linked_action.owner == user
+	if(linked_action)
+		if(linked_action.owner == user)
+			return TRUE
+		for(var/datum/weakref/reference as anything in linked_action.sharers)
+			if(IS_WEAKREF_OF(user, reference))
+				return TRUE
+		return FALSE
 	else if (isobserver(user))
 		var/mob/dead/observer/O = user
 		return !O.observetarget
@@ -75,7 +80,7 @@
 	var/mutable_appearance/hide_appearance
 	var/mutable_appearance/show_appearance
 
-/atom/movable/screen/movable/action_button/hide_toggle/Initialize()
+/atom/movable/screen/movable/action_button/hide_toggle/Initialize(mapload)
 	. = ..()
 	var/static/list/icon_cache = list()
 
@@ -109,14 +114,15 @@
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(LAZYACCESS(modifiers, ALT_CLICK))
+		var/buttons_locked = usr.client.prefs.read_preference(/datum/preference/toggle/buttons_locked)
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/atom/movable/screen/movable/action_button/B = A.button
 			B.moved = FALSE
 			if(B.id && usr.client)
 				usr.client.prefs.action_buttons_screen_locs["[B.name]_[B.id]"] = null
-			B.locked = usr.client.prefs.buttons_locked
-		locked = usr.client.prefs.buttons_locked
+			B.locked = buttons_locked
+		locked = buttons_locked
 		moved = FALSE
 		if(id && usr.client)
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = null

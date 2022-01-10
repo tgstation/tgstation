@@ -12,7 +12,7 @@
 	var/summon_ignore_density = FALSE //if set to TRUE, adds dense tiles to possible spawn places
 	var/summon_ignore_prev_spawn_points = TRUE //if set to TRUE, each new object is summoned on a new spawn point
 
-	var/list/newVars = list() //vars of the summoned objects will be replaced with those where they meet
+	var/list/new_vars = list() //vars of the summoned objects will be replaced with those where they meet
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 
 	var/cast_sound = 'sound/items/welder.ogg'
@@ -23,7 +23,7 @@
 		if(T.density && !summon_ignore_density)
 			targets -= T
 
-	for(var/i=0,i<summon_amt,i++)
+	for(var/i in 1 to summon_amt)
 		if(!targets.len)
 			break
 		var/summoned_object_type = pick(summon_type)
@@ -37,9 +37,9 @@
 		else
 			var/atom/summoned_object = new summoned_object_type(spawn_place)
 
-			for(var/varName in newVars)
-				if(varName in newVars)
-					summoned_object.vv_edit_var(varName, newVars[varName])
+			for(var/varName in new_vars)
+				if(varName in new_vars)
+					summoned_object.vv_edit_var(varName, new_vars[varName])
 			summoned_object.flags_1 |= ADMIN_SPAWNED_1
 			if(summon_lifespan)
 				QDEL_IN(summoned_object, summon_lifespan)
@@ -55,7 +55,14 @@
 	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
 	summon_amt = 10
 	range = 3
-	newVars = list("emagged" = 2, "remote_disabled" = 1,"shoot_sound" = 'sound/weapons/laser.ogg',"projectile" = /obj/projectile/beam/laser, "declare_arrests" = 0,"name" = "Wizard's Justicebot")
+	new_vars = list(
+		"emagged" = 2,
+		"remote_disabled" = 1,
+		"shoot_sound" = 'sound/weapons/laser.ogg',
+		"projectile" = /obj/projectile/beam/laser,
+		"security_mode_flags" = ~(SECBOT_DECLARE_ARRESTS),
+		"name" = "Wizard's Justicebot",
+	)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/link_worlds
 	name = "Link Worlds"

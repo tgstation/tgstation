@@ -14,7 +14,7 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/tank/jetpack/Initialize()
+/obj/item/tank/jetpack/Initialize(mapload)
 	. = ..()
 	ion_trail = new
 	ion_trail.auto_process = FALSE
@@ -23,6 +23,20 @@
 /obj/item/tank/jetpack/Destroy()
 	QDEL_NULL(ion_trail)
 	return ..()
+
+/obj/item/tank/jetpack/item_action_slot_check(slot)
+	if(slot == ITEM_SLOT_BACK)
+		return TRUE
+
+/obj/item/tank/jetpack/equipped(mob/user, slot, initial)
+	. = ..()
+	if(on && slot != ITEM_SLOT_BACK)
+		turn_off(user)
+
+/obj/item/tank/jetpack/dropped(mob/user, silent)
+	. = ..()
+	if(on)
+		turn_off(user)
 
 /obj/item/tank/jetpack/populate_gas()
 	if(gas_type)
@@ -65,6 +79,7 @@
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
+	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
@@ -78,7 +93,7 @@
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
-
+		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
@@ -101,6 +116,12 @@
 /obj/item/tank/jetpack/proc/pre_move_react(mob/user)
 	SIGNAL_HANDLER
 	ion_trail.oldposition = get_turf(src)
+
+/obj/item/tank/jetpack/proc/spacemove_react(mob/user, movement_dir)
+	SIGNAL_HANDLER
+
+	if(on && (movement_dir || stabilizers))
+		return COMSIG_MOVABLE_STOP_SPACEMOVE
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if((num < 0.005 || air_contents.total_moles() < num))
@@ -136,7 +157,7 @@
 	worn_icon_state = "jetpack-improvised"
 	volume = 20 //normal jetpacks have 70 volume
 	gas_type = null //it starts empty
-	full_speed = FALSE //moves at hardsuit jetpack speeds
+	full_speed = FALSE //moves at modsuit jetpack speeds
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
 	if(rand(0,250) == 0)
@@ -149,7 +170,7 @@
 	name = "void jetpack (oxygen)"
 	desc = "It works well in a void."
 	icon_state = "jetpack-void"
-	inhand_icon_state =  "jetpack-void"
+	inhand_icon_state = "jetpack-void"
 
 /obj/item/tank/jetpack/oxygen
 	name = "jetpack (oxygen)"
@@ -187,135 +208,6 @@
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
 	icon_state = "jetpack-black"
-	inhand_icon_state =  "jetpack-black"
+	inhand_icon_state = "jetpack-black"
 	distribute_pressure = 0
 	gas_type = /datum/gas/carbon_dioxide
-
-
-/obj/item/tank/jetpack/suit
-	name = "hardsuit jetpack upgrade"
-	desc = "A modular, compact set of thrusters designed to integrate with a hardsuit. It is fueled by a tank inserted into the suit's storage compartment."
-	icon_state = "jetpack-mining"
-	inhand_icon_state = "jetpack-black"
-	w_class = WEIGHT_CLASS_NORMAL
-	actions_types = list(/datum/action/item_action/toggle_jetpack, /datum/action/item_action/jetpack_stabilization)
-	volume = 1
-	slot_flags = null
-	gas_type = null
-	full_speed = FALSE
-	var/datum/gas_mixture/tempair_contents
-	var/obj/item/tank/internals/tank = null
-	var/mob/living/carbon/human/active_user = null
-	var/obj/item/clothing/suit/space/hardsuit/active_hardsuit = null
-
-
-/obj/item/tank/jetpack/suit/Initialize()
-	. = ..()
-	STOP_PROCESSING(SSobj, src)
-	tempair_contents = air_contents
-
-
-/obj/item/tank/jetpack/suit/Destroy()
-	if(on)
-		turn_off()
-	return ..()
-
-
-/obj/item/tank/jetpack/suit/attack_self()
-	return
-
-/obj/item/tank/jetpack/suit/cycle(mob/user)
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit))
-		to_chat(user, span_warning("\The [src] must be connected to a hardsuit!"))
-		return
-
-	var/mob/living/carbon/human/H = user
-	if(!istype(H.s_store, /obj/item/tank/internals))
-		to_chat(user, span_warning("You need a tank in your suit storage!"))
-		return
-	return ..()
-
-
-/obj/item/tank/jetpack/suit/turn_on(mob/user)
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
-		return FALSE
-	active_user = user
-	tank = active_user.s_store
-	air_contents = tank.return_air()
-	. = ..()
-	if(!.)
-		active_user = null
-		tank = null
-		air_contents = null
-		return
-	active_hardsuit = loc
-	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, .proc/on_user_del)
-	START_PROCESSING(SSobj, src)
-
-
-/obj/item/tank/jetpack/suit/turn_off(mob/user)
-	STOP_PROCESSING(SSobj, src)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	if(active_hardsuit)
-		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
-		active_hardsuit = null
-	if(active_user)
-		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
-		active_user = null
-	tank = null
-	air_contents = tempair_contents
-	return ..()
-
-
-/obj/item/tank/jetpack/suit/process()
-	var/mob/living/carbon/human/H = loc.loc
-	if(!tank || tank != H.s_store)
-		turn_off(active_user)
-		return
-	excited = TRUE
-	..()
-
-
-/// Called when the jetpack moves, presumably away from the hardsuit.
-/obj/item/tank/jetpack/suit/proc/on_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
-	SIGNAL_HANDLER
-	if(istype(loc, /obj/item/clothing/suit/space/hardsuit) && ishuman(loc.loc) && loc.loc == active_user)
-		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
-		active_hardsuit = loc
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_hardsuit_moved)
-		return
-	turn_off(active_user)
-
-
-/// Called when the hardsuit loc moves, presumably away from the human user.
-/obj/item/tank/jetpack/suit/proc/on_hardsuit_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
-	SIGNAL_HANDLER
-	turn_off(active_user)
-
-
-/// Called when the human wearing the suit that contains this jetpack is deleted.
-/obj/item/tank/jetpack/suit/proc/on_user_del(mob/living/carbon/human/source, force)
-	SIGNAL_HANDLER
-	turn_off(active_user)
-
-
-//Return a jetpack that the mob can use
-//Back worn jetpacks, hardsuit internal packs, and so on.
-//Used in Process_Spacemove() and wherever you want to check for/get a jetpack
-
-/mob/proc/get_jetpack()
-	return
-
-/mob/living/carbon/get_jetpack()
-	var/obj/item/tank/jetpack/J = back
-	if(istype(J))
-		return J
-
-/mob/living/carbon/human/get_jetpack()
-	var/obj/item/tank/jetpack/J = ..()
-	if(!istype(J) && istype(wear_suit, /obj/item/clothing/suit/space/hardsuit))
-		var/obj/item/clothing/suit/space/hardsuit/C = wear_suit
-		J = C.jetpack
-	return J

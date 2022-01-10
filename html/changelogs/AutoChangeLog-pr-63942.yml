@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "The HoP can no longer open CE job slots again."

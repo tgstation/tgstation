@@ -21,7 +21,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return FALSE
 	var/newtonian_target = turn(chassis.dir,180)
@@ -36,13 +36,14 @@
 			else
 				spread = round((i / projectiles_per_shot - 0.5) * variance)
 
-		var/obj/projectile/A = new projectile(get_turf(src))
-		var/modifiers = params2list(params)
-		A.firer = chassis
-		A.preparePixelProjectile(target, source, modifiers, spread)
-
-		A.fire()
-		if(!A.suppressed && firing_effect_type)
+		var/obj/projectile/projectile_obj = new projectile(get_turf(src))
+		projectile_obj.firer = chassis
+		projectile_obj.preparePixelProjectile(target, source, modifiers, spread)
+		if(source.client && isliving(source)) //dont want it to happen from syndie mecha npc mobs, they do direct fire anyways
+			var/mob/living/shooter = source
+			projectile_obj.hit_prone_targets = shooter.combat_mode
+		projectile_obj.fire()
+		if(!projectile_obj.suppressed && firing_effect_type)
 			new firing_effect_type(get_turf(src), chassis.dir)
 		playsound(chassis, fire_sound, 50, TRUE)
 
@@ -181,7 +182,7 @@
 		return FALSE
 
 
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	playsound(chassis, 'sound/items/airhorn.ogg', 100, TRUE)
@@ -270,7 +271,7 @@
 		src.rearm()
 	return
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(mob/source, atom/target, list/modifiers)
 	if(..())
 		projectiles -= projectiles_per_shot
 		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
@@ -364,7 +365,7 @@
 	var/missile_range = 30
 	var/diags_first = FALSE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
 	var/obj/O = new projectile(chassis.loc)
@@ -498,7 +499,7 @@
 		else
 			to_chat(usr, "[icon2html(src, usr)][span_warning("Lethal Fisting Disabled.")]")
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(mob/source, atom/target, list/modifiers)
 	. = ..()
 	if(.)
 		to_chat(usr, "[icon2html(src, usr)]<font color='red' size='5'>HONK</font>")

@@ -33,7 +33,7 @@
 	// randomizes hunting intervals, minimum 5 turns
 	var/time_to_hunt = 5
 
-/mob/living/simple_animal/ant/Initialize()
+/mob/living/simple_animal/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	time_to_hunt = rand(5,10)
@@ -43,7 +43,7 @@
 	turns_since_scan++
 	if(turns_since_scan > time_to_hunt)
 		turns_since_scan = 0
-		var/list/target_types = list(/mob/living/simple_animal/hostile/cockroach)
+		var/list/target_types = list(/mob/living/basic/cockroach)
 		for(var/mob/living/simple_animal/hostile/potential_target in view(2, get_turf(src)))
 			if(potential_target.type in target_types)
 				hunt(potential_target)

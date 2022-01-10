@@ -29,6 +29,9 @@
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
 
+/obj/item/food/grown/corn/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/oven_baked_corn, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
+
 /obj/item/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
@@ -56,7 +59,7 @@
 	species = "snapcorn"
 	plantname = "Snapcorn Stalks"
 	product = /obj/item/grown/snapcorn
-	mutatelist = list()
+	mutatelist = null
 	rarity = 10
 
 /obj/item/grown/snapcorn

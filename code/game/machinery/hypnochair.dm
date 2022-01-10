@@ -15,7 +15,7 @@
 	var/timerid = 0 ///Timer ID for interrogations
 	var/message_cooldown = 0 ///Cooldown for breakout message
 
-/obj/machinery/hypnochair/Initialize()
+/obj/machinery/hypnochair/Initialize(mapload)
 	. = ..()
 	open_machine()
 	update_appearance()

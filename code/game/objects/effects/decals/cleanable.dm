@@ -6,7 +6,7 @@
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 	var/beauty = 0
-	///The type of cleaning required to clean the decal, CLEAN_TYPE_LIGHT_DECAL can be cleaned with mops and soap, CLEAN_TYPE_HARD_DECAL can be cleaned by soap, see __DEFINES/cleaning.dm for the others
+	///The type of cleaning required to clean the decal. See __DEFINES/cleaning.dm for the options
 	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
@@ -72,12 +72,6 @@
 			to_chat(user, span_notice("You heat [name] with [W]!"))
 	else
 		return ..()
-
-/obj/effect/decal/cleanable/ex_act(severity)
-	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act(severity)
-	return ..()
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)

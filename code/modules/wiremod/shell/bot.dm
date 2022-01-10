@@ -12,7 +12,7 @@
 	light_system = MOVABLE_LIGHT
 	light_on = FALSE
 
-/obj/structure/bot/Initialize()
+/obj/structure/bot/Initialize(mapload)
 	. = ..()
 	AddComponent( \
 		/datum/component/shell, \
@@ -30,15 +30,9 @@
 	/// The user who used the bot
 	var/datum/port/output/entity
 
-/obj/item/circuit_component/bot/Initialize()
-	. = ..()
+/obj/item/circuit_component/bot/populate_ports()
 	entity = add_output_port("User", PORT_TYPE_ATOM)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/bot/Destroy()
-	signal = null
-	entity = null
-	return ..()
 
 /obj/item/circuit_component/bot/register_shell(atom/movable/shell)
 	RegisterSignal(shell, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)

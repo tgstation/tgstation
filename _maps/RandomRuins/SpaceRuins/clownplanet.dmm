@@ -159,7 +159,7 @@
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered/clownplanet)
 "aG" = (
-/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/plating/asteroid,
 /area/ruin/powered/clownplanet)
 "aH" = (
@@ -347,7 +347,7 @@
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
 "bh" = (
-/obj/effect/spawner/randomcolavend,
+/obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
@@ -361,14 +361,14 @@
 	},
 /area/ruin/powered/clownplanet)
 "bk" = (
-/obj/effect/spawner/randomsnackvend,
+/obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/stripes/white/box,
 /turf/open/floor/bluespace,
 /area/ruin/powered/clownplanet)
 "bl" = (
 /obj/item/bedsheet/clown,
 /obj/structure/bed,
-/obj/effect/mob_spawn/human/clown/corpse,
+/obj/effect/mob_spawn/corpse/human/clown,
 /turf/open/floor/wood,
 /area/ruin/powered/clownplanet)
 "bm" = (

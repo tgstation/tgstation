@@ -1,7 +1,6 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Input, Section, Stack, Table, Tooltip } from '../components';
+import { Box, Button, Dimmer, Icon, Input, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
-import { StackingConsole } from './StackingConsole';
 
 // byond defines for the program state
 const CLIENT_ONLINE = 2;
@@ -101,7 +100,7 @@ export const NtosNetChat = (props, context) => {
   const this_client = clients.find(client => client.ref === selfref);
   return (
     <NtosWindow
-      width={900}
+      width={1000}
       height={675}>
       <NtosWindow.Content>
         <Stack fill>
@@ -152,7 +151,7 @@ export const NtosNetChat = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Divider />
-          <Stack.Item grow={5}>
+          <Stack.Item grow={4}>
             <Stack vertical fill>
               <Stack.Item grow>
                 <Section scrollable fill>
@@ -205,7 +204,7 @@ export const NtosNetChat = (props, context) => {
           {!!in_channel && (
             <>
               <Stack.Divider />
-              <Stack.Item grow={1}>
+              <Stack.Item grow={2}>
                 <Stack vertical fill>
                   <Stack.Item grow>
                     <Section scrollable fill>
@@ -222,10 +221,10 @@ export const NtosNetChat = (props, context) => {
                               <>
                                 <Stack.Item>
                                   <Button
-                                    disabled={this_client.muted}
+                                    disabled={this_client?.muted}
                                     compact
                                     icon="bullhorn"
-                                    tooltip={!this_client.muted
+                                    tooltip={!this_client?.muted
                                       && "Ping" || "You are muted!"}
                                     tooltipPosition="left"
                                     onClick={() => act('PRG_ping_user', {

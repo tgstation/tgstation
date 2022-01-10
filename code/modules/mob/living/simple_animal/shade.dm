@@ -25,7 +25,7 @@
 	attack_verb_simple = "metaphysically strike"
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	speed = -1 //they don't have to lug a body made of runed metal around
 	stop_automated_movement = 1
 	faction = list("cult")
@@ -34,9 +34,10 @@
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 
-/mob/living/simple_animal/shade/Initialize()
+/mob/living/simple_animal/shade/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -53,7 +54,7 @@
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isconstruct(user))
 		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair_constructs)
+		if(!doll.can_repair)
 			return
 		if(health < maxHealth)
 			adjustHealth(-25)
@@ -65,9 +66,9 @@
 	else if(src != user)
 		return ..()
 
-/mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
-	if(istype(O, /obj/item/soulstone))
-		var/obj/item/soulstone/SS = O
-		SS.transfer_soul("SHADE", src, user)
+/mob/living/simple_animal/shade/attackby(obj/item/item, mob/user, params)  //Marker -Agouri
+	if(istype(item, /obj/item/soulstone))
+		var/obj/item/soulstone/stone = item
+		stone.capture_shade(src, user)
 	else
 		. = ..()

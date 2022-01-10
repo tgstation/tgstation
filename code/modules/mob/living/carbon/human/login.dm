@@ -1,5 +1,8 @@
 /mob/living/carbon/human/Login()
 	. = ..()
+
+	dna?.species?.on_owner_login(src)
+
 	if(!LAZYLEN(afk_thefts))
 		return
 
@@ -7,7 +10,7 @@
 	print_msg += span_info("*---------*")
 	print_msg += span_userdanger("As you snap back to consciousness, you recall people messing with your stuff...")
 
-	afk_thefts = reverseRange(afk_thefts)
+	afk_thefts = reverse_range(afk_thefts)
 
 	for(var/list/iter_theft as anything in afk_thefts)
 		if(!islist(iter_theft) || LAZYLEN(iter_theft) != AFK_THEFT_TIME)

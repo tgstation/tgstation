@@ -137,6 +137,8 @@
 		var/final_block_chance = head.block_chance - (clamp((armour_penetration-head.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(head.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
+	if(SEND_SIGNAL(src, COMSIG_HUMAN_CHECK_SHIELDS, AM, damage, attack_text, attack_type, armour_penetration) & SHIELD_BLOCK)
+		return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/check_block()
@@ -198,7 +200,9 @@
 	if(!.)
 		return
 	var/hulk_verb = pick("smash","pummel")
-	if(check_shields(user, 15, "the [hulk_verb]ing"))
+	if(check_shields(user, 15, "the [hulk_verb]ing", attack_type = UNARMED_ATTACK))
+		return
+	if(check_block()) //everybody is kung fu fighting
 		return
 	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
 	visible_message(span_danger("[user] [hulk_verb]ed [src]!"), \
@@ -333,6 +337,23 @@
 			affecting = get_bodypart(BODY_ZONE_CHEST)
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)
+
+
+/mob/living/carbon/human/attack_basic_mob(mob/living/basic/user, list/modifiers)
+	. = ..()
+	if(!.)
+		return
+	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
+	if(check_shields(user, damage, "the [user.name]", MELEE_ATTACK, user.armour_penetration))
+		return FALSE
+	var/dam_zone = dismembering_strike(user, pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+	if(!dam_zone) //Dismemberment successful
+		return TRUE
+	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
+	if(!affecting)
+		affecting = get_bodypart(BODY_ZONE_CHEST)
+	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
+	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/user, list/modifiers)

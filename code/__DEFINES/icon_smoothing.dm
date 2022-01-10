@@ -121,15 +121,15 @@ DEFINE_BITFIELD(smoothing_flags, list(
 #define SMOOTH_GROUP_ABDUCTOR_WALLS S_OBJ(10) ///turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor
 #define SMOOTH_GROUP_TITANIUM_WALLS S_OBJ(11) ///turf/closed/wall/mineral/titanium, /obj/structure/falsewall/titanium
 #define SMOOTH_GROUP_PLASTITANIUM_WALLS S_OBJ(13) ///turf/closed/wall/mineral/plastitanium, /obj/structure/falsewall/plastitanium
-#define SMOOTH_GROUP_SURVIVAL_TIANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/shuttle/survival_pod
+#define SMOOTH_GROUP_SURVIVAL_TIANIUM_POD S_OBJ(14) ///turf/closed/wall/mineral/titanium/survival/pod, /obj/machinery/door/airlock/survival_pod, /obj/structure/window/reinforced/shuttle/survival_pod
 #define SMOOTH_GROUP_HIERO_WALL S_OBJ(15) ///obj/effect/temp_visual/elite_tumor_wall, /obj/effect/temp_visual/hierophant/wall
 
 #define SMOOTH_GROUP_PAPERFRAME S_OBJ(20) ///obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 
-#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(21) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile
+#define SMOOTH_GROUP_WINDOW_FULLTILE S_OBJ(21) ///turf/closed/indestructible/fakeglass, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/reinforced/plasma/fulltile
 #define SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE S_OBJ(22) ///obj/structure/window/bronze/fulltile
-#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(23) ///turf/closed/indestructible/opsglass, /obj/structure/window/plasma/reinforced/plastitanium
-#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(24) ///obj/structure/window/shuttle
+#define SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM S_OBJ(23) ///turf/closed/indestructible/opsglass, /obj/structure/window/reinforced/plasma/plastitanium
+#define SMOOTH_GROUP_WINDOW_FULLTILE_SHUTTLE S_OBJ(24) ///obj/structure/window/reinforced/shuttle
 
 #define SMOOTH_GROUP_LATTICE  S_OBJ(30) ///obj/structure/lattice
 #define SMOOTH_GROUP_CATWALK  S_OBJ(31) ///obj/structure/lattice/catwalk
@@ -153,7 +153,7 @@ DEFINE_BITFIELD(smoothing_flags, list(
 
 #define SMOOTH_GROUP_HEDGE_FLUFF S_OBJ(65) ///obj/structure/hedge
 
-#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66) ///obj/structure/window/shuttle, /obj/structure/window/plasma/reinforced/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
+#define SMOOTH_GROUP_SHUTTLE_PARTS S_OBJ(66) ///obj/structure/window/reinforced/shuttle, /obj/structure/window/reinforced/plasma/plastitanium, /turf/closed/indestructible/opsglass, /obj/structure/shuttle
 
 #define SMOOTH_GROUP_CLEANABLE_DIRT S_OBJ(67) ///obj/effect/decal/cleanable/dirt
 

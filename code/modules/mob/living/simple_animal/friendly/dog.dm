@@ -27,7 +27,7 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/dog/Initialize()
+/mob/living/simple_animal/pet/dog/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "woofs happily!")
 	add_cell_sample()
@@ -69,6 +69,48 @@
 		inventory_back = null
 	return ..()
 
+/mob/living/simple_animal/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
+		"speak" = CALLBACK(src, .proc/handle_automated_speech, TRUE),
+		"wear_hat" = CALLBACK(src, .proc/find_new_hat),
+		"drop_hat" = CALLBACK(src, .proc/drop_hat),
+		"spin" = CALLBACK(src, /mob.proc/emote, "spin")), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+
+	if(. == COMPONENT_INCOMPATIBLE)
+		return
+
+	stop_automated_movement = TRUE
+
+///Deadchat plays command that picks a new hat for Ian.
+/mob/living/simple_animal/pet/dog/corgi/proc/find_new_hat()
+	if(!isturf(loc))
+		return
+	var/list/possible_headwear = list()
+	for(var/obj/item/item in loc)
+		if(ispath(item.dog_fashion, /datum/dog_fashion/head))
+			possible_headwear += item
+	if(!length(possible_headwear))
+		for(var/obj/item/item in orange(1))
+			if(ispath(item.dog_fashion, /datum/dog_fashion/head) && CanReach(item))
+				possible_headwear += item
+	if(!length(possible_headwear))
+		return
+	if(inventory_head)
+		inventory_head.forceMove(drop_location())
+		inventory_head = null
+	place_on_head(pick(possible_headwear))
+	visible_message(span_notice("[src] puts [inventory_head] on [p_their()] own head, somehow."))
+
+///Deadchat plays command that drops the current hat off Ian.
+/mob/living/simple_animal/pet/dog/corgi/proc/drop_hat()
+	if(!inventory_head)
+		return
+	visible_message(span_notice("[src] vigorously shakes [p_their()] head, dropping [inventory_head] to the ground."))
+	inventory_head.forceMove(drop_location())
+	inventory_head = null
+	update_corgi_fluff()
+	regenerate_icons()
+
 /mob/living/simple_animal/pet/dog/corgi/handle_atom_del(atom/A)
 	if(A == inventory_head)
 		inventory_head = null
@@ -79,7 +121,6 @@
 		update_corgi_fluff()
 		regenerate_icons()
 	return ..()
-
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -124,19 +165,19 @@
 	animal_species = /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	nofur = TRUE
 
-/mob/living/simple_animal/pet/dog/Initialize()
+/mob/living/simple_animal/pet/dog/Initialize(mapload)
 	. = ..()
 	var/dog_area = get_area(src)
 	for(var/obj/structure/bed/dogbed/D in dog_area)
 		if(D.update_owner(src)) //No muscling in on my turf you fucking parrot
 			break
 
-/mob/living/simple_animal/pet/dog/corgi/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/Initialize(mapload)
 	. = ..()
 	regenerate_icons()
 	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
 
-/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize(mapload)
 		. = ..()
 		var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 		add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
@@ -169,7 +210,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 
 	corgi_source.place_on_head(equipping, user)
 
-/datum/strippable_item/corgi_head/finish_unequip(atom/source, obj/item/equipping, mob/user)
+/datum/strippable_item/corgi_head/finish_unequip(atom/source, mob/user)
 	var/mob/living/simple_animal/pet/dog/corgi/corgi_source = source
 	if (!istype(corgi_source))
 		return
@@ -430,7 +471,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	var/memory_saved = FALSE
 	var/saved_head //path
 
-/mob/living/simple_animal/pet/dog/corgi/ian/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/ian/Initialize(mapload)
 	. = ..()
 	//parent call must happen first to ensure IAN
 	//is not in nullspace when child puppies spawn
@@ -627,7 +668,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	maxbodytemp = T0C + 40
 	held_state = "void_puppy"
 
-/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize()
+/mob/living/simple_animal/pet/dog/corgi/puppy/void/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_AI_BAGATTACK, INNATE_TRAIT)
 

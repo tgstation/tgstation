@@ -4,11 +4,6 @@
 #define AI_STATUS_ON 1
 #define AI_STATUS_OFF 2
 
-
-///Monkey checks
-#define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
-#define IS_DEAD_OR_INCAP(source) (HAS_TRAIT(source, TRAIT_INCAPACITATED) || HAS_TRAIT(source, TRAIT_HANDS_BLOCKED) || IS_IN_STASIS(source) || source.stat)
-
 ///For JPS pathing, the maximum length of a path we'll try to generate. Should be modularized depending on what we're doing later on
 #define AI_MAX_PATH_LENGTH 30 // 30 is possibly overkill since by default we lose interest after 14 tiles of distance, but this gives wiggle room for weaving around obstacles
 
@@ -24,14 +19,40 @@
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
 
-///Subtree defines
+///AI flags
+#define STOP_MOVING_WHEN_PULLED (1<<0)
+
+//Base Subtree defines
 
 ///This subtree should cancel any further planning, (Including from other subtrees)
 #define SUBTREE_RETURN_FINISH_PLANNING 1
 
+//Generic subtree defines
+
+/// probability that the pawn should try resisting out of restraints
+#define RESIST_SUBTREE_PROB 50
+///macro for whether it's appropriate to resist right now, used by resist subtree
+#define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && source.pulledby.grab_state > GRAB_PASSIVE))
+///macro for whether the pawn can act, used generally to prevent some horrifying ai disasters
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated() || source.stat)
+
+//Generic BB keys
+#define BB_CURRENT_MIN_MOVE_DISTANCE "min_move_distance"
+///time until we should next eat, set by the generic hunger subtree
+#define BB_NEXT_HUNGRY "BB_NEXT_HUNGRY"
+///what we're going to eat next
+#define BB_FOOD_TARGET "bb_food_target"
+
+//for songs
+
+///song instrument blackboard, set by instrument subtrees
+#define BB_SONG_INSTRUMENT "BB_SONG_INSTRUMENT"
+///song lines blackboard, set by default on controllers
+#define BB_SONG_LINES "song_lines"
+
 // Monkey AI controller blackboard keys
 
-#define BB_MONKEY_AGRESSIVE "BB_monkey_agressive"
+#define BB_MONKEY_AGGRESSIVE "BB_monkey_aggressive"
 #define BB_MONKEY_GUN_NEURONS_ACTIVATED "BB_monkey_gun_aware"
 #define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
 #define BB_MONKEY_BEST_FORCE_FOUND "BB_monkey_bestforcefound"
@@ -40,11 +61,11 @@
 #define BB_MONKEY_PICKUPTARGET "BB_monkey_pickuptarget"
 #define BB_MONKEY_PICKPOCKETING "BB_monkey_pickpocketing"
 #define BB_MONKEY_CURRENT_ATTACK_TARGET "BB_monkey_current_attack_target"
+#define BB_MONKEY_CURRENT_PRESS_TARGET "BB_monkey_current_press_target"
+#define BB_MONKEY_CURRENT_GIVE_TARGET "BB_monkey_current_give_target"
 #define BB_MONKEY_TARGET_DISPOSAL "BB_monkey_target_disposal"
 #define BB_MONKEY_DISPOSING "BB_monkey_disposing"
 #define BB_MONKEY_RECRUIT_COOLDOWN "BB_monkey_recruit_cooldown"
-#define BB_MONKEY_NEXT_HUNGRY "BB_monkey_next_hungry"
-
 
 ///Haunted item controller defines
 
@@ -52,8 +73,6 @@
 #define HAUNTED_ITEM_ATTACK_HAUNT_CHANCE 10
 ///Chance for haunted item to try to get itself let go.
 #define HAUNTED_ITEM_ESCAPE_GRASP_CHANCE 20
-///Chance for haunted item to warp somewhere new
-#define HAUNTED_ITEM_TELEPORT_CHANCE 4
 ///Amount of aggro you get when picking up a haunted item
 #define HAUNTED_ITEM_AGGRO_ADDITION 2
 
@@ -63,13 +82,14 @@
 #define BB_HAUNT_TARGET "BB_haunt_target"
 ///Amount of successful hits in a row this item has had
 #define BB_HAUNTED_THROW_ATTEMPT_COUNT "BB_haunted_throw_attempt_count"
+///If true, tolerates the equipper holding/equipping the hauntium
+#define BB_LIKES_EQUIPPER "BB_likes_equipper"
 
 ///Cursed item controller defines
 
 //defines
 ///how far a cursed item will still try to chase a target
 #define CURSED_VIEW_RANGE 7
-#define CURSED_ITEM_TELEPORT_CHANCE 4
 //blackboards
 
 ///Actual mob the item is haunting at the moment
@@ -78,6 +98,13 @@
 #define BB_TARGET_SLOT "BB_target_slot"
 ///Amount of successful hits in a row this item has had
 #define BB_CURSED_THROW_ATTEMPT_COUNT "BB_cursed_throw_attempt_count"
+
+///Mob the MOD is trying to attach to
+#define BB_MOD_TARGET "BB_mod_target"
+///The implant the AI was created from
+#define BB_MOD_IMPLANT "BB_mod_implant"
+///Range for a MOD AI controller.
+#define MOD_AI_RANGE 100
 
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"
@@ -161,3 +188,24 @@
 ///bane ai
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep thats it
+
+
+//Hunting defines
+#define SUCCESFUL_HUNT_COOLDOWN 5 SECONDS
+
+///Hunting BB keys
+#define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
+#define BB_HUNTING_COOLDOWN "BB_HUNTING_COOLDOWN"
+
+///Basic Mob Keys
+
+///Tipped blackboards
+///Bool that means a basic mob will start reacting to being tipped in it's planning
+#define BB_BASIC_MOB_TIP_REACTING "BB_basic_tip_reacting"
+///the motherfucker who tipped us
+#define BB_BASIC_MOB_TIPPER "BB_basic_tip_tipper"
+
+///Targetting subtrees
+#define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
+#define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"
+#define BB_TARGETTING_DATUM "targetting_datum"

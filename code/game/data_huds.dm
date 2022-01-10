@@ -230,10 +230,10 @@ FAN HUDs! For identifying other fans on-sight.
 	holder.icon_state = "hudfan_no"
 	var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(U)
-		if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_mime_pin))
-			holder.icon_state = "fan_mime_pin"
-		else if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
-			holder.icon_state = "fan_clown_pin"
+		if(istype(U.attached_accessory, /obj/item/clothing/accessory/mime_fan_pin))
+			holder.icon_state = "mime_fan_pin"
+		else if(istype(U.attached_accessory, /obj/item/clothing/accessory/clown_enjoyer_pin))
+			holder.icon_state = "clown_enjoyer_pin"
 
 /***********************************************
 Security HUDs! Basic mode shows only the job.
@@ -380,7 +380,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_MECH_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
+	holder.icon_state = "huddiag[RoundDiagBar(atom_integrity/max_integrity)]"
 
 
 /obj/vehicle/sealed/mecha/proc/diag_hud_set_mechcell()
@@ -428,7 +428,7 @@ Diagnostic HUDs!
 	var/image/holder = hud_list[DIAG_STAT_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
-	if(on)
+	if(bot_mode_flags & BOT_MODE_ON)
 		holder.icon_state = "hudstat"
 	else if(stat) //Generally EMP causes this
 		holder.icon_state = "hudoffline"

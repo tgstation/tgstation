@@ -22,21 +22,7 @@
 	var/list/ticket_holders = list()
 	var/list/obj/item/ticket_machine_ticket/tickets = list()
 
-/obj/machinery/ticket_machine/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/ticket_machine/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/ticket_machine/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/ticket_machine/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 
 /obj/machinery/ticket_machine/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I)) //make sure it has a data buffer
@@ -60,7 +46,7 @@
 		tickets.Cut()
 	update_appearance()
 
-/obj/machinery/ticket_machine/Initialize()
+/obj/machinery/ticket_machine/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -85,7 +71,7 @@
 	req_access = list()
 	id = "ticket_machine_default"
 
-/obj/machinery/button/ticket_machine/Initialize()
+/obj/machinery/button/ticket_machine/Initialize(mapload)
 	. = ..()
 	if(device)
 		var/obj/item/assembly/control/ticket_machine/ours = device
@@ -108,7 +94,7 @@
 	desc = "A remote controller for the HoP's ticket machine."
 	var/datum/weakref/linked //To whom are we linked?
 
-/obj/item/assembly/control/ticket_machine/Initialize()
+/obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 

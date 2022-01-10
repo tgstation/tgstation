@@ -1,11 +1,5 @@
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
-/datum/asset/simple/tgui_common
-	keep_local_name = TRUE
-	assets = list(
-		"tgui-common.bundle.js" = file("tgui/public/tgui-common.bundle.js"),
-	)
-
 /datum/asset/simple/tgui
 	keep_local_name = TRUE
 	assets = list(
@@ -139,27 +133,27 @@
 
 /datum/asset/simple/namespaced/fontawesome
 	assets = list(
-		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
+		"fa-regular-400.eot" = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',
-		"fa-solid-900.eot"    = 'html/font-awesome/webfonts/fa-solid-900.eot',
-		"fa-solid-900.woff"   = 'html/font-awesome/webfonts/fa-solid-900.woff',
-		"v4shim.css"          = 'html/font-awesome/css/v4-shims.min.css'
+		"fa-solid-900.eot" = 'html/font-awesome/webfonts/fa-solid-900.eot',
+		"fa-solid-900.woff" = 'html/font-awesome/webfonts/fa-solid-900.woff',
+		"v4shim.css" = 'html/font-awesome/css/v4-shims.min.css',
 	)
 	parents = list("font-awesome.css" = 'html/font-awesome/css/all.min.css')
 
 /datum/asset/simple/namespaced/tgfont
 	assets = list(
-		"tgfont.eot" = file("tgui/packages/tgfont/dist/tgfont.eot"),
-		"tgfont.woff2" = file("tgui/packages/tgfont/dist/tgfont.woff2"),
+		"tgfont.eot" = file("tgui/packages/tgfont/static/tgfont.eot"),
+		"tgfont.woff2" = file("tgui/packages/tgfont/static/tgfont.woff2"),
 	)
 	parents = list(
-		"tgfont.css" = file("tgui/packages/tgfont/dist/tgfont.css"),
+		"tgfont.css" = file("tgui/packages/tgfont/static/tgfont.css"),
 	)
 
 /datum/asset/spritesheet/chat
 	name = "chat"
 
-/datum/asset/spritesheet/chat/register()
+/datum/asset/spritesheet/chat/create_spritesheets()
 	InsertAll("emoji", EMOJI_SET)
 	// pre-loading all lanugage icons also helps to avoid meta
 	InsertAll("language", 'icons/misc/language.dmi')
@@ -170,7 +164,6 @@
 		if (icon != 'icons/misc/language.dmi')
 			var/icon_state = initial(L.icon_state)
 			Insert("language-[icon_state]", icon, icon_state=icon_state)
-	..()
 
 /datum/asset/simple/lobby
 	assets = list(
@@ -213,40 +206,9 @@
 
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
-	assets = list(
-		"default" = 'icons/ui_icons/achievements/default.png',
-		"basemisc" = 'icons/ui_icons/achievements/basemisc.png',
-		"baseboss" = 'icons/ui_icons/achievements/baseboss.png',
-		"baseskill" = 'icons/ui_icons/achievements/baseskill.png',
-		"bbgum" = 'icons/ui_icons/achievements/boss/bbgum.png',
-		"colossus" = 'icons/ui_icons/achievements/boss/colossus.png',
-		"hierophant" = 'icons/ui_icons/achievements/boss/hierophant.png',
-		"legion" = 'icons/ui_icons/achievements/boss/legion.png',
-		"miner" = 'icons/ui_icons/achievements/boss/miner.png',
-		"swarmer" = 'icons/ui_icons/achievements/boss/swarmer.png',
-		"tendril" = 'icons/ui_icons/achievements/boss/tendril.png',
-		"featofstrength" = 'icons/ui_icons/achievements/misc/featofstrength.png',
-		"helbital" = 'icons/ui_icons/achievements/misc/helbital.png',
-		"jackpot" = 'icons/ui_icons/achievements/misc/jackpot.png',
-		"meteors" = 'icons/ui_icons/achievements/misc/meteors.png',
-		"timewaste" = 'icons/ui_icons/achievements/misc/timewaste.png',
-		"upgrade" = 'icons/ui_icons/achievements/misc/upgrade.png',
-		"clownking" = 'icons/ui_icons/achievements/misc/clownking.png',
-		"clownthanks" = 'icons/ui_icons/achievements/misc/clownthanks.png',
-		"rule8" = 'icons/ui_icons/achievements/misc/rule8.png',
-		"snail" = 'icons/ui_icons/achievements/misc/snail.png',
-		"ascension" = 'icons/ui_icons/achievements/misc/ascension.png',
-		"ashascend" = 'icons/ui_icons/achievements/misc/ashascend.png',
-		"fleshascend" = 'icons/ui_icons/achievements/misc/fleshascend.png',
-		"rustascend" = 'icons/ui_icons/achievements/misc/rustascend.png',
-		"voidascend" = 'icons/ui_icons/achievements/misc/voidascend.png',
-		"mining" = 'icons/ui_icons/achievements/skills/mining.png',
-		"changeling" = 'icons/ui_icons/achievements/mafia/mafia.png',
-		"chaplain" = 'icons/ui_icons/achievements/mafia/town.png',
-		"clown" = 'icons/ui_icons/achievements/mafia/neutral.png',
-		"basemafia" ='icons/ui_icons/achievements/basemafia.png',
-		"frenching" = 'icons/ui_icons/achievements/misc/frenchingthebubble.png'
-	)
+
+/datum/asset/spritesheet/simple/achievements/create_spritesheets()
+	InsertAll("", ACHIEVEMENTS_SET)
 
 /datum/asset/spritesheet/simple/pills
 	name = "pills"
@@ -306,15 +268,14 @@
 /datum/asset/spritesheet/pipes
 	name = "pipes"
 
-/datum/asset/spritesheet/pipes/register()
+/datum/asset/spritesheet/pipes/create_spritesheets()
 	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
 		InsertAll("", each, GLOB.alldirs)
-	..()
 
 /datum/asset/spritesheet/supplypods
 	name = "supplypods"
 
-/datum/asset/spritesheet/supplypods/register()
+/datum/asset/spritesheet/supplypods/create_spritesheets()
 	for (var/style in 1 to length(GLOB.podstyles))
 		if (style == STYLE_SEETHROUGH)
 			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi' , "seethrough-icon"))
@@ -338,13 +299,12 @@
 				glow = "pod_glow_[glow]"
 				podIcon.Blend(icon('icons/obj/supplypods.dmi', glow), ICON_OVERLAY)
 		Insert("pod_asset[style]", podIcon)
-	return ..()
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
 	name = "design"
 
-/datum/asset/spritesheet/research_designs/register()
+/datum/asset/spritesheet/research_designs/create_spritesheets()
 	for (var/path in subtypesof(/datum/design))
 		var/datum/design/D = path
 
@@ -403,12 +363,11 @@
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		Insert(initial(D.id), I)
-	return ..()
 
 /datum/asset/spritesheet/vending
 	name = "vending"
 
-/datum/asset/spritesheet/vending/register()
+/datum/asset/spritesheet/vending/create_spritesheets()
 	for (var/k in GLOB.vending_products)
 		var/atom/item = k
 		if (!ispath(item, /atom))
@@ -441,7 +400,6 @@
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
 
 		Insert(imgid, I)
-	return ..()
 
 /datum/asset/simple/genetics
 	assets = list(
@@ -463,53 +421,48 @@
 /datum/asset/spritesheet/sheetmaterials
 	name = "sheetmaterials"
 
-/datum/asset/spritesheet/sheetmaterials/register()
+/datum/asset/spritesheet/sheetmaterials/create_spritesheets()
 	InsertAll("", 'icons/obj/stack_objects.dmi')
 
 	// Special case to handle Bluespace Crystals
 	Insert("polycrystal", 'icons/obj/telescience.dmi', "polycrystal")
-	..()
 
 /datum/asset/spritesheet/mafia
 	name = "mafia"
 
-/datum/asset/spritesheet/mafia/register()
+/datum/asset/spritesheet/mafia/create_spritesheets()
 	InsertAll("", 'icons/obj/mafia.dmi')
-	..()
 
 /datum/asset/simple/portraits
-	var/tab = "use subtypes of this please"
 	assets = list()
 
 /datum/asset/simple/portraits/New()
-	if(!SSpersistence.paintings || !SSpersistence.paintings[tab] || !length(SSpersistence.paintings[tab]))
+	if(!length(SSpersistent_paintings.paintings))
 		return
-	for(var/p in SSpersistence.paintings[tab])
-		var/list/portrait = p
-		var/png = "data/paintings/[tab]/[portrait["md5"]].png"
+	for(var/datum/painting/portrait as anything in SSpersistent_paintings.paintings)
+		var/png = "data/paintings/images/[portrait.md5].png"
 		if(fexists(png))
-			var/asset_name = "[tab]_[portrait["md5"]]"
+			var/asset_name = "paintings_[portrait.md5]"
 			assets[asset_name] = png
 	..() //this is where it registers all these assets we added to the list
-
-/datum/asset/simple/portraits/library
-	tab = "library"
-
-/datum/asset/simple/portraits/library_secure
-	tab = "library_secure"
-
-/datum/asset/simple/portraits/library_private
-	tab = "library_private"
 
 /datum/asset/simple/safe
 	assets = list(
 		"safe_dial.png" = 'icons/ui_icons/safe/safe_dial.png'
 	)
 
+/datum/asset/simple/contracts
+	assets = list(
+		"bluespace.png" = 'icons/ui_icons/contracts/bluespace.png',
+		"destruction.png" = 'icons/ui_icons/contracts/destruction.png',
+		"healing.png" = 'icons/ui_icons/contracts/healing.png',
+		"robeless.png" = 'icons/ui_icons/contracts/robeless.png',
+	)
+
 /datum/asset/spritesheet/fish
 	name = "fish"
 
-/datum/asset/spritesheet/fish/register()
+/datum/asset/spritesheet/fish/create_spritesheets()
 	for (var/path in subtypesof(/datum/aquarium_behaviour/fish))
 		var/datum/aquarium_behaviour/fish/fish_type = path
 		var/fish_icon = initial(fish_type.icon)
@@ -518,7 +471,6 @@
 		if(sprites[id]) //no dupes
 			continue
 		Insert(id, fish_icon, fish_icon_state)
-	..()
 
 /datum/asset/simple/adventure
 	assets = list(
@@ -563,12 +515,11 @@
 	name = "moods"
 	var/iconinserted = 1
 
-/datum/asset/spritesheet/moods/register()
+/datum/asset/spritesheet/moods/create_spritesheets()
 	for(var/i in 1 to 9)
 		var/target_to_insert = "mood"+"[iconinserted]"
 		Insert(target_to_insert, 'icons/hud/screen_gen.dmi', target_to_insert)
 		iconinserted++
-	..()
 
 /datum/asset/spritesheet/moods/ModifyInserted(icon/pre_asset)
 	var/blended_color

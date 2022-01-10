@@ -22,7 +22,7 @@
 /obj/item/ammo_box/magazine/recharge/ctf
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf
 
-/obj/item/ammo_box/magazine/recharge/ctf/Initialize()
+/obj/item/ammo_box/magazine/recharge/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -30,7 +30,7 @@
 /obj/item/ammo_casing/caseless/laser/ctf
 	projectile_type = /obj/projectile/beam/ctf/
 
-/obj/item/ammo_casing/caseless/laser/ctf/Initialize()
+/obj/item/ammo_casing/caseless/laser/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -43,7 +43,7 @@
 	weapon_weight = WEAPON_HEAVY
 	slot_flags = null
 
-/obj/item/gun/ballistic/automatic/laser/ctf/Initialize()
+/obj/item/gun/ballistic/automatic/laser/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -77,7 +77,7 @@
 	internal_magazine = FALSE
 	tac_reloads = TRUE
 
-/obj/item/gun/ballistic/shotgun/ctf/Initialize()
+/obj/item/gun/ballistic/shotgun/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -127,7 +127,7 @@
 	force = 75
 	mag_type = /obj/item/ammo_box/magazine/recharge/ctf/deagle
 
-/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize()
+/obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -165,7 +165,7 @@
 /obj/item/gun/energy/laser/instakill/emp_act() //implying you could stop the instagib
 	return
 
-/obj/item/gun/energy/laser/instakill/ctf/Initialize()
+/obj/item/gun/energy/laser/instakill/ctf/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/delete_on_drop)
 
@@ -189,43 +189,39 @@
 		target_mob.visible_message(span_danger("[target_mob] explodes into a shower of gibs!"))
 		target_mob.gib()
 
-// SHIELDED HARDSUIT
+// SHIELDED VEST
 
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf
-	name = "white shielded hardsuit"
-	desc = "Standard issue hardsuit for playing capture the flag."
-	icon_state = "ert_medical"
-	inhand_icon_state = "ert_medical"
-	hardsuit_type = "ert_medical"
+/obj/item/clothing/suit/armor/vest/ctf
+	name = "white shielded vest"
+	desc = "Standard issue vest for playing capture the flag."
+	icon = 'icons/mob/clothing/suits/ctf.dmi'
+	worn_icon = 'icons/mob/clothing/suits/ctf.dmi'
+	icon_state = "standard"
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0) // CTF gear gives no protection outside of the shield
 	allowed = null
-	slowdown = 0
-	max_charges = 150
-	recharge_amount = 30
-	lose_multiple_charges = TRUE
+	greyscale_config = /datum/greyscale_config/ctf_standard
+	greyscale_config_worn = /datum/greyscale_config/ctf_standard_worn
+	greyscale_colors = "#ffffff"
 
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
-	name = "shielded hardsuit helmet"
-	desc = "Standard issue hardsuit helmet for playing capture the flag."
-	icon_state = "hardsuit0-ert_medical"
-	inhand_icon_state = "hardsuit0-ert_medical"
-	hardsuit_type = "ert_medical"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	///Icon state to be fed into the shielded component
+	var/team_shield_icon = "shield-old"
 
-// LIGHT SHIELDED HARDSUIT
+/obj/item/clothing/suit/armor/vest/ctf/setup_shielding()
+	AddComponent(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light
-	name = "light white shielded hardsuit"
-	desc = "Lightweight hardsuit for playing capture the flag."
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
-	max_charges = 30
+// LIGHT SHIELDED VEST
+
+/obj/item/clothing/suit/armor/vest/ctf/light
+	name = "light white shielded vest"
+	desc = "Lightweight vest for playing capture the flag."
+	icon_state = "light"
+	greyscale_config = /datum/greyscale_config/ctf_light
+	greyscale_config_worn = /datum/greyscale_config/ctf_light_worn
 	slowdown = -0.25
 
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light
-	name = "light shielded hardsuit helmet"
-	desc = "Lightweight hardsuit helmet for playing capture the flag."
+/obj/item/clothing/suit/armor/vest/ctf/light/setup_shielding()
+	AddComponent(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
 // RED TEAM GUNS
 
@@ -487,119 +483,63 @@
 // RED TEAM SUITS
 
 // Regular
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/red
-	name = "red shielded hardsuit"
-	icon_state = "ert_security"
+/obj/item/clothing/suit/armor/vest/ctf/red
+	name = "red shielded vest"
 	inhand_icon_state = "ert_security"
-	hardsuit_type = "ert_security"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
-	shield_icon = "shield-red"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/red
-	icon_state = "hardsuit0-ert_security"
-	inhand_icon_state = "hardsuit0-ert_security"
-	hardsuit_type = "ert_security"
+	team_shield_icon = "shield-red"
+	greyscale_colors = COLOR_VIVID_RED
 
 // Light
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/red
-	name = "light red shielded hardsuit"
-	icon_state = "ert_security"
+/obj/item/clothing/suit/armor/vest/ctf/light/red
+	name = "light red shielded vest"
 	inhand_icon_state = "ert_security"
-	hardsuit_type = "ert_security"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/red
-	shield_icon = "shield-red"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/red
-	icon_state = "hardsuit0-ert_security"
-	inhand_icon_state = "hardsuit0-ert_security"
-	hardsuit_type = "ert_security"
+	team_shield_icon = "shield-red"
+	greyscale_colors = COLOR_VIVID_RED
 
 // BLUE TEAM SUITS
 
 // Regular
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/blue
-	name = "blue shielded hardsuit"
-	icon_state = "ert_command"
+/obj/item/clothing/suit/armor/vest/ctf/blue
+	name = "blue shielded vest"
 	inhand_icon_state = "ert_command"
-	hardsuit_type = "ert_commander"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
-	shield_icon = "shield-old"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/blue
-	icon_state = "hardsuit0-ert_commander"
-	inhand_icon_state = "hardsuit0-ert_commander"
-	hardsuit_type = "ert_commander"
+	team_shield_icon = "shield-old"
+	greyscale_colors = COLOR_DARK_CYAN
 
 // Light
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/blue
-	name = "light blue shielded hardsuit"
-	icon_state = "ert_command"
+/obj/item/clothing/suit/armor/vest/ctf/light/blue
+	name = "light blue shielded vest"
 	inhand_icon_state = "ert_command"
-	hardsuit_type = "ert_commander"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/blue
-	shield_icon = "shield-old"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/blue
-	icon_state = "hardsuit0-ert_commander"
-	inhand_icon_state = "hardsuit0-ert_commander"
-	hardsuit_type = "ert_commander"
+	team_shield_icon = "shield-old"
+	greyscale_colors = COLOR_DARK_CYAN
 
 // GREEN TEAM SUITS
 
 // Regular
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/green
-	name = "green shielded hardsuit"
-	icon_state = "ert_green"
+/obj/item/clothing/suit/armor/vest/ctf/green
+	name = "green shielded vest"
 	inhand_icon_state = "ert_green"
-	hardsuit_type = "ert_green"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
-	shield_icon = "shield-green"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/green
-	icon_state = "hardsuit0-ert_green"
-	inhand_icon_state = "hardsuit0-ert_green"
-	hardsuit_type = "ert_green"
+	team_shield_icon = "shield-green"
+	greyscale_colors = COLOR_LIME
 
 // Light
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/green
-	name = "light green shielded hardsuit"
-	icon_state = "ert_green"
+/obj/item/clothing/suit/armor/vest/ctf/light/green
+	name = "light green shielded vest"
 	inhand_icon_state = "ert_green"
-	hardsuit_type = "ert_green"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/green
-	shield_icon = "shield-green"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/green
-	icon_state = "hardsuit0-ert_green"
-	inhand_icon_state = "hardsuit0-ert_green"
-	hardsuit_type = "ert_green"
+	team_shield_icon = "shield-green"
+	greyscale_colors = COLOR_LIME
 
 // YELLOW TEAM SUITS
 
 // Regular
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/yellow
-	name = "yellow shielded hardsuit"
-	icon_state = "ert_engineer"
+/obj/item/clothing/suit/armor/vest/ctf/yellow
+	name = "yellow shielded vest"
 	inhand_icon_state = "ert_engineer"
-	hardsuit_type = "ert_engineer"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
-	shield_icon = "shield-yellow"
+	team_shield_icon = "shield-yellow"
+	greyscale_colors = COLOR_VIVID_YELLOW
 
 // Light
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/yellow
-	icon_state = "hardsuit0-ert_engineer"
-	inhand_icon_state = "hardsuit0-ert_engineer"
-	hardsuit_type = "ert_engineer"
-
-/obj/item/clothing/suit/space/hardsuit/shielded/ctf/light/yellow
-	name = "light yellow shielded hardsuit"
-	icon_state = "ert_engineer"
+/obj/item/clothing/suit/armor/vest/ctf/light/yellow
+	name = "light yellow shielded vest"
 	inhand_icon_state = "ert_engineer"
-	hardsuit_type = "ert_engineer"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/yellow
-	shield_icon = "shield-yellow"
-
-/obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf/light/yellow
-	icon_state = "hardsuit0-ert_engineer"
-	inhand_icon_state = "hardsuit0-ert_engineer"
-	hardsuit_type = "ert_engineer"
+	team_shield_icon = "shield-yellow"
+	greyscale_colors = COLOR_VIVID_YELLOW

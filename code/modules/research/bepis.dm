@@ -58,11 +58,6 @@
 	)
 
 /obj/machinery/rnd/bepis/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "chamber_open", "chamber", O))
-		update_appearance()
-		return
-	if(default_deconstruction_crowbar(O))
-		return
 	if(!is_operational)
 		to_chat(user, span_notice("[src] can't accept money when it's not functioning."))
 		return
@@ -83,6 +78,9 @@
 			say("No account detected on card. Aborting.")
 		return
 	return ..()
+
+/obj/machinery/rnd/bepis/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "chamber_open", "chamber", tool)
 
 /obj/machinery/rnd/bepis/RefreshParts()
 	var/C = 0
@@ -187,7 +185,7 @@
 				return
 			calcsuccess()
 			use_power(MACHINE_OPERATION * power_saver) //This thing should eat your APC battery if you're not careful.
-			use_power = IDLE_POWER_USE //Machine shuts off after use to prevent spam and look better visually.
+			update_use_power(IDLE_POWER_USE) //Machine shuts off after use to prevent spam and look better visually.
 			update_appearance()
 		if("amount")
 			var/input = text2num(params["amount"])
@@ -195,9 +193,9 @@
 				banking_amount = input
 		if("toggle_power")
 			if(use_power == ACTIVE_POWER_USE)
-				use_power = IDLE_POWER_USE
+				update_use_power(IDLE_POWER_USE)
 			else
-				use_power = ACTIVE_POWER_USE
+				update_use_power(ACTIVE_POWER_USE)
 			update_appearance()
 		if("account_reset")
 			if(use_power == IDLE_POWER_USE)

@@ -20,10 +20,9 @@
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
 	animate(src, , alpha = 0, time = 20)
 
-/obj/structure/closet/cardboard/agent/Initialize()
+/obj/structure/closet/cardboard/agent/Initialize(mapload)
 	. = ..()
 	go_invisible()
-
 
 /obj/structure/closet/cardboard/agent/open(mob/living/user, force = FALSE)
 	. = ..()

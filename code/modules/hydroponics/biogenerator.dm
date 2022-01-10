@@ -18,7 +18,7 @@
 	/// Currently selected category in the UI
 	var/selected_cat
 
-/obj/machinery/biogenerator/Initialize()
+/obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
 

@@ -26,7 +26,7 @@
 	species = "steelcap"
 	plantname = "Steel Caps"
 	product = /obj/item/grown/log/steel
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/cellulose = 0.05, /datum/reagent/iron = 0.05)
 	rarity = 20
 
@@ -57,12 +57,12 @@
 		var/seed_modifier = 0
 		if(seed)
 			seed_modifier = round(seed.potency / 25)
-		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier)
+		var/obj/item/stack/plank = new plank_type(user.loc, 1 + seed_modifier, FALSE)
 		var/old_plank_amount = plank.amount
-		for(var/obj/item/stack/ST in user.loc)
-			if(ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
+		for (var/obj/item/stack/ST in user.loc)
+			if (ST != plank && istype(ST, plank_type) && ST.amount < ST.max_amount)
 				ST.attackby(plank, user) //we try to transfer all old unfinished stacks to the new stack we created.
-		if(plank.amount > old_plank_amount)
+		if (plank.amount > old_plank_amount)
 			to_chat(user, span_notice("You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name]."))
 		qdel(src)
 
@@ -112,7 +112,7 @@
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"

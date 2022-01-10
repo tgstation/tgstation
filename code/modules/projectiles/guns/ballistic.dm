@@ -85,10 +85,12 @@
 	///Whether the gun can be tacloaded by slapping a fresh magazine directly on it
 	var/tac_reloads = TRUE //Snowflake mechanic no more.
 	///Whether the gun can be sawn off by sawing tools
-	var/can_be_sawn_off  = FALSE
+	var/can_be_sawn_off = FALSE
 	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
+	/// Check if you are able to see if a weapon has a bullet loaded in or not.
+	var/hidden_chambered = FALSE
 
 	///Gun internal magazine modification and misfiring
 
@@ -116,7 +118,7 @@
 	///What is the cap on our misfire probability? Do not set this to 100.
 	var/misfire_probability_cap = 25
 
-/obj/item/gun/ballistic/Initialize()
+/obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()
 	if (!spawnwithmagazine)
 		bolt_locked = TRUE
@@ -210,15 +212,18 @@
 		. += "[icon_state]_mag_[capacity_number]"
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
+/obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
-	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(istype(AC)) //there's a chambered round
-		if(casing_ejector || !from_firing)
-			AC.forceMove(drop_location()) //Eject casing onto ground.
-			AC.bounce_away(TRUE)
-			SEND_SIGNAL(AC, COMSIG_CASING_EJECTED)
+	var/obj/item/ammo_casing/casing = chambered //Find chambered round
+	if(istype(casing)) //there's a chambered round
+		if(QDELING(casing))
+			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
+			chambered = null
+		else if(casing_ejector || !from_firing)
+			casing.forceMove(drop_location()) //Eject casing onto ground.
+			casing.bounce_away(TRUE)
+			SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
@@ -488,7 +493,7 @@
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
 
-	if (!chambered)
+	if (!chambered && !hidden_chambered)
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."
@@ -548,7 +553,7 @@
 
 GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	/obj/item/gun/energy/plasmacutter,
-	/obj/item/melee/transforming/energy,
+	/obj/item/melee/energy,
 	/obj/item/dualsaber
 	)))
 
@@ -591,7 +596,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 		update_appearance()
 		return TRUE
 
-/obj/item/gun/ballistic/proc/guncleaning(mob/user, /obj/item/A)
+/obj/item/gun/ballistic/proc/guncleaning(mob/user, obj/item/A)
 	if(misfire_probability == 0)
 		to_chat(user, span_notice("[src] seems to be already clean of fouling."))
 		return

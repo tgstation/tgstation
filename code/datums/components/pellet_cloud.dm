@@ -53,6 +53,7 @@
 	/// for if we're an ammo casing being fired
 	var/mob/living/shooter
 
+
 /datum/component/pellet_cloud/Initialize(projectile_type=/obj/item/shrapnel, magnitude=5)
 	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent) && !issupplypod(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -335,7 +336,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED =.proc/grenade_uncrossed,
 	)
-	AddElement(/datum/element/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 /// Someone dropped the grenade, so set them to the shooter in case they're on top of it when it goes off
 /datum/component/pellet_cloud/proc/grenade_dropped(obj/item/nade, mob/living/slick_willy)

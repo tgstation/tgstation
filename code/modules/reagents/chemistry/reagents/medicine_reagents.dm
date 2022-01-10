@@ -49,10 +49,10 @@
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustPests(-rand(1,5))
-		mytray.adjustWeeds(-rand(1,5))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_pestlevel(-rand(1,5))
+		mytray.adjust_weedlevel(-rand(1,5))
 	if(chems.has_reagent(type, 3))
 		switch(rand(100))
 			if(66  to 100)
@@ -88,7 +88,6 @@
 	M.slurring = 0
 	M.jitteriness = 0
 	M.hallucination = 0
-	M.radiation = 0
 	REMOVE_TRAITS_NOT_IN(M, list(SPECIES_TRAIT, ROUNDSTART_TRAIT, ORGAN_TRAIT))
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM * delta_time, FALSE, TRUE)
 	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -119,7 +118,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.AdjustStun(-20 * REM * delta_time)
 	M.AdjustKnockdown(-20 * REM * delta_time)
 	M.AdjustUnconscious(-20 * REM * delta_time)
@@ -141,7 +140,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaphydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	M.adjust_drowsyness(-5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/mindbreaker))
 		holder.remove_reagent(/datum/reagent/toxin/mindbreaker, 5 * REM * delta_time)
 	if(holder.has_reagent(/datum/reagent/toxin/histamine))
@@ -181,8 +180,8 @@
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjustHealth(round(chems.get_reagent_amount(type) * 3))
-	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 3))
+	mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjust_toxic(-round(chems.get_reagent_amount(type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -440,29 +439,45 @@
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"
-	description = "Efficiently restores low radiation damage."
+	description = "Heals low toxin damage while the patient is irradiated, and will halt the damaging effects of radiation."
 	reagent_state = LIQUID
 	color = "#BAA15D"
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/potass_iodide/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+
+/datum/reagent/medicine/potass_iodide/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	return ..()
+
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.radiation > 0)
-		M.radiation -= min(8 * REM * delta_time, M.radiation)
+	if (HAS_TRAIT(M, TRAIT_IRRADIATED))
+		M.adjustToxLoss(-1 * REM * delta_time)
+
 	..()
 
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
-	description = "Reduces massive amounts of radiation and toxin damage while purging other chemicals from the body."
+	description = "Reduces massive amounts of toxin damage while purging other chemicals from the body."
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	ph = 1 //One of the best buffers, NEVERMIND!
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/medicine/pen_acid/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+
+/datum/reagent/medicine/pen_acid/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	return ..()
+
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.radiation -= (max(M.radiation - RAD_MOB_SAFE, 0) / 50) * REM * delta_time
 	M.adjustToxLoss(-2 * REM * delta_time, 0)
 	for(var/datum/reagent/R in M.reagents.reagent_list)
 		if(R != src)
@@ -573,7 +588,7 @@
 
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		M.drowsyness++
+		M.adjust_drowsyness(1)
 	M.jitteriness -= 1 * REM * delta_time
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 3 * REM * delta_time)
 	..()
@@ -604,7 +619,7 @@
 		if(11)
 			to_chat(M, span_warning("You start to feel tired...") )
 		if(12 to 24)
-			M.drowsyness += 1 * REM * delta_time
+			M.adjust_drowsyness(1 * REM * delta_time)
 		if(24 to INFINITY)
 			M.Sleeping(40 * REM * delta_time)
 			. = TRUE
@@ -890,7 +905,7 @@
 	. = ..()
 
 /datum/reagent/medicine/mannitol/overdose_start(mob/living/owner)
-	to_chat(owner, span_notice("You suddenly feel </span><span class='purple'>E N L I G H T E N E D!"))
+	to_chat(owner, span_notice("You suddenly feel <span class='purple'>E N L I G H T E N E D!</span>"))
 
 /datum/reagent/medicine/mannitol/overdose_process(mob/living/owner, delta_time, times_fired)
 	if(DT_PROB(65, delta_time))
@@ -903,8 +918,8 @@
 	else
 		tips = world.file2list("strings/chemistrytips.txt")
 	var/message = pick(tips)
-	to_chat(owner, span_purple("<b>Tip of the round: </b>[html_encode(message)]"))
-	..()
+	send_tip_of_the_round(owner, message)
+	return ..()
 
 /datum/reagent/medicine/neurine
 	name = "Neurine"
@@ -975,7 +990,7 @@
 
 /datum/reagent/medicine/antihol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = 0
-	M.drowsyness = 0
+	M.set_drowsyness(0)
 	M.slurring = 0
 	M.set_confusion(0)
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 3 * REM * delta_time * normalise_creation_purity(), FALSE, TRUE)
@@ -993,7 +1008,7 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 60
 	ph = 8.7
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 4) //0.8 per 2 seconds
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
@@ -1069,8 +1084,8 @@
 		return
 
 	var/mob/living/carbon/human/exposed_human = exposed_mob
-	exposed_human.hair_color = "C2F"
-	exposed_human.facial_hair_color = "C2F"
+	exposed_human.hair_color = "#CC22FF"
+	exposed_human.facial_hair_color = "#CC22FF"
 	exposed_human.update_hair()
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1088,7 +1103,7 @@
 	color = "#555555"
 	overdose_threshold = 30
 	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustBruteLoss(-5 * REM * delta_time, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -1173,7 +1188,7 @@
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
 		M.reagents.remove_reagent(R.type, 5 * REM * delta_time)
-	M.drowsyness += 2 * REM * delta_time
+	M.adjust_drowsyness(2 * REM * delta_time)
 	if(M.jitteriness >= 3)
 		M.jitteriness -= 3 * REM * delta_time
 	if (M.hallucination >= 5)
@@ -1190,7 +1205,7 @@
 	description = "Reduces the duration of unconciousness, knockdown and stuns. Restores stamina, but deals toxin damage when overdosed."
 	color = "#C1151D"
 	overdose_threshold = 30
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/metabolizer, delta_time, times_fired)
 	..()
@@ -1224,7 +1239,7 @@
 	description = "Drastically increases movement speed, but deals toxin damage."
 	color = "#AE151D"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
@@ -1259,7 +1274,7 @@
 	description = "A strange, pitch-black reagent that seems to absorb all light. Effects unknown."
 	color = "#000000"
 	self_consuming = TRUE
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/M)
 	..()
@@ -1274,7 +1289,7 @@
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/L)
 	. = ..()
@@ -1437,8 +1452,8 @@
 	. = ..()
 	if(!(methods & (TOUCH|VAPOR)) || !ishuman(exposed_human) || (reac_volume < 0.5))
 		return
-	exposed_human.hair_color = "92f"
-	exposed_human.facial_hair_color = "92f"
+	exposed_human.hair_color = "#9922ff"
+	exposed_human.facial_hair_color = "#9922ff"
 	exposed_human.update_hair()
 
 /datum/reagent/medicine/polypyr/overdose_process(mob/living/M, delta_time, times_fired)

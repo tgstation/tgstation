@@ -12,7 +12,7 @@
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
 
-/obj/effect/mine/Initialize()
+/obj/effect/mine/Initialize(mapload)
 	. = ..()
 	if(arm_delay)
 		armed = FALSE
@@ -37,7 +37,7 @@
 	armed = TRUE
 	icon_state = "uglymine"
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
-	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
+	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/effect/mine/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

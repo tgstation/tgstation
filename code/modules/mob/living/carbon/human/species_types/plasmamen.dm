@@ -25,7 +25,7 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	payday_modifier = 0.75
-	breathid = "tox"
+	breathid = "plas"
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT | CLOTH
@@ -51,13 +51,20 @@
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/atmos_sealed = CanIgniteMob(H) && (isclothing(H.wear_suit) && H.wear_suit.clothing_flags & STOPSPRESSUREDAMAGE) && (isclothing(H.head) && H.head.clothing_flags & STOPSPRESSUREDAMAGE)
+	var/flammable_limb = FALSE
+	for(var/obj/item/bodypart/found_bodypart as anything in H.bodyparts)//If any plasma based limb is found the plasmaman will attempt to autoignite
+		if(found_bodypart.status == BODYPART_ORGANIC && (found_bodypart.species_id == SPECIES_PLASMAMAN || HAS_TRAIT(found_bodypart, TRAIT_PLASMABURNT))) //Allows for "donated" limbs and augmented limbs to prevent autoignition
+			flammable_limb = TRUE
+			break
+	if(!flammable_limb && !H.on_fire) //Allows their suit to attempt to autoextinguish if augged and on fire
+		return
 	if(!atmos_sealed && (!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)))
 		var/datum/gas_mixture/environment = H.loc.return_air()
 		if(environment?.total_moles())
 			if(environment.gases[/datum/gas/hypernoblium] && (environment.gases[/datum/gas/hypernoblium][MOLES]) >= 5)
 				if(H.on_fire && H.fire_stacks > 0)
 					H.adjust_fire_stacks(-10 * delta_time)
-			else if(!HAS_TRAIT(H, TRAIT_NOFIRE))
+			else if(!HAS_TRAIT(H, TRAIT_NOFIRE) && !HAS_TRAIT(H, TRAIT_NOSELFIGNITION))
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
 					H.adjust_fire_stacks(0.25 * delta_time)
 					if(!H.on_fire && H.fire_stacks > 0)

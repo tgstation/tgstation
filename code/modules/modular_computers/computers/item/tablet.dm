@@ -151,6 +151,6 @@
 	device_theme = "syndicate"
 
 
-/obj/item/modular_computer/tablet/integrated/syndicate/Initialize()
+/obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
 	borgo.lamp_color = COLOR_RED //Syndicate likes it red

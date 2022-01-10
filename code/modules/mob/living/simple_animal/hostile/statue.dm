@@ -2,7 +2,7 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you..." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
@@ -29,7 +29,7 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("statue")
@@ -144,7 +144,7 @@
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	return
 
 // Turn to dust when gibbed

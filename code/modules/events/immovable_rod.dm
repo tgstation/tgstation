@@ -81,7 +81,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	special_target = aimed_at
 	loopy_rod = force_looping
 
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 
 	RegisterSignal(src, COMSIG_ATOM_ENTERING, .proc/on_entering_atom)
 
@@ -92,7 +92,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
-	RemoveElement(/datum/element/point_of_interest)
 	SSaugury.unregister_doom(src)
 
 	return ..()
@@ -258,7 +257,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
-		smeared_mob.ex_act(EXPLODE_HEAVY)
+		EX_ACT(smeared_mob, EXPLODE_HEAVY)
 
 /obj/effect/immovablerod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()

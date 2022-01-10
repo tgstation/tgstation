@@ -10,7 +10,7 @@
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = TRUE
 
-/obj/item/gun/magic/wand/Initialize()
+/obj/item/gun/magic/wand/Initialize(mapload)
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
 		if(prob(33))
 			max_charges = CEILING(max_charges / 3, 1)
@@ -241,7 +241,7 @@
 
 /obj/item/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE)
+	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	charges--
 
 /////////////////////////////////////

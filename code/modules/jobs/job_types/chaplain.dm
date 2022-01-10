@@ -1,6 +1,8 @@
 /datum/job/chaplain
-	title = "Chaplain"
-	department_head = list("Head of Personnel")
+	title = JOB_CHAPLAIN
+	description = "Hold services and funerals, cremate people, preach your \
+		religion, protect the crew against cults."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -28,8 +30,8 @@
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/ratplush = 1
 	)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	rpg_title = "Paladin"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
@@ -62,19 +64,11 @@
 	if(H.mind)
 		H.mind.holy_role = HOLY_ROLE_HIGHPRIEST
 
-	var/new_religion = DEFAULT_RELIGION
-	if(player_client?.prefs.custom_names["religion"])
-		new_religion = player_client.prefs.custom_names["religion"]
-
-	var/new_deity = DEFAULT_DEITY
-	if(player_client?.prefs.custom_names["deity"])
-		new_deity = player_client.prefs.custom_names["deity"]
+	var/new_religion = player_client?.prefs?.read_preference(/datum/preference/name/religion) || DEFAULT_RELIGION
+	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
+	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
 	B.deity_name = new_deity
-
-	var/new_bible = DEFAULT_BIBLE
-	if(player_client?.prefs.custom_names["bible"])
-		new_bible = player_client.prefs.custom_names["bible"]
 
 	switch(lowertext(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
@@ -120,19 +114,17 @@
 	name = "Chaplain"
 	jobtype = /datum/job/chaplain
 
-	belt = /obj/item/pda/chaplain
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/chaplain
 	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	backpack_contents = list(
+		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
-		/obj/item/camera/spooky = 1
 		)
-
-	skillchips = list(/obj/item/skillchip/entrails_reader)
+	belt = /obj/item/pda/chaplain
+	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack
 	satchel = /obj/item/storage/backpack/cultpack
 
 	chameleon_extras = /obj/item/stamp/chap
-
-	id_trim = /datum/id_trim/job/chaplain
+	skillchips = list(/obj/item/skillchip/entrails_reader)

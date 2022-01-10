@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `SS13_admin_log`;
 CREATE TABLE `SS13_admin_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `adminckey` varchar(32) NOT NULL,
   `adminip` int(10) unsigned NOT NULL,
   `operation` enum('add admin','remove admin','change admin rank','add rank','remove rank','change rank flags') NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE `SS13_ban` (
   `bantime` DATETIME NOT NULL,
   `server_ip` INT(10) UNSIGNED NOT NULL,
   `server_port` SMALLINT(5) UNSIGNED NOT NULL,
-  `round_id` INT(11) UNSIGNED NOT NULL,
+  `round_id` INT(11) UNSIGNED NULL,
   `role` VARCHAR(32) NULL DEFAULT NULL,
   `expiration_time` DATETIME NULL DEFAULT NULL,
   `applies_to_admins` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `SS13_citation`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `SS13_citation` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `server_ip` int(11) unsigned NOT NULL,
   `server_port` int(11) unsigned NOT NULL,
   `citation` text NOT NULL,
@@ -159,7 +159,7 @@ CREATE TABLE `SS13_death` (
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) NOT NULL,
+  `round_id` int(11) NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -190,7 +190,7 @@ DROP TABLE IF EXISTS `SS13_feedback`;
 CREATE TABLE `SS13_feedback` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `key_name` varchar(32) NOT NULL,
   `version` tinyint(3) unsigned NOT NULL,
   `key_type` enum('text', 'amount', 'tally', 'nested tally', 'associative') NOT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE `SS13_legacy_population` (
   `time` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -250,7 +250,7 @@ CREATE TABLE `SS13_library` (
   `ckey` varchar(32) NOT NULL DEFAULT 'LEGACY',
   `datetime` datetime NOT NULL,
   `deleted` tinyint(1) unsigned DEFAULT NULL,
-  `round_id_created` int(11) unsigned NOT NULL,
+  `round_id_created` int(11) unsigned NULL,
   PRIMARY KEY (`id`),
   KEY `deleted_idx` (`deleted`),
   KEY `idx_lib_id_del` (`id`,`deleted`),
@@ -295,7 +295,7 @@ CREATE TABLE `SS13_messages` (
   `server` varchar(32) DEFAULT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `secret` tinyint(1) unsigned NOT NULL,
   `expire_timestamp` datetime DEFAULT NULL,
   `severity` enum('high','medium','minor','none') DEFAULT NULL,
@@ -359,9 +359,9 @@ CREATE TABLE `SS13_player` (
   `ckey` varchar(32) NOT NULL,
   `byond_key` varchar(32) DEFAULT NULL,
   `firstseen` datetime NOT NULL,
-  `firstseen_round_id` int(11) unsigned NOT NULL,
+  `firstseen_round_id` int(11) unsigned NULL,
   `lastseen` datetime NOT NULL,
-  `lastseen_round_id` int(11) unsigned NOT NULL,
+  `lastseen_round_id` int(11) unsigned NULL,
   `ip` int(10) unsigned NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
@@ -585,9 +585,10 @@ CREATE TABLE `SS13_ticket` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) unsigned NOT NULL,
+  `round_id` int(11) unsigned NULL,
   `ticket` smallint(11) unsigned NOT NULL,
   `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `urgent` TINYINT(1) unsigned NOT NULL DEFAULT '0',
   `message` text NOT NULL,
   `timestamp` datetime NOT NULL,
   `recipient` varchar(32) DEFAULT NULL,
@@ -662,6 +663,35 @@ CREATE TABLE `SS13_admin_connections` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `unique_constraints` (`ckey`, `ip`, `cid`)
 ) ENGINE=InnoDB;
+
+--
+-- Table structure for table `known_alts`
+--
+DROP TABLE IF EXISTS `SS13_known_alts`;
+CREATE TABLE `SS13_known_alts` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey1` VARCHAR(32) NOT NULL,
+    `ckey2` VARCHAR(32) NOT NULL,
+    `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_contraints` (`ckey1` , `ckey2`)
+);
+
+--
+-- Table structure for table `telemetry_connections`
+--
+DROP TABLE IF EXISTS `SS13_telemetry_connections`;
+CREATE TABLE `SS13_telemetry_connections` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey` VARCHAR(32) NOT NULL,
+    `telemetry_ckey` VARCHAR(32) NOT NULL,
+    `address` INT(10) UNSIGNED NOT NULL,
+    `computer_id` VARCHAR(32) NOT NULL,
+    `first_round_id` INT(11) UNSIGNED NULL,
+    `latest_round_id` INT(11) UNSIGNED NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
+);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

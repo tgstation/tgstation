@@ -7,7 +7,7 @@
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
-/obj/structure/window/shuttle/tinted,
+/obj/structure/window/reinforced/shuttle/tinted,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -132,7 +132,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "at" = (
@@ -366,10 +366,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -415,10 +412,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},

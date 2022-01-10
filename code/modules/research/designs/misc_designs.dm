@@ -325,14 +325,14 @@
 	category = list("Equipment")
 
 /datum/design/pneumatic_seal
-	name = "Pneumatic Seal"
-	desc = "A heavy brace used to seal doors. Useful for keeping out people without the dexterity to remove it."
+	name = "Pneumatic Airlock Seal"
+	desc = "A heavy brace used to seal airlocks. Useful for keeping out people without the dexterity to remove it."
 	id = "pneumatic_seal"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 20000, /datum/material/plasma = 10000)
 	build_path = /obj/item/door_seal
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -345,7 +345,7 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 200)
 	build_path = /obj/item/mop/advanced
-	category = list("Equipment")
+	category = list("Equipment", "Tools", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/normtrash
@@ -571,6 +571,7 @@
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	autolathe_exportable = FALSE
 
 /datum/design/zipties
 	name = "Zipties"

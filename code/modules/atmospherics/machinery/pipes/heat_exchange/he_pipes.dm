@@ -8,12 +8,12 @@
 
 	hide = FALSE
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/isConnectable(obj/machinery/atmospherics/pipe/heat_exchanging/target, given_layer, HE_type_check = TRUE)
+/obj/machinery/atmospherics/pipe/heat_exchanging/is_connectable(obj/machinery/atmospherics/pipe/heat_exchanging/target, given_layer, HE_type_check = TRUE)
 	if(istype(target, /obj/machinery/atmospherics/pipe/heat_exchanging) != HE_type_check)
 		return FALSE
 	. = ..()
@@ -22,19 +22,19 @@
 	var/environment_temperature = 0
 	var/datum/gas_mixture/pipe_air = return_air()
 
-	var/turf/T = loc
-	if(istype(T))
-		if(islava(T))
+	var/turf/local_turf = loc
+	if(istype(local_turf))
+		if(islava(local_turf))
 			environment_temperature = 5000 //Yuck
-		else if(T.blocks_air)
-			environment_temperature = T.temperature
+		else if(local_turf.blocks_air)
+			environment_temperature = local_turf.temperature
 		else
-			var/turf/open/OT = T
-			environment_temperature = OT.GetTemperature()
+			var/turf/open/open_local = local_turf
+			environment_temperature = open_local.GetTemperature()
 	else
-		environment_temperature = T.temperature
+		environment_temperature = local_turf.temperature
 	if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
-		parent.temperature_interact(T, volume, thermal_conductivity)
+		parent.temperature_interact(local_turf, volume, thermal_conductivity)
 
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
@@ -43,9 +43,8 @@
 		var/mob/living/heat_source = buckled_mobs[1]
 		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
 		var/avg_temp = (pipe_air.temperature * hc + (heat_source.bodytemperature * buckled_mobs.len) * 3500) / (hc + (buckled_mobs ? buckled_mobs.len * 3500 : 0))
-		for(var/m in buckled_mobs)
-			var/mob/living/L = m
-			L.bodytemperature = avg_temp
+		for(var/mob/living/buckled_mob as anything in buckled_mobs)
+			buckled_mob.bodytemperature = avg_temp
 		pipe_air.temperature = avg_temp
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process(delta_time)
@@ -72,12 +71,12 @@
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
 	//burn any mobs buckled based on temperature
-	if(has_buckled_mobs())
-		var/heat_limit = 1000
-		if(pipe_air.temperature > heat_limit + 1)
-			for(var/m in buckled_mobs)
-				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
+	if(!has_buckled_mobs())
+		return
+	var/heat_limit = 1000
+	if(pipe_air.temperature > heat_limit + 1)
+		for(var/mob/living/buckled_mob as anything in buckled_mobs)
+			buckled_mob.apply_damage(delta_time * 2 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/update_pipe_icon()
 	return

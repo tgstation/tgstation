@@ -43,9 +43,11 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
 		instance.assigned_map = map_name
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
 		cam_plane_masters += instance
@@ -54,9 +56,9 @@
 	cam_background.del_on_map_removal = FALSE
 
 /datum/computer_file/program/secureye/Destroy()
-	qdel(cam_screen)
+	QDEL_NULL(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	qdel(cam_background)
+	QDEL_NULL(cam_background)
 	return ..()
 
 /datum/computer_file/program/secureye/ui_interact(mob/user, datum/tgui/ui)

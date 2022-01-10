@@ -37,7 +37,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "ak" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate2)
 "al" = (
@@ -46,7 +46,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "am" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "an" = (
@@ -117,7 +117,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aE" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate3)
 "aG" = (
@@ -126,7 +126,7 @@
 /area/awaymission/spacebattle/syndicate2)
 "aI" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
 "aJ" = (
@@ -207,7 +207,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate2)
 "bb" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate1)
 "bc" = (
@@ -224,7 +224,7 @@
 /area/awaymission/spacebattle/syndicate3)
 "be" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/syndi,
+/obj/item/mod/control/pre_equipped/nuclear,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "bf" = (
@@ -289,11 +289,6 @@
 /mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate3)
-"bt" = (
-/obj/structure/table/reinforced,
-/obj/item/melee/transforming/energy/sword/saber/red,
-/turf/open/floor/mineral/plastitanium/red,
-/area/awaymission/spacebattle/syndicate1)
 "bu" = (
 /obj/machinery/computer/shuttle{
 	dir = 1
@@ -344,7 +339,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
 "bJ" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "bK" = (
@@ -481,7 +476,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "cq" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Rosen Miller";
 	name = "Rosen Miller"
 	},
@@ -546,7 +541,7 @@
 /area/awaymission/spacebattle/cruiser)
 "cE" = (
 /obj/structure/table/reinforced,
-/obj/item/kitchen/knife,
+/obj/item/knife/kitchen,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/spacebattle/cruiser)
 "cF" = (
@@ -600,7 +595,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "cS" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Bill Sanchez";
 	name = "Bill Sanchez"
 	},
@@ -673,7 +668,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
 "dg" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "John Locke";
 	name = "John Locke"
 	},
@@ -701,7 +696,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "dm" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Daniel Kalla";
 	name = "Daniel Kalla"
 	},
@@ -905,7 +900,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "dX" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Andrew Thorn";
 	name = "Andrew Thorn"
 	},
@@ -927,7 +922,7 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ea" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Clay Dawson";
 	name = "Clay Dawson"
 	},
@@ -1011,7 +1006,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "ey" = (
-/obj/effect/mob_spawn/human/bridgeofficer{
+/obj/effect/mob_spawn/corpse/human/bridgeofficer{
 	mob_name = "Davis Hume";
 	name = "Davis Hume"
 	},
@@ -1068,7 +1063,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
 "eH" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Peter West";
 	name = "Peter West"
 	},
@@ -1150,14 +1145,8 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
-"eW" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
-/obj/item/melee/transforming/energy/sword/saber/red,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
 "eX" = (
-/obj/effect/mob_spawn/human/bridgeofficer{
+/obj/effect/mob_spawn/corpse/human/bridgeofficer{
 	mob_name = "Kurt Kliest";
 	name = "Kurt Kliest"
 	},
@@ -1187,7 +1176,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Eric Abnett";
 	name = "Eric Abnett"
 	},
@@ -1254,7 +1243,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/spacebattle/cruiser)
 "fl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate4)
 "fm" = (
@@ -1278,7 +1267,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fp" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/item/gun/ballistic/automatic/c20r,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
@@ -1303,7 +1292,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fr" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
@@ -1318,7 +1307,7 @@
 /obj/item/ammo_casing/a357,
 /obj/item/ammo_casing/a357,
 /obj/item/gun/ballistic/revolver/mateba,
-/obj/effect/mob_spawn/human/commander{
+/obj/effect/mob_spawn/corpse/human/commander{
 	mob_name = "Aaron Bowden";
 	name = "Aaron Bowden"
 	},
@@ -1455,7 +1444,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fN" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/item/gun/ballistic/automatic/c20r,
 /obj/item/ammo_casing/c10mm,
 /obj/item/ammo_casing/c10mm,
@@ -1567,7 +1556,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gd" = (
-/obj/effect/mob_spawn/human/bridgeofficer{
+/obj/effect/mob_spawn/corpse/human/bridgeofficer{
 	mob_name = "Robert Faver";
 	name = "Robert Faver"
 	},
@@ -1708,7 +1697,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "gF" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Adam Smith";
 	name = "Adam Smith"
 	},
@@ -1772,7 +1761,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	name = "Jeremy Tailor"
 	},
 /obj/effect/decal/cleanable/blood,
@@ -1811,7 +1800,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "gV" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Allan Yoshimaru";
 	name = "Allan Yoshimaru"
 	},
@@ -1874,7 +1863,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hh" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "Dan Hedricks";
 	name = "Dan Hedricks"
 	},
@@ -1925,8 +1914,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hq" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/space/hardsuit,
-/obj/item/clothing/head/helmet/space/hardsuit,
+/obj/item/mod/control/pre_equipped/standard,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "hr" = (
@@ -2021,7 +2009,7 @@
 /turf/open/floor/wood,
 /area/awaymission/spacebattle/cruiser)
 "hL" = (
-/obj/effect/mob_spawn/human/engineer/rig/gunner{
+/obj/effect/mob_spawn/corpse/human/engineer/mod{
 	mob_name = "William Gannon";
 	name = "William Gannon"
 	},
@@ -2071,7 +2059,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate7)
 "hU" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate7)
 "hV" = (
@@ -2135,7 +2123,7 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "ii" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Herbert West";
 	name = "Herbert West"
 	},
@@ -2143,7 +2131,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "ij" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Carth Robinson";
 	name = "Carth Robinson"
 	},
@@ -2190,7 +2178,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "is" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Cyrion";
 	name = "Cyrion"
 	},
@@ -2203,7 +2191,7 @@
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "iu" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/item/gun/ballistic/automatic/c20r,
 /turf/open/floor/iron{
 	icon_state = "damaged2"
@@ -2216,7 +2204,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/cruiser)
 "iw" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Mercutio";
 	name = "Mercutio"
 	},
@@ -2228,7 +2216,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "iy" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/space,
 /area/space/nearstation)
 "iz" = (
@@ -2242,14 +2230,14 @@
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iD" = (
-/obj/effect/mob_spawn/human/syndicatesoldier,
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/space/nearstation)
 "iE" = (
 /turf/closed/mineral/bananium,
 /area/space/nearstation)
 "iF" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "iG" = (
@@ -2289,7 +2277,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "iT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate5)
 "iW" = (
@@ -2325,7 +2313,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate6)
 "jf" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/syndicate6)
 "ji" = (
@@ -2353,7 +2341,7 @@
 /turf/closed/wall/mineral/plasma,
 /area/awaymission/spacebattle/secret)
 "jo" = (
-/obj/item/clothing/suit/space/hardsuit/wizard,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/vault/alien,
 /area/awaymission/spacebattle/secret)
 "jp" = (
@@ -2464,11 +2452,6 @@
 /obj/structure/barricade/security,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
-"jE" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "jF" = (
 /obj/structure/closet/crate,
 /obj/item/ammo_box/magazine/recharge,
@@ -2486,16 +2469,6 @@
 "jH" = (
 /mob/living/simple_animal/hostile/nanotrasen/ranged,
 /turf/open/floor/engine,
-/area/awaymission/spacebattle/cruiser)
-"jI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/engine,
-/area/awaymission/spacebattle/cruiser)
-"jJ" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/armory_contraband,
-/turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
 /obj/effect/turf_decal/tile/blue{
@@ -2515,7 +2488,7 @@
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jM" = (
-/obj/effect/mob_spawn/human/bridgeofficer{
+/obj/effect/mob_spawn/corpse/human/bridgeofficer{
 	mob_name = "Walter Strider";
 	name = "Walter Strider"
 	},
@@ -2601,10 +2574,6 @@
 /obj/item/gun/ballistic/automatic/laser,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
-"ka" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "kb" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
@@ -2643,14 +2612,14 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kj" = (
-/turf/open/floor/mech_bay_recharge_floor,
+/turf/open/floor/iron/recharge_floor,
 /area/awaymission/spacebattle/cruiser)
 "kk" = (
 /obj/item/shard,
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kl" = (
-/obj/effect/mob_spawn/human/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/item/gun/ballistic/automatic/wt550,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,
@@ -2727,7 +2696,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/spacebattle/cruiser)
 "kA" = (
-/obj/effect/mob_spawn/human/engineer{
+/obj/effect/mob_spawn/corpse/human/engineer{
 	mob_name = "Javier Wismer";
 	name = "Javier Wismer"
 	},
@@ -2792,18 +2761,48 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"pF" = (
+/obj/structure/table/reinforced,
+/obj/item/melee/energy/sword/saber/red,
+/turf/open/floor/mineral/plastitanium/red,
+/area/awaymission/spacebattle/syndicate1)
+"sA" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
 "zS" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate6)
+"AI" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/contraband/armory,
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "BO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate2)
+"Cx" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "Dv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate3)
+"Ny" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"Sj" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/item/melee/energy/sword/saber/red,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
 "UZ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate1)
@@ -24721,7 +24720,7 @@ aU
 bf
 bf
 bf
-bt
+pF
 bf
 bf
 aU
@@ -26583,9 +26582,9 @@ cK
 cK
 cK
 cK
-jE
-jE
-jI
+Cx
+Cx
+Ny
 el
 el
 jP
@@ -27356,15 +27355,15 @@ cK
 cK
 jF
 fb
-jE
-jE
+Cx
+Cx
 eT
 gc
 gq
 gD
 cK
-ka
-ka
+sA
+sA
 hn
 hn
 bT
@@ -27620,8 +27619,8 @@ cK
 cK
 cK
 cK
-ka
-ka
+sA
+sA
 hn
 hn
 bT
@@ -28127,7 +28126,7 @@ cK
 cK
 eT
 eT
-jJ
+AI
 fn
 jN
 jN
@@ -28907,7 +28906,7 @@ cK
 cK
 cK
 cK
-jJ
+AI
 eT
 bT
 bT
@@ -35835,7 +35834,7 @@ cc
 bT
 jw
 eN
-eW
+Sj
 cc
 cL
 cM

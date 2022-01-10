@@ -36,7 +36,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_2)
 "l" = (
-/obj/machinery/door/airlock/external/glass,
+/obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "m" = (
@@ -130,7 +130,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "x" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_2)
 "y" = (

@@ -47,7 +47,7 @@
 	head = /obj/item/clothing/head/helmet/thunderdome
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_hand = /obj/item/gun/energy/pulse/destroyer
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/grenade/smokebomb
 
 /datum/outfit/tournament/green
@@ -214,7 +214,7 @@
 	gloves = /obj/item/clothing/gloves/color/latex
 	head = /obj/item/clothing/head/welding
 	mask = /obj/item/clothing/mask/surgical
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/scalpel
 	l_hand = /obj/item/fireaxe
 
@@ -236,7 +236,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	l_pocket = /obj/item/melee/transforming/energy/sword/saber
+	l_pocket = /obj/item/melee/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -311,19 +311,19 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
+		/obj/item/spellbook = 1,
 )
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/wizard
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	r_pocket = /obj/item/teleportation_scroll
 	l_hand = /obj/item/staff
-	r_hand = /obj/item/spellbook
 
 /datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/spellbook/S = locate() in H.held_items
+	var/obj/item/spellbook/S = locate() in H.back
 	if(S)
 		S.owner = H
 
@@ -333,6 +333,7 @@
 	r_pocket = /obj/item/teleportation_scroll/apprentice
 	r_hand = null
 	l_hand = null
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"
@@ -405,16 +406,15 @@
 	head = /obj/item/clothing/head/helmet/space/chronos
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/debug //Debug objs plus hardsuit
+/datum/outfit/debug //Debug objs plus MODsuit
 	name = "Debug outfit"
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/debug
 	backpack_contents = list(
-		/obj/item/melee/transforming/energy/axe = 1,
+		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
@@ -442,11 +442,10 @@
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/administrative
 	backpack_contents = list(
-		/obj/item/melee/transforming/energy/axe = 1,
+		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,

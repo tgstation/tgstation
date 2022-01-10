@@ -18,7 +18,7 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 
-/obj/machinery/doppler_array/Initialize()
+/obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
@@ -75,7 +75,7 @@
 			records -= record
 			return TRUE
 		if("print_record")
-			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
+			var/datum/data/tachyon_record/record = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return
 			print(usr, record)
@@ -194,7 +194,7 @@
 	circuit = /obj/item/circuitboard/machine/doppler_array
 	var/datum/techweb/linked_techweb
 
-/obj/machinery/doppler_array/research/Initialize()
+/obj/machinery/doppler_array/research/Initialize(mapload)
 	..()
 	linked_techweb = SSresearch.science_tech
 	return INITIALIZE_HINT_LATELOAD
@@ -226,11 +226,11 @@
 	var/cash_gain = 0
 
 	/*****The Point Calculator*****/
-	if(orig_light_range < 10)
+	if(orig_light_range < TECHWEB_BOMB_MIN_RANGE)
 		say("Explosion not large enough for profitability.")
 		return
-	else if(orig_light_range < 4500)
-		cash_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
+	else if(orig_light_range < TECHWEB_BOMB_MAX_RANGE)
+		cash_gain = (TECHWEB_BOMB_SCALE_CONST * orig_light_range) / (TECHWEB_BOMB_SCALE_DIVISOR + orig_light_range)
 	else
 		cash_gain = TECHWEB_BOMB_CASHCAP
 
@@ -240,7 +240,7 @@
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
 			linked_techweb.largest_bomb_value = cash_gain
 			cash_gain -= old_tech_largest_bomb_value
-			cash_gain = min(cash_gain,TECHWEB_BOMB_CASHCAP)
+			cash_gain = min(cash_gain, TECHWEB_BOMB_CASHCAP)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
 			cash_gain = 1000
@@ -252,7 +252,7 @@
 		say("Data already captured. Aborting.")
 		return
 
-/obj/machinery/doppler_array/research/science/Initialize()
+/obj/machinery/doppler_array/research/science/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 

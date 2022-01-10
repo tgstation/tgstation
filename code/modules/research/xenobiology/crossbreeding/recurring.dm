@@ -13,7 +13,7 @@ Recurring extracts:
 	var/cooldown = 0
 	var/max_cooldown = 10 // In seconds
 
-/obj/item/slimecross/recurring/Initialize()
+/obj/item/slimecross/recurring/Initialize(mapload)
 	. = ..()
 	extract = new extract_type(src.loc)
 	visible_message(span_notice("[src] wraps a layer of goo around itself!"))

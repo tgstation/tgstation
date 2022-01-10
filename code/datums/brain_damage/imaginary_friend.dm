@@ -43,11 +43,11 @@
 	get_ghost()
 
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
-	friend = new(get_turf(owner), src)
+	friend = new(get_turf(owner), owner)
 
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 75, friend, POLL_IGNORE_IMAGINARYFRIEND)
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		friend.key = C.key
@@ -63,15 +63,14 @@
 	see_in_dark = 0
 	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	sight = NONE
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_MAXIMUM
 	var/icon/human_image
 	var/image/current_image
 	var/hidden = FALSE
 	var/move_delay = 0
-	var/mob/living/carbon/owner
-	var/datum/brain_trauma/special/imaginary_friend/trauma
+	var/mob/living/owner
 
 	var/datum/action/innate/imaginary_join/join
 	var/datum/action/innate/imaginary_hide/hide
@@ -84,17 +83,24 @@
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
-		to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
-		to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
-		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
+	to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
+	to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
+	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
-/mob/camera/imaginary_friend/Initialize(mapload, _trauma)
+/**
+ * Arguments:
+ * * imaginary_friend_owner - The living mob that owns the imaginary friend.
+ * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on these prefs.
+ */
+/mob/camera/imaginary_friend/Initialize(mapload, mob/living/imaginary_friend_owner, datum/preferences/appearance_from_prefs = null)
 	. = ..()
 
-	trauma = _trauma
-	owner = trauma.owner
+	owner = imaginary_friend_owner
 
-	INVOKE_ASYNC(src, .proc/setup_friend)
+	if(appearance_from_prefs)
+		INVOKE_ASYNC(src, .proc/setup_friend_from_prefs, appearance_from_prefs)
+	else
+		INVOKE_ASYNC(src, .proc/setup_friend)
 
 	join = new
 	join.Grant(src)
@@ -106,6 +112,43 @@
 	real_name = random_unique_name(gender)
 	name = real_name
 	human_image = get_flat_human_icon(null, pick(SSjob.joinable_occupations))
+
+/**
+ * Sets up the imaginary friend's name and look using a set of datum preferences.
+ *
+ * Arguments:
+ * * appearance_from_prefs - If this is a valid set of prefs, the appearance of the imaginary friend is based on the currently selected character in them. Otherwise, it's random.
+ */
+/mob/camera/imaginary_friend/proc/setup_friend_from_prefs(datum/preferences/appearance_from_prefs)
+	if(!istype(appearance_from_prefs))
+		stack_trace("Attempted to create imaginary friend appearance from null prefs. Using random appearance.")
+		setup_friend()
+		return
+
+	real_name = appearance_from_prefs.read_preference(/datum/preference/name/real_name)
+	name = real_name
+
+	// Determine what job is marked as 'High' priority.
+	var/datum/job/appearance_job
+	var/highest_pref = 0
+	for(var/job in appearance_from_prefs.job_preferences)
+		var/this_pref = appearance_from_prefs.job_preferences[job]
+		if(this_pref > highest_pref)
+			appearance_job = SSjob.GetJob(job)
+			highest_pref = this_pref
+
+	if(!appearance_job)
+		appearance_job = SSjob.GetJob("Assistant")
+
+	if(istype(appearance_job, /datum/job/ai))
+		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		return
+
+	if(istype(appearance_job, /datum/job/cyborg))
+		human_image = icon('icons/mob/robots.dmi', icon_state = "robot")
+		return
+
+	human_image = get_flat_human_icon(null, appearance_job, appearance_from_prefs)
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -131,13 +174,13 @@
 	client.images |= current_image
 
 /mob/camera/imaginary_friend/Destroy()
-	if(owner.client)
+	if(owner?.client)
 		owner.client.images.Remove(human_image)
 	if(client)
 		client.images.Remove(human_image)
 	return ..()
 
-/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/imaginary_friend/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if (!message)
 		return
 
@@ -151,7 +194,7 @@
 	friend_talk(message)
 
 /mob/camera/imaginary_friend/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
-	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
 		create_chat_message(speaker, message_language, raw_message, spans)
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mods))
 
@@ -182,12 +225,17 @@
 /mob/camera/imaginary_friend/Move(NewLoc, Dir = 0)
 	if(world.time < move_delay)
 		return FALSE
+	setDir(Dir)
 	if(get_dist(src, owner) > 9)
 		recall()
 		move_delay = world.time + 10
 		return FALSE
 	abstract_move(NewLoc)
 	move_delay = world.time + 1
+
+/mob/camera/imaginary_friend/keybind_face_direction(direction)
+	. = ..()
+	Show()
 
 /mob/camera/imaginary_friend/abstract_move(atom/destination)
 	. = ..()

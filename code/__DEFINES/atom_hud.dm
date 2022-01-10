@@ -62,23 +62,6 @@
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
 
-//antag HUD defines
-#define ANTAG_HUD_CULT 11
-#define ANTAG_HUD_REV 12
-#define ANTAG_HUD_OPS 13
-#define ANTAG_HUD_WIZ 14
-#define ANTAG_HUD_SHADOW 15
-#define ANTAG_HUD_TRAITOR 16
-#define ANTAG_HUD_NINJA 17
-#define ANTAG_HUD_CHANGELING 18
-#define ANTAG_HUD_ABDUCTOR 19
-#define ANTAG_HUD_BROTHER 20
-#define ANTAG_HUD_OBSESSED 21
-#define ANTAG_HUD_FUGITIVE 22
-#define ANTAG_HUD_GANGSTER 23
-#define ANTAG_HUD_SPACECOP 24
-#define ANTAG_HUD_HERETIC 25
-
 // Notification action types
 #define NOTIFY_JUMP "jump"
 #define NOTIFY_ATTACK "attack"

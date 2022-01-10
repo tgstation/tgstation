@@ -78,10 +78,6 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 	return ..()
 
-/mob/living/carbon/human/handle_mutations_and_radiation(delta_time, times_fired)
-	if(!dna || !dna.species.handle_mutations_and_radiation(src, delta_time, times_fired))
-		..()
-
 /mob/living/carbon/human/breathe()
 	if(!HAS_TRAIT(src, TRAIT_NOBREATH))
 		return ..()
@@ -102,8 +98,8 @@
 
 		if(S.breathid == "o2")
 			throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
-		else if(S.breathid == "tox")
-			throw_alert("not_enough_tox", /atom/movable/screen/alert/not_enough_tox)
+		else if(S.breathid == "plas")
+			throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
 		else if(S.breathid == "co2")
 			throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
 		else if(S.breathid == "n2")
@@ -177,11 +173,11 @@
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
 	if(wear_suit)
-		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
+		if((wear_suit.heat_protection & CHEST) && (wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT))
+			thermal_protection += (wear_suit.max_heat_protection_temperature * 0.7)
 	if(head)
-		if(head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT)
-			thermal_protection += (head.max_heat_protection_temperature*THERMAL_PROTECTION_HEAD)
+		if((head.heat_protection & HEAD) && (head.max_heat_protection_temperature >= FIRE_HELM_MAX_TEMP_PROTECT))
+			thermal_protection += (head.max_heat_protection_temperature * THERMAL_PROTECTION_HEAD)
 	thermal_protection = round(thermal_protection)
 	return thermal_protection
 

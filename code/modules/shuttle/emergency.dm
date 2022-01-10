@@ -200,10 +200,10 @@
 	if(!user.CanReach(src))
 		return
 	if(!user?.mind?.get_hijack_speed())
-		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
+		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
 		return
 	if(!EMERGENCY_AT_LEAST_DOCKED) // prevent advancing hijack stages on BYOS shuttles until the shuttle has "docked"
-		to_chat(user, "<span class='warning'>The flight plans for the shuttle haven't been loaded yet, you can't hack this right now.</span.")
+		to_chat(user, span_warning("The flight plans for the shuttle haven't been loaded yet, you can't hack this right now."))
 		return
 	if(hijack_hacking == TRUE)
 		return
@@ -605,7 +605,8 @@
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	. = ..()
-	possible_destinations += ";[port.id]_lavaland"
+	if(port)
+		possible_destinations += ";[port.id]_lavaland"
 
 /**
  * Signal handler for checking if we should lock or unlock escape pods accordingly to a newly set security level
@@ -701,6 +702,11 @@
 	if (can_interact(user))
 		return ..()
 
+/obj/item/storage/pod/attackby_secondary(obj/item/weapon, mob/user, params)
+	if (!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SHOW, user)
@@ -709,6 +715,11 @@
 /obj/item/storage/pod/MouseDrop(over_object, src_location, over_location)
 	if(can_interact(usr))
 		return ..()
+
+/obj/item/storage/pod/attack_hand_secondary(mob/user, list/modifiers)
+	if(!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/item/storage/pod/AltClick(mob/user)
 	if(!can_interact(user))
@@ -721,6 +732,7 @@
 	if(SSsecurity_level.current_level >= SEC_LEVEL_RED || unlocked)
 		return TRUE
 	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
+	return FALSE
 
 /obj/docking_port/mobile/emergency/backup
 	name = "backup shuttle"
@@ -730,7 +742,7 @@
 	height = 8
 	dir = EAST
 
-/obj/docking_port/mobile/emergency/backup/Initialize()
+/obj/docking_port/mobile/emergency/backup/Initialize(mapload)
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.

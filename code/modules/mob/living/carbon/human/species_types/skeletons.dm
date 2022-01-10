@@ -5,7 +5,7 @@
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES)
+	species_traits = list(NOBLOOD, HAS_BONE, NOTRANSSTING, NOEYESPRITES, NO_DNA_COPY)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,

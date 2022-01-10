@@ -115,7 +115,7 @@
 	text = replacetext(text, span_check, "")
 
 	// Clip message
-	var/maxlen = owned_by.prefs.max_chat_length
+	var/maxlen = owned_by.prefs.read_preference(/datum/preference/numeric/max_chat_length)
 	if (length_char(text) > maxlen)
 		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
@@ -165,7 +165,7 @@
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
-	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[text]</span>"
+	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH))
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
@@ -195,7 +195,8 @@
 	message.plane = RUNECHAT_PLANE
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
-	message.pixel_y = owner.bound_height * 0.95
+	message.pixel_y = owner.maptext_height
+	message.pixel_x = (owner.maptext_width * 0.5) - 16
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5

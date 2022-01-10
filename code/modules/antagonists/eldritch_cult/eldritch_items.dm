@@ -158,7 +158,7 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// slightly better than normal cult robes
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, RAD = 0, FIRE = 20, ACID = 20)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, FIRE = 20, ACID = 20)
 
 /obj/item/reagent_containers/glass/beaker/eldritch
 	name = "flask of eldritch essence"
@@ -174,7 +174,11 @@
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you loose comprehension of what you are seeing."
 	item_flags = EXAMINE_SKIP
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+
+/obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -185,14 +189,17 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
 	// slightly worse than normal cult robes
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
+	if (!HAS_TRAIT(src, TRAIT_NO_STRIP))
+		return ..()
 	var/mob/living/carbon/carbon_user = loc
-	to_chat(carbon_user,span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
+	to_chat(carbon_user, span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
@@ -204,6 +211,7 @@
 		. = ..()
 		to_chat(carbon_user,span_notice("The light shifts around you making the cloak invisible!"))
 		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_NO_STRIP, src)
 		return
 
 	to_chat(carbon_user,span_danger("You can't force the hood onto your head!"))
@@ -296,7 +304,7 @@
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_carver/Initialize()
+/obj/item/melee/rune_carver/Initialize(mapload)
 	. = ..()
 	linked_action = new(src)
 
@@ -329,7 +337,7 @@
 		if(!rune_ref.resolve())
 			current_runes -= rune_ref
 
-	if(current_runes.len >= max_rune_amt)
+	if(length(current_runes) >= max_rune_amt)
 		to_chat(user,span_notice("The blade cannot support more runes!"))
 		return
 
@@ -340,8 +348,8 @@
 
 	drawing = TRUE
 
-	var/type = pick_list[input(user,"Choose the rune","Rune") as null|anything in pick_list ]
-	if(!type)
+	var/type = pick_list[tgui_input_list(user, "Choose the rune", "Rune", pick_list) ]
+	if(isnull(type))
 		drawing = FALSE
 		return
 

@@ -87,13 +87,13 @@
 
 	var/list/saved_recipes = list()
 
-/obj/machinery/chem_dispenser/Initialize()
+/obj/machinery/chem_dispenser/Initialize(mapload)
 	. = ..()
-	dispensable_reagents = sortList(dispensable_reagents, /proc/cmp_reagents_asc)
+	dispensable_reagents = sort_list(dispensable_reagents, /proc/cmp_reagents_asc)
 	if(emagged_reagents)
-		emagged_reagents = sortList(emagged_reagents, /proc/cmp_reagents_asc)
+		emagged_reagents = sort_list(emagged_reagents, /proc/cmp_reagents_asc)
 	if(upgrade_reagents)
-		upgrade_reagents = sortList(upgrade_reagents, /proc/cmp_reagents_asc)
+		upgrade_reagents = sort_list(upgrade_reagents, /proc/cmp_reagents_asc)
 	if(is_operational)
 		begin_processing()
 	update_appearance()
@@ -329,7 +329,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
+			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -339,7 +339,7 @@
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
+						to_chat(usr, span_warning("[src] cannot find <b>[reagent]</b>!"))
 						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
@@ -391,7 +391,7 @@
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
-	chem_splash(get_turf(src), 3, R)
+	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
@@ -437,7 +437,7 @@
 		return
 	replace_beaker(user)
 
-/obj/machinery/chem_dispenser/drinks/Initialize()
+/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
 
@@ -471,7 +471,7 @@
 	icon_state = "soda_dispenser"
 	base_icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
-	dispensed_temperature = (T0C + 0.85) // cold enough that ice won't melt
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
@@ -519,7 +519,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
@@ -529,6 +529,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
 	base_icon_state = "booze_dispenser"
+	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
 		/datum/reagent/consumable/ethanol/beer,
@@ -539,6 +540,7 @@
 		/datum/reagent/consumable/ethanol/vodka,
 		/datum/reagent/consumable/ethanol/gin,
 		/datum/reagent/consumable/ethanol/rum,
+		/datum/reagent/consumable/ethanol/navy_rum,
 		/datum/reagent/consumable/ethanol/tequila,
 		/datum/reagent/consumable/ethanol/vermouth,
 		/datum/reagent/consumable/ethanol/cognac,
@@ -549,6 +551,7 @@
 		/datum/reagent/consumable/ethanol/creme_de_cacao,
 		/datum/reagent/consumable/ethanol/creme_de_coconut,
 		/datum/reagent/consumable/ethanol/triple_sec,
+		/datum/reagent/consumable/ethanol/curacao,
 		/datum/reagent/consumable/ethanol/sake,
 		/datum/reagent/consumable/ethanol/applejack
 	)
@@ -567,7 +570,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
 
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
@@ -608,7 +611,7 @@
 	flags_1 = NODECONSTRUCT_1
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
 
-/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+/obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)
 	. = ..()
 	dispensable_reagents |= emagged_reagents //adds emagged reagents
 
@@ -660,5 +663,7 @@
 		/datum/reagent/drug/space_drugs,
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
-		/datum/reagent/uranium
+		/datum/reagent/uranium,
+		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/medicine/c2/synthflesh
 	)

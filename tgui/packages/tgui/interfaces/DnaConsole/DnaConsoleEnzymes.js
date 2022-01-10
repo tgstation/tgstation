@@ -1,7 +1,7 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Icon, LabeledList, NumberInput, Section, Stack } from '../../components';
 import { GeneticMakeupInfo } from './GeneticMakeupInfo';
-import { RADIATION_DURATION_MAX, RADIATION_STRENGTH_MAX } from './constants';
+import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
 
 const GeneticMakeupBufferInfo = (props, context) => {
   const { index, makeup } = props;
@@ -193,7 +193,7 @@ const GeneticMakeupBuffers = (props, context) => {
   );
 };
 
-const RadiationEmitterProbs = (props, context) => {
+const PulseEmitterProbs = (props, context) => {
   const { data } = useBackend(context);
   const {
     stdDevAcc,
@@ -224,7 +224,7 @@ const RadiationEmitterProbs = (props, context) => {
   );
 };
 
-const RadiationEmitterPulseBoard = (props, context) => {
+const PulseBoard = (props, context) => {
   const { act } = useBackend(context);
   const {
     subjectBlock = [],
@@ -273,15 +273,15 @@ const RadiationEmitterPulseBoard = (props, context) => {
   );
 };
 
-const RadiationEmitterSettings = (props, context) => {
+const PulseSettings = (props, context) => {
   const { data, act } = useBackend(context);
   const {
-    radStrength,
-    radDuration,
+    pulseStrength,
+    pulseDuration,
   } = data;
   return (
     <Section
-      title="Radiation Emitter"
+      title="Emitter Configuration"
       minHeight="100%">
       <LabeledList>
         <LabeledList.Item label="Output level">
@@ -289,9 +289,9 @@ const RadiationEmitterSettings = (props, context) => {
             animated
             width="32px"
             stepPixelSize={10}
-            value={radStrength}
+            value={pulseStrength}
             minValue={1}
-            maxValue={RADIATION_STRENGTH_MAX}
+            maxValue={PULSE_STRENGTH_MAX}
             onDrag={(e, value) => act('set_pulse_strength', {
               val: value,
             })} />
@@ -301,9 +301,9 @@ const RadiationEmitterSettings = (props, context) => {
             animated
             width="32px"
             stepPixelSize={10}
-            value={radDuration}
+            value={pulseDuration}
             minValue={1}
-            maxValue={RADIATION_DURATION_MAX}
+            maxValue={PULSE_DURATION_MAX}
             onDrag={(e, value) => act('set_pulse_duration', {
               val: value,
             })} />
@@ -334,13 +334,13 @@ export const DnaConsoleEnzymes = (props, context) => {
     <>
       <Stack mb={1}>
         <Stack.Item width="155px">
-          <RadiationEmitterSettings />
+          <PulseSettings />
         </Stack.Item>
         <Stack.Item width="140px">
-          <RadiationEmitterProbs />
+          <PulseEmitterProbs />
         </Stack.Item>
         <Stack.Item grow={1} basis={0}>
-          <RadiationEmitterPulseBoard
+          <PulseBoard
             subjectBlock={subjectBlock}
             type={type}
             name={name} />

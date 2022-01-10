@@ -14,7 +14,7 @@
 	inhand_icon_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
 	var/obj/item/tank/internals/tank = null //The gas tank that is drawn from to fire things
@@ -38,7 +38,7 @@
 	trigger_guard = TRIGGER_GUARD_NORMAL
 
 
-/obj/item/pneumatic_cannon/Initialize()
+/obj/item/pneumatic_cannon/Initialize(mapload)
 	. = ..()
 	if(selfcharge)
 		init_charge()
@@ -291,7 +291,7 @@
 	clumsyCheck = FALSE
 	var/static/list/pie_typecache = typecacheof(/obj/item/food/pie)
 
-/obj/item/pneumatic_cannon/pie/Initialize()
+/obj/item/pneumatic_cannon/pie/Initialize(mapload)
 	. = ..()
 	allowed_typecache = pie_typecache
 

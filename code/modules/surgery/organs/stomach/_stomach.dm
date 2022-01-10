@@ -4,6 +4,7 @@
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
+	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
@@ -30,7 +31,7 @@
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
 
-/obj/item/organ/stomach/Initialize()
+/obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
 	//None edible organs do not get a reagent holder by default
 	if(!reagents)

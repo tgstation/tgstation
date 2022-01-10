@@ -1,6 +1,7 @@
 /datum/job/mime
-	title = "Mime"
-	department_head = list("Head of Personnel")
+	title = JOB_MIME
+	description = "..."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -27,8 +28,8 @@
 		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 10,
 		/obj/item/book/mimery = 1,
 	)
-
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS
+	rpg_title = "Fool"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3
@@ -38,32 +39,31 @@
 	. = ..()
 	if(!ishuman(spawned))
 		return
-	spawned.apply_pref_name("mime", player_client)
+	spawned.apply_pref_name(/datum/preference/name/mime, player_client)
 
 
 /datum/outfit/job/mime
 	name = "Mime"
 	jobtype = /datum/job/mime
 
-	belt = /obj/item/pda/mime
-	ears = /obj/item/radio/headset/headset_srv
+	id_trim = /datum/id_trim/job/mime
 	uniform = /obj/item/clothing/under/rank/civilian/mime
-	mask = /obj/item/clothing/mask/gas/mime
-	gloves = /obj/item/clothing/gloves/color/white
-	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(
-		/obj/item/stamp/mime = 1,
 		/obj/item/book/mimery = 1,
-		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1
+		/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing = 1,
+		/obj/item/stamp/mime = 1,
 		)
+	belt = /obj/item/pda/mime
+	ears = /obj/item/radio/headset/headset_srv
+	gloves = /obj/item/clothing/gloves/color/white
+	head = /obj/item/clothing/head/frenchberet
+	mask = /obj/item/clothing/mask/gas/mime
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 
 	chameleon_extras = /obj/item/stamp/mime
-
-	id_trim = /datum/id_trim/job/mime
 
 /datum/outfit/job/mime/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

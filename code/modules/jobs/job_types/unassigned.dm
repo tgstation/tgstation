@@ -5,4 +5,5 @@
  **/
 
 /datum/job/unassigned
-	title = "Unassigned"
+	title = "Unassigned Crewmember"
+	rpg_title = "Peasant"
