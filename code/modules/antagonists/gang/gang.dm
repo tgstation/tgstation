@@ -249,8 +249,7 @@
 	owner.visible_message(
 		span_notice("[human_owner] is offering to induct people into the Family."),
 		span_notice("You offer to induct people into the Family."),
-		null,
-		2,
+		vision_distance = 2,
 		)
 	if(human_owner.has_status_effect(STATUS_EFFECT_HANDSHAKE))
 		return FALSE
@@ -258,8 +257,7 @@
 		owner.visible_message(
 			span_danger("[human_owner] offers to induct people into the Family, but nobody was around."),
 			span_warning("You offer to induct people into the Family, but nobody is around."),
-			null,
-			2,
+			vision_distance = 2,
 			)
 		return FALSE
 
