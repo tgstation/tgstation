@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the instances where speech wasn't handled properly, such as hulks not yelling and tongue modifications."
