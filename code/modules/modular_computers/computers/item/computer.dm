@@ -487,7 +487,7 @@
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(!length(all_components))
-		to_chat(user, span_warning("This device doesn't have any components installed."))
+		user.balloon_alert(user, "This device doesn't have any components installed.")
 		return
 	var/list/component_names = list()
 	for(var/h in all_components)
@@ -507,6 +507,7 @@
 	if(!H)
 		return
 
+	tool.play_tool_sound(src, user, 20, volume=20)
 	uninstall_component(H, user)
 	return
 
@@ -529,7 +530,7 @@
 
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(length(all_components))
-			to_chat(user, span_warning("Remove all components from \the [src] before disassembling it."))
+			user.balloon_alert(user, "You need to remove all components from \the [src] before disassembling it.")
 			return
 		W.play_tool_sound(src, user, 20, volume=20)
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
