@@ -487,9 +487,8 @@
 
 /mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
-
-	for(var/mob/living/carbon/human/future_pancake in loc)
-		if(has_gravity(src))
+	if(has_gravity())
+		for(var/mob/living/carbon/human/future_pancake in loc)
 			run_over(future_pancake)
 
 	diag_hud_set_mulebotcell()
