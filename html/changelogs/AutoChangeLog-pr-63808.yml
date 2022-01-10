@@ -1,6 +1,0 @@
-author: "DragonTrance"
-delete-after: True
-changes: 
-  - rscadd: "Various items provide special texts when suiciding with them."
-  - rscadd: "Unique text is shown when suiciding with food, a clown box, bubblegum, bubblegum bubblegum, bees, tinfoil hats, suitcases, Magnus's Grasp, and even when inside a stealth implant box."
-  - rscadd: "Crayons now color you when suiciding with them."

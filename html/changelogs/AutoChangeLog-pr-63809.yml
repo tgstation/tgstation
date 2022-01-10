@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - balance: "Clarke can now attack in all directions"
-  - balance: "Clarke can now search for ruins"
-  - balance: "Clarke no longer gets a diagnostic HUD"
