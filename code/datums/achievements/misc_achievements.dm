@@ -188,7 +188,7 @@
 	icon = "bait"
 
 /datum/award/achievement/misc/springlock
-	name = "The man behind the slaughter"
+	name = "The man inside the MODsuit"
 	desc = "Ignore the warning label on a springlock MODsuit."
 	database_id = MEDAL_SPRINGLOCK
 	icon = "springlock"
