@@ -870,7 +870,7 @@
 	var/nick_spotted = FALSE
 
 	for(var/mob/living/carbon/human/possible_claus in view(5, quirk_holder))
-		if(assuage_jolly_levels(possible_claus))
+		if(evaluate_jolly_levels(possible_claus))
 			nick_spotted = TRUE
 			break
 
@@ -888,7 +888,7 @@
 			to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
 
 ///investigates whether possible_saint_nick possesses a high level of christmas cheer
-/datum/quirk/claustrophobia/proc/assuage_jolly_levels(mob/living/carbon/human/possible_saint_nick)
+/datum/quirk/claustrophobia/proc/evaluate_jolly_levels(mob/living/carbon/human/possible_saint_nick)
 	if(!istype(possible_saint_nick))
 		return FALSE
 
