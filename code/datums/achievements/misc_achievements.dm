@@ -186,3 +186,9 @@
 	desc = "Where's my free smartphone?!?"
 	database_id = MEDAL_CLICKBAIT
 	icon = "bait"
+
+/datum/award/achievement/misc/springlock
+	name = "The man behind the slaughter"
+	desc = "Ignore the warning label on a springlock MODsuit."
+	database_id = MEDAL_SPRINGLOCK
+	icon = "springlock"
