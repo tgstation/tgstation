@@ -603,3 +603,6 @@
 #define NO_TK TRUE
 /// If mobs can use this while resting
 #define FLOOR_OKAY TRUE
+
+/// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
+#define RESIZE_DEFAULT_SIZE 1

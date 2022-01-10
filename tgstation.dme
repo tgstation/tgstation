@@ -72,6 +72,7 @@
 #include "code\__DEFINES\exports.dm"
 #include "code\__DEFINES\fantasy_affixes.dm"
 #include "code\__DEFINES\flags.dm"
+#include "code\__DEFINES\fonts.dm"
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\fov.dm"
