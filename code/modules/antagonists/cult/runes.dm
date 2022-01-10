@@ -494,17 +494,18 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_name = "Nar'Sie"
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
-	req_cultists = 9
+	req_cultists = 0
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	scribe_delay = 500 //how long the rune takes to create
+	scribe_delay = 5 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
 	no_scribe_boost = TRUE
 	erase_time = 5 SECONDS
+	///Has the rune been used already?
 	var/used = FALSE
 
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
@@ -520,26 +521,35 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(!is_station_level(z))
 		return
 	var/mob/living/user = invokers[1]
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult, TRUE)
 	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 	var/area/place = get_area(src)
 	if(!(place in summon_objective.summon_spots))
 		to_chat(user, span_cultlarge("The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!"))
 		return
 	if(locate(/obj/narsie) in SSpoints_of_interest.narsies)
-		for(var/M in invokers)
-			to_chat(M, span_warning("Nar'Sie is already on this plane!"))
+		for(var/invoker in invokers)
+			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune failed - already summoned")
 		return
+	var/datum/team/cult/cult_team = user_antag.cult_team
+	if(cult_team.narsie_summoned)
+		for(var/invoker in invokers)
+			to_chat(invoker, span_warning("Nar'Sie is already rising!"))
+		log_game("Nar'Sie rune failed - already summoned")
+		return
+
 	//BEGIN THE SUMMONING
 	used = TRUE
+	cult_team.narsie_summoned = TRUE
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
-	var/turf/T = get_turf(src)
-	sleep(40)
+	addtimer(CALLBACK(src, .proc/spawn_narsie), 4 SECONDS)
+
+/obj/effect/rune/narsie/proc/spawn_narsie()
 	if(src)
 		color = RUNE_COLOR_RED
-	new /obj/narsie(T) //Causes Nar'Sie to spawn even if the rune has been removed
+	new /obj/narsie(get_turf(src)) //Causes Nar'Sie to spawn even if the rune has been removed
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
