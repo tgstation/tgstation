@@ -874,8 +874,7 @@
 			nick_spotted = TRUE
 			break
 
-	if(!nick_spotted)
-		if(isturf(quirk_holder.loc))
+	if(!nick_spotted && isturf(quirk_holder.loc))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
 			return
 
