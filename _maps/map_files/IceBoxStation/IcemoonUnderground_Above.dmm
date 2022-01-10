@@ -1117,6 +1117,9 @@
 "dJ" = (
 /obj/machinery/duct,
 /obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dK" = (
@@ -1684,6 +1687,9 @@
 	dir = 6
 	},
 /obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "fE" = (
@@ -2190,14 +2196,16 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "hr" = (
-/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/structure/closet/l3closet/virology,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 13
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "hs" = (
@@ -4951,23 +4959,15 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel)
 "qF" = (
-/obj/machinery/duct,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/shower{
-	name = "emergency shower";
-	pixel_y = 16
-	},
-/obj/machinery/camera{
-	c_tag = "Virology Airlock";
-	dir = 9;
-	network = list("ss13","medbay")
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet/l3closet/virology,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "qG" = (
@@ -6430,6 +6430,9 @@
 	},
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "vs" = (
@@ -7862,7 +7865,12 @@
 	dir = 5
 	},
 /obj/machinery/firealarm/directional/east,
-/obj/structure/closet/emcloset,
+/obj/structure/closet/l3closet/virology,
+/obj/machinery/camera{
+	c_tag = "Virology Airlock";
+	dir = 9;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "Av" = (
@@ -8124,11 +8132,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "Bn" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
@@ -8138,6 +8141,7 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},
+/obj/structure/closet/emcloset,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "Bo" = (
@@ -8222,6 +8226,9 @@
 /obj/structure/cable,
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "BD" = (
@@ -11784,6 +11791,9 @@
 /area/service/hydroponics)
 "No" = (
 /obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/medical/chemistry)
 "Nr" = (
@@ -13185,6 +13195,18 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
+"Si" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
+/turf/open/floor/iron/dark,
+/area/medical/morgue)
 "Sj" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -14127,7 +14149,9 @@
 	dir = 6
 	},
 /obj/machinery/airalarm/directional/east,
-/obj/structure/closet/l3closet/virology,
+/obj/machinery/shower{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "Vd" = (
@@ -14237,6 +14261,9 @@
 /obj/machinery/holopad,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/box/white{
+	color = "#52B4E9"
+	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "Vy" = (
@@ -52263,7 +52290,7 @@ vc
 wH
 ZO
 BX
-oZ
+Si
 oZ
 Al
 Dp
