@@ -251,7 +251,7 @@
 		if(!ui_interact(user))
 			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
-			user.visible_message(span_notice("[user] stamps [src] with \the [P.name]!"), span_notice("You stamp [src] with \the [P.name]!"))
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"), span_notice("You stamp [src] with \the [P.name] the best you can!"))
 
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
