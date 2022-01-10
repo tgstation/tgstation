@@ -30,7 +30,7 @@
 
 /obj/machinery/ecto_sniffer/proc/activate(mob/activator)
 	flick("ecto_sniffer_flick", src)
-	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 25)
+	playsound(loc, 'sound/machines/ectoscope_beep.ogg', 75)
 	use_power(10)
 	if(activator?.ckey)
 		ectoplasmic_residues += activator.ckey
@@ -72,6 +72,12 @@
 /obj/machinery/ecto_sniffer/Destroy()
 	ectoplasmic_residues = null
 	. = ..()
+
+/obj/machinery/ecto_sniffer/examine(mob/user)
+	. = ..()
+	. += span_notice("Any active ghost can leave a layer of ectoplasm on the ectoscopic sniffer, causing a small, audible blip. They may use this\
+	 to communicate that they wish to enter the world as a positronic personality, to trigger a signaller assembly attached to the device, or a myraid\
+	 of other possible use cases.")
 
 ///Removes the ghost from the ectoplasmic_residues list and lets them know they are free to activate the sniffer again.
 /obj/machinery/ecto_sniffer/proc/clear_residue(ghost_ckey)
