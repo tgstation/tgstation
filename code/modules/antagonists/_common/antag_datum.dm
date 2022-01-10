@@ -94,6 +94,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
+	info_button.Remove(old_body)
+	info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -477,6 +479,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
+	/// The antag datum that this button interacts with.
 	var/datum/antagonist/antag_datum
 
 /datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
@@ -484,9 +487,23 @@ GLOBAL_LIST_EMPTY(antagonists)
 	src.antag_datum = antag_datum
 	name += " [antag_datum.name]"
 
+/datum/action/antag_info/Destroy()
+	antag_datum = null
+	return ..()
+
 /datum/action/antag_info/Trigger()
-	if(antag_datum)
-		antag_datum.ui_interact(owner)
+	. = ..()
+	if(!.)
+		return
+
+	antag_datum.ui_interact(owner)
 
 /datum/action/antag_info/IsAvailable()
+	. = ..()
+	if(!.)
+		return
+	if(!antag_datum)
+		return FALSE
+	if(!(antag_datum in owner.mind.antag_datums))
+		return FALSE
 	return TRUE
