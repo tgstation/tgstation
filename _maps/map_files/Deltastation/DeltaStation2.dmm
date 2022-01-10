@@ -71017,12 +71017,15 @@
 "oto" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
-	name = "Hydroponics Desk";
-	req_access_txt = "35"
+	name = "Hydroponics Desk"
 	},
 /obj/machinery/door/firedoor,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/machinery/door/window/westleft{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "otz" = (
@@ -93582,10 +93585,6 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "uBi" = (
-/obj/machinery/door/window/eastleft{
-	name = "Hydroponics Biogenerator";
-	req_access_txt = "35"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
 /obj/item/folder/white{
@@ -93593,6 +93592,13 @@
 	pixel_y = 2
 	},
 /obj/item/folder/yellow,
+/obj/machinery/door/window/westright{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
+/obj/machinery/door/window/eastleft{
+	name = "Hydroponics Desk"
+	},
 /turf/open/floor/plating,
 /area/service/hydroponics)
 "uBn" = (
