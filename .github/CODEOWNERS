@@ -34,6 +34,10 @@
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
+# Kylerace
+/code/__DEFINES/spatial_gridmap.dm @Kylerace
+/code/controllers/subsystem/spatial_gridmap.dm @Kylerace
+
 # LemonInTheDark
 
 /code/__DEFINES/atmospherics/ @LemonInTheDark
@@ -47,6 +51,9 @@
 /code/modules/preferences_menu.dm @Mothblocks
 /code/modules/preferences_savefile.dm @Mothblocks
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+
+# MrMelbert
+/code/modules/hydroponics/ @MrMelbert
 
 # ninjanomnom
 
@@ -77,6 +84,10 @@
 /code/modules/wiremod/ @Watermelon914
 
 # CONTRIBUTORS
+
+# Fikou
+
+/code/modules/mod/ @Fikou
 
 # Ghilker
 

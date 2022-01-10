@@ -186,12 +186,12 @@
 		user.ForceContractDisease(iter_disease)
 
 	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.name]."), span_notice("You begin licking the wounds on [victim]'s [limb.name]..."), ignored_mobs=victim)
-	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
+	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.name]."))
 	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
 	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.name]."), span_notice("You lick some of the wounds on [victim]'s [limb.name]"), ignored_mobs=victim)
-	to_chat(victim, "<span class='green'>[user] licks the wounds on your [limb.name]!</span")
+	to_chat(victim, span_green("[user] licks the wounds on your [limb.name]!"))
 	blood_flow -= 0.5
 
 	if(blood_flow > minimum_flow)

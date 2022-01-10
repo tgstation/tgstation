@@ -75,6 +75,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.add_atom_colour(paint_color)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -248,7 +249,7 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)

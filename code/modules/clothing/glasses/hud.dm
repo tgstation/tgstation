@@ -41,6 +41,20 @@
 	to_chat(user, span_warning("PZZTTPFFFT"))
 	desc = "[desc] The display is flickering slightly."
 
+/obj/item/clothing/glasses/hud/suicide_act(mob/user)
+	if(user.is_blind() || !isliving(user))
+		return ..()
+	var/mob/living/living_user = user
+	user.visible_message(span_suicide("[user] looks through [src] and looks overwhelmed with the information! It looks like [user.p_theyre()] trying to commit suicide!"))
+	if(living_user.getOrganLoss(ORGAN_SLOT_BRAIN) >= BRAIN_DAMAGE_SEVERE)
+		var/mob/thing = pick((/mob in view()) - user)
+		if(thing)
+			user.say("VALID MAN IS WANTER, ARREST HE!!")
+			user.pointed(thing)
+		else
+			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
+	return OXYLOSS
+
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
@@ -65,7 +79,7 @@
 	icon_state = "sunhudmed"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 0.25
+	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
 
 /obj/item/clothing/glasses/hud/diagnostic
@@ -92,7 +106,7 @@
 	icon_state = "sunhuddiag"
 	inhand_icon_state = "glasses"
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 0.25
+	tint = 1
 
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
@@ -137,7 +151,7 @@
 	icon_state = "sunhudsec"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 0.25
+	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
 
 /obj/item/clothing/glasses/hud/security/night
@@ -232,7 +246,7 @@
 	icon_state = "bigsunglasses"
 	darkness_view = 1
 	flash_protect = FLASH_PROTECTION_FLASH
-	tint = 0.25
+	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 
 

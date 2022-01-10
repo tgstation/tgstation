@@ -28,7 +28,12 @@
 
 /obj/item/circuit_component/save_shell/proc/on_post_load(datum/source)
 	SIGNAL_HANDLER
-	loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
+	var/datum/component/shell/shell_component = loaded_shell.GetComponent(/datum/component/shell)
+	if(!istype(shell_component))
+		loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
+	else
+		QDEL_NULL(shell_component.attached_circuit)
+		shell_component.attach_circuit(parent)
 	on_loaded.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/save_shell/proc/on_pre_save_to_json(datum/source, list/general_data)

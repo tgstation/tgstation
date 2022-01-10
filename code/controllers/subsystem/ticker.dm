@@ -367,7 +367,7 @@ SUBSYSTEM_DEF(ticker)
 
 	// Find a suitable player to hold captaincy.
 	for(var/mob/dead/new_player/new_player_mob as anything in GLOB.new_player_list)
-		if(is_banned_from(new_player_mob.ckey, list("Captain")))
+		if(is_banned_from(new_player_mob.ckey, list(JOB_CAPTAIN)))
 			CHECK_TICK
 			continue
 		if(!ishuman(new_player_mob.new_character))
@@ -590,7 +590,7 @@ SUBSYSTEM_DEF(ticker)
 		if(WIZARD_KILLED)
 			news_message = "Tensions have flared with the Space Wizard Federation following the death of one of their members aboard [decoded_station_name]."
 		if(STATION_NUKED)
-			news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. Attempts to clone the Captain so he can be arrested and executed are underway."
+			news_message = "[decoded_station_name] activated its self-destruct device for unknown reasons. Attempts to clone the Captain for arrest and execution are underway."
 		if(CLOCK_SUMMON)
 			news_message = "The garbled messages about hailing a mouse and strange energy readings from [decoded_station_name] have been discovered to be an ill-advised, if thorough, prank by a clown."
 		if(CLOCK_SILICONS)

@@ -1,5 +1,0 @@
-author: "Pepsilawn"
-delete-after: True
-changes: 
-  - qol: "Account registration devices will now tell the user their new account ID number, previously unobtainable."
-  - rscadd: "Account registration devices added to service and cargo techfabs."

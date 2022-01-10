@@ -499,6 +499,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A freezing pint of delicious Ale."
 	ph = 4.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_STOCK
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
@@ -1251,12 +1252,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A stingy drink."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.mind) //Changeling Sting assists in the recharging of changeling chemicals.
-		var/datum/antagonist/changeling/changeling = M.mind.has_antag_datum(/datum/antagonist/changeling)
+/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
+	if(target.mind) //Changeling Sting assists in the recharging of changeling chemicals.
+		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.chem_charges += metabolization_rate * REM * delta_time
-			changeling.chem_charges = clamp(changeling.chem_charges, 0, changeling.chem_storage)
+			changeling.adjust_chemicals(metabolization_rate * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irishcarbomb
@@ -2122,6 +2122,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	ph = 4
 
 /datum/reagent/consumable/ethanol/fruit_wine/on_new(list/data)
+	if(!data)
+		return
+
+	src.data = data
 	names = data["names"]
 	tastes = data["tastes"]
 	boozepwr = data["boozepwr"]
@@ -2152,7 +2156,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	generate_data_info(data)
 
 /datum/reagent/consumable/ethanol/fruit_wine/proc/generate_data_info(list/data)
-	var/minimum_percent = 0.15 //Percentages measured between 0 and 1.
+	// BYOND's compiler fails to catch non-consts in a ranged switch case, and it causes incorrect behavior. So this needs to explicitly be a constant.
+	var/const/minimum_percent = 0.15 //Percentages measured between 0 and 1.
 	var/list/primary_tastes = list()
 	var/list/secondary_tastes = list()
 	glass_name = "glass of [name]"
