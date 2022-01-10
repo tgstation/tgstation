@@ -505,6 +505,8 @@
 #define SIGN_CUFFED 4
 
 // Mob Overlays Indexes
+/// Total number of layers for mob overlays
+#define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 /// Mutations layer - Tk headglows, cold resistance glow, etc
 #define MUTATIONS_LAYER 31 
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
@@ -567,13 +569,22 @@
 #define HALO_LAYER 2
 /// Fire layer when you're on fire
 #define FIRE_LAYER 1
-/// Total number of layers for mob overlays
-#define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
-//Bitflags for the layers an external organ can draw on
+if(EXTERNAL_BEHIND)
+			return BODY_BEHIND_LAYER
+		if(EXTERNAL_ADJACENT)
+			return BODY_ADJ_LAYER
+		if(EXTERNAL_FRONT)
+			return BODY_FRONT_LAYER
+
+//Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
+/// Draws organ on the BODY_FRONT_LAYER
 #define EXTERNAL_FRONT (1 << 1)
+/// Draws organ on the BODY_ADJ_LAYER
 #define EXTERNAL_ADJACENT (1 << 2)
+/// Draws organ on the BODY_BEHIND_LAYER
 #define EXTERNAL_BEHIND (1 << 3)
+/// Draws organ on all EXTERNAL layers
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
