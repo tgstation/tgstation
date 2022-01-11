@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(!soft_antag && owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)

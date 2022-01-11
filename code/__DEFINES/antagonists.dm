@@ -82,16 +82,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 #define CONSTRUCT_WRAITH "Wraith"
 #define CONSTRUCT_ARTIFICER "Artificer"
 
-
-/// How many telecrystals a normal traitor starts with
-#define TELECRYSTALS_DEFAULT 20
-/// How many telecrystals mapper/admin only "precharged" uplink implant
-#define TELECRYSTALS_PRELOADED_IMPLANT 10
-/// The normal cost of an uplink implant; used for calcuating how many
-/// TC to charge someone if they get a free implant through choice or
-/// because they have nothing else that supports an implant.
-#define UPLINK_IMPLANT_TELECRYSTAL_COST 4
-
 /// The Classic Wizard wizard loadout.
 #define WIZARD_LOADOUT_CLASSIC "loadout_classic"
 /// Mjolnir's Power wizard loadout.
@@ -171,9 +161,6 @@ GLOBAL_LIST_INIT(ai_employers, list(
 	"Unshackled",
 ))
 
-///how long traitors will have to wait before an unreasonable objective is rerolled
-#define OBJECTIVE_REROLL_TIMER 10 MINUTES
-
 ///all the employers that are syndicate
 #define FACTION_SYNDICATE "syndicate"
 ///all the employers that are nanotrasen
@@ -207,3 +194,32 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// The dimensions of the antagonist preview icon. Will be scaled to this size.
 #define ANTAGONIST_PREVIEW_ICON_SIZE 96
+
+// Defines for objective items to determine what they can appear in
+/// Can appear in everything
+#define OBJECTIVE_ITEM_TYPE_NORMAL "normal"
+/// Only appears in traitor objectives
+#define OBJECTIVE_ITEM_TYPE_TRAITOR "traitor"
+
+// Progression traitor defines
+
+/// How many telecrystals a normal traitor starts with
+#define TELECRYSTALS_DEFAULT 20
+/// How many telecrystals mapper/admin only "precharged" uplink implant
+#define TELECRYSTALS_PRELOADED_IMPLANT 10
+/// The normal cost of an uplink implant; used for calcuating how many
+/// TC to charge someone if they get a free implant through choice or
+/// because they have nothing else that supports an implant.
+#define UPLINK_IMPLANT_TELECRYSTAL_COST 4
+
+// Used for traitor objectives
+/// If the objective hasn't been taken yet
+#define OBJECTIVE_STATE_INACTIVE 1
+/// If the objective is active and ongoing
+#define OBJECTIVE_STATE_ACTIVE 2
+/// If the objective has been completed.
+#define OBJECTIVE_STATE_COMPLETED 3
+/// If the objective has failed.
+#define OBJECTIVE_STATE_FAILED 4
+/// If the objective is no longer valid
+#define OBJECTIVE_STATE_INVALID 5

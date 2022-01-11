@@ -1,18 +1,3 @@
-/// Chance that the traitor could roll hijack if the pop limit is met.
-#define HIJACK_PROB 10
-/// Hijack is unavailable as a random objective below this player count.
-#define HIJACK_MIN_PLAYERS 30
-
-/// Chance the traitor gets a martyr objective instead of having to escape alive, as long as all the objectives are martyr compatible.
-#define MARTYR_PROB 20
-
-/// Chance the traitor gets a kill objective. If this prob fails, they will get a steal objective instead.
-#define KILL_PROB 50
-/// If a kill objective is rolled, chance that it is to destroy the AI.
-#define DESTROY_AI_PROB(denominator) (100 / denominator)
-/// If the destroy AI objective doesn't roll, chance that we'll get a maroon instead. If this prob fails, they will get a generic assassinate objective instead.
-#define MAROON_PROB 30
-
 /datum/antagonist/traitor
 	name = "\improper Traitor"
 	roundend_category = "traitors"
@@ -40,10 +25,10 @@
 	///reference to the uplink this traitor was given, if they were.
 	var/datum/component/uplink/uplink
 
-	var/datum/contractor_hub/contractor_hub
+	/// The uplink handler that this traitor belongs to.
+	var/datum/uplink_handler/uplink_handler
 
-	///the final objective the traitor has to accomplish, be it escaping, hijacking, or just martyrdom.
-	var/datum/objective/ending_objective
+	var/uplink_sale_count = 3
 
 /datum/antagonist/traitor/New(give_objectives = TRUE)
 	. = ..()
@@ -56,10 +41,32 @@
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	uplink = owner.find_syndicate_uplink()
+	if(uplink)
+		if(uplink_handler)
+			uplink.uplink_handler = uplink_handler
+		else
+			uplink_handler = uplink.uplink_handler
+		uplink_handler.has_progression = TRUE
+		SStraitor.register_uplink_handler(uplink_handler)
+
+		uplink_handler.has_objectives = TRUE
+		uplink_handler.owner = owner
+		uplink_handler.assigned_role = owner.assigned_role.title
+		uplink_handler.generate_objectives()
+
+		if(uplink_handler.progression_points < SStraitor.current_global_progression)
+			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+		var/list/uplink_items = list()
+		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
+			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
+				&&  !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				uplink_items += item
+		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
+
+		RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
 
 	if(give_objectives)
 		forge_traitor_objectives()
-		forge_ending_objective()
 
 	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 
@@ -71,6 +78,10 @@
 
 	return ..()
 
+/datum/antagonist/traitor/proc/on_uplink_lost(datum/source)
+	SIGNAL_HANDLER
+	uplink = null
+
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
 	return ..()
@@ -79,11 +90,6 @@
 	var/list/possible_employers = list()
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
-	if(istype(ending_objective, /datum/objective/hijack))
-		possible_employers -= GLOB.normal_employers
-	else //escape or martyrdom
-		possible_employers -= GLOB.hijack_employers
-
 	switch(faction)
 		if(FACTION_SYNDICATE)
 			possible_employers -= GLOB.nanotrasen_employers
@@ -91,96 +97,71 @@
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
 
+/datum/objective/traitor_progression
+	name = "traitor progression"
+	explanation_text = "Become a living legend by getting a total of %REPUTATION% reputation points"
+
+	var/possible_range = list(40 MINUTES, 90 MINUTES)
+	var/required_total_progression_points
+
+/datum/objective/traitor_progression/New(text)
+	. = ..()
+	required_total_progression_points = round(rand(possible_range[1], possible_range[2]) / 60)
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_total_progression_points)
+
+/datum/objective/traitor_progression/check_completion()
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
+	if(!traitor)
+		return FALSE
+	if(!traitor.uplink_handler)
+		return FALSE
+	if(traitor.uplink_handler.progression_points < required_total_progression_points)
+		return FALSE
+	return TRUE
+
+/datum/objective/traitor_objectives
+	name = "traitor objective"
+	explanation_text = "Complete objectives colletively worth more than %REPUTATION% reputation points"
+
+	var/possible_range = list(20 MINUTES, 30 MINUTES)
+	var/required_progression_in_objectives
+
+/datum/objective/traitor_objectives/New(text)
+	. = ..()
+	required_progression_in_objectives = round(rand(possible_range[1], possible_range[2]) / 60)
+	explanation_text = replacetext(explanation_text, "%REPUTATION%", required_progression_in_objectives)
+
+/datum/objective/traitor_objectives/check_completion()
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/traitor/traitor = owner.has_antag_datum(/datum/antagonist/traitor)
+	if(!traitor)
+		return FALSE
+	if(!traitor.uplink_handler)
+		return FALSE
+	var/total_points = 0
+	for(var/datum/traitor_objective/objective as anything in traitor.uplink_handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
+			continue
+		total_points += objective.progression_reward
+	if(total_points < required_progression_in_objectives)
+		return FALSE
+	return TRUE
+
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
 	objectives.Cut()
-	var/objective_count = 0
 
-	if((GLOB.joined_player_list.len >= HIJACK_MIN_PLAYERS) && prob(HIJACK_PROB))
-		is_hijacker = TRUE
-		objective_count++
+	var/datum/objective/traitor_progression/final_objective = new /datum/objective/traitor_progression()
+	final_objective.owner = owner
+	objectives += final_objective
 
-	var/objective_limit = CONFIG_GET(number/traitor_objectives_amount)
+	var/datum/objective/traitor_objectives/objective_completion = new /datum/objective/traitor_objectives()
+	objective_completion.owner = owner
+	objectives += objective_completion
 
-	// for(in...to) loops iterate inclusively, so to reach objective_limit we need to loop to objective_limit - 1
-	// This does not give them 1 fewer objectives than intended.
-	for(var/i in objective_count to objective_limit - 1)
-		objectives += forge_single_generic_objective()
-
-
-/**
- * ## forge_ending_objective
- *
- * Forges the endgame objective and adds it to this datum's objective list.
- */
-/datum/antagonist/traitor/proc/forge_ending_objective()
-	if(is_hijacker)
-		ending_objective = new /datum/objective/hijack
-		ending_objective.owner = owner
-		return
-
-	var/martyr_compatibility = TRUE
-
-	for(var/datum/objective/traitor_objective in objectives)
-		if(!traitor_objective.martyr_compatible)
-			martyr_compatibility = FALSE
-			break
-
-	if(martyr_compatibility && prob(MARTYR_PROB))
-		ending_objective = new /datum/objective/martyr
-		ending_objective.owner = owner
-		objectives += ending_objective
-		return
-
-	ending_objective = new /datum/objective/escape
-	ending_objective.owner = owner
-	objectives += ending_objective
-
-/// Forges a single escape objective and adds it to this datum's objective list.
-/datum/antagonist/traitor/proc/forge_escape_objective()
-	var/is_martyr = prob(MARTYR_PROB)
-	var/martyr_compatibility = TRUE
-
-	for(var/datum/objective/traitor_objective in objectives)
-		if(!traitor_objective.martyr_compatible)
-			martyr_compatibility = FALSE
-			break
-
-	if(martyr_compatibility && is_martyr)
-		var/datum/objective/martyr/martyr_objective = new
-		martyr_objective.owner = owner
-		objectives += martyr_objective
-		return
-
-	var/datum/objective/escape/escape_objective = new
-	escape_objective.owner = owner
-	objectives += escape_objective
-
-/// Adds a generic kill or steal objective to this datum's objective list.
-/datum/antagonist/traitor/proc/forge_single_generic_objective()
-	if(prob(KILL_PROB))
-		var/list/active_ais = active_ais()
-		if(active_ais.len && prob(DESTROY_AI_PROB(GLOB.joined_player_list.len)))
-			var/datum/objective/destroy/destroy_objective = new
-			destroy_objective.owner = owner
-			destroy_objective.find_target()
-			return destroy_objective
-
-		if(prob(MAROON_PROB))
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
-			maroon_objective.find_target()
-			return maroon_objective
-
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		return kill_objective
-
-	var/datum/objective/steal/steal_objective = new
-	steal_objective.owner = owner
-	steal_objective.find_target()
-	return steal_objective
 
 /datum/antagonist/traitor/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -259,10 +240,14 @@
 
 	result += objectives_text
 
-	var/special_role_text = lowertext(name)
+	if(uplink_handler)
+		var/completed_objectives_text = "Completed Uplink Objectives: "
+		for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
+			if(objective.objective_state == OBJECTIVE_STATE_COMPLETED)
+				completed_objectives_text += "<br><B>[objective.name]</B> - ([objective.telecrystal_reward] TC, [round(objective.progression_reward/600, 0.1)] Reputation)"
+		result += completed_objectives_text
 
-	if (contractor_hub)
-		result += contractor_round_end()
+	var/special_role_text = lowertext(name)
 
 	if(traitor_won)
 		result += span_greentext("The [special_role_text] was successful!")
@@ -271,42 +256,6 @@
 		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
 
 	return result.Join("<br>")
-
-/// Proc detailing contract kit buys/completed contracts/additional info
-/datum/antagonist/traitor/proc/contractor_round_end()
-	var/result = ""
-	var/total_spent_rep = 0
-
-	var/completed_contracts = contractor_hub.contracts_completed
-	var/tc_total = contractor_hub.contract_TC_payed_out + contractor_hub.contract_TC_to_redeem
-
-	var/contractor_item_icons = "" // Icons of purchases
-	var/contractor_support_unit = "" // Set if they had a support unit - and shows appended to their contracts completed
-
-	/// Get all the icons/total cost for all our items bought
-	for (var/datum/contractor_item/contractor_purchase in contractor_hub.purchased_items)
-		contractor_item_icons += "<span class='tooltip_container'>\[ <i class=\"fas [contractor_purchase.item_icon]\"></i><span class='tooltip_hover'><b>[contractor_purchase.name] - [contractor_purchase.cost] Rep</b><br><br>[contractor_purchase.desc]</span> \]</span>"
-
-		total_spent_rep += contractor_purchase.cost
-
-		/// Special case for reinforcements, we want to show their ckey and name on round end.
-		if (istype(contractor_purchase, /datum/contractor_item/contractor_partner))
-			var/datum/contractor_item/contractor_partner/partner = contractor_purchase
-			contractor_support_unit += "<br><b>[partner.partner_mind.key]</b> played <b>[partner.partner_mind.current.name]</b>, their contractor support unit."
-
-	if (contractor_hub.purchased_items.len)
-		result += "<br>(used [total_spent_rep] Rep) "
-		result += contractor_item_icons
-	result += "<br>"
-	if (completed_contracts > 0)
-		var/pluralCheck = "contract"
-		if (completed_contracts > 1)
-			pluralCheck = "contracts"
-
-		result += "Completed [span_greentext("[completed_contracts]")] [pluralCheck] for a total of \
-					[span_greentext("[tc_total] TC")]![contractor_support_unit]<br>"
-
-	return result
 
 /datum/antagonist/traitor/roundend_report_footer()
 	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
@@ -333,10 +282,3 @@
 	sword.worn_icon_state = "e_sword_on_red"
 
 	H.update_inv_hands()
-
-#undef HIJACK_PROB
-#undef HIJACK_MIN_PLAYERS
-#undef MARTYR_PROB
-#undef KILL_PROB
-#undef DESTROY_AI_PROB
-#undef MAROON_PROB

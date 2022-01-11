@@ -101,7 +101,7 @@
 			var/y_off = T.y - origin.y
 			I.loc = locate(origin.x + x_off, origin.y + y_off, origin.z) //we have to set this after creating the image because it might be null, and images created in nullspace are immutable.
 			I.layer = ABOVE_NORMAL_TURF_LAYER
-			I.plane = 0
+			I.plane = ABOVE_GAME_PLANE
 			I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 			the_eye.placement_images[I] = list(x_off, y_off)
 
@@ -189,7 +189,7 @@
 		var/image/newI = image('icons/effects/alphacolors.dmi', the_eye.loc, "blue")
 		newI.loc = I.loc //It is highly unlikely that any landing spot including a null tile will get this far, but better safe than sorry.
 		newI.layer = ABOVE_OPEN_TURF_LAYER
-		newI.plane = 0
+		newI.plane = ABOVE_GAME_PLANE
 		newI.mouse_opacity = 0
 		the_eye.placed_images += newI
 
@@ -393,5 +393,3 @@
 	to_chat(target, span_notice("Jumped to [selected]."))
 	C.overlay_fullscreen("flash", /atom/movable/screen/fullscreen/flash/static)
 	C.clear_fullscreen("flash", 3)
-
-

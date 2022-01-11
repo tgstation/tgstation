@@ -97,6 +97,8 @@
 #define ROLE_SKELETON "Skeleton"
 #define ROLE_ZOMBIE "Zombie"
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
+#define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
+#define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 
 
 /// This defines the antagonists you can operate with in the settings.
