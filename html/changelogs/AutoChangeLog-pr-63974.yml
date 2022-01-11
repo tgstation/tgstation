@@ -1,0 +1,4 @@
+author: "ma44"
+delete-after: True
+changes: 
+  - code_imp: "Basic AI has been modified to allow for future features to be implemented in a proper way."
