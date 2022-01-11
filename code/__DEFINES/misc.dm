@@ -1,6 +1,3 @@
-/// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
-#define NO_BUCKLE_LYING -1
-
 // timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
 #define IGNORE_USER_LOC_CHANGE (1<<0)
 #define IGNORE_TARGET_LOC_CHANGE (1<<1)
