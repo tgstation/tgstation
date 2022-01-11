@@ -160,7 +160,7 @@
 	projectile.tem = src
 	projectile.firer = mod.wearer
 	projectile.fired_from = src
-	projectile.fire(dir2angle(dir))
+	projectile.fire(get_angle(mod.wearer, target), target)
 
 /obj/item/mod/module/tem/on_uninstall()
 	if(field)

@@ -1031,7 +1031,7 @@
 	construction_time = 15 SECONDS
 	build_path = /obj/item/mod/construction/armor
 	category = list("MOD Construction", "Equipment")
-	research_icon = 'icons/obj/mod.dmi'
+	research_icon = 'icons/obj/clothing/modsuits/mod_construction.dmi'
 	research_icon_state = "standard-armor"
 
 /datum/design/mod_armor/New()

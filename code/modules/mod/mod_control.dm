@@ -2,9 +2,9 @@
 /obj/item/mod
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
-	icon = 'icons/obj/mod_clothing.dmi'
+	icon = 'icons/obj/clothing/modsuits/mod_clothing.dmi'
 	icon_state = "standard-control"
-	worn_icon = 'icons/mob/mod.dmi'
+	worn_icon = 'icons/mob/clothing/mod.dmi'
 
 /obj/item/mod/control
 	name = "MOD control unit"

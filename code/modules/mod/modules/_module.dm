@@ -1,7 +1,7 @@
 ///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
-	icon = 'icons/obj/mod_modules.dmi'
+	icon = 'icons/obj/clothing/modsuits/mod_modules.dmi'
 	icon_state = "module"
 	/// If it can be removed
 	var/removable = TRUE
@@ -246,7 +246,7 @@
 		used_overlay = overlay_state_inactive
 	else
 		return
-	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/mod.dmi', used_overlay, layer = standing.layer + 0.1)
+	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/clothing/mod.dmi', used_overlay, layer = standing.layer + 0.1)
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated

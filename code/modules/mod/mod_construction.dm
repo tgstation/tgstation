@@ -1,5 +1,6 @@
 /obj/item/mod/construction
 	desc = "A part used in MOD construction."
+	icon = 'icons/obj/clothing/modsuits/mod_construction.dmi'
 	inhand_icon_state = "rack_parts"
 
 /obj/item/mod/construction/helmet
@@ -93,7 +94,7 @@
 /obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuits/mod_modules.dmi'
 	icon_state = "paintkit"
 
 #define START_STEP "start"
