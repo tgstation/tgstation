@@ -450,7 +450,7 @@
 	if(!istype(loc, /obj/item/mod/module/pathfinder))
 		return INITIALIZE_HINT_QDEL
 	module = loc
-	jet_icon = image(icon = 'icons/obj/clothing/modsuits/mod_modules.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
+	jet_icon = image(icon = 'icons/obj/clothing/modsuit/mod_modules.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
 
 /obj/item/implant/mod/Destroy()
 	if(module?.mod?.ai_controller)

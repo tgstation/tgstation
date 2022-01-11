@@ -7,14 +7,14 @@
 /obj/item/mod/module/eradication_lock
 	name = "MOD eradication lock module"
 	desc = "A module which remembers the original owner of the suit, even alternate universe \
-	versions. When a non-owner enters, the eradication lock will begin eradicating the suit \
-	from the timeline... with the intruder inside. Not the way you want to go, so it turns \
-	out to be a good deterrent."
+			versions. When a non-owner enters, the eradication lock will begin eradicating the suit \
+			from the timeline... with the intruder inside. Not the way you want to go, so it turns \
+			out to be a good deterrent."
 	icon_state = "eradicationlock"
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 3
-	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
+	incompatible_modules = list(/obj/item/mod/module/eradication_lock, /obj/item/mod/module/dna_lock)
 	cooldown_time = 0.5 SECONDS
 	removable = FALSE //copy paste this comment - no timeline modules should be removable
 	/// The ckey we lock with, to allow all alternate versions of the user, huhehuehe
@@ -37,9 +37,9 @@
 	drain_power(use_power_cost)
 
 /obj/item/mod/module/eradication_lock/proc/eradication_check(mob/user)
-	if(user.ckey == true_owner_ckey)
+	if(!true_owner_ckey || user.ckey == true_owner_ckey)
 		return TRUE
-	balloon_alert(user, "timeline inhabitant detected! eradicating...")
+	mod.balloon_alert(user, "timeline inhabitant detected! eradicating...")
 	return FALSE
 
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
@@ -60,8 +60,8 @@
 /obj/item/mod/module/rewinder
 	name = "MOD rewinder module"
 	desc = "A module that can pull the user back through time given an anchor point to \
-	pull to. Very useful tool to get the job done, but keep in mind the suit locks for \
-	safety reasons while preparing a rewind."
+			pull to. Very useful tool to get the job done, but keep in mind the suit locks for \
+			safety reasons while preparing a rewind."
 	icon_state = "rewinder"
 	module_type = MODULE_USABLE
 	complexity = 1
@@ -93,8 +93,8 @@
 /obj/item/mod/module/timestopper
 	name = "MOD timestopper module"
 	desc = "A module that can halt time in a small radius around the user... for as long as they \
-	want! Great for monologues or lunch breaks. Keep in mind moving will end the stop, and the \
-	module has a hefty cooldown period to avoid reality errors."
+			want! Great for monologues or lunch breaks. Keep in mind moving will end the stop, and the \
+			module has a hefty cooldown period to avoid reality errors."
 	icon_state = "timestop"
 	module_type = MODULE_USABLE
 	complexity = 3
@@ -133,8 +133,8 @@
 /obj/item/mod/module/tem
 	name = "MOD timestream eradication module"
 	desc = "The correction device of a fourth dimensional group outside time itself used to \
-	change the destination of a timeline. this device is capable of wiping a being from the \
-	timestream. They never are, they never were, they never will be."
+			change the destination of a timeline. this device is capable of wiping a being from the \
+			timestream. They never are, they never were, they never will be."
 	icon_state = "chronogun"
 	module_type = MODULE_ACTIVE
 	complexity = 3
@@ -300,25 +300,25 @@
 			timetokill += delta_time
 
 
-/obj/structure/chrono_field/bullet_act(obj/projectile/P)
-	if(istype(P, /obj/projectile/energy/chrono_beam))
-		var/obj/projectile/energy/chrono_beam/beam = P
-		var/obj/item/mod/module/tem/Ptem = beam.tem
-		if(Ptem && istype(Ptem))
-			Ptem.field_connect(src)
+/obj/structure/chrono_field/bullet_act(obj/projectile/projectile)
+	if(istype(projectile, /obj/projectile/energy/chrono_beam))
+		var/obj/projectile/energy/chrono_beam/beam = projectile
+		var/obj/item/mod/module/tem/linked_tem = beam.tem
+		if(linked_tem && istype(linked_tem))
+			linked_tem.field_connect(src)
 	else
 		return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
-	return 0
+	return FALSE
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
-	var/datum/gas_mixture/GM = new
-	GM.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	GM.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	GM.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
-	GM.temperature = T20C
-	return GM
+	var/datum/gas_mixture/fresh_air = new
+	fresh_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
+	fresh_air.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
+	fresh_air.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	fresh_air.temperature = T20C
+	return fresh_air
 
 /obj/structure/chrono_field/singularity_act()
 	return
