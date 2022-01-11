@@ -1,6 +1,6 @@
 /datum/traitor_objective/destroy_item
 	name = "Steal %ITEM% and destroy it"
-	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests. <b>You need to hold the %ITEM% in your hands once before you destroy it so that we can confirm you actually destroyed it.</b>"
+	description = "Find %ITEM% and destroy it using any means necessary. We can't allow the crew to have %ITEM% as it conflicts with our interests."
 
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES
@@ -35,7 +35,6 @@
 
 	possible_items = list(
 		/datum/objective_item/steal/blackbox,
-		/datum/objective_item/steal/reflector,
 	)
 
 /datum/traitor_objective/destroy_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
@@ -51,10 +50,19 @@
 		if(role.title in target.excludefromjob)
 			qdel(target)
 			continue
+		if(target.exists_on_map)
+			var/list/items = GLOB.steal_item_handler.objectives_by_path[target.targetitem]
+			if(!length(items))
+				continue
 		target_item = target
 		break
 	if(!target_item)
 		return FALSE
+	if(target_item.exists_on_map)
+		var/list/items = GLOB.steal_item_handler.objectives_by_path[target_item.targetitem]
+		for(var/obj/item/item as anything in items)
+			AddComponent(/datum/component/traitor_objective_register, item, succeed_signals = COMSIG_PARENT_QDELETING)
+			tracked_items += item
 	if(length(target_item.special_equipment))
 		special_equipment = target_item.special_equipment
 	replace_in_name("%ITEM%", target_item.name)

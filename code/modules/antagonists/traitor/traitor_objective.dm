@@ -18,6 +18,8 @@
 	var/telecrystal_reward = 0
 	/// TC penalty for failing an objective or cancelling it
 	var/telecrystal_penalty = 1
+	/// The time at which this objective was completed
+	var/time_of_completion = 0
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
 	/// Whether this objective was forced upon by an admin. Won't get autocleared by the traitor subsystem if progression surpasses an amount
@@ -101,6 +103,7 @@
 
 /// Used to handle cleaning up the objective.
 /datum/traitor_objective/proc/handle_cleanup()
+	time_of_completion = world.time
 	ungenerate_objective()
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active

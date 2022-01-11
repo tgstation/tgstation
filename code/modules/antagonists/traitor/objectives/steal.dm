@@ -18,6 +18,35 @@
 		/datum/traitor_objective/steal_item/most_risky = 1
 	)
 
+GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
+
+/datum/objective_item_handler
+	var/list/objectives_by_path = list()
+
+/datum/objective_item_handler/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/save_items)
+
+// Very inefficient proc, only gets called when the map finishes loading.
+/datum/objective_item_handler/proc/save_items()
+	for(var/datum/objective_item/steal/steal as anything in subtypesof(/datum/objective_item/steal))
+		if(!initial(steal.exists_on_map))
+			continue
+		objectives_by_path[initial(steal.targetitem)] = list()
+	for(var/atom/object as anything in world)
+		var/turf/place = get_turf(object)
+		if(!place || !is_station_level(place.z))
+			continue
+		for(var/typepath in objectives_by_path)
+			if(istype(object, typepath))
+				objectives_by_path[typepath] += object
+				RegisterSignal(object, COMSIG_PARENT_QDELETING, .proc/remove_item)
+
+/datum/objective_item_handler/proc/remove_item(atom/source)
+	SIGNAL_HANDLER
+	for(var/typepath in objectives_by_path)
+		objectives_by_path[typepath] -= typepath
+
 /datum/traitor_objective/steal_item
 	name = "Steal %ITEM% and place a bug on it. Hold it for %TIME% minutes"
 	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it on the item. After that, you must keep it near you for %TIME% minutes"
@@ -131,6 +160,10 @@
 		if(role.title in target.excludefromjob)
 			qdel(target)
 			continue
+		if(target.exists_on_map)
+			var/list/items = GLOB.steal_item_handler.objectives_by_path[target.targetitem]
+			if(!length(items))
+				continue
 		target_item = target
 		break
 	if(!target_item)

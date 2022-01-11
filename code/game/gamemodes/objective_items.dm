@@ -9,6 +9,8 @@
 	var/list/altitems = list() //Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
 	var/objective_type = OBJECTIVE_ITEM_TYPE_NORMAL
+	/// Whether this item exists on the station map at the start of a round.
+	var/exists_on_map = FALSE
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
@@ -39,6 +41,7 @@
 		JOB_CHIEF_ENGINEER,
 		JOB_RESEARCH_DIRECTOR,
 	)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/low_risk/techboard/aiupload
 	targetitem = /obj/item/circuitboard/computer/aiupload
@@ -65,22 +68,26 @@
 		JOB_SCIENTIST,
 		JOB_ATMOSPHERIC_TECHNICIAN,
 	)
+	exists_on_map = TRUE
 
 // Unique-ish low risk objectives
 /datum/objective_item/steal/low_risk/bartender_shotgun
 	name = "the bartender's shotgun"
 	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
 	excludefromjob = list(JOB_BARTENDER)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/low_risk/fireaxe
 	name = "a fire axe"
 	targetitem = /obj/item/fireaxe
 	excludefromjob = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/low_risk/nullrod
 	name = "the chaplain's null rod"
 	targetitem = /obj/item/nullrod
 	excludefromjob = list(JOB_CHAPLAIN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/low_risk/clown_shoes
 	name = "the clown's shoes"
@@ -102,6 +109,7 @@
 	name = "cargo's departmental budget"
 	targetitem = /obj/item/card/id/departmental_budget/car
 	excludefromjob = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN)
+	exists_on_map = TRUE
 
 // High risk steal objectives
 /datum/objective_item/steal/caplaser
@@ -109,42 +117,49 @@
 	targetitem = /obj/item/gun/energy/laser/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/hoslaser
 	name = "the head of security's personal laser gun"
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter"
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
 	targetitem = /obj/item/tank/jetpack/oxygen/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/magboots
 	name = "the chief engineer's advanced magnetic boots"
 	targetitem = /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
 	targetitem = /obj/item/clothing/accessory/medal/gold/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/hypo
 	name = "the hypospray"
 	targetitem = /obj/item/reagent_containers/hypospray/cmo
 	difficulty = 5
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/nukedisc
 	name = "the nuclear authentication disk"
@@ -160,23 +175,27 @@
 	targetitem = /obj/item/clothing/suit/hooded/ablative
 	difficulty = 3
 	excludefromjob = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/reactive
 	name = "the reactive teleport armor"
 	targetitem = /obj/item/clothing/suit/armor/reactive/teleport
 	difficulty = 5
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
 	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/nuke_core
 	name = "the heavily radioactive plutonium core from the onboard self-destruct"
 	valid_containers = list(/obj/item/nuke_core_container)
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/nuke
@@ -187,6 +206,7 @@
 	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
 	difficulty = 10
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -241,6 +261,7 @@
 	difficulty = 10
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
+	exists_on_map = TRUE
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
@@ -267,6 +288,7 @@
 	targetitem = /obj/item/blackbox
 	difficulty = 10
 	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+	exists_on_map = TRUE
 
 //Unique Objectives
 /datum/objective_item/special/New()
@@ -285,6 +307,7 @@
 	name = "the captain's pinpointer"
 	targetitem = /obj/item/pinpointer/nuke
 	difficulty = 10
+	exists_on_map = TRUE
 
 /datum/objective_item/special/aegun
 	name = "an advanced energy gun"
