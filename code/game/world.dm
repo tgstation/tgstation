@@ -210,7 +210,7 @@ GLOBAL_VAR(restart_counter)
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
 
 	var/final_composed = span_announce("PR: [announcement]")
