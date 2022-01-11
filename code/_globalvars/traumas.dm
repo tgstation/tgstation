@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/toy/figure/hos,
 		/obj/item/toy/figure/rd,
 		/obj/machinery/door/airlock/command,
-		/obj/structure/statue/diamond/captain
+		/obj/structure/statue/diamond/captain,
 		/obj/structure/statue/gold/ce,
 		/obj/structure/statue/gold/cmo,
 		/obj/structure/statue/gold/hop,
@@ -367,7 +367,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/alien,
 		/obj/structure/bed/abductor,
 		/obj/structure/closet/abductor,
-		/obj/structure/statue/plasma/xeno
+		/obj/structure/statue/plasma/xeno,
 		/obj/structure/table_frame/abductor,
 		/obj/structure/table/abductor,
 		/obj/structure/table/optable/abductor,
@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/reagent_containers/food/drinks/bottle/sake,
 		/obj/item/throwing_star,
 		/obj/item/toy/katana,
-		/obj/structure/mineral_door/paperframe
+		/obj/structure/mineral_door/paperframe,
 		/obj/structure/window/paperframe,
 	)),
 
@@ -402,7 +402,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/mask/gas/plaguedoctor,
 		/obj/item/clothing/shoes/griffin,
 		/obj/item/clothing/suit/chickensuit,
-		/obj/item/clothing/suit/space/freedom
+		/obj/item/clothing/suit/space/freedom,
 		/obj/item/clothing/suit/toggle/owlwings,
 		/obj/item/clothing/under/costume/griffin,
 		/obj/item/clothing/under/costume/owl,
@@ -420,7 +420,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/gun/syringe,
 		/obj/item/mecha_ammo,
 		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic,
-		/obj/item/mecha_parts/mecha_equipment/weapon/energy
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy,
 		/obj/item/storage/belt/bandolier,
 		/obj/item/storage/belt/holster,
 		/obj/machinery/porta_turret,
@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/reagent_containers/food/drinks/bottle/sake,
 		/obj/item/throwing_star,
 		/obj/item/toy/katana,
-		/obj/structure/mineral_door/paperframe
+		/obj/structure/mineral_door/paperframe,
 		/obj/structure/window/paperframe,
 	)),
 
