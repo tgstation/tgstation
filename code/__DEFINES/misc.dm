@@ -1,6 +1,3 @@
-#define AREASELECT_CORNERA "corner A"
-#define AREASELECT_CORNERB "corner B"
-
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
 
