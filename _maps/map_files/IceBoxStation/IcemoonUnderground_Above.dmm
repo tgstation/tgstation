@@ -9997,7 +9997,7 @@
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/virology)
 "HU" = (
 /obj/effect/turf_decal/tile/bar,

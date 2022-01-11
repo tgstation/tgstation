@@ -1625,7 +1625,7 @@
 "akc" = (
 /obj/machinery/chem_dispenser,
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "akg" = (
 /obj/machinery/camera/directional/south{
@@ -13673,7 +13673,7 @@
 /obj/item/reagent_containers/dropper,
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "dyq" = (
 /turf/closed/wall,
@@ -16064,7 +16064,7 @@
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "eRC" = (
 /obj/effect/turf_decal/tile/red{
@@ -29178,7 +29178,7 @@
 	},
 /obj/item/pen,
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "lCG" = (
 /obj/machinery/conveyor{
@@ -29246,6 +29246,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/security/checkpoint/medical)
 "lEk" = (
@@ -30754,7 +30755,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "mwH" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -34658,7 +34659,7 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "orl" = (
 /obj/structure/cable,
@@ -41079,7 +41080,7 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "rDH" = (
 /obj/structure/table,
@@ -41396,7 +41397,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "rKT" = (
 /obj/machinery/computer/teleporter{
@@ -45095,7 +45096,7 @@
 "tFE" = (
 /obj/machinery/chem_master,
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "tFQ" = (
 /obj/structure/cable,
@@ -45429,7 +45430,7 @@
 /obj/structure/table/glass,
 /obj/machinery/computer/med_data/laptop,
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "tOy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
@@ -47001,7 +47002,7 @@
 	layer = 2.9
 	},
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "uzt" = (
 /obj/structure/table/wood,
@@ -50176,7 +50177,7 @@
 /obj/structure/table/glass,
 /obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "wit" = (
 /obj/structure/table,
@@ -50366,7 +50367,7 @@
 	network = list("ss13","medbay")
 	},
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/cmo)
 "wnj" = (
 /obj/machinery/power/apc/auto_name/directional/west,
@@ -53707,7 +53708,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "xUQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
