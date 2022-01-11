@@ -166,7 +166,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/spear,
 		/obj/item/toy/figure/assistant,
 		/obj/structure/statue/sandstone/assistant,
-	)) + typecacheof(list(/obj/item/clothing/mask/gas), ignore_root_path = FALSE, only_root_path = TRUE // to match only specific items in this phobia and not subtypes, use an additional typecacheof w/ ignore_root_path set FALSE and only_root_patch set TRUE
+	))
+	+ typecacheof(list(/obj/item/clothing/mask/gas), ignore_root_path = FALSE, only_root_path = TRUE // to match only specific items in this phobia and not subtypes, use an additional typecacheof w/ ignore_root_path set FALSE and only_root_patch set TRUE
 	)),
 
 	"lizards" = typecacheof(list(
@@ -206,7 +207,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/rank/security/head_of_security/parade,
 		/obj/item/clothing/under/rank/security/head_of_security/parade/female,
 		/obj/item/gun/energy/alien,
-		/obj/item/megaphone/command
+		/obj/item/megaphone/command,
 		/obj/item/melee/baton/abductor,
 		/obj/item/stamp/captain,
 		/obj/item/stamp/ce,
