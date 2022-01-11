@@ -77,6 +77,7 @@
 #include "code\__DEFINES\food.dm"
 #include "code\__DEFINES\footsteps.dm"
 #include "code\__DEFINES\fov.dm"
+#include "code\__DEFINES\ghost.dm"
 #include "code\__DEFINES\gravity.dm"
 #include "code\__DEFINES\hud.dm"
 #include "code\__DEFINES\icon_smoothing.dm"

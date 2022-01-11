@@ -1,26 +1,3 @@
-//Ghost orbit types:
-#define GHOST_ORBIT_CIRCLE "circle"
-#define GHOST_ORBIT_TRIANGLE "triangle"
-#define GHOST_ORBIT_HEXAGON "hexagon"
-#define GHOST_ORBIT_SQUARE "square"
-#define GHOST_ORBIT_PENTAGON "pentagon"
-
-//Ghost showing preferences:
-#define GHOST_ACCS_NONE "Default sprites"
-#define GHOST_ACCS_DIR "Only directional sprites"
-#define GHOST_ACCS_FULL "Full accessories"
-
-#define GHOST_ACCS_DEFAULT_OPTION GHOST_ACCS_FULL
-
-#define GHOST_OTHERS_SIMPLE "White ghosts"
-#define GHOST_OTHERS_DEFAULT_SPRITE "Default sprites"
-#define GHOST_OTHERS_THEIR_SETTING "Their sprites"
-
-#define GHOST_OTHERS_DEFAULT_OPTION GHOST_OTHERS_THEIR_SETTING
-
-#define GHOST_MAX_VIEW_RANGE_DEFAULT 10
-#define GHOST_MAX_VIEW_RANGE_MEMBER 14
-
 // Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
@@ -39,13 +16,6 @@
 // Diagonal movement
 #define FIRST_DIAG_STEP 1
 #define SECOND_DIAG_STEP 2
-
-#define DEADCHAT_ANNOUNCEMENT "announcement"
-#define DEADCHAT_ARRIVALRATTLE "arrivalrattle"
-#define DEADCHAT_DEATHRATTLE "deathrattle"
-#define DEADCHAT_LAWCHANGE "lawchange"
-#define DEADCHAT_REGULAR "regular-deadchat"
-#define DEADCHAT_LOGIN_LOGOUT "loginlogout"
 
 // Bluespace shelter deploy checks
 #define SHELTER_DEPLOY_ALLOWED "allowed"
@@ -208,10 +178,6 @@
 //Filters
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
 #define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)
-
-#define CAMERA_NO_GHOSTS 0
-#define CAMERA_SEE_GHOSTS_BASIC 1
-#define CAMERA_SEE_GHOSTS_ORBIT 2
 
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
 
