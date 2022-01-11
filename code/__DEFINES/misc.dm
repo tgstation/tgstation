@@ -1,22 +1,3 @@
-//stages of shoe tying-ness
-#define SHOES_UNTIED 0
-#define SHOES_TIED 1
-#define SHOES_KNOTTED 2
-
-//suit sensors: sensor_mode defines
-
-#define SENSOR_OFF 0
-#define SENSOR_LIVING 1
-#define SENSOR_VITALS 2
-#define SENSOR_COORDS 3
-
-//suit sensors: has_sensor defines
-
-#define BROKEN_SENSORS -1
-#define NO_SENSORS 0
-#define HAS_SENSORS 1
-#define LOCKED_SENSORS 2
-
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE "circle"
 #define GHOST_ORBIT_TRIANGLE "triangle"
