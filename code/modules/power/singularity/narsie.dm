@@ -9,7 +9,7 @@
 /obj/narsie
 	name = "Nar'Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/narsie.dmi'
+	icon = 'icons/obj/cult/narsie.dmi'
 	icon_state = "narsie"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE

@@ -477,7 +477,7 @@
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "render"
 	worn_icon_state = "render"
