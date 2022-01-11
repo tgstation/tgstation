@@ -1,6 +1,3 @@
-//Just space
-#define SPACE_ICON_STATE "[((x + y) ^ ~(x * y) + z) % 25]"
-
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
