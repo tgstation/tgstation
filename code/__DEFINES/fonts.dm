@@ -19,3 +19,6 @@
 #define SHARE "Share Tech Mono"
 
 GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
+
+/// Emoji icon set
+#define EMOJI_SET 'icons/emoji.dmi'
