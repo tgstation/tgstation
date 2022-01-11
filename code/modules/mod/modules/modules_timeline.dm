@@ -102,13 +102,18 @@
 	incompatible_modules = list(/obj/item/mod/module/timestopper)
 	cooldown_time = 60 SECONDS
 	removable = FALSE //copy paste this comment - no timeline modules should be removable
+	///the current timestop in progress
+	var/obj/effect/timestop/channelled/timestop
 
 /obj/item/mod/module/timestopper/on_use()
 	. = ..()
 	if(!.)
 		return
+	if(timestop)
+		mod.balloon_alert(mod.wearer, "already freezing time!")
+		return
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
-	var/obj/effect/timestop/channelled/timestop =  new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
+	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
 	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
 
 ///unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
