@@ -1,8 +1,3 @@
-//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
-#define LUMA_R 0.213
-#define LUMA_G 0.715
-#define LUMA_B 0.072
-
 //different types of atom colorations
 #define ADMIN_COLOUR_PRIORITY 1 //only used by rare effects like greentext coloring mobs and when admins varedit color
 #define TEMPORARY_COLOUR_PRIORITY 2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
