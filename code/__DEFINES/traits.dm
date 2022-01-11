@@ -500,6 +500,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 /// Prevents stripping this equipment
 #define TRAIT_NO_STRIP "no_strip"
+/// Disallows this item from being pricetagged with a barcode
+#define TRAIT_NO_BARCODES "no_barcode"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"

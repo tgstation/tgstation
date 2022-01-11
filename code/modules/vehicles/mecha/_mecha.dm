@@ -543,7 +543,7 @@
 	if(src == target)
 		return
 	var/dir_to_target = get_dir(src,target)
-	if(dir_to_target && !(dir_to_target & dir))//wrong direction
+	if(!(mecha_flags & OMNIDIRECTIONAL_ATTACKS) && dir_to_target && !(dir_to_target & dir))//wrong direction
 		return
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))

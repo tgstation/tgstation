@@ -370,7 +370,7 @@
 		return FALSE
 
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
 				continue
 			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
@@ -385,7 +385,7 @@
 		return TRUE
 
 	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
 			for(var/place as anything in mobile_docking_port.shuttle_areas)
 				var/area/shuttle/shuttle_area = place
@@ -799,12 +799,12 @@
 /**
  * React to being hit by an explosion
  *
- * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
+ * Should be called through the [EX_ACT] wrapper macro.
+ * The wrapper takes care of the [COMSIG_ATOM_EX_ACT] signal.
+ * as well as calling [/atom/proc/contents_explosion].
  */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
-	contents_explosion(severity, target)
-	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
  * React to a hit by a blob objecd

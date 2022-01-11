@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - code_imp: "Documents and improves the code of the shuttle subsystem, so its inner workings are a little less of a mystery."

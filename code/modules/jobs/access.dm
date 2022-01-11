@@ -4,7 +4,7 @@
 	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
 	if(issilicon(accessor))
 		if(ispAI(accessor))

@@ -91,13 +91,20 @@
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			. += ""
-			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
-			. += "Absorbed DNA: [changeling.absorbedcount]"
+			. += "Chemical Storage: [changeling.chem_charges]/[changeling.total_chem_storage]"
+			. += "Absorbed DNA: [changeling.absorbed_count]"
 
 // called when something steps onto a human
 /mob/living/carbon/human/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
 	spreadFire(AM)
+
+/mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
+	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
+		update_fullscreen()
+		return
+	return ..()
+
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
@@ -387,7 +394,7 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		var/obj/item/bodypart/the_part = get_bodypart(target_zone || user.zone_selected)
+		var/obj/item/bodypart/the_part = get_bodypart(target_zone || check_zone(user.zone_selected))
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
