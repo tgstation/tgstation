@@ -157,6 +157,9 @@ LOG_VIRUS
 ## log cloning actions
 LOG_CLONING
 
+## log crafting actions
+LOG_CRAFTING
+
 ## log shuttle actions
 LOG_SHUTTLE
 

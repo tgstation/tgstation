@@ -74,6 +74,8 @@
 
 /datum/config_entry/flag/log_mecha // log mech data
 
+/datum/config_entry/flag/log_crafting // log things being crafted
+
 /datum/config_entry/flag/log_virus // log virology data
 
 /datum/config_entry/flag/log_cloning // log cloning actions.

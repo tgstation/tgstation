@@ -447,6 +447,7 @@
 				else
 					result.forceMove(user.drop_location())
 				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				user.log_message("[key_name(user)] crafted [crafting_recipe]", LOG_CRAFTING)
 				user.investigate_log("[key_name(user)] crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
 				crafting_recipe.on_craft_completion(user, result)
 			else
