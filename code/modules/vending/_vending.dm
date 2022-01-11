@@ -727,6 +727,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	return ..()
 
+/obj/machinery/vending/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if (!Adjacent(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/vending),

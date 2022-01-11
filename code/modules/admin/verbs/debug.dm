@@ -617,8 +617,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!holder)
 		return
 	var/list/names = list()
-	for(var/i in GLOB.ruin_landmarks)
-		var/obj/effect/landmark/ruin/ruin_landmark = i
+	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
 
 		var/count = 1

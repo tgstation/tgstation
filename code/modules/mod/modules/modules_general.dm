@@ -181,15 +181,15 @@
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	if(!(former_flags & HEADCOVERSMOUTH))
+	if(former_flags & HEADCOVERSMOUTH)
 		mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
-	if(!(former_visor_flags & HEADCOVERSMOUTH))
+	if(former_visor_flags & HEADCOVERSMOUTH)
 		mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
 
 /obj/item/mod/module/mouthhole/on_uninstall()
-	if(!(former_flags & HEADCOVERSMOUTH))
+	if(former_flags & HEADCOVERSMOUTH)
 		mod.helmet.flags_cover |= HEADCOVERSMOUTH
-	if(!(former_visor_flags & HEADCOVERSMOUTH))
+	if(former_visor_flags & HEADCOVERSMOUTH)
 		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
 
 ///EMP Shield - Protects the suit from EMPs.
