@@ -1063,7 +1063,7 @@
 	pixel_y = 7
 	},
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "dy" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -1646,7 +1646,7 @@
 /obj/item/bedsheet/medical,
 /obj/item/storage/secure/safe/directional/south,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "fC" = (
 /obj/structure/table/wood,
@@ -1800,7 +1800,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/virology)
 "ge" = (
 /obj/machinery/camera/directional/south{
@@ -3080,7 +3080,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "kF" = (
 /obj/machinery/computer/slot_machine{
@@ -3190,7 +3190,7 @@
 	},
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "kX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -4567,7 +4567,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/microwave,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "py" = (
 /obj/machinery/door/airlock/external{
@@ -4797,7 +4797,7 @@
 "qk" = (
 /obj/machinery/vending/wardrobe/viro_wardrobe,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "qm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6340,7 +6340,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "vr" = (
 /obj/machinery/duct,
@@ -7156,7 +7156,7 @@
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/white,
+/turf/open/floor/iron/white/smooth_large,
 /area/medical/virology)
 "yo" = (
 /obj/structure/grille/broken,
@@ -11191,7 +11191,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "LM" = (
 /obj/structure/sign/warning/electricshock,
@@ -14610,7 +14610,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "Xn" = (
 /obj/machinery/light/small/directional/north,
@@ -15245,7 +15245,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/turf_decal/tile/green/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
 "Zo" = (
 /obj/machinery/door/window/northleft{
