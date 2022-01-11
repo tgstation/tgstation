@@ -1,20 +1,3 @@
-//text files
-#define BRAIN_DAMAGE_FILE "traumas.json"
-#define ION_FILE "ion_laws.json"
-#define PIRATE_NAMES_FILE "pirates.json"
-#define REDPILL_FILE "redpill.json"
-#define ARCADE_FILE "arcade.json"
-#define BOOMER_FILE "boomer.json"
-#define LOCATIONS_FILE "locations.json"
-#define WANTED_FILE "wanted_message.json"
-#define VISTA_FILE "steve.json"
-#define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
-#define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
-#define SCAR_LOC_FILE "wounds/scar_loc.json"
-#define EXODRONE_FILE "exodrone.json"
-#define CLOWN_NONSENSE_FILE "clown_nonsense.json"
-#define CULT_SHUTTLE_CURSE "cult_shuttle_curse.json"
-
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15
 #define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

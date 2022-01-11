@@ -20,3 +20,35 @@
 
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
+
+// JSON text files found in the tgstation/strings folder 
+/// File location for brain damage traumas
+#define BRAIN_DAMAGE_FILE "traumas.json"
+/// File location for AI ion laws
+#define ION_FILE "ion_laws.json"
+/// File location for pirate names
+#define PIRATE_NAMES_FILE "pirates.json"
+/// File location for redpill questions
+#define REDPILL_FILE "redpill.json"
+/// File location for arcade names
+#define ARCADE_FILE "arcade.json"
+/// File location for boomer meme catchphrases
+#define BOOMER_FILE "boomer.json"
+/// File location for locations on the station
+#define LOCATIONS_FILE "locations.json"
+/// File location for wanted posters messages
+#define WANTED_FILE "wanted_message.json"
+/// File location for really dumb suggestions memes
+#define VISTA_FILE "steve.json"
+/// File location for flesh wound descriptions
+#define FLESH_SCAR_FILE "wounds/flesh_scar_desc.json"
+/// File location for bone wound descriptions
+#define BONE_SCAR_FILE "wounds/bone_scar_desc.json"
+/// File location for scar wound descriptions
+#define SCAR_LOC_FILE "wounds/scar_loc.json"
+/// File location for exodrone descriptions
+#define EXODRONE_FILE "exodrone.json"
+/// File location for clown honk descriptions
+#define CLOWN_NONSENSE_FILE "clown_nonsense.json"
+/// File location for cult shuttle curse descriptions
+#define CULT_SHUTTLE_CURSE "cult_shuttle_curse.json"
