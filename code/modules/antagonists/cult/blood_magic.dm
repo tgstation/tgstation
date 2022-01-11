@@ -803,7 +803,7 @@
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(IS_CULTIST(user))
 		var/static/list/spells = list(
-			"Bloody Halberd (150)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
+			"Bloody Halberd (150)" = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "occultpoleaxe0"),
 			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/ballistic.dmi', icon_state = "arcane_barrage"),
 			"Blood Beam (500)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "disintegrate")
 			)

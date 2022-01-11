@@ -1324,7 +1324,7 @@
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
