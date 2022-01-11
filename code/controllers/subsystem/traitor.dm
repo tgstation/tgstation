@@ -43,12 +43,13 @@ SUBSYSTEM_DEF(traitor)
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
-	var/list/data = json_decode(file2text(file(configuration_path)))
-	for(var/typepath in data)
-		var/actual_typepath = text2path(typepath)
-		if(!actual_typepath)
-			log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
-		configuration_data[actual_typepath] = data[typepath]
+	if(fexists(configuration_path))
+		var/list/data = json_decode(file2text(file(configuration_path)))
+		for(var/typepath in data)
+			var/actual_typepath = text2path(typepath)
+			if(!actual_typepath)
+				log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
+			configuration_data[actual_typepath] = data[typepath]
 
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
