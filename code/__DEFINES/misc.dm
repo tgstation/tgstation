@@ -1,6 +1,3 @@
-#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
-									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
-
 #define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
 
 //gold slime core spawning
