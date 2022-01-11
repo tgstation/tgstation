@@ -2,7 +2,7 @@
 /datum/component/traitor_objective_limit_per_time
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
-	/// The maximum time that an objective will be considered for
+	/// The maximum time that an objective will be considered for. Set to -1 to accept any time.
 	var/time_period = 0
 	/// The maximum amount of objectives that can be active or recently active at one time
 	var/maximum_objectives = 0
