@@ -222,5 +222,3 @@
 
 /// Emoji icon set
 #define EMOJI_SET 'icons/emoji.dmi'
-/// Achievements icon set
-#define ACHIEVEMENTS_SET 'icons/ui_icons/achievements/achievements.dmi'
