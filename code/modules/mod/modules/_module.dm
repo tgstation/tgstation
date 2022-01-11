@@ -1,6 +1,7 @@
 ///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
+	icon = 'icons/obj/mod_modules.dmi'
 	icon_state = "module"
 	/// If it can be removed
 	var/removable = TRUE
