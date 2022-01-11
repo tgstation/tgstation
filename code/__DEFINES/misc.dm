@@ -1,8 +1,3 @@
-
-
-#define FIELD_TURF 1
-#define FIELD_EDGE 2
-
 //gibtonite state defines
 #define GIBTONITE_UNSTRUCK 0
 #define GIBTONITE_ACTIVE 1
