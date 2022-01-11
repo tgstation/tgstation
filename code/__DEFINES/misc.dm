@@ -1,10 +1,3 @@
-//Force the log directory to be something specific in the data/logs folder
-#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
-//Prevent the master controller from starting automatically
-#define NO_INIT_PARAMETER "no-init"
-//Force the config directory to be something other than "config"
-#define OVERRIDE_CONFIG_DIRECTORY_PARAMETER "config-directory"
-
 #define EGG_LAYING_MESSAGES list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 
 //Filters
