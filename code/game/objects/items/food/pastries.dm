@@ -593,7 +593,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fortunecookie/proc/get_fortune()
-	var/drop_location = drop_location()
+	var/atom/drop_location = drop_location()
 	
 	var/obj/item/paper/fortune = locate(/obj/item/paper) in src
 	// If a fortune exists, use that.
