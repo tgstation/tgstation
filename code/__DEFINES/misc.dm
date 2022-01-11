@@ -1,10 +1,3 @@
-#define TELEPORT_CHANNEL_BLUESPACE "bluespace" //Classic bluespace teleportation, requires a sender but no receiver
-#define TELEPORT_CHANNEL_QUANTUM "quantum" //Quantum-based teleportation, requires both sender and receiver, but is free from normal disruption
-#define TELEPORT_CHANNEL_WORMHOLE "wormhole" //Wormhole teleportation, is not disrupted by bluespace fluctuations but tends to be very random or unsafe
-#define TELEPORT_CHANNEL_MAGIC "magic" //Magic teleportation, does whatever it wants (unless there's antimagic)
-#define TELEPORT_CHANNEL_CULT "cult" //Cult teleportation, does whatever it wants (unless there's holiness)
-#define TELEPORT_CHANNEL_FREE "free" //Anything else
-
 //Force the log directory to be something specific in the data/logs folder
 #define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
 //Prevent the master controller from starting automatically
