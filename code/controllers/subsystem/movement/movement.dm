@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
-	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
+	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER
 	wait = 1 //Fire each tick
 	///The list of datums we're processing
 	var/list/processing = list()
