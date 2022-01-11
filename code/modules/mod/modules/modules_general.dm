@@ -641,10 +641,10 @@
 ///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.
 /obj/item/mod/module/hat_stabilizer
 	name = "MOD hat stabilizer module"
-	desc = "A simple set of deployable stands, directly atop one's head; \
+	desc = "A simple set of deployable stands, directly atop one's head;\
 	these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet.\
-	\n	You still need to take the hat off your head while the helmet deploys, though.\
-	\n	This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
+	You still need to take the hat off your head while the helmet deploys, though.\
+	This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
 	icon_state = "hat_holder"
 	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
