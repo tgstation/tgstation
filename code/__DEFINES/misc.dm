@@ -1,6 +1,3 @@
-//Misc text define. Does 4 spaces. Used as a makeshift tabulator.
-#define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
-
 // The alpha we give to stuff under tiles, if they want it
 #define ALPHA_UNDERTILE 128
 
