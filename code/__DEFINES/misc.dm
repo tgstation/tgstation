@@ -1,22 +1,3 @@
-//FONTS:
-// Used by Paper and PhotoCopier (and PaperBin once a year).
-// Used by PDA's Notekeeper.
-// Used by NewsCaster and NewsPaper.
-// Used by Modular Computers
-#define PEN_FONT "Verdana"
-#define FOUNTAIN_PEN_FONT "Segoe Script"
-#define CRAYON_FONT "Comic Sans MS"
-#define PRINTER_FONT "Times New Roman"
-#define SIGNFONT "Times New Roman"
-#define CHARCOAL_FONT "Candara"
-
-#define RESIZE_DEFAULT_SIZE 1
-
-//check_target_facings() return defines
-#define FACING_SAME_DIR 1
-#define FACING_EACHOTHER 2
-#define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR 3 //Do I win the most informative but also most stupid define award?
-
 //stages of shoe tying-ness
 #define SHOES_UNTIED 0
 #define SHOES_TIED 1
@@ -58,14 +39,6 @@
 
 #define GHOST_MAX_VIEW_RANGE_DEFAULT 10
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
-
-//pda fonts
-#define MONO "Monospaced"
-#define VT "VT323"
-#define ORBITRON "Orbitron"
-#define SHARE "Share Tech Mono"
-
-GLOBAL_LIST_INIT(pda_styles, sort_list(list(MONO, VT, ORBITRON, SHARE)))
 
 // Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
