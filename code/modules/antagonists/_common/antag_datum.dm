@@ -94,6 +94,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
+	info_button.Remove(old_body)
+	info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -141,7 +143,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
-		info_button = new(owner.current, src)
+		info_button = new(src)
 		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
@@ -156,7 +158,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(!soft_antag && owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
@@ -477,16 +479,27 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
-	var/datum/antagonist/antag_datum
 
-/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+/datum/action/antag_info/New(Target)
 	. = ..()
-	src.antag_datum = antag_datum
-	name += " [antag_datum.name]"
+	name += " [target]"
 
 /datum/action/antag_info/Trigger()
-	if(antag_datum)
-		antag_datum.ui_interact(owner)
+	. = ..()
+	if(!.)
+		return
+
+	target.ui_interact(owner)
 
 /datum/action/antag_info/IsAvailable()
+	if(!target)
+		stack_trace("[type] was used without a target antag datum!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	if(!owner.mind)
+		return FALSE
+	if(!(target in owner.mind.antag_datums))
+		return FALSE
 	return TRUE

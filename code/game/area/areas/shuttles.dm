@@ -192,6 +192,9 @@
 /area/shuttle/sbc_fighter2
 	name = "SBC Fighter 2"
 
+/area/shuttle/sbc_fighter3
+	name = "SBC Fighter 3"
+
 /area/shuttle/sbc_corvette
 	name = "SBC corvette"
 

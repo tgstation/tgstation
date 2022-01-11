@@ -1,0 +1,4 @@
+author: "Gofawful5"
+delete-after: True
+changes: 
+  - bugfix: "Fix to where other forms of being dead (ie decapitation/braindeath) now shows up on crew monitors when vitals are available via the red square."

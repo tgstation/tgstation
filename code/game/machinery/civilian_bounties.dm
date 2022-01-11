@@ -275,14 +275,17 @@
 
 /obj/item/bounty_cube/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_BARCODES, INNATE_TRAIT) // Don't allow anyone to override our pricetag component with a barcode
 	radio = new(src)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
+	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
+	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
 	QDEL_NULL(radio)
-	. = ..()
+	return ..()
 
 /obj/item/bounty_cube/examine()
 	. = ..()
@@ -290,6 +293,20 @@
 		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
+
+/*
+ * Signal proc for [COMSIG_ITEM_EXPORTED], registered on the internal radio.
+ *
+ * Deletes the internal radio before being exported,
+ * to stop it from bring counted as an export.
+ *
+ * No 4 free credits for you!
+ */
+/obj/item/bounty_cube/proc/on_export(datum/source)
+	SIGNAL_HANDLER
+
+	QDEL_NULL(radio)
+	return COMPONENT_STOP_EXPORT // stops the radio from exporting, not the cube
 
 /obj/item/bounty_cube/process(delta_time)
 	//if our nag cooldown has finished and we aren't on Centcom or in transit, then nag
@@ -320,7 +337,7 @@
 	bounty_holder_account = holder_id.registered_account
 	name = "\improper [bounty_value] cr [name]"
 	desc += " The sales tag indicates it was <i>[bounty_holder] ([bounty_holder_job])</i>'s reward for completing the <i>[bounty_name]</i> bounty."
-	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut)
+	AddComponent(/datum/component/pricetag, holder_id.registered_account, holder_cut, FALSE)
 	AddComponent(/datum/component/gps, "[src]")
 	START_PROCESSING(SSobj, src)
 	COOLDOWN_START(src, next_nag_time, nag_cooldown)
