@@ -544,12 +544,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cult_team.narsie_summoned = TRUE
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
-	addtimer(CALLBACK(src, .proc/spawn_narsie), 4 SECONDS)
-
-/obj/effect/rune/narsie/proc/spawn_narsie()
+	var/turf/rune_turf = get_turf(src)
+	sleep(4 SECONDS)
 	if(src)
 		color = RUNE_COLOR_RED
-	new /obj/narsie(get_turf(src)) //Causes Nar'Sie to spawn even if the rune has been removed
+	new /obj/narsie(rune_turf) //Causes Nar'Sie to spawn even if the rune has been removed
 
 //Rite of Resurrection: Requires a dead or inactive cultist. When reviving the dead, you can only perform one revival for every three sacrifices your cult has carried out.
 /obj/effect/rune/raise_dead
