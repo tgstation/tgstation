@@ -149,7 +149,6 @@
 	floor_tile = /obj/item/stack/tile/bronze/flat
 
 /turf/open/floor/bronze/filled
-	icon = 'icons/obj/clockwork_objects.dmi'
 	floor_tile = /obj/item/stack/tile/bronze/filled
 
 /turf/open/floor/bronze/filled/lavaland
