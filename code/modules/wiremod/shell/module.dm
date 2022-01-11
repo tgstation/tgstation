@@ -112,7 +112,7 @@
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
 	attached_module = null
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/mod_adapter_core/input_received(datum/port/input/port)
 	if(!attached_module?.mod)

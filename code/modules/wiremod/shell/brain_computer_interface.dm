@@ -60,7 +60,7 @@
 	if(istype(bci))
 		bci.actions -= bci_action
 		QDEL_NULL(bci_action)
-	. = ..()
+	return ..()
 
 /obj/item/circuit_component/equipment_action/bci/input_received(datum/port/input/port)
 	if (!isnull(bci_action))
