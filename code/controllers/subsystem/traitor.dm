@@ -54,7 +54,8 @@ SUBSYSTEM_DEF(traitor)
 	var/player_count = length(GLOB.alive_player_list)
 	// Has a maximum of 1 minute, however the value can be lower if there are lower players than the ideal
 	// player count for a traitor to be threatening. Rounds to the nearest 10% of a minute to prevent weird
-	// values from appearing in the UI.
+	// values from appearing in the UI. Traitor scaling multiplier bypasses the limit and only multiplies the end value.
+	// from all of our calculations.
 	current_progression_scaling = max(min(
 		(player_count / CONFIG_GET(number/traitor_ideal_player_count)) * 1 MINUTES,
 		1 MINUTES
