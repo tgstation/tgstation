@@ -66,7 +66,7 @@
  */
 /obj/machinery/firealarm/proc/set_status()
 	if( (my_area.fire || LAZYLEN(my_area.active_firelocks)) && !(obj_flags & EMAGGED) )
-		soundloop.start()
+		//soundloop.start() //DEBUG -- Remove all soundloop parts if looping on the firelocks works
 		set_light(l_power = 0.8)
 	else
 		soundloop.stop()

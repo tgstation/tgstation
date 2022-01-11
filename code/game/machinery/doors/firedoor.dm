@@ -48,6 +48,9 @@
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
+	///looping sound datum for our fire alarm siren.
+	var/datum/looping_sound/firealarm/soundloop
+
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 
@@ -60,6 +63,9 @@
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_EXPOSE = .proc/check_atmos,
 	)
+
+	soundloop = new(src, FALSE)
+
 	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
@@ -82,6 +88,7 @@
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
+	QDEL_NULL(soundloop)
 	return ..()
 
 /obj/machinery/door/firedoor/examine(mob/user)
@@ -167,6 +174,7 @@
 	if(alarm_type)
 		return //We're already active
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	soundloop.start()
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
 
@@ -204,6 +212,7 @@
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
+	soundloop.stop()
 	for(var/area/place in affecting_areas)
 		LAZYREMOVE(place.active_firelocks, src)
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
