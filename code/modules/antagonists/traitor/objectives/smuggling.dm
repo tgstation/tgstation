@@ -56,7 +56,7 @@
 			user.balloon_alert(user, "[contraband] materializes in your hand")
 			RegisterSignal(contraband, COMSIG_ITEM_PICKUP, .proc/on_contraband_pickup)
 			AddComponent(/datum/component/traitor_objective_register, contraband, \
-				succeed_signals = COMSIG_ITEM_SOLD, \
+				succeed_signals = COMSIG_ITEM_EXPORTED, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = telecrystal_penalty \
 			)

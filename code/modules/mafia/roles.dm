@@ -522,6 +522,8 @@
 /datum/mafia_role/hos/handle_action(datum/mafia_controller/game,action,datum/mafia_role/target)
 	if(execute_target == target)
 		to_chat(body,span_warning("You have decided against executing tonight."))
+		execute_target = null
+		return
 	to_chat(body,span_warning("You have decided to execute [target.body.real_name] tonight."))
 	execute_target = target
 

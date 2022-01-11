@@ -26,11 +26,9 @@ Then the player gets the profit from selling his own wasted time.
 	var/list/total_value = list() //export instance => total value of sold objects
 
 // external_report works as "transaction" object, pass same one in if you're doing more than one export in single go
-/proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run=FALSE, datum/export_report/external_report)
+/proc/export_item_and_contents(atom/movable/AM, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report)
 	if(!GLOB.exports_list.len)
 		setupExports()
-
-	var/profit_ratio = 1 //Percentage that gets sent to the seller, rest goes to cargo.
 
 	var/list/contents = AM.get_all_contents()
 
@@ -45,12 +43,14 @@ Then the player gets the profit from selling his own wasted time.
 		var/sold = FALSE
 		for(var/datum/export/export as anything in GLOB.exports_list)
 			if(export.applies_to(thing, apply_elastic))
-				sold = export.sell_object(thing, report, dry_run, apply_elastic, profit_ratio)
+				if(!dry_run && (SEND_SIGNAL(thing, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
+					break
+				sold = export.sell_object(thing, report, dry_run, apply_elastic)
 				report.exported_atoms += " [thing.name]"
 				break
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
-				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
+				thing.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
 			to_delete += thing
 
 	for(var/atom/movable/thing as anything in to_delete)
@@ -136,31 +136,29 @@ Then the player gets the profit from selling his own wasted time.
  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
  *
  */
-/datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
+/datum/export/proc/sell_object(obj/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
-	var/the_cost = get_cost(O, apply_elastic)
+	var/export_value = get_cost(sold_item, apply_elastic)
 	///Quantity of the object in question.
-	var/amount = get_amount(O)
-	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
-	var/profit_ratio = 0
+	var/export_amount = get_amount(sold_item)
 
-	if(amount <=0 || (the_cost <=0 && !allow_negative_cost))
+	if(export_amount <= 0 || (export_value <= 0 && !allow_negative_cost))
 		return FALSE
-	if(dry_run == FALSE)
-		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, get_cost(O, apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
-			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_DRY)
-			the_cost = the_cost * ((100 - profit_ratio) * 0.01)
-	else
-		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-		the_cost = the_cost * ((100 - profit_ratio) * 0.01)
-	report.total_value[src] += the_cost
 
-	report.total_amount[src] += amount*amount_report_multiplier
+	// If we're not doing a dry run, send COMSIG_ITEM_EXPORTED to the sold item
+	var/export_result
+	if(!dry_run)
+		export_result = SEND_SIGNAL(sold_item, COMSIG_ITEM_EXPORTED, src, report, export_value)
+
+	// If the signal handled adding it to the report, don't do it now
+	if(!(export_result & COMPONENT_STOP_EXPORT_REPORT))
+		report.total_value[src] += export_value
+		report.total_amount[src] += export_amount * amount_report_multiplier
 
 	if(!dry_run)
 		if(apply_elastic)
-			cost *= NUM_E**(-1*k_elasticity*amount) //marginal cost modifier
-		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
+			cost *= NUM_E**(-1 * k_elasticity * export_amount) //marginal cost modifier
+		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_item.type]", "[export_value]"))
 	return TRUE
 
 // Total printout for the cargo console.

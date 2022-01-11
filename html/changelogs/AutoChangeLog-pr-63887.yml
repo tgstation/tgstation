@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Cyborgs now must be adjacent to a vending machine to lift it back upright."
