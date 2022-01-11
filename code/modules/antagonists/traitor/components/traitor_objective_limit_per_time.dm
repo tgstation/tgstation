@@ -33,7 +33,7 @@
 		return
 	var/count = 0
 	for(var/datum/traitor_objective/objective as anything in handler.potential_duplicate_objectives[typepath])
-		if(time_period > 0 && objective.objective_state != OBJECTIVE_STATE_INACTIVE && (world.time - objective.time_of_completion) > time_period)
+		if(time_period != -1 && objective.objective_state != OBJECTIVE_STATE_INACTIVE && (world.time - objective.time_of_completion) > time_period)
 			continue
 		count++
 
