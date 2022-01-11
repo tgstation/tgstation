@@ -1,12 +1,3 @@
-//gibtonite state defines
-#define GIBTONITE_UNSTRUCK 0
-#define GIBTONITE_ACTIVE 1
-#define GIBTONITE_STABLE 2
-#define GIBTONITE_DETONATE 3
-
-//for obj explosion block calculation
-#define EXPLOSION_BLOCK_PROC -1
-
 //for determining which type of heartbeat sound is playing
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
@@ -102,11 +93,6 @@
 
 #define VOMIT_TOXIC 1
 #define VOMIT_PURPLE 2
-
-//chem grenades defines
-#define GRENADE_EMPTY 1
-#define GRENADE_WIRED 2
-#define GRENADE_READY 3
 
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"

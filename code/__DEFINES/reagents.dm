@@ -180,3 +180,11 @@
 
 ///This is the center of a 1 degree deadband in which water will neither freeze to ice nor melt to liquid
 #define WATER_MATTERSTATE_CHANGE_TEMP 274.5
+
+//chem grenades defines
+/// Grenade is empty
+#define GRENADE_EMPTY 1
+/// Grenade has a activation trigger
+#define GRENADE_WIRED 2
+/// Grenade is ready to be finished
+#define GRENADE_READY 3
