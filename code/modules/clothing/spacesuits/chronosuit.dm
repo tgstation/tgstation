@@ -1,23 +1,5 @@
-/obj/item/clothing/head/helmet/space/chronos
-	name = "Chronosuit Helmet"
-	desc = "A white helmet with an opaque blue visor."
-	icon_state = "chronohelmet"
-	inhand_icon_state = "chronohelmet"
-	slowdown = 1
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/obj/item/clothing/suit/space/chronos/suit
 
-/obj/item/clothing/head/helmet/space/chronos/dropped()
-	if(suit)
-		suit.deactivate(1, 1)
-	..()
-
-/obj/item/clothing/head/helmet/space/chronos/Destroy()
-	dropped()
-	return ..()
-
-
+/*
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
 	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
@@ -26,7 +8,6 @@
 	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle)
 	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, FIRE = 100, ACID = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
 	var/obj/item/clothing/head/helmet/space/chronos/helmet
 	var/obj/effect/chronos_cam/camera
 	var/datum/action/innate/chrono_teleport/teleport_now = new
@@ -342,3 +323,5 @@
 	if(IsAvailable())
 		if(chronosuit.camera)
 			chronosuit.chronowalk(chronosuit.camera)
+
+*/

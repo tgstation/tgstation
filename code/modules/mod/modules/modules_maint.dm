@@ -29,7 +29,7 @@
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	playsound(src, 'sound/items/springlock.ogg', 75, TRUE)
+	playsound(src, 'sound/items/modsuits/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
 
@@ -177,7 +177,7 @@
 	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(20)
-	playsound(src, 'sound/items/inflate_bloon.ogg', 50, TRUE)
+	playsound(src, 'sound/items/modsuits/inflate_bloon.ogg', 50, TRUE)
 	var/obj/item/toy/balloon/balloon = new(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_power_cost)
@@ -238,7 +238,7 @@
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, .proc/fly_away)
 	else if(!(step_count % 2))
-		playsound(current_turf, 'sound/items/atrocinator_step.ogg', 50)
+		playsound(current_turf, 'sound/items/modsuits/atrocinator_step.ogg', 50)
 	step_count++
 
 #define FLY_TIME 5 SECONDS

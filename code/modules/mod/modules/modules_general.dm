@@ -551,7 +551,7 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 3
-	incompatible_modules = list(/obj/item/mod/module/dna_lock)
+	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
 	/// The DNA we lock with.
 	var/dna = null
