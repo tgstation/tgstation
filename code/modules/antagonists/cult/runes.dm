@@ -494,13 +494,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_name = "Nar'Sie"
 	cultist_desc = "tears apart dimensional barriers, calling forth the Geometer. Requires 9 invokers."
 	invocation = "TOK-LYR RQA-NAP G'OLT-ULOFT!!"
-	req_cultists = 9
+	req_cultists = 0
 	icon = 'icons/effects/96x96.dmi'
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
-	scribe_delay = 50 SECONDS //how long the rune takes to create
+	scribe_delay = 5 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
 	no_scribe_boost = TRUE
@@ -532,15 +532,15 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(invoker, span_warning("Nar'Sie is already on this plane!"))
 		log_game("Nar'Sie rune failed - already summoned")
 		return
-	var/datum/team/cult/cult_team = user_antag.cult_team
-	if(cult_team.narsie_summoned)
-		for(var/invoker in invokers)
-			to_chat(invoker, span_warning("Nar'Sie is already rising!"))
-		log_game("Nar'Sie rune failed - already summoned")
-		return
 
 	//BEGIN THE SUMMONING
 	used = TRUE
+	var/datum/team/cult/cult_team = user_antag.cult_team
+	if (cult_team.narsie_summoned)
+		for (var/datum/mind/cultist_mind in cult_team.members)
+			var/mob/living/cultist_mob = cultist_mind.current
+			cultist_mob.client?.give_award(/datum/award/achievement/misc/narsupreme, cultist_mob)
+
 	cult_team.narsie_summoned = TRUE
 	..()
 	sound_to_playing_players('sound/effects/dimensional_rend.ogg')
