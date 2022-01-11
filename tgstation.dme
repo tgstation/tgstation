@@ -2052,6 +2052,7 @@
 #include "code\modules\antagonists\traitor\traitor_objective.dm"
 #include "code\modules\antagonists\traitor\uplink_handler.dm"
 #include "code\modules\antagonists\traitor\components\traitor_objective_helpers.dm"
+#include "code\modules\antagonists\traitor\components\traitor_objective_limit_per_time.dm"
 #include "code\modules\antagonists\traitor\components\traitor_objective_mind_tracker.dm"
 #include "code\modules\antagonists\traitor\equipment\Malf_Modules.dm"
 #include "code\modules\antagonists\traitor\equipment\module_picker.dm"

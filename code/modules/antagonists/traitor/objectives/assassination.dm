@@ -25,6 +25,12 @@
 	progression_reward = list(5 MINUTES, 7 MINUTES)
 	telecrystal_reward = list(2, 4)
 
+	// The code below is for limiting how often you can get this objective. You will get this objective at a maximum of maximum_objectives_in_period every objective_period
+	/// The objective period at which we consider if it is an 'objective'. Set to 0 to accept all objectives.
+	var/objective_period = 15 MINUTES
+	/// The maximum number of objectives we can get within this period.
+	var/maximum_objectives_in_period = 3
+
 	/**
 	 * Makes the objective only set heads as targets when true, and block them from being targets when false.
 	 * This also blocks the objective from generating UNTIL the un-heads_of_staff version (WHICH SHOULD BE A DIRECT PARENT) is completed.
@@ -33,6 +39,11 @@
 	var/heads_of_staff = FALSE
 	///target we need to kill
 	var/mob/living/kill_target
+
+/datum/traitor_objective/assassinate/supported_configuration_changes()
+	. = ..()
+	. += NAMEOF(src, objective_period)
+	. += NAMEOF(src, maximum_objectives_in_period)
 
 /datum/traitor_objective/assassinate/calling_card
 	name = "Assassinate %TARGET% the %JOB TITLE%, and plant a calling card"
@@ -150,6 +161,14 @@
 	else
 		behead_goal = lost_head
 		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
+
+/datum/traitor_objective/assassinate/New(datum/uplink_handler/handler)
+	. = ..()
+	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+		/datum/traitor_objective/assassinate, \
+		time_period = objective_period, \
+		maximum_objectives = maximum_objectives_in_period \
+	)
 
 /datum/traitor_objective/assassinate/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 

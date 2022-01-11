@@ -41,6 +41,15 @@
 	/// Abstract type that won't be included as a possible objective
 	var/abstract_type = /datum/traitor_objective
 
+/// Returns a list of variables that can be changed by config, allows for balance through configuration.
+/// It is not recommended to finetweak any values of objectives on your server.
+/datum/traitor_objective/proc/supported_configuration_changes()
+	return list(
+		NAMEOF(src, global_progression_influence_intensity),
+		NAMEOF(src, global_progression_deviance_required),
+		NAMEOF(src, global_progression_limit_coeff)
+	)
+
 /// Replaces a word in the name of the proc. Also does it for the description
 /datum/traitor_objective/proc/replace_in_name(replace, word)
 	name = replacetext(name, replace, word)
@@ -49,6 +58,7 @@
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
 	src.handler = handler
+	apply_configuration()
 	if(SStraitor.generate_objectives)
 		if(islist(telecrystal_reward))
 			telecrystal_reward = rand(telecrystal_reward[1], telecrystal_reward[2])
@@ -60,6 +70,28 @@
 		if(!islist(progression_reward))
 			progression_reward = list(progression_reward, progression_reward)
 	progression_cost_coeff = (rand()*2 - 1) * progression_cost_coeff_deviance
+
+/datum/traitor_objective/proc/apply_configuration()
+	if(!length(SStraitor.configuration_data))
+		return
+	var/datum/traitor_objective/current_type = type
+	var/list/types = list()
+	while(current_type != /datum/traitor_objective)
+		types += current_type
+		current_type = type2parent(current_type)
+	types += /datum/traitor_objective
+	// Reverse the list direction
+	reverse_range(types)
+	var/list/supported_configurations = supported_configuration_changes()
+	for(var/typepath in types)
+		if(!(typepath in SStraitor.configuration_data))
+			continue
+		var/list/changes = SStraitor.configuration_data[typepath]
+		for(var/variable in changes)
+			if(!(variable in supported_configurations))
+				continue
+			vars[variable] = changes[variable]
+
 
 /// Updates the progression reward, scaling it depending on their current progression compared against the global progression
 /datum/traitor_objective/proc/update_progression_reward()

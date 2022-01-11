@@ -9,6 +9,15 @@ SUBSYSTEM_DEF(traitor)
 	/// A list of all uplink items
 	var/list/uplink_items = list()
 
+	/// File to load configurations from.
+	var/configuration_path = "config/traitor_objective.json"
+	/// Global configuration data that gets applied to each objective when it is created.
+	/// Basic objective format
+	/// '/datum/traitor_objective/path/to/objective': {
+	///   "global_progression_influence_intensity": 0
+	/// }
+	var/configuration_data = list()
+
 	/// The coefficient multiplied by the current_global_progression for new joining traitors to calculate their progression
 	var/newjoin_progression_coeff = 0.6
 	/// The current progression that all traitors should be at in the round
@@ -34,6 +43,13 @@ SUBSYSTEM_DEF(traitor)
 	category_handler = new()
 	traitor_debug_panel = new(category_handler)
 
+	var/list/data = json_decode(file2text(file(configuration_path)))
+	for(var/typepath in data)
+		var/actual_typepath = text2path(typepath)
+		if(!actual_typepath)
+			log_world("[configuration_path] has an invalid type ([typepath]) that doesn't exist in the codebase! Please correct or remove [typepath]")
+		configuration_data[actual_typepath] = data[typepath]
+
 /datum/controller/subsystem/traitor/fire(resumed)
 	var/player_count = length(GLOB.alive_player_list)
 	// Has a maximum of 1 minute, however the value can be lower if there are lower players than the ideal
@@ -42,7 +58,7 @@ SUBSYSTEM_DEF(traitor)
 	current_progression_scaling = max(min(
 		(player_count / CONFIG_GET(number/traitor_ideal_player_count)) * 1 MINUTES,
 		1 MINUTES
-	), 0.1 MINUTES)
+	), 0.1 MINUTES) * CONFIG_GET(number/traitor_scaling_multiplier)
 
 	var/progression_scaling_delta = (wait / (1 MINUTES)) * current_progression_scaling
 	var/previous_global_progression = current_global_progression

@@ -4,6 +4,9 @@
 /// Called whenever the uplink handler receives any sort of update. Used by uplinks to update their UI. No arguments passed
 #define COMSIG_UPLINK_HANDLER_ON_UPDATE "uplink_handler_on_update"
 
+/// Called before the traitor objective is generated
+#define COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE "traitor_objective_pre_generate"
+	#define COMPONENT_TRAITOR_OBJECTIVE_ABORT_GENERATION (1<<0)
 /// Called whenever the traitor objective is completed
 #define COMSIG_TRAITOR_OBJECTIVE_COMPLETED "traitor_objective_completed"
 /// Called whenever the traitor objective is failed
