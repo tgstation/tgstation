@@ -29,6 +29,20 @@ require only minor tweaks.
 /// Distance from edge to move to another z-level
 #define TRANSITIONEDGE 7
 
+// Maploader bounds indices
+/// The maploader index for the maps minimum x
+#define MAP_MINX 1
+/// The maploader index for the maps minimum y
+#define MAP_MINY 2
+/// The maploader index for the maps minimum z
+#define MAP_MINZ 3
+/// The maploader index for the maps maximum x
+#define MAP_MAXX 4
+/// The maploader index for the maps maximum y
+#define MAP_MAXY 5
+/// The maploader index for the maps maximum z
+#define MAP_MAXZ 6
+
 /// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
 
@@ -135,7 +149,6 @@ require only minor tweaks.
 #define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
-
 
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"
