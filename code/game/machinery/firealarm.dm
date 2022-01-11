@@ -1,4 +1,4 @@
-#define FIREALARM_COOLDOWN 67 // Chosen fairly arbitrarily, it is the length of the audio in FireAlarm.ogg. The actual track length is 7 seconds 8ms but but the audio stops at 6s 700ms
+#define FIREALARM_COOLDOWN 96 // This define is based on the current FireAlarm.ogg, and is placed to match the running time at 9 seconds 600 milliseconds (9.6 seconds)
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
@@ -160,7 +160,7 @@
 	COOLDOWN_START(src, last_alarm, FIREALARM_COOLDOWN)
 	var/area/area = get_area(src)
 	area.firealert(src)
-	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(loc, 'sound/machines/FireAlarm.ogg', 96)
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 

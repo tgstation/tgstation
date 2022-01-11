@@ -18,8 +18,8 @@
 
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/action/changeling/humanform/from_monkey/human_form_ability = new()
-	changeling.purchasedpowers += human_form_ability
-	changeling.purchasedpowers -= src
+	changeling.purchased_powers += human_form_ability
+	changeling.purchased_powers -= src
 
 	Remove(user)
 	human_form_ability.Grant(user)

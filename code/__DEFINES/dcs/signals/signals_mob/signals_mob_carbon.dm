@@ -85,3 +85,6 @@
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
 ///Called when a monkey turns into a human, from /mob/living/carbon/proc/finish_humanize(species)
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
+
+///From mob/living/carbon/human/suicide()
+#define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"

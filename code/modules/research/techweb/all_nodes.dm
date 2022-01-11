@@ -16,6 +16,7 @@
 		"basic_scanning",
 		"bepis",
 		"bucket",
+		"c38_rubber",
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
@@ -28,9 +29,11 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"gas_filter",
 		"handlabel",
 		"mechfab",
 		"micro_mani",
+		"oven_tray",
 		"packagewrap",
 		"paystand",
 		"plasmaglass",
@@ -41,6 +44,7 @@
 		"plastic_spoon",
 		"plastitanium",
 		"plastitaniumglass",
+		"plasmaman_gas_filter",
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
@@ -55,9 +59,6 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
-		"gas_filter",
-		"plasmaman_gas_filter",
-		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -1533,6 +1534,17 @@
 		"mod_microwave_beam",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly
+	id = "mod_anomaly"
+	display_name = "Anomalock Modular Suits"
+	description = "Modules for modular suits that require anomaly cores to function."
+	prereq_ids = list("mod_advanced", "anomaly_research")
+	design_ids = list(
+		"mod_antigrav",
+		"mod_teleporter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha

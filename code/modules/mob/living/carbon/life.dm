@@ -34,9 +34,6 @@
 
 	check_cremation(delta_time, times_fired)
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling(delta_time, times_fired)
-
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
@@ -366,18 +363,6 @@
 		var/datum/wound/W = thing
 		if(W.processes) // meh
 			W.handle_process(delta_time, times_fired)
-
-//todo generalize this and move hud out
-/mob/living/carbon/proc/handle_changeling(delta_time, times_fired)
-	if(mind && hud_used?.lingchemdisplay)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.regenerate(delta_time, times_fired)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>")
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
 
 /mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
 	if(!dna?.temporary_mutations.len)
