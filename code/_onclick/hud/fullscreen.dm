@@ -1,3 +1,9 @@
+//Fullscreen overlay resolution in tiles.
+/// The fullscreen overlay in tiles for x axis
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+/// The fullscreen overlay in tiles for y axis
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
 /mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
@@ -193,3 +199,6 @@
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
+
+#undef FULLSCREEN_OVERLAY_RESOLUTION_X
+#undef FULLSCREEN_OVERLAY_RESOLUTION_Y
