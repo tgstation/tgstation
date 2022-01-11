@@ -64,3 +64,9 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_STAIRS_FLAGS (ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED)
 /// Used for falling down open space.
 #define ZMOVE_FALL_FLAGS (ZMOVE_FALL_CHECKS|ZMOVE_ALLOW_BUCKLED)
+
+//Diagonal movement is split into two cardinal moves
+/// The first step of the diagnonal movement
+#define FIRST_DIAG_STEP 1
+/// The second step of the diagnonal movement
+#define SECOND_DIAG_STEP 2
