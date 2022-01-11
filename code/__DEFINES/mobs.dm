@@ -617,3 +617,8 @@
 
 /// Get the client from the var
 #define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+/// The mob will vomit a green color
+#define VOMIT_TOXIC 1
+/// The mob will vomit a purple color
+#define VOMIT_PURPLE 2

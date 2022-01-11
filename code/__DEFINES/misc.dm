@@ -1,6 +1,3 @@
-#define VOMIT_TOXIC 1
-#define VOMIT_PURPLE 2
-
 //Misc text define. Does 4 spaces. Used as a makeshift tabulator.
 #define FOURSPACES "&nbsp;&nbsp;&nbsp;&nbsp;"
 
