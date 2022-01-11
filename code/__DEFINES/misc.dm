@@ -1,8 +1,3 @@
-//server security mode
-#define SECURITY_SAFE 1
-#define SECURITY_ULTRASAFE 2
-#define SECURITY_TRUSTED 3
-
 //Dummy mob reserve slots
 #define DUMMY_HUMAN_SLOT_ADMIN "admintools"
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
