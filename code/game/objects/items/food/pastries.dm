@@ -601,7 +601,7 @@
 		fortune.forceMove(drop_location)
 		return fortune
 	// Otherwise, make a blank page.
-	var/obj/item/paper/out_paper = new(drop_location)
+	var/out_paper = new trash_type(drop_location)
 	return out_paper
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
