@@ -1,7 +1,3 @@
-//stack recipe placement check types
-#define STACK_CHECK_CARDINALS "cardinals" //checks if there is an object of the result type in any of the cardinal directions
-#define STACK_CHECK_ADJACENT "adjacent" //checks if there is an object of the result type within one tile
-
 //text files
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"

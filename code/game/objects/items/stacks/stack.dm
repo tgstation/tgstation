@@ -1,3 +1,9 @@
+//stack recipe placement check types
+/// Checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_CARDINALS "cardinals"
+/// Checks if there is an object of the result type within one tile
+#define STACK_CHECK_ADJACENT "adjacent"
+
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -605,3 +611,6 @@
 /datum/stack_recipe_list/New(title, recipes)
 	src.title = title
 	src.recipes = recipes
+
+#undef STACK_CHECK_CARDINALS
+#undef STACK_CHECK_ADJACENT
