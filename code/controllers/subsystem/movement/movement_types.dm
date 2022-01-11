@@ -583,7 +583,7 @@
 	SIGNAL_HANDLER
 
 	//You'll notice this is rise over run, except we flip the formula upside down depending on the larger number
-	//This is so we never move more then once tile at once
+	//This is so we never move more then one tile at once
 	var/delta_y = target.y - moving.y
 	var/delta_x = target.x - moving.x
 	//It's more convienent to store delta x and y as absolute values
