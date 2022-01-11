@@ -145,7 +145,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_REV = 14,
 	ROLE_PAI = 0,
-	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
 ))
 

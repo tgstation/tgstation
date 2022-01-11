@@ -209,14 +209,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
 
-/datum/objective/assassinate/internal
-	var/stolen = FALSE //Have we already eliminated this target?
-
-/datum/objective/assassinate/internal/update_explanation_text()
-	..()
-	if(target && !target.current)
-		explanation_text = "Assassinate [target.name], who was obliterated"
-
 /datum/objective/mutiny
 	name = "mutiny"
 	var/target_role_type=FALSE
