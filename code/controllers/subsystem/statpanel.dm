@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(statpanels)
 	name = "Stat Panels"
-	wait = 4 SECONDS
+	wait = 4
 	init_order = INIT_ORDER_STATPANELS
 	priority = FIRE_PRIORITY_STATPANEL
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
@@ -9,8 +9,18 @@ SUBSYSTEM_DEF(statpanels)
 	var/mc_data_encoded
 	var/list/cached_images = list()
 
+	///how many subsystem fires between most tab updates
+	var/default_wait = 10
+	///how many subsystem fires between updates of the status tab
+	var/status_wait = 12
+	///how many subsystem fires between updates of the MC tab
+	var/mc_wait = 5
+	///how many full runs this subsystem has completed. used for variable rate refreshes.
+	var/num_fires = 0
+
 /datum/controller/subsystem/statpanels/fire(resumed = FALSE)
 	if (!resumed)
+		num_fires++
 		var/datum/map_config/cached = SSmapping.next_map_config
 		var/list/global_data = list(
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
@@ -38,7 +48,7 @@ SUBSYSTEM_DEF(statpanels)
 		if(!target.statbrowser_ready)
 			continue
 
-		if(target.stat_tab == "Status")
+		if(target.stat_tab == "Status" && num_fires % status_wait == 0)
 			set_status_tab(target)
 
 		if(!target.holder)
@@ -49,24 +59,25 @@ SUBSYSTEM_DEF(statpanels)
 			if(!("MC" in target.panel_tabs) || !("Tickets" in target.panel_tabs))
 				target << output("[url_encode(target.holder.href_token)]", "statbrowser:add_admin_tabs")
 
-			if(target.stat_tab == "MC")
+			if(target.stat_tab == "MC" && ((num_fires % mc_wait == 0) || target?.prefs.read_preference(/datum/preference/toggle/fast_mc_refresh)))
 				set_MC_tab(target)
 
-			if(target.stat_tab == "Tickets")
+			if(target.stat_tab == "Tickets" && num_fires % default_wait == 0)
 				set_tickets_tab(target)
 
 			if(!length(GLOB.sdql2_queries) && ("SDQL2" in target.panel_tabs))
 				target << output("", "statbrowser:remove_sdql2")
 
-			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)))
+			else if(length(GLOB.sdql2_queries) && (target.stat_tab == "SDQL2" || !("SDQL2" in target.panel_tabs)) && num_fires % default_wait == 0)
 				set_SDQL2_tab(target)
 
 		if(target.mob)
 			var/mob/target_mob = target.mob
 			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.mob_spell_list) || length(target_mob.mind?.spell_list)))
-				set_spells_tab(target, target_mob)
+				if(num_fires % default_wait == 0)
+					set_spells_tab(target, target_mob)
 
-			if(target_mob?.listed_turf)
+			if(target_mob?.listed_turf && num_fires % default_wait == 0)
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
 					target << output("", "statbrowser:remove_listedturf")
 					target_mob.listed_turf = null
@@ -78,6 +89,9 @@ SUBSYSTEM_DEF(statpanels)
 			return
 
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
+	if(!encoded_global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
+		return
+
 	var/ping_str = url_encode("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)")
 	var/other_str = url_encode(json_encode(target.mob?.get_status_tab_items()))
 	target << output("[encoded_global_data];[ping_str];[other_str]", "statbrowser:update")
@@ -201,6 +215,9 @@ SUBSYSTEM_DEF(statpanels)
 
 ///immediately update the active statpanel tab of the target client
 /datum/controller/subsystem/statpanels/proc/immediate_send_stat_data(client/target)
+	if(!target.statbrowser_ready)
+		return FALSE
+
 	if(target.stat_tab == "Status")
 		set_status_tab(target)
 		return TRUE
