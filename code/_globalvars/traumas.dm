@@ -65,19 +65,19 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 	)),
 	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
 	"the supernatural" = typecacheof(list(
-		/mob/living/simple_animal/hostile/construct,
-		/mob/living/simple_animal/revenant,
-		/mob/living/simple_animal/shade,
-		/mob/living/simple_animal/hostile/skeleton,
-		/mob/living/simple_animal/hostile/retaliate/ghost,
-		/mob/living/simple_animal/hostile/imp,
 		/mob/dead/observer,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
-		/mob/living/simple_animal/hostile/retaliate/bat,
+		/mob/living/simple_animal/hostile/construct,
 		/mob/living/simple_animal/hostile/dark_wizard,
 		/mob/living/simple_animal/hostile/faithless,
+		/mob/living/simple_animal/hostile/imp,
+		/mob/living/simple_animal/hostile/retaliate/bat,
+		/mob/living/simple_animal/hostile/retaliate/ghost,
+		/mob/living/simple_animal/hostile/skeleton,
 		/mob/living/simple_animal/hostile/wizard,
 		/mob/living/simple_animal/hostile/zombie,
+		/mob/living/simple_animal/revenant,
+		/mob/living/simple_animal/shade,
 	)),
 	"aliens" = typecacheof(list(
 		/mob/living/carbon/alien,
@@ -114,16 +114,16 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/under/rank/security/officer,
 		/obj/item/clothing/under/rank/security/warden,
 		/obj/item/gun/energy/taser,
-		/obj/item/melee/baton,
 		/obj/item/megaphone/sec,
+		/obj/item/melee/baton,
 		/obj/item/restraints/handcuffs,
 		/obj/item/stamp/hos,
 		/obj/item/toy/figure/hos,
 		/obj/item/toy/figure/secofficer,
 		/obj/machinery/door/airlock/security,
+		/obj/structure/statue/gold/hos,
 		/obj/structure/statue/silver/sec,
 		/obj/structure/statue/silver/secborg,
-		/obj/structure/statue/gold/hos,
 	)),
 
 	"clowns" = typecacheof(list(
@@ -465,31 +465,50 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 
 GLOBAL_LIST_INIT(phobia_turfs, list(
 	"space" = typecacheof(list(
-		/turf/open/space,
-		/turf/open/floor/holofloor/space,
 		/turf/open/floor/fakespace,
+		/turf/open/floor/holofloor/space,
+		/turf/open/space,
 	)),
 	"the supernatural" = typecacheof(list(
-		/turf/open/floor/cult,
 		/turf/closed/wall/mineral/cult,
+		/turf/open/floor/cult,
 	)),
 	"aliens" = typecacheof(list(
+		/turf/closed/wall/mineral/abductor,
+		/turf/open/floor/mineral/abductor,
 		/turf/open/floor/plating/abductor,
 		/turf/open/floor/plating/abductor2,
-		/turf/open/floor/mineral/abductor,
-		/turf/closed/wall/mineral/abductor,
 	)),
-	"falling" = typecacheof(list(/turf/open/chasm, /turf/open/floor/fakepit, /turf/open/openspace)),
+	"falling" = typecacheof(list(
+		/turf/open/chasm,
+		/turf/open/floor/fakepit,
+		/turf/open/openspace,
+	)),
 ))
 
 GLOBAL_LIST_INIT(phobia_species, list(
-	"aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,/datum/species/shadow)),
+	"aliens" = typecacheof(list(
+		/datum/species/abductor,
+		/datum/species/jelly,
+		/datum/species/pod,
+		/datum/species/shadow,
+	)),
 	"anime" = typecacheof(list(/datum/species/human/felinid)),
-	"conspiracies" = typecacheof(list(/datum/species/abductor, /datum/species/lizard, /datum/species/synth)),
-	"insects" = typecacheof(list(/datum/species/fly, /datum/species/moth)),
+	"conspiracies" = typecacheof(list(
+		/datum/species/abductor,
+		/datum/species/lizard,
+		/datum/species/synth,
+	)),
+	"insects" = typecacheof(list(
+		/datum/species/fly,
+		/datum/species/moth,
+	)),
 	"lizards" = typecacheof(list(/datum/species/lizard)),
 	"robots" = typecacheof(list(/datum/species/android)),
-	"skeletons" = typecacheof(list(/datum/species/skeleton, /datum/species/plasmaman)),
+	"skeletons" = typecacheof(list(
+		/datum/species/plasmaman,
+		/datum/species/skeleton,
+	)),
 	"the supernatural" = typecacheof(list(/datum/species/golem/runic)),
 ))
 
