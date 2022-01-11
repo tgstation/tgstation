@@ -1,14 +1,3 @@
-//gold slime core spawning
-#define NO_SPAWN 0
-#define HOSTILE_SPAWN 1
-#define FRIENDLY_SPAWN 2
-
-//slime core activation type
-#define SLIME_ACTIVATE_MINOR 1
-#define SLIME_ACTIVATE_MAJOR 2
-
-#define LUMINESCENT_DEFAULT_GLOW 2
-
 #define RIDING_OFFSET_ALL "ALL"
 
 //stack recipe placement check types

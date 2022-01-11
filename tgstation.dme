@@ -178,6 +178,7 @@
 #include "code\__DEFINES\wiremod.dm"
 #include "code\__DEFINES\wires.dm"
 #include "code\__DEFINES\wounds.dm"
+#include "code\__DEFINES\xenobiology.dm"
 #include "code\__DEFINES\atmospherics\atmos_core.dm"
 #include "code\__DEFINES\atmospherics\atmos_helpers.dm"
 #include "code\__DEFINES\atmospherics\atmos_mapping_helpers.dm"
