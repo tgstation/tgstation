@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
-		info_button = new(owner.current, src)
+		info_button = new(src)
 		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
@@ -479,31 +479,27 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
-	/// The antag datum that this button interacts with.
-	var/datum/antagonist/antag_datum
 
-/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+/datum/action/antag_info/New(Target)
 	. = ..()
-	src.antag_datum = antag_datum
-	name += " [antag_datum.name]"
-
-/datum/action/antag_info/Destroy()
-	antag_datum = null
-	return ..()
+	name += " [target]"
 
 /datum/action/antag_info/Trigger()
 	. = ..()
 	if(!.)
 		return
 
-	antag_datum.ui_interact(owner)
+	target.ui_interact(owner)
 
 /datum/action/antag_info/IsAvailable()
+	if(!target)
+		stack_trace("[type] was used without a target antag datum!")
+		return FALSE
 	. = ..()
 	if(!.)
 		return
-	if(!antag_datum)
+	if(!owner.mind)
 		return FALSE
-	if(!(antag_datum in owner.mind.antag_datums))
+	if(!(target in owner.mind.antag_datums))
 		return FALSE
 	return TRUE
