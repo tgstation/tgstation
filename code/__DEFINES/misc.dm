@@ -1,7 +1,3 @@
-// Anonymous names defines (used in the secrets panel)
-#define ANON_DISABLED "" //so it's falsey
-#define ANON_RANDOMNAMES "Random Default"
-
 /// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
 #define NO_BUCKLE_LYING -1
 
