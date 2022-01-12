@@ -127,6 +127,9 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			qdel(src) //otherwise delete us
 
+/obj/structure/marker_beacon/attack_tk(mob/user)
+	return
+
 /obj/structure/marker_beacon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/marker_beacon))
 		var/obj/item/stack/marker_beacon/M = I

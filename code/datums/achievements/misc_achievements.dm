@@ -187,6 +187,12 @@
 	database_id = MEDAL_CLICKBAIT
 	icon = "bait"
 
+/datum/award/achievement/misc/narsupreme
+	name = "If Nar'Sie is so good, why isn't there a..."
+	desc = "Even interdimensional space deitys need a friend."
+	database_id = MEDAL_NARSUPREME
+	icon = "narsupreme"
+
 /datum/award/achievement/misc/springlock
 	name = "The Man Inside the MODsuit"
 	desc = "Ignore the warning label on a springlock MODsuit."
