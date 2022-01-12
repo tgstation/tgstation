@@ -20,13 +20,13 @@
 
 /obj/machinery/spaceship_navigation_beacon/Initialize(mapload)
 	. = ..()
-	SSshuttle.beacons |= src
+	SSshuttle.beacon_list |= src
 
 /obj/machinery/spaceship_navigation_beacon/emp_act()
 	locked = TRUE
 
 /obj/machinery/spaceship_navigation_beacon/Destroy()
-	SSshuttle.beacons -= src
+	SSshuttle.beacon_list -= src
 	return ..()
 
 // update the icon_state

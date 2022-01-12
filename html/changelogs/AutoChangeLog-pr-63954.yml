@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Wrapping a bounty cube then unwrapping it no longer scams the owner out of a cut"
+  - bugfix: "Wrapping a bounty cube then applying a barcode no longer grants a bigger cut than deserved, or steals money from the original owner"
+  - bugfix: "The internal radio within bounty cubes is no longer exported. Every bounty cube sold gave cargo an extra FOUR credits. How much extra money was gained by radios alone?"
+  - refactor: "Refactored Pricetag component, less getcomponent and ugly signals, more sanity, harder to break"
