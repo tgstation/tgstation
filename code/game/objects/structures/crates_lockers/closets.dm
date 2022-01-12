@@ -86,7 +86,6 @@
 	return
 
 /obj/structure/closet/Destroy()
-	dump_contents()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
@@ -353,6 +352,7 @@
 			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
 			electronics_ref.forceMove(drop_location())
+	dump_contents()
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)
@@ -390,6 +390,8 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
+		if (user.combat_mode)
+			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)

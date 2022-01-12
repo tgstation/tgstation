@@ -50,11 +50,11 @@
 #define MOB_PLANT (1 << 10)
 
 //Organ defines for carbon mobs
-#define ORGAN_ORGANIC   1
-#define ORGAN_ROBOTIC   2
+#define ORGAN_ORGANIC 1
+#define ORGAN_ROBOTIC 2
 
-#define BODYPART_ORGANIC   1
-#define BODYPART_ROBOTIC   2
+#define BODYPART_ORGANIC 1
+#define BODYPART_ROBOTIC 2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'

@@ -14,7 +14,6 @@
 #define ROLE_FAMILIES "Gangster"
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
-#define ROLE_MONKEY "Monkey"
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
@@ -98,6 +97,8 @@
 #define ROLE_SKELETON "Skeleton"
 #define ROLE_ZOMBIE "Zombie"
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
+#define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
+#define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 
 
 /// This defines the antagonists you can operate with in the settings.
@@ -112,7 +113,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_FAMILIES = 0,
 	ROLE_HERETIC = 0,
 	ROLE_MALF = 0,
-	ROLE_MONKEY = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
 	ROLE_TRAITOR = 0,

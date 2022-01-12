@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - rscadd: "Adds progression traitors and reworked traitor objectives to give reputation and telecrystals, which can be used to purchase equipment."
+  - balance: "Traitor gear now has a soft timelock. Most gear becomes accessible 30 minutes into a round."
+  - refactor: "Refactored the uplink UI code completely to be in typescript and modernizes it."
+  - rscdel: "Removed romerol, surplus crate and the special syndicate kits from regular traitor uplink. Romerol is now a final objective that you can receive."
