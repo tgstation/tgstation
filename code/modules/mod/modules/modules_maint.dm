@@ -190,7 +190,7 @@
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_power_cost)
 
-/// Paper Dispenser - Dispenses (sometimes burning) paper sheets.
+///Paper Dispenser - Dispenses (sometimes burning) paper sheets.
 /obj/item/mod/module/paper_dispenser
 	name = "MOD paper dispenser module"
 	desc = "A simple module designed by the bureaucrats of Torch Bay. \
@@ -198,7 +198,7 @@
 	icon_state = "paper_maker"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/paper_dispenser)
 	cooldown_time = 5 SECONDS
 	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
