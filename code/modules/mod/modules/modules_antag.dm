@@ -9,7 +9,7 @@
 		so this extra armor provides zero ability for extravehicular activity while deployed."
 	icon_state = "armor_booster"
 	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
 	cooldown_time = 0.5 SECONDS
@@ -44,7 +44,6 @@
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = NONE
 			clothing_part.cold_protection = NONE
 			spaceproofed[clothing_part] = TRUE
 
@@ -66,7 +65,6 @@
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = initial(clothing_part.heat_protection)
 			clothing_part.cold_protection = initial(clothing_part.cold_protection)
 	spaceproofed = list()
 
@@ -84,8 +82,8 @@
 		though with its' low amount of separate charges, the user remains mortal."
 	icon_state = "energy_shield"
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	/// Max charges of the shield.
 	var/max_charges = 3
@@ -134,8 +132,8 @@
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
@@ -226,7 +224,7 @@
 		in protest of these modules being legal."
 	icon_state = "noslip"
 	complexity = 1
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/noslip)
 
 /obj/item/mod/module/noslip/on_suit_activation()

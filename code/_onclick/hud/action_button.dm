@@ -64,7 +64,7 @@
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
-	linked_action.Trigger()
+	linked_action.Trigger(modifiers)
 	return TRUE
 
 //Hide/Show Action Buttons ... Button

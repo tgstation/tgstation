@@ -633,7 +633,6 @@
 	. += span_notice("Berserk mode is [berserk_charge]% charged.")
 
 /obj/item/clothing/head/hooded/berserker/process(delta_time)
-	. = ..()
 	if(berserk_active)
 		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
 	if(!berserk_charge)

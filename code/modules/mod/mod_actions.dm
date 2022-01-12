@@ -27,7 +27,7 @@
 		return
 	return ..()
 
-/datum/action/item_action/mod/Trigger()
+/datum/action/item_action/mod/Trigger(list/modifiers)
 	if(!IsAvailable())
 		return FALSE
 	if(mod.malfunctioning && prob(75))
@@ -37,30 +37,33 @@
 
 /datum/action/item_action/mod/deploy
 	name = "Deploy MODsuit"
-	desc = "Deploy/Conceal a part of the MODsuit."
+	desc = "LMB: Deploy/Undeploy part. RMB: Deploy/Undeploy full suit."
 	button_icon_state = "deploy"
 
-/datum/action/item_action/mod/deploy/Trigger()
+/datum/action/item_action/mod/deploy/Trigger(list/modifiers)
 	. = ..()
 	if(!.)
 		return
-	mod.choose_deploy(usr)
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		mod.choose_deploy(usr)
+	else
+		mod.quick_deploy(usr)
 
 /datum/action/item_action/mod/deploy/ai
 	ai_action = TRUE
 
 /datum/action/item_action/mod/activate
 	name = "Activate MODsuit"
-	desc = "Activate/Deactivate the MODsuit."
+	desc = "LMB: Activate/Deactivate suit with prompt. RMB: Activate/Deactivate suit skipping prompt."
 	button_icon_state = "activate"
 	/// First time clicking this will set it to TRUE, second time will activate it.
 	var/ready = FALSE
 
-/datum/action/item_action/mod/activate/Trigger()
+/datum/action/item_action/mod/activate/Trigger(list/modifiers)
 	. = ..()
 	if(!.)
 		return
-	if(!ready)
+	if(LAZYACCESS(modifiers, LEFT_CLICK) && !ready)
 		ready = TRUE
 		button_icon_state = "activate-ready"
 		if(!ai_action)
@@ -87,7 +90,7 @@
 	desc = "Toggle a MODsuit module."
 	button_icon_state = "module"
 
-/datum/action/item_action/mod/module/Trigger()
+/datum/action/item_action/mod/module/Trigger(list/modifiers)
 	. = ..()
 	if(!.)
 		return
@@ -101,7 +104,7 @@
 	desc = "Open the MODsuit's panel."
 	button_icon_state = "panel"
 
-/datum/action/item_action/mod/panel/Trigger()
+/datum/action/item_action/mod/panel/Trigger(list/modifiers)
 	. = ..()
 	if(!.)
 		return
@@ -121,6 +124,7 @@
 	..()
 	module = linked_module
 	name = "Activate [capitalize(linked_module.name)]"
+	desc = "Quickly activate [linked_module]."
 	icon_icon = linked_module.icon
 	button_icon_state = linked_module.icon_state
 	pinner = user
@@ -132,7 +136,7 @@
 		return
 	return ..()
 
-/datum/action/item_action/mod/pinned_module/Trigger()
+/datum/action/item_action/mod/pinned_module/Trigger(list/modifiers)
 	. = ..()
 	if(!.)
 		return

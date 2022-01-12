@@ -12,10 +12,10 @@
 	incompatible_modules = list(/obj/item/mod/module/springlock)
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.75
+	mod.activation_step_time *= 0.5
 
 /obj/item/mod/module/springlock/on_uninstall()
-	mod.activation_step_time /= 0.75
+	mod.activation_step_time *= 2
 
 /obj/item/mod/module/springlock/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
@@ -26,6 +26,7 @@
 ///Signal fired when wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
+
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
@@ -36,6 +37,7 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
+
 	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
@@ -48,7 +50,7 @@
 	mod.wearer.emote("scream")
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, sharpness = SHARP_POINTY, def_zone = BODY_ZONE_CHEST) //boggers, bogchamp, etc
+	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
 	mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
@@ -69,13 +71,13 @@
 	var/list/songs = list()
 	/// A list of the colors the module can take.
 	var/static/list/rainbow_order = list(
-		"#FF6666",
-		"#FFAA66",
-		"#FFFF66",
-		"#66FF66",
-		"#66AAFF",
-		"#AA66FF",
-		)
+		list(1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,0.5,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,0,0,0, 0,0.5,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
+	)
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
@@ -101,7 +103,7 @@
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, S = sound(selection.song_path), use_reverb = FALSE)
+		SEND_SOUND(mod.wearer, sound(selection.song_path, volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/on_deactivation()
 	. = ..()
@@ -110,6 +112,7 @@
 	QDEL_NULL(rave_screen)
 	if(selection)
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
+		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -126,7 +129,7 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, songs)
+		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
@@ -134,6 +137,11 @@
 			if(active)
 				return
 			selection = songs[value]
+
+/obj/item/mod/module/visor/rave/proc/clean_songs()
+	. = list()
+	for(var/track in songs)
+		. += track
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
@@ -143,7 +151,7 @@
 	icon_state = "tanning"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tanner)
 	cooldown_time = 30 SECONDS
 
@@ -166,7 +174,7 @@
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN*0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*0.5
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 
@@ -189,8 +197,8 @@
 	icon_state = "atrocinator"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot)
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	/// How many steps the user has taken since turning the suit on, used for footsteps.

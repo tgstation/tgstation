@@ -9,8 +9,8 @@
 	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
 	complexity = 4
-	active_power_cost = DEFAULT_CELL_DRAIN * 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 10
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	/// Whether or not the cloak turns off on bumping.
@@ -66,13 +66,13 @@
 	desc = "The latest in stealth technology, this module is a definite upgrade over previous versions. \
 		The field has been tuned to be even more responsive and fast-acting, with enough stability to \
 		continue operation of the field even if the user bumps into others. \
-		The draw on the power cell has been reduced drastically, \
-		making this perfect for activities like standing near sentry turrets for extended periods of time."
+		The power draw has been reduced drastically, making this perfect for activities like \
+		standing near sentry turrets for extended periods of time."
 	icon_state = "cloak_ninja"
 	bumpoff = FALSE
 	stealth_alpha = 20
-	active_power_cost = DEFAULT_CELL_DRAIN
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
 ///Holster - Instantly holsters any not huge gun.
@@ -85,7 +85,7 @@
 	icon_state = "holster"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	/// Gun we have holstered.

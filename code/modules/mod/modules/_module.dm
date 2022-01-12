@@ -11,11 +11,11 @@
 	/// How much space it takes up in the MOD
 	var/complexity = 0
 	/// Power use when idle
-	var/idle_power_cost = DEFAULT_CELL_DRAIN * 0
+	var/idle_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// Power use when active
-	var/active_power_cost = DEFAULT_CELL_DRAIN * 0
+	var/active_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// Power use when used, we call it manually
-	var/use_power_cost = DEFAULT_CELL_DRAIN * 0
+	var/use_power_cost = DEFAULT_CHARGE_DRAIN * 0
 	/// ID used by their TGUI
 	var/tgui_id
 	/// Linked MODsuit
@@ -103,7 +103,7 @@
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
-	if(!mod.active || mod.activating || !mod.cell?.charge)
+	if(!mod.active || mod.activating || !mod.get_charge())
 		balloon_alert(mod.wearer, "unpowered!")
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
@@ -156,6 +156,8 @@
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
+	if(mod.wearer.incapacitated(ignore_grab = TRUE))
+		return FALSE
 	mod.wearer.face_atom(target)
 	if(!on_use())
 		return FALSE
@@ -182,15 +184,16 @@
 /obj/item/mod/module/proc/on_active_process(delta_time)
 	return
 
-/// Drains power from the suit cell
+/// Drains power from the suit charge
 /obj/item/mod/module/proc/drain_power(amount)
 	if(!check_power(amount))
 		return FALSE
-	mod.cell.charge = max(0, mod.cell.charge - amount)
+	mod.subtract_charge(amount)
 	return TRUE
 
+/// Checks if there is enough power in the suit
 /obj/item/mod/module/proc/check_power(amount)
-	if(!mod.cell || (mod.cell.charge < amount))
+	if(mod.get_charge() < amount)
 		return FALSE
 	return TRUE
 
