@@ -73,7 +73,7 @@
 
 /obj/projectile/bullet/pellet
 	var/tile_dropoff = 0.45
-	var/tile_dropoff_s = 0.5
+	var/tile_dropoff_s = 0.25
 
 /obj/projectile/bullet/pellet/Range()
 	..()
@@ -95,7 +95,6 @@
 	name = "rubbershot pellet"
 	damage = 3
 	stamina = 11
-	tile_dropoff_s = 0.25
 	sharpness = NONE
 	embedding = null
 	speed = 1.2
