@@ -1,4 +1,6 @@
-// Checks if the layers of all atoms are on the proper planes.
+/// Checks if the layers of all atoms are on the proper planes.
+/datum/unit_test/mob_layers
+
 /datum/unit_test/mob_layers/Run()
 	for(var/atom/movable/am_path as anything in typesof(/atom/movable))
 		var/layer = initial(am_path.layer)
