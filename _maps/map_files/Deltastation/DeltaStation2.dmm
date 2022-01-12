@@ -25384,13 +25384,13 @@
 	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/bot,
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = -4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = 4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_y = 4
 	},
 /turf/open/floor/iron,

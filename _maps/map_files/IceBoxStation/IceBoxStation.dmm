@@ -6856,13 +6856,13 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = -4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = 4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_y = 4
 	},
 /obj/structure/table,

@@ -47,7 +47,7 @@
 	. = ..()
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 30))
 		return
-	new /obj/item/mod/core(drop_location())
+	new /obj/item/mod/core/standard(drop_location())
 	qdel(src)
 
 /obj/item/mod/construction/armor

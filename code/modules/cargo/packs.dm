@@ -1462,9 +1462,9 @@
 	cost = CARGO_CRATE_VALUE * 3
 	access = ACCESS_ROBOTICS
 	access_view = ACCESS_ROBOTICS
-	contains = list(/obj/item/mod/core,
-		/obj/item/mod/core,
-		/obj/item/mod/core)
+	contains = list(/obj/item/mod/core/standard,
+		/obj/item/mod/core/standard,
+		/obj/item/mod/core/standard)
 	crate_name = "MOD core crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
