@@ -367,6 +367,7 @@
 			decayedRange = max(0, decayedRange - reflect_range_decrease)
 			ricochet_chance *= ricochet_decay_chance
 			damage *= ricochet_decay_damage
+			stamina *= ricochet_decay_damage
 			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(point_cache)
@@ -862,10 +863,10 @@
 
 /**
  * Aims the projectile at a target.
- * 
+ *
  * Must be passed at least one of a target or a list of click parameters.
  * If only passed the click modifiers the source atom must be a mob with a client.
- * 
+ *
  * Arguments:
  * - [target][/atom]: (Optional) The thing that the projectile will be aimed at.
  * - [source][/atom]: The initial location of the projectile or the thing firing it.
@@ -911,7 +912,7 @@
 
 /**
  * Calculates the pixel offsets and angle that a projectile should be launched at.
- * 
+ *
  * Arguments:
  * - [source][/atom]: The thing that the projectile is being shot from.
  * - [target][/atom]: (Optional) The thing that the projectile is being shot at.
@@ -938,7 +939,7 @@
 
 	if(!ismob(source) || !LAZYACCESS(modifiers, SCREEN_LOC))
 		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
-	
+
 	var/mob/user = source
 	if(!user.client)
 		CRASH("Can't make trajectory calculations without a target or click modifiers and a client.")
