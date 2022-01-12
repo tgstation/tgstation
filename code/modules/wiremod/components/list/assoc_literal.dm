@@ -55,7 +55,7 @@
 			visible_message("[src] begins to overheat!")
 			return
 		var/value_to_add = entry_ports[index].value
-		if(is_proper_datum(value_to_add))
+		if(isdatum(value_to_add))
 			value_to_add = WEAKREF(value_to_add)
 		new_literal[key_ports[index].value] = entry_ports[index].value
 

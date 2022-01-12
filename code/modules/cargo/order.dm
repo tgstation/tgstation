@@ -3,8 +3,8 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/paper/fluff/jobs/cargo/manifest/New(atom/A, id, cost)
-	..()
+/obj/item/paper/fluff/jobs/cargo/manifest/Initialize(mapload, id, cost)
+	. = ..()
 	order_id = id
 	order_cost = cost
 
@@ -65,7 +65,7 @@
 	return P
 
 /datum/supply_order/proc/generateManifest(obj/container, owner, packname, cost) //generates-the-manifests.
-	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(container, id, cost)
+	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(null, id, cost)
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
