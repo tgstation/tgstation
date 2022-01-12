@@ -37,7 +37,7 @@
 #define MEDAL_TRAM_SURFER "Tram Surfer"
 #define MEDAL_CULT_SHUTTLE_OMFG "WHAT JUST HAPPENED"
 #define MEDAL_CLICKBAIT "Clickbait"
-#define MEDAL_SPRINGLOCK "Springlock"
+#define MEDAL_SPRINGLOCK "The Man Inside the Modsuit"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
