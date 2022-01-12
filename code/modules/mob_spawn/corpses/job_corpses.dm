@@ -55,7 +55,7 @@
 	outfit = /datum/outfit/plasmaman
 
 /obj/effect/mob_spawn/corpse/human/assistant
-	name = "Assistant"
+	name = JOB_ASSISTANT
 	outfit = /datum/outfit/job/assistant
 	icon_state = "corpsegreytider"
 

@@ -602,9 +602,8 @@
 /mob/living/get_contents()
 	var/list/ret = list()
 	ret |= contents //add our contents
-	for(var/i in ret.Copy()) //iterate storage objects
-		var/atom/A = i
-		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
+		SEND_SIGNAL(iter_atom, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
 	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -1985,6 +1984,10 @@
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()
 	return FALSE
+
+//Used specifically for the clown box suicide act
+/mob/living/carbon/human/will_escape_storage()
+	return TRUE
 
 /// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
 /mob/living/proc/set_safe_hunger_level()
