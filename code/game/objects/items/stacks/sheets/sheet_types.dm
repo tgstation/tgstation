@@ -334,6 +334,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	icon_state = "sheet-bamboo"
 	inhand_icon_state = "sheet-bamboo"
 	icon = 'icons/obj/stack_objects.dmi'
+	sheettype = "bamboo"
 	mats_per_unit = list(/datum/material/bamboo = MINERAL_MATERIAL_AMOUNT)
 	throwforce = 15
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
@@ -341,6 +342,7 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/cellulose = 10)
 	material_type = /datum/material/bamboo
+	walltype = /turf/closed/wall/mineral/bamboo
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()

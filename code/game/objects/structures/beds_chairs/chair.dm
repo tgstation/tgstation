@@ -412,6 +412,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/item/chair/stool/bamboo
 	name = "bamboo stool"
 	icon_state = "bamboo_stool"
+	inhand_icon_state = "stool_bamboo"
 	hitsound = 'sound/weapons/genhit1.ogg'
 	origin_type = /obj/structure/chair/stool/bamboo
 	break_chance = 50	//Submissive and breakable unlike the chad iron stool

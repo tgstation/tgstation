@@ -233,9 +233,10 @@
 
 /obj/item/reagent_containers/syringe/crude
 	name = "crude syringe"
-	desc = "A crudely made syringe. The flimsy wooden construction makes it hold up minimal amounts of reagents."
+	desc = "A crudely made syringe. The flimsy wooden construction makes it hold a minimal amounts of reagents, but its very disposable."
 	icon_state = "crude_0"
 	base_icon_state = "crude"
+	possible_transfer_amounts = list(1,5)
 	volume = 5
 
 /obj/item/reagent_containers/syringe/spider_extract
