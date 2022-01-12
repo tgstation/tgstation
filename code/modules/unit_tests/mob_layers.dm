@@ -3,7 +3,7 @@
 	for(var/atom/movable/am_path as anything in typesof(/atom/movable))
 		var/layer = initial(am_path.layer)
 		var/plane = initial(am_path.plane)
-		if(!layer || !plane) //Some abstract atoms maybe I dont know?
+		if(isnull(layer) || isnull(plane)) //Some abstract atoms maybe I dont know?
 			continue
 		switch(layer)
 			if(GAME_PLANE_FOV_HIDDEN_LAYER_START to GAME_PLANE_FOV_HIDDEN_LAYER_END)
