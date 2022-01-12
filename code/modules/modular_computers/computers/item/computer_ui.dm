@@ -182,7 +182,7 @@
 				new_color = input(user, "Choose a new color for [src]'s flashlight.", "Light Color",light_color) as color|null
 				if(!new_color)
 					return
-				if(color_hex2num(new_color) < 200) //Colors too dark are rejected
+				if(is_color_dark(new_color, 50) ) //Colors too dark are rejected
 					to_chat(user, span_warning("That color is too dark! Choose a lighter one."))
 					new_color = null
 			return set_flashlight_color(new_color)

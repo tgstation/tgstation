@@ -91,8 +91,7 @@
 		if("PRG_toggleadmin")
 			if(netadmin_mode)
 				netadmin_mode = FALSE
-				if(channel)
-					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
+				channel?.add_client(src)
 				return TRUE
 			var/mob/living/user = usr
 			if(can_run(user, TRUE, ACCESS_NETWORK))

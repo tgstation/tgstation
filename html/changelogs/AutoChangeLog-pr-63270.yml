@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed gas flowing into windows from above, I am.... so tired"
-  - bugfix: "Fixes gas sometimes not moving up from below after a structure change, see above"

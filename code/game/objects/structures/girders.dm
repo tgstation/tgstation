@@ -60,9 +60,9 @@
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 5)
-					to_chat(user, span_warning("You need at least two rods to create a false wall!"))
+					to_chat(user, span_warning("You need at least five rods to create a false wall!"))
 					return
-				to_chat(user, span_notice("You start building a reinforced false wall..."))
+				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20, target = src))
 					if(S.get_amount() < 5)
 						return

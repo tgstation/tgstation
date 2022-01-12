@@ -127,6 +127,11 @@
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
+	
+/datum/mood_event/claustrophobia
+	description = "<span class='warning'>Why do I feel trapped?!  Let me out!!!</span>\n"
+	mood_change = -7
+	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
 	description = "<span class='boldwarning'>I hate it in the light...I need to find a darker place...</span>\n"

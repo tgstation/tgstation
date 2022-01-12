@@ -159,6 +159,7 @@
 /obj/machinery/firealarm/proc/alarm(mob/user)
 	if(!is_operational)
 		return
+
 	if(my_area.fire)
 		return //area alarm already active
 	my_area.alarm_manager.send_alarm(ALARM_FIRE, my_area)

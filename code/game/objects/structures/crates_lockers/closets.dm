@@ -86,7 +86,6 @@
 	return
 
 /obj/structure/closet/Destroy()
-	dump_contents()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
@@ -187,7 +186,7 @@
 		. += span_notice("It's welded shut.")
 	if(anchored)
 		. += span_notice("It is <b>bolted</b> to the ground.")
-	if(opened)
+	if(opened && cutting_tool == /obj/item/weldingtool)
 		. += span_notice("The parts are <b>welded</b> together.")
 	else if(secure && !opened)
 		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
@@ -353,6 +352,7 @@
 			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
 			electronics_ref.forceMove(drop_location())
+	dump_contents()
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)
@@ -390,6 +390,8 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
+		if (user.combat_mode)
+			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -576,6 +578,8 @@
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
+	if(isstructure(loc))
+		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -604,6 +608,10 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+	container.container_resist_act()
+
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER
@@ -694,11 +702,13 @@
 		return
 	if(!opened && !shove_blocked)
 		return
-	if(opened)
+	var/was_opened = opened
+	if(!toggle())
+		return
+	if(was_opened)
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)

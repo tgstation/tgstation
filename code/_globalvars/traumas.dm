@@ -7,6 +7,7 @@ GLOBAL_LIST_INIT(phobia_types, sort_list(list(
 	"anime",
 	"authority",
 	"birds",
+	"blood",
 	"clowns",
 	"doctors",
 	"falling",
@@ -46,6 +47,7 @@ GLOBAL_LIST_INIT(phobia_regexes, list(
 	"spiders" = construct_phobia_regex("spiders"),
 	"strangers" = construct_phobia_regex("strangers"),
 	"the supernatural" = construct_phobia_regex("the supernatural"),
+	"blood" = construct_phobia_regex("blood"),
 ))
 
 GLOBAL_LIST_INIT(phobia_mobs, list(
@@ -150,9 +152,6 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/head/helmet/abductor, /obj/item/clothing/suit/armor/abductor/vest, /obj/item/melee/baton/abductor,
 		/obj/item/storage/belt/military/abductor, /obj/item/gun/energy/alien, /obj/item/abductor/silencer,
 		/obj/item/abductor/gizmo, /obj/item/clothing/under/rank/centcom/officer,
-		/obj/item/clothing/suit/space/hardsuit/ert, /obj/item/clothing/suit/space/hardsuit/ert/sec,
-		/obj/item/clothing/suit/space/hardsuit/ert/engi, /obj/item/clothing/suit/space/hardsuit/ert/med,
-		/obj/item/clothing/suit/space/hardsuit/deathsquad, /obj/item/clothing/head/helmet/space/hardsuit/deathsquad,
 		/obj/machinery/door/airlock/centcom, /obj/machinery/atmospherics/miner, /obj/item/toy/figure/captain, /obj/item/toy/figure/ce,
 		/obj/item/toy/figure/dsquad, /obj/item/toy/figure/hop, /obj/item/toy/figure/hos, /obj/item/toy/figure/rd,
 		/obj/item/toy/figure/cmo, /obj/item/stamp/captain, /obj/item/stamp/hop, /obj/item/stamp/hos, /obj/item/stamp/ce,
@@ -189,13 +188,11 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	)),
 
 	"the supernatural" = typecacheof(list(/obj/structure/destructible/cult, /obj/item/tome,
-		/obj/item/melee/cultblade, /obj/item/cult_bastard,
-		/obj/item/restraints/legcuffs/bola/cult, /obj/item/clothing/suit/space/hardsuit/cult,
+		/obj/item/melee/cultblade, /obj/item/cult_bastard, /obj/item/restraints/legcuffs/bola/cult,
 		/obj/item/clothing/suit/hooded/cultrobes, /obj/item/clothing/head/hooded/cult_hoodie, /obj/effect/rune,
 		/obj/item/stack/sheet/runed_metal, /obj/machinery/door/airlock/cult, /obj/narsie,
 		/obj/item/soulstone,
 		/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard, /obj/item/spellbook, /obj/item/staff,
-		/obj/item/clothing/suit/space/hardsuit/shielded/wizard, /obj/item/clothing/suit/space/hardsuit/wizard,
 		/obj/item/gun/magic/staff, /obj/item/gun/magic/wand,
 		/obj/item/nullrod, /obj/item/clothing/under/rank/civilian/chaplain,
 		/obj/item/gun/magic/staff, /obj/item/gun/magic/wand, /obj/item/scrying, /obj/item/necromantic_stone,
@@ -216,17 +213,11 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/structure/statue/plasma/xeno
 	)),
 
-	"birds" = typecacheof(list(/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/food/cracker,
-		/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
-		/obj/item/clothing/suit/toggle/owlwings, /obj/item/clothing/under/costume/owl, /obj/item/clothing/mask/gas/owl_mask,
-		/obj/item/clothing/under/costume/griffin, /obj/item/clothing/shoes/griffin, /obj/item/clothing/head/griffin,
-		/obj/item/clothing/head/helmet/space/freedom, /obj/item/clothing/suit/space/freedom,
-	)),
-
 	"anime" = typecacheof(list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/food/sashimi, /obj/item/food/chawanmushi,
 		/obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
-		/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe)),
+		/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/highfrequencyblade,
+		/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
+	)),
 
 	"birds" = typecacheof(list(/obj/item/clothing/mask/gas/plaguedoctor, /obj/item/food/cracker,
 		/obj/item/clothing/suit/chickensuit, /obj/item/clothing/head/chicken,
@@ -245,9 +236,11 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 
 	"anime" = typecacheof(list(/obj/item/clothing/under/costume/schoolgirl, /obj/item/katana, /obj/item/food/sashimi, /obj/item/food/chawanmushi,
 		/obj/item/reagent_containers/food/drinks/bottle/sake, /obj/item/throwing_star, /obj/item/clothing/head/kitty/genuine, /obj/item/clothing/suit/space/space_ninja,
-		/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/vibro_weapon,
+		/obj/item/clothing/mask/gas/space_ninja, /obj/item/clothing/shoes/space_ninja, /obj/item/clothing/gloves/space_ninja, /obj/item/highfrequencyblade,
 		/obj/item/nullrod/scythe/vibro, /obj/item/energy_katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana, /obj/structure/window/paperframe, /obj/structure/mineral_door/paperframe
 	)),
+
+	"blood" = typecacheof(list(/obj/machinery/iv_drip, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/blood, /obj/effect/decal/cleanable/blood)),
 ))
 
 GLOBAL_LIST_INIT(phobia_turfs, list(

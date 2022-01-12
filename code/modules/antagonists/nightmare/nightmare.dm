@@ -1,5 +1,5 @@
 /datum/antagonist/nightmare
-	name = "Nightmare"
+	name = "\improper Nightmare"
 	antagpanel_category = "Nightmare"
 	job_rank = ROLE_NIGHTMARE
 	show_in_antagpanel = FALSE

@@ -147,6 +147,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEARSIGHT "nearsighted"
 #define TRAIT_FAT "fat"
 #define TRAIT_HUSK "husk"
+///Blacklisted from being revived via defibrilator
+#define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
 /// means that you can't use weapons with normal trigger guards.
@@ -195,6 +197,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NODISMEMBER "dismember_immunity"
 #define TRAIT_NOFIRE "nonflammable"
 #define TRAIT_NOFIRE_SPREAD "no_fire_spreading"
+/// Prevents plasmamen from self-igniting
+#define TRAIT_NOSELFIGNITION "no_selfignition"
 #define TRAIT_NOGUNS "no_guns"
 #define TRAIT_NOHUNGER "no_hunger"
 #define TRAIT_NOMETABOLISM "no_metabolism"
@@ -212,6 +216,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH "no_breath"
 #define TRAIT_ANTIMAGIC "anti_magic"
 #define TRAIT_HOLY "holy"
+/// Like antimagic, but doesn't block the user from casting
+#define TRAIT_ANTIMAGIC_NO_SELFBLOCK "anti_magic_no_selfblock"
 #define TRAIT_DEPRESSION "depression"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
@@ -234,10 +240,20 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PRESENT_VISION "present-vision"
 #define TRAIT_DISK_VERIFIER "disk-verifier"
 #define TRAIT_NOMOBSWAP "no-mob-swap"
+/// Gives us turf, mob and object vision through walls
 #define TRAIT_XRAY_VISION "xray_vision"
+/// Gives us mob vision through walls and slight night vision
+#define TRAIT_THERMAL_VISION "thermal_vision"
+/// Gives us turf vision through walls and slight night vision
+#define TRAIT_MESON_VISION "meson_vision"
+/// Gives us Night vision
+#define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
+/// Negates our gravity, letting us move normally on floors in 0-g
+#define TRAIT_NEGATES_GRAVITY "negates_gravity"
+/// Lets us scan reagents
+#define TRAIT_REAGENT_SCANNER "reagent_scanner"
 /// Can weave webs into cloth
 #define TRAIT_WEB_WEAVER "web_weaver"
-#define TRAIT_THERMAL_VISION "thermal_vision"
 #define TRAIT_ABDUCTOR_TRAINING "abductor-training"
 #define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
 #define TRAIT_SURGEON "surgeon"
@@ -295,6 +311,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DUFFEL_CURSE_PROOF "duffel_cursed"
 /// Revenants draining you only get a very small benefit.
 #define TRAIT_WEAK_SOUL "weak_soul"
+/// This mob has no soul
+#define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something
 #define TRAIT_CANT_RIDE "cant_ride"
 /// Prevents a mob from being unbuckled, currently only used to prevent people from falling over on the tram
@@ -315,6 +333,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMABURNT "plasma_burnt"
 /// Addictions don't tick down, basically they're permanently addicted
 #define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
+/// This mob has a cult halo.
+#define TRAIT_CULT_HALO "cult_halo"
 /// Their eyes glow an unnatural red colour. Currently used to set special examine text on humans. Does not guarantee the mob's eyes are coloured red, nor that there is any visible glow on their character sprite.
 #define TRAIT_UNNATURAL_RED_GLOWY_EYES "unnatural_red_glowy_eyes"
 /// Their eyes are bloodshot. Currently used to set special examine text on humans. Examine text is overridden by TRAIT_UNNATURAL_RED_GLOWY_EYES.
@@ -427,12 +447,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Used for limbs.
 #define TRAIT_DISABLED_BY_WOUND "disabled-by-wound"
 
+
+//important_recursive_contents traits
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.
  * Use [/atom/movable/proc/become_area_sensitive(trait_source)] to properly enable it. How you remove it isn't as important.
  */
 #define TRAIT_AREA_SENSITIVE "area-sensitive"
-
+///every hearing sensitive atom has this trait
 #define TRAIT_HEARING_SENSITIVE "hearing_sensitive"
 
 /// Climbable trait, given and taken by the climbable element when added or removed. Exists to be easily checked via HAS_TRAIT().
@@ -476,6 +498,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WIELDED "wielded"
 /// Buckling yourself to objects with this trait won't immobilize you
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
+/// Prevents stripping this equipment
+#define TRAIT_NO_STRIP "no_strip"
+/// Disallows this item from being pricetagged with a barcode
+#define TRAIT_NO_BARCODES "no_barcode"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -590,6 +616,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ADMIN_TRAIT "admin"
 #define CHANGELING_TRAIT "changeling"
 #define CULT_TRAIT "cult"
+#define LICH_TRAIT "lich"
 /// The item is magically cursed
 #define CURSED_ITEM_TRAIT(item_type) "cursed_item_[item_type]"
 #define ABSTRACT_ITEM_TRAIT "abstract-item"
@@ -711,9 +738,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define PAI_FOLDED "pai-folded"
 /// Trait applied to brain mobs when they lack external aid for locomotion, such as being inside a mech.
 #define BRAIN_UNAIDED "brain-unaided"
+/// Trait applied by MODsuits.
+#define MOD_TRAIT "mod"
 /// Trait applied by element
 #define ELEMENT_TRAIT(source) "element_trait_[source]"
-/// Trait granted by [/obj/item/clothing/head/helmet/space/hardsuit/berserker]
+/// Trait granted by the berserker hood.
 #define BERSERK_TRAIT "berserk_trait"
 /// Trait granted by [/obj/item/rod_of_asclepius]
 #define HIPPOCRATIC_OATH_TRAIT "hippocratic_oath"

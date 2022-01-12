@@ -44,8 +44,8 @@
 /obj/item/food/pie/cream/proc/splat(atom/movable/hit_atom)
 	if(isliving(loc)) //someone caught us!
 		return
-	var/turf/T = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/food/pie_smudge(T)
+	var/turf/hit_turf = get_turf(hit_atom)
+	new/obj/effect/decal/cleanable/food/pie_smudge(hit_turf)
 	if(reagents?.total_volume)
 		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))

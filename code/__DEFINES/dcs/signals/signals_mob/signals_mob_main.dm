@@ -39,8 +39,12 @@
 ///from mind/transfer_to. Sent to the receiving mob.
 #define COMSIG_MOB_MIND_TRANSFERRED_INTO "mob_mind_transferred_into"
 
-///from base of obj/allowed(mob/M): (/obj) returns bool, if TRUE the mob has id access to the obj
-#define COMSIG_MOB_ALLOWED "mob_allowed"
+///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
+#define COMSIG_MOB_TRIED_ACCESS "tried_access"
+	#define ACCESS_ALLOWED (1<<0)
+	#define ACCESS_DISALLOWED (1<<1)
+	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
+
 ///from base of mob/anti_magic_check(): (mob/user, magic, holy, tinfoil, chargecost, self, protection_sources)
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"
 	#define COMPONENT_BLOCK_MAGIC (1<<0)
@@ -72,6 +76,7 @@
 	#define SPEECH_LANGUAGE 5
 	/* #define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */
+	#define SPEECH_RANGE 8
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
@@ -123,3 +128,5 @@
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
+/// From /datum/surgery_step/success(): (datum/surgey_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+#define COMSIG_MOB_SURGERY_STEP_SUCCESS "mob_surgery_step_success"

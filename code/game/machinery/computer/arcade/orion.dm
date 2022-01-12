@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 /obj/machinery/computer/arcade/orion_trail/Initialize(mapload)
 	. = ..()
 	radio = new /obj/item/radio(src)
-	radio.listening = 0
+	radio.set_listening(FALSE)
 	setup_events()
 
 /obj/machinery/computer/arcade/orion_trail/proc/setup_events()
@@ -131,6 +131,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 		radio.set_frequency(FREQ_MEDICAL)
 		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+
+		remove_radio_all(radio)//so we dont keep transmitting sec and medical comms
 
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 

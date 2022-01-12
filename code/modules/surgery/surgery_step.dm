@@ -12,6 +12,10 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
+	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
+		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+		return FALSE
+
 	if(accept_hand)
 		if(!tool)
 			success = TRUE
@@ -119,6 +123,7 @@
 		span_notice("[user] begins to perform surgery on [target]."))
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
+	SEND_SIGNAL(user, COMSIG_MOB_SURGERY_STEP_SUCCESS, src, target, target_zone, tool, surgery, default_display_results)
 	if(default_display_results)
 		display_results(user, target, span_notice("You succeed."),
 				span_notice("[user] succeeds!"),

@@ -39,6 +39,16 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/c38_rubber
+	name = "Speed Loader (.38 Rubber)"
+	desc = "Designed to quickly reload revolvers. Rubber bullets are bouncy and less-than-lethal."
+	id = "c38_rubber"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 20000)
+	build_path = /obj/item/ammo_box/c38/match/bouncy
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/rubbershot/sec
 	id = "sec_rshot"
 	build_type = PROTOLATHE | AWAY_LATHE

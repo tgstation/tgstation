@@ -73,7 +73,8 @@
 
 	var/cameraFollow = null
 
-	var/tod = null /// Time of death
+	/// Time of death
+	var/tod = null
 
 	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
@@ -83,7 +84,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/has_limbs = 0 ///does the mob have distinct limbs?(arms,legs, chest,head)
+	var/has_limbs = FALSE ///does the mob have distinct limbs?(arms,legs, chest,head)
 
 	///How many legs does this mob have by default. This shouldn't change at runtime.
 	var/default_num_legs = 2

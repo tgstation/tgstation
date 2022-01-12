@@ -145,8 +145,10 @@
 	log_admin("[key_name(user)] uploaded new event arena: [friendly_name].")
 
 /obj/machinery/computer/arena/proc/load_team(user,team)
-	var/rawteam = tgui_input_text(user, "Enter team list (ckeys separated by newline)", "Team List", multiline = TRUE)
-	for(var/i in splittext(rawteam,"\n"))
+	var/rawteam = tgui_input_text(user, "Enter team member list (ckeys separated by comma)", "Team List", multiline = TRUE)
+	if(isnull(rawteam))
+		return
+	for(var/i in splittext(rawteam, ","))
 		var/key = ckey(i)
 		if(!i)
 			continue
@@ -157,9 +159,9 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sort_key(keys)
+		var/client/selection = tgui_input_list(user, "Select a player", "Team member", sort_key(keys))
 		//Could be freeform if you want to add disconnected i guess
-		if(!selection)
+		if(isnull(selection))
 			return
 		key = selection.ckey
 	if(!team_keys[team])
@@ -266,6 +268,10 @@
 		toggle_spawn(user)
 	if(href_list["start"])
 		start_match(user)
+	if(href_list["follow"])
+		var/mob/observed_team_member = locate(href_list["follow"]) in GLOB.mob_list
+		if(observed_team_member)
+			user.client?.admin_follow(observed_team_member)
 	if(href_list["team_action"])
 		var/team = href_list["team"]
 		switch(href_list["team_action"])
@@ -326,7 +332,7 @@
 				else
 					player_status = M.stat == DEAD ? "Dead" : "Alive"
 				dat += "<li>[ckey] - [player_status] - "
-				dat += "<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(M)]'>FLW</a>"
+				dat += "<a href='?src=[REF(src)];follow=[REF(M)]'>FLW</a>"
 				dat += "<a href='?src=[REF(src)];member_action=remove;team=[team];ckey=[ckey]'>Remove</a>"
 				//Add more per player features here
 				dat += "</li>"

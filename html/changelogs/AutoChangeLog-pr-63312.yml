@@ -1,6 +1,0 @@
-author: "Azarak"
-delete-after: True
-changes: 
-  - rscadd: "Gas Masks now limit your field of view"
-  - rscadd: "Added field of view mechanics. It's darkness can be tweaked by a pref"
-  - rscadd: "Blind, nearsighted and fov-limited people will now see sounds as visual effects."

@@ -74,7 +74,8 @@
 	if(!parent_client) //Love client volatility!!
 		return
 	var/user_living = parent_mob != DEAD
-	var/user_extends_eye = parent_client.eye != parent_mob
+	var/atom/top_most_atom = get_atom_on_turf(parent_mob)
+	var/user_extends_eye = parent_client.eye != top_most_atom
 	var/should_apply_mask = user_living && !user_extends_eye
 
 	if(should_apply_mask == applied_mask)

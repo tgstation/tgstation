@@ -4054,7 +4054,7 @@
 /area/awaymission/cabin/caves)
 "kR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/carpet,
