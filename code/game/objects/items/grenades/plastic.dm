@@ -53,7 +53,7 @@
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
-				target.ex_act(EXPLODE_HEAVY, target)
+				EX_ACT(target, EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -91,6 +91,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = bomb_target
+		active = TRUE
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")

@@ -242,9 +242,7 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
-	if(data)
-		new_reagent.data = data
-		new_reagent.on_new(data)
+	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete

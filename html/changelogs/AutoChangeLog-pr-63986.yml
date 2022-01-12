@@ -1,0 +1,4 @@
+author: "Cheshify"
+delete-after: True
+changes: 
+  - qol: "Modular Devices now have auditory feedback for disassembly."

@@ -921,19 +921,15 @@
  * - [modifiers][/list]: A list of click parameters used to modify the shot angle.
  */
 /proc/calculate_projectile_angle_and_pixel_offsets(atom/source, atom/target, modifiers)
-	var/p_x = world.icon_size / 2
-	var/p_y = world.icon_size / 2
 	var/angle = 0
-	if(LAZYACCESS(modifiers, ICON_X))
-		p_x = text2num(LAZYACCESS(modifiers, ICON_X))
-	if(LAZYACCESS(modifiers, ICON_Y))
-		p_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	var/p_x = LAZYACCESS(modifiers, ICON_X) ? text2num(LAZYACCESS(modifiers, ICON_X)) : world.icon_size / 2 // ICON_(X|Y) are measured from the bottom left corner of the icon.
+	var/p_y = LAZYACCESS(modifiers, ICON_Y) ? text2num(LAZYACCESS(modifiers, ICON_Y)) : world.icon_size / 2 // This centers the target if modifiers aren't passed.
 
 	if(target)
 		var/turf/source_loc = get_turf(source)
 		var/turf/target_loc = get_turf(target)
 		var/dx = ((target_loc.x - source_loc.x) * world.icon_size) + (target.pixel_x - source.pixel_x) + (p_x - (world.icon_size / 2))
-		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_x) + (p_x - (world.icon_size / 2))
+		var/dy = ((target_loc.y - source_loc.y) * world.icon_size) + (target.pixel_y - source.pixel_y) + (p_y - (world.icon_size / 2))
 
 		angle = ATAN2(dy, dx)
 		return list(angle, p_x, p_y)

@@ -362,9 +362,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
  * * target_dna The DNA that we are comparing to
  */
 /datum/dna/proc/is_same_as(datum/dna/target_dna)
-	if(unique_identity == target_dna.unique_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
-		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
-			return TRUE
+	if( \
+		unique_identity == target_dna.unique_identity \
+		&& mutation_index == target_dna.mutation_index \
+		&& real_name == target_dna.real_name \
+		&& species.type == target_dna.species.type \
+		&& compare_list(features, target_dna.features) \
+		&& blood_type == target_dna.blood_type \
+	)
+		return TRUE
+
 	return FALSE
 
 /datum/dna/proc/update_instability(alert=TRUE)
