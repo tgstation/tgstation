@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Cameras are once again viewable from a distance, but this is limited to 2 tiles."
+  - bugfix: "The viewing range limit of 2 tiles also applies to the SecurEye tablet software."
