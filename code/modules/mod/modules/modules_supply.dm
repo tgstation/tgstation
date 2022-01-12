@@ -73,10 +73,7 @@
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_power_cost)
 
-/obj/item/mod/module/clamp/on_deactivation()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/clamp/on_suit_deactivation()
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate

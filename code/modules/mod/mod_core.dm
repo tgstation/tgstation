@@ -1,6 +1,9 @@
 /obj/item/mod/core
 	name = "MOD core"
 	icon_state = "mod-core"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "A non-functional MOD core. Inform the admins if you see this."
 	/// MOD unit we are powering.
 	var/obj/item/mod/control/mod
@@ -38,7 +41,7 @@
 
 /obj/item/mod/core/standard
 	name = "MOD standard core"
-	icon_state = "mod-core"
+	icon_state = "mod-core-standard"
 	desc = "Growing in the most lush, fertile areas of the planet Sprout, there is a crystal known as the Heartbloom. \
 		These rare, organic piezoelectric crystals are of incredible cultural significance to the artist castes of the \
 		Ethereals, owing to their appearance; which is exactly similar to that of an Ethereal's heart.\n\
@@ -179,7 +182,7 @@
 
 /obj/item/mod/core/ethereal
 	name = "MOD ethereal core"
-	icon_state = "mod-core"
+	icon_state = "mod-core-ethereal"
 	desc = "A reverse engineered core of a Modular Outerwear Device. Using natural liquid electricity from Ethereals, \
 		preventing the need to use external sources to convert electric charge."
 	/// A modifier to all charge we use, ethereals don't need to spend as much energy as normal suits.
@@ -221,7 +224,7 @@
 
 /obj/item/mod/core/infinite
 	name = "MOD infinite core"
-	icon_state = "mod-core"
+	icon_state = "mod-core-infinite"
 	desc = "A fusion core using the rare palladium to sustain enough energy for the lifetime of the MOD's user. \
 		This might be because of the slowly killing poison inside, but those are just rumors."
 
