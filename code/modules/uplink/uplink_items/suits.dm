@@ -49,3 +49,22 @@
 	item = /obj/item/mod/module/visor/night
 	progression_minimum = 20 MINUTES
 	cost = 2
+
+// Very high progression cost
+
+/datum/uplink_item/suits/modsuit/elite_traitor
+	name = "Elite Syndicate MODsuit"
+	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
+	item = /obj/item/mod/control/pre_equipped/elite
+	// This one costs more than the nuke op counterpart
+	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	progression_minimum = 60 MINUTES
+	cost = 16
+
+/datum/uplink_item/suits/noslip
+	name = "MODsuit Anti-Slip Module"
+	desc = "A MODsuit module preventing the user from slipping on water."
+	item = /obj/item/mod/module/noslip
+	progression_minimum = 60 MINUTES
+	cost = 4
