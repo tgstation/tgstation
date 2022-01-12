@@ -158,17 +158,17 @@ GLOBAL_LIST_INIT(creepy_ambience,list(
 ))
 
 GLOBAL_LIST_INIT(ambience_assoc,list(
+	AMBIENCE_AWAY = GLOB.away_ambience,
+	AMBIENCE_CREEPY = GLOB.creepy_ambience,
+	AMBIENCE_DANGER = GLOB.danger_ambience,
+	AMBIENCE_ENGI = GLOB.engi_ambience,
 	AMBIENCE_GENERIC = GLOB.generic_ambience,
 	AMBIENCE_HOLY = GLOB.holy_ambience,
-	AMBIENCE_DANGER = GLOB.danger_ambience,
-	AMBIENCE_RUINS = GLOB.ruins_ambience,
-	AMBIENCE_ENGI = GLOB.engi_ambience,
-	AMBIENCE_MINING = GLOB.mining_ambience,
-	AMBIENCE_MEDICAL = GLOB.medical_ambience,
-	AMBIENCE_SPOOKY = GLOB.spooky_ambience,
-	AMBIENCE_SPACE = GLOB.space_ambience,
 	AMBIENCE_MAINT = GLOB.maint_ambience,
-	AMBIENCE_AWAY = GLOB.away_ambience,
+	AMBIENCE_MEDICAL = GLOB.medical_ambience,
+	AMBIENCE_MINING = GLOB.mining_ambience,
 	AMBIENCE_REEBE = GLOB.reebe_ambience,
-	AMBIENCE_CREEPY = GLOB.creepy_ambience,
+	AMBIENCE_RUINS = GLOB.ruins_ambience,
+	AMBIENCE_SPACE = GLOB.space_ambience,
+	AMBIENCE_SPOOKY = GLOB.spooky_ambience,
 ))
