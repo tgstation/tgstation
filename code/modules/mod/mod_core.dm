@@ -9,7 +9,8 @@
 	var/obj/item/mod/control/mod
 
 /obj/item/mod/core/Destroy()
-	uninstall()
+	if(mod)
+		uninstall()
 	return ..()
 
 /obj/item/mod/core/proc/install(obj/item/mod/control/mod_unit)
