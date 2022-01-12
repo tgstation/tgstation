@@ -75,6 +75,15 @@
 	var/tile_dropoff = 0.45
 	var/tile_dropoff_s = 0.5
 
+/obj/projectile/bullet/pellet/Range()
+	..()
+	if(damage > 0)
+		damage -= tile_dropoff
+	if(stamina > 0)
+		stamina -= tile_dropoff_s
+	if(damage < 0 && stamina < 0)
+		qdel(src)
+
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
 	damage = 7.5
@@ -86,23 +95,30 @@
 	name = "rubbershot pellet"
 	damage = 3
 	stamina = 11
+	tile_dropoff_s = 0.25
 	sharpness = NONE
 	embedding = null
+	speed = 1.2
+	ricochets_max = 4
+	ricochet_chance = 120
+	ricochet_decay_chance = 0.9
+	ricochet_decay_damage = 0.8
+	ricochet_auto_aim_range = 2
+	ricochet_auto_aim_angle = 30
+	ricochet_incidence_leeway = 75
+	/// Subtracted from the ricochet chance for each tile traveled
+	var/tile_dropoff_ricochet = 4
+
+/obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
+	if(ricochet_chance > 0)
+		ricochet_chance -= tile_dropoff_ricochet
+	. = ..()
 
 /obj/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
 	damage = 1
 	stamina = 6
 	embedding = null
-
-/obj/projectile/bullet/pellet/Range()
-	..()
-	if(damage > 0)
-		damage -= tile_dropoff
-	if(stamina > 0)
-		stamina -= tile_dropoff_s
-	if(damage < 0 && stamina < 0)
-		qdel(src)
 
 /obj/projectile/bullet/pellet/shotgun_improvised
 	tile_dropoff = 0.35 //Come on it does 6 damage don't be like that.
