@@ -410,6 +410,10 @@
 /obj/machinery/computer/piratepad_control/proc/start_sending()
 	if(sending)
 		return
+	if(!pad)
+		status_report = "No pad detected. Build or link a pad."
+		pad.visible_message(span_notice("[pad] beeps."))
+		return
 	if(pad?.panel_open)
 		status_report = "Please screwdrive pad closed to send. "
 		pad.visible_message(span_notice("[pad] beeps."))
