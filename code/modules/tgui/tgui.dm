@@ -254,7 +254,7 @@
 		return
 	var/datum/host = src_object.ui_host(user)
 	// If the object or user died (or something else), abort.
-	if(!QDELETED(src_object) || !QDELETED(host) || !QDELETED(user) || !QDELETED(window))
+	if(QDELETED(src_object) || QDELETED(host) || QDELETED(user) || QDELETED(window))
 		close(can_be_suspended = FALSE)
 		return
 	// Validate ping
