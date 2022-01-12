@@ -38,9 +38,7 @@
 
 /datum/computer_file/program/power_monitor/proc/search() //keep in sync with /obj/machinery/computer/monitor's version
 	var/turf/T = get_turf(computer)
-	attached_wire = locate(/obj/structure/cable) in T.nullspaced_contents
-	if(attached_wire)
-	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T)
+	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T.nullspaced_contents)
 	if(attached_wire_ref)
 		return
 	var/area/A = get_area(computer) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
