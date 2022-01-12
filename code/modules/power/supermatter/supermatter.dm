@@ -639,11 +639,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(gas_comp[/datum/gas/carbon_dioxide] && gas_comp[/datum/gas/oxygen])
 			var/carbon_dioxide_pp = env.return_pressure() * gas_comp[/datum/gas/carbon_dioxide]
 			var/consumed_carbon_dioxide = clamp(((carbon_dioxide_pp - CO2_CONSUMPTION_PP) / (carbon_dioxide_pp + CO2_PRESSURE_SCALING)), CO2_CONSUMPTION_RATIO_MIN, CO2_CONSUMPTION_RATIO_MAX)
-			consumed_carbon_dioxide *= gas_comp[/datum/gas/carbon_dioxide] * combined_gas
+			consumed_carbon_dioxide = min(consumed_carbon_dioxide * gas_comp[/datum/gas/carbon_dioxide] * combined_gas, removed.gases[/datum/gas/carbon_dioxide][MOLES], removed.gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
 			if(consumed_carbon_dioxide)
 				removed.gases[/datum/gas/carbon_dioxide][MOLES] -= consumed_carbon_dioxide
-				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide / 2
-				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide / 2
+				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide * 0.5
+				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide * 0.5
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
