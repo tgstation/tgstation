@@ -19,7 +19,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 		/datum/micro_organism/cell_line/megacarp = 1,
 		/datum/micro_organism/cell_line/slime = 2,
 		/datum/micro_organism/cell_line/snake = 1,
-	)
+	),
 
 	CELL_LINE_TABLE_BLOB = list(
 		/datum/micro_organism/cell_line/blob_spore = 1,

@@ -186,9 +186,9 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	return resolve_ai_icon_sync(input)
 
 GLOBAL_LIST_INIT(security_depts_prefs, sort_list(list(
-	SEC_DEPT_NONE,
 	SEC_DEPT_ENGINEERING,
 	SEC_DEPT_MEDICAL,
+	SEC_DEPT_NONE,
 	SEC_DEPT_SCIENCE,
 	SEC_DEPT_SUPPLY,
 )))
