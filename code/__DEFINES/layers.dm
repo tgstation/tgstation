@@ -80,11 +80,17 @@
 #define HIGH_OBJ_LAYER 3.6
 
 #define BELOW_MOB_LAYER 3.7
+/// START OF LAYERS for GAME_PLANE_FOV_HIDDEN
+#define GAME_PLANE_FOV_HIDDEN_LAYER_START 3.8
 #define LYING_MOB_LAYER 3.8
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
 #define MOB_SHIELD_LAYER 4.01
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
+#define GAME_PLANE_FOV_HIDDEN_LAYER_END 4.06
+/// END OF LAYERS for GAME_PLANE_FOV_HIDDEN
+/// START FOR LAYERS for ABOVE_GAME_PLANE
+#define ABOVE_GAME_PLANE_LAYER_START 4.1
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define EDGED_TURF_LAYER 4.3
@@ -97,6 +103,8 @@
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
+#define ABOVE_GAME_PLANE_LAYER_END 5.1
+/// END FOR LAYERS for ABOVE_GAME_PLANE
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 
