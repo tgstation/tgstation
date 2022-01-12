@@ -92,9 +92,9 @@
 
 /obj/machinery/computer/security/ui_status(mob/user)
 	. = ..()
-	if(!.)
+	if(. == UI_DISABLED)
 		return UI_CLOSE
-	return ..()
+	return .
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
