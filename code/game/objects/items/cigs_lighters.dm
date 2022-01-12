@@ -216,10 +216,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	icon_state = lit ? icon_on : icon_off
 
-/obj/item/clothing/mask/cigarette/update_name()
-	. = ..()
-	name = lit ? "lit [initial(name)]" : initial(name)
-
 /// Lights the cigarette with given flavor text.
 /obj/item/clothing/mask/cigarette/proc/light(flavor_text = null)
 	if(lit)
@@ -423,11 +419,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime = 4 MINUTES
 	chem_volume = 50
 	list_reagents = null
-	///Stores the name used for this rollie
-	var/slang_name
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize(mapload)
-	slang_name = pick(list(
+	name = pick(list(
 		"bifta",
 		"bifter",
 		"bird",
@@ -468,14 +462,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"torpedo",
 		"zoot",
 		"zooter"))
-	name = slang_name
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-
-/obj/item/clothing/mask/cigarette/rollie/update_name()
-	. = ..()
-	name = lit ? "lit [slang_name]" : slang_name
 
 /obj/item/clothing/mask/cigarette/rollie/nicotine
 	list_reagents = list(/datum/reagent/drug/nicotine = 15)
@@ -592,10 +581,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/pipe/update_name()
 	. = ..()
-	if(lit)
-		name = "lit [packeditem]-packed [initial(name)]"
-	else
-		name = packeditem ? "[packeditem]-packed [initial(name)]" : "empty [initial(name)]"
+	name = packeditem ? "[packeditem]-packed [initial(name)]" : "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/put_out(mob/user, done_early = FALSE)
 	lit = FALSE
