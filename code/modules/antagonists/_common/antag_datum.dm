@@ -94,8 +94,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
-	info_button.Remove(old_body)
-	info_button.Grant(new_body)
+	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
+	if(info_button)
+		info_button.Remove(old_body)
+		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -485,10 +487,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info/New(Target)
 	. = ..()
 	name += " [target]"
-
-/datum/action/antag_info/Destroy()
-	antag_datum = null
-	return ..()
 
 /datum/action/antag_info/Trigger()
 	. = ..()
