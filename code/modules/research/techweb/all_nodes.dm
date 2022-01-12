@@ -1532,6 +1532,7 @@
 		"mod_armor_cosmohonk",
 		"mod_bikehorn",
 		"mod_microwave_beam",
+		"mod_waddle"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

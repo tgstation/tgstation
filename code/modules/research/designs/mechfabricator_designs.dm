@@ -1261,6 +1261,13 @@
 	build_path = /obj/item/mod/module/injector
 	department_type = MODULE_MEDICAL
 
+/datum/design/module/mod_bikehorn
+	name = "MOD Module: Bike Horn"
+	id = "mod_bikehorn"
+	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
+	build_path = /obj/item/mod/module/bikehorn
+	department_type = MODULE_SERVICE
+
 /datum/design/module/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
 	id = "mod_microwave_beam"
@@ -1268,11 +1275,11 @@
 	build_path = /obj/item/mod/module/microwave_beam
 	department_type = MODULE_SERVICE
 
-/datum/design/module/mod_bikehorn
-	name = "MOD Module: Bike Horn"
-	id = "mod_bikehorn"
-	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
-	build_path = /obj/item/mod/module/bikehorn
+/datum/design/module/mod_waddle
+	name = "MOD Module: Waddle"
+	id = "mod_waddle"
+	materials = list(/datum/material/plastic = 1000, /datum/material/iron = 1000)
+	build_path = /obj/item/mod/module/waddle
 	department_type = MODULE_SERVICE
 
 /datum/design/module/mod_clamp

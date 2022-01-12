@@ -561,7 +561,6 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/waddle)
 	skins = list(
 		"cosmohonk" = list(
 			HELMET_LAYER = NECK_LAYER,

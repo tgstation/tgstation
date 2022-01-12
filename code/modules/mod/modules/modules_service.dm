@@ -64,8 +64,8 @@
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
 		to waddle around, bouncing to and fro with a pep in their step."
 	icon_state = "waddle"
+	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
-	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 
 /obj/item/mod/module/waddle/on_suit_activation()
