@@ -24,8 +24,3 @@
 	inhand_icon_state = "nerdshirt"
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
-	name = "Vape Naysh shirt"
-	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
-	icon_state = "vapeshirt"
-	inhand_icon_state = "vapeshirt"
