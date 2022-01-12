@@ -1986,6 +1986,10 @@
 /mob/living/proc/will_escape_storage()
 	return FALSE
 
+//Used specifically for the clown box suicide act
+/mob/living/carbon/human/will_escape_storage()
+	return TRUE
+
 /// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
 /mob/living/proc/set_safe_hunger_level()
 	// Nutrition reset and alert clearing.

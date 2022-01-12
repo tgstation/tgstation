@@ -228,6 +228,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
+	if(!message)
+		if(succumbed)
+			succumb()
+		return
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
@@ -237,15 +246,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
 
-	var/list/speech_arguments = args + message_range
-	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, speech_arguments)
-	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
-		message = uppertext(message)
-	if(!message)
-		if(succumbed)
-			succumb()
-		return
 
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)

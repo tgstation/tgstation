@@ -84,7 +84,7 @@
 
 	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/has_limbs = 0 ///does the mob have distinct limbs?(arms,legs, chest,head)
+	var/has_limbs = FALSE ///does the mob have distinct limbs?(arms,legs, chest,head)
 
 	///How many legs does this mob have by default. This shouldn't change at runtime.
 	var/default_num_legs = 2
