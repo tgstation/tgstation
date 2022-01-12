@@ -188,6 +188,7 @@
 
 /obj/machinery/computer/secure_data/syndie
 	icon_keyboard = "syndie_key"
+	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/secure_data/laptop
 	name = "security laptop"

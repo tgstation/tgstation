@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(mapping)
 	SSshuttle.transit_requesters.Cut()
 	message_admins("Clearing dynamic reservation space.")
 	var/list/obj/docking_port/mobile/in_transit = list()
-	for(var/i in SSshuttle.transit)
+	for(var/i in SSshuttle.transit_docking_ports)
 		var/obj/docking_port/stationary/transit/T = i
 		if(!istype(T))
 			continue
