@@ -40823,7 +40823,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/biogenerator,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "gBM" = (
@@ -102336,7 +102336,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "wWB" = (
