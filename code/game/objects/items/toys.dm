@@ -834,10 +834,10 @@
 	if(parentdeck)
 		UnregisterSignal(parentdeck, COMSIG_PARENT_QDELETING)
 
-	parentdeck = new_parent_deck
-
-	if(parentdeck)
+	if(new_parent_deck)
 		RegisterSignal(parentdeck, COMSIG_PARENT_QDELETING, .proc/on_parent_deck_deletion)
+
+	parentdeck = new_parent_deck
 
 /**
  * Nulls the parent deck when the parent deck is deleted to avoid hard dels from hanging references.
@@ -845,7 +845,7 @@
 /obj/item/toy/cards/proc/on_parent_deck_deletion(obj/item/toy/cards/deck/source)
 	SIGNAL_HANDLER
 
-	parentdeck = null
+	set_parent_deck(null)
 
 /obj/item/toy/cards/deck
 	name = "deck of cards"
