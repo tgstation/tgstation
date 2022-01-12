@@ -310,8 +310,8 @@
 	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3")
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
-	/// Who's the blood donor, so to speak?
-	var/mob/living/blood_source
+	/// The cached info about the blood
+	var/list/blood_dna_info
 	/// Skip making the final blood splatter when we're done, like if we're not in a turf
 	var/skip = FALSE
 	/// How many tiles/items/people we can paint red
@@ -328,11 +328,12 @@
 /obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
 	if(isturf(loc) && !skip)
 		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
-		if(blood_source)
-			loc.add_mob_blood(blood_source)
+		if(blood_dna_info)
+			loc.add_blood_DNA(blood_dna_info)
 	return ..()
 
-/obj/effect/decal/cleanable/blood/hitsplatter/proc/GoTo(turf/target_turf, range)
+/// Set the splatter up to fly through the air until it rounds out of steam or hits something. Contains sleep() pending imminent moveloop rework, don't call without async'ing it
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
 	for(var/i in 1 to range)
 		step_towards(src,target_turf)
 		sleep(2) // Will be resolved pending Potato's moveloop rework
@@ -344,15 +345,15 @@
 				break
 
 			if(isitem(iter_atom))
-				iter_atom.add_mob_blood(blood_source)
+				iter_atom.add_blood_DNA(blood_dna_info)
 				splatter_strength--
 			else if(ishuman(iter_atom))
 				var/mob/living/carbon/human/splashed_human = iter_atom
 				if(splashed_human.wear_suit)
-					splashed_human.wear_suit.add_mob_blood(blood_source)
+					splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
 					splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
 				if(splashed_human.w_uniform)
-					splashed_human.w_uniform.add_mob_blood(blood_source)
+					splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
 					splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
 				splatter_strength--
 		if(splatter_strength <= 0) // we used all the puff so we delete it.
@@ -373,7 +374,7 @@
 
 	hit_endpoint = TRUE
 	if(isturf(prev_loc))
-		loc = bumped_atom
+		abstract_move(bumped_atom)
 		skip = TRUE
 		//Adjust pixel offset to make splatters appear on the wall
 		if(istype(bumped_atom, /obj/structure/window))
@@ -383,7 +384,7 @@
 			final_splatter.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
 			final_splatter.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
 	else // This will only happen if prev_loc is not even a turf, which is highly unlikely.
-		loc = bumped_atom //Either way we got this.
+		abstract_move(bumped_atom)
 		qdel(src)
 
 /// A special case for hitsplatters hitting windows, since those can actually be moved around, store it in the window and slap it in the vis_contents
