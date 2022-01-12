@@ -247,10 +247,14 @@
 /obj/machinery/piratepad
 	name = "cargo hold pad"
 	icon = 'icons/obj/telescience.dmi'
-	icon_state = "lpad-idle-o"
-	var/idle_state = "lpad-idle-o"
+	icon_state = "lpad-idle-off"
+	///This is the icon_state that this telepad uses when it's not in use.
+	var/idle_state = "lpad-idle-off"
+	///This is the icon_state that this telepad uses when it's warming up for goods teleportation.
 	var/warmup_state = "lpad-idle"
+	///This is the icon_state to flick when the goods are being sent off by the telepad.
 	var/sending_state = "lpad-beam"
+	///This is the cargo hold ID used by the piratepad_control. Match these two to link them together.
 	var/cargo_hold_id
 
 /obj/machinery/piratepad/multitool_act(mob/living/user, obj/item/multitool/I)
@@ -260,15 +264,33 @@
 		I.buffer = src
 		return TRUE
 
+/obj/machinery/piratepad/screwdriver_act_secondary(mob/living/user, obj/item/screwdriver/screw)
+	. = ..()
+	if(!.)
+		return default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle-off", screw)
+
+/obj/machinery/piratepad/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	. = ..()
+	default_deconstruction_crowbar(tool)
+	return TRUE
+
 /obj/machinery/computer/piratepad_control
 	name = "cargo hold control terminal"
+	///Message to display on the TGUI window.
 	var/status_report = "Ready for delivery."
+	///Reference to the specific pad that the control computer is linked up to.
 	var/obj/machinery/piratepad/pad
+	///How long does it take to warmup the pad to teleport?
 	var/warmup_time = 100
+	///Is the teleport pad/computer sending something right now? TRUE/FALSE
 	var/sending = FALSE
+	///For the purposes of space pirates, how many points does the control pad have collected.
 	var/points = 0
+	///Reference to the export report totaling all sent objects and mobs.
 	var/datum/export_report/total_report
+	///Callback holding the sending timer for sending the goods after a delay.
 	var/sending_timer
+	///This is the cargo hold ID used by the piratepad machine. Match these two to link them together.
 	var/cargo_hold_id
 
 /obj/machinery/computer/piratepad_control/Initialize(mapload)
@@ -388,6 +410,11 @@
 /obj/machinery/computer/piratepad_control/proc/start_sending()
 	if(sending)
 		return
+	if(pad?.panel_open)
+		status_report = "Please screwdrive pad closed to send. "
+		pad.visible_message(span_notice("[pad] beeps."))
+		return
+
 	sending = TRUE
 	status_report = "Sending... "
 	pad.visible_message(span_notice("[pad] starts charging up."))
