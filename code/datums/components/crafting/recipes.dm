@@ -969,7 +969,7 @@
 	result = /obj/structure/headpike/bone
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/headpikebone
+/datum/crafting_recipe/headpikebamboo
 	name = "Spike Head (Bamboo Spear)"
 	time = 65
 	reqs = list(/obj/item/spear/bamboospear = 1,
