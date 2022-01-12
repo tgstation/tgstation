@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - server: "Added support for define toggle live ref tracking. Consider using it if you're hunting hard deletes"
