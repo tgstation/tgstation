@@ -690,19 +690,16 @@
  */
 /datum/plant_gene/trait/invasive/proc/spread_seed(obj/machinery/hydroponics/target_tray, obj/machinery/hydroponics/origin_tray)
 	if(target_tray.myseed) // Check if there's another seed in the next tray.
-		if(target_tray.myseed.type == origin_tray.myseed.type && !target_tray.dead)
+		if(target_tray.myseed.type == origin_tray.myseed.type && target_tray.plant_status != HYDROTRAY_PLANT_DEAD)
 			return FALSE // It should not destroy its own kind.
 		target_tray.visible_message(span_warning("The [target_tray.myseed.plantname] is overtaken by [origin_tray.myseed.plantname]!"))
 		QDEL_NULL(target_tray.myseed)
-	target_tray.myseed = origin_tray.myseed.Copy()
+	target_tray.set_seed(origin_tray.myseed.Copy())
 	target_tray.age = 0
-	target_tray.dead = FALSE
-	target_tray.plant_health = target_tray.myseed.endurance
+	target_tray.set_plant_health(target_tray.myseed.endurance)
 	target_tray.lastcycle = world.time
-	target_tray.harvest = FALSE
-	target_tray.weedlevel = 0 // Reset
-	target_tray.pestlevel = 0 // Reset
-	target_tray.update_appearance()
+	target_tray.set_weedlevel(0, update_icon = FALSE) // Reset
+	target_tray.set_pestlevel(0) // Reset
 	target_tray.visible_message(span_warning("The [origin_tray.myseed.plantname] spreads!"))
 	if(target_tray.myseed)
 		target_tray.name = "[initial(target_tray.name)] ([target_tray.myseed.plantname])"
@@ -765,7 +762,7 @@
 /datum/plant_gene/trait/plant_laughter/proc/laughter(obj/item/our_plant, atom/target)
 	SIGNAL_HANDLER
 
-	our_plant.audible_message("<span_class='notice'>[our_plant] lets out burst of laughter.</span>")
+	our_plant.audible_message(span_notice("[our_plant] lets out burst of laughter."))
 	playsound(our_plant, pick(sounds), 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /**

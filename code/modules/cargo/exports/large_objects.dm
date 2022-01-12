@@ -109,7 +109,7 @@
 	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
 								/datum/gas/bz,
-								/datum/gas/stimulum,
+								/datum/gas/nitrium,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
 								/datum/gas/tritium,

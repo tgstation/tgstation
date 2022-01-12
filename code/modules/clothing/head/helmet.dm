@@ -98,11 +98,14 @@
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/marine
-	name = "marine combat helmet"
-	desc = "A multirole helmet painted in a tactical black, the added binoculars aren't functional, but they make you feel operator as fuck."
+	name = "tactical combat helmet"
+	desc = "A tactical black helmet, sealed from outside hazards with a plate of glass and not much else."
 	icon_state = "marine_command"
 	inhand_icon_state = "helmetalt"
-	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, FIRE = 40, ACID = 50, WOUND = 20)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 30, ENERGY = 25, BOMB = 50, BIO = 100, FIRE = 40, ACID = 50, WOUND = 20)
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | PLASMAMAN_HELMET_EXEMPT
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_flashlight = TRUE
 	dog_fashion = null
 
@@ -114,21 +117,15 @@
 
 /obj/item/clothing/head/helmet/marine/security
 	name = "marine heavy helmet"
-	desc = "A heavier armored marine helmet, painted black and with an added ballistic screen for extra protection from dangers to the face."
 	icon_state = "marine_security"
-	armor = list(MELEE = 35, BULLET = 60, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 20, FIRE = 50, ACID = 50, WOUND = 20)
 
 /obj/item/clothing/head/helmet/marine/engineer
 	name = "marine utility helmet"
-	desc = "A helmet with a pair of military grade welding goggles, sacrificing some armor protection for more environmental protection."
 	icon_state = "marine_engineer"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 70, BIO = 20, FIRE = 70, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/head/helmet/marine/medic
 	name = "marine medic helmet"
-	desc = "A multirole helmet with an attached antenna, which looks cool despite being useless. Has some extra biological protection installed."
 	icon_state = "marine_medic"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 20, ENERGY = 20, BOMB = 30, BIO = 30, FIRE = 50, ACID = 70, WOUND = 10)
 
 /obj/item/clothing/head/helmet/old
 	name = "degrading helmet"
@@ -526,14 +523,13 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/update_icon_state()
-	var/state = "[initial(icon_state)]"
 	if(attached_light)
+		var/state = "[initial(icon_state)]"
 		if(attached_light.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
 		else
 			state += "-flight" //etc.
-
-	icon_state = state
+		icon_state = state
 	return ..()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)

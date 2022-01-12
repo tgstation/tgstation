@@ -262,9 +262,11 @@
 			message_admins("[display_name] tried to execute on [parent.get_creator_admin()] that has admin_only set to 0")
 			return FALSE
 
-		var/obj/item/stock_parts/cell/cell = parent.get_cell()
-		if(!cell?.use(power_usage_per_input))
-			return FALSE
+		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, power_usage_per_input)
+		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
+			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			if(!cell?.use(power_usage_per_input))
+				return FALSE
 
 	if((!port || port.trigger == .proc/input_received) && (circuit_flags & CIRCUIT_FLAG_INPUT_SIGNAL) && !COMPONENT_TRIGGERED_BY(trigger_input, port))
 		return FALSE
@@ -274,6 +276,12 @@
 /// Called when trying to get the physical location of this object
 /obj/item/circuit_component/proc/get_location()
 	return get_turf(src) || get_turf(parent?.shell)
+
+/obj/item/circuit_component/balloon_alert(mob/viewer, text)
+	if(parent)
+		return parent.balloon_alert(viewer, text)
+	return ..()
+
 
 /// Called before input_received and should_receive_input. Used to perform behaviour that shouldn't care whether the input should be received or not.
 /obj/item/circuit_component/proc/pre_input_received(datum/port/input/port)

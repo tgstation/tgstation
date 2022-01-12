@@ -137,19 +137,19 @@
 		var/camera_location
 		var/turf/myturf = get_turf(src)
 		if(eyeobj.use_static != FALSE)
-			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
+			if((!length(z_lock) || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
 				for(var/obj/machinery/camera/C in GLOB.cameranet.cameras)
-					if(!C.can_use() || z_lock.len && !(C.z in z_lock))
+					if(!C.can_use() || length(z_lock) && !(C.z in z_lock))
 						continue
 					var/list/network_overlap = networks & C.network
-					if(network_overlap.len)
+					if(length(network_overlap))
 						camera_location = get_turf(C)
 						break
 		else
 			camera_location = myturf
-			if(z_lock.len && !(myturf.z in z_lock))
+			if(length(z_lock) && !(myturf.z in z_lock))
 				camera_location = locate(round(world.maxx/2), round(world.maxy/2), z_lock[1])
 
 		if(camera_location)
@@ -209,13 +209,7 @@
 		return eye_user.client
 	return null
 
-/mob/camera/ai_eye/remote/xenobio/canZMove(direction, turf/target)
-	var/area/new_area = get_area(target)
-	if(new_area && new_area.name == allowed_area || new_area && (new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
-		return TRUE
-	return FALSE
-
-/mob/camera/ai_eye/remote/setLoc(destination)
+/mob/camera/ai_eye/remote/setLoc(turf/destination, force_update = FALSE)
 	if(eye_user)
 		destination = get_turf(destination)
 		if (destination)
@@ -280,7 +274,7 @@
 	var/list/L = list()
 
 	for (var/obj/machinery/camera/cam in GLOB.cameranet.cameras)
-		if(origin.z_lock.len && !(cam.z in origin.z_lock))
+		if(length(origin.z_lock) && !(cam.z in origin.z_lock))
 			continue
 		L.Add(cam)
 
@@ -290,11 +284,17 @@
 
 	for (var/obj/machinery/camera/netcam in L)
 		var/list/tempnetwork = netcam.network & origin.networks
-		if (tempnetwork.len)
+		if (length(tempnetwork))
+			if(!netcam.c_tag)
+				continue
 			T["[netcam.c_tag][netcam.can_use() ? null : " (Deactivated)"]"] = netcam
 
 	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
-	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
+	var/camera = tgui_input_list(usr, "Camera to view", "Cameras", T)
+	if(isnull(camera))
+		return
+	if(isnull(T[camera]))
+		return
 	var/obj/machinery/camera/final = T[camera]
 	playsound(src, "terminal_type", 25, FALSE)
 	if(final)
@@ -315,7 +315,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(UP, FALSE))
+	if(remote_eye.zMove(UP))
 		to_chat(user_mob, span_notice("You move upwards."))
 	else
 		to_chat(user_mob, span_notice("You couldn't move upwards!"))
@@ -330,7 +330,7 @@
 		return
 	var/mob/living/user_mob = target
 	var/mob/camera/ai_eye/remote/remote_eye = user_mob.remote_control
-	if(remote_eye.zMove(DOWN, FALSE))
+	if(remote_eye.zMove(DOWN))
 		to_chat(user_mob, span_notice("You move downwards."))
 	else
 		to_chat(user_mob, span_notice("You couldn't move downwards!"))

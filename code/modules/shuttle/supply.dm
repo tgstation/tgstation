@@ -90,6 +90,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		sell()
 
 /obj/docking_port/mobile/supply/proc/buy()
+	SEND_SIGNAL(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
 	var/list/obj/miscboxes = list() //miscboxes are combo boxes that contain all goody orders grouped
 	var/list/misc_order_num = list() //list of strings of order numbers, so that the manifest can show all orders in a box
 	var/list/misc_contents = list() //list of lists of items that each box will contain
@@ -115,57 +116,63 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				new item.item_instance.type(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
-	if(!SSshuttle.shoppinglist.len)
+	if(!SSshuttle.shopping_list.len)
 		return
 
 	var/value = 0
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
 
-	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
-		var/price = SO.pack.get_cost()
-		if(SO.applied_coupon)
-			price *= (1 - SO.applied_coupon.discount_pct_off)
+		var/price = spawning_order.pack.get_cost()
+		if(spawning_order.applied_coupon)
+			price *= (1 - spawning_order.applied_coupon.discount_pct_off)
 
-		var/datum/bank_account/D
-		if(SO.paying_account) //Someone paid out of pocket
-			D = SO.paying_account
-			var/list/current_buyer_orders = goodies_by_buyer[SO.paying_account] // so we can access the length a few lines down
-			if(!SO.pack.goody)
-				price *= 1.1 //TODO make this customizable by the quartermaster
+		var/datum/bank_account/paying_for_this
 
-			// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
-			else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
-				price += CRATE_TAX
-				D.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
-		else
-			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			if(!D.adjust_money(-price))
-				if(SO.paying_account)
-					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
-				continue
+		//department orders EARN money for cargo, not the other way around
+		if(!spawning_order.department_destination)
+			if(spawning_order.paying_account) //Someone paid out of pocket
+				paying_for_this = spawning_order.paying_account
+				var/list/current_buyer_orders = goodies_by_buyer[spawning_order.paying_account] // so we can access the length a few lines down
+				if(!spawning_order.pack.goody)
+					price *= 1.1 //TODO make this customizable by the quartermaster
 
-		if(SO.paying_account)
-			if(SO.pack.goody)
-				LAZYADD(goodies_by_buyer[SO.paying_account], SO)
-			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+				// note this is before we increment, so this is the GOODY_FREE_SHIPPING_MAX + 1th goody to ship. also note we only increment off this step if they successfully pay the fee, so there's no way around it
+				else if(LAZYLEN(current_buyer_orders) == GOODY_FREE_SHIPPING_MAX)
+					price += CRATE_TAX
+					paying_for_this.bank_card_talk("Goody order size exceeds free shipping limit: Assessing [CRATE_TAX] credit S&H fee.")
+			else
+				paying_for_this = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(paying_for_this)
+				if(!paying_for_this.adjust_money(-price))
+					if(spawning_order.paying_account)
+						paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] rejected due to lack of funds. Credits required: [price]")
+					continue
+
+		if(spawning_order.paying_account)
+			if(spawning_order.pack.goody)
+				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
+			paying_for_this.bank_card_talk("Cargo order #[spawning_order.id] has shipped. [price] credits have been charged to your bank account.")
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
-			cargo.adjust_money(price - SO.pack.get_cost()) //Cargo gets the handling fee
-		value += SO.pack.get_cost()
-		SSshuttle.shoppinglist -= SO
-		SSshuttle.orderhistory += SO
-		QDEL_NULL(SO.applied_coupon)
+			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
+		value += spawning_order.pack.get_cost()
+		SSshuttle.shopping_list -= spawning_order
+		SSshuttle.order_history += spawning_order
+		QDEL_NULL(spawning_order.applied_coupon)
 
-		if(!SO.pack.goody) //we handle goody crates below
-			SO.generate(pick_n_take(empty_turfs))
+		if(!spawning_order.pack.goody) //we handle goody crates below
+			spawning_order.generate(pick_n_take(empty_turfs))
 
-		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.get_cost()]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
-		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
+		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[spawning_order.pack.get_cost()]", "[spawning_order.pack.name]"))
+
+		var/from_whom = paying_for_this?.account_holder || "nobody (department order)"
+
+		investigate_log("Order #[spawning_order.id] ([spawning_order.pack.name], placed by [key_name(spawning_order.orderer_ckey)]), paid by [from_whom] has shipped.", INVESTIGATE_CARGO)
+		if(spawning_order.pack.dangerous)
+			message_admins("\A [spawning_order.pack.name] ordered by [ADMIN_LOOKUPFLW(spawning_order.orderer_ckey)], paid by [from_whom] has shipped.")
 		purchases++
 
 	// we handle packing all the goodies last, since the type of crate we use depends on how many goodies they ordered. If it's more than GOODY_FREE_SHIPPING_MAX
@@ -220,7 +227,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		for(var/atom/movable/AM in shuttle_area)
 			if(iscameramob(AM))
 				continue
-			if(!AM.anchored || istype(AM, /obj/vehicle/sealed/mecha))
+			if(!AM.anchored)
 				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
 	if(ex.exported_atoms)

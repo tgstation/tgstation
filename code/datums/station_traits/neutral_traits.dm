@@ -36,6 +36,12 @@
 		if(!(istype(dog, /mob/living/simple_animal/pet/dog/corgi/ian) || istype(dog, /mob/living/simple_animal/pet/dog/corgi/puppy/ian)))
 			continue
 
+		// Makes this station trait more interesting. Ian probably won't go anywhere without a little external help.
+		// Also gives him a couple extra lives to survive eventual tiders.
+		dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
+		dog.AddComponent(/datum/component/multiple_lives, 2)
+		RegisterSignal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+
 		// The extended safety checks at time of writing are about chasms and lava
 		// if there are any chasms and lava on stations in the future, woah
 		var/turf/current_turf = get_turf(dog)
@@ -46,6 +52,36 @@
 		dog.forceMove(adventure_turf)
 		do_smoke(location=adventure_turf)
 
+/// Moves the new dog somewhere safe, equips it with the old one's inventory and makes it deadchat_playable.
+/datum/station_trait/ian_adventure/proc/do_corgi_respawn(mob/living/simple_animal/pet/dog/corgi/old_dog, mob/living/simple_animal/pet/dog/corgi/new_dog, gibbed, lives_left)
+	SIGNAL_HANDLER
+
+	var/turf/current_turf = get_turf(new_dog)
+	var/turf/adventure_turf = find_safe_turf(extended_safety_checks = TRUE, dense_atoms = FALSE)
+
+	do_smoke(location=current_turf)
+	new_dog.forceMove(adventure_turf)
+	do_smoke(location=adventure_turf)
+
+	if(old_dog.inventory_back)
+		var/obj/item/old_dog_back = old_dog.inventory_back
+		old_dog.inventory_back = null
+		old_dog_back.forceMove(new_dog)
+		new_dog.inventory_back = old_dog_back
+
+	if(old_dog.inventory_head)
+		var/obj/item/old_dog_hat = old_dog.inventory_head
+		old_dog.inventory_head = null
+		new_dog.place_on_head(old_dog_hat)
+
+	new_dog.update_corgi_fluff()
+	new_dog.regenerate_icons()
+	new_dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
+	if(lives_left)
+		RegisterSignal(new_dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
+
+	if(!gibbed) //The old dog will now disappear so we won't have more than one Ian at a time.
+		qdel(old_dog)
 
 /datum/station_trait/glitched_pdas
 	name = "PDA glitch"
@@ -78,3 +114,16 @@
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/medbot
+
+/datum/station_trait/colored_assistants
+	name = "Colored Assistants"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	show_in_report = TRUE
+	report_message = "Due to a shortage in standard issue jumpsuits, we have provided your assistants with one of our backup supplies."
+
+/datum/station_trait/colored_assistants/New()
+	. = ..()
+
+	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
+	GLOB.colored_assistant = new new_colored_assistant_type

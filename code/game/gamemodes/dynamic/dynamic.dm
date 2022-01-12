@@ -151,10 +151,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/waittime_l = 600
 	/// What is the higher bound of when the roundstart annoucement is sent out?
 	var/waittime_h = 1800
-	
+
 	/// Maximum amount of threat allowed to generate.
 	var/max_threat_level = 100
-	
+
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
@@ -470,7 +470,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/round_start_budget_left = round_start_budget
 
 	while (round_start_budget_left > 0)
-		var/datum/dynamic_ruleset/roundstart/ruleset = pick_weight_allow_zero(drafted_rules)
+		var/datum/dynamic_ruleset/roundstart/ruleset = pick_weight(drafted_rules)
 		if (isnull(ruleset))
 			log_game("DYNAMIC: No more rules can be applied, stopping with [round_start_budget] left.")
 			break
@@ -730,7 +730,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		ruleset.restricted_roles |= "Assistant"
+		ruleset.restricted_roles |= JOB_ASSISTANT
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

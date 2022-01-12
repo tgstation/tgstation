@@ -50,38 +50,72 @@
 
 /** Simple Animal BOT defines */
 
+//Assembly defines
+#define ASSEMBLY_FIRST_STEP 1
+#define ASSEMBLY_SECOND_STEP 2
+#define ASSEMBLY_THIRD_STEP 3
+#define ASSEMBLY_FOURTH_STEP 4
+#define ASSEMBLY_FIFTH_STEP 5
+#define ASSEMBLY_SIXTH_STEP 6
+#define ASSEMBLY_SEVENTH_STEP 7
+#define ASSEMBLY_EIGHTH_STEP 8
+#define ASSEMBLY_NINTH_STEP 9
+
 //Bot defines, placed here so they can be read by other things!
 /// Delay between movemements
 #define BOT_STEP_DELAY 4
 /// Maximum times a bot will retry to step from its position
 #define BOT_STEP_MAX_RETRIES 5
-
 /// Default view range for finding targets.
 #define DEFAULT_SCAN_RANGE 7
+//Amount of time that must pass after a Commissioned bot gets saluted to get another.
+#define BOT_COMMISSIONED_SALUTE_DELAY (60 SECONDS)
+
+//Bot mode defines displaying how Bots act
+///The Bot is currently active, and will do whatever it is programmed to do.
+#define BOT_MODE_ON (1<<0)
+///The Bot is currently set to automatically patrol the station.
+#define BOT_MODE_AUTOPATROL (1<<1)
+///The Bot is currently allowed to be remote controlled by Silicon.
+#define BOT_MODE_REMOTE_ENABLED (1<<2)
+///The Bot is allowed to have a pAI placed in control of it.
+#define BOT_MODE_PAI_CONTROLLABLE (1<<3)
+
+//Bot cover defines indicating the Bot's status
+///The Bot's cover is open and can be modified/emagged by anyone.
+#define BOT_COVER_OPEN (1<<0)
+///The Bot's cover is locked, and cannot be opened without unlocking it.
+#define BOT_COVER_LOCKED (1<<1)
+///The Bot is emagged.
+#define BOT_COVER_EMAGGED (1<<2)
+///The Bot has been hacked by a Silicon, emagging them, but revertable.
+#define BOT_COVER_HACKED (1<<3)
 
 //Bot types
 /// Secutritrons (Beepsky)
-#define SEC_BOT (1<<0)
+#define SEC_BOT "Securitron"
 /// ED-209s
-#define ADVANCED_SEC_BOT (1<<1)
+#define ADVANCED_SEC_BOT "ED-209"
 /// MULEbots
-#define MULE_BOT (1<<2)
+#define MULE_BOT "MULEbot"
 /// Floorbots
-#define FLOOR_BOT (1<<3)
+#define FLOOR_BOT "Floorbot"
 /// Cleanbots
-#define CLEAN_BOT (1<<4)
+#define CLEAN_BOT "Cleanbot"
 /// Medibots
-#define MED_BOT (1<<5)
+#define MED_BOT "Medibot"
 /// Honkbots & ED-Honks
-#define HONK_BOT (1<<6)
+#define HONK_BOT "Honkbot"
 /// Firebots
-#define FIRE_BOT (1<<7)
+#define FIRE_BOT "Firebot"
 /// Hygienebots
-#define HYGIENE_BOT (1<<8)
+#define HYGIENE_BOT "Hygienebot"
 /// Vibe bots
-#define VIBE_BOT (1<<9)
+#define VIBE_BOT "Vibebot"
 
 //Mode defines. If you add a new one make sure you update mode_name in /mob/living/simple_animal/bot
+
+// General Bot modes //
 /// Idle
 #define BOT_IDLE 0
 /// Found target, hunting
@@ -96,6 +130,8 @@
 #define BOT_SUMMON 5
 /// Currently moving
 #define BOT_MOVING 6
+
+// Unique modes //
 /// Secbot - At target, preparing to arrest
 #define BOT_PREP_ARREST 7
 /// Secbot - Arresting target
@@ -135,11 +171,10 @@
 ///Whether we will stun & cuff or endlessly stun
 #define SECBOT_HANDCUFF_TARGET (1<<4)
 
-/** Misc Robot defines */
-
-//Assembly defines
-#define ASSEMBLY_FIRST_STEP 0
-#define ASSEMBLY_SECOND_STEP 1
-#define ASSEMBLY_THIRD_STEP 2
-#define ASSEMBLY_FOURTH_STEP 3
-#define ASSEMBLY_FIFTH_STEP 4
+//MedBOT defines
+///Whether to declare if someone (we are healing) is in critical condition
+#define MEDBOT_DECLARE_CRIT (1<<0)
+///If the bot will stand still, only healing those next to it.
+#define MEDBOT_STATIONARY_MODE (1<<1)
+///Whether the bot will randomly speak from time to time. This will not actually prevent all speech.
+#define MEDBOT_SPEAK_MODE (1<<2)

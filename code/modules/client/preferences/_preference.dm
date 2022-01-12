@@ -9,14 +9,17 @@
 #define PREFERENCE_PRIORITY_GENDER 3
 
 /// The priority at which body type is decided, applied after gender so we can
-/// make sure they're non-binary.
+/// support the "use gender" option.
 #define PREFERENCE_PRIORITY_BODY_TYPE 4
 
 /// The priority at which names are decided, needed for proper randomization.
 #define PREFERENCE_PRIORITY_NAMES 5
 
+/// Preferences that aren't names, but change the name changes set by PREFERENCE_PRIORITY_NAMES.
+#define PREFERENCE_PRIORITY_NAME_MODIFICATIONS 6
+
 /// The maximum preference priority, keep this updated, but don't use it for `priority`.
-#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAMES
+#define MAX_PREFERENCE_PRIORITY PREFERENCE_PRIORITY_NAME_MODIFICATIONS
 
 /// For choiced preferences, this key will be used to set display names in constant data.
 #define CHOICED_PREFERENCE_DISPLAY_NAMES "display_names"

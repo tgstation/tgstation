@@ -55,11 +55,12 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 				return
 
 			var/datum/db_query/query_add_known_alt = SSdbcore.NewQuery({"
-				INSERT INTO [format_table_name("known_alts")] (ckey1, ckey2)
-				VALUES (:ckey1, :ckey2)
+				INSERT INTO [format_table_name("known_alts")] (ckey1, ckey2, admin_ckey)
+				VALUES (:ckey1, :ckey2, :admin_ckey)
 			"}, list(
 				"ckey1" = ckey1,
 				"ckey2" = ckey2,
+				"admin_ckey" = usr.ckey,
 			))
 
 			if (query_add_known_alt.warn_execute())
@@ -132,7 +133,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 	if (!SSdbcore.Connect())
 		return cached_known_alts || list()
 
-	var/datum/db_query/query_known_alts = SSdbcore.NewQuery("SELECT id, ckey1, ckey2 FROM [format_table_name("known_alts")] ORDER BY id DESC")
+	var/datum/db_query/query_known_alts = SSdbcore.NewQuery("SELECT id, ckey1, ckey2, admin_ckey FROM [format_table_name("known_alts")] ORDER BY id DESC")
 	query_known_alts.warn_execute()
 
 	if (query_known_alts.last_error)
@@ -145,6 +146,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 		cached_known_alts += list(list(
 			query_known_alts.item[2],
 			query_known_alts.item[3],
+			query_known_alts.item[4],
 
 			// The ID
 			query_known_alts.item[1],
@@ -166,7 +168,7 @@ GLOBAL_DATUM_INIT(known_alts, /datum/known_alts, new)
 	var/list/known_alts_html = list()
 
 	for (var/known_alt in load_known_alts())
-		known_alts_html += "<a href='?src=[REF(src)];[HrefToken()];action=delete;id=[known_alt[3]]'>\[-\] Delete</a> <b>[known_alt[1]]</b> is an alt of <b>[known_alt[2]]</b>."
+		known_alts_html += "<a href='?src=[REF(src)];[HrefToken()];action=delete;id=[known_alt[4]]'>\[-\] Delete</a> <b>[known_alt[1]]</b> is an alt of <b>[known_alt[2]]</b> (added by <b>[known_alt[3]]</b>)."
 
 	var/html = {"
 		<head>

@@ -253,7 +253,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "mb" = (
-/obj/effect/mob_spawn/human/abductor,
+/obj/effect/mob_spawn/corpse/human/abductor,
 /obj/structure/table/optable/abductor,
 /obj/effect/light_emitter{
 	set_cap = 1;

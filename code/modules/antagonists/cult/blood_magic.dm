@@ -40,15 +40,15 @@
 		break
 	if(rune)
 		limit = MAX_BLOODCHARGE
-	if(spells.len >= limit)
+	if(length(spells) >= limit)
 		if(rune)
 			to_chat(owner, span_cultitalic("You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b>"))
 		else
 			to_chat(owner, span_cultitalic("<b><u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</b></u>"))
-		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
-		if(nullify_spell)
-			qdel(nullify_spell)
-		return
+		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
+		if(isnull(nullify_spell))
+			return
+		qdel(nullify_spell)
 	var/entered_spell_name
 	var/datum/action/innate/cult/blood_spell/BS
 	var/list/possible_spells = list()
@@ -57,14 +57,16 @@
 		var/cult_name = initial(J.name)
 		possible_spells[cult_name] = J
 	possible_spells += "(REMOVE SPELL)"
-	entered_spell_name = input(owner, "Pick a blood spell to prepare...", "Spell Choices") as null|anything in possible_spells
-	if(entered_spell_name == "(REMOVE SPELL)")
-		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
-		if(nullify_spell)
-			qdel(nullify_spell)
+	entered_spell_name = tgui_input_list(owner, "Blood spell to prepare", "Spell Choices", possible_spells)
+	if(isnull(entered_spell_name))
 		return
+	if(entered_spell_name == "(REMOVE SPELL)")
+		var/nullify_spell = tgui_input_list(owner, "Spell to remove", "Current Spells", spells)
+		if(isnull(nullify_spell))
+			return
+		qdel(nullify_spell)
 	BS = possible_spells[entered_spell_name]
-	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (spells.len >= limit))
+	if(QDELETED(src) || owner.incapacitated() || !BS || (rune && !(locate(/obj/effect/rune/empower) in range(1, owner))) || (length(spells) >= limit))
 		return
 	to_chat(owner,span_warning("You begin to carve unnatural symbols into your flesh!"))
 	SEND_SOUND(owner, sound('sound/weapons/slice.ogg',0,1,10))
@@ -192,18 +194,20 @@
 	desc = "Allows you to summon a ritual dagger, in case you've lost the dagger that was given to you."
 	invocation = "Wur d'dai leev'mai k'sagan!" //where did I leave my keys, again?
 	button_icon_state = "equip" //this is the same icon that summon equipment uses, but eh, I'm not a spriter
+	/// The item given to the cultist when the spell is invoked. Typepath.
+	var/obj/item/summoned_type = /obj/item/melee/cultblade/dagger
 
 /datum/action/innate/cult/blood_spell/dagger/Activate()
 	var/turf/owner_turf = get_turf(owner)
 	owner.whisper(invocation, language = /datum/language/common)
 	owner.visible_message(span_warning("[owner]'s hand glows red for a moment."), \
 		span_cultitalic("Your plea for aid is answered, and light begins to shimmer and take form within your hand!"))
-	var/obj/item/melee/cultblade/dagger/summoned_blade = new (owner_turf)
+	var/obj/item/summoned_blade = new summoned_type(owner_turf)
 	if(owner.put_in_hands(summoned_blade))
-		to_chat(owner, span_warning("A ritual dagger appears in your hand!"))
+		to_chat(owner, span_warning("A [summoned_blade] appears in your hand!"))
 	else
-		owner.visible_message(span_warning("A ritual dagger appears at [owner]'s feet!"), \
-			span_cultitalic("A ritual dagger materializes at your feet."))
+		owner.visible_message(span_warning("A [summoned_blade] appears at [owner]'s feet!"), \
+			span_cultitalic("A [summoned_blade] materializes at your feet."))
 	SEND_SOUND(owner, sound('sound/effects/magic.ogg', FALSE, 0, 25))
 	charges--
 	if(charges <= 0)
@@ -473,22 +477,24 @@
 	if(IS_CULTIST(user))
 		var/list/potential_runes = list()
 		var/list/teleportnames = list()
-		for(var/R in GLOB.teleport_runes)
-			var/obj/effect/rune/teleport/T = R
-			potential_runes[avoid_assoc_duplicate_keys(T.listkey, teleportnames)] = T
+		for(var/obj/effect/rune/teleport/teleport_rune as anything in GLOB.teleport_runes)
+			potential_runes[avoid_assoc_duplicate_keys(teleport_rune.listkey, teleportnames)] = teleport_rune
 
-		if(!potential_runes.len)
+		if(!length(potential_runes))
 			to_chat(user, span_warning("There are no valid runes to teleport to!"))
-			log_game("Teleport talisman failed - no other teleport runes")
 			return
 
 		var/turf/T = get_turf(src)
 		if(is_away_level(T.z))
 			to_chat(user, span_cultitalic("You are not in the right dimension!"))
-			log_game("Teleport spell failed - user in away mission")
 			return
 
-		var/input_rune_key = input(user, "Choose a rune to teleport to.", "Rune to Teleport to") as null|anything in potential_runes //we know what key they picked
+		var/input_rune_key = tgui_input_list(user, "Rune to teleport to", "Teleportation Target", potential_runes) //we know what key they picked
+		if(isnull(input_rune_key))
+			return
+		if(isnull(potential_runes[input_rune_key]))
+			to_chat(user, span_warning("You must pick a valid rune!"))
+			return
 		var/obj/effect/rune/teleport/actual_selected_rune = potential_runes[input_rune_key] //what rune does that key correspond to?
 		if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !actual_selected_rune || !proximity)
 			return
@@ -598,13 +604,14 @@
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/mob/living/silicon/robot))
 			var/mob/living/silicon/robot/candidate = target
-			if(candidate.mmi)
+			if(candidate.mmi || candidate.shell)
 				channeling = TRUE
 				user.visible_message(span_danger("A dark cloud emanates from [user]'s hand and swirls around [candidate]!"))
 				playsound(T, 'sound/machines/airlock_alien_prying.ogg', 80, TRUE)
 				var/prev_color = candidate.color
 				candidate.color = "black"
 				if(do_after(user, 90, target = candidate))
+					candidate.undeploy()
 					candidate.emp_act(EMP_HEAVY)
 					var/construct_class = show_radial_menu(user, src, GLOB.construct_radial_images, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 					if(!check_menu(user))
@@ -625,7 +632,6 @@
 					return
 			else
 				uses--
-				candidate.undeploy()
 				to_chat(user, span_warning("A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!"))
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))

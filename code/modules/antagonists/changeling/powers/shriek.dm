@@ -5,7 +5,7 @@
 	button_icon_state = "resonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 //A flashy ability, good for crowd control and sowing chaos.
 /datum/action/changeling/resonant_shriek/sting_action(mob/user)
@@ -27,8 +27,9 @@
 			M.Paralyze(rand(100,200))
 
 	for(var/obj/machinery/light/L in range(4, user))
-		L.on = 1
+		L.on = TRUE
 		L.break_light_tube()
+		stoplag()
 	return TRUE
 
 /datum/action/changeling/dissonant_shriek
@@ -40,8 +41,10 @@
 
 /datum/action/changeling/dissonant_shriek/sting_action(mob/user)
 	..()
-	for(var/obj/machinery/light/L in range(5, usr))
-		L.on = 1
-		L.break_light_tube()
 	empulse(get_turf(user), 2, 5, 1)
+	for(var/obj/machinery/light/L in range(5, usr))
+		L.on = TRUE
+		L.break_light_tube()
+		stoplag()
+
 	return TRUE

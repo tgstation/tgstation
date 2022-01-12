@@ -1,5 +1,4 @@
 GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
-GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective
 	var/datum/mind/owner //The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
@@ -15,13 +14,11 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/martyr_compatible = FALSE //If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 
 /datum/objective/New(text)
-	GLOB.objectives += src
 	if(text)
 		explanation_text = text
 
 //Apparently objectives can be qdel'd. Learn a new thing every day
 /datum/objective/Destroy()
-	GLOB.objectives -= src
 	return ..()
 
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
@@ -102,14 +99,6 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/proc/get_target()
 	return target
-
-/datum/objective/proc/get_crewmember_minds()
-	. = list()
-	for(var/V in GLOB.data_core.locked)
-		var/datum/data/record/R = V
-		var/datum/mind/M = R.fields["mindref"]
-		if(M)
-			. += M
 
 //dupe_search_range is a list of antag datums / minds / teams
 /datum/objective/proc/find_target(dupe_search_range, blacklist)
@@ -246,7 +235,13 @@ GLOBAL_LIST_EMPTY(objectives)
 
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	if (!target)
+		return TRUE
+	if (!considered_alive(target))
+		return TRUE
+	if (!target.current.onCentCom() && !target.current.onSyndieBase())
+		return TRUE
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target?.current)
@@ -299,7 +294,7 @@ GLOBAL_LIST_EMPTY(objectives)
 	if(human_check)
 		brain_target = target.current?.getorganslot(ORGAN_SLOT_BRAIN)
 	//Protect will always suceed when someone suicides
-	return !target || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
+	return !target || target.current?.suiciding || considered_alive(target, enforce_human = human_check) || brain_target?.suicided
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -572,6 +567,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 	var/approved_targets = list()
 	check_items:
 		for(var/datum/objective_item/possible_item in GLOB.possible_items)
+			if(possible_item.objective_type != OBJECTIVE_ITEM_TYPE_NORMAL)
+				continue
 			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)
@@ -749,15 +746,15 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbed_count = 0
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling || !changeling.stored_profiles)
 			continue
-		absorbedcount += changeling.absorbedcount
-	return absorbedcount >= target_amount
+		absorbed_count += changeling.absorbed_count
+	return absorbed_count >= target_amount
 
 /datum/objective/absorb_most
 	name = "absorb most"
@@ -765,17 +762,17 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/absorb_most/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/absorbedcount = 0
+	var/absorbed_count = 0
 	for(var/datum/mind/M in owners)
 		if(!M)
 			continue
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling || !changeling.stored_profiles)
 			continue
-		absorbedcount += changeling.absorbedcount
+		absorbed_count += changeling.absorbed_count
 
 	for(var/datum/antagonist/changeling/changeling2 in GLOB.antagonists)
-		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbedcount < absorbedcount)
+		if(!changeling2.owner || changeling2.owner == owner || !changeling2.stored_profiles || changeling2.absorbed_count < absorbed_count)
 			continue
 		return FALSE
 	return TRUE
@@ -792,12 +789,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/datum/antagonist/changeling/changeling = M.has_antag_datum(/datum/antagonist/changeling)
 		if(!changeling)
 			continue
-		var/total_genetic_points = changeling.geneticpoints
+		var/total_genetic_points = changeling.genetic_points
 
-		for(var/datum/action/changeling/p in changeling.purchasedpowers)
+		for(var/datum/action/changeling/p in changeling.purchased_powers)
 			total_genetic_points += p.dna_cost
 
-		if(total_genetic_points > initial(changeling.geneticpoints))
+		if(total_genetic_points > initial(changeling.genetic_points))
 			return TRUE
 	return FALSE
 

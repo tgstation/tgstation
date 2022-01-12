@@ -15,12 +15,12 @@
 	QDEL_NULL(song)
 	return ..()
 
-/obj/structure/musician/proc/should_stop_playing(mob/user)
-	if(!(anchored || can_play_unanchored))
-		return TRUE
-	if(!user)
-		return FALSE
-	return !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE) //can play with TK and while resting because fun.
+/obj/structure/musician/proc/should_stop_playing(atom/music_player)
+	if(!(anchored || can_play_unanchored) || !ismob(music_player))
+		return STOP_PLAYING
+	var/mob/user = music_player
+	if(!user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)) //can play with TK and while resting because fun.
+		return STOP_PLAYING
 
 /obj/structure/musician/ui_interact(mob/user)
 	. = ..()

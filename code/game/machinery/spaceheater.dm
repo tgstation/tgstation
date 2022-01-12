@@ -48,6 +48,11 @@
 	if(ispath(cell))
 		cell = new cell(src)
 	update_appearance()
+	SSair.start_processing_machine(src)
+
+/obj/machinery/space_heater/Destroy()
+	SSair.stop_processing_machine(src)
+	return..()
 
 /obj/machinery/space_heater/on_deconstruction()
 	if(cell)
@@ -75,7 +80,7 @@
 	if(panel_open && display_panel)
 		. += "[base_icon_state]-open"
 
-/obj/machinery/space_heater/process(delta_time)
+/obj/machinery/space_heater/process_atmos()
 	if(!on || !is_operational)
 		if (on) // If it's broken, turn it off too
 			on = FALSE
@@ -110,7 +115,7 @@
 
 	var/heat_capacity = enviroment.heat_capacity()
 	var/required_energy = abs(enviroment.temperature - target_temperature) * heat_capacity
-	required_energy = min(required_energy, heating_power * delta_time)
+	required_energy = min(required_energy, heating_power)
 
 	if(required_energy < 1)
 		return
@@ -180,10 +185,7 @@
 /obj/machinery/space_heater/attack_hand_secondary(mob/user, list/modifiers)
 	if(!can_interact(user))
 		return
-	on = !on
-	update_appearance()
-	if (on)
-		START_PROCESSING(SSmachines, src)
+	toggle_power()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/space_heater/ui_interact(mob/user, datum/tgui/ui)
@@ -225,12 +227,7 @@
 
 	switch(action)
 		if("power")
-			on = !on
-			mode = HEATER_MODE_STANDBY
-			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
-			update_appearance()
-			if (on)
-				START_PROCESSING(SSmachines, src)
+			toggle_power()
 			. = TRUE
 		if("mode")
 			set_mode = params["mode"]
@@ -259,6 +256,14 @@
 	. = ..()
 	panel_open = TRUE
 	update_appearance()
+
+/obj/machinery/space_heater/proc/toggle_power()
+	on = !on
+	mode = HEATER_MODE_STANDBY
+	usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
+	update_appearance()
+	if (on)
+		SSair.start_processing_machine(src)
 
 ///For use with heating reagents in a ghetto way
 /obj/machinery/space_heater/improvised_chem_heater

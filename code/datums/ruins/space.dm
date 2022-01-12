@@ -44,6 +44,12 @@
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
 
+/datum/map_template/ruin/space/asteroid6
+	id = "asteroid6"
+	suffix = "asteroid6.dmm"
+	name = "Asteroid 6"
+	description = "This asteroid has brittle bone disease, so it is fortunate asteroids dont have bones."
+
 /datum/map_template/ruin/space/deep_storage
 	id = "deep-storage"
 	suffix = "deepstorage.dmm"
@@ -98,6 +104,18 @@
 	name = "Derelict 6"
 	description = "The hush-hush of Nanotrasen when it comes to stations seemingly vanishing off the radar is an interesting topic, theories of nuclear destruction float about while Nanotrasen \
 	flat-out denies said stations ever existing."
+
+/datum/map_template/ruin/space/derelict7
+	id = "derelict7"
+	suffix = "derelict7.dmm"
+	name = "Derelict 7"
+	description = "The official report says there was a 'huge explosion' which was 'radical' and 'tubular'. Nothing is said about the explosion's cause."
+
+/datum/map_template/ruin/space/derelict8
+	id = "derelict8"
+	suffix = "derelict8.dmm"
+	name = "Derelict 8"
+	description = "An auxillary storage bay might be the least respected room on any functional station, but studies show they are the least likely to be hit in an artillery strike."
 
 /datum/map_template/ruin/space/empty_shell
 	id = "empty-shell"

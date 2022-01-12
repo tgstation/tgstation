@@ -94,9 +94,6 @@
 	if(anchored)
 		connect_to_network()
 
-/obj/machinery/power/port_gen/pacman/Initialize(mapload)
-	. = ..()
-
 	var/obj/S = sheet_path
 	sheet_name = initial(S.name)
 

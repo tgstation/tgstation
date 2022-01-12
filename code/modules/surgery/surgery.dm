@@ -21,6 +21,8 @@
 	var/self_operable = FALSE //Can the surgery be performed on yourself.
 	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
+	var/organ_to_manipulate 
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -52,7 +54,7 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -76,13 +78,8 @@
 	var/turf/patient_turf = get_turf(patient)
 
 	//Get the relevant operating computer
-	var/obj/machinery/computer/operating/opcomputer
-	var/obj/structure/table/optable/optable = locate(/obj/structure/table/optable, patient_turf)
-	if(optable?.computer)
-		opcomputer = optable.computer
-	if(!opcomputer)
-		return
-	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
+	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
+	if (isnull(opcomputer))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
@@ -132,6 +129,22 @@
 		story_value = STORY_VALUE_OKAY
 	)
 	qdel(src)
+
+/// Returns a nearby operating computer linked to an operating table
+/datum/surgery/proc/locate_operating_computer(turf/patient_turf)
+	if (isnull(patient_turf))
+		return null
+
+	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
+	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
+
+	if (isnull(operating_computer))
+		return null
+
+	if(operating_computer.machine_stat & (NOPOWER|BROKEN))
+		return null
+
+	return operating_computer
 
 /datum/surgery/advanced
 	name = "advanced surgery"

@@ -42,7 +42,8 @@
 #define RACEMUT /datum/mutation/human/race
 #define RADIOACTIVE /datum/mutation/human/radioactive
 #define SHOCKTOUCH /datum/mutation/human/shock
-#define SPACEMUT /datum/mutation/human/space_adaptation
+#define TEMPADAPT /datum/mutation/human/temperature_adaptation
+#define PRESSUREADAPT /datum/mutation/human/pressure_adaptation
 #define SPASTIC /datum/mutation/human/spastic
 #define SPIDER_WEB /datum/mutation/human/webbing
 #define STIMMED /datum/mutation/human/stimmed
@@ -62,6 +63,8 @@
 
 #define BURDENED /datum/mutation/human/burdened
 #define HONORBOUND /datum/mutation/human/honorbound
+
+#define TK_MOD /datum/mutation/human/telekinesis/mod
 
 #define UE_CHANGED "ue changed"
 #define UI_CHANGED "ui changed"
@@ -84,6 +87,8 @@
 
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE 3
+
+#define DNA_BLOCK_SIZE_COLOR DEFAULT_HEX_COLOR_LEN
 
 #define DNA_EYE_COLOR_BLOCK 4
 #define DNA_FACIAL_HAIR_COLOR_BLOCK 2
@@ -146,6 +151,8 @@
 #define NOBLOODOVERLAY 20
 ///No augments, for monkeys in specific because they will turn into fucking freakazoids https://cdn.discordapp.com/attachments/326831214667235328/791313258912153640/102707682-fa7cad80-4294-11eb-8f13-8c689468aeb0.png
 #define NOAUGMENTS 21
+///will be assigned a universal vampire themed last name shared by their department. this is preferenced!
+#define BLOOD_CLANS 22
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"

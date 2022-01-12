@@ -106,32 +106,6 @@
 	if(istype(mover, /mob/living/simple_animal/hostile/morph))
 		return TRUE
 
-/obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
-	name = "pride's mirror"
-	desc = "Pride cometh before the..."
-	icon_state = "magic_mirror"
-
-/obj/structure/mirror/magic/pride/New()
-	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
-		if(initial(species_type.changesource_flags) & MIRROR_PRIDE)
-			choosable_races += initial(species_type.name)
-	..()
-
-/obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message(span_danger("<B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B>"), \
-	span_notice("Perfect. Much better! Now <i>nobody</i> will be able to resist yo-"))
-
-	var/turf/T = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if (levels.len)
-		dest = locate(T.x, T.y, pick(levels))
-
-	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/C = T
-	C.set_target(dest)
-	C.drop(user)
-
 //can't be bothered to do sloth right now, will make later
 
 /obj/item/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.

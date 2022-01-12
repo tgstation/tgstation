@@ -128,7 +128,7 @@
 
 	return TRUE
 
-/obj/machinery/door/window/can_atmos_pass(turf/T)
+/obj/machinery/door/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(get_dir(loc, T) == dir)
 		return !density
 	else
@@ -235,69 +235,68 @@
 		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"
 		open(2)
 
-/obj/machinery/door/window/attackby(obj/item/I, mob/living/user, params)
-
-	if(operating)
+/obj/machinery/door/window/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
 		return
-
+	if(density || operating)
+		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
+		return
 	add_fingerprint(user)
-	if(!(flags_1&NODECONSTRUCT_1))
-		if(I.tool_behaviour == TOOL_SCREWDRIVER)
-			if(density || operating)
-				to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
-				return
-			I.play_tool_sound(src)
-			panel_open = !panel_open
-			to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the [name]."))
-			return
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
+	return TRUE
 
-		if(I.tool_behaviour == TOOL_CROWBAR)
-			if(panel_open && !density && !operating)
-				user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
-					span_notice("You start to remove electronics from the [name]..."))
-				if(I.use_tool(src, user, 40, volume=50))
-					if(panel_open && !density && !operating && loc)
-						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(loc)
-						switch(base_state)
-							if("left")
-								WA.facing = "l"
-							if("right")
-								WA.facing = "r"
-							if("leftsecure")
-								WA.facing = "l"
-								WA.secure = TRUE
-							if("rightsecure")
-								WA.facing = "r"
-								WA.secure = TRUE
-						WA.set_anchored(TRUE)
-						WA.state= "02"
-						WA.setDir(dir)
-						WA.update_appearance()
-						WA.created_name = name
-
-						if(obj_flags & EMAGGED)
-							to_chat(user, span_warning("You discard the damaged electronics."))
-							qdel(src)
-							return
-
-						to_chat(user, span_notice("You remove the airlock electronics."))
-
-						var/obj/item/electronics/airlock/ae
-						if(!electronics)
-							ae = new/obj/item/electronics/airlock(drop_location())
-							if(req_one_access)
-								ae.one_access = 1
-								ae.accesses = req_one_access
-							else
-								ae.accesses = req_access
-						else
-							ae = electronics
-							electronics = null
-							ae.forceMove(drop_location())
-
-						qdel(src)
-				return
-	return ..()
+/obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return
+	if(!panel_open || density || operating)
+		return
+	add_fingerprint(user)
+	user.visible_message(span_notice("[user] removes the electronics from the [name]."), \
+	span_notice("You start to remove electronics from the [name]..."))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return
+	if(!panel_open || density || operating || !loc)
+		return
+	var/obj/structure/windoor_assembly/windoor_assembly = new /obj/structure/windoor_assembly(loc)
+	switch(base_state)
+		if("left")
+			windoor_assembly.facing = "l"
+		if("right")
+			windoor_assembly.facing = "r"
+		if("leftsecure")
+			windoor_assembly.facing = "l"
+			windoor_assembly.secure = TRUE
+		if("rightsecure")
+			windoor_assembly.facing = "r"
+			windoor_assembly.secure = TRUE
+	windoor_assembly.set_anchored(TRUE)
+	windoor_assembly.state= "02"
+	windoor_assembly.setDir(dir)
+	windoor_assembly.update_appearance()
+	windoor_assembly.created_name = name
+	if(obj_flags & EMAGGED)
+		to_chat(user, span_warning("You discard the damaged electronics."))
+		qdel(src)
+		return
+	to_chat(user, span_notice("You remove the airlock electronics."))
+	var/obj/item/electronics/airlock/dropped_electronics
+	if(!electronics)
+		dropped_electronics = new/obj/item/electronics/airlock(drop_location())
+		if(req_one_access)
+			dropped_electronics.one_access = 1
+			dropped_electronics.accesses = req_one_access
+		else
+			dropped_electronics.accesses = req_access
+	else
+		dropped_electronics = electronics
+		electronics = null
+		dropped_electronics.forceMove(drop_location())
+		qdel(src)
+	return TRUE
 
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)

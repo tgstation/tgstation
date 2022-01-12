@@ -585,25 +585,19 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/centcom/admin/storage)
-"cD" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
+"cC" = (
+/obj/structure/destructible/cult/item_dispenser/altar{
+	desc = "An altar dedicated to the Wizard Federation."
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/briefing)
+/obj/item/knife/ritual,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "cE" = (
 /obj/effect/turf_decal/tile/yellow/half{
 	dir = 4
@@ -824,11 +818,10 @@
 /turf/open/floor/stone,
 /area/centcom/holding)
 "dr" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "A little medical robot. You can make out the word \"sincerity\" on its chassis.";
 	name = "Hijikata";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/wood/large,
 /area/centcom/holding)
@@ -964,10 +957,6 @@
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
-/area/centcom/holding)
-"ed" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood/parquet,
 /area/centcom/holding)
 "eh" = (
 /obj/structure/chair/office,
@@ -1139,7 +1128,7 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/intern,
+/obj/effect/mob_spawn/corpse/human/intern,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
@@ -1599,11 +1588,10 @@
 /turf/open/floor/iron,
 /area/tdome/arena)
 "gV" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Momo";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -1995,7 +1983,7 @@
 /obj/item/grenade/c4/x4,
 /obj/structure/table/reinforced,
 /obj/item/clothing/ears/earmuffs,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/centcom/control)
@@ -2257,7 +2245,7 @@
 /turf/open/floor/iron,
 /area/centcom/supply)
 "jg" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3215,7 +3203,7 @@
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lj" = (
-/obj/structure/closet/abductor,
+/obj/machinery/limbgrower/fullupgrade,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "lk" = (
@@ -3999,7 +3987,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/control)
 "mW" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -5862,7 +5850,7 @@
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/security_unit/directional/north,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -7672,6 +7660,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
+"wW" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron/dark,
+/area/centcom/briefing)
 "wX" = (
 /obj/structure/sink{
 	dir = 4;
@@ -8438,10 +8440,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/evac)
-"zo" = (
-/obj/structure/destructible/cult/tome,
-/turf/open/floor/engine/cult,
-/area/wizard_station)
 "zp" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
@@ -8584,13 +8582,6 @@
 /area/centcom/supplypod/loading/two)
 "zN" = (
 /obj/structure/bookcase/random/reference,
-/turf/open/floor/engine/cult,
-/area/wizard_station)
-"zO" = (
-/obj/structure/destructible/cult/talisman{
-	desc = "An altar dedicated to the Wizards' Federation"
-	},
-/obj/item/knife/ritual,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "zP" = (
@@ -9485,7 +9476,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /obj/item/camera,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -9828,7 +9819,7 @@
 	},
 /obj/item/storage/box/silver_ids,
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -10684,7 +10675,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/syringes,
 /obj/item/gun/syringe/rapidsyringe,
-/obj/structure/reagent_dispensers/peppertank/directional/south,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/south,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -10823,13 +10814,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/tdome/tdomeobserve)
-"FT" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the wizard's ship";
-	name = "magma engine"
-	},
-/turf/open/floor/engine/cult,
-/area/wizard_station)
 "FU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -13716,14 +13700,8 @@
 "Mm" = (
 /turf/open/floor/grass,
 /area/centcom/holding)
-"Mt" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom/admin)
-"Mu" = (
-/obj/structure/destructible/cult/tome,
+"Mq" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /obj/item/book/codex_gigas,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral{
@@ -13737,6 +13715,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/centcom/admin)
+"Mt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/wood,
 /area/centcom/admin)
 "My" = (
 /obj/structure/chair/office{
@@ -14558,6 +14542,10 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
+"Qh" = (
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Ql" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/tile,
@@ -14581,6 +14569,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"Qq" = (
+/obj/structure/destructible/cult/item_dispenser/archives/library,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "Qt" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/plating/sandy_dirt,
@@ -14894,6 +14886,7 @@
 "RQ" = (
 /obj/structure/closet/abductor,
 /obj/item/storage/box/alienhandcuffs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
 /turf/open/floor/plating/abductor,
 /area/abductor_ship)
 "RU" = (
@@ -14937,11 +14930,10 @@
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
 "Sa" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/simple_animal/bot/medbot/stationary{
 	desc = "When engaged in combat, the vanquishing of thine enemy can be the warrior's only concern.";
 	name = "Hattori";
-	radio_key = null;
-	stationary_mode = 1
+	radio_key = null
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
@@ -14961,7 +14953,7 @@
 /area/centcom/supplypod/loading/two)
 "Sh" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/suit/space/hardsuit/deathsquad{
+/obj/item/mod/control/pre_equipped/corporate{
 	pixel_y = 5
 	},
 /obj/item/clothing/gloves/combat,
@@ -15052,13 +15044,6 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
-"Sz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron,
-/area/centcom/supplypod/loading/ert)
 "SD" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
@@ -15956,15 +15941,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating/beach/sand,
 /area/centcom/holding)
-"VX" = (
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/nukeop,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "VZ" = (
 /obj/structure/closet/secure_closet/ert_med,
 /obj/structure/sign/directions/medical{
@@ -21781,9 +21757,9 @@ qE
 qE
 qE
 yC
-zo
+Qq
 zN
-zo
+Qq
 Bf
 qE
 Ax
@@ -22552,9 +22528,9 @@ vj
 vj
 qE
 yC
-zo
+Qq
 qZ
-zo
+Qq
 Bf
 qE
 qZ
@@ -23338,7 +23314,7 @@ qE
 qE
 qZ
 qZ
-FT
+Qh
 Gr
 qE
 lI
@@ -23838,7 +23814,7 @@ qZ
 yb
 qZ
 qZ
-zO
+cC
 Ay
 qZ
 BS
@@ -24366,7 +24342,7 @@ qE
 qE
 EY
 qZ
-FT
+Qh
 Gr
 qE
 lI
@@ -44163,7 +44139,7 @@ es
 bu
 fO
 Pf
-hb
+Sa
 cH
 fO
 Oe
@@ -44420,7 +44396,7 @@ AG
 AG
 Up
 hb
-Sa
+hb
 ge
 fO
 UC
@@ -52880,7 +52856,7 @@ px
 mD
 pD
 pX
-Sz
+pX
 pX
 rb
 oe
@@ -53394,7 +53370,7 @@ mD
 wT
 PA
 cb
-cD
+wW
 wi
 Yh
 Th
@@ -56719,7 +56695,7 @@ On
 BV
 VE
 bz
-Mu
+Mq
 YJ
 YU
 xy

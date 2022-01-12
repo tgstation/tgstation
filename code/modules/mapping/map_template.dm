@@ -44,6 +44,7 @@
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/movable/movables = list()
+	var/list/obj/docking_port/stationary/ports = list()
 	var/list/area/areas = list()
 
 	var/list/turfs = block(
@@ -71,6 +72,8 @@
 				continue
 			if(istype(movable_in_turf, /obj/machinery/atmospherics))
 				atmos_machines += movable_in_turf
+			if(istype(movable_in_turf, /obj/docking_port/stationary))
+				ports += movable_in_turf
 
 	// Not sure if there is some importance here to make sure the area is in z
 	// first or not.  Its defined In Initialize yet its run first in templates
@@ -82,10 +85,19 @@
 
 	SSatoms.InitializeAtoms(areas + turfs + movables, returns_created_atoms ? created_atoms : null)
 
+	for(var/turf/unlit as anything in turfs)
+		if(unlit.always_lit)
+			continue
+		var/area/loc_area = unlit.loc
+		if(!loc_area.static_lighting)
+			continue
+		unlit.lighting_build_overlay()
+
 	// NOTE, now that Initialize and LateInitialize run correctly, do we really
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+	SSshuttle.setup_shuttles(ports)
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(

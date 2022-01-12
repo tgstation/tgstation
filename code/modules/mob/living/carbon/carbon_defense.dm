@@ -276,9 +276,9 @@
 
 	var/directional_blocked = FALSE
 	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
-	if(shove_blocked && can_hit_something)
-		if(!(shove_dir in GLOB.cardinals)) //Directional checks to make sure that we're not shoving through a windoor or something like that
-			return
+
+	//Directional checks to make sure that we're not shoving through a windoor or something like that
+	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
 		var/target_turf = get_turf(target)
 		for(var/obj/obj_content in target_turf)
 			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
@@ -291,7 +291,10 @@
 					break
 
 	if(can_hit_something)
-		if(directional_blocked || (!(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED) && shove_blocked))
+		//Don't hit people through windows, ok?
+		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
+			return
+		if(directional_blocked || shove_blocked)
 			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
 				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
@@ -416,6 +419,17 @@
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(M, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
+
+	else if ((M.zone_selected == BODY_ZONE_PRECISE_GROIN) && !isnull(src.getorgan(/obj/item/organ/tail)))
+		SEND_SIGNAL(src, COMSIG_CARBON_TAILPULL, M)
+		M.visible_message(span_notice("[M] pulls on [src]'s tail!"), \
+					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))
+		to_chat(M, span_notice("You pull on [src]'s tail!"))
+		to_chat(src, span_notice("[M] pulls on your tail!"))
+		if(HAS_TRAIT(src, TRAIT_BADTOUCH)) //How dare they!
+			to_chat(M, span_warning("[src] makes a grumbling noise as you pull on [p_their()] tail."))
+		else
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "tailpulled", /datum/mood_event/tailpulled)
 
 	else
 		SEND_SIGNAL(src, COMSIG_CARBON_HUGGED, M)
@@ -592,6 +606,8 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
+	if(health <= hardcrit_threshold)
+		. = FALSE
 
 
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)

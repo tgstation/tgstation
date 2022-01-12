@@ -3,7 +3,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/powered/mailroom)

@@ -16,7 +16,7 @@
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustPests(rand(2,3))
+		mytray.adjust_pestlevel(rand(2,3))
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
@@ -42,6 +42,7 @@
 
 
 /datum/reagent/blood/on_new(list/data)
+	. = ..()
 	if(istype(data))
 		SetViruses(src, data)
 
@@ -93,10 +94,10 @@
 
 /datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
-	mytray.adjustPests(rand(2,3))
+	mytray.adjust_pestlevel(rand(2,3))
 
 /datum/reagent/liquidgibs
-	name = "Liquid gibs"
+	name = "Liquid Gibs"
 	color = "#CC4633"
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
@@ -106,7 +107,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/bone_dust
-	name = "bone dust"
+	name = "Bone Dust"
 	color = "#dbcdcb"
 	description = "Ground up bones, gross!"
 	taste_description = "the most disgusting grain in existence"
@@ -212,6 +213,12 @@
 	. = ..()
 	if(methods & TOUCH)
 		exposed_mob.extinguish_mob() // extinguish removes all fire stacks
+	if(methods & VAPOR)
+		if(!isfelinid(exposed_mob))
+			return
+		exposed_mob.incapacitate(1) // startles the felinid, canceling any do_after
+		SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "watersprayed", /datum/mood_event/watersprayed)
+
 
 /datum/reagent/water/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	. = ..()
@@ -221,7 +228,7 @@
 ///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(src.type) * 1))
 		//You don't belong in this world, monster!
 		chems.remove_reagent(/datum/reagent/water, chems.get_reagent_amount(src.type))
 
@@ -239,8 +246,8 @@
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 		if(myseed)
 			myseed.adjust_instability(round(chems.get_reagent_amount(type) * 0.15))
 
@@ -309,7 +316,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/hydrogen_peroxide
-	name = "Hydrogen peroxide"
+	name = "Hydrogen Peroxide"
 	description = "An ubiquitous chemical substance that is composed of hydrogen and oxygen and oxygen." //intended intended
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
 	taste_description = "burning water"
@@ -879,10 +886,10 @@
 /datum/reagent/chlorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 1.5))
-		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustWeeds(-rand(1,3))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 1.5))
+		mytray.adjust_waterlevel(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjust_weedlevel(-rand(1,3))
 		// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
 
 
@@ -904,10 +911,10 @@
 /datum/reagent/fluorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 2))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2.5))
-		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustWeeds(-rand(1,4))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 2.5))
+		mytray.adjust_waterlevel(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjust_weedlevel(-rand(1,4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustToxLoss(0.5*REM*delta_time, 0)
@@ -936,9 +943,9 @@
 /datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 0.75))
-		mytray.adjustWater(-round(chems.get_reagent_amount(src.type) * 0.5))
-		mytray.adjustWeeds(-rand(1,2))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 0.75))
+		mytray.adjust_waterlevel(-round(chems.get_reagent_amount(src.type) * 0.5))
+		mytray.adjust_weedlevel(-rand(1,2))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1046,8 +1053,8 @@
 	. = ..()
 	mytray.mutation_roll(user)
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 2))
 
 /datum/reagent/uranium/radium
 	name = "Radium"
@@ -1063,8 +1070,8 @@
 /datum/reagent/uranium/radium/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(src.type) * 1))
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1111,7 +1118,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/fuel
-	name = "Welding fuel"
+	name = "Welding Fuel"
 	description = "Required for welders. Flammable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
@@ -1136,7 +1143,7 @@
 	return TRUE
 
 /datum/reagent/space_cleaner
-	name = "Space cleaner"
+	name = "Space Cleaner"
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
@@ -1249,7 +1256,7 @@
 		exposed_mob.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
 
 /datum/reagent/fungalspores
-	name = "Tubercle bacillus Cosmosis microbes"
+	name = "Tubercle Bacillus Cosmosis Microbes"
 	description = "Active fungal spores."
 	color = "#92D17D" // rgb: 146, 209, 125
 	taste_description = "slime"
@@ -1283,7 +1290,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
-	name = "Foaming agent"
+	name = "Foaming Agent"
 	description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1292,7 +1299,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
-	name = "Smart foaming agent"
+	name = "Smart Foaming Agent"
 	description = "An agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
 	reagent_state = SOLID
 	color = "#664B63" // rgb: 102, 75, 99
@@ -1313,7 +1320,7 @@
 	. = ..()
 	// Ammonia is bad ass.
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.12))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.12))
 		if(myseed && prob(10))
 			myseed.adjust_yield(1)
 			myseed.adjust_instability(1)
@@ -1330,8 +1337,8 @@
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustPests(-rand(1,2))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_pestlevel(-rand(1,2))
 		if(myseed)
 			myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 1))
 			myseed.adjust_instability(-round(chems.get_reagent_amount(src.type) * 1))
@@ -1382,55 +1389,55 @@
 		M.set_confusion(min(M.get_confusion() + 2, 5))
 	..()
 
-/datum/reagent/stimulum
-	name = "Stimulum"
-	description = "An unstable experimental gas that greatly increases the energy of those that inhale it, while dealing increasing toxin damage over time."
+/datum/reagent/nitrium_high_metabolization
+	name = "Nitrosyl plasmide"
+	description = "A highly reactive byproduct that stops you from sleeping, while dealing increasing toxin damage over time."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
 	ph = 1.8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 	addiction_types = list(/datum/addiction/stimulants = 14)
 
-/datum/reagent/stimulum/on_mob_metabolize(mob/living/L)
-	..()
+/datum/reagent/nitrium_high_metabolization/on_mob_metabolize(mob/living/L)
+	. = ..()
 	ADD_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 
-/datum/reagent/stimulum/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/nitrium_high_metabolization/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_STUNIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
-	..()
+	return ..()
 
-/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/nitrium_high_metabolization/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjustStaminaLoss(-2 * REM * delta_time, 0)
 	M.adjustToxLoss(0.1 * current_cycle * REM * delta_time, 0) // 1 toxin damage per cycle at cycle 10
-	..()
+	return ..()
 
-/datum/reagent/nitryl
-	name = "Nitryl"
+/datum/reagent/nitrium_low_metabolization
+	name = "Nitrium"
 	description = "A highly reactive gas that makes you feel faster."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
-	..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
+/datum/reagent/nitrium_low_metabolization/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
 
-/datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
-	..()
+/datum/reagent/nitrium_low_metabolization/on_mob_end_metabolize(mob/living/L)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitrium)
+	return ..()
 
 /datum/reagent/freon
 	name = "Freon"
 	description = "A powerful heat absorbent."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hypernoblium are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -1447,7 +1454,7 @@
 	name = "Hyper-Noblium"
 	description = "A suppressive gas that stops gas reactions on those who inhale it."
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because nitrium/freon/hyper-nob are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "searingly cold"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -1638,7 +1645,7 @@
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
 /datum/reagent/plantnutriment
-	name = "Generic nutriment"
+	name = "Generic Nutriment"
 	description = "Some kind of nutriment. You can't really tell what it is. You should probably report it, along with how you obtained it."
 	color = "#000000" // RBG: 0, 0, 0
 	var/tox_prob = 0
@@ -1675,7 +1682,7 @@
 /datum/reagent/plantnutriment/left4zednutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(myseed && chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 0.1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 0.1))
 		myseed.adjust_instability(round(chems.get_reagent_amount(src.type) * 0.2))
 
 /datum/reagent/plantnutriment/robustharvestnutriment
@@ -2004,7 +2011,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/acetone_oxide
-	name = "Acetone oxide"
+	name = "Acetone Oxide"
 	description = "Enslaved oxygen"
 	reagent_state = LIQUID
 	color = "#C8A5DC"
@@ -2042,8 +2049,8 @@
 /datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustWeeds(-1)
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjust_weedlevel(-1)
 
 /datum/reagent/acetone
 	name = "Acetone"
@@ -2192,7 +2199,7 @@
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
 		var/salt = chems.get_reagent_amount(src.type)
-		mytray.adjustHealth(round(salt * 0.18))
+		mytray.adjust_plant_health(round(salt * 0.18))
 		if(myseed)
 			myseed.adjust_production(-round(salt/10)-prob(salt%10))
 			myseed.adjust_potency(round(salt*1))
@@ -2207,7 +2214,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/drying_agent
-	name = "Drying agent"
+	name = "Drying Agent"
 	description = "A desiccant. Can be used to dry things."
 	reagent_state = LIQUID
 	color = "#A70FFF"
@@ -2232,51 +2239,51 @@
 // Virology virus food chems.
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood
-	name = "mutagenic agar"
+	name = "Mutagenic Agar"
 	color = "#A3C00F" // rgb: 163,192,15
 	taste_description = "sourness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutagen/mutagenvirusfood/sugar
-	name = "sucrose agar"
+	name = "Sucrose Agar"
 	color = "#41B0C0" // rgb: 65,176,192
 	taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/medicine/synaptizine/synaptizinevirusfood
-	name = "virus rations"
+	name = "Virus Rations"
 	color = "#D18AA5" // rgb: 209,138,165
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/plasma/plasmavirusfood
-	name = "virus plasma"
+	name = "Virus Plasma"
 	color = "#A270A8" // rgb: 166,157,169
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/plasma/plasmavirusfood/weak
-	name = "weakened virus plasma"
+	name = "Weakened Virus Plasma"
 	color = "#A28CA5" // rgb: 206,195,198
 	taste_description = "bitterness"
 	taste_mult = 1.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium/uraniumvirusfood
-	name = "decaying uranium gel"
+	name = "Decaying Uranium Gel"
 	color = "#67ADBA" // rgb: 103,173,186
 	taste_description = "the inside of a reactor"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium/uraniumvirusfood/unstable
-	name = "unstable uranium gel"
+	name = "Unstable Uranium Gel"
 	color = "#2FF2CB" // rgb: 47,242,203
 	taste_description = "the inside of a reactor"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/uranium/uraniumvirusfood/stable
-	name = "stable uranium gel"
+	name = "Stable Uranium Gel"
 	color = "#04506C" // rgb: 4,80,108
 	taste_description = "the inside of a reactor"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -2284,7 +2291,7 @@
 // Bee chemicals
 
 /datum/reagent/royal_bee_jelly
-	name = "royal bee jelly"
+	name = "Royal Bee Jelly"
 	description = "Royal Bee Jelly, if injected into a Queen Space Bee said bee will split into two bees."
 	color = "#00ff80"
 	taste_description = "strange honey"
@@ -2364,7 +2371,7 @@
 	..()
 
 /datum/reagent/plastic_polymers
-	name = "plastic polymers"
+	name = "Plastic Polymers"
 	description = "the petroleum based components of plastic."
 	color = "#f7eded"
 	taste_description = "plastic"
@@ -2372,7 +2379,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/glitter
-	name = "generic glitter"
+	name = "Generic Glitter"
 	description = "if you can see this description, contact a coder."
 	color = "#FFFFFF" //pure white
 	taste_description = "plastic"
@@ -2387,20 +2394,20 @@
 	new glitter_type(exposed_turf)
 
 /datum/reagent/glitter/pink
-	name = "pink glitter"
+	name = "Pink Glitter"
 	description = "pink sparkles that get everywhere"
 	color = "#ff8080" //A light pink color
 	glitter_type = /obj/effect/decal/cleanable/glitter/pink
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/glitter/white
-	name = "white glitter"
+	name = "White Glitter"
 	description = "white sparkles that get everywhere"
 	glitter_type = /obj/effect/decal/cleanable/glitter/white
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/glitter/blue
-	name = "blue glitter"
+	name = "Blue Glitter"
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
@@ -2424,22 +2431,22 @@
 	..()
 
 /datum/reagent/bz_metabolites
-	name = "BZ metabolites"
+	name = "BZ Metabolites"
 	description = "A harmless metabolite of BZ gas."
 	color = "#FAFF00"
 	taste_description = "acrid cinnamon"
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
-	if(L.mind)
-		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
+/datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
+	if(target.mind)
+		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.chem_charges = max(changeling.chem_charges - (2 * REM * delta_time), 0)
+			changeling.adjust_chemicals(-2 * REM * delta_time)
 	return ..()
 
 /datum/reagent/pax/peaceborg
-	name = "synthpax"
+	name = "Synthpax"
 	description = "A colorless liquid that suppresses violence in its subjects. Cheaper to synthesize than normal Pax, but wears off faster."
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
@@ -2707,7 +2714,7 @@
 	..()
 
 /datum/reagent/universal_indicator
-	name = "Universal indicator"
+	name = "Universal Indicator"
 	description = "A solution that can be used to create pH paper booklets, or sprayed on things to colour them by their pH."
 	taste_description = "a strong chemical taste"
 	color = "#1f8016"
@@ -2790,7 +2797,7 @@
 
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead
-	name = "lead"
+	name = "Lead"
 	description = "A dull metalltic element with a low melting point."
 	taste_description = "metal"
 	reagent_state = SOLID
@@ -2803,7 +2810,7 @@
 
 //The main feedstock for kronkaine production, also a shitty stamina healer.
 /datum/reagent/kronkus_extract
-	name = "kronkus extract"
+	name = "Kronkus Extract"
 	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
 	taste_description = "bitterness"
 	color = "#228f63"
@@ -2814,4 +2821,3 @@
 	. = ..()
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
-

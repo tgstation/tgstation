@@ -33,6 +33,9 @@
 	var/turf/open/location_return = null
 
 /datum/reagent/eigenstate/on_new(list/data)
+	. = ..()
+	if(!data)
+		return
 	location_created = data["location_created"]
 
 /datum/reagent/eigenstate/expose_mob(mob/living/living_mob, methods, reac_volume, show_message, touch_protection)
@@ -61,7 +64,7 @@
 	eigenstate.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	eigenstate.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	eigenstate.set_anchored(TRUE) //So space wind cannot drag it.
-	eigenstate.name = "[living_mob.name]'s eigenstate"//If someone decides to right click.
+	eigenstate.name = "[living_mob.name]'s Eigenstate"//If someone decides to right click.
 	eigenstate.set_light(2)	//hologram lighting
 
 	location_return = get_turf(living_mob)	//sets up return point

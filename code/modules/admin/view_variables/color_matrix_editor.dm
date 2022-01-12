@@ -115,7 +115,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/color_matrix_proxy_view)
 /datum/color_matrix_editor/proc/on_confirm()
 	var/atom/target_atom = target?.resolve()
 	if(istype(target_atom))
-		target_atom.add_atom_colour(current_color, ADMIN_COLOUR_PRIORITY)
+		target_atom.vv_edit_var("color", current_color)
 
 /datum/color_matrix_editor/proc/wait()
 	while(!closed)

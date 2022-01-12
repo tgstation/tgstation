@@ -269,6 +269,27 @@
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
 
+/datum/computer_file/program/radar/fission360/run_program(mob/living/user)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
+	if(computer)
+		RegisterSignal(computer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+
+/datum/computer_file/program/radar/fission360/kill_program(forced)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
+	if(computer)
+		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+/datum/computer_file/program/radar/fission360/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
+	if(computer)
+		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
+	return ..()
+
 /datum/computer_file/program/radar/fission360/find_atom()
 	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
 
@@ -277,17 +298,57 @@
 		return
 	next_scan = world.time + (2 SECONDS)
 	objects = list()
-	for(var/i in GLOB.nuke_list)
-		var/obj/machinery/nuclearbomb/nuke = i
 
-		var/list/nukeinfo = list(
+	// All the nukes
+	for(var/obj/machinery/nuclearbomb/nuke as anything in GLOB.nuke_list)
+		var/list/nuke_info = list(
 			ref = REF(nuke),
 			name = nuke.name,
 			)
-		objects += list(nukeinfo)
+		objects += list(nuke_info)
+
+	// Dat fukken disk
 	var/obj/item/disk/nuclear/disk = locate() in SSpoints_of_interest.real_nuclear_disks
-	var/list/nukeinfo = list(
+	var/list/disk_info = list(
 		ref = REF(disk),
 		name = "Nuke Auth. Disk",
 		)
-	objects += list(nukeinfo)
+	objects += list(disk_info)
+
+	// The infiltrator
+	var/obj/docking_port/mobile/infiltrator = SSshuttle.getShuttle("syndicate")
+	var/list/ship_info = list(
+		ref = REF(infiltrator),
+		name = "Infiltrator",
+		)
+	objects += list(ship_info)
+
+/*
+ * Signal proc for [COMSIG_PARENT_EXAMINE], registered on the computer.
+ * Shows how long any armed nukes are to detonating.
+ */
+/datum/computer_file/program/radar/fission360/proc/on_examine(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	for(var/obj/machinery/nuclearbomb/bomb as anything in GLOB.nuke_list)
+		if(bomb.timing)
+			examine_list += span_danger("Extreme danger. Arming signal detected. Time remaining: [bomb.get_time_left()].")
+
+/*
+ * Signal proc for [COMSIG_GLOB_NUKE_DEVICE_ARMED].
+ * Warns anyone nearby or holding the computer that a nuke was armed.
+ */
+/datum/computer_file/program/radar/fission360/proc/on_nuke_armed(datum/source, obj/machinery/nuclearbomb/bomb)
+	SIGNAL_HANDLER
+
+	if(!computer)
+		return
+
+	playsound(computer, 'sound/items/nuke_toy_lowpower.ogg', 50, FALSE)
+	if(isliving(computer.loc))
+		to_chat(computer.loc, span_userdanger("Your [computer.name] vibrates and lets out an ominous alarm. Uh oh."))
+	else
+		computer.audible_message(
+			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
+			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
+			)

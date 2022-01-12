@@ -98,9 +98,6 @@
 		var/mob/M = loc
 		M.update_inv_shoes()
 
-/obj/item/proc/negates_gravity()
-	return FALSE
-
 /**
  * adjust_laces adjusts whether our shoes (assuming they can_be_tied) and tied, untied, or knotted
  *
@@ -262,6 +259,9 @@
 
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
+	
+	if (!can_be_tied)
+		return
 
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		to_chat(user, span_warning("You're already interacting with [src]!"))
@@ -271,4 +271,4 @@
 
 	if(do_after(user, lace_time, target = src,extra_checks = CALLBACK(src, .proc/still_shoed, user)))
 		to_chat(user, span_notice("You [tied ? "untie" : "tie"] the laces on [src]."))
-		adjust_laces(tied ? SHOES_TIED : SHOES_UNTIED, user)
+		adjust_laces(tied ? SHOES_UNTIED : SHOES_TIED, user)

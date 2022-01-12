@@ -269,7 +269,7 @@
 				auth = FALSE
 				screen = MSG_MON_SCREEN_MAIN
 			else
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+				var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 				if(dkey && dkey != "")
 					if(linkedServer.decryptkey == dkey)
 						auth = TRUE
@@ -288,10 +288,11 @@
 			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
 				message_servers += M
 
-			if(message_servers.len > 1)
-				linkedServer = input(usr, "Please select a server.", "Select a server.", null) as null|anything in message_servers
-				message = span_alert("NOTICE: Server selected.")
-			else if(message_servers.len > 0)
+			if(length(message_servers) > 1)
+				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
+				if(linkedServer)
+					message = span_alert("NOTICE: Server selected.")
+			else if(length(message_servers) > 0)
 				linkedServer = message_servers[1]
 				message = span_notice("NOTICE: Only Single Server Detected - Server selected.")
 			else
@@ -323,14 +324,12 @@
 			if(LINKED_SERVER_NONRESPONSIVE)
 				message = noserver
 			else if(auth)
-				var/dkey = stripped_input(usr, "Please enter the decryption key.")
+				var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption")
 				if(dkey && dkey != "")
 					if(linkedServer.decryptkey == dkey)
-						var/newkey = stripped_input(usr,"Please enter the new key (3 - 16 characters max):")
+						var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", 16)
 						if(length(newkey) <= 3)
 							message = span_notice("NOTICE: Decryption key too short!")
-						else if(length(newkey) > 16)
-							message = span_notice("NOTICE: Decryption key too long!")
 						else if(newkey && newkey != "")
 							linkedServer.decryptkey = newkey
 						message = span_notice("NOTICE: Decryption key set.")
@@ -384,24 +383,24 @@
 
 					//Select Your Name
 					if("Sender")
-						customsender = stripped_input(usr, "Please enter the sender's name.") || customsender
+						customsender = tgui_input_text(usr, "Please enter the sender's name.", "Sender") || customsender
 
 					//Select Receiver
 					if("Recepient")
 						//Get out list of viable PDAs
 						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && GLOB.PDAs.len > 0)
-							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sendPDAs
+						if(GLOB.PDAs && length(GLOB.PDAs) > 0)
+							customrecepient = tgui_input_list(usr, "Select a PDA from the list", "PDA Selection", sendPDAs)
 						else
 							customrecepient = null
 
 					//Enter custom job
 					if("RecJob")
-						customjob = stripped_input(usr, "Please enter the sender's job.") || customjob
+						customjob = tgui_input_text(usr, "Please enter the sender's job.", "Job") || customjob
 
 					//Enter message
 					if("Message")
-						custommessage = stripped_input(usr, "Please enter your message.") || custommessage
+						custommessage = tgui_input_text(usr, "Please enter your message.", "Message") || custommessage
 
 					//Send message
 					if("Send")
@@ -420,7 +419,7 @@
 							"name" = "[customsender]",
 							"job" = "[customjob]",
 							"message" = custommessage,
-							"targets" = list("[customrecepient.owner] ([customrecepient.ownjob])")
+							"targets" = list(STRINGIFY_PDA_TARGET(customrecepient.owner, customrecepient.ownjob))
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)

@@ -27,8 +27,17 @@
 	var/starting_time = world.time
 
 	//Time to search the whole game for our ref
-	DoSearchVar(GLOB, "GLOB") //globals
+	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
 	log_reftracker("Finished searching globals")
+
+	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	//And global.vars is a really weird list
+	var/global_vars = list()
+	for(var/key in global.vars)
+		global_vars[key] = global.vars[key]
+
+	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
+	log_reftracker("Finished searching native globals")
 
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
@@ -55,7 +64,7 @@
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	#ifdef REFERENCE_TRACKING_DEBUG
-	if(!found_refs && SSgarbage.should_save_refs)
+	if(SSgarbage.should_save_refs && !found_refs)
 		found_refs = list()
 	#endif
 
@@ -91,6 +100,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					found_refs[varname] = TRUE
+					continue //End early, don't want these logging
 				#endif
 				log_reftracker("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
 				continue
@@ -110,6 +120,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
 				#endif
 				log_reftracker("Found [type] \ref[src] in list [container_name].")
 				continue
@@ -122,6 +133,7 @@
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
 					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
 				#endif
 				log_reftracker("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
 				continue

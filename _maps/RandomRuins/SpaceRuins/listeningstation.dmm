@@ -11,8 +11,8 @@
 "ad" = (
 /obj/machinery/computer/message_monitor,
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -239,7 +239,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
@@ -598,8 +598,8 @@
 /area/ruin/space/has_grav/listeningstation)
 "aU" = (
 /obj/machinery/airalarm/syndicate{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -943,7 +943,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -987,7 +987,6 @@
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/airalarm/syndicate{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,

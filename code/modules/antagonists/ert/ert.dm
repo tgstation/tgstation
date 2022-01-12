@@ -52,7 +52,7 @@
 	outfit = /datum/outfit/centcom/centcom_official
 
 /datum/antagonist/ert/official/greet()
-	to_chat(owner, "<span class='warningplain'><B><font size=3 color=red>You are a CentCom Official.</font></B></span>")
+	. = ..()
 	if (ert_team)
 		to_chat(owner, "<span class='warningplain'>Central Command is sending you to [station_name()] with the task: [ert_team.mission.explanation_text]</span>")
 	else
@@ -244,14 +244,12 @@
 
 /datum/antagonist/ert/families
 	name = "Space Police Responder"
-	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
 	suicide_cry = "FOR THE SPACE POLICE!!"
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		var/atom/movable/screen/wanted/giving_wanted_lvl = new /atom/movable/screen/wanted()
@@ -263,7 +261,6 @@
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		H.infodisplay -= H.wanted_lvl
@@ -271,7 +268,8 @@
 	..()
 
 /datum/antagonist/ert/families/greet()
-	var/missiondesc = "<span class='warningplain'><B><font size=6 color=red>You are the [name].</font></B>"
+	. = ..()
+	var/missiondesc
 	missiondesc += "<BR><B><font size=5 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>"
 	missiondesc += "<BR><B><font size=5 color=red>You are NOT a deathsquad. You are here to help innocents escape violence, criminal activity, and other dangerous things.</font></B>"
 	missiondesc += "<BR>After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"

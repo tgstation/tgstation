@@ -33,6 +33,8 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
+	/// Rate limit client refreshes to prevent DoS.
+	COOLDOWN_DECLARE(refresh_cooldown)
 
 /**
  * public
@@ -302,6 +304,10 @@
 		return FALSE
 	switch(type)
 		if("ready")
+			// Send a full update when the user manually refreshes the UI
+			if (initialized && COOLDOWN_FINISHED(src, refresh_cooldown))
+				send_full_update()
+				COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 			initialized = TRUE
 		if("pingReply")
 			initialized = TRUE

@@ -102,8 +102,7 @@
 	if(logged)
 		log_admin_private(pm)
 		message_admins("[header]:<br>[text]")
-		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font>")
-		admin_ticket_log(target_ckey, text)
+		admin_ticket_log(target_ckey, "<font color='blue'>[header]</font><br>[text]")
 		if(browse)
 			browse_messages("[type]")
 		else

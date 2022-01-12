@@ -183,6 +183,11 @@
 	id = "comp_direction"
 	build_path = /obj/item/circuit_component/direction
 
+/datum/design/component/reagentscanner
+	name = "Reagents Scanner"
+	id = "comp_reagents"
+	build_path = /obj/item/circuit_component/reagentscanner
+
 /datum/design/component/health
 	name = "Health Component"
 	id = "comp_health"
@@ -278,6 +283,11 @@
 	id = "comp_list_literal"
 	build_path = /obj/item/circuit_component/list_literal
 
+/datum/design/component/list_assoc_literal
+	name = "Associative List Literal"
+	id = "comp_list_assoc_literal"
+	build_path = /obj/item/circuit_component/list_literal/assoc_literal
+
 /datum/design/component/typecast
 	name = "Typecast Component"
 	id = "comp_typecast"
@@ -331,6 +341,25 @@
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
 
+/datum/design/component/id_getter
+	name = "ID Getter Component"
+	id = "comp_id_getter"
+	build_path = /obj/item/circuit_component/id_getter
+
+/datum/design/component/id_info_reader
+	name = "ID Getter Component"
+	id = "comp_id_info_reader"
+	build_path = /obj/item/circuit_component/id_info_reader
+
+/datum/design/component/id_access_reader
+	name = "ID Access Reader Component"
+	id = "comp_id_access_reader"
+	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/access_checker
+	name = "Access Checker Component"
+	id = "comp_access_checker"
+	build_path = /obj/item/circuit_component/compare/access
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"

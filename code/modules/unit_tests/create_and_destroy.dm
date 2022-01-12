@@ -23,6 +23,8 @@
 		/obj/structure/holosign/robot_seat,
 		//Singleton
 		/mob/dview,
+		//Requires a circuit url
+		/obj/effect/mapping_helpers/circuit_spawner,
 	)
 	//Say it with me now, type template
 	ignore += typesof(/obj/effect/mapping_helpers/atom_injector)
@@ -33,8 +35,6 @@
 	ignore += typesof(/obj/item/modular_computer/tablet/integrated)
 	//This one demands a computer, ditto
 	ignore += typesof(/obj/item/modular_computer/processor)
-	//Needs special input, let's be nice
-	ignore += typesof(/obj/effect/abstract/proximity_checker)
 	//Very finiky, blacklisting to make things easier
 	ignore += typesof(/obj/item/poster/wanted)
 	//We can't pass a mind into this
@@ -144,8 +144,8 @@
 			garbage_queue_processed = TRUE
 			break
 
-		if(world.time > start_time + time_needed + 8 MINUTES)
-			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 10 minutes. What the hell did you do")
+		if(world.time > start_time + time_needed + 30 MINUTES) //If this gets us gitbanned I'm going to laugh so hard
+			Fail("Something has gone horribly wrong, the garbage queue has been processing for well over 30 minutes. What the hell did you do")
 			break
 
 		//Immediately fire the gc right after

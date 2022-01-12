@@ -59,16 +59,6 @@
 	stock_max = 2
 	availability_prob = 70
 
-/datum/blackmarket_item/clothing/combatmedic_suit
-	name = "Combat Medic hardsuit"
-	desc = "A discarded combat medic hardsuit, found in the ruins of a carpet bombed xeno hive. Definately used, but as sturdy as an anchor."
-	item = /obj/item/clothing/suit/space/hardsuit/combatmedic
-
-	price_min = 5500
-	price_max = 7000
-	stock_max = 1
-	availability_prob = 10
-	
 /datum/blackmarket_item/clothing/rocket_boots
 	name = "Rocket Boots"
 	desc = "We found a pair of jump boots and overclocked the hell out of them. No liability for grevious harm to or with a body."

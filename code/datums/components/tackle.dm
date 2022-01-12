@@ -271,11 +271,10 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/T = target
-		var/suit_slot = T.get_item_by_slot(ITEM_SLOT_OCLOTHING)
 
 		if(isnull(T.wear_suit) && isnull(T.w_uniform)) // who honestly puts all of their effort into tackling a naked guy?
 			defense_mod += 2
-		if(suit_slot && (istype(suit_slot,/obj/item/clothing/suit/space/hardsuit)))
+		if(T.mob_negates_gravity())
 			defense_mod += 1
 		if(T.is_shove_knockdown_blocked()) // riot armor and such
 			defense_mod += 5
@@ -454,7 +453,7 @@
 	playsound(user, 'sound/effects/Glasshit.ogg', 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
-		for(var/i = 0, i < speed, i++)
+		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
 			shard.updateEmbedding()

@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - balance: "The nob + antinob hfr fuel type is now limited to 1e8 instead of 1e8 * 1.2"

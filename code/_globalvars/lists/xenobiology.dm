@@ -1,4 +1,4 @@
-///These global lists exist to allow our element to have weight tables without having to be seperate instances.
+///These global lists exist to allow our element to have weight tables without having to be separate instances.
 
 ///Assoc list of cell line define | assoc list of datum | cell_line
 GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(

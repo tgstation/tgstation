@@ -1,8 +1,7 @@
 /datum/antagonist/ninja
-	name = "Space Ninja"
+	name = "\improper Space Ninja"
 	antagpanel_category = "Space Ninja"
 	job_rank = ROLE_NINJA
-	antag_hud_type = ANTAG_HUD_NINJA
 	antag_hud_name = "space_ninja"
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
@@ -14,14 +13,6 @@
 	var/give_objectives = TRUE
 	///Whether or not this ninja receives the standard equipment
 	var/give_equipment = TRUE
-
-/datum/antagonist/ninja/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, ninja)
-
-/datum/antagonist/ninja/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/ninja = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, ninja)
 
 /**
  * Proc that equips the space ninja outfit on a given individual.  By default this is the owner of the antagonist datum.
@@ -108,8 +99,9 @@
 	objectives += survival
 
 /datum/antagonist/ninja/greet()
+	. = ..()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
-	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	owner.announce_objectives()
 

@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSSTRUCTURE | PASSTABLE | LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.
@@ -39,7 +39,7 @@
 	if(pushed_mob.buckled)
 		to_chat(user, span_warning("[pushed_mob] is buckled to [pushed_mob.buckled]!"))
 		return ..()
-	to_chat(user,"<span class='notice>You try to coax [pushed_mob] onto [src]...</span>")
+	to_chat(user, span_notice("You try to coax [pushed_mob] onto [src]..."))
 	if(!do_after(user,(5 SECONDS),target = pushed_mob))
 		return ..()
 	pushed_mob.forceMove(loc)

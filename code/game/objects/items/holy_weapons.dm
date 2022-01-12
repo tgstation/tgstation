@@ -81,7 +81,7 @@
 	icon_state = "witchhunterhat"
 	inhand_icon_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
-	flags_inv = HIDEEYES|HIDEHAIR
+	flags_inv = HIDEEYES
 
 /obj/item/clothing/head/helmet/chaplain/adept
 	name = "adept hood"
@@ -151,6 +151,12 @@
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/eldritch))
+
 	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
@@ -163,6 +169,16 @@
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[initial(holy_weapon_type.name)]")
+
+/obj/item/nullrod/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
+	if(!istype(target, /obj/effect/rune))
+		return
+
+	var/obj/effect/rune/target_rune = target
+	if(target_rune.log_when_erased)
+		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
+		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
@@ -531,6 +547,10 @@
 	attack_verb_continuous = list("enlightens", "redpills")
 	attack_verb_simple = list("enlighten", "redpill")
 	menu_description = "A sharp fedora dealing a very high amount of throw damage, but none of melee. Fits in pockets. Can be worn on the head, obviously."
+
+/obj/item/nullrod/fedora/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get further from god!"))
+	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"

@@ -862,10 +862,10 @@
 /area/awaymission/moonoutpost19/syndicate)
 "cd" = (
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
 	req_access = null;
-	req_access_txt = "150";
-	dir = 1
+	req_access_txt = "150"
 	},
 /turf/open/floor/iron{
 	dir = 8;
@@ -2182,9 +2182,9 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -2287,9 +2287,9 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/iron{
@@ -2590,9 +2590,9 @@
 	pixel_y = -2
 	},
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2706,7 +2706,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gi" = (
-/obj/structure/reagent_dispensers/peppertank/directional/west,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/west,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -3316,9 +3316,9 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/light/small/broken/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/log/gerald,
 /turf/open/floor/iron/cafeteria{
@@ -3718,7 +3718,7 @@
 /area/awaymission/moonoutpost19/research)
 "ij" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23;
 	req_access = null
 	},
@@ -4395,9 +4395,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "jI" = (
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -4511,9 +4511,9 @@
 "jY" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/airalarm/unlocked{
+	dir = 1;
 	pixel_y = 23;
-	req_access = null;
-	dir = 1
+	req_access = null
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
@@ -5141,7 +5141,7 @@
 /obj/structure/table,
 /obj/item/storage/box,
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
+	dir = 8;
 	pixel_x = -23;
 	req_access = null
 	},

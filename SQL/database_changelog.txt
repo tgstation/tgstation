@@ -1,12 +1,56 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-The latest database version is 5.17; The query to update the schema revision table is:
+Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 18);
+The latest database version is 5.21; The query to update the schema revision table is:
+
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 22);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 18);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 22);
 
 In any query remember to add a prefix to the table names if you use one.
+
+Version 5.22, 22 December 2021, by Mothblocks
+Fixes a bug in `telemetry_connections` that limited the range of IPs.
+
+```
+ALTER TABLE `telemetry_connections` MODIFY COLUMN `address` INT(10) UNSIGNED NOT NULL;
+```
+-----------------------------------------------------
+
+Version 5.21, 15 December 2021, by Mothblocks
+Adds `telemetry_connections` table for tracking tgui telemetry.
+
+```
+CREATE TABLE `telemetry_connections` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `ckey` VARCHAR(32) NOT NULL,
+    `telemetry_ckey` VARCHAR(32) NOT NULL,
+    `address` INT(10) NOT NULL,
+    `computer_id` VARCHAR(32) NOT NULL,
+    `first_round_id` INT(11) UNSIGNED NULL,
+    `latest_round_id` INT(11) UNSIGNED NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `unique_constraints` (`ckey` , `telemetry_ckey` , `address` , `computer_id`)
+);
+```
+-----------------------------------------------------
+
+Version 5.20, 11 November 2021, by Mothblocks
+Adds `admin_ckey` field to the `known_alts` table to track who added what.
+
+```
+ALTER TABLE `known_alts`
+ADD COLUMN `admin_ckey` VARCHAR(32) NOT NULL DEFAULT '*no key*' AFTER `ckey2`;
+```
+
+-----------------------------------------------------
+Version 5.19, 10 November 2021, by WalterMeldron
+Adds an urgent column to tickets for ahelps marked as urgent.
+
+```
+ALTER TABLE `ticket` ADD COLUMN `urgent` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sender`;
+```
 
 -----------------------------------------------------
 Version 5.18, 1 November 2021, by Mothblocks

@@ -216,6 +216,7 @@
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	inhand_icon_state = "seclite"
+	worn_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/heal
-	true_name = "organic replicator"
+	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1

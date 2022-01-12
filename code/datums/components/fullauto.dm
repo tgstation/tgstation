@@ -117,7 +117,7 @@
 	if(get_dist(source.mob, _target) < 2) //Adjacent clicking.
 		return
 
-	if(isnull(location)) //Clicking on a screen object.
+	if(isnull(location) || istype(_target, /atom/movable/screen)) //Clicking on a screen object.
 		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
 		_target = params_to_turf(modifiers["screen-loc"], get_turf(source.eye), source)
@@ -239,7 +239,7 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(semicd || shooter.stat || !can_trigger_gun(shooter))
+	if(semicd || shooter.incapacitated() || !can_trigger_gun(shooter))
 		return FALSE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
@@ -259,7 +259,7 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER
-	if(semicd || shooter.stat)
+	if(semicd || shooter.incapacitated())
 		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)

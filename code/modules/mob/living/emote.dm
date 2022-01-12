@@ -546,3 +546,9 @@
 	key_third_person = "exhales"
 	message = "breathes out."
 	emote_type = EMOTE_AUDIBLE
+
+/datum/emote/living/swear
+	key = "swear"
+	key_third_person = "swears"
+	message = "says a swear word!"
+	emote_type = EMOTE_AUDIBLE

@@ -136,5 +136,5 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 	temperature_change_multiplier = 1
 	requirements = list(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	primary_products = list(/datum/gas/helium)
-	secondary_products = list(/datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/proto_nitrate, /datum/gas/stimulum, /datum/gas/miasma)
+	secondary_products = list(/datum/gas/plasma, /datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/proto_nitrate, /datum/gas/nitrium, /datum/gas/miasma)
 	meltdown_flags = HYPERTORUS_FLAG_DEVASTATING_EXPLOSION | HYPERTORUS_FLAG_RADIATION_PULSE | HYPERTORUS_FLAG_EMP | HYPERTORUS_FLAG_MASSIVE_SPREAD | HYPERTORUS_FLAG_CRITICAL_MELTDOWN

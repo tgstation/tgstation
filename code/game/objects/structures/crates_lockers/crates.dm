@@ -16,6 +16,7 @@
 	close_sound_volume = 50
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
+	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
@@ -112,8 +113,13 @@
 
 /obj/structure/closet/crate/maint
 
+/obj/structure/closet/crate/maint/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_QDEL
+
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
+	new /obj/effect/spawner/random/structure/crate_empty(loc)
 	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/random/maintenance(src)
 

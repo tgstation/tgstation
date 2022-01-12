@@ -24,13 +24,13 @@
 	. = ..()
 	add_overlay("improvised_grenade_filled")
 	add_overlay("improvised_grenade_wired")
-	times = list("5" = 10, "-1" = 20, "[rand(30,80)]" = 50, "[rand(65,180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
+	times = list("5" = 10, "-1" = 20, "[rand(30, 80)]" = 50, "[rand(65, 180)]" = 20)// "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]
 	det_time = text2num(pick_weight(times))
 	if(det_time < 0) //checking for 'duds'
 		range = 1
-		det_time = rand(30,80)
+		det_time = rand(30, 80)
 	else
-		range = pick(2,2,2,3,3,3,4)
+		range = pick(2, 2, 2, 3, 3, 3, 4)
 	if(check_parts) //since construction code calls this itself, no need to always call it. This does have the downside that adminspawned ones can potentially not have cans if they don't use the /spawned subtype.
 		CheckParts()
 
@@ -56,7 +56,7 @@
 	underlays += can_underlay
 
 
-/obj/item/grenade/iedcasing/attack_self(mob/user) //
+/obj/item/grenade/iedcasing/attack_self(mob/user)
 	if(!active)
 		if(!botch_check(user))
 			to_chat(user, span_warning("You light the [name]!"))

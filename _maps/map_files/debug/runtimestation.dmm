@@ -67,8 +67,8 @@
 /area/engineering/main)
 "ar" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/structure/closet/secure_closet/engineering_welding{
 	locked = 0
@@ -80,8 +80,8 @@
 	charge = 5e+006
 	},
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -367,8 +367,8 @@
 /area/engineering/gravity_generator)
 "bs" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/rnd/destructive_analyzer,
 /turf/open/floor/iron,
@@ -423,8 +423,8 @@
 /area/science)
 "bG" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/blue{
@@ -494,8 +494,8 @@
 /area/cargo/miningoffice)
 "bP" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
@@ -525,8 +525,8 @@
 /area/security/brig)
 "bU" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/tile/blue{
@@ -849,8 +849,8 @@
 /area/commons/storage/primary)
 "cW" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/corner,
@@ -891,8 +891,8 @@
 /area/commons/storage/primary)
 "dd" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/turf_decal/stripes/line,
@@ -1312,8 +1312,8 @@
 /area/hallway/secondary/entry)
 "eG" = (
 /obj/machinery/airalarm/unlocked{
-	dir = 4;
-	pixel_x = -32
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
@@ -1738,8 +1738,8 @@
 /area/hallway/secondary/exit/departure_lounge)
 "fU" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 6
@@ -2257,8 +2257,8 @@
 	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
@@ -2279,8 +2279,8 @@
 /area/engineering/atmos)
 "AE" = (
 /obj/machinery/airalarm/unlocked{
-	pixel_y = 23;
-	dir = 1
+	dir = 1;
+	pixel_y = 23
 	},
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)

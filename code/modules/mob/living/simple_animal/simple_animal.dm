@@ -534,19 +534,6 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, BE_CLOSE))
-		return
-	else
-		..()
-
-/mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where)
-	if(!canUseTopic(who, BE_CLOSE))
-		return
-	else
-		..()
-
-
 /mob/living/simple_animal/update_resting()
 	if(resting)
 		ADD_TRAIT(src, TRAIT_IMMOBILIZED, RESTING_TRAIT)

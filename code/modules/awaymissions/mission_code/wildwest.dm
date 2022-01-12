@@ -94,7 +94,7 @@
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.dna.add_mutation(LASEREYES)
-				user.dna.add_mutation(SPACEMUT)
+				user.dna.add_mutation(PRESSUREADAPT)
 				user.dna.add_mutation(XRAY)
 				user.set_species(/datum/species/shadow)
 			if("Wealth")

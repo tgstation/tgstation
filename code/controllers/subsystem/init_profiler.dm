@@ -1,6 +1,6 @@
 #define INIT_PROFILE_NAME "init_profiler.json"
 
-///Subsystem exists so we can seperately log init time costs from the costs of general operation
+///Subsystem exists so we can separately log init time costs from the costs of general operation
 ///Hopefully this makes sorting out what causes problems when easier
 SUBSYSTEM_DEF(init_profiler)
 	name = "Init Profiler"

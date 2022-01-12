@@ -379,8 +379,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/directional/south,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/machinery/firealarm/directional/south,
 /obj/structure/spider/stickyweb,
@@ -588,7 +588,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -686,7 +686,6 @@
 	pixel_y = 5
 	},
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -1125,7 +1124,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1372,7 +1371,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/structure/spider/stickyweb,
@@ -1466,8 +1465,8 @@
 	},
 /obj/item/radio/off,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/iron/dark,
@@ -1925,7 +1924,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,
@@ -2121,8 +2119,8 @@
 /obj/item/extinguisher,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/airalarm/all_access{
-	pixel_y = 24;
-	dir = 1
+	dir = 1;
+	pixel_y = 24
 	},
 /obj/effect/turf_decal/box/white/corners{
 	dir = 4
@@ -2172,7 +2170,7 @@
 	pixel_y = 12
 	},
 /obj/item/toy/cards/cardhand{
-	currenthand = list("2 of Diamonds","3 of Clubs");
+	init_cards = list("2 of Diamonds","3 of Clubs");
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
@@ -2187,7 +2185,6 @@
 /area/shuttle/abandoned/bar)
 "La" = (
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt/dust,

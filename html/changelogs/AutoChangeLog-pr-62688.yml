@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Stops the \"You lack optic scanners, you get stunned\" singularity event from affecting blinded or dead mobs."

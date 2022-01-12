@@ -9,6 +9,29 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
 
+/datum/component/riding/vehicle/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
+	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))
+		return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+
+	if(!keycheck(rider))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='warning'>[movable_parent] has no key inserted!</span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+	if(HAS_TRAIT(rider, TRAIT_INCAPACITATED))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='warning'>You cannot operate [movable_parent] right now!</span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+	if(ride_check_flags & RIDER_NEEDS_LEGS && HAS_TRAIT(rider, TRAIT_FLOORED))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='warning'>You can't seem to manage that while unable to stand up enough to move [movable_parent]...</span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+	if(ride_check_flags & RIDER_NEEDS_ARMS && HAS_TRAIT(rider, TRAIT_HANDS_BLOCKED))
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(rider, "<span class='warning'>You can't seem to hold onto [movable_parent] to move it...</span>")
+		return COMPONENT_RIDDEN_STOP_Z_MOVE
+
+	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
+
 /datum/component/riding/vehicle/driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	if(!COOLDOWN_FINISHED(src, vehicle_move_cooldown))
 		return COMPONENT_DRIVER_BLOCK_MOVE
@@ -57,6 +80,7 @@
 		return COMPONENT_DRIVER_BLOCK_MOVE
 
 	handle_ride(user, direction)
+	return ..()
 
 /// This handles the actual movement for vehicles once [/datum/component/riding/vehicle/proc/driver_move] has given us the green light
 /datum/component/riding/vehicle/proc/handle_ride(mob/user, direction)

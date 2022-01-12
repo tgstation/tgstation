@@ -287,7 +287,7 @@ Buildable meters
 	..()
 	T.flipped = flipped
 
-/obj/item/pipe/directional/suicide_act(mob/user)
+/obj/item/pipe/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] shoves [src] in [user.p_their()] mouth and turns it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -298,6 +298,27 @@ Buildable meters
 			sleep(5)
 		C.blood_volume = 0
 	return(OXYLOSS|BRUTELOSS)
+
+/obj/item/pipe/examine(mob/user)
+	. = ..()
+	. += span_notice("The pipe layer is set to [piping_layer].")
+	. += span_notice("You can change the pipe layer by Alt-Right-Clicking the device.")
+	. += span_notice("You can rotate it by using it in hand or by Alt-Left-Clicking the device.")
+
+/obj/item/pipe/alt_click_secondary(mob/user)
+	. = ..()
+	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	set_piping_layer(layer_to_set)
+	visible_message("You set the pipe layer to [piping_layer].")
+
+/obj/item/pipe/trinary/flippable/examine(mob/user)
+	. = ..()
+	. += span_notice("You can flip the device by Ctrl-Clicking it.")
+
+/obj/item/pipe/trinary/flippable/CtrlClick(mob/user)
+	. = ..()
+	do_a_flip()
+	visible_message("You flip the device.")
 
 /obj/item/pipe_meter
 	name = "meter"

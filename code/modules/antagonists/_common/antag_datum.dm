@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	///Public name for this antagonist. Appears for player prompts and round-end reports.
-	var/name = "Antagonist"
+	var/name = "\improper Antagonist"
 	///Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/roundend_category = "other antagonists"
 	///Set to false to hide the antagonists from roundend report
@@ -31,8 +31,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
 	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().
 	var/hijack_speed = 0
-	///What is the configuration of this antagonist's hud icon, such as it's screen position and style, so thatit doesn't break other in-game hud icons.
-	var/antag_hud_type
+	///The antag hud's icon file
+	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	///Name of the antag hud we provide to this mob.
 	var/antag_hud_name
 	/// If set to true, the antag will not be added to the living antag list.
@@ -58,6 +58,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///button to access antag interface
 	var/datum/action/antag_info/info_button
 
+	/// The HUD shown to teammates, created by `add_team_hud`
+	var/datum/atom_hud/alternate_appearance/team_hud
+
 /datum/antagonist/New()
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
@@ -66,6 +69,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+	QDEL_NULL(team_hud)
 	owner = null
 	return ..()
 
@@ -88,8 +92,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	SHOULD_CALL_PARENT(TRUE)
 	remove_innate_effects(old_body)
-	if(!soft_antag && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
+	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
+	info_button.Remove(old_body)
+	info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -111,20 +117,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/on_mindshield(mob/implanter, mob/living/mob_override)
 	SIGNAL_HANDLER
 	return
-
-// Adds the specified antag hud to the player. Usually called in an antag datum file
-/datum/antagonist/proc/add_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.join_hud(mob_override)
-	set_antag_hud(mob_override, antag_hud_name)
-
-
-// Removes the specified antag hud from the player. Usually called in an antag datum file
-/datum/antagonist/proc/remove_antag_hud(antag_hud_type, mob/living/mob_override)
-	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.leave_hud(mob_override)
-	set_antag_hud(mob_override, null)
-
 
 /// Handles adding and removing the clumsy mutation from clown antags. Gets called in apply/remove_innate_effects
 /datum/antagonist/proc/handle_clown_mutation(mob/living/mob_override, message, removing = TRUE)
@@ -151,12 +143,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
-		info_button = new(owner.current, src)
+		info_button = new(src)
 		info_button.Grant(owner.current)
 	if(!silent)
 		greet()
 		if(ui_name)
-			to_chat(owner.current, span_big("You are \a [src]."))
 			to_chat(owner.current, span_boldnotice("For more info, read the panel. you can always come back to it using the button in the top left."))
 			info_button.Trigger()
 	apply_innate_effects()
@@ -167,8 +158,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(!soft_antag && owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
+
+	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
  * Proc that checks the sent mob aganst the banlistfor this antagonist.
@@ -217,6 +210,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
+
+	// Remove HUDs that they should no longer see
+	var/mob/living/current = owner.current
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if (!antag_hud.mobShouldSee(current))
+			antag_hud.remove_hud_from(current)
+
 	qdel(src)
 
 /**
@@ -224,14 +225,16 @@ GLOBAL_LIST_EMPTY(antagonists)
  * Use this proc for playing sounds, sending alerts, or helping to setup non-gameplay influencing aspects of the antagonist type.
  */
 /datum/antagonist/proc/greet()
-	return
+	if(!silent)
+		to_chat(owner.current, span_big("You are \the [src]."))
 
 /**
  * Proc that sends fluff or instructional messages to the player when they lose this antag datum.
  * Use this proc for playing sounds, sending alerts, or otherwise informing the player that they're no longer a specific antagonist type.
  */
 /datum/antagonist/proc/farewell()
-	return
+	if(!silent)
+		to_chat(owner.current, span_userdanger("You are no longer \the [src]!"))
 
 /**
  * Proc that assigns this antagonist's ascribed moodlet to the player.
@@ -389,7 +392,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			return
 
 /datum/antagonist/proc/edit_memory(mob/user)
-	var/new_memo = stripped_multiline_input(user, "Write new memory", "Memory", antag_memory, MAX_MESSAGE_LEN)
+	var/new_memo = tgui_input_text(user, "Write a new memory", "Antag Memory", antag_memory, multiline = TRUE)
 	if (isnull(new_memo))
 		return
 	antag_memory = new_memo
@@ -401,6 +404,23 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/hijack_speed()
 	var/datum/objective/hijack/H = locate() in objectives
 	return H?.hijack_speed_override || hijack_speed
+
+/// Adds a HUD that will show you other members with the same antagonist.
+/// If an antag typepath is passed to `antag_to_check`, will check that, otherwise will use the source type.
+/datum/antagonist/proc/add_team_hud(mob/target, antag_to_check)
+	QDEL_NULL(team_hud)
+
+	team_hud = target.add_alt_appearance(
+		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
+		"antag_team_hud_[REF(src)]",
+		image(hud_icon, target, antag_hud_name),
+		antag_to_check || type,
+	)
+
+	// Add HUDs that they couldn't see before
+	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
+		if (antag_hud.mobShouldSee(owner.current))
+			antag_hud.add_hud_to(owner.current)
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
@@ -459,16 +479,27 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
-	var/datum/antagonist/antag_datum
 
-/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+/datum/action/antag_info/New(Target)
 	. = ..()
-	src.antag_datum = antag_datum
-	name += " [antag_datum.name]"
+	name += " [target]"
 
 /datum/action/antag_info/Trigger()
-	if(antag_datum)
-		antag_datum.ui_interact(owner)
+	. = ..()
+	if(!.)
+		return
+
+	target.ui_interact(owner)
 
 /datum/action/antag_info/IsAvailable()
+	if(!target)
+		stack_trace("[type] was used without a target antag datum!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	if(!owner.mind)
+		return FALSE
+	if(!(target in owner.mind.antag_datums))
+		return FALSE
 	return TRUE

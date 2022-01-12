@@ -74,6 +74,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER

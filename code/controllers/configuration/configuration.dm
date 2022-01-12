@@ -297,7 +297,7 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	"Assistant" : "Don't kill everyone",
+	JOB_ASSISTANT : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }
@@ -460,9 +460,11 @@ Example config:
 		else
 			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
 
-	var/whitespace_split = @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))"
+	// We don't want a whitespace_split part if there's no stuff that requires it
+	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
 	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
-	return regex("([whitespace_split]|[word_bounds])", "i")
+	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
+	return regex(regex_filter, "i")
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)

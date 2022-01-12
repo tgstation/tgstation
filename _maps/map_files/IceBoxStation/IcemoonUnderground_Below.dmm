@@ -1011,7 +1011,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/camera{
 	c_tag = "Mining Break Room";
-	dir = 6
+	dir = 9
 	},
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 9
@@ -1143,7 +1143,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera{
 	c_tag = "Mining B-2 Hallway";
-	dir = 6
+	dir = 9
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
