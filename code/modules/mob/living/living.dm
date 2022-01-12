@@ -1366,9 +1366,9 @@
  * * stacks: int The amount to set fire_stacks to
  */
 /mob/living/proc/set_fire_stacks(stacks)
-	fire_stacks = clamp(stacks, -20, 20)
-	if(fire_stacks <= 0)
+	if(stacks <= 0)
 		extinguish_mob()
+	fire_stacks = clamp(stacks, -20, 20)
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()
