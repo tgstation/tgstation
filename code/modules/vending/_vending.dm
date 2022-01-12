@@ -518,6 +518,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 ///Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.
 /obj/machinery/vending/proc/tilt(atom/fatty, crit=FALSE)
+	if(QDELETED(src))
+		return
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
@@ -726,6 +728,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 
 	return ..()
+
+/obj/machinery/vending/attack_robot_secondary(mob/user, list/modifiers)
+	. = ..()
+	if (!Adjacent(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/vending/ui_assets(mob/user)
 	return list(

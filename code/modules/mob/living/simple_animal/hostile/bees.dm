@@ -324,6 +324,12 @@
 				to_chat(user, span_warning("You don't have enough units of that chemical to modify the bee's DNA!"))
 	..()
 
+/obj/item/queen_bee/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] eats [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("IT'S HIP TO EAT BEES!")
+	qdel(src)
+	return TOXLOSS
+
 /obj/item/queen_bee/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)

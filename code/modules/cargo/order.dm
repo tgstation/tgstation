@@ -35,7 +35,7 @@
 	var/obj/item/coupon/applied_coupon
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, orderer_ckey, reason, paying_account, department_destination, coupon)
-	id = SSshuttle.ordernum++
+	id = SSshuttle.order_number++
 	src.pack = pack
 	src.orderer = orderer
 	src.orderer_rank = orderer_rank
