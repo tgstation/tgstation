@@ -81,7 +81,7 @@ GLOBAL_LIST_INIT(medical_ambience,list('sound/ambience/ambinice.ogg'))
 GLOBAL_LIST_INIT(spooky_ambience,list(
 	'sound/ambience/ambimo1.ogg',
 	'sound/ambience/ambimo2.ogg',
-	'sound/ambience/ambimystery.ogg'
+	'sound/ambience/ambimystery.ogg',
 	'sound/ambience/ambiodd.ogg',
 	'sound/ambience/ambiruin6.ogg',
 	'sound/ambience/ambiruin7.ogg',
