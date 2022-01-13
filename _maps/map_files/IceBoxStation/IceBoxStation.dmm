@@ -8203,6 +8203,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bDr" = (
@@ -21865,6 +21866,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"hBS" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "hBT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -26963,6 +26968,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
+"kfO" = (
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "kfT" = (
 /turf/open/floor/iron/white,
 /area/medical/cryo)
@@ -48570,6 +48579,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "vlU" = (
@@ -73500,7 +73510,7 @@ uZN
 kdK
 nNx
 aPz
-aSg
+clK
 wZp
 jLW
 bhO
@@ -73757,7 +73767,7 @@ lTi
 kdK
 nNx
 aPz
-aSg
+hBS
 gUT
 vdK
 aPz
@@ -74528,7 +74538,7 @@ aPz
 aPz
 aPz
 aPz
-aSg
+kfO
 aSg
 hPM
 aPz
