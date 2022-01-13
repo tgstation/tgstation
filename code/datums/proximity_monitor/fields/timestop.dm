@@ -15,8 +15,7 @@
 	var/duration = 140
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/magic_resistances = NONE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -43,7 +42,7 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new (src, freezerange, TRUE, immune, check_anti_magic, check_holy)
+	chronofield = new (src, freezerange, TRUE, immune, magic_resistances)
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/magic
@@ -55,16 +54,14 @@
 	var/list/frozen_mobs = list() //cached separately for processing
 	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
 	var/list/frozen_turfs = list() //Only aesthetically
-	var/check_anti_magic = FALSE
-	var/check_holy = FALSE
+	var/magic_resistances = NONE
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy)
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, magic_resistances)
 	..()
 	src.immune = immune
-	src.check_anti_magic = check_anti_magic
-	src.check_holy = check_holy
+	src.magic_resistances = magic_resistances
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -81,7 +78,7 @@
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
-		if(M.anti_magic_check(check_anti_magic, check_holy))
+		if(M.anti_magic_check(magic_resistances))
 			immune[A] = TRUE
 			return
 	var/frozen = TRUE
