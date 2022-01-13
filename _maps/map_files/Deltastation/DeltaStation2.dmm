@@ -20107,7 +20107,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/newscaster/directional/north,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "dbc" = (
@@ -20128,6 +20128,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "dbd" = (
@@ -20146,11 +20148,9 @@
 /turf/open/floor/iron,
 /area/medical/pharmacy)
 "dbg" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "dbh" = (
@@ -20584,13 +20584,13 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/machinery/status_display/evac/directional/west,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "dcO" = (
@@ -20944,6 +20944,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "den" = (
@@ -20969,6 +20970,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "deq" = (
@@ -45201,6 +45203,20 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
+"hHJ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/medical/pharmacy)
 "hHL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -61600,6 +61616,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "lYb" = (
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "lYe" = (
@@ -69572,6 +69589,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "ods" = (
@@ -103050,6 +103068,10 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
+"xfe" = (
+/obj/machinery/newscaster/directional/east,
+/turf/closed/wall,
+/area/medical/pharmacy)
 "xfl" = (
 /obj/effect/turf_decal/stripes/end{
 	dir = 4
@@ -146918,7 +146940,7 @@ our
 eSk
 hVx
 wSx
-mOg
+pxG
 dbc
 lYb
 dem
@@ -147178,7 +147200,7 @@ iuE
 qDR
 dbd
 dcP
-den
+hHJ
 den
 mKh
 dir
@@ -147948,7 +147970,7 @@ eXB
 eCr
 pxG
 dbg
-dgZ
+den
 dgZ
 dgZ
 dgZ
@@ -148464,7 +148486,7 @@ pxG
 pxG
 pxG
 pxG
-pxG
+xfe
 dhb
 diu
 ndH
