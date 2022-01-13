@@ -55,11 +55,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	///name of the UI that will try to open, right now using a generic ui
 	var/ui_name = "AntagInfoGeneric"
-	///button to access antag interface
-	var/datum/action/antag_info/info_button
+	///weakref to button to access antag interface
+	var/datum/weakref/info_button_ref
 
-	/// The HUD shown to teammates, created by `add_team_hud`
-	var/datum/atom_hud/alternate_appearance/team_hud
+	/// A weakref to the HUD shown to teammates, created by `add_team_hud`
+	var/datum/weakref/team_hud_ref
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -69,7 +69,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
-	QDEL_NULL(team_hud)
+	QDEL_NULL(team_hud_ref)
 	owner = null
 	return ..()
 
@@ -94,6 +94,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
+	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
+	if(info_button)
+		info_button.Remove(old_body)
+		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
@@ -136,13 +140,15 @@ GLOBAL_LIST_EMPTY(antagonists)
 ///Called by the add_antag_datum() mind proc after the instanced datum is added to the mind's antag_datums list.
 /datum/antagonist/proc/on_gain()
 	SHOULD_CALL_PARENT(TRUE)
+	var/datum/action/antag_info/info_button
 	if(!owner)
 		CRASH("[src] ran on_gain() without a mind")
 	if(!owner.current)
 		CRASH("[src] ran on_gain() on a mind without a mob")
 	if(ui_name)//in the future, this should entirely replace greet.
-		info_button = new(owner.current, src)
+		info_button = new(src)
 		info_button.Grant(owner.current)
+		info_button_ref = WEAKREF(info_button)
 	if(!silent)
 		greet()
 		if(ui_name)
@@ -156,7 +162,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(!soft_antag && owner.current.stat != DEAD)
+	if(!soft_antag && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
@@ -199,8 +205,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	LAZYREMOVE(owner.antag_datums, src)
 	if(!LAZYLEN(owner.antag_datums) && !soft_antag)
 		owner.current.remove_from_current_living_antags()
-	if(info_button)
-		QDEL_NULL(info_button)
+	if(info_button_ref)
+		QDEL_NULL(info_button_ref)
 	if(!silent && owner.current)
 		farewell()
 	UnregisterSignal(owner, COMSIG_PRE_MINDSHIELD_IMPLANT)
@@ -406,14 +412,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Adds a HUD that will show you other members with the same antagonist.
 /// If an antag typepath is passed to `antag_to_check`, will check that, otherwise will use the source type.
 /datum/antagonist/proc/add_team_hud(mob/target, antag_to_check)
-	QDEL_NULL(team_hud)
+	QDEL_NULL(team_hud_ref)
 
-	team_hud = target.add_alt_appearance(
+	team_hud_ref = WEAKREF(target.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
 		"antag_team_hud_[REF(src)]",
 		image(hud_icon, target, antag_hud_name),
 		antag_to_check || type,
-	)
+	))
 
 	// Add HUDs that they couldn't see before
 	for (var/datum/atom_hud/alternate_appearance/basic/has_antagonist/antag_hud as anything in GLOB.has_antagonist_huds)
@@ -477,16 +483,27 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/action/antag_info
 	name = "Open Antag Information:"
 	button_icon_state = "round_end"
-	var/datum/antagonist/antag_datum
 
-/datum/action/antag_info/New(Target, datum/antagonist/antag_datum)
+/datum/action/antag_info/New(Target)
 	. = ..()
-	src.antag_datum = antag_datum
-	name += " [antag_datum.name]"
+	name += " [target]"
 
 /datum/action/antag_info/Trigger()
-	if(antag_datum)
-		antag_datum.ui_interact(owner)
+	. = ..()
+	if(!.)
+		return
+
+	target.ui_interact(owner)
 
 /datum/action/antag_info/IsAvailable()
+	if(!target)
+		stack_trace("[type] was used without a target antag datum!")
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	if(!owner.mind)
+		return FALSE
+	if(!(target in owner.mind.antag_datums))
+		return FALSE
 	return TRUE
