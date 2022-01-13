@@ -634,7 +634,7 @@
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/paint
-	name = "MOD Funny Paint Kit"
+	name = "MODsuit Funny Paint Kit"
 	desc = "A highly advanced piece of technology that will change the theme \
 			of your MODsuit. Highly recommended by clowns."
 	item = /obj/item/mod/paint
