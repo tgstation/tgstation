@@ -577,6 +577,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Female Sleep Barracks"
 	icon_state = "dorms_female"
 
+/area/commons/dorms/laundry
+	name = "\improper Laundry Room"
+	icon_state = "laundry_room"
+
 /area/commons/toilet
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
