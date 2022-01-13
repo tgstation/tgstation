@@ -49,9 +49,6 @@
 	if(!cache)
 		cached_map = null
 
-/obj/modular_map_root/test
-	modules = list(/datum/map_template/map_module/test1, /datum/map_template/map_module/test2, /datum/map_template/map_module/test3)
-
 /obj/modular_map_connector
 	invisibility = INVISIBILITY_ABSTRACT
 	icon = 'icons/obj/device.dmi'
@@ -59,15 +56,3 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-
-/datum/map_template/map_module/test1
-	name = "Test Module 1"
-	mappath = "_maps/map_files/debug/modtest1.dmm"
-
-/datum/map_template/map_module/test2
-	name = "Test Module 2"
-	mappath = "_maps/map_files/debug/modtest2.dmm"
-
-/datum/map_template/map_module/test3
-	name = "Test Module 3"
-	mappath = "_maps/map_files/debug/modtest3.dmm"
