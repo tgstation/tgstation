@@ -355,7 +355,7 @@
 
 /obj/item/clothing/head/beret/centcom_formal
 	name = "\improper CentCom Formal Beret"
-	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Central Command's nano-fabric durability enhancements, it's not the case."
+	desc = "Sometimes, you need to make a compromise between fashion and defense. Thanks to Nanotrasen's durability enhancements, you don't need to compromise any longer."
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
