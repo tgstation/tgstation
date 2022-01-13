@@ -162,6 +162,7 @@
 /datum/antagonist/rev/head
 	name = "\improper Head Revolutionary"
 	antag_hud_name = "rev_head"
+	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
 
@@ -368,7 +369,7 @@
 			var/list/datum/mind/nonhuman_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !HAS_TRAIT(khrushchev.current, TRAIT_RESTRAINED) && khrushchev.current.client)
-					if(ROLE_REV in khrushchev.current.client.prefs.be_special)
+					if(ROLE_REV_HEAD in khrushchev.current.client.prefs.be_special)
 						if(ishuman(khrushchev.current))
 							promotable += khrushchev
 						else

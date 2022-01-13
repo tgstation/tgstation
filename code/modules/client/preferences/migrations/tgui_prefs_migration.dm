@@ -43,6 +43,8 @@
 	// "Familes [sic] Antagonists" was the old name of the catch-all.
 	migrate_antagonist("Familes Antagonists", list(ROLE_FAMILIES, ROLE_FAMILY_HEAD_ASPIRANT))
 
+// If you have an antagonist enabled, it will add the alternative preferences for said antag in be_special
+// will_exist is the role we check if enabled, to_add list is the antagonists we add onto the be_special list
 /datum/preferences/proc/migrate_antagonist(will_exist, list/to_add)
 	if (will_exist in be_special)
 		for (var/add in to_add)
