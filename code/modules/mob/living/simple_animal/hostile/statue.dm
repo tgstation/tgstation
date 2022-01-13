@@ -53,7 +53,7 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
-	//ability to phase in and out when unseen.
+	///ability to phase in and out when unseen.
 	var/datum/action/innate/creature/teleport/teleport
 
 // No movement while seen code.
