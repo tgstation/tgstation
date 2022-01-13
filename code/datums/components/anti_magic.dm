@@ -28,7 +28,6 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(resistances)
-		antimagic_flags = NONE // reset our flags to 0
 		antimagic_flags = resistances
 	if(total_charges)
 		remaining_charges = total_charges
