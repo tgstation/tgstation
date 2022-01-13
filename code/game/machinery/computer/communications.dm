@@ -760,56 +760,102 @@
 	LAZYADD(messages, new_message)
 
 /// Defines for the various hack results.
-#define HACK_PIRATE "pirate"
-#define HACK_FUGITIVES "fugitives"
-#define HACK_SLEEPER "sleeper"
-#define HACK_THREAT "more_threat"
+#define HACK_PIRATE "Pirates"
+#define HACK_FUGITIVES "Fugitives"
+#define HACK_SLEEPER "Sleeper Agents"
+#define HACK_THREAT "Threat Boost"
 
 /// The minimum number of ghosts / observers to have the chance of spawning pirates.
 #define MIN_GHOSTS_FOR_PIRATES 4
 /// The minimum number of ghosts / observers to have the chance of spawning fugitives.
-#define MIN_GHOSTS_FOR_FUGITIVES 7
+#define MIN_GHOSTS_FOR_FUGITIVES 6
 /// The amount of threat injected by a hack, if chosen.
 #define HACK_THREAT_INJECTION_AMOUNT 15
 
+/*
+ * The communications console hack,
+ * called by certain antagonist actions.
+ *
+ * Brings in additional threats to the round.
+ *
+ * hacker - the mob that caused the hack
+ */
 /obj/machinery/computer/communications/proc/hack_console(mob/living/hacker)
-
+	// All hack results we'll choose from.
 	var/list/hack_options = list(HACK_SLEEPER, HACK_THREAT)
 
+	// If we have a certain amount of ghosts, we'll add some more !!fun!! options to the list
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
-	if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES) // 2/3 pirates ain't bad
+
+	// Pirates require empty space for the ship, and ghosts for the pirates obviously
+	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_PIRATES))
 		hack_options += HACK_PIRATE
-	if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES) // Please no waldo
+	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
+	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
 		hack_options += HACK_FUGITIVES
 
-	switch(pick(hack_options))
-		if(HACK_PIRATE)
-			priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
+	// If we have a really good amount of ghosts, let's not even consider sleeper agents - they want ghost roles
+	if(num_ghosts > 8)
+		hack_options -= HACK_SLEEPER
+
+	var/picked_option = pick(hack_options)
+	message_admins("[ADMIN_LOOKUPFLW(hacker)] hacked a [name] located at [ADMIN_VERBOSEJMP(src)], resulting in: [picked_option]!")
+	switch(picked_option)
+		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
+			priority_announce(
+				"Attention crew, it appears that someone on your station has made unexpected communication with a Syndicate ship in nearby space.",
+				"[command_name()] High-Priority Update"
+				)
+
 			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
+			if(!fugitive_event)
+				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
 			addtimer(CALLBACK(pirate_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
-		if(HACK_FUGITIVES)
-			priority_announce("Attention crew, it appears that someone on your station has established an unexpected orbit with an unmarked ship in nearby space.", "[command_name()] High-Priority Update")
+
+		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
+			priority_announce(
+				"Attention crew, it appears that someone on your station has established an unexpected orbit with an unmarked ship in nearby space.",
+				"[command_name()] High-Priority Update"
+				)
+
 			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
+			if(!fugitive_event)
+				CRASH("hack_console() attempted to run fugitives, but could not find an event controller!")
 			addtimer(CALLBACK(fugitive_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
-		if(HACK_THREAT)
-			priority_announce("Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.", "[command_name()] High-Priority Update")
+
+		if(HACK_THREAT) // Adds a flat amount of threat to buy a (probably) more dangerous antag later
+			priority_announce(
+				"Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.",
+				"[command_name()] High-Priority Update"
+				)
+
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT)
 			dynamic.threat_log += "[worldtime2text()]: Communications console hack by [hacker]. Added [HACK_THREAT_INJECTION_AMOUNT] threat."
-		if(HACK_SLEEPER)
+
+		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/autotraitor
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 20), 1, 3)
 			var/num_agents_created = 0
-			for(var/num_agents in 1 to rand(1, 3))
+			for(var/num_agents in 1 to rand(1, max_number_of_sleepers))
+				// Offset the trheat cost of the sleeper agent(s) we're about to run...
 				dynamic.create_threat(initial(sleeper_agent_type.cost))
+				// ...Then try to actually trigger a sleeper agent.
 				if(!dynamic.picking_specific_rule(sleeper_agent_type, TRUE))
 					break
 				num_agents_created++
 
 			if(num_agents_created <= 0)
+				// We failed to run any midround sleeper agents, so let's be patient and run latejoin traitor
 				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, TRUE)
+
 			else
-				priority_announce("Attention crew, it appears that someone on your station has broadcasted a strange syndicate radio signal directed at your personnel.", "[command_name()] High-Priority Update")
+				// We spawned some sleeper agents, nice - give them a report to kickstart the paranoia
+				priority_announce(
+					"Attention crew, it appears that someone on your station has hijacked your telecommunications, broadcasting a Syndicate radio signal to your fellow employees.",
+					"[command_name()] High-Priority Update"
+					)
 
 #undef HACK_PIRATE
 #undef HACK_FUGITIVES
