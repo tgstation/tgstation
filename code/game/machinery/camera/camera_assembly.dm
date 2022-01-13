@@ -236,6 +236,14 @@
 	forceMove(C)
 	C.setDir(src.dir)
 
+	// Add upgrades
+	if(xray_module)
+		C.upgrades += CAMERA_UPGRADE_XRAY
+	if(emp_module)
+		C.upgrades += CAMERA_UPGRADE_EMP_PROOF
+	if(proxy_module)
+		C.upgrades += CAMERA_UPGRADE_MOTION
+
 	C.network = tempnetwork
 	var/area/A = get_area(src)
 	C.c_tag = "[A.name] ([rand(1, 999)])"
