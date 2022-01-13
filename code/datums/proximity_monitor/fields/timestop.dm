@@ -46,7 +46,7 @@
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/magic
-	check_anti_magic = TRUE
+	magic_resistances = MAGIC_RESISTANCE
 
 /datum/proximity_monitor/advanced/timestop
 	var/list/immune = list()
