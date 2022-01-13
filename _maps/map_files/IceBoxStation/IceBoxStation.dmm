@@ -29503,7 +29503,6 @@
 /area/engineering/storage/tech)
 "lyB" = (
 /obj/machinery/light/directional/west,
-/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -29514,6 +29513,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/closet/wardrobe/grey,
 /turf/open/floor/iron,
 /area/commons/locker)
 "lzw" = (
@@ -31781,6 +31781,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/iron,
 /area/commons/locker)
 "mNe" = (
@@ -37110,7 +37111,6 @@
 /turf/open/floor/iron,
 /area/cargo/office)
 "pwH" = (
-/obj/structure/closet/wardrobe/white,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -37121,6 +37121,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/spawner/random/clothing/wardrobe_closet_colored,
 /turf/open/floor/iron,
 /area/commons/locker)
 "pwP" = (
@@ -52663,16 +52664,12 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "xoM" = (
-/obj/structure/table,
+/obj/item/storage/backpack{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/item/storage/backpack,
-/obj/item/storage/backpack{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/backpack{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/structure/table,
 /turf/open/floor/iron,
 /area/commons/locker)
 "xoV" = (
