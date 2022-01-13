@@ -301,7 +301,7 @@
 	initial_modules = list(
 		/obj/item/mod/module/eradication_lock,
 		/obj/item/mod/module/emp_shield,
-		//add teleport mode
+		/obj/item/mod/module/timeline_jumper,
 		/obj/item/mod/module/timestopper,
 		/obj/item/mod/module/rewinder,
 		/obj/item/mod/module/tem,

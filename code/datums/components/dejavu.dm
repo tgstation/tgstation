@@ -118,7 +118,9 @@
 
 ///differently themed dejavu for modsuits.
 /datum/component/dejavu/timeline
-	///message sent when dejavu rewinds
-	rewind_message = "Your suit rewinds time back to 10 seconds ago!"
-	///message sent when dejavu is out of rewinds
-	no_rewinds_message = "\"Rewind complete, anchor point lost.\""
+	rewind_message = "Your suit rewinds, pulling you through spacetime!"
+	no_rewinds_message = "\"Rewind complete. You have arrived at: 10 seconds ago.\""
+
+/datum/component/dejavu/timeline/rewind()
+	playsound(get_turf(parent), 'sound/items/modsuit/rewinder.ogg')
+	. = ..()

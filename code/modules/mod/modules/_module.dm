@@ -37,6 +37,8 @@
 	var/used_signal
 	/// List of mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
+	/// If we're allowed to use this module while phased out.
+	var/allowed_in_phaseout = FALSE
 	/// Timer for the cooldown
 	COOLDOWN_DECLARE(cooldown_timer)
 
@@ -107,6 +109,12 @@
 	if(!mod.active || mod.activating || !mod.cell?.charge)
 		balloon_alert(mod.wearer, "unpowered!")
 		return FALSE
+	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
+		//specifically a to_chat because the user is phased out.
+		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
+		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation())
 			return
@@ -149,6 +157,12 @@
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!check_power(use_power_cost))
+		return FALSE
+	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
+		//specifically a to_chat because the user is phased out.
+		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)

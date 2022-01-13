@@ -94,7 +94,7 @@
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
 		if(channelled)
-			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A

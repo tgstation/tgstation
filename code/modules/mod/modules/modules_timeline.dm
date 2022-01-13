@@ -74,7 +74,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(src, 'sound/items/modsuits/time_anchor_set.ogg', 50, TRUE)
+	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
@@ -112,22 +112,94 @@
 	if(timestop)
 		mod.balloon_alert(mod.wearer, "already freezing time!")
 		return
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+	//stops all mods from triggering during timestop- including timestop itself
+	for(var/obj/item/mod/module/module as anything in mod.modules)
+		RegisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_triggered)
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
 	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
 
 ///unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
+	for(var/obj/item/mod/module/module as anything in mod.modules)
+		UnregisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED)
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-	on_deactivation()
+	timestop = null
 
-///Signal fired when wearer attempts to activate/deactivate suits
+///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
+/obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source, user)
+	SIGNAL_HANDLER
+	balloon_alert(user, "not while channelling timestop!")
+	return MOD_ABORT_USE
+
+///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
 /obj/item/mod/module/timestopper/proc/on_activate_block(datum/source, user)
 	SIGNAL_HANDLER
 	balloon_alert(user, "not while channelling timestop!")
 	return MOD_CANCEL_ACTIVATE
+
+///timeline jumper - Infinite phasing. needs some special effects
+/obj/item/mod/module/timeline_jumper
+	name = "MOD timeline jumper module"
+	desc = "A module used to traverse timelines, phasing the user in and out of the stream of events."
+	icon_state = "timeline_jumper"
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	incompatible_modules = list(/obj/item/mod/module/timeline_jumper)
+	cooldown_time = 5 SECONDS
+	allowed_in_phaseout = TRUE
+	removable = FALSE //copy paste this comment - no timeline modules should be removable
+	///the dummy for phasing from this module, the wearer is phased out while this exists.
+	var/obj/effect/dummy/phased_mob/chrono/phased_mob
+
+/obj/item/mod/module/timeline_jumper/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/area/noteleport_check = get_area(mod.wearer)
+	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
+		to_chat(mod.wearer, span_danger("Some dull, universal force is between you and the [phased_mob ? "current timeline" : "stream between timelines"]."))
+		return FALSE
+
+	if(!phased_mob)
+		//phasing out
+		mod.visible_message(span_warning("[mod.wearer] leaps out of the timeline!"))
+		mod.wearer.SetAllImmobility(0)
+		mod.wearer.setStaminaLoss(0, 0)
+		phased_mob = new(get_turf(mod.wearer.loc))
+		mod.wearer.forceMove(phased_mob)
+		RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
+		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+	else
+		//phasing in
+		QDEL_NULL(phased_mob)
+		UnregisterSignal(mod, list(COMSIG_MOD_ACTIVATE, COMSIG_MOB_SAY))
+		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
+
+	//probably justifies its own sound but whatever
+	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
+
+///Signal fired from when wearer speaks while phased out, to relay the speech to the phased dummy
+/obj/item/mod/module/timeline_jumper/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	//the men are talking
+	phased_mob.say(speech_args[SPEECH_MESSAGE])
+	//so shut up
+	speech_args[SPEECH_MESSAGE] = ""
+
+///Signal fired when wearer attempts to activate/deactivate suits while phased out
+/obj/item/mod/module/timeline_jumper/proc/on_activate_block(datum/source, user)
+	SIGNAL_HANDLER
+	//has to be a to_chat because you're phased out.
+	to_chat(user, span_boldwarning("Deactivating your suit while inbetween timelines would be a very bad idea."))
+	return MOD_CANCEL_ACTIVATE
+
+///special subtype for phased mobs for the agent to speak from.
+/obj/effect/dummy/phased_mob/chrono
+	name = "reality static"
+	verb_say = "echoes"
 
 ///TEM - Lets you eradicate people.
 /obj/item/mod/module/tem
@@ -156,7 +228,7 @@
 		field_disconnect(field)
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/projectile = new /obj/projectile/energy/chrono_beam(get_turf(src))
-	playsound(src, 'sound/items/modsuits/time_anchor_set.ogg', 50, TRUE)
+	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	projectile.tem = src
 	projectile.firer = mod.wearer
 	projectile.fired_from = src
