@@ -1,0 +1,4 @@
+author: "nikothedude"
+delete-after: True
+changes: 
+  - qol: "In the edge case that an emote would have a custom parameter capitalized, it now stays capitalized properly."
