@@ -132,3 +132,5 @@
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
+/// From /datum/surgery_step/success(): (datum/surgey_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+#define COMSIG_MOB_SURGERY_STEP_SUCCESS "mob_surgery_step_success"

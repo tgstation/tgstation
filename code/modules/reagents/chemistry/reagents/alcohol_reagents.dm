@@ -2664,6 +2664,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		QDEL_NULL(prophet_trauma)
 	return ..()
 
+//a jacked up absinthe that causes hallucinations to the game master controller basically, used in smuggling objectives
+/datum/reagent/consumable/ethanol/ritual_wine
+	name = "Ritual Wine"
+	description = "The dangerous, potent, alcoholic component of ritual wine."
+	color = rgb(35, 231, 25)
+	boozepwr = 90 //enjoy near death intoxication
+	taste_mult = 6
+	taste_description = "concentrated herbs"
+
+/datum/reagent/consumable/ethanol/ritual_wine/on_mob_metabolize(mob/living/psychonaut)
+	. = ..()
+	if(!psychonaut.hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.add_filter("ritual_wine", 1, list("type" = "wave", "size" = 1, "x" = 5, "y" = 0, "flags" = WAVE_SIDEWAYS))
+
+/datum/reagent/consumable/ethanol/ritual_wine/on_mob_end_metabolize(mob/living/psychonaut)
+	. = ..()
+	if(!psychonaut.hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("ritual_wine")
+
 //Moth Drinks
 /datum/reagent/consumable/ethanol/curacao
 	name = "Curaçao"
