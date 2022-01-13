@@ -635,11 +635,16 @@
 		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
 		if(!istype(objective))
 			return
+		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
+		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
+		log_admin("[key_name(usr)] forcefully [performed] [objective].")
 		objective.fail_objective()
 	else if(href_list["succeed_objective"])
 		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
 		if(!istype(objective))
 			return
+		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
+		log_admin("[key_name(usr)] forcefully succeeded [objective].")
 		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])

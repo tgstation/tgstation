@@ -122,7 +122,7 @@
 		result += "[traitor_objective_to_html(objective)]<br>"
 	if(!length(uplink_handler.potential_objectives))
 		result += "EMPTY<br>"
-	result += "<a href='?src=[REF(owner)];common=1;give_objective=1'>Force add objective</a><br>"
+	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
 	return result
 
 /datum/antagonist/traitor/on_removal()
