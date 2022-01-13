@@ -207,7 +207,7 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
-	if(target.anti_magic_check(holy = TRUE))
+	if(target.anti_magic_check(MAGIC_RESISTANCE_HOLY))
 		to_chat(user, span_warning("The spell had no effect!"))
 		to_chat(target, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE
@@ -325,7 +325,7 @@
 	knockdown = 50
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
-	check_holy = TRUE
+	magic_resistances = MAGIC_RESISTANCE_HOLY
 	ignored_factions = list("cult")
 	range = 15
 	speed = 7
