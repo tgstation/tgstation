@@ -36,7 +36,6 @@
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
-#define ROLE_SWARMER "Swarmer"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
 // Latejoin roles
@@ -136,7 +135,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
-	ROLE_SWARMER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
 
 	// Latejoin
