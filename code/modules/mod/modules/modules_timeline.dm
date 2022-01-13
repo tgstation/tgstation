@@ -72,6 +72,7 @@
 	. = ..()
 	if(!.)
 		return
+	balloon_alert(mod.wearer, "anchor point set")
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
@@ -183,7 +184,7 @@
 /obj/item/mod/module/timeline_jumper/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 	//the men are talking
-	phased_mob.say(speech_args[SPEECH_MESSAGE])
+	phased_mob.say(speech_args[SPEECH_MESSAGE], sanitize = FALSE)
 	//so shut up
 	speech_args[SPEECH_MESSAGE] = ""
 
@@ -227,7 +228,7 @@
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/projectile = new /obj/projectile/energy/chrono_beam(get_turf(src))
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-	projectile.tem = src
+	projectile.tem_weakref = WEAKREF(src)
 	projectile.firer = mod.wearer
 	projectile.fired_from = src
 	projectile.fire(get_angle(mod.wearer, target), target)
@@ -299,9 +300,9 @@
 	nodamage = TRUE
 	///reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
 	var/datum/weakref/tem_weakref
-	//var/obj/item/mod/module/tem/tem
 
 /obj/projectile/energy/chrono_beam/on_hit(atom/target)
+	var/obj/item/mod/module/tem/tem = tem_weakref.resolve()
 	if(target && tem && isliving(target))
 		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
 		tem.field_connect(field)
@@ -330,7 +331,7 @@
 	var/attached = TRUE
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)
-	if(target && isliving(target))
+	if(isliving(target))
 		if(!tem)
 			attached = FALSE
 		target.forceMove(src)
@@ -403,7 +404,7 @@
 /obj/structure/chrono_field/bullet_act(obj/projectile/projectile)
 	if(istype(projectile, /obj/projectile/energy/chrono_beam))
 		var/obj/projectile/energy/chrono_beam/beam = projectile
-		var/obj/item/mod/module/tem/linked_tem = beam.tem
+		var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
 		if(linked_tem && istype(linked_tem))
 			linked_tem.field_connect(src)
 	else
