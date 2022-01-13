@@ -113,7 +113,7 @@
 	var/obj/target_object_type
 	/// The object this bug is currently planted on
 	var/obj/planted_on
-
+	/// The time it takes to place this bug.
 	var/deploy_time = 10 SECONDS
 
 /obj/item/traitor_bug/interact(mob/user)
@@ -129,7 +129,9 @@
 		return
 	if(!do_after(user, deploy_time, src))
 		return
-	new /obj/structure/traitor_bug(location)
+	var/obj/structure/traitor_bug/new_bug = new(location)
+	transfer_fingerprints_to(new_bug)
+	transfer_fibers_to(new_bug)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_GROUND, location)
 	qdel(src)
 
@@ -172,7 +174,7 @@
 
 /obj/structure/traitor_bug
 	name = "suspicious device"
-	desc = "It looks dangerous. Best you leave this alone"
+	desc = "It looks dangerous. Best you leave this alone."
 
 	anchored = TRUE
 
