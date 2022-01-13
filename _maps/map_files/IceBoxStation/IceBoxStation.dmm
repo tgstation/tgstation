@@ -14117,6 +14117,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/cargo/office)
+"dFi" = (
+/obj/machinery/requests_console/directional/east,
+/turf/open/floor/iron,
+/area/commons/locker)
 "dFp" = (
 /turf/open/floor/iron,
 /area/science/xenobiology)
@@ -24798,7 +24802,6 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors)
 "iZI" = (
-/obj/machinery/firealarm/directional/north,
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/neutral,
@@ -24811,6 +24814,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/commons/locker)
 "jaf" = (
@@ -41809,7 +41813,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/directional/north,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/commons/locker)
 "rWw" = (
@@ -50167,10 +50171,6 @@
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "vZv" = (
-/obj/machinery/requests_console/directional/west{
-	department = "Locker Room";
-	name = "Locker Room Requests Console"
-	},
 /obj/structure/closet/wardrobe/grey,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -74274,7 +74274,7 @@ cPo
 xoM
 hBB
 nGa
-lYu
+dFi
 fEo
 fEo
 oUp
