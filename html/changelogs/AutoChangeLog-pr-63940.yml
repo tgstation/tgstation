@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Stealthed admins orbiting something will no longer count for that atom's orbiter count in the orbit menu"

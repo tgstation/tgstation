@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "Added \"Find Updated Panel\" button to the admin player panel menu (not the F6 one). This allows you to attempt pulling up the new PP"
-  - admin: "The \"Check Contents\" right click verb on living mobs now provides VV and TAG links for each entry, so you don't have to sift through 4 layers of VV to get to someone's emergency oxygen tank."
-  - admin: "The F6 admin menu now lets you ignore punctuation when searching for character names, letting you look up a silicon named \"H.E.R.A.\" by simply searching \"hera\"."
