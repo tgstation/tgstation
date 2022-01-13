@@ -611,6 +611,36 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+	else if(href_list["edit_obj_tc"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
+		if(!istype(objective))
+			return
+		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
+		if(isnull(telecrystal))
+			return
+		objective.telecrystal_reward = telecrystal
+		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+	else if(href_list["edit_obj_pr"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
+		if(!istype(objective))
+			return
+		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
+		if(isnull(progression))
+			return
+		objective.progression_reward = progression
+		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
+		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
+	else if(href_list["fail_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
+		if(!istype(objective))
+			return
+		objective.fail_objective()
+	else if(href_list["succeed_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
+		if(!istype(objective))
+			return
+		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")

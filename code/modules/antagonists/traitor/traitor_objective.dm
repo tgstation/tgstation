@@ -18,12 +18,16 @@
 	var/telecrystal_reward = 0
 	/// TC penalty for failing an objective or cancelling it
 	var/telecrystal_penalty = 1
+	/// The time at which this objective was first created
+	var/time_of_creation = 0
 	/// The time at which this objective was completed
 	var/time_of_completion = 0
 	/// The current state of this objective
 	var/objective_state = OBJECTIVE_STATE_INACTIVE
 	/// Whether this objective was forced upon by an admin. Won't get autocleared by the traitor subsystem if progression surpasses an amount
 	var/forced = FALSE
+	/// Whether this objective was skipped by going from an inactive state to a failed state.
+	var/skipped = FALSE
 
 	/// Determines how influential global progression will affect this objective. Set to 0 to disable.
 	var/global_progression_influence_intensity = 0.5
@@ -58,6 +62,7 @@
 /datum/traitor_objective/New(datum/uplink_handler/handler)
 	. = ..()
 	src.handler = handler
+	src.time_of_creation = world.time
 	apply_configuration()
 	if(SStraitor.generate_objectives)
 		if(islist(telecrystal_reward))
@@ -133,25 +138,48 @@
 /datum/traitor_objective/proc/ungenerate_objective()
 	return
 
+/datum/traitor_objective/proc/get_log_data()
+	return list(
+		"type" = type,
+		"owner" = handler.owner.key,
+		"name" = name,
+		"description" = description,
+		"telecrystal_reward" = telecrystal_reward,
+		"progression_reward" = progression_reward,
+		"original_progression" = original_progression,
+		"objective_state" = objective_state,
+		"forced" = forced
+	)
+
+/// Converts the type into a useful debug string to be used for logging and debug display.
+/datum/traitor_objective/proc/to_debug_string()
+	return "[type] (Name: [name], TC: [telecrystal_reward], Progression: [progression_reward] Time of creation: [time_of_creation])"
+
+/datum/traitor_objective/proc/save_objective()
+	SSblackbox.record_feedback("associative", "traitor_objective", 1, get_log_data())
+
 /// Used to handle cleaning up the objective.
 /datum/traitor_objective/proc/handle_cleanup()
 	time_of_completion = world.time
 	ungenerate_objective()
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
+		skipped = TRUE
 		handler.complete_objective(src) // Remove this objective immediately, no reason to keep it around. It isn't even active
 
 /// Used to fail objectives. Players can clear completed objectives in the UI
-/datum/traitor_objective/proc/fail_objective(penalty_cost = FALSE, trigger_update = TRUE)
+/datum/traitor_objective/proc/fail_objective(penalty_cost = 0, trigger_update = TRUE)
 	// Don't let players succeed already succeeded/failed objectives
 	if(objective_state != OBJECTIVE_STATE_INACTIVE && objective_state != OBJECTIVE_STATE_ACTIVE)
 		return
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_FAILED)
 	handle_cleanup()
+	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "failed"] [to_debug_string()]")
 	if(penalty_cost)
 		handler.telecrystals -= penalty_cost
 		objective_state = OBJECTIVE_STATE_FAILED
 	else
 		objective_state = OBJECTIVE_STATE_INVALID
+	save_objective()
 	if(trigger_update)
 		handler.on_update() // Trigger an update to the UI
 
@@ -163,7 +191,9 @@
 	SEND_SIGNAL(src, COMSIG_TRAITOR_OBJECTIVE_COMPLETED)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, src)
 	handle_cleanup()
+	log_traitor("[key_name(handler.owner)] [objective_state == OBJECTIVE_STATE_INACTIVE? "missed" : "completed"] [to_debug_string()]")
 	objective_state = OBJECTIVE_STATE_COMPLETED
+	save_objective()
 	handler.on_update() // Trigger an update to the UI
 
 /// Called by player input, do not call directly. Validates whether the objective is finished and pays out the handler if it is.
