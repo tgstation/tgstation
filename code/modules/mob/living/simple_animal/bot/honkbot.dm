@@ -111,6 +111,11 @@
 		bike_horn(attack_target)
 	. = ..()
 
+/mob/living/simple_animal/bot/honkbot/honkbot/handle_automated_action()
+	. = ..()
+	if(!limiting_spam && prob(30))
+		bike_horn(attack_target)
+
 /mob/living/simple_animal/bot/secbot/honkbot/start_handcuffing(mob/living/carbon/current_target)
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if(!limiting_spam)
