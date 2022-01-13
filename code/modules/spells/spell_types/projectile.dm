@@ -3,8 +3,7 @@
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
 	var/list/ignored_factions //Do not hit these
-	var/check_holy = FALSE
-	var/check_antimagic = FALSE
+	var/magic_resistance = NONE
 	var/trigger_range = 0 //How far we do we need to be to hit
 	var/linger = FALSE //Can't hit anything but the intended target
 
@@ -46,7 +45,7 @@
 		return FALSE
 	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
 		var/mob/M = target
-		if(M.anti_magic_check(magic = check_antimagic, holy = check_holy))
+		if(M.anti_magic_check(resistances=magic_resistances))
 			return FALSE
 		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
 			return FALSE
@@ -74,8 +73,7 @@
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster
 	var/list/ignore_factions = list() //Faction types that will be ignored
-	var/check_antimagic = TRUE
-	var/check_holy = FALSE
+	var/magic_resistances = MAGIC_RESISTANCE
 
 /obj/effect/proc_holder/spell/targeted/projectile/proc/fire_projectile(atom/target, mob/user)
 	var/obj/projectile/magic/spell/projectile = new proj_type()
