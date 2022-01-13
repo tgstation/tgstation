@@ -308,4 +308,4 @@ INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
 	applied_skin = "honkerative"
 	theme = /datum/mod_theme/syndicate
 
-INITIALIZE_IMMEDIATE(obj/item/mod/control/pre_equipped/honkerative)
+INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/honkerative)
