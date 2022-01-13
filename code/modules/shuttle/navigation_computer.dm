@@ -39,7 +39,7 @@
 
 		for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
 			if(port.id == shuttleId)
-				add_jumpable_port(S)
+				add_jumpable_port(port.id)
 
 	for(var/obj/docking_port/stationary/port as anything in SSshuttle.stationary_docking_ports)
 		if(!port)
@@ -60,13 +60,20 @@
 	else
 		QDEL_NULL(my_port)
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/add_jumpable_port(obj/docking_port/stationary/port)
+/// "Initializes" any default port ids we have, done so add_jumpable_port can be a proper setter
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/set_init_ports()
+	var/list/init_ports = jump_to_ports.Copy()
+	jump_to_ports = list() //Reset it so we don't get dupes
+	for(var/port_id in init_ports)
+		add_jumpable_port(port_id)
+		
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/add_jumpable_port(port_id)
 	if(!length(jump_to_ports))
 		actions += new /datum/action/innate/camera_jump/shuttle_docker(src)
-	jump_to_ports[port.id] = TRUE
+	jump_to_ports[port_id] = TRUE
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/remove_jumpable_port(obj/docking_port/stationary/port)
-	jump_to_ports -= port.id
+/obj/machinery/computer/camera_advanced/shuttle_docker/proc/remove_jumpable_port(port_id)
+	jump_to_ports -= port_id
 	if(!length(jump_to_ports))
 		var/datum/action/to_remove = locate(/datum/action/innate/camera_jump/shuttle_docker) in actions
 		actions -= to_remove
