@@ -45,6 +45,4 @@
 	if(!do_after(user, 30 SECONDS, target))
 		return
 	succeed_objective()
-	priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-	var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-	pirate_event.runEvent()
+	target.hack_console(user)

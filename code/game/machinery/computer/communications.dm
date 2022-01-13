@@ -759,6 +759,67 @@
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
 	LAZYADD(messages, new_message)
 
+/// Defines for the various hack results.
+#define HACK_PIRATE "pirate"
+#define HACK_FUGITIVES "fugitives"
+#define HACK_SLEEPER "sleeper"
+#define HACK_THREAT "more_threat"
+
+/// The minimum number of ghosts / observers to have the chance of spawning pirates.
+#define MIN_GHOSTS_FOR_PIRATES 4
+/// The minimum number of ghosts / observers to have the chance of spawning fugitives.
+#define MIN_GHOSTS_FOR_FUGITIVES 7
+/// The amount of threat injected by a hack, if chosen.
+#define HACK_THREAT_INJECTION_AMOUNT 15
+
+/obj/machinery/computer/communications/proc/hack_console(mob/living/hacker)
+
+	var/list/hack_options = list(HACK_SLEEPER, HACK_THREAT)
+
+	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
+	if(num_ghosts >= MIN_GHOSTS_FOR_PIRATES) // 2/3 pirates ain't bad
+		hack_options += HACK_PIRATE
+	if(num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES) // Please no waldo
+		hack_options += HACK_FUGITIVES
+
+	switch(pick(hack_options))
+		if(HACK_PIRATE)
+			priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
+			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
+			addtimer(CALLBACK(pirate_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
+		if(HACK_FUGITIVES)
+			priority_announce("Attention crew, it appears that someone on your station has established an unexpected orbit with an unmarked ship in nearby space.", "[command_name()] High-Priority Update")
+			var/datum/round_event_control/fugitives/fugitive_event = locate() in SSevents.control
+			addtimer(CALLBACK(fugitive_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
+		if(HACK_THREAT)
+			priority_announce("Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.", "[command_name()] High-Priority Update")
+			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT)
+			dynamic.threat_log += "[worldtime2text()]: Communications console hack by [hacker]. Added [HACK_THREAT_INJECTION_AMOUNT] threat."
+		if(HACK_SLEEPER)
+			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/autotraitor
+			var/datum/game_mode/dynamic/dynamic = SSticker.mode
+			var/num_agents_created = 0
+			for(var/num_agents in 1 to rand(1, 3))
+				dynamic.create_threat(initial(sleeper_agent_type.cost))
+				if(!dynamic.picking_specific_rule(sleeper_agent_type, TRUE))
+					break
+				num_agents_created++
+
+			if(num_agents_created <= 0)
+				dynamic.picking_specific_rule(/datum/dynamic_ruleset/latejoin/infiltrator, TRUE)
+			else
+				priority_announce("Attention crew, it appears that someone on your station has broadcasted a strange syndicate radio signal directed at your personnel.", "[command_name()] High-Priority Update")
+
+#undef HACK_PIRATE
+#undef HACK_FUGITIVES
+#undef HACK_SLEEPER
+#undef HACK_THREAT
+
+#undef MIN_GHOSTS_FOR_PIRATES
+#undef MIN_GHOSTS_FOR_FUGITIVES
+#undef HACK_THREAT_INJECTION_AMOUNT
+
 /datum/comm_message
 	var/title
 	var/content
