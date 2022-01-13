@@ -100,7 +100,10 @@
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 
-
+/// The map used to mask the plane.
+#define MAP_MASK_PLANE -1
+/// The render target used to prevent the map mask from being rendered.
+#define MAP_MASK_RENDER_TARGET "*MAP_MASK_RENDER_TARGET"
 #define AREA_PLANE 60
 #define MASSIVE_OBJ_PLANE 70
 #define GHOST_PLANE 80
