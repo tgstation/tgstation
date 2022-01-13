@@ -96,7 +96,6 @@
 	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage,
-		/obj/item/mod/module/welding,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
 	)
@@ -106,7 +105,6 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/welding,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/holster,
@@ -117,7 +115,7 @@
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/welding,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/pathfinder,
 	)
