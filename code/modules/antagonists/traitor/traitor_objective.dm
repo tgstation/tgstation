@@ -233,7 +233,7 @@
 
 /datum/traitor_objective/proc/on_objective_taken(mob/user)
 	SStraitor.on_objective_taken(src)
-	log_traitor("[key_name(handler.owner)] has taken an objective: [objective.to_debug_string()]")
+	log_traitor("[key_name(handler.owner)] has taken an objective: [to_debug_string()]")
 
 /// Used for generating the UI buttons for the UI. Use ui_perform_action to respond to clicks.
 /datum/traitor_objective/proc/generate_ui_buttons(mob/user)
