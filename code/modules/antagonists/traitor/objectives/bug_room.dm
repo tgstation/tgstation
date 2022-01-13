@@ -129,7 +129,7 @@
 		if(target_area_type)
 			. += span_notice("This device must be placed by <b>using it in hand</b> inside the <b>[initial(target_area_type.name)]</b>.")
 		else if(target_object_type)
-			. += span_notice("This device must be placed by <b>hitting an</b> <b>[initial(target_object_type.name)]</b> with it.")
+			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
 		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
 
 /obj/item/traitor_bug/interact(mob/user)
