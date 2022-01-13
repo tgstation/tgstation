@@ -1,4 +1,0 @@
-author: "Bizzonium"
-delete-after: True
-changes: 
-  - bugfix: "fixed potential bucket corruption in timer reset_buckets"

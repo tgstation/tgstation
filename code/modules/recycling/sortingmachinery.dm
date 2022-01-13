@@ -63,7 +63,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
-		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
+		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -114,9 +114,10 @@
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
 
-		var/list/wrap_contents = src.get_all_contents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
+		for(var/obj/wrapped_item in get_all_contents())
+			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
+				continue
+			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -133,9 +134,10 @@
 			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
-		var/list/wrap_contents = src.get_all_contents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
+		for(var/obj/wrapped_item in get_all_contents())
+			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
+				continue
+			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -256,7 +258,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
-		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
+		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -307,9 +309,10 @@
 		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
 		sticker.cut_multiplier = tagger.cut_multiplier	//as above, as before.
 
-		var/list/wrap_contents = src.get_all_contents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
+		for(var/obj/wrapped_item in get_all_contents())
+			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
+				continue
+			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -327,9 +330,10 @@
 			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
 			return
 		sticker = stickerA
-		var/list/wrap_contents = src.get_all_contents()
-		for(var/obj/I in wrap_contents)
-			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
+		for(var/obj/wrapped_item in get_all_contents())
+			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
+				continue
+			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1

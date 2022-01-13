@@ -1,4 +1,0 @@
-author: "Sealed101"
-delete-after: True
-changes: 
-  - bugfix: "fixed energy axe sprites's clipping issues and incorrect facing directions"

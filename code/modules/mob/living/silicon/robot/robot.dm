@@ -142,6 +142,7 @@
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
+	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
 	cell = null
@@ -672,6 +673,11 @@
 	SEND_SIGNAL(src, COMSIG_BORG_SAFE_DECONSTRUCT)
 	uneq_all()
 	shown_robot_modules = FALSE
+
+	for(var/obj/item/storage/bag in model.contents) // drop all of the items that may be stored by the cyborg
+		for(var/obj/item in bag)
+			item.forceMove(drop_location())
+
 	if(hud_used)
 		hud_used.update_robot_modules_display()
 
@@ -718,7 +724,6 @@
 
 	hat_offset = model.hat_offset
 
-	magpulse = model.magpulsing
 	INVOKE_ASYNC(src, .proc/updatename)
 
 

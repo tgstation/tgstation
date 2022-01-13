@@ -12,6 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
@@ -201,8 +202,10 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect_system/foam_spread
-	var/amount = 10 // the size of the foam spread.
-	var/obj/chemholder
+	/// the size of the foam spread.
+	var/amount = 10
+	/// Stupid hack alertm exists to hold chems for us
+	var/atom/movable/chem_holder/chemholder
 	effect_type = /obj/effect/particle_effect/foam
 	var/metal = 0
 
@@ -220,14 +223,11 @@
 
 /datum/effect_system/foam_spread/New()
 	..()
-	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //same as above
-	chemholder.reagents = R
-	R.my_atom = chemholder
+	chemholder = new()
+	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
-	qdel(chemholder)
-	chemholder = null
+	QDEL_NULL(chemholder)
 	return ..()
 
 /datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = 0)

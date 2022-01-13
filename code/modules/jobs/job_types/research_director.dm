@@ -51,7 +51,7 @@
 
 
 /datum/outfit/job/rd
-	name = "Research Director"
+	name = JOB_RESEARCH_DIRECTOR
 	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
@@ -75,11 +75,12 @@
 	chameleon_extras = /obj/item/stamp/rd
 	skillchips = list(/obj/item/skillchip/job/research_director)
 
-/datum/outfit/job/rd/rig
-	name = "Research Director (Hardsuit)"
+/datum/outfit/job/rd/mod
+	name = "Research Director (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/rd
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/research
+	suit = null
 	mask = /obj/item/clothing/mask/breath
 	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE

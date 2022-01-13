@@ -153,7 +153,7 @@
 /datum/asset/spritesheet/chat
 	name = "chat"
 
-/datum/asset/spritesheet/chat/register()
+/datum/asset/spritesheet/chat/create_spritesheets()
 	InsertAll("emoji", EMOJI_SET)
 	// pre-loading all lanugage icons also helps to avoid meta
 	InsertAll("language", 'icons/misc/language.dmi')
@@ -164,7 +164,6 @@
 		if (icon != 'icons/misc/language.dmi')
 			var/icon_state = initial(L.icon_state)
 			Insert("language-[icon_state]", icon, icon_state=icon_state)
-	..()
 
 /datum/asset/simple/lobby
 	assets = list(
@@ -208,9 +207,8 @@
 /datum/asset/spritesheet/simple/achievements
 	name ="achievements"
 
-/datum/asset/spritesheet/simple/achievements/register()
+/datum/asset/spritesheet/simple/achievements/create_spritesheets()
 	InsertAll("", ACHIEVEMENTS_SET)
-	return ..()
 
 /datum/asset/spritesheet/simple/pills
 	name = "pills"
@@ -270,15 +268,14 @@
 /datum/asset/spritesheet/pipes
 	name = "pipes"
 
-/datum/asset/spritesheet/pipes/register()
+/datum/asset/spritesheet/pipes/create_spritesheets()
 	for (var/each in list('icons/obj/atmospherics/pipes/pipe_item.dmi', 'icons/obj/atmospherics/pipes/disposal.dmi', 'icons/obj/atmospherics/pipes/transit_tube.dmi', 'icons/obj/plumbing/fluid_ducts.dmi'))
 		InsertAll("", each, GLOB.alldirs)
-	..()
 
 /datum/asset/spritesheet/supplypods
 	name = "supplypods"
 
-/datum/asset/spritesheet/supplypods/register()
+/datum/asset/spritesheet/supplypods/create_spritesheets()
 	for (var/style in 1 to length(GLOB.podstyles))
 		if (style == STYLE_SEETHROUGH)
 			Insert("pod_asset[style]", icon('icons/obj/supplypods.dmi' , "seethrough-icon"))
@@ -302,13 +299,12 @@
 				glow = "pod_glow_[glow]"
 				podIcon.Blend(icon('icons/obj/supplypods.dmi', glow), ICON_OVERLAY)
 		Insert("pod_asset[style]", podIcon)
-	return ..()
 
 // Representative icons for each research design
 /datum/asset/spritesheet/research_designs
 	name = "design"
 
-/datum/asset/spritesheet/research_designs/register()
+/datum/asset/spritesheet/research_designs/create_spritesheets()
 	for (var/path in subtypesof(/datum/design))
 		var/datum/design/D = path
 
@@ -367,12 +363,11 @@
 					I.Blend(icon(icon_file, keyboard, SOUTH), ICON_OVERLAY)
 
 		Insert(initial(D.id), I)
-	return ..()
 
 /datum/asset/spritesheet/vending
 	name = "vending"
 
-/datum/asset/spritesheet/vending/register()
+/datum/asset/spritesheet/vending/create_spritesheets()
 	for (var/k in GLOB.vending_products)
 		var/atom/item = k
 		if (!ispath(item, /atom))
@@ -405,7 +400,6 @@
 		var/imgid = replacetext(replacetext("[item]", "/obj/item/", ""), "/", "-")
 
 		Insert(imgid, I)
-	return ..()
 
 /datum/asset/simple/genetics
 	assets = list(
@@ -427,19 +421,17 @@
 /datum/asset/spritesheet/sheetmaterials
 	name = "sheetmaterials"
 
-/datum/asset/spritesheet/sheetmaterials/register()
+/datum/asset/spritesheet/sheetmaterials/create_spritesheets()
 	InsertAll("", 'icons/obj/stack_objects.dmi')
 
 	// Special case to handle Bluespace Crystals
 	Insert("polycrystal", 'icons/obj/telescience.dmi', "polycrystal")
-	..()
 
 /datum/asset/spritesheet/mafia
 	name = "mafia"
 
-/datum/asset/spritesheet/mafia/register()
+/datum/asset/spritesheet/mafia/create_spritesheets()
 	InsertAll("", 'icons/obj/mafia.dmi')
-	..()
 
 /datum/asset/simple/portraits
 	assets = list()
@@ -470,7 +462,7 @@
 /datum/asset/spritesheet/fish
 	name = "fish"
 
-/datum/asset/spritesheet/fish/register()
+/datum/asset/spritesheet/fish/create_spritesheets()
 	for (var/path in subtypesof(/datum/aquarium_behaviour/fish))
 		var/datum/aquarium_behaviour/fish/fish_type = path
 		var/fish_icon = initial(fish_type.icon)
@@ -479,7 +471,6 @@
 		if(sprites[id]) //no dupes
 			continue
 		Insert(id, fish_icon, fish_icon_state)
-	..()
 
 /datum/asset/simple/adventure
 	assets = list(
@@ -524,12 +515,11 @@
 	name = "moods"
 	var/iconinserted = 1
 
-/datum/asset/spritesheet/moods/register()
+/datum/asset/spritesheet/moods/create_spritesheets()
 	for(var/i in 1 to 9)
 		var/target_to_insert = "mood"+"[iconinserted]"
 		Insert(target_to_insert, 'icons/hud/screen_gen.dmi', target_to_insert)
 		iconinserted++
-	..()
 
 /datum/asset/spritesheet/moods/ModifyInserted(icon/pre_asset)
 	var/blended_color
@@ -548,3 +538,43 @@
 			blended_color = "#2eeb9a"
 	pre_asset.Blend(blended_color, ICON_MULTIPLY)
 	return pre_asset
+
+/// Sends information needed for uplinks
+/datum/asset/json/uplink
+	name = "uplink"
+
+/datum/asset/json/uplink/generate()
+	var/list/data = list()
+	var/list/categories = list()
+	var/list/items = list()
+	for(var/datum/uplink_category/category as anything in subtypesof(/datum/uplink_category))
+		categories += category
+	categories = sortTim(categories, .proc/cmp_uplink_category_desc)
+
+	var/list/new_categories = list()
+	for(var/datum/uplink_category/category as anything in categories)
+		new_categories += initial(category.name)
+	categories = new_categories
+
+	for(var/datum/uplink_item/item_path as anything in subtypesof(/datum/uplink_item))
+		var/datum/uplink_item/item = new item_path()
+		if(item.item) {
+			items += list(list(
+				"id" = item_path,
+				"name" = item.name,
+				"cost" = item.cost,
+				"desc" = item.desc,
+				"category" = item.category? initial(item.category.name) : null,
+				"purchasable_from" = item.purchasable_from,
+				"restricted" = item.restricted,
+				"limited_stock" = item.limited_stock,
+				"restricted_roles" = item.restricted_roles,
+				"progression_minimum" = item.progression_minimum,
+			))
+		}
+		SStraitor.uplink_items += item
+		SStraitor.uplink_items_by_type[item_path] = item
+
+	data["items"] = items
+	data["categories"] = categories
+	return data

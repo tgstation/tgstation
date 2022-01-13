@@ -305,11 +305,11 @@ If you make a derivative work from this code, you must include this notification
 				if (2)
 					D.adjustBruteLoss(rand(20,30))
 				if (3)
-					D.ex_act(EXPLODE_LIGHT)
+					EX_ACT(D, EXPLODE_LIGHT)
 				else
 					D.adjustBruteLoss(rand(10,20))
 		else
-			D.ex_act(EXPLODE_LIGHT)
+			EX_ACT(D, EXPLODE_LIGHT)
 
 	else
 		if (A)
@@ -427,7 +427,7 @@ If you make a derivative work from this code, you must include this notification
 
 		if (falling == 1)
 			if (prob(33) || D.stat)
-				D.ex_act(EXPLODE_LIGHT)
+				EX_ACT(D, EXPLODE_LIGHT)
 			else
 				D.adjustBruteLoss(rand(20,30))
 		else

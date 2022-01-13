@@ -451,7 +451,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in sort_list(symptoms, /proc/cmp_typepaths_asc)
+			var/symptom = tgui_input_list(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", sort_list(symptoms, /proc/cmp_typepaths_asc))
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
@@ -465,7 +465,7 @@
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
+		var/new_name = tgui_input_text(user, "Name your new disease", "New Name", max_length = MAX_NAME_LEN)
 		if(!new_name)
 			return
 		D.Refresh()
@@ -474,11 +474,10 @@
 
 		var/list/targets = list("Random")
 		targets += sort_names(GLOB.human_list)
-		var/target = input(user, "Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
-
-		var/mob/living/carbon/human/H
-		if(!target)
+		var/target = tgui_input_list(user, "Viable human target", "Disease Target", targets)
+		if(isnull(target))
 			return
+		var/mob/living/carbon/human/H
 		if(target == "Random")
 			for(var/human in shuffle(GLOB.human_list))
 				H = human

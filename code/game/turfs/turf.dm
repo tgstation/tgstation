@@ -262,7 +262,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Precipitates a movable (plus whatever buckled to it) to lower z levels if possible and then calls zImpact()
 /turf/proc/zFall(atom/movable/falling, levels = 1, force = FALSE, falling_from_move = FALSE)
-	var/turf/target = get_step_multiz(src, DOWN)
+	var/direction = DOWN
+	if(falling.has_gravity() == NEGATIVE_GRAVITY)
+		direction = UP
+	var/turf/target = get_step_multiz(src, direction)
 	if(!target)
 		return FALSE
 	var/isliving = isliving(falling)
@@ -275,7 +278,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			falling = falling_living.buckled
 	if(!falling_from_move && falling.currently_z_moving)
 		return
-	if(!force && !falling.can_z_move(DOWN, src, target, ZMOVE_FALL_FLAGS))
+	if(!force && !falling.can_z_move(direction, src, target, ZMOVE_FALL_FLAGS))
 		falling.set_currently_z_moving(FALSE, TRUE)
 		return FALSE
 
@@ -353,12 +356,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/atom/firstbump
 	var/canPassSelf = CanPass(mover, get_dir(src, mover))
 	if(canPassSelf || (mover.movement_type & PHASING))
-		for(var/i in contents)
+		for(var/atom/movable/thing as anything in contents)
 			if(QDELETED(mover))
 				return FALSE //We were deleted, do not attempt to proceed with movement.
-			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
+			if(thing == mover || thing == mover.loc) // Multi tile objects and moving out of other objects
 				continue
-			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
 				if(QDELETED(mover)) //Mover deleted from Cross/CanPass, do not proceed.
 					return FALSE
@@ -503,19 +505,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/visibilityChanged()
 	GLOB.cameranet.updateVisibility(src)
-	// The cameranet usually handles this for us, but if we've just been
-	// recreated we should make sure we have the cameranet vis_contents.
-	var/datum/camerachunk/C = GLOB.cameranet.chunkGenerated(x, y, z)
-	if(C)
-		if(C.obscuredTurfs[src])
-			vis_contents += GLOB.cameranet.vis_contents_opaque
-		else
-			vis_contents -= GLOB.cameranet.vis_contents_opaque
 
 /turf/proc/burn_tile()
+	return
 
 /turf/proc/is_shielded()
-
+	return
 
 /turf/contents_explosion(severity, target)
 	for(var/thing in contents)

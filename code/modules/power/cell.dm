@@ -426,6 +426,10 @@
 	. = ..()
 	charge = 50000
 
+/obj/item/stock_parts/cell/crystal_cell/wizard
+	desc = "A very high power cell made from crystallized magic."
+	chargerate = 5000
+
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000
 	charge = 5000

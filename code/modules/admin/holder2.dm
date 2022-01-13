@@ -39,6 +39,9 @@ GLOBAL_PROTECT(href_token)
 	/// Whether or not this user can bypass 2FA
 	var/bypass_2fa = FALSE
 
+	/// A lazylist of tagged datums, for quick reference with the View Tags verb
+	var/list/tagged_datums
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"

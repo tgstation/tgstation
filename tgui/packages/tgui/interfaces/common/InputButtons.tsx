@@ -6,13 +6,8 @@ type InputButtonsData = {
 };
 
 type InputButtonsProps = {
-  input: string | number | null;
-  inputIsValid: Validator;
-};
-
-export type Validator = {
-  isValid: boolean;
-  error: string | null;
+  input: string | number;
+  message?: string;
 };
 
 export type Preferences = {
@@ -23,18 +18,17 @@ export type Preferences = {
 export const InputButtons = (props: InputButtonsProps, context) => {
   const { act, data } = useBackend<InputButtonsData>(context);
   const { large_buttons = false, swapped_buttons = true } = data.preferences;
-  const { input, inputIsValid } = props;
-  const { isValid, error } = inputIsValid;
+  const { input, message } = props;
+
   const submitButton = (
     <Button
       color="good"
-      disabled={!isValid}
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('submit', { entry: input })}
       pt={large_buttons ? 0.33 : 0}
       textAlign="center"
-      tooltip={!!large_buttons && error}
+      tooltip={large_buttons && message}
       width={!large_buttons && 6}>
       {large_buttons ? 'SUBMIT' : 'Submit'}
     </Button>
@@ -63,11 +57,9 @@ export const InputButtons = (props: InputButtonsProps, context) => {
       )}
       {!large_buttons && (
         <Stack.Item grow>
-          {!isValid && (
-            <Box color="average" nowrap textAlign="center">
-              {error}
-            </Box>
-          )}
+          <Box color="label" textAlign="center">
+            {message}
+          </Box>
         </Stack.Item>
       )}
       {large_buttons ? (

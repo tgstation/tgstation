@@ -106,7 +106,6 @@
 
 
 /atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 
@@ -138,14 +137,18 @@
 
 	LAZYCLEARLIST(client_mobs_in_contents)
 
-	LAZYCLEARLIST(important_recursive_contents)//has to be before moveToNullspace() so that we can exit our spatial_grid cell if we're in it
-
 	. = ..()
 
 	for(var/movable_content in contents)
 		qdel(movable_content)
 
 	moveToNullspace()
+
+	//This absolutely must be after moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYCLEARLIST(important_recursive_contents)
+
 
 	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
@@ -171,7 +174,7 @@
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
 	if(message)
-		visible_message("<span class='danger'>[src] crashes into [impacted_turf]!</span>")
+		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
 	var/atom/highest = impacted_turf
 	for(var/atom/hurt_atom as anything in impacted_turf.contents)
 		if(!hurt_atom.density)
@@ -254,20 +257,20 @@
 		destination = get_step_multiz(start, direction)
 		if(!destination)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(rider || src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			if(rider)
-				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.<span>")
+				to_chat(rider, span_warning("[src] is is not capable of flight."))
 			else
-				to_chat(src, "<span class='notice'>You are not Superman.<span>")
+				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
 	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
@@ -815,9 +818,9 @@
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 
-///propogates new_client's mob through our nested contents, similar to other important_recursive_contents procs
+///propogates ourselves through our nested contents, similar to other important_recursive_contents procs
 ///main difference is that client contents need to possibly duplicate recursive contents for the clients mob AND its eye
-/atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
+/mob/proc/enable_client_mobs_in_contents()
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf && SSspatial_grid.initialized)
@@ -826,11 +829,10 @@
 		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
-		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
+		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 
-///Clears the clients channel of this movables important_recursive_contents list and all nested locs
-/atom/movable/proc/clear_important_client_contents(client/former_client)
-
+///Clears the clients channel of this mob
+/mob/proc/clear_important_client_contents()
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf && SSspatial_grid.initialized)
@@ -839,7 +841,7 @@
 		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
-		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, former_client.mob)
+		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)
@@ -937,6 +939,9 @@
  * * movement_dir - 0 when stopping or any dir when trying to move
  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+		return TRUE
+
 	if(has_gravity(src))
 		return TRUE
 

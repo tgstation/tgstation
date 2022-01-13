@@ -103,6 +103,8 @@ Possible to do for anyone motivated enough:
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
@@ -300,7 +302,9 @@ Possible to do for anyone motivated enough:
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
 				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
-				if(QDELETED(usr) || !result || outgoing_call)
+				if(isnull(result))
+					return
+				if(QDELETED(usr) || outgoing_call)
 					return
 				if(usr.loc == loc)
 					var/input = text2num(params["headcall"])
@@ -719,15 +723,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(time_delta >= 1)
 		disk.record.entries += list(list(HOLORECORD_DELAY,time_delta))
 	disk.record.entries += list(list(HOLORECORD_SAY,message))
-	if(disk.record.entries.len >= HOLORECORD_MAX_LENGTH)
+	if(length(disk.record.entries) >= HOLORECORD_MAX_LENGTH)
 		record_stop()
 
 /obj/machinery/holopad/proc/replay_entry(entry_number)
 	if(!replay_mode)
 		return
-	if (!disk.record.entries.len) // check for zero entries such as photographs and no text recordings
+	if (!length(disk.record.entries)) // check for zero entries such as photographs and no text recordings
 		return // and pretty much just display them statically untill manually stopped
-	if(disk.record.entries.len < entry_number)
+	if(length(disk.record.entries) < entry_number)
 		if(loop_mode)
 			entry_number = 1
 		else

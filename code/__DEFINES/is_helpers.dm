@@ -7,6 +7,8 @@
 
 #define isatom(A) (isloc(A))
 
+#define isdatum(thing) (istype(thing, /datum))
+
 #define isweakref(D) (istype(D, /datum/weakref))
 
 //Turfs
@@ -138,8 +140,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
 
-#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
-
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismedicalmecha(A) (istype(A, /obj/vehicle/sealed/mecha/medical))
 
-#define ismopable(A) (A && (A.layer <= HIGH_SIGIL_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
+#define ismopable(A) (A && (A.layer <= FLOOR_CLEAN_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 

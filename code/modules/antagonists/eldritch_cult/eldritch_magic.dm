@@ -71,14 +71,44 @@
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(5 SECONDS)
 		C.adjustStaminaLoss(80)
-	var/list/knowledge = cultie.get_all_knowledge()
+	var/list/researched_knowledge = cultie.get_all_knowledge()
 
-	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/EK = knowledge[X]
-		if(EK.on_mansus_grasp(target, user, proximity_flag, click_parameters))
+	for(var/knowledge in researched_knowledge)
+		var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
 	if(use_charge)
 		return ..()
+
+/obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
+	var/mob/living/carbon/carbon_user = user	//iscarbon already used in spell's parent
+	var/datum/antagonist/heretic/cultie = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/list/researched_knowledge = cultie.get_all_knowledge()
+	var/escape_our_torment = 0
+	while(carbon_user.stat == CONSCIOUS)
+		if(QDELETED(src) || QDELETED(user))
+			return SHAME
+		if(escape_our_torment > 20) //Stops us from infinitely stunning ourselves if we're just not taking the damage
+			return FIRELOSS
+
+		if(prob(70))
+			carbon_user.adjustFireLoss(20)
+			playsound(carbon_user, 'sound/effects/wounds/sizzle1.ogg', 70, vary = TRUE)
+			if(prob(50))
+				carbon_user.emote("scream")
+				carbon_user.stuttering += 13
+
+		for(var/knowledge in researched_knowledge)
+			var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+			eldritch_knowledge.on_mansus_grasp(carbon_user, carbon_user)
+
+		carbon_user.adjustBruteLoss(10)
+		carbon_user.AdjustKnockdown(5 SECONDS)
+		carbon_user.adjustStaminaLoss(80)
+		escape_our_torment++
+		stoplag(0.4 SECONDS)
+	return FIRELOSS
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
@@ -586,7 +616,9 @@
 	if(!originator?.linked_mobs[living_owner])
 		CRASH("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it.")
 
-	var/message = sanitize(input("Message:", "Telepathy from the Manse") as text|null)
+	var/message = sanitize(tgui_input_text(living_owner, "Enter your message", "Telepathy from the Manse"))
+	if(!message)
+		return
 
 	if(QDELETED(living_owner))
 		return
@@ -595,14 +627,14 @@
 		to_chat(living_owner, span_warning("The link seems to have been severed..."))
 		Remove(living_owner)
 		return
-	if(message)
-		var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
-		log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
-		to_chat(originator.linked_mobs, msg)
 
-		for(var/dead_mob in GLOB.dead_mob_list)
-			var/link = FOLLOW_LINK(dead_mob, living_owner)
-			to_chat(dead_mob, "[link] [msg]")
+	var/msg = "<i><font color=#568b00>\[Mansus Link\] <b>[living_owner]:</b> [message]</font></i>"
+	log_directed_talk(living_owner, originator, msg, LOG_SAY, "Mansus Link")
+	to_chat(originator.linked_mobs, msg)
+
+	for(var/dead_mob in GLOB.dead_mob_list)
+		var/link = FOLLOW_LINK(dead_mob, living_owner)
+		to_chat(dead_mob, "[link] [msg]")
 
 /obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch
 	range = 10

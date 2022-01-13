@@ -539,6 +539,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!removed || !removed.total_moles() || isspaceturf(local_turf)) //we're in space or there is no gas to process
 		if(takes_damage)
 			damage += max((power / 1000) * DAMAGE_INCREASE_MULTIPLIER, 0.1) // always does at least some damage
+		if(!istype(env, /datum/gas_mixture/immutable) && produces_gas && power) //There is no gas to process, but we are not in a space turf. Lets make them.
+			//Power * 0.55 * a value between 1 and 0.8
+			var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
+			//Can't do stuff if it's null, so lets make a new gasmix.
+			removed = new()
+			//Since there is no gas to process, we will produce as if heat penalty is 1 and temperature at TCMB.
+			removed.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+			removed.temperature = ((device_energy) / THERMAL_RELEASE_MODIFIER)
+			removed.temperature = max(TCMB, min(removed.temperature, 2500))
+			removed.gases[/datum/gas/plasma][MOLES] = max((device_energy) / PLASMA_RELEASE_MODIFIER, 0)
+			removed.gases[/datum/gas/oxygen][MOLES] = max(((device_energy + TCMB) - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+			removed.garbage_collect()
+			env.merge(removed)
+			air_update_turf(FALSE, FALSE)
 	else
 		if(takes_damage)
 			//causing damage
@@ -639,11 +653,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(gas_comp[/datum/gas/carbon_dioxide] && gas_comp[/datum/gas/oxygen])
 			var/carbon_dioxide_pp = env.return_pressure() * gas_comp[/datum/gas/carbon_dioxide]
 			var/consumed_carbon_dioxide = clamp(((carbon_dioxide_pp - CO2_CONSUMPTION_PP) / (carbon_dioxide_pp + CO2_PRESSURE_SCALING)), CO2_CONSUMPTION_RATIO_MIN, CO2_CONSUMPTION_RATIO_MAX)
-			consumed_carbon_dioxide *= gas_comp[/datum/gas/carbon_dioxide] * combined_gas
+			consumed_carbon_dioxide = min(consumed_carbon_dioxide * gas_comp[/datum/gas/carbon_dioxide] * combined_gas, removed.gases[/datum/gas/carbon_dioxide][MOLES], removed.gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
 			if(consumed_carbon_dioxide)
 				removed.gases[/datum/gas/carbon_dioxide][MOLES] -= consumed_carbon_dioxide
-				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide / 2
-				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide / 2
+				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide * 0.5
+				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide * 0.5
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -721,7 +735,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Power * 0.55 * (some value between 1.5 and 23) / 5
 		removed.temperature += ((device_energy * dynamic_heat_modifier) / THERMAL_RELEASE_MODIFIER)
 		//We can only emit so much heat, that being 57500
-		removed.temperature = max(0, min(removed.temperature, 2500 * dynamic_heat_modifier))
+		removed.temperature = max(TCMB, min(removed.temperature, 2500 * dynamic_heat_modifier))
 
 		//Calculate how much gas to release
 		//Varies based on power and gas content
@@ -852,13 +866,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
 	var/turf/local_turf = loc
+	var/kiss_power = 0
+	switch(projectile.type)
+		if(/obj/projectile/kiss)
+			kiss_power = 60
+		if(/obj/projectile/kiss/death)
+			kiss_power = 20000
 	if(!istype(local_turf))
 		return FALSE
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
-	if(projectile.flag != BULLET)
+	if(projectile.flag != BULLET || kiss_power)
+		if(kiss_power)
+			psyCoeff = 1
+			psy_overlay = TRUE
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy
+			power += projectile.damage * bullet_energy + kiss_power
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")

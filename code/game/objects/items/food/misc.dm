@@ -27,6 +27,9 @@
 /obj/item/food/cheese/wheel/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
 
+/obj/item/food/cheese/wheel/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+
 /obj/item/food/cheese/royal
 	name = "royal cheese"
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
@@ -442,6 +445,11 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
+/obj/item/food/bubblegum/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	qdel(src)
+	return TOXLOSS
+
 /obj/item/food/bubblegum/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
@@ -466,6 +474,8 @@
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
 	metabolization_amount = REAGENTS_METABOLISM
+	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
+	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
 
 /obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
@@ -496,9 +506,13 @@
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")]</b>"))
+		to_chat(victim, span_colossus("<b>[pick(hallucination_lines)]</b>"))
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
+
+/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
+	user.say(";[pick(hallucination_lines)]")
+	return ..()
 
 /obj/item/food/gumball
 	name = "gumball"
@@ -882,6 +896,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/char = 1)
 	tastes = list("bell pepper" = 1, "char" = 1)
 	foodtypes = VEGETABLES
+	burns_in_oven = TRUE
 
 //DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
 /obj/item/food/ready_donk

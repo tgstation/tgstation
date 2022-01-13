@@ -669,7 +669,7 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = 300
 	tick_interval = 10
-	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
+	examine_text = span_warning("SUBJECTPRONOUN seems slow and unfocused.")
 	var/stun = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/trance
 
@@ -690,7 +690,7 @@
 	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
-	span_warning("[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]"))
+	span_warning(pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")))
 	return TRUE
 
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
@@ -728,53 +728,56 @@
 	alert_type = null
 
 /datum/status_effect/spasms/tick()
-	if(prob(15))
-		switch(rand(1,5))
-			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
-					to_chat(owner, span_warning("Your leg spasms!"))
-					step(owner, pick(GLOB.cardinals))
-			if(2)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				if(I)
-					to_chat(owner, span_warning("Your fingers spasm!"))
-					owner.log_message("used [I] due to a Muscle Spasm", LOG_ATTACK)
-					I.attack_self(owner)
-			if(3)
-				owner.set_combat_mode(TRUE)
+	if(owner.stat >= UNCONSCIOUS)
+		return
+	if(!prob(15))
+		return
+	switch(rand(1,5))
+		if(1)
+			if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
+				to_chat(owner, span_warning("Your leg spasms!"))
+				step(owner, pick(GLOB.cardinals))
+		if(2)
+			if(owner.incapacitated())
+				return
+			var/obj/item/held_item = owner.get_active_held_item()
+			if(!held_item)
+				return
+			to_chat(owner, span_warning("Your fingers spasm!"))
+			owner.log_message("used [held_item] due to a Muscle Spasm", LOG_ATTACK)
+			held_item.attack_self(owner)
+		if(3)
+			owner.set_combat_mode(TRUE)
 
-				var/range = 1
-				if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
-					range = 7
+			var/range = 1
+			if(istype(owner.get_active_held_item(), /obj/item/gun)) //get targets to shoot at
+				range = 7
 
-				var/list/mob/living/targets = list()
-				for(var/mob/M in oview(owner, range))
-					if(isliving(M))
-						targets += M
-				if(LAZYLEN(targets))
-					to_chat(owner, span_warning("Your arm spasms!"))
-					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
-					owner.ClickOn(pick(targets))
-				owner.set_combat_mode(FALSE)
-			if(4)
-				owner.set_combat_mode(TRUE)
+			var/list/mob/living/targets = list()
+			for(var/mob/living/nearby_mobs in oview(owner, range))
+				targets += nearby_mobs
+			if(LAZYLEN(targets))
 				to_chat(owner, span_warning("Your arm spasms!"))
-				owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
-				owner.ClickOn(owner)
-				owner.set_combat_mode(FALSE)
-			if(5)
-				if(owner.incapacitated())
-					return
-				var/obj/item/I = owner.get_active_held_item()
-				var/list/turf/targets = list()
-				for(var/turf/T in oview(owner, 3))
-					targets += T
-				if(LAZYLEN(targets) && I)
-					to_chat(owner, span_warning("Your arm spasms!"))
-					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
-					owner.throw_item(pick(targets))
+				owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
+				owner.ClickOn(pick(targets))
+			owner.set_combat_mode(FALSE)
+		if(4)
+			owner.set_combat_mode(TRUE)
+			to_chat(owner, span_warning("Your arm spasms!"))
+			owner.log_message("attacked [owner.p_them()]self to a Muscle Spasm", LOG_ATTACK)
+			owner.ClickOn(owner)
+			owner.set_combat_mode(FALSE)
+		if(5)
+			if(owner.incapacitated())
+				return
+			var/obj/item/held_item = owner.get_active_held_item()
+			var/list/turf/targets = list()
+			for(var/turf/nearby_turfs in oview(owner, 3))
+				targets += nearby_turfs
+			if(LAZYLEN(targets) && held_item)
+				to_chat(owner, span_warning("Your arm spasms!"))
+				owner.log_message("threw [held_item] due to a Muscle Spasm", LOG_ATTACK)
+				owner.throw_item(pick(targets))
 
 /datum/status_effect/convulsing
 	id = "convulsing"
@@ -859,25 +862,28 @@
 	switch(msg_stage)
 		if(0 to 300)
 			if(prob(1))
-				fake_msg = pick(span_warning("[pick("Your head hurts.", "Your head pounds.")]"),
-				span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"),
-				span_warning("[pick("You feel dizzy.", "Your head spins.")]"),
-				"<span notice='warning'>[pick("You swallow excess mucus.", "You lightly cough.")]</span>",
-				span_warning("[pick("Your head hurts.", "Your mind blanks for a moment.")]"),
-				span_warning("[pick("Your throat hurts.", "You clear your throat.")]"))
+				fake_msg = pick(
+				span_warning(pick("Your head hurts.", "Your head pounds.")),
+				span_warning(pick("You're having difficulty breathing.", "Your breathing becomes heavy.")),
+				span_warning(pick("You feel dizzy.", "Your head spins.")),
+				span_warning(pick("You swallow excess mucus.", "You lightly cough.")),
+				span_warning(pick("Your head hurts.", "Your mind blanks for a moment.")),
+				span_warning(pick("Your throat hurts.", "You clear your throat.")))
 		if(301 to 600)
 			if(prob(2))
-				fake_msg = pick(span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"),
-				span_warning("[pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")]"),
+				fake_msg = pick(
+				span_warning(pick("Your head hurts a lot.", "Your head pounds incessantly.")),
+				span_warning(pick("Your windpipe feels like a straw.", "Your breathing becomes tremendously difficult.")),
 				span_warning("You feel very [pick("dizzy","woozy","faint")]."),
-				span_warning("[pick("You hear a ringing in your ear.", "Your ears pop.")]"),
+				span_warning(pick("You hear a ringing in your ear.", "Your ears pop.")),
 				span_warning("You nod off for a moment."))
 		else
 			if(prob(3))
 				if(prob(50))// coin flip to throw a message or an emote
-					fake_msg = pick(span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"),
-					span_userdanger("[pick("Your lungs hurt!", "It hurts to breathe!")]"),
-					span_warning("[pick("You feel nauseated.", "You feel like you're going to throw up!")]"))
+					fake_msg = pick(
+					span_userdanger(pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")),
+					span_userdanger(pick("Your lungs hurt!", "It hurts to breathe!")),
+					span_warning(pick("You feel nauseated.", "You feel like you're going to throw up!")))
 				else
 					fake_emote = pick("cough", "sniff", "sneeze")
 
@@ -991,7 +997,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/ants
 	duration = 2 MINUTES //Keeping the normal timer makes sure people can't somehow dump 300+ ants on someone at once so they stay there for like 30 minutes. Max w/ 1 dump is 57.6 brute.
-	examine_text = "<span class='warning'>SUBJECTPRONOUN is covered in ants!</span>"
+	examine_text = span_warning("SUBJECTPRONOUN is covered in ants!")
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
@@ -999,7 +1005,7 @@
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)
 		if(new_owner.stat < UNCONSCIOUS) // Unconcious people won't get messages
-			to_chat(new_owner, "<span class='userdanger'>You're covered in ants!</span>")
+			to_chat(new_owner, span_userdanger("You're covered in ants!"))
 		ants_remaining += amount_left
 		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
@@ -1009,7 +1015,7 @@
 	if(isnum(amount_left) && ants_remaining >= 1 && victim.stat < HARD_CRIT)
 		if(victim.stat < UNCONSCIOUS) // Unconcious people won't get messages
 			if(!prob(1)) // 99%
-				to_chat(victim, "<span class='userdanger'>You're covered in MORE ants!</span>")
+				to_chat(victim, span_userdanger("You're covered in MORE ants!"))
 			else // 1%
 				victim.say("AAHH! THIS SITUATION HAS ONLY BEEN MADE WORSE WITH THE ADDITION OF YET MORE ANTS!!", forced = /datum/status_effect/ants)
 		ants_remaining += amount_left
@@ -1017,7 +1023,7 @@
 
 /datum/status_effect/ants/on_remove()
 	ants_remaining = 0
-	to_chat(owner, "<span class='notice'>All of the ants are off of your body!</span>")
+	to_chat(owner, span_notice("All of the ants are off of your body!"))
 	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
 
@@ -1040,18 +1046,18 @@
 			switch(rand(1,50))
 				if (1 to 8) //16% Chance
 					var/obj/item/bodypart/head/hed = victim.get_bodypart(BODY_ZONE_HEAD)
-					to_chat(victim, "<span class='danger'>You scratch at the ants on your scalp!.</span>")
+					to_chat(victim, span_danger("You scratch at the ants on your scalp!."))
 					hed.receive_damage(1,0)
 				if (9 to 29) //40% chance
 					var/obj/item/bodypart/arm = victim.get_bodypart(pick(BODY_ZONE_L_ARM,BODY_ZONE_R_ARM))
-					to_chat(victim, "<span class='danger'>You scratch at the ants on your arms!</span>")
+					to_chat(victim, span_danger("You scratch at the ants on your arms!"))
 					arm.receive_damage(3,0)
 				if (30 to 49) //38% chance
 					var/obj/item/bodypart/leg = victim.get_bodypart(pick(BODY_ZONE_L_LEG,BODY_ZONE_R_LEG))
-					to_chat(victim, "<span class='danger'>You scratch at the ants on your leg!</span>")
+					to_chat(victim, span_danger("You scratch at the ants on your leg!"))
 					leg.receive_damage(3,0)
 				if(50) // 2% chance
-					to_chat(victim, "<span class='danger'>You rub some ants away from your eyes!</span>")
+					to_chat(victim, span_danger("You rub some ants away from your eyes!"))
 					victim.blur_eyes(3)
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
@@ -1060,18 +1066,18 @@
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"
-	desc = "<span class='warning'>JESUS FUCKING CHRIST! CLICK TO GET THOSE THINGS OFF!</span>"
+	desc = span_warning("JESUS FUCKING CHRIST! CLICK TO GET THOSE THINGS OFF!")
 	icon_state = "antalert"
 
 /atom/movable/screen/alert/status_effect/ants/Click()
 	var/mob/living/living = owner
 	if(!istype(living) || !living.can_resist() || living != owner)
 		return
-	to_chat(living, "<span class='notice'>You start to shake the ants off!</span>")
+	to_chat(living, span_notice("You start to shake the ants off!"))
 	if(!do_after(living, 2 SECONDS, target = living))
 		return
 	for (var/datum/status_effect/ants/ant_covered in living.status_effects)
-		to_chat(living, "<span class='notice'>You manage to get some of the ants off!</span>")
+		to_chat(living, span_notice("You manage to get some of the ants off!"))
 		ant_covered.ants_remaining -= 10 // 5 Times more ants removed per second than just waiting in place
 
 /datum/status_effect/ghoul
