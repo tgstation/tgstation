@@ -705,13 +705,13 @@
 * and gives them a fallback spell if no uplink was found
 */
 /datum/mind/proc/try_give_equipment_fallback()
-	var/datum/component/uplink/uplink
+	var/uplink_exists
 	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
-		uplink = traitor_datum.uplink
-	if(!uplink)
-		uplink = find_syndicate_uplink(check_unlocked = TRUE)
-	if(!uplink && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
+		uplink_exists = traitor_datum.uplink_ref
+	if(!uplink_exists)
+		uplink_exists = find_syndicate_uplink(check_unlocked = TRUE)
+	if(!uplink_exists && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
 		AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
 
 /datum/mind/proc/take_uplink()

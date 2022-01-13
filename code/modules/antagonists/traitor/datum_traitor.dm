@@ -23,7 +23,7 @@
 	var/list/traitor_flavor
 
 	///reference to the uplink this traitor was given, if they were.
-	var/datum/component/uplink/uplink
+	var/datum/weakref/uplink_ref
 
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
@@ -40,7 +40,8 @@
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
-	uplink = owner.find_syndicate_uplink()
+	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
+	uplink_ref = WEAKREF(uplink)
 	if(uplink)
 		if(uplink_handler)
 			uplink.uplink_handler = uplink_handler
@@ -63,8 +64,6 @@
 				uplink_items += item
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
-		RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
-
 	if(give_objectives)
 		forge_traitor_objectives()
 
@@ -77,10 +76,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	return ..()
-
-/datum/antagonist/traitor/proc/on_uplink_lost(datum/source)
-	SIGNAL_HANDLER
-	uplink = null
 
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
@@ -181,6 +176,7 @@
 		component.delete_if_from_source(src)
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
+	var/datum/component/uplink/uplink = uplink_ref?.resolve()
 	var/list/data = list()
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)

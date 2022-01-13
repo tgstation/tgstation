@@ -15190,10 +15190,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
-"enR" = (
-/obj/effect/temp_visual/swarmer,
-/turf/closed/wall/r_wall,
-/area/command/heads_quarters/captain)
 "enS" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -25114,7 +25110,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/temp_visual/swarmer,
 /turf/open/floor/iron,
 /area/command/bridge)
 "jtr" = (
@@ -86835,7 +86830,7 @@ olj
 olj
 olj
 olj
-enR
+olj
 olj
 vtF
 vtF
