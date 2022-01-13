@@ -173,7 +173,7 @@
 	cell.use(cell.charge/3)
 	if(isliving(loc))
 		var/mob/living/user = loc
-		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!</span>"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
 		user.adjust_fire_stacks(4)
 		user.IgniteMob()
 
