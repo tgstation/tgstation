@@ -20,7 +20,7 @@
 	var/list/pickable_departments = subtypesof(/datum/job_department)
 	for(var/datum/job_department/dep as anything in pickable_departments)
 		options[dep.department_name] = dep
-	picked_department = options[(input(usr,"Which department should revolt?","Select a department") as null|anything in options)]
+	picked_department = options[(input(usr,"Which department should revolt? Select none for a random department.","Select a department") as null|anything in options)]
 	if(!picked_department)
 		return //eh just random they dont care
 
