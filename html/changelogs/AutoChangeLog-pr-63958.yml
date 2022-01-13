@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes gang induction, sentient disease abilities, birdboat's vomit button, and the ooze's boost button"

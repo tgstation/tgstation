@@ -177,16 +177,9 @@
 		return
 	AI_notify_hack()
 	if(do_after(ninja, 300))
-		var/announcement_pick = rand(0, 1)
-		switch(announcement_pick)
-			if(0)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/spawn_swarmer/swarmer_event = new/datum/round_event_control/spawn_swarmer
-				swarmer_event.runEvent()
-			if(1)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-				pirate_event.runEvent()
+		priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
+		var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
+		pirate_event.runEvent()
 		ninja_gloves.communication_console_hack_success = TRUE
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
 		if(!ninja_antag)

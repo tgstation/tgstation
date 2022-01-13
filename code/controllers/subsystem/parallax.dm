@@ -40,7 +40,8 @@ SUBSYSTEM_DEF(parallax)
 		if(!istype(movable_eye))
 			continue
 
-		for (movable_eye; isloc(movable_eye.loc) && !isturf(movable_eye.loc); movable_eye = movable_eye.loc);
+		while(isloc(movable_eye.loc) && !isturf(movable_eye.loc))
+			movable_eye = movable_eye.loc
 		//get the last movable holding the mobs eye
 
 		if(movable_eye == processing_client.movingmob)

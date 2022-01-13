@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Fixes the spider charge not giving ninjas their objective"

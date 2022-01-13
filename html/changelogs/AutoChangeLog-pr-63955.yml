@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Can no longer open storage containers in a locker (or other container) via right click."
