@@ -41,7 +41,7 @@
 	if(!cached_map)
 		return
 
-	var/list/offset = discover_offset(/obj/modular_map_connector)
+	var/list/offset = discover_offset(obj/modular_map_connector)
 
 	x_offset = offset[1] - 1
 	y_offset = offset[2] - 1

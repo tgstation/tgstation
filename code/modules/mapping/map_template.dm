@@ -186,7 +186,7 @@
 			placement = corner
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
-/datum/map_template/proc/discover_offset(var/obj/marker)
+/datum/map_template/proc/discover_offset(obj/marker)
 	var/key
 	var/list/models = cached_map.grid_models
 	for(key in models)
