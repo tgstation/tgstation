@@ -247,7 +247,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#972A2A#F2F2F2"
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
