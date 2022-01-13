@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - bugfix: "Fortune cookies now give you your fortune."
