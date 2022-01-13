@@ -111,7 +111,7 @@
 		bike_horn(attack_target)
 	. = ..()
 
-/mob/living/simple_animal/bot/honkbot/honkbot/handle_automated_action()
+/mob/living/simple_animal/bot/secbot/honkbot/handle_automated_action()
 	. = ..()
 	if(!limiting_spam && prob(30))
 		bike_horn(attack_target)
