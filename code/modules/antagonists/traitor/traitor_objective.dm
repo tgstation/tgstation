@@ -153,7 +153,7 @@
 
 /// Converts the type into a useful debug string to be used for logging and debug display.
 /datum/traitor_objective/proc/to_debug_string()
-	return "[type] (Name: [name], TC: [telecrystal_reward], Progression: [progression_reward] Time of creation: [time_of_creation])"
+	return "[type] (Name: [name], TC: [telecrystal_reward], Progression: [progression_reward], Time of creation: [time_of_creation])"
 
 /datum/traitor_objective/proc/save_objective()
 	SSblackbox.record_feedback("associative", "traitor_objective", 1, get_log_data())
