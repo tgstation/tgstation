@@ -65,7 +65,7 @@
 	complexity = 1
 	use_power_cost = DEFAULT_CELL_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/rewinder)
-	cooldown_time = 30 SECONDS
+	cooldown_time = 20 SECONDS
 	removable = FALSE //copy paste this comment - no timeline modules should be removable
 
 /obj/item/mod/module/rewinder/on_use()
@@ -74,12 +74,17 @@
 		return
 	balloon_alert(mod.wearer, "anchor point set")
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
+	//stops all mods from triggering during rewinding
+	for(var/obj/item/mod/module/module as anything in mod.modules)
+		RegisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_triggered)
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
 
 ///unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
+	for(var/obj/item/mod/module/module as anything in mod.modules)
+		UnregisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
@@ -87,6 +92,12 @@
 	SIGNAL_HANDLER
 	balloon_alert(user, "not while rewinding!")
 	return MOD_CANCEL_ACTIVATE
+
+///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
+/obj/item/mod/module/rewinder/proc/on_module_triggered(datum/source)
+	SIGNAL_HANDLER
+	balloon_alert(mod.wearer, "not while rewinding!")
+	return MOD_ABORT_USE
 
 ///timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
 /obj/item/mod/module/timestopper
@@ -127,9 +138,9 @@
 	timestop = null
 
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
-/obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source, user)
+/obj/item/mod/module/timestopper/proc/on_module_triggered(datum/source)
 	SIGNAL_HANDLER
-	balloon_alert(user, "not while channelling timestop!")
+	balloon_alert(mod.wearer, "not while channelling timestop!")
 	return MOD_ABORT_USE
 
 ///Signal fired when wearer attempts to activate/deactivate suits, if attempting while time is stopped
