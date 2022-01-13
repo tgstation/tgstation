@@ -36,23 +36,21 @@
 	balloon_alert(mod.wearer, "user remembered")
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/eradication_lock/proc/eradication_check(mob/user)
-	if(!true_owner_ckey || user.ckey == true_owner_ckey)
-		return TRUE
-	mod.balloon_alert(user, "timeline inhabitant detected! eradicating...")
-	return FALSE
-
+///Signal fired when the modsuit tries activating
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!eradication_check(user))
+	if(true_owner_ckey && user.ckey != true_owner_ckey)
+		to_chat(mod.wearer, span_userdanger("\"MODsuit compromised by timeline inhabitant! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
 		return MOD_CANCEL_ACTIVATE
 
+///Signal fired when the modsuit tries removing a module.
 /obj/item/mod/module/eradication_lock/proc/on_mod_removal(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!eradication_check(user))
+	if(true_owner_ckey && user.ckey != true_owner_ckey)
+		to_chat(mod.wearer, span_userdanger("\"Timeline inhabitant tampering detected! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
 		return MOD_CANCEL_REMOVAL
 
@@ -238,51 +236,75 @@
 	if(field)
 		field_disconnect(field)
 
-/obj/item/mod/module/tem/proc/field_connect(obj/structure/chrono_field/F)
-	var/mob/living/user = loc
-	if(F.tem)
-		if(isliving(user) && F.captured)
-			to_chat(user, span_alert("<b>FAIL: <i>[F.captured]</i> already has an existing connection.</b>"))
-		field_disconnect(F)
-	else
-		startpos = get_turf(mod.wearer)
-		field = F
-		F.tem = src
-		if(isliving(user) && F.captured)
-			to_chat(user, span_notice("Connection established with target: <b>[F.captured]</b>"))
+/**
+ * ### field_connect
+ *
+ * Links a chrono field to this module. The chrono field will keep track of the eradication process.
+ * Unlinks a chrono field if it is connected to a tem already.
+ *
+ * Arguments:
+ * * field: chronofield we are attempting to link to this module.
+ */
+/obj/item/mod/module/tem/proc/field_connect(obj/structure/chrono_field/field)
+	if(field.tem)
+		if(field.captured)
+			to_chat(mod.wearer, span_alert("<b>FAIL: <i>[field.captured]</i> already has an existing connection.</b>"))
+		field_disconnect(field)
+		return
+	startpos = get_turf(mod.wearer)
+	field = field
+	field.tem = src
+	if(field.captured)
+		to_chat(mod.wearer, span_notice("Connection established with target: <b>[field.captured]</b>"))
 
-/obj/item/mod/module/tem/proc/field_disconnect(obj/structure/chrono_field/F)
-	if(F && field == F)
-		var/mob/living/user = loc
-		if(F.tem == src)
-			F.tem = null
-		if(isliving(user) && F.captured)
-			to_chat(user, span_alert("Disconnected from target: <b>[F.captured]</b>"))
+/**
+ * ### field_disconnect
+ *
+ * Unlinks a chrono field from this module.
+ *
+ * Arguments:
+ * * field: chronofield we are attempting to unlink from this module.
+ */
+/obj/item/mod/module/tem/proc/field_disconnect(obj/structure/chrono_field/field)
+	if(field && field == field)
+		if(field.tem == src)
+			field.tem = null
+		if(field.captured)
+			to_chat(mod.wearer, span_alert("Disconnected from target: <b>[field.captured]</b>"))
 	field = null
 	startpos = null
 
-/obj/item/mod/module/tem/proc/field_check(obj/structure/chrono_field/F)
-	if(F)
-		if(field == F)
-			var/turf/currentpos = get_turf(src)
-			var/mob/living/user = loc
-			if(currentpos == startpos && isliving(user) && user.body_position == STANDING_UP && !HAS_TRAIT(user, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
-				return TRUE
-		field_disconnect(F)
+/**
+ * ### field_check
+ *
+ * Checks to see if  our field can still be linked to the tem. If it isn't, it will unlink the field.
+ *
+ * Arguments:
+ * * field: chronofield we're checking the connection's validity on.
+ */
+/obj/item/mod/module/tem/proc/field_check(obj/structure/chrono_field/field)
+	if(!field)
 		return FALSE
+	if(field == field)
+		var/turf/currentpos = get_turf(src)
+		if(currentpos == startpos && mod.wearer.body_position == STANDING_UP && !HAS_TRAIT(mod.wearer, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
+			return TRUE
+	field_disconnect(field)
+	return FALSE
 
 /obj/projectile/energy/chrono_beam
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
 	nodamage = TRUE
-	///reference to the tem... given by the tem!
-	var/obj/item/mod/module/tem/tem
+	///reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
+	var/datum/weakref/tem_weakref
+	//var/obj/item/mod/module/tem/tem
 
 /obj/projectile/energy/chrono_beam/on_hit(atom/target)
 	if(target && tem && isliving(target))
-		var/obj/structure/chrono_field/F = new(target.loc, target, tem)
-		tem.field_connect(F)
+		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
+		tem.field_connect(field)
 
 /obj/structure/chrono_field
 	name = "eradication field"
@@ -294,12 +316,18 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	interaction_flags_atom = NONE
+	///mob being eradicated by this field
 	var/mob/living/captured
+	///linked module. while this exists, the field will progress towards eradication. while it isn't, the field progresses away until it disappears. see attached for a special case
 	var/obj/item/mod/module/tem/tem
+	///time in seconds before someone is eradicated, assuming progress isn't interrupted
 	var/timetokill = 30
+	///the eradication appearance
 	var/mutable_appearance/mob_underlay
+	///the actual frame the animation is at in eradication, only changing when the progress towards eradication progresses enough to move to the next frame.
 	var/RPpos = null
-	var/attached = TRUE //if the tem arg isn't included initially, then the chronofield will work without one
+	///if a tem to link to isn't provided initially, this chrono field will progress towards eradication by itself without one.
+	var/attached = TRUE
 
 /obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/mod/module/tem/tem)
 	if(target && isliving(target))

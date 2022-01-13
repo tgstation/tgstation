@@ -985,7 +985,7 @@
 	)
 
 /datum/mod_theme/timeline
-	name = "timeline correction"
+	name = "chrono"
 	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."
 	extended_desc = "A suit whose tech goes beyond this era's understanding. The internal mechanisms are all but \
 		completely alien, but the purpose is quite simple. The suit protects the user from the many incredibly lethal \

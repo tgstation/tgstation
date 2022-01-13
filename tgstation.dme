@@ -2397,7 +2397,6 @@
 #include "code\modules\clothing\shoes\wheelys.dm"
 #include "code\modules\clothing\spacesuits\_spacesuits.dm"
 #include "code\modules\clothing\spacesuits\bountyhunter.dm"
-#include "code\modules\clothing\spacesuits\chronosuit.dm"
 #include "code\modules\clothing\spacesuits\freedom.dm"
 #include "code\modules\clothing\spacesuits\pirate.dm"
 #include "code\modules\clothing\spacesuits\plasmamen.dm"
