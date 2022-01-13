@@ -32,12 +32,20 @@
 	modstorage.max_combined_w_class = max_combined_w_class
 	modstorage.max_items = max_items
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
+	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall()
 	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
 	storage.slaves -= modstorage
 	qdel(modstorage)
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
+	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
+
+/obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
+	if(QDELETED(source) || newloc == mod.wearer || !mod.wearer.s_store)
+		return
+	to_chat(mod.wearer, span_notice("[src] tries to store [mod.wearer.s_store] inside itself."))
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, mod.wearer.s_store, mod.wearer, TRUE)
 
 /obj/item/mod/module/storage/large_capacity
 	name = "MOD expanded storage module"

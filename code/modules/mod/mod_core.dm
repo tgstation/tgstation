@@ -187,7 +187,7 @@
 	desc = "A reverse engineered core of a Modular Outerwear Device. Using natural liquid electricity from Ethereals, \
 		preventing the need to use external sources to convert electric charge."
 	/// A modifier to all charge we use, ethereals don't need to spend as much energy as normal suits.
-	var/charge_modifier = 0.2
+	var/charge_modifier = 0.1
 
 /obj/item/mod/core/ethereal/charge_source()
 	var/obj/item/organ/stomach/ethereal/ethereal_stomach = mod.wearer.getorganslot(ORGAN_SLOT_STOMACH)

@@ -148,6 +148,9 @@
 /obj/item/mod/control/Destroy()
 	if(active)
 		STOP_PROCESSING(SSobj, src)
+	for(var/obj/item/mod/module/module as anything in modules)
+		module.mod = null
+		modules -= module
 	var/atom/deleting_atom
 	if(!QDELETED(helmet))
 		deleting_atom = helmet
@@ -173,9 +176,6 @@
 		boots = null
 		mod_parts -= deleting_atom
 		qdel(deleting_atom)
-	for(var/obj/item/mod/module/module as anything in modules)
-		module.mod = null
-		modules -= module
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(wires)
@@ -256,7 +256,7 @@
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			balloon_alert(user, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
@@ -265,7 +265,7 @@
 /obj/item/mod/control/MouseDrop(atom/over_object)
 	if(usr != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
 		return ..()
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			balloon_alert(wearer, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
@@ -424,7 +424,7 @@
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc == src)
 			continue
 		conceal(null, part)
@@ -458,7 +458,7 @@
 /obj/item/mod/control/proc/on_unequip()
 	SIGNAL_HANDLER
 
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			return COMPONENT_ITEM_BLOCK_UNEQUIP
 
@@ -498,6 +498,10 @@
 			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected")
 		else if(module.active)
 			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_active")
+		if(!COOLDOWN_FINISHED(module, cooldown_timer))
+			var/image/cooldown_image = image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown")
+			module_image.add_overlay(cooldown_image)
+			addtimer(CALLBACK(module_image, /image.proc/cut_overlay, cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
 		items += list(module.name = module_image)
 	if(!length(items))
 		return

@@ -1490,6 +1490,7 @@
 		"mod_jetpack",
 		"mod_rad_protection",
 		"mod_emp_shield",
+		"mod_storage_expanded",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
