@@ -171,6 +171,12 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/communications
 
+/obj/item/circuitboard/computer/communications/syndicate
+	name = "Syndicate Communications (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/communications/syndicate
+
+
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
