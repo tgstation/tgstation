@@ -1,4 +1,0 @@
-author: "theOOZ"
-delete-after: True
-changes: 
-  - qol: "Runechat offsets correctly on larger mobs"

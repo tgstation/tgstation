@@ -87,6 +87,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/slot_flags = 0
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
+	/// This var exists as a weird proxy "owner" ref
+	/// It's used in a few places. Stop using it, and optimially replace all uses please
 	var/obj/item/master = null
 
 	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
@@ -239,7 +241,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		updateEmbedding()
 
 /obj/item/Destroy()
-	item_flags &= ~DROPDEL //prevent reqdels
+	// This var exists as a weird proxy "owner" ref
+	// It's used in a few places. Stop using it, and optimially replace all uses please
+	master = null
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -575,7 +579,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
-	if(item_flags & DROPDEL)
+	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)
@@ -1033,7 +1037,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return
 
 /obj/item/proc/unembedded()
-	if(item_flags & DROPDEL)
+	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 		return TRUE
 
@@ -1051,7 +1055,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///In case we want to do something special (like self delete) upon failing to embed in something.
 /obj/item/proc/failedEmbed()
-	if(item_flags & DROPDEL)
+	if(item_flags & DROPDEL && !QDELETED(src))
 		qdel(src)
 
 ///Called by the carbon throw_item() proc. Returns null if the item negates the throw, or a reference to the thing to suffer the throw else.

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Prisoners can no longer roll roundstart revhead or cultist, and can no longer roll latejoin revhead. This fixes an accidental change from an earlier PR."

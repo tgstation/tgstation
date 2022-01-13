@@ -1460,7 +1460,6 @@
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/purple,
-/obj/item/clothing/suit/vapeshirt,
 /obj/item/clothing/shoes/cookflops{
 	desc = "A very fashionable pair of flip flops.";
 	name = "flip-flops"

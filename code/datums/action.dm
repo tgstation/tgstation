@@ -33,7 +33,8 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
-	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
+	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 /datum/action/Destroy()
 	if(owner)
@@ -49,7 +50,7 @@
 				return
 			Remove(owner)
 		owner = M
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
+		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 		//button id generation
 		var/counter = 0
@@ -75,9 +76,12 @@
 	else
 		Remove(owner)
 
-/datum/action/proc/owner_deleted(datum/source)
+/datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
-	Remove(owner)
+	if(ref == owner)
+		Remove(owner)
+	if(ref == target)
+		qdel(src)
 
 /datum/action/proc/Remove(mob/M)
 	for(var/datum/weakref/reference as anything in sharers)
@@ -93,10 +97,13 @@
 		M.update_action_buttons()
 	if(owner)
 		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		if(target == owner)
+			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
 		owner = null
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	button.locked = FALSE
-	button.id = null
+	if(button)
+		button.moved = FALSE //so the button appears in its normal position when given to another owner.
+		button.locked = FALSE
+		button.id = null
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -579,6 +586,29 @@
 	var/box = new boxtype(owner.drop_location())
 	owner.forceMove(box)
 	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+
+/datum/action/item_action/agent_box/Grant(mob/M)
+	. = ..()
+	if(owner)
+		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
+
+/datum/action/item_action/agent_box/Remove(mob/M)
+	if(owner)
+		UnregisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT)
+	return ..()
+
+/datum/action/item_action/agent_box/proc/suicide_act(datum/source)
+	SIGNAL_HANDLER
+
+	if(!istype(owner.loc, /obj/structure/closet/cardboard/agent))
+		return
+
+	var/obj/structure/closet/cardboard/agent/box = owner.loc
+	owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
+	box.open()
+	owner.visible_message(span_suicide("[owner] falls out of [box]! It looks like [owner.p_they()] committed suicide!"))
+	owner.throw_at(get_turf(owner))
+	return OXYLOSS
 
 //Preset for spells
 /datum/action/spell_action

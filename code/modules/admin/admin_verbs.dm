@@ -193,6 +193,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
 	/client/proc/cmd_admin_toggle_fov,
+	/client/proc/cmd_admin_debug_traitor_objectives,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -456,33 +457,35 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			if(isobserver(mob))
-				mob.invisibility = initial(mob.invisibility)
-				mob.alpha = initial(mob.alpha)
-				if(mob.mind)
-					if(mob.mind.ghostname)
-						mob.name = mob.mind.ghostname
-					else
-						mob.name = mob.mind.name
+	if(!holder)
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		if(isobserver(mob))
+			mob.invisibility = initial(mob.invisibility)
+			mob.alpha = initial(mob.alpha)
+			if(mob.mind)
+				if(mob.mind.ghostname)
+					mob.name = mob.mind.ghostname
 				else
-					mob.name = mob.real_name
-				mob.mouse_opacity = initial(mob.mouse_opacity)
-		else
-			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-			if(!new_key)
-				return
-			holder.fakekey = new_key
-			createStealthKey()
-			if(isobserver(mob))
-				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
-				mob.alpha = 0 //JUUUUST IN CASE
-				mob.name = " "
-				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+					mob.name = mob.mind.name
+			else
+				mob.name = mob.real_name
+			mob.mouse_opacity = initial(mob.mouse_opacity)
+	else
+		var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		if(!new_key)
+			return
+		holder.fakekey = new_key
+		createStealthKey()
+		if(isobserver(mob))
+			mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+			mob.alpha = 0 //JUUUUST IN CASE
+			mob.name = " "
+			mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
