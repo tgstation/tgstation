@@ -39,7 +39,7 @@ export const FilingCabinet = (props, context) => {
         {contents.length === 0 && (
           <Section>
             <Box color="white" align="center">
-              The {cabinet_name} cabinet is empty!
+              The {cabinet_name} is empty!
             </Box>
           </Section>
         )}
