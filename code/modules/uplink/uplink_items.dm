@@ -1337,6 +1337,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
+/datum/uplink_item/suits/paint
+	name = "MOD Funny Paints Kit"
+	desc = "A highly advanced piece of technology that will change the theme \
+			of your MODsuit. Highly recommended by clowns."
+	item = /obj/item/mod/paint
+	cost = 0
+	limited_stock = 1 // they're infinite usage so we don't need millions floating around
+	purchasable_from = UPLINK_CLOWN_OPS // right now, only intended to let clown ops use honkerative modsuit, but could be made available to all uplinks if we get different suit variations.
+
 // Devices and Tools
 /datum/uplink_item/device_tools
 	category = "Misc. Gadgets"

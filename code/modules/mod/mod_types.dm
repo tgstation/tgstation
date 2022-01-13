@@ -158,6 +158,18 @@
 		/obj/item/mod/module/holster,
 		)
 
+/obj/item/mod/control/pre_equipped/honkerative
+	applied_skin = "honkerative"
+	theme = /datum/mod_theme/syndicate
+	cell = /obj/item/stock_parts/cell/hyper
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/welding,
+		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/holster,
+		)
+
 /obj/item/mod/control/pre_equipped/enchanted
 	theme = /datum/mod_theme/enchanted
 	cell = /obj/item/stock_parts/cell/crystal_cell/wizard
