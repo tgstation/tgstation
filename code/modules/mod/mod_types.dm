@@ -1,6 +1,9 @@
 /obj/item/mod/control/pre_equipped
+	/// The skin we apply to the suit, defaults to the default_skin of the theme.
 	var/applied_skin
+	/// The MOD core we apply to the suit.
 	var/applied_core = /obj/item/mod/core/standard
+	/// The cell we apply to the core. Only applies to standard core suits.
 	var/applied_cell = /obj/item/stock_parts/cell/high
 
 /obj/item/mod/control/pre_equipped/Initialize(mapload, new_theme, new_skin, new_core)
@@ -192,7 +195,9 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
 	)
+	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia
+	/// Additional module we add, as a treat.
 	var/additional_module = /obj/item/mod/module
 
 /obj/item/mod/control/pre_equipped/responsory/Initialize(mapload, new_theme, new_skin, new_core)
