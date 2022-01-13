@@ -274,7 +274,7 @@
 
 /atom/movable/screen/plane_master/map_mask
 	name = "map mask plane"
-	plane = AREA_PLANE
+	plane = MAP_MASK_PLANE
 	render_target = MAP_MASK_RENDER_TARGET
 	render_relay_plane = null
 
