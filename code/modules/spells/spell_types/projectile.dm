@@ -57,12 +57,7 @@
 /obj/effect/proc_holder/spell/targeted/projectile
 	name = "Projectile"
 	desc = "This spell summons projectiles which try to hit the targets."
-
-
-
 	var/proj_type = /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
-
-
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
 	//Below only apply if update_projectile is true
 	var/proj_icon = 'icons/obj/guns/projectiles.dmi'
