@@ -99,7 +99,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			data["status"] = "Recharging"
 		else
 			data["status"] = "In Transit"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+	for(var/obj/docking_port/stationary/S in SSshuttle.stationary_docking_ports)
 		if(!options.Find(S.port_destinations))
 			continue
 		if(!M.check_dock(S, silent = TRUE))
@@ -201,7 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 
 /obj/machinery/computer/auxiliary_base/proc/set_landing_zone(turf/T, mob/user, no_restrictions)
-	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile
+	var/obj/docking_port/mobile/auxiliary_base/base_dock = locate(/obj/docking_port/mobile/auxiliary_base) in SSshuttle.mobile_docking_ports
 	if(!base_dock) //Not all maps have an Aux base. This object is useless in that case.
 		to_chat(user, span_warning("This station is not equipped with an auxiliary base. Please contact your Nanotrasen contractor."))
 		return
@@ -370,7 +370,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		return
 
 //Mining shuttles may not be created equal, so we find the map's shuttle dock and size accordingly.
-	for(var/S in SSshuttle.stationary)
+	for(var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S //SM is declared outside so it can be checked for null
 		if(SM.id == "mining_home" || SM.id == "mining_away")
 
@@ -394,7 +394,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	var/obj/docking_port/mobile/mining_shuttle
 	var/list/landing_turfs = list() //List of turfs where the mining shuttle may land.
-	for(var/S in SSshuttle.mobile)
+	for(var/S in SSshuttle.mobile_docking_ports)
 		var/obj/docking_port/mobile/MS = S
 		if(MS.id != "mining")
 			continue
@@ -404,7 +404,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 	if(!mining_shuttle) //Not having a mining shuttle is a map issue
 		to_chat(user, span_warning("No mining shuttle signal detected. Please contact Nanotrasen Support."))
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary_docking_ports.Remove(Mport)
 		qdel(Mport)
 		return
 
@@ -412,18 +412,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		var/turf/L = landing_turfs[i]
 		if(!L) //This happens at map edges
 			to_chat(user, span_warning("Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base."))
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary_docking_ports.Remove(Mport)
 			qdel(Mport)
 			return
 		if(istype(get_area(L), /area/shuttle/auxiliary_base))
 			to_chat(user, span_warning("The mining shuttle must not land within the mining base itself."))
-			SSshuttle.stationary.Remove(Mport)
+			SSshuttle.stationary_docking_ports.Remove(Mport)
 			qdel(Mport)
 			return
 
 	if(mining_shuttle.canDock(Mport) != SHUTTLE_CAN_DOCK)
 		to_chat(user, span_warning("Unable to secure a valid docking zone. Please try again in an open area near, but not within the auxiliary mining base."))
-		SSshuttle.stationary.Remove(Mport)
+		SSshuttle.stationary_docking_ports.Remove(Mport)
 		qdel(Mport)
 		return
 

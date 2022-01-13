@@ -86,7 +86,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/mob_negates_gravity()
-	return (locate(/obj/structure/spider/stickyweb) in loc) || ..()
+	if(locate(/obj/structure/spider/stickyweb) in loc)
+		return TRUE
+	return ..()
 
 /**
  * # Spider Hunter
@@ -191,17 +193,25 @@
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-	charger = TRUE
-	charge_distance = 4
 	menu_description = "Tank spider variant with an enormous amount of health and damage, but is very slow when not on webbing. It also has a charge ability to close distance with a target after a small windup. Does not inject toxin."
-	///Whether or not the tarantula is currently walking on webbing.
+	/// Whether or not the tarantula is currently walking on webbing.
 	var/silk_walking = TRUE
+	/// Charging ability
+	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
-/mob/living/simple_animal/hostile/giant_spider/tarantula/ranged_secondary_attack(atom/target, modifiers)
-	if(COOLDOWN_FINISHED(src, charge_cooldown))
-		INVOKE_ASYNC(src, /mob/living/simple_animal/hostile/.proc/enter_charge, target)
-	else
-		to_chat(src, span_notice("Your charge is still on cooldown!"))
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Initialize(mapload)
+	. = ..()
+	charge = new /datum/action/cooldown/mob_cooldown/charge/basic_charge()
+	charge.Grant(src)
+
+/mob/living/simple_animal/hostile/giant_spider/tarantula/Destroy()
+	QDEL_NULL(charge)
+	return ..()
+
+/mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire()
+	if(client)
+		return
+	charge.Trigger(target)
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()

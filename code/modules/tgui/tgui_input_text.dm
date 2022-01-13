@@ -26,13 +26,16 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		if(max_length)
+		if(encode)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default)
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout)
 	text_input.ui_interact(user)
 	text_input.wait()
@@ -71,7 +74,7 @@
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default)
+			return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/async/text_input = new(user, message, title, default, max_length, multiline, encode, callback, timeout)
 	text_input.ui_interact(user)
 
@@ -170,6 +173,10 @@
 					return FALSE
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
+			if(!length(params["entry"]))
+				set_entry(null)
+				SStgui.close_uis(src)
+				return TRUE
 			set_entry(params["entry"])
 			SStgui.close_uis(src)
 			return TRUE
@@ -179,8 +186,9 @@
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	var/converted_entry = encode ? html_encode(entry) : entry
-	src.entry = trim(converted_entry, max_length)
+	if(entry)
+		var/converted_entry = encode ? html_encode(entry) : entry
+		src.entry = trim(converted_entry, max_length)
 
 /**
  * # async tgui_input_text

@@ -297,7 +297,7 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	"Assistant" : "Don't kill everyone",
+	JOB_ASSISTANT : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }

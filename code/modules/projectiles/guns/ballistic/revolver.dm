@@ -142,6 +142,7 @@
 	icon_state = "russianrevolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
+	hidden_chambered = TRUE //Cheater.
 
 /obj/item/gun/ballistic/revolver/russian/do_spin()
 	. = ..()

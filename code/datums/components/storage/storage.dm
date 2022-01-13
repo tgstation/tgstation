@@ -544,10 +544,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/component/storage/proc/attackby(datum/source, obj/item/I, mob/M, params)
 	SIGNAL_HANDLER
 
-	if(istype(I, /obj/item/hand_labeler))
-		var/obj/item/hand_labeler/labeler = I
-		if(labeler.mode)
-			return FALSE
+	if(!I.attackby_storage_insert(src, parent, M))
+		return FALSE
 	. = TRUE //no afterattack
 	if(iscyborg(M))
 		return
@@ -868,7 +866,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 
 /datum/component/storage/proc/open_storage(mob/user)
-	if(!isliving(user) || !user.CanReach(parent) || user.incapacitated())
+	if(!user.CanReach(parent))
+		user.balloon_alert(user, "can't reach!")
+		return FALSE
+	if(!isliving(user) || user.incapacitated())
 		return FALSE
 	if(locked)
 		to_chat(user, span_warning("[parent] seems to be locked!"))
@@ -893,6 +894,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(open_storage(user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /datum/component/storage/proc/on_open_storage_attackby(datum/source, obj/item/weapon, mob/user, params)
 	SIGNAL_HANDLER

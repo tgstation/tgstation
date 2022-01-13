@@ -50,4 +50,6 @@
 	name = "\improper Moffuchi's Kitchen"
 	icon_state = "dk_yellow"
 
-
+/area/ruin/planetengi
+	name = "\improper Engineering Outpost"
+	icon_state = "red"
