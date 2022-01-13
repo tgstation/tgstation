@@ -18,12 +18,13 @@
 	var/datum/callback/post_untipped_callback
 
 /datum/component/tippable/Initialize(
-		tip_time = 3 SECONDS,
-		untip_time = 1 SECONDS,
-		self_right_time = 60 SECONDS,
-		datum/callback/pre_tipped_callback,
-		datum/callback/post_tipped_callback,
-		datum/callback/post_untipped_callback)
+	tip_time = 3 SECONDS,
+	untip_time = 1 SECONDS,
+	self_right_time = 60 SECONDS,
+	datum/callback/pre_tipped_callback,
+	datum/callback/post_tipped_callback,
+	datum/callback/post_untipped_callback,
+)
 
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
