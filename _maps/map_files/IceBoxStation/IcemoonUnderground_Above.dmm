@@ -1856,8 +1856,8 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/paper_bin,
 /obj/machinery/light/directional/south,
+/obj/item/storage/crayons,
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms/laundry)
 "gG" = (
@@ -2512,17 +2512,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"iA" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/item/storage/crayons,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "iB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3305,6 +3294,18 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/medical/virology)
+"li" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/closet,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/rank/civilian/lawyer/black/skirt,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "lj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15893,16 +15894,6 @@
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
-"ZN" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "ZP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -33579,7 +33570,7 @@ iK
 dj
 To
 cP
-ZN
+aT
 iK
 Fp
 Fp
@@ -34607,7 +34598,7 @@ iK
 sX
 Hs
 To
-iA
+aT
 iK
 Fp
 Fp
@@ -34864,7 +34855,7 @@ iK
 jd
 cP
 cP
-aT
+li
 iK
 oZ
 iv
