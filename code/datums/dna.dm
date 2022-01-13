@@ -112,7 +112,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.species = new species.type
 	new_dna.species.species_traits = species.species_traits
 	new_dna.real_name = real_name
-	new_dna.mutations = mutations.Copy()
+	// Mutations aren't gc managed, but they still aren't templates
+	// Let's do a proper copy
+	for(var/datum/mutation/human/mutation in mutations)
+		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)

@@ -4,6 +4,13 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "alien-pad-idle"
 	var/turf/teleport_target
+	var/obj/machinery/abductor/console/console
+
+/obj/machinery/abductor/pad/Destroy()
+	if(console)
+		console.pad = null
+		console = null
+	return ..()
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(!target.buckled)
