@@ -33047,6 +33047,16 @@
 /obj/item/paicard,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"nwt" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron,
+/area/commons/locker)
 "nwI" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -35411,6 +35421,19 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/office)
+"oFG" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/commons/locker)
 "oFI" = (
 /obj/structure/ladder,
 /turf/open/floor/plating,
@@ -41768,6 +41791,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/commons/locker)
 "rWw" = (
@@ -71434,7 +71458,7 @@ rVW
 dkw
 dkw
 dkw
-kQD
+oFG
 xPS
 vMh
 xPS
@@ -72465,7 +72489,7 @@ lYu
 gHe
 cFe
 cFe
-cFe
+nwt
 hQF
 aPz
 oCz

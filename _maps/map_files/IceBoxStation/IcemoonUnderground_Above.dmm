@@ -294,7 +294,7 @@
 	},
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -709,7 +709,7 @@
 /obj/machinery/light/small/directional/west,
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "co" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating{
@@ -840,7 +840,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "cR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -967,7 +967,7 @@
 	},
 /obj/structure/closet/crate/trashcart/laundry,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "dm" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/security/glass{
@@ -1018,7 +1018,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "dI" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -1465,7 +1465,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "fo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -1857,8 +1857,9 @@
 	},
 /obj/structure/table,
 /obj/item/paper_bin,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "gG" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
@@ -2521,7 +2522,7 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "iB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2564,7 +2565,7 @@
 	dir = 1
 	},
 /turf/open/genturf,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "iH" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/purple,
@@ -2585,7 +2586,7 @@
 /area/maintenance/port)
 "iK" = (
 /turf/closed/wall,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "iL" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -2691,7 +2692,7 @@
 /obj/item/toy/foamblade,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ja" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -2725,8 +2726,9 @@
 	},
 /obj/structure/table,
 /obj/structure/bedsheetbin,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "jf" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/duct,
@@ -4275,7 +4277,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "oz" = (
 /obj/structure/sign/warning/vacuum{
 	pixel_y = 32
@@ -5679,7 +5681,7 @@
 "sJ" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "sK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -5782,7 +5784,7 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "sY" = (
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
@@ -6413,7 +6415,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "vd" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
@@ -6920,8 +6922,9 @@
 /area/maintenance/department/medical)
 "wU" = (
 /obj/structure/rack,
+/obj/item/pickaxe,
 /obj/item/tank/internals/emergency_oxygen,
-/obj/item/clothing/mask,
+/obj/item/clothing/mask/breath,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "wY" = (
@@ -9255,7 +9258,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "EK" = (
 /obj/structure/fence/end{
 	dir = 4
@@ -9909,7 +9912,7 @@
 /obj/machinery/camera/emp_proof/directional/south,
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "GN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "73"
@@ -10149,7 +10152,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "Hu" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "Mining_launch";
@@ -12014,7 +12017,7 @@
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "Nz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12473,7 +12476,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "OY" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -12743,9 +12746,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
-"PM" = (
-/turf/open/genturf,
-/area/icemoon/underground/unexplored)
 "PO" = (
 /obj/machinery/duct,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -12917,7 +12917,7 @@
 /obj/machinery/disposal/bin,
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "Qn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -13921,7 +13921,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "Tp" = (
 /obj/machinery/vending/dinnerware,
 /obj/structure/sign/poster/random{
@@ -15084,7 +15084,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "Xg" = (
 /obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -15902,7 +15902,7 @@
 	},
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ZP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -33574,7 +33574,7 @@ ak
 ak
 ak
 ak
-PM
+ak
 iK
 dj
 To
@@ -34613,7 +34613,7 @@ Fp
 Fp
 Fp
 Fp
-Fp
+cp
 Fp
 mO
 mO
@@ -34871,7 +34871,7 @@ iv
 oZ
 Fp
 Fp
-Fp
+Jq
 mO
 mO
 mO
