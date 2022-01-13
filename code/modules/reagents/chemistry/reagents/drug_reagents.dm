@@ -490,6 +490,7 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/psychonaut)
 	. = ..()
+	SEND_SIGNAL(psychonaut, COMSIG_CLEAR_MOOD_EVENT, "tripping")
 	if(!psychonaut.hud_used)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -546,6 +547,7 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/dancer)
 	. = ..()
 
+	SEND_SIGNAL(dancer, COMSIG_CLEAR_MOOD_EVENT, "vibing")
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("flip"))
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("spin"))
 
