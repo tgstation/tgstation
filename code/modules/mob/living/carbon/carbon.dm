@@ -769,7 +769,7 @@
 			hud_used.healths.icon_state = "health7"
 
 /mob/living/carbon/update_stamina_hud(shown_stamina_amount)
-	if(!client || !hud_used || !hud_used?.stamina)
+	if(!client || !hud_used?.stamina)
 		return
 	if(stat == DEAD || IsStun() || IsParalyzed() || IsImmobilized() || IsKnockdown() || IsFrozen())
 		hud_used.stamina.icon_state = "stamina6"
