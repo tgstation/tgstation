@@ -172,10 +172,10 @@
 		return
 	cell.use(cell.charge/3)
 	if(isliving(loc))
-		var/mob/living/L = loc
-		L.visible_message("<span class='danger'>Concentrated plasma discharges from [src] onto [L], burning them!</span>", "<span class='userdanger'>[src] malfunctions, spewing concentrated plasma onto you! It burns!</span>")
-		L.adjust_fire_stacks(4)
-		L.IgniteMob()
+		var/mob/living/user = loc
+		user.visible_message("<span class='danger'>Concentrated plasma discharges from [src] onto [user], burning them!</span>", "<span class='userdanger'>[src] malfunctions, spewing concentrated plasma onto you! It burns!</span>")
+		user.adjust_fire_stacks(4)
+		user.IgniteMob()
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
