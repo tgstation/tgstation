@@ -278,7 +278,7 @@
  * * field: chronofield we are attempting to unlink from this module.
  */
 /obj/item/mod/module/tem/proc/field_disconnect(obj/structure/chrono_field/field)
-	if(field && field == field)
+	if(field)
 		if(field.tem == src)
 			field.tem = null
 		if(field.captured)
