@@ -1,0 +1,380 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"b" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"c" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck/cas{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
+"d" = (
+/obj/structure/cable,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/djstation)
+"e" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"f" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"g" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/ruin/space/djstation)
+"j" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"k" = (
+/obj/modular_map_root/djstation/kitchen,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"m" = (
+/obj/machinery/duct,
+/obj/modular_map_root/djstation/quarters,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"n" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"o" = (
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
+"q" = (
+/obj/item/paper/fluff/ruins/djstation,
+/obj/item/pen/fountain,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"r" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/djstation)
+"s" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"u" = (
+/obj/item/radio/intercom{
+	dir = 8;
+	freerange = 1;
+	name = "Pirate Radio Listening Channel"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"v" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"w" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/space/djstation)
+"x" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"y" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
+"z" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/ruin/space/djstation)
+"C" = (
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"F" = (
+/obj/item/clipboard,
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"I" = (
+/obj/structure/chair/office,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/djstation)
+"K" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"L" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/djstation)
+"N" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"O" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/djstation)
+"Q" = (
+/obj/item/pen/red{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/pen/blue{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"R" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"T" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/djstation)
+"U" = (
+/obj/item/radio/intercom{
+	broadcasting = 1;
+	dir = 8;
+	freerange = 1;
+	listening = 0;
+	name = "Pirate Radio Broadcast Channel"
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/turf/open/floor/iron/dark/smooth_large,
+/area/ruin/space/djstation)
+"V" = (
+/obj/modular_map_connector,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"W" = (
+/turf/open/floor/wood/parquet,
+/area/ruin/space/djstation)
+"X" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+s
+s
+v
+o
+o
+a
+R
+n
+k
+o
+a
+"}
+(2,1,1) = {"
+s
+o
+a
+R
+a
+a
+N
+w
+w
+K
+a
+"}
+(3,1,1) = {"
+s
+v
+R
+c
+p
+b
+r
+u
+F
+O
+X
+"}
+(4,1,1) = {"
+s
+o
+R
+y
+W
+f
+I
+U
+q
+d
+V
+"}
+(5,1,1) = {"
+s
+v
+R
+W
+W
+e
+L
+u
+Q
+T
+j
+"}
+(6,1,1) = {"
+s
+o
+a
+R
+a
+a
+x
+z
+g
+C
+a
+"}
+(7,1,1) = {"
+s
+s
+v
+o
+o
+a
+R
+n
+m
+o
+a
+"}

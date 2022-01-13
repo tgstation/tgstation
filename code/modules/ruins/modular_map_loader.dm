@@ -18,7 +18,7 @@
 
 	var/datum/map_template/map_module/map
 
-	map = pick(/datum/map_template/map_module/test1, /datum/map_template/map_module/test2, /datum/map_template/map_module/test3)
+	map = pick(modules)
 
 	map = new map()
 
