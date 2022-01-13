@@ -811,13 +811,15 @@
 	background_icon_state = our_proc_holder.action_background_icon_state
 	button.name = name
 
-/datum/action/cooldown/spell_like/Trigger()
-	if(!..())
+/datum/action/cooldown/spell_like/Activate(atom/activate_target)
+	if(!target)
 		return FALSE
-	if(target)
-		var/obj/effect/proc_holder/our_proc_holder = target
-		our_proc_holder.Click()
-		return TRUE
+
+	StartCooldown(10 SECONDS)
+	var/obj/effect/proc_holder/our_proc_holder = target
+	our_proc_holder.Click()
+	StartCooldown()
+	return TRUE
 
 //Stickmemes
 /datum/action/item_action/stickmen
