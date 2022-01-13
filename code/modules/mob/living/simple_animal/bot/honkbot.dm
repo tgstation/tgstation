@@ -108,13 +108,13 @@
 	if(!(bot_mode_flags & BOT_MODE_ON))
 		return
 	if(!limiting_spam)
-		bike_horn(attack_target)
+		bike_horn()
 	. = ..()
 
 /mob/living/simple_animal/bot/secbot/honkbot/handle_automated_action()
 	. = ..()
 	if(!limiting_spam && prob(30))
-		bike_horn(attack_target)
+		bike_horn()
 
 /mob/living/simple_animal/bot/secbot/honkbot/start_handcuffing(mob/living/carbon/current_target)
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
@@ -137,7 +137,7 @@
 /mob/living/simple_animal/bot/secbot/honkbot/proc/limiting_spam_false() //used for addtimer
 	limiting_spam = FALSE
 
-/mob/living/simple_animal/bot/secbot/honkbot/proc/bike_horn(mob/living/carbon/attack_target) // horn attack
+/mob/living/simple_animal/bot/secbot/honkbot/proc/bike_horn() // horn attack
 	if(limiting_spam)
 		return
 	playsound(loc, honksound, 50, TRUE, -1)
