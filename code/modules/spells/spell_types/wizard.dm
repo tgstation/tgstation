@@ -257,7 +257,7 @@
 	sound = 'sound/magic/repulse.ogg'
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
-	var/anti_magic_check = TRUE
+	var/magic_resistances = MAGIC_RESISTANCE
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	action_icon_state = "repulse"
@@ -278,7 +278,7 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.anti_magic_check(anti_magic_check, FALSE))
+			if(M.anti_magic_check(magic_resistances))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -311,7 +311,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
-	anti_magic_check = FALSE
+	magic_resistances = NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -337,12 +337,12 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
-		if(L.anti_magic_check(TRUE, TRUE))
+		if(L.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		if(!U.anti_magic_check(TRUE, TRUE))
+		if(!U.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
