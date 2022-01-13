@@ -241,11 +241,12 @@
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
-	desc = "A robust (in looks) beret with the security insignia emblazoned on it."
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to provide additional protection."
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#972A2A#F2F2F2"
+	armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 20, BOMB = 13, BIO = 0, FIRE = 10, ACID = 25, WOUND = 2)
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
@@ -254,6 +255,7 @@
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
+	armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 20, BOMB = 13, BIO = 0, FIRE = 10, ACID = 25, WOUND = 2)
 	greyscale_colors = "#3C485A#00AEEF"
 	strip_delay = 60
 
