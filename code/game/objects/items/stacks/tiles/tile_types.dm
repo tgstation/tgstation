@@ -131,7 +131,9 @@
 	desc = "A piece of a bamboo mat with a decorative trim."
 	icon_state = "tile_bamboo"
 	turf_type = /turf/open/floor/bamboo
+	merge_type = /obj/item/stack/tile/bamboo
 	resistance_flags = FLAMMABLE
+	
 
 //Basalt
 /obj/item/stack/tile/basalt
