@@ -73,6 +73,9 @@
 
 	var/transfer_ratio = transfer_rate / air1.volume
 
+	if(!transfer_ratio)
+		return
+
 	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
 	if(!removed.total_moles())
