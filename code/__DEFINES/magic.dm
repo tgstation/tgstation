@@ -1,4 +1,3 @@
-
 //schools of magic - unused for years and years on end, finally has a use with chaplains getting punished for using "evil" spells
 
 //use this if your spell isn't actually a spell, it's set by default (and actually, i really suggest if that's the case you should use datum/actions instead - see spider.dm for an example)
@@ -27,3 +26,13 @@
 #define INVOCATION_EMOTE "emote"
 ///Forces the wizard to whisper (and be able to) to cast the spell.
 #define INVOCATION_WHISPER "whisper"
+
+// magic resistance bitflags - used by /mob/proc/anti_magic_check and anti_magic componenent
+/// Default magic resistance that blocks normal magic (wizard, spells, staffs)
+#define MAGIC_RESISTANCE (1<<0)
+/// Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
+#define MAGIC_RESISTANCE_TINFOIL (1<<1)
+/// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god, )
+#define MAGIC_RESISTANCE_HOLY (1<<2)
+/// Prevents casting magic
+#define MAGIC_CASTING_RESTRICTION // pretty sure this is worthless and not used (since we use traits instead)
