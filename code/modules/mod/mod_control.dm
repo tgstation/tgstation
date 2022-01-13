@@ -565,6 +565,13 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
+		if(action)
+			action.Grant(wearer)
+	if(ai)
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
+		if(action)
+			action.Grant(ai)
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
