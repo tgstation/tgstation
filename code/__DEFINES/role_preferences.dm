@@ -61,7 +61,6 @@
 #define ROLE_DRONE "Drone"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_LAVALAND "Lavaland"
-#define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
 
 #define ROLE_POSITRONIC_BRAIN "Positronic Brain"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -145,7 +144,6 @@ GLOBAL_LIST_INIT(special_roles, list(
 	// I'm not too sure why these are here, but they're not moving.
 	ROLE_REV = 14,
 	ROLE_PAI = 0,
-	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
 ))
 
