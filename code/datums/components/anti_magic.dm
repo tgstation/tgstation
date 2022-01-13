@@ -1,7 +1,7 @@
 /// This provides different types of magic resistance on an object
 /datum/component/anti_magic
 	/// The types of magic resistance present on the object
-	var/antimagic_flags = MAGIC_RESISTANCE
+	var/antimagic_flags = MAGIC_RESISTANCE // see DEFINES/magic.dm for list of antimagic flags
 	/// The amount of times the object can protect the user
 	var/remaining_charges = INFINITY
 	/// The inventory slot the object must be located at in order to activate

@@ -91,7 +91,12 @@
 
 /obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, 1, FALSE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire))//one charge of anti_magic
+	AddComponent(/datum/component/anti_magic, \
+		resistances = (MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY), \
+		total_charges = 1, //one charge of anti_magic
+		reaction = CALLBACK(src, .proc/block_magic), \
+		expiration = CALLBACK(src, .proc/expire), \
+	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
 /obj/item/ritual_totem/proc/block_magic(mob/user, major)
