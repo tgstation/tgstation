@@ -137,6 +137,7 @@
 /obj/item/clothing/head/hos
 	name = "head of security cap"
 	desc = "The robust standard-issue cap of the Head of Security. For showing the officers who's in charge."
+	armor = list(MELEE = 40, BULLET = 30, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 10, FIRE = 50, ACID = 60, WOUND = 10)
 	icon_state = "hoscap"
 	strip_delay = 80
 	dynamic_hair_suffix = ""
@@ -241,12 +242,12 @@
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
-	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to provide additional protection."
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#972A2A#F2F2F2"
-	armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 20, BOMB = 13, BIO = 0, FIRE = 10, ACID = 25, WOUND = 2)
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 20, ACID = 50, WOUND = 4)
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE
@@ -255,7 +256,6 @@
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
 	desc = "A special beret with the Warden's insignia emblazoned on it. For wardens with class."
-	armor = list(MELEE = 20, BULLET = 15, LASER = 15, ENERGY = 20, BOMB = 13, BIO = 0, FIRE = 10, ACID = 25, WOUND = 2)
 	greyscale_colors = "#3C485A#00AEEF"
 	strip_delay = 60
 
@@ -338,11 +338,12 @@
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
-	desc = "A beret made from durathread. How fashionable!"
+	desc = "A beret made from durathread, its resilient fibers provide some protection to the wearer."
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
+	armor = list(MELEE = 15, BULLET = 5, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, FIRE = 30, ACID = 5, WOUND = 4)
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
@@ -357,7 +358,7 @@
 
 /obj/item/clothing/head/beret/centcom_formal
 	name = "\improper CentCom Formal Beret"
-	desc = "Sometimes, you need to make a compromise between fashion and defense. Thanks to Nanotrasen's durability enhancements, you don't need to compromise any longer."
+	desc = "Sometimes, a compromise between fashion and defense needs to be made. Thanks to Nanotrasen's most recent nano-fabric durability enhancements, this time, it's not the case."
 	icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
