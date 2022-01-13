@@ -1636,6 +1636,7 @@
 #include "code\game\objects\structures\mirror.dm"
 #include "code\game\objects\structures\mop_bucket.dm"
 #include "code\game\objects\structures\morgue.dm"
+#include "code\game\objects\structures\mystery_box.dm"
 #include "code\game\objects\structures\noticeboard.dm"
 #include "code\game\objects\structures\petrified_statue.dm"
 #include "code\game\objects\structures\plasticflaps.dm"
