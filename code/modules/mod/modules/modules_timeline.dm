@@ -264,7 +264,7 @@
 		field_disconnect(field)
 		return
 	startpos = get_turf(mod.wearer)
-	field = field
+	src.field = field
 	field.tem = src
 	if(field.captured)
 		to_chat(mod.wearer, span_notice("Connection established with target: <b>[field.captured]</b>"))
@@ -297,10 +297,9 @@
 /obj/item/mod/module/tem/proc/field_check(obj/structure/chrono_field/field)
 	if(!field)
 		return FALSE
-	if(field == field)
-		var/turf/currentpos = get_turf(src)
-		if(currentpos == startpos && mod.wearer.body_position == STANDING_UP && !HAS_TRAIT(mod.wearer, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
-			return TRUE
+	var/turf/currentpos = get_turf(src)
+	if(currentpos == startpos && mod.wearer.body_position == STANDING_UP && !HAS_TRAIT(mod.wearer, TRAIT_INCAPACITATED) && (field in view(CHRONO_BEAM_RANGE, currentpos)))
+		return TRUE
 	field_disconnect(field)
 	return FALSE
 
@@ -364,7 +363,7 @@
 	return ..()
 
 /obj/structure/chrono_field/Destroy()
-	if(tem?.field_check(src))
+	if(tem)
 		tem.field_disconnect(src)
 	return ..()
 
@@ -384,8 +383,8 @@
 		return
 
 	if(timetokill > initial(timetokill))
-		for(var/atom/movable/AM in contents)
-			AM.forceMove(drop_location())
+		for(var/atom/movable/freed_movable in contents)
+			freed_movable.forceMove(drop_location())
 		qdel(src)
 	else if(timetokill <= 0)
 		to_chat(captured, span_boldnotice("As the last essence of your being is erased from time, you are taken back to your most enjoyable memory. You feel happy..."))
