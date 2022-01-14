@@ -796,15 +796,6 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_transform_clown
-	name = "Cyborg Upgrade (Clown Model)"
-	id = "borg_transform_clown"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/transform/clown
-	materials = list(/datum/material/iron = 15000, /datum/material/glass = 15000, /datum/material/bananium = 1000)
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_selfrepair
 	name = "Cyborg Upgrade (Self-repair)"
 	id = "borg_upgrade_selfrepair"
@@ -847,33 +838,6 @@
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/processor
 	materials = list(/datum/material/iron = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000)
-	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_trashofholding
-	name = "Cyborg Upgrade (Trash Bag of Holding)"
-	id = "borg_upgrade_trashofholding"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/tboh
-	materials = list(/datum/material/gold = 2000, /datum/material/uranium = 1000)
-	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_advancedmop
-	name = "Cyborg Upgrade (Advanced Mop)"
-	id = "borg_upgrade_advancedmop"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/amop
-	materials = list(/datum/material/iron = 2000, /datum/material/glass = 2000)
-	construction_time = 40
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_prt
-	name = "Cyborg Upgrade (Plating Repair Tool)"
-	id = "borg_upgrade_prt"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/prt
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 750) //same price as a cautery
 	construction_time = 40
 	category = list("Cyborg Upgrade Modules")
 
