@@ -79,11 +79,9 @@
 	user.set_machine(src)
 	var/dat = text("<TT><B>[]</B><BR>\n\nLock Status: []",src, (locked ? "LOCKED" : "UNLOCKED"))
 	var/message = "Code"
-	if ((l_set == 0) && (!l_setshort))
+	if (lock_set == 0)
 		dat += text("<p>\n<b>5-DIGIT PASSCODE NOT SET.<br>ENTER NEW PASSCODE.</b>")
-	if (l_setshort)
-		dat += text("<p>\n<font color=red><b>ALERT: MEMORY SYSTEM ERROR - 6040 201</b></font>")
-	message = text("[]", code)
+	message = text("[]", entered_code)
 	if (!locked)
 		message = "*****"
 	dat += text("<HR>\n>[]<BR>\n<A href='?src=[REF(src)];type=1'>1</A>-<A href='?src=[REF(src)];type=2'>2</A>-<A href='?src=[REF(src)];type=3'>3</A><BR>\n<A href='?src=[REF(src)];type=4'>4</A>-<A href='?src=[REF(src)];type=5'>5</A>-<A href='?src=[REF(src)];type=6'>6</A><BR>\n<A href='?src=[REF(src)];type=7'>7</A>-<A href='?src=[REF(src)];type=8'>8</A>-<A href='?src=[REF(src)];type=9'>9</A><BR>\n<A href='?src=[REF(src)];type=R'>R</A>-<A href='?src=[REF(src)];type=0'>0</A>-<A href='?src=[REF(src)];type=E'>E</A><BR>\n</TT>", message)
@@ -95,26 +93,26 @@
 		return
 	if (href_list["type"])
 		if (href_list["type"] == "E")
-			if (!l_set && (length(code) == 5) && (!l_setshort) && (code != "ERROR"))
-				l_code = code
-				l_set = TRUE
-			else if ((code == l_code) && l_set)
+			if (!lock_set && (length(entered_code) == 5) && (entered_code != "ERROR"))
+				lock_code = entered_code
+				lock_set = TRUE
+			else if ((entered_code == lock_code) && lock_set)
 				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 				cut_overlays()
 				add_overlay(icon_opened)
-				code = null
+				entered_code = null
 			else
-				code = "ERROR"
+				entered_code = "ERROR"
 		else
-			if ((href_list["type"] == "R") && (!l_setshort))
+			if ((href_list["type"] == "R")
 				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 				cut_overlays()
-				code = null
+				entered_code = null
 				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_FROM, usr)
 			else
-				code += text("[]", sanitize_text(href_list["type"]))
-				if (length(code) > 5)
-					code = "ERROR"
+				entered_code += text("[]", sanitize_text(href_list["type"]))
+				if (length(entered_code) > 5)
+					entered_code = "ERROR"
 		add_fingerprint(usr)
 		for(var/mob/M in viewers(1, loc))
 			if ((M.client && M.machine == src))
