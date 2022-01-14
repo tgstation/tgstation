@@ -12,7 +12,7 @@
 			continue
 		if(!(victim.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
 			continue
-		if((victim.satiety <= -60) && !HAS_TRAIT(victim, TRAIT_NOHUNGER)) //Multiple junk food items recently
+		if((victim.satiety <= -60) && !HAS_TRAIT(victim, TRAIT_NOHUNGER)) //Multiple junk food items recently. Satiety doesn't decay with TRAIT_NOHUNGER hence we need to check for it to prevent permanent increased risk of heart attack.
 			heart_attack_contestants[victim] = 3
 		else
 			heart_attack_contestants[victim] = 1
