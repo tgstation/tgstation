@@ -257,6 +257,13 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"aP" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "aQ" = (
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
@@ -746,6 +753,12 @@
 	},
 /turf/open/floor/iron,
 /area/science/xenobiology)
+"cu" = (
+/obj/structure/sign/plaques/kiddie/devils_tooth{
+	pixel_y = 32
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 "cv" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Crematorium Maintenance";
@@ -802,6 +815,17 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/chapel)
+"cF" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "maintenance external airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "cI" = (
 /obj/structure/railing/corner{
 	dir = 4
@@ -871,6 +895,18 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"cW" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Drone Bay External Airlock";
+	opacity = 0;
+	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "cX" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -1019,15 +1055,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms/laundry)
-"dD" = (
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "dI" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -1054,18 +1081,6 @@
 	dir = 8
 	},
 /area/mine/eva)
-"dL" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Drone Bay External Airlock";
-	opacity = 0;
-	req_access_txt = "31"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/cargo/drone_bay)
 "dM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1222,6 +1237,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"er" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
 "et" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/plating/dirt{
@@ -1503,6 +1525,13 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
+"fq" = (
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/service/chapel)
 "fs" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm_B";
@@ -1634,6 +1663,10 @@
 "fT" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"fU" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/medical/chemistry)
 "fV" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -1822,13 +1855,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"gy" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/sign/warning{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
 "gz" = (
 /obj/effect/turf_decal/tile/dark{
 	dir = 1
@@ -1876,6 +1902,18 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"gE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/crayons,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "gG" = (
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
@@ -2061,10 +2099,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
-"hl" = (
-/obj/effect/turf_decal/caution,
-/turf/open/floor/plating,
-/area/cargo/drone_bay)
 "hn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3303,6 +3337,18 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/plating,
 /area/medical/virology)
+"li" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/closet,
+/obj/item/clothing/under/suit/black,
+/obj/item/clothing/under/rank/civilian/lawyer/black/skirt,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "lj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -3506,6 +3552,15 @@
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"lN" = (
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "lP" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 1
@@ -3934,18 +3989,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"nj" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/closet,
-/obj/item/clothing/under/suit/black,
-/obj/item/clothing/under/rank/civilian/lawyer/black/skirt,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "nk" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine,
@@ -5227,13 +5270,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"rx" = (
-/obj/structure/sign/warning{
-	pixel_y = 32
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/engineering/lobby)
 "ry" = (
 /obj/effect/turf_decal/trimline/green/filled/warning{
 	dir = 4
@@ -6059,6 +6095,17 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
+"tW" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Chemistry Lab External Airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "chem-airlock"
+	},
+/turf/open/floor/plating,
+/area/medical/chemistry)
 "tX" = (
 /obj/machinery/light/dim/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6409,13 +6456,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"vo" = (
-/obj/structure/sign/warning{
-	pixel_y = 32
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/maintenance/department/chapel)
 "vp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -6745,18 +6785,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/production)
-"wt" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/crayons,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "wu" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -6985,6 +7013,13 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/medical/virology)
+"xm" = (
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/engineering/lobby)
 "xn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -7068,6 +7103,17 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"xG" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Chapel External Airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/service/chapel)
 "xH" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
@@ -7237,10 +7283,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/medical/chemistry)
-"yn" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
 /area/medical/chemistry)
 "yo" = (
 /obj/machinery/duct,
@@ -7901,6 +7943,17 @@
 	dir = 1
 	},
 /area/mine/eva)
+"Ax" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Chapel Maintenance External Airlock";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "Ay" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -8114,17 +8167,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/medical)
-"Bh" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Chapel Maintenance External Airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/chapel)
 "Bi" = (
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/wood,
@@ -8747,18 +8789,6 @@
 "Dg" = (
 /turf/closed/wall,
 /area/service/bar)
-"Dh" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "engineering external airlock";
-	opacity = 0;
-	req_access_txt = "10;24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/engineering/lobby)
 "Di" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -8840,13 +8870,6 @@
 	},
 /turf/open/floor/stone,
 /area/service/bar/atrium)
-"Ds" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/sign/warning{
-	pixel_y = 32
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "Dt" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -9145,6 +9168,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"Eq" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "engineering external airlock";
+	opacity = 0;
+	req_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engineering/lobby)
 "Er" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating,
@@ -10439,13 +10474,6 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"Iq" = (
-/obj/structure/sign/warning{
-	pixel_y = 32
-	},
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/service/chapel)
 "It" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -11212,15 +11240,6 @@
 /obj/effect/spawner/random/clothing/bowler_or_that,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"KV" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/machinery/door/airlock/external{
-	name = "External Access"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "KW" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -12823,6 +12842,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/grass,
 /area/medical/virology)
+"Qg" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "Qh" = (
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
@@ -13441,6 +13470,15 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
+"RZ" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/machinery/door/airlock/external{
+	name = "External Access"
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "Sa" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14441,17 +14479,6 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"Vb" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "maintenance external airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "Vc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -14577,17 +14604,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"Vy" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Chapel External Airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/service/chapel)
 "Vz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -15139,17 +15155,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"XC" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Chemistry Lab External Airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "chem-airlock"
-	},
-/turf/open/floor/plating,
-/area/medical/chemistry)
 "XD" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/blue/filled/warning,
@@ -15444,6 +15449,13 @@
 /obj/effect/decal/cleanable/ants,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"Yt" = (
+/obj/structure/sign/warning{
+	pixel_y = 32
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/maintenance/department/chapel)
 "Yu" = (
 /obj/structure/fence{
 	dir = 4
@@ -15470,16 +15482,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/eva)
-"Yy" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "Yz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -15575,6 +15577,10 @@
 "YM" = (
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"YP" = (
+/obj/effect/turf_decal/caution,
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "YQ" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -33043,7 +33049,7 @@ oZ
 oZ
 iK
 iK
-Fp
+cu
 PG
 Fp
 ak
@@ -33573,7 +33579,7 @@ oJ
 We
 lp
 rP
-dL
+cW
 jn
 Rj
 Ka
@@ -33830,7 +33836,7 @@ kN
 Nf
 kN
 rP
-hl
+YP
 rP
 mO
 mO
@@ -34325,8 +34331,8 @@ iK
 iG
 fn
 cP
-Yy
-wt
+Qg
+gE
 iK
 Fp
 Fp
@@ -34840,7 +34846,7 @@ iK
 jd
 cP
 cP
-nj
+li
 iK
 oZ
 iv
@@ -38923,7 +38929,7 @@ ak
 Fp
 Fp
 pr
-KV
+RZ
 pr
 kJ
 QD
@@ -46686,7 +46692,7 @@ ak
 ak
 Fp
 nO
-gy
+er
 nO
 Fp
 Fp
@@ -48502,7 +48508,7 @@ Fp
 PG
 Fp
 Fo
-rx
+xm
 Fo
 Fp
 ak
@@ -48759,7 +48765,7 @@ Fp
 Fp
 VW
 Fo
-Dh
+Eq
 Fo
 Fp
 ak
@@ -51299,7 +51305,7 @@ PG
 Fp
 Fp
 OV
-XC
+tW
 OV
 cd
 fa
@@ -51556,7 +51562,7 @@ Fp
 PG
 Fp
 OV
-yn
+fU
 rk
 vy
 Rk
@@ -54667,7 +54673,7 @@ mO
 Mc
 Mc
 nO
-gy
+er
 nO
 Fp
 Fp
@@ -55710,7 +55716,7 @@ Fp
 Fp
 Fp
 hM
-dD
+lN
 hM
 hM
 hM
@@ -56208,7 +56214,7 @@ mO
 mO
 mO
 hM
-Vb
+cF
 hM
 Rj
 mO
@@ -56465,7 +56471,7 @@ ak
 ak
 ak
 hM
-Ds
+aP
 hM
 Rj
 Fp
@@ -59239,7 +59245,7 @@ Fp
 Fp
 Fp
 UK
-Bh
+Ax
 UK
 Fp
 Fp
@@ -59496,7 +59502,7 @@ UK
 Fp
 Fp
 UK
-vo
+Yt
 UK
 Fp
 fc
@@ -60796,7 +60802,7 @@ RT
 Fp
 Et
 IC
-Vy
+xG
 IC
 Et
 ak
@@ -61053,7 +61059,7 @@ IC
 Et
 Et
 IC
-Iq
+fq
 IC
 Et
 Et

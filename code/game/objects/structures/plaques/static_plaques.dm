@@ -118,6 +118,10 @@
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be disabled. Beneath the image, someone has scratched the word \"PACKETS\"."
 	icon_state = "kiddieplaque"
 
+/obj/structure/sign/plaques/kiddie/devils_tooth
+	name = "\improper Devil's Tooth Plaque"
+	desc = "A plaque commemerating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."
+
 /obj/structure/sign/plaques/kiddie/badger
 	name = "\improper Remembrance Plaque"
 	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom."
