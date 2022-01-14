@@ -12,7 +12,7 @@
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_PAI_CONTROLLABLE | BOT_MODE_AUTOPATROL
 	hackables = "sound control systems"
 	path_image_color = "#FF69B4"
-	data_hud_type = null
+	data_hud_type = DATA_HUD_FAN
 
 	baton_type = /obj/item/bikehorn
 	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS
