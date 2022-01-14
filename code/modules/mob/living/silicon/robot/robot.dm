@@ -8,8 +8,7 @@
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
 		self_right_time = 60 SECONDS, \
-		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
-	)
+		post_tipped_callback = CALLBACK(src, .proc/after_tip_over))
 
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
