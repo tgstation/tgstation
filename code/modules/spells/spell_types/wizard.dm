@@ -255,9 +255,9 @@
 	cooldown_min = 150
 	selection_type = "view"
 	sound = 'sound/magic/repulse.ogg'
+	magic_resistances = MAGIC_RESISTANCE
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
-	var/magic_resistances = MAGIC_RESISTANCE
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	action_icon_state = "repulse"
@@ -303,7 +303,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	magic_resistances = NONE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"

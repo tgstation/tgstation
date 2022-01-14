@@ -34,5 +34,7 @@
 #define MAGIC_RESISTANCE_TINFOIL (1<<1)
 /// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god, )
 #define MAGIC_RESISTANCE_HOLY (1<<2)
-/// Prevents casting magic
-#define MAGIC_CASTING_RESTRICTION // pretty sure this is worthless and not used (since we use traits instead)
+/// Prevents a user from casting magic
+#define MAGIC_CASTING_RESTRICTION (1<<3)
+/// All magic resistances combined
+#define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE | MAGIC_RESISTANCE_TINFOIL | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION)

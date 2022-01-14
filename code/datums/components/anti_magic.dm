@@ -15,8 +15,8 @@
 		resistances = null, 
 		total_charges = null, 
 		inventory_slots = null, 
-		/datum/callback/reaction = null, 
-		/datum/callback/expiration = null
+		datum/callback/reaction = null, 
+		datum/callback/expiration = null
 	)
 
 	if(isitem(parent))

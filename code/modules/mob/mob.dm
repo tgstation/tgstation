@@ -920,7 +920,7 @@
 		client << output(null, "statbrowser:check_spells")
 
 ///Return any anti magic atom on this mob that matches the magic type
-/mob/proc/anti_magic_check(resistances = MAGIC_RESISTANCE, charge_cost = 1)
+/mob/proc/anti_magic_check(resistances = MAGIC_RESISTANCE, charge_cost = 1) // see DEFINES/magic.dm for list of antimagic flags
 	if(resistances == NONE)
 		return
 	var/list/protection_sources = list()
@@ -929,11 +929,11 @@
 			return pick(protection_sources)
 		else
 			return src
-	if((resistances & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(resistances & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		return src 
-	if((resistances & ~MAGIC_RESTRICT_CASTING) && (resistances & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+	if( (resistances & ~MAGIC_CASTING_RESTRICTION)) && (resistances & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK) )
 		return src
-	if((resistances & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+	if( (resistances & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		return src
 
 /**

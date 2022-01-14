@@ -15,12 +15,12 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	shield_uses = round(our_seed.potency / 20)
 	//deliver us from evil o melon god
-	our_plant.AddComponent(/datum/component/anti_magic, \
-		resistances = (MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY | MAGIC_RESTRICTS_CASTING), \
-		inventory_slots = ITEM_SLOT_HANDS, \
-		total_charges = shield_uses, \
-		reaction = CALLBACK(src, .proc/block_magic), \
-		expiration = CALLBACK(src, .proc/expire), \
+	our_plant.AddComponent(/datum/component/anti_magic,
+		resistances = (MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION),
+		inventory_slots = ITEM_SLOT_HANDS,
+		total_charges = shield_uses,
+		reaction = CALLBACK(src, .proc/block_magic),
+		expiration = CALLBACK(src, .proc/expire),
 	)
 
 /*

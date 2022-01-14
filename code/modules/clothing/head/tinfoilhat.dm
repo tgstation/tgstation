@@ -12,11 +12,11 @@
 /obj/item/clothing/head/foilhat/Initialize(mapload)
 	. = ..()
 	if(!warped)
-		AddComponent(/datum/component/anti_magic, \
-			resistances = (MAGIC_RESISTANCE_TINFOIL | MAGIC_RESTRICT_CASTING), \
-			inventory_slots = ITEM_SLOT_HEAD, \
-			total_charges = 6, \
-			expiration = CALLBACK(src, .proc/warp_up) \
+		AddComponent(/datum/component/anti_magic,
+			resistances = (MAGIC_RESISTANCE_TINFOIL | MAGIC_CASTING_RESTRICTION),
+			inventory_slots = ITEM_SLOT_HEAD,
+			total_charges = 6,
+			expiration = CALLBACK(src, .proc/warp_up)
 		)
 	else
 		warp_up()

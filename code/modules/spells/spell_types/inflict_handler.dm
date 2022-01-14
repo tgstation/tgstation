@@ -2,6 +2,7 @@
 	name = "Inflict Handler"
 	desc = "This spell blinds and/or destroys/damages/heals and/or knockdowns/stuns the target."
 	school = SCHOOL_EVOCATION
+	magic_resistances = MAGIC_RESISTANCE
 	var/amt_paralyze = 0
 	var/amt_unconscious = 0
 	var/amt_stun = 0
@@ -16,7 +17,6 @@
 	var/amt_eye_blurry = 0
 	var/destroys = "none" //can be "none", "gib" or "disintegrate"
 	var/summon_type = null //this will put an obj at the target's location
-	var/magic_resistances = MAGIC_RESISTANCE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)

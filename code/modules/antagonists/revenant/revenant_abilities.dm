@@ -128,8 +128,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
-	holy_check = TRUE
-	tinfoil_check = FALSE
+	magic_resistances = MAGIC_RESISTANCE_HOLY
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0

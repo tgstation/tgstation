@@ -36,5 +36,5 @@
 		return TRUE
 	if(isliving(mover))
 		var/mob/M = mover
-		if(M.anti_magic_check(chargecost = 0))
+		if(M.anti_magic_check(charge_cost = 0))
 			return TRUE

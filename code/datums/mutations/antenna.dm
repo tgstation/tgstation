@@ -61,7 +61,7 @@
 
 /obj/effect/proc_holder/spell/targeted/mindread/cast(list/targets, mob/living/carbon/human/user = usr)
 	for(var/mob/living/M in targets)
-		if(usr.anti_magic_check(magic = FALSE, tinfoil = TRUE, chargecost = 0) || M.anti_magic_check(magic = FALSE, tinfoil = TRUE, chargecost = 0))
+		if(usr.anti_magic_check(MAGIC_RESISTANCE_TINFOIL, charge_cost = 0) || M.anti_magic_check(MAGIC_RESISTANCE_TINFOIL, charge_cost = 0))
 			to_chat(usr, span_warning("As you reach out with your mind, you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
 			return
 		if(M.stat == DEAD)

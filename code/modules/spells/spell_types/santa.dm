@@ -5,7 +5,7 @@
 	school = SCHOOL_CONJURATION
 	charge_max = 600
 	clothes_req = FALSE
-	antimagic_allowed = TRUE
+	magic_resistances = NONE
 	invocation = "HO HO HO"
 	invocation_type = INVOCATION_SHOUT
 	range = 3

@@ -8,9 +8,9 @@
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_spell"
+	magic_resistances = MAGIC_RESISTANCE_TINFOIL
 	var/notice = "notice"
 	var/boldnotice = "boldnotice"
-	var/magic_resistances = MAGIC_RESISTANCE_TINFOIL
 
 /obj/effect/proc_holder/spell/targeted/telepathy/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
