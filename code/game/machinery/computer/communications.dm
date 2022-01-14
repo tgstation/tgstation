@@ -769,6 +769,8 @@
 #define MIN_GHOSTS_FOR_PIRATES 4
 /// The minimum number of ghosts / observers to have the chance of spawning fugitives.
 #define MIN_GHOSTS_FOR_FUGITIVES 6
+/// The maximum percentage of the population to be ghosts before we no longer have the chance of spawning Sleeper Agents.
+#define MAX_PERCENT_GHOSTS_FOR_SLEEPER 0.2
 /// The amount of threat injected by a hack, if chosen.
 #define HACK_THREAT_INJECTION_AMOUNT 15
 
@@ -793,8 +795,8 @@
 	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
 	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
 		hack_options += HACK_FUGITIVES
-	// If less than 20% of the population is ghosts, consider sleeper agents
-	if(num_ghosts < (length(GLOB.clients) * 0.2))
+	// If less than a certain percent of the population is ghosts, consider sleeper agents
+	if(num_ghosts < (length(GLOB.clients) * MAX_PERCENT_GHOSTS_FOR_SLEEPER))
 		hack_options += HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
@@ -868,6 +870,7 @@
 
 #undef MIN_GHOSTS_FOR_PIRATES
 #undef MIN_GHOSTS_FOR_FUGITIVES
+#undef MAX_PERCENT_GHOSTS_FOR_SLEEPER
 #undef HACK_THREAT_INJECTION_AMOUNT
 
 /datum/comm_message
