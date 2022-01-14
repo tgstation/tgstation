@@ -2105,7 +2105,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/aft)
 "hh" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -4196,7 +4196,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/department/chapel)
 "ou" = (
 /obj/effect/turf_decal/stripes/line{
@@ -4576,7 +4576,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/aft)
 "pz" = (
 /turf/open/openspace/icemoon/keep_below,
@@ -4688,7 +4688,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/department/medical)
 "pU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4842,7 +4842,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/engineering/lobby)
 "qB" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -5532,7 +5532,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/department/chapel)
 "sA" = (
 /obj/structure/rack,
@@ -5853,7 +5853,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/cargo/drone_bay)
 "tF" = (
 /obj/effect/turf_decal/tile/dark{
@@ -6782,7 +6782,7 @@
 /obj/structure/sign/warning{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/department/medical)
 "wY" = (
 /obj/structure/window/reinforced{
@@ -6979,7 +6979,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "chem-airlock"
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/medical/chemistry)
 "xG" = (
 /obj/structure/railing/corner,
@@ -7446,7 +7446,7 @@
 /obj/structure/sign/warning{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/aft)
 "zm" = (
 /obj/machinery/door/airlock{
@@ -8457,7 +8457,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/engineering/lobby)
 "CA" = (
 /obj/machinery/door/airlock{
@@ -9118,7 +9118,7 @@
 /turf/closed/wall,
 /area/cargo/storage)
 "EV" = (
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/fore)
 "EW" = (
 /obj/machinery/door/airlock/external{
@@ -9214,7 +9214,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/department/medical)
 "Fn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -9529,14 +9529,14 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/service/chapel)
 "Gu" = (
 /obj/structure/sign/warning{
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/service/chapel)
 "Gv" = (
 /obj/structure/table,
@@ -10657,6 +10657,9 @@
 /obj/structure/displaycase,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"JZ" = (
+/turf/open/floor/plating/snowed,
+/area/maintenance/aft)
 "Ka" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
@@ -10693,7 +10696,7 @@
 /obj/machinery/door/airlock/external{
 	name = "External Access"
 	},
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/maintenance/fore)
 "Kh" = (
 /obj/machinery/light/directional/west,
@@ -11268,7 +11271,7 @@
 /area/mine/storage)
 "LX" = (
 /obj/effect/turf_decal/caution,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/cargo/drone_bay)
 "LZ" = (
 /obj/structure/stairs/west,
@@ -13375,7 +13378,7 @@
 /area/maintenance/department/crew_quarters/bar)
 "Ti" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed,
 /area/medical/chemistry)
 "Tj" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -55513,7 +55516,7 @@ hM
 hM
 hM
 hM
-IH
+JZ
 hM
 VJ
 Fa
