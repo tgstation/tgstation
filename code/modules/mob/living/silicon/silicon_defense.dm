@@ -68,9 +68,6 @@
 		user_unbuckle_mob(buckled_mobs[1], user)
 	else
 		if(user.combat_mode)
-			//Return here as the tippable component will do the work instead.
-			if(LAZYACCESS(modifiers, RIGHT_CLICK))
-				return
 			user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 			playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
 			visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
