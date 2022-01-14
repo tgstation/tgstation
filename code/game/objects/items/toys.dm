@@ -726,12 +726,14 @@
 	var/list/card_attack_verb_continuous = list("attacks")
 	var/list/card_attack_verb_simple = list("attack")
 
+
 /obj/item/toy/cards/Initialize(mapload)
 	. = ..()
 	if(card_attack_verb_continuous)
 		card_attack_verb_continuous = string_list(card_attack_verb_continuous)
 	if(card_attack_verb_simple)
 		card_attack_verb_simple = string_list(card_attack_verb_simple)
+
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
@@ -824,29 +826,6 @@
 	update_appearance()
 	return card_to_draw
 
-/**
- * Sets the parent deck for this card, registering a signal to clear references on the parent deck's deletion.
- *
- * Arguments:
- * * new_parent_deck - New deck to set as a parent.
- */
-/obj/item/toy/cards/proc/set_parent_deck(obj/item/toy/cards/deck/new_parent_deck)
-	if(parentdeck)
-		UnregisterSignal(parentdeck, COMSIG_PARENT_QDELETING)
-
-	parentdeck = new_parent_deck
-
-	if(parentdeck)
-		RegisterSignal(parentdeck, COMSIG_PARENT_QDELETING, .proc/on_parent_deck_deletion)
-
-/**
- * Nulls the parent deck when the parent deck is deleted to avoid hard dels from hanging references.
- */
-/obj/item/toy/cards/proc/on_parent_deck_deletion(obj/item/toy/cards/deck/source)
-	SIGNAL_HANDLER
-
-	parentdeck = null
-
 /obj/item/toy/cards/deck
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
@@ -879,7 +858,7 @@
 	if(holo)
 		holo.spawned += card_to_add
 	card_to_add.cardname = name
-	card_to_add.set_parent_deck(src)
+	card_to_add.parentdeck = src
 	card_to_add.apply_card_vars(card_to_add, src)
 	return card_to_add
 
@@ -1120,7 +1099,7 @@
 
 		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
 	else
-		new_cardhand.set_parent_deck(parentdeck)
+		new_cardhand.parentdeck = parentdeck
 		new_cardhand.apply_card_vars(new_cardhand, src)
 		to_chat(user, span_notice("You combine the cards into a hand."))
 
