@@ -274,6 +274,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if (!moveable)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
+	AddComponent(/datum/component/dusting, register_signals = FALSE)
+
 	update_constants()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
@@ -1091,17 +1093,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return TRUE
 
 /obj/machinery/power/supermatter_crystal/Bumped(atom/movable/hit_object)
-	if(isliving(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-			span_userdanger("You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
-			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
-	else if(isobj(hit_object) && !iseffect(hit_object))
-		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src] and rapidly flashes to ash."), null,
-			span_hear("You hear a loud crack as you are washed with a wave of heat."))
-	else
-		return
-
-	playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+	. = ..()
 	Consume(hit_object)
 
 /obj/machinery/power/supermatter_crystal/intercept_zImpact(list/falling_movables, levels)
@@ -1111,44 +1103,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
+	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
+		return
+	var/datum/component/dusting/dust = GetComponent(/datum/component/dusting)
+	dust?.consume_atom(consumed_object)
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
-		if(consumed_mob.status_flags & GODMODE)
-			return
-		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
-		consumed_mob.dust(force = TRUE)
 		if(power_changes)
 			matter_power += 200
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
 			damage += rand(-300, 300) // HONK
 			damage = max(damage, 0)
-	else if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
-		return
-	else if(isobj(consumed_object))
-		if(!iseffect(consumed_object))
-			var/suspicion = ""
-			if(consumed_object.fingerprintslast)
-				suspicion = "last touched by [consumed_object.fingerprintslast]"
-				message_admins("[src] has consumed [consumed_object], [suspicion] [ADMIN_JMP(src)].")
-			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
-		qdel(consumed_object)
 	if(!iseffect(consumed_object) && power_changes)
 		matter_power += 200
 
-	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
-	for(var/mob/living/near_mob in range(10))
-		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
-		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
-			continue
-		if(ishuman(near_mob) && SSradiation.wearing_rad_protected_clothing(near_mob))
-			continue
-		if(near_mob in view())
-			near_mob.show_message(span_danger("As \the [src] slowly stops resonating, you find your skin covered in new radiation burns."), MSG_VISUAL,
-				span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
-		else
-			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
 	return

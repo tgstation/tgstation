@@ -666,6 +666,7 @@
 #include "code\datums\components\deadchat_control.dm"
 #include "code\datums\components\dejavu.dm"
 #include "code\datums\components\deployable.dm"
+#include "code\datums\components\dusting.dm"
 #include "code\datums\components\earprotection.dm"
 #include "code\datums\components\edit_complainer.dm"
 #include "code\datums\components\effect_remover.dm"
