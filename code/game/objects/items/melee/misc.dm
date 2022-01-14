@@ -215,6 +215,11 @@
 	..()
 	balanced = FALSE
 
+/obj/item/melee/supermatter_sword/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] touches [src]'s blade. It looks like [user.p_theyre()] tired of waiting for the radiation to kill [user.p_them()]!"))
+	user.dropItemToGround(src, TRUE)
+	Bumped(user)
+
 /obj/item/melee/supermatter_sword/add_blood_DNA(list/blood_dna)
 	return FALSE
 
