@@ -38,6 +38,11 @@
 
 	access |= SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 
+/// Trim for Bounty Hunters hired by centcom.
+/datum/id_trim/centcom/bounty_hunter
+	access = list(ACCESS_CENT_GENERAL)
+	assignment = "Bounty Hunter"
+
 /// Trim for Centcom Bartenders.
 /datum/id_trim/centcom/bartender
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
