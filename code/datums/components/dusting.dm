@@ -156,7 +156,7 @@
 		return
 	if(is_type_in_typecache(consumed_atom, ignore_subtypesof))
 		return
-	if(!consume_turfs && isturf(consumed_atom))
+	if((!consume_turfs && isturf(consumed_atom)) || currently_consuming_contents)
 		return
 	if(ismob(consumed_atom) && !isliving(consumed_atom)) //Don't kill ghosts/eyes somehow
 		return
