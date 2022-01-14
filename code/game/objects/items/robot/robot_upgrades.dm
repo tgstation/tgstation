@@ -165,83 +165,6 @@
 		R.model.basic_modules += S
 		R.model.add_module(S, FALSE, TRUE)
 
-/obj/item/borg/upgrade/tboh
-	name = "janitor cyborg trash bag of holding"
-	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-
-/obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/trash/cyborg/TB in R.model.modules)
-			R.model.remove_module(TB, TRUE)
-
-		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.model)
-		R.model.basic_modules += B
-		R.model.add_module(B, FALSE, TRUE)
-
-/obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.model.modules)
-			R.model.remove_module(B, TRUE)
-
-		var/obj/item/storage/bag/trash/cyborg/TB = new (R.model)
-		R.model.basic_modules += TB
-		R.model.add_module(TB, FALSE, TRUE)
-
-/obj/item/borg/upgrade/amop
-	name = "janitor cyborg advanced mop"
-	desc = "An advanced mop replacement for the janiborg's standard mop."
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-
-/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/cyborg/M in R.model.modules)
-			R.model.remove_module(M, TRUE)
-
-		var/obj/item/mop/advanced/cyborg/mop = new /obj/item/mop/advanced/cyborg(R.model)
-		R.model.basic_modules += mop
-		R.model.add_module(mop, FALSE, TRUE)
-
-/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/mop/advanced/cyborg/A in R.model.modules)
-			R.model.remove_module(A, TRUE)
-
-		var/obj/item/mop/cyborg/M = new (R.model)
-		R.model.basic_modules += M
-		R.model.add_module(M, FALSE, TRUE)
-
-/obj/item/borg/upgrade/prt
-	name = "janitor cyborg plating repair tool"
-	desc = "A tiny heating device to repair burnt and damaged hull platings with."
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-
-/obj/item/borg/upgrade/prt/action(mob/living/silicon/robot/R)
-	. = ..()
-	if(.)
-		var/obj/item/cautery/prt/P = new (R.model)
-		R.model.basic_modules += P
-		R.model.add_module(P, FALSE, TRUE)
-
-/obj/item/borg/upgrade/prt/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if(.)
-		for(var/obj/item/cautery/prt/P in R.model.modules)
-			R.model.remove_module(P, TRUE)
-
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
@@ -667,12 +590,6 @@
 	. = ..()
 	if(. && new_model)
 		R.model.transform_to(new_model)
-
-/obj/item/borg/upgrade/transform/clown
-	name = "borg model picker (Clown)"
-	desc = "Allows you to to turn a cyborg into a clown, honk."
-	icon_state = "cyborg_upgrade3"
-	new_model = /obj/item/robot_model/clown
 
 /obj/item/borg/upgrade/circuit_app
 	name = "circuit manipulation apparatus"
