@@ -715,7 +715,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	///The parent deck of the cards
-	var/parentdeck = null
+	var/datum/weakref/parentdeck
 	///Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -769,7 +769,7 @@
 	if (istype(src, /obj/item/toy/cards/cardhand))
 		to_cardhand = TRUE
 
-	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != src))
+	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != WEAKREF(src)))
 		to_chat(user, span_warning("You can't mix cards from other decks!"))
 		return
 	if (!user.temporarilyRemoveItemFromInventory(card_to_add))
@@ -858,7 +858,7 @@
 	if(holo)
 		holo.spawned += card_to_add
 	card_to_add.cardname = name
-	card_to_add.parentdeck = src
+	card_to_add.parentdeck = WEAKREF(src)
 	card_to_add.apply_card_vars(card_to_add, src)
 	return card_to_add
 
@@ -1099,7 +1099,7 @@
 
 		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
 	else
-		new_cardhand.parentdeck = parentdeck
+		new_cardhand.parentdeck = WEAKREF(parentdeck)
 		new_cardhand.apply_card_vars(new_cardhand, src)
 		to_chat(user, span_notice("You combine the cards into a hand."))
 
