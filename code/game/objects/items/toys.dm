@@ -1099,7 +1099,7 @@
 
 		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
 	else
-		new_cardhand.parentdeck = WEAKREF(parentdeck)
+		new_cardhand.parentdeck = parentdeck
 		new_cardhand.apply_card_vars(new_cardhand, src)
 		to_chat(user, span_notice("You combine the cards into a hand."))
 
