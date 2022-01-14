@@ -1,5 +1,6 @@
 /obj/item/mod/construction
 	desc = "A part used in MOD construction."
+	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	inhand_icon_state = "rack_parts"
 
 /obj/item/mod/construction/helmet
@@ -53,7 +54,7 @@
 /obj/item/mod/construction/armor
 	name = "MOD external plating"
 	desc = "External plating used to finish a MOD control unit."
-	icon_state = "standard-armor"
+	icon_state = "standard-plating"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
 /obj/item/mod/construction/armor/Initialize(mapload)
@@ -61,7 +62,7 @@
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
 	name = "MOD [used_theme.name] external plating"
 	desc = "[desc] [used_theme.desc]"
-	icon_state = "[used_theme.default_skin]-armor"
+	icon_state = "[used_theme.default_skin]-plating"
 
 /obj/item/mod/construction/armor/engineering
 	theme = /datum/mod_theme/engineering
@@ -84,7 +85,7 @@
 /obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "paintkit"
 
 #define START_STEP "start"
