@@ -636,3 +636,20 @@
 
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
+
+///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
+/obj/item/mod/module/signlang_radio
+	name = "MOD glove translator module"
+	desc = "A module that adds motion sensors into the suit's gloves, \
+		which works in tandem with a short-range subspace transmitter, \
+		letting the audibly impaired use sign language over comms."
+	icon_state = "signlang_radio"
+	complexity = 1
+	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	incompatible_modules = list(/obj/item/mod/module/signlang_radio)
+
+/obj/item/mod/module/signlang_radio/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+/obj/item/mod/module/signlang_radio/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)

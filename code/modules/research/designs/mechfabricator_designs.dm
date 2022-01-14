@@ -1341,3 +1341,9 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/mod/module/anomaly_locked/teleporter
 	department_type = MODULE_SCIENCE
+
+/datum/design/module/mod_glove_translator
+	name = "MOD Module: Glove Translator"
+	id = "mod_sign_radio"
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/signlang_radio
