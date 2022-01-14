@@ -57,26 +57,26 @@
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
 
-/obj/item/toy/cards/deck/cas/draw_card(mob/living/user)
+/obj/item/toy/cards/deck/cas/draw_card(mob/user)
 	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!(living_user.mobility_flags & MOBILITY_PICKUP))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
 			return
 	if(cards.len == 0)
 		to_chat(user, span_warning("There are no more cards to draw!"))
 		return
-	var/obj/item/toy/cards/singlecard/cas/new_cas_card = new/obj/item/toy/cards/singlecard/cas(user.loc)
+	var/obj/item/toy/cards/singlecard/cas/H = new/obj/item/toy/cards/singlecard/cas(user.loc)
 	var/datum/playingcard/choice = cards[1]
 	if (choice.name == "Blank Card")
-		new_cas_card.blank = 1
-	new_cas_card.name = choice.name
-	new_cas_card.buffertext = choice.name
-	new_cas_card.icon_state = choice.card_icon
-	new_cas_card.card_face = choice.card_icon
-	new_cas_card.set_parent_deck(src)
-	cards -= choice
-	new_cas_card.pickup(user)
-	user.put_in_hands(new_cas_card)
+		H.blank = 1
+	H.name = choice.name
+	H.buffertext = choice.name
+	H.icon_state = choice.card_icon
+	H.card_face = choice.card_icon
+	H.parentdeck = src
+	src.cards -= choice
+	H.pickup(user)
+	user.put_in_hands(H)
 	user.visible_message(span_notice("[user] draws a card from the deck."), span_notice("You draw a card from the deck."))
 	update_appearance()
 
