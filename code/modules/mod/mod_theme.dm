@@ -518,6 +518,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/hat_stabilizer)
 	skins = list(
 		"magnate" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -881,6 +882,7 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	inbuilt_modules = list(/obj/item/mod/module/hat_stabilizer)
 	skins = list(
 		"corporate" = list(
 			HELMET_LAYER = null,
@@ -980,6 +982,47 @@
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+			),
+		),
+	)
+
+/datum/mod_theme/timeline
+	name = "chrono"
+	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."
+	extended_desc = "A suit whose tech goes beyond this era's understanding. The internal mechanisms are all but \
+		completely alien, but the purpose is quite simple. The suit protects the user from the many incredibly lethal \
+		and sometimes hilariously painful side effects of jumping timelines, while providing inbuilt equipment for \
+		making timeline adjustments to correct a bad course."
+	default_skin = "timeline"
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, FIRE = 100, ACID = 100)
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	complexity_max = 15
+	slowdown_inactive = 0
+	slowdown_active = 0
+	skins = list(
+		"timeline" = list(
+			HELMET_LAYER = null,
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
+				UNSEALED_COVER = HEADCOVERSMOUTH,
+				SEALED_COVER = HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		),
 	)

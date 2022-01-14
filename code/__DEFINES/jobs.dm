@@ -39,6 +39,7 @@
 //Silicon
 #define JOB_AI "AI"
 #define JOB_CYBORG "Cyborg"
+#define JOB_PERSONAL_AI "Personal AI"
 //Security
 #define JOB_WARDEN "Warden"
 #define JOB_DETECTIVE "Detective"

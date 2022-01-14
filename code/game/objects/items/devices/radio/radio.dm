@@ -438,16 +438,13 @@
 	else
 		. += span_notice("It cannot be modified or attached.")
 
-/obj/item/radio/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/screwdriver_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		unscrewed = !unscrewed
-		if(unscrewed)
-			to_chat(user, span_notice("The radio can now be attached and modified!"))
-		else
-			to_chat(user, span_notice("The radio can no longer be modified or attached!"))
+	unscrewed = !unscrewed
+	if(unscrewed)
+		to_chat(user, span_notice("The radio can now be attached and modified!"))
 	else
-		return ..()
+		to_chat(user, span_notice("The radio can no longer be modified or attached!"))
 
 /obj/item/radio/emp_act(severity)
 	. = ..()
@@ -506,36 +503,36 @@
 	. = ..()
 	set_frequency(FREQ_SYNDICATE)
 
-/obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
+/obj/item/radio/borg/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!keyslot)
+		to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
+		return
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(keyslot)
-			for(var/ch_name in channels)
-				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
+	for(var/ch_name in channels)
+		SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+		secure_radio_connections[ch_name] = null
 
+	if(keyslot)
+		var/turf/user_turf = get_turf(user)
+		if(user_turf)
+			keyslot.forceMove(user_turf)
+			keyslot = null
 
-			if(keyslot)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot.forceMove(T)
-					keyslot = null
+	recalculateChannels()
+	to_chat(user, span_notice("You pop out the encryption key in the radio."))
+	return ..()
 
-			recalculateChannels()
-			to_chat(user, span_notice("You pop out the encryption key in the radio."))
+/obj/item/radio/borg/attackby(obj/item/attacking_item, mob/user, params)
 
-		else
-			to_chat(user, span_warning("This radio doesn't have any encryption keys!"))
-
-	else if(istype(W, /obj/item/encryptionkey/))
+	if(istype(attacking_item, /obj/item/encryptionkey))
 		if(keyslot)
 			to_chat(user, span_warning("The radio can't hold another key!"))
 			return
 
 		if(!keyslot)
-			if(!user.transferItemToLoc(W, src))
+			if(!user.transferItemToLoc(attacking_item, src))
 				return
-			keyslot = W
+			keyslot = attacking_item
 
 		recalculateChannels()
 
