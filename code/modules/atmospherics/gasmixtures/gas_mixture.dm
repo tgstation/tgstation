@@ -192,8 +192,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Returns: gas_mixture with the gases removed
 /datum/gas_mixture/proc/remove_ratio(ratio)
 	if(ratio <= 0)
-		var/datum/gas_mixture/removed = new type
-		removed.volume = volume
+		var/datum/gas_mixture/removed = new(volume)
 		return removed
 	ratio = min(ratio, 1)
 
