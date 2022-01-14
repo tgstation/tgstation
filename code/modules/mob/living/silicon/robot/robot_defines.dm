@@ -150,17 +150,9 @@
 	. = ..()
 	INVOKE_ASYNC(model, /obj/item/robot_model.proc/transform_to, set_model, TRUE)
 
-/mob/living/silicon/robot/model/clown
-	set_model = /obj/item/robot_model/clown
-	icon_state = "clown"
-
 /mob/living/silicon/robot/model/engineering
 	set_model = /obj/item/robot_model/engineering
 	icon_state = "engineer"
-
-/mob/living/silicon/robot/model/janitor
-	set_model = /obj/item/robot_model/janitor
-	icon_state = "janitor"
 
 /mob/living/silicon/robot/model/medical
 	set_model = /obj/item/robot_model/medical
