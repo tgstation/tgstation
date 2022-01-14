@@ -1288,10 +1288,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else if(direction & WEST)
 		to_x -= 32
 	if(!direction)
-		to_y += 16
+		to_y += 10
+		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
+
 	flick_overlay(pickup_animation, GLOB.clients, 4)
 	var/matrix/animation_matrix = new
 	animation_matrix.Turn(pick(-30, 30))
+	animation_matrix.Scale(0.7)
 
 	animate(pickup_animation, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = animation_matrix, easing = CUBIC_EASING)
 	animate(alpha = 0, transform = matrix(), time = 1)
@@ -1314,7 +1317,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	else if(direction & WEST)
 		from_x += 32
 	if(!direction)
-		from_y += 16
+		from_y += 10
+		from_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
 
 	//We're moving from these chords to our current ones
 	var/old_x = pixel_x
@@ -1322,6 +1326,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/old_alpha = alpha
 	var/matrix/animation_matrix = new
 	animation_matrix.Turn(pick(-30, 30))
+	animation_matrix.Scale(0.7) // Shrink to start, end up normal sized
 
 	pixel_x = from_x
 	pixel_y = from_y
