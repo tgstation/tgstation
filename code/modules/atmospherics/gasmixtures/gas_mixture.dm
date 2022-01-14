@@ -610,7 +610,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	 * In total we now have our equation be: (N1 + n) * (W1 + n/N2 * W2) / (C1 + n/N2 * C2) = PV/R
 	 * Now you can rearrange this and find out that it's a quadratic equation and pretty much solvable with the formula. Will be a bit messy though.
 	 * 
-	 * (W2/N2)n^2 + (N1*W2/N2)n + W1n - ((PV/R)*C2/N2)n - (PV/R)*C1 + N1W1 = 0
+	 * W2/N2n^2 + 
+	 * (N1*W2/N2)n + W1n - ((PV/R)*C2/N2)n + 
+	 * (-(PV/R)*C1) + N1W1 = 0
 	 * 
 	 * We will represent each of these terms with A, B, and C. A for the n^2 part, B for the n^1 part, and C for the n^0 part.
 	 * We then put this into the famous (-b +/- sqrt(b^2-4ac)) / 2a formula.
@@ -619,14 +621,25 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	 * If all this counting fucks up, we revert first to Newton's approximation, then the old simple formula.
 	 */
 
-	// The PV/R part in our equation.
-	var/ntvalue = pv / R_IDEAL_GAS_EQUATION
-	// x^2
-	var/a_value = thermal_energy() / total_moles()
-	// x^1
-	var/b_value = (output_air.total_moles() * thermal_energy() / total_moles())  + output_air.thermal_energy() - (ntvalue*heat_capacity()/total_moles())
-	// x^0
-	var/c_value = (-1 * ntvalue * output_air.heat_capacity()) + (output_air.total_moles() * output_air.thermal_energy())
+	// Our thermal energy and moles
+	var/w2 = thermal_energy()
+	var/n2 = total_moles()
+	var/c2 = heat_capacity()
+	
+	// Target thermal energy and moles
+	var/w1 = output_air.thermal_energy()
+	var/n1 = output_air.total_moles()
+	var/c1 = output_air.heat_capacity()
+
+	/// The PV/R part in our equation.
+	var/pvr = pv / R_IDEAL_GAS_EQUATION
+	
+	/// x^2 in the quadratic
+	var/a_value = w2/n2
+	/// x^1 in the quadratic
+	var/b_value = ((n1*w2)/n2) + w1 - (pvr*c2/n2)
+	/// x^0 in the quadratic
+	var/c_value = (-1*pvr*c1) + n1 * w1
 	
 	. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
 	if(.)
