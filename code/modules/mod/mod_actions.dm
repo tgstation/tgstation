@@ -132,9 +132,9 @@
 	icon_icon = linked_module.icon
 	button_icon_state = linked_module.icon_state
 	pinner = user
-	RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(linked_module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_trigger)
+	RegisterSignal(linked_module, COMSIG_MODULE_ACTIVATED, .proc/on_module_activate)
+	RegisterSignal(linked_module, COMSIG_MODULE_DEACTIVATED, .proc/on_module_deactivate)
+	RegisterSignal(linked_module, COMSIG_MODULE_USED, .proc/on_module_use)
 
 /datum/action/item_action/mod/pinned_module/Grant(mob/user)
 	if(user != pinner)
@@ -160,26 +160,18 @@
 		current_button.add_overlay(cooldown_image)
 		addtimer(CALLBACK(current_button, /image.proc/cut_overlay, cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
 
-/// When the module is selected, we update the icon.
-/datum/action/item_action/mod/pinned_module/proc/on_module_select(datum/source, obj/item/mod/module/selected_module)
+
+/datum/action/item_action/mod/pinned_module/proc/on_module_activate(datum/source)
 	SIGNAL_HANDLER
 
-	if(selected_module != mod.selected_module && selected_module != module)
-		return
 	UpdateButtonIcon()
 
-/// When the suit is being activated, we update the icon.
-/datum/action/item_action/mod/pinned_module/proc/on_mod_activation(datum/source, mob/user)
+/datum/action/item_action/mod/pinned_module/proc/on_module_deactivate(datum/source)
 	SIGNAL_HANDLER
 
-	if(mod.active)
-		override = TRUE
-	else
-		override = FALSE
 	UpdateButtonIcon()
 
-/// When the module is triggered, we update the icon.
-/datum/action/item_action/mod/pinned_module/proc/on_module_trigger(datum/source)
+/datum/action/item_action/mod/pinned_module/proc/on_module_use(datum/source)
 	SIGNAL_HANDLER
 
 	UpdateButtonIcon()

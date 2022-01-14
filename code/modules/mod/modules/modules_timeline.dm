@@ -74,7 +74,7 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
@@ -82,7 +82,7 @@
 ///Unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		UnregisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED)
+		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
@@ -121,7 +121,7 @@
 		return
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_triggered)
+		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
 	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
 
@@ -129,7 +129,7 @@
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		UnregisterSignal(module, COMSIG_MOD_MODULE_TRIGGERED)
+		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
