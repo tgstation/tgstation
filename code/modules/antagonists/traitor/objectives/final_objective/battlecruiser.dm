@@ -9,6 +9,8 @@
 
 	/// Checks whether we have sent the card to the traitor yet.
 	var/sent_accesscard = FALSE
+	/// Battlecruiser team that we get assigned to
+	var/datum/team/battlecruiser/team
 
 /datum/traitor_objective/final/battlecruiser/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	if(!can_take_final_objective())
@@ -25,6 +27,17 @@
 
 	return TRUE
 
+/datum/traitor_objective/final/battlecruiser/on_objective_taken(mob/user)
+	. = ..()
+	team = new()
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+	if(nuke.r_code == "ADMIN")
+		nuke.r_code = random_nukecode()
+	team.nuke = nuke
+	team.update_objectives()
+	handler.owner.add_antag_datum(/datum/antagonist/battlecruiser/ally, team)
+
+
 /datum/traitor_objective/final/battlecruiser/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
 	if(!sent_accesscard)
@@ -38,10 +51,12 @@
 			if(sent_accesscard)
 				return
 			sent_accesscard = TRUE
+			var/obj/item/card/emag/battlecruiser/emag_card = new()
+			emag_card.team = team
 			podspawn(list(
 				"target" = get_turf(user),
 				"style" = STYLE_SYNDICATE,
-				"spawn" = /obj/item/card/emag/battlecruiser,
+				"spawn" = emag_card,
 			))
 
 #undef MIN_GHOSTS_FOR_BATTLECRUISER

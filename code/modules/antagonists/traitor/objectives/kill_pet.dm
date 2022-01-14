@@ -11,7 +11,7 @@
 /datum/traitor_objective/kill_pet
 	name = "Kill the %DEPARTMENT HEAD%'s beloved %PET%"
 	description = "The %DEPARTMENT HEAD% has particularly annoyed us by sending us spam emails and we want their %PET% dead to show them what happens when they cross us. "
-	telecrystal_reward = list(1, 3)
+	telecrystal_reward = list(1, 2)
 
 	progression_reward = list(3 MINUTES, 6 MINUTES)
 
@@ -40,7 +40,7 @@
 /datum/traitor_objective/kill_pet/high_risk
 	progression_minimum = 25 MINUTES
 	progression_reward = list(14 MINUTES, 18 MINUTES)
-	telecrystal_reward = list(3, 5)
+	telecrystal_reward = list(2, 3)
 
 	limited_to_department_head = FALSE
 	possible_heads = list(

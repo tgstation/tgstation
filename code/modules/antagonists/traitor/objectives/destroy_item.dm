@@ -4,7 +4,7 @@
 
 	progression_minimum = 20 MINUTES
 	progression_reward = 5 MINUTES
-	telecrystal_reward = list(2, 4)
+	telecrystal_reward = 0
 
 	var/list/possible_items = list()
 	/// The current target item that we are stealing.
@@ -20,7 +20,7 @@
 	progression_minimum = 10 MINUTES
 	progression_maximum = 35 MINUTES
 	progression_reward = list(5 MINUTES, 10 MINUTES)
-	telecrystal_reward = list(2, 4)
+	telecrystal_reward = 1
 
 	possible_items = list(
 		/datum/objective_item/steal/low_risk/bartender_shotgun,
@@ -31,7 +31,7 @@
 /datum/traitor_objective/destroy_item/very_risky
 	progression_minimum = 40 MINUTES
 	progression_reward = 15 MINUTES
-	telecrystal_reward = list(4, 6)
+	telecrystal_reward = 3
 
 	possible_items = list(
 		/datum/objective_item/steal/blackbox,

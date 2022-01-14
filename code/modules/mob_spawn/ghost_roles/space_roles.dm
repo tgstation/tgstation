@@ -147,6 +147,10 @@
 	to_chat(owner, span_big("You are a [name]!"))
 	owner.announce_objectives()
 
+/datum/antagonist/battlecruiser/ally
+	name = "Battlecruiser Ally"
+	show_to_ghosts = FALSE
+
 /datum/antagonist/battlecruiser/captain
 	name = "Battlecruiser Captain"
 	antag_hud_name = "battlecruiser_lead"
