@@ -1,6 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "admin running department revolt works again"
-  - bugfix: "separatists no longer have a bad greeting message"
-  - bugfix: "united nations lawset is now properly rejecting law changes unless it completely overrides the laws"
