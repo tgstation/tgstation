@@ -1271,7 +1271,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return
 	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
 	pickup_animation.plane = GAME_PLANE
-	pickup_animation.transform *= 0.75
+	pickup_animation.transform.Scale(0.75)
 	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 
 	var/turf/current_turf = get_turf(src)
@@ -1294,10 +1294,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	flick_overlay(pickup_animation, GLOB.clients, 4)
 	var/matrix/animation_matrix = new
 	animation_matrix.Turn(pick(-30, 30))
-	animation_matrix.Scale(0.7)
+	animation_matrix.Scale(0.65)
 
 	animate(pickup_animation, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = animation_matrix, easing = CUBIC_EASING)
-	animate(alpha = 0, transform = matrix(), time = 1)
+	animate(alpha = 0, transform = matrix().Scale(0.7), time = 1)
 
 /obj/item/proc/do_drop_animation(atom/moving_from)
 	if(!istype(loc, /turf))
