@@ -191,11 +191,7 @@
 	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
 	START_PROCESSING(SSobj, src)
 
-	AddComponent(/datum/component/dusting,\
-		consume_on_bumped = FALSE,\
-		consume_all_contents = TRUE,\
-		consume_turfs = TRUE,\
-		ignore_subtypesof = list()) //If you can hit it, consume it
+	AddComponent(/datum/component/dusting, consume_on_bumped = FALSE, consume_on_attackby = FALSE, consume_all_contents = TRUE, consume_turfs = TRUE, ignore_subtypesof = list()) //If you can hit it, consume it
 
 /obj/item/melee/supermatter_sword/process()
 	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
