@@ -279,6 +279,18 @@
 		/obj/item/mod/module/holster,
 	)
 
+/obj/item/mod/control/pre_equipped/chrono
+	theme = /datum/mod_theme/chrono
+	applied_core = /obj/item/mod/core/infinite
+	initial_modules = list(
+		/obj/item/mod/module/eradication_lock,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/timeline_jumper,
+		/obj/item/mod/module/timestopper,
+		/obj/item/mod/module/rewinder,
+		/obj/item/mod/module/tem,
+	)
+
 /obj/item/mod/control/pre_equipped/debug
 	theme = /datum/mod_theme/debug
 	applied_core = /obj/item/mod/core/infinite
@@ -302,18 +314,6 @@
 		/obj/item/mod/module/quick_carry/advanced,
 		/obj/item/mod/module/magboot/advanced,
 		/obj/item/mod/module/jetpack,
-	)
-
-/obj/item/mod/control/pre_equipped/timeline
-	theme = /datum/mod_theme/timeline
-	cell = /obj/item/stock_parts/cell/bluespace
-	initial_modules = list(
-		/obj/item/mod/module/eradication_lock,
-		/obj/item/mod/module/emp_shield,
-		/obj/item/mod/module/timeline_jumper,
-		/obj/item/mod/module/timestopper,
-		/obj/item/mod/module/rewinder,
-		/obj/item/mod/module/tem,
 	)
 
 //these exist for the prefs menu

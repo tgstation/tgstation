@@ -134,6 +134,7 @@
 	pinner = user
 	RegisterSignal(mod, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+	RegisterSignal(linked_module, COMSIG_MOD_MODULE_TRIGGERED, .proc/on_module_trigger)
 
 /datum/action/item_action/mod/pinned_module/Grant(mob/user)
 	if(user != pinner)
@@ -175,4 +176,10 @@
 		override = TRUE
 	else
 		override = FALSE
+	UpdateButtonIcon()
+
+/// When the module is triggered, we update the icon.
+/datum/action/item_action/mod/pinned_module/proc/on_module_trigger(datum/source)
+	SIGNAL_HANDLER
+
 	UpdateButtonIcon()

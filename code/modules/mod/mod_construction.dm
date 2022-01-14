@@ -37,7 +37,7 @@
 
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
-	icon_state = "mod-core-broken"
+	icon_state = "mod-core"
 	desc = "An internal power source for a Modular Outerwear Device. You don't seem to be able to source any power from this one, though."
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
