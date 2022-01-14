@@ -12,6 +12,9 @@
 // -----------------------------
 /obj/item/storage/secure
 	name = "secstorage"
+	desc = "This shouldn't exist. If it does, create an issue report."
+	w_class = WEIGHT_CLASS_NORMAL
+
 	/// icon_state of locked safe
 	var/icon_locking = "secureb"
 	/// icon_state of sparking safe
@@ -19,9 +22,9 @@
 	/// icon_state of opened safe
 	var/icon_opened = "secure0"
 	/// The code entered by the user
-	var/entered_code = ""
+	var/entered_code
 	/// The code that will open this safe
-	var/lock_code = null
+	var/lock_code
 	/// Does this lock have a code set?
 	var/lock_set = FALSE
 	/// Is this lock currently being hacked?
@@ -30,8 +33,7 @@
 	var/panel_open = FALSE
 	/// Is this door hackable?
 	var/can_hack_open = TRUE
-	w_class = WEIGHT_CLASS_NORMAL
-	desc = "This shouldn't exist. If it does, create an issue report."
+
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
@@ -104,7 +106,7 @@
 			else
 				entered_code = "ERROR"
 		else
-			if ((href_list["type"] == "R")
+			if (href_list["type"] == "R")
 				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 				cut_overlays()
 				entered_code = null
