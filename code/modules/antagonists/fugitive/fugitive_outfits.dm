@@ -141,7 +141,6 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
@@ -171,7 +170,6 @@
 	synthetic_appearance.assume_disguise(synthetic_appearance, H)
 	H.update_hair()
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
