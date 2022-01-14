@@ -103,8 +103,6 @@
 
 /// Called when the module is activated
 /obj/item/mod/module/proc/on_activation()
-	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
-		return FALSE
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
@@ -114,6 +112,8 @@
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation())
@@ -153,8 +153,6 @@
 
 /// Called when the module is used
 /obj/item/mod/module/proc/on_use()
-	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
-		return FALSE
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
@@ -163,6 +161,8 @@
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
 		to_chat(mod.wearer, span_warning("You cannot activate this right now."))
+		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOD_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	COOLDOWN_START(src, cooldown_timer, cooldown_time)
 	addtimer(CALLBACK(mod.wearer, /mob.proc/update_inv_back), cooldown_time)
