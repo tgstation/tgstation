@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Pluoxium formation via supermatter will no longer consume oxygen that doesn't exist."
