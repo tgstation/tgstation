@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			if(shell)
 				to_chat(user, span_warning("You cannot seem to open the radio compartment!")) //Prevent AI radio key theft
 			else if(radio)
-				radio.attackby(W,user)//Push it to the radio to let it handle everything
+				radio.screwdriver_act(user, W)//Push it to the radio to let it handle everything
 			else
 				to_chat(user, span_warning("Unable to locate a radio!"))
 		update_icons()
@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
 
-	if(istype(W, /obj/item/encryptionkey/) && opened)
+	if(istype(W, /obj/item/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
