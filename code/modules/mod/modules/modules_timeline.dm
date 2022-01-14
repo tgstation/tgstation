@@ -180,24 +180,15 @@
 		mod.wearer.setStaminaLoss(0, 0)
 		phased_mob = new(get_turf(mod.wearer.loc))
 		mod.wearer.forceMove(phased_mob)
-		RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
 		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	else
 		//phasing in
 		QDEL_NULL(phased_mob)
-		UnregisterSignal(mod, list(COMSIG_MOD_ACTIVATE, COMSIG_MOB_SAY))
+		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 
 	//probably justifies its own sound but whatever
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
-
-///Signal fired from when wearer speaks while phased out, to relay the speech to the phased dummy
-/obj/item/mod/module/timeline_jumper/proc/handle_speech(datum/source, list/speech_args)
-	SIGNAL_HANDLER
-	//the men are talking
-	phased_mob.say(speech_args[SPEECH_MESSAGE], sanitize = FALSE)
-	//so shut up
-	speech_args[SPEECH_MESSAGE] = ""
 
 ///Signal fired when wearer attempts to activate/deactivate suits while phased out
 /obj/item/mod/module/timeline_jumper/proc/on_activate_block(datum/source, user)
@@ -206,7 +197,7 @@
 	to_chat(user, span_boldwarning("Deactivating your suit while inbetween timelines would be a very bad idea."))
 	return MOD_CANCEL_ACTIVATE
 
-///special subtype for phased mobs for the agent to speak from.
+///special subtype for phased mobs.
 /obj/effect/dummy/phased_mob/chrono
 	name = "reality static"
 	verb_say = "echoes"
@@ -404,7 +395,7 @@
 				timetokill -= delta_time
 			else
 				tem = null
-				return .()
+				return
 		else if(!attached)
 			timetokill -= delta_time
 		else
