@@ -407,7 +407,6 @@
  * reset_perspective(thing) set the eye to the thing (if it's equal to current default reset to mob perspective)
  */
 /mob/proc/reset_perspective(atom/new_eye)
-	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	if(!client)
 		return
 
@@ -439,6 +438,8 @@
 		else
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = loc
+	/// Signal sent after the eye has been successfully updated, with the client existing.
+	SEND_SIGNAL(src, COMSIG_MOB_RESET_PERSPECTIVE)
 	return TRUE
 
 /**
@@ -1031,7 +1032,10 @@
 	if(oldname == newname)
 		log_message("[src] failed name change as the new name was the same as the old one: [oldname]", LOG_OWNERSHIP)
 		return FALSE
-
+	if(!istext(newname) && !isnull(newname))
+		stack_trace("[src] attempted to change its name from [oldname] to the non string value [newname]")
+		return FALSE
+		
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
 	log_played_names(ckey, newname)
@@ -1316,11 +1320,22 @@
 	SIGNAL_HANDLER
 	set_active_storage(null)
 
-///clears the client mob in our client_mobs_in_contents list
-/mob/proc/clear_client_in_contents()
-	if(client?.movingmob)
-		LAZYREMOVE(client.movingmob.client_mobs_in_contents, src)
-		client.movingmob = null
+/// Cleanup proc that's called when a mob loses a client, either through client destroy or logout
+/// Logout happens post client del, so we can't just copypaste this there. This keeps things clean and consistent
+/mob/proc/become_uncliented()
+	if(!canon_client)
+		return
+		
+	for(var/foo in canon_client.player_details.post_logout_callbacks)
+		var/datum/callback/CB = foo
+		CB.Invoke()
+
+	if(canon_client?.movingmob)
+		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
+		canon_client.movingmob = null
+
+	clear_important_client_contents()
+	canon_client = null
 
 ///Shows a tgui window with memories
 /mob/verb/memory()

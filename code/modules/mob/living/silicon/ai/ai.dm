@@ -44,7 +44,8 @@
 	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
 	///Used as a fake multitoool in tcomms machinery
 	var/obj/item/multitool/aiMulti
-	var/mob/living/simple_animal/bot/Bot
+	///Weakref to the bot the ai's commanding right now
+	var/datum/weakref/bot_ref
 	var/tracking = FALSE //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
 
@@ -220,7 +221,7 @@
 	QDEL_NULL(alert_control)
 	malfhack = null
 	current = null
-	Bot = null
+	bot_ref = null
 	controlled_equipment = null
 	linked_core = null
 	apc_override = null
@@ -432,7 +433,7 @@
 			target += to_track
 		if(name == string)
 			target += src
-		if(target.len)
+		if(length(target))
 			cam_prev = get_turf(eyeobj)
 			ai_actual_track(pick(target))
 		else
@@ -500,16 +501,16 @@
 		to_chat(src, span_danger("Selected location is not visible."))
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
-
-	if(!Bot)
+	var/mob/living/simple_animal/bot/bot = bot_ref?.resolve()
+	if(!bot)
 		return
 
-	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
+	if(bot.calling_ai && bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
 		to_chat(src, span_danger("Interface error. Unit is already in use."))
 		return
 	to_chat(src, span_notice("Sending command to bot..."))
 	call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
-	Bot.call_bot(src, waypoint)
+	bot.call_bot(src, waypoint)
 	call_bot_cooldown = 0
 
 /mob/living/silicon/ai/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
@@ -559,11 +560,11 @@
 			continue
 
 		tempnetwork.Remove("rd", "ordnance", "prison")
-		if(tempnetwork.len)
+		if(length(tempnetwork))
 			for(var/i in C.network)
 				cameralist[i] = i
 	var/old_network = network
-	network = tgui_input_list(U, "Which network would you like to view?", sort_list(cameralist))
+	network = tgui_input_list(U, "Which network would you like to view?", "Camera Network", sort_list(cameralist))
 
 	if(!U.eyeobj)
 		U.view_core()
@@ -599,14 +600,19 @@
 					for(var/datum/data/record/record_datum in GLOB.data_core.locked)//Look in data core locked.
 						personnel_list["[record_datum.fields["name"]]: [record_datum.fields["rank"]]"] = record_datum.fields["image"]//Pull names, rank, and image.
 
-					if(personnel_list.len)
-						input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
-						var/icon/character_icon = personnel_list[input]
-						if(character_icon)
-							qdel(holo_icon)//Clear old icon so we're not storing it in memory.
-							holo_icon = getHologramIcon(icon(character_icon))
-					else
+					if(!length(personnel_list))
 						tgui_alert(usr,"No suitable records found. Aborting.")
+						return
+					input = tgui_input_list(usr, "Select a crew member", "Station Member", sort_list(personnel_list))
+					if(isnull(input))
+						return
+					if(isnull(personnel_list[input]))
+						return
+					var/icon/character_icon = personnel_list[input]
+					if(character_icon)
+						qdel(holo_icon)//Clear old icon so we're not storing it in memory.
+						holo_icon = getHologramIcon(icon(character_icon))
+
 				if("My Character")
 					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?",,list("Yes","No")))
 						if("Yes")
@@ -638,17 +644,20 @@
 			)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(input)
-				qdel(holo_icon)
-				switch(input)
-					if("poly")
-						holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
-					if("chicken")
-						holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
-					if("spider")
-						holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
-					else
-						holo_icon = getHologramIcon(icon(icon_list[input], input))
+			if(isnull(input))
+				return
+			if(isnull(icon_list[input]))
+				return
+			qdel(holo_icon)
+			switch(input)
+				if("poly")
+					holo_icon = getHologramIcon(icon(icon_list[input],"parrot_fly"))
+				if("chicken")
+					holo_icon = getHologramIcon(icon(icon_list[input],"chicken_brown"))
+				if("spider")
+					holo_icon = getHologramIcon(icon(icon_list[input],"guard"))
+				else
+					holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
 				"default" = 'icons/mob/ai.dmi',
@@ -659,13 +668,16 @@
 				)
 
 			input = tgui_input_list(usr, "Select a hologram", "Hologram", sort_list(icon_list))
-			if(input)
-				qdel(holo_icon)
-				switch(input)
-					if("xeno queen")
-						holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
-					else
-						holo_icon = getHologramIcon(icon(icon_list[input], input))
+			if(isnull(input))
+				return
+			if(isnull(icon_list[input]))
+				return
+			qdel(holo_icon)
+			switch(input)
+				if("xeno queen")
+					holo_icon = getHologramIcon(icon(icon_list[input],"alienq"))
+				else
+					holo_icon = getHologramIcon(icon(icon_list[input], input))
 	return
 
 /datum/action/innate/core_return
@@ -931,7 +943,9 @@
 	if(!target || !(target in possible)) //If the AI is looking for a new shell, or its pre-selected shell is no longer valid
 		target = tgui_input_list(src, "Which body to control?", "Direct Control", sort_names(possible))
 
-	if (!target || target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
+	if(isnull(target))
+		return
+	if (target.stat == DEAD || target.deployed || !(!target.connected_ai ||(target.connected_ai == src)))
 		return
 
 	else if(mind)

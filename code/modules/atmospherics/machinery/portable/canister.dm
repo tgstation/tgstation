@@ -496,7 +496,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(src))
 		return
 	SSair.start_processing_machine(src)
 
@@ -620,8 +620,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	switch(action)
 		if("relabel")
-			var/label = tgui_input_list(usr, "New canister label", name, GLOB.gas_id_to_canister)
-			if(label && !..())
+			var/label = tgui_input_list(usr, "New canister label", "Canister", GLOB.gas_id_to_canister)
+			if(isnull(label))
+				return
+			if(!..())
 				var/newtype = GLOB.gas_id_to_canister[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
@@ -684,7 +686,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						logmsg += "\n[name]: [gaseslog[name]] moles."
 						if(n <= 5) //the first five gases added
 							admin_msg += "\n[name]: [gaseslog[name]] moles."
-						if(n == 5 && gaseslog.len > 5) //message added if more than 5 gases
+						if(n == 5 && length(gaseslog) > 5) //message added if more than 5 gases
 							admin_msg += "\nToo many gases to log. Check investigate log."
 					if(danger) //sent to admin's chat if contains dangerous gases
 						message_admins(admin_msg)

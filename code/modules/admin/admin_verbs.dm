@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/show_tip,
 	/client/proc/smite,
 	/client/proc/admin_away,
+	/client/proc/add_mob_ability,
 	/datum/admins/proc/station_traits_panel,
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
@@ -192,6 +193,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/adventure_manager,
 	/client/proc/load_circuit,
 	/client/proc/cmd_admin_toggle_fov,
+	/client/proc/cmd_admin_debug_traitor_objectives,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -455,33 +457,35 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/stealth()
 	set category = "Admin"
 	set name = "Stealth Mode"
-	if(holder)
-		if(holder.fakekey)
-			holder.fakekey = null
-			if(isobserver(mob))
-				mob.invisibility = initial(mob.invisibility)
-				mob.alpha = initial(mob.alpha)
-				if(mob.mind)
-					if(mob.mind.ghostname)
-						mob.name = mob.mind.ghostname
-					else
-						mob.name = mob.mind.name
+	if(!holder)
+		return
+
+	if(holder.fakekey)
+		holder.fakekey = null
+		if(isobserver(mob))
+			mob.invisibility = initial(mob.invisibility)
+			mob.alpha = initial(mob.alpha)
+			if(mob.mind)
+				if(mob.mind.ghostname)
+					mob.name = mob.mind.ghostname
 				else
-					mob.name = mob.real_name
-				mob.mouse_opacity = initial(mob.mouse_opacity)
-		else
-			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-			if(!new_key)
-				return
-			holder.fakekey = new_key
-			createStealthKey()
-			if(isobserver(mob))
-				mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
-				mob.alpha = 0 //JUUUUST IN CASE
-				mob.name = " "
-				mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+					mob.name = mob.mind.name
+			else
+				mob.name = mob.real_name
+			mob.mouse_opacity = initial(mob.mouse_opacity)
+	else
+		var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+		if(!new_key)
+			return
+		holder.fakekey = new_key
+		createStealthKey()
+		if(isobserver(mob))
+			mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+			mob.alpha = 0 //JUUUUST IN CASE
+			mob.name = " "
+			mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
@@ -490,12 +494,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
-	var/choice = tgui_input_list(usr, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
+	var/choice = tgui_input_list(src, "What size explosion would you like to produce? NOTE: You can do all this rapidly and in an IC manner (using cruise missiles!) with the Config/Launch Supplypod verb. WARNING: These ignore the maxcap", "Drop Bomb", choices)
+	if(isnull(choice))
+		return
 	var/turf/epicenter = mob.loc
 
 	switch(choice)
-		if(null)
-			return
 		if("Small Bomb (1, 2, 3, 3)")
 			explosion(epicenter, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3, flash_range = 3, adminlog = TRUE, ignorecap = TRUE, explosion_cause = mob)
 		if("Medium Bomb (2, 3, 4, 4)")
@@ -779,7 +783,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 					candidates = get_area_turfs(area)
 
-					if (candidates.len)
+					if (length(candidates))
 						k = 100
 
 						do

@@ -138,9 +138,9 @@
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /atom/movable/screen/alert/bloodsense)
 	if(cult_team.cult_risen)
-		cult_team.rise(current)
-		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
+	if(cult_team.cult_ascendent)
+		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 
 	add_team_hud(current)
 
@@ -156,13 +156,10 @@
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
-	if(ishuman(current))
-		var/mob/living/carbon/human/H = current
-		H.eye_color = initial(H.eye_color)
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		REMOVE_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		H.remove_overlay(HALO_LAYER)
-		H.update_body()
+	if (HAS_TRAIT(current, TRAIT_UNNATURAL_RED_GLOWY_EYES))
+		current.RemoveElement(/datum/element/cult_eyes)
+	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
+		current.RemoveElement(/datum/element/cult_halo)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)
@@ -238,9 +235,9 @@
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
 	if(cult_team.cult_risen)
-		cult_team.rise(current)
-		if(cult_team.cult_ascendent)
-			cult_team.ascend(current)
+		current.AddElement(/datum/element/cult_eyes, initial_delay = 0 SECONDS)
+	if(cult_team.cult_ascendent)
+		current.AddElement(/datum/element/cult_halo, initial_delay = 0 SECONDS)
 	add_team_hud(current, /datum/antagonist/cult)
 
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
@@ -257,15 +254,26 @@
 /datum/team/cult
 	name = "Cult"
 
+	///The blood mark target
 	var/blood_target
+	///Image of the blood mark target
 	var/image/blood_target_image
+	///Timer for the blood mark expiration
 	var/blood_target_reset_timer
 
+	///Has a vote been called for a leader?
 	var/cult_vote_called = FALSE
+	///The cult leader
 	var/mob/living/cult_master
+	///Has the mass teleport been used yet?
 	var/reckoning_complete = FALSE
+	///Has the cult risen, and gotten red eyes?
 	var/cult_risen = FALSE
+	///Has the cult asceneded, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	///Has narsie been summoned yet?
+	var/narsie_summoned = FALSE
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -281,40 +289,22 @@
 				++alive
 	var/ratio = cultplayers/alive
 	if(ratio > CULT_RISEN && !cult_risen)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
-				to_chat(B.current, span_cultlarge("<span class='warningplain'>The veil weakens as your cult grows, your eyes begin to glow...</span>"))
-				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
+		for(var/datum/mind/mind as anything in members)
+			if(mind.current)
+				SEND_SOUND(mind.current, 'sound/hallucinations/i_see_you2.ogg')
+				to_chat(mind.current, span_cultlarge(span_warning("The veil weakens as your cult grows, your eyes begin to glow...")))
+				mind.current.AddElement(/datum/element/cult_eyes)
 		cult_risen = TRUE
 		log_game("The blood cult has risen with [cultplayers] players.")
 
 	if(ratio > CULT_ASCENDENT && !cult_ascendent)
-		for(var/datum/mind/B in members)
-			if(B.current)
-				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, span_cultlarge("<span class='warningplain'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>"))
-				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
+		for(var/datum/mind/mind as anything in members)
+			if(mind.current)
+				SEND_SOUND(mind.current, 'sound/hallucinations/im_here1.ogg')
+				to_chat(mind.current, span_cultlarge(span_warning("Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")))
+				mind.current.AddElement(/datum/element/cult_halo)
 		cult_ascendent = TRUE
 		log_game("The blood cult has ascended with [cultplayers] players.")
-
-
-/datum/team/cult/proc/rise(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/H = cultist
-		H.eye_color = BLOODCULT_EYE
-		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
-		ADD_TRAIT(H, TRAIT_UNNATURAL_RED_GLOWY_EYES, CULT_TRAIT)
-		H.update_body()
-
-/datum/team/cult/proc/ascend(cultist)
-	if(ishuman(cultist))
-		var/mob/living/carbon/human/human = cultist
-		new /obj/effect/temp_visual/cult/sparks(get_turf(human), human.dir)
-		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
-		var/mutable_appearance/new_halo_overlay = mutable_appearance('icons/effects/32x64.dmi', istate, -HALO_LAYER)
-		human.overlays_standing[HALO_LAYER] = new_halo_overlay
-		human.apply_overlay(HALO_LAYER)
 
 /datum/team/cult/proc/make_image(datum/objective/sacrifice/sac_objective)
 	var/datum/job/job_of_sacrifice = sac_objective.target.assigned_role

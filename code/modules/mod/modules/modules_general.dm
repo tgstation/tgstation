@@ -1,7 +1,6 @@
 //General modules for MODsuits
 
-//Storage
-
+///Storage - Adds a storage component to the suit.
 /obj/item/mod/module/storage
 	name = "MOD storage module"
 	desc = "What amounts to a series of integrated storage compartments and specialized pockets installed across \
@@ -9,9 +8,13 @@
 	icon_state = "storage"
 	complexity = 3
 	incompatible_modules = list(/obj/item/mod/module/storage)
+	/// The storage component of the module.
 	var/datum/component/storage/concrete/storage
+	/// Max weight class of items in the storage.
 	var/max_w_class = WEIGHT_CLASS_NORMAL
+	/// Max combined weight of all items in the storage.
 	var/max_combined_w_class = 15
+	/// Max amount of items in the storage.
 	var/max_items = 7
 
 /obj/item/mod/module/storage/Initialize(mapload)
@@ -64,8 +67,7 @@
 	max_items = 21
 
 
-//Ion Jetpack
-
+///Ion Jetpack - Lets the user fly freely through space using battery charge.
 /obj/item/mod/module/jetpack
 	name = "MOD ion jetpack module"
 	desc = "A series of electric thrusters installed across the suit, this is a module highly anticipated by trainee Engineers. \
@@ -80,8 +82,11 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_jetpack"
 	overlay_state_active = "module_jetpack_on"
+	/// Do we stop the wearer from gliding in space.
 	var/stabilizers = FALSE
+	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
+	/// The ion trail particles left after the jetpack.
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
@@ -158,34 +163,36 @@
 	ion_trail.generate_effect()
 	return TRUE
 
-//Eating Apparatus
-
+///Eating Apparatus - Lets the user eat/drink with the suit on.
 /obj/item/mod/module/mouthhole
 	name = "MOD eating apparatus module"
 	desc = "A favorite by Miners, this modification to the helmet utilizes a nanotechnology barrier infront of the mouth \
-		to allow eating and drinking while retaining protection and atmosphere. \
-		However, it will do nothing to improve the taste of a goliath steak."
+		to allow eating and drinking while retaining protection and atmosphere. However, it won't free you from masks, \
+		and it will do nothing to improve the taste of a goliath steak."
 	icon_state = "apparatus"
 	complexity = 1
 	incompatible_modules = list(/obj/item/mod/module/mouthhole)
 	overlay_state_inactive = "module_apparatus"
+	/// Former flags of the helmet.
 	var/former_flags = NONE
+	/// Former visor flags of the helmet.
 	var/former_visor_flags = NONE
 
 /obj/item/mod/module/mouthhole/on_install()
 	former_flags = mod.helmet.flags_cover
 	former_visor_flags = mod.helmet.visor_flags_cover
-	mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
-	mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
+	if(former_flags & HEADCOVERSMOUTH)
+		mod.helmet.flags_cover &= ~HEADCOVERSMOUTH
+	if(former_visor_flags & HEADCOVERSMOUTH)
+		mod.helmet.visor_flags_cover &= ~HEADCOVERSMOUTH
 
 /obj/item/mod/module/mouthhole/on_uninstall()
-	if(!(former_flags & HEADCOVERSMOUTH))
+	if(former_flags & HEADCOVERSMOUTH)
 		mod.helmet.flags_cover |= HEADCOVERSMOUTH
-	if(!(former_visor_flags & HEADCOVERSMOUTH))
+	if(former_visor_flags & HEADCOVERSMOUTH)
 		mod.helmet.visor_flags_cover |= HEADCOVERSMOUTH
 
-//EMP Shield
-
+///EMP Shield - Protects the suit from EMPs.
 /obj/item/mod/module/emp_shield
 	name = "MOD EMP shield module"
 	desc = "A field inhibitor installed into the suit, protecting it against feedback such as \
@@ -202,8 +209,7 @@
 /obj/item/mod/module/emp_shield/on_uninstall()
 	mod.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_WIRES|EMP_PROTECT_CONTENTS)
 
-//Flashlight
-
+///Flashlight - Gives the suit a customizable flashlight.
 /obj/item/mod/module/flashlight
 	name = "MOD flashlight module"
 	desc = "A simple pair of flashlights installed on the left and right sides of the helmet, \
@@ -221,8 +227,11 @@
 	light_range = 3
 	light_power = 1
 	light_on = FALSE
+	/// Cell drain per range amount.
 	var/base_power = DEFAULT_CELL_DRAIN * 0.1
+	/// Minimum range we can set.
 	var/min_range = 2
+	/// Maximum range we can set.
 	var/max_range = 5
 
 /obj/item/mod/module/flashlight/on_activation()
@@ -250,7 +259,7 @@
 	. = ..()
 	if(!active)
 		return
-	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/mod.dmi', "module_light_on", layer = standing.layer + 0.2)
+	var/mutable_appearance/light_icon = mutable_appearance('icons/mob/clothing/mod.dmi', "module_light_on", layer = standing.layer + 0.2)
 	light_icon.appearance_flags = RESET_COLOR
 	light_icon.color = light_color
 	. += light_icon
@@ -274,8 +283,7 @@
 		if("light_range")
 			set_light_range(clamp(value, min_range, max_range))
 
-//Dispenser
-
+///Dispenser - Dispenses an item after a time passes.
 /obj/item/mod/module/dispenser
 	name = "MOD burger dispenser module"
 	desc = "A rare piece of technology reverse-engineered from a prototype found in a Donk Corporation vessel. \
@@ -288,7 +296,9 @@
 	use_power_cost = DEFAULT_CELL_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/dispenser)
 	cooldown_time = 5 SECONDS
+	/// Path we dispense.
 	var/dispense_type = /obj/item/food/burger/plain
+	/// Time it takes for us to dispense.
 	var/dispense_time = 0 SECONDS
 
 /obj/item/mod/module/dispenser/on_use()
@@ -297,15 +307,14 @@
 		return
 	if(dispense_time && !do_after(mod.wearer, dispense_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		return
+		return FALSE
 	var/obj/item/dispensed = new dispense_type(mod.wearer.loc)
 	mod.wearer.put_in_hands(dispensed)
 	balloon_alert(mod.wearer, "[dispensed] dispensed")
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 	drain_power(use_power_cost)
 
-//Longfall
-
+///Longfall - Nullifies fall damage, removing charge instead.
 /obj/item/mod/module/longfall
 	name = "MOD longfall module"
 	desc = "Useful for protecting both the suit and the wearer, \
@@ -331,8 +340,7 @@
 	to_chat(mod.wearer, span_notice("[src] protects you from the damage!"))
 	return NO_Z_IMPACT_DAMAGE
 
-//Thermal Regulator
-
+///Thermal Regulator - Regulates the wearer's core temperature.
 /obj/item/mod/module/thermal_regulator
 	name = "MOD thermal regulator module"
 	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, \
@@ -344,8 +352,11 @@
 	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/thermal_regulator)
 	cooldown_time = 0.5 SECONDS
+	/// The temperature we are regulating to.
 	var/temperature_setting = BODYTEMP_NORMAL
+	/// Minimum temperature we can set.
 	var/min_temp = 293.15
+	/// Maximum temperature we can set.
 	var/max_temp = 318.15
 
 /obj/item/mod/module/thermal_regulator/get_configuration()
@@ -360,8 +371,7 @@
 /obj/item/mod/module/thermal_regulator/on_active_process(delta_time)
 	mod.wearer.adjust_bodytemperature(get_temp_change_amount((temperature_setting - mod.wearer.bodytemperature), 0.08 * delta_time))
 
-//Pathfinder
-
+///Pathfinder - Can fly the suit from a long distance to an implant installed in someone.
 /obj/item/mod/module/pathfinder
 	name = "MOD pathfinder module"
 	desc = "This module, brought to you by Nakamura Engineering, has two components. \
@@ -370,11 +380,13 @@
 		and to be able to locate the second part of the system; \
 		a pathfinding implant installed into the base of the user's spine, \
 		broadcasting their location to the suit and allowing them to recall it to their back at any time. \
+		The implant is stored in the module and needs to be injected in a human to function. \
 		Nakamura Engineering swears up and down there's airbrakes."
 	icon_state = "pathfinder"
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/pathfinder)
+	/// The pathfinding implant.
 	var/obj/item/implant/mod/implant
 
 /obj/item/mod/module/pathfinder/Initialize(mapload)
@@ -417,6 +429,8 @@
 		return
 	if(!human_user.equip_to_slot_if_possible(mod, mod.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		return
+	for(var/obj/item/part as anything in mod.mod_parts)
+		mod.deploy(null, part)
 	human_user.update_action_buttons(TRUE)
 	balloon_alert(human_user, "[mod] attached")
 	playsound(mod, 'sound/machines/ping.ogg', 50, TRUE)
@@ -426,7 +440,9 @@
 	name = "MOD pathfinder implant"
 	desc = "Lets you recall a MODsuit to you at any time."
 	actions_types = list(/datum/action/item_action/mod_recall)
+	/// The pathfinder module we are linked to.
 	var/obj/item/mod/module/pathfinder/module
+	/// The jet icon we apply to the MOD.
 	var/image/jet_icon
 
 /obj/item/implant/mod/Initialize(mapload)
@@ -434,7 +450,7 @@
 	if(!istype(loc, /obj/item/mod/module/pathfinder))
 		return INITIALIZE_HINT_QDEL
 	module = loc
-	jet_icon = image(icon = 'icons/obj/mod.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
+	jet_icon = image(icon = 'icons/obj/clothing/modsuit/mod_modules.dmi', icon_state = "mod_jet", layer = LOW_ITEM_LAYER)
 
 /obj/item/implant/mod/Destroy()
 	if(module?.mod?.ai_controller)
@@ -506,7 +522,9 @@
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	button_icon_state = "recall"
+	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)
+	/// The implant we are linked to.
 	var/obj/item/implant/mod/implant
 
 /datum/action/item_action/mod_recall/New(Target)
@@ -523,8 +541,7 @@
 	if(implant.recall())
 		COOLDOWN_START(src, recall_cooldown, 15 SECONDS)
 
-//DNA Lock
-
+///DNA Lock - Prevents people without the set DNA from activating the suit.
 /obj/item/mod/module/dna_lock
 	name = "MOD DNA lock module"
 	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
@@ -534,8 +551,9 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = DEFAULT_CELL_DRAIN * 3
-	incompatible_modules = list(/obj/item/mod/module/dna_lock)
+	incompatible_modules = list(/obj/item/mod/module/dna_lock, /obj/item/mod/module/eradication_lock)
 	cooldown_time = 0.5 SECONDS
+	/// The DNA we lock with.
 	var/dna = null
 
 /obj/item/mod/module/dna_lock/on_install()
@@ -568,10 +586,13 @@
 	. = ..()
 	on_emag(src, user, emag_card)
 
-/obj/item/mod/module/dna_lock/proc/dna_check()
-	if(!dna || (mod.wearer.has_dna() && mod.wearer.dna.unique_enzymes == dna))
+/obj/item/mod/module/dna_lock/proc/dna_check(mob/user)
+	if(!iscarbon(user))
+		return FALSE
+	var/mob/living/carbon/carbon_user = user
+	if(!dna  || (carbon_user.has_dna() && carbon_user.dna.unique_enzymes == dna))
 		return TRUE
-	balloon_alert(mod.wearer, "dna locked!")
+	balloon_alert(user, "dna locked!")
 	return FALSE
 
 /obj/item/mod/module/dna_lock/proc/on_emp(datum/source, severity)
@@ -584,20 +605,19 @@
 
 	dna = null
 
-/obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source)
+/obj/item/mod/module/dna_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!dna_check())
+	if(!dna_check(user))
 		return MOD_CANCEL_ACTIVATE
 
-/obj/item/mod/module/dna_lock/proc/on_mod_removal(datum/source)
+/obj/item/mod/module/dna_lock/proc/on_mod_removal(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!dna_check())
+	if(!dna_check(user))
 		return MOD_CANCEL_REMOVAL
 
-//Plasma Stabilizer
-
+///Plasma Stabilizer - Prevents plasmamen from igniting in the suit
 /obj/item/mod/module/plasma_stabilizer
 	name = "MOD plasma stabilizer module"
 	desc = "This system essentially forms an atmosphere of its' own inside the suit, \
@@ -617,41 +637,101 @@
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
 
-//Kinesis
+//Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
+///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.
+/obj/item/mod/module/hat_stabilizer
+	name = "MOD hat stabilizer module"
+	desc = "A simple set of deployable stands, directly atop one's head; \
+		these will deploy under a select few hats to keep them from falling off, allowing them to be worn atop the sealed helmet. \
+		You still need to take the hat off your head while the helmet deploys, though. \
+		This is a must-have for Nanotrasen Captains, enabling them to show off their authoritative hat even while in their MODsuit."
+	icon_state = "hat_holder"
+	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
+	/*Intentionally left inheriting 0 complexity and removable = TRUE;
+	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
+	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
+	var/obj/item/clothing/head/attached_hat
+	///Whitelist of attachable hats; read note in Initialize() below this line
+	var/static/list/attachable_hats_list
 
-/obj/item/mod/module/kinesis //TODO POST-MERGE MAKE NOT SUCK ASS, MAKE BALLER AS FUCK
-	name = "MOD kinesis module"
-	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
-		despite the suits it used to be mounted on still seeing some circulation. \
-		This piece of technology allows the user to generate precise anti-gravity fields, \
-		letting them move objects as small as a titanium rod to as large as industrial machinery. \
-		Oddly enough, it doesn't seem to work on living creatures."
-	icon_state = "kinesis"
-//	module_type = MODULE_ACTIVE
-	module_type = MODULE_TOGGLE
-//	complexity = 3
-	complexity = 0
-	active_power_cost = DEFAULT_CELL_DRAIN*0.75
-//	use_power_cost = DEFAULT_CELL_DRAIN*3
-	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/kinesis)
-	cooldown_time = 0.5 SECONDS
-	var/has_tk = FALSE
-
-/obj/item/mod/module/kinesis/on_activation()
+/obj/item/mod/module/hat_stabilizer/Initialize()
 	. = ..()
-	if(!.)
-		return
-	if(mod.wearer.dna.check_mutation(TK))
-		has_tk = TRUE
+	attachable_hats_list = typecacheof(
+	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
+	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
+	//Yes, I said it, the captain should have fun.
+		list(
+			/obj/item/clothing/head/caphat,
+			/obj/item/clothing/head/crown,
+			/obj/item/clothing/head/centhat,
+			/obj/item/clothing/head/centcom_cap,
+			/obj/item/clothing/head/pirate,
+			/obj/item/clothing/head/santa,
+			/obj/item/clothing/head/hardhat/reindeer,
+			/obj/item/clothing/head/sombrero,
+			/obj/item/clothing/head/kitty,
+			/obj/item/clothing/head/rabbitears,
+			/obj/item/clothing/head/festive,
+			/obj/item/clothing/head/powdered_wig,
+			/obj/item/clothing/head/weddingveil,
+			/obj/item/clothing/head/that,
+			/obj/item/clothing/head/nursehat,
+			/obj/item/clothing/head/chefhat,
+			/obj/item/clothing/head/papersack,
+			)) - /obj/item/clothing/head/caphat/beret
+			//Need to subtract the beret because its annoying
+
+/obj/item/mod/module/hat_stabilizer/on_suit_activation()
+	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
+	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
+	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+
+/obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
+	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
+		remove_hat(src, mod.wearer)
+	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+
+/obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
+	SIGNAL_HANDLER
+	if(attached_hat)
+		base_examine += span_notice("There's \a [attached_hat] placed on the helmet. Right-click to remove it.")
 	else
-		mod.wearer.dna.add_mutation(TK)
+		base_examine += span_notice("There's nothing placed on the helmet. Yet.")
 
-/obj/item/mod/module/kinesis/on_deactivation()
+/obj/item/mod/module/hat_stabilizer/proc/place_hat(datum/source, obj/item/hitting_item, mob/user)
+	SIGNAL_HANDLER
+	if(!istype(hitting_item, /obj/item/clothing/head))
+		return
+	if(!mod.active)
+		balloon_alert(user, "suit must be active!")
+		return
+	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
+		balloon_alert(user, "this hat won't fit!")
+		return
+	if(attached_hat)
+		balloon_alert(user, "hat already attached!")
+		return
+	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
+		attached_hat = hitting_item
+		balloon_alert(user, "hat attached, right click to remove")
+		mod.wearer.update_inv_back()
+
+/obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
-	if(!.)
+	if(attached_hat)
+		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
+
+/obj/item/mod/module/hat_stabilizer/proc/remove_hat(datum/source, mob/user)
+	SIGNAL_HANDLER
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!attached_hat)
 		return
-	if(has_tk)
-		has_tk = FALSE
-		return
-	mod.wearer.dna.remove_mutation(TK)
+	attached_hat.forceMove(drop_location())
+	if(user.put_in_active_hand(attached_hat))
+		balloon_alert(user, "hat removed")
+	else
+		balloon_alert_to_viewers("the hat falls to the floor!")
+	attached_hat = null
+	mod.wearer.update_inv_back()

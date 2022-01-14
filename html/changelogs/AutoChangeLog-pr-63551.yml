@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Exo-drone fuel pellets delete when empty."
-  - bugfix: "Exo-drone launchers now update their icon correctly when adding / removing fuel. Removing fuel with a crowbar also doesn't smack the launcher when done."
-  - bugfix: "Fixes a hard-del with the exo-drone launcher."
