@@ -794,8 +794,8 @@
 	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
 		hack_options += HACK_FUGITIVES
 
-	// If we have a really good amount of ghosts, let's not even consider sleeper agents - they want ghost roles
-	if(num_ghosts > 8)
+	// If more than 10% of the population is ghosts, let's not even consider sleeper agents - they want ghost roles
+	if(num_ghosts >= (length(GLOB.clients) / 10))
 		hack_options -= HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
@@ -808,7 +808,7 @@
 				)
 
 			var/datum/round_event_control/pirates/pirate_event = locate() in SSevents.control
-			if(!fugitive_event)
+			if(!pirate_event)
 				CRASH("hack_console() attempted to run pirates, but could not find an event controller!")
 			addtimer(CALLBACK(pirate_event, /datum/round_event_control.proc/runEvent), rand(20 SECONDS, 1 MINUTES))
 
@@ -828,6 +828,11 @@
 				"Attention crew, it appears that someone on your station has shifted your orbit into more dangerous territory.",
 				"[command_name()] High-Priority Update"
 				)
+
+			for(var/mob/crew_member as anything in GLOB.player_list)
+				if(!is_station_level(crew_member.z))
+					continue
+				shake_camera(crew_member, 15, 1)
 
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT)
