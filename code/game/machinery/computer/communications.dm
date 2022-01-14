@@ -782,7 +782,7 @@
  */
 /obj/machinery/computer/communications/proc/hack_console(mob/living/hacker)
 	// All hack results we'll choose from.
-	var/list/hack_options = list(HACK_SLEEPER, HACK_THREAT)
+	var/list/hack_options = list(HACK_THREAT)
 
 	// If we have a certain amount of ghosts, we'll add some more !!fun!! options to the list
 	var/num_ghosts = length(GLOB.current_observers_list) + length(GLOB.dead_player_list)
@@ -793,10 +793,9 @@
 	// Fugitives require empty space for the hunter's ship, and ghosts for both fugitives and hunters (Please no waldo)
 	if(SSmapping.empty_space && (num_ghosts >= MIN_GHOSTS_FOR_FUGITIVES))
 		hack_options += HACK_FUGITIVES
-
-	// If more than 10% of the population is ghosts, let's not even consider sleeper agents - they want ghost roles
-	if(num_ghosts >= (length(GLOB.clients) / 10))
-		hack_options -= HACK_SLEEPER
+	// If less than 20% of the population is ghosts, consider sleeper agents
+	if(num_ghosts < (length(GLOB.clients) * 0.2))
+		hack_options += HACK_SLEEPER
 
 	var/picked_option = pick(hack_options)
 	message_admins("[ADMIN_LOOKUPFLW(hacker)] hacked a [name] located at [ADMIN_VERBOSEJMP(src)], resulting in: [picked_option]!")
