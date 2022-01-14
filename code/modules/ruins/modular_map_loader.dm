@@ -6,8 +6,10 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
 
-	/// List of map templates which can be attached to this root
-	var/list/modules = list()
+	/// Points to a .toml file storing configuration data about the modules associated with this root
+	var/config_file = null
+	/// Key used to look up the appropriate map paths in the associated .toml file
+	var/key = null
 
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
@@ -18,7 +20,12 @@
 
 	var/datum/map_template/map_module/map = new()
 
-	var/mapfile = pick(modules)
+	if(!config_file)
+		return
+
+	var/config = rustg_read_toml_file(config_file)
+
+	var/mapfile = config["directory"] + pick(config["rooms"][key]["modules"])
 
 	map.load(spawn_area, FALSE, mapfile)
 
@@ -37,7 +44,7 @@
 
 	mappath = mapfile
 
-	preload_size(mappath)
+	preload_size(mappath) // We need to run this here as the map path has been null until now
 
 	T = locate(T.x - x_offset, T.y - y_offset, T.z)
 	. = ..()

@@ -83,12 +83,16 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "k" = (
-/obj/modular_map_root/djstation/kitchen,
+/obj/modular_map_root/djstation{
+	key = "kitchen"
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "m" = (
 /obj/machinery/duct,
-/obj/modular_map_root/djstation/quarters,
+/obj/modular_map_root/djstation{
+	key = "quarters"
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/djstation)
 "n" = (

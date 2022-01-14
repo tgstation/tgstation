@@ -34,7 +34,9 @@
 /turf/template_noop,
 /area/template_noop)
 "s" = (
-/obj/modular_map_root/djstation/radio,
+/obj/modular_map_root/djstation{
+	key = "radioroom"
+	},
 /turf/template_noop,
 /area/template_noop)
 "v" = (
@@ -121,7 +123,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation/service)
 "U" = (
-/obj/modular_map_root/djstation/solar,
+/obj/modular_map_root/djstation{
+	key = "solars"
+	},
 /turf/template_noop,
 /area/template_noop)
 "V" = (

@@ -6,14 +6,5 @@
 
 /////////// djstation module roots
 
-/obj/modular_map_root/djstation/radio
-	modules = list("_maps/RandomRuins/SpaceRuins/DJstation/radioroom_1.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/radioroom_2.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/radioroom_3.dmm")
-
-/obj/modular_map_root/djstation/solar
-	modules = list("_maps/RandomRuins/SpaceRuins/DJstation/solar_1.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/solar_2.dmm")
-
-/obj/modular_map_root/djstation/quarters
-	modules = list("_maps/RandomRuins/SpaceRuins/DJstation/quarters_1.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/quarters_2.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/quarters_3.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/quarters_4.dmm")
-
-/obj/modular_map_root/djstation/kitchen
-	modules = list("_maps/RandomRuins/SpaceRuins/DJstation/kitchen_1.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/kitchen_2.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/kitchen_3.dmm", "_maps/RandomRuins/SpaceRuins/DJstation/kitchen_4.dmm")
+/obj/modular_map_root/djstation
+	config_file = "code/modules/ruins/spaceruin_code/DJstation.toml"

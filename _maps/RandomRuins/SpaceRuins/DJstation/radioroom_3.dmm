@@ -8,7 +8,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "f" = (
-/obj/modular_map_root/djstation/kitchen,
+/obj/modular_map_root/djstation{
+	key = "kitchen"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "g" = (
@@ -57,7 +59,9 @@
 /area/ruin/space/djstation)
 "K" = (
 /obj/machinery/duct,
-/obj/modular_map_root/djstation/quarters,
+/obj/modular_map_root/djstation{
+	key = "quarters"
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/djstation)
 "M" = (
