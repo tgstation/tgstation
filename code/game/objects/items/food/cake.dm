@@ -472,7 +472,7 @@
 
 /obj/item/food/cake/pavlova
 	name = "pavlova"
-	desc = "A sweet berry pavlova. Invented in New Zealand, but named after a Russian ballerina... And scientifically proven to be the best at dinner parties!"
+	desc = "A sweet berry pavlova. Invented in Australia, but named after a Russian ballerina... And scientifically proven to be the best at dinner parties!"
 	icon_state = "pavlova"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("meringue" = 5, "creaminess" = 1, "berries" = 1)
