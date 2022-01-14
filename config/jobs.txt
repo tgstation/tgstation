@@ -21,7 +21,7 @@ Cook=2,1
 Botanist=3,2
 Janitor=2,1
 
-Clown=1,1
+Clown=2,2
 Mime=1,1
 Curator=1,1
 Lawyer=2,2
