@@ -411,8 +411,7 @@
 	sending = FALSE
 
 /obj/machinery/computer/piratepad_control/proc/start_sending()
-	if(sending)
-		return
+	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	if(!pad)
 		status_report = "No pad detected. Build or link a pad."
 		pad.visible_message(span_notice("[pad] beeps."))
@@ -421,10 +420,10 @@
 		status_report = "Please screwdrive pad closed to send. "
 		pad.visible_message(span_notice("[pad] beeps."))
 		return
-
+	if(sending)
+		return
 	sending = TRUE
 	status_report = "Sending... "
-	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	pad.visible_message(span_notice("[pad] starts charging up."))
 	pad.icon_state = pad.warmup_state
 	sending_timer = addtimer(CALLBACK(src,.proc/send),warmup_time, TIMER_STOPPABLE)
