@@ -3,8 +3,8 @@
 	description = "Entertain the crew, make bad jokes, go on a holy quest to find bananium, HONK!"
 	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	exp_granted_type = EXP_TYPE_CREW
