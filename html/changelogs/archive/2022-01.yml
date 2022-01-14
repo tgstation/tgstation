@@ -464,3 +464,54 @@
       software.
   san7890:
   - code_imp: Traumas.dm is now spanned out and alphabetized. Just a small code improvement.
+2022-01-14:
+  EOBGames:
+  - rscadd: An old space billboard has been spotted in the vicinity of the station.
+      Apparently, nobody at the advertising company realised how hard it is to read
+      a billboard when passing by at 2/3rds the speed of light.
+  Kylerace:
+  - bugfix: NanoTrasen has broken up the AI Static Union and thus AI static will no
+      longer intermittently decide to stop working.
+  Melbert:
+  - bugfix: Fixes gang induction, sentient disease abilities, birdboat's vomit button,
+      and the ooze's boost button
+  Pickle-Coding:
+  - bugfix: Pluoxium formation via supermatter will no longer consume oxygen that
+      doesn't exist.
+  SuperNovaa41:
+  - bugfix: Fixes stamps being randomly applied to paper even when not blind.
+  - bugfix: Fixes the spider charge not giving ninjas their objective
+  TemporalOroboros:
+  - bugfix: Guns can once again target individual pixels rather than always shooting
+      at the center of their target.
+  TheBonded:
+  - bugfix: The carp plushie null rod variant now properly gives the carp faction
+      to holy people instead of favouring the unworthy.
+  Timberpoes:
+  - bugfix: Prisoners can no longer roll roundstart revhead or cultist, and can no
+      longer roll latejoin revhead. This fixes an accidental change from an earlier
+      PR.
+  Time-Green:
+  - expansion: adds a springlock death achievement
+  jjpark-kb:
+  - bugfix: fixed nuclear particle's incorrect flag variable which could cause a runtime.
+  neopythagorean:
+  - bugfix: Fortune cookies now give you your fortune.
+  nikothedude:
+  - qol: In the edge case that an emote would have a custom parameter capitalized,
+      it now stays capitalized properly.
+  san7890:
+  - spellcheck: When a pAI holomatrix shell "perks up", you'll no longer be on the
+      edge of your seat, holding your breath to see what could possibly come next.
+  - bugfix: To everyone who likes sleep, hopefully you can all dream a little bit
+      sounder now that all of your bedsheets actually cover you now rather than persist
+      under you (and any other mobs).
+  - bugfix: DeltaStation's Pharmacy has gotten some minor refurbishment, replacing
+      a window for a wall to slam more equipment on it.
+  theOOZ:
+  - balance: Venting now has an indicator
+  tralezab:
+  - bugfix: admin running department revolt works again
+  - bugfix: separatists no longer have a bad greeting message
+  - bugfix: united nations lawset is now properly rejecting law changes unless it
+      completely overrides the laws

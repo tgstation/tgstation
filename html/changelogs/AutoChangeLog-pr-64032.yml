@@ -1,4 +1,0 @@
-author: "jjpark-kb"
-delete-after: True
-changes: 
-  - bugfix: "fixed nuclear particle's incorrect flag variable which could cause a runtime."
