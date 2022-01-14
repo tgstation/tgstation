@@ -499,9 +499,7 @@
 		else if(module.active)
 			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_active")
 		if(!COOLDOWN_FINISHED(module, cooldown_timer))
-			var/image/cooldown_image = image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown")
-			module_image.add_overlay(cooldown_image)
-			addtimer(CALLBACK(module_image, /image.proc/cut_overlay, cooldown_image), COOLDOWN_TIMELEFT(module, cooldown_timer))
+			module_image.add_overlay(image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown"))
 		items += list(module.name = module_image)
 	if(!length(items))
 		return

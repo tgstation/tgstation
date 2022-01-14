@@ -151,6 +151,7 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/injector,
 	)
 
 /obj/item/mod/control/pre_equipped/elite
@@ -163,6 +164,7 @@
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/injector,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted
