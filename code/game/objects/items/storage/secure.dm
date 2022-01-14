@@ -12,15 +12,23 @@
 // -----------------------------
 /obj/item/storage/secure
 	name = "secstorage"
+	/// icon_state of locked safe
 	var/icon_locking = "secureb"
+	/// icon_state of sparking safe
 	var/icon_sparking = "securespark"
+	/// icon_state of opened safe
 	var/icon_opened = "secure0"
-	var/code = ""
-	var/l_code = null
-	var/l_set = FALSE
-	var/l_setshort = FALSE
-	var/l_hacking = FALSE
-	var/open = FALSE
+	/// The code entered by the user
+	var/entered_code = ""
+	/// The code that will open this safe
+	var/lock_code = null
+	/// Does this lock have a code set?
+	var/lock_set = FALSE
+	/// Is this lock currently being hacked?
+	var/lock_hacking = FALSE
+	/// Is the safe service panel open?
+	var/panel_open = FALSE
+	/// Is this door hackable?
 	var/can_hack_open = TRUE
 	w_class = WEIGHT_CLASS_NORMAL
 	desc = "This shouldn't exist. If it does, create an issue report."
@@ -34,30 +42,30 @@
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
 	if(can_hack_open)
-		. += "The service panel is currently <b>[open ? "unscrewed" : "screwed shut"]</b>."
+		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
-/obj/item/storage/secure/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/secure/attackby(obj/item/weapon, mob/user, params)
 	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
-		if (W.tool_behaviour == TOOL_SCREWDRIVER)
-			if (W.use_tool(src, user, 20))
-				open = !open
-				to_chat(user, span_notice("You [open ? "open" : "close"] the service panel."))
+		if (weapon.tool_behaviour == TOOL_SCREWDRIVER)
+			if (weapon.use_tool(src, user, 20))
+				panel_open = !panel_open
+				to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
 			return
-		if (W.tool_behaviour == TOOL_WIRECUTTER)
+		if (weapon.tool_behaviour == TOOL_WIRECUTTER)
 			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
 			return
-		if (W.tool_behaviour == TOOL_MULTITOOL)
-			if(l_hacking)
+		if (weapon.tool_behaviour == TOOL_MULTITOOL)
+			if(lock_hacking)
 				to_chat(user, span_danger("This safe is already being hacked."))
 				return
-			if(open == TRUE)
+			if(panel_open == TRUE)
 				to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
-				l_hacking = TRUE
-				if (W.use_tool(src, user, 400))
+				lock_hacking = TRUE
+				if (weapon.use_tool(src, user, 400))
 					to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
-					l_set = FALSE
+					lock_set = FALSE
 
-				l_hacking = FALSE
+				lock_hacking = FALSE
 				return
 
 			to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
@@ -114,7 +122,6 @@
 			return
 	return
 
-
 // -----------------------------
 //        Secure Briefcase
 // -----------------------------
@@ -150,8 +157,8 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i in 1 to STR.max_items - 2)
+	var/datum/component/storage/storage_space = GetComponent(/datum/component/storage)
+	for(var/i in 1 to storage_space.max_items - 2)
 		new /obj/item/stack/spacecash/c1000(src)
 
 
@@ -216,8 +223,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 /obj/item/storage/secure/safe/caps_spare/Initialize(mapload)
 	. = ..()
 
-	l_code = SSid_access.spare_id_safe_code
-	l_set = TRUE
+	lock_code = SSid_access.spare_id_safe_code
+	lock_set = TRUE
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/storage/secure/safe/caps_spare/PopulateContents()
