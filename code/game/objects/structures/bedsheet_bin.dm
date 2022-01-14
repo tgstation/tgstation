@@ -18,6 +18,7 @@ LINEN BINS
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2

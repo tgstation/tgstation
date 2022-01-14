@@ -1,0 +1,4 @@
+author: "theOOZ"
+delete-after: True
+changes: 
+  - balance: "Venting now has an indicator"

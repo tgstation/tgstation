@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - bugfix: "The carp plushie null rod variant now properly gives the carp faction to holy people instead of favouring the unworthy."
