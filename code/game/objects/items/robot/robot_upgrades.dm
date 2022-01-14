@@ -645,34 +645,6 @@
 		if (E)
 			R.model.remove_module(E, TRUE)
 
-/obj/item/borg/upgrade/broomer
-	name = "experimental push broom"
-	desc = "An experimental push broom used for efficiently pushing refuse."
-	icon_state = "cyborg_upgrade3"
-	require_model = TRUE
-	model_type = list(/obj/item/robot_model/janitor)
-	model_flags = BORG_MODEL_JANITOR
-
-/obj/item/borg/upgrade/broomer/action(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (!.)
-		return
-	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
-	if (BR)
-		to_chat(user, span_warning("This janiborg is already equipped with an experimental broom!"))
-		return FALSE
-	BR = new(R.model)
-	R.model.basic_modules += BR
-	R.model.add_module(BR, FALSE, TRUE)
-
-/obj/item/borg/upgrade/broomer/deactivate(mob/living/silicon/robot/R, user = usr)
-	. = ..()
-	if (!.)
-		return
-	var/obj/item/pushbroom/cyborg/BR = locate() in R.model.modules
-	if (BR)
-		R.model.remove_module(BR, TRUE)
-
 ///This isn't an upgrade or part of the same path, but I'm gonna just stick it here because it's a tool used on cyborgs.
 //A reusable tool that can bring borgs back to life. They gotta be repaired first, though.
 /obj/item/borg_restart_board
