@@ -16,13 +16,11 @@
 /obj/modular_map_root/proc/load_map()
 	var/turf/spawn_area = get_turf(src)
 
-	var/datum/map_template/map_module/map
+	var/datum/map_template/map_module/map = new()
 
-	map = pick(modules)
+	var/mapfile = pick(modules)
 
-	map = new map()
-
-	map.load(spawn_area, FALSE)
+	map.load(spawn_area, FALSE, mapfile)
 
 	qdel(src, force=TRUE)
 
@@ -32,7 +30,15 @@
 	var/x_offset = 0
 	var/y_offset = 0
 
-/datum/map_template/map_module/load(turf/T, centered = FALSE)
+/datum/map_template/map_module/load(turf/T, centered = FALSE, mapfile = null)
+
+	if(!mapfile)
+		return
+
+	mappath = mapfile
+
+	preload_size(mappath)
+
 	T = locate(T.x - x_offset, T.y - y_offset, T.z)
 	. = ..()
 
@@ -41,7 +47,7 @@
 	if(!cached_map)
 		return
 
-	var/list/offset = discover_offset(obj/modular_map_connector)
+	var/list/offset = discover_offset(/obj/modular_map_connector)
 
 	x_offset = offset[1] - 1
 	y_offset = offset[2] - 1
