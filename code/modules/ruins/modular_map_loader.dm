@@ -23,6 +23,9 @@
 	if(!config_file)
 		return
 
+	if(!key)
+		return
+
 	var/config = rustg_read_toml_file(config_file)
 
 	var/mapfile = config["directory"] + pick(config["rooms"][key]["modules"])
