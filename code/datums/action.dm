@@ -1,8 +1,3 @@
-#define AB_CHECK_HANDS_BLOCKED (1<<0)
-#define AB_CHECK_IMMOBILE (1<<1)
-#define AB_CHECK_LYING (1<<2)
-#define AB_CHECK_CONSCIOUS (1<<3)
-
 /datum/action
 	var/name = "Generic Action"
 	var/desc
@@ -105,7 +100,7 @@
 		button.locked = FALSE
 		button.id = null
 
-/datum/action/proc/Trigger(list/modifiers)
+/datum/action/proc/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -204,7 +199,7 @@
 	UNSETEMPTY(I.actions)
 	return ..()
 
-/datum/action/item_action/Trigger()
+/datum/action/item_action/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -233,7 +228,7 @@
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
 
-/datum/action/item_action/toggle_light/Trigger()
+/datum/action/item_action/toggle_light/Trigger(trigger_flags)
 	if(istype(target, /obj/item/pda))
 		var/obj/item/pda/P = target
 		P.toggle_light(owner)
@@ -299,7 +294,7 @@
 /datum/action/item_action/toggle_welding_screen
 	name = "Toggle Welding Screen"
 
-/datum/action/item_action/toggle_welding_screen/Trigger()
+/datum/action/item_action/toggle_welding_screen/Trigger(trigger_flags)
 	var/obj/item/clothing/head/hardhat/weldhat/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
@@ -307,7 +302,7 @@
 /datum/action/item_action/toggle_welding_screen/plasmaman
 	name = "Toggle Welding Screen"
 
-/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger()
+/datum/action/item_action/toggle_welding_screen/plasmaman/Trigger(trigger_flags)
 	var/obj/item/clothing/head/helmet/space/plasmaman/H = target
 	if(istype(H))
 		H.toggle_welding_screen(owner)
@@ -325,7 +320,7 @@
 	UnregisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE)
 	return ..()
 
-/datum/action/item_action/toggle_spacesuit/Trigger()
+/datum/action/item_action/toggle_spacesuit/Trigger(trigger_flags)
 	var/obj/item/clothing/suit/space/suit = target
 	if(!istype(suit))
 		return
@@ -362,7 +357,7 @@
 	button_icon_state = "berserk_mode"
 	background_icon_state = "bg_demon"
 
-/datum/action/item_action/berserk_mode/Trigger()
+/datum/action/item_action/berserk_mode/Trigger(trigger_flags)
 	if(istype(target, /obj/item/clothing/head/hooded/berserker))
 		var/obj/item/clothing/head/hooded/berserker/berzerk = target
 		if(berzerk.berserk_active)
@@ -410,7 +405,7 @@
 	if(istype(Target, /obj/item/picket_sign))
 		S = Target
 
-/datum/action/item_action/nano_picket_sign/Trigger()
+/datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
 	if(istype(S))
 		S.retext(owner)
 
@@ -462,7 +457,7 @@
 	button_icon_state = "scan_mode"
 	var/active = FALSE
 
-/datum/action/item_action/toggle_research_scanner/Trigger()
+/datum/action/item_action/toggle_research_scanner/Trigger(trigger_flags)
 	if(IsAvailable())
 		active = !active
 		if(active)
@@ -482,7 +477,7 @@
 	name = "Use Instrument"
 	desc = "Use the instrument specified"
 
-/datum/action/item_action/instrument/Trigger()
+/datum/action/item_action/instrument/Trigger(trigger_flags)
 	if(istype(target, /obj/item/instrument))
 		var/obj/item/instrument/I = target
 		I.interact(usr)
@@ -531,7 +526,7 @@
 	button.screen_loc = "6:157,4:-2"
 	button.moved = "6:157,4:-2"
 
-/datum/action/item_action/cult_dagger/Trigger()
+/datum/action/item_action/cult_dagger/Trigger(trigger_flags)
 	for(var/obj/item/held_item as anything in owner.held_items) // In case we were already holding a dagger
 		if(istype(held_item, /obj/item/melee/cultblade/dagger))
 			held_item.attack_self(owner)
@@ -567,7 +562,7 @@
 	COOLDOWN_DECLARE(box_cooldown)
 
 ///Handles opening and closing the box.
-/datum/action/item_action/agent_box/Trigger()
+/datum/action/item_action/agent_box/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -631,7 +626,7 @@
 	S.action = null
 	return ..()
 
-/datum/action/spell_action/Trigger()
+/datum/action/spell_action/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	if(target)
@@ -671,7 +666,7 @@
 	check_flags = NONE
 	var/active = 0
 
-/datum/action/innate/Trigger()
+/datum/action/innate/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	if(!active)
@@ -733,7 +728,7 @@
 	UpdateButtonIcon()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/action/cooldown/Trigger(atom/target)
+/datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
 	if(!.)
 		return
@@ -845,7 +840,7 @@
 	button_icon_state = "language_menu"
 	check_flags = NONE
 
-/datum/action/language_menu/Trigger()
+/datum/action/language_menu/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	if(ismob(owner))
@@ -903,7 +898,7 @@
 	small_icon_state = "arachnid_mini"
 	background_icon_state = "bg_demon"
 
-/datum/action/small_sprite/Trigger()
+/datum/action/small_sprite/Trigger(trigger_flags)
 	..()
 	if(!small)
 		var/image/I = image(icon = small_icon, icon_state = small_icon_state, loc = owner)

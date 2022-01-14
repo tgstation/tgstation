@@ -27,7 +27,7 @@
 		return
 	return ..()
 
-/datum/action/item_action/mod/Trigger(list/modifiers)
+/datum/action/item_action/mod/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return FALSE
 	if(mod.malfunctioning && prob(75))
@@ -40,14 +40,14 @@
 	desc = "LMB: Deploy/Undeploy part. RMB: Deploy/Undeploy full suit."
 	button_icon_state = "deploy"
 
-/datum/action/item_action/mod/deploy/Trigger(list/modifiers)
+/datum/action/item_action/mod/deploy/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
-	if(LAZYACCESS(modifiers, LEFT_CLICK))
-		mod.choose_deploy(usr)
-	else
+	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
 		mod.quick_deploy(usr)
+	else
+		mod.choose_deploy(usr)
 
 /datum/action/item_action/mod/deploy/ai
 	ai_action = TRUE
@@ -59,11 +59,11 @@
 	/// First time clicking this will set it to TRUE, second time will activate it.
 	var/ready = FALSE
 
-/datum/action/item_action/mod/activate/Trigger(list/modifiers)
+/datum/action/item_action/mod/activate/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
-	if(LAZYACCESS(modifiers, LEFT_CLICK) && !ready)
+	if(!(trigger_flags & TRIGGER_SECONDARY_ACTION) && !ready)
 		ready = TRUE
 		button_icon_state = "activate-ready"
 		if(!ai_action)
@@ -90,7 +90,7 @@
 	desc = "Toggle a MODsuit module."
 	button_icon_state = "module"
 
-/datum/action/item_action/mod/module/Trigger(list/modifiers)
+/datum/action/item_action/mod/module/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -104,7 +104,7 @@
 	desc = "Open the MODsuit's panel."
 	button_icon_state = "panel"
 
-/datum/action/item_action/mod/panel/Trigger(list/modifiers)
+/datum/action/item_action/mod/panel/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -141,7 +141,7 @@
 		return
 	return ..()
 
-/datum/action/item_action/mod/pinned_module/Trigger(list/modifiers)
+/datum/action/item_action/mod/pinned_module/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

@@ -200,7 +200,7 @@
 	name = "Memento Mori"
 	desc = "Bind your life to the pendant."
 
-/datum/action/item_action/hands_free/memento_mori/Trigger()
+/datum/action/item_action/hands_free/memento_mori/Trigger(trigger_flags)
 	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
 	if(!MM.active_owner)
 		if(ishuman(owner))

@@ -538,7 +538,7 @@
 	..()
 	implant = Target
 
-/datum/action/item_action/mod_recall/Trigger()
+/datum/action/item_action/mod_recall/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

@@ -26,6 +26,7 @@
 #include "code\__DEFINES\access.dm"
 #include "code\__DEFINES\achievements.dm"
 #include "code\__DEFINES\acid.dm"
+#include "code\__DEFINES\actions.dm"
 #include "code\__DEFINES\actionspeed_modification.dm"
 #include "code\__DEFINES\admin.dm"
 #include "code\__DEFINES\adventure.dm"
