@@ -649,89 +649,38 @@
 	incompatible_modules = list(/obj/item/mod/module/hat_stabilizer)
 	/*Intentionally left inheriting 0 complexity and removable = TRUE;
 	even though it comes inbuilt into the Magnate/Corporate MODS and spawns in maints, I like the idea of stealing them*/
-	///Currently "stored" hat. No armor or function will be inherited, ONLY the icon.
-	var/obj/item/clothing/head/attached_hat
-	///Whitelist of attachable hats; read note in Initialize() below this line
-	var/static/list/attachable_hats_list
-
-/obj/item/mod/module/hat_stabilizer/Initialize()
-	. = ..()
-	attachable_hats_list = typecacheof(
-	//List of attachable hats. Make sure these and their subtypes are all tested, so they dont appear janky.
-	//This list should also be gimmicky, so captains can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
-	//Yes, I said it, the captain should have fun.
-		list(
-			/obj/item/clothing/head/caphat,
-			/obj/item/clothing/head/crown,
-			/obj/item/clothing/head/centhat,
-			/obj/item/clothing/head/centcom_cap,
-			/obj/item/clothing/head/pirate,
-			/obj/item/clothing/head/santa,
-			/obj/item/clothing/head/hardhat/reindeer,
-			/obj/item/clothing/head/sombrero,
-			/obj/item/clothing/head/kitty,
-			/obj/item/clothing/head/rabbitears,
-			/obj/item/clothing/head/festive,
-			/obj/item/clothing/head/powdered_wig,
-			/obj/item/clothing/head/weddingveil,
-			/obj/item/clothing/head/that,
-			/obj/item/clothing/head/nursehat,
-			/obj/item/clothing/head/chefhat,
-			/obj/item/clothing/head/papersack,
-			)) - /obj/item/clothing/head/caphat/beret
-			//Need to subtract the beret because its annoying
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
-	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
-	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	mod.helmet.AddElement(/datum/element/hatstacker, typesof(list(\
+			/obj/item/clothing/head/caphat,\
+			/obj/item/clothing/head/crown,\
+			/obj/item/clothing/head/centhat,\
+			/obj/item/clothing/head/centcom_cap,\
+			/obj/item/clothing/head/pirate,\
+			/obj/item/clothing/head/santa,\
+			/obj/item/clothing/head/hardhat/reindeer,\
+			/obj/item/clothing/head/sombrero,\
+			/obj/item/clothing/head/kitty,\
+			/obj/item/clothing/head/rabbitears,\
+			/obj/item/clothing/head/festive,\
+			/obj/item/clothing/head/powdered_wig,\
+			/obj/item/clothing/head/weddingveil,\
+			/obj/item/clothing/head/that,\
+			/obj/item/clothing/head/nursehat,\
+			/obj/item/clothing/head/chefhat,\
+			/obj/item/clothing/head/papersack,\
+	) - /obj/item/clothing/head/caphat/beret \
+	))
+	//List of attachable hats as a second argument. Make sure these and their subtypes are all tested, so they dont appear janky.
+	//This list should also be gimmicky, so people can have fun. I.E. the Santahat, Pirate hat, Tophat, Chefhat...
+	//DO NOT INCLUDE THE CONE. IT WILL LOOK LIKE SHIT ON MODHELMETS. Same with berets
 
 /obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
-	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
-		remove_hat(src, mod.wearer)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
-	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
-
-/obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
-	SIGNAL_HANDLER
-	if(attached_hat)
-		base_examine += span_notice("There's \a [attached_hat] placed on the helmet. Right-click to remove it.")
-	else
-		base_examine += span_notice("There's nothing placed on the helmet. Yet.")
-
-/obj/item/mod/module/hat_stabilizer/proc/place_hat(datum/source, obj/item/hitting_item, mob/user)
-	SIGNAL_HANDLER
-	if(!istype(hitting_item, /obj/item/clothing/head))
-		return
-	if(!mod.active)
-		balloon_alert(user, "suit must be active!")
-		return
-	if(!is_type_in_typecache(hitting_item, attachable_hats_list))
-		balloon_alert(user, "this hat won't fit!")
-		return
-	if(attached_hat)
-		balloon_alert(user, "hat already attached!")
-		return
-	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
-		attached_hat = hitting_item
-		balloon_alert(user, "hat attached, right click to remove")
-		mod.wearer.update_inv_back()
+	mod.helmet.RemoveElement(/datum/element/hatstacker)
 
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()
 	. = ..()
-	if(attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
-
-/obj/item/mod/module/hat_stabilizer/proc/remove_hat(datum/source, mob/user)
-	SIGNAL_HANDLER
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!attached_hat)
-		return
-	attached_hat.forceMove(drop_location())
-	if(user.put_in_active_hand(attached_hat))
-		balloon_alert(user, "hat removed")
-	else
-		balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
-	mod.wearer.update_inv_back()
+	for(var/obj/item/clothing/head/possibly_stacked in src)
+		if(HAS_TRAIT(possibly_stacked, TRAIT_HATSTACKED))
+			. += possibly_stacked.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
+			break

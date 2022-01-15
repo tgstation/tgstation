@@ -65,13 +65,7 @@
 	. = ..()
 	visor_toggling()
 	update_appearance()
-
-/obj/item/clothing/head/helmet/space/plasmaman/examine()
-	. = ..()
-	if(attached_hat)
-		. += span_notice("There's [attached_hat.name] placed on the helmet. Right-click to remove it.")
-	else
-		. += span_notice("There's nothing placed on the helmet.")
+	AddElement(/datum/element/hatstacker, null)	//TODO: FILL OUT THIS LIST
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -105,19 +99,6 @@
 				update_appearance()
 		else
 			to_chat(user, span_warning("Seems like someone already drew something on this helmet's visor!"))
-		return
-	if(istype(hitting_item, /obj/item/clothing/head))
-		var/obj/item/clothing/hitting_clothing = hitting_item
-		if(hitting_clothing.clothing_flags & PLASMAMAN_HELMET_EXEMPT)
-			to_chat(user, span_notice("You cannot place [hitting_clothing.name] on helmet!"))
-			return
-		if(attached_hat)
-			to_chat(user, span_notice("There's already something placed on helmet!"))
-			return
-		attached_hat = hitting_clothing
-		to_chat(user, span_notice("You placed [hitting_clothing.name] on helmet!"))
-		hitting_clothing.forceMove(src)
-		update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
@@ -125,8 +106,6 @@
 		var/mutable_appearance/M = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)
 		M.color = smile_color
 		. += M
-	if(!isinhands && attached_hat)
-		. += attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 	else
@@ -155,16 +134,6 @@
 		set_light_on(FALSE)
 
 	update_action_buttons()
-
-/obj/item/clothing/head/helmet/space/plasmaman/attack_hand_secondary(mob/user)
-	..()
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!attached_hat)
-		return
-	user.put_in_active_hand(attached_hat)
-	to_chat(user, span_notice("You removed [attached_hat.name] from helmet!"))
-	attached_hat = null
-	update_appearance()
 
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
