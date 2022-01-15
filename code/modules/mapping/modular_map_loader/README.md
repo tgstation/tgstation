@@ -1,8 +1,47 @@
-# Modular Map Loader (MML)
+# Modular Map Loader
 
 ## Concept
 
+Modular map loading is a system to allow maps to be generated with random variants by selecting from a set of pre-made modules. The system is designed to be as simple as possible for mappers to use, with a minimum of interaction with the code required.
+
 ## Implementation
+
+### /obj/modular_map_root
+
+This root object handled picking and loading in map modules. It has two variables, and one proc.
+
+* `var/config_file` - A string, points to a TOML configuration file, which is used to hold the information necessary to pull the correct map files and place them on the correct roots. This will be the same for all roots on a map.
+* `var/key` - A string, used to pull a list of `.dmm` files from the configuration file.
+* `load_map()` - Called asynchronously in the root's `Initialize()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over.
+
+### /datum/map_template/map_module
+
+This map templace subtype is responsible for loading in the module, it has two variables and two relevant procs.
+
+* `var/x_offset` and `var/y_offset` - Integers, used to store the offsets used to correctly align the module when it is loaded.
+* `load()` - Extends the functionality of the general map template's `load()` to allow a map to be specified at runtime. This means `preload_size()` must be called again here as the template's map file has been changed. The origin turf for the map to be loaded from is set using the offsets, and the map is loaded as per the parent.
+* `preload_size()` - Extends the functionality of the general map template's `preload_size()` to run the `discover_offset` proc, calculating the offset of `/obj/modular_map_connector` and setting the offset variables accordingly.
+
+### /obj/modular_map_connector
+
+This object is used only to determine the offsets to be used on loading, and has no other functionality.
+
+### TOML configuration
+
+This TOML file is used to map between a list of `.dmm` files and a string key. The file consists of two parts. The first is a line 
+
+```
+directory = _maps/etc/
+```
+
+which points at a folder containing the `.dmm` files of the modules used in the map. The second is a series of tables
+
+```
+[rooms.example]
+modules = ["example_1.dmm", "example_2.dmm"]
+```
+
+which contains the mapping between the key `"example"` and the list of filenames `["example_1.dmm", "example_2.dmm"]`.
 
 ## How-To
 
@@ -81,3 +120,7 @@ Make sure your main map is large enough to fully contain the most expansive vari
 > Parts of my map are overlapping with each other!
 
 Make sure modules placed adjacent or close to each other have no combination of variants which can overlap with each other, this may take some trial and error in complicated cases.
+
+> My map still isn't working and I don't know what's wrong!
+
+Ping Thunder12345#9999 in the #coding-general channel of our discord if you need help with any problems.
