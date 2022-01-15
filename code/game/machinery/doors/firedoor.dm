@@ -57,14 +57,14 @@
 
 /obj/machinery/door/firedoor/Initialize(mapload)
 	. = ..()
+	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
+	soundloop = new(src, FALSE)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_EXPOSE = .proc/check_atmos,
 	)
-
-	soundloop = new(src, FALSE)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
@@ -112,10 +112,19 @@
  * and writes it to affecting_areas.
  */
 /obj/machinery/door/firedoor/proc/CalculateAffectingAreas()
+	var/list/new_affecting_areas = get_adjacent_open_areas(src) | get_area(src)
+	if(compare_list(new_affecting_areas, affecting_areas))
+		return //No changes needed
+
 	remove_from_areas()
-	affecting_areas = get_adjacent_open_areas(src) | get_area(src)
+	affecting_areas = new_affecting_areas
 	for(var/area/place in affecting_areas)
 		LAZYADD(place.firedoors, src)
+		if(alarm_type)
+			if(place == get_area(src))
+				LAZYADD(place.active_firelocks, src) //We only add ourselves to our own area's active firelocks...
+			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
+				fire_panel.set_status() //...but all adjacent fire alarms are notified
 
 /**
  * Removes us from any lists of areas in the affecting_areas list, then clears affecting_areas
@@ -124,7 +133,6 @@
  * Calls reset() first, in case any alarms need to be cleared first.
  */
 /obj/machinery/door/firedoor/proc/remove_from_areas()
-	reset() //This handles some alert/alarm clearing
 	if(!affecting_areas)
 		return
 	for(var/area/place in affecting_areas)
@@ -151,9 +159,9 @@
 	var/datum/gas_mixture/environment = my_turf.return_air()
 	var/result
 
-	if(environment.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		result = FIRELOCK_ALARM_TYPE_HOT
-	if(environment.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 		result = FIRELOCK_ALARM_TYPE_COLD
 	if(!result)
 		return
@@ -173,8 +181,8 @@
 /obj/machinery/door/firedoor/proc/start_activation_process(code = FIRELOCK_ALARM_TYPE_GENERIC)
 	if(alarm_type)
 		return //We're already active
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	soundloop.start()
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
 
@@ -212,13 +220,13 @@
 /obj/machinery/door/firedoor/proc/reset()
 	SIGNAL_HANDLER
 	alarm_type = null
-	soundloop.stop()
 	for(var/area/place in affecting_areas)
 		LAZYREMOVE(place.active_firelocks, src)
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
+	soundloop.stop()
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
 

@@ -66,7 +66,6 @@
  */
 /obj/machinery/firealarm/proc/set_status()
 	if( (my_area.fire || LAZYLEN(my_area.active_firelocks)) && !(obj_flags & EMAGGED) )
-		//soundloop.start() //DEBUG -- Remove all soundloop parts if looping on the firelocks works
 		set_light(l_power = 0.8)
 	else
 		soundloop.stop()
@@ -168,6 +167,7 @@
 		firelock.activate(FIRELOCK_ALARM_TYPE_GENERIC)
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
+	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -184,6 +184,7 @@
 	my_area.alarm_manager.clear_alarm(ALARM_FIRE, my_area)
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
+	soundloop.stop()
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
@@ -352,10 +353,15 @@
 // Allows users to examine the state of the thermal sensor
 /obj/machinery/firealarm/examine(mob/user)
 	. = ..()
-	if(my_area.fire)
-		. += "The local area fire warning light is flashing."
+	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
+		. += "The local area hazard light is flashing."
+		. += "<b>Left-Click</b> to activate all firelocks in this area."
+		. += "<b>Right-Click</b> or <b>Alt-Click</b> to reset firelocks in this area."
+		if(isobserver(user) && is_admin(user))
+			. += "As admin, Atom ProcCall <b>reset</b> with no args to reset firelocks."
 	else
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
+		. += "<b>Left-Click</b> to activate all firelocks in this area."
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
