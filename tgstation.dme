@@ -888,6 +888,7 @@
 #include "code\datums\elements\firestacker.dm"
 #include "code\datums\elements\footstep.dm"
 #include "code\datums\elements\forced_gravity.dm"
+#include "code\datums\elements\hatstacker.dm"
 #include "code\datums\elements\haunted.dm"
 #include "code\datums\elements\honkspam.dm"
 #include "code\datums\elements\item_fov.dm"
