@@ -23,6 +23,8 @@
 	var/armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
 	/// Resistance flags shared across the MOD pieces.
 	var/resistance_flags = NONE
+	/// Atom flags shared across the MOD pieces.
+	var/atom_flags = NONE
 	/// Max heat protection shared across the MOD pieces.
 	var/max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	/// Max cold protection shared across the MOD pieces.
@@ -34,7 +36,7 @@
 	/// How much modules can the MOD carry without malfunctioning.
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much battery power the MOD uses by just being on
-	var/cell_drain = DEFAULT_CELL_DRAIN
+	var/charge_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
@@ -228,14 +230,14 @@
 		mining teams have since heavily tweaked the suit themselves. Aftermarket armor plating has been added, \
 		giving way to incredible protection against corrosives and thermal protection good enough for volcanic environments. \
 		The systems have been upgraded as well, giving space for further modification down the line. \
-		However, all of this has proven to be straining on the cell and the actuators of the suit, \
+		However, all of this has proven to be straining on the power and the actuators of the suit, \
 		making it demand more power in exchange."
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	cell_drain = DEFAULT_CELL_DRAIN * 2
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	skins = list(
 		"mining" = list(
 			HELMET_LAYER = null,
@@ -273,7 +275,7 @@
 		and weak against fingers tapping the glass."
 	default_skin = "medical"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 75, WOUND = 10)
-	cell_drain = DEFAULT_CELL_DRAIN * 1.5
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	skins = list(
@@ -338,7 +340,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 100, ACID = 100, WOUND = 10)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	cell_drain = DEFAULT_CELL_DRAIN * 1.5
+	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
@@ -382,6 +384,7 @@
 	default_skin = "research"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 1.75
@@ -424,7 +427,7 @@
 		However, the systems used in these suits are more than a few years out of date, \
 		leading to an overall lower capacity for modules."
 	default_skin = "security"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
@@ -466,7 +469,7 @@
 		Heatsinks line the sides of the suit, and greater technology has been used in insulating it against \
 		both corrosive environments and sudden impacts to the user's joints."
 	default_skin = "safeguard"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 25, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 40, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -513,6 +516,7 @@
 	default_skin = "magnate"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 20)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
@@ -555,10 +559,9 @@
 		All you know is that this suit is mysteriously power-efficient, and far too colorful for the Mime to steal."
 	default_skin = "cosmohonk"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 100, FIRE = 60, ACID = 30, WOUND = 5)
-	cell_drain = DEFAULT_CELL_DRAIN * 0.25
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
-	inbuilt_modules = list(/obj/item/mod/module/waddle)
 	skins = list(
 		"cosmohonk" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -591,12 +594,13 @@
 	extended_desc = "An advanced combat suit adorned in a sinister crimson red color scheme, produced and manufactured \
 		for special mercenary operations. The build is a streamlined layering consisting of shaped Plasteel, \
 		and composite ceramic, while the under suit is lined with a lightweight Kevlar and durathread hybrid weave \
-		to provide ample protection to the user where the plating doesn't, with an illegal onboard cell powered \
+		to provide ample protection to the user where the plating doesn't, with an illegal onboard electric powered \
 		ablative shield module to provide resistance against conventional energy firearms. \
 		A small tag hangs off of it reading; 'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void warranty."
 	default_skin = "syndicate"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 35, BIO = 100, FIRE = 50, ACID = 90, WOUND = 25)
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 1
@@ -662,6 +666,7 @@
 	default_skin = "elite"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.75
@@ -700,9 +705,9 @@
 	extended_desc = "The Wizard Federation's relatively low-tech MODsuit. This armor employs not \
 		plasteel or carbon fibre, but space dragon scales for its protection. Recruits are expected to \
 		gather these themselves, but the effort is well worth it, the suit being well-armored against threats \
-		both mundane and mystic. Rather than wholly relying on the suit's cell, which would surely perish \
+		both mundane and mystic. Rather than wholly relying on a cell, which would surely perish \
 		under the load, several naturally-occurring bluespace gemstones have been utilized as \
-		supplementary means of power. The hood and platform boots are of unknown usage, but it's speculated that \
+		default means of power. The hood and platform boots are of unknown usage, but it's speculated that \
 		wizards trend towards the dramatic."
 	default_skin = "enchanted"
 	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
@@ -755,7 +760,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 5)
 	resistance_flags = FIRE_PROOF
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	cell_drain = DEFAULT_CELL_DRAIN * 2
+	charge_drain = DEFAULT_CHARGE_DRAIN * 2
 	slowdown_inactive = 2
 	slowdown_active = 1.5
 	ui_theme = "hackerman"
@@ -795,6 +800,7 @@
 		While wearing it you feel an extreme deference to darkness. "
 	default_skin = "responsory"
 	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 15)
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -860,6 +866,7 @@
 	default_skin = "apocryphal"
 	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
@@ -900,6 +907,7 @@
 	default_skin = "corporate"
 	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
@@ -931,6 +939,46 @@
 		),
 	)
 
+/datum/mod_theme/chrono
+	name = "chrono"
+	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."
+	extended_desc = "A suit whose tech goes beyond this era's understanding. The internal mechanisms are all but \
+		completely alien, but the purpose is quite simple. The suit protects the user from the many incredibly lethal \
+		and sometimes hilariously painful side effects of jumping timelines, while providing inbuilt equipment for \
+		making timeline adjustments to correct a bad course."
+	default_skin = "chrono"
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100)
+	resistance_flags = FIRE_PROOF|ACID_PROOF
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
+	slowdown_inactive = 0
+	slowdown_active = 0
+	skins = list(
+		"chrono" = list(
+			HELMET_LAYER = NECK_LAYER,
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
+				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+		),
+	)
+
 /datum/mod_theme/debug
 	name = "debug"
 	desc = "Strangely nostalgic."
@@ -940,6 +988,7 @@
 	default_skin = "debug"
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 0)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
 	slowdown_inactive = 0.5
@@ -981,9 +1030,10 @@
 	default_skin = "debug"
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
+	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
-	cell_drain = DEFAULT_CELL_DRAIN * 0
+	charge_drain = DEFAULT_CHARGE_DRAIN * 0
 	slowdown_inactive = 0
 	slowdown_active = 0
 	skins = list(
@@ -1004,47 +1054,6 @@
 			),
 			BOOTS_FLAGS = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-			),
-		),
-	)
-
-/datum/mod_theme/timeline
-	name = "chrono"
-	desc = "A suit beyond our time, beyond time itself. Used to traverse timelines and \"correct their course\"."
-	extended_desc = "A suit whose tech goes beyond this era's understanding. The internal mechanisms are all but \
-		completely alien, but the purpose is quite simple. The suit protects the user from the many incredibly lethal \
-		and sometimes hilariously painful side effects of jumping timelines, while providing inbuilt equipment for \
-		making timeline adjustments to correct a bad course."
-	default_skin = "timeline"
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 90, FIRE = 100, ACID = 100)
-	resistance_flags = FIRE_PROOF|ACID_PROOF
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	complexity_max = 15
-	slowdown_inactive = 0
-	slowdown_active = 0
-	skins = list(
-		"timeline" = list(
-			HELMET_LAYER = null,
-			HELMET_FLAGS = list(
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEEARS|HIDEHAIR|HIDESNOUT,
-				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE,
-				UNSEALED_COVER = HEADCOVERSMOUTH,
-				SEALED_COVER = HEADCOVERSEYES|PEPPERPROOF,
-			),
-			CHESTPLATE_FLAGS = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				SEALED_INVISIBILITY = HIDEJUMPSUIT,
-			),
-			GAUNTLETS_FLAGS = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-			),
-			BOOTS_FLAGS = list(
-				UNSEALED_CLOTHING = THICKMATERIAL,
-				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 			),
 		),
 	)

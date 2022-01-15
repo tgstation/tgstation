@@ -1106,6 +1106,12 @@
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/storage
 
+/datum/design/module/mod_storage_expanded
+	name = "MOD Module: Expanded Storage"
+	id = "mod_storage_expanded"
+	materials = list(/datum/material/iron = 5000, /datum/material/uranium = 2000)
+	build_path = /obj/item/mod/module/storage/large_capacity
+
 /datum/design/module/mod_visor_medhud
 	name = "MOD Module: Medical Visor"
 	id = "mod_visor_medhud"
@@ -1137,7 +1143,7 @@
 /datum/design/module/mod_visor_welding
 	name = "MOD Module: Welding Protection"
 	id = "mod_welding"
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/welding
 	department_type = MODULE_ENGINEERING
 
@@ -1261,6 +1267,13 @@
 	build_path = /obj/item/mod/module/injector
 	department_type = MODULE_MEDICAL
 
+/datum/design/module/mod_bikehorn
+	name = "MOD Module: Bike Horn"
+	id = "mod_bikehorn"
+	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
+	build_path = /obj/item/mod/module/bikehorn
+	department_type = MODULE_SERVICE
+
 /datum/design/module/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
 	id = "mod_microwave_beam"
@@ -1268,11 +1281,11 @@
 	build_path = /obj/item/mod/module/microwave_beam
 	department_type = MODULE_SERVICE
 
-/datum/design/module/mod_bikehorn
-	name = "MOD Module: Bike Horn"
-	id = "mod_bikehorn"
-	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
-	build_path = /obj/item/mod/module/bikehorn
+/datum/design/module/mod_waddle
+	name = "MOD Module: Waddle"
+	id = "mod_waddle"
+	materials = list(/datum/material/plastic = 1000, /datum/material/iron = 1000)
+	build_path = /obj/item/mod/module/waddle
 	department_type = MODULE_SERVICE
 
 /datum/design/module/mod_clamp
