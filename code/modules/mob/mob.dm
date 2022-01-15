@@ -213,7 +213,7 @@
 		var/msg = message
 		var/msg_type = MSG_VISUAL
 		
-		if(M.see_invisible < invisibility)//if src is invisible to M	
+		if(M.see_invisible < invisibility)//if src is invisible to M
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		else if(T != loc && T != src) //if src is inside something and not a turf.
