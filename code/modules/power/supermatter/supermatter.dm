@@ -926,7 +926,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/proc/after_consumed(/datum/component/dusting/comp_source, atom/consumed_atom)
+/obj/machinery/power/supermatter_crystal/proc/after_consumed(datum/component/dusting/comp_source, atom/consumed_atom)
 	if(ismob(consumed_atom))
 		var/mob/consumed_mob = consumed_atom
 		if(power_changes)
