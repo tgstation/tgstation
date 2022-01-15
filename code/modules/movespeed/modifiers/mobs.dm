@@ -126,3 +126,6 @@
 
 /datum/movespeed_modifier/morph_disguised
 	multiplicative_slowdown = 1
+
+/datum/movespeed_modifier/janiborg_cleaning
+	multiplicative_slowdown = 5

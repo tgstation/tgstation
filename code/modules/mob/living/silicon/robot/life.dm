@@ -28,6 +28,13 @@
 		toggle_headlamp(TRUE)
 	diag_hud_set_borgcell()
 
+#define CLEANING_MODE_POWER_DRAW 30
+/mob/living/silicon/robot/model/janitor/use_power(delta_time, times_fired)
+	. = ..()
+	if(cell?.charge && model.clean_on_move)
+		cell.use(CLEANING_MODE_POWER_DRAW)
+#undef CLEANING_MODE_POWER_DRAW
+
 /mob/living/silicon/robot/proc/handle_robot_hud_updates()
 	if(!client)
 		return

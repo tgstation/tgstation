@@ -55,6 +55,8 @@
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	///List of skins the borg can be reskinned to, optional
 	var/list/borg_skins
+	///Special abilities a model might have
+	var/list/abilities
 
 /obj/item/robot_model/Initialize(mapload)
 	. = ..()
@@ -190,6 +192,13 @@
 	cyborg.diag_hud_set_status()
 	cyborg.diag_hud_set_borgcell()
 	cyborg.diag_hud_set_aishell()
+
+	//Apply all the abilites
+	if (new_model.abilities)
+		for (var/ability in new_model.abilities)
+			var/datum/action/new_ability = new ability
+			new_ability.Grant(cyborg)
+
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
@@ -357,7 +366,35 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
-	clean_on_move = TRUE
+	abilities = list(
+		/datum/action/jani_powers
+	)
+
+/datum/action/jani_powers
+	name = "Toggle Cleaning Mode"
+	icon_icon = 'icons/obj/janitor.dmi'
+	button_icon_state = "mop"
+
+/datum/action/jani_powers/Trigger()
+	var/mob/living/silicon/robot/janitor = owner
+	var/obj/item/robot_model/janitor_model = janitor.model
+	if (janitor_model.clean_on_move)
+		stop_cleaning(janitor, janitor_model)
+	else
+		start_cleaning(janitor, janitor_model)
+
+/datum/action/jani_powers/proc/stop_cleaning(mob/living/silicon/robot/janitor, obj/item/robot_model/janitor_model)
+	janitor_model.clean_on_move = FALSE
+	janitor.RemoveElement(/datum/element/cleaning)
+	janitor.audible_message("[owner] ceases humming.", "[owner] ceases vibrating.")
+	janitor.remove_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
+
+/datum/action/jani_powers/proc/start_cleaning(mob/living/silicon/robot/janitor, obj/item/robot_model/janitor_model)
+	janitor_model.clean_on_move = TRUE
+	janitor.AddElement(/datum/element/cleaning)
+	janitor.audible_message("[owner] begins to hum loudly!", "[owner] appears to vibrate slightly.")
+	janitor.add_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
+
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"

@@ -161,6 +161,11 @@
 /mob/living/silicon/robot/model/janitor
 	set_model = /obj/item/robot_model/janitor
 	icon_state = "janitor"
+	var/datum/action/jani_powers/jani_powers = new /datum/action/jani_powers
+
+/mob/living/silicon/robot/model/janitor/Initialize(mapload)
+	. = ..()
+	jani_powers.Grant(src)
 
 /mob/living/silicon/robot/model/medical
 	set_model = /obj/item/robot_model/medical
