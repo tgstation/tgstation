@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - balance: "Rubbershot is now much more bouncy than before, loses damage over range a bit slower, and has a somewhat tighter spread. Its pellets now also fly 50% slower."
-  - bugfix: "Bullets that deal both brute and stamina damage like .38 Rubber will now properly have both their brute and stamina damage reduced after each ricochet, instead of just the brute."
