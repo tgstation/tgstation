@@ -56,9 +56,8 @@
  *
  * source - the mob being tipped over
  * user - the mob interacting with source
- * modifiers - list of on click modifiers (we only tip mobs over using right click!)
  */
-/datum/component/tippable/proc/interact_with_tippable(mob/living/source, mob/user, modifiers)
+/datum/component/tippable/proc/interact_with_tippable(mob/living/source, mob/user)
 	SIGNAL_HANDLER
 
 	var/mob/living/living_user = user
@@ -69,7 +68,7 @@
 
 	if(is_tipped)
 		INVOKE_ASYNC(src, .proc/try_untip, source, user)
-	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	else
 		INVOKE_ASYNC(src, .proc/try_tip, source, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN
