@@ -25761,7 +25761,7 @@
 /area/service/hydroponics)
 "gQK" = (
 /obj/effect/spawner/random/decoration/statue,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "gQV" = (
 /turf/open/floor/iron/white,
