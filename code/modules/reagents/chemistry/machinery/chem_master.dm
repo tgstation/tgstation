@@ -37,6 +37,10 @@
 	var/list/pill_styles
 	/// List of available condibottle styles for UI
 	var/list/condi_styles
+	/// Currently selected patch style
+	var/patch_style = DEFAULT_PATCH_STYLE
+	/// List of available patch styles for UI
+	var/list/patch_styles
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -49,6 +53,14 @@
 		SL["id"] = x
 		SL["className"] = assets.icon_class_name("pill[x]")
 		pill_styles += list(SL)
+
+	var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
+	patch_styles = list()
+	for (var/patch_style in PATCH_STYLE_LIST)
+		var/list/SL = list()
+		SL["style"] = patch_style
+		SL["class_name"] = patches_assets.icon_class_name(patch_style)
+		patch_styles += list(SL)
 
 	condi_styles = strip_condi_styles_to_icons(get_condi_styles())
 
@@ -184,6 +196,7 @@
 	return list(
 		get_asset_datum(/datum/asset/spritesheet/simple/pills),
 		get_asset_datum(/datum/asset/spritesheet/simple/condiments),
+		get_asset_datum(/datum/asset/spritesheet/simple/patches),
 	)
 
 /obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)
@@ -225,6 +238,8 @@
 	//Calculated at init time as it never changes
 	data["pillStyles"] = pill_styles
 	data["condiStyles"] = condi_styles
+	data["patch_style"] = patch_style
+	data["patch_styles"] = patch_styles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -382,6 +397,7 @@
 			for(var/i in 1 to amount)
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
+				P.icon_state = patch_style
 				adjust_item_drop_location(P)
 				reagents.trans_to(P, vol_each, transfered_by = usr)
 			return TRUE
@@ -432,6 +448,10 @@
 
 	if(action == "goScreen")
 		screen = params["screen"]
+		return TRUE
+
+	if(action == "change_patch_style")
+		patch_style = params["patch_style"]
 		return TRUE
 
 	return FALSE
