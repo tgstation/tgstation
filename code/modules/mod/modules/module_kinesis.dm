@@ -1,4 +1,3 @@
-
 ///Kinesis - Gives you the ability to move and launch objects.
 /obj/item/mod/module/anomaly_locked/kinesis
 	name = "MOD kinesis module"
@@ -11,7 +10,7 @@
 	module_type = MODULE_ACTIVE
 	complexity = 3
 	use_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/kinesis)
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
 	overlay_state_active = "module_kinesis_on"
