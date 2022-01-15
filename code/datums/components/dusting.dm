@@ -175,6 +175,8 @@
 	//Next, consume the actual atom
 	if(ismob(consumed_atom))
 		var/mob/living/consumed_living = consumed_atom
+		if(consumed_living.status_flags & ignore_status_flags)
+			return
 		message_admins("[atom_parent] ([src.type]) has consumed [key_name_admin(consumed_living)] [ADMIN_JMP(atom_parent)].")
 		atom_parent.investigate_log("has consumed [key_name(consumed_living)].", INVESTIGATE_SUPERMATTER)
 		consumed_living.visible_message(span_danger("[consumed_living] slams into [atom_parent] inducing a resonance... [consumed_living.p_their()] body starts to glow and burst into flames before flashing into dust!"),
