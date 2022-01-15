@@ -1055,7 +1055,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else if(user.dropItemToGround(item)) //Consume the item
 		investigate_log("has been attacked ([item]) by [key_name(user)]", INVESTIGATE_SUPERMATTER)
 		user.visible_message(span_danger("As [user] touches [src] with \a [item], silence fills the room..."),
-			span_userdanger("You touch [src] with [item], and everything suddenly goes silent.</span>\n<span class='notice'> [item] flashes into dust as you flinch away from [src]."),
+			span_userdanger("You touch [src] with [item], and everything suddenly goes silent.</span>\n<span class='notice'>[item] flashes into dust as you flinch away from [src]."),
 			span_hear("Everything suddenly goes silent."))
 
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
