@@ -301,9 +301,10 @@ Converts shots to STAMNINA damage.
 /obj/item/microfusion_gun_attachment/undercharger/remove_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
 	if(toggle)
-		microfusion_gun.heat_dissipation_bonus -= cooling_rate_increase
-		microfusion_gun.recoil -= recoil_to_remove
-		microfusion_gun.spread -= spread_to_remove
+		toggle = FALSE
+		microfusion_gun.heat_dissipation_bonus += cooling_rate_increase
+		microfusion_gun.recoil += recoil_to_remove
+		microfusion_gun.spread += spread_to_remove
 	microfusion_gun.fire_sound = microfusion_gun.chambered?.fire_sound
 
 /*
