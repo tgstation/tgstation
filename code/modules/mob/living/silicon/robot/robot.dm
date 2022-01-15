@@ -277,8 +277,8 @@
 	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, FALSE)
 
 /mob/living/silicon/robot/can_interact_with(atom/A)
-	if (A == modularInterface)
-		return TRUE //bypass for borg tablets
+	if ((A == modularInterface) || (istype(A, /obj/machinery/recharge_station)))
+		return TRUE //bypass for borg tablets and recharging stations
 	if (low_power_mode)
 		return FALSE
 	return ..()
