@@ -61,7 +61,8 @@
 		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
 			return FALSE
 
-	var/stock = item_stock[to_purchase] || INFINITY
+	var/current_stock = item_stock[to_purchase]
+	var/stock = current_stock != null? current_stock : INFINITY
 	if(telecrystals < to_purchase.cost || stock <= 0 || (has_progression && progression_points < to_purchase.progression_minimum))
 		return FALSE
 
@@ -71,13 +72,13 @@
 	if(!can_purchase_item(user, to_purchase))
 		return
 
-	if(to_purchase.limited_stock != -1 && !(to_purchase.type in item_stock))
+	if(to_purchase.limited_stock != -1 && !(to_purchase in item_stock))
 		item_stock[to_purchase] = to_purchase.limited_stock
 
 	telecrystals -= to_purchase.cost
 	to_purchase.purchase(user, src)
 
-	if(to_purchase.type in item_stock)
+	if(to_purchase in item_stock)
 		item_stock[to_purchase] -= 1
 
 	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(to_purchase.name)]", "[to_purchase.cost]"))

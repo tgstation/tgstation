@@ -163,9 +163,17 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const canBuy = telecrystals >= item.cost;
       const hasEnoughProgression
         = progression_points >= item.progression_minimum;
+
+      let stock: number|null = current_stock[item.id];
+      if (item.ref) {
+        stock = extra_purchasable_stock[item.ref];
+      }
+      if (!stock && stock !== 0) {
+        stock = null;
+      }
+      const canBuy = telecrystals >= item.cost && (stock === null || stock > 0);
       items.push({
         id: item.id,
         name: item.name,

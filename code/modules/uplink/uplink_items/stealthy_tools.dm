@@ -106,9 +106,10 @@
 	restricted = TRUE
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
-/datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+/datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/round_event_control/event = locate(/datum/round_event_control/communications_blackout) in SSevents.control
 	event.runEvent()
+	return source //For log icon
 
 /datum/uplink_item/stealthy_tools/blackout
 	name = "Trigger Stationwide Blackout"
@@ -124,3 +125,4 @@
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/datum/round_event_control/event = locate(/datum/round_event_control/grid_check) in SSevents.control
 	event.runEvent()
+	return source //For log icon
