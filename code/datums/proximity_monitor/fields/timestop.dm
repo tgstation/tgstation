@@ -68,7 +68,7 @@
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_obstructions)
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_obstructions, channelled))
 	..()
 	src.immune = immune
 	src.antimagic_obstructions = antimagic_obstructions
