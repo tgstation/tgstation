@@ -355,6 +355,160 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
+	/// Weakref to the wash toggle action we own
+	var/datum/weakref/wash_toggle_ref
+
+/obj/item/robot_model/janitor/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	. = ..()
+	if(!.)
+		return
+	var/datum/action/wash_toggle = new /datum/action/toggle_buffer(loc)
+	wash_toggle.Grant(loc)
+	wash_toggle_ref = WEAKREF(wash_toggle)
+
+/obj/item/robot_model/janitor/Destroy()
+	QDEL_NULL(wash_toggle_ref)
+	return ..()
+
+/datum/action/toggle_buffer
+	name = "Activate Auto-Wash"
+	desc = "Trade speed and water for a clean floor"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "activate_wash"
+	var/static/datum/callback/allow_buffer_change
+	var/block_buffer_change	= FALSE
+	var/buffer_on = FALSE
+	///The bucket we draw water from
+	var/datum/weakref/bucket_ref
+	///Our looping sound
+	var/datum/looping_sound/wash/wash_audio
+	///Activation cooldown to prevent sound spam
+	COOLDOWN_DECLARE(activation_cooldown)
+
+/datum/action/toggle_buffer/New(Target)
+	if(!allow_buffer_change)
+		allow_buffer_change = CALLBACK(src, .proc/allow_buffer_change)
+	return ..()
+
+/datum/action/toggle_buffer/Destroy()
+	if(buffer_on)
+		toggle_auto_wash()
+	QDEL_NULL(wash_audio)
+	return ..()
+
+/datum/action/toggle_buffer/Grant(mob/M)
+	. = ..()
+	wash_audio = new(owner)
+
+/datum/action/toggle_buffer/IsAvailable()
+	if(!istype(owner, /mob/living/silicon/robot))
+		return FALSE
+	return TRUE
+
+/datum/action/toggle_buffer/Trigger()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/silicon/robot/robot_owner = owner
+
+	block_buffer_change = DOING_INTERACTION(owner, "auto_wash_toggle")
+	if(block_buffer_change)
+		return FALSE
+
+	var/obj/item/reagent_containers/glass/bucket/our_bucket = locate(/obj/item/reagent_containers/glass/bucket) in robot_owner.model.modules
+	bucket_ref = WEAKREF(our_bucket)
+
+	if(!buffer_on)
+		if(!COOLDOWN_FINISHED(src, activation_cooldown))
+			robot_owner.balloon_alert(robot_owner, "Auto-wash refreshing, please hold")
+			return FALSE
+		COOLDOWN_START(src, activation_cooldown, 4 SECONDS)
+		if(!allow_buffer_change())
+			return FALSE
+
+		robot_owner.balloon_alert(robot_owner, "Activating auto-wash")
+		wash_audio.start()
+		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_change))
+			wash_audio.stop()
+			return FALSE
+	else
+		robot_owner.balloon_alert(robot_owner, "De-activating auto-wash")
+
+	toggle_auto_wash()
+
+/datum/action/toggle_buffer/proc/toggle_auto_wash()
+	var/mob/living/silicon/robot/robot_owner = owner
+	if(buffer_on)
+		buffer_on = FALSE
+		robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
+		UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
+		// Reset our animations
+		animate(robot_owner, pixel_x = robot_owner.base_pixel_x, pixel_y = robot_owner.base_pixel_y, time = 2)
+		var/stop_in = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+		addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), stop_in)
+	else
+		buffer_on = TRUE
+		robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
+		RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
+		var/base_x = robot_owner.base_pixel_x
+		var/base_y = robot_owner.base_pixel_y
+		robot_owner.pixel_x = base_x + rand(-7, 7)
+		robot_owner.pixel_y = base_y + rand(-7, 7)
+		//Larger shake with more changes to start out, feels like "Revving"
+		var/x_offset = 0
+		var/y_offset = 0
+		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+		for(var/i in 1 to 100)
+			x_offset = base_x + rand(-2, 2)
+			y_offset = base_y + rand(-2, 2)
+			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		if(!wash_audio.is_active())
+			wash_audio.start()
+		clean()
+
+	UpdateButtonIcon()
+
+/datum/action/toggle_buffer/proc/allow_buffer_change()
+	var/mob/living/silicon/robot/robot_owner = owner
+	if(block_buffer_change)
+		robot_owner.balloon_alert(robot_owner, "Activation canceled")
+		return FALSE
+
+	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
+	if(!buffer_on && our_bucket?.reagents?.total_volume < 0.1)
+		robot_owner.balloon_alert(robot_owner, "Bucket is empty")
+		return FALSE
+	return TRUE
+
+/datum/action/toggle_buffer/proc/clean()
+	var/mob/living/silicon/robot/robot_owner = owner
+
+	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
+	var/datum/reagents/reagents = our_bucket?.reagents
+
+	if(!reagents || reagents.total_volume < 0.1)
+		robot_owner.balloon_alert(robot_owner, "Bucket is empty, de-activating")
+		toggle_auto_wash()
+		return
+	
+	var/turf/our_turf = get_turf(robot_owner)
+
+	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
+		our_turf.wash(CLEAN_SCRUB)
+
+	reagents.expose(our_turf, TOUCH, 10)
+	// We use more water doing this then mopping
+	reagents.remove_any(2) //reaction() doesn't use up the reagents
+
+/datum/action/toggle_buffer/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+	if(buffer_on)
+		name = "De-Activate Auto-Wash"
+		button_icon_state = "deactivate_wash"
+	else
+		name = "Activate Auto-Wash"
+		button_icon_state = "activate_wash"
+	
+	return ..()
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
