@@ -1,0 +1,12 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "You can now right-click modsuit action buttons to activate them faster."
+  - balance: "Undeployed modsuits now have 1/5 of the slowdown instead of 0 (from 0.15 on quick suits like rescue and 0.2 on semi quick like advanced or medical to 0.35 on research and 0.4 on prototype)"
+  - qol: "the storage modsuit module now tries to scoop up the suit storage item"
+  - balance: "you can now print expanded storage modules"
+  - bugfix: "the magnate suit now has a jetpack"
+  - bugfix: "you can now spraypaint storage items"
+  - bugfix: "fixes bomb protecting modsuits not protecting the contents from bombs"
+  - bugfix: "fixes elite suit nukies burning down"
+  - rscadd: "MODsuit modular cores. These power your suit, the three types of them are: standard, your current ones, using power cells. infinite, dont use power at all, used by some admin and wizard suits. ethereal, these dont use power cells, but an ethereal's charge directly, they are craftable."

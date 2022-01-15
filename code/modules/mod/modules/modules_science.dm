@@ -9,7 +9,7 @@
 	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
@@ -149,7 +149,8 @@
 	icon_state = "antigrav"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.7
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.7
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 
@@ -183,7 +184,7 @@
 	icon_state = "teleporter"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	/// Time it takes to teleport
@@ -202,9 +203,11 @@
 	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
 	if(!do_after(mod.wearer, teleport_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		animate(mod.wearer, teleport_time, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+		var/matrix/post_matrix = matrix(mod.wearer.transform)
+		animate(mod.wearer, teleport_time, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
 		return
-	animate(mod.wearer, teleport_time*0.1, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+	var/matrix/post_matrix = matrix(mod.wearer.transform)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
 	drain_power(use_power_cost)

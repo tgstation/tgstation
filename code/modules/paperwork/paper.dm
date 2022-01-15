@@ -247,8 +247,15 @@
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		to_chat(user, span_notice("You ready your stamp over the paper! "))
-		ui_interact(user)
+		if(!user.can_read(src))
+			//The paper window is 400x500
+			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"))
+			to_chat(user, span_notice("You stamp [src] with \the [P.name] the best you can!"))
+		else
+			to_chat(user, span_notice("You ready your stamp over the paper! "))
+			ui_interact(user)
+
 		return /// Normaly you just stamp, you don't need to read the thing
 	else
 		// cut paper?  the sky is the limit!
@@ -352,7 +359,39 @@
 
 	return data
 
-/obj/item/paper/ui_act(action, params,datum/tgui/ui)
+/**
+ * ##stamp
+ *
+ * Proc used to place a stamp onto a piece of paper
+ *
+ * Arguments:
+ * * x - The x coord of the stamp
+ * * y - The y coord of the stamp
+ * * r - The rotation in degrees, of the stamp
+ * * icon_state - The stamp icon to be placed on the paper
+ * * class - (Optional) A string needed for the list of stamps on the page
+ */
+/obj/item/paper/proc/stamp(x, y, r, icon_state, class = "paper121x54 [icon_state]")
+	if (isnull(stamps))
+		stamps = list()
+	if (stamps.len < MAX_PAPER_STAMPS)
+		stamps[++stamps.len] = list(class, x, y, r)
+
+		if(isnull(stamped))
+			stamped = list()
+		if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
+			var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[icon_state]")
+			stampoverlay.pixel_x = rand(-2, 2)
+			stampoverlay.pixel_y = rand(-3, 2)
+			add_overlay(stampoverlay)
+			LAZYADD(stamped, icon_state)
+			update_icon()
+		return TRUE
+	else
+		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+		return FALSE
+
+/obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -363,28 +402,10 @@
 			var/stamp_r = text2num(params["r"]) // rotation in degrees
 			var/stamp_icon_state = params["stamp_icon_state"]
 			var/stamp_class = params["stamp_class"]
-			if (isnull(stamps))
-				stamps = list()
-			if(stamps.len < MAX_PAPER_STAMPS)
-				// I hate byond when dealing with freaking lists
-				stamps[++stamps.len] = list(stamp_class, stamp_x, stamp_y, stamp_r) /// WHHHHY
-
-				/// This does the overlay stuff
-				if (isnull(stamped))
-					stamped = list()
-				if(stamped.len < MAX_PAPER_STAMPS_OVERLAYS)
-					var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[stamp_icon_state]")
-					stampoverlay.pixel_x = rand(-2, 2)
-					stampoverlay.pixel_y = rand(-3, 2)
-					add_overlay(stampoverlay)
-					LAZYADD(stamped, stamp_icon_state)
-					update_icon()
-
-				update_static_data(usr,ui)
-				var/obj/O = ui.user.get_active_held_item()
-				ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [O.name]!"), span_notice("You stamp [src] with \the [O.name]!"))
-			else
-				to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
+			if(stamp(stamp_x, stamp_y, stamp_r, stamp_icon_state, stamp_class))
+				update_static_data(usr, ui)
+				var/obj/stamp = ui.user.get_active_held_item()
+				ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [stamp.name]!"), span_notice("You stamp [src] with \the [stamp.name]!"))
 			. = TRUE
 
 		if("save")
