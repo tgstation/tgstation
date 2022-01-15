@@ -348,7 +348,7 @@
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/paint/paint_remover,
 		/obj/item/lightreplacer/cyborg,
-		/obj/item/holosign_creator/janibarrier,
+		/obj/item/holosign_creator,
 		/obj/item/reagent_containers/spray/cyborg_drying)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
