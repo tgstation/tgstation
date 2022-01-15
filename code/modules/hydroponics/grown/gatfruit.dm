@@ -24,7 +24,7 @@
 	name = "gatfruit"
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
-	trash_type = /obj/item/gun/ballistic/revolver
+	trash_type = /obj/item/gun/ballistic/revolver/gatfruit
 	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	tastes = list("gunpowder" = 1)

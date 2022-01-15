@@ -118,3 +118,18 @@
 	ricochet_auto_aim_range = 6
 	ricochet_incidence_leeway = 80
 	ricochet_decay_chance = 1
+
+// used only by gatfruits, does moderate brute damage and slight toxin damage.
+/obj/projectile/bullet/pea
+	name = "pea bullet"
+	damage = 15
+	ricochets_max = 2
+	ricochet_chance = 100
+	wound_bonus = CANT_WOUND
+	icon_state = "pea"
+
+/obj/projectile/bullet/pea/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/M = target
+		M.adjustToxLoss(5, FALSE)

@@ -236,3 +236,9 @@
 		user.emote("scream")
 		user.drop_all_held_items()
 		user.Paralyze(80)
+
+/obj/item/gun/ballistic/revolver/gatfruit
+	name = "\improper pea revolver"
+	desc = "A rather botanical looking revolver, chambered in A-pea rounds." // for the gatfruit only, holds special pea rounds
+	icon_state = "plant_revolver"
+	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/gatfruit

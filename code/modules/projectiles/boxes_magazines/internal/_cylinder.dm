@@ -59,3 +59,9 @@
 		if(!give_round(new load_type(src)))
 			break
 	update_appearance()
+
+/obj/item/ammo_box/magazine/internal/cylinder/gatfruit
+	name = "pea casing cylinder"
+	ammo_type = /obj/item/ammo_casing/pea
+	caliber = CALIBER_PEA
+	max_ammo = 7
