@@ -27,7 +27,7 @@
 	if(grabbed_atom)
 		clear_grab()
 		return
-	ifif(!range_check(target))
+	if(!range_check(target))
 		balloon_alert(mod.wearer, "too far!")
 		return
 	if(!can_grab(target))
