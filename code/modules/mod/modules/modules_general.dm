@@ -715,7 +715,7 @@
 		return
 	if(mod.wearer.transferItemToLoc(hitting_item, src, force = FALSE, silent = TRUE))
 		attached_hat = hitting_item
-		balloon_alert(user, "hat attached, right click to remove")
+		balloon_alert(user, "hat attached, right-click to remove")
 		mod.wearer.update_inv_back()
 
 /obj/item/mod/module/hat_stabilizer/generate_worn_overlay()

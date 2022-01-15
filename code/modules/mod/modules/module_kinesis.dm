@@ -9,12 +9,13 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CELL_DRAIN*5
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
+	var/grab_range = 5
 	var/atom/movable/grabbed_atom
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_select_use(atom/target)
@@ -24,8 +25,13 @@
 	if(grabbed_atom)
 		clear_grab()
 		return
-	if(!can_grab(target))
+	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+		balloon_alert(mod.wearer, "too far!")
 		return
+	if(!can_grab(target))
+		balloon_alert(mod.wearer, "can't grab!")
+		return
+	drain_power(use_power_cost)
 	grabbed_atom = target
 	START_PROCESSING(SSfastprocess, src)
 
@@ -36,7 +42,11 @@
 	clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
-	new /obj/effect/temp_visual/at_shield(grabbed_atom.loc)
+	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+		balloon_alert(mod.wearer, "out of range!")
+		clear_grab()
+		return
+	new /obj/effect/temp_visual/emp/pulse(grabbed_atom.loc)
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
 	if(!ismovable(target))
