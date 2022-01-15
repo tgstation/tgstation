@@ -32,6 +32,7 @@
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_OPPORTUNIST "Opportunist"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"

@@ -6,8 +6,14 @@
 	show_in_antagpanel = TRUE
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE LION'S SHARE!!"
+	preview_outfit = /datum/outfit/thief
 	///assoc list of strings set up for the flavor of the thief. Thief flavor also decides what objectives are forged, FYI.
 	var/list/thief_flavor
+
+/datum/antagonist/thief/on_gain()
+	. = ..()
+	roll_flavor()
+	forge_objectives()
 
 /datum/antagonist/thief/proc/roll_flavor()
 	var/picked_flavor
@@ -34,3 +40,10 @@
 	var/datum/objective/escape/escape_objective = new
 	escape_objective.owner = owner
 	objectives += escape_objective
+
+/datum/outfit/thief
+	name = "Thief (Preview only)"
+	uniform = /obj/item/clothing/under/color/black
+	glasses = /obj/item/clothing/glasses/night
+	gloves = /obj/item/clothing/gloves/color/latex
+	back = /obj/item/storage/backpack/duffelbag/syndie

@@ -1,7 +1,8 @@
 
 GLOBAL_LIST_INIT(hoarder_targets, list(
 	/obj/item/clothing/gloves/color/yellow,
-	/obj/item/mod/core
+	/obj/item/mod/control,
+	/obj/item/melee/baton/security
 ))
 
 /datum/objective/hoarder
