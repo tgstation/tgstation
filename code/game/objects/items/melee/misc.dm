@@ -191,28 +191,39 @@
 	visible_message(span_warning("[src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all."))
 	START_PROCESSING(SSobj, src)
 
-	AddComponent(/datum/component/dusting, consume_on_bumped = FALSE, consume_on_attackby = TRUE, consume_on_attack_hand = FALSE, consume_turfs = TRUE, ignore_subtypesof = list()) //If you can hit it, consume it
+	AddComponent(/datum/component/dusting,\
+		consume_on_bumped = FALSE,\
+		consume_on_attackby = TRUE,\
+		consume_on_attack_hand = FALSE,\
+		consume_turfs = TRUE,\
+		ignore_subtypesof = list(),\
+		callback_on_process = CALLBACK(src, .proc/release_self),\
+		callback_on_pickup = CALLBACK(src, .proc/handle_pickup),\
+	)
 
-/obj/item/melee/supermatter_sword/process()
-	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
+/obj/item/melee/supermatter_sword/examine(mob/user)
+	. = ..()
+	if(balanced)
+		. += span_danger("<b>It's balancing perfectly on the base of its hilt.</b>")
+
+//Break itself out of crate torment. That's how the SM works yes sir
+/obj/item/melee/supermatter_sword/proc/release_self(datum/component/dusting/comp_source)
+	if(balanced || throwing || ismob(loc) || isnull(loc))
 		return
-	var/datum/component/dusting/dust = GetComponent(/datum/component/dusting)
-	if(!isturf(src.loc))
+	if(!isturf(loc))
+		comp_source.passively_consumes_turf = FALSE
 		var/atom/target = src.loc
 		forceMove(target.loc)
-		dust?.consume_atom(target)
+		comp_source.consume_atom(target)
 	else
-		var/turf/turf = get_turf(src)
-		if(!isspaceturf(turf))
-			dust?.consume_atom(turf)
+		comp_source.passively_consumes_turf = TRUE
 
-/obj/item/melee/supermatter_sword/afterattack(target, mob/user, proximity_flag)
-	. = ..()
-	if(user && target == user)
-		user.dropItemToGround(src)
-
-/obj/item/melee/supermatter_sword/pickup(user)
-	..()
+/obj/item/melee/supermatter_sword/proc/handle_pickup(datum/component/dusting/comp_source, mob/user)
+	if(!balanced && prob(30))
+		user.visible_message(span_danger("[user] accidentally touches [src]'s blade! Oops!"),
+			span_danger("You reach to pick up [src], and..."))
+		comp_source.consume_atom(user)
+		return TRUE
 	balanced = FALSE
 
 /obj/item/melee/supermatter_sword/suicide_act(mob/user)
