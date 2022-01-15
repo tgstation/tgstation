@@ -97,6 +97,10 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
+	. = ..()
+	QDEL_NULL(banana_rustle)
+	QDEL_NULL(banana_bunch)
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle
