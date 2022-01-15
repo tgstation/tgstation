@@ -65,7 +65,8 @@
 	projectile_type = /obj/projectile/bullet/pea
 
 /obj/item/ammo_casing/pea/attack_self(mob/user)
-	qdel(src)
+	user.dropItemToGround(src)
 	var/obj/item/food/grown/peas/peas = new (user.drop_location())
 	user.put_in_hands(peas)
 	to_chat(user, span_notice("You crush the pea in your hand, and it explodes into a small bundle of edible peas."))
+	qdel(src)

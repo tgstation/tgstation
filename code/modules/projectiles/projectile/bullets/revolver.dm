@@ -130,6 +130,9 @@
 
 /obj/projectile/bullet/pea/on_hit(atom/target, blocked = FALSE)
 	. = ..()
+	if(iszombie(target)) // yabbhdhgh yo ghro rhahhhh! (funny pvz reference)
+		var/mob/living/zombie = target
+		zombie.adjustBruteLoss(15, FALSE)
 	if(isliving(target))
-		var/mob/living/M = target
-		M.adjustToxLoss(5, FALSE)
+		var/mob/living/victim = target
+		victim.adjustToxLoss(5, FALSE)
