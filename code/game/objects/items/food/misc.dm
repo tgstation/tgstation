@@ -7,9 +7,9 @@
 	icon_state = "cheesewheel"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 5) //Hard cheeses contain about 25% protein
 	w_class = WEIGHT_CLASS_NORMAL
-	rat_heal = 35
+	var/rat_heal = 35
 
-/obj/item/food/cheese/wedge
+/obj/item/food/cheesewedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
@@ -25,7 +25,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)

@@ -11,7 +11,7 @@
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/meat/steak = 1,
-		/obj/item/food/cheese/wedge = 1
+		/obj/item/food/cheesewedge = 1
 	)
 	result = /obj/item/food/sandwich
 	subcategory = CAT_SANDWICH
@@ -20,7 +20,7 @@
 	name = "Cheese sandwich"
 	reqs = list(
 		/obj/item/food/breadslice/plain = 2,
-		/obj/item/food/cheese/wedge = 2
+		/obj/item/food/cheesewedge = 2
 	)
 	result = /obj/item/food/cheese_sandwich
 	subcategory = CAT_SANDWICH

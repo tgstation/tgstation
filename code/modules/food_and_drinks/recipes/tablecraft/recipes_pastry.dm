@@ -451,7 +451,7 @@
 	reqs = list(
 		/datum/reagent/consumable/eggyolk = 2,
 		/datum/reagent/consumable/eggwhite = 4,
-		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/cheesewedge = 1,
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
