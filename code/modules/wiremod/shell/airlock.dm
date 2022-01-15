@@ -31,7 +31,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/shell/allowed(mob/user)
-	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, user) & COMPONENT_OBJ_ALLOW)
+	if(SEND_SIGNAL(src, COMSIG_AIRLOCK_SHELL_ALLOWED, user) & COMPONENT_AIRLOCK_SHELL_ALLOW)
 		return TRUE
 	return isAdminGhostAI(user)
 
