@@ -653,25 +653,27 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Actually tries to solve the quadratic equation.
 /// Do mind that the numbers can get very big and might hit BYOND's single point float limit.
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
+	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		. = max(SolveQuadratic(a, b, c)) 
-		if((. > lower_limit) && (. < upper_limit)) //SolveQuadratic can return nulls so be careful here
-			return
-	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [.]")
+		solution = max(SolveQuadratic(a, b, c)) 
+		if((solution > lower_limit) && (solution < upper_limit)) //SolveQuadratic can return nulls so be careful here
+			return solution
+	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
 
 /// Approximation of the quadratic equation using Newton-Raphson's Method.
 /// We use the slope of an approximate value to get closer to the root of a given equation.
 /datum/gas_mixture/proc/gas_pressure_approximate(a, b, c, lower_limit, upper_limit)
+	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		// We need to start off at a reasonably good estimate. For very big numbers the amount of moles is most likely small so better start with lower_limit.
-		. = lower_limit
+		/// We need to start off at a reasonably good estimate. For very big numbers the amount of moles is most likely small so better start with lower_limit.
+		solution = lower_limit
 		for (var/iteration in 1 to ATMOS_PRESSURE_APPROXIMATION_ITERATIONS)
-			var/diff = (a*.**2 + b*. + c) / (2*a*. + b) // f(.) / f'(.)
-			. -= diff // xn+1 = xn - f(.) / f'(.)
-			if(abs(diff) < MOLAR_ACCURACY && (. > lower_limit) && (. < upper_limit))
-				return
-	stack_trace("Newton's Approximation for pressure failed after [ATMOS_PRESSURE_APPROXIMATION_ITERATIONS] iterations. Current value: [.]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit]. A: [a]. B: [b]. C:[c].")
+			var/diff = (a*solution**2 + b*solution + c) / (2*a*solution + b) // f(sol) / f'(sol)
+			solution -= diff // xn+1 = xn - f(sol) / f'(sol)
+			if(abs(diff) < MOLAR_ACCURACY && (solution > lower_limit) && (solution < upper_limit))
+				return solution
+	stack_trace("Newton's Approximation for pressure failed after [ATMOS_PRESSURE_APPROXIMATION_ITERATIONS] iterations. A: [a]. B: [b]. C:[c]. Current value: [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
 	return FALSE
 
 /// Pumps gas from src to output_air. Amount depends on target_pressure
