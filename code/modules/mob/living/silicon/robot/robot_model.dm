@@ -376,6 +376,7 @@
 	button_icon_state = "mop"
 
 /datum/action/jani_powers/Trigger()
+	. = ..()
 	var/mob/living/silicon/robot/janitor = owner
 	var/obj/item/robot_model/janitor_model = janitor.model
 	if (janitor_model.clean_on_move)
