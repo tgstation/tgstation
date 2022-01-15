@@ -9,7 +9,7 @@
 	var/consume_on_attackby = TRUE
 	/// Consume when trying to get picked up by a mob
 	var/consume_on_pickup = FALSE
-	/// Consume when we are throw onto something
+	/// Consume when we are thrown onto something
 	var/consume_on_throw = TRUE
 	/// If we consume the contents of atoms we consume as well. This ignores turfs regardless if consume_turfs is TRUE
 	var/consume_all_contents = FALSE
