@@ -120,7 +120,8 @@
 	if(isnull(location) || istype(_target, /atom/movable/screen)) //Clicking on a screen object.
 		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
-		_target = params_to_turf(modifiers["screen-loc"], get_turf(source.eye), source)
+		_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
+		params = list2params(modifiers)
 		if(!_target)
 			CRASH("Failed to get the turf under clickcatcher")
 
@@ -199,7 +200,8 @@
 	SIGNAL_HANDLER
 	if(isnull(over_location)) //This happens when the mouse is over an inventory or screen object, or on entering deep darkness, for example.
 		var/list/modifiers = params2list(params)
-		var/new_target = params_to_turf(modifiers["screen-loc"], get_turf(source.eye), source)
+		var/new_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
+		params = list2params(modifiers)
 		mouse_parameters = params
 		if(!new_target)
 			if(QDELETED(target)) //No new target acquired, and old one was deleted, get us out of here.
