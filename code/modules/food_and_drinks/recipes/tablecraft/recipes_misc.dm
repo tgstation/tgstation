@@ -191,7 +191,7 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5
 	)
-	result = /obj/item/food/cheese/royal
+	result = /obj/item/food/cheesewheel/royal
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/ant_candy

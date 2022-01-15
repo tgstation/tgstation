@@ -126,7 +126,7 @@
 	if (QDELETED(target))
 		return
 
-	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
+	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheesewheel))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
 		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
