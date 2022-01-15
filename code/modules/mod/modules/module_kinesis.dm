@@ -9,7 +9,7 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*3
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
@@ -17,6 +17,8 @@
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	var/grab_range = 5
 	var/atom/movable/grabbed_atom
+	var/datum/beam/kinesis_beam
+	var/mutable_appearance/kinesis_icon
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_select_use(atom/target)
 	. = ..()
@@ -25,7 +27,7 @@
 	if(grabbed_atom)
 		clear_grab()
 		return
-	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+	ifif(!range_check(target))
 		balloon_alert(mod.wearer, "too far!")
 		return
 	if(!can_grab(target))
@@ -34,6 +36,9 @@
 	drain_power(use_power_cost)
 	grabbed_atom = target
 	START_PROCESSING(SSfastprocess, src)
+	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
+	grabbed_atom.add_overlay(kinesis_icon)
+	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation()
 	. = ..()
@@ -42,11 +47,12 @@
 	clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
-	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+	if(!range_check(grabbed_atom))
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
-	new /obj/effect/temp_visual/emp/pulse(grabbed_atom.loc)
+	drain_power(use_power_cost/10)
+	kinesis_beam.redrawing()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
 	if(!ismovable(target))
@@ -72,7 +78,16 @@
 	if(!grabbed_atom)
 		return
 	STOP_PROCESSING(SSfastprocess, src)
+	grabbed_atom.cut_overlay(kinesis_icon)
+	QDEL_NULL(kinesis_beam)
 	grabbed_atom = null
+
+/obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
+	if(!isturf(target.loc))
+		return FALSE
+	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+		return FALSE
+	return TRUE
 
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
@@ -80,5 +95,5 @@
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype
 	name = "MOD prototype kinesis module"
 	complexity = 0
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 8
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	removable = FALSE

@@ -93,7 +93,7 @@
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
-	return charge_source.use(amount)
+	return charge_source.use(amount, TRUE)
 
 /obj/item/mod/core/standard/update_charge_alert()
 	var/obj/item/stock_parts/cell/charge_source = charge_source()

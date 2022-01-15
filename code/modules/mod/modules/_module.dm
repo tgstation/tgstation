@@ -159,6 +159,7 @@
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!check_power(use_power_cost))
+		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
@@ -207,6 +208,7 @@
 	if(!check_power(amount))
 		return FALSE
 	mod.subtract_charge(amount)
+	mod.update_charge_alert()
 	return TRUE
 
 /// Checks if there is enough power in the suit
