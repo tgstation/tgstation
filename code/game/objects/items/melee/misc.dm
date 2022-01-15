@@ -221,7 +221,7 @@
 /obj/item/melee/supermatter_sword/proc/handle_pickup(datum/component/dusting/comp_source, mob/user)
 	if(!balanced && prob(30))
 		user.visible_message(span_danger("[user] accidentally touches [src]'s blade! Oops!"),
-			span_danger("You reach to pick up [src], and..."))
+			span_userdanger("You reach to pick up [src], and..."))
 		comp_source.consume_atom(user)
 		return TRUE
 	balanced = FALSE

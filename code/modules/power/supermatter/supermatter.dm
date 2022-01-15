@@ -275,6 +275,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
 
 	AddComponent(/datum/component/dusting,\
+		consumed_text = span_userdanger("You slam into [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),\
 		callback_after_consume = CALLBACK(src, .proc/after_consumed),\
 		callback_get_flavortext = CALLBACK(src, .proc/provide_text_vars),\
 		callback_hitby_blob = CALLBACK(src, .proc/handle_blob_act),\
@@ -952,11 +953,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return TRUE //Doesn't get eaten!
 
 /obj/machinery/power/supermatter_crystal/proc/provide_text_vars(datum/component/dusting/comp_source, atom/consumed_atom, list/magic_text)
-	. = list(
+	. = magic_text + list(
 		COMP_DUST_RADIATION_VISUAL = span_danger("As [src] slowly stops resonating, you find your skin covered in new radiation burns."),
 		COMP_DUST_RADIATION_AUDIBLE = span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."),
 		COMP_DUST_RADIATION_UNSEEN = span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."),
-	) + magic_text
+	)
 	if(ismob(consumed_atom))
 		.[COMP_DUST_RADIATION_RANGE] = 6
 		.[COMP_DUST_RADIATION_THRESHOLD] = 0.6
