@@ -9,7 +9,7 @@
 	icon_state = "kinesis"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*5
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/kinesis)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_kinesis"
@@ -78,6 +78,7 @@
 	prebuilt = TRUE
 
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype
+	name = "MOD prototype kinesis module"
 	complexity = 0
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
-	removable = TRUE
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 8
+	removable = FALSE
