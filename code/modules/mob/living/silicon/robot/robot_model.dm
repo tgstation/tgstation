@@ -383,16 +383,30 @@
 	else
 		start_cleaning(janitor, janitor_model)
 
+/**
+ * stops the janiborg cleaning ability
+ *
+ * Arguments:
+ * * mob/living/silicon/robot/janitor - The cyborg
+ * * obj/item/robot_model/janitor_model - The cyborg's model
+ */
 /datum/action/jani_powers/proc/stop_cleaning(mob/living/silicon/robot/janitor, obj/item/robot_model/janitor_model)
 	janitor_model.clean_on_move = FALSE
 	janitor.RemoveElement(/datum/element/cleaning)
-	janitor.audible_message("[owner] ceases humming.", "[owner] ceases vibrating.")
+	janitor.audible_message(span_notice("[owner] ceases humming."), span_notice("[owner] ceases vibrating."))
 	janitor.remove_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
 
+/**
+ * starts the janiborg cleaning ability
+ *
+ * Arguments:
+ * * mob/living/silicon/robot/janitor - The cyborg
+ * * obj/item/robot_model/janitor_model - The cyborg's model
+ */
 /datum/action/jani_powers/proc/start_cleaning(mob/living/silicon/robot/janitor, obj/item/robot_model/janitor_model)
 	janitor_model.clean_on_move = TRUE
 	janitor.AddElement(/datum/element/cleaning)
-	janitor.audible_message("[owner] begins to hum loudly!", "[owner] appears to vibrate slightly.")
+	janitor.audible_message(span_notice("[owner] begins to hum loudly!"), span_notice("[owner] appears to vibrate slightly."))
 	janitor.add_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
 
 
