@@ -33,7 +33,8 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
-	RegisterSignal(Target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
+	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 /datum/action/Destroy()
 	if(owner)
@@ -49,7 +50,7 @@
 				return
 			Remove(owner)
 		owner = M
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/owner_deleted)
+		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 		//button id generation
 		var/counter = 0
@@ -75,9 +76,12 @@
 	else
 		Remove(owner)
 
-/datum/action/proc/owner_deleted(datum/source)
+/datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
-	Remove(owner)
+	if(ref == owner)
+		Remove(owner)
+	if(ref == target)
+		qdel(src)
 
 /datum/action/proc/Remove(mob/M)
 	for(var/datum/weakref/reference as anything in sharers)
@@ -93,10 +97,13 @@
 		M.update_action_buttons()
 	if(owner)
 		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		if(target == owner)
+			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
 		owner = null
-	button.moved = FALSE //so the button appears in its normal position when given to another owner.
-	button.locked = FALSE
-	button.id = null
+	if(button)
+		button.moved = FALSE //so the button appears in its normal position when given to another owner.
+		button.locked = FALSE
+		button.id = null
 
 /datum/action/proc/Trigger()
 	if(!IsAvailable())
@@ -804,13 +811,15 @@
 	background_icon_state = our_proc_holder.action_background_icon_state
 	button.name = name
 
-/datum/action/cooldown/spell_like/Trigger()
-	if(!..())
+/datum/action/cooldown/spell_like/Activate(atom/activate_target)
+	if(!target)
 		return FALSE
-	if(target)
-		var/obj/effect/proc_holder/our_proc_holder = target
-		our_proc_holder.Click()
-		return TRUE
+
+	StartCooldown(10 SECONDS)
+	var/obj/effect/proc_holder/our_proc_holder = target
+	our_proc_holder.Click()
+	StartCooldown()
+	return TRUE
 
 //Stickmemes
 /datum/action/item_action/stickmen

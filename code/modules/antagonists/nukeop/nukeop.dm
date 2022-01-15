@@ -20,6 +20,11 @@
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	var/nuke_icon_state = "nuclearbomb_base"
 
+	/// The amount of discounts that the team get
+	var/discount_team_amount = 5
+	/// The amount of limited discounts that the team get
+	var/discount_limited_amount = 10
+
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
 		return
@@ -44,9 +49,23 @@
 		move_to_spawnpoint()
 		// grant extra TC for the people who start in the nukie base ie. not the lone op
 		var/extra_tc = CEILING(GLOB.joined_player_list.len/5, 5)
-		var/datum/component/uplink/U = owner.find_syndicate_uplink()
-		if (U)
-			U.telecrystals += extra_tc
+		var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
+		if (uplink)
+			uplink.add_telecrystals(extra_tc)
+
+	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
+	if(uplink)
+		var/datum/team/nuclear/nuke_team = get_team()
+		if(!nuke_team.team_discounts)
+			var/list/uplink_items = list()
+			for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
+				if(item.item && !item.cant_discount && (item.purchasable_from & uplink.uplink_handler.uplink_flag) && item.cost > 1)
+					uplink_items += item
+			nuke_team.team_discounts = list()
+			nuke_team.team_discounts += create_uplink_sales(discount_team_amount, /datum/uplink_category/discount_team_gear, -1, uplink_items)
+			nuke_team.team_discounts += create_uplink_sales(discount_limited_amount, /datum/uplink_category/limited_discount_team_gear, 1, uplink_items)
+		uplink.uplink_handler.extra_purchasable += nuke_team.team_discounts
+
 	memorize_code()
 
 /datum/antagonist/nukeop/get_team()

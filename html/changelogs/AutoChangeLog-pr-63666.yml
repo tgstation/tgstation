@@ -1,0 +1,4 @@
+author: "Kylerace"
+delete-after: True
+changes: 
+  - bugfix: "NanoTrasen has broken up the AI Static Union and thus AI static will no longer intermittently decide to stop working."
