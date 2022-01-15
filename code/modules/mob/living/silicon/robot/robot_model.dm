@@ -396,6 +396,8 @@
 	janitor.audible_message(span_notice("[owner] ceases humming."), span_notice("[owner] ceases vibrating."))
 	janitor.remove_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
 
+	animate(janitor, pixel_x = janitor.base_pixel_x, pixel_y = janitor.base_pixel_y, time = 2)
+
 /**
  * starts the janiborg cleaning ability
  *
@@ -408,6 +410,19 @@
 	janitor.AddElement(/datum/element/cleaning)
 	janitor.audible_message(span_notice("[owner] begins to hum loudly!"), span_notice("[owner] appears to vibrate slightly."))
 	janitor.add_movespeed_modifier(/datum/movespeed_modifier/janiborg_cleaning)
+
+	var/base_x = janitor.base_pixel_x
+	var/base_y = janitor.base_pixel_y
+	janitor.pixel_x = base_x + rand(-7, 7)
+	janitor.pixel_y = base_y + rand(-7, 7)
+	//Larger shake with more changes to start out, feels like "Revving"
+	var/x_offset = 0
+	var/y_offset = 0
+	animate(janitor, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+	for(var/i in 1 to 100)
+		x_offset = base_x + rand(-2, 2)
+		y_offset = base_y + rand(-2, 2)
+		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
 
 /obj/item/reagent_containers/spray/cyborg_drying
