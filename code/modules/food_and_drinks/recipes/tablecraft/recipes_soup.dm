@@ -255,7 +255,7 @@
 		/datum/reagent/water = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 	)
 	result = /obj/item/food/soup/onion
 	subcategory = CAT_SOUP

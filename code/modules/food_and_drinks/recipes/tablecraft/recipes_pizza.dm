@@ -7,7 +7,7 @@
 	name = "Margherita pizza"
 	reqs = list(
 		/obj/item/food/flatdough = 1,
-		/obj/item/food/cheese = 4,
+		/obj/item/food/cheese/wedge = 4,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/margherita/raw
@@ -18,7 +18,7 @@
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/meat/rawcutlet = 4,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/meat/raw
@@ -30,7 +30,7 @@
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/meat/rawcutlet = 3,
 		/obj/item/ammo_casing/c9mm = 8,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/arnold/raw
@@ -62,7 +62,7 @@
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/donkpocket = 3,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/donkpocket/raw
@@ -73,7 +73,7 @@
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/grown/ambrosia/vulgaris = 3,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/dank/raw
@@ -84,7 +84,7 @@
 	reqs = list(
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/raw_meatball = 3,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/sassysage/raw
@@ -96,7 +96,7 @@
 		/obj/item/food/flatdough = 1,
 		/obj/item/food/meat/rawcutlet = 2,
 		/obj/item/food/pineappleslice = 3,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/pizza/pineapple/raw
@@ -106,7 +106,7 @@
 	name = "Ant Party pizza"
 	reqs = list(
 		/obj/item/food/pizzabread = 1,
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/grown/tomato = 1,
 		/datum/reagent/ants = 20
 	)

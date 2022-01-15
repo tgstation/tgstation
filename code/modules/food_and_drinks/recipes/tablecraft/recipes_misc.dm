@@ -54,7 +54,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/loadedbakedpotato
 	subcategory = CAT_MISCFOOD
@@ -63,7 +63,7 @@
 	name = "Cheesy fries"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/cheesyfries
 	subcategory = CAT_MISCFOOD
@@ -72,7 +72,7 @@
 	name = "Poutine"
 	reqs = list(
 		/obj/item/food/fries = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/gravy = 3
 	)
 	result = /obj/item/food/poutine
@@ -90,7 +90,7 @@
 /datum/crafting_recipe/food/eggplantparm
 	name ="Eggplant parmigiana"
 	reqs = list(
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/grown/eggplant = 1
 	)
 	result = /obj/item/food/eggplantparm
@@ -151,7 +151,7 @@
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
 	reqs = list(
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/datum/reagent/consumable/ethanol/wine = 5,
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1
@@ -186,7 +186,7 @@
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
 	reqs = list(
-		/obj/item/food/cheese/wheel = 1,
+		/obj/item/food/cheese = 1,
 		/obj/item/clothing/head/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5

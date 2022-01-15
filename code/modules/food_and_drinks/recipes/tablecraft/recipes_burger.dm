@@ -234,7 +234,7 @@
 		/datum/reagent/consumable/blackpepper = 5,
 		/obj/item/food/patty/plain = 5,
 		/obj/item/food/grown/tomato = 4,
-		/obj/item/food/cheese = 3,
+		/obj/item/food/cheese/wedge = 3,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/bacon = 1,
 		/obj/item/food/bun = 1
@@ -385,7 +385,7 @@
 	reqs = list(
 			/obj/item/food/patty/plain = 2,
 			/obj/item/food/bun = 1,
-			/obj/item/food/cheese = 2,
+			/obj/item/food/cheese/wedge = 2,
 			/obj/item/food/grown/chili = 1,
 			/obj/item/food/grown/cabbage = 1,
 			/obj/item/toy/crayon/green = 1,
