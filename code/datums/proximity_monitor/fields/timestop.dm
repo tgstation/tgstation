@@ -16,6 +16,8 @@
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
 	var/antimagic_obstructions = NONE
+ 	///if true, immune atoms moving ends the timestop instead of duration.
+	var/channelled = FALSE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -42,11 +44,17 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new (src, freezerange, TRUE, immune, antimagic_obstructions)
-	QDEL_IN(src, duration)
+	chronofield = new (src, freezerange, TRUE, immune, antimagic_obstructions, channelled)
+	if(!channelled)
+		QDEL_IN(src, duration)
+
 
 /obj/effect/timestop/magic
 	antimagic_obstructions = MAGIC_RESISTANCE
+
+///indefinite version, but only if no immune atoms move.
+/obj/effect/timestop/channelled
+	channelled = TRUE
 
 /datum/proximity_monitor/advanced/timestop
 	var/list/immune = list()
@@ -55,6 +63,8 @@
 	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
 	var/list/frozen_turfs = list() //Only aesthetically
 	var/antimagic_obstructions = NONE
+	///if true, this doesn't time out after a duration but rather when an immune atom inside moves.
+	var/channelled = FALSE
 
 	var/static/list/global_frozen_atoms = list()
 
@@ -62,11 +72,15 @@
 	..()
 	src.immune = immune
 	src.antimagic_obstructions = antimagic_obstructions
+ 	src.channelled = channelled
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
+	if(channelled)
+		for(var/atom in immune)
+			UnregisterSignal(atom, COMSIG_MOVABLE_MOVED)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -74,7 +88,11 @@
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
-	if(immune[A] || global_frozen_atoms[A] || !istype(A))
+	if(global_frozen_atoms[A] || !istype(A))
+		return FALSE
+	if(immune[A]) //a little special logic but yes immune things don't freeze
+		if(channelled)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
@@ -208,3 +226,8 @@
 //let's put some colour back into your cheeks
 /datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)
 	A.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+
+//signal fired when an immune atom moves in the time freeze zone
+/datum/proximity_monitor/advanced/timestop/proc/atom_broke_channel(datum/source)
+	SIGNAL_HANDLER
+	qdel(host)

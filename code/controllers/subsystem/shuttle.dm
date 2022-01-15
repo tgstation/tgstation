@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(shuttle)
 
 		supply_packs[pack.id] = pack
 
-	initial_load()
+	setup_shuttles(stationary_docking_ports)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
@@ -166,10 +166,9 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
 	return ..()
 
-/datum/controller/subsystem/shuttle/proc/initial_load()
-	for(var/port in stationary_docking_ports)
-		var/obj/docking_port/stationary/stationary_port = port
-		stationary_port.load_roundstart()
+/datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
+	for(var/obj/docking_port/stationary/port as anything in stationary)
+		port.load_roundstart()
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/fire()

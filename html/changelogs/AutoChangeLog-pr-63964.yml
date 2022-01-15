@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - qol: "Due to subtle design changes it is now possible to reach past hydroponics trays, cooking grills, crates, and a few other table-shaped objects."

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Assigning timers on people's IDs now work properly, yay Tramstation Brig!"
