@@ -11,14 +11,17 @@
 
 /datum/element/hatstacker/Attach(datum/target, list/attachable_hats_list)
 	. = ..()
-	src.attachable_hats_list = attachable_hats_list
+	attachable_hats_list = src.attachable_hats_list
 	if(!istype(target, /obj/item/clothing/head))
 		return ELEMENT_INCOMPATIBLE
-	var/obj/item/clothing/head/valid_target = target
 
-	RegisterSignal(valid_target, COMSIG_PARENT_EXAMINE, .proc/add_examine)
-	RegisterSignal(valid_target, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
-	RegisterSignal(valid_target, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/add_examine)
+	if(!istype(target, /obj/item/clothing/head/mod))	//Check if its a MOD helmet, which needs some special updating fyuckery
+		RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
+		RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	else
+		RegisterSignal(target, COMSIG_PARENT_ATTACKBY, .proc/mod_place_hat)
+		RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/mod_remove_hat)
 
 /datum/element/hatstacker/Detach(datum/target)
 	. = ..()
@@ -50,14 +53,13 @@
 		base_examine += span_notice("There's nothing placed on the helmet. Yet.")
 
 /**
-* Attempts to place the attacking item, if a hat, atop the targetted hat
+* Attempts to place the attacking item, if a hat, atop the targetted hat. To be called by the ACTUAL place_hat procs; this cuts back copy-paste code
 *
 * target = the bottom-most, attacked hat
 * hitting_item = the attacking item, hopefully a hat
 * user = the one trying to stack the hats
 **/
-/datum/element/hatstacker/proc/place_hat(obj/item/clothing/head/target, obj/item/hitting_item, mob/user)
-	SIGNAL_HANDLER
+/datum/element/hatstacker/proc/attempt_place_hat(obj/item/clothing/head/target, obj/item/hitting_item, mob/user)
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
 	if(!istype(hitting_item, /obj/item/clothing/head))
 		return
@@ -71,21 +73,39 @@
 		ADD_TRAIT(hitting_item, TRAIT_HATSTACKED, ELEMENT_TRAIT(src))
 		attached_hat = hitting_item
 		target.balloon_alert(user, "hat attached, right click to remove")
-		//MODs all route thru the back. So this check needs to make sure the update is done on the back.
-		if(istype(target, /obj/item/clothing/head/mod))
-			var/icon_to_use = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
-			user.update_inv_back(icon_to_use)	//The user should really be the only one placing the item in this case; helmet can only be deployed by a worn suit, after all.
-		else
-			var/icon_to_use = attached_hat.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
-			target.update_appearance(icon_to_use)
+
+/**
+* Calls Attempt_Place_Hat, then updates the icon
+*
+* target = the bottom-most, attacked hat
+* hitting_item = the attacking item, hopefully a hat
+* user = the one trying to stack the hats
+**/
+/datum/element/hatstacker/proc/place_hat(obj/item/clothing/head/target, obj/item/hitting_item, mob/user)
+	SIGNAL_HANDLER
+	attempt_place_hat(target, hitting_item, user)
+	var/icon_to_use = hitting_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
+	target.update_appearance()
+
+/**
+* Calls Attempt_Place_Hat, then updates the icon of the MOD backpack (which, inturn, updates the helmet)
+*
+* target = the bottom-most, attacked hat
+* hitting_item = the attacking item, hopefully a hat
+* user = the one trying to stack the hats
+**/
+/datum/element/hatstacker/proc/mod_place_hat(obj/item/clothing/head/mod/target, obj/item/hitting_item, mob/user)
+	SIGNAL_HANDLER
+	attempt_place_hat(target, hitting_item, user)
+	var/icon_to_use = hitting_item.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
+	target.mod.wearer.update_inv_back(icon_to_use)	//Because we've set target as a head/mod, it gets to check for the wearer
 
 /**
 * Attemps to remove a stacked hat on right-click
 *
 *
 **/
-/datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
-	SIGNAL_HANDLER
+/datum/element/hatstacker/proc/attempt_remove_hat(obj/item/clothing/head/target, mob/user)
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
 	if(!attached_hat)
@@ -96,8 +116,13 @@
 	else
 		target.balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
-	//MODs all route thru the back. So this check needs to make sure the update is done on the back.
-	if(istype(target, /obj/item/clothing/head/mod))
-		user.update_inv_back()	//The user should really be the only one placing the item. I hope.
-	else
-		user.update_inv_head()
+
+/datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
+	SIGNAL_HANDLER
+	attempt_remove_hat(target, user)
+	user.update_inv_head()
+
+/datum/element/hatstacker/proc/mod_remove_hat(obj/item/clothing/head/mod/target, mob/user)
+	SIGNAL_HANDLER
+	attempt_remove_hat(target, user)
+	target.mod.wearer.update_inv_back()
