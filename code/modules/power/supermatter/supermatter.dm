@@ -1105,10 +1105,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
 	if(consumed_object.flags_1 & SUPERMATTER_IGNORES_1)
 		return
-	var/datum/component/dusting/dust = GetComponent(/datum/component/dusting)
-	dust?.consume_atom(consumed_object)
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
+		if(consumed_mob.status_flags & GODMODE)
+			return
 		if(power_changes)
 			matter_power += 200
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
@@ -1116,6 +1116,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			damage = max(damage, 0)
 	if(!iseffect(consumed_object) && power_changes)
 		matter_power += 200
+
+	var/datum/component/dusting/dust = GetComponent(/datum/component/dusting)
+	dust?.consume_atom(consumed_object)
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)
