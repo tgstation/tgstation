@@ -99,8 +99,8 @@ The cell is stable and will not emit sparks when firing.
 	. = ..()
 	microfusion_gun.recoil -= recoil_to_add
 	microfusion_gun.spread -= spread_to_add
-	microfusion_gun.microfusion_lens.pellets -= microfusion_gun.microfusion_lens.pellets
-	microfusion_gun.microfusion_lens.variance -= microfusion_gun.microfusion_lens.variance
+	microfusion_gun.microfusion_lens.pellets -= pellets_to_add
+	microfusion_gun.microfusion_lens.variance -= variance_to_add
 
 /*
 REPEATER ATTACHMENT
