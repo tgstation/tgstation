@@ -87,11 +87,11 @@
 	/// Do we give the wearer a speed buff.
 	var/full_speed = FALSE
 	/// The ion trail particles left after the jetpack.
-	var/datum/effect_system/trail_follow/ion/ion_trail
+	var/datum/effect_system/trail_follow/ion/grav_allowed/ion_trail
 
 /obj/item/mod/module/jetpack/Initialize(mapload)
 	. = ..()
-	ion_trail = new
+	ion_trail = new()
 	ion_trail.auto_process = FALSE
 	ion_trail.set_up(src)
 
