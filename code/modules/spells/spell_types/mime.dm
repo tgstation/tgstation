@@ -9,7 +9,7 @@
 	summon_lifespan = 300
 	charge_max = 300
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -39,7 +39,7 @@
 	summon_lifespan = 250
 	charge_max = 300
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -77,7 +77,7 @@
 	summon_lifespan = 500
 	charge_max = 300
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -112,7 +112,7 @@
 	panel = "Mime"
 	clothes_req = FALSE
 	human_req = TRUE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	charge_max = 3000
 	range = -1
 	include_user = TRUE
@@ -156,7 +156,7 @@
 	charge_max = 600
 	sound = null
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	range = -1
 	include_user = TRUE
 
@@ -181,7 +181,7 @@
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	invocation_type = INVOCATION_EMOTE
 	invocation_emote_self = span_danger("You fire your finger gun!")
 	range = 20

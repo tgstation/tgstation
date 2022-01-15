@@ -255,7 +255,7 @@
 	cooldown_min = 150
 	selection_type = "view"
 	sound = 'sound/magic/repulse.ogg'
-	magic_resistances = MAGIC_RESISTANCE
+	antimagic_obstructions = MAGIC_RESISTANCE
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
@@ -278,7 +278,7 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.anti_magic_check(magic_resistances))
+			if(M.anti_magic_check(antimagic_obstructions))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -303,7 +303,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -311,7 +311,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -337,12 +337,12 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
-		if(L.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_UNHOLY))
+		if(L.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		if(!U.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_UNHOLY))
+		if(!U.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket

@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
-	var/magic_resistances = MAGIC_CASTING_RESTRICTION // This determines if a user can cast a spell or if certain items block the magic
+	var/antimagic_obstructions = MAGIC_CASTING_RESTRICTION // This determines if a user can cast a spell or if certain items block the magic
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = "none" //can be none, whisper, emote and shout
@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(magic_resistances & MAGIC_CASTING_RESTRICTION)
+	if(antimagic_obstructions & MAGIC_CASTING_RESTRICTION)
 		// we only want to pass the MAGIC_RESTRICTS_CASTING flag to the anti_magic_check since we are only checking
 		// if the person can cast the spell themselves and want to ignore all other resistances
 		var/antimagic = user.anti_magic_check(MAGIC_CASTING_RESTRICTION, charge_cost = 0)
@@ -547,8 +547,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	// we only want to pass the MAGIC_RESTRICT_CASTING flag to the anti_magic_check and not all the magic_resistances
-	if((magic_resistances & MAGIC_CASTING_RESTRICTION) && user.anti_magic_check(MAGIC_CASTING_RESTRICTION, charge_cost = 0))
+	// we only want to pass the MAGIC_RESTRICT_CASTING flag to the anti_magic_check and not all the antimagic_obstructions
+	if((antimagic_obstructions & MAGIC_CASTING_RESTRICTION) && user.anti_magic_check(MAGIC_CASTING_RESTRICTION, charge_cost = 0))
 		return FALSE
 
 	if(!ishuman(user))

@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, (MAGIC_RESISTANCE_UNHOLY | MAGIC_CASTING_RESTRICTION))
+	AddComponent(/datum/component/anti_magic, (MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION))
 
 /obj/item/storage/book/bible/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is offering [user.p_them()]self to [deity_name]! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -78,7 +78,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
-				if(target.anti_magic_check(MAGIC_RESISTANCE))
+				if(target.anti_magic_check())
 					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
 											   span_revenwarning("Violet lights, dancing in your vision, receding--"))
@@ -128,7 +128,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
-	magic_resistances = MAGIC_RESISTANCE_UNHOLY
+	antimagic_obstructions = MAGIC_RESISTANCE_HOLY
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -227,7 +227,7 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning", time = 5)
-		if(!M.anti_magic_check(MAGIC_RESISTANCE_UNHOLY))
+		if(!M.anti_magic_check(MAGIC_RESISTANCE_HOLY))
 			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
@@ -310,7 +310,7 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
-		if(human.anti_magic_check(MAGIC_RESISTANCE_UNHOLY))
+		if(human.anti_magic_check(MAGIC_RESISTANCE_HOLY))
 			continue
 		to_chat(human, span_revenwarning("You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")]."))
 		new /obj/effect/temp_visual/revenant(human.loc)
@@ -347,7 +347,7 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
-		if(mob.anti_magic_check(MAGIC_RESISTANCE_UNHOLY))
+		if(mob.anti_magic_check(MAGIC_RESISTANCE_HOLY))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))

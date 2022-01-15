@@ -8,7 +8,7 @@
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_spell"
-	magic_resistances = MAGIC_RESISTANCE_MIND
+	antimagic_obstructions = MAGIC_RESISTANCE_MIND
 	var/notice = "notice"
 	var/boldnotice = "boldnotice"
 
@@ -20,7 +20,7 @@
 			return
 		log_directed_talk(user, M, msg, LOG_SAY, "[name]")
 		to_chat(user, "<span class='[boldnotice]'>You transmit to [M]:</span> <span class='[notice]'>[msg]</span>")
-		if(!M.anti_magic_check(magic_resistances, charge_cost = 0)) //hear no evil
+		if(!M.anti_magic_check(antimagic_obstructions, charge_cost = 0)) //hear no evil
 			to_chat(M, "<span class='[boldnotice]'>You hear something behind you talking...</span> <span class='[notice]'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))

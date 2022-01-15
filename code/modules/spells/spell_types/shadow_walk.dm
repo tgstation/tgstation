@@ -5,7 +5,7 @@
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
 	clothes_req = FALSE
-	magic_resistances = NONE
+	antimagic_obstructions = NONE
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
