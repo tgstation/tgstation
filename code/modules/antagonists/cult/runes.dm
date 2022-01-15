@@ -255,7 +255,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return FALSE
-	if(convertee.anti_magic_check(MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //Not chargecost because it can be spammed
+	if(convertee.anti_magic_check(MAGIC_RESISTANCE_UNHOLY, charge_cost = 0)) //Not chargecost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
 		log_game("Offer rune failed - convertee had anti-magic")

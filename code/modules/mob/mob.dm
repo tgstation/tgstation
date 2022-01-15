@@ -933,7 +933,7 @@
 		return src 
 	if((resistances & ~MAGIC_CASTING_RESTRICTION) && (resistances & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
 		return src
-	if((resistances & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+	if((resistances & MAGIC_RESISTANCE_UNHOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		return src
 
 /**

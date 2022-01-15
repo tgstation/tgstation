@@ -8,7 +8,7 @@
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_spell"
-	magic_resistances = MAGIC_RESISTANCE_TINFOIL
+	magic_resistances = MAGIC_RESISTANCE_MIND
 	var/notice = "notice"
 	var/boldnotice = "boldnotice"
 
