@@ -8,21 +8,21 @@
 /// The box is presenting the prize, for someone to claim it
 #define MYSTERY_BOX_PRESENTING 3
 
+// delays for the different stages of the box's state, the visuals, and the audio
 /// How long the box takes to decide what the prize is
 #define MBOX_DURATION_CHOOSING 5 SECONDS
 /// How long the box takes to start expiring the offer, though it's still valid until MBOX_DURATION_EXPIRING finishes. Timed to the sound clips
-#define MBOX_DURATION_PRESENTING 7.4 SECONDS
+#define MBOX_DURATION_PRESENTING 3.5 SECONDS
 /// How long the box takes to start lowering the prize back into itself. When this finishes, the prize is gone
-#define MBOX_DURATION_EXPIRING 2 SECONDS
+#define MBOX_DURATION_EXPIRING 4.5 SECONDS
 /// How long after the box closes until it can go again
-#define MBOX_DURATION_STANDBY 2 SECONDS
+#define MBOX_DURATION_STANDBY 2.7 SECONDS
 
 /obj/structure/mystery_box
 	name = "mystery box"
 	desc = "A rectangular steel crate."
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "wooden"
-
 	pixel_y = -4
 
 	var/crate_open_sound = 'sound/machines/crate_open.ogg'
@@ -76,20 +76,19 @@
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	playsound(src, open_sound, 50, FALSE, channel = CHANNEL_MBOX)
+	playsound(src, open_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	playsound(src, crate_open_sound, 80)
 	//addtimer(CALLBACK(src, .proc/present_weapon), MBOX_DURATION_CHOOSING)
 
 /// The box has finished choosing, mark it as available for grabbing
 /obj/structure/mystery_box/proc/present_weapon()
-	testing("Box is now presenting [presented_item.selected_path]")
 	box_state = MYSTERY_BOX_PRESENTING
-	box_expire_timer = addtimer(CALLBACK(src, .proc/expire_offer), MBOX_DURATION_PRESENTING - MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
+	box_expire_timer = addtimer(CALLBACK(src, .proc/start_expire_offer), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
 
 /// The prize is still claimable, but the animation will show it start to recede back into the box
-/obj/structure/mystery_box/proc/expire_offer()
+/obj/structure/mystery_box/proc/start_expire_offer()
 	presented_item.expire_animation()
-	box_expire_timer = addtimer(CALLBACK(src, .proc/close_box), MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
+	box_close_timer = addtimer(CALLBACK(src, .proc/close_box), MBOX_DURATION_EXPIRING, TIMER_STOPPABLE)
 
 /// The box is closed, whether because the prize fully expired, or it was claimed. Start resetting all of the state stuff
 /obj/structure/mystery_box/proc/close_box()
@@ -97,8 +96,10 @@
 	update_icon_state()
 	QDEL_NULL(presented_item)
 	deltimer(box_close_timer)
+	deltimer(box_expire_timer)
 	playsound(src, crate_close_sound, 100)
 	box_close_timer = null
+	box_expire_timer = null
 	addtimer(CALLBACK(src, .proc/ready_again), MBOX_DURATION_STANDBY)
 
 /// The cooldown between activations has finished, shake to show that
@@ -110,7 +111,7 @@
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
 	var/obj/item/instantiated_weapon = new presented_item.selected_path(src)
 	user.put_in_hands(instantiated_weapon)
-	playsound(src, grant_sound, 50, FALSE, channel = CHANNEL_MBOX)
+	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	close_box()
 
 
@@ -135,7 +136,7 @@
 	var/matrix/starting = matrix()
 	starting.Scale(0.5,0.5)
 	transform = starting
-	add_filter("weapon_rays", 2, list("type" = "rays", "size" = 35, "color" = COLOR_VIVID_YELLOW))
+	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = COLOR_VIVID_YELLOW))
 
 /obj/mystery_box_item/Destroy(force)
 	. = ..()
@@ -182,7 +183,7 @@
 /obj/mystery_box_item/proc/expire_animation()
 	var/matrix/shrink_back = matrix()
 	shrink_back.Scale(0.5,0.5)
-	animate(src, pixel_y = -8, transform = shrink_back, time = MBOX_DURATION_CHOOSING)
+	animate(src, pixel_y = -8, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
 
 #undef MYSTERY_BOX_COOLING_DOWN
 #undef MYSTERY_BOX_STANDBY

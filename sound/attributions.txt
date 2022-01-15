@@ -23,4 +23,4 @@ champagne_pop.ogg is credited to ultradust on freesound https://freesound.org/pe
 can_open.ogg adapted from https://freesound.org/people/MaxDemianAGL/sounds/130031/
 can_shake.ogg adapted from https://freesound.org/people/mcmast/sounds/456703/
 
-mbox_full.ogg and mbox_end.ogg make use of the 15s cut of Slapstick Dick from Commercial Non-Stop, available off APM music at https://www.apmmusic.com/albums/SON_CNS_0001
+mbox_full.ogg and mbox_end.ogg make use of The Ragtime Drummer by James Lent, in the public domain
