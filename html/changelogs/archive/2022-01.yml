@@ -515,3 +515,33 @@
   - bugfix: separatists no longer have a bad greeting message
   - bugfix: united nations lawset is now properly rejecting law changes unless it
       completely overrides the laws
+2022-01-15:
+  MMMiraclkes:
+  - bugfix: Tramstation's prison area is no longer powered by a secret bathroom APC.
+  OrionTheFox:
+  - rscadd: The Captain and Corporate MODsuits now have an inbuilt hat stabilizer,
+      which can also rarely be found in maintenance!
+  RaidenKoizuma:
+  - rscadd: Added a medical medal lockbox to spawn within CMO's secure locker which
+      contains two medals
+  RandomGamer123:
+  - bugfix: Allows for putting integrated circuits (and swiping your ID to lock them)
+      into circuit airlocks without having to use combat mode.
+  Ryll/Shaps:
+  - balance: Rubbershot is now much more bouncy than before, loses damage over range
+      a bit slower, and has a somewhat tighter spread. Its pellets now also fly 50%
+      slower.
+  - bugfix: Bullets that deal both brute and stamina damage like .38 Rubber will now
+      properly have both their brute and stamina damage reduced after each ricochet,
+      instead of just the brute.
+  SmoSmoSmoSmok:
+  - bugfix: Mulebots wont crush people in no gravity
+  Vexylius:
+  - qol: Chef can now enter botany on Delta. Also, there's a new biogenerator there.
+  itseasytosee:
+  - bugfix: Fixed some drugs keeping you high forever
+  pitreforten:
+  - bugfix: you can now get wet again!
+  tralezab:
+  - rscadd: Time Eradication Agents now use a MODsuit, which comes with some extra
+      functionalities
