@@ -665,6 +665,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_RUSTY "rust_trait"
 ///stops someone from splashing their reagent_container on an object with this trait
 #define DO_NOT_SPLASH "do_not_splash"
+///Trait applied when a hat is currently stacked on another hat; used for tracking
+#define TRAIT_HATSTACKED "stacked"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
