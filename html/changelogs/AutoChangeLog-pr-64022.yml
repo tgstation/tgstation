@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - qol: "Improves feedback from the civilian and pirate bounty pads."
+  - bugfix: "Bounty pads can now be deconstructed like regular machinery."
