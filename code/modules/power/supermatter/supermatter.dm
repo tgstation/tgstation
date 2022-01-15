@@ -927,10 +927,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/supermatter_crystal/proc/after_consumed(/datum/component/dusting/comp_source, atom/consumed_atom)
-	if(power_changes)
-		matter_power += 200
 	if(ismob(consumed_atom))
 		var/mob/consumed_mob = consumed_atom
+		if(power_changes)
+			matter_power += 200
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
 			damage += rand(-300, 300) // HONK
 			damage = max(damage, 0)
