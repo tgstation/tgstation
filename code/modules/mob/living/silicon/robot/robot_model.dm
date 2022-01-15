@@ -37,8 +37,6 @@
 	var/list/model_traits = null
 	///List of radio channels added to the cyborg
 	var/list/radio_channels = list()
-	///Do we clean when we move
-	var/clean_on_move = FALSE
 	///Whether the borg loses tool slots with damage.
 	var/breakable_modules = TRUE
 	///Whether swapping to this configuration should lockcharge the borg
@@ -357,7 +355,6 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = -5
-	clean_on_move = TRUE
 
 /obj/item/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
