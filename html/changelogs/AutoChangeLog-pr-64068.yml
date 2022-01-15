@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "People who don't have head revolutionary enabled in their preference, will no longer be promoted to head revolutionaries by force."
+  - bugfix: "People banned from head revolutionary will no longer roll Head revolutionary."

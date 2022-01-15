@@ -2546,7 +2546,6 @@
 /area/command/heads_quarters/rd)
 "aGo" = (
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/newscaster/directional/east,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -2560,6 +2559,9 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "aGu" = (
@@ -6600,14 +6602,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/hydroponics/glass{
-	name = "Hydroponics";
-	req_access_txt = "35"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/door/airlock/hydroponics/glass{
+	name = "Hydroponics";
+	req_one_access_txt = "35;28"
+	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "bxp" = (
@@ -7496,9 +7498,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "bEK" = (
@@ -40833,7 +40832,6 @@
 /turf/open/floor/iron/large,
 /area/service/hydroponics)
 "gBp" = (
-/obj/item/radio/intercom/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -40841,6 +40839,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/service/kitchen)
 "gBM" = (
@@ -83704,6 +83703,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "rWh" = (
