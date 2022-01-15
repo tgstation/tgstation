@@ -93,9 +93,6 @@
 	if(.)
 		return
 
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
-		return
-
 	switch(action)
 		// Take the object out
 		if("remove_object")
