@@ -61,4 +61,11 @@
 	name = "pea bullet casing"
 	desc = "A pea bullet casing. Yummy."
 	caliber = CALIBER_PEA
+	icon_state = "pea"
 	projectile_type = /obj/projectile/bullet/pea
+
+/obj/item/ammo_casing/pea/attack_self(mob/user)
+	qdel(src)
+	var/obj/item/food/grown/peas/peas = new (user.drop_location())
+	user.put_in_hands(peas)
+	to_chat(user, span_notice("You crush the pea in your hand, and it explodes into a small bundle of edible peas."))
