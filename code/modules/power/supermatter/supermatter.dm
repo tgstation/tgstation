@@ -1059,8 +1059,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			span_hear("Everything suddenly goes silent."))
 
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
-		comp_source.consume_atom(item)
-		comp_source.consume_atom(user)
+		comp_source.consume_multiple_atoms(list(item, user))
 		return TRUE
 
 /obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
