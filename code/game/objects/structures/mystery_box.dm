@@ -20,7 +20,7 @@
 
 /obj/structure/mystery_box
 	name = "mystery box"
-	desc = "A rectangular steel crate."
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear."
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "wooden"
 	pixel_y = -4
@@ -31,26 +31,21 @@
 	var/grant_sound = 'sound/effects/mysterybox/mbox_end.ogg'
 	/// The box's current state, and whether it can be interacted with in different ways
 	var/box_state = MYSTERY_BOX_STANDBY
-	/// The object that represents the
+	/// The object that represents the rapidly changing item that will be granted upon being claimed. Is not, itself, an item.
 	var/obj/mystery_box_item/presented_item
 	/// A timer for how long it takes for the box to start its expire animation
 	var/box_expire_timer
 	/// A timer for how long it takes for the box to close itself
 	var/box_close_timer
 	/// Every type that's a child of this that has an icon, icon_state, and isn't ABSTRACT is fair game. More granularity to come
-	var/selectable_base_type = /obj/item/gun
-	/// Holds every type that the box can roll, rolled on Initialize()
-	var/list/valid_types = list()
+	var/selectable_base_type = /obj/item
+	/// The instantiated list that contains all of the valid items that can be chosen from. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
+	var/list/valid_types
 
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
-	for(var/iter_path in typesof(selectable_base_type))
-		if(ispath(iter_path) && ispath(iter_path, /obj/item))
-			var/obj/item/iter_item = iter_path
-			if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state))
-				continue
-			valid_types += iter_path
+	generate_valid_types()
 
 /obj/structure/mystery_box/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -69,6 +64,17 @@
 /obj/structure/mystery_box/update_icon_state()
 	icon_state = "[initial(icon_state)][box_state > MYSTERY_BOX_STANDBY ? "open" : ""]"
 	return ..()
+
+/// This proc is used to define what item types valid_types is filled with
+/obj/structure/mystery_box/proc/generate_valid_types()
+	valid_types = list()
+
+	for(var/iter_path in typesof(selectable_base_type))
+		if(ispath(iter_path) && ispath(iter_path, /obj/item))
+			var/obj/item/iter_item = iter_path
+			if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
+				continue
+			valid_types += iter_path
 
 /// The box has been activated, play the sound and spawn the prop item
 /obj/structure/mystery_box/proc/activate(mob/living/user)
@@ -113,6 +119,13 @@
 	user.put_in_hands(instantiated_weapon)
 	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	close_box()
+
+
+/obj/structure/mystery_box/guns
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one seems focused on firearms."
+
+/obj/structure/mystery_box/guns/generate_valid_types()
+	valid_types = GLOB.summoned_guns
 
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
