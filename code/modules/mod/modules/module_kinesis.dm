@@ -85,7 +85,7 @@
 /obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
 	if(!isturf(target.loc))
 		return FALSE
-	if(get_dist(grabbed_atom, mod.wearer) > grab_range)
+	if(get_dist(target, mod.wearer) > grab_range)
 		return FALSE
 	return TRUE
 
