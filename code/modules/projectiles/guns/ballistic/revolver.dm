@@ -241,4 +241,5 @@
 	name = "\improper pea revolver"
 	desc = "A rather botanical looking revolver, chambered in A-pea rounds." // for the gatfruit only, holds special pea rounds
 	icon_state = "plant_revolver"
+	fire_sound = 'sound/weapons/peashoot.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/gatfruit
