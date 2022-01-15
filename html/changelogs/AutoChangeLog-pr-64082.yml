@@ -1,0 +1,5 @@
+author: "jjpark-kb"
+delete-after: True
+changes: 
+  - bugfix: "added buttons for the chapel privacy shutters on Deltastation"
+  - bugfix: "added missing chapel privacy shutters in the office on Deltastation"
