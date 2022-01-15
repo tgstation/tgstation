@@ -151,7 +151,7 @@
 /datum/crafting_recipe/food/risotto
 	name = "Risotto"
 	reqs = list(
-		/obj/item/food/cheese/wedge = 1,
+		/obj/item/food/cheesewedge = 1,
 		/datum/reagent/consumable/ethanol/wine = 5,
 		/obj/item/food/salad/boiledrice = 1,
 		/obj/item/food/grown/mushroom/chanterelle = 1
