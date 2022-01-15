@@ -10635,7 +10635,7 @@
 /obj/structure/fluff/paper/stack,
 /obj/item/paper,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/food/cheese/wheel,
+/obj/item/food/cheese,
 /turf/open/floor/plating,
 /area/maintenance/tram/right)
 "cld" = (

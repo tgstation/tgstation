@@ -20,14 +20,14 @@
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 10
 
-/obj/item/food/cheese/wheel/Initialize(mapload)
+/obj/item/food/cheese/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
+/obj/item/food/cheese/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheesewedge, 5, 30)
 
-/obj/item/food/cheese/wheel/MakeBakeable()
+/obj/item/food/cheese/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cheese/royal
