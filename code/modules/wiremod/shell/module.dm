@@ -3,7 +3,7 @@
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	module_type = MODULE_USABLE
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
 
