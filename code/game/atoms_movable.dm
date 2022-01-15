@@ -674,20 +674,57 @@
 		on_changed_z_level(old_turf, new_turf)
 
 	if(HAS_SPATIAL_GRID_CONTENTS(src))
+		var/datum/spatial_grid_cell/start_cell
+		var/datum/spatial_grid_cell/end_cell
 		if(old_turf && new_turf && (old_turf.z != new_turf.z \
 			|| ROUND_UP(old_turf.x / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.x / SPATIAL_GRID_CELLSIZE) \
 			|| ROUND_UP(old_turf.y / SPATIAL_GRID_CELLSIZE) != ROUND_UP(new_turf.y / SPATIAL_GRID_CELLSIZE)))
 
-			SSspatial_grid.exit_cell(src, old_turf)
-			SSspatial_grid.enter_cell(src, new_turf)
+			start_cell = SSspatial_grid.exit_cell(src, old_turf)
+			end_cell = SSspatial_grid.enter_cell(src, new_turf)
 
 		else if(old_turf && !new_turf)
-			SSspatial_grid.exit_cell(src, old_turf)
+			start_cell = SSspatial_grid.exit_cell(src, old_turf)
 
 		else if(new_turf && !old_turf)
-			SSspatial_grid.enter_cell(src, new_turf)
+			end_cell = SSspatial_grid.enter_cell(src, new_turf)
+
+		if(start_cell != end_cell)
+			//go through all of our recursive contents that care about the grid and tell them theyve changed grid cells
+			for(var/atom/movable/target in important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] | important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE])
+				target.on_grid_cell_change(end_cell, start_cell)
 
 	return TRUE
+
+///called when moving from one spatial grid cell to another
+/atom/movable/proc/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)
+	return
+
+/mob/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)//TODOKYLER: move this
+	if(!client)
+		return
+
+	var/list/new_closeby_cells = SSspatial_grid.get_block_of_cells(src, 1)
+
+	var/list/new_closeby_client_mobs = list()
+
+	for(var/datum/spatial_grid_cell/cell as anything in new_closeby_cells)
+		new_closeby_client_mobs += cell.client_contents
+
+	if(closeby_client_mobs)
+		//client mobs that used to be adjacent but arent any more
+		for(var/mob/non_adjacent_client_mob as anything in closeby_client_mobs - new_closeby_client_mobs)
+			LAZYREMOVE(non_adjacent_client_mob.closeby_client_mobs, src)
+
+	//client mobs that were not adjacent previously but are now
+	for(var/mob/newly_adjacent_client_mob as anything in new_closeby_client_mobs - closeby_client_mobs)
+		LAZYADD(newly_adjacent_client_mob.closeby_client_mobs, src)
+
+	if(length(new_closeby_client_mobs))
+		closeby_client_mobs = new_closeby_client_mobs
+
+	else
+		closeby_client_mobs = null
 
 // Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
 // You probably want CanPass()
@@ -827,13 +864,14 @@
 /atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
 	var/turf/our_turf = get_turf(src)
 
-	if(our_turf && SSspatial_grid.initialized)
-		SSspatial_grid.enter_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
-	else if(our_turf && !SSspatial_grid.initialized)
-		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
-
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
 		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
+
+	if(our_turf && SSspatial_grid.initialized)
+		SSspatial_grid.enter_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		on_grid_cell_change(SSspatial_grid.get_cell_of(src))
+	else if(our_turf && !SSspatial_grid.initialized)
+		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 ///Clears the clients channel of this movables important_recursive_contents list and all nested locs
 /atom/movable/proc/clear_important_client_contents(client/former_client)
@@ -842,6 +880,7 @@
 
 	if(our_turf && SSspatial_grid.initialized)
 		SSspatial_grid.exit_cell(src, our_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		on_grid_cell_change(null)
 	else if(our_turf && !SSspatial_grid.initialized)
 		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
@@ -1399,7 +1438,7 @@
 
 /obj/item/proc/do_pickup_animation(atom/target)
 	set waitfor = FALSE
-	if(!istype(loc, /turf))
+	if(!isturf(loc))
 		return
 	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
 	pickup_animation.plane = GAME_PLANE

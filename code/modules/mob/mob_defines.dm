@@ -45,6 +45,12 @@
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
+	///lazylist of client mobs in adjacent spatial grid cells to reduce spatial searches. by default is only used by client mobs to store other client mobs.
+	///represents an undirected graph where all nodes are linked bidirectionally: if playermob X is in this list, then we are in playermob X's list.
+	///when a mob that uses this changes spatial grid cells, all mobs that should no longer be in the list are removed from our list and we are removed from their list.
+	///every client mob in a newly adjacent grid cell is then added to this list and we are added to their list.
+	var/list/closeby_client_mobs
+
 	///Whether this mob has or is in the middle of committing suicide.
 	var/suiciding = FALSE
 
