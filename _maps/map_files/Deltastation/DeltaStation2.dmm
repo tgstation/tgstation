@@ -2546,7 +2546,6 @@
 /area/command/heads_quarters/rd)
 "aGo" = (
 /obj/structure/disposalpipe/trunk,
-/obj/machinery/newscaster/directional/east,
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -2560,6 +2559,9 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "aGu" = (
@@ -7496,9 +7498,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/structure/sign/poster/random{
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "bEK" = (
@@ -83704,6 +83703,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/service/bar/atrium)
 "rWh" = (
