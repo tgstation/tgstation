@@ -953,14 +953,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/provide_text_vars(datum/component/dusting/comp_source, atom/consumed_atom, list/magic_text)
 	. = list(
-		"rad_visual" = span_danger("As [src] slowly stops resonating, you find your skin covered in new radiation burns."),
-		"rad_audible" = span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."),
-		"rad_unseen" = span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."),
+		COMP_DUST_RADIATION_VISUAL = span_danger("As [src] slowly stops resonating, you find your skin covered in new radiation burns."),
+		COMP_DUST_RADIATION_AUDIBLE = span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."),
+		COMP_DUST_RADIATION_UNSEEN = span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."),
 	) + magic_text
 	if(ismob(consumed_atom))
-		.["range"] = 6
-		.["threshold"] = 0.6
-		.["chance"] = 60
+		.[COMP_DUST_RADIATION_RANGE] = 6
+		.[COMP_DUST_RADIATION_THRESHOLD] = 0.6
+		.[COMP_DUST_RADIATION_CHANCE] = 60
 		if(ishuman(consumed_atom))
 			. += get_human_text_interaction(comp_source, consumed_atom)
 		else if(isanimal(consumed_atom))
@@ -970,8 +970,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				verb_attack = animal_user.friendly_verb_continuous
 			else
 				verb_attack = animal_user.attack_verb_continuous
-			.["mob_visual"] = span_danger("[animal_user] unwisely [verb_attack] [src], and [animal_user.p_their()] body burns brilliantly before flashing into ash!")
-			.["mob_self"] = span_userdanger("You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.")
+			.[COMP_DUST_MOB_VISUAL] = span_danger("[animal_user] unwisely [verb_attack] [src], and [animal_user.p_their()] body burns brilliantly before flashing into ash!")
+			.[COMP_DUST_MOB_SELF] = span_userdanger("You unwisely touch [src], and your vision glows brightly as your body crumbles to dust. Oops.")
 
 /obj/machinery/power/supermatter_crystal/proc/get_human_text_interaction(datum/component/dusting/comp_source, mob/living/carbon/human/user)
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
@@ -980,27 +980,27 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!user.is_mouth_covered())
 		if(user.combat_mode)
 			return list(
-				"mob_visual" = span_danger("As [user] tries to take a bite out of [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash."),
-				"mob_self" = span_userdanger("You try to take a bite out of [src], but find [p_them()] far too hard to get anywhere before everything starts burning and your ears fill with ringing!"),
+				COMP_DUST_MOB_VISUAL = span_danger("As [user] tries to take a bite out of [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash."),
+				COMP_DUST_MOB_SELF = span_userdanger("You try to take a bite out of [src], but find [p_them()] far too hard to get anywhere before everything starts burning and your ears fill with ringing!"),
 			)
 
 		var/obj/item/organ/tongue/licking_tongue = user.getorganslot(ORGAN_SLOT_TONGUE)
 		if(licking_tongue)
 			return list(
-				"mob_visual" = span_danger("As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
-				"mob_self" = span_userdanger("You tentatively lick [src], but you can't figure out what it tastes like before everything starts burning and your ears fill with ringing!"),
+				COMP_DUST_MOB_VISUAL = span_danger("As [user] hesitantly leans in and licks [src] everything goes silent before [user.p_their()] body starts to glow and burst into flames before flashing to ash!"),
+				COMP_DUST_MOB_SELF = span_userdanger("You tentatively lick [src], but you can't figure out what it tastes like before everything starts burning and your ears fill with ringing!"),
 			)
 
 	var/obj/item/bodypart/head/forehead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(forehead)
 		return list(
-			"mob_visual" = span_danger("As [user]'s forehead bumps into [src], inducing a resonance... Everything goes silent before [user.p_their()] [forehead] flashes to ash!"),
-			"mob_self" = span_userdanger("You feel your forehead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision."),
+			COMP_DUST_MOB_VISUAL = span_danger("As [user]'s forehead bumps into [src], inducing a resonance... Everything goes silent before [user.p_their()] [forehead] flashes to ash!"),
+			COMP_DUST_MOB_SELF = span_userdanger("You feel your forehead bump into [src] and everything suddenly goes silent. As your head fills with ringing you come to realize that that was not a wise decision."),
 		)
 	
 	return list(
-		"mob_visual" = span_danger("[user] leans in and tries to lick [src], inducing a resonance... [user.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-		"mob_self" = span_userdanger("You lean in and try to lick [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\""),
+		COMP_DUST_MOB_VISUAL = span_danger("[user] leans in and tries to lick [src], inducing a resonance... [user.p_their()] body starts to glow and burst into flames before flashing into dust!"),
+		COMP_DUST_MOB_SELF = span_userdanger("You lean in and try to lick [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\""),
 	)
 
 /obj/machinery/power/supermatter_crystal/proc/dust_memory(mob/living/nom)

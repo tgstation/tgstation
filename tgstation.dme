@@ -179,6 +179,7 @@
 #include "code\__DEFINES\atmospherics\atmos_piping.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
+#include "code\__DEFINES\dcs\components\dusting.dm"
 #include "code\__DEFINES\dcs\signals\signals_action.dm"
 #include "code\__DEFINES\dcs\signals\signals_admin.dm"
 #include "code\__DEFINES\dcs\signals\signals_adventure.dm"

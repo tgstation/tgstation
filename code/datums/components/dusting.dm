@@ -343,21 +343,21 @@
 			return
 
 		//Logging. Don't skip admeme chat because this is a mob we're talking about
-		message_admins("[misc_text["message_admins_prefix"]][misc_text["message_admins_mob"]] [ADMIN_JMP(atom_parent)]")
-		atom_parent.investigate_log(misc_text["investigate_log_mob"], INVESTIGATE_SUPERMATTER)
+		message_admins("[misc_text[COMP_DUST_ADMINS_PREFIX]][misc_text[COMP_DUST_ADMINS_MOB]] [ADMIN_JMP(atom_parent)]")
+		atom_parent.investigate_log(misc_text[COMP_DUST_INVESTIGATE_MOB], INVESTIGATE_SUPERMATTER)
 
 		//Consume thy flesh
-		consumed_living.visible_message(misc_text["mob_visual"], misc_text["mob_self"], misc_text["mob_blind"])
+		consumed_living.visible_message(misc_text[COMP_DUST_MOB_VISUAL], misc_text[COMP_DUST_MOB_SELF], misc_text[COMP_DUST_MOB_BLIND])
 		consumed_living.dust(force = TRUE)
 
 	if(isobj(consumed_atom))
 		var/obj/consumed_object = consumed_atom
 		if(!currently_consuming_contents) //Skip sending this to an admin's chat
-			message_admins("[misc_text["message_admins_prefix"]][misc_text["message_admins"]] [ADMIN_JMP(atom_parent)].")
-		atom_parent.investigate_log(misc_text["investigate_log"], INVESTIGATE_SUPERMATTER)
+			message_admins("[misc_text[COMP_DUST_ADMINS_PREFIX]][misc_text[COMP_DUST_ADMINS]] [ADMIN_JMP(atom_parent)].")
+		atom_parent.investigate_log(misc_text[COMP_DUST_INVESTIGATE], INVESTIGATE_SUPERMATTER)
 
 		//Vaporized
-		consumed_object.visible_message(misc_text["obj_visual"], null, misc_text["obj_blind"])
+		consumed_object.visible_message(misc_text[COMP_DUST_OBJ_VISUAL], null, misc_text[COMP_DUST_OBJ_BLIND])
 		qdel(consumed_object)
 
 	if(isturf(consumed_atom))
@@ -368,7 +368,7 @@
 			return
 		
 		//Complete destruction
-		new_turf.visible_message(span_danger("[misc_text["turf_visual_prefix"]] and reveals [new_turf] underneath."), null, misc_text["turf_blind"])
+		new_turf.visible_message(span_danger("[misc_text[COMP_DUST_TURF_VISUAL_PREFIX]] and reveals [new_turf] underneath."), null, misc_text[COMP_DUST_TURF_BLIND])
 
 	//Om nom nom
 	playsound(get_turf(parent), consumption_sound, 80, vary = TRUE)
@@ -378,14 +378,14 @@
 
 	if(consume_does_radiation)
 		do_radiation(
-			range = misc_text["rad_range"],
-			threshold = misc_text["rad_threshold"],
-			chance = misc_text["rad_chance"],
-			visual_range = misc_text["rad_text_range"],
-			visual_message = misc_text["rad_visual"],
-			audible_message = misc_text["rad_audible"],
-			unseen_message = misc_text["rad_unseen"],
-			consumed_atom_name = misc_text["consumed_name"],
+			range = misc_text[COMP_DUST_RADIATION_RANGE],
+			threshold = misc_text[COMP_DUST_RADIATION_THRESHOLD],
+			chance = misc_text[COMP_DUST_RADIATION_CHANCE],
+			visual_range = misc_text[COMP_DUST_RADIATION_RANGE_TEXT],
+			visual_message = misc_text[COMP_DUST_RADIATION_VISUAL],
+			audible_message = misc_text[COMP_DUST_RADIATION_AUDIBLE],
+			unseen_message = misc_text[COMP_DUST_RADIATION_UNSEEN],
+			consumed_atom_name = misc_text[COMP_DUST_CONSUMED],
 		)
 	
 	callback_after_consume?.InvokeAsync(src, consumed_atom)
@@ -432,32 +432,32 @@
 //Returns a list full of text with assigned values to customize what is shown when a mob gets consumed. Also returns radiation values
 /datum/component/dusting/proc/get_special_text(datum/callback/callback, atom/atom_parent, atom/consumed_atom, rad_range, rad_threshold, rad_chance)
 	. = list(
-		"mob_visual" = span_danger("[consumed_atom] slams into [atom_parent], inducing a resonance... [consumed_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
-		"mob_self" = consumed_text,
-		"mob_blind" = span_hear("You hear an unearthly noise as a wave of heat washes over you."),
-		"obj_visual" = span_danger("[consumed_atom] smacks into [atom_parent] and rapidly flashes to ash."),
-		"obj_blind" = span_hear("You hear a loud crack as you are washed with a wave of heat."),
-		"turf_visual_prefix" = "[atom_parent] consumes \the [consumed_atom.name]",
-		"turf_blind" = span_hear("You hear a loud crack as you are washed with a wave of heat."),
-		"turf_override" = null,
-		"investigate_log" = "has consumed [consumed_atom]",
-		"investigate_log_mob" = "has consumed [key_name(consumed_atom)].",
-		"message_admins_prefix" = "[atom_parent] ([type]) ",
-		"message_admins" = "has consumed [consumed_atom]",
-		"message_admins_mob" = "has consumed [key_name_admin(consumed_atom)]",
-		"rad_range" = rad_range,
-		"rad_threshold" = rad_threshold,
-		"rad_chance" = rad_chance,
-		"rad_text_range" = watch_consume_text_range,
-		"rad_visual" = watch_consume_text_visual,
-		"rad_audible" = watch_consume_text_audible,
-		"rad_unseen" = watch_consume_text_unseen,
-		"consumed_name" = consumed_atom.name,
+		COMP_DUST_MOB_VISUAL = span_danger("[consumed_atom] slams into [atom_parent], inducing a resonance... [consumed_atom.p_their()] body starts to glow and burst into flames before flashing into dust!"),
+		COMP_DUST_MOB_SELF = consumed_text,
+		COMP_DUST_MOB_BLIND = span_hear("You hear an unearthly noise as a wave of heat washes over you."),
+		COMP_DUST_OBJ_VISUAL = span_danger("[consumed_atom] smacks into [atom_parent] and rapidly flashes to ash."),
+		COMP_DUST_OBJ_BLIND = span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		COMP_DUST_TURF_VISUAL_PREFIX = "[atom_parent] consumes \the [consumed_atom.name]",
+		COMP_DUST_TURF_BLIND = span_hear("You hear a loud crack as you are washed with a wave of heat."),
+		COMP_DUST_TURF_OVERRIDE = null,
+		COMP_DUST_INVESTIGATE = "has consumed [consumed_atom]",
+		COMP_DUST_INVESTIGATE_MOB = "has consumed [key_name(consumed_atom)].",
+		COMP_DUST_ADMINS_PREFIX = "[atom_parent] ([type]) ",
+		COMP_DUST_ADMINS = "has consumed [consumed_atom]",
+		COMP_DUST_ADMINS_MOB = "has consumed [key_name_admin(consumed_atom)]",
+		COMP_DUST_RADIATION_RANGE = rad_range,
+		COMP_DUST_RADIATION_THRESHOLD = rad_threshold,
+		COMP_DUST_RADIATION_CHANCE = rad_chance,
+		COMP_DUST_RADIATION_RANGE_TEXT = watch_consume_text_range,
+		COMP_DUST_RADIATION_VISUAL = watch_consume_text_visual,
+		COMP_DUST_RADIATION_AUDIBLE = watch_consume_text_audible,
+		COMP_DUST_RADIATION_UNSEEN = watch_consume_text_unseen,
+		COMP_DUST_CONSUMED = consumed_atom.name,
 	)
 	if(isobj(consumed_atom))
 		var/obj/consumed_object = consumed_atom
 		if(consumed_object.fingerprintslast)
-			.["investigate_log"] += ", last touched by [consumed_object.fingerprintslast]"
+			.[COMP_DUST_INVESTIGATE] += ", last touched by [consumed_object.fingerprintslast]"
 	
 	if(callback)
 		. = callback.Invoke(src, consumed_atom, .)
