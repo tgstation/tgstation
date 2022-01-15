@@ -12,7 +12,7 @@
 /datum/element/hatstacker/Attach(datum/target, list/hat_whitelist)
 	. = ..()
 	if(!hat_whitelist)
-		attachable_hats = subtypesof(/obj/item/clothing/head)	//PLACEHOLDER - TODO - Add default list of stackable hats
+		attachable_hats_list = subtypesof(/obj/item/clothing/head)	//PLACEHOLDER - TODO - Add default list of stackable hats
 	attachable_hats_list = hat_whitelist
 	if(!istype(target, /obj/item/clothing/head))
 		return ELEMENT_INCOMPATIBLE
