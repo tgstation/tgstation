@@ -55,6 +55,8 @@ Difficulty: Hard
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	del_on_death = TRUE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
@@ -117,15 +119,15 @@ Difficulty: Hard
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		blood_warp.Trigger(target)
+		blood_warp.Trigger(target = target)
 
 	if(!BUBBLEGUM_SMASH)
-		triple_charge.Trigger(target)
+		triple_charge.Trigger(target = target)
 	else
 		if(prob(50 + anger_modifier))
-			hallucination_charge.Trigger(target)
+			hallucination_charge.Trigger(target = target)
 		else
-			hallucination_charge_surround.Trigger(target)
+			hallucination_charge_surround.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)

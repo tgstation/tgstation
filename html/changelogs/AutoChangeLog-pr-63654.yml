@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "If you aim at something through cameras you will now aim at the thing you aimed at from the perspective of yourself instead of the camera you were using to aim."

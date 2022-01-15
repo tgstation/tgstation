@@ -58,6 +58,7 @@
 	name = "input gate"
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
@@ -69,6 +70,7 @@
 	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)

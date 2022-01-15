@@ -44,6 +44,8 @@
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	del_on_death = TRUE
 	gps_name = "Angelic Signal"
 	achievement_type = /datum/award/achievement/boss/colossus_kill
@@ -102,14 +104,14 @@
 		move_to_delay = initial(move_to_delay)
 
 	if(prob(20+anger_modifier)) //Major attack
-		spiral_shots.Trigger(target)
+		spiral_shots.Trigger(target = target)
 	else if(prob(20))
-		random_shots.Trigger(target)
+		random_shots.Trigger(target = target)
 	else
 		if(prob(70))
-			shotgun_blast.Trigger(target)
+			shotgun_blast.Trigger(target = target)
 		else
-			dir_shots.Trigger(target)
+			dir_shots.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))
