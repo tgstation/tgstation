@@ -123,9 +123,9 @@
 /obj/projectile/bullet/pea
 	name = "pea bullet"
 	damage = 15
+	weak_against_armour = TRUE
 	ricochets_max = 2
 	ricochet_chance = 100
-	wound_bonus = CANT_WOUND
 	icon_state = "pea"
 
 /obj/projectile/bullet/pea/on_hit(atom/target, blocked = FALSE)
