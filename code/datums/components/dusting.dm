@@ -275,8 +275,7 @@
 		), .proc/on_attack_hand)
 		RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/on_hitby_blob)
 		
-	if(callback_process)
-		START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSobj, src)
 
 /datum/component/dusting/Destroy()
 	UnregisterSignal(parent, list(\
@@ -296,11 +295,7 @@
 	return ..()
 
 /datum/component/dusting/process(delta_time)
-	if(!callback_process)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	. = callback_process.Invoke(src) //Kills process if this returns PROCESS_KILL
+	. = callback_process?.Invoke(src) //Kills process if this returns PROCESS_KILL
 	if(passively_consumes_turf && consume_turfs)
 		consume_atom(get_turf(parent))
 
