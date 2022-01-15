@@ -40,6 +40,7 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LAZYLIST(diseases)
+	QDEL_LIST(surgeries)
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels, message = TRUE)
@@ -1337,7 +1338,7 @@
 	if(!on_fire)
 		return
 	on_fire = FALSE
-	fire_stacks = 0 //If it is not called from set_fire_stacks()
+	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
 	clear_alert("fire")
@@ -1369,6 +1370,7 @@
 	fire_stacks = clamp(stacks, -20, 20)
 	if(fire_stacks <= 0)
 		extinguish_mob()
+
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()

@@ -295,6 +295,18 @@
 		/obj/item/mod/module/jetpack,
 		)
 
+/obj/item/mod/control/pre_equipped/timeline
+	theme = /datum/mod_theme/timeline
+	cell = /obj/item/stock_parts/cell/bluespace
+	initial_modules = list(
+		/obj/item/mod/module/eradication_lock,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/timeline_jumper,
+		/obj/item/mod/module/timestopper,
+		/obj/item/mod/module/rewinder,
+		/obj/item/mod/module/tem,
+	)
+
 //these exist for the prefs menu
 /obj/item/mod/control/pre_equipped/syndicate_empty
 	theme = /datum/mod_theme/syndicate
@@ -303,3 +315,6 @@
 	theme = /datum/mod_theme/elite
 
 INITIALIZE_IMMEDIATE(/obj/item/mod/control/pre_equipped/syndicate_empty)
+
+/obj/item/mod/control/pre_equipped/syndicate_empty/honkerative
+	applied_skin = "honkerative"
