@@ -105,7 +105,7 @@
 				if(powered)
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 
-	for(var/obj/item/food/cheese/cheese in range(1, src))
+	for(var/obj/item/food/cheesewedge/cheese in range(1, src))
 		if(prob(10))
 			be_fruitful()
 			qdel(cheese)
@@ -119,7 +119,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return
 	. = ..()
-	if(istype(A, /obj/item/food/cheese) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
+	if(istype(A, /obj/item/food/cheesewedge) && canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
 		if(health == maxHealth)
 			to_chat(src,span_warning("You don't need to eat or heal."))
 			return

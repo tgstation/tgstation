@@ -340,7 +340,7 @@
 
 /mob/living/simple_animal/hostile/rat/AttackingTarget()
 	. = ..()
-	if(istype(target, /obj/item/food/cheese))
+	if(istype(target, /obj/item/food/cheesewheel))
 		if (health >= maxHealth)
 			to_chat(src, span_warning("You feel fine, no need to eat anything!"))
 			return

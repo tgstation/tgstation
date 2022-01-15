@@ -186,7 +186,7 @@
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
 	reqs = list(
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheesewheel = 1,
 		/obj/item/clothing/head/crown = 1,
 		/datum/reagent/medicine/strange_reagent = 5,
 		/datum/reagent/toxin/mutagen = 5

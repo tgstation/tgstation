@@ -123,7 +123,7 @@
 			if(6 to 33)
 				king.say(pick("Treasure!","Our precious!","Cheese!"))
 				to_chat(king, span_notice("Score! You find some cheese!"))
-				new /obj/item/food/cheese(get_turf(king))
+				new /obj/item/food/cheesewedge(get_turf(king))
 			else
 				var/pickedtrash = pick(GLOB.ratking_trash)
 				to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))

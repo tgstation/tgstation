@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/obj/item/food/cheese
+/obj/item/food/cheesewheel
 	name = "cheese wheel"
 	desc = "A big wheel of delcious Cheddar."
 	icon_state = "cheesewheel"
@@ -20,17 +20,17 @@
 	/// used to determine how much health rats/regal rats recover when they eat it.
 	var/rat_heal = 10
 
-/obj/item/food/cheese/Initialize(mapload)
+/obj/item/food/cheesewheel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/food_storage)
 
-/obj/item/food/cheese/MakeProcessable()
+/obj/item/food/cheesewheel/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheesewedge, 5, 30)
 
-/obj/item/food/cheese/MakeBakeable()
+/obj/item/food/cheesewheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
-/obj/item/food/cheese/royal
+/obj/item/food/cheesewheel/royal
 	name = "royal cheese"
 	desc = "Ascend the throne. Consume the wheel. Feel the POWER."
 	icon_state = "royalcheese"
@@ -39,11 +39,11 @@
 	tastes = list("cheese" = 4, "royalty" = 1)
 	rat_heal = 70
 
-/obj/item/food/cheese/Initialize(mapload)
+/obj/item/food/cheesewheel/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
-/obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+/obj/item/food/cheesewheel/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
 
 	king.cheese_heal(src, rat_heal, span_green("You eat [src], restoring some health."))
