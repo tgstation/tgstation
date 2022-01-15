@@ -120,7 +120,7 @@
 
 /obj/structure/sign/plaques/kiddie/devils_tooth
 	name = "\improper Devil's Tooth Plaque"
-	desc = "A plaque commemerating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."
+	desc = "A plaque commemorating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."
 
 /obj/structure/sign/plaques/kiddie/badger
 	name = "\improper Remembrance Plaque"
