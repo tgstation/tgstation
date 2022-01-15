@@ -28,7 +28,7 @@
 /// Will update the light (duh).
 /// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
-	if (QDELETED(src))
+	if (QDELING(src))
 		return
 
 	if(light_system != STATIC_LIGHT)
