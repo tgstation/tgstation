@@ -737,7 +737,7 @@
 		var/mob/chosen_mind = pick_n_take(candidates)
 		assigned += chosen_mind.mind
 		chosen_mind.mind.restricted_roles = restricted_roles
-		chosen_mind.mind.special_role = ROLE_CHANGELING
+		chosen_mind.mind.special_role = ROLE_THIEF
 		GLOB.pre_setup_antags += chosen_mind.mind
 	return TRUE
 
