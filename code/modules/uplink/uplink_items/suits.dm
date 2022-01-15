@@ -59,12 +59,12 @@
 	item = /obj/item/mod/control/pre_equipped/elite
 	// This one costs more than the nuke op counterpart
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
-	progression_minimum = 60 MINUTES
+	progression_minimum = 90 MINUTES
 	cost = 16
 
 /datum/uplink_item/suits/noslip
 	name = "MODsuit Anti-Slip Module"
 	desc = "A MODsuit module preventing the user from slipping on water."
 	item = /obj/item/mod/module/noslip
-	progression_minimum = 60 MINUTES
+	progression_minimum = 90 MINUTES
 	cost = 4
