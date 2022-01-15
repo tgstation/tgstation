@@ -16,7 +16,7 @@
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
 	var/antimagic_obstructions = NONE
- 	///if true, immune atoms moving ends the timestop instead of duration.
+	///if true, immune atoms moving ends the timestop instead of duration.
 	var/channelled = FALSE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
@@ -68,7 +68,7 @@
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_obstructions, channelled))
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, antimagic_obstructions, channelled)
 	..()
 	src.immune = immune
 	src.antimagic_obstructions = antimagic_obstructions
