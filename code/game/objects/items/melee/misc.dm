@@ -197,7 +197,7 @@
 		consume_on_attack_hand = FALSE,\
 		consume_turfs = TRUE,\
 		ignore_subtypesof = list(),\
-		callback_on_process = CALLBACK(src, .proc/release_self),\
+		callback_process = CALLBACK(src, .proc/release_self),\
 		callback_on_pickup = CALLBACK(src, .proc/handle_pickup),\
 	)
 
