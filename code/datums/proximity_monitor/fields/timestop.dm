@@ -72,7 +72,7 @@
 	..()
 	src.immune = immune
 	src.antimagic_obstructions = antimagic_obstructions
- 	src.channelled = channelled
+	src.channelled = channelled
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
