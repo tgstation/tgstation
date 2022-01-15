@@ -109,23 +109,22 @@
 **/
 /datum/element/hatstacker/proc/attempt_remove_hat(obj/item/clothing/head/target, mob/user)
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
 		return
-	attached_hat.forceMove(attached_hat.drop_location())
-	attached_hat = null
 	if(user.put_in_active_hand(attached_hat))
 		target.balloon_alert(user, "hat removed")
 	else
+		attached_hat.forceMove(attached_hat.drop_location())
 		target.balloon_alert_to_viewers("the hat falls to the floor!")
+	attached_hat = null
 
 /datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
 	SIGNAL_HANDLER
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	attempt_remove_hat(target, user)
 	user.update_inv_head()
 
 /datum/element/hatstacker/proc/mod_remove_hat(obj/item/clothing/head/mod/target, mob/user)
 	SIGNAL_HANDLER
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	attempt_remove_hat(target, user)
 	target.mod.wearer.update_inv_back()
