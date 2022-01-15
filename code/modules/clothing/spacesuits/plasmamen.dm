@@ -66,7 +66,7 @@
 	visor_toggling()
 	update_appearance()
 	AddElement(/datum/element/hatstacker, typesof(list(\
-	/obj/item/clothing/head,\
+		/obj/item/clothing/head,\
 	)))	//TODO: FILL OUT THIS LIST
 
 /obj/item/clothing/head/helmet/space/plasmaman/AltClick(mob/user)

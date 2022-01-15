@@ -9,9 +9,11 @@
 	///Whitelist of attachable hats, supplied as argument 2
 	var/list/attachable_hats_list
 
-/datum/element/hatstacker/Attach(datum/target, list/attachable_hats_list)
+/datum/element/hatstacker/Attach(datum/target, list/hat_whitelist)
 	. = ..()
-	attachable_hats_list = src.attachable_hats_list
+	if(!hat_whitelist)
+		attachable_hats = subtypesof(/obj/item/clothing/head)	//PLACEHOLDER - TODO - Add default list of stackable hats
+	attachable_hats_list = hat_whitelist
 	if(!istype(target, /obj/item/clothing/head))
 		return ELEMENT_INCOMPATIBLE
 
@@ -106,23 +108,24 @@
 *
 **/
 /datum/element/hatstacker/proc/attempt_remove_hat(obj/item/clothing/head/target, mob/user)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
 	if(!attached_hat)
 		return
-	attached_hat.forceMove(user.drop_location())
+	attached_hat.forceMove(attached_hat.drop_location())
+	attached_hat = null
 	if(user.put_in_active_hand(attached_hat))
 		target.balloon_alert(user, "hat removed")
 	else
 		target.balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
 
 /datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
 	SIGNAL_HANDLER
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	attempt_remove_hat(target, user)
 	user.update_inv_head()
 
 /datum/element/hatstacker/proc/mod_remove_hat(obj/item/clothing/head/mod/target, mob/user)
 	SIGNAL_HANDLER
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	attempt_remove_hat(target, user)
 	target.mod.wearer.update_inv_back()
