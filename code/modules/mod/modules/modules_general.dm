@@ -752,7 +752,7 @@
 		letting the audibly impaired use sign language over comms."
 	icon_state = "signlang_radio"
 	complexity = 1
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/signlang_radio)
 
 /obj/item/mod/module/signlang_radio/on_suit_activation()
