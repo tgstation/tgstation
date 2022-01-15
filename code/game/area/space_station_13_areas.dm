@@ -1283,12 +1283,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "customs_point_aux"
 
 /area/security/checkpoint/customs/fore
-    name = "Fore Customs"
-    icon_state = "customs_point_fore"
+	name = "Fore Customs"
+	icon_state = "customs_point_fore"
 
 /area/security/checkpoint/customs/aft
-    name = "Aft Customs"
-    icon_state = "customs_point_aft"
+	name = "Aft Customs"
+	icon_state = "customs_point_aft"
 
 //Security - AI Monitored
 /area/ai_monitored/security/armory
