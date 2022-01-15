@@ -1,0 +1,26 @@
+{
+	"Thief": {
+		"introduction": "You're a Thief.",
+		"objective_type": "/datum/objective/steal",
+		"objective_needs_target": 1,
+		"goal": "For one reason or another, you're looking to steal something expensive today, and you've found a good target."
+	},
+	"Hoarder": {
+		"introduction": "You're a Hoarder.",
+		"objective_type": "/datum/objective/hoarder",
+		"objective_needs_target": 1,
+		"goal": "You have a pretty bad hoarding problem. But you have a real bad feeling about today, and you need to set up a stash for when it all goes down."
+	},
+	"Black Market Outfitter": {
+		"introduction": "You're a Black Market Outfitter.",
+		"objective_type": "/datum/objective/steal_n_of_type/summon_guns",
+		"objective_needs_target": 0,
+		"goal": "You've tapped into the black market, and it turns out you could get rich quick introducing some of Nanotrasen's guns to the dark web!"
+	},
+	"Organ Market Collector": {
+		"introduction": "You're am Organ Market Collector.",
+		"objective_type": "/datum/objective/steal_n_of_type/organs",
+		"objective_needs_target": 0,
+		"goal": "Nanotrasen has top of the line medical resources handy, which means you could be making a pretty penny slipping some organs out of medical."
+	}
+}

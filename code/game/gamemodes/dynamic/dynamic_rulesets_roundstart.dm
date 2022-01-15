@@ -704,6 +704,50 @@
 
 	spawn_meteors(ramp_up_final, wavetype)
 
+/// Ruleset for thieves
+/datum/dynamic_ruleset/roundstart/thieves
+	name = "Thieves"
+	antag_flag = ROLE_THIEF
+	antag_datum = /datum/antagonist/thief
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 5
+	cost = 6 //very cheap cost for the round
+	scaling_cost = 9
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
+	antag_cap = list("denominator" = 24)
+
+/datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
+	. = ..()
+	var/num_thieves = get_antag_cap(population) * (scaled_times + 1)
+	for (var/i = 1 to num_thieves)
+		if(candidates.len <= 0)
+			break
+		var/mob/chosen_mind = pick_n_take(candidates)
+		assigned += chosen_mind.mind
+		chosen_mind.mind.restricted_roles = restricted_roles
+		chosen_mind.mind.special_role = ROLE_CHANGELING
+		GLOB.pre_setup_antags += chosen_mind.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/thieves/execute()
+	for(var/datum/mind/chosen_mind as anything in assigned)
+		var/datum/antagonist/thief/new_antag = new antag_datum
+		chosen_mind.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= chosen_mind
+	return TRUE
+
 /// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations
 	name = "Nations"
