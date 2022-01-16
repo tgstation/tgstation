@@ -1,5 +1,8 @@
-///Blood walk element, causes you to make blood wherever you walk.
+///Blood walk, a bespoke element that causes you to make blood wherever you walk.
 /datum/element/blood_walk
+	element_flags = ELEMENT_BESPOKE
+	id_arg_index = 2
+
 	///A unique blood type we might want to spread
 	var/blood_type = /obj/effect/decal/cleanable/blood
 	///The sound that plays when we spread blood.
