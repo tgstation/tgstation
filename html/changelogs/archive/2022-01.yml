@@ -515,3 +515,88 @@
   - bugfix: separatists no longer have a bad greeting message
   - bugfix: united nations lawset is now properly rejecting law changes unless it
       completely overrides the laws
+2022-01-15:
+  MMMiraclkes:
+  - bugfix: Tramstation's prison area is no longer powered by a secret bathroom APC.
+  OrionTheFox:
+  - rscadd: The Captain and Corporate MODsuits now have an inbuilt hat stabilizer,
+      which can also rarely be found in maintenance!
+  RaidenKoizuma:
+  - rscadd: Added a medical medal lockbox to spawn within CMO's secure locker which
+      contains two medals
+  RandomGamer123:
+  - bugfix: Allows for putting integrated circuits (and swiping your ID to lock them)
+      into circuit airlocks without having to use combat mode.
+  Ryll/Shaps:
+  - balance: Rubbershot is now much more bouncy than before, loses damage over range
+      a bit slower, and has a somewhat tighter spread. Its pellets now also fly 50%
+      slower.
+  - bugfix: Bullets that deal both brute and stamina damage like .38 Rubber will now
+      properly have both their brute and stamina damage reduced after each ricochet,
+      instead of just the brute.
+  SmoSmoSmoSmok:
+  - bugfix: Mulebots wont crush people in no gravity
+  Vexylius:
+  - qol: Chef can now enter botany on Delta. Also, there's a new biogenerator there.
+  itseasytosee:
+  - bugfix: Fixed some drugs keeping you high forever
+  pitreforten:
+  - bugfix: you can now get wet again!
+  tralezab:
+  - rscadd: Time Eradication Agents now use a MODsuit, which comes with some extra
+      functionalities
+2022-01-16:
+  ArcaneMusic:
+  - qol: Improves feedback from the civilian and pirate bounty pads.
+  - bugfix: Bounty pads can now be deconstructed like regular machinery.
+  DragonTrance:
+  - bugfix: The tram can no longer consume and delete the Supermatter.
+  Fikou:
+  - qol: You can now right-click modsuit action buttons to activate them faster.
+  - balance: Undeployed modsuits now have 1/5 of the slowdown instead of 0 (from 0.15
+      on quick suits like rescue and 0.2 on semi quick like advanced or medical to
+      0.35 on research and 0.4 on prototype)
+  - qol: the storage modsuit module now tries to scoop up the suit storage item
+  - balance: you can now print expanded storage modules
+  - bugfix: the magnate suit now has a jetpack
+  - bugfix: you can now spraypaint storage items
+  - bugfix: fixes bomb protecting modsuits not protecting the contents from bombs
+  - bugfix: fixes elite suit nukies burning down
+  - rscadd: 'MODsuit modular cores. These power your suit, the three types of them
+      are: standard, your current ones, using power cells. infinite, dont use power
+      at all, used by some admin and wizard suits. ethereal, these dont use power
+      cells, but an ethereal''s charge directly, they are craftable.'
+  JohnFulpWillard:
+  - qol: People who don't have head revolutionary enabled in their preference, will
+      no longer be promoted to head revolutionaries by force.
+  - bugfix: People banned from head revolutionary will no longer roll Head revolutionary.
+  - bugfix: Assigning timers on people's IDs now work properly, yay Tramstation Brig!
+  LemonInTheDark:
+  - rscadd: Added a visual effect for dropping items from your inventory or hands
+  - rscadd: Increased the animation time of the pickup effect, to make it less of
+      a snapshot. Did some other things to it to hopefully make it look nicer
+  - rscadd: Very minorly changed self attack animations
+  - bugfix: Attack animations will display properly now
+  ReinaCoder:
+  - bugfix: there is now a fire alarm in Metastation arrivals
+  Ryll/Shaps, credit to Crystalwarrior of Hippiestation:
+  - rscadd: Suffering slashing or piercing wounds, as well as violent dismemberment,
+      can now send bloodsplatters flying from your body that can land on walls/floors/windows/whatever
+      in the environment. Juicy!
+  SuperNovaa41:
+  - bugfix: Cult airlocks properly throw non-cultists across the room now.
+  capsaicinz:
+  - rscadd: 'Honk Co. is proud to announce their new project: clown operative MODsuits!
+      Adds the "Honkerative" theme to Syndicate MODsuits, and a paint kit module to
+      clown operative uplinks. Honka honka.'
+  itseasytosee:
+  - bugfix: Robot themed wings will now actually be visible
+  - imageadd: If synths get wings, they will be robot themed.
+  jjpark-kb:
+  - bugfix: added buttons for the chapel privacy shutters on Deltastation
+  - bugfix: added missing chapel privacy shutters in the office on Deltastation
+  san7890:
+  - bugfix: Moved the poster and newscaster in the bar on Deltastation so they aren't
+      ontop of other wall objects for ghosts/AIs
+  timothymtorres:
+  - bugfix: Fix deaf people being able to hear in certain text messages.

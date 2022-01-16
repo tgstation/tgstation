@@ -431,11 +431,9 @@
 			return
 		cell = suit.cell
 	else if(mod)
-		if(!istype(mod))
+		cell = mod.get_charge_source()
+		if(!istype(cell))
 			return
-		if(!mod.cell)
-			return
-		cell = mod.cell
 	else
 		return
 	use_power(charge_rate * delta_time)
