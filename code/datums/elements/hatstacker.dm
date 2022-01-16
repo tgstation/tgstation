@@ -1,5 +1,5 @@
 /**
- * ### hat stacker element!
+ * ### Hat Stacker element!
  *
  * Bespoke element (1-per-unique-argument in existence) that lets helmets stack hats on top of themselves!
  */
@@ -12,8 +12,9 @@
 /datum/element/hatstacker/Attach(datum/target, list/hat_whitelist)
 	. = ..()
 	if(!hat_whitelist)
-		attachable_hats_list = subtypesof(/obj/item/clothing/head)	//PLACEHOLDER - TODO - Add default list of stackable hats
-	attachable_hats_list = hat_whitelist
+		attachable_hats_list = subtypesof(/obj/item/clothing/head)	//PLACEHOLDER - TODO - Add pre-defined list of stackable hats
+	else
+		attachable_hats_list = hat_whitelist
 	if(!istype(target, /obj/item/clothing/head))
 		return ELEMENT_INCOMPATIBLE
 
