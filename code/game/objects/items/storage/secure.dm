@@ -7,9 +7,7 @@
  * Wall Safe
  */
 
-// -----------------------------
-//         Generic Item
-// -----------------------------
+///Generic Safe
 /obj/item/storage/secure
 	name = "secstorage"
 	desc = "This shouldn't exist. If it does, create an issue report."
@@ -122,9 +120,7 @@
 			return
 	return
 
-// -----------------------------
-//        Secure Briefcase
-// -----------------------------
+///Secure Briefcase
 /obj/item/storage/secure/briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
@@ -151,7 +147,7 @@
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
-//Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
+///Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/storage/secure/briefcase/syndie
 	force = 15
 
@@ -161,11 +157,7 @@
 	for(var/i in 1 to storage_space.max_items - 2)
 		new /obj/item/stack/spacecash/c1000(src)
 
-
-// -----------------------------
-//        Secure Safe
-// -----------------------------
-
+///Secure Safe
 /obj/item/storage/secure/safe
 	name = "secure safe"
 	icon = 'icons/obj/storage.dmi'
