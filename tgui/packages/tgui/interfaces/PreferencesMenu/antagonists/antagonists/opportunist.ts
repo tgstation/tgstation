@@ -6,8 +6,8 @@ const Opportunist: Antagonist = {
   key: "opportunist",
   name: "Opportunist",
   description: [
-    multiline`Something's going down, it's all about to be FUBAR. Maybe
-    nobody will notice if you supplement your paycheck with some loot?`,
+    multiline`A form of thief that can activate at any point in the middle
+    of the shift, looking to line their paychecks while nobody's looking.`,
     THIEF_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Midround,
