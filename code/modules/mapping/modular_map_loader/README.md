@@ -43,6 +43,10 @@ modules = ["example_1.dmm", "example_2.dmm"]
 
 which contains the mapping between the key `"example"` and the list of filenames `["example_1.dmm", "example_2.dmm"]`.
 
+### /datum/unit_test/modular_map_loader
+
+This is the unit test for modular map loading. It performs two checks on every subtype of `/obj/modular_map_root`. First it checks if the file `config_file` points at, and if it does not the test is failed because the file does not exist. If it does exist, it then attempts to read the file, if this is null it means the fild is not valid TOML, and the test is failed because the TOML file is invalid.
+
 ## How-To
 
 This section will cover the basics of how to use map modules as a mapper. If you want a concrete example to look at, the space ruin `_maps/RandomRuins/SpaceRuins/DJstation.dmm` and its associated code, configuration and modules employ all the techniques covered in this tutorial.
