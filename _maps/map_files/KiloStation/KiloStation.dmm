@@ -9649,10 +9649,10 @@
 /obj/machinery/ecto_sniffer{
 	pixel_x = -6
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = -4
 	},
-/obj/item/mod/construction/core{
+/obj/item/mod/core/standard{
 	pixel_x = 4
 	},
 /turf/open/floor/iron/dark,
