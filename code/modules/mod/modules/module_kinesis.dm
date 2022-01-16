@@ -58,6 +58,7 @@
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
 	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
+	kinesis_icon.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	grabbed_atom.add_overlay(kinesis_icon)
 	movement_animation = grabbed_atom.animate_movement
 	grabbed_atom.animate_movement = NO_STEPS
@@ -97,7 +98,9 @@
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
 	if(grabbed_atom.Move(next_turf))
 		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
-			mod.wearer.put_in_hands(grabbed_atom)
+			var/obj/item/grabbed_item = grabbed_atom
+			grabbed_item.pickup(mod.wearer)
+			mod.wearer.put_in_hands(grabbed_item)
 		return
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
@@ -166,6 +169,8 @@
 	soundloop.stop()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
+	if(!isturf(mod.wearer.loc))
+		return FALSE
 	if(ismovable(target) && !isturf(target.loc))
 		return FALSE
 	if(!can_see(mod.wearer, target, grab_range))
@@ -176,24 +181,24 @@
 	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
 	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, .proc/launch_impact)
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
-	grabbed_atom.throw_at(target_turf, range = grab_range, speed = 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
+	grabbed_atom.throw_at(target_turf, range = grab_range, speed = grabbed_atom.density ? 3 : 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
 	if(!(isstructure(source) || ismachinery(source) || isvehicle(source)))
 		return
 	var/damage_self = TRUE
-	var/damage = 5
+	var/damage = 8
 	if(source.density)
 		damage_self = FALSE
 		damage = 15
 	if(isliving(hit_atom))
 		var/mob/living/living_atom = hit_atom
-		living_atom.apply_damage(damage)
+		living_atom.apply_damage(damage, BRUTE)
 	else if(hit_atom.uses_integrity)
-		hit_atom.take_damage(damage)
+		hit_atom.take_damage(damage, BRUTE, MELEE)
 	if(damage_self && source.uses_integrity)
-		source.take_damage(source.max_integrity/5)
+		source.take_damage(source.max_integrity/5, BRUTE, MELEE)
 
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
