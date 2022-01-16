@@ -983,6 +983,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	. = TRUE
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+		var/mob/living/carbon/carbon_user = user
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+			user.visible_message(span_danger("[user] reaches out and touches [src], a sound similar to the ringing of glass resonating. It seems [user.p_their()] gloves protected [user.p_them()] from the crystal."),
+				span_danger("You reach out and touch [src], your gloves protecting you from the crystal's surface."))
+			return
 		dust_mob(user, cause = "hand")
 		return
 
@@ -1040,6 +1045,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
 		return FALSE
+	if(istype(item, /obj/item/clothing/gloves/supermatter_gloves))
+		user.visible_message(span_danger("The [item] comes into contact with \the [src]. Nothing really happens."),\
+			span_danger("You touch \the [src] with the [item], being cautious to keep your fingers far from the crystal itself."))
+		return
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
@@ -1092,6 +1101,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		radiation_pulse(src, max_range = 3, threshold = 0.1, chance = 50)
 
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
+		var/mob/living/carbon/carbon_user = user
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+			user.visible_message(span_danger("[user] reaches out and touches [src], a sound similar to the ringing of glass resonating. It seems [user.p_their()] gloves protected [user.p_them()] from the crystal."),
+				span_danger("You reach out and touch [src], your gloves protecting you from the crystal's surface."))
+			return
 		var/vis_msg = span_danger("[user] reaches out and touches [src] with [item], inducing a resonance... [item] starts to glow briefly before the light continues up to [user]'s body. [user.p_they(TRUE)] bursts into flames before flashing into dust!")
 		var/mob_msg = span_userdanger("You reach out and touch [src] with [item]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"")
 		dust_mob(user, vis_msg, mob_msg)
@@ -1104,10 +1118,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/Bumped(atom/movable/hit_object)
 	if(isliving(hit_object))
+		var/mob/living/carbon/carbon_user = hit_object
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+			hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src], a sound similar to the ringing of glass resonating. It looks like [hit_object.p_their()] caught [hit_object.p_them()]self with their gloves!"),
+				span_userdanger("You slam into \the [src], but manage to catch yourself with your gloves at the last second!"))
+			return
 		hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src] inducing a resonance... [hit_object.p_their()] body starts to glow and burst into flames before flashing into dust!"),
 			span_userdanger("You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
 			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 	else if(isobj(hit_object) && !iseffect(hit_object))
+		if(istype(hit_object, /obj/item/clothing/gloves/supermatter_gloves))
+			hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src], but not much happens."))
+			return
 		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src] and rapidly flashes to ash."), null,
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 	else

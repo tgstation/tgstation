@@ -50,6 +50,13 @@
 
 	QDEL_NULL(pull_component_weakref)
 
+/obj/item/clothing/gloves/supermatter_gloves
+	name = "nobilium gloves"
+	desc = "Gloves laced with hyper-nobilium fabric, to prevent any adverse reactions."
+	icon_state = "nob"
+	inhand_icon_state = "nob"
+	transfer_prints = FALSE
+
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."

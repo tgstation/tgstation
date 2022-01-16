@@ -632,6 +632,15 @@
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/supermatter_gloves
+	name = "Nobilium Gloves"
+	result = /obj/item/clothing/gloves/supermatter_gloves
+	time = 15
+	reqs = list(/obj/item/clothing/gloves/color/black = 1,
+				/obj/item/hypernoblium_crystal = 1)
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
