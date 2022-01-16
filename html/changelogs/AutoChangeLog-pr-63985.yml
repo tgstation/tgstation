@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - admin: "Station traits are now logged at roundstart."

@@ -28,7 +28,6 @@
 		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
 		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
 		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
-		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
 		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
@@ -166,10 +165,6 @@
 			name = "lusty xenomorph maid ([rand(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph maid."
 			icon_state = "cutout_lusty"
-		if("Swarmer")
-			name = "Swarmer ([rand(1, 999)])"
-			desc = "A cardboard cutout of a swarmer."
-			icon_state = "cutout_swarmer"
 		if("Ash Walker")
 			name = lizard_name(pick(MALE, FEMALE))
 			desc = "A cardboard cutout of an ash walker."

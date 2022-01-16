@@ -142,6 +142,7 @@
 	QDEL_NULL(inv1)
 	QDEL_NULL(inv2)
 	QDEL_NULL(inv3)
+	QDEL_NULL(hands)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(alert_control)
 	cell = null
@@ -853,7 +854,7 @@
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/undeployment/Trigger()
+/datum/action/innate/undeployment/Trigger(trigger_flags)
 	if(!..())
 		return FALSE
 	var/mob/living/silicon/robot/R = owner
