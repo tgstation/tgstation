@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile
+/mob/living/simple_animal/hostile/smspider
 	name = "supermatter spider"
 	desc= "A sliver of supermatter placed upon a robotically enhanced pedestal."
 	icon = 'icons/mob/smspider.dmi'
