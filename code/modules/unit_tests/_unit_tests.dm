@@ -108,7 +108,6 @@
 #include "surgeries.dm"
 #include "teleporters.dm"
 #include "tgui_create_message.dm"
-#include "thief.dm"
 #include "timer_sanity.dm"
 #include "traitor.dm"
 #include "unit_test.dm"

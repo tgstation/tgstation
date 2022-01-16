@@ -857,6 +857,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	wanted_items = list(/obj/item/gun)
 	amount = 5
 
+/datum/objective/steal_n_of_type/summon_guns/thief
+	explanation_text = "Steal at least 3 guns!"
+	amount = 3
+
 /datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"
 	explanation_text = "Steal at least five magical artefacts!"
@@ -887,7 +891,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "steal organs"
 	explanation_text = "Steal at least 10 organs! They must be kept healthy."
 	wanted_items = list(/obj/item/organ)
-	amount = 10
+	amount = 5 //i want this to be higher, but the organs must be fresh at roundend
 
 /datum/objective/steal_n_of_type/organs/check_completion()
 	var/list/datum/mind/owners = get_owners()

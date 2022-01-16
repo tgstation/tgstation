@@ -1,18 +1,13 @@
-import { Antagonist, Category } from "../base";
 import { multiline } from "common/string";
-
-export const THIEF_MECHANICAL_DESCRIPTION
-  = multiline`
-      While all the chaos of the station goes down, try to escape with
-      some loot without getting caught!
-    `;
+import { Antagonist, Category } from "../base";
+import { THIEF_MECHANICAL_DESCRIPTION } from "./thief";
 
 const Opportunist: Antagonist = {
   key: "opportunist",
   name: "Opportunist",
   description: [
-    `Something's going down, it's all about to be FUBAR. Maybe nobody will
-    notice if you nick some loot in the chaos?`,
+    multiline`Something's going down, it's all about to be FUBAR. Maybe
+    nobody will notice if you supplement your paycheck with some loot?`,
     THIEF_MECHANICAL_DESCRIPTION,
   ],
   category: Category.Midround,
