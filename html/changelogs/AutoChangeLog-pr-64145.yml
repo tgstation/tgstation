@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "Windoors can now have their electronics removed without creating infinite assemblies."
