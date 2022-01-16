@@ -215,7 +215,7 @@
 	var/mob/living/carbon/carbon_user = user
 	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
-	if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+	if(istype(carbon_user.gloves, /obj/item/clothing/gloves/nob_gloves))
 		user.visible_message(span_notice("[user] reaches out and tries to pick up [src], the gloves protecting them from any danger."),\
 			span_userdanger("You reach out for the [src], the gloves protecting you from any potential harm."))
 		return

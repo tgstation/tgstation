@@ -984,7 +984,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. = TRUE
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/carbon_user = user
-		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/nob_gloves))
 			user.visible_message(span_danger("[user] reaches out and touches [src], a sound similar to the ringing of glass resonating. It seems [user.p_their()] gloves protected [user.p_them()] from the crystal."),
 				span_danger("You reach out and touch [src], your gloves protecting you from the crystal's surface."))
 			return
@@ -1045,7 +1045,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
 		return FALSE
-	if(istype(item, /obj/item/clothing/gloves/supermatter_gloves))
+	if(istype(item, /obj/item/clothing/gloves/nob_gloves))
 		user.visible_message(span_danger("The [item] comes into contact with \the [src]. Nothing really happens."),\
 			span_danger("You touch \the [src] with the [item], being cautious to keep your fingers far from the crystal itself."))
 		return
@@ -1102,7 +1102,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	else if(Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
 		var/mob/living/carbon/carbon_user = user
-		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/nob_gloves))
 			user.visible_message(span_danger("[user] reaches out and touches [src], a sound similar to the ringing of glass resonating. It seems [user.p_their()] gloves protected [user.p_them()] from the crystal."),
 				span_danger("You reach out and touch [src], your gloves protecting you from the crystal's surface."))
 			return
@@ -1119,7 +1119,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/Bumped(atom/movable/hit_object)
 	if(isliving(hit_object))
 		var/mob/living/carbon/carbon_user = hit_object
-		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/supermatter_gloves))
+		if(istype(carbon_user.gloves, /obj/item/clothing/gloves/nob_gloves))
 			hit_object.visible_message(span_danger("\The [hit_object] slams into \the [src], a sound similar to the ringing of glass resonating. It looks like [hit_object.p_their()] caught [hit_object.p_them()]self with their gloves!"),
 				span_userdanger("You slam into \the [src], but manage to catch yourself with your gloves at the last second!"))
 			return
@@ -1127,7 +1127,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			span_userdanger("You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\""),
 			span_hear("You hear an unearthly noise as a wave of heat washes over you."))
 	else if(isobj(hit_object) && !iseffect(hit_object))
-		if(istype(hit_object, /obj/item/clothing/gloves/supermatter_gloves))
+		if(istype(hit_object, /obj/item/clothing/gloves/nob_gloves))
 			hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src], but not much happens."))
 			return
 		hit_object.visible_message(span_danger("\The [hit_object] smacks into \the [src] and rapidly flashes to ash."), null,

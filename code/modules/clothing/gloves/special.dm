@@ -50,7 +50,7 @@
 
 	QDEL_NULL(pull_component_weakref)
 
-/obj/item/clothing/gloves/supermatter_gloves
+/obj/item/clothing/gloves/nob_gloves
 	name = "nobilium gloves"
 	desc = "Gloves laced with hyper-nobilium fabric, to prevent any adverse reactions."
 	icon_state = "nob"
