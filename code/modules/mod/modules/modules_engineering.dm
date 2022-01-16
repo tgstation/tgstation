@@ -26,7 +26,7 @@
 	icon_state = "tray"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/t_ray)
 	cooldown_time = 0.5 SECONDS
 	/// T-ray scan range.
@@ -45,7 +45,7 @@
 	icon_state = "magnet"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/magboot, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	/// Slowdown added onto the suit.
@@ -86,7 +86,7 @@
 	icon_state = "tether"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/tether)
 	cooldown_time = 1.5 SECONDS
 
@@ -111,7 +111,7 @@
 /obj/projectile/tether
 	name = "tether"
 	icon_state = "tether_projectile"
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
@@ -124,7 +124,7 @@
 
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
-		line = firer.Beam(src, "line", 'icons/obj/mod.dmi')
+		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi')
 	..()
 
 /obj/projectile/tether/on_hit(atom/target)
@@ -144,7 +144,7 @@
 		giving a voice to an otherwise silent killer."
 	icon_state = "radshield"
 	complexity = 2
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/rad_protection)
 	tgui_id = "rad_counter"
 	/// Radiation threat level being perceived.
@@ -187,8 +187,8 @@
 	icon_state = "constructor"
 	module_type = MODULE_USABLE
 	complexity = 2
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/constructor, /obj/item/mod/module/quick_carry)
 	cooldown_time = 11 SECONDS
 
@@ -218,8 +218,8 @@
 	module_type = MODULE_TOGGLE
 //	complexity = 3
 	complexity = 0
-	active_power_cost = DEFAULT_CELL_DRAIN*0.75
-//	use_power_cost = DEFAULT_CELL_DRAIN*3
+	active_power_cost = DEFAULT_CHARGE_DRAIN*0.75
+//	use_power_cost = DEFAULT_CHARGE_DRAIN*3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/kinesis)
 	cooldown_time = 0.5 SECONDS

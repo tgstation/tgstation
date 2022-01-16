@@ -26,16 +26,18 @@
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(surgery_target)
-		target = surgery_target
-		target.surgeries += src
-		if(surgery_location)
-			location = surgery_location
-		if(surgery_bodypart)
-			operated_bodypart = surgery_bodypart
-			if(targetable_wound)
-				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-				operated_wound.attached_surgery = src
+	if(!surgery_target)
+		return
+	target = surgery_target
+	target.surgeries += src
+	if(surgery_location)
+		location = surgery_location
+	if(!surgery_bodypart)
+		return
+	operated_bodypart = surgery_bodypart
+	if(targetable_wound)
+		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+		operated_wound.attached_surgery = src
 
 /datum/surgery/Destroy()
 	if(operated_wound)

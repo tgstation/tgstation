@@ -989,7 +989,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(choice) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	time_to_assign = round(choice)
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
