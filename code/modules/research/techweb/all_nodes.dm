@@ -1549,7 +1549,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 
 /datum/techweb_node/mod_anomaly_engi
-	id = "mod_anomaly"
+	id = "mod_anomaly_engi"
 	display_name = "Engineering Anomalock Modular Suits"
 	description = "Advanced modules for modular suits, using anomaly cores to become even better engineers."
 	prereq_ids = list("mod_advanced_engineering", "mod_anomaly")
