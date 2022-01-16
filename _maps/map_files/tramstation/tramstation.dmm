@@ -57213,7 +57213,6 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery/room_b)
 "thh" = (
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/structure/sink{
 	pixel_y = 15
