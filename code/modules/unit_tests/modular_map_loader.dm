@@ -5,3 +5,6 @@
 		var/config_file = initial(map_root_type.config_file)
 		if (!fexists(config_file))
 			Fail("[map_root_type] points to a config file which does not exist!")
+			continue
+		if (rustg_read_toml_file(config_file) == null)
+			Fail("[map_root_type] points to a config file which is invalid!")
