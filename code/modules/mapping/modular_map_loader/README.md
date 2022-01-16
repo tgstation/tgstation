@@ -63,7 +63,7 @@ In `code/modules/ruins/spaceruin_code/foobar.dm` we need to add a small piece of
 
 ```
 /obj/modular_map_root/foobar
-	config_file = "code/modules/ruins/spaceruin_code/foobar.toml"
+	config_file = "strings/modular_maps/foobar.toml"
 ```
 
 This means when we place root objects `/obj/modular_map_root` in our new map, we use this subtype that points to the correct configuration file.
