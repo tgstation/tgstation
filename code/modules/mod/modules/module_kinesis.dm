@@ -41,6 +41,7 @@
 	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
 	grabbed_atom.add_overlay(kinesis_icon)
+	grabbed_atom.animate_movement = NO_STEPS
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
@@ -62,12 +63,12 @@
 		return
 	drain_power(use_power_cost/10)
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
-	grabbed_atom.pixel_x = kinesis_catcher.given_x - world.icon_size/2
-	grabbed_atom.pixel_y = kinesis_catcher.given_y - world.icon_size/2
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
-		animate(grabbed_atom, 0.1 SECONDS, pixel_x = kinesis_catcher.given_x - world.icon_size/2, pixel_y = kinesis_catcher.given_y - world.icon_size/2)
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = kinesis_catcher.given_x - world.icon_size/2, pixel_y = kinesis_catcher.given_y - world.icon_size/2)
 		kinesis_beam.redrawing()
 		return
+	grabbed_atom.pixel_x = kinesis_catcher.given_x - world.icon_size/2
+	grabbed_atom.pixel_y = kinesis_catcher.given_y - world.icon_size/2
 	grabbed_atom.Move(get_step_towards(grabbed_atom, kinesis_catcher.given_turf))
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
@@ -99,6 +100,7 @@
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
 	QDEL_NULL(kinesis_beam)
+	grabbed_atom.animate_movement = initial(grabbed_atom.animate_movement)
 	grabbed_atom = null
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
