@@ -1,0 +1,275 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"c" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"e" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"f" = (
+/obj/machinery/door/window{
+	name = "Kitchen Coldroom"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"g" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/flour{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/condiment/flour{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"h" = (
+/obj/structure/window/reinforced,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"i" = (
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"j" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"k" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"r" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"z" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"A" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"F" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"I" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"J" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"L" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"M" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"N" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"O" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/cooking_to_serve_man,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"Q" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/mining,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"R" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/food_or_drink/condiment{
+	pixel_x = -3;
+	spawn_loot_count = 5;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"T" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/turf/template_noop,
+/area/template_noop)
+"V" = (
+/obj/structure/table,
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 10;
+	pixel_y = -1
+	},
+/obj/item/kitchen/rollingpin,
+/obj/item/knife/kitchen,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"W" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"Y" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"Z" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+e
+a
+"}
+(2,1,1) = {"
+e
+a
+a
+b
+a
+a
+b
+a
+a
+b
+a
+a
+"}
+(3,1,1) = {"
+e
+a
+L
+L
+L
+N
+N
+L
+N
+N
+L
+a
+"}
+(4,1,1) = {"
+e
+b
+L
+Q
+h
+W
+W
+Y
+W
+M
+r
+I
+"}
+(5,1,1) = {"
+e
+a
+L
+A
+f
+W
+R
+g
+W
+V
+N
+b
+"}
+(6,1,1) = {"
+e
+b
+L
+k
+h
+W
+i
+z
+W
+F
+N
+a
+"}
+(7,1,1) = {"
+e
+a
+L
+L
+L
+c
+O
+J
+j
+L
+L
+b
+"}
+(8,1,1) = {"
+e
+a
+a
+a
+L
+W
+W
+W
+W
+L
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+T
+Z
+N
+a
+L
+a
+"}
