@@ -48,6 +48,10 @@
 			death()
 	return FALSE
 
+/mob/living/simple_animal/hostile/smspider/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/swarming)
+
 /mob/living/simple_animal/hostile/smspider/overcharged
 	name = "overcharged supermatter spider"
 	desc = "A sliver of overcharged supermatter placed upon a robotically enhanced pedestal. This one seems especially dangerous."
