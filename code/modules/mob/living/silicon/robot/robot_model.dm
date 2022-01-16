@@ -403,7 +403,7 @@
 /datum/action/toggle_buffer/IsAvailable()
 	if(!istype(owner, /mob/living/silicon/robot))
 		return FALSE
-	return TRUE
+	return ..()
 
 /datum/action/toggle_buffer/Trigger()
 	. = ..()
@@ -420,19 +420,29 @@
 
 	if(!buffer_on)
 		if(!COOLDOWN_FINISHED(src, activation_cooldown))
-			robot_owner.balloon_alert(robot_owner, "Auto-wash refreshing, please hold")
+			robot_owner.balloon_alert(robot_owner, "auto-wash refreshing, please hold...")
 			return FALSE
 		COOLDOWN_START(src, activation_cooldown, 4 SECONDS)
 		if(!allow_buffer_change())
 			return FALSE
 
-		robot_owner.balloon_alert(robot_owner, "Activating auto-wash")
+		robot_owner.balloon_alert(robot_owner, "activating auto-wash...")
+
 		wash_audio.start()
+		var/base_x = robot_owner.base_pixel_x
+		var/base_y = robot_owner.base_pixel_y
+		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+		for(var/i in 1 to 17) //Startup rumble
+			var/x_offset = base_x + rand(-1, 1)
+			var/y_offset = base_y + rand(-1, 1)
+			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+
 		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_change))
 			wash_audio.stop()
+			animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
 			return FALSE
 	else
-		robot_owner.balloon_alert(robot_owner, "De-activating auto-wash")
+		robot_owner.balloon_alert(robot_owner, "de-activating auto-wash...")
 
 	toggle_auto_wash()
 
@@ -442,9 +452,17 @@
 		buffer_on = FALSE
 		robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
 		UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
-		// Reset our animations
-		animate(robot_owner, pixel_x = robot_owner.base_pixel_x, pixel_y = robot_owner.base_pixel_y, time = 2)
+
+		var/base_x = robot_owner.base_pixel_x
+		var/base_y = robot_owner.base_pixel_y
 		var/stop_in = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
+		for(var/i in 1 to stop_in + 2.6 SECONDS - 0.1 SECONDS) //We rumble until we're finished making noise
+			var/x_offset = base_x + rand(-1, 1)
+			var/y_offset = base_y + rand(-1, 1)
+			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+		// Reset our animations
+		animate(pixel_x = base_x, pixel_y = base_y, time = 2)
 		addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), stop_in)
 	else
 		buffer_on = TRUE
@@ -455,12 +473,10 @@
 		robot_owner.pixel_x = base_x + rand(-7, 7)
 		robot_owner.pixel_y = base_y + rand(-7, 7)
 		//Larger shake with more changes to start out, feels like "Revving"
-		var/x_offset = 0
-		var/y_offset = 0
 		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
 		for(var/i in 1 to 100)
-			x_offset = base_x + rand(-2, 2)
-			y_offset = base_y + rand(-2, 2)
+			var/x_offset = base_x + rand(-2, 2)
+			var/y_offset = base_y + rand(-2, 2)
 			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 		if(!wash_audio.is_active())
 			wash_audio.start()
@@ -471,12 +487,12 @@
 /datum/action/toggle_buffer/proc/allow_buffer_change()
 	var/mob/living/silicon/robot/robot_owner = owner
 	if(block_buffer_change)
-		robot_owner.balloon_alert(robot_owner, "Activation canceled")
+		robot_owner.balloon_alert(robot_owner, "activation cancelled!")
 		return FALSE
 
 	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
 	if(!buffer_on && our_bucket?.reagents?.total_volume < 0.1)
-		robot_owner.balloon_alert(robot_owner, "Bucket is empty")
+		robot_owner.balloon_alert(robot_owner, "bucket is empty!")
 		return FALSE
 	return TRUE
 
@@ -487,10 +503,10 @@
 	var/datum/reagents/reagents = our_bucket?.reagents
 
 	if(!reagents || reagents.total_volume < 0.1)
-		robot_owner.balloon_alert(robot_owner, "Bucket is empty, de-activating")
+		robot_owner.balloon_alert(robot_owner, "bucket is empty, de-activating...")
 		toggle_auto_wash()
 		return
-	
+
 	var/turf/our_turf = get_turf(robot_owner)
 
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
@@ -507,7 +523,7 @@
 	else
 		name = "Activate Auto-Wash"
 		button_icon_state = "activate_wash"
-	
+
 	return ..()
 
 /obj/item/reagent_containers/spray/cyborg_drying
