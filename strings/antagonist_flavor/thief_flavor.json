@@ -1,38 +1,38 @@
 {
-    "Black Market Outfitter": {
-        "goal": "You've tapped into the black market, and it turns out you could get rich quick introducing some of Nanotrasen's guns to the dark web!",
-        "introduction": "You're a Black Market Outfitter.",
-        "objective_needs_target": 0,
-        "objective_type": "/datum/objective/steal_n_of_type/summon_guns"
-    },
-    "Hoarder": {
-        "goal": "You have a pretty bad hoarding problem. But you have a real bad feeling about today, and you need to set up a stash for when it all goes down.",
-        "introduction": "You're a Hoarder.",
-        "objective_needs_target": 1,
-        "objective_type": "/datum/objective/hoarder"
-    },
-    "Organ Market Collector": {
-        "goal": "Nanotrasen has top of the line medical resources handy, which means you could be making a pretty penny slipping some organs out of medical.",
-        "introduction": "You're am Organ Market Collector.",
-        "objective_needs_target": 0,
-        "objective_type": "/datum/objective/steal_n_of_type/organs"
-    },
-    "Thief": {
-        "goal": "For one reason or another, you're looking to steal something expensive today, and you've found a good target.",
-        "introduction": "You're a Thief.",
-        "objective_needs_target": 1,
-        "objective_type": "/datum/objective/steal"
-    },
+	"Black Market Outfitter": {
+		"goal": "You've tapped into the black market, and it turns out you could get rich quick introducing some of Nanotrasen's guns to the dark web!",
+		"introduction": "You're a Black Market Outfitter.",
+		"objective_needs_target": 0,
+		"objective_type": "/datum/objective/steal_n_of_type/summon_guns"
+	},
 	"Chronicler": {
-        "goal": "You're one who wants to protect and preserve heirlooms. Unfortunately, your crewmates don't understand the greater mission here, so you'll have to take their heirlooms without their permission. Hint: You can find out who has heirlooms at a medical records console.",
-        "introduction": "You're the Chronicler.",
-        "objective_needs_target": 1,
-        "objective_type": "/datum/objective/chronicle"
+		"goal": "You're one who wants to protect and preserve heirlooms. Unfortunately, your crewmates don't understand the greater mission here, so you'll have to take their heirlooms without their permission. Hint: You can find out who has heirlooms at a medical records console.",
+		"introduction": "You're the Chronicler.",
+		"objective_needs_target": 1,
+		"objective_type": "/datum/objective/chronicle"
 	},
 	"Deranged": {
-    	"goal": "Nothing was the same after opening the Codex. You now know that the souls of the dead have forever been trapped by the Devil within their own mortal body. The only way to solve this is to collect them all, and have a tea party with them!",
-        "introduction": "You're Deranged.",
-        "objective_needs_target": 1,
-        "objective_type": "/datum/objective/hoarder/bodies"
+		"goal": "Nothing was the same after opening the Codex. You now know that the souls of the dead have forever been trapped by the Devil within their own mortal body. The only way to solve this is to collect them all, and have a tea party with them!",
+		"introduction": "You're Deranged.",
+		"objective_needs_target": 1,
+		"objective_type": "/datum/objective/hoarder/bodies"
+	},
+	"Hoarder": {
+		"goal": "You have a pretty bad hoarding problem. But you have a real bad feeling about today, and you need to set up a stash for when it all goes down.",
+		"introduction": "You're a Hoarder.",
+		"objective_needs_target": 1,
+		"objective_type": "/datum/objective/hoarder"
+	},
+	"Organ Market Collector": {
+		"goal": "Nanotrasen has top of the line medical resources handy, which means you could be making a pretty penny slipping some organs out of medical.",
+		"introduction": "You're am Organ Market Collector.",
+		"objective_needs_target": 0,
+		"objective_type": "/datum/objective/steal_n_of_type/organs"
+	},
+	"Thief": {
+		"goal": "For one reason or another, you're looking to steal something expensive today, and you've found a good target.",
+		"introduction": "You're a Thief.",
+		"objective_needs_target": 1,
+		"objective_type": "/datum/objective/steal"
 	}
 }

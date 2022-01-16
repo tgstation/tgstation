@@ -1,4 +1,3 @@
-
 ///very low level antagonist that has objectives to steal items and live, but is not allowed to kill.
 /datum/antagonist/thief
 	name = "\improper Thief"
