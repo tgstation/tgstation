@@ -79,7 +79,7 @@
 				reveal(46)
 				stun(46)
 				target.visible_message(span_warning("[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray."))
-				if(target.anti_magic_check())
+				if(target.anti_magic_check(MAGIC_RESISTANCE_HOLY))
 					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
 											   span_revenwarning("Violet lights, dancing in your vision, receding--"))
