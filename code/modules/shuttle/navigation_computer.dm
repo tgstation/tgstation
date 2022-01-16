@@ -34,6 +34,8 @@
 	actions += new /datum/action/innate/shuttledocker_rotate(src)
 	actions += new /datum/action/innate/shuttledocker_place(src)
 
+	set_init_ports()
+	
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
@@ -66,7 +68,7 @@
 	jump_to_ports = list() //Reset it so we don't get dupes
 	for(var/port_id in init_ports)
 		add_jumpable_port(port_id)
-		
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/add_jumpable_port(port_id)
 	if(!length(jump_to_ports))
 		actions += new /datum/action/innate/camera_jump/shuttle_docker(src)
