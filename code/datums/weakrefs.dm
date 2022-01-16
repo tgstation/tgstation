@@ -37,7 +37,7 @@
  *
  * A common use case for weak references is holding onto what created itself.
  * For example, if a machine wanted to know what its last user was, it might
- * create a `var/mob/living/last_user`. However, this is a storng reference to
+ * create a `var/mob/living/last_user`. However, this is a strong reference to
  * the mob, and thus will force a hard deletion when that mob is deleted.
  * It is often better in this case to instead create a weakref to the user,
  * meaning this type definition becomes `var/datum/weakref/last_user`.
