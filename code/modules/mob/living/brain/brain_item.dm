@@ -6,6 +6,7 @@
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL

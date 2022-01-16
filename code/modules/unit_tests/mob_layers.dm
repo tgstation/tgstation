@@ -7,6 +7,9 @@
 		var/plane = initial(movable_path.plane)
 		if(isnull(layer) || isnull(plane)) //Some abstract atoms maybe I dont know?
 			continue
+		// For things like UI elements, fullscreen effects and other stuff which wants to use their own layering defines.
+		if(plane < GAME_PLANE || plane > ABOVE_GAME_PLANE)
+			continue
 		switch(layer)
 			if(GAME_PLANE_FOV_HIDDEN_LAYER_START to GAME_PLANE_FOV_HIDDEN_LAYER_END)
 				if(plane != GAME_PLANE_FOV_HIDDEN)
