@@ -405,7 +405,7 @@
 		return FALSE
 	return ..()
 
-/datum/action/toggle_buffer/Trigger()
+/datum/action/toggle_buffer/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
