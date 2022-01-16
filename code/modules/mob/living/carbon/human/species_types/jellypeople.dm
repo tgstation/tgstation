@@ -734,7 +734,7 @@
 	var/msg = tgui_input_text(telepath, title = "Telepathy")
 	if(isnull(msg))
 		return
-	if(recipient.anti_magic_check((MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND), charge_cost = 0))
+	if(recipient.anti_magic_check(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		to_chat(telepath, span_notice("As you try to communicate with [recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
 		return
 	log_directed_talk(telepath, recipient, msg, LOG_SAY, "slime telepathy")

@@ -52,7 +52,10 @@
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, resistances, charge_cost, list/protection_sources)
 	SIGNAL_HANDLER
 
-	if(resistances & antimagic_flags)
+	// ignore magic casting restrictions since proc/protect is only called
+	// when being attacked with magic by another mob
+	var/antimagic = antimagic_flags & ~MAGIC_CASTING_RESTRICTION
+	if(resistances & antimagic) 
 		protection_sources += parent
 		react?.Invoke(user, charge_cost, parent)
 		remaining_charges -= charge_cost

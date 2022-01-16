@@ -45,7 +45,7 @@
 		return FALSE
 	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
 		var/mob/M = target
-		if(M.anti_magic_check(resistances = antimagic_obstructions))
+		if(M.anti_magic_check(antimagic_obstructions))
 			return FALSE
 		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
 			return FALSE
