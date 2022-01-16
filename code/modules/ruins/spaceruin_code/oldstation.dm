@@ -110,9 +110,6 @@
 /obj/machinery/mod_installer/proc/play_install_sound()
 	playsound(src, 'sound/items/rped.ogg', 30, FALSE)
 
-/obj/machinery/mod_installer/proc/play_piston_sound()
-	playsound(src, 'sound/machines/piston_lower.ogg', 70)
-
 /obj/machinery/mod_installer/update_icon_state()
 	icon_state = busy ? busy_icon_state : "[base_icon_state][state_open ? "_open" : null]"
 	return ..()
@@ -129,12 +126,10 @@
 		return
 	if(!occupant || !mod_unit || busy)
 		return
-	playsound(src, 'sound/machines/piston_raise.ogg', 70)
 	set_busy(TRUE, "[initial(icon_state)]_raising")
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"), 2.5 SECONDS)
 	addtimer(CALLBACK(src, .proc/play_install_sound), 2.5 SECONDS)
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"), 5 SECONDS)
-	addtimer(CALLBACK(src, .proc/play_piston_sound), 5 SECONDS)
 	addtimer(CALLBACK(src, .proc/complete_process), 7.5 SECONDS)
 
 /obj/machinery/mod_installer/proc/complete_process()

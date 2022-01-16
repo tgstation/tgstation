@@ -61,6 +61,8 @@
 		balloon_alert(mod.wearer, "out of range!")
 		clear_grab()
 		return
+	if(!kinesis_catcher.given_turf)
+		return
 	drain_power(use_power_cost/10)
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
@@ -104,7 +106,7 @@
 	grabbed_atom = null
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
-	if(!isturf(target.loc))
+	if(ismovable(target) && !isturf(target.loc))
 		return FALSE
 	if(!can_see(mod.wearer, target, grab_range))
 		return FALSE
