@@ -7113,7 +7113,7 @@
 /area/science/robotics/mechbay)
 "bnd" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;47;5"
+	req_one_access_txt = "12;47;5"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -39621,7 +39621,7 @@
 	cycle_id = "sci-med-passthrough"
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12;47;5"
+	req_one_access_txt = "12;47;5"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
