@@ -79,11 +79,11 @@
 		starting_circuit = circuit, \
 	)
 
-/*/obj/item/mod/module/circuit/on_install()
-	circuit.set_cell(mod.cell)
+/obj/item/mod/module/circuit/on_install()
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_uninstall()
-	circuit.set_cell(mod.cell)*/
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_suit_activation()
 	circuit.set_on(TRUE)

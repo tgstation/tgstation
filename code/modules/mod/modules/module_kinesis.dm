@@ -16,11 +16,14 @@
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	var/grab_range = 5
+	var/hit_cooldown_time = 1 SECONDS
+	var/movement_animation
 	var/atom/movable/grabbed_atom
 	var/datum/beam/kinesis_beam
 	var/mutable_appearance/kinesis_icon
 	var/atom/movable/screen/fullscreen/kinesis/kinesis_catcher
 	var/datum/looping_sound/gravgen/kinesis/soundloop
+	COOLDOWN_DECLARE(hit_cooldown)
 
 /obj/item/mod/module/anomaly_locked/kinesis/Initialize(mapload)
 	. = ..()
@@ -32,7 +35,7 @@
 		mod.wearer.clear_fullscreen("kinesis")
 		grabbed_atom.cut_overlay(kinesis_icon)
 		QDEL_NULL(kinesis_beam)
-		grabbed_atom.animate_movement = initial(grabbed_atom.animate_movement)
+		grabbed_atom.animate_movement = movement_animation
 	QDEL_NULL(soundloop)
 	return ..()
 
@@ -56,11 +59,12 @@
 	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
 	grabbed_atom.add_overlay(kinesis_icon)
+	movement_animation = grabbed_atom.animate_movement
 	grabbed_atom.animate_movement = NO_STEPS
 	kinesis_beam = mod.wearer.Beam(grabbed_atom, "kinesis")
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
-	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
+	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	soundloop.start()
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation()
@@ -82,12 +86,41 @@
 	drain_power(use_power_cost/10)
 	mod.wearer.setDir(get_dir(mod.wearer, grabbed_atom))
 	if(grabbed_atom.loc == kinesis_catcher.given_turf)
-		animate(grabbed_atom, 0.2 SECONDS, pixel_x = kinesis_catcher.given_x - world.icon_size/2, pixel_y = kinesis_catcher.given_y - world.icon_size/2)
+		if(grabbed_atom.pixel_x == kinesis_catcher.given_x - world.icon_size/2 && grabbed_atom.pixel_y == kinesis_catcher.given_y - world.icon_size/2)
+			return //spare us redrawing if we are standing still
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + kinesis_catcher.given_x - world.icon_size/2, pixel_y = grabbed_atom.base_pixel_y + kinesis_catcher.given_y - world.icon_size/2)
 		kinesis_beam.redrawing()
 		return
 	grabbed_atom.pixel_x = kinesis_catcher.given_x - world.icon_size/2
 	grabbed_atom.pixel_y = kinesis_catcher.given_y - world.icon_size/2
-	grabbed_atom.Move(get_step_towards(grabbed_atom, kinesis_catcher.given_turf))
+	kinesis_beam.redrawing()
+	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
+	if(grabbed_atom.Move(next_turf))
+		return
+	var/direction = get_dir(grabbed_atom, next_turf)
+	if(direction & NORTH)
+		grabbed_atom.pixel_y = world.icon_size/2
+	else if(direction & SOUTH)
+		grabbed_atom.pixel_y = -world.icon_size/2
+	if(direction & EAST)
+		grabbed_atom.pixel_x = world.icon_size/2
+	else if(direction & WEST)
+		grabbed_atom.pixel_x = -world.icon_size/2
+	kinesis_beam.redrawing()
+	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
+		return
+	var/atom/hitting_atom
+	if(next_turf.density)
+		hitting_atom = next_turf
+	for(var/atom/movable/movable_content as anything in next_turf.contents)
+		if(ismob(movable_content))
+			continue
+		if(movable_content.density)
+			hitting_atom = movable_content
+			break
+	var/obj/item/grabbed_item = grabbed_atom
+	grabbed_item.melee_attack_chain(mod.wearer, hitting_atom)
+	COOLDOWN_START(src, hit_cooldown, hit_cooldown_time)
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
 	if(!ismovable(target))
@@ -119,7 +152,10 @@
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
 	QDEL_NULL(kinesis_beam)
-	grabbed_atom.animate_movement = initial(grabbed_atom.animate_movement)
+	grabbed_atom.animate_movement = movement_animation
+	movement_animation = null
+	if(!isitem(grabbed_atom))
+		animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x, pixel_y = grabbed_atom.base_pixel_y)
 	grabbed_atom = null
 	soundloop.stop()
 
@@ -133,7 +169,7 @@
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
 	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
-	grabbed_atom.throw_at(target_turf, range = grab_range, speed = 4, thrower = mod.wearer)
+	grabbed_atom.throw_at(target_turf, range = grab_range, speed = 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
 
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
@@ -154,10 +190,10 @@
 	var/turf/given_turf
 	COOLDOWN_DECLARE(coordinate_cooldown)
 
-/atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/new_location)
+/atom/movable/screen/fullscreen/kinesis/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	if(given_turf)
-		var/x_offset = new_location.x - source.loc.x
-		var/y_offset = new_location.y - source.loc.y
+		var/x_offset = source.loc.x - oldloc.x
+		var/y_offset = source.loc.y - oldloc.y
 		given_turf = locate(given_turf.x+x_offset, given_turf.y+y_offset, given_turf.z)
 
 /atom/movable/screen/fullscreen/kinesis/MouseEntered(location, control, params)
