@@ -123,7 +123,6 @@
 /obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = FALSE
-	var/ckey_holder = null
 	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
 		if(ckey)
