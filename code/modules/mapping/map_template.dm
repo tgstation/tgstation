@@ -193,8 +193,7 @@
 		if(findtext(models[key], "[marker]")) // Yay compile time checks
 			break // This works by assuming there will ever only be one mobile dock in a template at most
 
-	for(var/i in cached_map.gridSets)
-		var/datum/grid_set/gset = i
+	for(var/datum/grid_set/gset as anything in cached_map.gridSets)
 		var/ycrd = gset.ycrd
 		for(var/line in gset.gridLines)
 			var/xcrd = gset.xcrd
