@@ -35,7 +35,7 @@
 	qdel(src, force=TRUE)
 
 /datum/map_template/map_module
-	name = "Base Map Module Templat"
+	name = "Base Map Module Template"
 
 	var/x_offset = 0
 	var/y_offset = 0
