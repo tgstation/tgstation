@@ -246,10 +246,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)
-			if(tracked_living_mob.IsSleeping() && !isdead(tracked_living_mob))
-				entry["life_status"] = "Alive"
-				return
-			entry["life_status"] = !tracked_living_mob.stat
+			entry["life_status"] = (tracked_living_mob.stat != DEAD)
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)
