@@ -4,22 +4,27 @@
 	id_arg_index = 2
 
 	///A unique blood type we might want to spread
-	var/blood_type = /obj/effect/decal/cleanable/blood
+	var/blood_type
 	///The sound that plays when we spread blood.
 	var/sound_played
 	///How loud will the sound be, if there is one.
-	var/sound_volume = 80
+	var/sound_volume
 	///The chance of spawning blood whenever walking
-	var/blood_spawn_chance = 100
+	var/blood_spawn_chance
 
 
-/datum/element/blood_walk/Attach(datum/target, _blood_type, _sound_played, _sound_volume, _blood_spawn_chance)
+/datum/element/blood_walk/Attach(
+	datum/target,
+	_blood_type = /obj/effect/decal/cleanable/blood,
+	_sound_played,
+	_sound_volume = 80,
+	_blood_spawn_chance = 100,
+)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
-	if(_blood_type)
-		blood_type = _blood_type
+	blood_type = _blood_type
 	sound_played = _sound_played
 	sound_volume = _sound_volume
 	blood_spawn_chance = _blood_spawn_chance
