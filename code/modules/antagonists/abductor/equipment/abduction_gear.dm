@@ -344,7 +344,7 @@
 		if(QDELETED(G))
 			return
 
-		if(C.anti_magic_check(MAGIC_RESISTANCE_MIND, 0))
+		if(C.anti_magic_check(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 			to_chat(user, span_warning("Your target seems to have some sort of tinfoil protection on, blocking the message from being sent!"))
 			return
 
