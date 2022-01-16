@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(owner_AI && owner_AI.malf_cooldown > world.time)
 		return
 
-/datum/action/innate/ai/Trigger()
+/datum/action/innate/ai/Trigger(trigger_flags)
 	. = ..()
 	if(auto_use_uses)
 		adjust_uses(-1)

@@ -1,0 +1,4 @@
+author: "That REALLY Good Soda Flavor"
+delete-after: True
+changes: 
+  - imageadd: "Added a stamina indicator to the human mob's HUD."

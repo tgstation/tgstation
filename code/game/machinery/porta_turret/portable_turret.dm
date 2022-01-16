@@ -645,7 +645,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_cycle_equip_off"
 
-/datum/action/turret_toggle/Trigger()
+/datum/action/turret_toggle/Trigger(trigger_flags)
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
@@ -656,7 +656,7 @@ DEFINE_BITFIELD(turret_flags, list(
 	icon_icon = 'icons/mob/actions/actions_mecha.dmi'
 	button_icon_state = "mech_eject"
 
-/datum/action/turret_quit/Trigger()
+/datum/action/turret_quit/Trigger(trigger_flags)
 	var/obj/machinery/porta_turret/P = target
 	if(!istype(P))
 		return
