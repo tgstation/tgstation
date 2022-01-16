@@ -22,12 +22,12 @@
 	var/picked_flavor
 	//this list has a maximum pickweight of 100. if you're adding a new type of thief, DON'T just add pickweight without adjusting the others, numb nuts.
 	var/list/weighted_objectives = list(
-		/datum/objective/steal = 40,
-		/datum/objective/hoarder = 30,
-		/datum/objective/steal_n_of_type/summon_guns/thief = 15,
-		/datum/objective/steal_n_of_type/organs = 8,
-		/datum/objective/chronicle = 5,
-		/datum/objective/hoarder/bodies = 2
+		/datum/objective/steal = 40, //Thief
+		/datum/objective/hoarder = 30, //Hoarder
+		/datum/objective/steal_n_of_type/summon_guns/thief = 15, //Outfitter
+		/datum/objective/steal_n_of_type/organs = 8, //Collector
+		/datum/objective/chronicle = 5, //Chronicler
+		/datum/objective/hoarder/bodies = 2 //Deranged
 	)
 	var/chosen_objective = pick_weight(weighted_objectives)
 	//this will make the objective call find_target()
@@ -69,7 +69,7 @@
 	var/list/data = list()
 	data["objectives"] = get_objectives()
 	data["goal"] = thief_flavor["goal"]
-	data["intro"] = thief_flavor["intro"]
+	data["intro"] = thief_flavor["introduction"]
 	data["honor"] = honor_among_thieves
 	return data
 
