@@ -128,4 +128,4 @@
 	multiplicative_slowdown = 1
 
 /datum/movespeed_modifier/auto_wash
-	multiplicative_slowdown = 4
+	multiplicative_slowdown = 3
