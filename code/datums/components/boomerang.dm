@@ -2,13 +2,13 @@
 #define BOOMERANG_REBOUND_INTERVAL (1 SECONDS)
 /**
  * If an ojvect is given the boomerang component, it should be thrown back to the thrower after either hitting it's target, or landing on the thrown tile.
- * Thrown objects should
+ * Thrown objects should be thrown back to the original thrower with this component, a number of tiles defined by boomerang_throw_range.
  */
 /datum/component/boomerang
 	///How far should the boomerang try to travel to return to the thrower?
 	var/boomerang_throw_range = 3
 	///"Thrownthing" datum for the most recent throw.
-	var/datum/thrownthing/thrown_boomerang
+	//var/datum/weakref/thrown_boomerang
 	///If this boomerang is thrown, does it re-enable the throwers throw mode?
 	var/thrower_easy_catch_enabled = FALSE
 	///This cooldown prevents our 2 throwing signals from firing too often based on how we implement those signals within thrown impacts.
@@ -31,7 +31,6 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/return_hit_throw)
 
 /datum/component/boomerang/UnregisterFromParent()
-	. = ..()
 	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
 
 /**
@@ -40,12 +39,12 @@
  * * thrown_thing: The atom that has had the boomerang component added to it. Updates thrown_boomerang.
  * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
  */
-/datum/component/boomerang/proc/prepare_throw(datum/source, atom/thrown_thing, spin)
+/datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/thrown_thing, spin)
 	SIGNAL_HANDLER
-	thrown_boomerang = thrown_thing //Here we update our "thrownthing" datum with that of the original throw for each boomerang. We save it for the return throw.
-	if(thrower_easy_catch_enabled && thrown_boomerang?.thrower)
-		if(iscarbon(thrown_boomerang.thrower))
-			var/mob/living/carbon/Carbon = thrown_boomerang.thrower
+	//thrown_boomerang = thrown_thing //Here we update our "thrownthing" datum with that of the original throw for each boomerang. We save it for the return throw.
+	if(thrower_easy_catch_enabled && thrown_thing?.thrower)
+		if(iscarbon(thrown_thing.thrower))
+			var/mob/living/carbon/Carbon = thrown_thing.thrower
 			Carbon.throw_mode_on(THROW_MODE_TOGGLE)
 	return
 
@@ -60,10 +59,9 @@
 	if (!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
 	var/obj/item/true_parent = parent
-	var/caught = hit_atom.hitby(true_parent, FALSE, FALSE, throwingdatum=init_throwing_datum)
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
 	aerodynamic_swing(init_throwing_datum)
-	if(thrown_by && !caught)
+	if(thrown_by)
 		addtimer(CALLBACK(true_parent, /atom/movable.proc/throw_at, thrown_by, boomerang_throw_range, init_throwing_datum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
 	return

@@ -139,10 +139,6 @@
 	active_throw_speed = 1
 	can_clumsy_use = TRUE
 
-/obj/item/shield/energy/bananium/Initialize(mapload)
-	. = ..()
-
-
 /obj/item/shield/energy/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
 	adjust_comedy()
