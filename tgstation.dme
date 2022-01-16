@@ -864,6 +864,7 @@
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\bsa_blocker.dm"
+#include "code\datums\elements\bullet_shield.dm"
 #include "code\datums\elements\chemical_transfer.dm"
 #include "code\datums\elements\chewable.dm"
 #include "code\datums\elements\cleaning.dm"

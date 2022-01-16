@@ -78,8 +78,10 @@
 	dir_shots.Grant(src)
 	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
+	AddElement(/datum/element/bullet_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
+	RemoveElement(/datum/element/bullet_shield)
 	QDEL_NULL(spiral_shots)
 	QDEL_NULL(random_shots)
 	QDEL_NULL(shotgun_blast)
@@ -160,17 +162,7 @@
 /obj/effect/temp_visual/at_shield/Initialize(mapload, new_target)
 	. = ..()
 	target = new_target
-	INVOKE_ASYNC(src, /atom/movable/proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/projectile/P)
-	if(!stat)
-		var/obj/effect/temp_visual/at_shield/AT = new /obj/effect/temp_visual/at_shield(loc, src)
-		var/random_x = rand(-32, 32)
-		AT.pixel_x += random_x
-
-		var/random_y = rand(0, 72)
-		AT.pixel_y += random_y
-	return ..()
+	INVOKE_ASYNC(src, /atom/movable.proc/orbit, target, 0, FALSE, 0, 0, FALSE, TRUE)
 
 /obj/projectile/colossus
 	name = "death bolt"
