@@ -6,9 +6,11 @@
 	var/sound_played
 	///How loud will the sound be, if there is one.
 	var/sound_volume = 80
+	///The chance of spawning blood whenever walking
+	var/blood_spawn_chance = 100
 
 
-/datum/element/blood_walk/Attach(datum/target, _blood_type, _sound_played, _sound_volume)
+/datum/element/blood_walk/Attach(datum/target, _blood_type, _sound_played, _sound_volume, _blood_spawn_chance)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
@@ -17,6 +19,8 @@
 		blood_type = _blood_type
 	sound_played = _sound_played
 	sound_volume = _sound_volume
+	if(_blood_spawn_chance)
+		blood_spawn_chance = _blood_spawn_chance
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/spread_blood)
 
 /datum/element/blood_walk/Detach(datum/target)
@@ -29,6 +33,8 @@
 	var/atom/movable/movable_source = source
 	var/turf/current_turf = movable_source.loc
 	if(!isturf(current_turf))
+		return
+	if(!prob(blood_spawn_chance))
 		return
 
 	new blood_type(current_turf)
