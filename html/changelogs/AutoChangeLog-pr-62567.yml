@@ -1,0 +1,9 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - qol: "Space movement, assuming I've done my job correctly, should feel significantly smoother"
+  - bugfix: "Fixed the immovable rod not properly carrying orbiters to new z levels"
+  - code_imp: "Added a framework for different forms of looping movement"
+  - balance: "Secborgs can no longer fly in space, as they have canonical wheels. The same likely applies to other spacefareing simple mobs, report anything that looks weird."
+  - refactor: "Refactored how meteors, some mobs, space drifting things, and a lot of general effects move, among other things. Please report any bugs or strange behavior"
+  - server: "Hello admins. Spamming meteors will no longer lag things out quite so much. Still not amazing cause of all the explosions, but it won't kill things anymore. Blow some people up for me yeah?"
