@@ -722,7 +722,7 @@
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 5
+	weight = 3
 	cost = 6 //very cheap cost for the round
 	scaling_cost = 9
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
