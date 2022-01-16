@@ -124,7 +124,7 @@
 	name = "pea bullet"
 	damage = 15
 	weak_against_armour = TRUE
-	ricochets_max = 2
+	ricochets_max = 3
 	ricochet_chance = 100
 	icon_state = "pea"
 
