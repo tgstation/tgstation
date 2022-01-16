@@ -1,7 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Added a visual effect for dropping items from your inventory or hands"
-  - rscadd: "Increased the animation time of the pickup effect, to make it less of a snapshot. Did some other things to it to hopefully make it look nicer"
-  - rscadd: "Very minorly changed self attack animations"
-  - bugfix: "Attack animations will display properly now"
