@@ -382,8 +382,8 @@
 	var/datum/weakref/bucket_ref
 	///Our looping sound
 	var/datum/looping_sound/wash/wash_audio
-	///Activation cooldown to prevent sound spam
-	COOLDOWN_DECLARE(activation_cooldown)
+	///Toggle cooldown to prevent sound spam
+	COOLDOWN_DECLARE(toggle_cooldown)
 
 /datum/action/toggle_buffer/New(Target)
 	if(!allow_buffer_change)
@@ -392,7 +392,7 @@
 
 /datum/action/toggle_buffer/Destroy()
 	if(buffer_on)
-		toggle_auto_wash()
+		turn_off_wash()
 	QDEL_NULL(wash_audio)
 	return ..()
 
@@ -419,16 +419,17 @@
 	bucket_ref = WEAKREF(our_bucket)
 
 	if(!buffer_on)
-		if(!COOLDOWN_FINISHED(src, activation_cooldown))
+		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
 			robot_owner.balloon_alert(robot_owner, "auto-wash refreshing, please hold...")
 			return FALSE
-		COOLDOWN_START(src, activation_cooldown, 4 SECONDS)
+		COOLDOWN_START(src, toggle_cooldown, 4 SECONDS)
 		if(!allow_buffer_change())
 			return FALSE
 
 		robot_owner.balloon_alert(robot_owner, "activating auto-wash...")
-
+		// Start the sound. it'll just last the 4 seconds it takes for us to rev up
 		wash_audio.start()
+		// We're just gonna shake the borg a bit. Not a ton, but just enough that it feels like the audio makes sense
 		var/base_x = robot_owner.base_pixel_x
 		var/base_y = robot_owner.base_pixel_y
 		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
@@ -438,50 +439,70 @@
 			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
 		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_change))
-			wash_audio.stop()
+			wash_audio.stop() // Coward
 			animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
 			return FALSE
 	else
+		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
+			robot_owner.balloon_alert(robot_owner, "auto-wash deactivating, please hold...")
+			return FALSE
 		robot_owner.balloon_alert(robot_owner, "de-activating auto-wash...")
 
-	toggle_auto_wash()
+	toggle_wash()
 
-/datum/action/toggle_buffer/proc/toggle_auto_wash()
-	var/mob/living/silicon/robot/robot_owner = owner
+/datum/action/toggle_buffer/proc/toggle_wash()
 	if(buffer_on)
-		buffer_on = FALSE
-		robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-		UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
-
-		var/base_x = robot_owner.base_pixel_x
-		var/base_y = robot_owner.base_pixel_y
-		var/stop_in = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
-		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
-		for(var/i in 1 to stop_in + 2.6 SECONDS - 0.1 SECONDS) //We rumble until we're finished making noise
-			var/x_offset = base_x + rand(-1, 1)
-			var/y_offset = base_y + rand(-1, 1)
-			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
-		// Reset our animations
-		animate(pixel_x = base_x, pixel_y = base_y, time = 2)
-		addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), stop_in)
+		deactivate_wash()
 	else
-		buffer_on = TRUE
-		robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-		RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
-		var/base_x = robot_owner.base_pixel_x
-		var/base_y = robot_owner.base_pixel_y
-		robot_owner.pixel_x = base_x + rand(-7, 7)
-		robot_owner.pixel_y = base_y + rand(-7, 7)
-		//Larger shake with more changes to start out, feels like "Revving"
-		animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
-		for(var/i in 1 to 100)
-			var/x_offset = base_x + rand(-2, 2)
-			var/y_offset = base_y + rand(-2, 2)
-			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
-		if(!wash_audio.is_active())
-			wash_audio.start()
-		clean()
+		activate_wash()
 
+/datum/action/toggle_buffer/proc/activate_wash()
+	var/mob/living/silicon/robot/robot_owner = owner
+	buffer_on = TRUE
+	// Slow em down a bunch
+	robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
+	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
+	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
+	var/base_x = robot_owner.base_pixel_x
+	var/base_y = robot_owner.base_pixel_y
+	robot_owner.pixel_x = base_x + rand(-7, 7)
+	robot_owner.pixel_y = base_y + rand(-7, 7)
+	//Larger shake with more changes to start out, feels like "Revving"
+	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1, loop = -1)
+	for(var/i in 1 to 100)
+		var/x_offset = base_x + rand(-2, 2)
+		var/y_offset = base_y + rand(-2, 2)
+		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+	if(!wash_audio.is_active())
+		wash_audio.start()
+	clean()
+	UpdateButtonIcon()
+
+/datum/action/toggle_buffer/proc/deactivate_wash()
+	var/mob/living/silicon/robot/robot_owner = owner
+	var/time_left = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
+	var/finished_by = time_left + 2.6 SECONDS
+	// Need to ensure that people don't spawn the deactivate button
+	COOLDOWN_START(src, toggle_cooldown, finished_by)
+	// Diable the cleaning, we're revving down
+	UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
+	// Do the rumble animation till we're all finished
+	var/base_x = robot_owner.base_pixel_x
+	var/base_y = robot_owner.base_pixel_y
+	animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
+	for(var/i in 1 to finished_by - 0.1 SECONDS) //We rumble until we're finished making noise
+		var/x_offset = base_x + rand(-1, 1)
+		var/y_offset = base_y + rand(-1, 1)
+		animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
+	// Reset our animations
+	animate(pixel_x = base_x, pixel_y = base_y, time = 2)
+	addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), time_left)
+	addtimer(CALLBACK(src, .proc/turn_off_wash), finished_by)
+
+/datum/action/toggle_buffer/proc/turn_off_wash()
+	var/mob/living/silicon/robot/robot_owner = owner
+	buffer_on = FALSE
+	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
 	UpdateButtonIcon()
 
 /datum/action/toggle_buffer/proc/allow_buffer_change()
@@ -497,6 +518,7 @@
 	return TRUE
 
 /datum/action/toggle_buffer/proc/clean()
+	SIGNAL_HANDLER
 	var/mob/living/silicon/robot/robot_owner = owner
 
 	var/obj/item/reagent_containers/glass/bucket/our_bucket = bucket_ref?.resolve()
@@ -504,7 +526,7 @@
 
 	if(!reagents || reagents.total_volume < 0.1)
 		robot_owner.balloon_alert(robot_owner, "bucket is empty, de-activating...")
-		toggle_auto_wash()
+		deactivate_wash()
 		return
 
 	var/turf/our_turf = get_turf(robot_owner)
