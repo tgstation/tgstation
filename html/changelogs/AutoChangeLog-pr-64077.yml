@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - rscadd: "Added a new system to allow for partial random generation of space ruins (and maybe more)"
+  - rscadd: "The russian DJ station has been overhauled and given randomly generated variations."
