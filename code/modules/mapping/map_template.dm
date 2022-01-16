@@ -186,6 +186,7 @@
 			placement = corner
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
+/// Takes in a type path, locates an instance of that type in the cached map, and calculates its offset from the origin of the map, returns this offset in the form list(x, y).
 /datum/map_template/proc/discover_offset(obj/marker)
 	var/key
 	var/list/models = cached_map.grid_models
