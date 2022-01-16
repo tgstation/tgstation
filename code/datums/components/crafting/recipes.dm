@@ -633,7 +633,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/nob_gloves
-	name = "Nobilium Gloves"
+	name = "Noblium Gloves"
 	result = /obj/item/clothing/gloves/nob_gloves
 	time = 15
 	reqs = list(/obj/item/clothing/gloves/color/black = 1,
