@@ -27,7 +27,7 @@
 
 /obj/item/mod/module/anomaly_locked/kinesis/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, TRUE)
+	soundloop = new(src)
 
 /obj/item/mod/module/anomaly_locked/kinesis/Destroy()
 	if(grabbed_atom)
@@ -96,6 +96,8 @@
 	kinesis_beam.redrawing()
 	var/turf/next_turf = get_step_towards(grabbed_atom, kinesis_catcher.given_turf)
 	if(grabbed_atom.Move(next_turf))
+		if(isitem(grabbed_atom) && (mod.wearer in next_turf))
+			mod.wearer.put_in_hands(grabbed_atom)
 		return
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
@@ -125,6 +127,8 @@
 /obj/item/mod/module/anomaly_locked/kinesis/proc/can_grab(atom/target)
 	if(!ismovable(target))
 		return FALSE
+	if(iseffect(target))
+		return FALSE
 	var/atom/movable/movable_target = target
 	if(movable_target.anchored)
 		return FALSE
@@ -139,6 +143,8 @@
 	else if(isitem(movable_target))
 		var/obj/item/item_target = movable_target
 		if(item_target.w_class >= WEIGHT_CLASS_GIGANTIC)
+			return FALSE
+		if(item_target.item_flags & ABSTRACT)
 			return FALSE
 	return TRUE
 
@@ -168,8 +174,26 @@
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/launch()
 	playsound(grabbed_atom, 'sound/magic/repulse.ogg', 100, TRUE)
+	RegisterSignal(grabbed_atom, COMSIG_MOVABLE_IMPACT, .proc/launch_impact)
 	var/turf/target_turf = get_turf_in_angle(get_angle(mod.wearer, grabbed_atom), get_turf(src), 10)
 	grabbed_atom.throw_at(target_turf, range = grab_range, speed = 4, thrower = mod.wearer, spin = isitem(grabbed_atom))
+
+/obj/item/mod/module/anomaly_locked/kinesis/proc/launch_impact(atom/movable/source, atom/hit_atom, datum/thrownthing/thrownthing)
+	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	if(!(isstructure(source) || ismachinery(source) || isvehicle(source)))
+		return
+	var/damage_self = TRUE
+	var/damage = 5
+	if(source.density)
+		damage_self = FALSE
+		damage = 15
+	if(isliving(hit_atom))
+		var/mob/living/living_atom = hit_atom
+		living_atom.apply_damage(damage)
+	else if(hit_atom.uses_integrity)
+		hit_atom.take_damage(damage)
+	if(damage_self && source.uses_integrity)
+		source.take_damage(source.max_integrity/5)
 
 /obj/item/mod/module/anomaly_locked/kinesis/prebuilt
 	prebuilt = TRUE
