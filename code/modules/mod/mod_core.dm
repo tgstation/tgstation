@@ -158,7 +158,6 @@
 		return
 	mod.balloon_alert(user, "cell removed")
 	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	uninstall_cell()
 	cell.forceMove(drop_location())
 	user.put_in_hands(cell)
 	mod.update_charge_alert()
