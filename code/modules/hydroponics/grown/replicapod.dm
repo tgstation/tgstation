@@ -182,14 +182,11 @@
 	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(parent.loc)
 
 	if(realName)
-		podman.real_name = realName
+		podman.fully_replace_character_name(null, realName)
 	else
 		podman.real_name = "Pod Person ([rand(1,999)])"
+
 	mind.transfer_to(podman)
-	if(ckey)
-		podman.ckey = ckey
-	else
-		podman.ckey = ckey_holder
 	podman.gender = blood_gender
 	podman.faction |= factions
 	if(!features["mcolor"])
