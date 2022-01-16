@@ -53,8 +53,6 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
-	///ability to phase in and out when unseen.
-	var/datum/action/innate/creature/teleport/teleport
 
 // No movement while seen code.
 
@@ -65,7 +63,7 @@
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
-	teleport = new
+	var/datum/action/innate/creature/teleport/teleport = new
 	teleport.Grant(src)
 
 	// Set creator
