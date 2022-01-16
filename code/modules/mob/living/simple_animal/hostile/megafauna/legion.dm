@@ -16,6 +16,11 @@
  *
  *SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
  */
+
+#define LEGION_LARGE 3
+#define LEGION_MEDIUM 2
+#define LEGION_SMALL 1
+
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
 	health = 700
@@ -57,8 +62,38 @@
 							   /datum/action/innate/megafauna_attack/charge_target,
 							   /datum/action/innate/megafauna_attack/create_turrets)
 	small_sprite_type = /datum/action/small_sprite/megafauna/legion
-	var/size = 3
+	var/size = LEGION_LARGE
 	var/charging = FALSE
+
+/mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+
+/mob/living/simple_animal/hostile/megafauna/legion/medium
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	pixel_x = -16
+	pixel_y = -8
+	maxHealth = 350
+	size = LEGION_MEDIUM
+
+/mob/living/simple_animal/hostile/megafauna/legion/medium/left
+	icon_state = "mega_legion_left"
+
+/mob/living/simple_animal/hostile/megafauna/legion/medium/eye
+	icon_state = "mega_legion_eye"
+
+/mob/living/simple_animal/hostile/megafauna/legion/medium/right
+	icon_state = "mega_legion_right"
+
+/mob/living/simple_animal/hostile/megafauna/legion/small
+	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	icon_state = "mega_legion" //resets state from second size
+	pixel_x = 0
+	pixel_y = 0
+	maxHealth = 200
+	size = LEGION_SMALL
+
+
 
 /datum/action/innate/megafauna_attack/create_skull
 	name = "Create Legion Skull"
@@ -214,42 +249,57 @@
 ///Splits legion into smaller skulls.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/Split()
 	size--
-	if(size < 1)
-		return FALSE
-	adjustHealth(-maxHealth) //We heal in preparation of the split
-	switch(size) //Yay, switches
-		if(3 to INFINITY)
-			icon = initial(icon)
-			pixel_x = initial(pixel_x)
-			pixel_y = initial(pixel_y)
-			maxHealth = initial(maxHealth)
-		if(2)
-			icon = 'icons/mob/lavaland/64x64megafauna.dmi'
-			pixel_x = -16
-			pixel_y = -8
-			maxHealth = 350
-		if(1)
-			icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-			pixel_x = 0
-			pixel_y = 0
-			maxHealth = 200
-	adjustHealth(0) //Make the health HUD look correct.
-	visible_message(span_boldannounce("This is getting out of hands. Now there are three of them!"))
-	for(var/i in 1 to 2) //Create three skulls in total
-		var/mob/living/simple_animal/hostile/megafauna/legion/L = new(loc)
-		L.setVarsAfterSplit(src)
-	return TRUE
+	switch(size)
+		if (LEGION_SMALL)
+			for (var/i in 0 to 2)
+				new /mob/living/simple_animal/hostile/megafauna/legion/small(loc)
+		if (LEGION_MEDIUM)
+			new /mob/living/simple_animal/hostile/megafauna/legion/medium/left(loc)
+			new /mob/living/simple_animal/hostile/megafauna/legion/medium/right(loc)
+			new /mob/living/simple_animal/hostile/megafauna/legion/medium/eye(loc)
+		else
+			return FALSE
 
-///Sets the variables for new legion skulls. Usually called after splitting.
-/mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/L)
-	maxHealth = L.maxHealth
-	updatehealth()
-	size = L.size
-	icon = L.icon
-	pixel_x = L.pixel_x
-	pixel_y = L.pixel_y
-	faction = L.faction.Copy()
-	GiveTarget(L.target)
+/**
+*	adjustHealth(-maxHealth) //We heal in preparation of the split
+*	switch(size) //Yay, switches
+*		if(3 to INFINITY)
+*			icon = initial(icon)
+*			pixel_x = initial(pixel_x)
+*			pixel_y = initial(pixel_y)
+*			maxHealth = initial(maxHealth)
+*		if(2)
+*			icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+*			icon_state += "-3"
+*			pixel_x = -16
+*			pixel_y = -8
+*			maxHealth = 350
+*		if(1)
+*			icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+*			icon_state = "mega_legion" //resets state from "mega_legion-1" or whatever
+*			pixel_x = 0
+*			pixel_y = 0
+*			maxHealth = 200
+*	adjustHealth(0) //Make the health HUD look correct.
+*	visible_message(span_boldannounce("This is getting out of hand. Now there are three of them!"))
+*	for(var/i in 1 to 2) //Create three skulls in total
+*		var/mob/living/simple_animal/hostile/megafauna/legion/Legion = new(loc)
+*		Legion.setVarsAfterSplit(src)
+*	return TRUE
+*
+* ///Sets the variables for new legion skulls. Usually called after splitting.
+* /mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/Legion)
+*	maxHealth = Legion.maxHealth
+*	updatehealth()
+*	size = Legion.size
+*	icon = Legion.icon
+*	pixel_x = Legion.pixel_x
+*	pixel_y = Legion.pixel_y
+*	faction = Legion.faction.Copy()
+*	GiveTarget(Legion.target)
+*	if (Legion.size == 2)
+*		Legion.icon_state = "mega_legion-" + i
+*/
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
@@ -277,6 +327,7 @@
 /obj/structure/legionturret/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/set_up_shot), initial_firing_time)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 ///Handles an extremely basic AI
 /obj/structure/legionturret/proc/set_up_shot()
