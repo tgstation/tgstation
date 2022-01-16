@@ -238,18 +238,18 @@
 	else if(user.zone_selected == BODY_ZONE_HEAD || user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		if(user == slapped)
 			user.visible_message(
-				span_danger("[user] facepalms!"),
+				span_notice("[user] facepalms!"),
 				span_notice("You facepalm."),
 				span_hear("You hear a slap."),
-				)
+			)
 
 		else
 			if(slapped.IsSleeping() || slapped.IsUnconscious())
 				user.visible_message(
-					span_danger("[user] slaps [slapped] in the face, trying to wake [slapped.p_them()] up!"),
+					span_notice("[user] slaps [slapped] in the face, trying to wake [slapped.p_them()] up!"),
 					span_notice("You slap [slapped] in the face, trying to wake [slapped.p_them()] up!"),
 					span_hear("You hear a slap."),
-					)
+				)
 
 				// Worse than just help intenting people.
 				slapped.AdjustSleeping(-75)
@@ -260,12 +260,13 @@
 					span_danger("[user] slaps [slapped] in the face!"),
 					span_notice("You slap [slapped] in the face!"),
 					span_hear("You hear a slap."),
-					)
+				)
 	else
-		user.visible_message(span_danger("[user] slaps [slapped]!"),
+		user.visible_message(
+			span_danger("[user] slaps [slapped]!"),
 			span_notice("You slap [slapped]!"),
 			span_hear("You hear a slap."),
-			)
+		)
 	playsound(slapped, 'sound/weapons/slap.ogg', slap_volume, TRUE, -1)
 	return
 
