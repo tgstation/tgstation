@@ -20,7 +20,7 @@
 	/// What was our last result?
 	var/last_result = FALSE
 
-/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, dead_shy_immediate machine_whitelist)
+/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, dead_shy_immediate, machine_whitelist)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.mob_whitelist = mob_whitelist
