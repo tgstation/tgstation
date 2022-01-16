@@ -247,11 +247,14 @@
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		to_chat(user, span_notice("You ready your stamp over the paper! "))
-		if(!ui_interact(user))
+		if(!user.can_read(src))
 			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
-			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"), span_notice("You stamp [src] with \the [P.name] the best you can!"))
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"))
+			to_chat(user, span_notice("You stamp [src] with \the [P.name] the best you can!"))
+		else
+			to_chat(user, span_notice("You ready your stamp over the paper! "))
+			ui_interact(user)
 
 		return /// Normaly you just stamp, you don't need to read the thing
 	else

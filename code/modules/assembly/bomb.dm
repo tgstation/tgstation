@@ -13,6 +13,11 @@
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
 
+/obj/item/onetankbomb/Destroy()
+	bombassembly = null
+	bombtank = null
+	return ..()
+
 /obj/item/onetankbomb/IsSpecialAssembly()
 	return TRUE
 

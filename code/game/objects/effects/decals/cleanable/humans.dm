@@ -69,6 +69,12 @@
 	icon_state = "gibbl1"
 	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
 
+/obj/effect/decal/cleanable/blood/splatter/over_window // special layer/plane set to appear on windows
+	layer = ABOVE_WINDOW_LAYER
+	plane = GAME_PLANE
+	turf_loc_check = FALSE
+	alpha = 180
+
 /obj/effect/decal/cleanable/blood/tracks
 	icon_state = "tracks"
 	desc = "They look like tracks left by wheels."
@@ -296,3 +302,97 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return TRUE
 	return FALSE
+
+/obj/effect/decal/cleanable/blood/hitsplatter
+	name = "blood splatter"
+	pass_flags = PASSTABLE | PASSGRILLE
+	icon_state = "hitsplatter1"
+	random_icon_states = list("hitsplatter1", "hitsplatter2", "hitsplatter3")
+	/// The turf we just came from, so we can back up when we hit a wall
+	var/turf/prev_loc
+	/// The cached info about the blood
+	var/list/blood_dna_info
+	/// Skip making the final blood splatter when we're done, like if we're not in a turf
+	var/skip = FALSE
+	/// How many tiles/items/people we can paint red
+	var/splatter_strength = 3
+	/// Insurance so that we don't keep moving once we hit a stoppoint
+	var/hit_endpoint = FALSE
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Initialize(mapload, splatter_strength)
+	. = ..()
+	prev_loc = loc //Just so we are sure prev_loc exists
+	if(splatter_strength)
+		src.splatter_strength = splatter_strength
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
+	if(isturf(loc) && !skip)
+		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
+		if(blood_dna_info)
+			loc.add_blood_DNA(blood_dna_info)
+	return ..()
+
+/// Set the splatter up to fly through the air until it rounds out of steam or hits something. Contains sleep() pending imminent moveloop rework, don't call without async'ing it
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
+	for(var/i in 1 to range)
+		step_towards(src,target_turf)
+		sleep(2) // Will be resolved pending Potato's moveloop rework
+		prev_loc = loc
+		for(var/atom/iter_atom in get_turf(src))
+			if(hit_endpoint)
+				return
+			if(splatter_strength <= 0)
+				break
+
+			if(isitem(iter_atom))
+				iter_atom.add_blood_DNA(blood_dna_info)
+				splatter_strength--
+			else if(ishuman(iter_atom))
+				var/mob/living/carbon/human/splashed_human = iter_atom
+				if(splashed_human.wear_suit)
+					splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
+					splashed_human.update_inv_wear_suit()    //updates mob overlays to show the new blood (no refresh)
+				if(splashed_human.w_uniform)
+					splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
+					splashed_human.update_inv_w_uniform()    //updates mob overlays to show the new blood (no refresh)
+				splatter_strength--
+		if(splatter_strength <= 0) // we used all the puff so we delete it.
+			qdel(src)
+			return
+	qdel(src)
+
+/obj/effect/decal/cleanable/blood/hitsplatter/Bump(atom/bumped_atom)
+	if(!iswallturf(bumped_atom) && !istype(bumped_atom, /obj/structure/window))
+		qdel(src)
+		return
+
+	if(istype(bumped_atom, /obj/structure/window))
+		var/obj/structure/window/bumped_window = bumped_atom
+		if(!bumped_window.fulltile)
+			qdel(src)
+			return
+
+	hit_endpoint = TRUE
+	if(isturf(prev_loc))
+		abstract_move(bumped_atom)
+		skip = TRUE
+		//Adjust pixel offset to make splatters appear on the wall
+		if(istype(bumped_atom, /obj/structure/window))
+			land_on_window(bumped_atom)
+		else
+			var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc)
+			final_splatter.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
+			final_splatter.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
+	else // This will only happen if prev_loc is not even a turf, which is highly unlikely.
+		abstract_move(bumped_atom)
+		qdel(src)
+
+/// A special case for hitsplatters hitting windows, since those can actually be moved around, store it in the window and slap it in the vis_contents
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
+	if(!the_window.fulltile)
+		return
+	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new
+	final_splatter.forceMove(the_window)
+	the_window.vis_contents += final_splatter
+	the_window.bloodied = TRUE
+	qdel(src)

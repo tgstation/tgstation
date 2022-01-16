@@ -65,6 +65,9 @@
 
 /obj/item/modular_computer/Destroy()
 	wipe_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle as anything in idle_threads)
+		idle.kill_program(TRUE)
+	idle_threads.Cut()
 	STOP_PROCESSING(SSobj, src)
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]

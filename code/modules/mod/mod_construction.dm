@@ -1,5 +1,6 @@
 /obj/item/mod/construction
 	desc = "A part used in MOD construction."
+	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	inhand_icon_state = "rack_parts"
 
 /obj/item/mod/construction/helmet
@@ -34,18 +35,9 @@
 	. = ..()
 	. += span_notice("You could insert these into a <b>MOD shell</b>...")
 
-/obj/item/mod/construction/core
-	name = "MOD core"
-	icon_state = "mod-core"
-	desc = "Growing in the most lush, fertile areas of the planet Sprout, there is a crystal known as the Heartbloom. \
-		These rare, organic piezoelectric crystals are of incredible cultural significance to the artist castes of the Ethereals, \
-		owing to their appearance; which is exactly similar to that of an Ethereal's heart. \n\
-		Which one you have in your suit is unclear, but either way, \
-		it's been repurposed to be an internal power source for a Modular Outerwear Device."
-
 /obj/item/mod/construction/broken_core
 	name = "broken MOD core"
-	icon_state = "mod-core-broken"
+	icon_state = "mod-core"
 	desc = "An internal power source for a Modular Outerwear Device. You don't seem to be able to source any power from this one, though."
 
 /obj/item/mod/construction/broken_core/examine(mob/user)
@@ -56,13 +48,13 @@
 	. = ..()
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 30))
 		return
-	new /obj/item/mod/construction/core(drop_location())
+	new /obj/item/mod/core/standard(drop_location())
 	qdel(src)
 
 /obj/item/mod/construction/armor
 	name = "MOD external plating"
 	desc = "External plating used to finish a MOD control unit."
-	icon_state = "standard-armor"
+	icon_state = "standard-plating"
 	var/datum/mod_theme/theme = /datum/mod_theme
 
 /obj/item/mod/construction/armor/Initialize(mapload)
@@ -70,7 +62,7 @@
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
 	name = "MOD [used_theme.name] external plating"
 	desc = "[desc] [used_theme.desc]"
-	icon_state = "[used_theme.default_skin]-armor"
+	icon_state = "[used_theme.default_skin]-plating"
 
 /obj/item/mod/construction/armor/engineering
 	theme = /datum/mod_theme/engineering
@@ -93,7 +85,7 @@
 /obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "paintkit"
 
 #define START_STEP "start"
@@ -145,7 +137,7 @@
 	. = ..()
 	switch(step)
 		if(START_STEP)
-			if(!istype(part, /obj/item/mod/construction/core))
+			if(!istype(part, /obj/item/mod/core))
 				return
 			if(!user.transferItemToLoc(part, src))
 				balloon_alert(user, "core stuck to your hand!")
@@ -249,9 +241,9 @@
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "suit finished")
-				var/obj/item/modsuit = new /obj/item/mod/control(drop_location(), external_armor.theme)
+				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_armor.theme, null, core)
 				qdel(src)
-				user.put_in_hands(modsuit)
+				user.put_in_hands(mod)
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
 				if(part.use_tool(src, user, 0, volume=30))
 					balloon_alert(user, "assembly unscrewed")
