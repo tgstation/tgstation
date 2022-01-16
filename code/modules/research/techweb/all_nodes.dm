@@ -1545,6 +1545,7 @@
 	design_ids = list(
 		"mod_antigrav",
 		"mod_teleporter",
+		"mod_kinesis",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
 

@@ -1344,13 +1344,20 @@
 /datum/design/module/mod_antigrav
 	name = "MOD Module: Anti-Gravity"
 	id = "mod_antigrav"
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 2000)
 	build_path = /obj/item/mod/module/anomaly_locked/antigrav
 	department_type = MODULE_SCIENCE
 
 /datum/design/module/mod_teleporter
 	name = "MOD Module: Teleporter"
 	id = "mod_teleporter"
-	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/bluespace = 1000)
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/bluespace = 2000)
 	build_path = /obj/item/mod/module/anomaly_locked/teleporter
 	department_type = MODULE_SCIENCE
+
+/datum/design/module/mod_kinesis
+	name = "MOD Module: Kinesis"
+	id = "mod_kinesis"
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/mod/module/anomaly_locked/kinesis
+	department_type = MODULE_ENGINEERING

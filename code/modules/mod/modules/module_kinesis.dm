@@ -20,6 +20,21 @@
 	var/datum/beam/kinesis_beam
 	var/mutable_appearance/kinesis_icon
 	var/atom/movable/screen/fullscreen/kinesis/kinesis_catcher
+	var/datum/looping_sound/gravgen/kinesis/soundloop
+
+/obj/item/mod/module/anomaly_locked/kinesis/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, TRUE)
+
+/obj/item/mod/module/anomaly_locked/kinesis/Destroy()
+	if(grabbed_atom)
+		kinesis_catcher = null
+		mod.wearer.clear_fullscreen("kinesis")
+		grabbed_atom.cut_overlay(kinesis_icon)
+		QDEL_NULL(kinesis_beam)
+		grabbed_atom.animate_movement = initial(grabbed_atom.animate_movement)
+	QDEL_NULL(soundloop)
+	return ..()
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_select_use(atom/target)
 	. = ..()
@@ -46,6 +61,7 @@
 	kinesis_catcher = mod.wearer.overlay_fullscreen("kinesis", /atom/movable/screen/fullscreen/kinesis, 0)
 	kinesis_catcher.kinesis_user = mod.wearer
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
+	soundloop.start()
 
 /obj/item/mod/module/anomaly_locked/kinesis/on_deactivation()
 	. = ..()
@@ -99,11 +115,13 @@
 	if(playsound)
 		playsound(grabbed_atom, 'sound/effects/empulse.ogg', 75, TRUE)
 	STOP_PROCESSING(SSfastprocess, src)
+	kinesis_catcher = null
 	mod.wearer.clear_fullscreen("kinesis")
 	grabbed_atom.cut_overlay(kinesis_icon)
 	QDEL_NULL(kinesis_beam)
 	grabbed_atom.animate_movement = initial(grabbed_atom.animate_movement)
 	grabbed_atom = null
+	soundloop.stop()
 
 /obj/item/mod/module/anomaly_locked/kinesis/proc/range_check(atom/target)
 	if(ismovable(target) && !isturf(target.loc))
