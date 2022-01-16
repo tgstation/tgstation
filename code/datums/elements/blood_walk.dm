@@ -22,8 +22,7 @@
 		blood_type = _blood_type
 	sound_played = _sound_played
 	sound_volume = _sound_volume
-	if(_blood_spawn_chance)
-		blood_spawn_chance = _blood_spawn_chance
+	blood_spawn_chance = _blood_spawn_chance
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/spread_blood)
 
 /datum/element/blood_walk/Detach(datum/target)
