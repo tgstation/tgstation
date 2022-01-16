@@ -14,7 +14,7 @@
 	icon_grow = "peas-grow"
 	icon_dead = "peas-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/peas/laugh,/obj/item/seeds/gatfruit)
+	mutatelist = list(/obj/item/seeds/peas/laugh)
 	reagents_add = list (/datum/reagent/consumable/nutriment/vitamin = 0.1, /datum/reagent/consumable/nutriment = 0.05, /datum/reagent/water = 0.05)
 
 /obj/item/food/grown/peas
