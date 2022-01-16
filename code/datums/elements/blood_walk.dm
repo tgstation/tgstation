@@ -1,6 +1,6 @@
 ///Blood walk, a bespoke element that causes you to make blood wherever you walk.
 /datum/element/blood_walk
-	element_flags = ELEMENT_BESPOKE
+	element_flags = ELEMENT_BESPOKE|ELEMENT_DETACH
 	id_arg_index = 2
 
 	///A unique blood type we might want to spread

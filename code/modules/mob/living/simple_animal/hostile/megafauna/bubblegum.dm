@@ -103,8 +103,6 @@ Difficulty: Hard
 		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
-	if(spawn_blood)
-		RemoveElement(/datum/element/blood_walk)
 	QDEL_NULL(triple_charge)
 	QDEL_NULL(hallucination_charge)
 	QDEL_NULL(hallucination_charge_surround)
