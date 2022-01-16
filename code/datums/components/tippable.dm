@@ -16,6 +16,8 @@
 	var/datum/callback/post_tipped_callback
 	/// Callback to additional behavior after being untipped.
 	var/datum/callback/post_untipped_callback
+	///The timer given until the borg untips themselves
+	var/self_untip_timer
 
 /datum/component/tippable/Initialize(
 	tip_time = 3 SECONDS,
@@ -127,7 +129,7 @@
 	else if(self_right_time <= 0)
 		right_self(tipped_mob)
 	else
-		addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time)
+		self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
 /*
  * Try to untip a mob that has been tipped.
@@ -169,6 +171,8 @@
 		ignored_mobs = untipper
 		)
 
+	if(self_untip_timer)
+		deltimer(self_untip_timer)
 	set_tipped_status(tipped_mob, FALSE)
 	post_untipped_callback?.Invoke(untipper)
 
