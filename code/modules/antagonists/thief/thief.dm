@@ -27,10 +27,14 @@
 			picked_flavor = "Thief"
 		if(41 to 70)
 			picked_flavor = "Hoarder"
-		if(71 to 90)
+		if(71 to 84)
 			picked_flavor = "Black Market Outfitter"
-		if(91 to 100)
+		if(85 to 93)
 			picked_flavor = "Organ Market Collector"
+		if(94 to 99)
+			picked_flavor = "Chronicler"
+		if(100)
+			picked_flavor = "Deranged"
 	thief_flavor = strings(THIEF_FLAVOR_FILE, picked_flavor)
 
 /datum/antagonist/thief/proc/forge_objectives()

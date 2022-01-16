@@ -22,5 +22,17 @@
         "introduction": "You're a Thief.",
         "objective_needs_target": 1,
         "objective_type": "/datum/objective/steal"
-    }
+    },
+	"Chronicler": {
+        "goal": "You're one who wants to protect and preserve heirlooms. Unfortunately, your crewmates don't understand the greater mission here, so you'll have to take their heirlooms without their permission. Hint: You can find out who has heirlooms at a medical records console.",
+        "introduction": "You're the Chronicler.",
+        "objective_needs_target": 1,
+        "objective_type": "/datum/objective/chronicle"
+	},
+	"Deranged": {
+    	"goal": "Nothing was the same after opening the Codex. You now know that the souls of the dead have forever been trapped by the Devil within their own mortal body. The only way to solve this is to collect them all, and have a tea party with them!",
+        "introduction": "You're Deranged.",
+        "objective_needs_target": 1,
+        "objective_type": "/datum/objective/hoarder/bodies"
+	}
 }
