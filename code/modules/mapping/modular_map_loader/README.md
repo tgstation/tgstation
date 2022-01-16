@@ -56,14 +56,14 @@ This section will cover the basics of how to use map modules as a mapper. If you
 First we need to create a map, as we usually would. Let's say we want to create a new space ruin `foobar.dmm`, and we put it in the appropriate folder as usual, `_maps/RandomRuins/SpaceRuins/foobar.dmm`. We now need to create three more things.
 
 * `code/modules/ruins/spaceruin_code/foobar.dm` - A code file like would be used to store any code specific to this map.
-* `code/modules/ruins/spaceruin_code/foobar.toml`- A configuration file, this will be looked at in more detail later.
+* `strings/modular_maps/foobar.toml`- A configuration file, this will be looked at in more detail later.
 * `_maps/RandomRuins/SpaceRuins/foobar/` - A new subfolder, which is where we will put the `.dmm` files for the modules.
 
 In `code/modules/ruins/spaceruin_code/foobar.dm` we need to add a small piece of code to define a new modular map root type for our map, which should look like this
 
 ```
 /obj/modular_map_root/foobar
-	config_file = 'code/modules/ruins/spaceruin_code/foobar.toml'
+	config_file = "code/modules/ruins/spaceruin_code/foobar.toml"
 ```
 
 This means when we place root objects `/obj/modular_map_root` in our new map, we use this subtype that points to the correct configuration file.
@@ -82,7 +82,7 @@ If you wish, you can also place another root on a module, if for some reason tha
 
 ### Configuration
 
-Now we go back to our configuration file `code/modules/ruins/spaceruin_code/foobar.toml`. Say we ended up using three different sets of modules in our map, `vault`, `airlock` and `bathroom`, each of which have two variants. We want our `.toml` file to look like this
+Now we go back to our configuration file `strings/modular_maps/foobar.toml`. Say we ended up using three different sets of modules in our map, `vault`, `airlock` and `bathroom`, each of which have two variants. We want our `.toml` file to look like this
 
 ```
 directory = "_maps/RandomRuins/SpaceRuins/foobar/"

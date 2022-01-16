@@ -7,4 +7,4 @@
 /////////// djstation module roots
 
 /obj/modular_map_root/djstation
-	config_file = 'code/modules/ruins/spaceruin_code/DJstation.toml'
+	config_file = "strings/modular_maps/DJstation.toml"
