@@ -52,7 +52,7 @@
 
 /obj/item/clothing/gloves/nob_gloves
 	name = "noblium gloves"
-	desc = "Gloves laced with hyper-nobilium fabric, to prevent any adverse reactions."
+	desc = "Gloves laced with hyper-noblium fabric, to prevent any adverse reactions."
 	icon_state = "nob"
 	inhand_icon_state = "nob"
 	transfer_prints = FALSE
