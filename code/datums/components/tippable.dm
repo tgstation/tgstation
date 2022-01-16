@@ -71,7 +71,7 @@
 	else
 		INVOKE_ASYNC(src, .proc/try_tip, source, user)
 
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
 /*
  * Try to tip over [tipped_mob].
