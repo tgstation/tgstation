@@ -227,7 +227,7 @@
 			span_notice("The nerve! You wind back your hand and smack [slapped] hard enough to knock [slapped.p_them()] over!"),
 			span_hear("You hear someone get the everloving shit smacked out of them!"),
 			ignored_mobs = slapped,
-			)
+		)
 		to_chat(slapped, span_userdanger("You see [user] scoff and pull back [user.p_their()] arm, then suddenly you're on the ground with an ungodly ringing in your ears!"))
 		slap_volume = 120
 		SEND_SOUND(slapped, sound('sound/weapons/flash_ring.ogg'))
