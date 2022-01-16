@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - bugfix: "Podpeople are no longer missing a hand when facing right, and podwomen no longer stick out of their jumpsuit."
