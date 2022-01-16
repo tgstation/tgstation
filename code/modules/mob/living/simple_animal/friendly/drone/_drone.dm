@@ -338,7 +338,7 @@
 	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, not_shy_of, 3, "Your laws prevent this action near %TARGET.", TRUE, shy_machine_whitelist)
+		LoadComponent(/datum/component/shy, not_shy_of, shy_range=3, "Your laws prevent this action near %TARGET.", dead_shy=FALSE, dead_shy_immediate=TRUE, shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
