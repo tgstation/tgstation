@@ -87,7 +87,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/legion/small
 	icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-	icon_state = "mega_legion" //resets state from second size
+	icon_state = "mega_legion"
 	pixel_x = 0
 	pixel_y = 0
 	maxHealth = 200
