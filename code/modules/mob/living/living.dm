@@ -40,6 +40,7 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LAZYLIST(diseases)
+	QDEL_LIST(surgeries)
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels, message = TRUE)
@@ -887,12 +888,13 @@
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
 		return
+
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
 
-	if(has_limbs)
+	if(!has_limbs)
 		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
 		if (T)
 			turfs_to_check += T
@@ -910,8 +912,7 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!force_moving)
-		..(pressure_difference, direction, pressure_resistance_prob_delta)
+	..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
@@ -970,7 +971,7 @@
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 40
+			client.move_delay = world.time + 4 SECONDS
 	else
 		pulledby.stop_pulling()
 		return FALSE
@@ -1337,7 +1338,7 @@
 	if(!on_fire)
 		return
 	on_fire = FALSE
-	fire_stacks = 0 //If it is not called from set_fire_stacks()
+	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
 	clear_alert("fire")
@@ -1369,6 +1370,7 @@
 	fire_stacks = clamp(stacks, -20, 20)
 	if(fire_stacks <= 0)
 		extinguish_mob()
+
 
 //Share fire evenly between the two mobs
 //Called in MobBump() and Crossed()

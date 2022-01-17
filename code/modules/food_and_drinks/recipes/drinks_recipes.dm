@@ -469,7 +469,7 @@
 
 /datum/chemical_reaction/drink/quadruplesec
 	results = list(/datum/reagent/consumable/ethanol/quadruple_sec = 15)
-	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 5, /datum/reagent/consumable/triple_citrus = 5, /datum/reagent/consumable/ethanol/creme_de_menthe = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 5, /datum/reagent/consumable/triple_citrus = 5, /datum/reagent/consumable/grenadine = 5)
 	mix_message = "The snap of a taser emanates clearly from the mixture as it settles."
 	mix_sound = 'sound/weapons/taser.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER

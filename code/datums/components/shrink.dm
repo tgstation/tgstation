@@ -38,4 +38,4 @@
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			H.physiology.damage_resistance += 100
-	..()
+	return ..()

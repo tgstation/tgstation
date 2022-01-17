@@ -611,6 +611,41 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+	else if(href_list["edit_obj_tc"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
+		if(!istype(objective))
+			return
+		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
+		if(isnull(telecrystal))
+			return
+		objective.telecrystal_reward = telecrystal
+		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+	else if(href_list["edit_obj_pr"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
+		if(!istype(objective))
+			return
+		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
+		if(isnull(progression))
+			return
+		objective.progression_reward = progression
+		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
+		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
+	else if(href_list["fail_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
+		if(!istype(objective))
+			return
+		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
+		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
+		log_admin("[key_name(usr)] forcefully [performed] [objective].")
+		objective.fail_objective()
+	else if(href_list["succeed_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
+		if(!istype(objective))
+			return
+		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
+		log_admin("[key_name(usr)] forcefully succeeded [objective].")
+		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -705,13 +740,13 @@
 * and gives them a fallback spell if no uplink was found
 */
 /datum/mind/proc/try_give_equipment_fallback()
-	var/datum/component/uplink/uplink
+	var/uplink_exists
 	var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 	if(traitor_datum)
-		uplink = traitor_datum.uplink
-	if(!uplink)
-		uplink = find_syndicate_uplink(check_unlocked = TRUE)
-	if(!uplink && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
+		uplink_exists = traitor_datum.uplink_ref
+	if(!uplink_exists)
+		uplink_exists = find_syndicate_uplink(check_unlocked = TRUE)
+	if(!uplink_exists && !(locate(/obj/effect/proc_holder/spell/self/special_equipment_fallback) in spell_list))
 		AddSpell(new /obj/effect/proc_holder/spell/self/special_equipment_fallback(null, src))
 
 /datum/mind/proc/take_uplink()

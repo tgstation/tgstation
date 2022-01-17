@@ -94,7 +94,6 @@
 	name = "Groundhog Day"
 	begin_day = 2
 	begin_month = FEBRUARY
-	drone_hat = /obj/item/clothing/head/helmet/space/chronos
 
 /datum/holiday/groundhog/getStationPrefix()
 	return pick("Deja Vu") //I have been to this place before

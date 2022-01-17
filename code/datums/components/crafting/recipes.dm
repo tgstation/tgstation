@@ -1216,14 +1216,27 @@
 	category = CAT_MISC
 
 /datum/crafting_recipe/mod_core
-	name = "MOD core"
-	result = /obj/item/mod/construction/core
+	name = "MOD core (Standard)"
+	result = /obj/item/mod/core/standard
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 10 SECONDS
 	reqs = list(/obj/item/stack/cable_coil = 5,
 				/obj/item/stack/rods = 2,
 				/obj/item/stack/sheet/glass = 1,
-				/obj/item/organ/heart/ethereal = 1
+				/obj/item/organ/heart/ethereal = 1,
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/mod_core
+	name = "MOD core (Ethereal)"
+	result = /obj/item/mod/core/ethereal
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(/datum/reagent/consumable/liquidelectricity = 5,
+				/obj/item/stack/cable_coil = 5,
+				/obj/item/stack/rods = 2,
+				/obj/item/stack/sheet/glass = 1,
+				/obj/item/reagent_containers/syringe = 1,
 				)
 	category = CAT_MISC
 

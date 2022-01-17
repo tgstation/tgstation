@@ -1,0 +1,288 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = -6;
+	spawn_loot_count = 2;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"c" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"d" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"f" = (
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/djstation)
+"h" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_loot_count = 3;
+	spawn_loot_double = 0;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"i" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"p" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/turf/template_noop,
+/area/template_noop)
+"s" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"t" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/wood/tile,
+/area/ruin/space/djstation)
+"u" = (
+/obj/machinery/duct,
+/obj/machinery/door/airlock/silver{
+	name = "Bedroom"
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/space/djstation)
+"v" = (
+/obj/structure/window/plasma,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 4
+	},
+/turf/open/floor/carpet/purple,
+/area/ruin/space/djstation)
+"x" = (
+/obj/effect/spawner/random/trash/soap{
+	spawn_scatter_radius = 1
+	},
+/obj/structure/table/reinforced/rglass,
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"z" = (
+/obj/structure/bed,
+/obj/item/bedsheet/rainbow,
+/turf/open/floor/carpet/purple,
+/area/ruin/space/djstation)
+"A" = (
+/obj/effect/spawner/random/clothing/wardrobe_closet,
+/turf/open/floor/wood/tile,
+/area/ruin/space/djstation)
+"B" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/machinery/duct,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"D" = (
+/turf/open/floor/carpet/purple,
+/area/ruin/space/djstation)
+"H" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"J" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"L" = (
+/obj/structure/bed,
+/obj/item/bedsheet/purple,
+/turf/open/floor/carpet/purple,
+/area/ruin/space/djstation)
+"N" = (
+/obj/structure/window/plasma,
+/obj/structure/table/wood,
+/obj/effect/spawner/random/exotic/languagebook,
+/turf/open/floor/carpet/purple,
+/area/ruin/space/djstation)
+"T" = (
+/obj/structure/dresser,
+/obj/machinery/duct,
+/turf/open/floor/wood/tile,
+/area/ruin/space/djstation)
+"U" = (
+/obj/machinery/door/airlock/silver{
+	name = "Bathroom"
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"V" = (
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+"W" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"X" = (
+/obj/structure/mirror/directional/north,
+/obj/structure/sink{
+	pixel_y = 17
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"Y" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+p
+B
+J
+a
+i
+W
+"}
+(2,1,1) = {"
+a
+a
+W
+i
+Z
+Z
+Z
+V
+b
+i
+a
+"}
+(3,1,1) = {"
+a
+a
+W
+i
+Z
+V
+d
+V
+h
+i
+Y
+"}
+(4,1,1) = {"
+a
+J
+J
+i
+u
+i
+i
+i
+i
+i
+a
+"}
+(5,1,1) = {"
+a
+J
+L
+v
+f
+A
+i
+s
+c
+i
+a
+"}
+(6,1,1) = {"
+a
+J
+D
+D
+f
+t
+i
+X
+C
+i
+a
+"}
+(7,1,1) = {"
+a
+J
+z
+N
+T
+f
+U
+H
+x
+i
+a
+"}
+(8,1,1) = {"
+a
+J
+J
+i
+i
+i
+i
+i
+i
+i
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+W
+a
+a
+a
+W
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}
