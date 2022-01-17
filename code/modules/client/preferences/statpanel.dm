@@ -3,3 +3,9 @@
 	savefile_key = "fast_mc_refreshes"
 	savefile_identifier = PREFERENCE_PLAYER
 	default_value = FALSE
+
+/datum/preference/toggle/fast_mc_refresh/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+
+	return is_admin(preferences.parent)
