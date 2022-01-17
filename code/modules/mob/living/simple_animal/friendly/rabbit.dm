@@ -31,15 +31,46 @@
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
 	///passed to animal_variety component as the prefix icon.
-	var/icon_prefix = "rabbit"
 	var/obj/item/inventory_head
 
 /mob/living/simple_animal/rabbit/Initialize(mapload)
-	. = ..()
+
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
-	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
+	AddElement(/datum/element/animal_variety, "rabbit", pick("brown","black","white"), TRUE)
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 
+#undef icon_prefix
+
+/mob/living/simple_animal/rabbit/easter
+	icon_state = "e_rabbit_white"
+	icon_living = "e_rabbit_white"
+	icon_dead = "e_rabbit_white_dead"
+	speak = list(
+		"Hop into Easter!",
+		"Come get your eggs!",
+		"Prizes for everyone!",
+	)
+	///passed to egg_layer component as how many eggs it starts out as able to lay.
+	var/initial_egg_amount = 10
+	///passed to animal_variety component as the prefix icon.
+
+/mob/living/simple_animal/rabbit/easter/Initialize(mapload)
+	. = ..()
+	var/eggs_added_from_eating = rand(1, 4)
+	var/max_eggs_held = 8
+	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
+	AddElement(/datum/element/animal_variety, "e_rabbit", pick("brown","black","white"), TRUE)
+	AddComponent(/datum/component/egg_layer,\
+		/obj/item/surprise_egg,\
+		list(/obj/item/food/grown/carrot),\
+		feed_messages,\
+		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
+		initial_egg_amount,\
+		eggs_added_from_eating,\
+		max_eggs_held,\
+	)
+
+#undef icon_prefix
 
 /mob/living/simple_animal/rabbit/proc/place_on_head(obj/item/item_to_add, mob/user)
 	if(inventory_head)

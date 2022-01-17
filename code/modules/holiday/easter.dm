@@ -30,33 +30,6 @@
 				else
 					new /mob/living/simple_animal/rabbit/easter(R.loc)
 
-/mob/living/simple_animal/rabbit/easter
-	icon_state = "e_rabbit_white"
-	icon_living = "e_rabbit_white"
-	icon_dead = "e_rabbit_white_dead"
-	speak = list(
-		"Hop into Easter!",
-		"Come get your eggs!",
-		"Prizes for everyone!",
-	)
-	///passed to egg_layer component as how many eggs it starts out as able to lay.
-	var/initial_egg_amount = 10
-
-/mob/living/simple_animal/rabbit/easter/Initialize(mapload)
-	. = ..()
-	var/eggs_added_from_eating = rand(1, 4)
-	var/max_eggs_held = 8
-	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
-	AddComponent(/datum/component/egg_layer,\
-		/obj/item/surprise_egg,\
-		list(/obj/item/food/grown/carrot),\
-		feed_messages,\
-		list("hides an egg.","scampers around suspiciously.","begins making a huge racket.","begins shuffling."),\
-		initial_egg_amount,\
-		eggs_added_from_eating,\
-		max_eggs_held,\
-	)
-
 //Easter Baskets
 /obj/item/storage/basket/easter
 	name = "Easter Basket"
