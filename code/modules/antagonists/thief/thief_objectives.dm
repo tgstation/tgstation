@@ -2,7 +2,7 @@
 GLOBAL_LIST_INIT(hoarder_targets, list(
 	/obj/item/clothing/gloves/color/yellow,
 	/obj/item/mod/control,
-	/obj/item/melee/baton/security
+	/obj/item/melee/baton/security,
 ))
 
 /datum/objective/hoarder
@@ -18,11 +18,14 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 /datum/objective/hoarder/find_target(dupe_search_range, blacklist)
 	amount = rand(amount - 2, amount + 2)
 	target_type = pick(GLOB.hoarder_targets)
-	target_area = pick(subtypesof(/area/maintenance))
+	target_area = pick(get_areas(/area/maintenance, TRUE))
+	target_area = target_area.type //we don't want a ref anyways
 
 /datum/objective/hoarder/update_explanation_text()
 	var/obj/item/target_item = target_type
-	explanation_text = "Hoard as many [initial(target_item.name)]s as you can in [initial(target_area.name)]! At least [amount] will do."
+	var/explanation_name = initial(target_item.name)
+	if(copytext(explanation_name, ))
+	explanation_text = "Hoard as many [explanation_name]\s as you can in [initial(target_area.name)]! At least [amount] will do."
 
 /datum/objective/hoarder/check_completion()
 	. = ..()
