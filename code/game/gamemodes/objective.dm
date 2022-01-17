@@ -889,7 +889,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_n_of_type/organs
 	name = "steal organs"
-	explanation_text = "Steal at least 5 organs! They must be kept healthy."
+	explanation_text = "Steal at least 5 organic organs! They must be kept healthy."
 	wanted_items = list(/obj/item/organ)
 	amount = 5 //i want this to be higher, but the organs must be fresh at roundend
 
@@ -910,7 +910,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				continue
 			//this is an objective item
 			var/obj/item/organ/wanted = stolen
-			if(!(wanted.organ_flags & ORGAN_FAILING))
+			if(!(wanted.organ_flags & ORGAN_FAILING) && !(wanted.organ_flags & ORGAN_SYNTHETIC))
 				stolen_count++
 	return stolen_count >= amount
 
