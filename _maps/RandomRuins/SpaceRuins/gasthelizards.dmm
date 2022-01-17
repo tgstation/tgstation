@@ -18,7 +18,7 @@
 	},
 /area/space)
 "bW" = (
-/obj/structure/billboard,
+/obj/effect/spawner/random/structure/billboard/lizardsgas,
 /turf/open/floor/plating/asteroid/airless,
 /area/space)
 "cm" = (
