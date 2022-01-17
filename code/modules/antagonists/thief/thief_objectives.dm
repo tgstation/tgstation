@@ -23,9 +23,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 
 /datum/objective/hoarder/update_explanation_text()
 	var/obj/item/target_item = target_type
-	var/explanation_name = initial(target_item.name)
-	if(copytext(explanation_name, ))
-	explanation_text = "Hoard as many [explanation_name]\s as you can in [initial(target_area.name)]! At least [amount] will do."
+	explanation_text = "Hoard as many [initial(target_item.name)]\s as you can in [initial(target_area.name)]! At least [amount] will do."
 
 /datum/objective/hoarder/check_completion()
 	. = ..()
