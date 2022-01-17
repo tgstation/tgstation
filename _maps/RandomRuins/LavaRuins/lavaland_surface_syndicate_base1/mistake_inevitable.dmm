@@ -47,11 +47,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"ek" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/template_noop)
 "em" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/testlab)
@@ -80,6 +75,25 @@
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
 /obj/machinery/airalarm/directional/north,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/matter_bin/bluespace,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/manipulator/femto,
+/obj/item/stock_parts/manipulator/femto,
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "hJ" = (
@@ -93,13 +107,6 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
-"ic" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/template_noop)
 "iQ" = (
 /obj/structure/sign/warning/explosives/alt{
 	pixel_y = -32
@@ -117,13 +124,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"ln" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 9
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "lR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -254,24 +254,11 @@
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
-"Fw" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/template_noop,
-/area/template_noop)
 "GD" = (
 /obj/item/stack/sheet/plasmarglass,
 /obj/structure/window/reinforced/plasma/spawner,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"GM" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 5
-	},
-/obj/structure/lattice,
-/turf/template_noop,
-/area/template_noop)
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/directional/south,
@@ -300,24 +287,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"MI" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 1
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/testlab)
 "Rp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"SG" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/template_noop,
-/area/template_noop)
 "Vo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
@@ -356,13 +331,6 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
-"Yx" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/template_noop)
 "ZR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/machinery/firealarm/directional/east,
@@ -370,9 +338,6 @@
 /area/ruin/syndicate_lava_base/testlab)
 
 (1,1,1) = {"
-aA
-aA
-aA
 aA
 aA
 aA
@@ -390,9 +355,6 @@ aA
 (2,1,1) = {"
 aA
 aA
-aA
-aA
-aA
 em
 em
 em
@@ -406,9 +368,6 @@ aA
 aA
 "}
 (3,1,1) = {"
-aA
-aA
-aA
 aA
 em
 em
@@ -424,9 +383,6 @@ aA
 aA
 "}
 (4,1,1) = {"
-aA
-aA
-aA
 em
 em
 gX
@@ -442,10 +398,7 @@ aA
 aA
 "}
 (5,1,1) = {"
-ic
-ek
-ek
-MI
+em
 bs
 Yj
 Yj
@@ -460,9 +413,6 @@ aA
 aA
 "}
 (6,1,1) = {"
-Fw
-ek
-GM
 hK
 me
 XS
@@ -478,9 +428,6 @@ be
 aA
 "}
 (7,1,1) = {"
-SG
-ek
-ln
 EC
 me
 XS
@@ -496,10 +443,7 @@ AV
 on
 "}
 (8,1,1) = {"
-Yx
-ek
-ek
-MI
+em
 me
 AS
 AS
@@ -514,9 +458,6 @@ aA
 aA
 "}
 (9,1,1) = {"
-aA
-aA
-aA
 em
 It
 Vo
@@ -532,9 +473,6 @@ aA
 aA
 "}
 (10,1,1) = {"
-aA
-aA
-aA
 rX
 sa
 sa
