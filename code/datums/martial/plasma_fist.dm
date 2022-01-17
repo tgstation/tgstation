@@ -113,8 +113,8 @@
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	if (ishuman(user))
-		var/mob/living/carbon/human/dying_human = user
+	if(ishuman(dying))
+		var/mob/living/carbon/human/dying_human = dying
 		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
 		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
 	if(dying.stat == DEAD)
