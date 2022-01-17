@@ -21,7 +21,6 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	target_area = pick(subtypesof(/area/maintenance))
 
 /datum/objective/hoarder/update_explanation_text()
-	. = ..()
 	var/obj/item/target_item = target_type
 	explanation_text = "Hoard as many [initial(target_item.name)]s as you can in [initial(target_area.name)]! At least [amount] will do."
 
@@ -55,6 +54,9 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	if(target.stat != DEAD)
 		return FALSE
 	return TRUE
+
+/datum/objective/hoarder/bodies/update_explanation_text()
+	explanation_text = "Hoard as many dead bodies as you can in [initial(target_area.name)]! At least [amount] will do."
 
 /datum/objective/chronicle //exactly what it sounds like, steal someone's heirloom.
 	name = "chronicle"
