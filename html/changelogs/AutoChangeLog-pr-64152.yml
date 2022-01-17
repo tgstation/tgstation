@@ -1,0 +1,4 @@
+author: "tf-4"
+delete-after: True
+changes: 
+  - bugfix: "Trying to make weak virus plasma will no longer plasmaflood virology."
