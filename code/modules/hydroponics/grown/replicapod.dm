@@ -144,7 +144,6 @@
 						if(!O.can_reenter_corpse)
 							break
 					make_podman = TRUE
-					ckey_holder = M.ckey
 					break
 
 	// No podman player, give one or two seeds.
