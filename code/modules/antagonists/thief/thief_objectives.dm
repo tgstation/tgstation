@@ -12,27 +12,35 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	var/atom/movable/target_type
 	///how many we want for greentext
 	var/amount = 7
-	///and in where do we want it roundend (this is a type, not a ref)
-	var/area/target_area
+	///and where do we want it roundend (this is a type, not a ref)
+	var/turf/hoarder_turf
 
 /datum/objective/hoarder/find_target(dupe_search_range, blacklist)
 	amount = rand(amount - 2, amount + 2)
 	target_type = pick(GLOB.hoarder_targets)
-	target_area = pick(get_areas(/area/maintenance, TRUE))
-	target_area = target_area.type //we don't want a ref anyways
+	add_action()
+
+/datum/objective/hoarder/proc/add_action()
+	var/list/owners = get_owners()
+	var/datum/mind/hoardpicker = owners[1]
+	var/datum/action/declare_hoard/declare = new /datum/action/declare_hoard(hoardpicker.current)
+	declare.weak_objective = WEAKREF(src)
+	declare.Grant(hoardpicker.current)
 
 /datum/objective/hoarder/update_explanation_text()
 	var/obj/item/target_item = target_type
-	explanation_text = "Hoard as many [initial(target_item.name)]\s as you can in [initial(target_area.name)]! At least [amount] will do."
+	explanation_text = "Hoard as many [initial(target_item.name)]\s as you can in maintenance (after declaring a spot)! At least [amount] will do."
 
 /datum/objective/hoarder/check_completion()
 	. = ..()
+	if(.)
+		return TRUE
 	var/stolen_amount = 0
-	var/area/area_instance = GLOB.areas_by_type[target_area]
-	var/list/contents = area_instance.get_all_contents()
-	for(var/atom/movable/in_target_area in contents)
-		if(istype(in_target_area, target_type))
-			if(!valid_target(in_target_area))
+	if(!hoarder_turf)
+		return FALSE //they never set up their hoard spot, so they couldn't have done their objective
+	for(var/atom/movable/in_target_turf in hoarder_turf)
+		if(istype(in_target_turf, target_type))
+			if(!valid_target(in_target_turf))
 				continue
 			stolen_amount++
 	return stolen_amount >= amount
@@ -49,7 +57,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 /datum/objective/hoarder/bodies/find_target(dupe_search_range, blacklist)
 	amount = rand(amount - 2, amount + 2)
 	target_type = /mob/living/carbon/human
-	target_area = pick(subtypesof(/area/maintenance))
+	add_action()
 
 /datum/objective/hoarder/bodies/valid_target(mob/living/carbon/human/target)
 	if(target.stat != DEAD)
@@ -57,7 +65,31 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	return TRUE
 
 /datum/objective/hoarder/bodies/update_explanation_text()
-	explanation_text = "Hoard as many dead bodies as you can in [initial(target_area.name)]! At least [amount] will do."
+	explanation_text = "Hoard as many dead bodies as you can in maintenance (after declaring a spot)! At least [amount] will do."
+
+/datum/action/declare_hoard
+	name = "Declare Hoard"
+	desc = "Declare a new hoarding spot on the ground you're standing on. Items on this floor will count for your objective."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "hoard"
+	///weak reference to the objective this action targets, set by hoarder objective
+	var/datum/weakref/weak_objective
+
+/datum/action/declare_hoard/Trigger(trigger_flags)
+	if(owner.incapacitated())
+		owner.balloon_alert(owner, "not while incapacitated!")
+		return
+	var/area/owner_area = get_area(owner)
+	if(!(owner_area.type in typesof(/area/maintenance)))
+		owner.balloon_alert(owner, "hoard must be in maintenance!")
+		return
+	var/datum/objective/hoarder/objective = weak_objective.resolve()
+	if(objective)
+		owner.balloon_alert(owner, "hoard position set")
+		objective.hoarder_turf = get_turf(owner)
+		var/image/hoarder_marker = image('icons/mob/telegraphing/telegraph.dmi', objective.hoarder_turf, "hoarder_circle", layer = ABOVE_OPEN_TURF_LAYER)
+		owner.client.images |= hoarder_marker
+	qdel(src)
 
 /datum/objective/chronicle //exactly what it sounds like, steal someone's heirloom.
 	name = "chronicle"
