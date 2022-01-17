@@ -123,11 +123,10 @@ Difficulty: Hard
 
 	if(!BUBBLEGUM_SMASH)
 		triple_charge.Trigger(target = target)
+	else if(prob(50 + anger_modifier))
+		hallucination_charge.Trigger(target = target)
 	else
-		if(prob(50 + anger_modifier))
-			hallucination_charge.Trigger(target = target)
-		else
-			hallucination_charge_surround.Trigger(target = target)
+		hallucination_charge_surround.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)
