@@ -31,6 +31,7 @@
 		/obj/item/toy/plush/ratplush = 1
 	)
 	rpg_title = "Paladin"
+	job_type_flags = JOB_STATION_JOB
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
 
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
