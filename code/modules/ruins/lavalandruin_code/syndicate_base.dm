@@ -59,4 +59,4 @@
 		to_chat(user, span_danger("This shard's already in Syndicate custody, taking it again could cause more harm than good."))
 		return
 	else
-	. = ..()
+		. = ..()
