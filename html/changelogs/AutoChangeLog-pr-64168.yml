@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Borgs who are untipped ahead of time and re-tipped will not have their first self-untip timer untip them the second time."
