@@ -92,7 +92,7 @@
 			query_data += list(list(
 				"telemetry_ckey" = row["ckey"],
 				"address" = row["address"],
-				"computer_id" = row["computer_id"]
+				"computer_id" = row["computer_id"],
 			))
 
 		if (row["ckey"] in our_known_alts)
@@ -134,6 +134,7 @@
 			"telemetry_ckey" = query_data["telemetry_ckey"],
 			"address" = query_data["address"],
 			"computer_id" = query_data["computer_id"], 
-			"round_id" = GLOB.round_id
+			"round_id" = GLOB.round_id,
 		))
 		query.Execute()
+		qdel(query)
