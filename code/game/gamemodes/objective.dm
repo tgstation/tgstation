@@ -889,7 +889,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_n_of_type/organs
 	name = "steal organs"
-	explanation_text = "Steal at least 10 organs! They must be kept healthy."
+	explanation_text = "Steal at least 5 organs! They must be kept healthy."
 	wanted_items = list(/obj/item/organ)
 	amount = 5 //i want this to be higher, but the organs must be fresh at roundend
 
