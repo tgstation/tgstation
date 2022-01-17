@@ -88,25 +88,25 @@
 	SIGNAL_HANDLER
 	attempt_place_hat(target, hitting_item, user)
 	var/icon_to_use = hitting_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
-	target.update_appearance()
+	//TO-DO: get icon_to_use actually added to the overlay list. Somehow.
+	user.update_inv_head()
 
 /**
 * Calls Attempt_Place_Hat, then updates the icon of the MOD backpack (which, inturn, updates the helmet)
-*
-* target = the bottom-most, attacked hat
-* hitting_item = the attacking item, hopefully a hat
-* user = the one trying to stack the hats
+* Same as the normal place_hat proc aside from the backpack
 **/
 /datum/element/hatstacker/proc/mod_place_hat(obj/item/clothing/head/mod/target, obj/item/hitting_item, mob/user)
 	SIGNAL_HANDLER
 	attempt_place_hat(target, hitting_item, user)
 	var/icon_to_use = hitting_item.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
-	target.mod.wearer.update_inv_back(icon_to_use)	//Because we've set target as a head/mod, it gets to check for the wearer
+	//TO-DO: get icon_to_use actually added to the overlay list. Somehow.
+	target.mod.wearer.update_inv_back()	//Because we've set target as a head/mod, it gets to check for the wearer
 
 /**
 * Attemps to remove a stacked hat on right-click
 *
-*
+* target = the bottom-most hat in the stack; we're trying to remove a hat FROM this target
+* user = the one attempting to remove the hat
 **/
 /datum/element/hatstacker/proc/attempt_remove_hat(obj/item/clothing/head/target, mob/user)
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
@@ -115,10 +115,11 @@
 		return
 	if(user.put_in_active_hand(attached_hat))
 		target.balloon_alert(user, "hat removed")
+		attached_hat = null
 	else
 		attached_hat.forceMove(attached_hat.drop_location())
 		target.balloon_alert_to_viewers("the hat falls to the floor!")
-	attached_hat = null
+		attached_hat = null
 
 /datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
 	SIGNAL_HANDLER
