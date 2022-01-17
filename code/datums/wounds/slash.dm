@@ -30,13 +30,15 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null)
+/datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null, attack_direction = null)
 	blood_flow = initial_flow
 	if(old_wound)
 		blood_flow = max(old_wound.blood_flow, initial_flow)
 		if(old_wound.severity > severity && old_wound.highest_scar)
 			set_highest_scar(old_wound.highest_scar)
 			old_wound.clear_highest_scar()
+	else if(attack_direction && victim.blood_volume > BLOOD_VOLUME_OKAY)
+		victim.spray_blood(attack_direction, severity)
 
 	if(!highest_scar)
 		var/datum/scar/new_scar = new

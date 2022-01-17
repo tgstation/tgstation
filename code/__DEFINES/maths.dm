@@ -39,7 +39,7 @@
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
+#define MODULUS(x, y) ( (x) - FLOOR(x, y))
 
 // Cotangent
 #define COT(x) (1 / tan(x))

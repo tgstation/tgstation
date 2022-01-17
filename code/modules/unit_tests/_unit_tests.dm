@@ -80,6 +80,7 @@
 #include "metabolizing.dm"
 #include "mob_spawn.dm"
 #include "modsuit.dm"
+#include "modular_map_loader.dm"
 #include "ntnetwork_tests.dm"
 #include "outfit_sanity.dm"
 #include "objectives.dm"
