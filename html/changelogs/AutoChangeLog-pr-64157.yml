@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - bugfix: "sleeping people no longer show up as dead on crew monitor"
