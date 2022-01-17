@@ -15,25 +15,26 @@
 
 /datum/element/blood_walk/Attach(
 	datum/target,
-	_blood_type = /obj/effect/decal/cleanable/blood,
-	_sound_played,
-	_sound_volume = 80,
-	_blood_spawn_chance = 100,
+	blood_type = /obj/effect/decal/cleanable/blood,
+	sound_played,
+	sound_volume = 80,
+	blood_spawn_chance = 100,
 )
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 
-	blood_type = _blood_type
-	sound_played = _sound_played
-	sound_volume = _sound_volume
-	blood_spawn_chance = _blood_spawn_chance
+	src.blood_type = blood_type
+	src.sound_played = sound_played
+	src.sound_volume = sound_volume
+	src.blood_spawn_chance = blood_spawn_chance
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/spread_blood)
 
 /datum/element/blood_walk/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 
+///Spawns blood (if possible) under the source, and plays a sound effect (if any)
 /datum/element/blood_walk/proc/spread_blood(datum/source)
 	SIGNAL_HANDLER
 
