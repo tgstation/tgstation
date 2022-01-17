@@ -120,11 +120,11 @@
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
-	if(SSshuttle.supplyBlocked)
+	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
 	data["cart"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
@@ -134,7 +134,7 @@
 		))
 
 	data["requests"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.requestlist)
+	for(var/datum/supply_order/SO in SSshuttle.request_list)
 		data["requests"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
@@ -154,7 +154,7 @@
 			if(!SSshuttle.supply.canMove())
 				computer.say(safety_warning)
 				return
-			if(SSshuttle.supplyBlocked)
+			if(SSshuttle.supply_blocked)
 				computer.say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == docking_home)
@@ -170,7 +170,7 @@
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
 				return
-			if(SSshuttle.supplyBlocked)
+			if(SSshuttle.supply_blocked)
 				computer.say(blockade_warning)
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
@@ -238,42 +238,42 @@
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
 			if((requestonly && !self_paid) || !(card_slot?.GetID()))
-				SSshuttle.requestlist += SO
+				SSshuttle.request_list += SO
 			else
-				SSshuttle.shoppinglist += SO
+				SSshuttle.shopping_list += SO
 				if(self_paid)
 					computer.say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+			for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 				if(SO.id == id)
-					SSshuttle.shoppinglist -= SO
+					SSshuttle.shopping_list -= SO
 					. = TRUE
 					break
 		if("clear")
-			SSshuttle.shoppinglist.Cut()
+			SSshuttle.shopping_list.Cut()
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.requestlist)
+			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
 					var/obj/item/card/id/id_card = card_slot?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
-					SSshuttle.requestlist -= SO
-					SSshuttle.shoppinglist += SO
+					SSshuttle.request_list -= SO
+					SSshuttle.shopping_list += SO
 					. = TRUE
 					break
 		if("deny")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.requestlist)
+			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					SSshuttle.requestlist -= SO
+					SSshuttle.request_list -= SO
 					. = TRUE
 					break
 		if("denyall")
-			SSshuttle.requestlist.Cut()
+			SSshuttle.request_list.Cut()
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid

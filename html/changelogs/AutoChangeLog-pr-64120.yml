@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "To lessen confusion, DeltaStation's customs areas have been split into two, so the average scientist doesn't need to perform a kilometer long trek up and down the station looking for those sweet, sweet anomaly cores."

@@ -195,7 +195,8 @@
 	message.plane = RUNECHAT_PLANE
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
-	message.pixel_y = owner.bound_height * 0.95
+	message.pixel_y = owner.maptext_height
+	message.pixel_x = (owner.maptext_width * 0.5) - 16
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5

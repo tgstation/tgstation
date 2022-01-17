@@ -228,8 +228,6 @@ As a Revenant, your Defile ability removes holy water from tiles in a small radi
 As a Revenant, your Overload Lights ability will only shock humans with lights if the lights are still on after a brief delay.
 As a Revenant, your Malfunction ability in general damages machinery and mechanical objects, possibly even emagging some objects. Experiment!
 As a Revenant, the illness inflicted on humans by Blight can be easily cured by lying down or with holy water, making it best used on targets that have no time to lie down, such as humans in combat.
-As a Swarmer, you can deconstruct more things than you think. Try deconstructing light switches, buttons, air alarms and more. Experiment!
-As a Swarmer, you can teleport fellow swarmers away if you think they are in danger.
 As a Morph, you can talk while disguised, but your words have a chance of being slurred, giving you away!
 As a Drone, you can ping other drones to alert them of areas in the station in need of repair.
 As a Ghost, you can see the inside of a container on the ground by clicking on it.

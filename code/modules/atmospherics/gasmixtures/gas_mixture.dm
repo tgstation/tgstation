@@ -335,12 +335,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gases[path][MOLES] = text2num(gas[id])
 	return 1
 
-///Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length.
-///Returns: amount of gas exchanged (+ if sharer received).
-///sharer - the other gas mixture we are moving part of our gas into
-/datum/gas_mixture/proc/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
+/// Performs air sharing calculations between two gas_mixtures
+/// share() is communitive, which means A.share(B) needs to be the same as B.share(A)
+/// If we don't retain this, we will get negative moles. Don't do it
+/// Returns: amount of gas exchanged (+ if sharer received)
+/datum/gas_mixture/proc/share(datum/gas_mixture/sharer, our_coeff, sharer_coeff)
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
+
+	var/list/only_in_sharer = sharer_gases - cached_gases
+	var/list/only_in_cached = cached_gases - sharer_gases
 
 	var/temperature_delta = temperature_archived - sharer.temperature_archived
 	var/abs_temperature_delta = abs(temperature_delta)
@@ -358,20 +362,31 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/abs_moved_moles = 0
 
 	//GAS TRANSFER
-	for(var/new_gas_id in sharer_gases - cached_gases) // create gases not in our cache
-		ADD_GAS(new_gas_id, cached_gases)
-	for(var/id in cached_gases) // transfer gases
-		ASSERT_GAS(id, sharer_gases)
 
+	//Prep
+	for(var/id in only_in_sharer) //create gases not in our cache
+		ADD_GAS(id, cached_gases)
+	for(var/id in only_in_cached) //create gases not in the sharing mix
+		ADD_GAS(id, sharer_gases)
+
+	for(var/id in cached_gases) //transfer gases
 		var/gas = cached_gases[id]
 		var/sharergas = sharer_gases[id]
+		var/delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE]) //the amount of gas that gets moved between the mixtures
 
-		///the amount of gas that gets moved between the mixtures.
-		var/gas_delta = QUANTIZE(gas[ARCHIVE] - sharergas[ARCHIVE]) / (atmos_adjacent_turfs + 1)
+		if(!delta)
+			continue
 
-		if(gas_delta && abs_temperature_delta  > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-			var/gas_heat_capacity = gas_delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
-			if(gas_delta > 0)
+		// If we have more gas then they do, gas is moving from us to them
+		// This means we want to scale it by our coeff. Vis versa for their case
+		if(delta > 0)
+			delta = delta * our_coeff
+		else
+			delta = delta * sharer_coeff
+
+		if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+			var/gas_heat_capacity = delta * gas[GAS_META][META_GAS_SPECIFIC_HEAT]
+			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
@@ -401,8 +416,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity / old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	garbage_collect()
-	sharer.garbage_collect()
+	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
+		garbage_collect(only_in_cached) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		sharer.garbage_collect(only_in_sharer) //the reverse is equally true
+	else if (initial(sharer.gc_share))
+		sharer.garbage_collect()
+
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases, our_moles)

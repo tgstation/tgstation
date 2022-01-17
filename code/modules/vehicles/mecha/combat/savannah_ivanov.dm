@@ -304,7 +304,7 @@
 	name = "Savannah Skyfall"
 	button_icon_state = "mech_savannah"
 
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger()
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/savannah_mecha = chassis
@@ -333,7 +333,7 @@
 	name = "Ivanov Strike"
 	button_icon_state = "mech_ivanov"
 
-/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger()
+/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/ivanov_mecha = chassis

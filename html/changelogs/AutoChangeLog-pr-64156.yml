@@ -1,0 +1,8 @@
+author: "ReinaCoder"
+delete-after: True
+changes: 
+  - bugfix: "Fixes Icebox not having a drone dispenser."
+  - bugfix: "Fixes Icebox not having a medical records console available to MD."
+  - bugfix: "Fixes the little cross section of Icebox medical and science maints not allowing medical and science access."
+  - bugfix: "Fixes the fire extinguisher on a disposal bin on Icebox"
+  - bugfix: "Fixes the placement of a camera in Icebox medical"

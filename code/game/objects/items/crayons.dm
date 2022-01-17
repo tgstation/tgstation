@@ -75,6 +75,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.add_atom_colour(paint_color)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -815,6 +816,9 @@
 		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped

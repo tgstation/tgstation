@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/plasma
-	true_name = "effluvium sanguine-synonym emitter"
+	abductor_hint = "effluvium sanguine-synonym emitter. The abductee randomly emits clouds of plasma."
 	cooldown_low = 1200
 	cooldown_high = 1800
 	icon_state = "slime"
