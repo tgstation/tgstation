@@ -13,7 +13,7 @@
 	var/message = "You find yourself too shy to do that around %TARGET!"
 	/// Are you shy around a dead body?
 	var/dead_shy = FALSE
-	/// If dead_shy is false and this is true, you're only shy when next to a dead target
+	/// If dead_shy is false and this is true, you're only shy when right next to a dead target
 	var/dead_shy_immediate = TRUE
 	/// Invalidate last_result at this time
 	COOLDOWN_DECLARE(result_cooldown)
@@ -84,7 +84,9 @@
 			if(!is_type_in_typecache(person, mob_whitelist))
 				continue
 			if(person.stat == DEAD && !dead_shy)
-				if(!dead_shy_immediate || !owner.DirectAccess(person))
+				if(!dead_shy_immediate)
+					continue
+				else if(!owner.DirectAccess(person))
 					continue
 			to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
 			result = TRUE
