@@ -20,3 +20,6 @@
 					/obj/item/reagent_containers/food/drinks/bottle/holywater = 1)
 	product_slogans = "It's not pyromania if you're getting paid!;You smell that? Plasma, son. Nothing else in the world smells like that.;I love the smell of Plasma in the morning."
 	resistance_flags = FIRE_PROOF
+
+/obj/modular_map_root/syndicatebase
+	config_file = "strings/modular_maps/syndicatebase.toml"
