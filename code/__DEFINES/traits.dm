@@ -370,6 +370,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+// You can touch and interact with the supermatter, without being instantly exploded into tiny bits.
+// Applied to /mob
+#define TRAIT_SUPERMATTER_IMMUNITY "supermatter_immunity"
+
 /*
 * Trait granted by various security jobs, and checked by [/obj/item/food/donut]
 * When present in the mob's mind, they will always love donuts.

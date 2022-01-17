@@ -50,6 +50,26 @@
 
 	QDEL_NULL(pull_component_weakref)
 
+/obj/item/clothing/gloves/noblium
+	name = "noblium gloves"
+	desc = "Thick black gloves laced with hyper-noblium thread, providing safety from supermatter handling (and other reactive activities) at the cost of slowing you down."
+	icon_state = "nob"
+	inhand_icon_state = "nob"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	transfer_prints = FALSE
+	equip_delay_self = 2 SECONDS
+	equip_delay_other = 2 SECONDS
+	clothing_traits = list(TRAIT_SUPERMATTER_IMMUNITY)
+	resistance_flags = NONE
+
+/obj/item/clothing/gloves/noblium/equipped(mob/equipper, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		to_chat(equipper, span_notice("You feel the pressure of the hyper-noblium against your hands. You feel safe."))
+		slowdown = 0.8
+		equipper.update_equipment_speed_mods()
+
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."

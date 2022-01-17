@@ -982,6 +982,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 
 	. = TRUE
+
+	if(HAS_TRAIT(user, TRAIT_SUPERMATTER_IMMUNITY))
+		to_chat(user, span_notice("You reach out to touch the supermatter, and you close your eyes as you feel a sharp pain shoot through your head.. but you're alive."))
+		return
+
 	if(user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 		dust_mob(user, cause = "hand")
 		return
@@ -1040,6 +1045,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return
 	if(istype(item, /obj/item/melee/roastingstick))
 		return FALSE
+	if(istype(item, /obj/item/clothing/gloves/noblium))
+		return
 	if(istype(item, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/cig = item
 		var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)

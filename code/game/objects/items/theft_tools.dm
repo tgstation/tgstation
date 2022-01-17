@@ -214,6 +214,8 @@
 	..()
 	if(!isliving(user) || user.status_flags & GODMODE) //try to keep this in sync with supermatter's consume fail conditions
 		return FALSE
+	if(HAS_TRAIT(user, TRAIT_SUPERMATTER_IMMUNITY))
+		return
 	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
 			span_hear("Everything suddenly goes silent."))
