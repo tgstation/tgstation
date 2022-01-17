@@ -328,7 +328,7 @@ It's listed here in the hope that it will prevent fruitless debugging in future.
 
 #### Icon hell
 
-The ‘transparent’ icon state causes fucked visual behavior when used on turfs, something to do with underlays and overlays.
+Due to how they are internally represented as part of appearance, overlays and underlays which have an icon_state named the same as an icon_state on the parent object will use the parent's icon_state and look completely wrong. This has caused two bugs with underlay lighting whenever a turf had the icon_state of "transparent" or "dark" and their lighting objects also had those states - because when the lighting underlays were in those modes they would be rendered by the client to look like the icons the floor used. When adding something as an overlay or an underlay make sure it can't match icon_state names with whatever you're adding it to.
 
 ## SQL
 
