@@ -11,8 +11,18 @@
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	minimum_required_age = 0
-	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
@@ -27,6 +37,8 @@
 	COOLDOWN_START(src, autotraitor_cooldown_check, autotraitor_cooldown)
 	var/num_traitors = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_traitors)
+		if(candidates.len <= 0)
+			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.special_role = ROLE_TRAITOR
@@ -51,11 +63,11 @@
 	antag_flag = ROLE_MALF
 	antag_datum = /datum/antagonist/malf_ai
 	minimum_required_age = 14
-	exclusive_roles = list("AI")
+	exclusive_roles = list(JOB_AI)
 	required_candidates = 1
 	weight = 3
 	cost = 18
-	requirements = list(101,101,80,70,60,60,50,50,40,40)
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
 	antag_cap = 1
 	flags = HIGH_IMPACT_RULESET
 
@@ -75,6 +87,8 @@
 	// Maybe a bit too pedantic, but there should never be more malf AIs than there are available positions, spawn positions or antag cap allocations.
 	var/num_malf = min(get_antag_cap(population), min(ai_job.total_positions - ai_job.current_positions, ai_job.spawn_positions))
 	for (var/i in 1 to num_malf)
+		if(candidates.len <= 0)
+			break
 		var/mob/new_malf = pick_n_take(candidates)
 		assigned += new_malf.mind
 		new_malf.mind.special_role = ROLE_MALF
@@ -93,11 +107,21 @@
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
-	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("Cyborg", "AI")
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 2
-	weight = 4
-	cost = 15
+	weight = 2
+	cost = 12
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
 	antag_cap = 2 // Can pick 3 per team, but rare enough it doesn't matter.
@@ -142,8 +166,18 @@
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
-	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 3
 	cost = 16
@@ -155,6 +189,8 @@
 	. = ..()
 	var/num_changelings = get_antag_cap(population) * (scaled_times + 1)
 	for (var/i = 1 to num_changelings)
+		if(candidates.len <= 0)
+			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
@@ -179,8 +215,18 @@
 	name = "Heretics"
 	antag_flag = ROLE_HERETIC
 	antag_datum = /datum/antagonist/heretic
-	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI", "Cyborg")
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 3
 	cost = 15
@@ -194,6 +240,8 @@
 	var/num_ecult = get_antag_cap(population) * (scaled_times + 1)
 
 	for (var/i = 1 to num_ecult)
+		if(candidates.len <= 0)
+			break
 		var/mob/picked_candidate = pick_n_take(candidates)
 		assigned += picked_candidate.mind
 		picked_candidate.mind.restricted_roles = restricted_roles
@@ -225,7 +273,10 @@
 	antag_datum = /datum/antagonist/wizard
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
-	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
 	weight = 2
 	cost = 20
@@ -268,7 +319,18 @@
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHAPLAIN,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 2
 	weight = 3
 	cost = 20
@@ -326,7 +388,10 @@
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
-	restricted_roles = list("Head of Security", "Captain") // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+	) // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 5
 	weight = 3
 	cost = 20
@@ -400,7 +465,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//               REVS                 //
+//               REVS                       //
 //                                          //
 //////////////////////////////////////////////
 
@@ -408,10 +473,23 @@
 	name = "Revolution"
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
-	antag_flag_override = ROLE_REV
+	antag_flag_override = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 3
 	weight = 3
 	delay = 7 MINUTES
@@ -494,9 +572,21 @@
 	persistent = TRUE
 	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILIES
-	protected_roles = list("Prisoner", "Head of Personnel")
-	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Research Director")
-	required_candidates = 9
+	protected_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_PRISONER,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	required_candidates = 3
 	weight = 1
 	cost = 19
 	requirements = list(101,101,40,40,30,20,10,10,10,10)
@@ -579,71 +669,6 @@
 			clowns.set_assigned_role(SSjob.GetJobType(/datum/job/clown_operative))
 			clowns.special_role = ROLE_CLOWN_OPERATIVE
 
-
-//////////////////////////////////////////////
-//                                          //
-//               MONKEY                     //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/roundstart/monkey
-	name = "Monkey"
-	antag_flag = ROLE_MONKEY
-	antag_datum = /datum/antagonist/monkey/leader
-	restricted_roles = list("Cyborg", "AI", "Prisoner")
-	required_candidates = 1
-	weight = 3
-	cost = 0
-	requirements = list(101,101,101,101,101,101,101,101,101,101)
-	flags = LONE_RULESET
-	var/players_per_carrier = 30
-	var/monkeys_to_win = 1
-	var/escaped_monkeys = 0
-	var/datum/team/monkey/monkey_team
-
-/datum/dynamic_ruleset/roundstart/monkey/pre_execute()
-	. = ..()
-	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
-
-	for(var/j in 1 to carriers_to_make)
-		if (!candidates.len)
-			break
-		var/mob/carrier = pick_n_take(candidates)
-		assigned += carrier.mind
-		carrier.mind.special_role = "Monkey Leader"
-		carrier.mind.restricted_roles = restricted_roles
-		log_game("[key_name(carrier)] has been selected as a Jungle Fever carrier")
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/monkey/execute()
-	for(var/datum/mind/carrier in assigned)
-		var/datum/antagonist/monkey/M = carrier.add_antag_datum(/datum/antagonist/monkey/leader)
-		if(M)
-			monkey_team = M.monkey_team
-	return TRUE
-
-/datum/dynamic_ruleset/roundstart/monkey/proc/check_monkey_victory()
-	if(SSshuttle.emergency.mode != SHUTTLE_ENDGAME)
-		return FALSE
-	var/datum/disease/D = new /datum/disease/transformation/jungle_fever()
-	for(var/mob/living/carbon/human/M in GLOB.alive_mob_list)
-		if(!ismonkey(M))
-			continue
-		if (M.HasDisease(D))
-			if(M.onCentCom() || M.onSyndieBase())
-				escaped_monkeys++
-	if(escaped_monkeys >= monkeys_to_win)
-		return TRUE
-	else
-		return FALSE
-
-// This does not get called. Look into making it work.
-/datum/dynamic_ruleset/roundstart/monkey/round_result()
-	if(check_monkey_victory())
-		SSticker.mode_result = "win - monkey win"
-	else
-		SSticker.mode_result = "loss - staff stopped the monkeys"
-
 //////////////////////////////////////////////
 //                                          //
 //               METEOR                     //
@@ -678,3 +703,27 @@
 	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+/// Ruleset for Nations
+/datum/dynamic_ruleset/roundstart/nations
+	name = "Nations"
+	required_candidates = 0
+	weight = 0 //admin only (and for good reason)
+	cost = 0
+	flags = LONE_RULESET
+
+/datum/dynamic_ruleset/roundstart/nations/execute()
+	. = ..()
+	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
+	var/list/department_types = list(
+		/datum/job_department/silicon, //united nations
+		/datum/job_department/cargo,
+		/datum/job_department/engineering,
+		/datum/job_department/medical,
+		/datum/job_department/science,
+		/datum/job_department/security,
+		/datum/job_department/service,
+	)
+
+	for(var/department_type in department_types)
+		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)

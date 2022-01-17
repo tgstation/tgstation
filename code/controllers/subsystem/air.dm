@@ -632,6 +632,9 @@ GLOBAL_LIST_EMPTY(colored_images)
 /datum/controller/subsystem/air/proc/start_processing_machine(obj/machinery/machine)
 	if(machine.atmos_processing)
 		return
+	if(QDELETED(machine))
+		stack_trace("We tried to add a garbage collecting machine to SSair. Don't")
+		return
 	machine.atmos_processing = TRUE
 	atmos_machinery += machine
 

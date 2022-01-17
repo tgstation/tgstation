@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		investigate_log("was brought online and is now producing gravity for this level.", INVESTIGATE_GRAVITY)
 		message_admins("The gravity generator was brought online [ADMIN_VERBOSEJMP(src)]")
 		shake_everyone()
-	gravity_field = make_field(/datum/proximity_monitor/advanced/gravity, list("current_range" = 2, "host" = src, "gravity_value" = 6))
+	gravity_field = new(src, 2, TRUE, 6)
 
 	complete_state_update()
 
@@ -399,7 +399,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		var/mob/M = i
 		if(M.z != z && !(SSmapping.level_trait(z, ZTRAITS_STATION) && SSmapping.level_trait(M.z, ZTRAITS_STATION)))
 			continue
-		M.update_gravity(M.mob_has_gravity())
+		M.update_gravity(M.has_gravity())
 		if(M.client)
 			shake_camera(M, 15, 1)
 			M.playsound_local(T, null, 100, 1, 0.5, S = alert_sound)

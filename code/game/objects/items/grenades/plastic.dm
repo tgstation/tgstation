@@ -53,7 +53,7 @@
 			location = get_turf(target)
 			target.cut_overlay(plastic_overlay, TRUE)
 			if(!ismob(target) || full_damage_on_mobs)
-				target.ex_act(EXPLODE_HEAVY, target)
+				EX_ACT(target, EXPLODE_HEAVY, target)
 	else
 		location = get_turf(src)
 	if(location)
@@ -69,19 +69,16 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num|null
-
+	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", 10, 60000, 10)
 	if (isnull(newtime))
 		return
-
 	if(user.get_active_held_item() == src)
-		newtime = clamp(newtime, 10, 60000)
-		det_time = newtime
+		det_time = round(newtime)
 		to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
-	aim_dir = get_dir(user,bomb_target)
+	aim_dir = get_dir(user, bomb_target)
 	if(!flag)
 		return
 	if(bomb_target != user && HAS_TRAIT(user, TRAIT_PACIFISM) && isliving(bomb_target))
@@ -94,6 +91,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		target = bomb_target
+		active = TRUE
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")

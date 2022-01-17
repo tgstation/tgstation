@@ -5,12 +5,12 @@
 	button_icon_state = "last_resort"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 /datum/action/changeling/headcrab/sting_action(mob/living/user)
 	set waitfor = FALSE
-	var/confirm = tgui_alert(usr, "Are we sure we wish to kill ourself and create a headslug?", "Last Resort", list("Yes", "No"))
-	if(confirm == "No")
+	var/confirm = tgui_alert(user, "Are we sure we wish to kill ourself and create a headslug?", "Last Resort", list("Yes", "No"))
+	if(confirm != "Yes")
 		return
 
 	..()

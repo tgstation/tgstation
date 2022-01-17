@@ -12608,7 +12608,7 @@
 "yj" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12668,7 +12668,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yp" = (
 /obj/structure/alien/weeds,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12754,7 +12754,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yC" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12765,7 +12765,7 @@
 "yD" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12776,7 +12776,7 @@
 "yH" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";

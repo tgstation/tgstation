@@ -15,8 +15,14 @@
  */
 /obj/item/gun/blastcannon
 	name = "blast cannon"
-	desc = "A makeshift device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
-	icon_state = "empty_blastcannon"
+	desc = "A surprisingly portable device used to concentrate a bomb's blast energy to a narrow wave. Small enough to stow in a bag."
+	icon = 'icons/obj/guns/wide_guns.dmi'
+	icon_state = "blastcannon_empty"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	base_pixel_x = -2
+	pixel_x = -2
 	inhand_icon_state = "blastcannon_empty"
 	base_icon_state = "blastcannon"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -50,6 +56,7 @@
 	if(!pin)
 		pin = new
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
@@ -84,7 +91,8 @@
 	return ..()
 
 /obj/item/gun/blastcannon/update_icon_state()
-	icon_state = "[bomb ? "loaded" : "empty"]_[base_icon_state]"
+	icon_state = "[base_icon_state]_[bomb ? "loaded" : "empty"]"
+	inhand_icon_state = icon_state
 	return ..()
 
 /obj/item/gun/blastcannon/attackby(obj/item/transfer_valve/bomb_to_attach, mob/user)
@@ -134,6 +142,7 @@
 	message_admins("Blastcannon transfer valve opened by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(current_turf)] while aiming at [ADMIN_VERBOSEJMP(target_turf)] (target).")
 	log_game("Blastcannon transfer valve opened by [key_name(user)] at [AREACOORD(current_turf)] while aiming at [AREACOORD(target_turf)] (target).")
 	bomb.toggle_valve()
+	update_appearance()
 	return
 
 
@@ -285,8 +294,10 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
+	flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
+	phasing_ignore_direct_target = TRUE // If we don't do this the blastcannon shot can be blocked by random items.
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavy_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
@@ -295,7 +306,7 @@
 	var/light_ex_range = 0
 
 /obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range)
-	range = max(heavy_ex_range, medium_ex_range, light_range, 0)
+	range = max(heavy_ex_range, medium_ex_range, light_ex_range, 0)
 	src.heavy_ex_range = heavy_ex_range
 	src.medium_ex_range = medium_ex_range
 	src.light_ex_range = light_ex_range
@@ -314,7 +325,7 @@
 		SSexplosions.highturf += loc
 	else if(medium_ex_range)
 		SSexplosions.medturf += loc
-	else if(light_range)
+	else if(light_ex_range)
 		SSexplosions.lowturf += loc
 	else
 		qdel(src)

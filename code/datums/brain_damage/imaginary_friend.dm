@@ -83,9 +83,9 @@
 	Show()
 
 /mob/camera/imaginary_friend/proc/greet()
-		to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
-		to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
-		to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
+	to_chat(src, span_notice("<b>You are the imaginary friend of [owner]!</b>"))
+	to_chat(src, span_notice("You are absolutely loyal to your friend, no matter what."))
+	to_chat(src, span_notice("You cannot directly influence the world around you, but you can see what [owner] cannot."))
 
 /**
  * Arguments:
@@ -138,7 +138,7 @@
 			highest_pref = this_pref
 
 	if(!appearance_job)
-		appearance_job = SSjob.GetJob("Assistant")
+		appearance_job = SSjob.GetJob(JOB_ASSISTANT)
 
 	if(istype(appearance_job, /datum/job/ai))
 		human_image = icon('icons/mob/ai.dmi', icon_state = resolve_ai_icon(appearance_from_prefs.read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)

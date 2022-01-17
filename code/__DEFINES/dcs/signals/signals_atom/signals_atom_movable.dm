@@ -5,7 +5,7 @@
 ///from base of atom/movable/Moved(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
-///from base of atom/movable/Moved(): (/atom, dir)
+///from base of atom/movable/Moved(): (atom/old_loc, dir, forced, list/old_locs)
 #define COMSIG_MOVABLE_MOVED "movable_moved"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
@@ -13,6 +13,9 @@
 #define COMSIG_MOVABLE_CROSS_OVER "movable_cross_am"
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
+///from base of atom/movable/newtonian_move(): (inertia_direction)
+#define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
+	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
 ///from base of atom/movable/throw_impact(): (/atom/hit_atom, /datum/thrownthing/throwingdatum)
 #define COMSIG_MOVABLE_IMPACT "movable_impact"
 	#define COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH (1<<0) //if true, flip if the impact will push what it hits
@@ -72,3 +75,10 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called when a movable is teleported from `do_teleport()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
+/// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
+#define COMSIG_BUCKLED_CAN_Z_MOVE "ridden_pre_can_z_move"
+	#define COMPONENT_RIDDEN_STOP_Z_MOVE 1
+	#define COMPONENT_RIDDEN_ALLOW_Z_MOVE 2
+/// from base of atom/movable/Process_Spacemove(): (movement_dir)
+#define COMSIG_MOVABLE_SPACEMOVE "spacemove"
+	#define COMSIG_MOVABLE_STOP_SPACEMOVE (1<<0)

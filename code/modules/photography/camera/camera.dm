@@ -57,16 +57,12 @@
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
 
 /obj/item/camera/proc/adjust_zoom(mob/user)
-	var/desired_x = input(user, "How wide do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num|null
-
+	var/desired_x = tgui_input_number(user, "How wide do you want the camera to shoot?", "Zoom", picture_size_x, picture_size_x_max, picture_size_x_min)
 	if (isnull(desired_x))
 		return
-
-	var/desired_y = input(user, "How high do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num|null
-
+	var/desired_y = tgui_input_number(user, "How high do you want the camera to shoot", "Zoom", picture_size_y, picture_size_y_max, picture_size_y_min)
 	if (isnull(desired_y))
 		return
-
 	picture_size_x = min(clamp(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 
@@ -119,8 +115,8 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else //user is an atom
-		if(!(get_turf(target) in view(world.view, user)))
+	else //user is an atom or null
+		if(!(get_turf(target) in view(world.view, user || src)))
 			return FALSE
 	return TRUE
 
@@ -176,9 +172,9 @@
 	var/list/dead_spotted = list()
 	var/ai_user = isAI(user)
 	var/list/seen
-	var/list/viewlist = (user && user.client)? getviewsize(user.client.view) : getviewsize(world.view)
+	var/list/viewlist = user?.client ? getviewsize(user.client.view) : getviewsize(world.view)
 	var/viewr = max(viewlist[1], viewlist[2]) + max(size_x, size_y)
-	var/viewc = user.client? user.client.eye : target
+	var/viewc = user?.client ? user.client.eye : target
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
@@ -234,9 +230,9 @@
 		if(can_customise)
 			customise = tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 		if(customise == "Yes")
-			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
-			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
-			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
+			var/name1 = tgui_input_text(user, "Set a name for this photo, or leave blank.", "Name", max_length = 32)
+			var/desc1 = tgui_input_text(user, "Set a description to add to photo, or leave blank.", "Description", max_length = 128)
+			var/caption = tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 			if(name1)
 				picture.picture_name = name1
 			if(desc1)
@@ -294,8 +290,8 @@
 	return ..()
 
 /obj/item/circuit_component/camera/proc/sanitize_picture_size()
-	camera.picture_size_x = clamp(adjust_size_x, camera.picture_size_x_min, camera.picture_size_x_max)
-	camera.picture_size_y = clamp(adjust_size_y, camera.picture_size_y_min, camera.picture_size_y_max)
+	camera.picture_size_x = clamp(adjust_size_x.value, camera.picture_size_x_min, camera.picture_size_x_max)
+	camera.picture_size_y = clamp(adjust_size_y.value, camera.picture_size_y_min, camera.picture_size_y_max)
 
 /obj/item/circuit_component/camera/proc/on_image_captured(obj/item/camera/source, atom/target, mob/user)
 	SIGNAL_HANDLER
@@ -303,10 +299,10 @@
 	picture_taken.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/camera/input_received(datum/port/input/port)
-	var/atom/target = picture_target
+	var/atom/target = picture_target.value
 	if(!target)
 		var/turf/our_turf = get_location()
-		target = locate(our_turf.x + adjust_size_x, our_turf.y + adjust_size_y, our_turf.z)
+		target = locate(our_turf.x + picture_coord_x.value, our_turf.y + picture_coord_y.value, our_turf.z)
 		if(!target)
 			return
 	if(!camera.can_target(target))

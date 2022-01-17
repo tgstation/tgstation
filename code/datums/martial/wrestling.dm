@@ -52,7 +52,7 @@ If you make a derivative work from this code, you must include this notification
 	name = "Slam (Cinch) - Slam a grappled opponent into the floor."
 	button_icon_state = "wrassle_slam"
 
-/datum/action/slam/Trigger()
+/datum/action/slam/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -63,7 +63,7 @@ If you make a derivative work from this code, you must include this notification
 	name = "Throw (Cinch) - Spin a cinched opponent around and throw them."
 	button_icon_state = "wrassle_throw"
 
-/datum/action/throw_wrassle/Trigger()
+/datum/action/throw_wrassle/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -74,7 +74,7 @@ If you make a derivative work from this code, you must include this notification
 	name = "Kick - A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	button_icon_state = "wrassle_kick"
 
-/datum/action/kick/Trigger()
+/datum/action/kick/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -85,7 +85,7 @@ If you make a derivative work from this code, you must include this notification
 	name = "Strike - Hit a neaby opponent with a quick attack."
 	button_icon_state = "wrassle_strike"
 
-/datum/action/strike/Trigger()
+/datum/action/strike/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -96,7 +96,7 @@ If you make a derivative work from this code, you must include this notification
 	name = "Drop - Smash down onto an opponent."
 	button_icon_state = "wrassle_drop"
 
-/datum/action/drop/Trigger()
+/datum/action/drop/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't WRESTLE while you're OUT FOR THE COUNT."))
 		return
@@ -305,11 +305,11 @@ If you make a derivative work from this code, you must include this notification
 				if (2)
 					D.adjustBruteLoss(rand(20,30))
 				if (3)
-					D.ex_act(EXPLODE_LIGHT)
+					EX_ACT(D, EXPLODE_LIGHT)
 				else
 					D.adjustBruteLoss(rand(10,20))
 		else
-			D.ex_act(EXPLODE_LIGHT)
+			EX_ACT(D, EXPLODE_LIGHT)
 
 	else
 		if (A)
@@ -427,7 +427,7 @@ If you make a derivative work from this code, you must include this notification
 
 		if (falling == 1)
 			if (prob(33) || D.stat)
-				D.ex_act(EXPLODE_LIGHT)
+				EX_ACT(D, EXPLODE_LIGHT)
 			else
 				D.adjustBruteLoss(rand(20,30))
 		else

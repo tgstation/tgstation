@@ -285,7 +285,7 @@
 				return
 			var/list/expNames = list("Devastation", "Heavy Damage", "Light Damage", "Flame") //Explosions have a range of different types of damage
 			var/list/boomInput = list()
-			for (var/i=1 to expNames.len) //Gather input from the user for the value of each type of damage
+			for (var/i=1 to length(expNames)) //Gather input from the user for the value of each type of damage
 				boomInput.Add(input("Enter the [expNames[i]] range of the explosion. WARNING: This ignores the bomb cap!", "[expNames[i]] Range",  0) as null|num)
 				if (isnull(boomInput[i]))
 					return
@@ -332,10 +332,10 @@
 				temp_pod.adminNamed = FALSE
 				temp_pod.setStyle(temp_pod.style) //This resets the name of the pod based on it's current style (see supplypod/setStyle() proc)
 				return
-			var/nameInput= input("Custom name", "Enter a custom name", GLOB.podstyles[temp_pod.style][POD_NAME]) as null|text //Gather input for name and desc
+			var/nameInput= tgui_input_text(usr, "Enter a custom name", "Custom name", GLOB.podstyles[temp_pod.style][POD_NAME], MAX_NAME_LEN) //Gather input for name and desc
 			if (isnull(nameInput))
 				return
-			var/descInput = input("Custom description", "Enter a custom desc", GLOB.podstyles[temp_pod.style][POD_DESC]) as null|text //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
+			var/descInput = tgui_input_text(usr, "Enter a custom desc", "Custom description", GLOB.podstyles[temp_pod.style][POD_DESC])  //The GLOB.podstyles is used to get the name, desc, or icon state based on the pod's style
 			if (isnull(descInput))
 				return
 			temp_pod.name = nameInput
@@ -406,7 +406,7 @@
 				return
 
 			var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-			var/target = input("Select a mob! (Smiting does this automatically)", "Target", null, null) as null|anything in possible_destinations
+			var/target = tgui_input_list(usr, "Select a mob! (Smiting does this automatically)", "Target", possible_destinations)
 
 			if (isnull(target))
 				return
@@ -456,7 +456,7 @@
 					continue
 				var/sound/found = playing_sound
 				if (found.file == tempSound.file)
-					soundLen = found.len
+					soundLen = length(found)
 			if (!soundLen)
 				soundLen = input(holder, "Couldn't auto-determine sound file length. What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
 				if (isnull(soundLen))
@@ -638,7 +638,7 @@
 			var/turf/target_turf = get_turf(target)
 			setDropoff(target_turf)
 			customDropoff = TRUE
-			to_chat(user, "<span class = 'notice'> You've selected [target_turf] at [COORD(target_turf)] as your dropoff location.</span>")
+			to_chat(user, span_notice("You've selected [target_turf] at [COORD(target_turf)] as your dropoff location."))
 
 /datum/centcom_podlauncher/proc/refreshView()
 	switch(tabIndex)
@@ -689,7 +689,7 @@
 	acceptableTurfs = list()
 	for (var/t in orderedArea) //Go through the orderedArea list
 		var/turf/unchecked_turf = t
-		if (iswallturf(unchecked_turf) || typecache_filter_list_reverse(unchecked_turf.contents, ignored_atoms).len != 0) //if there is something in this turf that isn't in the blacklist, we consider this turf "acceptable" and add it to the acceptableTurfs list
+		if (iswallturf(unchecked_turf) || length(typecache_filter_list_reverse(unchecked_turf.contents, ignored_atoms))) //if there is something in this turf that isn't in the blacklist, we consider this turf "acceptable" and add it to the acceptableTurfs list
 			acceptableTurfs.Add(unchecked_turf) //Because orderedArea was an ordered linear list, acceptableTurfs will be as well.
 			numTurfs ++
 
@@ -703,7 +703,7 @@
 					if (iswallturf(accepted_turf))
 						launchList += accepted_turf
 			if(LAUNCH_ORDERED) //If we are launching one at a time
-				if (launchCounter > acceptableTurfs.len) //Check if the launchCounter, which acts as an index, is too high. If it is, reset it to 1
+				if (launchCounter > length(acceptableTurfs)) //Check if the launchCounter, which acts as an index, is too high. If it is, reset it to 1
 					launchCounter = 1 //Note that the launchCounter index is incremented in the launch() proc
 				var/turf/next_turf_in_line = acceptableTurfs[launchCounter]
 				launchList |= typecache_filter_list_reverse(next_turf_in_line.contents, ignored_atoms) //Filter the specicic turf chosen from acceptableTurfs, and add it to the launchList
@@ -774,7 +774,7 @@
 /datum/centcom_podlauncher/proc/updateSelector() //Ensures that the selector effect will showcase the next item if needed
 	if (launchChoice == LAUNCH_ORDERED && length(acceptableTurfs) > 1 && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
 		var/index = (launchCounter == 1 ? launchCounter : launchCounter + 1) //launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list. We don't want to do this for the very first item tho
-		if (index > acceptableTurfs.len) //out of bounds check
+		if (index > length(acceptableTurfs)) //out of bounds check
 			index = 1
 		selector.forceMove(acceptableTurfs[index]) //forceMove the selector to the next turf in the ordered acceptableTurfs list
 	else

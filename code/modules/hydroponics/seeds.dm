@@ -211,7 +211,7 @@
 			mutated_seed = new mutated_seed
 			for(var/datum/plant_gene/trait/trait in parent.myseed.genes)
 				if((trait.mutability_flags & PLANT_GENE_MUTATABLE) && trait.can_add(mutated_seed))
-					mutated_seed.genes += trait
+					mutated_seed.genes += trait.Copy()
 			t_prod = new t_prod(output_loc, mutated_seed)
 			t_prod.transform = initial(t_prod.transform)
 			t_prod.transform *= TRANSFORM_USING_VARIABLE(t_prod.seed.potency, 100) + 0.5
@@ -447,51 +447,36 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/pen))
-		var/choice = tgui_input_list(usr, "What would you like to change?",, list("Plant Name", "Seed Description", "Product Description", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Seed Alteration", list("Plant Name", "Seed Description", "Product Description"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		switch(choice)
 			if("Plant Name")
-				var/newplantname = reject_bad_text(stripped_input(user, "Write a new plant name:", name, plantname))
+				var/newplantname = reject_bad_text(tgui_input_text(user, "Write a new plant name", "Plant Name", plantname, 20))
+				if(isnull(newplantname))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newplantname) > 20)
-					to_chat(user, span_warning("That name is too long!"))
-					return
-				if(!newplantname)
-					to_chat(user, span_warning("That name is invalid."))
-					return
-				else
-					name = "[lowertext(newplantname)]"
-					plantname = newplantname
+				name = "[lowertext(newplantname)]"
+				plantname = newplantname
 			if("Seed Description")
-				var/newdesc = stripped_input(user, "Write a new description:", name, desc)
+				var/newdesc = tgui_input_text(user, "Write a new seed description", "Seed Description", desc, 180)
+				if(isnull(newdesc))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
-					return
-				if(!newdesc)
-					to_chat(user, span_warning("That description is invalid."))
-					return
-				else
-					desc = newdesc
+				desc = newdesc
 			if("Product Description")
 				if(product && !productdesc)
 					productdesc = initial(product.desc)
-				var/newproductdesc = stripped_input(user, "Write a new description:", name, productdesc)
+				var/newproductdesc = tgui_input_text(user, "Write a new product description", "Product Description", productdesc, 180)
+				if(isnull(newproductdesc))
+					return
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
-				if (length(newproductdesc) > 180)
-					to_chat(user, span_warning("That description is too long!"))
-					return
-				if(!newproductdesc)
-					to_chat(user, span_warning("That description is invalid."))
-					return
-				else
-					productdesc = newproductdesc
-			else
-				return
+				productdesc = newproductdesc
 
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 

@@ -34,7 +34,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/toxin/mutagen
-	name = "Unstable mutagen"
+	name = "Unstable Mutagen"
 	description = "Might cause unpredictable mutations. Keep away from children."
 	color = "#00FF00"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -225,31 +225,30 @@
 	toxpwr = 0.5
 	taste_description = "death"
 	penetrates_skin = NONE
-	var/fakedeath_active = FALSE
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
-	if(fakedeath_active)
-		L.fakedeath(type)
-
-/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
-	L.cure_fakedeath(type)
-	..()
-
-/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
-	exposed_mob.adjustOxyLoss(0.5*REM, 0)
-	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-		if(istype(zombiepowder))
-			zombiepowder.fakedeath_active = TRUE
+	holder_mob.adjustOxyLoss(0.5*REM, 0)
+	if(data?["method"] & INGEST)
+		holder_mob.fakedeath(type)
+
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/holder_mob)
+	holder_mob.cure_fakedeath(type)
+	return ..()
+
+/datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
+	. = ..()
+	var/datum/reagent/zombiepowder = target_atom.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+	if(!zombiepowder || !(methods & INGEST))
+		return
+	LAZYINITLIST(zombiepowder.data)
+	zombiepowder.data["method"] |= INGEST
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, delta_time, times_fired)
 	..()
-	if(fakedeath_active)
+	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
@@ -259,7 +258,6 @@
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
-			fakedeath_active = TRUE
 			M.fakedeath(type)
 
 /datum/reagent/toxin/ghoulpowder
@@ -1000,7 +998,7 @@
 
 
 /datum/reagent/toxin/acid
-	name = "Sulphuric acid"
+	name = "Sulphuric Acid"
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
@@ -1046,7 +1044,7 @@
 	exposed_turf.acid_act(acidpwr, reac_volume)
 
 /datum/reagent/toxin/acid/fluacid
-	name = "Fluorosulfuric acid"
+	name = "Fluorosulfuric Acid"
 	description = "Fluorosulfuric acid is an extremely corrosive chemical substance."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY
@@ -1070,7 +1068,7 @@
 	..()
 
 /datum/reagent/toxin/acid/nitracid
-	name = "Nitric acid"
+	name = "Nitric Acid"
 	description = "Nitric acid is an extremely corrosive chemical substance that violently reacts with living organic tissue."
 	color = "#5050FF"
 	creation_purity = REAGENT_STANDARD_PURITY

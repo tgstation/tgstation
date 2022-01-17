@@ -21,19 +21,23 @@
 	var/self_operable = FALSE //Can the surgery be performed on yourself.
 	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
+	var/organ_to_manipulate 
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(surgery_target)
-		target = surgery_target
-		target.surgeries += src
-		if(surgery_location)
-			location = surgery_location
-		if(surgery_bodypart)
-			operated_bodypart = surgery_bodypart
-			if(targetable_wound)
-				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-				operated_wound.attached_surgery = src
+	if(!surgery_target)
+		return
+	target = surgery_target
+	target.surgeries += src
+	if(surgery_location)
+		location = surgery_location
+	if(!surgery_bodypart)
+		return
+	operated_bodypart = surgery_bodypart
+	if(targetable_wound)
+		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+		operated_wound.attached_surgery = src
 
 /datum/surgery/Destroy()
 	if(operated_wound)
@@ -52,7 +56,7 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -78,7 +82,7 @@
 	//Get the relevant operating computer
 	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
 	if (isnull(opcomputer))
-		return FALSE
+		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
 	if(type in opcomputer.advanced_surgeries)

@@ -15,9 +15,12 @@
 	var/list/gas_filters
 	///Type of filter that spawns on roundstart
 	var/starting_filter_type = /obj/item/gas_filter
+	///Does the mask have an FOV?
+	var/has_fov = TRUE
 
 /obj/item/clothing/mask/gas/Initialize(mapload)
 	. = ..()
+	init_fov()
 	if(!max_filters || !starting_filter_type)
 		return
 
@@ -75,6 +78,11 @@
 		has_filter = FALSE
 	return filtered_breath
 
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	if (has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
 /**
  * Getter for overall filter durability, takes into consideration all filters filter_status
  */
@@ -92,7 +100,6 @@
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
-	w_class = WEIGHT_CLASS_SMALL
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
@@ -171,6 +178,7 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 	var/list/clownmask_designs = list()
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
@@ -218,6 +226,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -230,6 +239,7 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 	var/list/mimemask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/plasmaman
@@ -283,6 +293,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"

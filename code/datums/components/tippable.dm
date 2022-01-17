@@ -18,12 +18,13 @@
 	var/datum/callback/post_untipped_callback
 
 /datum/component/tippable/Initialize(
-		tip_time = 3 SECONDS,
-		untip_time = 1 SECONDS,
-		self_right_time = 60 SECONDS,
-		datum/callback/pre_tipped_callback,
-		datum/callback/post_tipped_callback,
-		datum/callback/post_untipped_callback)
+	tip_time = 3 SECONDS,
+	untip_time = 1 SECONDS,
+	self_right_time = 60 SECONDS,
+	datum/callback/pre_tipped_callback,
+	datum/callback/post_tipped_callback,
+	datum/callback/post_untipped_callback,
+)
 
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -36,10 +37,10 @@
 	src.post_untipped_callback = post_untipped_callback
 
 /datum/component/tippable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/interact_with_tippable)
+	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
 
 /datum/component/tippable/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /datum/component/tippable/Destroy()
 	if(pre_tipped_callback)
@@ -55,9 +56,8 @@
  *
  * source - the mob being tipped over
  * user - the mob interacting with source
- * modifiers - list of on click modifiers (we only tip mobs over using right click!)
  */
-/datum/component/tippable/proc/interact_with_tippable(mob/living/source, mob/user, modifiers)
+/datum/component/tippable/proc/interact_with_tippable(mob/living/source, mob/user)
 	SIGNAL_HANDLER
 
 	var/mob/living/living_user = user
@@ -68,7 +68,7 @@
 
 	if(is_tipped)
 		INVOKE_ASYNC(src, .proc/try_untip, source, user)
-	else if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	else
 		INVOKE_ASYNC(src, .proc/try_tip, source, user)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -16,6 +16,7 @@
 		"basic_scanning",
 		"bepis",
 		"bucket",
+		"c38_rubber",
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
@@ -28,9 +29,11 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"gas_filter",
 		"handlabel",
 		"mechfab",
 		"micro_mani",
+		"oven_tray",
 		"packagewrap",
 		"paystand",
 		"plasmaglass",
@@ -41,6 +44,7 @@
 		"plastic_spoon",
 		"plastitanium",
 		"plastitaniumglass",
+		"plasmaman_gas_filter",
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
@@ -55,9 +59,6 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
-		"gas_filter",
-		"plasmaman_gas_filter",
-		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -110,6 +111,28 @@
 		"ripley_right_leg",
 		"ripley_torso",
 		"ripleyupgrade",
+	)
+
+/datum/techweb_node/mod_basic
+	id = "mod"
+	starting_node = TRUE
+	display_name = "Basic Modular Suits"
+	description = "Specialized back mounted power suits with various different modules."
+	design_ids = list(
+		"mod_armor_standard",
+		"mod_boots",
+		"mod_chestplate",
+		"mod_gauntlets",
+		"mod_helmet",
+		"mod_paint_kit",
+		"mod_shell",
+		"mod_storage",
+		"mod_welding",
+		"mod_mouthhole",
+		"mod_flashlight",
+		"mod_longfall",
+		"mod_thermal_regulator",
+		"mod_plasma",
 	)
 
 /datum/techweb_node/mech_tools
@@ -199,6 +222,7 @@
 	description = "Research on how to fully exploit the power of integrated circuits"
 	design_ids = list(
 		"circuit_multitool",
+		"comp_access_checker",
 		"comp_arithmetic",
 		"comp_binary_convert",
 		"comp_clock",
@@ -214,6 +238,9 @@
 		"comp_gps",
 		"comp_health",
 		"comp_hear",
+		"comp_id_access_reader",
+		"comp_id_getter",
+		"comp_id_info_reader",
 		"comp_index",
 		"comp_index_assoc",
 		"comp_index_table",
@@ -691,6 +718,7 @@
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
+		"mod_circuit",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
@@ -1419,6 +1447,107 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
+//MODsuit tech
+
+/datum/techweb_node/mod_advanced
+	id = "mod_advanced"
+	display_name = "Advanced Modular Suits"
+	description = "More advanced modules, to improve modular suits."
+	prereq_ids = list("robotics")
+	design_ids = list(
+		"mod_visor_diaghud",
+		"mod_gps",
+		"mod_reagent_scanner",
+		"mod_clamp",
+		"mod_drill",
+		"mod_orebag",
+		"mod_pathfinder",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_engineering
+	id = "mod_engineering"
+	display_name = "Engineering Modular Suits"
+	description = "Engineering suits, for powered engineers."
+	prereq_ids = list("mod_advanced", "engineering")
+	design_ids = list(
+		"mod_armor_engineering",
+		"mod_visor_meson",
+		"mod_t_ray",
+		"mod_magboot",
+		"mod_tether",
+		"mod_constructor",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_advanced_engineering
+	id = "mod_advanced_engineering"
+	display_name = "Advanced Engineering Modular Suits"
+	description = "Advanced Engineering suits, for advanced powered engineers."
+	prereq_ids = list("mod_engineering", "adv_engi")
+	design_ids = list(
+		"mod_armor_atmospheric",
+		"mod_jetpack",
+		"mod_rad_protection",
+		"mod_emp_shield",
+		"mod_storage_expanded",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
+
+/datum/techweb_node/mod_medical
+	id = "mod_medical"
+	display_name = "Medical Modular Suits"
+	description = "Medical suits for quick rescue purposes."
+	prereq_ids = list("mod_advanced", "biotech")
+	design_ids = list(
+		"mod_armor_medical",
+		"mod_visor_medhud",
+		"mod_health_analyzer",
+		"mod_quick_carry",
+		"mod_injector",
+		"mod_organ_thrower",
+		"mod_dna_lock",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_security
+	id = "mod_security"
+	display_name = "Security Modular Suits"
+	description = "Security suits for space crime handling."
+	prereq_ids = list("mod_advanced", "sec_basic")
+	design_ids = list(
+		"mod_armor_security",
+		"mod_visor_sechud",
+		"mod_stealth",
+		"mod_holster",
+		"mod_pathfinder",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_entertainment
+	id = "mod_entertainment"
+	display_name = "Entertainment Modular Suits"
+	description = "Powered suits for protection against low-humor environments."
+	prereq_ids = list("mod_advanced", "clown")
+	design_ids = list(
+		"mod_armor_cosmohonk",
+		"mod_bikehorn",
+		"mod_microwave_beam",
+		"mod_waddle",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly
+	id = "mod_anomaly"
+	display_name = "Anomalock Modular Suits"
+	description = "Modules for modular suits that require anomaly cores to function."
+	prereq_ids = list("mod_advanced", "anomaly_research")
+	design_ids = list(
+		"mod_antigrav",
+		"mod_teleporter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha
 	id = "adv_mecha"
@@ -1855,11 +1984,11 @@
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
 	boost_item_paths = list()
-	for(var/path in GLOB.uplink_items)
-		var/datum/uplink_item/UI = new path
-		if(!UI.item || !UI.illegal_tech)
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
+		if(!item.item || !item.illegal_tech)
 			continue
-		boost_item_paths |= UI.item //allows deconning to unlock.
+		boost_item_paths |= item.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////

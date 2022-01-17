@@ -2,6 +2,7 @@
 	name = "tongue"
 	desc = "A fleshy muscle mostly used for lying."
 	icon_state = "tonguenormal"
+	visual = FALSE
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_TONGUE
 	attack_verb_continuous = list("licks", "slobbers", "slaps", "frenches", "tongues")
@@ -124,7 +125,7 @@
 	QDEL_NULL(statue)
 	. = ..()
 
-/datum/action/item_action/organ_action/statue/Trigger()
+/datum/action/item_action/organ_action/statue/Trigger(trigger_flags)
 	. = ..()
 	if(!iscarbon(owner))
 		to_chat(owner, span_warning("Your body rejects the powers of the tongue!"))

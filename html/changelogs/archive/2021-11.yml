@@ -865,3 +865,85 @@
   jlsnow301:
   - bugfix: 'Scams Deleted: You will no longer be charged full price for items listed
       as discounted in the vendor.'
+2021-11-27:
+  Gandalf2k15:
+  - balance: Diagonal movement is now slightly faster
+  Ghommie:
+  - expansion: Gradients can now be applied to facial hair too.
+  - expansion: 'Two new hair gradients: Striped horizontal and Striped vertical.'
+  - bugfix: Fixed the dye kit missing a lot of checks which made it able to dye mobs
+      out of reach or while incapacitated.
+  - bugfix: Fixed clown mobs spawning banana peels on turfs they can't reach or while
+      inside objects.
+  - bugfix: Some things such as heretic influences won't spawn on open space anymore.
+  HarseTheef:
+  - bugfix: The space heater right click toggle now works correctly.
+  - bugfix: Pipe layer changes now occur on right + alt click
+  JohnFulpWillard:
+  - bugfix: Bots will no longer turn invisible when being turned on/off
+  Melbert:
+  - expansion: The Fission360 has been upgraded, operatives. Examining a tablet running
+      the Fission360 when a bomb is armed will show you the time remaining until detonation,
+      and it can now point back to the Infiltrator. Hopefully you'll stop missing
+      your pinpointers now.
+  - expansion: The Syndicate Infiltrator is now a point of interest in the orbit menu
+      that ghosts can jump to.
+  OrionTheFox:
+  - rscadd: Added new reskins of the Catwalk Tiles, which will blend better with other
+      types of floor! These can be selected via a radial on the base catwalk tile,
+      crafted with iron rods.
+  - expansion: Floorbots will automatically place catwalks when they're in a maintenance
+      area, and will repair damaged/burnt tiles rather than fully replacing them.
+  - bugfix: Floorbots will actually place a plating when repairing a breach with tiles,
+      rather than haphazardly laying a tile that has space below it.
+  cacogen:
+  - rscadd: Adds timezones to US Thanksgiving so it's active on the server when it's
+      celebrated in real life
+  carshalash:
+  - expansion: Abductors now have a limb grower to play with, for scientific purposes.
+      Brain traumas are no longer forced after abductions.
+  tralezab:
+  - bugfix: prison plates have fixed text in some interactions
+2021-11-28:
+  Ghommie:
+  - expansion: Falling for a pda bomb will now net you an achievement.
+  MMMiracles:
+  - expansion: Tramstation's Security has been transformed to accommodate a genpop
+      prisoners of all kinds to mingle together.
+  - rscadd: Genpop removes the usual isolated timed cells and adds the ability to
+      assign timers to prisoner IDs for holding them in a general prison area.
+  Mothblocks:
+  - bugfix: Fixed tend wounds being inacessible without an operating table + computer.
+  alexkar598:
+  - bugfix: Fixed the bitfield_to_field() proc not working
+  tf-4:
+  - code_imp: GAR glasses are now (mostly) subtypes rather than all their own thing
+  - qol: GAR glasses now layer above hair, rather than under it.
+2021-11-29:
+  Ghommie:
+  - bugfix: 'Fixed yet another couple TK teleportation tricks: airlock notes and cloth
+      cut from gauzes.'
+  - bugfix: The camera circuit will now actually work.
+  MMMiracles:
+  - bugfix: The Tramstation Tram no longer force unbuckles you from chairs/vehicles
+      when moving.
+  Pickle-Coding:
+  - spellcheck: Captain's wintercoat now has spaces separating between some words.
+  tralezab:
+  - rscadd: Malfunctioning Ais now roll for backstory, much like traitors!
+  - expansion: Malfunctioning Ais now get a unique antag panel!
+2021-11-30:
+  GoldenAlpharex:
+  - bugfix: Elevators are no longer defying the laws of physics and therefore can
+      no longer phase through ceilings or floors.
+  - bugfix: When an individual is interacting with an elevator and said elevator is
+      moved, their menu will be closed if they weren't the one to cause that move,
+      to prevent more physics-defying operations.
+  - code_imp: Improved the industrial lift code by adding documentation and trying
+      to enforce the coding standards in there while I was at it.
+  Krysonism:
+  - imageadd: The blast cannon & blast wave projectile has new sprites.
+  Melbert:
+  - rscadd: Deltastation - Service and arrivals complete revamp! Cargo tweaks!
+  Thunder12345:
+  - bugfix: Some erroneous green paint has been scraped off the hydroponics airlocks.

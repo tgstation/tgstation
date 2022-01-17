@@ -1335,18 +1335,7 @@
 	id = "infiltrator_starboardblast";
 	name = "Infiltrator Starboard Hatch"
 	},
-/obj/docking_port/mobile{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	hidden = 1;
-	id = "syndicate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "syndicate infiltrator";
-	port_direction = 4;
-	width = 23
-	},
+/obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/box,
 /obj/machinery/button/door/directional/north{

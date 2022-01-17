@@ -10,7 +10,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	pass_flags = PASSMOB | PASSFLAPS
 
-	bot_core = /obj/machinery/bot_core/honkbot
+	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_THEATRE)
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
 	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
@@ -72,7 +72,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	walk_to(src,0)
+	SSmove_manager.stop_looping(src)
 	last_found = world.time
 	limiting_spam = FALSE
 
@@ -213,7 +213,7 @@
 
 		if(BOT_IDLE) // idle
 
-			walk_to(src,0)
+			SSmove_manager.stop_looping(src)
 			look_for_perp()
 			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL)
 				mode = BOT_START_PATROL
@@ -222,7 +222,7 @@
 
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 5) //gives up easier than beepsky
-				walk_to(src,0)
+				SSmove_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -241,7 +241,7 @@
 
 				else // not next to perp
 					var/turf/olddist = get_dist(src, target)
-					walk_to(src, target,1,4)
+					SSmove_manager.move_to(src, target, 1, 4)
 					if((get_dist(src, target)) >= (olddist))
 						frustration++
 					else
@@ -308,8 +308,6 @@
 				continue
 
 /mob/living/simple_animal/bot/honkbot/explode()
-
-	walk_to(src,0)
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	//doesn't drop cardboard nor its assembly, since its a very frail material.
@@ -349,6 +347,3 @@
 				INVOKE_ASYNC(src, /mob/living/simple_animal/bot/proc/speak, "Honk!")
 			sensor_blink()
 			return
-
-/obj/machinery/bot_core/honkbot
-	req_one_access = list(ACCESS_THEATRE, ACCESS_ROBOTICS)

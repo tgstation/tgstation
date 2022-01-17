@@ -171,6 +171,12 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/communications
 
+/obj/item/circuitboard/computer/communications/syndicate
+	name = "Syndicate Communications (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/communications/syndicate
+
+
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -232,18 +238,16 @@
 	name = "Library Visitor Console (Computer Board)"
 	build_path = /obj/machinery/computer/libraryconsole
 
-/obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/bookmanagement)
-			name = "Library Visitor Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole
-			to_chat(user, span_notice("Defaulting access protocols."))
-		else
-			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/bookmanagement
-			to_chat(user, span_notice("Access protocols successfully updated."))
+/obj/item/circuitboard/computer/libraryconsole/screwdriver_act(mob/living/user, obj/item/tool)
+	if(build_path == /obj/machinery/computer/bookmanagement)
+		name = "Library Visitor Console (Computer Board)"
+		build_path = /obj/machinery/computer/libraryconsole
+		to_chat(user, span_notice("Defaulting access protocols."))
 	else
-		return ..()
+		name = "Book Inventory Management Console (Computer Board)"
+		build_path = /obj/machinery/computer/bookmanagement
+		to_chat(user, span_notice("Access protocols successfully updated."))
+	return TRUE
 
 /obj/item/circuitboard/computer/monastery_shuttle
 	name = "Monastery Shuttle (Computer Board)"

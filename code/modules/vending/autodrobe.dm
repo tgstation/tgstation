@@ -86,6 +86,9 @@
 		/obj/item/clothing/mask/animal/frog = 1,
 		/obj/item/clothing/mask/animal/rat/tribal = 1,
 		/obj/item/clothing/mask/animal/rat = 1,
+		/obj/item/clothing/mask/animal/pig = 1,
+		/obj/item/clothing/mask/animal/cowmask = 1,
+		/obj/item/clothing/mask/animal/horsehead = 1,
 		/obj/item/clothing/suit/apron/overalls = 1,
 		/obj/item/clothing/head/rabbitears =1,
 		/obj/item/clothing/accessory/vest_sheriff =1,
@@ -134,7 +137,7 @@
 		/obj/item/clothing/suit/judgerobe = 1,
 		/obj/item/clothing/head/powdered_wig = 1,
 		/obj/item/gun/magic/wand/nothing = 2,
-		/obj/item/clothing/glasses/sunglasses/garb = 2,
+		/obj/item/clothing/glasses/sunglasses/gar = 2,
 		/obj/item/clothing/glasses/blindfold = 1,
 		/obj/item/clothing/mask/muzzle = 2
 	)

@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed clown mobs spawning banana peels on turfs they can't reach or while inside objects."

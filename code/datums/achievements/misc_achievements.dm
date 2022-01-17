@@ -180,3 +180,21 @@
 	desc = "As a blood cultist, be part of a team that summons 3 shuttle curses within 10 seconds. Imagine cleaning up after them, g r o s s!"
 	database_id = MEDAL_CULT_SHUTTLE_OMFG
 	icon = "cult_shuttle_omfg"
+
+/datum/award/achievement/misc/clickbait
+	name = "Clickbait"
+	desc = "Where's my free smartphone?!?"
+	database_id = MEDAL_CLICKBAIT
+	icon = "bait"
+
+/datum/award/achievement/misc/narsupreme
+	name = "If Nar'Sie is so good, why isn't there a..."
+	desc = "Even interdimensional space deitys need a friend."
+	database_id = MEDAL_NARSUPREME
+	icon = "narsupreme"
+
+/datum/award/achievement/misc/springlock
+	name = "The Man Inside the MODsuit"
+	desc = "Ignore the warning label on a springlock MODsuit."
+	database_id = MEDAL_SPRINGLOCK
+	icon = "springlock"

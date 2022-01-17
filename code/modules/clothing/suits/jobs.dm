@@ -39,7 +39,7 @@
 	inhand_icon_state = "chef"
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
@@ -51,7 +51,7 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 
 //Detective
 /obj/item/clothing/suit/det_suit
@@ -88,7 +88,7 @@
 	icon_state = "hazard"
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio, /obj/item/storage/bag/construction)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
@@ -200,7 +200,7 @@
 	inhand_icon_state = "curator"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
+	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip, /obj/item/storage/bag/books)
 	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS

@@ -112,7 +112,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.species = new species.type
 	new_dna.species.species_traits = species.species_traits
 	new_dna.real_name = real_name
-	new_dna.mutations = mutations.Copy()
+	// Mutations aren't gc managed, but they still aren't templates
+	// Let's do a proper copy
+	for(var/datum/mutation/human/mutation in mutations)
+		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
@@ -362,9 +365,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
  * * target_dna The DNA that we are comparing to
  */
 /datum/dna/proc/is_same_as(datum/dna/target_dna)
-	if(unique_identity == target_dna.unique_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
-		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
-			return TRUE
+	if( \
+		unique_identity == target_dna.unique_identity \
+		&& mutation_index == target_dna.mutation_index \
+		&& real_name == target_dna.real_name \
+		&& species.type == target_dna.species.type \
+		&& compare_list(features, target_dna.features) \
+		&& blood_type == target_dna.blood_type \
+	)
+		return TRUE
+
 	return FALSE
 
 /datum/dna/proc/update_instability(alert=TRUE)
@@ -849,5 +859,5 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			return
 		eyes.Remove(src)
 		qdel(eyes)
-		visible_message(span_notice("[src] looks up and their eyes melt away!"), "<span class>='userdanger'>I understand now.</span>")
+		visible_message(span_notice("[src] looks up and their eyes melt away!"), span_userdanger("I understand now."))
 		addtimer(CALLBACK(src, .proc/adjustOrganLoss, ORGAN_SLOT_BRAIN, 200), 20)

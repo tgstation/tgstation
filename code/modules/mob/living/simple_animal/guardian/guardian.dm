@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		add_atom_colour(guardiancolor, FIXED_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/hostile/guardian/proc/guardianrename()
-	var/new_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/new_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!new_name) //redo proc until we get a good name
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		guardianrename()
@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand
 
-	if(hands_overlays.len)
+	if(length(hands_overlays))
 		guardian_overlays[GUARDIAN_HANDS_LAYER] = hands_overlays
 	apply_overlay(GUARDIAN_HANDS_LAYER)
 
@@ -393,7 +393,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Communicate()
 	if(summoner)
 		var/sender_key = key
-		var/input = stripped_input(src, "Please enter a message to tell your summoner.", "Guardian", "")
+		var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
 		if(sender_key != key || !input) //guardian got reset, or did not enter anything
 			return
 
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	set name = "Communicate"
 	set category = "Guardian"
 	set desc = "Communicate telepathically with your guardian."
-	var/input = stripped_input(src, "Please enter a message to tell your guardian.", "Message", "")
+	var/input = tgui_input_text(src, "Enter a message to tell your guardian", "Message")
 	if(!input)
 		return
 
@@ -453,38 +453,41 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/P = para
 		if(P.reset)
 			guardians -= P //clear out guardians that are already reset
-	if(guardians.len)
-		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in sort_names(guardians)
-		if(G)
-			to_chat(src, span_holoparasite("You attempt to reset <font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font>'s personality..."))
-			var/list/mob/dead/observer/candidates = poll_ghost_candidates("Do you want to play as [src.real_name]'s [G.real_name]?", ROLE_PAI, FALSE, 100)
-			if(LAZYLEN(candidates))
-				var/mob/dead/observer/C = pick(candidates)
-				to_chat(G, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
-				to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[G.guardiancolor]\">[G.real_name]</font> has been successfully reset.</span>")
-				message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(G)])")
-				G.ghostize(0)
-				G.guardianrecolor()
-				G.guardianrename() //give it a new color and name, to show it's a new person
-				G.key = C.key
-				G.reset = 1
-				switch(G.theme)
-					if("tech")
-						to_chat(src, span_holoparasite("<font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> is now online!"))
-					if("magic")
-						to_chat(src, span_holoparasite("<font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been summoned!"))
-					if("carp")
-						to_chat(src, span_holoparasite("<font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!"))
-					if("miner")
-						to_chat(src, span_holoparasite("<font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has appeared!"))
-				guardians -= G
-				if(!guardians.len)
-					remove_verb(src, /mob/living/proc/guardian_reset)
-			else
-				to_chat(src, span_holoparasite("There were no ghosts willing to take control of <font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now."))
-		else
-			to_chat(src, span_holoparasite("You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"]."))
-	else
+	if(!length(guardians))
+		remove_verb(src, /mob/living/proc/guardian_reset)
+		return
+
+	var/mob/living/simple_animal/hostile/guardian/chosen_guardian = tgui_input_list(src, "Pick the guardian you wish to reset", "Guardian Reset", sort_names(guardians))
+	if(isnull(chosen_guardian))
+		to_chat(src, span_holoparasite("You decide not to reset [length(guardians) > 1 ? "any of your guardians":"your guardian"]."))
+		return
+
+	to_chat(src, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font>'s personality..."))
+	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [src.real_name]'s [chosen_guardian.real_name]?", ROLE_PAI, FALSE, 100)
+	if(!LAZYLEN(ghost_candidates))
+		to_chat(src, span_holoparasite("There were no ghosts willing to take control of <font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font>. Looks like you're stuck with it for now."))
+		return
+
+	var/mob/dead/observer/candidate = pick(ghost_candidates)
+	to_chat(chosen_guardian, span_holoparasite("Your user reset you, and your body was taken over by a ghost. Looks like they weren't happy with your performance."))
+	to_chat(src, "<span class='holoparasite bold'>Your <font color=\"[chosen_guardian.guardiancolor]\">[chosen_guardian.real_name]</font> has been successfully reset.</span>")
+	message_admins("[key_name_admin(candidate)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
+	chosen_guardian.ghostize(0)
+	chosen_guardian.guardianrecolor()
+	chosen_guardian.guardianrename() //give it a new color and name, to show it's a new person
+	chosen_guardian.key = candidate.key
+	chosen_guardian.reset = 1
+	switch(chosen_guardian.theme)
+		if("tech")
+			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font> is now online!"))
+		if("magic")
+			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font> has been summoned!"))
+		if("carp")
+			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font> has been caught!"))
+		if("miner")
+			to_chat(src, span_holoparasite("<font color=\"[chosen_guardian.guardiancolor]\"><b>[chosen_guardian.real_name]</b></font> has appeared!"))
+	guardians -= chosen_guardian
+	if(!length(guardians))
 		remove_verb(src, /mob/living/proc/guardian_reset)
 
 ////////parasite tracking/finding procs
@@ -526,7 +529,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		to_chat(user, span_holoparasite("[mob_name] chains are not allowed."))
 		return
 	var/list/guardians = user.hasparasites()
-	if(guardians.len && !allowmultiple)
+	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
 		return
 	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allowling)
@@ -552,8 +555,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sort_list(possible_guardians)
-		if(!guardiantype || !candidate.client)
+		guardiantype = tgui_input_list(user, "Pick the type of [mob_name]", "Guardian Creation", sort_list(possible_guardians))
+		if(isnull(guardiantype) || !candidate.client)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
 			return
@@ -594,7 +597,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
 	var/list/guardians = user.hasparasites()
-	if(guardians.len && !allowmultiple)
+	if(length(guardians) && !allowmultiple)
 		to_chat(user, span_holoparasite("You already have a [mob_name]!") )
 		used = FALSE
 		return

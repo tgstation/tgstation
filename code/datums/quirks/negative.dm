@@ -327,12 +327,15 @@
 /datum/quirk/nyctophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	if(quirk_holder.stat == DEAD)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(human_holder.dna?.species.id in list(SPECIES_SHADOW, SPECIES_NIGHTMARE))
+		return
+
+	if((human_holder.sight & SEE_TURFS) == SEE_TURFS)
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)
@@ -478,7 +481,7 @@
 	processing_quirk = TRUE
 
 /datum/quirk/insanity/process(delta_time)
-	if(quirk_holder.stat == DEAD)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
 	if(DT_PROB(2, delta_time))
@@ -847,3 +850,54 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/bad_touch)
+
+/datum/quirk/claustrophobia
+	name = "Claustrophobia"
+	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
+	icon = "box-open"
+	value = -4
+	medical_record_text = "Patient demonstrates a fear of tight spaces."
+	hardcore_value = 5
+	processing_quirk = TRUE
+
+/datum/quirk/claustrophobia/remove()
+	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia")
+
+/datum/quirk/claustrophobia/process(delta_time)
+	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
+		return
+
+	var/nick_spotted = FALSE
+
+	for(var/mob/living/carbon/human/possible_claus in view(5, quirk_holder))
+		if(evaluate_jolly_levels(possible_claus))
+			nick_spotted = TRUE
+			break
+
+	if(!nick_spotted && isturf(quirk_holder.loc))
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
+		return
+
+	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
+	quirk_holder.losebreath += 0.25 // miss a breath one in four times
+	if(DT_PROB(25, delta_time))
+		if(nick_spotted)
+			to_chat(quirk_holder, span_warning("Santa Claus is here! I gotta get out of here!"))
+		else
+			to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
+
+///investigates whether possible_saint_nick possesses a high level of christmas cheer
+/datum/quirk/claustrophobia/proc/evaluate_jolly_levels(mob/living/carbon/human/possible_saint_nick)
+	if(!istype(possible_saint_nick))
+		return FALSE
+
+	if(istype(possible_saint_nick.back, /obj/item/storage/backpack/santabag))
+		return TRUE
+
+	if(istype(possible_saint_nick.head, /obj/item/clothing/head/santa))
+		return TRUE
+
+	if(istype(possible_saint_nick.wear_suit, /obj/item/clothing/suit/space/santa))
+		return TRUE
+
+	return FALSE

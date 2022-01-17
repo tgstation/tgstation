@@ -45,6 +45,7 @@
 		/obj/item/clothing/neck/tie/red = 3,
 		/obj/item/clothing/neck/tie/black = 3,
 		/obj/item/clothing/neck/tie/horrible = 3,
+		/obj/item/clothing/accessory/pride = 15,
 		/obj/item/storage/belt/fannypack = 3,
 		/obj/item/storage/belt/fannypack/blue = 3,
 		/obj/item/storage/belt/fannypack/red = 3,
@@ -184,7 +185,6 @@
 		/obj/item/storage/belt/fannypack/black = 2,
 		/obj/item/clothing/suit/jacket/letterman_syndie = 1,
 		/obj/item/clothing/under/costume/jabroni = 1,
-		/obj/item/clothing/suit/vapeshirt = 1,
 		/obj/item/clothing/under/costume/geisha = 1,
 		/obj/item/clothing/under/rank/centcom/officer/replica = 1,
 		/obj/item/clothing/under/rank/centcom/officer_skirt/replica = 1

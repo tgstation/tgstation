@@ -1,7 +1,7 @@
-///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents seperated and only reacts under your given terms
+///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 /obj/machinery/plumbing/reaction_chamber
 	name = "reaction chamber"
-	desc = "Keeps chemicals seperated until given conditions are met."
+	desc = "Keeps chemicals separated until given conditions are met."
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
@@ -22,7 +22,7 @@
 	var/target_temperature = 300
 	///cool/heat power
 	var/heater_coefficient = 0.05 //same lvl as acclimator
-	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a seperate thing. It's a small (50u) beaker
+	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker
 	var/obj/item/reagent_containers/glass/beaker/acidic_beaker
 	///beaker that holds the alkaline buffer.
 	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker

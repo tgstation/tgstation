@@ -171,7 +171,7 @@
 		else
 			var/obj/item/card/id/new_card = W
 			if(new_card.registered_account)
-				var/msg = stripped_input(user, "Name of your roulette wheel:", "Roulette Naming", "Roulette Machine")
+				var/msg = tgui_input_text(user, "Name of your roulette wheel", "Roulette Naming", "Roulette Machine", MAX_NAME_LEN)
 				if(!msg)
 					return
 				name = msg

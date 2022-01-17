@@ -57,9 +57,16 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
-#ifdef REFERENCE_TRACKING
+#if defined(REFERENCE_DOING_IT_LIVE)
+#define log_reftracker(msg) log_harddel("## REF SEARCH [msg]")
+
+/proc/log_harddel(text)
+	WRITE_LOG(GLOB.harddel_log, text)
+
+#elif defined(REFERENCE_TRACKING) // Doing it locally
 #define log_reftracker(msg) log_world("## REF SEARCH [msg]")
-#else
+
+#else //Not tracking at all
 #define log_reftracker(msg)
 #endif
 
@@ -137,6 +144,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_econ))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
+/proc/log_traitor(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_game_log, "TRAITOR: [text]")
+
 /proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
 		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role.title] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
@@ -170,6 +181,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
 		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+
+/proc/log_radio_emote(text)
+	if (CONFIG_GET(flag/log_emote))
+		WRITE_LOG(GLOB.world_game_log, "RADIOEMOTE: [text]")
 
 /proc/log_prayer(text)
 	if (CONFIG_GET(flag/log_prayer))

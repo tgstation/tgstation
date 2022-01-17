@@ -17,7 +17,7 @@
 	button_icon_state = "cult_comms"
 
 /datum/action/innate/cult/comm/Activate()
-	var/input = stripped_input(usr, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
+	var/input = tgui_input_text(usr, "Message to tell to the other acolytes", "Voice of Blood")
 	if(!input || !IsAvailable())
 		return
 

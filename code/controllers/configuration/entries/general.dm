@@ -103,7 +103,7 @@
 
 /datum/config_entry/flag/log_world_topic // log all world.Topic() calls
 
-/datum/config_entry/flag/log_manifest // log crew manifest to seperate file
+/datum/config_entry/flag/log_manifest // log crew manifest to separate file
 
 /datum/config_entry/flag/log_job_debug // log roundstart divide occupations debug information to a file
 
@@ -558,3 +558,9 @@
 /datum/config_entry/string/adminhelp_webhook_pfp
 
 /datum/config_entry/string/adminhelp_webhook_name
+
+/datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/station_name_in_hub_entry
+	default = FALSE

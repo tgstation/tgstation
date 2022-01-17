@@ -686,6 +686,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/kitchen/diner
 	name = "\improper Diner"
 
+/area/service/kitchen/abandoned
+	name = "\improper Abandoned Kitchen"
+
 /area/service/bar
 	name = "\improper Bar"
 	icon_state = "bar"
@@ -713,6 +716,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "abandoned_g_den"
 
 /area/service/abandoned_gambling_den/secondary
+	icon_state = "abandoned_g_den_2"
+
+/area/service/abandoned_gambling_den/gaming
+	name = "\improper Abandoned Gaming Den"
 	icon_state = "abandoned_g_den_2"
 
 /area/service/theater
@@ -879,12 +886,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage
 	name = "Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/engineering/storage_shared
 	name = "Shared Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage_shared"
 
 /area/engineering/transit_tube
 	name = "\improper Transit Tube"

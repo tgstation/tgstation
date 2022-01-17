@@ -32,10 +32,10 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		datum_series = series
 	if(!datum_id)
 		datum_id = id
-	var/list/L = GLOB.cached_cards[datum_series]
-	if(!L)
+	var/list/temp_list = GLOB.cached_cards[datum_series]
+	if(!temp_list)
 		return
-	var/datum/card/temp = L["ALL"][datum_id]
+	var/datum/card/temp = temp_list["ALL"][datum_id]
 	if(!temp)
 		return
 	name = temp.name
@@ -125,17 +125,17 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = template.icon_state
 	return ..()
 
-/obj/item/tcgcard/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/tcgcard))
-		var/obj/item/tcgcard/second_card = I
+/obj/item/tcgcard/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/tcgcard))
+		var/obj/item/tcgcard/second_card = item
 		var/obj/item/tcgcard_deck/new_deck = new /obj/item/tcgcard_deck(drop_location())
 		new_deck.flipped = flipped
 		user.transferItemToLoc(second_card, new_deck)//Start a new pile with both cards, in the order of card placement.
 		user.transferItemToLoc(src, new_deck)
 		new_deck.update_icon_state()
 		user.put_in_hands(new_deck)
-	if(istype(I, /obj/item/tcgcard_deck))
-		var/obj/item/tcgcard_deck/old_deck = I
+	if(istype(item, /obj/item/tcgcard_deck))
+		var/obj/item/tcgcard_deck/old_deck = item
 		if(length(old_deck.contents) >= 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
 			return
@@ -162,7 +162,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	animate(src, transform = ntransform, time = 2, easing = (EASE_IN|EASE_OUT))
 
 /obj/item/tcgcard/proc/flip_card(mob/user)
-	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
+	to_chat(user, span_notice("You turn the card over."))
 	if(!flipped)
 		name = "Trading Card"
 		desc = "It's the back of a trading card... no peeking!"
@@ -249,13 +249,13 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 		return FALSE
 	return TRUE
 
-/obj/item/tcgcard_deck/attackby(obj/item/I, mob/living/user, params)
+/obj/item/tcgcard_deck/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
-	if(istype(I, /obj/item/tcgcard))
+	if(istype(item, /obj/item/tcgcard))
 		if(contents.len > 30)
 			to_chat(user, span_notice("This pile has too many cards for a regular deck!"))
 			return FALSE
-		var/obj/item/tcgcard/new_card = I
+		var/obj/item/tcgcard/new_card = item
 		new_card.flipped = flipped
 		new_card.forceMove(src)
 
@@ -306,8 +306,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	var/list/temp_deck = contents.Copy()
 	contents = reverse_range(temp_deck)
 	//Now flip the cards to their opposite positions.
-	for(var/a in 1 to contents.len)
-		var/obj/item/tcgcard/nu_card = contents[a]
+	for (var/obj/item/tcgcard/nu_card as anything in contents)
 		nu_card.flipped = flipped
 		nu_card.update_icon_state()
 	update_icon_state()
@@ -382,11 +381,11 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), series, template)
-	to_chat(user, "<span_class='notice'>Wow! Check out these cards!</span>")
+	to_chat(user, span_notice("Wow! Check out these cards!"))
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
-		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
+		to_chat(user, span_notice("...and it came with a flipper, too!"))
 		new /obj/item/coin/thunderdome(get_turf(user))
 	qdel(src)
 
@@ -526,9 +525,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist\n"
 				continue
 		//Lets run a check to see if all the rarities exist that we want to exist exist
-		for(var/I in pack.rarity_table)
-			if(!GLOB.cached_cards[pack.series][I])
-				toReturn += "[pack.type] does not have the required rarity [I]\n"
+		for(var/pack_rarity in pack.rarity_table)
+			if(!GLOB.cached_cards[pack.series][pack_rarity])
+				toReturn += "[pack.type] does not have the required rarity [pack_rarity]\n"
 		qdel(pack)
 	return toReturn
 
@@ -542,12 +541,12 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			var/datum/card/target = GLOB.cached_cards[series]["ALL"][card]
 			var/toAdd = "The card [target.id] in [series] has the following default variables:"
 			var/shouldAdd = FALSE
-			for(var/a in (target.vars ^ thing.vars))
-				if(a == "icon" && target.vars[a] == DEFAULT_TCG_DMI)
+			for(var/current_var in (target.vars ^ thing.vars))
+				if(current_var == "icon" && target.vars[current_var] == DEFAULT_TCG_DMI)
 					continue
-				if(target.vars[a] == initial(target.vars[a]))
+				if(target.vars[current_var] == initial(target.vars[current_var]))
 					shouldAdd = TRUE
-					toAdd += "\n[a] with a value of [target.vars[a]]"
+					toAdd += "\n[current_var] with a value of [target.vars[current_var]]"
 			if(shouldAdd)
 				toReturn += toAdd
 	qdel(thing)
@@ -591,16 +590,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	for(var/list/data in json["templates"])
 		templates[data["template"]] = data
 	for(var/list/data in cards)
-		var/datum/card/c = new(data, templates)
+		var/datum/card/card = new(data, templates)
 		//Lets cache the id by rarity, for top speed lookup later
-		if(!GLOB.cached_cards[c.series])
-			GLOB.cached_cards[c.series] = list()
-			GLOB.cached_cards[c.series]["ALL"] = list()
-		if(!GLOB.cached_cards[c.series][c.rarity])
-			GLOB.cached_cards[c.series][c.rarity] = list()
-		GLOB.cached_cards[c.series][c.rarity] += c.id
+		if(!GLOB.cached_cards[card.series])
+			GLOB.cached_cards[card.series] = list()
+			GLOB.cached_cards[card.series]["ALL"] = list()
+		if(!GLOB.cached_cards[card.series][card.rarity])
+			GLOB.cached_cards[card.series][card.rarity] = list()
+		GLOB.cached_cards[card.series][card.rarity] += card.id
 		//Let's actually store the datum here
-		GLOB.cached_cards[c.series]["ALL"][c.id] = c
+		GLOB.cached_cards[card.series]["ALL"][card.id] = card
 
 #undef DEFAULT_TCG_DMI_ICON
 #undef DEFAULT_TCG_DMI
