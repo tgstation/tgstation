@@ -8,16 +8,14 @@
 	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE LION'S SHARE!!"
 	preview_outfit = /datum/outfit/thief
+	antag_hud_name = "thief"
 	ui_name = "AntagInfoThief"
 	///assoc list of strings set up for the flavor of the thief.
 	var/list/thief_flavor
-	///funny little flavor sent to the ui.
-	var/honor_among_thieves = FALSE
 	///if added by an admin, they can choose a thief flavor
 	var/admin_choice_flavor
 
 /datum/antagonist/thief/on_gain()
-	honor_among_thieves = prob(50)
 	flavor_and_objectives()
 	. = ..() //ui opens here, objectives must exist beforehand
 
@@ -87,7 +85,6 @@
 	data["objectives"] = get_objectives()
 	data["goal"] = thief_flavor["goal"]
 	data["intro"] = thief_flavor["introduction"]
-	data["honor"] = honor_among_thieves
 	return data
 
 /datum/outfit/thief

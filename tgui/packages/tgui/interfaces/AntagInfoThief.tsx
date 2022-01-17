@@ -21,7 +21,6 @@ export const AntagInfoThief = (props, context) => {
   const {
     intro,
     goal,
-    honor,
   } = data;
   return (
     <Window
@@ -46,7 +45,7 @@ export const AntagInfoThief = (props, context) => {
           </Stack.Item>
           <Stack.Item>
             <Section textAlign="center" textColor="red" fontSize="20px">
-              Remember: There is {!honor && "no "}honor among thieves.
+              Remember: You cannot kill to achieve your objectives.
             </Section>
           </Stack.Item>
         </Stack>
