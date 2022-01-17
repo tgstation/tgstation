@@ -1,22 +1,241 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"iW" = (
-/obj/structure/table/wood,
+"aK" = (
+/turf/open/floor/iron/dark,
+/area/space)
+"bp" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/plating,
+/area/space)
+"bt" = (
+/obj/machinery/computer/atmos_control/tank/plasma_tank{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 8
+	},
+/area/space)
+"cm" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/space)
+"cF" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space)
+"iA" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/space)
+"jv" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/space)
+"kO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 8
+	},
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"kS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output,
+/turf/open/floor/engine/plasma,
 /area/space)
 "mR" = (
 /turf/closed/wall,
 /area/space)
+"rs" = (
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/space)
+"ss" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space)
+"sN" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"uh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
 "vQ" = (
 /turf/open/space/basic,
+/area/space)
+"xy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/space)
+"zz" = (
+/obj/machinery/door/window,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 4
+	},
+/area/space)
+"AZ" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/away{
+	pixel_y = 25
+	},
+/turf/open/floor/iron/dark/smooth_corner,
+/area/space)
+"Bu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"Cv" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/space)
+"CA" = (
+/turf/open/space,
 /area/space)
 "CV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/space/basic,
 /area/space)
+"DG" = (
+/turf/open/floor/engine/plasma,
+/area/space)
+"Es" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating,
+/area/space)
+"FJ" = (
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"GM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/space)
+"Io" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating,
+/area/space)
+"JP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/space)
+"Kw" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating,
+/area/space)
+"LA" = (
+/turf/closed/wall/r_wall,
+/area/space)
+"LT" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/open/floor/plating,
+/area/space)
+"Mw" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/space)
+"Ow" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/space)
+"Pb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/space)
 "Qg" = (
 /turf/closed/mineral,
 /area/space)
+"Ss" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/turf/open/floor/plating,
+/area/space)
+"Tj" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/turf/open/floor/plating,
+/area/space)
+"Ud" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/space)
+"Uh" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
+	dir = 4
+	},
+/turf/open/floor/engine/plasma,
+/area/space)
+"Uz" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"VP" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/space)
 "Wh" = (
+/turf/open/floor/plating,
+/area/space)
+"WP" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 5
+	},
+/obj/structure/lattice,
+/obj/structure/lattice/catwalk,
+/turf/open/space/basic,
+/area/space)
+"Ys" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space)
+"Zs" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/space)
 
@@ -79,14 +298,14 @@ vQ
 vQ
 vQ
 vQ
-vQ
 Qg
 Qg
 Qg
 Qg
 Qg
 Qg
-vQ
+Qg
+Qg
 vQ
 vQ
 vQ
@@ -105,16 +324,16 @@ vQ
 vQ
 vQ
 vQ
-vQ
 Qg
 Qg
+mR
+mR
+mR
+mR
+mR
+mR
 Qg
 Qg
-Qg
-Qg
-Qg
-Qg
-vQ
 vQ
 vQ
 vQ
@@ -132,15 +351,15 @@ vQ
 vQ
 vQ
 vQ
-vQ
 Qg
 Qg
-Qg
-vQ
-Wh
-Wh
-Wh
-Qg
+mR
+AZ
+rs
+zz
+Uz
+Uz
+mR
 Qg
 Qg
 vQ
@@ -161,14 +380,14 @@ vQ
 vQ
 Qg
 Qg
-Qg
-vQ
-vQ
+mR
+jv
+aK
+Ow
 Wh
+Uz
 Wh
-Wh
-Wh
-Wh
+mR
 Qg
 vQ
 vQ
@@ -188,14 +407,14 @@ vQ
 Qg
 Qg
 Qg
-Qg
-vQ
-vQ
+mR
+bt
+FJ
+VP
 Wh
+Uz
 Wh
-Wh
-Wh
-Wh
+mR
 Qg
 vQ
 vQ
@@ -214,15 +433,15 @@ vQ
 vQ
 Qg
 Qg
-Qg
-Qg
-vQ
-vQ
+LA
+LA
+uh
+uh
+uh
 Wh
+Uz
 Wh
-Wh
-Wh
-Wh
+mR
 mR
 mR
 mR
@@ -241,24 +460,24 @@ vQ
 vQ
 Qg
 Qg
-Qg
-vQ
-vQ
-vQ
-Wh
-Wh
-Wh
-Wh
-Wh
-Wh
-Wh
-Wh
-vQ
-vQ
-vQ
-vQ
-vQ
-vQ
+LA
+DG
+DG
+kS
+Tj
+Ss
+sN
+Ss
+Ss
+GM
+Pb
+ss
+Bu
+Bu
+kO
+Bu
+Bu
+WP
 vQ
 vQ
 vQ
@@ -268,13 +487,13 @@ vQ
 vQ
 Qg
 Qg
-Qg
-vQ
-vQ
-vQ
+LA
+DG
+DG
+DG
+uh
 Wh
-Wh
-Wh
+bp
 Wh
 Wh
 mR
@@ -295,18 +514,18 @@ vQ
 vQ
 vQ
 Qg
-Qg
-vQ
-vQ
-vQ
+LA
+Uh
+DG
+DG
+uh
 Wh
-Wh
-Wh
+Zs
 Wh
 Wh
 CV
-vQ
-vQ
+CA
+CA
 vQ
 vQ
 vQ
@@ -322,15 +541,15 @@ vQ
 vQ
 vQ
 Qg
-Qg
-vQ
-vQ
-vQ
+LA
+Ud
+uh
+uh
+uh
+Wh
+Zs
 Wh
 Wh
-Wh
-Wh
-iW
 CV
 vQ
 vQ
@@ -349,13 +568,13 @@ vQ
 vQ
 vQ
 Qg
-vQ
-vQ
-vQ
-vQ
+mR
+iA
+JP
+Ys
+mR
 Wh
-Wh
-Wh
+Zs
 Wh
 Wh
 CV
@@ -376,13 +595,13 @@ vQ
 vQ
 vQ
 Qg
-vQ
-vQ
-vQ
-vQ
+mR
+Es
+JP
 Wh
+mR
 Wh
-Wh
+Zs
 Wh
 Wh
 CV
@@ -403,15 +622,15 @@ vQ
 vQ
 vQ
 Qg
-vQ
-vQ
-vQ
-vQ
+mR
+LT
+xy
+Kw
+mR
+Wh
+Zs
 Wh
 Wh
-Wh
-Wh
-iW
 CV
 vQ
 vQ
@@ -430,14 +649,14 @@ vQ
 vQ
 vQ
 Qg
-vQ
-vQ
-vQ
-vQ
-Wh
-Wh
-Wh
-Wh
+mR
+Io
+cm
+Mw
+Cv
+Mw
+Mw
+cF
 Wh
 CV
 vQ
@@ -457,17 +676,17 @@ vQ
 vQ
 vQ
 Qg
-vQ
-vQ
-vQ
-vQ
+mR
+mR
+mR
+mR
+mR
 Wh
 Wh
 Wh
 Wh
-Wh
+mR
 Qg
-vQ
 vQ
 vQ
 vQ
@@ -485,17 +704,17 @@ vQ
 vQ
 Qg
 Qg
-vQ
-vQ
-vQ
-Wh
-Wh
-Wh
-Wh
-Wh
 Qg
 Qg
-vQ
+mR
+Wh
+Wh
+Wh
+Wh
+Wh
+mR
+Qg
+Qg
 vQ
 vQ
 vQ
@@ -513,17 +732,17 @@ vQ
 Qg
 Qg
 Qg
-vQ
-vQ
-vQ
-vQ
-vQ
-vQ
-vQ
+Qg
+mR
+Wh
+Wh
+Wh
+Wh
+Wh
+mR
 Qg
 Qg
 Qg
-vQ
 vQ
 vQ
 vQ
@@ -541,13 +760,13 @@ vQ
 Qg
 Qg
 Qg
-vQ
-vQ
-vQ
-vQ
-vQ
-vQ
-Qg
+mR
+mR
+mR
+Wh
+Wh
+Wh
+mR
 Qg
 Qg
 Qg
@@ -570,11 +789,11 @@ Qg
 Qg
 Qg
 Qg
-vQ
-vQ
-vQ
-vQ
-Qg
+mR
+mR
+mR
+mR
+mR
 Qg
 Qg
 Qg
