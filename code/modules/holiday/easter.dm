@@ -28,12 +28,12 @@
 				if(isspaceturf(R.loc))
 					new /mob/living/simple_animal/rabbit/space(R.loc)
 				else
-					new /mob/living/simple_animal/rabbit(R.loc)
+					new /mob/living/simple_animal/rabbit/easter(R.loc)
 
 /mob/living/simple_animal/rabbit/easter
-	icon_state = "rabbit_white"
-	icon_living = "rabbit_white"
-	icon_dead = "rabbit_white_dead"
+	icon_state = "e_rabbit_white"
+	icon_living = "e_rabbit_white"
+	icon_dead = "e_rabbit_white_dead"
 	speak = list(
 		"Hop into Easter!",
 		"Come get your eggs!",

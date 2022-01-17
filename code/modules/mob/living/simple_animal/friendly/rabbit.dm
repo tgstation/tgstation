@@ -8,9 +8,9 @@
 	health = 15
 	maxHealth = 15
 	icon = 'icons/mob/easter.dmi'
-	icon_state = "b_rabbit_white"
-	icon_living = "b_rabbit_white"
-	icon_dead = "b_rabbit_white_dead"
+	icon_state = "rabbit_white"
+	icon_living = "rabbit_white"
+	icon_dead = "rabbit_white_dead"
 	speak_emote = list("sniffles","twitches")
 	emote_hear = list("hops.")
 	emote_see = list("hops around","bounces up and down")
