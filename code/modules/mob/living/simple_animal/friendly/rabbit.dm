@@ -34,6 +34,7 @@
 	var/icon_prefix = "rabbit"
 
 /mob/living/simple_animal/rabbit/Initialize(mapload)
+	. = ..()
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, "rabbit", pick("brown","black","white"), TRUE)
 
