@@ -33,3 +33,18 @@
 	name = "\improper Azik Interstellar billboard"
 	desc = "A billboard advertising Azik Interstellar and their newest model: the Autocrat Solar Sailer. Azik Interstellar: Tiziran Refinement for Galactic Necessities."
 	icon_state = "billboard_azik"
+
+/obj/structure/billboard/lizards_gas
+	name = "\improper The Lizard's Gas billboard"
+	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. It's been lost to time, and this is the only known gas station of its type."
+	icon_state = "billboard_lizards_gas"
+
+/obj/structure/billboard/lizards_gas/shit/
+	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. Based on the artistic quality of this billboard, it's hard to see why this franchise flopped."
+	icon_state = "billboard_lizards_gas_shit"
+
+/obj/structure/billboard/lizards_gas/shit/defaced
+	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. The soulfully drawn billboard has been scratched out, with some more scratching out over the graffiti."
+	icon_state = "billboard_lizards_gas_defaced"
+
+

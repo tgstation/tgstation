@@ -17,6 +17,10 @@
 	dir = 8
 	},
 /area/space)
+"bW" = (
+/obj/structure/billboard,
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
 "cm" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -43,14 +47,6 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
-/area/space)
-"kO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 8
-	},
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
 /area/space)
 "kS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output,
@@ -85,6 +81,9 @@
 "vQ" = (
 /turf/open/space/basic,
 /area/space)
+"wb" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
 "xy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -106,7 +105,6 @@
 /area/space)
 "Bu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
@@ -142,9 +140,22 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/space)
+"Hc" = (
+/obj/structure/flora/rock/pile{
+	icon_state = "basalt"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
 "Io" = (
 /obj/machinery/power/smes,
 /turf/open/floor/plating,
+/area/space)
+"Jg" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/turf/open/space/basic,
 /area/space)
 "JP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -170,6 +181,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/space)
+"MB" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+	dir = 8
+	},
+/turf/open/space/basic,
+/area/space)
 "Ow" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/smooth_edge,
@@ -182,6 +200,13 @@
 /area/space)
 "Qg" = (
 /turf/closed/mineral,
+/area/space)
+"Qi" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/open/space/basic,
 /area/space)
 "Ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -205,6 +230,10 @@
 	},
 /turf/open/floor/engine/plasma,
 /area/space)
+"Um" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/plating/asteroid/airless,
+/area/space)
 "Uz" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -219,11 +248,8 @@
 /turf/open/floor/plating,
 /area/space)
 "WP" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 5
-	},
-/obj/structure/lattice,
 /obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden,
 /turf/open/space/basic,
 /area/space)
 "Ys" = (
@@ -393,10 +419,10 @@ vQ
 vQ
 vQ
 vQ
+Jg
 vQ
 vQ
-vQ
-vQ
+Jg
 vQ
 vQ
 vQ
@@ -420,10 +446,10 @@ vQ
 vQ
 vQ
 vQ
+MB
 vQ
 vQ
-vQ
-vQ
+MB
 vQ
 vQ
 vQ
@@ -447,10 +473,10 @@ mR
 mR
 vQ
 vQ
+MB
 vQ
 vQ
-vQ
-vQ
+MB
 vQ
 vQ
 vQ
@@ -474,7 +500,7 @@ Pb
 ss
 Bu
 Bu
-kO
+WP
 Bu
 Bu
 WP
@@ -501,10 +527,10 @@ mR
 mR
 vQ
 vQ
+MB
 vQ
 vQ
-vQ
-vQ
+MB
 vQ
 vQ
 vQ
@@ -528,10 +554,10 @@ CA
 CA
 vQ
 vQ
+MB
 vQ
 vQ
-vQ
-vQ
+MB
 vQ
 vQ
 vQ
@@ -555,10 +581,10 @@ vQ
 vQ
 vQ
 vQ
+Qi
 vQ
 vQ
-vQ
-vQ
+Qi
 vQ
 vQ
 vQ
@@ -687,8 +713,8 @@ Wh
 Wh
 mR
 Qg
-vQ
-vQ
+Um
+wb
 vQ
 vQ
 vQ
@@ -704,8 +730,8 @@ vQ
 vQ
 Qg
 Qg
-Qg
-Qg
+wb
+wb
 mR
 Wh
 Wh
@@ -714,9 +740,9 @@ Wh
 Wh
 mR
 Qg
-Qg
-vQ
-vQ
+wb
+wb
+wb
 vQ
 vQ
 vQ
@@ -730,9 +756,9 @@ vQ
 vQ
 vQ
 Qg
-Qg
-Qg
-Qg
+wb
+wb
+Um
 mR
 Wh
 Wh
@@ -742,9 +768,9 @@ Wh
 mR
 Qg
 Qg
-Qg
-vQ
-vQ
+wb
+wb
+bW
 vQ
 vQ
 vQ
@@ -757,8 +783,8 @@ vQ
 vQ
 vQ
 vQ
-Qg
-Qg
+wb
+wb
 Qg
 mR
 mR
@@ -768,10 +794,10 @@ Wh
 Wh
 mR
 Qg
-Qg
-Qg
-Qg
-vQ
+Hc
+wb
+wb
+wb
 vQ
 vQ
 vQ
@@ -794,11 +820,11 @@ mR
 mR
 mR
 mR
-Qg
-Qg
-Qg
-Qg
-vQ
+wb
+wb
+wb
+wb
+wb
 vQ
 vQ
 vQ
@@ -821,11 +847,11 @@ Qg
 Qg
 Qg
 Qg
+wb
 Qg
-Qg
-Qg
-Qg
-vQ
+wb
+wb
+wb
 vQ
 vQ
 vQ
