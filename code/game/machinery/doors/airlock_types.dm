@@ -232,7 +232,7 @@
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
 	material_flags = MATERIAL_EFFECTS
 	material_modifier = 0.25
-	
+
 /obj/machinery/door/airlock/plasma/Initialize(mapload)
 	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
 	. = ..()
@@ -535,7 +535,7 @@
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
-			L.throw_at(throwtarget, 5, 1,src)
+			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()

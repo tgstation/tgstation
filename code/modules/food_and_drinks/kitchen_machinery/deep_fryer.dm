@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER

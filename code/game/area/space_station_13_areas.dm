@@ -886,12 +886,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage
 	name = "Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/engineering/storage_shared
 	name = "Shared Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage_shared"
 
 /area/engineering/transit_tube
 	name = "\improper Transit Tube"
