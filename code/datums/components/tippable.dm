@@ -16,7 +16,7 @@
 	var/datum/callback/post_tipped_callback
 	/// Callback to additional behavior after being untipped.
 	var/datum/callback/post_untipped_callback
-	///The timer given until the borg untips themselves
+	///The timer given until they untip themselves
 	var/self_untip_timer
 
 /datum/component/tippable/Initialize(
