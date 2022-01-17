@@ -3,9 +3,61 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/toolbox/syndicate{
+	pixel_y = 7
+	},
+/obj/item/storage/box/monkeycubes/syndicate,
+/obj/item/paper/crumpled{
+	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
+	name = "Explosives Testing Warning";
+	pixel_x = -6;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "d" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/main)
+"i" = (
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"n" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/testlab)
+"w" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"A" = (
+/obj/structure/sign/warning/explosives/alt{
+	pixel_x = 32
+	},
+/obj/structure/closet/firecloset,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"B" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/testlab)
+"F" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"K" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"N" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
@@ -30,11 +82,7 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"i" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"n" = (
+"P" = (
 /obj/machinery/door/airlock/external{
 	name = "external experimentation";
 	req_access_txt = "150"
@@ -42,7 +90,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/syndicate_lava_base/testlab)
-"w" = (
+"Q" = (
 /obj/structure/table/reinforced,
 /obj/item/restraints/handcuffs,
 /obj/item/taperecorder,
@@ -52,76 +100,36 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
-"A" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/main)
-"B" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/testlab)
-"F" = (
-/obj/structure/sign/warning/explosives/alt{
-	pixel_x = 32
-	},
-/obj/structure/closet/firecloset,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"K" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"N" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/toolbox/syndicate{
-	pixel_y = 7
-	},
-/obj/item/storage/box/monkeycubes/syndicate,
-/obj/item/paper/crumpled{
-	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
-	name = "Explosives Testing Warning";
-	pixel_x = -6;
-	pixel_y = -3
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
-"P" = (
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/ruin/syndicate_lava_base/testlab)
-"Q" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/testlab)
 
 (1,1,1) = {"
 a
 B
-N
-w
-K
+B
+B
+a
 a
 "}
 (2,1,1) = {"
 a
-n
+B
 c
 Q
-Q
-d
+K
+a
 "}
 (3,1,1) = {"
-A
+a
 P
 i
 F
+F
+N
+"}
+(4,1,1) = {"
+d
+n
+w
+A
 a
 a
 "}
