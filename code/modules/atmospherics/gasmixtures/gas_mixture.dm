@@ -391,10 +391,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			else
 				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
-		gas[MOLES] -= gas_delta
-		sharergas[MOLES] += gas_delta
-		moved_moles += gas_delta
-		abs_moved_moles += abs(gas_delta)
+		gas[MOLES] -= delta
+		sharergas[MOLES] += delta
+		moved_moles += delta
+		abs_moved_moles += abs(delta)
 
 	last_share = abs_moved_moles
 

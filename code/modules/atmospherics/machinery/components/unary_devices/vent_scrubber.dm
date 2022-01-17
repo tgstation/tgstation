@@ -38,6 +38,8 @@
 	///Radio connection from the air alarm
 	var/radio_filter_in
 
+	COOLDOWN_DECLARE(check_turfs_cooldown)
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	if(!id_tag)
 		id_tag = SSnetworks.assign_random_name()
@@ -227,7 +229,10 @@
 		return
 	scrub(us)
 	if(widenet)
-		check_turfs()
+		if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
+			check_turfs()
+			COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
+
 		for(var/turf/tile in adjacent_turfs)
 			scrub(tile)
 	return TRUE
