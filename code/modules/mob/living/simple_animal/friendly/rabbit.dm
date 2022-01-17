@@ -30,10 +30,10 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
+	//passed to animal_varity as the prefix icon.
 	var/icon_prefix = "rabbit"
 
 /mob/living/simple_animal/rabbit/Initialize(mapload)
-
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
 	AddElement(/datum/element/animal_variety, "rabbit", pick("brown","black","white"), TRUE)
 
@@ -76,5 +76,3 @@
 	minbodytemp = 0
 	maxbodytemp = 1500
 	unsuitable_atmos_damage = 0
-
-/mob/living/simple_animal/rabbit/empty //top hats summon these kinds of rabbits instead of the normal kind
