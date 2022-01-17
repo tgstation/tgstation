@@ -61,7 +61,7 @@
 					// Language unknown: scramble
 					message_out = "\"[language_instance.scramble(message_in)]\""
 				else
-					message_out = "(Uninteligible)"
+					message_out = "(Unintelligible)"
 				packet_out["message"] = message_out
 				
 				var/mob/mobtype = packet.parameters["mobtype"]
