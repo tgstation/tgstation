@@ -7,7 +7,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	health = 15
 	maxHealth = 15
-	icon = 'icons/mob/easter.dmi'
+	icon = 'icons/mob/rabbit.dmi'
 	icon_state = "rabbit_white"
 	icon_living = "rabbit_white"
 	icon_dead = "rabbit_white_dead"
