@@ -30,13 +30,12 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
-	//passed to animal_varity as the prefix icon.
-	var/icon_prefix = "rabbit"
+	var/icon_prefix = "rabbit" //passed to animal_varity as the prefix icon.
 
 /mob/living/simple_animal/rabbit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/pet_bonus, "hops around happily!")
-	AddElement(/datum/element/animal_variety, "rabbit", pick("brown","black","white"), TRUE)
+	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
 
 /mob/living/simple_animal/rabbit/easter
 	icon_state = "e_rabbit_white"
@@ -49,8 +48,17 @@
 		"Prizes for everyone!",
 	)
 	icon_prefix = "e_rabbit"
-	///passed to egg_layer component as how many eggs it starts out as able to lay.
-	var/initial_egg_amount = 10
+	var/initial_egg_amount = 10 ///passed to egg_layer component as how many eggs it starts out as able to lay.
+
+/mob/living/simple_animal/rabbit/easter/space
+	icon_state = "s_rabbit_white"
+	icon_living = "s_rabbit_white"
+	icon_dead = "s_rabbit_white_dead"
+	icon_prefix = "s_rabbit"
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0
+	maxbodytemp = 1500
+	unsuitable_atmos_damage = 0
 
 /mob/living/simple_animal/rabbit/easter/Initialize(mapload)
 	. = ..()
@@ -67,13 +75,3 @@
 		eggs_added_from_eating,\
 		max_eggs_held,\
 	)
-
-/mob/living/simple_animal/rabbit/space
-	icon_state = "s_rabbit_white"
-	icon_living = "s_rabbit_white"
-	icon_dead = "s_rabbit_white_dead"
-	icon_prefix = "s_rabbit"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = 1500
-	unsuitable_atmos_damage = 0
