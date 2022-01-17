@@ -600,3 +600,56 @@
       ontop of other wall objects for ghosts/AIs
   timothymtorres:
   - bugfix: Fix deaf people being able to hear in certain text messages.
+2022-01-17:
+  JohnFulpWillard:
+  - bugfix: Mutations like Telepathy will now work again.
+  JohnFulpWillard and theOOZ:
+  - qol: Tipping mobs over all runs on right click, rather than running on both right
+      and left click.
+  - balance: You can now tip Borgs over.
+  LemonInTheDark:
+  - qol: Space movement, assuming I've done my job correctly, should feel significantly
+      smoother
+  - bugfix: Fixed the immovable rod not properly carrying orbiters to new z levels
+  - code_imp: Added a framework for different forms of looping movement
+  - balance: Secborgs can no longer fly in space, as they have canonical wheels. The
+      same likely applies to other spacefareing simple mobs, report anything that
+      looks weird.
+  - refactor: Refactored how meteors, some mobs, space drifting things, and a lot
+      of general effects move, among other things. Please report any bugs or strange
+      behavior
+  - server: Hello admins. Spamming meteors will no longer lag things out quite so
+      much. Still not amazing cause of all the explosions, but it won't kill things
+      anymore. Blow some people up for me yeah?
+  SuperNovaa41:
+  - bugfix: Fixes not drawing cards from non-standard decks.
+  That REALLY Good Soda Flavor:
+  - imageadd: Added a stamina indicator to the human mob's HUD.
+  Thunder12345:
+  - rscadd: Added a new system to allow for partial random generation of space ruins
+      (and maybe more)
+  - rscadd: The russian DJ station has been overhauled and given randomly generated
+      variations.
+  Watermelon914:
+  - admin: Added the objectives to the antag panel for admins.
+  - admin: Added logs for when a player gets a potential objective, when a player
+      takes an objective and when a player succeeds/fails an objective.
+  neopythagorean:
+  - bugfix: Podpeople are no longer missing a hand when facing right, and podwomen
+      no longer stick out of their jumpsuit.
+  san7890:
+  - bugfix: On the mapping end, all of the engineering storages are no longer number
+      "2" (as far as the sprite labelling the rooms go). The sprites now reflect their
+      actual usage in their respective maps.
+  - code_imp: If you care, _globalvars/lists now has a lot of lists spanned out and
+      alphabetized. If you don't care, that's fine too.
+  - code_imp: Badass.dmi has been moved to a new folder in the repository.
+  - bugfix: Nanotrasen has now stopped including a big chunk of iron in their berets,
+      making it a bit weaker to melee damage. Still just as fashionable, though.
+  tf-4:
+  - bugfix: Windoors can now have their electronics removed without creating infinite
+      assemblies.
+  - balance: Atmospheric gas masks are now normal-sized, the same as other full-face
+      gas masks.
+  tralezab:
+  - rscadd: chisels are now the animated statue's bane.

@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Added the objectives to the antag panel for admins."
-  - admin: "Added logs for when a player gets a potential objective, when a player takes an objective and when a player succeeds/fails an objective."

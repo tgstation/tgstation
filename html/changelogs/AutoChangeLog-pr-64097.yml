@@ -1,5 +1,0 @@
-author: "JohnFulpWillard and theOOZ"
-delete-after: True
-changes: 
-  - qol: "Tipping mobs over all runs on right click, rather than running on both right and left click."
-  - balance: "You can now tip Borgs over."

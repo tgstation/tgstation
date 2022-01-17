@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On the mapping end, all of the engineering storages are no longer number \"2\" (as far as the sprite labelling the rooms go). The sprites now reflect their actual usage in their respective maps."
