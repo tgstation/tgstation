@@ -1959,7 +1959,6 @@
 #include "code\modules\antagonists\changeling\powers\pheromone_receptors.dm"
 #include "code\modules\antagonists\changeling\powers\regenerate.dm"
 #include "code\modules\antagonists\changeling\powers\shriek.dm"
-#include "code\modules\antagonists\changeling\powers\spiders.dm"
 #include "code\modules\antagonists\changeling\powers\strained_muscles.dm"
 #include "code\modules\antagonists\changeling\powers\tiny_prick.dm"
 #include "code\modules\antagonists\changeling\powers\transform.dm"
