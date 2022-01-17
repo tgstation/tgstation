@@ -66,20 +66,31 @@
 		return ..()
 
 
-/obj/structure/filingcabinet/ui_interact(mob/user)
-	. = ..()
-	if(contents.len <= 0)
-		to_chat(user, span_notice("[src] is empty."))
+/obj/structure/filingcabinet/ui_data()
+	var/list/data = list()
+	var/list/contents_out = list()
+	for (var/obj/item/item in contents)
+		contents_out += list(list("name" = item.name, "ref"=REF(item)))
+	data["contents"] = contents_out
+	return data
+
+/obj/structure/filingcabinet/ui_act(action, params)
+	if(..())
 		return
+	switch(action)
+		if("remove")
+			var/obj/item/item = locate(params["ref"])
+			if(item)
+				usr.put_in_hands(item)
+				updateUsrDialog()
+				icon_state = "[initial(icon_state)]-open"
+				addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
-	var/dat = "<center><table>"
-	var/i
-	for(i=contents.len, i>=1, i--)
-		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
-	dat += "</table></center>"
-	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
-
+/obj/structure/filingcabinet/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "FilingCabinet", name)
+		ui.open()
 
 /obj/structure/filingcabinet/attack_tk(mob/user)
 	if(anchored)
@@ -98,20 +109,6 @@
 			to_chat(user, span_notice("You pull \a [I] out of [src] at random."))
 			return
 	to_chat(user, span_notice("You find nothing in [src]."))
-
-
-/obj/structure/filingcabinet/Topic(href, href_list)
-	if(!usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(usr)))
-		return
-	if(href_list["retrieve"])
-		usr << browse("", "window=filingcabinet") // Close the menu
-
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(istype(P) && in_range(src, usr))
-			usr.put_in_hands(P)
-			updateUsrDialog()
-			icon_state = "[initial(icon_state)]-open"
-			addtimer(VARSET_CALLBACK(src, icon_state, initial(icon_state)), 5)
 
 
 /*
