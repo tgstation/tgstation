@@ -62,8 +62,6 @@
 #define COMSIG_CARBON_HEALTH_UPDATE "carbon_health_update"
 ///Called when a carbon updates their sanity (source = carbon)
 #define COMSIG_CARBON_SANITY_UPDATE "carbon_sanity_update"
-///Called when a carbon catches a thrown object (source = carbon)
-#define COMSIG_CARBON_SUCCESSFUL_CATCH "carbon_catch_success"
 // /mob/living/carbon/human signals
 
 ///Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
