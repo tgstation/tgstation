@@ -260,47 +260,6 @@
 		else
 			return FALSE
 
-/**
-*	adjustHealth(-maxHealth) //We heal in preparation of the split
-*	switch(size) //Yay, switches
-*		if(3 to INFINITY)
-*			icon = initial(icon)
-*			pixel_x = initial(pixel_x)
-*			pixel_y = initial(pixel_y)
-*			maxHealth = initial(maxHealth)
-*		if(2)
-*			icon = 'icons/mob/lavaland/64x64megafauna.dmi'
-*			icon_state += "-3"
-*			pixel_x = -16
-*			pixel_y = -8
-*			maxHealth = 350
-*		if(1)
-*			icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
-*			icon_state = "mega_legion" //resets state from "mega_legion-1" or whatever
-*			pixel_x = 0
-*			pixel_y = 0
-*			maxHealth = 200
-*	adjustHealth(0) //Make the health HUD look correct.
-*	visible_message(span_boldannounce("This is getting out of hand. Now there are three of them!"))
-*	for(var/i in 1 to 2) //Create three skulls in total
-*		var/mob/living/simple_animal/hostile/megafauna/legion/Legion = new(loc)
-*		Legion.setVarsAfterSplit(src)
-*	return TRUE
-*
-* ///Sets the variables for new legion skulls. Usually called after splitting.
-* /mob/living/simple_animal/hostile/megafauna/legion/proc/setVarsAfterSplit(mob/living/simple_animal/hostile/megafauna/legion/Legion)
-*	maxHealth = Legion.maxHealth
-*	updatehealth()
-*	size = Legion.size
-*	icon = Legion.icon
-*	pixel_x = Legion.pixel_x
-*	pixel_y = Legion.pixel_y
-*	faction = Legion.faction.Copy()
-*	GiveTarget(Legion.target)
-*	if (Legion.size == 2)
-*		Legion.icon_state = "mega_legion-" + i
-*/
-
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
 	name = "\improper Legion sentinel"
