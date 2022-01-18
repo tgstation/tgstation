@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Added premium Two-Time root beer to soda vending machines for 200 credits! The soda grants you doubled fire-rate with ranged guns while in your system, though it also causes intense dizziness while in your system, as well as heavy stamina damage and drowsiness when it wears off."
+  - rscadd: "Added admin-only racing shooting gloves that grant the doubled fire-rate buff to the wearer with no downsides."
