@@ -100,16 +100,18 @@
 			grabbed_item.pickup(mod.wearer)
 			mod.wearer.put_in_hands(grabbed_item)
 		return
+	var/pixel_x_change
+	var/pixel_y_change
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
-		grabbed_atom.pixel_y = world.icon_size/2
+		pixel_y_change = world.icon_size/2
 	else if(direction & SOUTH)
-		grabbed_atom.pixel_y = -world.icon_size/2
+		pixel_y_change = -world.icon_size/2
 	if(direction & EAST)
-		grabbed_atom.pixel_x = world.icon_size/2
+		pixel_x_change = world.icon_size/2
 	else if(direction & WEST)
-		grabbed_atom.pixel_x = -world.icon_size/2
-	animate(grabbed_atom)
+		pixel_x_change = -world.icon_size/2
+	animate(grabbed_atom, 0.2 SECONDS, pixel_x = grabbed_atom.base_pixel_x + pixel_x_change, pixel_y = grabbed_atom.base_pixel_y + pixel_y_change)
 	kinesis_beam.redrawing()
 	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
 		return
