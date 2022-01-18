@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/generated_accounts = list()
 	/**
-	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
+	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
 	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
 	 */
 	var/full_ancap = FALSE
