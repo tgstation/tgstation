@@ -86,8 +86,9 @@
  * * mob/user - The user drawing from the deck.
  * * list/cards - The list of cards the user is drawing from.
  * * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
+ * * place_on_table (optional) - Used to ignore putting a card in a users hand (for placing cards on tables)
  */
-/obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null)
+/obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null, place_on_table = FALSE)
 	if(isliving(user))
 		var/mob/living/living_user = user
 		if(!(living_user.mobility_flags & MOBILITY_PICKUP))
@@ -108,8 +109,11 @@
 		card_to_draw = cards[1]
 
 	cards -= card_to_draw
-	card_to_draw.pickup(user)
-	user.put_in_hands(card_to_draw)
+
+	if(!place_on_table)
+		card_to_draw.pickup(user)
+		user.put_in_hands(card_to_draw)
+
 	user.visible_message(span_notice("[user] draws a card from [from_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [from_cardhand ? "your hand" : "the deck"]."))
 	update_appearance()
 	return card_to_draw

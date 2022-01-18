@@ -99,6 +99,14 @@
 				user.stop_pulling()
 	return ..()
 
+/obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/deck = weapon 
+		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table=TRUE)
+		src.attackby(card, user, params)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/structure/table/attack_tk(mob/user)
 	return
