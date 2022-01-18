@@ -1063,12 +1063,10 @@
 		else
 			src.icon_state = "sc_Ace of Spades_[deckstyle]"
 			src.name = "What Card"
-		src.pixel_x = 5
 	else if(flipped)
 		src.flipped = FALSE
 		src.icon_state = "singlecard_down_[deckstyle]"
 		src.name = "card"
-		src.pixel_x = -5
 
 /**
  * ## do_cardhand
