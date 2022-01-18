@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - bugfix: "Pumping hot gas into cold gas using the regular pumps should no longer explode."
+  - code_imp: "Some math changes to how pressure based pumps calculate pressure (both portable and fixed). Report if problems are found."
