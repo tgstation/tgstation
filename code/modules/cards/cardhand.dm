@@ -35,7 +35,7 @@
 
 	var/list/handradial = list()
 	for(var/obj/item/toy/cards/singlecard/card in cards)
-		handradial[card] = image(icon = src.icon, icon_state = "sc_[card.name]_[deckstyle]")
+		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)
 
 	var/obj/item/toy/cards/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!choice)
@@ -100,5 +100,5 @@
 	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
 	for(var/i = k; i <= overlay_cards; i++)
 		var/obj/item/toy/cards/singlecard/card = cards[i]
-		var/card_overlay = image(icon = src.icon, icon_state = "sc_[card.cardname]_[deckstyle]", pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
+		var/card_overlay = image(icon = src.icon, icon_state = card.icon_state, pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
 		add_overlay(card_overlay)
