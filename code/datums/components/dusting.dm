@@ -3,8 +3,6 @@
 	var/consume_on_bumped = TRUE
 	/// Consume when attacking with the sword
 	var/consume_on_attack = TRUE
-	/// Consume when attacked by a mob with attack_hand
-	var/consume_on_attack_hand = TRUE
 	/// Consume when attacked by a mob using an item
 	var/consume_on_attackby = TRUE
 	/// Consume when trying to get picked up by a mob
@@ -45,7 +43,6 @@
 /datum/component/dusting/Initialize(
 	consume_on_bumped = TRUE,
 	consume_on_attack = TRUE,
-	consume_on_attack_hand = TRUE,
 	consume_on_attackby = TRUE,
 	consume_on_pickup = FALSE,
 	consume_on_throw = TRUE,
@@ -70,7 +67,6 @@
 	atom_parent = parent
 	src.consume_on_bumped = consume_on_bumped
 	src.consume_on_attack = consume_on_attack
-	src.consume_on_attack_hand = consume_on_attack_hand
 	src.consume_on_attackby = consume_on_attackby
 	src.consume_on_pickup = consume_on_pickup
 	src.consume_on_throw = consume_on_throw
@@ -87,7 +83,7 @@
 	src.ignore_subtypesof = typecacheof(ignore_subtypesof)
 
 	if(register_signals) //For specifically the case of the supermatter, it has too much interaction
-		RegisterSignal(parent, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_ATOM_BULLET_ACT, COMSIG_ITEM_ATTACK_OBJ), .proc/attack_atom)
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_BULLET_ACT, COMSIG_ITEM_ATTACK_OBJ), .proc/attack_atom)
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
@@ -102,9 +98,8 @@
 
 /datum/component/dusting/Destroy()
 	UnregisterSignal(parent, list(\
-		COMSIG_ITEM_PRE_ATTACK,
+		COMSIG_ITEM_ATTACK,
 		COMSIG_ATOM_BULLET_ACT,
-		COMSIG_ITEM_ATTACK_OBJ,
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ITEM_PICKUP,
 		COMSIG_MOVABLE_IMPACT,
@@ -126,20 +121,18 @@
 
 /datum/component/dusting/proc/on_attack_hand(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	if(consume_on_attack_hand && isturf(atom_parent.loc)) //Prevent eating if it's in your inventory
+	if(consume_on_attack && isturf(atom_parent.loc)) //Prevent eating if it's in your inventory
 		consume_atom(user)
 
 /datum/component/dusting/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
 	if(consume_on_attackby && isturf(atom_parent.loc)) //Prevent eating if it's in your inventory
-		if(consume_atom(attacking_item))
-			return COMPONENT_NO_AFTERATTACK
+		consume_atom(attacking_item)
 
 /datum/component/dusting/proc/on_pickup(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if(consume_on_pickup)
-		if(consume_atom(user))
-			return COMPONENT_CANCEL_ATTACK_CHAIN
+		consume_atom(user)
 
 /datum/component/dusting/proc/on_bumped(datum/source, atom/bumped_atom)
 	SIGNAL_HANDLER
@@ -173,6 +166,7 @@
 		ignoring_admin_messages = 0
 	
 	//Next, consume the actual atom
+	playsound(get_turf(parent), consumption_sound, 80, vary = TRUE)
 	if(ismob(consumed_atom))
 		var/mob/living/consumed_living = consumed_atom
 		message_admins("[atom_parent] ([src.type]) has consumed [key_name_admin(consumed_living)] [ADMIN_JMP(atom_parent)].")
@@ -196,14 +190,11 @@
 		if(isspaceturf(consumed_atom)) //don't scrape away reality at its seams
 			return
 		var/turf/old_turf = consumed_atom
-		var/old_turf_name = old_turf.name
-		var/turf/old_turf_type = old_turf.type
 		var/turf/new_turf = old_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-		if(new_turf.type == old_turf_type)
+		if(new_turf.type == old_turf.type)
 			return
-		new_turf.visible_message(span_danger("[atom_parent] consumes \the [old_turf_name] and reveals [new_turf] underneath."), null,
+		new_turf.visible_message(span_danger("[atom_parent] consumes [old_turf] and reveals [new_turf] underneath."), null,
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
-	playsound(get_turf(parent), consumption_sound, 80, vary = TRUE)
 
 	//Next, do radiation and give fluff text to nearby mobs
 	. = TRUE
@@ -212,7 +203,7 @@
 	if(radiation_atom[atom_parent.type])
 		radiation_array = atom_parent.type
 	else
-		var/actual_subtype //used to check the best subtype in the list without breaking early. if we broke early, obj/item/sword would return an obj value when obj/item/sword is also defined
+		var/actual_subtype //used to check the best subtype in the list without breaking early. if we broke early, obj/item would return an obj value when obj/item is also defined
 		for(var/typepath in radiation_atom)
 			if(istype(atom_parent, typepath) && (ispath(typepath, actual_subtype) || !actual_subtype))
 				radiation_array = typepath
@@ -222,8 +213,8 @@
 	var/threshold = radiation_atom[radiation_array]["threshold"]
 	var/chance = radiation_atom[radiation_array]["chance"]
 
-	if(!range || !threshold || !chance && !(!range && !threshold && !chance)) //Don't continue w/ radiation nor its messages if any of these are set to 0, but not when all are zero
-		stack_trace("Incorrect radiation_pulse arguments (range=[range], threshold=[threshold], chance=[chance]).") //Send a warning just in case this was never intended
+	if(!(range || threshold || chance)) //Don't continue w/ radiation nor its messages if any of these are set to 0
+		warning("[type] tried to pulse radiation without the correct arguments. range=[range], threshold=[threshold], chance=[chance]") //Send a warning just in case this was never intended
 		return
 	radiation_pulse(parent, max_range = range, threshold = threshold, chance = chance)
 	var/visual_message = rename_text(consume_text_visual, consumed_atom)
