@@ -13,9 +13,6 @@
 /datum/export/food/get_cost(obj/O, allowed_categories, apply_elastic)
 	. = ..()
 	var/obj/item/food/sold_food = O
-	tweak_description(sold_food)
 	if(sold_food.flags & FOOD_SILVER_SPAWNED)
-		return FOOD_WORTHLESS
+		return FOOD_PRICE_WORTHLESS
 	return sold_food.venue_value
-
-

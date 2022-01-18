@@ -407,7 +407,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
-	venue_value = FOOD_WORTHLESS
+	venue_value = FOOD_PRICE_WORTHLESS
 	var/mutable_appearance/head
 	var/head_color = rgb(0, 0, 0)
 
@@ -527,7 +527,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
-	venue_value = FOOD_WORTHLESS
+	venue_value = FOOD_PRICE_WORTHLESS
 
 /obj/item/food/gumball/Initialize(mapload)
 	. = ..()
@@ -663,7 +663,7 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
-	venue_value = FOOD_EXOTIC
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/canned/tomatoes
 	name = "canned San Marzano tomatoes"
