@@ -156,7 +156,7 @@
 	cost = 5
 
 /datum/uplink_item/role_restricted/springlock_module
-	name = "Springlock MODSuit Module"
+	name = "Springlock MODsuit Module"
 	desc = "A module that spans the entire size of the MOD unit, sitting under the outer shell. \
 		This mechanical exoskeleton pushes out of the way when the user enters and it helps in booting \
 		up, but was taken out of modern suits because of the springlock's tendency to \"snap\" back \
