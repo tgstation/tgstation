@@ -109,6 +109,7 @@
 		grabbed_atom.pixel_x = world.icon_size/2
 	else if(direction & WEST)
 		grabbed_atom.pixel_x = -world.icon_size/2
+	animate(grabbed_atom)
 	kinesis_beam.redrawing()
 	if(!isitem(grabbed_atom) || !COOLDOWN_FINISHED(src, hit_cooldown))
 		return
