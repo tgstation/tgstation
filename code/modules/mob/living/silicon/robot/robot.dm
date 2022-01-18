@@ -38,6 +38,8 @@
 
 	if(lawupdate)
 		make_laws()
+		for (var/law in laws.inherent)
+			lawcheck += law
 		if(!TryConnectToAI())
 			lawupdate = FALSE
 
