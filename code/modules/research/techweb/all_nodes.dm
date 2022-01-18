@@ -133,6 +133,7 @@
 		"mod_longfall",
 		"mod_thermal_regulator",
 		"mod_plasma",
+		"mod_sign_radio",
 	)
 
 /datum/techweb_node/mech_tools

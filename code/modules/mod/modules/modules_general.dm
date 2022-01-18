@@ -480,6 +480,7 @@
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSELFIGNITION, MOD_TRAIT)
 
+
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
 ///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.
 /obj/item/mod/module/hat_stabilizer
@@ -578,3 +579,20 @@
 		balloon_alert_to_viewers("the hat falls to the floor!")
 	attached_hat = null
 	mod.wearer.update_inv_back()
+
+///Sign Language Translator - allows people to sign over comms using the modsuit's gloves.
+/obj/item/mod/module/signlang_radio
+	name = "MOD glove translator module"
+	desc = "A module that adds motion sensors into the suit's gloves, \
+		which works in tandem with a short-range subspace transmitter, \
+		letting the audibly impaired use sign language over comms."
+	icon_state = "signlang_radio"
+	complexity = 1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	incompatible_modules = list(/obj/item/mod/module/signlang_radio)
+
+/obj/item/mod/module/signlang_radio/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)
+
+/obj/item/mod/module/signlang_radio/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_CAN_SIGN_ON_COMMS, MOD_TRAIT)

@@ -1341,6 +1341,12 @@
 	materials = list(/datum/material/plasma = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/plasma_stabilizer
 
+/datum/design/module/mod_glove_translator
+	name = "MOD Module: Glove Translator"
+	id = "mod_sign_radio"
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/signlang_radio
+
 /datum/design/module/mod_antigrav
 	name = "MOD Module: Anti-Gravity"
 	id = "mod_antigrav"
