@@ -102,6 +102,7 @@
 	
 	error_message = ""
 	
+	. = TRUE
 	switch(action)
 		if("scan_network")
 			// Scan for a network
@@ -122,18 +123,23 @@
 					servers.Add(server)
 			if(servers.len == 0)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE ANY SERVERS IN NETWORK [network]."
+				return
+			return
 		if("clear_buffer")
 			servers = list()
 			network = ""
+			return
 		if("view_server")
 			SelectedServer = locate(params["server"])
 			if(!SelectedServer)
 				error_message = "OPERATION FAILED: UNABLE TO LOCATE SERVER."
 				return
 			screen = SERVER_VIEW
+			return
 		if("return_home")
 			SelectedServer = null
 			screen = MAIN_VIEW
+			return
 		if("delete_packet")
 			// Delete a packet from server logs
 			var/datum/comm_log_entry/packet = locate(params["ref"])
@@ -146,6 +152,8 @@
 			SelectedServer.log_entries.Remove(packet)
 			error_message = "SUCCESSFULLY DELETED [packet.name]."
 			qdel(packet)
+			return
+	return FALSE
 
 /obj/machinery/computer/telecomms/server/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
