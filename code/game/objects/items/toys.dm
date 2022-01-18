@@ -1035,6 +1035,14 @@
 			cardUser.visible_message(span_notice("[cardUser] checks [cardUser.p_their()] card."), span_notice("The card reads: [cardname]."))
 		else
 			. += span_warning("You need to have the card in your hand to check it!")
+		. += span_notice("Right-click to flip it.")
+
+/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	Flip()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * ## Flip
