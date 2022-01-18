@@ -11,7 +11,7 @@
 
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
-	icon_state = "psiphon:0"
+	icon_state = "siphon"
 	density = TRUE
 	max_integrity = 250
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
@@ -33,7 +33,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
-	icon_state = "psiphon:[on]"
+	icon_state = "[initial(icon_state)]:[on]"
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_overlays()
