@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "Nuke disks must now be held by a player or pulled by a player in order to count as moving to not increase the chances of lone ops. This means no more disk conveyor belts."

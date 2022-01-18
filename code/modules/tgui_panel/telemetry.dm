@@ -76,7 +76,7 @@
 
 	var/list/found
 
-	var/list/insert_queries = list()
+	var/list/query_data = list()
 
 	for(var/i in 1 to len)
 		if(QDELETED(client))
@@ -89,28 +89,10 @@
 			return
 
 		if (!isnull(GLOB.round_id))
-			insert_queries += SSdbcore.NewQuery({"
-				INSERT INTO [format_table_name("telemetry_connections")] (
-					ckey,
-					telemetry_ckey,
-					address,
-					computer_id,
-					first_round_id,
-					latest_round_id
-				) VALUES(
-					:ckey,
-					:telemetry_ckey,
-					INET_ATON(:address),
-					:computer_id,
-					:round_id,
-					:round_id
-				) ON DUPLICATE KEY UPDATE latest_round_id = :round_id
-			"}, list(
-				"ckey" = ckey,
+			query_data += list(list(
 				"telemetry_ckey" = row["ckey"],
 				"address" = row["address"],
 				"computer_id" = row["computer_id"],
-				"round_id" = GLOB.round_id,
 			))
 
 		if (row["ckey"] in our_known_alts)
@@ -130,7 +112,29 @@
 		log_suspicious_login(msg, access_log_mirror = FALSE)
 
 	// Only log them all at the end, since it's not as important as reporting an evader
-	for (var/datum/db_query/insert_query as anything in insert_queries)
-		insert_query.Execute()
-
-	QDEL_LIST(insert_queries)
+	for (var/one_query as anything in query_data)
+		var/datum/db_query/query = SSdbcore.NewQuery({"
+			INSERT INTO [format_table_name("telemetry_connections")] (
+				ckey,
+				telemetry_ckey,
+				address,
+				computer_id,
+				first_round_id,
+				latest_round_id
+			) VALUES(
+				:ckey,
+				:telemetry_ckey,
+				INET_ATON(:address),
+				:computer_id,
+				:round_id,
+				:round_id
+			) ON DUPLICATE KEY UPDATE latest_round_id = :round_id
+		"}, list(
+			"ckey" = ckey,
+			"telemetry_ckey" = query_data["telemetry_ckey"],
+			"address" = query_data["address"],
+			"computer_id" = query_data["computer_id"], 
+			"round_id" = GLOB.round_id,
+		))
+		query.Execute()
+		qdel(query)

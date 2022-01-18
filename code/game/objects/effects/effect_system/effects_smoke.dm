@@ -265,20 +265,18 @@
 
 
 /datum/effect_system/smoke_spread/chem
-	var/obj/chemholder
+	/// Evil evil hack so we have something to "hold" our reagents
+	var/atom/movable/chem_holder/chemholder
 	effect_type = /obj/effect/particle_effect/smoke/chem
 
 /datum/effect_system/smoke_spread/chem/New()
 	..()
-	chemholder = new /obj()
-	var/datum/reagents/R = new (500, REAGENT_HOLDER_INSTANT_REACT) //This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
-	chemholder.reagents = R
-
-	R.my_atom = chemholder
+	chemholder = new()
+	//This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
+	chemholder.create_reagents(500, REAGENT_HOLDER_INSTANT_REACT)
 
 /datum/effect_system/smoke_spread/chem/Destroy()
-	qdel(chemholder)
-	chemholder = null
+	QDEL_NULL(chemholder)
 	return ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = FALSE)

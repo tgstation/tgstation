@@ -135,7 +135,7 @@
 	else
 		icon_state = "[chassis]"
 	if(loc != card)
-		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground"]"))
+		visible_message(span_notice("[src] [resting? "lays down for a moment..." : "perks up from the ground."]"))
 
 /mob/living/silicon/pai/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return FALSE
