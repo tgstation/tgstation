@@ -259,8 +259,6 @@
 			new /mob/living/simple_animal/hostile/megafauna/legion/medium/left(loc)
 			new /mob/living/simple_animal/hostile/megafauna/legion/medium/right(loc)
 			new /mob/living/simple_animal/hostile/megafauna/legion/medium/eye(loc)
-		else
-			return FALSE
 
 ///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
 /obj/structure/legionturret
@@ -346,3 +344,7 @@
 /obj/effect/projectile/tracer/legion
 	icon = 'icons/effects/beam.dmi'
 	icon_state = "blood"
+
+#undef LEGION_LARGE
+#undef LEGION_MEDIUM
+#undef LEGION_SMALL
