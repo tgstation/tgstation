@@ -7,8 +7,6 @@
 /datum/component/boomerang
 	///How far should the boomerang try to travel to return to the thrower?
 	var/boomerang_throw_range = 3
-	///"Thrownthing" datum for the most recent throw.
-	//var/datum/weakref/thrown_boomerang
 	///If this boomerang is thrown, does it re-enable the throwers throw mode?
 	var/thrower_easy_catch_enabled = FALSE
 	///This cooldown prevents our 2 throwing signals from firing too often based on how we implement those signals within thrown impacts.
@@ -36,12 +34,11 @@
 /**
  * Proc'd before the thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.
  * * source: Datum src from original signal call.
- * * thrown_thing: The atom that has had the boomerang component added to it. Updates thrown_boomerang.
+ * * thrown_thing: The thrownthing datum from the parent object's latest throw. Updates thrown_boomerang.
  * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
  */
 /datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/thrown_thing, spin)
 	SIGNAL_HANDLER
-	//thrown_boomerang = thrown_thing //Here we update our "thrownthing" datum with that of the original throw for each boomerang. We save it for the return throw.
 	if(thrower_easy_catch_enabled && thrown_thing?.thrower)
 		if(iscarbon(thrown_thing.thrower))
 			var/mob/living/carbon/Carbon = thrown_thing.thrower
