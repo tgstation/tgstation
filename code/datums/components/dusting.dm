@@ -1,7 +1,7 @@
 /datum/component/dusting
 	/// Consume all objects that bump into the atom. Only applies to dense atoms.
 	var/consume_on_bumped = TRUE
-	/// Consume when attacking with the sword
+	/// Consume when attacked by a mob
 	var/consume_on_attack = TRUE
 	/// Consume when attacked by a mob using an item
 	var/consume_on_attackby = TRUE
@@ -83,7 +83,7 @@
 	src.ignore_subtypesof = typecacheof(ignore_subtypesof)
 
 	if(register_signals) //For specifically the case of the supermatter, it has too much interaction
-		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_BULLET_ACT, COMSIG_ITEM_ATTACK_OBJ), .proc/attack_atom)
+		RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ATOM_BULLET_ACT), .proc/attack_atom)
 		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 		RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/on_throw_impact)
@@ -161,8 +161,7 @@
 	if(consume_all_contents && !currently_consuming_contents)
 		ignoring_admin_messages = 1
 		for(var/atom/thing as anything in consumed_atom.get_all_contents())
-			if(thing != atom_parent)
-				consume_atom(thing, TRUE)
+			consume_atom(thing, TRUE)
 		ignoring_admin_messages = 0
 	
 	//Next, consume the actual atom
@@ -179,10 +178,10 @@
 		var/obj/consumed_object = consumed_atom
 		var/suspicion = ""
 		if(consumed_object.fingerprintslast)
-			suspicion = ", last touched by [consumed_object.fingerprintslast]"
+			suspicion = "last touched by [consumed_object.fingerprintslast]"
 		if(!ignoring_admin_messages)
-			message_admins("[atom_parent] has consumed [consumed_object][suspicion] [ADMIN_JMP(atom_parent)].")
-		atom_parent.investigate_log("has consumed [consumed_object][suspicion].", INVESTIGATE_SUPERMATTER)
+			message_admins("[atom_parent] has consumed [consumed_object], [suspicion] [ADMIN_JMP(atom_parent)].")
+		atom_parent.investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		consumed_object.visible_message(span_danger("[consumed_object] smacks into [atom_parent] and rapidly flashes to ash."), null,
 			span_hear("You hear a loud crack as you are washed with a wave of heat."))
 		qdel(consumed_object)
@@ -212,6 +211,8 @@
 	var/range = radiation_atom[radiation_array]["range"]
 	var/threshold = radiation_atom[radiation_array]["threshold"]
 	var/chance = radiation_atom[radiation_array]["chance"]
+	if(radiation_atom[radiation_array]?.len != 3) //helper to say "hey you forgot this"
+		stack_trace("radiation_atom list length cannot be anything but 3 (returned as [radiation_atom[radiation_array]?.len])")
 
 	if(!(range || threshold || chance)) //Don't continue w/ radiation nor its messages if any of these are set to 0
 		warning("[type] tried to pulse radiation without the correct arguments. range=[range], threshold=[threshold], chance=[chance]") //Send a warning just in case this was never intended
