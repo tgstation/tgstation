@@ -45,16 +45,10 @@
 
 #define FOOD_IN_CONTAINER (1<<0)
 #define FOOD_FINGER_FOOD (1<<1)
+///Is this food item spawned from a silver slime? Prevent it from exporting for profit from cargo.
+#define FOOD_SILVER_SPAWNED (1<<2)
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
-
-#define FOOD_WORTHLESS 0
-#define FOOD_JUNK 6
-#define FOOD_FAST 40
-#define FOOD_RARE 80
-#define FOOD_EXOTIC 150
-#define FOOD_LEGENDARY 1000
-#define FOOD_ILLEGAL 1000
 
 #define FOOD_MEAT_NORMAL 5
 #define FOOD_MEAT_HUMAN 50
@@ -85,17 +79,28 @@
 
 
 
-///Food price classes
-#define FOOD_PRICE_TRASH 25  //cheap and quick.
-#define FOOD_PRICE_CHEAP 70 //In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
-#define FOOD_PRICE_NORMAL 150 //Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
-#define FOOD_PRICE_EXOTIC 450 //Making one of these should be worth the time investment, solid chunk of profit.
-#define FOOD_PRICE_LEGENDARY 1300 //Large windfall for making something from this list.
+///***Food price classes***
+///Foods that are meant to have no value, such as lollypops from medborgs.
+#define FOOD_PRICE_WORTHLESS 0
+///cheap and quick foods, like those from vending machines.
+#define FOOD_PRICE_TRASH 25
+///In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
+#define FOOD_PRICE_CHEAP 70
+///Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
+#define FOOD_PRICE_NORMAL 150
+///Making one of these should be worth the time investment, solid chunk of profit.
+#define FOOD_PRICE_EXOTIC 450
+///Large windfall for making something from this list.
+#define FOOD_PRICE_LEGENDARY 1300
 
-
+///***Drink price classes***
+///Drinks that are only limited by a single click of the dispenser.
 #define DRINK_PRICE_STOCK 20
+///Drinks that are made through very basic processing.
 #define DRINK_PRICE_EASY 35
+///Drinks that are made through more basic processing, or multiple steps.
 #define DRINK_PRICE_MEDIUM 80
+///Drinks that are made through rare ingredients, or high levels of processing.
 #define DRINK_PRICE_HIGH 200
 
 
