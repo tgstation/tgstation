@@ -5,9 +5,9 @@
 
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
 	AddComponent(/datum/component/tippable, \
-		tip_time = 3 SECONDS, \
+		tip_time = 5 SECONDS, \
 		untip_time = 2 SECONDS, \
-		self_right_time = 60 SECONDS, \
+		self_right_time = 20 SECONDS, \
 		post_tipped_callback = CALLBACK(src, .proc/after_tip_over), \
 		post_untipped_callback = CALLBACK(src, .proc/after_righted))
 
