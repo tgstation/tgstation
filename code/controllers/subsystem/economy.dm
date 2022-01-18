@@ -3,7 +3,9 @@ SUBSYSTEM_DEF(economy)
 	wait = 5 MINUTES
 	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
+	///How many paychecks should players start out the round with?
 	var/roundstart_paychecks = 5
+	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
@@ -13,8 +15,12 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/generated_accounts = list()
-	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
-							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
+	/**
+	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
+	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
+	 */
+	var/full_ancap = FALSE
+
 	/// Departmental cash provided to science when a node is researched in specific configs.
 	var/techweb_bounty = 250
 	/**
@@ -22,6 +28,7 @@ SUBSYSTEM_DEF(economy)
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
+	///List of the departmental budget cards in existance.
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
