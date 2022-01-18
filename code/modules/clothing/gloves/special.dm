@@ -60,3 +60,10 @@
 /obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
+
+/obj/item/clothing/gloves/radio
+	name = "translation gloves"
+	desc = "A pair of electronic gloves which connect to nearby radios wirelessly. Allows for sign language users to 'speak' over comms."
+	icon_state = "radio_g"
+	inhand_icon_state = "radio_g"
+	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
