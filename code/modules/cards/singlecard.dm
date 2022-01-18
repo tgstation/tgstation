@@ -123,6 +123,7 @@
 		name = cardtext
 		cardname = cardtext
 		blank = FALSE
+		update_appearance()
 	else
 		return ..()
 
