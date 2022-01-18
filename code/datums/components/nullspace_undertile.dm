@@ -16,16 +16,21 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
+	var/obj/obj_parent = parent
+
 	src.tile_overlay = tile_overlay
 	src.invisibility_trait = invisibility_trait
 
 	if(nullspace_when_underfloor_visible)
 		nullspace_underlay = new()
-		var/obj/obj_parent = parent
 		nullspace_underlay.appearance = obj_parent.appearance
 		RegisterSignal(parent, COMSIG_ATOM_UPDATED_APPEARANCE, .proc/on_updated_appearance)
 
 	RegisterSignal(parent, COMSIG_OBJ_HIDE, .proc/on_hide)
+
+/datum/component/nullspace_undertile/UnregisterFromParent()
+	. = ..()
+	on_hide(parent, UNDERFLOOR_VISIBLE)
 
 /datum/component/nullspace_undertile/proc/on_hide(obj/source, underfloor_accessibility)
 	SIGNAL_HANDLER

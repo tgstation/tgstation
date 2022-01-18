@@ -29,13 +29,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
-	associated_loc = loc
-	if(associated_loc)
-		LAZYADD(associated_loc.nullspaced_contents, src)
-
 	GLOB.cable_list += src //add it to the global cable list
+	AddElement(/datum/element/associated_loc_updater)
 	Connect_cable()
-	//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
 	AddComponent(/datum/component/nullspace_undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, nullspace_when_underfloor_visible = TRUE)
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
@@ -109,12 +105,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 				neighbor_cable.update_appearance()
 
 /obj/structure/cable/Destroy() // called when a cable is deleted
-	if(associated_loc && !loc)
-		loc = associated_loc
 	Disconnect_cable()
-
-	if(associated_loc)
-		LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	if(powernet)
 		cut_cable_from_powernet() // update the powernets

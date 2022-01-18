@@ -858,6 +858,7 @@
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\animal_variety.dm"
 #include "code\datums\elements\art.dm"
+#include "code\datums\elements\associated_loc_updater.dm"
 #include "code\datums\elements\atmos_requirements.dm"
 #include "code\datums\elements\atmos_sensitive.dm"
 #include "code\datums\elements\backblast.dm"

@@ -53,7 +53,9 @@
 			dpdir |= DOWN
 
 	//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
+	AddElement(/datum/element/associated_loc_updater)
 	AddComponent(/datum/component/nullspace_undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, nullspace_when_underfloor_visible = FALSE)
+
 
 // pipe is deleted
 // ensure if holder is present, it is expelled
@@ -63,9 +65,6 @@
 		holder.active = FALSE
 		expel(holder, associated_loc, 0)
 	stored = null //The qdel is handled in expel()
-
-	if(associated_loc)
-		LAZYREMOVE(associated_loc.nullspaced_contents, src)
 
 	return ..()
 

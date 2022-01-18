@@ -55,19 +55,6 @@
 	range = 4
 	cooldown = 50
 
-/obj/item/t_scanner/adv_mining_scanner/toggle_on()
-	. = ..()
-	if(on)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
-
-/obj/item/t_scanner/adv_mining_scanner/process()
-	if(!on)
-		STOP_PROCESSING(SSobj, src)
-		return null
-	scan()
-
 /obj/item/t_scanner/adv_mining_scanner/scan()
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown

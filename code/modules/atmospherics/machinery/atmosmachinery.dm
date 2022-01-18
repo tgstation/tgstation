@@ -82,9 +82,7 @@
 
 	set_init_directions(init_dir)
 
-	if(loc)
-		associated_loc = get_turf(src)
-		LAZYADD(associated_loc.nullspaced_contents, src)
+	AddElement(/datum/element/associated_loc_updater)
 
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
@@ -105,19 +103,7 @@
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
-	LAZYREMOVE(associated_loc.nullspaced_contents, src)
-
 	return ..()
-
-/obj/machinery/atmospherics/Moved(atom/old_loc, Dir)
-	. = ..()
-	if(old_loc)
-		var/turf/old_real_loc = get_turf(old_loc)
-		LAZYREMOVE(old_real_loc.nullspaced_contents, src)
-	if(loc)
-		var/turf/real_loc = get_turf(src)
-		associated_loc = real_loc
-		LAZYADD(real_loc.nullspaced_contents, src)
 
 /obj/machinery/atmospherics/examine(mob/user)
 	. = ..()
