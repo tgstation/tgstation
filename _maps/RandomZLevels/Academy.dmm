@@ -81,10 +81,6 @@
 /obj/item/paper_bin,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-"ax" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
 "ay" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/mirror/magic/lesser{
@@ -121,11 +117,6 @@
 /obj/structure/table/reinforced,
 /obj/item/laser_pointer/upgraded,
 /turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"aJ" = (
-/obj/structure/destructible/cult/tome,
-/obj/item/dice/d20/fate,
-/turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "aK" = (
 /mob/living/simple_animal/hostile/morph{
@@ -2490,12 +2481,6 @@
 /mob/living/simple_animal/hostile/retaliate/bat,
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
-"lk" = (
-/obj/structure/safe/floor,
-/obj/item/gun/magic/wand/fireball,
-/obj/item/mod/control/pre_equipped/enchanted,
-/turf/open/floor/wood,
-/area/awaymission/academy/headmaster)
 "ll" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/academy/academyengine)
@@ -3041,6 +3026,11 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
+"GS" = (
+/obj/structure/destructible/cult/item_dispenser/archives,
+/obj/item/dice/d20/fate,
+/turf/open/floor/wood,
+/area/awaymission/academy/headmaster)
 "Hb" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
@@ -3070,6 +3060,12 @@
 /area/awaymission/academy/academyaft)
 "JX" = (
 /obj/machinery/light/directional/south,
+/turf/open/floor/wood,
+/area/awaymission/academy/headmaster)
+"KZ" = (
+/obj/structure/safe/floor,
+/obj/item/gun/magic/wand/fireball,
+/obj/item/mod/control/pre_equipped/enchanted,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
 "LH" = (
@@ -11853,7 +11849,7 @@ ah
 as
 ay
 aE
-aJ
+GS
 as
 ah
 ah
@@ -12242,7 +12238,7 @@ ai
 al
 as
 aB
-lk
+KZ
 lm
 as
 al

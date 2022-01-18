@@ -43,6 +43,16 @@
 	occupant_actions = list()
 	generate_actions()
 
+/obj/vehicle/Destroy(force)
+	QDEL_NULL(trailer)
+	inserted_key = null
+	return ..()
+
+/obj/vehicle/Exited(atom/movable/gone, direction)
+	if(gone == inserted_key)
+		inserted_key = null
+	return ..()
+
 /obj/vehicle/examine(mob/user)
 	. = ..()
 	if(resistance_flags & ON_FIRE)

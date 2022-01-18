@@ -240,7 +240,7 @@
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"
 	desc = "Overdesigned engineering gloves that have automated construction subrutines dialed in, allowing for faster construction while worn."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "clockwork_gauntlets"
 	inhand_icon_state = "clockwork_gauntlets"
 	siemens_coefficient = 0.8

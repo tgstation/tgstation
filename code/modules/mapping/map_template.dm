@@ -44,6 +44,7 @@
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/movable/movables = list()
+	var/list/obj/docking_port/stationary/ports = list()
 	var/list/area/areas = list()
 
 	var/list/turfs = block(
@@ -71,6 +72,8 @@
 				continue
 			if(istype(movable_in_turf, /obj/machinery/atmospherics))
 				atmos_machines += movable_in_turf
+			if(istype(movable_in_turf, /obj/docking_port/stationary))
+				ports += movable_in_turf
 
 	// Not sure if there is some importance here to make sure the area is in z
 	// first or not.  Its defined In Initialize yet its run first in templates
@@ -94,6 +97,7 @@
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
+	SSshuttle.setup_shuttles(ports)
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(
@@ -185,6 +189,24 @@
 		if(corner)
 			placement = corner
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
+
+/// Takes in a type path, locates an instance of that type in the cached map, and calculates its offset from the origin of the map, returns this offset in the form list(x, y).
+/datum/map_template/proc/discover_offset(obj/marker)
+	var/key
+	var/list/models = cached_map.grid_models
+	for(key in models)
+		if(findtext(models[key], "[marker]")) // Yay compile time checks
+			break // This works by assuming there will ever only be one mobile dock in a template at most
+
+	for(var/datum/grid_set/gset as anything in cached_map.gridSets)
+		var/ycrd = gset.ycrd
+		for(var/line in gset.gridLines)
+			var/xcrd = gset.xcrd
+			for(var/j in 1 to length(line) step cached_map.key_len)
+				if(key == copytext(line, j, j + cached_map.key_len))
+					return list(xcrd, ycrd)
+				++xcrd
+			--ycrd
 
 
 //for your ever biggening badminnery kevinz000

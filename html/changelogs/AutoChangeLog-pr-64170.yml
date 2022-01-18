@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixes the centcom commander outfit not having a modsuit counterpart"
