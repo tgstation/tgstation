@@ -290,11 +290,22 @@
 	obj_flags |= EMAGGED
 	INVOKE_ASYNC(src, .proc/open)
 
-/obj/machinery/door/firedoor/Bumped(atom/movable/AM)
+/obj/machinery/door/firedoor/Bumped(atom/movable/movable)
 	if(panel_open || operating)
 		return
 	if(!density)
 		return ..()
+	if(!isliving(movable))
+		return
+	var/mob/living/opener = movable
+	if(iscyborg(opener))
+		var/mob/living/silicon/robot/robot = opener
+		if(robot.module_active?.tool_behaviour == TOOL_CROWBAR)
+			attackby(robot.module_active, robot)
+		return
+	var/obj/item/held_item = opener.get_active_held_item()
+	if(held_item?.tool_behaviour == TOOL_CROWBAR)
+		attackby(held_item, opener)
 	return FALSE
 
 /obj/machinery/door/firedoor/bumpopen(mob/living/user)
