@@ -32,7 +32,7 @@
 /*
 	Overwriting of base procs
 */
-/datum/wound/blunt/wound_injury(datum/wound/old_wound = null)
+/datum/wound/blunt/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
 	RegisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), .proc/update_inefficiencies)
 
@@ -223,7 +223,7 @@
 		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
 	return ..()
 
-/datum/wound/blunt/moderate/wound_injury(datum/wound/old_wound)
+/datum/wound/blunt/moderate/wound_injury(datum/wound/old_wound, attack_direction = null)
 	. = ..()
 	RegisterSignal(victim, COMSIG_LIVING_DOORCRUSHED, .proc/door_crush)
 
@@ -361,7 +361,7 @@
 	regen_ticks_needed = 240 // ticks every 2 seconds, 480 seconds, so roughly 8 minutes default
 
 // doesn't make much sense for "a" bone to stick out of your head
-/datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)
+/datum/wound/blunt/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
 	if(L.body_zone == BODY_ZONE_HEAD)
 		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
 		examine_desc = "has an unsettling indent, with bits of skull poking out"

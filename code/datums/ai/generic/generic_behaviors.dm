@@ -79,20 +79,22 @@
 	pawn.activate_hand(pawn.get_active_hand())
 	finish_action(controller, TRUE)
 
-/// Use the currently held item, or unarmed, on an object in the world
+/// Use the currently held item, or unarmed, on a weakref to an object in the world
 /datum/ai_behavior/use_on_object
 	required_distance = 1
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 /datum/ai_behavior/use_on_object/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	controller.current_movement_target = target_ref?.resolve()
 
 /datum/ai_behavior/use_on_object/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
-	var/atom/target = controller.blackboard[BB_MONKEY_CURRENT_PRESS_TARGET]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	var/atom/target = target_ref?.resolve()
 
 	if(!target || !pawn.CanReach(target))
 		finish_action(controller, FALSE)
@@ -113,13 +115,15 @@
 
 /datum/ai_behavior/give/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	controller.current_movement_target = target_ref?.resolve()
 
 /datum/ai_behavior/give/perform(delta_time, datum/ai_controller/controller, target_key)
 	. = ..()
 	var/mob/living/pawn = controller.pawn
 	var/obj/item/held_item = pawn.get_item_by_slot(pawn.get_active_hand())
-	var/atom/target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	var/atom/target = target_ref?.resolve()
 
 	if(!target || !pawn.CanReach(target) || !isliving(target))
 		finish_action(controller, FALSE)
@@ -151,12 +155,14 @@
 
 /datum/ai_behavior/consume/setup(datum/ai_controller/controller, target_key)
 	. = ..()
-	controller.current_movement_target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	controller.current_movement_target = target_ref?.resolve()
 
 /datum/ai_behavior/consume/perform(delta_time, datum/ai_controller/controller, target_key, hunger_timer_key)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	var/obj/item/target = controller.blackboard[target_key]
+	var/datum/weakref/target_ref = controller.blackboard[target_key]
+	var/obj/item/target = target_ref.resolve()
 
 	if(!(target in living_pawn.held_items))
 		if(!living_pawn.put_in_hand_check(target))
@@ -187,7 +193,7 @@
 	. = ..()
 	var/find_this_thing = search_tactic(controller, locate_path, search_range)
 	if(find_this_thing)
-		controller.blackboard[set_key] = find_this_thing
+		controller.blackboard[set_key] = WEAKREF(find_this_thing)
 		finish_action(controller, TRUE)
 	else
 		finish_action(controller, FALSE)
@@ -341,7 +347,8 @@
 /datum/ai_behavior/setup_instrument/perform(delta_time, datum/ai_controller/controller, song_instrument_key, song_lines_key)
 	. = ..()
 
-	var/obj/item/instrument/song_instrument = controller.blackboard[song_instrument_key]
+	var/datum/weakref/instrument_ref = controller.blackboard[song_instrument_key]
+	var/obj/item/instrument/song_instrument = instrument_ref.resolve()
 	var/datum/song/song = song_instrument.song
 	var/song_lines = controller.blackboard[song_lines_key]
 
@@ -357,7 +364,8 @@
 /datum/ai_behavior/play_instrument/perform(delta_time, datum/ai_controller/controller, song_instrument_key)
 	. = ..()
 
-	var/obj/item/instrument/song_instrument = controller.blackboard[song_instrument_key]
+	var/datum/weakref/instrument_ref = controller.blackboard[song_instrument_key]
+	var/obj/item/instrument/song_instrument = instrument_ref.resolve()
 	var/datum/song/song = song_instrument.song
 
 	song.start_playing(controller.pawn)
@@ -377,5 +385,5 @@
 		possible_targets += thing
 	if(!possible_targets.len)
 		finish_action(controller, FALSE)
-	controller.blackboard[target_key] = pick(possible_targets)
+	controller.blackboard[target_key] = WEAKREF(pick(possible_targets))
 	finish_action(controller, TRUE)

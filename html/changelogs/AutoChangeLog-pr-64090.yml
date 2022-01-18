@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - expansion: "MODsuits now have a Glove Translator module for all the vocally impaired. Plasmamen can now _properly_ be mute hand-talkers."

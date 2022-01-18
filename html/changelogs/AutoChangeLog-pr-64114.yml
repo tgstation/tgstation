@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - server: "A couple mapping errors will now be more visible and actually logged in the mapping error log."

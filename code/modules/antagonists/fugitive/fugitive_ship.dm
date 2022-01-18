@@ -44,7 +44,7 @@
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "huntership_custom"
 	see_hidden = FALSE
-	jumpto_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1)
+	jump_to_ports = list("huntership_home" = 1, "whiteship_home" = 1, "syndicate_nw" = 1)
 	view_range = 4.5
 
 /obj/structure/closet/crate/eva

@@ -1,0 +1,4 @@
+author: "sasichkamega"
+delete-after: True
+changes: 
+  - rscadd: "patch icon choosing in the chem dispenser and chem press"
