@@ -12,7 +12,7 @@ This root object handled picking and loading in map modules. It has two variable
 
 * `var/config_file` - A string, points to a TOML configuration file, which is used to hold the information necessary to pull the correct map files and place them on the correct roots. This will be the same for all roots on a map.
 * `var/key` - A string, used to pull a list of `.dmm` files from the configuration file.
-* `load_map()` - Called asynchronously in the root's `Initialize()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over.
+* `load_map()` - Called asynchronously in the root's `New()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over. This proc is called on `New()` and not `Initialize()` for reasons due to the init order to prevent runtime errors.
 
 ### /datum/map_template/map_module
 
