@@ -318,7 +318,7 @@
 /datum/ai_laws/proc/add_inherent_law(law)
 	if (!(law in inherent))
 		inherent += law
-		owner.lawcheck += law
+		owner?.lawcheck += law
 
 /datum/ai_laws/proc/add_ion_law(law)
 	ion += law
