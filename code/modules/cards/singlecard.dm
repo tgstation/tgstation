@@ -24,13 +24,6 @@
 			. += span_warning("You need to have the card in your hand to check it!")
 		. += span_notice("Right-click to flip it.")
 
-/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	Flip()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /**
  * ## Flip
  *
@@ -123,6 +116,13 @@
 		update_appearance()
 	else
 		return ..()
+
+/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	Flip()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
