@@ -1252,15 +1252,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A stingy drink."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-<<<<<<< HEAD
-/datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(drinker.mind) //Changeling Sting assists in the recharging of changeling chemicals.
-		var/datum/antagonist/changeling/changeling = drinker.mind.has_antag_datum(/datum/antagonist/changeling)
-=======
 /datum/reagent/consumable/ethanol/changelingsting/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
 	if(target.mind) //Changeling Sting assists in the recharging of changeling chemicals.
 		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
->>>>>>> master
 		if(changeling)
 			changeling.adjust_chemicals(metabolization_rate * REM * delta_time)
 	return ..()
