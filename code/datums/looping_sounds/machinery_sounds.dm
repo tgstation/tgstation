@@ -114,7 +114,7 @@
 	falloff_distance = 1
 	falloff_exponent = 5
 	volume = 50
-	player_sensitive = TRUE
+	loud_machine = TRUE
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
@@ -141,4 +141,4 @@
 	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20
-	player_sensitive = TRUE
+	loud_machine = TRUE

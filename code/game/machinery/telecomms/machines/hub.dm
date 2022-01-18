@@ -20,6 +20,27 @@
 	netspeed = 40
 	circuit = /obj/item/circuitboard/machine/telecomms/hub
 
+	///The looping telecomms sound
+	var/datum/looping_sound/server/soundloop
+
+/obj/machinery/telecomms/hub/Initialize(mapload)
+	. = ..()
+	soundloop = new(src, on)
+
+/obj/machinery/telecomms/hub/Destroy()
+	QDEL_NULL(soundloop)
+	return ..()
+
+/obj/machinery/telecomms/hub/update_power()
+	. = ..()
+	if(!toggled)
+		soundloop.stop()
+		return
+	if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+		soundloop.stop()
+	else
+		soundloop.start()
+
 /obj/machinery/telecomms/hub/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)
 	if(!is_freq_listening(signal))
 		return
@@ -34,11 +55,12 @@
 		relay_information(signal, /obj/machinery/telecomms/broadcaster)
 
 //Preset HUB
-
 /obj/machinery/telecomms/hub/preset
 	id = "Hub"
 	network = "tcommsat"
-	autolinkers = list("hub", "relay", "s_relay", "m_relay", "r_relay", "h_relay", "science", "medical",
-	"supply", "service", "common", "command", "engineering", "security",
-	"receiverA", "receiverB", "broadcasterA", "broadcasterB", "autorelay", "messaging")
+	autolinkers = list(
+		"hub", "relay", "s_relay", "m_relay", "r_relay", "h_relay", "science", "medical",
+		"supply", "service", "common", "command", "engineering", "security",
+		"receiverA", "receiverB", "broadcasterA", "broadcasterB", "autorelay", "messaging",
+	)
 

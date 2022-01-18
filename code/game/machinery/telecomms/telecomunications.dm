@@ -48,9 +48,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	/// Is it a hidden machine?
 	var/hide = FALSE
 
-	///Looping sounds for any servers
-	var/datum/looping_sound/server/soundloop
-
 /// relay signal to all linked machinery that are of type [filter]. If signal has been sent [amount] times, stop sending
 /obj/machinery/telecomms/proc/relay_information(datum/signal/subspace/signal, filter, copysig, amount = 20)
 	if(!on)
@@ -104,7 +101,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
-	soundloop = new(src, on)
 	GLOB.telecomms_list += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
@@ -116,7 +112,6 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src
-	QDEL_NULL(soundloop)
 	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		remove_link(comm)
 	links = list()
@@ -144,13 +139,10 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	if(toggled)
 		if(machine_stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
 			on = FALSE
-			soundloop.stop()
 		else
 			on = TRUE
-			soundloop.start()
 	else
 		on = FALSE
-		soundloop.stop()
 
 /obj/machinery/telecomms/process(delta_time)
 	update_power()

@@ -1,12 +1,12 @@
 import { multiline } from "common/string";
-import { CheckboxInput, FeatureToggle } from "../base";
+import { Feature, FeatureNumberInput } from "../base";
 
-export const loud_sound: FeatureToggle = {
-  name: "Disable Loud Sounds",
+export const loud_sound: Feature<number> = {
+  name: "Loud sound volume limit",
   category: "ACCESSIBILITY",
   description: multiline`
-    When toggled, loud sounds (like the Gravity Generator and Telecomms)
-    will be muted. Good if you have problems with looping loud sounds.
+    The max volume that can be made from loud machines, like the grav gen.
+    Good if you have problems with looping loud sounds.
   `,
-  component: CheckboxInput,
+  component: FeatureNumberInput,
 };
