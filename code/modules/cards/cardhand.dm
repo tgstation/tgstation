@@ -54,8 +54,6 @@
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/card, mob/living/user, params)
 	if(istype(card))
-		if (!card.flipped)
-			card.Flip() // flip so that the card appears properly in the hand
 		add_card(user, cards, card)
 	else
 		return ..()
