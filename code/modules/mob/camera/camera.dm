@@ -4,6 +4,7 @@
 	density = FALSE
 	move_force = INFINITY
 	move_resist = INFINITY
+	pressure_resistance = INFINITY
 	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	see_in_dark = 7
@@ -14,9 +15,6 @@
 /mob/camera/Initialize(mapload)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
-
-/mob/camera/experience_pressure_difference()
-	return
 
 /mob/camera/canUseStorage()
 	return FALSE

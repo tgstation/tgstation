@@ -3,6 +3,13 @@
 ///(V) is if the share is vertical or not. True or False
 #define CANATMOSPASS(A, O, V) ( A.can_atmos_pass == ATMOS_PASS_PROC ? A.can_atmos_pass(O, V) : ( A.can_atmos_pass == ATMOS_PASS_DENSITY ? !A.density : A.can_atmos_pass ) )
 
+/// Get the amount of force this atom (A) can resist from turf (T)
+/// Allows for proc overrides if the atom does something unique
+#define GETPRESSURERESIST(A, T) ( A.complex_pressure ? A.get_pressure_resistance(T) : A.pressure_resistance )
+
+/// Get the ratio between the turf (T)'s pressure, and atom (A)'s pressure resistance
+#define GET_PRESSURE_RATIO(A, T) ( GETPRESSURERESIST(A, T) / ( T.archived_pressure_difference || INFINITY ) )
+
 //Helpers
 ///Moves the icon of the device based on the piping layer and on the direction
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \

@@ -311,7 +311,6 @@ SUBSYSTEM_DEF(air)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
 		high_pressure_delta.len--
 		T.high_pressure_movements()
-		T.pressure_difference = 0
 		if(MC_TICK_CHECK)
 			return
 
@@ -423,6 +422,8 @@ SUBSYSTEM_DEF(air)
 	#endif
 	if(istype(T))
 		T.excited = FALSE
+		T.pressure_difference = 0
+		T.archived_pressure_difference = 0
 		if(T.excited_group)
 			//If this fires during active turfs it'll cause a slight removal of active turfs, as they breakdown if they have no excited group
 			//The group also expands by a tile per rebuild on each edge, suffering
@@ -438,6 +439,8 @@ SUBSYSTEM_DEF(air)
 	#endif
 	if(istype(T))
 		T.excited = FALSE
+		T.pressure_difference = 0
+		T.archived_pressure_difference = 0
 
 ///Adds a turf to active processing, handles duplicates. Call this with blockchanges == TRUE if you want to nuke the assoc excited group
 /datum/controller/subsystem/air/proc/add_to_active(turf/open/T, blockchanges = FALSE)

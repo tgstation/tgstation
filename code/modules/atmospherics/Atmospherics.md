@@ -59,7 +59,6 @@ Now then, into the breach.
 6. High pressure deltas
     - Takes the gas movement from Active Turfs and uses it to move objects on said turfs
     - Calls `high_pressure_movements()` on each `/turf/open` in the `high_pressure_delta` list.
-    - Sets each turf's `pressure_difference` to 0
 7. Hotspots
     - These are what you might know as fire, at least the effect of it.
     - They deal with burning things, and color calculations, lots of color calculations

@@ -5,6 +5,7 @@
 	icon = 'icons/effects/effects.dmi'
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
+	pressure_resistance = INFINITY
 	obj_flags = NONE
 	vis_flags = VIS_INHERIT_PLANE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
@@ -33,9 +34,6 @@
 
 /obj/effect/attack_hulk(mob/living/carbon/human/user)
 	return FALSE
-
-/obj/effect/experience_pressure_difference()
-	return
 
 /obj/effect/ex_act(severity, target)
 	return FALSE

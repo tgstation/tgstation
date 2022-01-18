@@ -15,6 +15,17 @@
 	var/archived_cycle = 0
 	var/current_cycle = 0
 
+	//used for pressure movement
+	///Pressure difference between two turfs
+	var/pressure_difference = 0
+	///Where the difference come from (from higher pressure to lower pressure)
+	var/pressure_direction = 0
+	///Canon pressure difference, used to make movement smoother
+	var/archived_pressure_difference = 0
+	///Similar to archived_pressure_difference, but for direction
+	var/archived_pressure_direction = 0
+
+
 	/**
 	 * used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	 * string parsed by /datum/gas/proc/copy_from_turf
@@ -24,12 +35,6 @@
 	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open
-	//used for spacewind
-	///Pressure difference between two turfs
-	var/pressure_difference = 0
-	///Where the difference come from (from higher pressure to lower pressure)
-	var/pressure_direction = 0
-
 	///Excited group we are part of
 	var/datum/excited_group/excited_group
 	///Are we active?
@@ -341,7 +346,7 @@
 		if(difference > 0)
 			consider_pressure_difference(enemy_tile, difference)
 		else
-			enemy_tile.consider_pressure_difference(src, difference)
+			enemy_tile.consider_pressure_difference(src, -difference)
 
 	our_air.react(src)
 
@@ -359,36 +364,111 @@
 
 /turf/open/proc/consider_pressure_difference(turf/target_turf, difference)
 	SSair.high_pressure_delta |= src
-	if(difference > pressure_difference)
+	if(abs(difference) > pressure_difference)
 		pressure_direction = get_dir(src, target_turf)
 		pressure_difference = difference
 
+// We max at one tile every ___ second
+#define PRESSURE_DELAY_MAX 0.8 SECONDS
+#define PRESSURE_DELAY_MIN 0.2 SECONDS
+
 /turf/open/proc/high_pressure_movements()
-	var/atom/movable/moving_atom
-	for(var/thing in src)
-		moving_atom = thing
-		if (!moving_atom.anchored && !moving_atom.pulledby && moving_atom.last_high_pressure_movement_air_cycle < SSair.times_fired)
-			moving_atom.experience_pressure_difference(pressure_difference, pressure_direction)
+	if(pressure_difference < 0) //Negative pressure is possible, better to handle here rather then in consider_pressure_difference
+		pressure_difference *= -1 // We want this positive
+		pressure_direction = turn(pressure_direction, 180) // Flip er around
+
+	archived_pressure_difference = pressure_difference
+	archived_pressure_direction = pressure_direction
+	pressure_difference = 0
+
+	var/force = sqrt(archived_pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
+	for(var/atom/movable/moving_atom as anything in src)
+		if(moving_atom.pressure_moving || moving_atom.anchored)
+			continue
+		var/pressure_ratio = GET_PRESSURE_RATIO(moving_atom, src)
+		// Need at least enough pressure to move us
+		if(pressure_ratio > 1)
+			continue
+
+		if(force <= (moving_atom.move_resist * MOVE_FORCE_PUSH_RATIO * 0.5))
+			continue
+		moving_atom.start_pressure_move(pressure_ratio, archived_pressure_direction)
 
 /atom/movable
-	///How much delta pressure is needed for us to move
+	/// How much pressure is needed for us to move. Also effects rate of movement.
 	var/pressure_resistance = 10
-	var/last_high_pressure_movement_air_cycle = 0
+	/// Is this atom currently being moved by pressure?
+	var/pressure_moving = FALSE // Yes we could use a proc call for this, but it's hot, so we're using a var
+	/// Does this atom want to be asked in get_pressure_from about the amount of force acting on it?
+	/// Or does it just use pressure_resistance
+	var/complex_pressure = FALSE
 
-/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
-	set waitfor = FALSE
-	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_PRESSURE_PUSH) & COMSIG_ATOM_BLOCKS_PRESSURE)
+/atom/movable/proc/start_pressure_move(pressure_ratio, direction, added_flags = MOVEMENT_LOOP_START_FAST)
+	pressure_moving = TRUE
+	var/rate = max(pressure_ratio * PRESSURE_DELAY_MAX, PRESSURE_DELAY_MIN)
+	var/datum/move_loop/loop = SSmove_manager.move(src, direction = direction, delay = rate, subsystem = SSpressure_movement, flags = MOVEMENT_LOOP_IGNORE_PRIORITY|added_flags)
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, /atom/movable/proc/pre_pressure_move)
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, /atom/movable/proc/release_pressure)
+
+/atom/movable/proc/pre_pressure_move(datum/move_loop/move/source)
+	SIGNAL_HANDLER
+	if(anchored || !istype(loc, /turf/open))
+		qdel(source)
+		return MOVELOOP_SKIP_STEP
+
+	var/turf/open/our_turf = loc
+
+	// Need at least enough pressure to move us. We also make the assumption that pressure resist won't change
+	if(GET_PRESSURE_RATIO(src, our_turf) > 1)
+		qdel(source)
+		return MOVELOOP_SKIP_STEP
+
+	var/force = sqrt(our_turf.archived_pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
+	if(force <= (move_resist * MOVE_FORCE_PUSH_RATIO * 0.5))
+		qdel(source)
+		return MOVELOOP_SKIP_STEP
+
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_PRESSURE_PUSH) & COMSIG_ATOM_BLOCKS_PRESSURE || pulledby)
+		return MOVELOOP_SKIP_STEP
+
+	source.direction = our_turf.archived_pressure_direction
+
+/atom/movable/proc/release_pressure(datum/move_loop/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	pressure_moving = FALSE
+
+/atom/movable/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(!isturf(loc))
+		if(pressure_moving)
+			SSmove_manager.stop_looping(src, SSpressure_movement)
 		return
-	var/const/PROBABILITY_OFFSET = 25
-	var/const/PROBABILITY_BASE_PRECENT = 75
-	var/max_force = sqrt(pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
-	var/move_prob = 100
-	if (pressure_resistance > 0)
-		move_prob = (pressure_difference / pressure_resistance * PROBABILITY_BASE_PRECENT) - PROBABILITY_OFFSET
-	move_prob += pressure_resistance_prob_delta
-	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
-		step(src, direction)
-		last_high_pressure_movement_air_cycle = SSair.times_fired
+	var/turf/our_turf = loc
+	var/pressure_ratio = GET_PRESSURE_RATIO(src, our_turf)
+
+	// Need at least enough pressure to move us. We also make the assumption that pressure resist won't change
+	if(pressure_ratio > 1)
+		if(pressure_moving)
+			SSmove_manager.stop_looping(src, SSpressure_movement)
+		return
+	var/force = sqrt(our_turf.archived_pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
+	if(force <= (move_resist * MOVE_FORCE_PUSH_RATIO * 0.5))
+		if(pressure_moving)
+			SSmove_manager.stop_looping(src, SSpressure_movement)
+		return
+	if(!pressure_moving)
+		start_pressure_move(pressure_ratio, our_turf.archived_pressure_direction, added_flags = NONE)
+		return
+
+	var/datum/move_loop/move/our_loop = SSmove_manager.processing_on(src, SSpressure_movement)
+	our_loop.delay = max(pressure_ratio * PRESSURE_DELAY_MAX, PRESSURE_DELAY_MIN)
+	our_loop.direction = our_turf.archived_pressure_direction
+
+/// Returns the amount of pressure this atom will resist from the turf source.
+/// Only called if complex_pressure is set to TRUE
+/atom/movable/proc/get_pressure_resistance(turf/source)
+	return 0 // You need to override this
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
@@ -496,6 +576,8 @@
 /datum/excited_group/proc/dismantle()
 	for(var/turf/open/current_turf as anything in turf_list)
 		current_turf.excited = FALSE
+		current_turf.pressure_difference = 0
+		current_turf.archived_pressure_difference = 0
 		current_turf.significant_share_ticker = 0
 		SSair.active_turfs -= current_turf
 		#ifdef VISUALIZE_ACTIVE_TURFS //Use this when you want details about how the turfs are moving, display_all_groups should work for normal operation

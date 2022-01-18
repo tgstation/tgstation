@@ -36,7 +36,7 @@
 #define COMSIG_ATOM_SINGULARITY_TRY_MOVE "atom_singularity_try_move"
 	/// When returned from `COMSIG_ATOM_SINGULARITY_TRY_MOVE`, the singularity will move to that turf
 	#define SINGULARITY_TRY_MOVE_BLOCK (1 << 0)
-///from base of atom/experience_pressure_difference(): (pressure_difference, direction, pressure_resistance_prob_delta)
+///from base of atom/pre_pressure_move(): ()
 #define COMSIG_ATOM_PRE_PRESSURE_PUSH "atom_pre_pressure_push"
 	///prevents pressure movement
 	#define COMSIG_ATOM_BLOCKS_PRESSURE (1<<0)

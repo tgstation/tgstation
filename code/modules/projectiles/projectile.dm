@@ -14,6 +14,7 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	plane = GAME_PLANE_FOV_HIDDEN
+	pressure_resistance = INFINITY // Don't get moved by pressure
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -1011,9 +1012,6 @@
 		QDEL_IN(thing, duration)
 	if(cleanup)
 		cleanup_beam_segments()
-
-/obj/projectile/experience_pressure_difference()
-	return
 
 ///Like [/obj/item/proc/updateEmbedding] but for projectiles instead, call this when you want to add embedding or update the stats on the embedding element
 /obj/projectile/proc/updateEmbedding()

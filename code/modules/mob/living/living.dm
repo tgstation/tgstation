@@ -884,35 +884,32 @@
 	else
 		return pick("trails_1", "trails_2")
 
-/mob/living/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+/mob/living/pre_pressure_move/(datum/move_loop/move/source)
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
-		return
+		return MOVELOOP_SKIP_STEP
+	return ..()
 
-	if(client && client.move_delay >= world.time + world.tick_lag*2)
-		pressure_resistance_prob_delta -= 30
+/mob/living/get_pressure_resistance(turf/source)
+	if(!has_limbs)
+		return ..()
+
+	var/pressure_direction = source.archived_pressure_direction
 
 	var/list/turfs_to_check = list()
+	turfs_to_check += get_step(source, turn(pressure_direction, 90))
+	turfs_to_check += get_step(source, turn(pressure_direction, -90))
 
-	if(!has_limbs)
-		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
-		if (T)
-			turfs_to_check += T
-
-		T = get_step(src, angle2dir(dir2angle(direction)-90))
-		if(T)
-			turfs_to_check += T
-
-		for(var/t in turfs_to_check)
-			T = t
-			if(T.density)
-				pressure_resistance_prob_delta -= 20
-				continue
-			for (var/atom/movable/AM in T)
-				if (AM.density && AM.anchored)
-					pressure_resistance_prob_delta -= 20
-					break
-	..(pressure_difference, direction, pressure_resistance_prob_delta)
+	var/functional_resistance = pressure_resistance
+	for(var/turf/to_check in turfs_to_check)
+		if(to_check.density)
+			functional_resistance += 20 //If you have hands, a wall is worth 20 kpa of pressure resist
+			continue
+		for (var/atom/movable/AM in to_check)
+			if (AM.density && AM.anchored)
+				functional_resistance += 20
+				break
+	return functional_resistance
 
 /mob/living/can_resist()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
