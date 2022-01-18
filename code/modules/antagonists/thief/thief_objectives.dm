@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	var/stolen_amount = 0
 	if(!hoarder_turf)
 		return FALSE //they never set up their hoard spot, so they couldn't have done their objective
-	for(var/atom/movable/in_target_turf in hoarder_turf)
+	for(var/atom/movable/in_target_turf in hoarder_turf.get_all_contents())
 		if(istype(in_target_turf, target_type))
 			if(!valid_target(in_target_turf))
 				continue
