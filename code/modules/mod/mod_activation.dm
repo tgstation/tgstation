@@ -37,6 +37,28 @@
 			choose_deploy(user)
 			break
 
+/// Quickly deploys all parts (or retracts if all are on the wearer)
+/obj/item/mod/control/proc/quick_deploy(mob/user)
+	if(active || activating)
+		balloon_alert(user, "deactivate the suit first!")
+		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
+		return FALSE
+	var/deploy = FALSE
+	for(var/obj/item/part as anything in mod_parts)
+		if(part.loc != src)
+			continue
+		deploy = TRUE
+	for(var/obj/item/part as anything in mod_parts)
+		if(deploy && part.loc == src)
+			deploy(null, part)
+		else if(!deploy && part.loc != src)
+			conceal(null, part)
+	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its' pieces with a mechanical hiss."),
+		span_notice("[src] [deploy ? "deploys" : "retracts"] its' pieces with a mechanical hiss."),
+		span_hear("You hear a mechanical hiss."))
+	playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
+
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, part)
 	var/obj/item/piece = part
@@ -102,7 +124,7 @@
 		balloon_alert(user, "access insufficient!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	if(!cell?.charge && !force_deactivate)
+	if(!get_charge() && !force_deactivate)
 		balloon_alert(user, "suit not powered!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE

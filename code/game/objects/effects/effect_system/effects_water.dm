@@ -25,6 +25,17 @@
 		A.reagents.expose_temperature(-25)
 	return ..()
 
+///Extinguisher snowflake
+/obj/effect/particle_effect/water/extinguisher
+
+/obj/effect/particle_effect/water/extinguisher/Move()
+	. = ..()
+	if(!reagents)
+		return
+	reagents.expose(get_turf(src))
+	for(var/atom/thing as anything in get_turf(src))
+		reagents.expose(thing)
+
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM
