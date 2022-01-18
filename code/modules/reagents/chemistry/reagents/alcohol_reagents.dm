@@ -167,7 +167,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.adjust_drowsyness(-3 * REM * delta_time)
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.Jitter(5)
+		drinker.Jitter(0.5 SECONDS)
 	..()
 	. = TRUE
 
@@ -229,14 +229,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	drinker.AdjustSleeping(-40 * REM * delta_time)
 	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.Jitter(5)
+		drinker.Jitter(0.5 SECONDS)
 	..()
 	return TRUE
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker)
 	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
-	drinker.Jitter(20)
-	drinker.Stun(15)
+	drinker.Jitter(2 SECONDS)
+	drinker.Stun(1.5 SECONDS)
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/drinker, delta_time, times_fired)
 	if(DT_PROB(3.5, delta_time) && iscarbon(drinker))
@@ -244,7 +244,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(held_item)
 			drinker.dropItemToGround(held_item)
 			to_chat(drinker, span_notice("Your hands jitter and you drop what you were holding!"))
-			drinker.Jitter(10)
+			drinker.Jitter(1 SECONDS)
 
 	if(DT_PROB(3.5, delta_time))
 		to_chat(drinker, span_notice("[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
@@ -265,8 +265,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	if(DT_PROB(1.5, delta_time) && iscarbon(drinker))
 		drinker.visible_message(span_danger("[drinker] starts having a seizure!"), span_userdanger("You have a seizure!"))
-		drinker.Unconscious(100)
-		drinker.Jitter(350)
+		drinker.Unconscious(10 SECONDS)
+		drinker.Jitter(35 SECONDS)
 
 	if(DT_PROB(0.5, delta_time) && iscarbon(drinker))
 		var/datum/disease/heart_attack = new /datum/disease/heart_failure
