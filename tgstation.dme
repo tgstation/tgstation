@@ -2286,6 +2286,7 @@
 #include "code\modules\client\preferences\ambient_occlusion.dm"
 #include "code\modules\client\preferences\assets.dm"
 #include "code\modules\client\preferences\auto_fit_viewport.dm"
+#include "code\modules\client\preferences\block_loud_sound.dm"
 #include "code\modules\client\preferences\body_type.dm"
 #include "code\modules\client\preferences\broadcast_login_logout.dm"
 #include "code\modules\client\preferences\buttons_locked.dm"

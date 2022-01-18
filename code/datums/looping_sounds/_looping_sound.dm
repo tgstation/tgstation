@@ -36,6 +36,8 @@
 	var/falloff_distance
 	var/skip_starting_sounds = FALSE
 	var/loop_started = FALSE
+	///Whether this looping sound takes character's sound accessibility preferences into account
+	var/player_sensitive = FALSE
 
 /datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
@@ -83,13 +85,21 @@
 		play(get_sound(starttime))
 
 /datum/looping_sound/proc/play(soundfile, volume_override)
-	var/sound/S = sound(soundfile)
-	if(direct)
-		S.channel = SSsounds.random_available_channel()
-		S.volume = volume_override || volume //Use volume as fallback if theres no override
-		SEND_SOUND(parent, S)
+	if(player_sensitive)
+		for(var/mob/nearby_player in view(SOUND_RANGE + extra_range, parent))
+			if(nearby_player?.client?.prefs?.read_preference(/datum/preference/toggle/block_loud_sound))
+				continue
+			var/sound/S = sound(soundfile)
+			nearby_player.playsound_local(parent, S, volume, vary, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
+			return
 	else
-		playsound(parent, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
+		var/sound/S = sound(soundfile)
+		if(direct)
+			S.channel = SSsounds.random_available_channel()
+			S.volume = volume_override || volume //Use volume as fallback if theres no override
+			SEND_SOUND(parent, S)
+		else
+			playsound(parent, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds

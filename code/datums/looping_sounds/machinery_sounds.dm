@@ -100,13 +100,21 @@
 
 
 /datum/looping_sound/server
-	mid_sounds = list('sound/machines/tcomms/tcomms_mid1.ogg'=1,'sound/machines/tcomms/tcomms_mid2.ogg'=1,'sound/machines/tcomms/tcomms_mid3.ogg'=1,'sound/machines/tcomms/tcomms_mid4.ogg'=1,\
-										'sound/machines/tcomms/tcomms_mid5.ogg'=1,'sound/machines/tcomms/tcomms_mid6.ogg'=1,'sound/machines/tcomms/tcomms_mid7.ogg'=1)
+	mid_sounds = list(
+		'sound/machines/tcomms/tcomms_mid1.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid2.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid3.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid4.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid5.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid6.ogg' = 1,
+		'sound/machines/tcomms/tcomms_mid7.ogg' = 1,
+	)
 	mid_length = 1.8 SECONDS
 	extra_range = -11
 	falloff_distance = 1
 	falloff_exponent = 5
 	volume = 50
+	player_sensitive = TRUE
 
 /datum/looping_sound/computer
 	start_sound = 'sound/machines/computer/computer_start.ogg'
@@ -122,9 +130,15 @@
 	falloff_distance = 1 //Instant falloff after initial tile
 
 /datum/looping_sound/gravgen
-	mid_sounds = list('sound/machines/gravgen/gravgen_mid1.ogg'=1,'sound/machines/gravgen/gravgen_mid2.ogg'=1,'sound/machines/gravgen/gravgen_mid3.ogg'=1,'sound/machines/gravgen/gravgen_mid4.ogg'=1,)
+	mid_sounds = list(
+		'sound/machines/gravgen/gravgen_mid1.ogg' = 1,
+		'sound/machines/gravgen/gravgen_mid2.ogg' = 1,
+		'sound/machines/gravgen/gravgen_mid3.ogg' = 1,
+		'sound/machines/gravgen/gravgen_mid4.ogg' = 1,
+	)
 	mid_length = 1.8 SECONDS
 	extra_range = 10
 	volume = 40
 	falloff_distance = 5
 	falloff_exponent = 20
+	player_sensitive = TRUE
