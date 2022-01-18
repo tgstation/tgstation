@@ -56,11 +56,12 @@
 
 	var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
 	patch_styles = list()
-	for (var/patch_style in PATCH_STYLE_LIST)
-		var/list/SL = list()
-		SL["style"] = patch_style
-		SL["class_name"] = patches_assets.icon_class_name(patch_style)
-		patch_styles += list(SL)
+	for (var/raw_patch_style in PATCH_STYLE_LIST)
+		//adding class_name for use in UI
+		var/list/patch_style = list()
+		patch_style["style"] = raw_patch_style
+		patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
+		patch_styles += list(patch_style)
 
 	condi_styles = strip_condi_styles_to_icons(get_condi_styles())
 
