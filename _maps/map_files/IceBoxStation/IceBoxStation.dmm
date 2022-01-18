@@ -14823,7 +14823,6 @@
 "ecB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -25431,9 +25430,6 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -33695,9 +33691,6 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -37640,7 +37633,6 @@
 "pIw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/machinery/door/firedoor/border_only,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -42220,12 +42212,6 @@
 	},
 /area/hallway/secondary/service)
 "scZ" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -42239,6 +42225,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/railing{
 	dir = 8
 	},
 /turf/open/floor/iron,

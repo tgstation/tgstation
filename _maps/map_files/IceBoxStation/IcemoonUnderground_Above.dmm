@@ -10434,14 +10434,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
-"Il" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/explored)
 "In" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -12475,11 +12467,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"Pb" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/explored)
 "Pc" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -14956,14 +14943,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
-"WL" = (
-/obj/structure/lattice,
-/obj/structure/lattice/catwalk,
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/explored)
 "WM" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -32280,7 +32259,7 @@ ak
 ak
 zd
 Rj
-Il
+qs
 Rj
 Rj
 Rj
@@ -36905,7 +36884,7 @@ Rj
 mO
 zd
 zd
-Pb
+zd
 qs
 Rj
 mO
@@ -37929,10 +37908,10 @@ wS
 wS
 wS
 mO
-WL
+qs
 Rj
 zd
-Pb
+zd
 zd
 qs
 Rj
