@@ -36,10 +36,7 @@
  *
  * flips the card over
  */
-/obj/item/toy/cards/singlecard/verb/Flip()
-	set name = "Flip Card"
-	set category = "Object"
-	set src in range(1)
+/obj/item/toy/cards/singlecard/proc/Flip()
 	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
 		return
 	flipped = !flipped
