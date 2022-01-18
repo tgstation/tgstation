@@ -93,6 +93,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	gloves = /obj/item/clothing/gloves/color/latex
 	back = /obj/item/storage/backpack/duffelbag/syndie
+	mask = /obj/item/clothing/mask/balaclava
 
 /datum/outfit/thief/post_equip(mob/living/carbon/human/thief, visualsOnly=FALSE)
 	// This outfit is used by the assets SS, which is ran before the atoms SS

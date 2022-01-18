@@ -44,8 +44,9 @@ export const AntagInfoThief = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section textAlign="center" textColor="red" fontSize="20px">
-              Remember: You cannot kill to achieve your objectives.
+            <Section textAlign="center" textColor="red" fontSize="19px">
+              Remember: You don&apos;t have a license to freely kill like
+              other antagonists.
             </Section>
           </Stack.Item>
         </Stack>
