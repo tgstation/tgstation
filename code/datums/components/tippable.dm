@@ -116,6 +116,8 @@
 		CRASH("Tippable component: do_tip() called with QDELETED tipped_mob!")
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
+	if (!isnull(tipped_mob.client))
+		log_attack("[tipper] ([tipper.key]) has tipped over [tipped_mob] ([tipped_mob.key])!")
 	tipped_mob.visible_message(
 		span_warning("[tipper] tips over [tipped_mob]."),
 		span_userdanger("You are tipped over by [tipper]!"),
