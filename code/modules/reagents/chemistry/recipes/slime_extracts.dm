@@ -157,7 +157,9 @@
 	..()
 
 /datum/chemical_reaction/slime/slimebork/proc/getbork()
-	return get_random_food()
+	var/obj/item/food/fuud = get_random_food()
+	fuud.food_flags |= FOOD_SILVER_SPAWNED
+	return fuud
 
 /datum/chemical_reaction/slime/slimebork/drinks
 	required_reagents = list(/datum/reagent/water = 1)
