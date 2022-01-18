@@ -20,7 +20,7 @@ map boxstation
 endmap
 
 map metastation
-	minplayers 25
+	#minplayers 25
 	#voteweight 0.5
 	votable
 endmap
@@ -30,12 +30,12 @@ map pubbystation
 endmap
 
 map deltastation
-	minplayers 50
+	#minplayers 50
 	votable
 endmap
 
 map donutstation
-	minplayers 50
+	#minplayers 50
 	votable
 endmap
 
