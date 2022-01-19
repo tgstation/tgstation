@@ -207,7 +207,8 @@
 	if(istype(I, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = I 
 		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table=TRUE)
-		src.attackby(card, user, params)
+		if(card) 
+			src.attackby(card, user, params)
 		return
 
 	if(istype(I, /obj/item/riding_offhand))
