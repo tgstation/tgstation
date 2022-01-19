@@ -566,14 +566,9 @@
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
-<<<<<<< Updated upstream
-	active = !active
-	playsound(src, "sparks", 75, TRUE, -1)
-	update_appearance()
-=======
 	set_active(!active)
 	playsound(src, "sparks", 75, TRUE, -1)
->>>>>>> Stashed changes
+
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
