@@ -173,7 +173,11 @@
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
+	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
+		mounting of more jets and a red paint applied on it."
 	icon_state = "jetpack_advanced"
+	overlay_state_inactive = "module_jetpackadv"
+	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
