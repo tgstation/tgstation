@@ -328,8 +328,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cornchips/MakeLeaveTrash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/cornchips/blue
 	name = "coolest ranch boritos corn chips"
