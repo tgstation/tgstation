@@ -81,7 +81,7 @@
 			msg += event.description
 	else
 		msg += "<span class='nicegreen'>I don't have much of a reaction to anything right now.<span>\n"
-	to_chat(user || parent, msg)
+	to_chat(user, msg)
 
 ///Called after moodevent/s have been added/removed.
 /datum/component/mood/proc/update_mood()
@@ -307,6 +307,8 @@
 	QDEL_NULL(screen_obj_sanity)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
+	if(user != parent)
+		return
 	print_mood(user)
 
 /datum/component/mood/proc/HandleNutrition()
