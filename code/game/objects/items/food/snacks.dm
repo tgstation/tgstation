@@ -312,3 +312,31 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
+
+/obj/item/food/pistachios
+	name = "\improper Gallery's peanuts"
+	desc = "A favourite amongst the terminally angry."
+	icon_state = "peanuts"
+	trash_type = /obj/item/trash/peanuts
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("peanuts" = 4, "anger" = 1)
+	foodtypes = JUNKFOOD | NUTS
+	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
+	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
+	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+	var/safe_for_consumption = TRUE
+
+/obj/item/food/semki
+	name = "\improper Semki Sunflower Seeds"
+	desc = "A favourite amongst the terminally angry."
+	icon_state = "peanuts"
+	trash_type = /obj/item/trash/peanuts
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("sunflowers" = 2, "salt" = 2, "oil" = 1)
+	foodtypes = JUNKFOOD | NUTS
+	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
+	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
+	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cornoil  = 2, /datum/reagent/consumable/salt = 4)
+	var/safe_for_consumption = TRUE
