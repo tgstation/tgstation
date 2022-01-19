@@ -3298,6 +3298,8 @@
 #include "code\modules\mod\mod_types.dm"
 #include "code\modules\mod\mod_ui.dm"
 #include "code\modules\mod\modules\_module.dm"
+#include "code\modules\mod\modules\module_kinesis.dm"
+#include "code\modules\mod\modules\module_pathfinder.dm"
 #include "code\modules\mod\modules\modules_antag.dm"
 #include "code\modules\mod\modules\modules_engineering.dm"
 #include "code\modules\mod\modules\modules_general.dm"

@@ -142,3 +142,8 @@
 	falloff_distance = 5
 	falloff_exponent = 20
 	loud_machine = TRUE
+
+/datum/looping_sound/gravgen/kinesis
+	volume = 20
+	falloff_distance = 2
+	falloff_exponent = 5
