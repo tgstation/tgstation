@@ -91,6 +91,8 @@
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+		if(mod.wearer)
+			balloon_alert(mod.wearer, "not active!")
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -238,8 +240,12 @@
 	SIGNAL_HANDLER
 
 	if(!active)
-		mod.wearer.transferItemToLoc(device, src, TRUE)
-		UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+		UnregisterSignal(source, COMSIG_ATOM_EXITED)
+		if(ismob(source))
+			var/mob/mob = source
+			mob.transferItemToLoc(device, src, TRUE)
+		else
+			mod.wearer.transferItemToLoc(device, src, TRUE)
 		return
 	if(part.loc == src)
 		return
