@@ -1,0 +1,8 @@
+author: "DragonTrance"
+delete-after: True
+changes: 
+  - balance: "Maintenance Drone health changed from 30 to 45"
+  - balance: "Maintenance Drone stun times from getting EMP'd reduced from 10 seconds to 7 seconds"
+  - qol: "Maintenance Drones can now interact near dead bodies"
+  - qol: "Maintenance Drones don't have to wait 5 minutes to open an airlock when someone recently did it. Now they have to wait 1 minute."
+  - qol: "Changed distance Maintenance Drones aren't allowed to interact with anything from a nearby mob from 4 tiles to 3 tiles"
