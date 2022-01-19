@@ -312,3 +312,73 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
+
+
+/obj/item/food/cornchips
+	name = "boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
+	icon_state = "boritos"
+	trash_type = /obj/item/trash/boritos
+	bite_consumption = 2
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
+	junkiness = 20
+	custom_price = PAYCHECK_ASSISTANT * 0.8  //we are filled to the brim with flavor
+	tastes = list("fried corn" = 1)
+	foodtypes = JUNKFOOD | FRIED
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/cornchips/MakeLeaveTrash()
+	if(trash_type)
+		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+
+/obj/item/food/cornchips/blue
+	name = "coolest ranch boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in coolest ranch!"
+	icon_state = "boritos"
+	trash_type = /obj/item/trash/boritos
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/yoghurt = 1, /datum/reagent/consumable/garlic = 1)
+	tastes = list("fried corn" = 1, "spess salsa" = 1)
+
+/obj/item/food/cornchips/green
+	name = "spess salsa boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in spess salsa!"
+	icon_state = "boritosgreen"
+	trash_type = /obj/item/trash/boritos/green
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/blackpepper = 1)
+	tastes = list("fried corn" = 1, "spess salsa" = 1)
+
+/obj/item/food/cornchips/red
+	name = "nacho cheese boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in nacho cheese!"
+	icon_state = "boritosred"
+	trash_type = /obj/item/trash/boritos/red
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/cornmeal = 1)
+	tastes = list("fried corn" = 1, "nacho cheese" = 1)
+
+/obj/item/food/cornchips/purple
+	name = "spicy sweet chili boritos corn chips"
+	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in spicy sweet chili!"
+	icon_state = "boritospurple"
+	trash_type = /obj/item/trash/boritos/purple
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
+	tastes = list("fried corn" = 1, "spicy & sweet chili" = 1)
+
+/obj/item/food/cornchips/random
+	name = "mystery filled boritos cornchips"
+	desc = "Filled with one of four delicious flavours!"
+
+/obj/item/food/cornchips/random/Initialize(mapload)
+	var/random_flavour = pick(subtypesof(/obj/item/food/cornchips) - /obj/item/food/cornchips/random)
+
+	var/obj/item/food/sample = new random_flavour(loc)
+
+	name = sample.name
+	desc = sample.desc
+	food_reagents = sample.food_reagents
+	icon_state = sample.icon_state
+	trash_type = sample.trash_type
+	tastes = sample.tastes
+
+	qdel(sample)
+
+	. = ..()

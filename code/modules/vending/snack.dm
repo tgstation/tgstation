@@ -13,7 +13,7 @@
 		/obj/item/food/chips = 6,
 		/obj/item/food/chips/shrimp = 6,
 		/obj/item/food/sosjerky = 6,
-		/obj/item/food/chips = 6,
+		/obj/item/food/cornchips/random = 6,
 		/obj/item/food/sosjerky = 6,
 		/obj/item/food/no_raisin = 6,
 		/obj/item/food/peanuts = 6,
