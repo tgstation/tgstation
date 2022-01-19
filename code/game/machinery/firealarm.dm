@@ -357,8 +357,6 @@
 		. += "The local area hazard light is flashing."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
 		. += "<b>Right-Click</b> or <b>Alt-Click</b> to reset firelocks in this area."
-		if(isobserver(user) && is_admin(user))
-			. += "As admin, Atom ProcCall <b>reset</b> with no args to reset firelocks."
 	else
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."

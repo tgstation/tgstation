@@ -207,7 +207,8 @@
 		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
-			place.set_fire_alarm_effect() //bathe in red
+			if(alarm_type != FIRELOCK_ALARM_TYPE_GENERIC) //Generic alarms tend to activate all firelocks in an area, which otherwise makes the red lighting spread like a virus. Anyway, fire alarms already do this for manual pulls.
+				place.set_fire_alarm_effect() //bathe in red
 			if(place == my_area)
 				place.alarm_manager.send_alarm(ALARM_FIRE, place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
 	update_icon() //Sets the door lights even if the door doesn't move.
@@ -226,6 +227,7 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
+			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
 	update_icon() //Sets the door lights even if the door doesn't move.
