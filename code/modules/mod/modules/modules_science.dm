@@ -9,7 +9,7 @@
 	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
@@ -64,7 +64,7 @@
 		to the HUD. Useful for universal translation, or perhaps as a calculator."
 	module_type = MODULE_USABLE
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
 	var/obj/item/integrated_circuit/circuit
@@ -80,10 +80,10 @@
 	)
 
 /obj/item/mod/module/circuit/on_install()
-	circuit.set_cell(mod.cell)
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_uninstall()
-	circuit.set_cell(mod.cell)
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_suit_activation()
 	circuit.set_on(TRUE)
@@ -160,93 +160,6 @@
 		return
 	wearer.set_output(attached_module.mod.wearer)
 
-///Anomaly Locked - Causes the module to not function without an anomaly.
-/obj/item/mod/module/anomaly_locked
-	name = "MOD anomaly locked module"
-	desc = "A form of a module, locked behind an anomalous core to function."
-	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
-	/// The core item the module runs off.
-	var/obj/item/assembly/signaler/anomaly/core
-	/// Accepted types of anomaly cores.
-	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
-	/// If this one starts with a core in.
-	var/prebuilt = FALSE
-
-/obj/item/mod/module/anomaly_locked/Initialize(mapload)
-	. = ..()
-	if(!prebuilt || !length(accepted_anomalies))
-		return
-	var/core_path = pick(accepted_anomalies)
-	core = new core_path(src)
-	update_icon_state()
-
-/obj/item/mod/module/anomaly_locked/Destroy()
-	QDEL_NULL(core)
-	return ..()
-
-/obj/item/mod/module/anomaly_locked/examine(mob/user)
-	. = ..()
-	if(!length(accepted_anomalies))
-		return
-	if(core)
-		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
-	else
-		var/list/core_list = list()
-		for(var/path in accepted_anomalies)
-			var/atom/core_path = path
-			core_list += initial(core_path.name)
-		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
-
-/obj/item/mod/module/anomaly_locked/on_select()
-	if(!core)
-		balloon_alert(mod.wearer, "no core!")
-		return
-	return ..()
-
-/obj/item/mod/module/anomaly_locked/on_process(delta_time)
-	. = ..()
-	if(!core)
-		return FALSE
-
-/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
-	if(!core)
-		return FALSE
-	return TRUE
-
-/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
-	if(item.type in accepted_anomalies)
-		if(core)
-			balloon_alert(user, "core already in!")
-			return
-		if(!user.transferItemToLoc(item, src))
-			return
-		core = item
-		balloon_alert(user, "core installed")
-		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon_state()
-	else
-		return ..()
-
-/obj/item/mod/module/anomaly_locked/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(!core)
-		balloon_alert(user, "no core!")
-		return
-	balloon_alert(user, "removing core...")
-	if(!do_after(user, 3 SECONDS, target = src))
-		balloon_alert(user, "interrupted!")
-		return
-	balloon_alert(user, "core removed")
-	core.forceMove(drop_location())
-	if(Adjacent(user) && !issilicon(user))
-		user.put_in_hands(core)
-	core = null
-	update_icon_state()
-
-/obj/item/mod/module/anomaly_locked/update_icon_state()
-	icon_state = initial(icon_state) + (core ? "-core" : "")
-	return ..()
-
 ///Anti-Gravity - Makes the user weightless.
 /obj/item/mod/module/anomaly_locked/antigrav
 	name = "MOD anti-gravity module"
@@ -254,7 +167,8 @@
 	icon_state = "antigrav"
 	module_type = MODULE_TOGGLE
 	complexity = 3
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.7
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.7
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked, /obj/item/mod/module/atrocinator)
 	cooldown_time = 0.5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 
@@ -288,7 +202,7 @@
 	icon_state = "teleporter"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 5 SECONDS
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	/// Time it takes to teleport
@@ -307,9 +221,11 @@
 	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
 	if(!do_after(mod.wearer, teleport_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		animate(mod.wearer, teleport_time, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+		var/matrix/post_matrix = matrix(mod.wearer.transform)
+		animate(mod.wearer, teleport_time, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
 		return
-	animate(mod.wearer, teleport_time*0.1, color = null, transform = user_matrix.Scale(0.25, 4), easing = EASE_IN)
+	var/matrix/post_matrix = matrix(mod.wearer.transform)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
 	drain_power(use_power_cost)

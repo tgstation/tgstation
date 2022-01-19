@@ -23,7 +23,7 @@
 	var/list/traitor_flavor
 
 	///reference to the uplink this traitor was given, if they were.
-	var/datum/component/uplink/uplink
+	var/datum/weakref/uplink_ref
 
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
@@ -40,7 +40,8 @@
 	if(give_uplink)
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
-	uplink = owner.find_syndicate_uplink()
+	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
+	uplink_ref = WEAKREF(uplink)
 	if(uplink)
 		if(uplink_handler)
 			uplink.uplink_handler = uplink_handler
@@ -63,8 +64,6 @@
 				uplink_items += item
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
-		RegisterSignal(uplink, COMSIG_PARENT_QDELETING, .proc/on_uplink_lost)
-
 	if(give_objectives)
 		forge_traitor_objectives()
 
@@ -78,9 +77,53 @@
 
 	return ..()
 
-/datum/antagonist/traitor/proc/on_uplink_lost(datum/source)
-	SIGNAL_HANDLER
-	uplink = null
+/datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
+	var/string = "[to_display.name]"
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE || to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
+		string += " <a href='?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
+		string += " <a href='?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
+	else
+		string += ", [to_display.telecrystal_reward] TC"
+		string += ", [to_display.progression_reward] PR"
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
+		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
+		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
+	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
+		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
+
+	if(to_display.skipped)
+		string += " - <b>Skipped</b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_FAILED)
+		string += " - <b><font color='red'>Failed</font></b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_INVALID)
+		string += " - <b>Invalidated</b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_COMPLETED)
+		string += " - <b><font color='green'>Succeeded</font></b>"
+
+	return string
+
+/datum/antagonist/traitor/antag_panel_objectives()
+	var/result = ..()
+	if(!uplink_handler)
+		return result
+	result += "<i><b>Traitor specific objectives</b></i><br>"
+	result += "<i><b>Concluded Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.completed_objectives))
+		result += "EMPTY<br>"
+	result += "<i><b>Ongoing Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.active_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.active_objectives))
+		result += "EMPTY<br>"
+	result += "<i><b>Potential Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.potential_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.potential_objectives))
+		result += "EMPTY<br>"
+	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
+	return result
 
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
@@ -181,6 +224,7 @@
 		component.delete_if_from_source(src)
 
 /datum/antagonist/traitor/ui_static_data(mob/user)
+	var/datum/component/uplink/uplink = uplink_ref?.resolve()
 	var/list/data = list()
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)
@@ -234,7 +278,7 @@
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
-			var/static/icon/badass = icon('icons/badass.dmi', "badass")
+			var/static/icon/badass = icon('icons/ui_icons/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 

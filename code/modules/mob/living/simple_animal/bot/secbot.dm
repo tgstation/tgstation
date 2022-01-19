@@ -134,7 +134,7 @@
 	target = null
 	oldtarget_name = null
 	set_anchored(FALSE)
-	walk_to(src,0)
+	SSmove_manager.stop_looping(src)
 	last_found = world.time
 
 /mob/living/simple_animal/bot/secbot/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)//shocks only make him angry
@@ -318,7 +318,7 @@
 	switch(mode)
 
 		if(BOT_IDLE) // idle
-			walk_to(src,0)
+			SSmove_manager.stop_looping(src)
 			look_for_perp() // see if any criminals are in range
 			if(!mode && bot_mode_flags & BOT_MODE_AUTOPATROL) // still idle, and set to patrol
 				mode = BOT_START_PATROL // switch to patrol mode
@@ -326,7 +326,7 @@
 		if(BOT_HUNT) // hunting for perp
 			// if can't reach perp for long enough, go idle
 			if(frustration >= 8)
-				walk_to(src,0)
+				SSmove_manager.stop_looping(src)
 				back_to_idle()
 				return
 
@@ -346,7 +346,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			walk_to(src, target,1,4)
+			SSmove_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else
@@ -447,8 +447,6 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
-
-	walk_to(src, 0)
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	if(bot_type == ADVANCED_SEC_BOT)

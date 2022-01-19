@@ -142,3 +142,10 @@
 	mid_sounds = list('sound/machines/FireAlarm.ogg'=1)
 	mid_length = 9.7 SECONDS
 	volume = 75
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/looping_sound/gravgen/kinesis
+	volume = 20
+	falloff_distance = 2
+	falloff_exponent = 5
