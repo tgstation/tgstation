@@ -452,11 +452,11 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'goon/icons/obj/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
@@ -715,7 +715,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	///The parent deck of the cards
-	var/parentdeck = null
+	var/datum/weakref/parentdeck
 	///Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -769,7 +769,7 @@
 	if (istype(src, /obj/item/toy/cards/cardhand))
 		to_cardhand = TRUE
 
-	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != src))
+	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != WEAKREF(src)))
 		to_chat(user, span_warning("You can't mix cards from other decks!"))
 		return
 	if (!user.temporarilyRemoveItemFromInventory(card_to_add))
@@ -858,7 +858,7 @@
 	if(holo)
 		holo.spawned += card_to_add
 	card_to_add.cardname = name
-	card_to_add.parentdeck = src
+	card_to_add.parentdeck = WEAKREF(src)
 	card_to_add.apply_card_vars(card_to_add, src)
 	return card_to_add
 
@@ -1298,7 +1298,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
@@ -1324,7 +1324,7 @@
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

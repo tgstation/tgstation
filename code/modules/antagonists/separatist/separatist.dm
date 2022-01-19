@@ -111,5 +111,5 @@
 
 /datum/antagonist/separatist/greet()
 	. = ..()
-	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
+	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.department.department_name]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
 	owner.announce_objectives()

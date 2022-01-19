@@ -256,6 +256,7 @@
 /obj/item/nullrod/claymore/darkblade
 	name = "dark blade"
 	desc = "Spread the glory of the dark gods!"
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
 	worn_icon_state = "cultblade"
@@ -477,7 +478,7 @@
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "render"
 	worn_icon_state = "render"
@@ -700,7 +701,7 @@
 /obj/item/nullrod/spear
 	name = "ancient spear"
 	desc = "An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'

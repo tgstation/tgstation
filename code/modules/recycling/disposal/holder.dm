@@ -20,9 +20,13 @@
 	var/tomail = FALSE
 	/// whether we contain a mob
 	var/hasmob = FALSE
+	var/obj/structure/disposalpipe/last_pipe
+	var/obj/structure/disposalpipe/current_pipe
 
 /obj/structure/disposalholder/Destroy()
 	active = FALSE
+	last_pipe = null
+	current_pipe = null
 	return ..()
 
 /// initialize a holder from the contents of a disposal unit
@@ -66,37 +70,48 @@
 	forceMove(D.trunk.associated_loc)
 	active = TRUE
 	setDir(DOWN)
-	move(D.trunk)
+	start_moving()
 
-/// movement process, persists while holder is moving through pipes
-/obj/structure/disposalholder/proc/move(obj/structure/disposalpipe/starting_node)
-	set waitfor = FALSE
-	var/ticks = 1
-	var/obj/structure/disposalpipe/last_node = starting_node
-	while(active)
-		var/obj/structure/disposalpipe/current_node = last_node.transfer(src)
+/// Starts the movement process, persists while the holder is moving through pipes
+/obj/structure/disposalholder/proc/start_moving()
+	var/delay = world.tick_lag
+	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
+	if(our_loop)
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/try_expel)
+		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/movement_stop)
+		current_pipe = loc
 
-		set_glide_size(DELAY_TO_GLIDE_SIZE(ticks * world.tick_lag))
+/obj/structure/disposalholder/proc/pre_move(datum/move_loop/source)
+	SIGNAL_HANDLER
+	last_pipe = loc
 
-		if(!current_node && active)
-			last_node.expel(src, get_turf(src), dir)
-		last_node = current_node
+/obj/structure/disposalholder/proc/try_expel(datum/move_loop/source, succeed, visual_delay)
+	SIGNAL_HANDLER
+	current_pipe = loc
+	if(current_pipe || !active)
+		return
+	last_pipe.expel(src, get_turf(src), dir)
 
-		sleep(1)
-		//ticks = stoplag()
-		if(!(count--))
-			active = FALSE
+/obj/structure/disposalholder/proc/movement_stop(datum/source)
+	SIGNAL_HANDLER
+	current_pipe = null
+	last_pipe = null
 
-//failsafe in the case the holder is somehow forcemoved somewhere that doesnt have a disposals pipe. Otherwise the above loop breaks.
+//failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	//Moved to nullspace gang
-
-	var/turf/turf_loc = get_turf(src)
-
-	if(!turf_loc)
+	if(!loc || pipes_typecache[loc.type])
 		return
+	var/turf/T = get_turf(loc)
+	if(T)
+		vent_gas(T)
+	for(var/A in contents)
+		var/atom/movable/AM = A
+		AM.forceMove(drop_location())
+	qdel(src)
 
 	var/has_possible_loc = FALSE
 

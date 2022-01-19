@@ -111,12 +111,14 @@
 		else
 			var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
 			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
-				visible_message(span_notice("[src] begins climbing into the ventilation system..."), span_notice("You begin climbing into the ventilation system..."))
+				flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), ventcrawl_target, 2 SECONDS)
+				visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
 				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target))
 					return
 				if(!client)
 					return
-				visible_message(span_notice("[src] scrambles into the ventilation ducts!"), span_notice("You climb into the ventilation ducts."))
+				flick_overlay_static(image('icons/effects/vent_indicator.dmi', "insert", ABOVE_MOB_LAYER), ventcrawl_target, 1 SECONDS)
+				visible_message(span_notice("[src] scrambles into the ventilation ducts!"),span_notice("You climb into the ventilation ducts."))
 				move_into_vent(ventcrawl_target)
 			else
 				to_chat(src, span_warning("This ventilation duct is not connected to anything!"))

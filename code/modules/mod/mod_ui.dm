@@ -16,8 +16,8 @@
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["AI"] = ai?.name
-	data["cell"] = cell?.name
-	data["charge"] = cell ? round(cell.percent(), 1) : 0
+	data["core"] = core?.name
+	data["charge"] = get_charge_percent()
 	data["modules"] = list()
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_data = list(
