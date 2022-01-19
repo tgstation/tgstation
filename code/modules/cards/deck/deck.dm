@@ -57,13 +57,13 @@
 	draw_card(user, cards, flip_card_over=TRUE)
 
 /obj/item/toy/cards/deck/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user))
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		src.pickup(user)
 		user.put_in_hands(src)
 	return ..()
 
 /obj/item/toy/cards/deck/CtrlClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user))
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
 			return
 		COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
