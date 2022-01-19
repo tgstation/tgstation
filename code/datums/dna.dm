@@ -93,8 +93,10 @@
 	switch(holder.gender)
 		if(MALE)
 			L[DNA_GENDER_BLOCK] = construct_block(G_MALE, 3)
-		else
+		if(FEMALE)
 			L[DNA_GENDER_BLOCK] = construct_block(G_FEMALE, 3)
+		else
+			L[DNA_GENDER_BLOCK] = construct_block(G_PLURAL, 3)
 	if(ishuman(holder))
 		var/mob/living/carbon/human/H = holder
 		if(!GLOB.hair_styles_list.len)
@@ -181,12 +183,14 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
 		if(DNA_EYE_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
-		if()
+		if(DNA_GENDER_BLOCK)
 			switch(H.gender)
 				if(MALE)
 					setblock(uni_identity, blocknumber, construct_block(G_MALE, 3))
-				else
+				if(FEMALE)
 					setblock(uni_identity, blocknumber, construct_block(G_FEMALE, 3))
+				else
+					setblock(uni_identity, blocknumber, construct_block(G_PLURAL, 3))
 		if(DNA_FACIAL_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
@@ -369,8 +373,10 @@
 	switch(deconstruct_block(getblock(dna.uni_identity, DNA_GENDER_BLOCK), 3))
 		if(G_MALE)
 			gender = MALE
-		else
+		if(G_FEMALE)
 			gender = FEMALE
+		else
+			gender = PLURAL
 
 /mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()

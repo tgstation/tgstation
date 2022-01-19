@@ -66,7 +66,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
-	var/list/genders = list(MALE, FEMALE)
+	var/list/genders = list(MALE, FEMALE, PLURAL)
+	var/list/friendlyGenders = list("Male" = "male", "Female" = "female", "Other" = "plural")
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -189,8 +190,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/dispGender
 				if(gender == MALE)
 					dispGender = "Male"
-				else(gender == FEMALE)
+				else if(gender == FEMALE)
 					dispGender = "Female"
+				else
+					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
@@ -1120,29 +1123,37 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_facial_hair_style
 					if(gender == MALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_male_list
-					else
+					else if(gender == FEMALE)
 						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_female_list
+					else
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_list
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
 				if("next_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if(gender == FEMALE)
 						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("previous_facehair_style")
 					if (gender == MALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
-					else
+					else if (gender == FEMALE)
 						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
+					else
+						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_list)
 
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_m
-					else
+					else if(gender == FEMALE)
 						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_f
+					else
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_list
 					if(new_underwear)
 						underwear = new_underwear
 
@@ -1150,8 +1161,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_undershirt
 					if(gender == MALE)
 						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_m
-					else
+					else if(gender == FEMALE)
 						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_f
+					else
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_list
 					if(new_undershirt)
 						undershirt = new_undershirt
 
@@ -1352,16 +1365,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
 				if("gender")
-					if(gender == MALE)
-						gender = FEMALE
-					else
-						gender = MALE
-					underwear = random_underwear(gender)
-					undershirt = random_undershirt(gender)
-					socks = random_socks()
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
-					
+					var/pickedGender = input(user, "Choose your gender.", "Character Preference", gender) as null|anything in friendlyGenders
+					if(pickedGender && friendlyGenders[pickedGender] != gender)
+						gender = friendlyGenders[pickedGender]
+						underwear = random_underwear(gender)
+						undershirt = random_undershirt(gender)
+						socks = random_socks()
+						facial_hair_style = random_facial_hair_style(gender)
+						hair_style = random_hair_style(gender)
+
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
