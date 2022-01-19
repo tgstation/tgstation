@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 		owner.balloon_alert(owner, "not while incapacitated!")
 		return
 	var/area/owner_area = get_area(owner)
-	if(!(owner_area.type in typesof(/area/maintenance)))
+	if(!istype(owner_area, /area/maintenance))
 		owner.balloon_alert(owner, "hoard must be in maintenance!")
 		return
 	var/datum/objective/hoarder/objective = weak_objective.resolve()
@@ -104,8 +104,8 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 		if(!isliving(owner.current))
 			continue
 		var/list/all_items = owner.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/possible_heirloom in all_items) //Check for wanted items
+		for(var/obj/possible_heirloom in all_items)
 			var/datum/component/heirloom/found = possible_heirloom.GetComponent(/datum/component/heirloom)
-			if(found && !(found.owner in owners)) //it exists, and its not yours.
+			if(found && !(found.owner in owners))
 				return TRUE
 	return FALSE
