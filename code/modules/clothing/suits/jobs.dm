@@ -54,7 +54,7 @@
 	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 
 //Detective
-/obj/item/clothing/suit/det_suit
+/obj/item/clothing/suit/toggle/det_suit
 	name = "trenchcoat"
 	desc = "A 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
@@ -65,17 +65,17 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/det_suit/Initialize(mapload)
+/obj/item/clothing/suit/toggle/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/det_suit/grey
+/obj/item/clothing/suit/toggle/det_suit/grey
 	name = "noir trenchcoat"
 	desc = "A hard-boiled private investigator's grey trenchcoat."
 	icon_state = "greydet"
 	inhand_icon_state = "greydet"
 
-/obj/item/clothing/suit/det_suit/noir
+/obj/item/clothing/suit/toggle/det_suit/noir
 	name = "noir suit coat"
 	desc = "A dapper private investigator's grey suit coat."
 	icon_state = "detsuit"
@@ -236,3 +236,18 @@
 	icon_state = "jamrock_blazer"
 	inhand_icon_state = "jamrock_blazer"
 
+//This kind of shenanigans exist because I have no other idea how to make those disco suits not togglable.
+/obj/item/clothing/suit/det_suit
+	name = "old trenchcoat"
+	desc = "Looks like mapper fucked up and placed wrong trenchcoat."
+	icon_state = ""
+	inhand_icon_state = "det_suit"
+	blood_overlay_type = "coat"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/toggle/suit/det_suit/Initialize(mapload)
+	. = ..()
+	allowed = GLOB.detective_vest_allowed

@@ -16,7 +16,7 @@
 /obj/item/clothing/suit/space/officer
 	name = "officer's jacket"
 	desc = "An armored, space-proof jacket used in special operations."
-	icon_state = "detective"
+	icon_state = "detective_t"
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	slowdown = 0
