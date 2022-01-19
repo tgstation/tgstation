@@ -1,10 +1,11 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
+	icon = 'goon/icons/obj/toolbox.dmi'
 	icon_state = "toolbox_default"
 	inhand_icon_state = "toolbox_default"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 12
 	throwforce = 12
@@ -62,6 +63,7 @@
 
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
 	material_flags = NONE
@@ -84,6 +86,7 @@
 
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 	has_soul = TRUE
@@ -215,9 +218,13 @@
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"
+	icon = 'icons/obj/storage.dmi'
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
@@ -232,9 +239,11 @@
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"
+	icon = 'icons/obj/storage.dmi'
 	desc = "It contains some gun maintenance supplies"
 	icon_state = "maint_kit"
 	inhand_icon_state = "ammobox"
+	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
@@ -245,9 +254,12 @@
 
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"
+	icon = 'icons/obj/storage.dmi'
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
 	inhand_icon_state = "infiltrator_case"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	force = 15
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
