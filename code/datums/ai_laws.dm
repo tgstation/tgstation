@@ -318,20 +318,14 @@
 /datum/ai_laws/proc/add_inherent_law(law)
 	if (!(law in inherent))
 		inherent += law
-		owner?.lawcheck += law
 
 /datum/ai_laws/proc/add_ion_law(law)
 	ion += law
-	owner.ioncheck += law
 
 /datum/ai_laws/proc/add_hacked_law(law)
 	hacked += law
-	owner.hackedcheck += law
 
 /datum/ai_laws/proc/clear_inherent_laws()
-	for (var/law in inherent)
-		if (law in owner.lawcheck)
-			owner.lawcheck -= law
 	qdel(inherent)
 	inherent = list()
 
@@ -340,7 +334,6 @@
 		supplied += ""
 
 	supplied[number + 1] = law
-	owner.lawcheck += law
 
 /datum/ai_laws/proc/replace_random_law(law,groups)
 	var/replaceable_groups = list()
@@ -413,7 +406,6 @@
 	if(inherent.len && number <= inherent.len)
 		. = inherent[number]
 		inherent -= .
-		owner.lawcheck -= .
 		return
 	var/list/supplied_laws = list()
 	for(var/index in 1 to supplied.len)
@@ -424,22 +416,16 @@
 		var/law_to_remove = supplied_laws[number-inherent.len]
 		. = supplied[law_to_remove]
 		supplied -= .
-		owner.lawcheck -= .
 		return
 
 /datum/ai_laws/proc/clear_supplied_laws()
-	for (var/law in supplied)
-		if (law in owner.lawcheck)
-			owner.lawcheck -= law
 	supplied = list()
 
 /datum/ai_laws/proc/clear_ion_laws()
 	ion = list()
-	owner.ioncheck = list()
 
 /datum/ai_laws/proc/clear_hacked_laws()
 	hacked = list()
-	owner.hackedcheck = list()
 
 /datum/ai_laws/proc/show_laws(who)
 	var/list/printable_laws = get_law_list(include_zeroth = TRUE)
@@ -448,19 +434,18 @@
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
 	if(force)
-		owner.lawcheck -= zeroth
 		zeroth = null
 		zeroth_borg = null
-		return
+		return TRUE
 	if(owner?.mind?.special_role)
-		return
+		return FALSE
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
 		if(A?.deployed_shell?.mind?.special_role)
-			return
-	owner.lawcheck -= zeroth
+			return FALSE
 	zeroth = null
 	zeroth_borg = null
+	return TRUE
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
