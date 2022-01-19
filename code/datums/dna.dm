@@ -181,7 +181,7 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.skin_tones.Find(H.skin_tone), GLOB.skin_tones.len))
 		if(DNA_EYE_COLOR_BLOCK)
 			setblock(uni_identity, blocknumber, sanitize_hexcolor(H.eye_color))
-		if(DNA_GENDER_BLOCK)
+		if()
 			switch(H.gender)
 				if(MALE)
 					setblock(uni_identity, blocknumber, construct_block(G_MALE, 3))
