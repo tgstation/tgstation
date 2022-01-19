@@ -120,9 +120,9 @@
 			return
 		mod.selected_module = src
 		if(device)
+			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
-				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				return
@@ -236,6 +236,8 @@
 	SIGNAL_HANDLER
 
 	if(!active)
+		mod.wearer.transferItemToLoc(device, src, TRUE)
+		UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		return
 	if(part.loc == src)
 		return
