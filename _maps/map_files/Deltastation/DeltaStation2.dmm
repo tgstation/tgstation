@@ -4333,11 +4333,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/door/airlock/atmos{
-	name = "Turbine Generator Access";
-	req_one_access_txt = "24;10"
-	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/atmos/glass{
+	name = "Turbine Generator Access";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "aUV" = (
@@ -29393,9 +29393,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dQv" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/rack,
 /obj/item/crowbar,
 /obj/item/storage/toolbox/mechanical,
@@ -33059,6 +33056,25 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos/storage)
+"elv" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/command/heads_quarters/ce)
 "ely" = (
 /obj/machinery/door/airlock/security{
 	name = "Isolation Cell";
@@ -35285,6 +35301,10 @@
 "eSb" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "ceblast";
+	name = "Chief Engineer's Office Blast Doors"
+	},
 /turf/open/floor/plating,
 /area/command/heads_quarters/ce)
 "eSd" = (
@@ -35579,9 +35599,6 @@
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "eVD" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -36949,7 +36966,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_one_access_txt = "10;24"
 	},
@@ -38623,6 +38640,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -40127,12 +40147,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/door/airlock/atmos{
-	name = "Turbine Generator Access";
-	req_one_access_txt = "24;10"
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/atmos/glass{
+	name = "Turbine Generator Access";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
 "gcR" = (
@@ -42992,13 +43012,10 @@
 "gNW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail{
-	name = "CE's Junction";
-	sortType = 5
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/corner{
 	dir = 8
 	},
@@ -43822,6 +43839,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
@@ -50008,9 +50028,6 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "iCr" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/cell_charger,
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/ai/directional/north,
@@ -70019,12 +70036,15 @@
 "nGR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/disposalpipe/sorting/mail{
+	name = "CE's Junction";
+	sortType = 5
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 8
@@ -71098,6 +71118,10 @@
 "nUH" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/machinery/door/poddoor/preopen{
+	id = "ceblast";
+	name = "Chief Engineer's Office Blast Doors"
+	},
 /turf/open/floor/plating,
 /area/command/heads_quarters/ce)
 "nUM" = (
@@ -77129,7 +77153,7 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering/glass{
+/obj/machinery/door/airlock/engineering{
 	name = "Engineering Break Room";
 	req_one_access_txt = "19;32"
 	},
@@ -81340,7 +81364,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_one_access_txt = "10;24"
 	},
@@ -87155,9 +87179,6 @@
 /turf/open/floor/plating,
 /area/service/abandoned_gambling_den)
 "siK" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -87171,6 +87192,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "siM" = (
@@ -92240,10 +92262,11 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "tyq" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "ceblast";
+	name = "Chief Engineer's Office Blast Doors"
+	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/command/heads_quarters/ce)
@@ -92494,6 +92517,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -100988,7 +101014,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/atmos/glass{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics";
 	req_one_access_txt = "10;24"
 	},
@@ -103624,9 +103650,6 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "wyk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -103655,6 +103678,9 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
@@ -107280,10 +107306,6 @@
 /area/engineering/atmos)
 "xvi" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock/atmos/glass{
-	name = "Atmospherics";
-	req_one_access_txt = "10;24"
-	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -107292,6 +107314,10 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/atmos{
+	name = "Atmospherics";
+	req_one_access_txt = "10;24"
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "xvm" = (
@@ -133726,7 +133752,7 @@ oWn
 tNz
 pFk
 eVD
-sRl
+elv
 saa
 cXw
 saa
