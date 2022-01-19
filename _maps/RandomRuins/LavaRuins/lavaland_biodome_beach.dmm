@@ -577,7 +577,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "rn" = (
-/obj/structure/chair/stool/bar/diretional/north,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "rU" = (
