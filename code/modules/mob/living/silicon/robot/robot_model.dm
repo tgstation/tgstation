@@ -375,7 +375,7 @@
 	desc = "Trade speed and water for a clean floor"
 	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "activate_wash"
-	var/static/datum/callback/allow_buffer_change
+	var/static/datum/callback/allow_buffer_activate
 	var/block_buffer_change	= FALSE
 	var/buffer_on = FALSE
 	///The bucket we draw water from
@@ -386,8 +386,8 @@
 	COOLDOWN_DECLARE(toggle_cooldown)
 
 /datum/action/toggle_buffer/New(Target)
-	if(!allow_buffer_change)
-		allow_buffer_change = CALLBACK(src, .proc/allow_buffer_change)
+	if(!allow_buffer_activate)
+		allow_buffer_activate = CALLBACK(src, .proc/allow_buffer_activate)
 	return ..()
 
 /datum/action/toggle_buffer/Destroy()
@@ -423,7 +423,7 @@
 			robot_owner.balloon_alert(robot_owner, "auto-wash refreshing, please hold...")
 			return FALSE
 		COOLDOWN_START(src, toggle_cooldown, 4 SECONDS)
-		if(!allow_buffer_change())
+		if(!allow_buffer_activate())
 			return FALSE
 
 		robot_owner.balloon_alert(robot_owner, "activating auto-wash...")
@@ -438,7 +438,7 @@
 			var/y_offset = base_y + rand(-1, 1)
 			animate(pixel_x = x_offset, pixel_y = y_offset, time = 1)
 
-		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_change))
+		if(!do_after(robot_owner, 4 SECONDS, interaction_key = "auto_wash_toggle", extra_checks = allow_buffer_activate))
 			wash_audio.stop() // Coward
 			animate(robot_owner, pixel_x = base_x, pixel_y = base_y, time = 1)
 			return FALSE
@@ -450,12 +450,14 @@
 
 	toggle_wash()
 
+/// Toggle our wash mode
 /datum/action/toggle_buffer/proc/toggle_wash()
 	if(buffer_on)
 		deactivate_wash()
 	else
 		activate_wash()
 
+/// Activate the buffer, comes with a nice animation that loops while it's on
 /datum/action/toggle_buffer/proc/activate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = TRUE
@@ -478,6 +480,7 @@
 	clean()
 	UpdateButtonIcon()
 
+/// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
 	var/time_left = timeleft(wash_audio.timerid) // We delay by the timer of our wash cause well, we want to hear the ramp down
@@ -499,13 +502,16 @@
 	addtimer(CALLBACK(wash_audio, /datum/looping_sound/proc/stop), time_left)
 	addtimer(CALLBACK(src, .proc/turn_off_wash), finished_by)
 
+/// Called by [deactivate_wash] on a timer to allow noises and animation to play out.
+/// Finally disables the buffer. Doesn't do everything mind, just the stuff that we wanted to delay
 /datum/action/toggle_buffer/proc/turn_off_wash()
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
 	UpdateButtonIcon()
 
-/datum/action/toggle_buffer/proc/allow_buffer_change()
+/// Should we keep trying to activate our buffer, or did you fuck it up somehow
+/datum/action/toggle_buffer/proc/allow_buffer_activate()
 	var/mob/living/silicon/robot/robot_owner = owner
 	if(block_buffer_change)
 		robot_owner.balloon_alert(robot_owner, "activation cancelled!")
@@ -517,6 +523,7 @@
 		return FALSE
 	return TRUE
 
+/// Call this to attempt to actually clean the turf underneath us
 /datum/action/toggle_buffer/proc/clean()
 	SIGNAL_HANDLER
 	var/mob/living/silicon/robot/robot_owner = owner
