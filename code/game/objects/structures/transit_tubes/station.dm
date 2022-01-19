@@ -142,7 +142,7 @@
 			close_animation()
 			sleep(CLOSE_DURATION + 2)
 			if(open_status == STATION_TUBE_CLOSED && pod && pod.loc == loc)
-				pod.follow_tube()
+				pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
@@ -241,7 +241,7 @@
 	for(var/obj/structure/transit_tube_pod/pod in loc)
 		if(!pod.moving)
 			pod_moving = TRUE
-			pod.follow_tube()
+			pod.follow_tube(src)
 			pod_moving = FALSE
 			return TRUE
 	return FALSE
