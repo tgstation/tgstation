@@ -64216,12 +64216,6 @@
 "vOa" = (
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
-"vOv" = (
-/obj/effect/turf_decal/siding/thinplating,
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/turf_decal/trimline/neutral/filled/warning,
-/turf/open/floor/iron,
-/area/security/checkpoint/supply)
 "vOA" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -112995,7 +112989,7 @@ iku
 aTg
 xfF
 xfF
-vOv
+vcz
 oID
 aeu
 hVZ
