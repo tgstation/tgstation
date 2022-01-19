@@ -50,26 +50,31 @@
 		for(var/person in list("Jack", "Queen", "King"))
 			cards += generate_card("[person] of [suit]")
 
+/**
+ * ## shuffle_cards
+ *
+ * Shuffles the cards in the deck
+ * 
+ * Arguments:
+ * * user - The person shuffling the cards.
+ */
+/obj/item/toy/cards/deck/proc/shuffle_cards(mob/living/user)
+	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
+		return
+	COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
+	cards = shuffle(cards)
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
 	draw_card(user, cards)
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
 	draw_card(user, cards, flip_card_over=TRUE)
 
-/obj/item/toy/cards/deck/AltClick(mob/user)
+/obj/item/toy/cards/deck/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		src.pickup(user)
-		user.put_in_hands(src)
-	return ..()
-
-/obj/item/toy/cards/deck/CtrlClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
-			return
-		COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
-		cards = shuffle(cards)
-		playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-		user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+		shuffle_cards(user)
 	return ..()
 
 /obj/item/toy/cards/deck/update_icon_state()
@@ -84,13 +89,8 @@
 			icon_state = "deck_[deckstyle]_empty"
 	return ..()
 
-/obj/item/toy/cards/deck/attack_self(mob/user)
-	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
-		return
-	COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
-	cards = shuffle(cards)
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+/obj/item/toy/cards/deck/attack_self(mob/living/user)
+	shuffle_cards(user)
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/cards/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
