@@ -576,6 +576,10 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"rn" = (
+/obj/structure/chair/stool/bar/diretional/north,
+/turf/open/floor/wood,
+/area/ruin/powered/beach)
 "rU" = (
 /obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5
