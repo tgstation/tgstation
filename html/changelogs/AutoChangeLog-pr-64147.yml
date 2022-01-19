@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Aiming at obscured turfs will no longer make you shoot somewhere up and right of where you clicked."
