@@ -600,3 +600,139 @@
       ontop of other wall objects for ghosts/AIs
   timothymtorres:
   - bugfix: Fix deaf people being able to hear in certain text messages.
+2022-01-17:
+  JohnFulpWillard:
+  - bugfix: Mutations like Telepathy will now work again.
+  JohnFulpWillard and theOOZ:
+  - qol: Tipping mobs over all runs on right click, rather than running on both right
+      and left click.
+  - balance: You can now tip Borgs over.
+  LemonInTheDark:
+  - qol: Space movement, assuming I've done my job correctly, should feel significantly
+      smoother
+  - bugfix: Fixed the immovable rod not properly carrying orbiters to new z levels
+  - code_imp: Added a framework for different forms of looping movement
+  - balance: Secborgs can no longer fly in space, as they have canonical wheels. The
+      same likely applies to other spacefareing simple mobs, report anything that
+      looks weird.
+  - refactor: Refactored how meteors, some mobs, space drifting things, and a lot
+      of general effects move, among other things. Please report any bugs or strange
+      behavior
+  - server: Hello admins. Spamming meteors will no longer lag things out quite so
+      much. Still not amazing cause of all the explosions, but it won't kill things
+      anymore. Blow some people up for me yeah?
+  SuperNovaa41:
+  - bugfix: Fixes not drawing cards from non-standard decks.
+  That REALLY Good Soda Flavor:
+  - imageadd: Added a stamina indicator to the human mob's HUD.
+  Thunder12345:
+  - rscadd: Added a new system to allow for partial random generation of space ruins
+      (and maybe more)
+  - rscadd: The russian DJ station has been overhauled and given randomly generated
+      variations.
+  Watermelon914:
+  - admin: Added the objectives to the antag panel for admins.
+  - admin: Added logs for when a player gets a potential objective, when a player
+      takes an objective and when a player succeeds/fails an objective.
+  neopythagorean:
+  - bugfix: Podpeople are no longer missing a hand when facing right, and podwomen
+      no longer stick out of their jumpsuit.
+  san7890:
+  - bugfix: On the mapping end, all of the engineering storages are no longer number
+      "2" (as far as the sprite labelling the rooms go). The sprites now reflect their
+      actual usage in their respective maps.
+  - code_imp: If you care, _globalvars/lists now has a lot of lists spanned out and
+      alphabetized. If you don't care, that's fine too.
+  - code_imp: Badass.dmi has been moved to a new folder in the repository.
+  - bugfix: Nanotrasen has now stopped including a big chunk of iron in their berets,
+      making it a bit weaker to melee damage. Still just as fashionable, though.
+  tf-4:
+  - bugfix: Windoors can now have their electronics removed without creating infinite
+      assemblies.
+  - balance: Atmospheric gas masks are now normal-sized, the same as other full-face
+      gas masks.
+  tralezab:
+  - rscadd: chisels are now the animated statue's bane.
+2022-01-18:
+  Capsandi:
+  - bugfix: Fixed a metastation active turf, enjoy slightly faster loading
+  FlamingCheese:
+  - bugfix: Replaced snowed over plating in icebox airlocks with regular plating to
+      make the plating unable to generate dangerous gases
+  JohnFulpWillard:
+  - bugfix: Borgs who are untipped ahead of time and re-tipped will not have their
+      first self-untip timer untip them the second time.
+  LemonInTheDark:
+  - admin: Telemetry code will spam you with undeleted query logs much less often
+      now!
+  - server: Improved how the db subsystem handles undeleted queries, should never
+      have an incident like that again
+  Melbert:
+  - expansion: Slapping yourself in the face now delivers a facepalm.
+  - expansion: Slapping someone who's asleep in the face may wake them up faster.
+  - balance: 'Placed traitor bugs should have fingerprints and fibers now. Remember:
+      You can clean your fingerprints off of things with soap or other cleaning methods.'
+  Mothblocks:
+  - balance: Nuke disks must now be held by a player or pulled by a player in order
+      to count as moving to not increase the chances of lone ops. This means no more
+      disk conveyor belts.
+  ReinaCoder:
+  - bugfix: Fixes Icebox not having a drone dispenser.
+  - bugfix: Fixes Icebox not having a medical records console available to MD.
+  - bugfix: Fixes the little cross section of Icebox medical and science maints not
+      allowing medical and science access.
+  - bugfix: Fixes the fire extinguisher on a disposal bin on Icebox
+  - bugfix: Fixes the placement of a camera in Icebox medical
+  SuperNovaa41:
+  - bugfix: Fixes AIs not being able to announce any custom laws.
+  - bugfix: Fixes floorbots dropping full toolboxes.
+  Thunder12345:
+  - bugfix: Blood brothers will now be told who their teammates are in their antagonist
+      info window.
+  magatsuchi:
+  - bugfix: sleeping people no longer show up as dead on crew monitor
+  san7890:
+  - bugfix: To lessen confusion, DeltaStation's customs areas have been split into
+      two, so the average scientist doesn't need to perform a kilometer long trek
+      up and down the station looking for those sweet, sweet anomaly cores.
+  tf-4:
+  - bugfix: Trying to make weak virus plasma will no longer plasmaflood virology.
+2022-01-19:
+  Fikou:
+  - bugfix: fixes the centcom commander outfit not having a modsuit counterpart
+  JohnFulpWillard:
+  - spellcheck: Exploration Drone Control Console's computer board is now properly
+      spelled.
+  RandomGamer123:
+  - bugfix: Teleport runes made by wraiths now show their custom names properly.
+  Ryll/Shaps:
+  - rscadd: Added premium Two-Time root beer to soda vending machines for 200 credits!
+      The soda grants you doubled fire-rate with ranged guns while in your system,
+      though it also causes intense dizziness while in your system, as well as heavy
+      stamina damage and drowsiness when it wears off.
+  - rscadd: Added admin-only racing shooting gloves that grant the doubled fire-rate
+      buff to the wearer with no downsides.
+  ShizCalev:
+  - server: A couple mapping errors will now be more visible and actually logged in
+      the mapping error log.
+  Wallem:
+  - expansion: MODsuits now have a Glove Translator module for all the vocally impaired.
+      Plasmamen can now _properly_ be mute hand-talkers.
+  san7890:
+  - imageadd: The "Interrogation Room" area now has a new sprite to define it on the
+      mapping end.
+  - expansion: What's this? Nanotrasen tunneled out a grand hole into the ice planet
+      that Ice Box Station currently rests on! There's a new laundry room! For your
+      clothes! What d'you mean, Ian?
+  - rscadd: You can also exit this laundry room onto a caringly, yet sloppily placed
+      bridge to explore the ice planet (if you really want to). Watch your step, and
+      watch for wolves.
+  - rscadd: To accommodate the grand new laundry room, the locker room (and surrounding
+      maintenance tunnels) have been shuffled around.
+  sasichkamega:
+  - rscadd: patch icon choosing in the chem dispenser and chem press
+  vincentiusvin:
+  - bugfix: Pumping hot gas into cold gas using the regular pumps should no longer
+      explode.
+  - code_imp: Some math changes to how pressure based pumps calculate pressure (both
+      portable and fixed). Report if problems are found.

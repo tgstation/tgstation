@@ -539,7 +539,7 @@
 		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	else
 		return
-	update_health_hud()
+	update_stamina_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -768,6 +768,29 @@
 		else
 			hud_used.healths.icon_state = "health7"
 
+/mob/living/carbon/update_stamina_hud(shown_stamina_amount)
+	if(!client || !hud_used?.stamina)
+		return
+	if(stat == DEAD || IsStun() || IsParalyzed() || IsImmobilized() || IsKnockdown() || IsFrozen())
+		hud_used.stamina.icon_state = "stamina6"
+	else
+		if(shown_stamina_amount == null)
+			shown_stamina_amount = health - getStaminaLoss() - crit_threshold
+		if(shown_stamina_amount >= health)
+			hud_used.stamina.icon_state = "stamina0"
+		else if(shown_stamina_amount > health*0.8)
+			hud_used.stamina.icon_state = "stamina1"
+		else if(shown_stamina_amount > health*0.6)
+			hud_used.stamina.icon_state = "stamina2"
+		else if(shown_stamina_amount > health*0.4)
+			hud_used.stamina.icon_state = "stamina3"
+		else if(shown_stamina_amount > health*0.2)
+			hud_used.stamina.icon_state = "stamina4"
+		else if(shown_stamina_amount > 0)
+			hud_used.stamina.icon_state = "stamina5"
+		else
+			hud_used.stamina.icon_state = "stamina6"
+
 /mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
 	if(hud_used?.internals)
 		hud_used.internals.icon_state = "internal[internal_state]"
@@ -809,6 +832,7 @@
 			set_stat(CONSCIOUS)
 	update_damage_hud()
 	update_health_hud()
+	update_stamina_hud()
 	med_hud_set_status()
 
 
@@ -1363,4 +1387,4 @@
 	our_splatter.add_blood_DNA(return_blood_DNA())
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
-	INVOKE_ASYNC(our_splatter, /obj/effect/decal/cleanable/blood/hitsplatter/.proc/fly_towards, targ, splatter_strength)
+	our_splatter.fly_towards(targ, splatter_strength)
