@@ -52,7 +52,7 @@
 		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
 	for(var/mob/living/simple_animal/shade/sharded_shade in src)
 		sharded_shade.icon_state = "ghost1"
-		sharded_shade.name = "Purified [initial(sharded_shade.name)]"
+		sharded_shade.name = "Purified [sharded_shade.real_name]"
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
 
@@ -197,7 +197,7 @@
 			if(THEME_HOLY)
 				icon_state = "purified_soulstone"
 				A.icon_state = "shade_holy"
-				A.name = "Purified [initial(A.name)]"
+				A.name = "Purified [A.real_name]"
 				A.loot = list(/obj/item/ectoplasm/angelic)
 			if(THEME_WIZARD)
 				icon_state = "mystic_soulstone"
