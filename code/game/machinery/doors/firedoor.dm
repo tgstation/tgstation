@@ -207,6 +207,7 @@
 		if(LAZYLEN(place.active_firelocks) == 1) //if we're the first to activate in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
+			place.set_fire_alarm_effect() //bathe in red
 			if(place == my_area)
 				place.alarm_manager.send_alarm(ALARM_FIRE, place) //We'll limit our reporting to just the area we're on. If the issue affects bordering areas, they can report it themselves
 	update_icon() //Sets the door lights even if the door doesn't move.
