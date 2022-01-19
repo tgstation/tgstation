@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 		owner.balloon_alert(owner, "not while incapacitated!")
 		return
 	var/area/owner_area = get_area(owner)
-	if(!(owner_area.type in typesof(/area/maintenance)))
+	if(!istype(owner_area, /area/maintenance))
 		owner.balloon_alert(owner, "hoard must be in maintenance!")
 		return
 	var/datum/objective/hoarder/objective = weak_objective.resolve()
