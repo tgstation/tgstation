@@ -11116,9 +11116,6 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
-"cxe" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "cxp" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
@@ -32045,10 +32042,6 @@
 /obj/effect/turf_decal/trimline/neutral/corner,
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
-"jXv" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/space)
 "jXF" = (
 /obj/effect/turf_decal/box/white{
 	color = "#EFB341"
@@ -99669,7 +99662,7 @@ oOY
 agA
 odO
 aPb
-cxe
+aUb
 lxE
 pyh
 aUj
@@ -99926,7 +99919,7 @@ cMo
 cMo
 lvc
 azk
-jXv
+aJS
 iPb
 jED
 cni
