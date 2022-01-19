@@ -23,6 +23,7 @@
 		else
 			. += span_warning("You need to have the card in your hand to check it!")
 		. += span_notice("Right-click to flip it.")
+		. += span_notice("Alt-click to rotate it 90 degrees.")
 
 /**
  * ## Flip
@@ -124,10 +125,29 @@
 	Flip()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/toy/cards/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
+		return
+	Flip()
+
 /obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
+
+/obj/item/toy/cards/singlecard/AltClick(mob/living/carbon/human/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+		src.transform = turn(src.transform, 90)
+/**		
+		var/matrix/M = matrix()
+		M.Turn(90)
+		transform = M
+		// OR
+		var/matrix/M = matrix()
+		M.Turn(45)
+		src.transform = M
+**/
+	return ..()
 
 /obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
 	..()
