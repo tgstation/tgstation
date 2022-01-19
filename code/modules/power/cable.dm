@@ -97,7 +97,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(!(linked_dirs & check_dir))
 			continue
 
-		var/turf/neighbor_turf = get_step(associated_loc, check_dir)
+		var/turf/our_turf = associated_loc || loc
+
+		if(!our_turf)
+			return FALSE
+
+		var/turf/neighbor_turf = get_step(our_turf, check_dir)
 
 		for(var/obj/structure/cable/neighbor_cable in neighbor_turf.nullspaced_contents)
 			if(cable_layer & neighbor_cable.cable_layer)

@@ -9,7 +9,7 @@
 	///used so we can keep our maptick improvements when parent is on a turf that shows undertiles but doesnt allow interacting with them.
 	var/mutable_appearance/nullspace_underlay
 
-	///essentially used by t-ray scanners
+	///applies this trait to parent when its completely hidden.
 	var/invisibility_trait
 
 /datum/component/nullspace_undertile/Initialize(mutable_appearance/tile_overlay, invisibility_trait, nullspace_when_underfloor_visible = FALSE)
@@ -53,20 +53,17 @@
 			if(nullspace_underlay) //if this exists then we nullspace in this case
 				source.loc = null
 				real_loc.underlays += nullspace_underlay
-
 			else
 				source.loc = real_loc
-
 			if(tile_overlay)
-				real_loc.overlays -= tile_overlay
-
+				real_loc.cut_overlay(tile_overlay)
 			if(invisibility_trait)
 				REMOVE_TRAIT(parent, invisibility_trait, TRAIT_GENERIC)
 
 		if(UNDERFLOOR_INTERACTABLE)
 			source.loc = real_loc
 			if(tile_overlay)
-				real_loc.overlays -= tile_overlay
+				real_loc.cut_overlay(tile_overlay)
 			if(nullspace_underlay)
 				real_loc.underlays -= nullspace_underlay
 			if(invisibility_trait)

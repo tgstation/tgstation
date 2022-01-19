@@ -21,8 +21,6 @@
 
 	var/volume = 0
 
-	var/mutable_appearance/t_ray_overlay // TODOKYLER: fix this
-
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
