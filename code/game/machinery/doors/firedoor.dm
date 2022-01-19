@@ -298,6 +298,8 @@
 	if(!isliving(movable))
 		return
 	var/mob/living/opener = movable
+	if(!ISADVANCEDTOOLUSER(opener))
+		return
 	if(iscyborg(opener))
 		var/mob/living/silicon/robot/robot = opener
 		if(robot.module_active?.tool_behaviour == TOOL_CROWBAR)
