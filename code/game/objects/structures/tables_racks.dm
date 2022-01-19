@@ -103,7 +103,8 @@
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = weapon 
 		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table=TRUE, flip_card_over=TRUE)
-		src.attackby(card, user, params)
+		if(card)
+			src.attackby(card, user, params)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
