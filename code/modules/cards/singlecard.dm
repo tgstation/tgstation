@@ -75,8 +75,6 @@
 
 	for (var/obj/item/toy/cards/singlecard/card in cards)
 		user.dropItemToGround(card) // drop them all so the loc will properly update
-		if (!card.flipped)
-			card.Flip() // flip so the card shows up in the cardhand properly
 		new_cardhand.cards += card
 
 	if (preexisting)
@@ -117,9 +115,11 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/user, params)
+/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
