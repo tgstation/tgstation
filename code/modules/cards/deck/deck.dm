@@ -19,6 +19,13 @@
 	AddElement(/datum/element/drag_pickup)
 	populate_deck()
 
+/obj/item/toy/cards/deck/examine(mob/user)
+	. = ..()
+	. += span_notice("Left-click to draw a card face down.")
+	. += span_notice("Right-click to draw a card face up.")
+	. += span_notice("Alt-Click to shuffle the deck.")
+	. += span_notice("Click and drag the deck to yourself to pickup.")
+
 /**
  * ## generate_card
  *
