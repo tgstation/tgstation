@@ -88,7 +88,7 @@
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
-	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
@@ -131,7 +131,7 @@
 		/obj/item/reagent_containers/glass/bottle,
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/medspray,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
