@@ -139,7 +139,8 @@
 	var/atom/old_loc = moving.loc
 	moving.Move(get_step(moving, direction), direction)
 	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
-	return old_loc != moving.loc
+	// Moving also can be null on occasion, if the move deleted it and therefor us
+	return old_loc != moving?.loc
 
 /**
  * Like move(), but it uses byond's pathfinding on a step by step basis
@@ -164,7 +165,7 @@
 /datum/move_loop/move/move_to/move()
 	var/atom/old_loc = moving.loc
 	step_to(moving, get_step(moving, direction))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -190,7 +191,7 @@
 /datum/move_loop/move/force/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, direction))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /datum/move_loop/has_target
@@ -243,7 +244,7 @@
 /datum/move_loop/has_target/force_move/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, get_dir(moving, target)))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -364,7 +365,7 @@
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
 	moving.Move(next_step, get_dir(moving, next_step))
-	. = (old_loc != moving.loc)
+	. = (old_loc != moving?.loc)
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
@@ -427,7 +428,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_to(moving, target)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /**
  * Wrapper around walk_away()
@@ -460,7 +461,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_away(moving, target)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -563,7 +564,7 @@
 		x_rate = 0
 		y_rate = 0
 		return
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
@@ -639,7 +640,7 @@
 	var/turf/target_turf = get_step_towards(moving, target)
 	var/atom/old_loc = moving.loc
 	moving.Move(target_turf, get_dir(moving, target_turf))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -685,7 +686,7 @@
 		var/turf/moving_towards = get_step(moving, testdir)
 		var/atom/old_loc = moving.loc
 		moving.Move(moving_towards, testdir)
-		if(old_loc != moving.loc)  //If it worked, we're done
+		if(old_loc != moving?.loc)  //If it worked, we're done
 			return TRUE
 		potential_dirs -= testdir
 	return FALSE
@@ -713,7 +714,7 @@
 /datum/move_loop/move_to_rand/move()
 	var/atom/old_loc = moving.loc
 	step_rand(moving)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /**
  * Snowflake disposal movement. Moves a disposal holder along a chain of disposal pipes
@@ -749,5 +750,5 @@
 /datum/move_loop/disposal_holder/move()
 	var/obj/structure/disposalholder/holder = moving
 	var/atom/old_loc = moving.loc
-	holder.current_pipe.transfer(holder)
-	return old_loc != moving.loc
+	holder.current_pipe = holder.current_pipe.transfer(holder)
+	return old_loc != moving?.loc
