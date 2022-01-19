@@ -31,8 +31,6 @@
  * flips the card over
  */
 /obj/item/toy/cards/singlecard/proc/Flip()
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
-		return
 	flipped = !flipped
 	name = flipped ? cardname : "card"
 	update_appearance()
