@@ -51,10 +51,26 @@
 			cards += generate_card("[person] of [suit]")
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
-	if (!user.combat_mode)
-		draw_card(user, cards)
-	else
-		return ..()
+	draw_card(user, cards)
+
+/obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
+	draw_card(user, cards, flip_card_over=TRUE)
+
+/obj/item/toy/cards/deck/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user))
+		src.pickup(user)
+		user.put_in_hands(src)
+	return ..()
+
+/obj/item/toy/cards/deck/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user))
+		if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
+			return
+		COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
+		cards = shuffle(cards)
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+		user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+	return ..()
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(cards.len)
