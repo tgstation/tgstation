@@ -381,7 +381,7 @@
 			balloon_alert(user, "not painted!")
 		return TRUE
 	else if(open && attacking_item.GetID())
-		update_access(user, attacking_item)
+		update_access(user, attacking_item.GetID())
 		return TRUE
 	return ..()
 
