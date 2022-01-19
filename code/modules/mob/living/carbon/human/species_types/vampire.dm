@@ -85,7 +85,7 @@
 	name = "Drain Victim"
 	desc = "Leech blood from any carbon victim you are passively grabbing."
 
-/datum/action/item_action/organ_action/vampire/Trigger()
+/datum/action/item_action/organ_action/vampire/Trigger(trigger_flags)
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner

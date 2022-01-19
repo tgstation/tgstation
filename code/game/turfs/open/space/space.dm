@@ -14,6 +14,7 @@
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25

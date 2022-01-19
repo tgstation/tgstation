@@ -13,12 +13,14 @@
 	var/message = "You find yourself too shy to do that around %TARGET!"
 	/// Are you shy around a dead body?
 	var/dead_shy = FALSE
+	/// If dead_shy is false and this is true, you're only shy when right next to a dead target
+	var/dead_shy_immediate = TRUE
 	/// Invalidate last_result at this time
 	COOLDOWN_DECLARE(result_cooldown)
 	/// What was our last result?
 	var/last_result = FALSE
 
-/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, machine_whitelist)
+/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, dead_shy_immediate, machine_whitelist)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.mob_whitelist = mob_whitelist
@@ -28,6 +30,8 @@
 		src.message = message
 	if(dead_shy)
 		src.dead_shy = dead_shy
+	if(dead_shy_immediate)
+		src.dead_shy_immediate = dead_shy_immediate
 	if(machine_whitelist)
 		src.machine_whitelist = machine_whitelist
 
@@ -75,10 +79,18 @@
 
 	if(length(strangers) && locate(/mob/living) in strangers)
 		for(var/mob/living/person in strangers)
-			if(person != owner && !is_type_in_typecache(person, mob_whitelist) && (person.stat != DEAD || dead_shy))
-				to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
-				result = TRUE
-				break
+			if(person == owner)
+				continue
+			if(!is_type_in_typecache(person, mob_whitelist))
+				continue
+			if(person.stat == DEAD && !dead_shy)
+				if(!dead_shy_immediate)
+					continue
+				else if(!owner.DirectAccess(person))
+					continue
+			to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
+			result = TRUE
+			break
 
 	last_result = result
 	COOLDOWN_START(src, result_cooldown, SHY_COMPONENT_CACHE_TIME)

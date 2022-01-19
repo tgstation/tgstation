@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Eliminated a runtime error related to Modular Map Loading"

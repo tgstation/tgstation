@@ -12,10 +12,10 @@
 	incompatible_modules = list(/obj/item/mod/module/springlock)
 
 /obj/item/mod/module/springlock/on_install()
-	mod.activation_step_time *= 0.75
+	mod.activation_step_time *= 0.5
 
 /obj/item/mod/module/springlock/on_uninstall()
-	mod.activation_step_time /= 0.75
+	mod.activation_step_time *= 2
 
 /obj/item/mod/module/springlock/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
@@ -26,16 +26,18 @@
 ///Signal fired when wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
+
 	if(!(methods & (VAPOR|PATCH|TOUCH)))
 		return //remove non-touch reagent exposure
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
-	playsound(src, 'sound/items/springlock.ogg', 75, TRUE)
+	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
+
 	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
@@ -48,8 +50,10 @@
 	mod.wearer.emote("scream")
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, sharpness = SHARP_POINTY, def_zone = BODY_ZONE_CHEST) //boggers, bogchamp, etc
-	mod.wearer.death() //just in case, for some reason, they're still alive
+	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
+	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
+		mod.wearer.death() //just in case, for some reason, they're still alive
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
@@ -69,13 +73,13 @@
 	var/list/songs = list()
 	/// A list of the colors the module can take.
 	var/static/list/rainbow_order = list(
-		"#FF6666",
-		"#FFAA66",
-		"#FFFF66",
-		"#66FF66",
-		"#66AAFF",
-		"#AA66FF",
-		)
+		list(1,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,0.5,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,0,0,0, 0,1,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,0,0,0, 0,0.5,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
+		list(1,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0),
+	)
 
 /obj/item/mod/module/visor/rave/Initialize(mapload)
 	. = ..()
@@ -101,7 +105,7 @@
 	rave_screen = mod.wearer.add_client_colour(/datum/client_colour/rave)
 	rave_screen.update_colour(rainbow_order[rave_number])
 	if(selection)
-		mod.wearer.playsound_local(get_turf(src), null, 50, channel = CHANNEL_JUKEBOX, S = sound(selection.song_path), use_reverb = FALSE)
+		SEND_SOUND(mod.wearer, sound(selection.song_path, volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/on_deactivation()
 	. = ..()
@@ -110,6 +114,7 @@
 	QDEL_NULL(rave_screen)
 	if(selection)
 		mod.wearer.stop_sound_channel(CHANNEL_JUKEBOX)
+		SEND_SOUND(mod.wearer, sound('sound/machines/terminal_off.ogg', volume = 50, channel = CHANNEL_JUKEBOX))
 
 /obj/item/mod/module/visor/rave/generate_worn_overlay(mutable_appearance/standing)
 	. = ..()
@@ -126,7 +131,7 @@
 /obj/item/mod/module/visor/rave/get_configuration()
 	. = ..()
 	if(length(songs))
-		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, songs)
+		.["selection"] = add_ui_configuration("Song", "list", selection.song_name, clean_songs())
 
 /obj/item/mod/module/visor/rave/configure_edit(key, value)
 	switch(key)
@@ -134,6 +139,11 @@
 			if(active)
 				return
 			selection = songs[value]
+
+/obj/item/mod/module/visor/rave/proc/clean_songs()
+	. = list()
+	for(var/track in songs)
+		. += track
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
@@ -143,7 +153,7 @@
 	icon_state = "tanning"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/tanner)
 	cooldown_time = 30 SECONDS
 
@@ -166,7 +176,7 @@
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN*0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*0.5
 	incompatible_modules = list(/obj/item/mod/module/balloon)
 	cooldown_time = 15 SECONDS
 
@@ -177,10 +187,53 @@
 	if(!do_after(mod.wearer, 10 SECONDS, target = mod))
 		return FALSE
 	mod.wearer.adjustOxyLoss(20)
-	playsound(src, 'sound/items/inflate_bloon.ogg', 50, TRUE)
+	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
 	var/obj/item/toy/balloon/balloon = new(get_turf(src))
 	mod.wearer.put_in_hands(balloon)
 	drain_power(use_power_cost)
+
+///Paper Dispenser - Dispenses (sometimes burning) paper sheets.
+/obj/item/mod/module/paper_dispenser
+	name = "MOD paper dispenser module"
+	desc = "A simple module designed by the bureaucrats of Torch Bay. \
+		It dispenses 'warm, clean, and crisp sheets of paper' onto a nearby table. Usually."
+	icon_state = "paper_maker"
+	module_type = MODULE_USABLE
+	complexity = 1
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	incompatible_modules = list(/obj/item/mod/module/paper_dispenser)
+	cooldown_time = 5 SECONDS
+	/// The total number of sheets created by this MOD. The more sheets, them more likely they set on fire.
+	var/num_sheets_dispensed = 0
+
+/obj/item/mod/module/paper_dispenser/on_use()
+	. = ..()
+	if(!.)
+		return
+	if(!do_after(mod.wearer, 1 SECONDS, target = mod))
+		return FALSE
+
+	var/obj/item/paper/crisp_paper = new(get_turf(src))
+	crisp_paper.desc = "It's crisp and warm to the touch. Must be fresh."
+
+	var/obj/structure/table/nearby_table = locate() in range(1, mod.wearer)
+	playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	balloon_alert(mod.wearer, "dispensed paper[nearby_table ? " onto table":""]")
+
+	mod.wearer.put_in_hands(crisp_paper)
+	if(nearby_table)
+		mod.wearer.transferItemToLoc(crisp_paper, nearby_table.drop_location(), silent = FALSE)
+
+	// Up to a 30% chance to set the sheet on fire, +2% per sheet made
+	if(prob(min(num_sheets_dispensed * 2, 30)))
+		if(crisp_paper in mod.wearer.held_items)
+			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
+		crisp_paper.balloon_alert(mod.wearer, "PC LOAD LETTER!")
+		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))
+		crisp_paper.fire_act(1000, 100)
+
+	drain_power(use_power_cost)
+	num_sheets_dispensed++
 
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
@@ -189,8 +242,8 @@
 	icon_state = "atrocinator"
 	module_type = MODULE_TOGGLE
 	complexity = 2
-	active_power_cost = DEFAULT_CELL_DRAIN
-	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot)
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/magboot, /obj/item/mod/module/anomaly_locked/antigrav)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_atrocinator"
 	/// How many steps the user has taken since turning the suit on, used for footsteps.
@@ -238,7 +291,7 @@
 	else if(!turf_above && istype(current_turf) && current_turf.planetary_atmos) //nothing holding you down
 		INVOKE_ASYNC(src, .proc/fly_away)
 	else if(!(step_count % 2))
-		playsound(current_turf, 'sound/items/atrocinator_step.ogg', 50)
+		playsound(current_turf, 'sound/items/modsuit/atrocinator_step.ogg', 50)
 	step_count++
 
 #define FLY_TIME 5 SECONDS

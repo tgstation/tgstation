@@ -254,15 +254,26 @@
 /datum/team/cult
 	name = "Cult"
 
+	///The blood mark target
 	var/blood_target
+	///Image of the blood mark target
 	var/image/blood_target_image
+	///Timer for the blood mark expiration
 	var/blood_target_reset_timer
 
+	///Has a vote been called for a leader?
 	var/cult_vote_called = FALSE
+	///The cult leader
 	var/mob/living/cult_master
+	///Has the mass teleport been used yet?
 	var/reckoning_complete = FALSE
+	///Has the cult risen, and gotten red eyes?
 	var/cult_risen = FALSE
+	///Has the cult asceneded, and gotten halos?
 	var/cult_ascendent = FALSE
+
+	///Has narsie been summoned yet?
+	var/narsie_summoned = FALSE
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)

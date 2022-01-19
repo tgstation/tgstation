@@ -923,6 +923,21 @@
 	registered_name = "Syndicate"
 	trim = /datum/id_trim/syndicom/captain
 
+
+/obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare
+	name = "syndicate captain's spare ID"
+	desc = "The spare ID of the Dark Lord himself."
+	registered_name = "Captain"
+	registered_age = null
+
+/obj/item/card/id/advanced/black/syndicate_command/captain_id/syndie_spare/update_label()
+	if(registered_name == "Captain")
+		name = "[initial(name)][(!assignment || assignment == "Captain") ? "" : " ([assignment])"]"
+		update_appearance(UPDATE_ICON)
+		return
+
+	return ..()
+
 /obj/item/card/id/advanced/debug
 	name = "\improper Debug ID"
 	desc = "A debug ID card. Has ALL the all access, you really shouldn't have this."
@@ -974,7 +989,7 @@
 		to_chat(user, "Restating prisoner ID to default parameters.")
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
-	if(isnull(time_to_assign) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(choice) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	time_to_assign = round(choice)
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")

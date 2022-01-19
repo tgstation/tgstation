@@ -38,7 +38,7 @@ Assistant
 	rpg_title = "Lout"
 
 /datum/outfit/job/assistant
-	name = "Assistant"
+	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 

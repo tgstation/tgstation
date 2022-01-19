@@ -225,6 +225,10 @@
 	sharpness = SHARP_POINTY
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
+	/// The real desc of our item when extended.
+	var/hidden_desc = "It's a normal black ink pen."
+	/// The real icons used when extended.
+	var/hidden_icon = "edagger"
 	/// Whether or pen is extended
 	var/extended = FALSE
 
@@ -259,13 +263,15 @@
 	extended = active
 	if(active)
 		name = hidden_name
-		icon_state = "edagger"
-		inhand_icon_state = "edagger"
+		desc = hidden_desc
+		icon_state = hidden_icon
+		inhand_icon_state = hidden_icon
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		embedding = list(embed_chance = 100) // Rule of cool
 	else
 		name = initial(name)
+		desc = initial(desc)
 		icon_state = initial(icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
@@ -276,6 +282,15 @@
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+///syndicate prototype for smuggling missions
+/obj/item/pen/edagger/prototype
+	name = "odd pen"
+	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
+	hidden_name = "prototype hardlight dagger"
+	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
+	to energy weapons, but it's still surprisingly deadly."
+	hidden_icon = "eprototypedagger"
 
 /obj/item/pen/survival
 	name = "survival pen"

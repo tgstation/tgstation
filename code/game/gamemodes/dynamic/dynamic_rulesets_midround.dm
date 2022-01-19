@@ -750,45 +750,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//            SWARMERS    (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/swarmers
-	name = "Swarmers"
-	antag_datum = /datum/antagonist/swarmer
-	antag_flag = ROLE_SWARMER
-	required_type = /mob/dead/observer
-	enemy_roles = list(
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_SECURITY_OFFICER,
-	)
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 0
-	weight = 3
-	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/swarmers/execute()
-	var/list/spawn_locs = list()
-	for(var/x in GLOB.xeno_spawn)
-		var/turf/spawn_turf = x
-		var/light_amount = spawn_turf.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			spawn_locs += spawn_turf
-	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
-		return MAP_ERROR
-	var/obj/structure/swarmer_beacon/new_beacon = new(pick(spawn_locs))
-	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
-	notify_ghosts("\A Swarmer Beacon has spawned!", source = new_beacon, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Swarmer Beacon Spawned")
-	return ..()
-
-//////////////////////////////////////////////
-//                                          //
 //            SPACE NINJA (GHOST)           //
 //                                          //
 //////////////////////////////////////////////
@@ -999,6 +960,53 @@
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
+	return ..()
+
+/// Thief ruleset
+/datum/dynamic_ruleset/midround/opportunist
+	name = "Opportunist"
+	antag_datum = /datum/antagonist/thief
+	antag_flag = ROLE_OPPORTUNIST
+	antag_flag_override = ROLE_THIEF
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	required_candidates = 1
+	weight = 5
+	cost = 3 //Worth less than obsessed, but there's more of them.
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/opportunist/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/carbon/human/candidate in candidates)
+		if( \
+			candidate.mind.has_antag_datum(antag_datum) \
+			|| candidate.stat == DEAD \
+			|| !(ROLE_OPPORTUNIST in candidate.client?.prefs?.be_special) \
+			|| !candidate.mind.assigned_role \
+		)
+			candidates -= candidate
+
+/datum/dynamic_ruleset/midround/opportunist/execute()
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/living/carbon/human/thief = pick_n_take(candidates)
+	thief.mind.add_antag_datum(antag_datum)
+	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
+	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
 	return ..()
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.

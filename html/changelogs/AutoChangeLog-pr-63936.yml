@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "Log messages for being deconverted from a revolution are now also registered in the mob's individual logs instead of just to the game.log"
