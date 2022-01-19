@@ -569,7 +569,6 @@
 	set_active(!active)
 	playsound(src, "sparks", 75, TRUE, -1)
 
-
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
 
