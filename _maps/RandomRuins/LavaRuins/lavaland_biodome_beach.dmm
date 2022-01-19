@@ -576,10 +576,6 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
-"rn" = (
-/obj/structure/chair/stool/bar/directional/north,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "rU" = (
 /obj/item/reagent_containers/food/condiment/enzyme{
 	layer = 5
@@ -1507,7 +1503,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
 	},
-/obj/effect/mob_spawn/corpse/human/bartender{
+/obj/effect/mob_spawn/ghost_role/human/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,
