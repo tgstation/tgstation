@@ -2592,7 +2592,7 @@
 #include "code\modules\reagents\reagent_containers\dropper.dm"
 #include "code\modules\reagents\reagent_containers\glass.dm"
 #include "code\modules\reagents\reagent_containers\hypospray.dm"
-#include "code\modules\reagents\reagent_containers\medigel.dm"
+#include "code\modules\reagents\reagent_containers\medspray.dm"
 #include "code\modules\reagents\reagent_containers\patch.dm"
 #include "code\modules\reagents\reagent_containers\pill.dm"
 #include "code\modules\reagents\reagent_containers\spray.dm"
