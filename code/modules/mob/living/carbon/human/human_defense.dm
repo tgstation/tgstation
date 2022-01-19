@@ -779,7 +779,7 @@
 			broken_plural = TRUE
 		else
 			var/holder = broken[1]	//our one and only element
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				broken_plural = TRUE
 		//Put the items in that list into a string of text
 		for(var/B in broken)
@@ -791,7 +791,7 @@
 			damaged_plural = TRUE
 		else
 			var/holder = damaged[1]
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				damaged_plural = TRUE
 		for(var/D in damaged)
 			damaged_message += D

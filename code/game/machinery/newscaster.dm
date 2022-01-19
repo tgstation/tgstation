@@ -515,7 +515,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(href_list["set_channel_name"])
 			channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
 			while (findtext(channel_name," ") == 1)
-				channel_name = copytext(channel_name,2,lentext(channel_name)+1)
+				channel_name = copytext(channel_name,2,length(channel_name)+1)
 			updateUsrDialog()
 		else if(href_list["set_channel_lock"])
 			c_locked = !c_locked

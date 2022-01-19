@@ -233,7 +233,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/r_val
 	var/b_val
 	var/g_val
-	var/color_format = lentext(input_color)
+	var/color_format = length(input_color)
 	if(color_format == 3)
 		r_val = hex2num(copytext(input_color, 1, 2))*16
 		g_val = hex2num(copytext(input_color, 2, 3))*16
