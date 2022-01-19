@@ -332,7 +332,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/blue
 	name = "coolest ranch boritos corn chips"
-	desc = "Triangular corn chips. This one is in coolest ranch and would probably go well with some kind of dipping sauce."
+	desc = "Triangular corn chips. This one is in coolest ranch and would probably go well with some kind of dipping sauce. Which came first, ranch or cool ranch?"
 	icon_state = "boritos"
 	trash_type = /obj/item/trash/boritos
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/yoghurt = 1, /datum/reagent/consumable/garlic = 1)
