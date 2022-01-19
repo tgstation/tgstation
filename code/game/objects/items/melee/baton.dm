@@ -407,8 +407,7 @@
 	if(mov_content == cell)
 		cell.update_appearance()
 		cell = null
-		active = FALSE
-		update_appearance()
+		set_active(FALSE)
 
 /obj/item/melee/baton/security/update_icon_state()
 	if(active)
@@ -454,17 +453,26 @@
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
-		active = !active
+		set_active(!active)
 		balloon_alert(user, "turned [active ? "on" : "off"]")
 		playsound(src, "sparks", 75, TRUE, -1)
 	else
-		active = FALSE
+		set_active(FALSE)
 		if(!cell)
 			balloon_alert(user, "no power source!")
 		else
 			balloon_alert(user, "out of charge!")
-	update_appearance()
 	add_fingerprint(user)
+
+/obj/item/melee/baton/security/proc/set_active(new_state)
+	active = new_state
+	if(!active)
+		attack_verb_continuous = list("beats")
+		attack_verb_simple = list("beat")
+	else
+		attack_verb_continuous = list("shocks")
+		attack_verb_simple = list("shocks")
+	update_appearance()
 
 /obj/item/melee/baton/security/proc/deductcharge(deducted_charge)
 	if(!cell)
@@ -474,8 +482,7 @@
 	. = cell.use(deducted_charge)
 	if(active && cell.charge < cell_hit_cost)
 		//we're below minimum, turn off
-		active = FALSE
-		update_appearance()
+		set_active(FALSE)
 		playsound(src, "sparks", 75, TRUE, -1)
 
 /obj/item/melee/baton/security/clumsy_check(mob/living/carbon/human/user)
@@ -559,9 +566,14 @@
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
+<<<<<<< Updated upstream
 	active = !active
 	playsound(src, "sparks", 75, TRUE, -1)
 	update_appearance()
+=======
+	set_active(!active)
+	playsound(src, "sparks", 75, TRUE, -1)
+>>>>>>> Stashed changes
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.
 	preload_cell_type = /obj/item/stock_parts/cell/high
