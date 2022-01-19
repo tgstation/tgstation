@@ -66,6 +66,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "ethcolor" = "9c3030", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "moth_markings" = "None")
+	var/list/genders = list(MALE, FEMALE)
 
 	var/list/custom_names = list()
 	var/preferred_ai_core_display = "Blue"
@@ -185,7 +186,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
 			if(!(AGENDER in pref_species.species_traits))
-				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+				var/dispGender
+				if(gender == MALE)
+					dispGender = "Male"
+				else(gender == FEMALE)
+					dispGender = "Female"
+				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
 
 			dat += "<b>Special Names:</b><BR>"
