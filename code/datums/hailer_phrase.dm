@@ -70,10 +70,6 @@
 	phrase_text = "Shut up crime!"
 	phrase_sound = "shutup"
 
-/datum/hailer_phrase/super
-	phrase_text = "Face the wrath of the golden bolt."
-	phrase_sound = "super"
-
 /datum/hailer_phrase/dredd
 	phrase_text = "I am, the LAW!"
 	phrase_sound = "dredd"
