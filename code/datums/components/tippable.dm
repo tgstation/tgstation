@@ -238,4 +238,4 @@
 	self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, user), time_left / 2, TIMER_UNIQUE | TIMER_STOPPABLE)
 	roleplayed = TRUE
 
-	to_chat(user, span_notice("Your emotion has empowered you! You can now right yourself faster!"))
+	to_chat(user, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
