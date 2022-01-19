@@ -428,7 +428,7 @@
 /obj/item/clothing/suit/bronze
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "clockwork_cuirass_old"
 	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
 

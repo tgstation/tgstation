@@ -73,13 +73,13 @@
 	return 100*charge/maxcharge
 
 // use power from a cell
-/obj/item/stock_parts/cell/use(amount)
+/obj/item/stock_parts/cell/use(amount, force)
 	if(rigged && amount > 0)
 		explode()
 		return FALSE
-	if(charge < amount)
+	if(!force && charge < amount)
 		return FALSE
-	charge = (charge - amount)
+	charge = max(charge - amount, 0)
 	if(!istype(loc, /obj/machinery/power/apc))
 		SSblackbox.record_feedback("tally", "cell_used", 1, type)
 	return TRUE
@@ -202,6 +202,10 @@
 
 /obj/item/stock_parts/cell/get_part_rating()
 	return rating * maxcharge
+
+/obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	var/obj/item/mod/control/mod = storage_holder
+	return !(istype(mod) && mod.open)
 
 /* Cell variants*/
 /obj/item/stock_parts/cell/empty/Initialize(mapload)

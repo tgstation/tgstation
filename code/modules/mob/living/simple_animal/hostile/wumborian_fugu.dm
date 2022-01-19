@@ -114,8 +114,8 @@
 	if(!wumbo)
 		return
 
-	walk(src, 0)
 	wumbo = 0
+	SSmove_manager.stop_looping(src)
 	icon_state = "Fugu0"
 	obj_damage = 0
 	melee_damage_lower = 0

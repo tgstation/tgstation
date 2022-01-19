@@ -452,11 +452,11 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'goon/icons/obj/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
@@ -1298,7 +1298,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT

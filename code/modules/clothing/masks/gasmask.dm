@@ -100,7 +100,6 @@
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
-	atom_size = ITEM_SIZE_SMALL
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
 	max_filters = 3
