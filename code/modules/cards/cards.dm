@@ -111,12 +111,12 @@
 
 	cards -= card_to_draw
 
+	if(flip_card_over)
+		card_to_draw.Flip()
+
 	if(!place_on_table)
 		card_to_draw.pickup(user)
 		user.put_in_hands(card_to_draw)
-
-	if(flip_card_over)
-		card_to_draw.Flip()
 
 	user.visible_message(span_notice("[user] draws a card from [from_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [from_cardhand ? "your hand" : "the deck"]."))
 	update_appearance()
