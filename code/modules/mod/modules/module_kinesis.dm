@@ -146,7 +146,7 @@
 			return FALSE
 	else if(isitem(movable_target))
 		var/obj/item/item_target = movable_target
-		if(item_target.w_class >= WEIGHT_CLASS_GIGANTIC)
+		if(item_target.atom_size >= ITEM_SIZE_GIGANTIC)
 			return FALSE
 		if(item_target.item_flags & ABSTRACT)
 			return FALSE

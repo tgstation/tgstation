@@ -34,13 +34,6 @@
 	/// Is this door hackable?
 	var/can_hack_open = TRUE
 
-
-/obj/item/storage/secure/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_SMALL
-	STR.max_combined_w_class = 14
-
 /obj/item/storage/secure/examine(mob/user)
 	. = ..()
 	if(can_hack_open)
