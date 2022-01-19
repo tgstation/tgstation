@@ -372,7 +372,7 @@
 
 /datum/action/toggle_buffer
 	name = "Activate Auto-Wash"
-	desc = "Trade speed and water for a clean floor"
+	desc = "Trade speed and water for a clean floor."
 	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
 	button_icon_state = "activate_wash"
 	var/static/datum/callback/allow_buffer_change
