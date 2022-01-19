@@ -333,15 +333,15 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/blue
 	name = "coolest ranch boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in coolest ranch!"
+	desc = "Triangular corn chips. This one is in coolest ranch and would probably go well with some kind of dipping sauce."
 	icon_state = "boritos"
 	trash_type = /obj/item/trash/boritos
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/yoghurt = 1, /datum/reagent/consumable/garlic = 1)
-	tastes = list("fried corn" = 1, "spess salsa" = 1)
+	tastes = list("fried corn" = 1, "coolest ranch" = 1)
 
 /obj/item/food/cornchips/green
 	name = "spess salsa boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in spess salsa!"
+	desc = "Triangular corn chips. This one is in spess salsa and would probably go well with some kind of dipping sauce."
 	icon_state = "boritosgreen"
 	trash_type = /obj/item/trash/boritos/green
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/blackpepper = 1)
@@ -349,7 +349,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/red
 	name = "nacho cheese boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in nacho cheese!"
+	desc = "Triangular corn chips. This one is in nacho cheese and would probably go well with some kind of dipping sauce."
 	icon_state = "boritosred"
 	trash_type = /obj/item/trash/boritos/red
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/astrotame = 1, /datum/reagent/consumable/cornmeal = 1)
@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/cornchips/purple
 	name = "spicy sweet chili boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce. This one is in spicy sweet chili!"
+	desc = "Triangular corn chips. This one is in spicy sweet chili and would probably go well with some kind of dipping sauce."
 	icon_state = "boritospurple"
 	trash_type = /obj/item/trash/boritos/purple
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3, /datum/reagent/consumable/capsaicin = 1, /datum/reagent/consumable/sugar = 1)
