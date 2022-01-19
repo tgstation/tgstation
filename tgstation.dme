@@ -2052,6 +2052,8 @@
 #include "code\modules\antagonists\space_dragon\space_dragon.dm"
 #include "code\modules\antagonists\space_ninja\space_ninja.dm"
 #include "code\modules\antagonists\survivalist\survivalist.dm"
+#include "code\modules\antagonists\thief\thief.dm"
+#include "code\modules\antagonists\thief\thief_objectives.dm"
 #include "code\modules\antagonists\traitor\balance_helper.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
 #include "code\modules\antagonists\traitor\objective_category.dm"
