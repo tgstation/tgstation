@@ -46,7 +46,7 @@
 
 /obj/item/clothing/suit/hooded/ablative/RemoveHood()
 	var/mob/living/carbon/user = loc
-	if (!HAS_TRAIT(user, TRAIT_SECURITY_HUD))
+	if (!HAS_TRAIT_FROM(user, TRAIT_SECURITY_HUD, HELMET_TRAIT))
 		return ..()
 	var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	REMOVE_TRAIT(user, TRAIT_SECURITY_HUD, HELMET_TRAIT)
