@@ -364,7 +364,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1, "spicy & sweet chili" = 1)
 
 /obj/item/food/cornchips/random
-	name = "mystery filled boritos cornchips"
+	name = "boritos cornchips"
 	desc = "Filled with one of four delicious flavours!"
 
 /obj/item/food/cornchips/random/Initialize(mapload)
