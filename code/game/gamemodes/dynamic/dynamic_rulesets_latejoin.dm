@@ -79,7 +79,7 @@
 	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_PROVOCATEUR
-	antag_flag_override = ROLE_REV
+	antag_flag_override = ROLE_REV_HEAD
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CAPTAIN,
