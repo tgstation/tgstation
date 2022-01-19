@@ -122,11 +122,12 @@
 			return
 		mod.selected_module = src
 		if(device)
-			RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
+				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
+				mod.wearer.transferItemToLoc(device, src, force = TRUE)
 				return
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
@@ -144,7 +145,7 @@
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
 		if(device)
-			mod.wearer.transferItemToLoc(device, src, TRUE)
+			mod.wearer.transferItemToLoc(device, src, force = TRUE)
 			balloon_alert(mod.wearer, "[device] retracted")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
@@ -240,12 +241,6 @@
 	SIGNAL_HANDLER
 
 	if(!active)
-		UnregisterSignal(source, COMSIG_ATOM_EXITED)
-		if(ismob(source))
-			var/mob/mob = source
-			mob.transferItemToLoc(device, src, TRUE)
-		else
-			mod.wearer.transferItemToLoc(device, src, TRUE)
 		return
 	if(part.loc == src)
 		return
