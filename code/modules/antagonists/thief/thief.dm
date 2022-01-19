@@ -5,7 +5,6 @@
 	roundend_category = "thieves"
 	antagpanel_category = "Thief"
 	show_in_antagpanel = TRUE
-	show_to_ghosts = TRUE
 	suicide_cry = "FOR THE LION'S SHARE!!"
 	preview_outfit = /datum/outfit/thief
 	antag_hud_name = "thief"
