@@ -749,6 +749,8 @@
 
 /datum/move_loop/disposal_holder/move()
 	var/obj/structure/disposalholder/holder = moving
+	if(!holder.current_pipe)
+		return FALSE
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
 	return old_loc != moving?.loc
