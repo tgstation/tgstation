@@ -1,3 +1,6 @@
+#define CARD_FACEDOWN 0
+#define CARD_FACEUP 1
+
 /obj/item/toy/cards/singlecard
 	name = "card"
 	desc = "A playing card used to play card games like poker."
@@ -28,10 +31,17 @@
 /**
  * ## Flip
  *
- * flips the card over
+ * Flips the card over
+ * 
+ * * Arguments:
+ * * orientation (optional) - Force the card to be flipped faceup or facedown
  */
-/obj/item/toy/cards/singlecard/proc/Flip()
-	flipped = !flipped
+/obj/item/toy/cards/singlecard/proc/Flip(orientation)
+	if(!isnull(orientation))
+		flipped = orientation
+	else
+		flipped = !flipped
+
 	name = flipped ? cardname : "card"
 	update_appearance()
 
