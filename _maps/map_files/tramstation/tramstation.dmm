@@ -40,7 +40,7 @@
 "aau" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aaB" = (
 /turf/closed/wall,
 /area/maintenance/port/central)
@@ -446,7 +446,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "adS" = (
 /turf/closed/wall,
 /area/maintenance/starboard/central)
@@ -681,7 +681,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "afG" = (
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain)
@@ -696,7 +696,7 @@
 /obj/structure/bedsheetbin,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "afI" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1380,7 +1380,7 @@
 	},
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ajU" = (
 /obj/structure/railing/corner,
 /turf/open/floor/glass,
@@ -1480,7 +1480,7 @@
 	},
 /obj/structure/closet/wardrobe/grey,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aku" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "medcell";
@@ -2022,7 +2022,7 @@
 /obj/structure/closet/boxinggloves,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "anG" = (
 /turf/closed/wall,
 /area/hallway/primary/tram/left)
@@ -2539,7 +2539,7 @@
 	},
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aqV" = (
 /obj/structure/ladder,
 /turf/open/floor/iron/white,
@@ -2579,7 +2579,7 @@
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ari" = (
 /obj/machinery/modular_computer/console/preset/civilian{
 	dir = 4
@@ -2695,7 +2695,7 @@
 	},
 /obj/machinery/vending/clothing,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "arJ" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern,
@@ -3800,7 +3800,7 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ayb" = (
 /obj/machinery/field/generator,
 /obj/effect/turf_decal/stripes/line,
@@ -3858,7 +3858,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ayt" = (
 /turf/open/openspace,
 /area/hallway/primary/tram/right)
@@ -4018,7 +4018,7 @@
 /obj/structure/table,
 /obj/structure/bedsheetbin,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "azr" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -4195,7 +4195,7 @@
 	},
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aAk" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -4354,7 +4354,7 @@
 	name = "Laundromat"
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aBy" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -4708,7 +4708,7 @@
 	},
 /obj/machinery/vending/modularpc,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aDH" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -4718,7 +4718,7 @@
 	},
 /obj/machinery/washing_machine,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aDI" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -4907,7 +4907,7 @@
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aEB" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
@@ -6514,7 +6514,7 @@
 /obj/structure/closet/wardrobe/black,
 /obj/item/clothing/shoes/jackboots,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aRL" = (
 /turf/closed/wall,
 /area/maintenance/starboard/secondary)
@@ -6544,7 +6544,7 @@
 /area/construction/mining/aux_base)
 "aRW" = (
 /turf/closed/wall,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aRX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -6843,7 +6843,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aUJ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -6862,7 +6862,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aUW" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
@@ -7222,7 +7222,7 @@
 /obj/structure/closet/wardrobe/green,
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "aZb" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -14631,7 +14631,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "dLp" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -14907,7 +14907,7 @@
 /obj/structure/closet/crate/trashcart/laundry,
 /obj/effect/spawner/random/clothing/costume,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "dTm" = (
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
@@ -15689,7 +15689,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "efY" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
@@ -16699,7 +16699,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "evi" = (
 /turf/closed/wall,
 /area/security/warden)
@@ -17448,7 +17448,7 @@
 /obj/effect/landmark/start/hangover,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "eLR" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
@@ -28871,7 +28871,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "iOw" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
@@ -34401,7 +34401,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "kTU" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -40071,7 +40071,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "mWR" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
@@ -43361,7 +43361,7 @@
 /obj/structure/closet/masks,
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "ogL" = (
 /obj/structure/railing{
 	dir = 1
@@ -49609,7 +49609,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "qqR" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -50899,7 +50899,7 @@
 	},
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "qSj" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -56775,7 +56775,7 @@
 /obj/structure/chair/stool/directional/west,
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "tad" = (
 /obj/structure/chair{
 	dir = 1
@@ -58201,7 +58201,7 @@
 /obj/structure/closet/athletic_mixed,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "tzE" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access";
@@ -67545,7 +67545,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "xaO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -70095,7 +70095,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
-/area/commons/locker)
+/area/commons/dorms/laundry)
 "xTU" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/stack/sheet/iron,
