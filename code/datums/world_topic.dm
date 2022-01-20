@@ -72,7 +72,7 @@
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
+		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
 	var/final_composed = span_announce("PR: [input[keyword]]")
