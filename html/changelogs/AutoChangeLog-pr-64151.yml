@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscadd: "Reworked the MOD Kinesis module and added it to techwebs."
-  - bugfix: "fixed modsuits not running out of charge"
-  - bugfix: "fixed modsuits needing multiple cores and cell fitting being weird"
