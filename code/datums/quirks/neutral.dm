@@ -413,7 +413,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
 	// It was a heated gamer moment...
-	human_holder.say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
+	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
 
 /datum/quirk/gamer/proc/gamed()
 	// Executed when a gamer has gamed
