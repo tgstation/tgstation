@@ -31,16 +31,18 @@
 	var/h2 = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/antinoblium]
 	var/an = . ? .[MOLES] : 0
+	. = air_gases[/datum/gas/nitrogen]
+	var/n2 = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
-			if(plas > 0.5 || trit > 0.5 || h2 > 0.5 || an > 0.5)
+			if(plas > 0.5 || trit > 0.5 || h2 > 0.5 || (an > 0.5 && n2 > 0.5))
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5 || an > 0.5))
+	if((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5 || (an > 0.5 && n2 > 0.5)))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
