@@ -117,7 +117,8 @@
 
 	to_chat(tipper, span_warning("You tip over [tipped_mob]."))
 	if (!isnull(tipped_mob.client))
-		log_attack("[tipper] ([tipper.key]) has tipped over [tipped_mob] ([tipped_mob.key])!")
+		tipped_mob.log_message("[key_name(tipped_mob)] has been tipped over by [key_name(tipper)].", LOG_ATTACK)
+		tipper.log_message("[key_name(tipper)] has tipped over [key_name(tipped_mob)].", LOG_ATTACK)
 	tipped_mob.visible_message(
 		span_warning("[tipper] tips over [tipped_mob]."),
 		span_userdanger("You are tipped over by [tipper]!"),
