@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Certain traitor objectives now fail when they are supposed to instead of unintentionally succeeding, most notably when objective-critical items are destroyed."
