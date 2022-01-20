@@ -565,6 +565,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
+			var/datum/quirk/gamer/gamer_quirk = locate() in user.mind.current.quirks
+			if(gamer_quirk)
+				gamer_quirk.won_game()
 
 	else if(player_hp <= 0)
 		if(timer_id)
@@ -579,13 +582,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if (istype(living_user))
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
-
-	if(gameover)
-		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 		// If user has gamer quirk, make them mad at losing
 		var/datum/quirk/gamer/gamer_quirk = locate() in user.mind.current.quirks
 		if(gamer_quirk)
 			gamer_quirk.lost_game()
+
+	if(gameover)
+		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
 
 ///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet

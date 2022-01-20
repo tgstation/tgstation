@@ -483,6 +483,11 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
+	// Gamers love to win
+	var/datum/quirk/gamer/gamer_quirk = locate() in usr.mind.current.quirks
+	if(gamer_quirk)
+		gamer_quirk.won_game()
+	
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
