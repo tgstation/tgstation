@@ -178,7 +178,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_STRIP, src)
+	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"

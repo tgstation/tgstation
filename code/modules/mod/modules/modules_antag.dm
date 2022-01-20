@@ -1,7 +1,6 @@
 //Antag modules for MODsuits
 
-//Armor Booster
-
+///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection.
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
 	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
@@ -10,15 +9,19 @@
 		so this extra armor provides zero ability for extravehicular activity while deployed."
 	icon_state = "armor_booster"
 	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
+	/// Whether or not this module removes pressure protection.
 	var/remove_pressure_protection = TRUE
+	/// Slowdown added to the suit.
 	var/added_slowdown = -0.5
+	/// Armor values added to the suit parts.
 	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
+	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
@@ -41,8 +44,6 @@
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = NONE
-			clothing_part.cold_protection = NONE
 			spaceproofed[clothing_part] = TRUE
 
 /obj/item/mod/module/armor_booster/on_deactivation()
@@ -63,8 +64,6 @@
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = initial(clothing_part.heat_protection)
-			clothing_part.cold_protection = initial(clothing_part.cold_protection)
 	spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/elite
@@ -72,8 +71,7 @@
 	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
 	added_slowdown = -0.25
 
-//Energy Shield
-
+///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
 	name = "MOD energy shield module"
 	desc = "A personal, protective forcefield typically seen in military applications. \
@@ -82,17 +80,26 @@
 		though with its' low amount of separate charges, the user remains mortal."
 	icon_state = "energy_shield"
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
+	/// Max charges of the shield.
 	var/max_charges = 3
+	/// The time it takes for the first charge to recover.
 	var/recharge_start_delay = 20 SECONDS
+	/// How much time it takes for charges to recover after they started recharging.
 	var/charge_increment_delay = 1 SECONDS
+	/// How much charge is recovered per recovery.
 	var/charge_recovery = 1
+	/// Whether or not this shield can lose multiple charges.
 	var/lose_multiple_charges = FALSE
+	/// The item path to recharge this shielkd.
 	var/recharge_path = null
+	/// The icon file of the shield.
 	var/shield_icon_file = 'icons/effects/effects.dmi'
+	/// The icon_state of the shield.
 	var/shield_icon = "shield-red"
+	/// Charges the shield should start with.
 	var/charges
 
 /obj/item/mod/module/energy_shield/Initialize(mapload)
@@ -123,8 +130,8 @@
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
@@ -132,8 +139,7 @@
 	shield_icon = "mageshield"
 	recharge_path = /obj/item/wizard_armour_charge
 
-//Magic Nullifier
-
+///Magic Nullifier - Protects you from magic.
 /obj/item/mod/module/anti_magic
 	name = "MOD magic nullifier module"
 	desc = "A series of obsidian rods installed into critical points around the suit, \
@@ -167,8 +173,7 @@
 /obj/item/mod/module/anti_magic/wizard/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_ANTIMAGIC_NO_SELFBLOCK, MOD_TRAIT)
 
-//Insignia
-
+///Insignia - Gives you a skin specific stripe.
 /obj/item/mod/module/insignia
 	name = "MOD insignia module"
 	desc = "Despite the existence of IFF systems, radio communique, and modern methods of deductive reasoning involving \
@@ -178,7 +183,7 @@
 	icon_state = "insignia"
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/insignia)
-	overlay_state_inactive = "insignia"
+	overlay_state_inactive = "module_insignia"
 
 /obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
@@ -206,3 +211,22 @@
 
 /obj/item/mod/module/insignia/chaplain
 	color = "#f0a00c"
+
+///Anti Slip - Prevents you from slipping on water.
+/obj/item/mod/module/noslip
+	name = "MOD anti slip module"
+	desc = "These are a modified variant of standard magnetic boots, utilizing piezoelectric crystals on the soles. \
+		The two plates on the bottom of the boots automatically extend and magnetize as the user steps; \
+		a pull that's too weak to offer them the ability to affix to a hull, but just strong enough to \
+		protect against the fact that you didn't read the wet floor sign. Honk Co. has come out numerous times \
+		in protest of these modules being legal."
+	icon_state = "noslip"
+	complexity = 1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
+	incompatible_modules = list(/obj/item/mod/module/noslip)
+
+/obj/item/mod/module/noslip/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+
+/obj/item/mod/module/noslip/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)

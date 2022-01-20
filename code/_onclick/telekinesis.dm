@@ -181,11 +181,9 @@
 
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
-	if (istype(target, /atom/movable/screen))
-		return
 	var/d = get_dist(user, target)
 	if(d > TK_MAXRANGE)
-		to_chat(user, span_warning("Your mind won't reach that far."))
+		user.balloon_alert(user, "can't TK, too far!")
 		return
 	return TRUE
 

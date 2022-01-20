@@ -171,6 +171,12 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/communications
 
+/obj/item/circuitboard/computer/communications/syndicate
+	name = "Syndicate Communications (Computer Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/communications/syndicate
+
+
 /obj/item/circuitboard/computer/message_monitor
 	name = "Message Monitor (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -531,7 +537,7 @@
 	build_path = /obj/machinery/computer/exoscanner_control
 
 /obj/item/circuitboard/computer/exodrone_console
-	name = "Exploration odrone control console (Computer Board)"
+	name = "Exploration Drone Control Console (Computer Board)"
 	build_path = /obj/machinery/computer/exodrone_control_console
 
 /obj/item/circuitboard/computer/service_orders

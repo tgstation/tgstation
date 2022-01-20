@@ -1,7 +1,6 @@
 //Supply modules for MODsuits
 
-//Internal GPS
-
+///Internal GPS - Extends a GPS you can use.
 /obj/item/mod/module/gps
 	name = "MOD internal GPS module"
 	desc = "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, \
@@ -10,7 +9,7 @@
 	icon_state = "gps"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/gps/mod
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
@@ -21,8 +20,7 @@
 	icon_state = "gps-b"
 	gpstag = "MOD0"
 
-//Hydraulic Clamp
-
+///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
 	name = "MOD hydraulic clamp module"
 	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
@@ -31,10 +29,14 @@
 	icon_state = "clamp"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
-	var/max_crates = 5
+	overlay_state_inactive = "module_clamp"
+	overlay_state_active = "module_clamp_on"
+	/// The max amount of crates you can carry.
+	var/max_crates = 3
+	/// The crates stored in the module.
 	var/list/stored_crates = list()
 
 /obj/item/mod/module/clamp/on_select_use(atom/target)
@@ -71,13 +73,12 @@
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_power_cost)
 
-/obj/item/mod/module/clamp/on_uninstall()
+/obj/item/mod/module/clamp/on_suit_deactivation()
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
 
-//Drill
-
+///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
 	name = "MOD drill module"
 	desc = "An integrated drill, typically extending over the user's hand. While useful for drilling through rock, \
@@ -85,7 +86,7 @@
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
 
@@ -111,6 +112,12 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
+	else if(istype(target, /turf/open/floor/plating/asteroid))
+		var/turf/open/floor/plating/asteroid/sand_turf = target
+		if(!sand_turf.can_dig(mod.wearer))
+			return
+		sand_turf.getDug()
+		drain_power(use_power_cost)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -120,8 +127,7 @@
 	mineral_turf.gets_drilled(mod.wearer)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-//Ore Bag
-
+///Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
 	name = "MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \
@@ -130,9 +136,10 @@
 	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
+	/// The ores stored in the bag.
 	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()

@@ -1,0 +1,4 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "headset, spray can, card, crayon, seclite have correct suit slot sprite now."
