@@ -287,11 +287,10 @@
 	name = "Ollie"
 	desc = "Get some air! Land on a table to do a gnarly grind."
 	button_icon_state = "skateboard_ollie"
-	///Cooldown to next jump
-	var/next_ollie
+	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger(trigger_flags)
-	if(world.time > next_ollie)
+	if(..())
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
 		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
