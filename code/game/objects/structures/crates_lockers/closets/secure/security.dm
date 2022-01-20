@@ -302,6 +302,8 @@
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		/obj/item/gun/energy/e_gun/thermal
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"

@@ -379,3 +379,14 @@
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+
+//Inferno Pistol
+/obj/item/gun/energy/e_gun/thermal
+	name = "thermal pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten/frozen angry robots into the bad guys."
+	icon_state = "thermalpistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/inferno, /obj/item/ammo_casing/energy/cryo)
+	charge_sections = 4
+	ammo_x_offset = 1
+	w_class = WEIGHT_CLASS_BULKY
+	dual_wield_spread = 10 //as intended by the coders
