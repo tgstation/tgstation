@@ -211,6 +211,13 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
+	SEND_SIGNAL(gamer, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
+	
+	// Quell gaming need for gamers
+	var/datum/quirk/gamer/gamer_quirk = locate() in gamer.mind.current.quirks
+	if(gamer_quirk)
+		gamer_quirk.gamed()
+
 	if(event)
 		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
@@ -345,6 +352,11 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
+	// If the player has the gamer quirk, make them seethe with anger
+	var/datum/quirk/gamer/gamer_quirk = locate() in usr.mind.current.quirks
+	if(gamer_quirk)
+		gamer_quirk.lost_game()
+	
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)

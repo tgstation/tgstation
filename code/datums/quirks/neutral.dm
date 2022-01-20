@@ -362,3 +362,61 @@
 
 /datum/quirk/item_quirk/colorist/add_unique()
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+
+/datum/quirk/gamer
+	name = "Gamer"
+	desc = "You are a hardcore gamer, and you have a need to game. You only like gamer food."
+	icon = "egg" // TODO: CHANGE ICON!!!
+	value = 0
+	processing_quirk = TRUE
+	gain_text = span_notice("You feel the suddent urge to game.")
+	lose_text = span_notice("You've lost all interest in gaming.")
+	medical_record_text = "Patient has a severe video game addiction."
+	mob_trait = TRAIT_GAMER
+	/// The last time the gamer quelled the urge to game
+	var/last_game_time
+
+/datum/quirk/gamer/add()
+	// Gamer diet
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/datum/species/species = human_holder.dna.species
+	species.liked_food = JUNKFOOD
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+
+/datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+	new_species.liked_food = JUNKFOOD
+
+/datum/quirk/gamer/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/datum/species/species = human_holder.dna.species
+	species.liked_food = initial(species.liked_food)
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+
+/datum/quirk/gamer/add_unique()
+	// The gamer starts off quelled
+	last_game_time = world.time
+
+/datum/quirk/gamer/proc/won_game()
+	// Epic gamer victory
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_won", /datum/mood_event/gamer_won)
+
+/datum/quirk/gamer/proc/lost_game()
+	// Executed when a gamer has lost
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
+	// It was a heated gamer moment...
+	quirk_holder.say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
+
+/datum/quirk/gamer/proc/gamed()
+	// Executed when a gamer has gamed
+	last_game_time = world.time
+
+/datum/quirk/gamer/process(delta_time)
+	// If enough time has passed since the last game session, go into gamer withdrawal
+	var/current_time = world.time
+	if (current_time - last_game_time > 5 MINUTES)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")

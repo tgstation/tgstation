@@ -285,6 +285,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(usr?.mind)
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 
+	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
+	// Quell gaming need for gamers
+	var/datum/quirk/gamer/gamer_quirk = locate() in usr.mind.current.quirks
+	if(gamer_quirk)
+		gamer_quirk.gamed()
+
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
 
@@ -576,6 +582,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
+		// If user has gamer quirk, make them mad at losing
+		var/datum/quirk/gamer/gamer_quirk = locate() in user.mind.current.quirks
+		if(gamer_quirk)
+			gamer_quirk.lost_game()
 
 
 ///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
