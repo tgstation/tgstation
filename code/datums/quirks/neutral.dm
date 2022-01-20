@@ -382,6 +382,9 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = JUNKFOOD
 	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, .proc/won_game)
+	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, .proc/lost_game)
+	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, .proc/gamed)
 
 /datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -392,6 +395,9 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME)
+	UnregisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
+	UnregisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
 
 /datum/quirk/gamer/add_unique()
 	// The gamer starts off quelled

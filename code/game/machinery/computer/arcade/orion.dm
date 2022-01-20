@@ -213,10 +213,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	SEND_SIGNAL(gamer, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	
-	// Quell gaming need for gamers
-	var/datum/quirk/gamer/gamer_quirk = locate() in gamer.mind.current.quirks
-	if(gamer_quirk)
-		gamer_quirk.gamed()
+	SEND_SIGNAL(gamer, COMSIG_MOB_PLAYED_VIDEOGAME)
 
 	if(event)
 		event.response(src, action)
@@ -352,10 +349,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
-	// If the player has the gamer quirk, make them seethe with anger
-	var/datum/quirk/gamer/gamer_quirk = locate() in usr.mind.current.quirks
-	if(gamer_quirk)
-		gamer_quirk.lost_game()
+	SEND_SIGNAL(usr, COMSIG_MOB_LOST_VIDEOGAME)
 	
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
@@ -483,10 +477,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
-	// Gamers love to win
-	var/datum/quirk/gamer/gamer_quirk = locate() in usr.mind.current.quirks
-	if(gamer_quirk)
-		gamer_quirk.won_game()
+	SEND_SIGNAL(usr, COMSIG_MOB_WON_VIDEOGAME)
 	
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
