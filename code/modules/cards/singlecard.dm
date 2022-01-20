@@ -7,6 +7,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
+	worn_icon_state = "card"
 	pixel_x = -5
 	///The name of the card
 	var/cardname = null
