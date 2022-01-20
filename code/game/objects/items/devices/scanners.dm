@@ -579,7 +579,7 @@ GENE SCANNER
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gas_analyzer, TRUE)
+	AddComponent(/datum/component/atmospheric_scanner, TRUE)
 
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
