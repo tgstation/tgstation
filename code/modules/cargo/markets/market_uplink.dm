@@ -1,20 +1,24 @@
-/obj/item/blackmarket_uplink
-	name = "Black Market Uplink"
+/obj/item/market_uplink
+	name = "\improper Market Uplink"
+	desc = "An market uplink. Usable with markets. You probably shouldn't have this!"
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 
 	// UI variables.
+	/// What category is the current uplink viewing?
 	var/viewing_category
+	/// What market is currently being bought from by the uplink?
 	var/viewing_market
+	/// What item is the current uplink attempting to buy?
 	var/selected_item
+	/// Is the uplink in the process of buying the selected item?
 	var/buying
+	///Reference to the currently logged in user's bank account.
+	var/datum/bank_account/current_user
+	/// List of typepaths for "/datum/market"s that this uplink can access.
+	var/list/accessible_markets = list(/datum/market/blackmarket)
 
-	/// How much money is inserted into the uplink.
-	var/money = 0
-	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
-
-/obj/item/blackmarket_uplink/Initialize(mapload)
+/obj/item/market_uplink/Initialize(mapload)
 	. = ..()
 	// We don't want to go through this at mapload because the SSblackmarket isn't initialized yet.
 	if(mapload)
@@ -23,43 +27,14 @@
 	update_viewing_category()
 
 /// Simple internal proc for updating the viewing_category variable.
-/obj/item/blackmarket_uplink/proc/update_viewing_category()
+/obj/item/market_uplink/proc/update_viewing_category()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
 		var/list/categories = SSblackmarket.markets[viewing_market].categories
 		if(categories?.len)
 			viewing_category = categories[1]
 
-/obj/item/blackmarket_uplink/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/holochip) || istype(I, /obj/item/stack/spacecash) || istype(I, /obj/item/coin))
-		var/worth = I.get_item_credit_value()
-		if(!worth)
-			to_chat(user, span_warning("[I] doesn't seem to be worth anything!"))
-		money += worth
-		to_chat(user, span_notice("You slot [I] into [src] and it reports a total of [money] credits inserted."))
-		qdel(I)
-		return
-	. = ..()
-
-/obj/item/blackmarket_uplink/AltClick(mob/user)
-	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5, money, 1)
-	if(isnull(amount_to_remove))
-		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	if(amount_to_remove <= 0)
-		return
-
-	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
-	money -= amount_to_remove
-	holochip.name = "washed " + holochip.name
-	user.put_in_hands(holochip)
-	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
-
-/obj/item/blackmarket_uplink/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/market_uplink/ui_interact(mob/user, datum/tgui/ui)
 	if(!viewing_category)
 		update_viewing_category()
 
@@ -68,22 +43,32 @@
 		ui = new(user, src, "BlackMarketUplink", name)
 		ui.open()
 
-/obj/item/blackmarket_uplink/ui_data(mob/user)
+/obj/item/market_uplink/ui_data(mob/user)
 	var/list/data = list()
-	var/datum/blackmarket_market/market = viewing_market ? SSblackmarket.markets[viewing_market] : null
+	var/datum/market/market = viewing_market ? SSblackmarket.markets[viewing_market] : null
+	var/obj/item/card/id/id_card
+	if(isliving(user))
+		var/mob/living/livin = user
+		id_card = livin.get_idcard()
+	if(id_card?.registered_account)
+		current_user = id_card.registered_account
+	else
+		current_user = null
 	data["categories"] = market ? market.categories : null
 	data["delivery_methods"] = list()
 	if(market)
 		for(var/delivery in market.shipping)
 			data["delivery_methods"] += list(list("name" = delivery, "price" = market.shipping[delivery]))
-	data["money"] = money
+	data["money"] = "N/A cr"
+	if(current_user)
+		data["money"] = current_user.account_balance
 	data["buying"] = buying
 	data["items"] = list()
 	data["viewing_category"] = viewing_category
 	data["viewing_market"] = viewing_market
 	if(viewing_category && market)
 		if(market.available_items[viewing_category])
-			for(var/datum/blackmarket_item/I in market.available_items[viewing_category])
+			for(var/datum/market_item/I in market.available_items[viewing_category])
 				data["items"] += list(list(
 					"id" = I.type,
 					"name" = I.name,
@@ -93,20 +78,20 @@
 				))
 	return data
 
-/obj/item/blackmarket_uplink/ui_static_data(mob/user)
+/obj/item/market_uplink/ui_static_data(mob/user)
 	var/list/data = list()
 	data["delivery_method_description"] = SSblackmarket.shipping_method_descriptions
 	data["ltsrbt_built"] = SSblackmarket.telepads.len
 	data["markets"] = list()
 	for(var/M in accessible_markets)
-		var/datum/blackmarket_market/BM = SSblackmarket.markets[M]
+		var/datum/market/BM = SSblackmarket.markets[M]
 		data["markets"] += list(list(
 			"id" = M,
 			"name" = BM.name
 		))
 	return data
 
-/obj/item/blackmarket_uplink/ui_act(action, params)
+/obj/item/market_uplink/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -152,15 +137,23 @@
 			if(isnull(selected_item))
 				buying = FALSE
 				return
-			var/datum/blackmarket_market/market = SSblackmarket.markets[viewing_market]
+			var/datum/market/market = SSblackmarket.markets[viewing_market]
 			market.purchase(selected_item, viewing_category, params["method"], src, usr)
 
 			buying = FALSE
 			selected_item = null
 
+/obj/item/market_uplink/blackmarket
+	name = "\improper Black Market Uplink"
+	desc = "An illegal black market uplink. If command wanted you to have these, they wouldn't have made it so hard to get one."
+	icon = 'icons/obj/blackmarket.dmi'
+	icon_state = "uplink"
+	accessible_markets = list(/datum/market/blackmarket) ///The original black market uplink
+
+
 /datum/crafting_recipe/blackmarket_uplink
 	name = "Black Market Uplink"
-	result = /obj/item/blackmarket_uplink
+	result = /obj/item/market_uplink
 	time = 30
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER, TOOL_MULTITOOL)
 	reqs = list(
