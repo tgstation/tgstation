@@ -4,6 +4,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
+	worn_icon_state = "card"
 	///Cards in this hand of cards.
 	var/list/cards = list()
 	///List of cards to add into the hand on initialization (used for mapping mostly)
