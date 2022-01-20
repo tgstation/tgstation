@@ -951,3 +951,61 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	return REACTING
+
+/datum/gas_reaction/nitrogen_combustion
+	priority_group = PRIORITY_FIRE
+	name = "Nitrogen combustion"
+	id = "n2_combustion"
+
+/datum/gas_reaction/nitrogen_combustion/init_reqs()
+	requirements = list(
+		/datum/gas/antinoblium = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+	)
+
+/datum/gas_reaction/nitrogen_combustion/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/cached_results = air.reaction_results
+	cached_results["fire"] = 0
+	var/turf/open/location
+	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/pipenet = holder
+		location = get_turf(pick(pipenet.members))
+	else
+		location = get_turf(holder)
+	var/consumed_amount = min(0.000008 * temperature * cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] / (cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] * 8 + cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] * 0.000001 * temperature + cached_gases[/datum/gas/oxygen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] * 0.000008 * temperature), cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.125))
+	ASSERT_GAS(/datum/gas/nitrium, air)
+	cached_gases[/datum/gas/nitrogen][MOLES] -= consumed_amount
+	cached_gases[/datum/gas/oxygen][MOLES] -= consumed_amount * 0.125
+	cached_gases[/datum/gas/nitrium][MOLES] += consumed_amount
+	energy_released += consumed_amount * 40000000
+	cached_results["fire"] += consumed_amount
+	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
+	var/zap_type = DEFAULT_ZAP_ICON_STATE
+	var/flags = (ZAP_SUPERMATTER_FLAGS | ZAP_MOB_DAMAGE)
+	if(consumed_amount >= 64)
+		zap_type = SLIGHTLY_CHARGED_ZAP_ICON_STATE
+		flags |= (ZAP_MOB_STUN | ZAP_OBJ_DAMAGE)
+		if(prob(2))
+			empulse(location, min(sqrt(consumed_amount) / 3, 10), min(sqrt(consumed_amount) / 1.5, 20))
+	if(consumed_amount >= 256)
+		zap_type = OVER_9000_ZAP_ICON_STATE
+		flags |= ZAP_MACHINE_EXPLOSIVE
+	supermatter_zap(location, range = min(sqrt(consumed_amount) / 2, 8), zap_str = energy_released / 1000000, zap_cutoff = energy_released / 2000000, zap_icon = zap_type, zap_flags = flags, power_level = energy_released / 1000000)
+	if(energy_released)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
+
+	//let the floor know a fire is happening
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+
+	return cached_results["fire"] ? REACTING : NO_REACTION
