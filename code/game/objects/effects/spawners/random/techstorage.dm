@@ -36,6 +36,7 @@
 		/obj/item/circuitboard/machine/microwave,
 		/obj/item/circuitboard/machine/deep_fryer,
 		/obj/item/circuitboard/machine/griddle,
+		/obj/item/circuitboard/machine/reagentgrinder,
 		/obj/item/circuitboard/machine/oven,
 		/obj/item/circuitboard/machine/processor,
 		/obj/item/circuitboard/machine/gibber,
