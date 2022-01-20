@@ -248,8 +248,8 @@
 	
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	var/list/all_parts = mod.mod_parts.Copy() + mod 
-	for(var/obj/item/part as anything in all_parts) // turns the suit yellow
+	for(var/obj/item/part in all_parts) // turns the suit yellow
 		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
-	part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
-	part.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
+	mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
+	mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
