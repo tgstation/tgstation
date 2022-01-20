@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - bugfix: "Hitting cancel when renaming a paper now actually cancels the operation."
