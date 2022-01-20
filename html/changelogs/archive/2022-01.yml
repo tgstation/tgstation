@@ -736,3 +736,38 @@
       explode.
   - code_imp: Some math changes to how pressure based pumps calculate pressure (both
       portable and fixed). Report if problems are found.
+2022-01-20:
+  DragonTrance:
+  - balance: Maintenance Drone health changed from 30 to 45
+  - balance: Maintenance Drone stun times from getting EMP'd reduced from 10 seconds
+      to 7 seconds
+  - qol: Maintenance Drones can now interact near dead bodies
+  - qol: Maintenance Drones don't have to wait 5 minutes to open an airlock when someone
+      recently did it. Now they have to wait 1 minute.
+  - qol: Changed distance Maintenance Drones aren't allowed to interact with anything
+      from a nearby mob from 4 tiles to 3 tiles
+  ErdinyoBarboza:
+  - rscadd: Lizardpeople now enjoy eating (these) nuts.
+  Fikou:
+  - rscadd: Reworked the MOD Kinesis module and added it to techwebs.
+  - bugfix: fixed modsuits not running out of charge
+  - bugfix: fixed modsuits needing multiple cores and cell fitting being weird
+  TemporalOroboros:
+  - bugfix: Aiming at obscured turfs will no longer make you shoot somewhere up and
+      right of where you clicked.
+  Thunder12345:
+  - bugfix: The CMO's office on Icebox can no longer be entered from maint by anyone
+      with general medbay access.
+  - bugfix: Eliminated a runtime error related to Modular Map Loading
+  - bugfix: The Kilo pharmacy's door onto the public med lobby no longer requires
+      general medical access to open.
+  san7890:
+  - bugfix: Great news! If you want to crack open a window on TramStation, you shouldn't
+      be immediately greeted with the vast vacuum of space lying under said window.
+  - bugfix: Nanotrasen updated their weather protocols, it should now snow around
+      Moffuchi's Pizzeria whenever it shows up on the surface of Ice Box Station.
+  - rscadd: The Laundry Room on TramStation is now called a Laundry Room. Rejoice!
+  tralezab:
+  - rscadd: Added thieves! Low level antagonists that want to steal, hoard, and escape
+      with your goodies!
+  - rscadd: They show up roundstart and midround, and do not have a license to kill.
