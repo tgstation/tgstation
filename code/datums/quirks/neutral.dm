@@ -365,8 +365,8 @@
 
 /datum/quirk/gamer
 	name = "Gamer"
-	desc = "You are a hardcore gamer, and you have a need to game. You only like gamer food."
-	icon = "egg" // TODO: CHANGE ICON!!!
+	desc = "You are a hardcore gamer, and you have a need to game. You love winning and hate losing. You only like gamer food."
+	icon = "gamepad"
 	value = 0
 	processing_quirk = TRUE
 	gain_text = span_notice("You feel the suddent urge to game.")
@@ -407,7 +407,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
 	// It was a heated gamer moment...
-	quirk_holder.say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
+	human_holder.say("[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
 
 /datum/quirk/gamer/proc/gamed()
 	// Executed when a gamer has gamed
@@ -415,8 +415,9 @@
 
 /datum/quirk/gamer/process(delta_time)
 	// If enough time has passed since the last game session, go into gamer withdrawal
+	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/current_time = world.time
 	if (current_time - last_game_time > 5 MINUTES)
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+		SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 	else
-		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+		SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
