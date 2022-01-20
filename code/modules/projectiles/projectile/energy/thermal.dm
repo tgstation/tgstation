@@ -14,7 +14,7 @@
 	icon_state = "cryoshot"
 	damage = 15
 	damage_type = BRUTE
-	armour_penetration = 40
+	armour_penetration = 50
 	flag = ENERGY
 	sharpness = SHARP_POINTY //it's a big ol' shard of ice
 	reflectable = NONE

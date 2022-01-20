@@ -6,6 +6,7 @@
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
@@ -34,6 +35,7 @@
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
@@ -82,6 +84,7 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
+	w_class = WEIGHT_CLASS_NORMAL
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
