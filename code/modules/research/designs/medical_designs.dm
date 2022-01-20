@@ -182,11 +182,11 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/medspray
-	name = "Medical Spray"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
-	id = "medspray"
-	build_path = /obj/item/reagent_containers/medspray
+/datum/design/medigel
+	name = "Medical Gel"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
+	id = "medigel"
+	build_path = /obj/item/reagent_containers/medigel
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 500)
 	category = list("Medical Designs")

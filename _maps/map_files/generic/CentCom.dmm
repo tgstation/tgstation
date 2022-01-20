@@ -17424,9 +17424,9 @@
 /obj/machinery/iv_drip,
 /obj/item/roller,
 /obj/item/storage/firstaid/regular,
-/obj/item/reagent_containers/medspray/synthflesh,
-/obj/item/reagent_containers/medspray/synthflesh,
-/obj/item/reagent_containers/medspray/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
 /turf/open/floor/wood,
 /area/centcom/holding)
 "Qj" = (

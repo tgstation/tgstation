@@ -97,8 +97,8 @@
 	..()
 	new /obj/item/storage/box/pillbottles(src)
 	new /obj/item/storage/box/pillbottles(src)
-	new /obj/item/storage/box/medsprays(src)
-	new /obj/item/storage/box/medsprays(src)
+	new /obj/item/storage/box/medigels(src)
+	new /obj/item/storage/box/medigels(src)
 
 /obj/structure/closet/secure_closet/chemical/heisenberg //contains one of each beaker, syringe etc.
 	name = "advanced chemical closet"

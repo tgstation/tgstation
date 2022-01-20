@@ -1,8 +1,8 @@
-/obj/item/reagent_containers/medspray
-	name = "medical spray"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+/obj/item/reagent_containers/medigel
+	name = "medical gel"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "medigel" //TODO: Rename the icons to match a name like "medispray". Applies to other sprays here as well
+	icon_state = "medigel"
 	item_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -18,21 +18,21 @@
 	volume = 60
 	var/can_fill_from_container = TRUE
 	var/apply_type = PATCH
-	var/apply_method = "spray"
+	var/apply_method = "spray" //the thick gel is sprayed and then dries into patch like film.
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
 	custom_price = 40
 
-/obj/item/reagent_containers/medspray/attack_self(mob/user)
+/obj/item/reagent_containers/medigel/attack_self(mob/user)
 	squirt_mode = !squirt_mode
 	if(squirt_mode)
 		amount_per_transfer_from_this = squirt_amount
 	else
 		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
-	to_chat(user, "<span class='notice'>You will now apply the medspray's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
+	to_chat(user, "<span class='notice'>You will now apply the medigel's contents in [squirt_mode ? "short bursts":"extended sprays"]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
-/obj/item/reagent_containers/medspray/attack(mob/M, mob/user, def_zone)
+/obj/item/reagent_containers/medigel/attack(mob/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
@@ -62,32 +62,30 @@
 
 	else
 		log_combat(user, M, "applied", src, reagents.log_list())
-		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
-		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
-		reagents.reaction(M, apply_type, fraction)
-		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
+		playsound(src, 'sound/effects/spray.ogg', 30, 1, -6)
+		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user, method = apply_type)
 	return
 
-/obj/item/reagent_containers/medspray/styptic
-	name = "medical spray (styptic powder)"
-	desc = "A medical spray applicator bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
+/obj/item/reagent_containers/medigel/styptic
+	name = "medical gel (styptic powder)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
 	icon_state = "brutegel"
 	list_reagents = list(/datum/reagent/medicine/styptic_powder = 60)
 
-/obj/item/reagent_containers/medspray/silver_sulf
-	name = "medical spray (silver sulfadiazine)"
-	desc = "A medical spray applicator bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
+/obj/item/reagent_containers/medigel/silver_sulf
+	name = "medical gel (silver sulfadiazine)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains silver sulfadiazine, useful for treating burns."
 	icon_state = "burngel"
 	list_reagents = list(/datum/reagent/medicine/silver_sulfadiazine = 60)
 
-/obj/item/reagent_containers/medspray/synthflesh
-	name = "medical spray (synthflesh)"
-	desc = "A medical spray applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
+/obj/item/reagent_containers/medigel/synthflesh
+	name = "medical gel (synthflesh)"
+	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap. This one contains synthflesh, an apex brute and burn healing agent."
 	icon_state = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/synthflesh = 60)
 	custom_price = 80
 
-/obj/item/reagent_containers/medspray/sterilizine
-	name = "sterilizer spray"
-	desc = "spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
+/obj/item/reagent_containers/medigel/sterilizine
+	name = "sterilizer gel"
+	desc = "gel bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list(/datum/reagent/space_cleaner/sterilizine = 60)

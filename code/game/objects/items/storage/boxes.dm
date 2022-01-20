@@ -266,13 +266,13 @@
 	new /obj/item/reagent_containers/glass/beaker/noreact(src)
 	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 
-/obj/item/storage/box/medsprays
-	name = "box of medical sprayers"
-	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
+/obj/item/storage/box/medigels
+	name = "box of medical gels"
+	desc = "A box full of medical gel applicators, with unscrewable caps and precision spray heads."
 
-/obj/item/storage/box/medsprays/PopulateContents()
+/obj/item/storage/box/medigels/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/medspray( src )
+		new /obj/item/reagent_containers/medigel( src )
 
 /obj/item/storage/box/injectors
 	name = "box of DNA injectors"

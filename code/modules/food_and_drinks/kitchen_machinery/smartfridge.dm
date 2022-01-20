@@ -453,7 +453,7 @@
 					/obj/item/reagent_containers/glass/bottle,
 					/obj/item/reagent_containers/glass/beaker,
 					/obj/item/reagent_containers/spray,
-					/obj/item/reagent_containers/medspray,
+					/obj/item/reagent_containers/medigel,
 					/obj/item/reagent_containers/chem_pack
 	))
 
