@@ -333,7 +333,7 @@
 	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
 		return
 
-	if(!istype(AM))
+	if(!istype(AM) || isdead(AM) || iscameramob(AM) || istype(AM, /obj/effect/dummy/phased_mob))
 		return
 
 	load(AM)
