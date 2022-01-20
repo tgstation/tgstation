@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - admin: "Telemetry code will spam you with undeleted query logs much less often now!"
-  - server: "Improved how the db subsystem handles undeleted queries, should never have an incident like that again"

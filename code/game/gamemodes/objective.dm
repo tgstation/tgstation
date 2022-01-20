@@ -826,14 +826,17 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 
 /datum/objective/steal_five_of_type
 	name = "steal five of"
-	explanation_text = "Steal at least five items!"
+	explanation_text = "Steal some items!"
+	//what types we want to steal
 	var/list/wanted_items = list()
+	//how many we want to steal
+	var/amount = 5
 
-/datum/objective/steal_five_of_type/New()
+/datum/objective/steal_n_of_type/New()
 	..()
 	wanted_items = typecacheof(wanted_items)
 
-/datum/objective/steal_five_of_type/check_completion()
+/datum/objective/steal_n_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	var/stolen_count = 0
 	for(var/datum/mind/M in owners)
@@ -845,21 +848,27 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				stolen_count++
 	return stolen_count >= 5
 
-/datum/objective/steal_five_of_type/summon_guns
+/datum/objective/steal_n_of_type/summon_guns
 	name = "steal guns"
 	explanation_text = "Steal at least five guns!"
 	wanted_items = list(/obj/item/gun)
+	amount = 5
 
-/datum/objective/steal_five_of_type/summon_magic
+/datum/objective/steal_n_of_type/summon_guns/thief
+	explanation_text = "Steal at least 3 guns!"
+	amount = 3
+
+/datum/objective/steal_n_of_type/summon_magic
 	name = "steal magic"
 	explanation_text = "Steal at least five magical artefacts!"
 	wanted_items = list()
+	amount = 5
 
-/datum/objective/steal_five_of_type/summon_magic/New()
+/datum/objective/steal_n_of_type/summon_magic/New()
 	wanted_items = GLOB.summoned_magic_objectives
 	..()
 
-/datum/objective/steal_five_of_type/summon_magic/check_completion()
+/datum/objective/steal_n_of_type/summon_magic/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	var/stolen_count = 0
 	for(var/datum/mind/M in owners)
@@ -873,7 +882,34 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 					stolen_count++ //it counts. nice.
 			else if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
-	return stolen_count >= 5
+	return stolen_count >= amount
+
+/datum/objective/steal_n_of_type/organs
+	name = "steal organs"
+	explanation_text = "Steal at least 5 organic organs! They must be kept healthy."
+	wanted_items = list(/obj/item/organ)
+	amount = 5 //i want this to be higher, but the organs must be fresh at roundend
+
+/datum/objective/steal_n_of_type/organs/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/stolen_count = 0
+	for(var/datum/mind/mind in owners)
+		if(!isliving(mind.current))
+			continue
+		var/list/all_items = mind.current.get_all_contents() //this should get things in cheesewheels, books, etc.
+		for(var/obj/item/stolen in all_items) //Check for wanted items
+			var/found = FALSE
+			for(var/wanted_type in wanted_items)
+				if(istype(stolen, wanted_type))
+					found = TRUE
+					break
+			if(!found)
+				continue
+			//this is an objective item
+			var/obj/item/organ/wanted = stolen
+			if(!(wanted.organ_flags & ORGAN_FAILING) && !(wanted.organ_flags & ORGAN_SYNTHETIC))
+				stolen_count++
+	return stolen_count >= amount
 
 //Created by admin tools
 /datum/objective/custom

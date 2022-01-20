@@ -522,7 +522,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
-	inbuilt_modules = list(/obj/item/mod/module/hat_stabilizer)
 	skins = list(
 		"magnate" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -764,7 +763,7 @@
 	slowdown_inactive = 2
 	slowdown_active = 1.5
 	ui_theme = "hackerman"
-	inbuilt_modules = list(/obj/item/mod/module/kinesis)
+	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
 	skins = list(
 		"prototype" = list(
 			HELMET_LAYER = null,
@@ -912,7 +911,6 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	inbuilt_modules = list(/obj/item/mod/module/hat_stabilizer)
 	skins = list(
 		"corporate" = list(
 			HELMET_LAYER = null,
