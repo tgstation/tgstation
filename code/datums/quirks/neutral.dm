@@ -369,7 +369,7 @@
 	icon = "gamepad"
 	value = 0
 	processing_quirk = TRUE
-	gain_text = span_notice("You feel the suddent urge to game.")
+	gain_text = span_notice("You feel the sudden urge to game.")
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
 	mob_trait = TRAIT_GAMER
