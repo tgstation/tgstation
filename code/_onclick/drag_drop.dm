@@ -33,6 +33,7 @@
 	var/mouseControlObject = null
 	var/middragtime = 0
 	var/atom/middragatom
+	var/list/seen_messages
 
 /client/MouseDown(object, location, control, params)
 	if (mouse_down_icon)

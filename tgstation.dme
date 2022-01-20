@@ -298,6 +298,7 @@
 #include "code\datums\beam.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
+#include "code\datums\chatmessage.dm"
 #include "code\datums\cinematic.dm"
 #include "code\datums\dash_weapon.dm"
 #include "code\datums\datacore.dm"
