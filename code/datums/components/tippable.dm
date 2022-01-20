@@ -16,6 +16,8 @@
 	var/datum/callback/post_tipped_callback
 	/// Callback to additional behavior after being untipped.
 	var/datum/callback/post_untipped_callback
+	/// Callback to any extra roleplay behaviour
+	var/datum/callback/roleplay_callback
 	///The timer given until they untip themselves
 	var/self_untip_timer
 
@@ -35,6 +37,7 @@
 	datum/callback/post_untipped_callback,
 	roleplay_friendly = FALSE,
 	roleplay_emotes,
+	datum/callback/roleplay_callback,
 )
 
 	if(!isliving(parent))
@@ -48,6 +51,7 @@
 	src.post_untipped_callback = post_untipped_callback
 	src.roleplay_friendly = roleplay_friendly
 	src.roleplay_emotes = roleplay_emotes
+	src.roleplay_callback = roleplay_callback
 
 /datum/component/tippable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
@@ -65,6 +69,8 @@
 		QDEL_NULL(post_tipped_callback)
 	if(post_untipped_callback)
 		QDEL_NULL(post_untipped_callback)
+	if(roleplay_callback)
+		QDEL_NULL(roleplay_callback)
 	return ..()
 
 /*
@@ -235,7 +241,6 @@
 		return
 	var/time_left = timeleft(self_untip_timer)
 	deltimer(self_untip_timer)
-	self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, user), time_left / 2, TIMER_UNIQUE | TIMER_STOPPABLE)
+	self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, user), time_left * 0.75, TIMER_UNIQUE | TIMER_STOPPABLE)
 	roleplayed = TRUE
-
-	to_chat(user, span_notice("Your frustration has empowered you! You can now right yourself faster!"))
+	roleplay_callback?.Invoke(user)
