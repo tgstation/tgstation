@@ -57,6 +57,10 @@
 /area/space)
 "rs" = (
 /obj/structure/cable,
+/obj/machinery/button/door/directional/west{
+	id = gasstation;
+	name = "Shutters"
+	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -138,6 +142,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = gasstation;
+	name = "Gas Station Shutters"
+	},
 /turf/open/floor/plating,
 /area/space)
 "Hc" = (
