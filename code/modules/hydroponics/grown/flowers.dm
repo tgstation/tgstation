@@ -161,7 +161,7 @@
 	icon_state = "seed-sunflower"
 	species = "sunflower"
 	plantname = "Sunflowers"
-	product = /obj/item/grown/sunflower
+	product = /obj/item/food/grown/sunflower
 	genes = list(/datum/plant_gene/trait/attack/sunflower_attack, /datum/plant_gene/trait/preserved)
 	endurance = 20
 	production = 2
@@ -174,7 +174,7 @@
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
-/obj/item/grown/sunflower // FLOWER POWER!
+/obj/item/food/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
@@ -190,7 +190,7 @@
 	throw_speed = 1
 	throw_range = 3
 
-/obj/item/grown/sunflower/make_dryable()
+/obj/item/food/grown/sunflower/make_dryable()
 	AddElement(/datum/element/dryable, /obj/item/food/semki/healthy) //yum
 
 // Moonflower
