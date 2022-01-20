@@ -117,7 +117,7 @@
 	else
 		to_chat(user, span_warning("You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."))
 
-//Now if detective wants to get a noir fedora it will be too protected.
+//Now detective doesn't need to get a basic non-protected grey fedora if they want to follow noir style.
 /obj/item/clothing/head/fedora/det_hat/noir
 	name = "noir detective's fedora"
 	icon_state = "fedora"
