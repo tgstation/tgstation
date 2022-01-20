@@ -6,7 +6,7 @@
 /datum/component/atmospheric_scanner/Initialize(visible)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(visible)
+	if(!isnull(visible))
 		src.visible = visible
 
 /datum/component/atmospheric_scanner/RegisterWithParent()
