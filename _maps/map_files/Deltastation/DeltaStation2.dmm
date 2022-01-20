@@ -39364,14 +39364,14 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "glt" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "glz" = (
@@ -45407,22 +45407,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
-"hNr" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/turf/open/floor/iron,
-/area/science/mixing)
 "hNx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
@@ -49042,14 +49026,14 @@
 	pixel_y = 9
 	},
 /obj/item/raw_anomaly_core/random,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "iKS" = (
@@ -61434,10 +61418,10 @@
 /obj/machinery/computer/atmos_control/ordnancemix{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -74592,8 +74576,6 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
 "puE" = (
@@ -79225,7 +79207,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
 "qKy" = (
@@ -92721,6 +92702,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "uqH" = (
@@ -93962,7 +93946,6 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
 "uHd" = (
@@ -94081,7 +94064,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "uIG" = (
@@ -97285,10 +97267,10 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
 "vAb" = (
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/purple{
+/obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -98066,6 +98048,24 @@
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/central)
+"vKz" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/science/mixing)
 "vKD" = (
 /obj/structure/table/wood,
 /obj/machinery/light/directional/east,
@@ -99315,7 +99315,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/science/mixing)
 "wcF" = (
@@ -138752,9 +138751,9 @@ huK
 nXC
 saw
 uHc
-hNr
-puD
 rMd
+puD
+vKz
 uqv
 kaX
 kNB
