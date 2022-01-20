@@ -247,6 +247,7 @@
 	mod.activation_step_time *= 10
 	
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+	..()
 	var/list/all_parts = mod.mod_parts.Copy() + mod 
 	for(var/obj/item/part in all_parts) // turns the suit yellow
 		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
