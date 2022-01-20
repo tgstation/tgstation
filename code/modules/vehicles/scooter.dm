@@ -94,6 +94,12 @@
 	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
+		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
+			rider.Paralyze(8 SECONDS)
+			rider.forceMove(bumped_thing)
+			src.forceMove(bumped_thing)
+			visible_message(span_danger("[src] crashes into [bumped_thing], and gets dumped straight into it!"))
+			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
@@ -108,10 +114,10 @@
 				grinding_mulitipler = 2
 			victim.Knockdown(4 * grinding_mulitipler SECONDS)
 			victim.Paralyze(1 * grinding_mulitipler SECONDS)
-		else
-			var/backdir = turn(dir, 180)
-			step(src, backdir)
-			rider.spin(4, 1)
+	else
+		var/backdir = turn(dir, 180)
+		step(src, backdir)
+		rider.spin(4, 1)
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
@@ -155,7 +161,7 @@
 					victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
 					victim.Paralyze(1.5 SECONDS)
 					skater.adjustStaminaLoss(instability)
-					victim.visible_message(span_danger("[victim] strait up gets grinded into the ground by [skater]'s [src]! Radical!"))
+					victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 		for(var/obj/item/cut_thing in location)
 			var/cut_holder = new/obj/item/knife(null) // The lore implications is that when a skateboard runs over cheese, it summons a knife from the shadow realm to cut it
 			cut_thing.tool_act(skater, cut_holder, TOOL_KNIFE, instant_proccess = TRUE)
