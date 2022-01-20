@@ -70,6 +70,10 @@
 	owned_by = owner.client
 	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
 
+	// Remove spans in the message from things like the recorder
+	var/static/regex/span_check = new(@"<\/?span[^>]*>", "gi")
+	text = replacetext(text, span_check, "")
+
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
 	if (length_char(text) > maxlen)
@@ -129,7 +133,7 @@
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER)
-	message.plane = GAME_PLANE
+	message.plane = RUNECHAT_PLANE
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = owner.bound_height * 0.95
