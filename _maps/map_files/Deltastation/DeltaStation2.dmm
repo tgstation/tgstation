@@ -999,6 +999,10 @@
 	location = "Engineering"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/preopen{
+	id = "engielock";
+	name = "Engineering Lockdown Blast Door"
+	},
 /turf/open/floor/iron,
 /area/maintenance/port)
 "agh" = (
@@ -7267,7 +7271,7 @@
 	dir = 5
 	},
 /turf/open/space/basic,
-/area/engineering/atmos)
+/area/space/nearstation)
 "byD" = (
 /obj/machinery/gulag_item_reclaimer{
 	pixel_y = 28
@@ -35916,7 +35920,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
-/obj/effect/landmark/start/station_engineer,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -53373,6 +53376,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmoslock";
+	name = "Atmospherics Lockdown Blast door"
+	},
 /turf/open/floor/iron,
 /area/engineering/atmos/project)
 "jxO" = (
@@ -63370,7 +63377,6 @@
 	},
 /area/maintenance/starboard)
 "lSA" = (
-/obj/effect/landmark/start/station_engineer,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
@@ -70464,6 +70470,7 @@
 "nKa" = (
 /obj/structure/closet/radiation,
 /obj/effect/turf_decal/bot,
+/obj/item/analyzer,
 /turf/open/floor/iron,
 /area/engineering/atmos/hfr_room)
 "nKm" = (
@@ -74959,6 +74966,10 @@
 "oRf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
+/obj/machinery/door/poddoor/preopen{
+	id = "engielock";
+	name = "Engineering Lockdown Blast Door"
+	},
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
 "oRk" = (
@@ -94411,12 +94422,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/commons/locker)
-"uaR" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
 "ubc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/start/cargo_technician,
@@ -95178,6 +95183,14 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/storage)
+"umM" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/start/station_engineer,
+/turf/open/floor/iron,
+/area/engineering/main)
 "umQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -100593,6 +100606,7 @@
 	dir = 8
 	},
 /obj/structure/closet/radiation,
+/obj/item/analyzer,
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -104414,7 +104428,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/area/space/nearstation)
 "wEN" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
@@ -130635,7 +130649,7 @@ aaa
 aaa
 qYo
 vVc
-uaR
+ooT
 wEy
 vVc
 aFr
@@ -132442,7 +132456,7 @@ cbO
 tbn
 tIk
 mtA
-aFs
+mTG
 cFY
 qRj
 rUt
@@ -135325,7 +135339,7 @@ oMh
 cfv
 iit
 uMD
-oMh
+wNd
 ybw
 tXV
 hnN
@@ -135842,7 +135856,7 @@ wwY
 wiD
 wiD
 wiD
-wwY
+umM
 sSJ
 eYN
 eph
