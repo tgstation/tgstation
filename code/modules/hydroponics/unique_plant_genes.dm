@@ -309,7 +309,7 @@
 	/// Spawned mob's melee damage = this multiplier * seed potency.
 	var/mob_melee_multiplier = 1
 	/// Spawned mob's move delay = this multiplier * seed potency.
-	var/mob_speed_multiplier = 1
+	var/mob_speed_multiplier = 0.5
 
 /datum/plant_gene/trait/mob_transformation/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()

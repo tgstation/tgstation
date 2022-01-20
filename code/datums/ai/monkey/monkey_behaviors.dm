@@ -132,7 +132,7 @@
 			break
 
 	if(target)
-		SSmove_manager.move_away(living_pawn, target, max_dist=MONKEY_ENEMY_VISION, delay=5)
+		SSmove_manager.move_away(living_pawn, target, max_dist=MONKEY_ENEMY_VISION, delay=2.5)
 	else
 		finish_action(controller, TRUE)
 

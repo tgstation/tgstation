@@ -32,7 +32,7 @@
 	src.priority = priority
 	src.flags = flags
 
-/datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
+/datum/move_loop/proc/setup(delay = world.tick_lag, timeout = INFINITY)
 	if(!ismovable(moving) || !owner)
 		return FALSE
 
