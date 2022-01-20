@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	icon_state = "whistle"
 	inhand_icon_state = "whistle"
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_NECK
-	custom_price = PAYCHECK_HARD * 1.5
+	custom_price = PAYCHECK_COMMAND * 1.5
 	actions_types = list(/datum/action/item_action/halt)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)

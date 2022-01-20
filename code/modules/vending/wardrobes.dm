@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = PAYCHECK_ASSISTANT
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 	panel_type = "panel19"
@@ -171,7 +171,7 @@
 	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2,
 					/obj/item/organ/tongue/robot = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
-	extra_price = PAYCHECK_HARD * 1.2
+	extra_price = PAYCHECK_COMMAND * 1.2
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/robo_wardrobe
 	machine_name = "RoboDrobe"
@@ -279,7 +279,7 @@
 	premium = list(/obj/item/storage/box/dishdrive = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
-	extra_price = PAYCHECK_HARD
+	extra_price = PAYCHECK_COMMAND
 /obj/item/vending_refill/wardrobe/bar_wardrobe
 	machine_name = "BarDrobe"
 
@@ -334,8 +334,8 @@
 					/obj/item/watertank/janitor = 1,
 					/obj/item/storage/belt/janitor = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
-	default_price = PAYCHECK_EASY
-	extra_price = PAYCHECK_HARD * 0.8
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND * 0.8
 	payment_department = ACCOUNT_SRV
 	light_color = COLOR_STRONG_MAGENTA
 

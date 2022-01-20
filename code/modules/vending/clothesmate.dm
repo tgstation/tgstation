@@ -202,8 +202,8 @@
 		/obj/item/instrument/piano_synth/headphones/spacepods = 1
 	)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = PAYCHECK_ASSISTANT * 0.7 //Default of
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW * 0.7 //Default of
+	extra_price = PAYCHECK_COMMAND
 	payment_department = NO_FREEBIES
 	light_mask = "wardrobe-light-mask"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN

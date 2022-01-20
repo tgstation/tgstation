@@ -35,7 +35,7 @@
 	) //U S A
 	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
-	default_price = PAYCHECK_HARD * 2.5
+	default_price = PAYCHECK_COMMAND * 2.5
 	extra_price = PAYCHECK_COMMAND * 2.5
 	payment_department = ACCOUNT_SEC
 	light_mask = "liberation-light-mask"

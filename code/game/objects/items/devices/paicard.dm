@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_premium_price = PAYCHECK_HARD * 1.25
+	custom_premium_price = PAYCHECK_COMMAND * 1.25
 	///don't spam alert messages.
 	var/alert_cooldown
 	/// If the pAIcard is slotted in a PDA

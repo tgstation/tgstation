@@ -13,7 +13,7 @@
 	outfit = /datum/outfit/job/miner
 	plasmaman_outfit = /datum/outfit/plasmaman/mining
 
-	paycheck = PAYCHECK_MEDIUM
+	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
 
 	display_order = JOB_DISPLAY_ORDER_SHAFT_MINER

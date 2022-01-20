@@ -269,5 +269,5 @@
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	hitsound = 'sound/voice/moth/scream_moth.ogg'
-	custom_price = PAYCHECK_HARD * 2.37
-	custom_premium_price = PAYCHECK_HARD * 2.37
+	custom_price = PAYCHECK_COMMAND * 2.37
+	custom_premium_price = PAYCHECK_COMMAND * 2.37

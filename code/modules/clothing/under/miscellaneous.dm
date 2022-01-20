@@ -71,7 +71,7 @@
 	icon_state = "overalls"
 	inhand_icon_state = "lb_suit"
 	can_adjust = FALSE
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"

@@ -8,7 +8,7 @@
 	supervisors = "the security team"
 	selection_color = "#ffe1c3"
 	exp_granted_type = EXP_TYPE_CREW
-	paycheck = PAYCHECK_PRISONER
+	paycheck = PAYCHECK_LOWER
 
 	outfit = /datum/outfit/job/prisoner
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner

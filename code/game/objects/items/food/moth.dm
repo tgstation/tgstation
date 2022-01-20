@@ -369,7 +369,7 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/soup/moth_bean_stew 
+/obj/item/food/soup/moth_bean_stew
 	name = "prickeldröndolhaskl" //prickeld = spicy, röndol = bean, haskl = stew
 	desc = "A spicy bean stew with lots of veggies, commonly served aboard the fleet as a filling and satisfying meal with rice or bread."
 	icon = 'icons/obj/food/moth.dmi'
@@ -389,7 +389,7 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/soup/moth_fire_soup 
+/obj/item/food/soup/moth_fire_soup
 	name = "tömpröttkrakklmæsch" //tömprött = heart (tömp = thump, rött = muscle), krakkl = fire, mæsch = soup
 	desc = "Tömpröttkrakklmæsch, or heartburn soup, is a cold soup dish that originated amongst the jungle moths, and is named for two things- its rosy pink colour, and its scorchingly hot chilli heat."
 	icon = 'icons/obj/food/moth.dmi'
@@ -400,7 +400,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/rice_porridge
-	name = "rice porridge" 
+	name = "rice porridge"
 	desc = "A plate of rice porridge. It's mostly flavourless, but it does fill a spot. To the Chinese it's congee, and moths call it höllflöfmisklsløsk." //höllflöfmiskl = rice (höllflöf = cloud, miskl = seed), sløsk = porridge
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "rice_porridge"
@@ -410,7 +410,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/hua_mulan_congee
-	name = "\improper Hua Mulan congee" 
+	name = "\improper Hua Mulan congee"
 	desc = "Nobody is quite sure why this smiley bowl of rice porridge with eggs and bacon is named after a mythological Chinese figure- it's just sorta what it's always been called."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "hua_mulan_congee"
@@ -420,7 +420,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/toechtauese_rice_porridge
-	name = "töchtaüse rice porridge" 
+	name = "töchtaüse rice porridge"
 	desc = "Commonly served aboard the mothic fleet, rice porridge with töchtaüse syrup is more palatable than the regular stuff, if even just because it's spicier than normal."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "toechtauese_rice_porridge"
@@ -430,7 +430,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/cornmeal_porridge
-	name = "cornmeal porridge" 
+	name = "cornmeal porridge"
 	desc = "A plate of cornmeal porridge. It's more flavourful than most porridges, and makes a good base for other flavours, too."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "cornmeal_porridge"
@@ -440,7 +440,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/cheesy_porridge //milk, polenta, firm cheese, curd cheese, butter
-	name = "cheesy porridge" 
+	name = "cheesy porridge"
 	desc = "A rich and creamy bowl of cheesy cornmeal porridge."
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "cheesy_porridge"
@@ -450,7 +450,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/soup/fried_eggplant_polenta
-	name = "fried eggplant and polenta" 
+	name = "fried eggplant and polenta"
 	desc = "Polenta loaded with cheese, served with a few discs of fried eggplant and some tomato sauce. Lække!"
 	icon = 'icons/obj/food/moth.dmi'
 	icon_state = "fried_eggplant_polenta"
@@ -762,7 +762,7 @@
 	name = "\improper Activin 12 Hour medicated gum packet"
 	desc = "Stay awake during long shifts in the maintenance tunnels with Activin! The approval seal of the Mothic Nomad Fleet is emblazoned on the packaging, alongside a litany of health and safety disclaimers in both Mothic and Galactic Common."
 	icon_state = "bubblegum_wake_up"
-	custom_premium_price = PAYCHECK_EASY * 1.5
+	custom_premium_price = PAYCHECK_CREW * 1.5
 
 /obj/item/storage/box/gum/wake_up/examine_more(mob/user)
 	var/list/msg = list(span_notice("<i>You read some of the health and safety information...</i>"))

@@ -34,8 +34,8 @@
 	)
 	refill_canister = /obj/item/vending_refill/snack
 	canload_access_list = list(ACCESS_KITCHEN)
-	default_price = PAYCHECK_ASSISTANT * 0.6
-	extra_price = PAYCHECK_EASY
+	default_price = PAYCHECK_CREW * 0.6
+	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 	input_display_header = "Chef's Food Selection"
 

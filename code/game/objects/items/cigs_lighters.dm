@@ -676,7 +676,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
-	custom_price = PAYCHECK_ASSISTANT * 1.1
+	custom_price = PAYCHECK_CREW * 1.1
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	light_power = 0.6

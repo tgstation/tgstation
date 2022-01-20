@@ -3,8 +3,6 @@ SUBSYSTEM_DEF(economy)
 	wait = 5 MINUTES
 	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
-	///How many paychecks should players start out the round with?
-	var/roundstart_paychecks = 5
 	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
@@ -83,6 +81,7 @@ SUBSYSTEM_DEF(economy)
 		var/datum/bank_account/bank_account = bank_accounts_by_id[account]
 		if(bank_account?.account_job && !ispath(bank_account.account_job))
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
+		bank_account.payday(1, FALSE)
 		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
 	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
@@ -121,7 +120,7 @@ SUBSYSTEM_DEF(economy)
 		if(!is_station_level(V.z))
 			continue
 		V.reset_prices(V.product_records, V.coin_records)
-	earning_report = "Sector Economic Report<br /> Sector vendor prices is currently at [SSeconomy.inflation_value()*100]%.<br /> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
+	earning_report = "<b>Sector Economic Report</b><br /> Sector vendor prices is currently at [SSeconomy.inflation_value()*100]%.<br /> The station spending power is currently <b>[station_total] Credits</b>, and the crew's targeted allowance is at <b>[station_target] Credits</b>.<br /> That's all from the <i>Nanotrasen Economist Division</i>."
 	GLOB.news_network.SubmitArticle(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = FALSE)
 
 /**

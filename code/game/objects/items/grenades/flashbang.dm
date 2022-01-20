@@ -50,7 +50,7 @@
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 5
-	custom_premium_price = PAYCHECK_HARD * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
+	custom_premium_price = PAYCHECK_COMMAND * 3.5 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
 	name = "mega stingbang"

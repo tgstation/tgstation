@@ -88,4 +88,4 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)
 	grind_results = list(/datum/reagent/iron = 10, /datum/reagent/silicon = 10)
-	custom_price = PAYCHECK_EASY * 0.5
+	custom_price = PAYCHECK_CREW * 0.5

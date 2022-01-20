@@ -7,7 +7,7 @@
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
-	custom_premium_price = PAYCHECK_HARD * 3.5
+	custom_premium_price = PAYCHECK_COMMAND * 3.5
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]

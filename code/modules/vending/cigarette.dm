@@ -29,8 +29,8 @@
 	)
 
 	refill_canister = /obj/item/vending_refill/cigarette
-	default_price = PAYCHECK_ASSISTANT
-	extra_price = PAYCHECK_HARD
+	default_price = PAYCHECK_CREW
+	extra_price = PAYCHECK_COMMAND
 	payment_department = ACCOUNT_SRV
 	light_mask = "cigs-light-mask"
 

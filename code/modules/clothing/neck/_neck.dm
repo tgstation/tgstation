@@ -24,7 +24,7 @@
 	icon_state = "bluetie"
 	inhand_icon_state = "" //no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -96,7 +96,7 @@
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	w_class = WEIGHT_CLASS_TINY
 	dog_fashion = /datum/dog_fashion/head
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
@@ -160,17 +160,17 @@
 /obj/item/clothing/neck/stripedredscarf
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 
 /obj/item/clothing/neck/petcollar
 	name = "pet collar"
@@ -262,7 +262,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#ffffff"
-	custom_price = PAYCHECK_ASSISTANT * 0.2
+	custom_price = PAYCHECK_CREW * 0.2
 	custom_materials = (list(/datum/material/plastic = 500))
 
 /obj/item/clothing/neck/beads/Initialize(mapload)

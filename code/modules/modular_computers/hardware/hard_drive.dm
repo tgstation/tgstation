@@ -159,7 +159,7 @@
 	max_capacity = 64
 	icon_state = "ssd_mini"
 	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_MEDIUM * 2
+	custom_price = PAYCHECK_CREW * 2
 
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()

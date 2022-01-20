@@ -1,7 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	inhand_icon_state = "flashlight"
@@ -450,7 +450,7 @@
 /obj/item/flashlight/glowstick
 	name = "glowstick"
 	desc = "A military-grade glowstick."
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 	light_range = 4
 	light_system = MOVABLE_LIGHT

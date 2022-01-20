@@ -709,7 +709,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	drop_sound = 'sound/items/handling/matchbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/matchbox_pickup.ogg'
-	custom_price = PAYCHECK_ASSISTANT * 0.4
+	custom_price = PAYCHECK_CREW * 0.4
 	base_icon_state = "matchbox"
 	illustration = null
 
@@ -1101,7 +1101,7 @@
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
-	custom_premium_price = PAYCHECK_EASY * 3
+	custom_premium_price = PAYCHECK_CREW * 3
 
 /obj/item/storage/box/dishdrive/PopulateContents()
 	var/static/items_inside = list(
@@ -1224,7 +1224,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	illustration = null
 	foldable = null
-	custom_price = PAYCHECK_EASY
+	custom_price = PAYCHECK_CREW
 
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
@@ -1240,7 +1240,7 @@
 	name = "nicotine gum packet"
 	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
 	icon_state = "bubblegum_nicotine"
-	custom_premium_price = PAYCHECK_EASY * 1.5
+	custom_premium_price = PAYCHECK_CREW * 1.5
 
 /obj/item/storage/box/gum/nicotine/PopulateContents()
 	for(var/i in 1 to 4)
@@ -1250,8 +1250,8 @@
 	name = "HP+ gum packet"
 	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
 	icon_state = "bubblegum_happiness"
-	custom_price = PAYCHECK_HARD * 3
-	custom_premium_price = PAYCHECK_HARD * 3
+	custom_price = PAYCHECK_COMMAND * 3
+	custom_premium_price = PAYCHECK_COMMAND * 3
 
 /obj/item/storage/box/gum/happiness/Initialize(mapload)
 	. = ..()

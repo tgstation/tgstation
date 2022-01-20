@@ -25,7 +25,7 @@
 	bite_consumption = 10
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtypes = JUNKFOOD | RAW | GROSS
-	custom_price = PAYCHECK_ASSISTANT * 1.6 //Joke adjusted for inflation
+	custom_price = PAYCHECK_CREW * 1.6 //Joke adjusted for inflation
 	w_class = WEIGHT_CLASS_TINY
 	var/revelation = FALSE
 
@@ -111,7 +111,7 @@
 	tastes = list("dried raisins" = 1)
 	foodtypes = JUNKFOOD | FRUIT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_ASSISTANT * 0.7
+	custom_price = PAYCHECK_CREW * 0.7
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin/healthy
@@ -130,7 +130,7 @@
 	junkiness = 25
 	foodtypes = JUNKFOOD | GRAIN | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-	custom_price = PAYCHECK_PRISONER
+	custom_price = PAYCHECK_LOWER
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/candy_trash
@@ -188,7 +188,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("peanuts" = 4, "anger" = 1)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_ASSISTANT * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
+	custom_price = PAYCHECK_CREW * 0.8 //nuts are expensive in real life, and this is the best food in the vendor.
 	junkiness = 10 //less junky than other options, since peanuts are a decently healthy snack option
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
