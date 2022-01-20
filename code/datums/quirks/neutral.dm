@@ -417,7 +417,7 @@
 	// If enough time has passed since the last game session, go into gamer withdrawal
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/current_time = world.time
-	if (current_time - last_game_time > 5 MINUTES)
+	if (current_time - last_game_time > 15 MINUTES)
 		SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 	else
 		SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
