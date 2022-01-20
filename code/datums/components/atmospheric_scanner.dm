@@ -1,4 +1,4 @@
-///Atoms with this component can call it in order to get a scan of surrounding atmospherics sent to a specific mob.
+///Atoms with this component can signal it in order to get a scan of surrounding atmospherics sent to a specific mob.
 /datum/component/atmospheric_scanner
 	/// Controls if the analyzer requires being able to see it in order to obtain the results. The value is set in AddComponent.
 	var/visible = TRUE
