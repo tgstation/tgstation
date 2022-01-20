@@ -332,11 +332,11 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	icon_state = "semki"
 	trash_type = /obj/item/trash/semki
 	food_reagents = list(/datum/reagent/consumable/cornoil  = 1, /datum/reagent/consumable/salt = 6) //1 cornoil is equal to 1.33 nutriment
-	tastes = list("sunflowers" = 2, "salt" = 2, "oil" = 1)
+	tastes = list("sunflowers" = 5)
 	foodtypes = JUNKFOOD | NUTS
 	custom_price = PAYCHECK_ASSISTANT * 0.4 //sunflowers are cheap in real life.
 	bite_consumption = 1
-	junkiness = 30
+	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/semki/healthy
