@@ -1,4 +1,4 @@
-///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
+///MOD Module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
@@ -159,6 +159,7 @@
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!check_power(use_power_cost))
+		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
@@ -207,6 +208,7 @@
 	if(!check_power(amount))
 		return FALSE
 	mod.subtract_charge(amount)
+	mod.update_charge_alert()
 	return TRUE
 
 /// Checks if there is enough power in the suit
@@ -288,3 +290,90 @@
 		action = new(mod, src, user)
 		action.Grant(user)
 		pinned_to[user] = action
+
+///Anomaly Locked - Causes the module to not function without an anomaly.
+/obj/item/mod/module/anomaly_locked
+	name = "MOD anomaly locked module"
+	desc = "A form of a module, locked behind an anomalous core to function."
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
+	/// The core item the module runs off.
+	var/obj/item/assembly/signaler/anomaly/core
+	/// Accepted types of anomaly cores.
+	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
+	/// If this one starts with a core in.
+	var/prebuilt = FALSE
+
+/obj/item/mod/module/anomaly_locked/Initialize(mapload)
+	. = ..()
+	if(!prebuilt || !length(accepted_anomalies))
+		return
+	var/core_path = pick(accepted_anomalies)
+	core = new core_path(src)
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/Destroy()
+	QDEL_NULL(core)
+	return ..()
+
+/obj/item/mod/module/anomaly_locked/examine(mob/user)
+	. = ..()
+	if(!length(accepted_anomalies))
+		return
+	if(core)
+		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
+	else
+		var/list/core_list = list()
+		for(var/path in accepted_anomalies)
+			var/atom/core_path = path
+			core_list += initial(core_path.name)
+		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+
+/obj/item/mod/module/anomaly_locked/on_select()
+	if(!core)
+		balloon_alert(mod.wearer, "no core!")
+		return
+	return ..()
+
+/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+	. = ..()
+	if(!core)
+		return FALSE
+
+/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+	if(!core)
+		return FALSE
+	return TRUE
+
+/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
+	if(item.type in accepted_anomalies)
+		if(core)
+			balloon_alert(user, "core already in!")
+			return
+		if(!user.transferItemToLoc(item, src))
+			return
+		core = item
+		balloon_alert(user, "core installed")
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		update_icon_state()
+	else
+		return ..()
+
+/obj/item/mod/module/anomaly_locked/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!core)
+		balloon_alert(user, "no core!")
+		return
+	balloon_alert(user, "removing core...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	balloon_alert(user, "core removed")
+	core.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(core)
+	core = null
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/update_icon_state()
+	icon_state = initial(icon_state) + (core ? "-core" : "")
+	return ..()

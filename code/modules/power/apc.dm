@@ -304,7 +304,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 	if (area)
 		if (area.apc)
-			WARNING("Duplicate APC created at [AREACOORD(src)]")
+			log_mapping("Duplicate APC created at [AREACOORD(src)]")
 		area.apc = src
 
 	update_appearance()

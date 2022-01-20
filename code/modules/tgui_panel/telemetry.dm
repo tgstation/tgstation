@@ -112,7 +112,7 @@
 		log_suspicious_login(msg, access_log_mirror = FALSE)
 
 	// Only log them all at the end, since it's not as important as reporting an evader
-	for (var/one_query as anything in query_data)
+	for (var/list/one_query as anything in query_data)
 		var/datum/db_query/query = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("telemetry_connections")] (
 				ckey,
@@ -131,9 +131,9 @@
 			) ON DUPLICATE KEY UPDATE latest_round_id = :round_id
 		"}, list(
 			"ckey" = ckey,
-			"telemetry_ckey" = query_data["telemetry_ckey"],
-			"address" = query_data["address"],
-			"computer_id" = query_data["computer_id"], 
+			"telemetry_ckey" = one_query["telemetry_ckey"],
+			"address" = one_query["address"],
+			"computer_id" = one_query["computer_id"], 
 			"round_id" = GLOB.round_id,
 		))
 		query.Execute()

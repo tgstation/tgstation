@@ -29,7 +29,7 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 	disliked_food = GRAIN | DAIRY | CLOTH
-	liked_food = GROSS | MEAT | SEAFOOD
+	liked_food = GROSS | MEAT | SEAFOOD | NUTS
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")

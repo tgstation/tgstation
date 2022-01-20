@@ -67,3 +67,10 @@
 	icon_state = "radio_g"
 	inhand_icon_state = "radio_g"
 	clothing_traits = list(TRAIT_CAN_SIGN_ON_COMMS)
+
+/obj/item/clothing/gloves/race
+	name = "race gloves"
+	desc = "Extremely finely made gloves meant for use by sportsmen in speed-shooting competitions."
+	clothing_traits = list(TRAIT_DOUBLE_TAP)
+	icon_state = "black"
+	inhand_icon_state = "blackgloves"
