@@ -285,7 +285,7 @@
 	for (var/index in 1 to length(laws.supplied))
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			length(lawcheck) += 1
+			lawcheck.len += 1
 			if (!lawcheck[number+1])
 				lawcheck[number+1] = "Yes"
 			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
