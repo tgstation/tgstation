@@ -230,3 +230,26 @@
 
 /obj/item/mod/module/noslip/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	
+/obj/item/mod/module/springlock/bite_of_87
+	name = "MOD DNA lock module"
+	desc = "A module which engages with the various locks and seals tied to the suit's systems, \
+		enabling it to only be worn by someone corresponding with the user's exact DNA profile; \
+		however, this incredibly sensitive module is shorted out by EMPs. Luckily, cloning has been outlawed."
+	icon_state = "dnalock"
+	complexity = 2 // for all intents and purposes, looks like a real DNA lock module
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 3
+
+/obj/item/mod/module/springlock/bite_of_87/on_install()
+	mod.activation_step_time *= 0.1
+
+/obj/item/mod/module/springlock/bite_of_87/on_uninstall()
+	mod.activation_step_time *= 10
+	
+/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+	var/list/all_parts = mod.mod_parts.Copy() + mod 
+	for(var/obj/item/part as anything in all_parts) // turns the suit yellow
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
+	part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
+	part.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
