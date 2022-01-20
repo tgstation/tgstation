@@ -82,16 +82,16 @@
 		set_density(FALSE)
 	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
+/obj/vehicle/ridden/scooter/skateboard/Bump(atom/bumped_thing)
 	. = ..()
-	if(!A.density || !has_buckled_mobs() || world.time < next_crash)
+	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
 
 	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
 		rider.throw_at(throw_target, 3, 2)
@@ -99,12 +99,19 @@
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
-		visible_message(span_danger("[src] crashes into [A], sending [rider] flying!"))
-		rider.Paralyze(80)
-	else
-		var/backdir = turn(dir, 180)
-		step(src, backdir)
-		rider.spin(4, 1)
+		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
+		rider.Paralyze(8 SECONDS)
+		if(iscarbon(bumped_thing))
+			var/mob/living/carbon/victim = bumped_thing
+			var/grinding_mulitipler = 1
+			if(grinding)
+				grinding_mulitipler = 2
+			victim.Knockdown(4 * grinding_mulitipler SECONDS)
+			victim.Paralyze(1 * grinding_mulitipler SECONDS)
+		else
+			var/backdir = turn(dir, 180)
+			step(src, backdir)
+			rider.spin(4, 1)
 
 ///Moves the vehicle forward and if it lands on a table, repeats
 /obj/vehicle/ridden/scooter/skateboard/proc/grind()
@@ -116,24 +123,43 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.adjustStaminaLoss(instability*0.5)
-	if (skater.getStaminaLoss() >= 100)
+	skater.adjustStaminaLoss(instability*0.3)
+	if(skater.getStaminaLoss() >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
 		visible_message(span_danger("[skater] loses [skater.p_their()] footing and slams on the ground!"))
-		skater.Paralyze(40)
+		skater.Paralyze(4 SECONDS)
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
 	playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
-	if(prob(25))
-		var/turf/location = get_turf(src)
-		if(location)
+	var/turf/location = get_turf(src)
+
+	if(location)
+		if(prob(25))
 			location.hotspot_expose(1000,1000)
-		sparks.start() //the most radical way to start plasma fires
+			sparks.start() //the most radical way to start plasma fires
+
+		for(var/mob/living/carbon/victim in location)
+			if(victim.body_position == LYING_DOWN)
+				var/total_brute = victim.getBruteLoss()
+				playsound(location, 'sound/items/trayhit2.ogg', 40)
+				if(victim.stat == DEAD && total_brute >= 175)
+					victim.gib() // Beaten and brutalised, your body gives up
+					playsound(victim, 'sound/effects/splat.ogg', 50)
+				else
+					var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
+					victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
+					victim.Paralyze(1.5 SECONDS)
+					skater.adjustStaminaLoss(instability)
+					victim.visible_message(span_danger("[victim] strait up gets grinded into the ground by [skater]'s [src]! Radical!"))
+		for(var/obj/item/cut_thing in location)
+			var/cut_holder = new/obj/item/knife(null) // The lore implications is that when a skateboard runs over cheese, it summons a knife from the shadow realm to cut it
+			cut_thing.tool_act(skater, cut_holder, TOOL_KNIFE, instant_proccess = TRUE)
+			qdel(cut_holder) // and then disapears the knife back to where it came from.
 	addtimer(CALLBACK(src, .proc/grind), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)

@@ -1367,7 +1367,7 @@
  *
  * Must return  parent proc ..() in the end if overridden
  */
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking, instant_proccess = FALSE)
 	var/act_result
 	var/signal_result
 	if(!is_right_clicking) // Left click first for sensibility
@@ -1376,7 +1376,7 @@
 		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
 			return TOOL_ACT_SIGNAL_BLOCKING
 		if(processing_recipes.len)
-			process_recipes(user, tool, processing_recipes)
+			process_recipes(user, tool, processing_recipes, instant_proccess)
 		if(QDELETED(tool))
 			return TRUE
 		switch(tool_type)
@@ -1417,16 +1417,16 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
-/atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes)
+/atom/proc/process_recipes(mob/living/user, obj/item/processed_object, list/processing_recipes, instant_proccess = FALSE)
 	//Only one recipe? use the first
 	if(processing_recipes.len == 1)
-		StartProcessingAtom(user, processed_object, processing_recipes[1])
+		StartProcessingAtom(user, processed_object, processing_recipes[1], instant_proccess)
 		return
 	//Otherwise, select one with a radial
-	ShowProcessingGui(user, processed_object, processing_recipes)
+	ShowProcessingGui(user, processed_object, processing_recipes, instant_proccess)
 
 ///Creates the radial and processes the selected option
-/atom/proc/ShowProcessingGui(mob/living/user, obj/item/processed_object, list/possible_options)
+/atom/proc/ShowProcessingGui(mob/living/user, obj/item/processed_object, list/possible_options, instant_proccess = FALSE)
 	var/list/choices_to_options = list() //Dict of object name | dict of object processing settings
 	var/list/choices = list()
 
@@ -1438,12 +1438,16 @@
 
 	var/pick = show_radial_menu(user, src, choices, radius = 36, require_near = TRUE)
 
-	StartProcessingAtom(user, processed_object, choices_to_options[pick])
+	StartProcessingAtom(user, processed_object, choices_to_options[pick], instant_proccess)
 
 
-/atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
-	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
+/atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option, instant_proccess = FALSE)
+	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
+	if(instant_proccess)
+		processing_time = 0
+	else
+		to_chat(user, span_notice("You start working on [src]."))
+	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
