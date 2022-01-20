@@ -590,8 +590,8 @@ GENE SCANNER
 	return BRUTELOSS
 
 /obj/item/analyzer/attack_self(mob/user)
+	..()
 	add_fingerprint(user)
-	SEND_SIGNAL(src, COMSIG_GAS_ENVIRONMENT_SCAN, user, TRUE)
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()

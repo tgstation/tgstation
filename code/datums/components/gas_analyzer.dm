@@ -1,20 +1,24 @@
 ///Atoms with this component can call it in order to get a scan of surrounding atmospherics sent to a specific mob.
 /datum/component/gas_analyzer
+	/// Controls if the analyzer requires being able to see it in order to obtain the results. The value is set in AddComponent.
 	var/visible = TRUE
 
-/datum/component/gas_analyzer/Initialize(...)
+/datum/component/gas_analyzer/Initialize(visible)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+	if(visible)
+		src.visible = visible
 
 /datum/component/gas_analyzer/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_GAS_ENVIRONMENT_SCAN, .proc/analyzer_scan)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/analyzer_scan)
 
 /datum/component/gas_analyzer/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_GAS_ENVIRONMENT_SCAN)
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 
-/datum/component/gas_analyzer/proc/analyzer_scan(datum/source, mob/user, visible)
+/datum/component/gas_analyzer/proc/analyzer_scan(datum/source, mob/user)
 	SIGNAL_HANDLER
 	if (visible && (user.stat || user.is_blind())) //check if it requires visibility and if the user is you know, blind.
+		to_chat(user, span_warning("You're unable to see the [src]'s results!"))
 		return
 
 	var/turf/location = user.loc

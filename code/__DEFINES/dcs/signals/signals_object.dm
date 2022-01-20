@@ -255,9 +255,6 @@
 #define COMSIG_IMPLANT_EXISTING_UPLINK "implant_uplink_exists"
 	//This uses all return values of COMSIG_IMPLANT_OTHER
 
-/// called on gas analyzers to show the surrounding gas around someone: (mob/user, visible)
-#define COMSIG_GAS_ENVIRONMENT_SCAN "gas_environment_scan"
-
 // /obj/item/pda signals
 
 ///called on pda when the user changes the ringtone: (mob/living/user, new_ringtone)
