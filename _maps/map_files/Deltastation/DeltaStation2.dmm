@@ -6122,7 +6122,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/service/hydroponics/garden/abandoned)
 "bmS" = (
 /obj/structure/cable,
@@ -36968,7 +36968,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/maintenance/port/fore)
 "fkR" = (
 /obj/structure/disposalpipe/segment,
@@ -38814,7 +38814,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/service/hydroponics/garden/abandoned)
 "fMz" = (
 /obj/effect/landmark/start/hangover,
@@ -61416,6 +61416,12 @@
 	name = "Engineering Foyer";
 	req_one_access_txt = "32;19"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/engineering/lobby)
 "lxk" = (
@@ -62025,6 +62031,12 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "lEu" = (
@@ -77486,7 +77498,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/maintenance/department/engine/atmos)
 "pCc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -81924,11 +81936,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
-"qLb" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/checker,
-/area/engineering/supermatter/room)
 "qLc" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
@@ -98978,7 +98985,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/maintenance/port/fore)
 "vkd" = (
 /turf/closed/wall/r_wall,
@@ -103295,7 +103302,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron,
 /area/maintenance/department/engine/atmos)
 "wpW" = (
 /turf/closed/wall/r_wall,
@@ -107393,7 +107400,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron,
+/turf/open/floor/iron/half{
+	dir = 8
+	},
 /area/engineering/lobby)
 "xtl" = (
 /obj/structure/disposalpipe/segment,
@@ -134068,7 +134077,7 @@ qiH
 wrj
 jvK
 jYB
-qLb
+jYB
 vPS
 cnI
 cxO
