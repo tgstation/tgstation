@@ -70,7 +70,7 @@
 	icon_aggro = "Hivelordbrood"
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
-	move_to_delay = 1
+	move_to_delay = 1.5
 	friendly_verb_continuous = "buzzes near"
 	friendly_verb_simple = "buzz near"
 	vision_range = 10
