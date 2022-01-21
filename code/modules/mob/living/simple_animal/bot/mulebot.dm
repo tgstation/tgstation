@@ -149,7 +149,7 @@
 	reached_target = FALSE
 
 /mob/living/simple_animal/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)

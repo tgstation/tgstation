@@ -394,10 +394,10 @@
 	else
 		to_chat(user, span_warning("The maintenance panel is locked!"))
 
+	return TRUE
+
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		return FALSE
-	else if(attacking_item.GetID())
+	if(attacking_item.GetID())
 		unlock_with_id(user)
 	else if(istype(attacking_item, /obj/item/paicard))
 		insertpai(user, attacking_item)
