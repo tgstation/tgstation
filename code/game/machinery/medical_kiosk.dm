@@ -81,7 +81,7 @@
 	if(!is_operational)
 		icon_state = "[base_icon_state]_off"
 		return ..()
-	icon_state = "[base_icon_state][scan_active ? "active" : null]"
+	icon_state = "[base_icon_state][scan_active ? "_active" : null]"
 	return ..()
 
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/I) //Allows for wrenching/unwrenching the machine.

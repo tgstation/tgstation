@@ -1133,6 +1133,7 @@
 #include "code\game\machinery\announcement_system.dm"
 #include "code\game\machinery\autolathe.dm"
 #include "code\game\machinery\bank_machine.dm"
+#include "code\game\machinery\better_newscaster.dm"
 #include "code\game\machinery\bounty_board.dm"
 #include "code\game\machinery\buttons.dm"
 #include "code\game\machinery\canister_frame.dm"
