@@ -428,9 +428,8 @@
 	// Executed when a gamer has lost
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
-	// It was a heated gamer moment...
-	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
-
+	// Executed asynchronously due to say()
+	INVOKE_ASYNC(src, .proc/gamer_moment)
 /**
  * Gamer is playing a game
  *
@@ -441,6 +440,11 @@
 	SIGNAL_HANDLER
 	// Executed when a gamer has gamed
 	COOLDOWN_START(src, gaming_withdrawal, GAMING_WITHDRAWAL_TIME)
+
+/datum/quirk/gamer/proc/gamer_moment()
+	// It was a heated gamer moment...
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
 
 /datum/quirk/gamer/process(delta_time)
 	// If enough time has passed since the last game session, go into gamer withdrawal
