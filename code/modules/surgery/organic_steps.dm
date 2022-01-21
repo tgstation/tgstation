@@ -13,7 +13,8 @@
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to make an incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."))
+		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
+		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE))
 	display_pain(target, "You feel a stabbing in your [parse_zone(target_zone)].")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
@@ -28,7 +29,8 @@
 		if (!(NOBLOOD in human_target.dna.species.species_traits))
 			display_results(user, target, span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
-				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),playsound(get_turf(target), 'sound/surgery/scalpel.ogg', 75, TRUE))
+				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
+				playsound(get_turf(target), 'sound/surgery/scalpel2.ogg', 75, TRUE))
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
 				target_bodypart.generic_bleedstacks += 10
@@ -84,8 +86,16 @@
 	display_results(user, target, span_notice("You begin to retract the skin in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/retractor1', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor1.ogg', 75, TRUE))
 	display_pain(target, "You feel a severe stinging pain spreading across your [parse_zone(target_zone)] as the skin is pulled back!")
+
+/datum/surgery_step/retract_skin/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+	display_results(user, target, span_notice("You retract the skin from [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] retracts the skin from [target]'s [parse_zone(target_zone)]."),
+		span_notice("[user] retracts the skin from [target]'s [parse_zone(target_zone)]."),
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
+	display_pain(target, "You feel the skin from your [parse_zone(target_zone)] being pulled back!")
+	return ..()
 
 //close incision
 /datum/surgery_step/close
