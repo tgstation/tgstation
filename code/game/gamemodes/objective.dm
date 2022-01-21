@@ -824,9 +824,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		to_chat(admin, span_boldwarning("No active AIs with minds."))
 	update_explanation_text()
 
-/datum/objective/destroy/internal
-	var/stolen = FALSE //Have we already eliminated this target?
-
 /datum/objective/steal_n_of_type
 	name = "steal five of"
 	explanation_text = "Steal some items!"

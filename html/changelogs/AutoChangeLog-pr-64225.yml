@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Tramstation's Brig lockers can now be used more than once."
-  - qol: "Security Officers can right click Tramstation's permabrig lockers to open them early, unregistering their ID."
