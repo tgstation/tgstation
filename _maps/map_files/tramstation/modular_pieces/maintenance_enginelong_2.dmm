@@ -1,0 +1,97 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+"b" = (
+/turf/closed/wall,
+/area/maintenance/central/secondary)
+"g" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/turf/open/floor/iron,
+/area/maintenance/tram/mid)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille/broken,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_root/tramstation{
+	key = "maintenance_engine_5x6_east"
+	},
+/turf/closed/wall,
+/area/maintenance/central/secondary)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_loot_count = 2;
+	spawn_random_offset = 1;
+	spawn_scatter_radius = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+"P" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+"V" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central/secondary)
+
+(1,1,1) = {"
+g
+P
+E
+E
+I
+V
+E
+E
+w
+E
+E
+E
+I
+V
+E
+E
+E
+P
+a
+"}
+(2,1,1) = {"
+g
+b
+b
+b
+b
+b
+b
+A
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+E
+"}

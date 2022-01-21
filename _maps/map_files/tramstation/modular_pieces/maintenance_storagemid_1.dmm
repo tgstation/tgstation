@@ -1,0 +1,218 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"e" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/glass,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/head/hardhat,
+/turf/open/floor/plating,
+/area/maintenance/central)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"o" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/sign/warning{
+	desc = "A warning sign to watch for loose rocks.";
+	name = "COLLAPSE HAZARD sign";
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/maintenance/central)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"r" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"u" = (
+/turf/closed/wall,
+/area/maintenance/central)
+"y" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/item/pickaxe/mini{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"z" = (
+/turf/closed/wall/rust,
+/area/maintenance/central)
+"D" = (
+/obj/item/clothing/head/cone{
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/turf/closed/wall/rock/porous,
+/area/maintenance/central)
+"F" = (
+/obj/effect/spawner/random/structure/crate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"M" = (
+/obj/structure/barricade/wooden,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/central)
+"O" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/maintenance/central)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"S" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/central)
+"V" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/maintenance/central)
+"X" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/flashlight/flare,
+/turf/open/floor/plating,
+/area/maintenance/central)
+
+(1,1,1) = {"
+a
+a
+M
+e
+X
+E
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+o
+O
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+S
+u
+u
+u
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+p
+p
+r
+E
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+p
+P
+l
+E
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+p
+p
+c
+u
+"}
+(7,1,1) = {"
+a
+a
+a
+u
+p
+y
+u
+u
+"}
+(8,1,1) = {"
+a
+a
+u
+z
+p
+F
+E
+a
+"}
+(9,1,1) = {"
+D
+V
+p
+p
+p
+u
+u
+a
+"}
+(10,1,1) = {"
+a
+a
+u
+z
+z
+u
+a
+a
+"}

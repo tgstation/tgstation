@@ -2885,6 +2885,7 @@
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
 #include "code\modules\mapping\verify.dm"
+#include "code\modules\mapping\map_specific_code\Tramstation.dm"
 #include "code\modules\mapping\modular_map_loader\modular_map_loader.dm"
 #include "code\modules\mapping\space_management\multiz_helpers.dm"
 #include "code\modules\mapping\space_management\space_level.dm"

@@ -1,0 +1,80 @@
+directory = "_maps/map_files/tramstation/modular_pieces/"
+
+# Maintenance section east of Atmo's front desk
+[rooms.maintenance_enginelong]
+modules = ["maintenance_enginelong_1.dmm", "maintenance_enginelong_2.dmm"]
+
+[rooms.maintenance_engine_5x6_east]
+modules = ["maintenance_engine_5x6_east_1.dmm", "maintenance_engine_5x6_east_2.dmm", "maintenance_engine_5x6_east_3.dmm"]
+
+[rooms.maintenance_engine_5x6_extension]
+modules = ["maintenance_engine_5x6_extension_1.dmm", "maintenance_engine_5x6_extension_2.dmm", "maintenance_engine_5x6_extension_3.dmm"]
+
+# Maintenance section south of the civilian block on the lower level
+[rooms.maintenance_civilian_south]
+modules = ["maintenance_civilian_south_1.dmm", "maintenance_civilian_south_2.dmm", "maintenance_civilian_south_3.dmm", "generic_wall_blocker.dmm"]
+
+[rooms.maintenance_civilian_south_attachment1]
+modules = ["maintenance_civilian_south_attachment1_1.dmm", "maintenance_civilian_south_attachment1_2.dmm", "generic_wall_blocker.dmm"]
+
+[rooms.maintenance_civilian_south_attachment2]
+modules = ["maintenance_civilian_south_attachment2_1.dmm", "maintenance_civilian_south_attachment2_2.dmm", "generic_wall_blocker.dmm"]
+
+# Abandoned maintenance section west of mining, below the solar panels
+[rooms.maintenance_miningsolar]
+modules = ["maintenance_miningsolar_1.dmm", "maintenance_miningsolar_2.dmm", "maintenance_miningsolar_3.dmm"]
+
+[rooms.maintenance_miningsolar_attachment]
+modules = ["maintenance_miningsolar_attachment_1.dmm", "maintenance_miningsolar_attachment_2.dmm", "generic_wall_blocker.dmm"]
+
+[rooms.maintenance_miningsolar_cavetunnel]
+modules = ["maintenance_miningsolar_cavetunnel_1.dmm", "maintenance_miningsolar_cavetunnel_2.dmm"]
+
+[rooms.maintenance_miningsolar_cavetunnel_attachment]
+modules = ["maintenance_miningsolar_cavetunnel_attachment_1.dmm", "maintenance_miningsolar_cavetunnel_attachment_2.dmm", "generic_asteroid_blocker.dmm"]
+
+# Maintenance storage area above the lower floor tram workshop.
+[rooms.maintenance_storagebig]
+modules = ["maintenance_storagebig_1.dmm", "maintenance_storagebig_2.dmm", "maintenance_storagebig_3.dmm"]
+
+# Maintenance room below the prison garden.
+[rooms.maintenance_storagemid]
+modules = ["maintenance_storagemid_1.dmm", "maintenance_storagemid_2.dmm"]
+
+# Maintenance hall below the dorms.
+[rooms.maintenance_dorms]
+modules = ["maintenance_dorms_1.dmm", "maintenance_dorms_2.dmm"]
+
+[rooms.maintenance_dorms_attachment]
+modules = ["maintenance_dorms_attachment_1.dmm", "maintenance_dorms_attachment_2.dmm", "maintenance_dorms_attachment_3.dmm"]
+
+# Maintenance hall between medical and science.
+[rooms.maintenance_science_west]
+modules = ["maintenance_science_west_1.dmm", "maintenance_science_west_2.dmm"]
+
+[rooms.maintenance_science_west_attachment]
+modules = ["maintenance_science_west_attachment_1.dmm", "maintenance_science_west_attachment_2.dmm", "maintenance_science_west_attachment_3.dmm"]
+
+# Ladder between maintenance of cargo and the civilian wing.
+[rooms.maintenance_midladder]
+modules = ["maintenance_midladder_1.dmm", "maintenance_midladder_2.dmm"]
+
+[rooms.maintenance_midladder_upper]
+modules = ["maintenance_midladder_upper_1.dmm", "maintenance_midladder_upper_2.dmm"]
+
+[rooms.maintenance_midladder_upper_attachment]
+modules = ["maintenance_midladder_upper_attachment_1.dmm", "maintenance_midladder_upper_attachment_2.dmm"]
+
+# Maintenance shaft connecting between the security and civilian wing.
+[rooms.maintenance_security_long]
+modules = ["maintenance_security_long_1.dmm", "maintenance_security_long_2.dmm"]
+
+[rooms.maintenance_security_long_attachment]
+modules = ["maintenance_security_long_1.dmm", "maintenance_security_long_2.dmm"]
+
+# Maintenance rooms underneath the arrivals wing.
+[rooms.maintenance_lowarrivals]
+modules = ["maintenance_lowarrivals_1.dmm", "maintenance_lowarrivals_2.dmm"]
+
+[rooms.maintenance_lowarrivals_attachment]
+modules = ["maintenance_lowarrivals_attachment_1.dmm", "maintenance_lowarrivals_attachment_2.dmm"]

@@ -1,0 +1,534 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/maintenance/department/crew_quarters/dorms)
+"b" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Dorms Maintenance";
+	req_one_access_txt = "12"
+	},
+/obj/effect/turf_decal/sand,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"d" = (
+/turf/closed/wall/rust,
+/area/maintenance/department/crew_quarters/dorms)
+"e" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"h" = (
+/turf/closed/wall/rock/porous,
+/area/maintenance/department/crew_quarters/dorms)
+"i" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_dorms_attachment"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"l" = (
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/crew_quarters/dorms)
+"m" = (
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/crew_quarters/dorms)
+"t" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"y" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"A" = (
+/turf/template_noop,
+/area/template_noop)
+"D" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"E" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"K" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"L" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"N" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Dorms Maintenance";
+	req_one_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+"P" = (
+/obj/item/clothing/head/cone{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/turf/template_noop,
+/area/template_noop)
+"Q" = (
+/obj/item/clothing/head/cone{
+	pixel_x = -9;
+	pixel_y = -10
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/effect/spawner/random/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"U" = (
+/obj/effect/turf_decal/sand,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
+
+(1,1,1) = {"
+d
+R
+i
+a
+h
+K
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+d
+D
+y
+D
+L
+L
+L
+L
+L
+a
+"}
+(3,1,1) = {"
+L
+D
+A
+A
+A
+A
+A
+A
+D
+d
+"}
+(4,1,1) = {"
+N
+A
+A
+A
+A
+A
+A
+A
+D
+m
+"}
+(5,1,1) = {"
+Q
+A
+A
+A
+A
+A
+A
+A
+e
+m
+"}
+(6,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+e
+m
+"}
+(7,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+m
+"}
+(8,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+K
+"}
+(9,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+a
+"}
+(10,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+E
+a
+"}
+(11,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+d
+"}
+(12,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+a
+"}
+(13,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+K
+"}
+(14,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+h
+"}
+(15,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+a
+"}
+(16,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+a
+"}
+(17,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+f
+L
+a
+"}
+(18,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+D
+a
+a
+"}
+(19,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+D
+m
+A
+"}
+(20,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+e
+m
+A
+"}
+(21,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+e
+m
+A
+"}
+(22,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+t
+h
+A
+"}
+(23,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+L
+h
+A
+"}
+(24,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+L
+d
+d
+"}
+(25,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+L
+L
+d
+"}
+(26,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+a
+"}
+(27,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+L
+R
+"}
+(28,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+m
+"}
+(29,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+e
+m
+"}
+(30,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+l
+"}
+(31,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+U
+a
+"}
+(32,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+a
+"}
+(33,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+D
+d
+"}
+(34,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+b
+a
+"}
+(35,1,1) = {"
+A
+A
+A
+A
+A
+A
+A
+A
+P
+A
+"}

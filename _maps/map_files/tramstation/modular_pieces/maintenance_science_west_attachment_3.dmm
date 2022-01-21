@@ -1,0 +1,150 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"d" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/pickaxe/rusted,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"h" = (
+/obj/item/relic,
+/obj/item/stack/ore/iron{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material,
+/obj/effect/spawner/random/engineering/material,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"s" = (
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"v" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"z" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"A" = (
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"B" = (
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/material_cheap,
+/obj/effect/spawner/random/engineering/material_cheap,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"N" = (
+/obj/item/storage/bag/ore,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"R" = (
+/obj/item/clothing/head/cone{
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/obj/item/clothing/head/cone{
+	pixel_x = 11;
+	pixel_y = -10
+	},
+/turf/template_noop,
+/area/template_noop)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"U" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/department/medical)
+"W" = (
+/turf/closed/wall/rock/porous,
+/area/maintenance/department/medical)
+"X" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+
+(1,1,1) = {"
+a
+a
+X
+b
+B
+a
+a
+A
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+T
+T
+z
+N
+A
+A
+A
+a
+"}
+(3,1,1) = {"
+R
+v
+T
+b
+b
+A
+B
+A
+U
+W
+"}
+(4,1,1) = {"
+a
+a
+C
+n
+b
+d
+A
+s
+h
+a
+"}
+(5,1,1) = {"
+a
+a
+X
+X
+W
+A
+A
+A
+a
+a
+"}
