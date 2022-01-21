@@ -367,6 +367,6 @@
 	mood_change = -5
 
 /datum/mood_event/gamer_lost
-	description = span_boldwarning("I hate losing after a heated gamer moment!\n")
+	description = span_boldwarning("If I'm not good at video games, can I truly call myself a gamer?\n")
 	mood_change = -10
 	timeout = 10 MINUTES
