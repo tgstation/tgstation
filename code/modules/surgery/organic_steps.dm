@@ -60,7 +60,7 @@
 	display_results(user, target, span_notice("You clamp a blood vessel inside [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] clamps a blood vessel inside [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] clamps a blood vessel inside [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/tendwounds1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/hemostat1.ogg', 75, TRUE))
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
 	if (ishuman(target))
@@ -83,7 +83,8 @@
 /datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to retract the skin in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."))
+		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
+		playsound(get_turf(target), 'sound/surgery/retractor1', 75, TRUE))
 	display_pain(target, "You feel a severe stinging pain spreading across your [parse_zone(target_zone)] as the skin is pulled back!")
 
 //close incision
@@ -150,7 +151,7 @@
 	display_results(user, target, span_notice("You saw [target]'s [parse_zone(target_zone)] open."),
 		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
 		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
-		playsound(get_turf(target), 'sound/surgery/tendwounds3.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE))
 	display_pain(target, "It feels like something just broke in your [parse_zone(target_zone)]!")
 	return ..()
 
