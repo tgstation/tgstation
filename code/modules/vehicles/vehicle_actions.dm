@@ -297,7 +297,7 @@
 			return
 		var/mob/living/rider = owner
 		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
-		rider.adjustStaminaLoss(vehicle.instability*0.5)
+		rider.adjustStaminaLoss(vehicle.instability* 0.75)
 		if (rider.getStaminaLoss() >= 100)
 			vehicle.obj_flags &= ~CAN_BE_HIT
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
