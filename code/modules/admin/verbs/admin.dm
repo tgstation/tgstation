@@ -84,16 +84,6 @@
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
 
-///Calls the reset proc a fire alarm, as if a user right-clicked it. Shows up in Context menu for admins.
-/client/proc/admin_reset_firealarm(obj/machinery/firealarm/alarm in GLOB.machines)
-	set name = "Fire Alarm Reset"
-
-	if(!check_rights(R_ADMIN))
-		return
-	if(!istype(alarm))
-		return
-	return alarm.reset(usr)
-
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))
 		return

@@ -64,7 +64,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/admin_disable_shuttle, /*allows us to disable the emergency shuttle admin-wise so that it cannot be called*/
 	/client/proc/admin_enable_shuttle,  /*undoes the above*/
 	/client/proc/cmd_admin_direct_narrate, /*send text directly to a player with no padding. Useful for narratives and fluff-text*/
-	/client/proc/admin_reset_firealarm, /*Calls the reset proc on a fire alarm, as if a user right-clicked it*/
 	/client/proc/cmd_admin_world_narrate, /*sends text to all players with no padding*/
 	/client/proc/cmd_admin_local_narrate, /*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
