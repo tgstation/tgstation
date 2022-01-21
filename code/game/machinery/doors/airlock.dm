@@ -115,6 +115,7 @@
 	var/list/obj/machinery/door/airlock/close_others = list()
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
+	COOLDOWN_DECLARE(denyCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
 	/// The seal on the airlock
 	var/obj/item/seal
@@ -580,8 +581,11 @@
 		if("deny")
 			if(!machine_stat)
 				update_icon(ALL, AIRLOCK_DENY)
-				playsound(src,doorDeni,50,FALSE,3)
 				addtimer(CALLBACK(src, /atom/proc/update_icon, ALL, AIRLOCK_CLOSED), AIRLOCK_DENY_ANIMATION_TIME)
+				if(!COOLDOWN_FINISHED(src, denyCooldown)) //please, stop spamming with the sound
+					return
+				COOLDOWN_START(src, denyCooldown, 1.5 SECONDS)
+				playsound(src,doorDeni,50,FALSE,3)
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
