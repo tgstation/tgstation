@@ -289,38 +289,14 @@ GLOBAL_LIST_INIT(scarySounds, list(
 //If you don't want to fuck up disposals, add to this list, and don't change the order.
 //If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
-GLOBAL_LIST_INIT(TAGGERLOCATIONS, list(
-	"Atmospherics",
-	"Bar",
-	"Cargo Bay",
-	"CE Office",
-	"Chapel",
-	"Chemistry",
-	"CMO Office",
-	"Detective's Office",
-	"Disposals",
-	"Dormitories",
-	"Engineering",
-	"Experimentor Lab",
-	"Genetics",
-	"HoP Office",
-	"HoS Office",
-	"Hydroponics",
-	"Janitor Closet",
-	"Kitchen",
-	"Law Office",
-	"Library",
-	"Medbay",
-	"Ordnance",
-	"QM Office",
-	"RD Office",
-	"Research",
-	"Robotics",
-	"Security",
-	"Theatre",
-	"Virology",
-	"Xenobiology",
-))
+GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
+	"Cargo Bay", "QM Office", "Engineering", "CE Office",
+	"Atmospherics", "Security", "HoS Office", "Medbay",
+	"CMO Office", "Chemistry", "Research", "RD Office",
+	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
+	"Experimentor Lab", "Ordnance", "Dormitories", "Virology",
+	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt"))
 
