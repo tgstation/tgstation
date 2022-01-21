@@ -653,3 +653,148 @@
       gas masks.
   tralezab:
   - rscadd: chisels are now the animated statue's bane.
+2022-01-18:
+  Capsandi:
+  - bugfix: Fixed a metastation active turf, enjoy slightly faster loading
+  FlamingCheese:
+  - bugfix: Replaced snowed over plating in icebox airlocks with regular plating to
+      make the plating unable to generate dangerous gases
+  JohnFulpWillard:
+  - bugfix: Borgs who are untipped ahead of time and re-tipped will not have their
+      first self-untip timer untip them the second time.
+  LemonInTheDark:
+  - admin: Telemetry code will spam you with undeleted query logs much less often
+      now!
+  - server: Improved how the db subsystem handles undeleted queries, should never
+      have an incident like that again
+  Melbert:
+  - expansion: Slapping yourself in the face now delivers a facepalm.
+  - expansion: Slapping someone who's asleep in the face may wake them up faster.
+  - balance: 'Placed traitor bugs should have fingerprints and fibers now. Remember:
+      You can clean your fingerprints off of things with soap or other cleaning methods.'
+  Mothblocks:
+  - balance: Nuke disks must now be held by a player or pulled by a player in order
+      to count as moving to not increase the chances of lone ops. This means no more
+      disk conveyor belts.
+  ReinaCoder:
+  - bugfix: Fixes Icebox not having a drone dispenser.
+  - bugfix: Fixes Icebox not having a medical records console available to MD.
+  - bugfix: Fixes the little cross section of Icebox medical and science maints not
+      allowing medical and science access.
+  - bugfix: Fixes the fire extinguisher on a disposal bin on Icebox
+  - bugfix: Fixes the placement of a camera in Icebox medical
+  SuperNovaa41:
+  - bugfix: Fixes AIs not being able to announce any custom laws.
+  - bugfix: Fixes floorbots dropping full toolboxes.
+  Thunder12345:
+  - bugfix: Blood brothers will now be told who their teammates are in their antagonist
+      info window.
+  magatsuchi:
+  - bugfix: sleeping people no longer show up as dead on crew monitor
+  san7890:
+  - bugfix: To lessen confusion, DeltaStation's customs areas have been split into
+      two, so the average scientist doesn't need to perform a kilometer long trek
+      up and down the station looking for those sweet, sweet anomaly cores.
+  tf-4:
+  - bugfix: Trying to make weak virus plasma will no longer plasmaflood virology.
+2022-01-19:
+  Fikou:
+  - bugfix: fixes the centcom commander outfit not having a modsuit counterpart
+  JohnFulpWillard:
+  - spellcheck: Exploration Drone Control Console's computer board is now properly
+      spelled.
+  RandomGamer123:
+  - bugfix: Teleport runes made by wraiths now show their custom names properly.
+  Ryll/Shaps:
+  - rscadd: Added premium Two-Time root beer to soda vending machines for 200 credits!
+      The soda grants you doubled fire-rate with ranged guns while in your system,
+      though it also causes intense dizziness while in your system, as well as heavy
+      stamina damage and drowsiness when it wears off.
+  - rscadd: Added admin-only racing shooting gloves that grant the doubled fire-rate
+      buff to the wearer with no downsides.
+  ShizCalev:
+  - server: A couple mapping errors will now be more visible and actually logged in
+      the mapping error log.
+  Wallem:
+  - expansion: MODsuits now have a Glove Translator module for all the vocally impaired.
+      Plasmamen can now _properly_ be mute hand-talkers.
+  san7890:
+  - imageadd: The "Interrogation Room" area now has a new sprite to define it on the
+      mapping end.
+  - expansion: What's this? Nanotrasen tunneled out a grand hole into the ice planet
+      that Ice Box Station currently rests on! There's a new laundry room! For your
+      clothes! What d'you mean, Ian?
+  - rscadd: You can also exit this laundry room onto a caringly, yet sloppily placed
+      bridge to explore the ice planet (if you really want to). Watch your step, and
+      watch for wolves.
+  - rscadd: To accommodate the grand new laundry room, the locker room (and surrounding
+      maintenance tunnels) have been shuffled around.
+  sasichkamega:
+  - rscadd: patch icon choosing in the chem dispenser and chem press
+  vincentiusvin:
+  - bugfix: Pumping hot gas into cold gas using the regular pumps should no longer
+      explode.
+  - code_imp: Some math changes to how pressure based pumps calculate pressure (both
+      portable and fixed). Report if problems are found.
+2022-01-20:
+  DragonTrance:
+  - balance: Maintenance Drone health changed from 30 to 45
+  - balance: Maintenance Drone stun times from getting EMP'd reduced from 10 seconds
+      to 7 seconds
+  - qol: Maintenance Drones can now interact near dead bodies
+  - qol: Maintenance Drones don't have to wait 5 minutes to open an airlock when someone
+      recently did it. Now they have to wait 1 minute.
+  - qol: Changed distance Maintenance Drones aren't allowed to interact with anything
+      from a nearby mob from 4 tiles to 3 tiles
+  ErdinyoBarboza:
+  - rscadd: Lizardpeople now enjoy eating (these) nuts.
+  Fikou:
+  - rscadd: Reworked the MOD Kinesis module and added it to techwebs.
+  - bugfix: fixed modsuits not running out of charge
+  - bugfix: fixed modsuits needing multiple cores and cell fitting being weird
+  TemporalOroboros:
+  - bugfix: Aiming at obscured turfs will no longer make you shoot somewhere up and
+      right of where you clicked.
+  Thunder12345:
+  - bugfix: The CMO's office on Icebox can no longer be entered from maint by anyone
+      with general medbay access.
+  - bugfix: Eliminated a runtime error related to Modular Map Loading
+  - bugfix: The Kilo pharmacy's door onto the public med lobby no longer requires
+      general medical access to open.
+  san7890:
+  - bugfix: Great news! If you want to crack open a window on TramStation, you shouldn't
+      be immediately greeted with the vast vacuum of space lying under said window.
+  - bugfix: Nanotrasen updated their weather protocols, it should now snow around
+      Moffuchi's Pizzeria whenever it shows up on the surface of Ice Box Station.
+  - rscadd: The Laundry Room on TramStation is now called a Laundry Room. Rejoice!
+  tralezab:
+  - rscadd: Added thieves! Low level antagonists that want to steal, hoard, and escape
+      with your goodies!
+  - rscadd: They show up roundstart and midround, and do not have a license to kill.
+2022-01-21:
+  Ghommie:
+  - bugfix: Syndicate, ninja, fugitive hunter masks and some costume masks (cyborg
+      visor, plague doctor, carp, owl, monkey) no longer impair vision with field
+      of vision cones.
+  - bugfix: Restored the LACK OF pepperspray protection the aforementioned costume
+      masks (not the antag ones) had before the transition from gas mask tint to FoV.
+  JohnFulpWillard:
+  - bugfix: Tramstation's Brig lockers can now be used more than once.
+  - qol: Security Officers can right click Tramstation's permabrig lockers to open
+      them early, unregistering their ID.
+  OneAsianTortoise:
+  - bugfix: headset, spray can, card, crayon, seclite have correct suit slot sprite
+      now.
+  RandomGamer123:
+  - bugfix: Certain traitor objectives now fail when they are supposed to instead
+      of unintentionally succeeding, most notably when objective-critical items are
+      destroyed.
+  SuperNovaa41:
+  - admin: Adds logging to the tippable component, to catch all the new borg griefing.
+  TemporalOroboros:
+  - balance: The blastcannon's damage has become more spread out and it now may be
+      somewhat diminished by walls depending on config.
+  - balance: The base range of the blastcannon has been slightly buffed to compensate
+      for the new diminishing effect of walls.
+  neopythagorean:
+  - bugfix: Hitting cancel when renaming a paper now actually cancels the operation.

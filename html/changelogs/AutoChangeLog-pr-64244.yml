@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a dead bartender spawning in the beach biodome ruin."

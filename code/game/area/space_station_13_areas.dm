@@ -577,6 +577,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Female Sleep Barracks"
 	icon_state = "dorms_female"
 
+/area/commons/dorms/laundry
+	name = "\improper Laundry Room"
+	icon_state = "laundry_room"
+
 /area/commons/toilet
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
@@ -853,6 +857,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
 
+/area/engineering/atmos/storage
+	name = "\improper Atmospherics Storage Room"
+
+/area/engineering/atmos/office
+	name = "\improper Atmospherics Office"
+
+/area/engineering/atmos/hfr_room
+	name = "\improper Atmospherics HFR Room"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
@@ -1279,7 +1291,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "customs_point"
 
 /area/security/checkpoint/customs/auxiliary
+	name = "Auxiliary Customs"
 	icon_state = "customs_point_aux"
+
+/area/security/checkpoint/customs/fore
+	name = "Fore Customs"
+	icon_state = "customs_point_fore"
+
+/area/security/checkpoint/customs/aft
+	name = "Aft Customs"
+	icon_state = "customs_point_aft"
 
 //Security - AI Monitored
 /area/ai_monitored/security/armory
