@@ -95,6 +95,7 @@
 						pipenetwarnings--
 					if(pipenetwarnings == 0)
 						log_mapping("build_pipeline(): further messages about pipenets will be suppressed")
+						pipenetwarnings--
 
 				members += item
 				possible_expansions += item
