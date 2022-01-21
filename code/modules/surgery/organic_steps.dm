@@ -39,7 +39,8 @@
 /datum/surgery_step/incise/nobleed/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
-		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."))
+		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
+		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE))
 	display_pain(target, "You feel a <i>careful</i> stabbing in your [parse_zone(target_zone)].")
 
 //clamp bleeders
@@ -148,7 +149,7 @@
 	display_results(user, target, span_notice("You begin to saw through the bone in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/saw.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/saw.ogg', 40, TRUE))
 	display_pain(target, "You feel a horrid ache spread through the inside of your [parse_zone(target_zone)]!")
 
 /datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)

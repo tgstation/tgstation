@@ -100,7 +100,8 @@
 			target_zone = check_zone(target_zone)
 		display_results(user, target, span_notice("You begin to insert [tool] into [target]'s [parse_zone(target_zone)]..."),
 			span_notice("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)]."),
-			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."))
+			span_notice("[user] begins to insert something into [target]'s [parse_zone(target_zone)]."),
+			playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE))
 		display_pain(target, "You can feel your something being placed in your [parse_zone(target_zone)]!")
 
 
@@ -131,7 +132,8 @@
 					return -1
 				display_results(user, target, span_notice("You begin to extract [target_organ] from [target]'s [parse_zone(target_zone)]..."),
 					span_notice("[user] begins to extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
-					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."))
+					span_notice("[user] begins to extract something from [target]'s [parse_zone(target_zone)]."),
+					playsound(get_turf(target), 'sound/surgery/hemostat1.ogg', 75, TRUE))
 				display_pain(target, "You can feel your [target_organ] being removed from your [parse_zone(target_zone)]!")
 			else
 				return -1

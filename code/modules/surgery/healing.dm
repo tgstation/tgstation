@@ -63,7 +63,8 @@
 			display_results(user, target, span_notice("You attempt to patch some of [target]'s [woundtype]."),
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
-		display_pain(target, "Your [woundtype] sting like hell!"))
+		display_pain(target, "Your [woundtype] sting like hell!"),
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
@@ -95,7 +96,7 @@
 	display_results(user, target, span_notice("[user_msg]."),
 		"[target_msg].",
 		"[target_msg].",
-		playsound(get_turf(target), 'sound/surgery/hemostat1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
