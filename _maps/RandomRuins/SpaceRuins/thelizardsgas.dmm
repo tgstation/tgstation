@@ -1,13 +1,30 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/seed,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
 "aK" = (
 /turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/thelizardsgas)
+"aS" = (
+/obj/structure/rack,
+/obj/item/analyzer,
+/obj/item/crowbar/red,
+/obj/item/flashlight,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"bo" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/cowboy/lizard,
+/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "bp" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "bt" = (
 /obj/machinery/computer/atmos_control/tank/plasma_tank{
@@ -30,11 +47,31 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
-"cF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+"ct" = (
+/turf/open/floor/iron/white/corner{
+	dir = 4
 	},
-/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"de" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"gL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"gS" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"hl" = (
+/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "iA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -42,18 +79,56 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"iO" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
 "jv" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 1
 	},
 /area/ruin/space/has_grav/thelizardsgas)
+"jN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
 "kS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output,
 /turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav/thelizardsgas)
+"mN" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
 "mR" = (
 /turf/closed/wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"na" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"nL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"qX" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "rs" = (
 /obj/structure/cable,
@@ -64,6 +139,10 @@
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
+/area/ruin/space/has_grav/thelizardsgas)
+"rC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -76,19 +155,36 @@
 "sN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "uh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"vj" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/iron/white/corner,
+/area/ruin/space/has_grav/thelizardsgas)
 "wb" = (
 /turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"xb" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/seed_rare,
+/turf/open/floor/iron/white/side,
 /area/ruin/space/has_grav/thelizardsgas)
 "xy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"zn" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "zz" = (
 /obj/machinery/door/window,
@@ -99,12 +195,22 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "AZ" = (
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/smooth_corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "Bu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"BJ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 4
+	},
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "Cv" = (
@@ -117,10 +223,6 @@
 "CA" = (
 /turf/template_noop,
 /area/template_noop)
-"CV" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
-/area/ruin/space/has_grav/thelizardsgas)
 "DG" = (
 /turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav/thelizardsgas)
@@ -128,10 +230,21 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"EH" = (
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
 "FJ" = (
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
 	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Gr" = (
+/obj/structure/cable,
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "GM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -143,6 +256,9 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"GR" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
 "Hc" = (
 /obj/structure/flora/rock/pile{
 	icon_state = "basalt"
@@ -150,8 +266,15 @@
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "Io" = (
-/obj/machinery/power/smes,
+/obj/machinery/power/smes{
+	charge = 2e+006
+	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"Je" = (
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Jg" = (
 /obj/structure/lattice/catwalk,
@@ -162,7 +285,12 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "JP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"JY" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "Kw" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
@@ -195,11 +323,21 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/space/has_grav/thelizardsgas)
+"OQ" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/thelizardsgas)
 "Pb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Pi" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "Qg" = (
 /turf/closed/mineral,
@@ -211,21 +349,26 @@
 	},
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
+"QQ" = (
+/obj/item/toy/plush/space_lizard_plushie,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/thelizardsgas)
 "Ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
-/turf/open/floor/plating,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Tj" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ud" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "Uh" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
@@ -239,6 +382,18 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Uz" = (
 /obj/structure/cable,
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"UO" = (
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Ve" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/mob/living/simple_animal/hostile/lizard/space,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "VP" = (
@@ -247,13 +402,24 @@
 	dir = 1
 	},
 /area/ruin/space/has_grav/thelizardsgas)
+"VV" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
 "Wh" = (
-/turf/open/floor/plating,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "WP" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden,
 /turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"WY" = (
+/obj/machinery/air_sensor/atmos/plasma_tank,
+/turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ys" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -262,10 +428,24 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
+"YK" = (
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"Zr" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
 "Zs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 
 (1,1,1) = {"
@@ -386,7 +566,7 @@ mR
 AZ
 rs
 zz
-Uz
+JY
 Uz
 mR
 Qg
@@ -413,9 +593,9 @@ mR
 jv
 aK
 Ow
-Wh
-Uz
-Wh
+hl
+Zr
+ct
 mR
 Qg
 CA
@@ -440,19 +620,19 @@ mR
 bt
 FJ
 VP
-Wh
-Uz
-Wh
+hl
+Gr
+UO
 mR
 Qg
 CA
 CA
 CA
 CA
-MB
+de
 CA
 CA
-MB
+de
 CA
 CA
 CA
@@ -464,12 +644,12 @@ Qg
 Qg
 LA
 LA
-uh
-uh
-uh
-Wh
-Uz
-Wh
+rC
+rC
+rC
+hl
+Gr
+UO
 mR
 mR
 mR
@@ -490,13 +670,13 @@ CA
 Qg
 Qg
 LA
-DG
+OQ
 DG
 kS
 Tj
-Ss
+na
 sN
-Ss
+iO
 Ss
 GM
 Pb
@@ -518,12 +698,12 @@ Qg
 Qg
 LA
 DG
-DG
-DG
-uh
-Wh
+WY
+QQ
+rC
+hl
 bp
-Wh
+GR
 Wh
 mR
 mR
@@ -547,20 +727,20 @@ LA
 Uh
 DG
 DG
-uh
-Wh
+rC
+hl
 Zs
-Wh
-Wh
-CV
+GR
+UO
+uh
 CA
 CA
 CA
 CA
-MB
+BJ
 CA
 CA
-MB
+BJ
 CA
 CA
 CA
@@ -572,14 +752,14 @@ CA
 Qg
 LA
 Ud
-uh
-uh
-uh
-Wh
+LA
+LA
+LA
+xb
 Zs
-Wh
-Wh
-CV
+zn
+UO
+uh
 CA
 CA
 CA
@@ -602,11 +782,11 @@ iA
 JP
 Ys
 mR
-Wh
+ak
 Zs
-Wh
-Wh
-CV
+zn
+UO
+uh
 CA
 CA
 CA
@@ -626,14 +806,14 @@ CA
 Qg
 mR
 Es
-JP
-Wh
+Ve
+aS
 mR
-Wh
+gS
 Zs
-Wh
-Wh
-CV
+zn
+UO
+uh
 CA
 CA
 CA
@@ -656,11 +836,11 @@ LT
 xy
 Kw
 mR
-Wh
+bo
 Zs
-Wh
-Wh
-CV
+zn
+UO
+uh
 CA
 CA
 CA
@@ -683,11 +863,11 @@ Io
 cm
 Mw
 Cv
-Mw
-Mw
-cF
-Wh
-CV
+nL
+gL
+zn
+UO
+uh
 CA
 CA
 CA
@@ -710,10 +890,10 @@ mR
 mR
 mR
 mR
-Wh
-Wh
-Wh
-Wh
+VV
+jN
+zn
+UO
 mR
 Qg
 Um
@@ -736,11 +916,11 @@ Qg
 wb
 wb
 mR
-Wh
-Wh
-Wh
-Wh
-Wh
+vj
+Pi
+GR
+zn
+UO
 mR
 Qg
 wb
@@ -763,11 +943,11 @@ wb
 wb
 Um
 mR
-Wh
-Wh
-Wh
-Wh
-Wh
+YK
+GR
+GR
+zn
+UO
 mR
 Qg
 Qg
@@ -790,11 +970,11 @@ wb
 wb
 Qg
 mR
-Wh
-Wh
-Wh
-Wh
-Wh
+mN
+Je
+qX
+Je
+EH
 mR
 Qg
 Hc
