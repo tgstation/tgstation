@@ -123,11 +123,11 @@
 	name = "Empty Shell"
 	description = "Cosy, rural property available for young professional couple. Only twelve parsecs from the nearest hyperspace lane!"
 
-/datum/map_template/ruin/space/gas_the_lizards
-	id = "gas-the-lizards"
-	suffix = "gasthelizards.dmm"
-	name = "Disposal Facility 17"
-	description = "Gas efficiency at 95.6%, fluid elimination at 96.2%. Will require renewed supplies of 'carpet' before the end of the quarter."
+/datum/map_template/ruin/space/the_lizards_gas
+	id = "the-lizards-gas"
+	suffix = "thelizardsgas.dmm"
+	name = "The Lizard's Gas"
+	description = "A refueling station stocked with enough plasma for any space-worthy vessel. Well, maybe if it were still the year 2318."
 
 /datum/map_template/ruin/space/intact_empty_ship
 	id = "intact-empty-ship"
