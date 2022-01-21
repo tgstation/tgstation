@@ -36,15 +36,11 @@
 
 /obj/structure/billboard/lizards_gas
 	name = "\improper The Lizard's Gas billboard"
-	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. It's been lost to time, and this is the only known gas station of its type."
+	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. It's been lost to time, and this is the only known gas station of its type. It's hard to see why it flopped based on the quality of the billboard."
 	icon_state = "billboard_lizards_gas"
 
-/obj/structure/billboard/lizards_gas/shit/
-	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. Based on the artistic quality of this billboard, it's hard to see why this franchise flopped."
-	icon_state = "billboard_lizards_gas_shit"
-
-/obj/structure/billboard/lizards_gas/shit/defaced
-	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. The soulfully drawn billboard has been scratched out, with some more scratching out over the graffiti."
+/obj/structure/billboard/lizards_gas/defaced
+	desc = "A billboard labelling the gas station known as 'The Lizard's Gas'. The soulfully drawn billboard has been graffitied, with a kind stranger painting over the vitriolic graffiti."
 	icon_state = "billboard_lizards_gas_defaced"
 
 
