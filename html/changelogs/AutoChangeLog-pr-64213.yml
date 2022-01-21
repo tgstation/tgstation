@@ -1,4 +1,0 @@
-author: "Thunder12345"
-delete-after: True
-changes: 
-  - bugfix: "The CMO's office on Icebox can no longer be entered from maint by anyone with general medbay access."

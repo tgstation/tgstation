@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen updated their weather protocols, it should now snow around Moffuchi's Pizzeria whenever it shows up on the surface of Ice Box Station."

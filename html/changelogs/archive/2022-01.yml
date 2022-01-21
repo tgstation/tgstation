@@ -736,3 +736,65 @@
       explode.
   - code_imp: Some math changes to how pressure based pumps calculate pressure (both
       portable and fixed). Report if problems are found.
+2022-01-20:
+  DragonTrance:
+  - balance: Maintenance Drone health changed from 30 to 45
+  - balance: Maintenance Drone stun times from getting EMP'd reduced from 10 seconds
+      to 7 seconds
+  - qol: Maintenance Drones can now interact near dead bodies
+  - qol: Maintenance Drones don't have to wait 5 minutes to open an airlock when someone
+      recently did it. Now they have to wait 1 minute.
+  - qol: Changed distance Maintenance Drones aren't allowed to interact with anything
+      from a nearby mob from 4 tiles to 3 tiles
+  ErdinyoBarboza:
+  - rscadd: Lizardpeople now enjoy eating (these) nuts.
+  Fikou:
+  - rscadd: Reworked the MOD Kinesis module and added it to techwebs.
+  - bugfix: fixed modsuits not running out of charge
+  - bugfix: fixed modsuits needing multiple cores and cell fitting being weird
+  TemporalOroboros:
+  - bugfix: Aiming at obscured turfs will no longer make you shoot somewhere up and
+      right of where you clicked.
+  Thunder12345:
+  - bugfix: The CMO's office on Icebox can no longer be entered from maint by anyone
+      with general medbay access.
+  - bugfix: Eliminated a runtime error related to Modular Map Loading
+  - bugfix: The Kilo pharmacy's door onto the public med lobby no longer requires
+      general medical access to open.
+  san7890:
+  - bugfix: Great news! If you want to crack open a window on TramStation, you shouldn't
+      be immediately greeted with the vast vacuum of space lying under said window.
+  - bugfix: Nanotrasen updated their weather protocols, it should now snow around
+      Moffuchi's Pizzeria whenever it shows up on the surface of Ice Box Station.
+  - rscadd: The Laundry Room on TramStation is now called a Laundry Room. Rejoice!
+  tralezab:
+  - rscadd: Added thieves! Low level antagonists that want to steal, hoard, and escape
+      with your goodies!
+  - rscadd: They show up roundstart and midround, and do not have a license to kill.
+2022-01-21:
+  Ghommie:
+  - bugfix: Syndicate, ninja, fugitive hunter masks and some costume masks (cyborg
+      visor, plague doctor, carp, owl, monkey) no longer impair vision with field
+      of vision cones.
+  - bugfix: Restored the LACK OF pepperspray protection the aforementioned costume
+      masks (not the antag ones) had before the transition from gas mask tint to FoV.
+  JohnFulpWillard:
+  - bugfix: Tramstation's Brig lockers can now be used more than once.
+  - qol: Security Officers can right click Tramstation's permabrig lockers to open
+      them early, unregistering their ID.
+  OneAsianTortoise:
+  - bugfix: headset, spray can, card, crayon, seclite have correct suit slot sprite
+      now.
+  RandomGamer123:
+  - bugfix: Certain traitor objectives now fail when they are supposed to instead
+      of unintentionally succeeding, most notably when objective-critical items are
+      destroyed.
+  SuperNovaa41:
+  - admin: Adds logging to the tippable component, to catch all the new borg griefing.
+  TemporalOroboros:
+  - balance: The blastcannon's damage has become more spread out and it now may be
+      somewhat diminished by walls depending on config.
+  - balance: The base range of the blastcannon has been slightly buffed to compensate
+      for the new diminishing effect of walls.
+  neopythagorean:
+  - bugfix: Hitting cancel when renaming a paper now actually cancels the operation.
