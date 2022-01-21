@@ -103,15 +103,9 @@
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	//Moved to nullspace gang
-	if(!loc || pipes_typecache[loc.type])
+	if(!loc && !associated_loc)
 		return
-	var/turf/T = get_turf(loc)
-	if(T)
-		vent_gas(T)
-	for(var/A in contents)
-		var/atom/movable/AM = A
-		AM.forceMove(drop_location())
-	qdel(src)
+	var/turf/turf_loc = get_turf(associated_loc)
 
 	var/has_possible_loc = FALSE
 
