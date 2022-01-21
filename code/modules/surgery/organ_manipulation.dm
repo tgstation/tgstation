@@ -154,7 +154,7 @@
 		display_results(user, target, span_notice("You insert [tool] into [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!"),
 			span_notice("[user] inserts something into [target]'s [parse_zone(target_zone)]!"),
-			playsound(get_turf(target), 'sound/surgery/tendwounds2.ogg', 75, TRUE))
+			playsound(get_turf(target), 'sound/surgery/organ1.ogg', 75, TRUE))
 		display_pain(target, "Your [parse_zone(target_zone)] throbs with pain as your new [tool] comes to life!")
 
 	else if(current_type == "extract")
@@ -162,7 +162,7 @@
 			display_results(user, target, span_notice("You successfully extract [target_organ] from [target]'s [parse_zone(target_zone)]."),
 				span_notice("[user] successfully extracts [target_organ] from [target]'s [parse_zone(target_zone)]!"),
 				span_notice("[user] successfully extracts something from [target]'s [parse_zone(target_zone)]!"),
-				playsound(get_turf(target), 'sound/surgery/tendwounds3.ogg', 75, TRUE))
+				playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE))
 			display_pain(target, "Your [parse_zone(target_zone)] throbs with pain, you can't feel your [target_organ] anymore!")
 			log_combat(user, target, "surgically removed [target_organ.name] from", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 			target_organ.Remove(target)
