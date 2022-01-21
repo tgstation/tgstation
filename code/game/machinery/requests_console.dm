@@ -352,7 +352,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 	updateUsrDialog()
 
 /obj/machinery/requests_console/say_mod(input, list/message_mods = list())
-	if(spantext_char(input, "!", -3))
+	if(findtext(input, "!!!"))
 		return "blares"
 	else
 		. = ..()
