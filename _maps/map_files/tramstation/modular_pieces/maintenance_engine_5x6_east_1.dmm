@@ -41,12 +41,9 @@
 /area/maintenance/central/secondary)
 "C" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
+/obj/structure/chair/plastic{
+	dir = 4
 	},
-/obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "F" = (
@@ -65,16 +62,19 @@
 /area/maintenance/central/secondary)
 "T" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/plastic{
-	dir = 4
-	},
+/obj/structure/table,
+/obj/item/lighter/greyscale,
+/obj/effect/spawner/random/entertainment/cigarette_pack,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "V" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/item/lighter/greyscale,
-/obj/effect/spawner/random/entertainment/cigarette_pack,
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/effect/spawner/random/bureaucracy/pen,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "X" = (
@@ -92,25 +92,25 @@ a
 a
 "}
 (2,1,1) = {"
-n
 h
+g
 g
 g
 A
 n
 "}
 (3,1,1) = {"
-n
-T
+C
 G
+g
 g
 G
 z
 "}
 (4,1,1) = {"
-n
+T
 V
-C
+g
 X
 F
 n

@@ -44,6 +44,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"B" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/bouquet/sunflower,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "F" = (
 /obj/item/kitchen/fork/plastic,
 /obj/effect/decal/cleanable/dirt,
@@ -51,7 +56,7 @@
 /area/maintenance/port/fore)
 "G" = (
 /obj/modular_map_root/tramstation{
-	key = "maintenance_lowarrival_attachment"
+	key = "maintenance_lowarrivals_attachment"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -118,7 +123,7 @@ a
 (3,1,1) = {"
 a
 U
-j
+B
 I
 F
 j

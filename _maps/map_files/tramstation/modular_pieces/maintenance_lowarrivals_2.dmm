@@ -22,7 +22,7 @@
 /area/maintenance/port/fore)
 "n" = (
 /obj/modular_map_root/tramstation{
-	key = "maintenance_lowarrival_attachment"
+	key = "maintenance_lowarrivals_attachment"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
