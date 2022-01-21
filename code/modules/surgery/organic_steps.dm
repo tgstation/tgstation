@@ -14,7 +14,7 @@
 	display_results(user, target, span_notice("You begin to make an incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to make an incision in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel a stabbing in your [parse_zone(target_zone)].")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
@@ -30,7 +30,7 @@
 			display_results(user, target, span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
 				span_notice("Blood pools around the incision in [human_target]'s [parse_zone(target_zone)]."),
-				playsound(get_turf(target), 'sound/surgery/scalpel2.ogg', 75, TRUE))
+				playsound(get_turf(target), 'sound/surgery/scalpel2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 			var/obj/item/bodypart/target_bodypart = target.get_bodypart(target_zone)
 			if(target_bodypart)
 				target_bodypart.generic_bleedstacks += 10
@@ -40,7 +40,7 @@
 	display_results(user, target, span_notice("You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel a <i>careful</i> stabbing in your [parse_zone(target_zone)].")
 
 //clamp bleeders
@@ -63,7 +63,7 @@
 	display_results(user, target, span_notice("You clamp a blood vessel inside [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] clamps a blood vessel inside [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] clamps a blood vessel inside [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/hemostat1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/hemostat1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(20,0)
 	if (ishuman(target))
@@ -87,14 +87,14 @@
 	display_results(user, target, span_notice("You begin to retract the skin in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to retract the skin in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/retractor1.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel a severe stinging pain spreading across your [parse_zone(target_zone)] as the skin is pulled back!")
 
 /datum/surgery_step/retract_skin/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 	display_results(user, target, span_notice("You retract the skin from [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] retracts the skin from [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] retracts the skin from [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel the skin from your [parse_zone(target_zone)] being pulled back!")
 	return ..()
 
@@ -112,7 +112,7 @@
 	display_results(user, target, span_notice("You begin to mend the incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/cautery.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/cautery.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "Your [parse_zone(target_zone)] is being burned!")
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
@@ -149,7 +149,7 @@
 	display_results(user, target, span_notice("You begin to saw through the bone in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to saw through the bone in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/saw.ogg', 40, TRUE))
+		playsound(get_turf(target), 'sound/surgery/saw.ogg', 40, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel a horrid ache spread through the inside of your [parse_zone(target_zone)]!")
 
 /datum/surgery_step/saw/tool_check(mob/user, obj/item/tool)
@@ -162,7 +162,7 @@
 	display_results(user, target, span_notice("You saw [target]'s [parse_zone(target_zone)] open."),
 		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
 		span_notice("[user] saws [target]'s [parse_zone(target_zone)] open!"),
-		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "It feels like something just broke in your [parse_zone(target_zone)]!")
 	return ..()
 

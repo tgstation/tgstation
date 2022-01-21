@@ -64,7 +64,7 @@
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
 		span_notice("[user] attempts to patch some of [target]'s [woundtype]."),
 		display_pain(target, "Your [woundtype] sting like hell!"),
-		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 
 /datum/surgery_step/heal/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	if(!..())
@@ -96,7 +96,7 @@
 	display_results(user, target, span_notice("[user_msg]."),
 		"[target_msg].",
 		"[target_msg].",
-		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE))
+		playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	if(istype(surgery, /datum/surgery/healing))
 		var/datum/surgery/healing/the_surgery = surgery
 		the_surgery.antispam = TRUE
@@ -106,7 +106,7 @@
 	display_results(user, target, span_warning("You screwed up!"),
 		span_warning("[user] screws up!"),
 		span_notice("[user] fixes some of [target]'s wounds."),
-		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE),)
+		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1),)
 	var/brute_dealt = brutehealing * 0.8
 	var/burn_dealt = burnhealing * 0.8
 	brute_dealt += round((target.getBruteLoss() * (brute_multiplier * 0.5)),0.1)
