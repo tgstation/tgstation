@@ -1,0 +1,4 @@
+author: "SkeletalElite"
+delete-after: True
+changes: 
+  - rscadd: "new plasma cutter EMP effect, it sets you on fire"
