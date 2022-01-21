@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Moved the poster and newscaster in the bar on Deltastation so they aren't ontop of other wall objects for ghosts/AIs"

@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - refactor: "Boomerang behavior has been moved to a component."

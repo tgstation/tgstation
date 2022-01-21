@@ -452,11 +452,11 @@
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
 	desc = "A replica toolbox that rumbles when you turn the key."
-	icon = 'icons/obj/storage.dmi'
+	icon = 'goon/icons/obj/toolbox.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
@@ -832,6 +832,7 @@
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_SMALL
 	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
@@ -915,6 +916,7 @@
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "none"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_TINY
 	///Cards in this hand of cards.
 	var/list/cards = list()
@@ -1020,6 +1022,7 @@
 	desc = "A playing card used to play card games like poker."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_TINY
 	pixel_x = -5
 	///The name of the card
@@ -1298,7 +1301,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT

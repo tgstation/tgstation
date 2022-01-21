@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Soulful toolboxes, made by using a soulstone with a shade in it on a toolbox now display their icon properly."

@@ -25761,7 +25761,7 @@
 /area/service/hydroponics)
 "gQK" = (
 /obj/effect/spawner/random/decoration/statue,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/space/nearstation)
 "gQV" = (
 /turf/open/floor/iron/white,
@@ -68713,6 +68713,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "wcm" = (
