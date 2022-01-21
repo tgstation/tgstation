@@ -115,7 +115,7 @@
 		user.put_in_hands(card_to_draw)
 		user.visible_message(span_notice("[user] draws a card from [from_cardhand ? "[user.p_their()] hand" : "the deck"]."), span_notice("You draw a card from [from_cardhand ? "your hand" : "the deck"]."))
 	else
-		user.visible_message(span_notice("[user] deals a card from the [deck]."), span_notice("You deal a card from the [deck]."))
-		
+		user.visible_message(span_notice("[user] deals a card from the deck."), span_notice("You deal a card from the deck."))
+
 	update_appearance()
 	return card_to_draw
