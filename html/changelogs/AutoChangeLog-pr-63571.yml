@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Syndicate, ninja, fugitive hunter masks and some costume masks (cyborg visor, plague doctor, carp, owl, monkey) no longer impair vision with field of vision cones."
-  - bugfix: "Restored the LACK OF pepperspray protection the aforementioned costume masks (not the antag ones) had before the transition from gas mask tint to FoV."

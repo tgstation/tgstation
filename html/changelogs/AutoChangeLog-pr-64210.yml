@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - admin: "Adds logging to the tippable component, to catch all the new borg griefing."

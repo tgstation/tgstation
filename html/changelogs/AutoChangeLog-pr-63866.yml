@@ -1,5 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - balance: "The blastcannon's damage has become more spread out and it now may be somewhat diminished by walls depending on config."
-  - balance: "The base range of the blastcannon has been slightly buffed to compensate for the new diminishing effect of walls."
