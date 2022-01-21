@@ -148,11 +148,12 @@
 	..()
 	reached_target = FALSE
 
+/mob/living/simple_animal/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	update_appearance()
+
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		. = ..()
-		update_appearance()
-	else if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
 			return
