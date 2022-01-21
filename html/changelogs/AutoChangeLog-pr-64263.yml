@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixes some weird behavior with items falling out of your hands when space moving. Life is pain"

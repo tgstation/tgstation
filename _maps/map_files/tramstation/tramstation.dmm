@@ -5398,15 +5398,15 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "aHs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
 /obj/effect/turf_decal/trimline/purple/filled/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/neutral/corner,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
 "aHu" = (
@@ -7583,8 +7583,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/sorting/mail{
 	dir = 4;
-	name = "sorting disposal pipe (Civilan Wing)";
-	sortTypes = list(16,17)
+	name = "sorting disposal pipe (Civilian & Engineering Wing)";
+	sortType = "4;5;6;16;17;26"
 	},
 /obj/structure/sign/warning/docking{
 	desc = "A warning sign which reads 'KEEP CLEAR OF TRAM DOCKING AREA'.";
@@ -10361,10 +10361,10 @@
 /turf/open/floor/glass/reinforced,
 /area/ai_monitored/turret_protected/aisat/hallway)
 "cee" = (
-/obj/effect/turf_decal/stripes/corner{
+/obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/trimline/purple/filled/line{
+/obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -18146,6 +18146,14 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen/diner)
+"eXK" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central/secondary)
 "eYw" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/landmark/xeno_spawn,
@@ -18691,6 +18699,16 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
+"fhV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central/secondary)
 "fhX" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
@@ -23928,6 +23946,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
+"hdd" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central/secondary)
 "hdg" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -30114,6 +30142,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor,
 /area/maintenance/central/secondary)
 "jmC" = (
@@ -49659,6 +49690,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tcommsat/computer)
+"qrN" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central/secondary)
 "qrO" = (
 /obj/structure/rack,
 /obj/item/storage/box/lights/tubes{
@@ -61419,9 +61460,6 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/port/central)
 "uFL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
 /obj/machinery/button/door/directional/north{
 	id = "mechbay";
 	name = "Mech Bay Shutters Control";
@@ -61431,6 +61469,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/purple/filled/corner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
 "uFP" = (
@@ -64209,12 +64250,6 @@
 "vOa" = (
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
-"vOv" = (
-/obj/effect/turf_decal/siding/thinplating,
-/obj/effect/turf_decal/trimline/red/filled/line,
-/obj/effect/turf_decal/trimline/neutral/filled/warning,
-/turf/open/floor/iron,
-/area/security/checkpoint/supply)
 "vOA" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
@@ -70851,6 +70886,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/cargo/storage)
+"ygV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central/secondary)
 "yhy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -98367,16 +98412,16 @@ dhe
 dhe
 dhe
 aJo
-jmA
-jmA
-jmA
-jmA
-jmA
-jmA
-jmA
-jmA
-jmA
-jmA
+fhV
+eXK
+eXK
+eXK
+eXK
+eXK
+eXK
+eXK
+ygV
+hdd
 aJy
 qwi
 dwi
@@ -99135,10 +99180,10 @@ doC
 cBt
 aJy
 xVB
-qIr
-jmA
-jmA
-jmA
+qrN
+eXK
+eXK
+hdd
 aJy
 asV
 acC
@@ -112988,7 +113033,7 @@ iku
 aTg
 xfF
 xfF
-vOv
+vcz
 oID
 aeu
 hVZ
