@@ -315,7 +315,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 
 /obj/item/food/cornchips
-	name = "boritos corn chips"
+	name = "\improper Boritos corn chips"
 	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
 	icon_state = "boritos"
 	trash_type = /obj/item/trash/boritos
@@ -331,7 +331,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/cornchips/blue
-	name = "coolest ranch boritos corn chips"
+	name = "\improper Coolest Ranch Boritos corn chips"
 	desc = "Triangular corn chips. This one is in coolest ranch and would probably go well with some kind of dipping sauce. Which came first, ranch or cool ranch?"
 	icon_state = "boritos"
 	trash_type = /obj/item/trash/boritos
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1, "coolest ranch" = 1)
 
 /obj/item/food/cornchips/green
-	name = "spess salsa boritos corn chips"
+	name = "\improper Spess Salsa Boritos corn chips"
 	desc = "Triangular corn chips. This one is in spess salsa and would probably go well with some kind of dipping sauce."
 	icon_state = "boritosgreen"
 	trash_type = /obj/item/trash/boritos/green
@@ -347,7 +347,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1, "spess salsa" = 1)
 
 /obj/item/food/cornchips/red
-	name = "nacho cheese boritos corn chips"
+	name = "\improper Nacho Cheese Boritos corn chips"
 	desc = "Triangular corn chips. This one is in nacho cheese and would probably go well with some kind of dipping sauce."
 	icon_state = "boritosred"
 	trash_type = /obj/item/trash/boritos/red
@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1, "nacho cheese" = 1)
 
 /obj/item/food/cornchips/purple
-	name = "spicy sweet chili boritos corn chips"
+	name = "\improper Spicy Sweet Chili Boritos corn chips"
 	desc = "Triangular corn chips. This one is in spicy sweet chili and would probably go well with some kind of dipping sauce."
 	icon_state = "boritospurple"
 	trash_type = /obj/item/trash/boritos/purple
@@ -363,7 +363,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	tastes = list("fried corn" = 1, "spicy & sweet chili" = 1)
 
 /obj/item/food/cornchips/random
-	name = "boritos cornchips"
+	name = "\improper Boritos cornchips"
 	desc = "Filled with one of four delicious flavours!"
 
 /obj/item/food/cornchips/random/Initialize(mapload)
