@@ -257,6 +257,11 @@
 	. = ..()
 	update_icon()
 	correct_state()
+	if(machine_stat & NOPOWER)
+		soundloop.volume = 0 //This is the easiest way to stop an alarm when we lose power without having to keep track of which firelock was playing the alarm sound.
+	else
+		soundloop.volume = initial(soundloop.volume)
+
 
 /obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
