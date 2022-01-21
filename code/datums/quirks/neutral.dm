@@ -363,6 +363,7 @@
 /datum/quirk/item_quirk/colorist/add_unique()
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
+#define GAMING_WITHDRAWAL_TIME (15 MINUTES)
 /datum/quirk/gamer
 	name = "Gamer"
 	desc = "You are a hardcore gamer, and you have a need to game. You love winning and hate losing. You only like gamer food."
@@ -373,8 +374,8 @@
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
 	mob_trait = TRAIT_GAMER
-	/// The last time the gamer quelled the urge to game
-	var/last_game_time
+	/// Timer for gaming withdrawal to kick in
+	COOLDOWN_DECLARE(gaming_withdrawal)
 
 /datum/quirk/gamer/add()
 	// Gamer diet
@@ -401,29 +402,51 @@
 
 /datum/quirk/gamer/add_unique()
 	// The gamer starts off quelled
-	last_game_time = world.time
-
+	COOLDOWN_START(src, gaming_withdrawal, GAMING_WITHDRAWAL_TIME)
+/**
+ * Gamer won a game
+ *
+ * Executed on the COMSIG_MOB_WON_VIDEOGAME signal
+ * This signal should be called whenever a player has won a video game.
+ * (E.g. Orion Trail)
+ */
 /datum/quirk/gamer/proc/won_game()
+	SIGNAL_HANDLER
 	// Epic gamer victory
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_won", /datum/mood_event/gamer_won)
 
+/**
+ * Gamer lost a game
+ *
+ * Executed on the COMSIG_MOB_LOST_VIDEOGAME signal
+ * This signal should be called whenever a player has lost a video game.
+ * (E.g. Orion Trail)
+ */
 /datum/quirk/gamer/proc/lost_game()
+	SIGNAL_HANDLER
 	// Executed when a gamer has lost
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
 	// It was a heated gamer moment...
-	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced=name)
+	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
 
+/**
+ * Gamer is playing a game
+ *
+ * Executed on the COMSIG_MOB_PLAYED_VIDEOGAME signal
+ * This signal should be called whenever a player interacts with a video game.
+ */
 /datum/quirk/gamer/proc/gamed()
+	SIGNAL_HANDLER
 	// Executed when a gamer has gamed
-	last_game_time = world.time
+	COOLDOWN_START(src, gaming_withdrawal, GAMING_WITHDRAWAL_TIME)
 
 /datum/quirk/gamer/process(delta_time)
 	// If enough time has passed since the last game session, go into gamer withdrawal
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/current_time = world.time
-	if (current_time - last_game_time > 15 MINUTES)
+	if (COOLDOWN_FINISHED(src, gaming_withdrawal))
 		SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 	else
 		SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+#undef GAMING_WITHDRAWAL_TIME
