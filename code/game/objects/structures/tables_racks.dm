@@ -102,8 +102,9 @@
 /obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = weapon 
-		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table=TRUE, flip_card_over=TRUE)
+		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
 		if(card)
+			card.Flip()
 			src.attackby(card, user, params)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	..()
@@ -207,8 +208,8 @@
 
 	if(istype(I, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = I 
-		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table=TRUE)
-		if(card) 
+		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
+		if(card)
 			src.attackby(card, user, params)
 		return
 

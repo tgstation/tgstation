@@ -78,7 +78,8 @@
 	draw_card(user, cards)
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
-	draw_card(user, cards, flip_card_over=TRUE)
+	var/obj/item/toy/cards/singlecard/card = draw_card(user, cards)
+	card.Flip()
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
