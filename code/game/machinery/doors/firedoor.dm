@@ -50,6 +50,8 @@
 
 	///looping sound datum for our fire alarm siren.
 	var/datum/looping_sound/firealarm/soundloop
+	///Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be). Used during power changes.
+	var/is_playing_alarm = FALSE
 
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
@@ -182,6 +184,7 @@
 	if(alarm_type)
 		return //We're already active
 	soundloop.start()
+	is_playing_alarm = TRUE
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
@@ -230,6 +233,7 @@
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
+	is_playing_alarm = FALSE
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
 
@@ -258,9 +262,9 @@
 	update_icon()
 	correct_state()
 	if(machine_stat & NOPOWER)
-		soundloop.volume = 0 //This is the easiest way to stop an alarm when we lose power without having to keep track of which firelock was playing the alarm sound.
-	else
-		soundloop.volume = initial(soundloop.volume)
+		soundloop.stop()
+	else if(is_playing_alarm)
+		soundloop.start()
 
 
 /obj/machinery/door/firedoor/attack_hand(mob/living/user, list/modifiers)
