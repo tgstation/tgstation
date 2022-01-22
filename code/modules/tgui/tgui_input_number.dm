@@ -14,7 +14,7 @@
  * * min_value - Specifies a minimum value. Often 0.
  * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number(mob/user, message, title = "Number Input", default = 0, max_value, min_value, timeout = 0)
+/proc/tgui_input_number(mob/user, message, title = "Number Input", default = 0, max_value, 10000, min_value = 0, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -106,9 +106,9 @@
 		if(default)
 			src.default = 0
 	/// Sanity check
-	if(min_value && default < min_value)
+	if(default < min_value)
 		src.default = min_value
-	if(max_value && default > max_value)
+	if(default > max_value)
 		CRASH("Default value is greater than max value.")
 
 /datum/tgui_input_number/Destroy(force, ...)
@@ -160,9 +160,14 @@
 		return
 	switch(action)
 		if("submit")
-			if(max_value && (params["entry"] > max_value))
+			if(!isnum(params["entry"])
+				stack_trace("A non number was input into tgui input number by [usr]")
+				return
+			if(params["entry"] > max_value)
+				stack_trace("A number greater than the max value was input into tgui input number by [usr]")
 				return FALSE
-			if(min_value && (params["entry"] < min_value))
+			if(params["entry"] < min_value)
+				stack_trace("A number less than the min value was input into tgui input number by [usr]")
 				return FALSE
 			set_entry(params["entry"])
 			SStgui.close_uis(src)
