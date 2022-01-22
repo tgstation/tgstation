@@ -26,7 +26,7 @@
 
 //Basically just so people don't forget to adjust metabolization_rate
 /datum/reagent/inverse
-	name = "Toxic monomers"
+	name = "Toxic Monomers"
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
 	ph = 2
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
@@ -45,7 +45,7 @@
 //Failed chems - generally use inverse if you want to use a impure subtype for it
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction
 /datum/reagent/consumable/failed_reaction
-	name = "Viscous sludge"
+	name = "Viscous Sludge"
 	description = "A off smelling sludge that's created when a reaction gets too impure."
 	nutriment_factor = -1
 	quality = -1

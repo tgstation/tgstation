@@ -14,6 +14,10 @@
 	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/copper = 5)
 	merge_type = /obj/item/stack/light_w
 
+/obj/item/stack/light_w/examine(mob/user)
+	. = ..()
+	. += span_warning("The [name] looks unfinished, add <b>iron</b> to complete it.")
+
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = O

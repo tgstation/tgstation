@@ -162,7 +162,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/beach/alive/lifeguard,
+/obj/effect/mob_spawn/ghost_role/human/beach/lifeguard,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "bJ" = (
@@ -1347,7 +1347,7 @@
 	},
 /area/ruin/powered/beach)
 "TC" = (
-/obj/effect/mob_spawn/human/beach/alive{
+/obj/effect/mob_spawn/ghost_role/human/beach{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1460,7 +1460,6 @@
 /obj/structure/closet/cabinet,
 /obj/item/storage/backpack/duffelbag,
 /obj/item/clothing/under/shorts/purple,
-/obj/item/clothing/suit/vapeshirt,
 /obj/item/clothing/shoes/cookflops{
 	desc = "A very fashionable pair of flip flops.";
 	name = "flip-flops"
@@ -1508,7 +1507,7 @@
 /obj/structure/sign/poster/official/high_class_martini{
 	pixel_x = -32
 	},
-/obj/effect/mob_spawn/human/bartender/alive{
+/obj/effect/mob_spawn/ghost_role/human/bartender{
 	dir = 4
 	},
 /turf/open/floor/wood,

@@ -9,10 +9,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
 	custom_premium_price = PAYCHECK_HARD * 1.25
-	var/alert_cooldown ///don't spam alart messages.
-	var/mob/living/silicon/pai/pai
-	var/emotion_icon = "off" ///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
 	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
+
+	/// Spam alert prevention
+	var/alert_cooldown
+	/// If the pAIcard is slotted in a PDA
+	var/slotted = FALSE
+	/// Any pAI personalities inserted
+	var/mob/living/silicon/pai/pai
+	///what emotion icon we have. handled in /mob/living/silicon/pai/Topic()
+	var/emotion_icon = "off"
 
 /obj/item/paicard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is staring sadly at [src]! [user.p_they()] can't keep living without real human intimacy!"))
@@ -52,75 +58,97 @@
 	if (!in_range(src, user))
 		return
 	user.set_machine(src)
-	var/dat = "<TT><B>Personal AI Device</B><BR>"
-	if(pai)
-		if(!pai.master_dna || !pai.master)
-			dat += "<a href='byond://?src=[REF(src)];setdna=1'>Imprint Master DNA</a><br>"
-		dat += "Installed Personality: [pai.name]<br>"
-		dat += "Prime directive: <br>[pai.laws.zeroth]<br>"
-		for(var/slaws in pai.laws.supplied)
-			dat += "Additional directives: <br>[slaws]<br>"
-		dat += "<a href='byond://?src=[REF(src)];setlaws=1'>Configure Directives</a><br>"
-		dat += "<br>"
-		dat += "<h3>Device Settings</h3><br>"
-		if(pai.radio)
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "Transmit: <A href='byond://?src=[REF(src)];toggle_transmit=1'>\[[pai.can_transmit? "Disable" : "Enable"] Radio Transmission\]</a><br>"
-			dat += "Receive: <A href='byond://?src=[REF(src)];toggle_receive=1'>\[[pai.can_receive? "Disable" : "Enable"] Radio Reception\]</a><br>"
-		else
-			dat += "<b>Radio Uplink</b><br>"
-			dat += "<font color=red><i>Radio firmware not loaded. Please install a pAI personality to load firmware.</i></font><br>"
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			if(H.real_name == pai.master || H.dna.unique_enzymes == pai.master_dna)
-				dat += "<A href='byond://?src=[REF(src)];toggle_holo=1'>\[[pai.canholo? "Disable" : "Enable"] holomatrix projectors\]</a><br>"
-		dat += "<A href='byond://?src=[REF(src)];fix_speech=1'>\[Reset speech synthesis module\]</a><br>"
-		dat += "<A href='byond://?src=[REF(src)];wipe=1'>\[Wipe current pAI personality\]</a><br>"
-	else
-		dat += "No personality installed.<br>"
-		dat += "Searching for a personality... Press view available personalities to notify potential candidates."
-		dat += "<A href='byond://?src=[REF(src)];request=1'>\[View available personalities\]</a><br>"
-	user << browse(dat, "window=paicard")
-	onclose(user, "paicard")
-	return
+	ui_interact(user)
 
-/obj/item/paicard/Topic(href, href_list)
+/obj/item/paicard/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PaiCard")
+		ui.open()
 
-	if(!usr || usr.stat)
-		return
+/obj/item/paicard/ui_state(mob/user)
+	return GLOB.paicard_state
 
-	if(href_list["request"])
-		SSpai.findPAI(src, usr)
+/obj/item/paicard/ui_data(mob/user)
+	. = ..()
+	var/list/data = list()
+	data["candidates"] = list()
+	if(!pai)
+		data["candidates"] = pool_candidates()
+		data["pai"] = null
+		return data
+	data["pai"] = list()
+	data["pai"]["can_holo"] = pai.canholo
+	data["pai"]["dna"] = pai.master_dna
+	data["pai"]["emagged"] = pai.emagged
+	data["pai"]["laws"] = pai.laws.supplied
+	data["pai"]["master"] = pai.master
+	data["pai"]["name"] = pai.name
+	data["pai"]["transmit"] = pai.can_transmit
+	data["pai"]["receive"] = pai.can_receive
+	return data
 
-	if(pai)
-		if(!(loc == usr))
-			return
-		if(href_list["setdna"])
+/obj/item/paicard/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return FALSE
+	switch(action)
+		if("download")
+			/// The individual candidate to download
+			var/datum/pai_candidate/candidate
+			for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
+				if(params["key"] == checked_candidate.key)
+					candidate = checked_candidate
+					break
+			if(isnull(candidate))
+				return FALSE
+			if(pai)
+				return FALSE
+			if(SSpai.check_ready(candidate) != candidate)
+				return FALSE
+			/// The newly downloaded pAI personality
+			var/mob/living/silicon/pai/new_pai = new(src)
+			new_pai.name = candidate.name || pick(GLOB.ninja_names)
+			new_pai.real_name = new_pai.name
+			new_pai.key = candidate.key
+			setPersonality(new_pai)
+			SSpai.candidates -= candidate
+		if("fix_speech")
+			to_chat(pai, span_notice("Your owner has corrected your speech modulation!"))
+			to_chat(usr, span_notice("You fix the pAI's speech modulator."))
+			pai.stuttering = 0
+			pai.slurring = 0
+			pai.derpspeech = 0
+		if("request")
+			if(!pai)
+				SSpai.findPAI(src, usr)
+		if("set_dna")
 			if(pai.master_dna)
 				return
 			if(!iscarbon(usr))
 				to_chat(usr, span_warning("You don't have any DNA, or your DNA is incompatible with this device!"))
 			else
-				var/mob/living/carbon/M = usr
-				pai.master = M.real_name
-				pai.master_dna = M.dna.unique_enzymes
+				var/mob/living/carbon/master = usr
+				pai.master = master.real_name
+				pai.master_dna = master.dna.unique_enzymes
 				to_chat(pai, span_notice("You have been bound to a new master."))
 				pai.emittersemicd = FALSE
-		if(href_list["wipe"])
-			var/confirm = tgui_alert(usr, "Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
-			if(confirm == "Yes")
-				if(pai)
-					to_chat(pai, span_warning("You feel yourself slipping away from reality."))
-					to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
-					to_chat(pai, span_userdanger("Your mental faculties leave you."))
-					to_chat(pai, span_rose("oblivion... "))
-					qdel(pai)
-		if(href_list["fix_speech"])
-			pai.stuttering = 0
-			pai.slurring = 0
-			pai.derpspeech = 0
-		if(href_list["toggle_transmit"] || href_list["toggle_receive"])
-			var/transmitting = href_list["toggle_transmit"] //it can't be both so if we know it's not transmitting it must be receiving.
+		if("set_laws")
+			var/newlaws = tgui_input_text(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN, TRUE)
+			if(newlaws && pai)
+				pai.add_supplied_law(0,newlaws)
+		if("toggle_holo")
+			if(pai.canholo)
+				to_chat(pai, span_warning("Your owner has disabled your holomatrix projectors!"))
+				pai.canholo = FALSE
+				to_chat(usr, span_notice("You disable your pAI's holomatrix!"))
+			else
+				to_chat(pai, span_notice("Your owner has enabled your holomatrix projectors!"))
+				pai.canholo = TRUE
+				to_chat(usr, span_notice("You enable your pAI's holomatrix!"))
+		if("toggle_radio")
+			var/transmitting = params["option"] == "transmit" //it can't be both so if we know it's not transmitting it must be receiving.
 			var/transmit_holder = (transmitting ? WIRE_TX : WIRE_RX)
 			if(transmitting)
 				pai.can_transmit = !pai.can_transmit
@@ -128,23 +156,20 @@
 				pai.can_receive = !pai.can_receive
 			pai.radio.wires.cut(transmit_holder)//wires.cut toggles cut and uncut states
 			transmit_holder = (transmitting ? pai.can_transmit : pai.can_receive) //recycling can be fun!
-			to_chat(usr,span_warning("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-			to_chat(pai,span_warning("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
-		if(href_list["setlaws"])
-			var/newlaws = stripped_multiline_input(usr, "Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", pai.laws.supplied[1], MAX_MESSAGE_LEN)
-			if(newlaws && pai)
-				pai.add_supplied_law(0,newlaws)
-		if(href_list["toggle_holo"])
-			if(pai.canholo)
-				to_chat(pai, span_userdanger("Your owner has disabled your holomatrix projectors!"))
-				pai.canholo = FALSE
-				to_chat(usr, span_warning("You disable your pAI's holomatrix!"))
-			else
-				to_chat(pai, span_boldnotice("Your owner has enabled your holomatrix projectors!"))
-				pai.canholo = TRUE
-				to_chat(usr, span_notice("You enable your pAI's holomatrix!"))
-
-	attack_self(usr)
+			to_chat(usr, span_notice("You [transmit_holder ? "enable" : "disable"] your pAI's [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+			to_chat(pai, span_notice("Your owner has [transmit_holder ? "enabled" : "disabled"] your [transmitting ? "outgoing" : "incoming"] radio transmissions!"))
+		if("wipe_pai")
+			var/confirm = tgui_alert(usr, "Are you certain you wish to delete the current personality? This action cannot be undone.", "Personality Wipe", list("Yes", "No"))
+			if(confirm != "Yes")
+				return
+			if(!pai)
+				return
+			to_chat(pai, span_warning("You feel yourself slipping away from reality."))
+			to_chat(pai, span_danger("Byte by byte you lose your sense of self."))
+			to_chat(pai, span_userdanger("Your mental faculties leave you."))
+			to_chat(pai, span_rose("oblivion... "))
+			qdel(pai)
+	return
 
 // WIRE_SIGNAL = 1
 // WIRE_RECEIVE = 2
@@ -173,3 +198,25 @@
 	if(pai && !pai.holoform)
 		pai.emp_act(severity)
 
+/**
+ * Gathers a list of candidates to display in the download candidate
+ * window. If the candidate isn't marked ready, ie they have not
+ * pressed submit, they will be skipped over.
+ *
+ * @return - An array of candidate objects.
+ */
+/obj/item/paicard/proc/pool_candidates()
+	/// Array of pAI candidates
+	var/list/candidates = list()
+	if(length(SSpai.candidates))
+		for(var/datum/pai_candidate/checked_candidate as anything in SSpai.candidates)
+			if(!checked_candidate.ready)
+				continue
+			/// The object containing the candidate data.
+			var/list/candidate = list()
+			candidate["comments"] = checked_candidate.comments
+			candidate["description"] = checked_candidate.description
+			candidate["key"] = checked_candidate.key
+			candidate["name"] = checked_candidate.name
+			candidates += list(candidate)
+	return candidates

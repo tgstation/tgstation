@@ -1353,7 +1353,7 @@
 /area/shuttle/escape)
 "qp" = (
 /obj/machinery/door/airlock/grunge{
-	name = "Monastery Cemetary"
+	name = "Monastery Cemetery"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
@@ -2828,7 +2828,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IK" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IL" = (
@@ -3449,7 +3449,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/camera/directional/west{
-	c_tag = "Monastery Cemetary";
+	c_tag = "Monastery Cemetery";
 	network = list("ss13","monastery")
 	},
 /turf/open/floor/iron/dark,

@@ -39,8 +39,11 @@
 
 	///If there is an active hotspot on us store a reference to it here
 	var/obj/effect/hotspot/active_hotspot
-	///Whether or not we are a planetary turf
-	var/planetary_atmos = FALSE //air will revert to initial_gas_mix
+	/// air will slowly revert to initial_gas_mix
+	var/planetary_atmos = FALSE
+	/// once our paired turfs are finished with all other shares, do one 100% share
+	/// exists so things like space can ask to take 100% of a tile's gas
+	var/run_later = FALSE
 
 	///gas IDs of current active gas overlays
 	var/list/atmos_overlay_types
@@ -145,9 +148,7 @@
 	temperature_archived = temperature
 
 /turf/open/archive()
-	air.archive()
-	archived_cycle = SSair.times_fired
-	temperature_archived = temperature
+	LINDA_CYCLE_ARCHIVE(src)
 
 /////////////////////////GAS OVERLAYS//////////////////////////////
 
@@ -242,7 +243,7 @@
 
 /turf/open/process_cell(fire_count)
 	if(archived_cycle < fire_count) //archive self if not already done
-		archive()
+		LINDA_CYCLE_ARCHIVE(src)
 
 	current_cycle = fire_count
 	var/cached_ticker = significant_share_ticker
@@ -251,20 +252,25 @@
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
-	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
+	var/our_share_coeff = 1/(LAZYLEN(adjacent_turfs) + 1)
 
 	var/datum/gas_mixture/our_air = air
+
+	var/list/share_end
 
 	#ifdef TRACK_MAX_SHARE
 	max_share = 0 //Gotta reset our tracker
 	#endif
 
-	for(var/t in adjacent_turfs)
-		var/turf/open/enemy_tile = t
+	for(var/turf/open/enemy_tile as anything in adjacent_turfs)
+		// This var is only rarely set, exists so turfs can request to share at the end of our sharing
+		// We need this so we can assume share is communative, which we need to do to avoid a hellish amount of garbage_collect()s
+		if(enemy_tile.run_later)
+			LAZYADD(share_end, enemy_tile)
 
 		if(fire_count <= enemy_tile.current_cycle)
 			continue
-		enemy_tile.archive()
+		LINDA_CYCLE_ARCHIVE(enemy_tile)
 
 	/******************* GROUP HANDLING START *****************************************************************/
 
@@ -296,7 +302,7 @@
 
 		//air sharing
 		if(should_share_air)
-			var/difference = our_air.share(enemy_air, adjacent_turfs_length)
+			var/difference = our_air.share(enemy_air, our_share_coeff, 1 / (LAZYLEN(enemy_tile.atmos_adjacent_turfs) + 1))
 			if(difference)
 				if(difference > 0)
 					consider_pressure_difference(enemy_tile, difference)
@@ -311,18 +317,31 @@
 	if (planetary_atmos) //share our air with the "atmosphere" "above" the turf
 		var/datum/gas_mixture/planetary_mix = SSair.planetary[initial_gas_mix]
 		// archive ourself again so we don't accidentally share more gas than we currently have
-		archive()
+		LINDA_CYCLE_ARCHIVE(src)
 		if(our_air.compare(planetary_mix))
 			if(!our_excited_group)
 				var/datum/excited_group/new_group = new
 				new_group.add_turf(src)
 				our_excited_group = excited_group
 			// shares 4/5 of our difference in moles with the atmosphere
-			our_air.share(planetary_mix, 0.25)
+			our_air.share(planetary_mix, 0.8, 0.8)
 			// temperature share with the atmosphere with an inflated heat capacity to simulate faster sharing with a large atmosphere
 			our_air.temperature_share(planetary_mix, OPEN_HEAT_TRANSFER_COEFFICIENT, planetary_mix.temperature_archived, planetary_mix.heat_capacity() * 5)
 			planetary_mix.garbage_collect()
 			PLANET_SHARE_CHECK
+
+	for(var/turf/open/enemy_tile as anything in share_end)
+		var/datum/gas_mixture/enemy_mix = enemy_tile.air
+		archive()
+		// We share 100% of our mix in this step. Let's jive
+		var/difference = our_air.share(enemy_mix, 1, 1)
+		LAST_SHARE_CHECK
+		if(!difference)
+			continue
+		if(difference > 0)
+			consider_pressure_difference(enemy_tile, difference)
+		else
+			enemy_tile.consider_pressure_difference(src, difference)
 
 	our_air.react(src)
 
@@ -357,10 +376,12 @@
 	var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	set waitfor = FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_PRESSURE_PUSH) & COMSIG_ATOM_BLOCKS_PRESSURE)
+		return
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
-	set waitfor = FALSE
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference / pressure_resistance * PROBABILITY_BASE_PRECENT) - PROBABILITY_OFFSET

@@ -2,6 +2,7 @@
 	name = "body egg"
 	desc = "All slimy and yuck."
 	icon_state = "innards"
+	visual = TRUE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_PARASITE_EGG
 

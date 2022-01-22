@@ -33,7 +33,7 @@
 
 		maprotatechoices[mapname] = VM
 	var/chosenmap = tgui_input_list(usr, "Choose a map to change to", "Change Map", sort_list(maprotatechoices)|"Custom")
-	if (!chosenmap)
+	if (isnull(chosenmap))
 		return
 
 	if(chosenmap == "Custom")

@@ -19,14 +19,14 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	desc = "An updated, modular intercom that fits over the head. Takes encryption keys."
 	icon_state = "headset"
 	inhand_icon_state = "headset"
-	worn_icon_state = null
+	worn_icon_state = "headset"
 	custom_materials = list(/datum/material/iron=75)
 	subspace_transmission = TRUE
 	canhear_range = 0 // can't hear headsets from very far away
 
 	slot_flags = ITEM_SLOT_EARS
-	var/obj/item/encryptionkey/keyslot2 = null
 	dog_fashion = null
+	var/obj/item/encryptionkey/keyslot2 = null
 
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
@@ -55,25 +55,23 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()
+	set_listening(TRUE)
 	recalculateChannels()
+	possibly_deactivate_in_loc()
+
+/obj/item/radio/headset/proc/possibly_deactivate_in_loc()
+	if(ismob(loc))
+		set_listening(should_be_listening)
+	else
+		set_listening(FALSE, actual_setting = FALSE)
+
+/obj/item/radio/headset/Moved(atom/OldLoc, Dir)
+	. = ..()
+	possibly_deactivate_in_loc()
 
 /obj/item/radio/headset/Destroy()
 	QDEL_NULL(keyslot2)
 	return ..()
-
-/obj/item/radio/headset/talk_into(mob/living/M, message, channel, list/spans, datum/language/language, list/message_mods)
-	if (!listening)
-		return ITALICS | REDUCE_RANGE
-	return ..()
-
-/obj/item/radio/headset/can_receive(freq, level, AIuser)
-	if(ishuman(src.loc))
-		var/mob/living/carbon/human/H = src.loc
-		if(H.ears == src)
-			return ..(freq, level)
-	else if(AIuser)
-		return ..(freq, level)
-	return FALSE
 
 /obj/item/radio/headset/ui_data(mob/user)
 	. = ..()
@@ -288,9 +286,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
-/obj/item/radio/headset/silicon/can_receive(freq, level)
-	return ..(freq, level, TRUE)
-
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
@@ -335,11 +330,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 
 /obj/item/radio/headset/recalculateChannels()
-	..()
+	. = ..()
 	if(keyslot2)
 		for(var/ch_name in keyslot2.channels)
 			if(!(ch_name in src.channels))
-				channels[ch_name] = keyslot2.channels[ch_name]
+				LAZYSET(channels, ch_name, keyslot2.channels[ch_name])
 
 		if(keyslot2.translate_binary)
 			translate_binary = TRUE
@@ -348,8 +343,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		if (keyslot2.independent)
 			independent = TRUE
 
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+		for(var/ch_name in channels)
+			secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
 
 /obj/item/radio/headset/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())

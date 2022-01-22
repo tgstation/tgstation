@@ -2,29 +2,40 @@
 	name = "chemical grenade"
 	desc = "A custom made grenade."
 	icon_state = "chemg"
+	base_icon_state = "chemg"
 	inhand_icon_state = "flashbang"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 2
+	/// Which stage of construction this grenade is currently at.
 	var/stage = GRENADE_EMPTY
+	/// The set of reagent containers that have been added to this grenade casing.
 	var/list/obj/item/reagent_containers/glass/beakers = list()
+	/// The types of reagent containers that can be added to this grenade casing.
 	var/list/allowed_containers = list(/obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/glass/bottle)
+	/// The types of reagent containers that can't be added to this grenade casing.
 	var/list/banned_containers = list(/obj/item/reagent_containers/glass/beaker/bluespace) //Containers to exclude from specific grenade subtypes
+	/// The maximum volume of the reagents in the grenade casing.
+	var/casing_holder_volume = 1000
+	/// The range that this grenade can splash reagents at if they aren't consumed on detonation.
 	var/affected_area = 3
-	var/ignition_temp = 10 // The amount of heat added to the reagents when this grenade goes off.
-	var/threatscale = 1 // Used by advanced grenades to make them slightly more worthy.
-	var/no_splash = FALSE //If the grenade deletes even if it has no reagents to splash with. Used for slime core reactions.
-	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition." // Appears when examining empty casings.
+	/// The amount of temperature that is added to the reagents on detonation.
+	var/ignition_temp = 10
+	/// How much to scale the reagents by when the grenade detonates. Used by advanced grenades to make them slightly more worthy.
+	var/threatscale = 1
+	/// The description when examining empty casings.
+	var/casedesc = "This basic model accepts both beakers and bottles. It heats contents by 10 K upon ignition."
+	/// Whether or not the grenade is currently acting as a landmine. Currently broken and not my current project.
 	var/obj/item/assembly/prox_sensor/landminemode = null
+
+/obj/item/grenade/chem_grenade/Initialize(mapload)
+	. = ..()
+	create_reagents(casing_holder_volume)
+	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
+	wires = new /datum/wires/explosive/chem_grenade(src)
 
 /obj/item/grenade/chem_grenade/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
-
-/obj/item/grenade/chem_grenade/Initialize(mapload)
-	. = ..()
-	create_reagents(1000)
-	stage_change() // If no argument is set, it will change the stage to the current stage, useful for stock grenades that start READY.
-	wires = new /datum/wires/explosive/chem_grenade(src)
 
 /obj/item/grenade/chem_grenade/examine(mob/user)
 	display_timer = (stage == GRENADE_READY) //show/hide the timer based on assembly state
@@ -45,6 +56,42 @@
 		else
 			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
 				. += span_notice("You see a [glass_beaker.name] inside the grenade.")
+
+/obj/item/grenade/chem_grenade/update_name(updates)
+	switch(stage)
+		if(GRENADE_EMPTY)
+			name = "[initial(name)] casing"
+		if(GRENADE_WIRED)
+			name = "unsecured [initial(name)]"
+		if(GRENADE_READY)
+			name = initial(name)
+	return ..()
+
+/obj/item/grenade/chem_grenade/update_desc(updates)
+	switch(stage)
+		if(GRENADE_EMPTY)
+			desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
+		if(GRENADE_WIRED)
+			desc = "An unsecured [initial(name)] assembly."
+		if(GRENADE_READY)
+			desc = initial(desc)
+	return ..()
+
+
+/obj/item/grenade/chem_grenade/update_icon_state()
+	if(active)
+		icon_state = "[base_icon_state]_active"
+		return ..()
+
+	switch(stage)
+		if(GRENADE_EMPTY)
+			icon_state = base_icon_state
+		if(GRENADE_WIRED)
+			icon_state = "[base_icon_state]_ass"
+		if(GRENADE_READY)
+			icon_state = "[base_icon_state]_locked"
+	return ..()
+
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == GRENADE_READY && !active)
@@ -126,18 +173,7 @@
 /obj/item/grenade/chem_grenade/proc/stage_change(N)
 	if(N)
 		stage = N
-	if(stage == GRENADE_EMPTY)
-		name = "[initial(name)] casing"
-		desc = "A do it yourself [initial(name)]! [initial(casedesc)]"
-		icon_state = initial(icon_state)
-	else if(stage == GRENADE_WIRED)
-		name = "unsecured [initial(name)]"
-		desc = "An unsecured [initial(name)] assembly."
-		icon_state = "[initial(icon_state)]_ass"
-	else if(stage == GRENADE_READY)
-		name = initial(name)
-		desc = initial(desc)
-		icon_state = "[initial(icon_state)]_locked"
+	update_appearance()
 
 /obj/item/grenade/chem_grenade/on_found(mob/finder)
 	var/obj/item/assembly/assembly = wires.get_attached(wires.get_wire(1))
@@ -164,12 +200,13 @@
 				to_chat(user, span_warning("You prime [src], activating its proximity sensor."))
 			else
 				to_chat(user, span_warning("You prime [src]! [DisplayTimeText(det_time)]!"))
+
+	active = TRUE
+	update_icon_state()
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
-	icon_state = initial(icon_state) + "_active"
 	if(landminemode)
 		landminemode.activate()
 		return
-	active = TRUE
 	addtimer(CALLBACK(src, .proc/detonate), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/chem_grenade/detonate(mob/living/lanced_by)
@@ -182,22 +219,13 @@
 		reactants += glass_beaker.reagents
 
 	var/turf/detonation_turf = get_turf(src)
+	if (chem_splash(detonation_turf, reagents, affected_area, reactants, ignition_temp, threatscale))
+		// logs from custom assemblies priming are handled by the wire component
+		log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
 
-	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
-		if(beakers.len)
-			for(var/obj/beaker as anything in beakers)
-				beaker.forceMove(drop_location())
-			beakers = list()
-		stage_change(GRENADE_EMPTY)
-		active = FALSE
-		return
-// logs from custom assemblies priming are handled by the wire component
-	log_game("A grenade detonated at [AREACOORD(detonation_turf)]")
+	active = FALSE
+	update_appearance()
 
-	update_mob()
-
-	qdel(src)
 
 //Large chem grenades accept slime cores and use the appropriately.
 /obj/item/grenade/chem_grenade/large
@@ -205,6 +233,7 @@
 	desc = "A custom made large grenade. Larger splash range and increased ignition temperature compared to basic grenades. Fits exotic and bluespace based containers."
 	casedesc = "This casing affects a larger area than the basic model and can fit exotic containers, including slime cores and bluespace beakers. Heats contents by 25 K upon ignition."
 	icon_state = "large_grenade"
+	base_icon_state = "large_grenade"
 	allowed_containers = list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/condiment, /obj/item/reagent_containers/food/drinks)
 	banned_containers = list()
 	affected_area = 5
@@ -213,29 +242,52 @@
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
-		return
+		return FALSE
 
-	for(var/obj/item/slime_extract/slime_extract in beakers)
-		if (!slime_extract.Uses)
+
+	var/extract_total_volume = 0
+	var/extract_maximum_volume = 0
+	var/list/extracts = list()
+
+	var/beaker_total_volume = 0
+	var/list/other_containers = list()
+
+	for(var/obj/item/thing as anything in beakers)
+		if(!thing.reagents)
 			continue
 
-		for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-			glass_beaker.reagents.trans_to(slime_extract, glass_beaker.reagents.total_volume)
+		if(istype(thing, /obj/item/slime_extract))
+			var/obj/item/slime_extract/extract = thing
+			if(!extract.Uses)
+				continue
 
-		//If there is still a core (sometimes it's used up)
-		//and there are reagents left, behave normally,
-		//otherwise drop it on the ground for timed reactions like gold.
-
-		if(!slime_extract)
-			continue
-
-		if(slime_extract.reagents && slime_extract.reagents.total_volume)
-			for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
-				slime_extract.reagents.trans_to(glass_beaker, slime_extract.reagents.total_volume)
+			extract_total_volume += extract.reagents.total_volume
+			extract_maximum_volume += extract.reagents.maximum_volume
+			extracts += extract
 		else
-			slime_extract.forceMove(get_turf(src))
-			no_splash = TRUE
-	..()
+			beaker_total_volume += thing.reagents.total_volume
+			other_containers += thing
+
+
+	var/available_extract_volume = extract_maximum_volume - extract_total_volume
+	if(beaker_total_volume <= 0 || available_extract_volume <= 0)
+		return ..()
+
+	var/container_ratio = available_extract_volume / beaker_total_volume
+	var/datum/reagents/tmp_holder = new/datum/reagents(beaker_total_volume)
+	for(var/obj/item/container as anything in other_containers)
+		container.reagents.trans_to(tmp_holder, container.reagents.total_volume * container_ratio, 1, preserve_data = TRUE, no_react = TRUE)
+
+	for(var/obj/item/slime_extract/extract as anything in extracts)
+		var/available_volume = extract.reagents.maximum_volume - extract.reagents.total_volume
+		tmp_holder.trans_to(extract, beaker_total_volume * (available_volume / available_extract_volume), 1, preserve_data = TRUE, no_react = TRUE)
+
+		extract.reagents.handle_reactions() // Reaction handling in the transfer proc is reciprocal and we don't want to blow up the tmp holder early.
+		if(QDELETED(extract))
+			beakers -= extract
+			extracts -= extract
+
+	return ..()
 
 	//I tried to just put it in the allowed_containers list but
 	//if you do that it must have reagents.  If you're going to
@@ -254,6 +306,7 @@
 	desc = "A custom made cryogenic grenade. Rapidly cools contents upon ignition."
 	casedesc = "Upon ignition, it rapidly cools contents by 100 K. Smaller splash range than regular casings."
 	icon_state = "cryog"
+	base_icon_state = "cryog"
 	affected_area = 2
 	ignition_temp = -100
 
@@ -262,6 +315,7 @@
 	desc = "A custom made pyrotechnical grenade. Heats up contents upon ignition."
 	casedesc = "Upon ignition, it rapidly heats contents by 500 K."
 	icon_state = "pyrog"
+	base_icon_state = "pyrog"
 	ignition_temp = 500 // This is enough to expose a hotspot.
 
 /obj/item/grenade/chem_grenade/adv_release // Intended for weaker, but longer lasting effects. Could have some interesting uses.
@@ -269,18 +323,20 @@
 	desc = "A custom made advanced release grenade. It is able to be detonated more than once. Can be configured using a multitool."
 	casedesc = "This casing is able to detonate more than once. Can be configured using a multitool."
 	icon_state = "timeg"
+	base_icon_state = "timeg"
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/multitool_act(mob/living/user, obj/item/tool)
 	if (active)
 		return
-	var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
-	if (newspread != null && user.canUseTopic(src, BE_CLOSE))
-		newspread = round(newspread)
-		unit_spread = clamp(newspread, 5, 100)
-		to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
-	if (newspread != unit_spread)
-		to_chat(user, span_notice("The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units."))
+	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
+	if(isnull(newspread))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	newspread = round(newspread)
+	unit_spread = clamp(newspread, 5, 100)
+	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
@@ -291,14 +347,15 @@
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
 		total_volume += reagent_container.reagents.total_volume
 	if(!total_volume)
-		qdel(src)
+		active = FALSE
+		update_appearance()
 		return
 	var/fraction = unit_spread/total_volume
 	var/datum/reagents/reactants = new(unit_spread)
 	reactants.my_atom = src
 	for(var/obj/item/reagent_containers/reagent_container in beakers)
 		reagent_container.reagents.trans_to(reactants, reagent_container.reagents.total_volume*fraction, threatscale, 1, 1)
-	chem_splash(get_turf(src), affected_area, list(reactants), ignition_temp, threatscale)
+	chem_splash(get_turf(src), reagents, affected_area, list(reactants), ignition_temp, threatscale)
 
 	var/turf/detonated_turf = get_turf(src)
 	addtimer(CALLBACK(src, .proc/detonate), det_time)
@@ -573,6 +630,7 @@
 	name = "holy hand grenade"
 	desc = "A vessel of concentrated religious might."
 	icon_state = "holy_grenade"
+	base_icon_state = "holy_grenade"
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/holy/Initialize(mapload)

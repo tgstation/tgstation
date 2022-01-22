@@ -42,7 +42,7 @@
  * Plays a specific numerical key from our instrument to anyone who can hear us.
  * Does a hearing check if enough time has passed.
  */
-/datum/song/proc/playkey_synth(key, mob/user)
+/datum/song/proc/playkey_synth(key, atom/player)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
@@ -62,7 +62,7 @@
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))

@@ -1137,7 +1137,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fw" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1762,7 +1762,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
@@ -2389,10 +2389,6 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
-"lg" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
 "lh" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
@@ -2815,11 +2811,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"mX" = (
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/secondary)
 "mY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -3041,7 +3032,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -10303,7 +10294,7 @@ mI
 mI
 mI
 mI
-mX
+mI
 mI
 mU
 mZ

@@ -156,7 +156,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
@@ -170,6 +170,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
+			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
+			if(confirmed != "Yes")
+				return
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
@@ -455,7 +458,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.everyone_a_traitor)
 				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
 				return
-			var/objective = stripped_input(holder, "Enter an objective")
+			var/objective = tgui_input_text(holder, "Enter an objective", "Objective")
 			if(!objective)
 				return
 			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
@@ -625,14 +628,19 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
-	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
-		return
 	if(is_special_character(player))
 		return
-	var/datum/antagonist/traitor/traitor_datum = new()
-	traitor_datum.give_objectives = FALSE
-	var/datum/objective/new_objective = new
-	new_objective.owner = player
-	new_objective.explanation_text = objective
-	traitor_datum.objectives += new_objective
-	player.mind.add_antag_datum(traitor_datum)
+	if(ishuman(player))
+		var/datum/antagonist/traitor/traitor_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		traitor_datum.objectives += new_objective
+		player.mind.add_antag_datum(traitor_datum)
+	else if(isAI(player))
+		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		malfunction_datum.objectives += new_objective
+		player.mind.add_antag_datum(malfunction_datum)

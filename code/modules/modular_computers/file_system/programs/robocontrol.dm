@@ -12,8 +12,6 @@
 	program_icon = "robot"
 	///Number of simple robots on-station.
 	var/botcount = 0
-	///Used to find the location of the user for the purposes of summoning robots.
-	var/mob/current_user
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
 
@@ -33,24 +31,34 @@
 		data["access_on_card"] = id_card ? id_card.access : null
 
 	botcount = 0
-	current_user = user
 
-	for(var/B in GLOB.bots_list)
-		var/mob/living/simple_animal/bot/Bot = B
-		if(!(Bot.bot_mode_flags & BOT_MODE_ON) || Bot.z != zlevel || !(Bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
+		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		else if(computer) //Also, the inserted ID must have access to the bot type
-			var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-			if(!id_card && !Bot.bot_core.allowed(current_user))
-				continue
-			else if(id_card && !Bot.bot_core.check_access(id_card))
-				continue
-		var/list/newbot = list("name" = Bot.name, "mode" = Bot.get_mode_ui(), "model" = Bot.bot_type, "locat" = get_area(Bot), "bot_ref" = REF(Bot), "mule_check" = FALSE)
-		if(Bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/MULE = Bot
-			mulelist += list(list("name" = MULE.name, "dest" = MULE.destination, "power" = MULE.cell ? MULE.cell.percent() : 0, "home" = MULE.home_destination, "autoReturn" = MULE.auto_return, "autoPickup" = MULE.auto_pickup, "reportDelivery" = MULE.report_delivery, "mule_ref" = REF(MULE)))
-			if(MULE.load)
-				data["load"] = MULE.load.name
+		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
+			continue
+		var/list/newbot = list(
+			"name" = simple_bot.name,
+			"mode" = simple_bot.get_mode_ui(),
+			"model" = simple_bot.bot_type,
+			"locat" = get_area(simple_bot),
+			"bot_ref" = REF(simple_bot),
+			"mule_check" = FALSE,
+		)
+		if(simple_bot.bot_type == MULE_BOT)
+			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = simple_bot
+			mulelist += list(list(
+				"name" = simple_mulebot.name,
+				"dest" = simple_mulebot.destination,
+				"power" = simple_mulebot.cell ? simple_mulebot.cell.percent() : 0,
+				"home" = simple_mulebot.home_destination,
+				"autoReturn" = simple_mulebot.auto_return,
+				"autoPickup" = simple_mulebot.auto_pickup,
+				"reportDelivery" = simple_mulebot.report_delivery,
+				"mule_ref" = REF(simple_mulebot),
+			))
+			if(simple_mulebot.load)
+				data["load"] = simple_mulebot.load.name
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
@@ -60,10 +68,11 @@
 
 	return data
 
-/datum/computer_file/program/robocontrol/ui_act(action, list/params)
+/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
+	var/mob/current_user = ui.user
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/card/id/id_card
 	if(computer)
@@ -71,16 +80,33 @@
 		if(card_slot)
 			id_card = card_slot.stored_card
 
-	var/list/standard_actions = list("patroloff", "patrolon", "ejectpai")
-	var/list/MULE_actions = list("stop", "go", "home", "destination", "setid", "sethome", "unload", "autoret", "autopick", "report", "ejectpai")
-	var/mob/living/simple_animal/bot/Bot = locate(params["robot"]) in GLOB.bots_list
+	var/list/standard_actions = list(
+		"patroloff",
+		"patrolon",
+		"ejectpai",
+	)
+	var/list/MULE_actions = list(
+		"stop",
+		"go",
+		"home",
+		"destination",
+		"setid",
+		"sethome",
+		"unload",
+		"autoret",
+		"autopick",
+		"report",
+		"ejectpai",
+	)
+	var/mob/living/simple_animal/bot/simple_bot = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
-		Bot.bot_control(action, current_user, current_access)
+		simple_bot.bot_control(action, current_user, current_access)
 	if (action in MULE_actions)
-		Bot.bot_control(action, current_user, current_access, TRUE)
+		simple_bot.bot_control(action, current_user, current_access, TRUE)
+
 	switch(action)
 		if("summon")
-			Bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
+			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
 		if("ejectcard")
 			if(!computer || !card_slot)
 				return

@@ -45,12 +45,12 @@
 /obj/machinery/plumbing/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(anchored)
-		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
+		to_chat(user, span_warning("The [name] needs to be unbolted to do that!"))
 	if(I.tool_start_check(user, amount=0))
-		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
+		to_chat(user, span_notice("You start slicing the [name] apart."))
 		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
-			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
+			to_chat(user, span_notice("You slice the [name] apart."))
 			return TRUE
 
 ///We can empty beakers in here and everything
@@ -58,6 +58,7 @@
 	name = "input gate"
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
@@ -69,6 +70,7 @@
 	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)

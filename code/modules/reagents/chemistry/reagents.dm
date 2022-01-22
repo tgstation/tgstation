@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/datum/reagents/holder = null
 	/// LIQUID, SOLID, GAS
 	var/reagent_state = LIQUID
-	/// special data associated with this like viruses etc
+	/// Special data associated with the reagent that will be passed on upon transfer to a new holder.
 	var/list/data
 	/// increments everytime on_mob_life is called
 	var/current_cycle = 0
@@ -200,7 +200,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
-	return
+	if(data)
+		src.data = data
 
 /// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount)
@@ -208,10 +209,6 @@ Primarily used in reagents/reaction_agents
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)
-	return
-
-/// Called when the reagent container is hit by an explosion
-/datum/reagent/proc/on_ex_act(severity)
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects
