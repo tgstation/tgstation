@@ -15,7 +15,7 @@
 	friendly_verb_simple = "chits at"
 	speak_emote = list("chitters")
 	speed = 3
-	move_to_delay = 20
+	move_to_delay = 10
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
