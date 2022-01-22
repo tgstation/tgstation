@@ -14720,11 +14720,11 @@
 /obj/machinery/gulag_item_reclaimer{
 	pixel_x = 32
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 5
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/processing)
@@ -44010,13 +44010,13 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
 	},
 /obj/structure/closet/emcloset,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/security/processing)
 "oqt" = (
@@ -46660,11 +46660,11 @@
 /area/maintenance/tram/right)
 "pnc" = (
 /obj/machinery/computer/shuttle/labor,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 9
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/security/processing)
@@ -58832,10 +58832,10 @@
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
+/obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
