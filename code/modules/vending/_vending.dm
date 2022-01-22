@@ -280,6 +280,15 @@
 		found_anything = FALSE
 		for(var/record in shuffle(product_records))
 			var/datum/data/vending_product/R = record
+
+			//first dump any of the items that have been returned, in case they contain the nuke disk or something
+			if(LAZYLEN(R.returned_products))
+				for(var/obj/returned_obj_to_dump in R.returned_products)
+					R.returned_products -= returned_obj_to_dump
+					returned_obj_to_dump.forceMove(get_turf(src))
+					step(returned_obj_to_dump, pick(GLOB.alldirs))
+					R.amount--
+
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
 			var/dump_path = R.product_path
@@ -290,13 +299,7 @@
 			if(found_anything && prob(80))
 				continue
 
-			var/obj/obj_to_dump
-			if(R.amount > LAZYLEN(R.returned_products))
-				obj_to_dump = new dump_path(loc)
-			else
-				obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
-				obj_to_dump.forceMove(loc)
-				R.returned_products -= obj_to_dump
+			var/obj/obj_to_dump = new dump_path(loc)
 			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
@@ -522,7 +525,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(R.amount > LAZYLEN(R.returned_products))
 				new dump_path(get_turf(src))
 			else
-				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
 				R.returned_products -= obj_to_dump
 				obj_to_dump.forceMove(get_turf(src))
 			R.amount--
@@ -969,12 +972,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/obj/item/vended_item
 	if(!LAZYLEN(R.returned_products))
 		vended_item = new R.product_path(get_turf(src))
-		if(greyscale_colors)
-			vended_item.set_greyscale(colors=greyscale_colors)
 	else
-		vended_item = R.returned_products[1] //first in, first out
-		vended_item.forceMove(get_turf(src))
+		vended_item = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
 		R.returned_products -= vended_item
+		vended_item.forceMove(get_turf(src))
+	if(greyscale_colors)
+		vended_item.set_greyscale(colors=greyscale_colors)
 	R.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [R.name] out of the slot."))
@@ -1043,7 +1046,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(R.amount > LAZYLEN(R.returned_products))
 			throw_item = new dump_path(loc)
 		else
-			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
 			throw_item.forceMove(loc)
 			R.returned_products -= throw_item
 		R.amount--
