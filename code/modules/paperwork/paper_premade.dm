@@ -126,6 +126,7 @@
 	<br> Anyways, I thought that when I bought this fuckin' joint (ha ha get it weed), that I should probably sell, y'know, <i> gas? </i> Get it? Gas. Like weed. God, I love weed so much.
 	<br> Back to my point, feel free to sling some of this weed on the side. I don't know what jurisdiction we're in, but it's fine. I know it's fine. I probably wouldn't care. Weed.
 	<br> Yep, all of my weed is in this box. Enjoy! I'm going to go home and hit a gram of my THC (that's like, concentrated weed) Pen (for weed). I'll be back, and those hemp ropes I tied should stay...
+	<br> Make sure you turn that SMES off before you leave! It needs to be on for everything to function, but there's only so much charge left and I can't afford a new one!
 	<br>
 	<br> Best of luck!
 	<br> Josh."}
