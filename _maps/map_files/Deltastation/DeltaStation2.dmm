@@ -81453,12 +81453,6 @@
 "rqn" = (
 /obj/structure/cable,
 /obj/structure/closet/secure_closet/detective,
-/obj/item/clothing/head/fedora/det_hat{
-	icon_state = "curator"
-	},
-/obj/item/clothing/suit/det_suit{
-	icon_state = "curator"
-	},
 /obj/item/clothing/under/rank/security/detective,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
