@@ -29213,6 +29213,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/virology)
+"dPt" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/engineering/atmos/project)
 "dPI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -87188,12 +87194,14 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "sfY" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/co2{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "sga" = (
@@ -96512,10 +96520,11 @@
 /turf/open/floor/iron,
 /area/maintenance/port)
 "uCG" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "uCH" = (
@@ -134015,7 +134024,7 @@ mRd
 pCc
 mRd
 qqN
-qqN
+dPt
 qqN
 mEF
 qjG
