@@ -31,13 +31,13 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "bt" = (
-/obj/machinery/computer/atmos_control/tank/plasma_tank{
-	dir = 8;
-	output_info = null
-	},
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 8
 	},
+/area/ruin/space/has_grav/thelizardsgas)
+"bO" = (
+/obj/structure/closet/crate/secure/gear,
+/turf/closed/mineral,
 /area/ruin/space/has_grav/thelizardsgas)
 "bW" = (
 /obj/effect/spawner/random/structure/billboard/lizardsgas,
@@ -49,6 +49,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/structure/sign/poster/contraband/lizards_gas_power{
+	pixel_x = 32
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
@@ -78,15 +81,6 @@
 "hl" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/side,
-/area/ruin/space/has_grav/thelizardsgas)
-"hp" = (
-/obj/machinery/camera/directional/west{
-	network = list("gasstation");
-	network_id = null
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 4
-	},
 /area/ruin/space/has_grav/thelizardsgas)
 "ig" = (
 /obj/structure/table/wood,
@@ -121,7 +115,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "kS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output{
-	internal_pressure_bound = 250
+	internal_pressure_bound = 750
 	},
 /turf/open/floor/engine/plasma,
 /area/ruin/space/has_grav/thelizardsgas)
@@ -237,6 +231,9 @@
 "zz" = (
 /obj/machinery/door/window,
 /obj/structure/cable,
+/obj/structure/sign/poster/contraband/lizards_gas_payment{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},
@@ -252,10 +249,8 @@
 /obj/machinery/power/apc/auto_name/directional/north{
 	coverlocked = 0;
 	locked = 0;
-	network_id = gasstation;
-	powernet = 7890;
-	start_charge = 60;
-	use_power = null
+	network_id = null;
+	start_charge = 60
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_corner,
@@ -306,8 +301,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Es" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/closet/crate/engineering/electrical,
-/obj/item/stack/cable_coil,
+/obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "EH" = (
@@ -316,10 +310,9 @@
 	},
 /area/ruin/space/has_grav/thelizardsgas)
 "FJ" = (
-/obj/machinery/computer/security{
+/obj/machinery/computer/atmos_control/tank/plasma_tank{
 	dir = 8;
-	network = list("gasstation");
-	network_id = null
+	output_info = null
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -354,9 +347,8 @@
 "Io" = (
 /obj/machinery/power/smes{
 	charge = 2e+006;
-	network_id = gasstation;
-	output_level = 0;
-	powernet = 7890
+	network_id = null;
+	output_level = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -400,13 +392,10 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "LT" = (
-/obj/machinery/portable_atmospherics/pump,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
-/obj/machinery/power/terminal{
-	dir = 4
-	},
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/thelizardsgas)
 "Mw" = (
@@ -430,15 +419,6 @@
 "OQ" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine/plasma,
-/area/ruin/space/has_grav/thelizardsgas)
-"OZ" = (
-/obj/machinery/camera/directional/south{
-	network = list("gassstation");
-	network_id = null
-	},
-/turf/open/floor/iron/white/side{
-	dir = 1
-	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Pb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -478,6 +458,9 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/sign/poster/contraband/lizards_gas_payment{
+	pixel_x = -32
+	},
 /turf/open/floor/iron/white/corner{
 	dir = 4
 	},
@@ -552,6 +535,10 @@
 "WY" = (
 /obj/machinery/air_sensor/atmos/plasma_tank,
 /turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/thelizardsgas)
+"XB" = (
+/obj/machinery/power/terminal,
+/turf/closed/wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ys" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -718,14 +705,14 @@ CA
 CA
 CA
 Qg
-Qg
+bO
 mR
 jv
 aK
 Ow
 hl
 Zr
-hp
+ct
 mR
 Qg
 CA
@@ -988,7 +975,7 @@ CA
 CA
 CA
 Qg
-mR
+XB
 Io
 cm
 Mw
@@ -1050,11 +1037,11 @@ vj
 Pi
 GR
 zn
-OZ
+UO
 mR
 Qg
 wb
-wb
+RB
 wb
 RB
 CA
@@ -1108,7 +1095,7 @@ EH
 mR
 Qg
 Hc
-wb
+RB
 wb
 RB
 CA
@@ -1162,7 +1149,7 @@ Qg
 Qg
 wb
 Qg
-wb
+RB
 wb
 RB
 CA
