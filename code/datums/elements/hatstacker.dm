@@ -86,10 +86,11 @@
 **/
 /datum/element/hatstacker/proc/place_hat(obj/item/clothing/head/target, obj/item/hitting_item, mob/user)
 	SIGNAL_HANDLER
-	attempt_place_hat(target, hitting_item, user)
+	var/hat_to_place = attempt_place_hat(target, hitting_item, user)
 	var/icon_to_use = hitting_item.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head.dmi')
 	//TO-DO: get icon_to_use actually added to the overlay list. Somehow.
-	user.update_inv_head()
+	user.update_inv_head(icon_to_use)
+	return hat_to_place ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
 
 /**
 * Calls Attempt_Place_Hat, then updates the icon of the MOD backpack (which, inturn, updates the helmet)
@@ -97,36 +98,44 @@
 **/
 /datum/element/hatstacker/proc/mod_place_hat(obj/item/clothing/head/mod/target, obj/item/hitting_item, mob/user)
 	SIGNAL_HANDLER
-	attempt_place_hat(target, hitting_item, user)
+	var/hat_to_place = attempt_place_hat(target, hitting_item, user)
 	var/icon_to_use = hitting_item.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head.dmi')
 	//TO-DO: get icon_to_use actually added to the overlay list. Somehow.
-	target.mod.wearer.update_inv_back()	//Because we've set target as a head/mod, it gets to check for the wearer
+	target.mod.wearer.update_inv_back(icon_to_use)	//Because we've set target as a head/mod, it gets to check for the wearer
+	return hat_to_place ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
 
 /**
-* Attemps to remove a stacked hat on right-click
+* Attempts to remove a stacked hat on right-click
 *
 * target = the bottom-most hat in the stack; we're trying to remove a hat FROM this target
 * user = the one attempting to remove the hat
 **/
 /datum/element/hatstacker/proc/attempt_remove_hat(obj/item/clothing/head/target, mob/user)
 	var/obj/item/clothing/head/attached_hat = find_stacked_hat(target)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+//	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!attached_hat)
-		return
+		return FALSE
 	if(user.put_in_active_hand(attached_hat))
 		target.balloon_alert(user, "hat removed")
-		attached_hat = null
 	else
 		attached_hat.forceMove(attached_hat.drop_location())
 		target.balloon_alert_to_viewers("the hat falls to the floor!")
-		attached_hat = null
+	attached_hat = null
 
+/**
+* Attempts to remove a hat from another hat
+**/
 /datum/element/hatstacker/proc/remove_hat(obj/item/clothing/head/target, mob/user)
 	SIGNAL_HANDLER
-	attempt_remove_hat(target, user)
+	var/hat_to_remove = attempt_remove_hat(target, user)
 	user.update_inv_head()
+	return hat_to_remove ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
 
+/**
+* Attempts to remove a hat from a MODsuit helmet
+**/
 /datum/element/hatstacker/proc/mod_remove_hat(obj/item/clothing/head/mod/target, mob/user)
 	SIGNAL_HANDLER
-	attempt_remove_hat(target, user)
+	var/hat_to_remove = attempt_remove_hat(target, user)
 	target.mod.wearer.update_inv_back()
+	return hat_to_remove ? COMPONENT_CANCEL_ATTACK_CHAIN : NONE
