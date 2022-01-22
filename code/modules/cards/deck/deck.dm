@@ -22,6 +22,9 @@
 
 /obj/item/toy/cards/deck/examine(mob/user)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		var/obj/item/toy/cards/singlecard/card = cards[1]
+		. += span_notice("You scan the deck with your x-ray vision and the top card reads: [card.cardname].")
 	. += span_notice("Left-click to draw a card face down.")
 	. += span_notice("Right-click to draw a card face up.")
 	. += span_notice("Alt-Click to shuffle the deck.")
