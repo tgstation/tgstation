@@ -23,3 +23,30 @@
 	if(prob(50))
 		C.transform = M
 	return
+
+/obj/item/toy/cards/deck/tarot/haunted
+	name = "haunted tarot game deck"
+	desc = "A spooky looking tarot deck. You can sense a supernatural presence linked to the cards..."
+	var/mob/living/carbon/psychic // the person holding the cards
+
+/obj/item/toy/cards/deck/tarot/haunted/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_equip(datum/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	if(slot != ITEM_SLOT_HANDS)
+		return
+
+	psychic = equipper
+	ADD_TRAIT(psychic, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
+	to_chat(psychic, span_notice("You can sense the dead souls calling out to you..."))
+
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
+	SIGNAL_HANDLER
+
+	REMOVE_TRAIT(psychic, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
+	to_chat(psychic, span_notice("The connection to the spirit realm is severed."))
+	psychic = null
