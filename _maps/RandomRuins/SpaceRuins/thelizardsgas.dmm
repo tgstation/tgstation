@@ -117,7 +117,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output{
 	internal_pressure_bound = 750
 	},
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "mN" = (
 /obj/effect/spawner/random/food_or_drink/booze,
@@ -294,10 +296,14 @@
 	network = list("gasstation");
 	network_id = null
 	},
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "DG" = (
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Es" = (
 /obj/structure/disposalpipe/segment,
@@ -418,7 +424,9 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "OQ" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Pb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -450,7 +458,9 @@
 	desc = "How the fuck did he get in there?!";
 	name = "Zingo"
 	},
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "RB" = (
 /obj/structure/marker_beacon/burgundy,
@@ -489,7 +499,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
 	dir = 4
 	},
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "Um" = (
 /obj/structure/flora/rock/pile,
