@@ -87,7 +87,7 @@
 			var/newcharge = tgui_input_number(usr, "Set new charge", borg.name, borg.cell.charge, borg.cell.maxcharge)
 			if (isnull(newcharge))
 				return
-			borg.cell.charge = clamp(newcharge, 0, borg.cell.maxcharge)
+			borg.cell.charge = newcharge
 			message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")
 			log_silicon("[key_name(user)] set the charge of [key_name(borg)] to [borg.cell.charge].")
 		if ("remove_cell")

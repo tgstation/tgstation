@@ -71,7 +71,7 @@ export const NumberInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { data } = useBackend<NumberInputData>(context);
+  const { act, data } = useBackend<NumberInputData>(context);
   const { min_value, max_value, init_value } = data;
   const { input, onClick, onChange } = props;
 
@@ -81,7 +81,7 @@ const InputArea = (props, context) => {
         <Button
           disabled={input === min_value}
           icon="angle-double-left"
-          onClick={() => onClick(min_value || 0)}
+          onClick={() => onClick(min_value)}
           tooltip={min_value ? `Min (${min_value})` : 'Min'}
         />
       </Stack.Item>
@@ -91,15 +91,15 @@ const InputArea = (props, context) => {
           autoSelect
           fluid
           minValue={min_value}
-          maxValue={max_value ? max_value : 1000000}
+          maxValue={max_value}
           onChange={(_, value) => onChange(value)}
-          onDrag={(_, value) => onChange(value)}
+          onEnter={() => act('submit', { entry: input })}
           value={input}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
-          disabled={!max_value || max_value === 0 || input === max_value}
+          disabled={input === max_value}
           icon="angle-double-right"
           onClick={() => onClick(max_value)}
           tooltip={max_value ? `Max (${max_value})` : 'Max'}

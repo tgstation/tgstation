@@ -1260,10 +1260,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/price = 1
 
 /obj/item/price_tagger/attack_self(mob/user)
-	var/chosen_price = tgui_input_number(user, "Set price", "Price", price)
-	if(isnull(chosen_price))
+	var/chosen_price = tgui_input_number(user, "Set price", "Price", price, min_value = 1)
+	if(!chosen_price || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
-	price = round(chosen_price)
+	price = chosen_price
 	to_chat(user, span_notice(" The [src] will now give things a [price] cr tag."))
 
 /obj/item/price_tagger/afterattack(atom/target, mob/user, proximity)

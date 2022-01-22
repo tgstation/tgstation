@@ -330,12 +330,9 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(isnull(newspread))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	newspread = round(newspread)
-	unit_spread = clamp(newspread, 5, 100)
+	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
 	..()
 

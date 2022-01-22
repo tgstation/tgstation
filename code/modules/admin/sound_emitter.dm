@@ -93,7 +93,6 @@
 		var/new_volume = tgui_input_number(user, "Choose a volume", "Sound Emitter", sound_volume, 100)
 		if(isnull(new_volume))
 			return
-		new_volume = clamp(new_volume, 0, 100)
 		sound_volume = new_volume
 		to_chat(user, span_notice("Volume set to [sound_volume]%."), confidential = TRUE)
 	if(href_list["edit_mode"])
@@ -113,10 +112,9 @@
 		emitter_range = range_list[new_range]
 		to_chat(user, span_notice("Range set to [emitter_range]."), confidential = TRUE)
 	if(href_list["edit_radius"])
-		var/new_radius = tgui_input_number(user, "Choose a radius.", "Sound Emitter", sound_volume, 127)
+		var/new_radius = tgui_input_number(user, "Choose a radius", "Sound Emitter", sound_volume, 127)
 		if(isnull(new_radius))
 			return
-		new_radius = clamp(new_radius, 0, 127)
 		play_radius = new_radius
 		to_chat(user, span_notice("Audible radius set to [play_radius]."), confidential = TRUE)
 	if(href_list["play"])

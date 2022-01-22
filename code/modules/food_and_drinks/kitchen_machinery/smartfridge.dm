@@ -215,9 +215,9 @@
 				desired = text2num(params["amount"])
 			else
 				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", 1, min_value = 1)
-				if(isnull(desired))
+				if(!desired)
 					return FALSE
-				desired = round(desired)
+
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 

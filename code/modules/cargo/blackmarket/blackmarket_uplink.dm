@@ -44,15 +44,9 @@
 /obj/item/blackmarket_uplink/AltClick(mob/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-
-	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5, money, 1)
-	if(isnull(amount_to_remove))
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", max_value = money)
+	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	if(amount_to_remove <= 0)
-		return
-
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	money -= amount_to_remove
 	holochip.name = "washed " + holochip.name

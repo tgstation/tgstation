@@ -126,11 +126,9 @@
 	. = ..()
 	if(.)
 		return
-
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg))
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
-	degrees = round(deg)
 	to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 

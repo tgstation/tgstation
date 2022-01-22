@@ -185,22 +185,22 @@
 		stop_playing()
 
 	else if(href_list["setlinearfalloff"])
-		var/amount = tgui_input_number(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration")
+		var/amount = tgui_input_number(usr, "Set linear sustain duration in seconds", "Linear Sustain Duration", 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN, 0.1)
 		if(!isnull(amount))
 			set_linear_falloff_duration(amount)
 
 	else if(href_list["setexpfalloff"])
-		var/amount = tgui_input_number(usr, "Set exponential sustain factor", "Exponential sustain factor")
+		var/amount = tgui_input_number(usr, "Set exponential sustain factor", "Exponential sustain factor", INSTRUMENT_EXP_FALLOFF_MIN, INSTRUMENT_EXP_FALLOFF_MAX,  INSTRUMENT_EXP_FALLOFF_MIN)
 		if(!isnull(amount))
 			set_exponential_drop_rate(amount)
 
 	else if(href_list["setvolume"])
-		var/amount = tgui_input_number(usr, "Set volume", "Volume")
+		var/amount = tgui_input_number(usr, "Set volume", "Volume", 1, 75, 1)
 		if(!isnull(amount))
 			set_volume(amount)
 
 	else if(href_list["setdropoffvolume"])
-		var/amount = tgui_input_number(usr, "Set dropoff threshold", "Dropoff Threshold Volume")
+		var/amount = tgui_input_number(usr, "Set dropoff threshold", "Dropoff Volume", max_value = 100)
 		if(!isnull(amount))
 			set_dropoff_volume(amount)
 

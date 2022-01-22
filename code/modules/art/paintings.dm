@@ -170,28 +170,28 @@
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(!id_card)
-		to_chat(user,span_notice("You don't even have a id and you want to be an art patron?"))
+		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
 	if(!id_card.registered_account || !id_card.registered_account.account_job)
-		to_chat(user,span_notice("No valid non-departamental account found."))
+		to_chat(user, span_warning("No valid non-departamental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
-	if(account.account_balance < painting_metadata.credit_value)
-		to_chat(user,span_notice("You can't afford this."))
+	if(!account.has_money(painting_metadata.credit_value))
+		to_chat(user, span_warning("You can't afford this."))
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(isnull(offer_amount))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(offer_amount <= 0 || sniped_amount != painting_metadata.credit_value || offer_amount < painting_metadata.credit_value+1 || !user.canUseTopic(src))
+	if(sniped_amount != painting_metadata.credit_value)
 		return
 	if(!account.adjust_money(-offer_amount))
-		to_chat(user,span_warning("Transaction failure. Please try again."))
+		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
-	to_chat(user,span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 
 /obj/item/canvas/update_overlays()
 	. = ..()

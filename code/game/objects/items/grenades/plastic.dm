@@ -1,3 +1,6 @@
+#define MIN_TIMER 10 SECONDS
+#define MAX_TIMER 6000 SECONDS
+
 /obj/item/grenade/c4
 	name = "C-4 charge"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
@@ -69,12 +72,11 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", 10, 60000, 10)
-	if (isnull(newtime))
+	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", MIN_TIMER, MAX_TIMER, MIN_TIMER)
+	if (!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(user.get_active_held_item() == src)
-		det_time = round(newtime)
-		to_chat(user, "Timer set for [det_time] seconds.")
+	det_time = newtime
+	to_chat(user, "Timer set for [det_time] seconds.")
 
 /obj/item/grenade/c4/afterattack(atom/movable/bomb_target, mob/user, flag)
 	. = ..()
@@ -150,3 +152,6 @@
 	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)
+
+#undef MAX_TIMER
+#undef MIN_TIMER

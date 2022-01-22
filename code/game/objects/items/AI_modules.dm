@@ -247,9 +247,9 @@ AI MODULES
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
 	var/newpos = tgui_input_number(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority ", lawpos, 50, 15)
-	if(isnull(newpos))
+	if(!newpos || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
-	lawpos = round(newpos)
+	lawpos = newpos
 	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
@@ -286,7 +286,7 @@ AI MODULES
 
 /obj/item/ai_module/remove/attack_self(mob/user)
 	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50, 1)
-	if(isnull(lawpos))
+	if(!lawpos || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
 	to_chat(user, span_notice("Law [lawpos] selected."))
 	..()
