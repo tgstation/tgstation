@@ -176,17 +176,16 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	AI_notify_hack()
-	if(do_after(ninja, 300))
-		priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-		var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-		pirate_event.runEvent()
-		ninja_gloves.communication_console_hack_success = TRUE
-		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-		if(!ninja_antag)
-			return
-		var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
-		if(objective)
-			objective.completed = TRUE
+	if(!do_after(ninja, 30 SECONDS, src))
+		return
+	hack_console(ninja)
+	ninja_gloves.communication_console_hack_success = TRUE
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	if(!ninja_antag)
+		return
+	var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
+	if(objective)
+		objective.completed = TRUE
 
 //AIRLOCK//
 /obj/machinery/door/airlock/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
