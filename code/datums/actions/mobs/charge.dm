@@ -16,12 +16,10 @@
 	var/charge_damage = 30
 	/// If we destroy objects while charging
 	var/destroy_objects = TRUE
-	/// Associative boolean list of chargers that are currently charging
+	/// If the current move is being triggered by us or not
+	var/actively_moving = FALSE
+	/// List of charging mobs
 	var/list/charging = list()
-	/// Associative list of chargers and their hit targets
-	var/list/already_hit = list()
-	/// Associative direction list of chargers that lets our move signal know how we are supposed to move
-	var/list/next_move_allowed = list()
 
 /datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
 	. = ..()
@@ -53,34 +51,62 @@
 	var/chargeturf = get_turf(target_atom)
 	if(!chargeturf)
 		return
-	charger.setDir(get_dir(charger, target_atom))
-	var/turf/T = get_ranged_target_turf(chargeturf, charger.dir, past)
-	if(!T)
+	var/dir = get_dir(charger, target_atom)
+	var/turf/target = get_ranged_target_turf(chargeturf, dir, past)
+	if(!target)
 		return
+
+	if(charger in charging)
+		// Stop any existing charging, this'll clean things up properly
+		SSmove_manager.stop_looping(charger)
+
+	charging += charger
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	charging[charger] = TRUE
-	already_hit[charger] = list()
 	DestroySurroundings(charger)
-	charger.setDir(get_dir(charger, target_atom))
-	do_charge_indicator(charger, T)
+	charger.setDir(dir)
+	do_charge_indicator(charger, target)
+
 	SLEEP_CHECK_DEATH(delay, charger)
-	var/distance = min(get_dist(charger, T), charge_distance)
-	for(var/i in 1 to distance)
-		// Prevents movement from the user during the charge
-		SLEEP_CHECK_DEATH(charge_speed, charger)
-		next_move_allowed[charger] = get_dir(charger, T)
-		step_towards(charger, T)
-		next_move_allowed.Remove(charger)
-	UnregisterSignal(charger, COMSIG_MOVABLE_BUMP)
-	UnregisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(charger, COMSIG_MOVABLE_MOVED)
-	charging.Remove(charger)
-	already_hit.Remove(charger)
-	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+
+	var/time_to_hit = min(get_dist(charger, target), charge_distance) * charge_speed
+
+	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	if(!new_loop)
+		return
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
+	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/charge_end)
+	if(ismob(charger))
+		RegisterSignal(charger, COMSIG_MOB_STATCHANGE, .proc/stat_changed)
+
+	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
+	sleep(time_to_hit + charge_speed)
+
 	return TRUE
+
+/datum/action/cooldown/mob_cooldown/charge/proc/pre_move(datum)
+	SIGNAL_HANDLER
+	// If you sleep in Move() you deserve what's coming to you
+	actively_moving = TRUE
+
+/datum/action/cooldown/mob_cooldown/charge/proc/post_move(datum)
+	SIGNAL_HANDLER
+	actively_moving = FALSE
+
+/datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/move_loop/source)
+	SIGNAL_HANDLER
+	var/atom/movable/charger = source.moving
+	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_STATCHANGE))
+	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+	charging -= charger
+
+/datum/action/cooldown/mob_cooldown/charge/proc/stat_changed(mob/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+	if(new_stat == DEAD)
+		SSmove_manager.stop_looping(source) //This will cause the loop to qdel, triggering an end to our charging
 
 /datum/action/cooldown/mob_cooldown/charge/proc/do_charge_indicator(atom/charger, atom/charge_target)
 	var/turf/target_turf = get_turf(charge_target)
@@ -92,23 +118,15 @@
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_move(atom/source, atom/new_loc)
 	SIGNAL_HANDLER
-	var/expected_dir = next_move_allowed[source]
-	if(!expected_dir)
+	if(!actively_moving)
 		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-	var/real_dir = get_dir(source, new_loc)
-	if(!(expected_dir & real_dir))
-		return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-	// Disable the flag for the direction we moved (this is so diagonal movements can be fully completed)
-	next_move_allowed[source] = expected_dir & ~real_dir
-	if(charging[source])
-		new /obj/effect/temp_visual/decoy/fading(source.loc, source)
-		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	new /obj/effect/temp_visual/decoy/fading(source.loc, source)
+	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_moved(atom/source)
 	SIGNAL_HANDLER
-	if(charging[source])
-		playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
-		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	playsound(source, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
+	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/DestroySurroundings(atom/movable/charger)
 	if(!destroy_objects)
@@ -116,46 +134,43 @@
 	if(!isanimal(charger))
 		return
 	for(var/dir in GLOB.cardinals)
-		var/turf/T = get_step(charger, dir)
-		if(QDELETED(T))
+		var/turf/next_turf = get_step(charger, dir)
+		if(!next_turf)
 			continue
-		if(T.Adjacent(charger))
-			if(iswallturf(T) || ismineralturf(T))
-				if(!isanimal(charger))
-					SSexplosions.medturf += T
-					continue
-				T.attack_animal(charger)
+		if(next_turf.Adjacent(charger) && (iswallturf(next_turf) || ismineralturf(next_turf)))
+			if(!isanimal(charger))
+				SSexplosions.medturf += next_turf
 				continue
-		for(var/obj/O in T.contents)
-			if(!O.Adjacent(charger))
+			next_turf.attack_animal(charger)
+			continue
+		for(var/obj/object in next_turf.contents)
+			if(!object.Adjacent(charger))
 				continue
-			if((ismachinery(O) || isstructure(O)) && O.density && !O.IsObscured())
-				if(!isanimal(charger))
-					SSexplosions.med_mov_atom += target
-					break
-				O.attack_animal(charger)
+			if(!ismachinery(object) && !isstructure(object))
+				continue
+			if(!object.density || object.IsObscured())
+				continue
+			if(!isanimal(charger))
+				SSexplosions.med_mov_atom += target
 				break
+			object.attack_animal(charger)
+			break
 
 /datum/action/cooldown/mob_cooldown/charge/proc/on_bump(atom/movable/source, atom/target)
 	SIGNAL_HANDLER
-	if(SEND_SIGNAL(owner, COMSIG_BUMPED_CHARGE, target) & COMPONENT_OVERRIDE_CHARGE_BUMP)
+	if(owner == target)
 		return
-	if(charging[source])
-		if(owner == target)
-			return
-		if(isturf(target) || isobj(target) && target.density)
-			if(isobj(target))
-				SSexplosions.med_mov_atom += target
-			else
-				SSexplosions.medturf += target
-		INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
-		hit_target(source, target, charge_damage)
+	if(isturf(target))
+		SSexplosions.medturf += target
+	if(isobj(target) && target.density)
+		SSexplosions.med_mov_atom += target
+
+	INVOKE_ASYNC(src, .proc/DestroySurroundings, source)
+	hit_target(source, target, charge_damage)
 
 /datum/action/cooldown/mob_cooldown/charge/proc/hit_target(atom/movable/source, atom/target, damage_dealt)
-	var/list/hit_things = already_hit[source]
-	if(!isliving(target) || hit_things.Find(target))
+	if(!isliving(target))
 		return
-	hit_things.Add(target)
 	var/mob/living/living_target = target
 	living_target.visible_message("<span class='danger'>[source] slams into [living_target]!</span>", "<span class='userdanger'>[source] tramples you into the ground!</span>")
 	source.forceMove(get_turf(living_target))
@@ -173,26 +188,28 @@
 	charger.Shake(15, 15, 1 SECONDS)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
+	var/mob/living/living_source
+	if(isliving(source))
+		living_source = source
+
 	if(!isliving(target))
-		if(target.density && !target.CanPass(source, get_dir(target, source)))
-			source.visible_message(span_danger("[source] smashes into [target]!"))
-			if(isliving(source))
-				var/mob/living/living_source = source
-				living_source.Stun(6, ignore_canstun = TRUE)
+		if(!target.density || target.CanPass(source, get_dir(target, source)))
+			return
+		source.visible_message(span_danger("[source] smashes into [target]!"))
+		if(!living_source)
+			return
+		living_source.Stun(6, ignore_canstun = TRUE)
 		return
+
 	var/mob/living/living_target = target
-	var/blocked = FALSE
 	if(ishuman(living_target))
 		var/mob/living/carbon/human/human_target = living_target
-		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK))
-			blocked = TRUE
-	if(!blocked)
-		living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
-		living_target.Knockdown(6)
-	else
-		if(isliving(source))
-			var/mob/living/living_source = source
+		if(human_target.check_shields(source, 0, "the [source.name]", attack_type = LEAP_ATTACK) && living_source)
 			living_source.Stun(6, ignore_canstun = TRUE)
+			return
+
+	living_target.visible_message(span_danger("[source] charges on [living_target]!"), span_userdanger("[source] charges into you!"))
+	living_target.Knockdown(6)
 
 /datum/action/cooldown/mob_cooldown/charge/triple_charge
 	name = "Triple Charge"
@@ -253,7 +270,7 @@
 		our_clone.alpha = 127.5
 		our_clone.move_through_mob = owner
 		our_clone.spawn_blood = spawn_blood
-		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
+		do_charge(our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 

@@ -45,6 +45,8 @@
 	if(building)
 		buildstage = 0
 		panel_open = TRUE
+	if(name == initial(name))
+		name = "[get_area_name(src)] [initial(name)]"
 	update_appearance()
 	myarea = get_area(src)
 	LAZYADD(myarea.firealarms, src)
