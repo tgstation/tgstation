@@ -318,6 +318,7 @@
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
 
+		log_atmos("[src.type] exploded with a mix of ", air_contents)
 		// As of writing this this is calibrated to maxcap at 140L and 160atm.
 		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
