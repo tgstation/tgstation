@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixed aggressive mobs moving twice as slow as they should. This was the result of a rather big refactor that moved us away from a BYOND thing. I don't know how the BYOND thing fucking works internally, so the numbers might be a bit off. If something seems (way) too fast/slow, lemme know yeah?"
