@@ -466,7 +466,7 @@ SUBSYSTEM_DEF(timer)
 	if(buckethead == src)
 		bucket_list[bucket_pos] = next
 		timer_subsystem.bucket_count--
-	else if(timeToRun < TIMER_MAX(timer_subsystem))
+	else if(bucket_joined)
 		timer_subsystem.bucket_count--
 	else
 		var/l = length(second_queue)
