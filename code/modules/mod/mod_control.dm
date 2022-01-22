@@ -381,7 +381,7 @@
 			balloon_alert(user, "not painted!")
 		return TRUE
 	else if(open && attacking_item.GetID())
-		update_access(user, attacking_item)
+		update_access(user, attacking_item.GetID())
 		return TRUE
 	return ..()
 
@@ -587,6 +587,13 @@
 			old_module.on_deactivation()
 	if(wearer)
 		old_module.on_unequip()
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
+		if(action)
+			action.Remove(wearer)
+	if(ai)
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
+		if(action)
+			action.Remove(ai)
 	old_module.pinned_to.Cut()
 	old_module.on_uninstall()
 	old_module.mod = null

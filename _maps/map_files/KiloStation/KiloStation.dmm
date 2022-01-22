@@ -75467,8 +75467,8 @@
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/machinery/door/airlock/medical/glass{
-	name = "Chemistry Lab";
-	req_access_txt = "5; 69"
+	name = "Pharmacy";
+	req_access_txt = "69"
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/disposalpipe/segment,
