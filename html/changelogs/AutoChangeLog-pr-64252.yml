@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - qol: "Fire alarms prepend their area name"
