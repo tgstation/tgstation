@@ -127,7 +127,7 @@
 	id = "the-lizards-gas"
 	suffix = "thelizardsgas.dmm"
 	name = "The Lizard's Gas"
-	description = "A refueling station stocked with enough plasma for any space-worthy vessel. Well, maybe if it were still the year 2318."
+	description = "A refueling station stocked with enough plasma for any space-worthy vessel. Well, maybe if it weren't 50 years ago."
 
 /datum/map_template/ruin/space/intact_empty_ship
 	id = "intact-empty-ship"
