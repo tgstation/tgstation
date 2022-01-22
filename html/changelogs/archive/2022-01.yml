@@ -798,3 +798,59 @@
       for the new diminishing effect of walls.
   neopythagorean:
   - bugfix: Hitting cancel when renaming a paper now actually cancels the operation.
+2022-01-22:
+  AdipemDragon:
+  - imageadd: Chefs got a whole lot better at making visually apealing pizzas! Their
+      boxes got spiffied up to match, too.
+  ArcaneMusic:
+  - refactor: Boomerang behavior has been moved to a component.
+  ErdinyoBarboza:
+  - bugfix: Ready Meal Donkhiladas are now made with meat and vegetables that do not
+      vaporize when microwaved.
+  Fikou:
+  - bugfix: fixes modsuit devices fucking up if you couldnt equip them
+  - bugfix: fixes modsuit pins fucking up if you remove the module
+  - imageadd: modsuit jetpack now has unique assets
+  LemonInTheDark:
+  - bugfix: Fixes plants not maintaining their healthy size when picked up and put
+      back down
+  - bugfix: Fixes some weird behavior with items falling out of your hands when space
+      moving. Life is pain
+  - bugfix: Fixes things not properly flying out of ruptured disposal pipes
+  Melbert:
+  - expansion: 'Deltastation: Atmosphics, Engineering, and Service Maintenance revamp!'
+  Pickle-Coding:
+  - balance: Tritiumfire will need more tritium burned in order to release radiation.
+      The higher the volume of the gasmixture, the more tritium is needed.
+  - balance: Tritiumfire radiation pulse will always have a range of at least 6, but
+      will need more tritium in order to increase range.
+  - balance: Tritiumfire will be less likely to irradiate you if there is less tritium
+      getting burned.
+  RandomGamer123:
+  - bugfix: Soulful toolboxes, made by using a soulstone with a shade in it on a toolbox
+      now display their icon properly.
+  ShizCalev:
+  - bugfix: Camera assemblies are now upgradable again!
+  SkeletalElite:
+  - rscadd: new plasma cutter EMP effect, it sets you on fire
+  SuperNovaa41:
+  - bugfix: Fixed a dead bartender spawning in the beach biodome ruin.
+  Tastyfish:
+  - bugfix: Fixed delivery tagger destinations.
+  YakumoChen:
+  - qol: Traitors trying to steal a supermatter sliver should be reminded that magboots
+      are required near an active supermatter at all times.
+  cacogen:
+  - qol: Fire alarms prepend their area name
+  san7890:
+  - bugfix: Portable Scrubbers and Large Scrubbers should no longer display as large,
+      embittered ERROR icons for those who enjoy mapping.
+  - bugfix: Nanotrasen finally realized that when spraying decals on TramStation to
+      go UNDER any staircase accessories.
+  tastyfish:
+  - bugfix: Objects transitioning through z-levels in disposals no longer lose their
+      delivery destination tag.
+  - bugfix: Tramstation port-aft disposals loop containing part of service, and engineering
+      now work again.
+  zxaber:
+  - bugfix: Fixed cyborg light overlay not showing when the light is off.

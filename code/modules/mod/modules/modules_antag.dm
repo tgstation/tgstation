@@ -230,3 +230,30 @@
 
 /obj/item/mod/module/noslip/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+	
+/obj/item/mod/module/springlock/bite_of_87
+	
+/obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
+	. = ..()
+	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
+	name = initial(the_dna_lock_behind_the_slaughter.name)
+	desc = initial(the_dna_lock_behind_the_slaughter.desc)
+	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
+	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
+	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
+
+/obj/item/mod/module/springlock/bite_of_87/on_install()
+	mod.activation_step_time *= 0.1
+
+/obj/item/mod/module/springlock/bite_of_87/on_uninstall()
+	mod.activation_step_time *= 10
+	
+/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+	..()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
+		var/list/all_parts = mod.mod_parts.Copy() + mod 
+		for(var/obj/item/part in all_parts) // turns the suit yellow
+			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
+		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
+		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
