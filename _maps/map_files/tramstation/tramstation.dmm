@@ -39237,7 +39237,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/ore_box,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "mIg" = (
@@ -45440,6 +45440,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "oQs" = (
@@ -57066,6 +57067,7 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/light/small/directional/east,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "tew" = (

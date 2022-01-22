@@ -16981,16 +16981,21 @@
 /turf/open/floor/iron,
 /area/security/warden)
 "bTg" = (
-/obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/jackboots{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/ai/directional/south,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
 	},
-/obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/shoes/cowboy/black,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/industrial/loader,
+/turf/open/floor/iron/dark,
+/area/cargo/drone_bay)
 "bTj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external{
@@ -69031,8 +69036,6 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow,
-/obj/machinery/light/directional/south,
-/obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -77673,8 +77676,14 @@
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "vWT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/structure/grille,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/jackboots{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/shoes/jackboots,
+/obj/item/clothing/shoes/cowboy/black,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "vXv" = (
@@ -79104,6 +79113,11 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/medical/surgery/room_b)
+"wzR" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/trimline/yellow,
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "wAk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -124971,7 +124985,7 @@ eZr
 sly
 jRU
 sEx
-bEg
+bTg
 bEg
 xVs
 mwi
@@ -125228,8 +125242,8 @@ evh
 img
 jEq
 gaV
-bOC
-bTg
+wzR
+bEg
 vWT
 bEg
 sfF
@@ -125485,8 +125499,8 @@ eCi
 sly
 qVZ
 qVZ
+sly
 bEg
-bUw
 bEg
 bEg
 bOc

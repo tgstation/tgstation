@@ -60232,6 +60232,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"tca" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "tcf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -65975,6 +65982,7 @@
 /turf/open/floor/iron,
 /area/engineering/break_room)
 "vgB" = (
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/wood,
 /area/cargo/qm)
 "vgE" = (
@@ -93502,7 +93510,7 @@ lZy
 dne
 hCI
 doJ
-aRG
+tca
 xZo
 hPP
 dne

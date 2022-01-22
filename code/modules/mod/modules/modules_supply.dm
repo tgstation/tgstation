@@ -174,3 +174,14 @@
 		ore.forceMove(drop_location())
 		ores -= ore
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/hydraulic
+	name = "MOD hydraulic arms module"
+	desc = "A pair of powerful hydraulic arms, installed to the MODsuit, enhancing the user's dexterity."
+	icon_state = "hydraulic"
+	module_type = MODULE_ACTIVE
+	removable = FALSE
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/hydraulic)
+	cooldown_time = 0.5 SECONDS
+	overlay_state_inactive = "module_hydraulic"

@@ -82,5 +82,4 @@
 	back = /obj/item/mod/control/pre_equipped/research
 	suit = null
 	mask = /obj/item/clothing/mask/breath
-	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE

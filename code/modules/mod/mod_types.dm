@@ -52,6 +52,14 @@
 		/obj/item/mod/module/jetpack,
 	)
 
+/obj/item/mod/control/pre_equipped/loader
+	theme = /datum/mod_theme/loader
+	applied_cell = /obj/item/stock_parts/cell/high/plus
+	initial_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/flashlight,
+	)
+
 /obj/item/mod/control/pre_equipped/mining
 	theme = /datum/mod_theme/mining
 	applied_cell = /obj/item/stock_parts/cell/high/plus
