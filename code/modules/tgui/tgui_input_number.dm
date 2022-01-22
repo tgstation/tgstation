@@ -160,16 +160,17 @@
 		return
 	switch(action)
 		if("submit")
-			if(!isnum(params["entry"])
+			if(!isnum(params["entry"]))
 				stack_trace("A non number was input into tgui input number by [usr]")
 				return
-			if(params["entry"] > max_value)
+			var/choice = round(params["entry"])
+			if(choice > max_value)
 				stack_trace("A number greater than the max value was input into tgui input number by [usr]")
 				return FALSE
-			if(params["entry"] < min_value)
+			if(choice < min_value)
 				stack_trace("A number less than the min value was input into tgui input number by [usr]")
 				return FALSE
-			set_entry(params["entry"])
+			set_entry(choice)
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
