@@ -34319,7 +34319,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering Storage";
-	req_one_access_txt = "19;35"
+	req_one_access_txt = "19;32"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
