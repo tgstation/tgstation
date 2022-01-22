@@ -245,7 +245,6 @@
 	locked = 0;
 	name = "The GOOD Stuff"
 	},
-/obj/effect/spawner/random/food_or_drink/seed_rare,
 /obj/machinery/power/apc/auto_name/directional/north{
 	coverlocked = 0;
 	locked = 0;
@@ -253,6 +252,10 @@
 	start_charge = 60
 	},
 /obj/structure/cable,
+/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
 /turf/open/floor/iron/dark/smooth_corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "Bi" = (
