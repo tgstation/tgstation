@@ -358,6 +358,7 @@
 	worn_icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
+	var/sort_list_mode = "STANDARD" // Mode to sort destinations by. Other values defined and used inside TGUI.
 	w_class = WEIGHT_CLASS_TINY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -402,6 +403,7 @@
 	var/list/data = list()
 	data["locations"] = GLOB.TAGGERLOCATIONS
 	data["currentTag"] = currTag
+	data["sortListMode"] = sort_list_mode
 	return data
 
 /** User clicks a button on the tagger */
@@ -409,11 +411,17 @@
 	. = ..()
 	if(.)
 		return
-	if(action != "change")
-		return
-	if(round(text2num(params["index"])) == currTag)
-		return
-	currTag = round(text2num(params["index"]))
+	switch(action)
+		if("change")
+			var/new_tag = round(text2num(params["index"]))
+			if(new_tag == currTag)
+				return
+			currTag = new_tag
+		if("sort_list")
+			var/new_sort_mode = params["mode"]
+			if(new_sort_mode == sort_list_mode)
+				return
+			sort_list_mode = new_sort_mode
 	return TRUE
 
 /obj/item/sales_tagger
