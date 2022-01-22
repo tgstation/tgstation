@@ -160,7 +160,6 @@
 "rs" = (
 /obj/machinery/button/door/directional/west{
 	desc = "After all, what's more important than making sure you get what you're due?";
-	id = gasstation;
 	name = "Criminal Shutters"
 	},
 /obj/structure/cable,
@@ -187,7 +186,6 @@
 "uh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = gasstation;
 	name = "Criminal Shutters"
 	},
 /turf/open/floor/plating,
@@ -291,15 +289,6 @@
 "CA" = (
 /turf/template_noop,
 /area/template_noop)
-"Da" = (
-/obj/machinery/camera/autoname/directional/north{
-	network = list("gasstation");
-	network_id = null
-	},
-/turf/open/floor/engine/plasma{
-	initial_gas_mix = "plasma=35000;TEMP=293.15"
-	},
-/area/ruin/space/has_grav/thelizardsgas)
 "DG" = (
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=35000;TEMP=293.15"
@@ -336,7 +325,6 @@
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = gasstation;
 	name = "Criminal Shutters"
 	},
 /turf/open/floor/plating,
@@ -826,7 +814,7 @@ CA
 Qg
 Qg
 LA
-Da
+DG
 WY
 QQ
 rC
