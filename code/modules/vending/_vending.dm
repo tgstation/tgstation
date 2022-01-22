@@ -36,6 +36,8 @@
 	var/age_restricted = FALSE
 	///Whether the product can be recolored by the GAGS system
 	var/colorable
+	///List of items that have been returned to the vending machine.
+	var/list/returned_products = list()
 
 /**
  * # vending machines
@@ -288,8 +290,14 @@
 			if(found_anything && prob(80))
 				continue
 
-			var/obj/O = new dump_path(loc)
-			step(O, pick(GLOB.alldirs))
+			var/obj/obj_to_dump
+			if(R.amount > LAZYLEN(R.returned_products))
+				obj_to_dump = new dump_path(loc)
+			else
+				obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+				obj_to_dump.forceMove(loc)
+				R.returned_products -= obj_to_dump
+			step(obj_to_dump, pick(GLOB.alldirs))
 			found_anything = TRUE
 			dump_amount++
 			if (dump_amount >= 16)
@@ -511,9 +519,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/dump_path = R.product_path
 			if(!dump_path)
 				continue
-
+			if(R.amount > LAZYLEN(R.returned_products))
+				new dump_path(get_turf(src))
+			else
+				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+				R.returned_products -= obj_to_dump
+				obj_to_dump.forceMove(get_turf(src))
 			R.amount--
-			new dump_path(get_turf(src))
 			break
 
 ///Tilts ontop of the atom supplied, if crit is true some extra shit can happen. Returns TRUE if it dealt damage to something.
@@ -646,11 +658,18 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = TRUE
 	if(!user.transferItemToLoc(I, src))
 		return FALSE
+	to_chat(user, span_notice("You insert [I] into [src]'s input compartment."))
+
+	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
+		if(istype(I, product_datum.product_path))
+			product_datum.amount++
+			product_datum.returned_products += I
+			return
+
 	if(vending_machine_input[format_text(I.name)])
 		vending_machine_input[format_text(I.name)]++
 	else
 		vending_machine_input[format_text(I.name)] = 1
-	to_chat(user, span_notice("You insert [I] into [src]'s input compartment."))
 	loaded_items++
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
@@ -945,9 +964,15 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(icon_vend) //Show the vending animation if needed
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-	var/obj/item/vended_item = new R.product_path(get_turf(src))
-	if(greyscale_colors)
-		vended_item.set_greyscale(colors=greyscale_colors)
+	var/obj/item/vended_item
+	if(R.amount > LAZYLEN(R.returned_products))
+		vended_item = new R.product_path(get_turf(src))
+		if(greyscale_colors)
+			vended_item.set_greyscale(colors=greyscale_colors)
+	else
+		vended_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+		vended_item.forceMove(get_turf(src))
+		R.returned_products -= vended_item
 	R.amount--
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [R.name] out of the slot."))
@@ -1013,9 +1038,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/dump_path = R.product_path
 		if(!dump_path)
 			continue
-
+		if(R.amount > LAZYLEN(R.returned_products))
+			throw_item = new dump_path(loc)
+		else
+			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+			throw_item.forceMove(loc)
+			R.returned_products -= throw_item
 		R.amount--
-		throw_item = new dump_path(loc)
 		break
 	if(!throw_item)
 		return FALSE
@@ -1064,6 +1093,9 @@ GLOBAL_LIST_EMPTY(vending_products)
  * * user - the user doing the loading
  */
 /obj/machinery/vending/proc/canLoadItem(obj/item/I, mob/user)
+	if((I.type in products) || (I.type in premium) || (I.type in contraband))
+		return TRUE
+	to_chat(user, span_warning("[src] does not accept [I]!"))
 	return FALSE
 
 /obj/machinery/vending/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
