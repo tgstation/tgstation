@@ -74,6 +74,8 @@
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_power_cost)
+	else
+		balloon_alert(mod.wearer, "invalid target!")
 
 /obj/item/mod/module/clamp/on_suit_deactivation()
 	for(var/atom/movable/crate as anything in stored_crates)
@@ -230,7 +232,7 @@
 	var/angle = get_angle(mod.wearer, target)
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
-		max(round(0.8*power), 1), max(round(0.2*power), 1), mod.wearer, spin = FALSE, \
+		range = power, speed = max(round(0.2*power), 1), thrower = mod.wearer, spin = FALSE, \
 		callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
 
 /obj/item/mod/module/hydraulic/proc/on_throw_end(atom/target, angle)
