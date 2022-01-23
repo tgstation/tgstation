@@ -435,9 +435,10 @@
 
 /datum/greyscale_config/mothcoat
 	name = "Moth Coat"
-	icon_file = 'icons/obj/clothing/suits.dmi'
+	icon_file = 'icons/obj/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_clothes.json'
 
-/datum/greyscale_config/mothcoat/worn
-	name = "Moth Coat Worn"
+/datum/greyscale_config/mothcoat_worn
+	name = "Worn Moth Coat"
+	icon_file = 'icons/mob/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_clothes_worn.json'

@@ -2,26 +2,45 @@
 	"mothcoat": [
 		{
 			"type": "icon_state",
-			"icon_state": "mothcoat",
+			"icon_state": "mothcoat_worn",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "mothcoat_details",
+			"icon_state": "mothcoat_details_worn",
+			"blend_mode": "overlay"
+		}
+	],
+	"mothcoat_short": [
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_mantle_top_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_mantle_details_worn",
 			"blend_mode": "overlay"
 		}
 	],
 	"mothcoat_winter": [
 		{
 			"type": "icon_state",
-			"icon_state": "mothcoat_winter",
+			"icon_state": "mothcoat_mantle_top_worn",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
 		{
 			"type": "icon_state",
-			"icon_state": "mothcoat_winter_details",
+			"icon_state": "mothcoat_mantle_bottom_worn",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "mothcoat_mantle_details_worn",
 			"blend_mode": "overlay"
 		}
 	]
