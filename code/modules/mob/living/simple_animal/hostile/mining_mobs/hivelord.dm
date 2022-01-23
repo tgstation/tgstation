@@ -8,7 +8,7 @@
 	icon_dead = "Hivelord_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC
-	move_to_delay = 7
+	move_to_delay = 14
 	ranged = 1
 	vision_range = 5
 	aggro_vision_range = 9
@@ -70,7 +70,7 @@
 	icon_aggro = "Hivelordbrood"
 	icon_dead = "Hivelordbrood"
 	icon_gib = "syndicate_gib"
-	move_to_delay = 1.5
+	move_to_delay = 1
 	friendly_verb_continuous = "buzzes near"
 	friendly_verb_simple = "buzz near"
 	vision_range = 10
@@ -268,7 +268,7 @@
 	del_on_death = TRUE
 	sentience_type = SENTIENCE_BOSS
 	loot = list(/obj/item/organ/regenerative_core/legion = 3, /obj/effect/mob_spawn/corpse/human/legioninfested = 5)
-	move_to_delay = 7
+	move_to_delay = 14
 	vision_range = 5
 	aggro_vision_range = 9
 	speed = 3

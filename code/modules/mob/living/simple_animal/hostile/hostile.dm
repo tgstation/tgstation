@@ -18,8 +18,7 @@
 	var/projectiletype //set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
 	var/casingtype //set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
-	///Delay for automated movement, measured in deciseconds
-	var/move_to_delay = 1.5
+	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
@@ -99,7 +98,7 @@
 
 /mob/living/simple_animal/hostile/update_stamina()
 	. = ..()
-	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.03))
+	move_to_delay = (initial(move_to_delay) + (staminaloss * 0.06))
 
 /mob/living/simple_animal/hostile/proc/sidestep()
 	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
@@ -127,7 +126,7 @@
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
 			FindTarget(list(P.firer), 1)
-		Goto(P.starting, move_to_delay, 1.5)
+		Goto(P.starting, move_to_delay, 3)
 	return ..()
 
 //////////////HOSTILE MOB TARGETTING AND AGGRESSION////////////

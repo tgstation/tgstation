@@ -22,8 +22,8 @@
 
 	///The human target the bot is trying to wash.
 	var/mob/living/carbon/human/target
-	///The mob's current speed, which varies based on how long the bot chases it's target. Measured in deciseconds
-	var/currentspeed = 2.5
+	///The mob's current speed, which varies based on how long the bot chases it's target.
+	var/currentspeed = 5
 	///Is the bot currently washing it's target/everything else that crosses it?
 	var/washing = FALSE
 	///Have the target evaded the bot for long enough that it will swear at it like kirk did to kahn?
@@ -109,16 +109,16 @@
 
 		if(BOT_HUNT) // hunting for stinkman
 			if(bot_cover_flags & BOT_COVER_EMAGGED) //lol fuck em up
-				currentspeed = 1.5
+				currentspeed = 3.5
 				start_washing()
 				mad = TRUE
 			else
 				switch(frustration)
 					if(0 to 4)
-						currentspeed = 2.5
+						currentspeed = 5
 						mad = FALSE
 					if(5 to INFINITY)
-						currentspeed = 1
+						currentspeed = 2.5
 						mad = TRUE
 			if(target && !check_purity(target))
 				if(target.loc == loc && isturf(target.loc)) //LADIES AND GENTLEMAN WE GOTEM PREPARE TO DUMP
