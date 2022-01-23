@@ -2092,6 +2092,18 @@
 	hidden = TRUE
 	experimental = TRUE
 
+/datum/techweb_node/mod_experimental
+	id = "mod_experimental"
+	display_name = "Experimental Modular Suits"
+	description = "Applications of experimentality when creating Modules has created these..."
+	prereq_ids = list("base")
+	design_ids = list(
+		"mod_disposal",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
 //Helpers for debugging/balancing the techweb in its entirety!
 /proc/total_techweb_points()
 	var/list/datum/techweb_node/processing = list()

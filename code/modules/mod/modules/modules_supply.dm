@@ -238,36 +238,92 @@
 		return
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
 
-/obj/item/mod/module/disposal_selector
+/obj/item/mod/module/disposal_connector
 	name = "MOD disposal selector module"
-	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal."
+	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal. \
+		Only seems to work when the suit is on."
 	icon_state = "disposal"
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	incompatible_modules = list(/obj/item/mod/module/disposal_selector)
+	incompatible_modules = list(/obj/item/mod/module/disposal_connector)
 	var/disposal_tag = NONE
 
-/obj/item/mod/module/disposal_selector/Initialize(mapload)
+/obj/item/mod/module/disposal_connector/Initialize(mapload)
 	. = ..()
 	disposal_tag = pick(GLOB.TAGGERLOCATIONS)
 
-/obj/item/mod/module/disposal_selector/on_suit_activation()
+/obj/item/mod/module/disposal_connector/on_suit_activation()
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
-/obj/item/mod/module/disposal_selector/on_suit_deactivation()
+/obj/item/mod/module/disposal_connector/on_suit_deactivation()
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
-/obj/item/mod/module/disposal_selector/get_configuration()
+/obj/item/mod/module/disposal_connector/get_configuration()
 	. = ..()
-	.["disposal_tag"] = add_ui_configuration("Disposal Tag", "list", disposal_tag, GLOB.TAGGERLOCATIONS)
+	.["disposal_tag"] = add_ui_configuration("Disposal Tag", "list", GLOB.TAGGERLOCATIONS[disposal_tag], GLOB.TAGGERLOCATIONS)
 
-/obj/item/mod/module/disposal_selector/configure_edit(key, value)
+/obj/item/mod/module/disposal_connector/configure_edit(key, value)
 	switch(key)
 		if("disposal_tag")
-			if(value in GLOB.TAGGERLOCATIONS)
-				disposal_tag = value
+			for(var/tag in 1 to length(GLOB.TAGGERLOCATIONS))
+				if(GLOB.TAGGERLOCATIONS[tag] == value)
+					disposal_tag = tag
+					break
 
-/obj/item/mod/module/disposal_selector/proc/disposal_handling(datum/disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+/obj/item/mod/module/disposal_connector/proc/disposal_handling(datum/disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
 	SIGNAL_HANDLER
 
 	disposal_holder.destinationTag = disposal_tag
+
+/obj/item/mod/module/magnet
+	name = "MOD loader hydraulic magnet module"
+	desc = "A powerful electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
+	icon_state = "magnet"
+	module_type = MODULE_ACTIVE
+	removable = FALSE
+	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	incompatible_modules = list(/obj/item/mod/module/magnet)
+	cooldown_time = 0.5 SECONDS
+	overlay_state_active = "module_magnet"
+
+/obj/item/mod/module/magnet/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(istype(mod.wearer.pulling, /obj/structure/closet))
+		mod.wearer.pulling.forceMove(mod.wearer.loc)
+		mod.wearer.pulling.throw_at(target, range = 7, speed = 4, thrower = mod.wearer, spin = FALSE)
+		return
+	if(!(target in view(mod.wearer)) || !istype(target, /obj/structure/closet))
+		balloon_alert(mod.wearer, "invalid target!")
+		return
+	var/obj/structure/closet/locker = target
+	if(locker.anchored || locker.move_resist >= MOVE_FORCE_OVERPOWERING)
+		balloon_alert(mod.wearer, "target anchored!")
+		return
+	locker.throw_at(mod.wearer, range = 7, speed = 4, spin = FALSE, \
+		callback = CALLBACK(src, .proc/check_locker, locker), force = MOVE_FORCE_NORMAL)
+
+/obj/item/mod/module/magnet/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	var/datum/pull_component = mod.wearer.GetComponent(/datum/component/strong_pull)
+	if(!pull_component)
+		return
+	qdel(pull_component)
+	mod.wearer.stop_pulling()
+
+/obj/item/mod/module/magnet/proc/check_locker(obj/structure/closet/locker)
+	if(!mod?.wearer)
+		return
+	if(!locker.Adjacent(mod.wearer))
+		return
+	mod.wearer.AddComponent(/datum/component/strong_pull)
+	mod.wearer.start_pulling(locker)
+	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
+
+/obj/item/mod/module/magnet/proc/on_stop_pull(datum/source, atom/movable/last_puller)
+	SIGNAL_HANDLER
+
+	qdel(mod.wearer.GetComponent(/datum/component/strong_pull))
