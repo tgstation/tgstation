@@ -369,13 +369,12 @@
 	desc = "You are a hardcore gamer, and you have a need to game. You love winning and hate losing. You only like gamer food."
 	icon = "gamepad"
 	value = 0
-	processing_quirk = TRUE
 	gain_text = span_notice("You feel the sudden urge to game.")
 	lose_text = span_notice("You've lost all interest in gaming.")
 	medical_record_text = "Patient has a severe video game addiction."
 	mob_trait = TRAIT_GAMER
 	/// Timer for gaming withdrawal to kick in
-	COOLDOWN_DECLARE(gaming_withdrawal)
+	var/gaming_withdrawal_timer = TIMER_ID_NULL
 
 /datum/quirk/gamer/add()
 	// Gamer diet
@@ -402,7 +401,8 @@
 
 /datum/quirk/gamer/add_unique()
 	// The gamer starts off quelled
-	COOLDOWN_START(src, gaming_withdrawal, GAMING_WITHDRAWAL_TIME)
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+
 /**
  * Gamer won a game
  *
@@ -438,19 +438,23 @@
  */
 /datum/quirk/gamer/proc/gamed()
 	SIGNAL_HANDLER
-	// Executed when a gamer has gamed
-	COOLDOWN_START(src, gaming_withdrawal, GAMING_WITHDRAWAL_TIME)
+	
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	// Remove withdrawal malus
+	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+	// Reset withdrawal timer
+	if (gaming_withdrawal_timer)
+		deltimer(gaming_withdrawal_timer)
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+	
 
 /datum/quirk/gamer/proc/gamer_moment()
 	// It was a heated gamer moment...
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
 
-/datum/quirk/gamer/process(delta_time)
-	// If enough time has passed since the last game session, go into gamer withdrawal
+/datum/quirk/gamer/proc/enter_withdrawal()
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	if (COOLDOWN_FINISHED(src, gaming_withdrawal))
-		SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
-	else
-		SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+
 #undef GAMING_WITHDRAWAL_TIME
