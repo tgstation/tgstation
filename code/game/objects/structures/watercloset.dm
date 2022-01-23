@@ -333,6 +333,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
 
+	if(istype(O, /obj/item/organ/brain))
+		var/obj/item/organ/brain/smooth = O
+		smooth.icon_state = "brain-w"
+		smooth.setOrganDamage(BRAIN_TRAUMA_MILD)
+		to_chat(user, span_notice("You wash and uncrease the brain, making sure all those pesky wrinkles are removed!"))
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RG = O
 		if(reagents.total_volume <= 0)
