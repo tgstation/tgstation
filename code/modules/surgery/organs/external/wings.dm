@@ -2,7 +2,7 @@
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = EXTERNAL_BEHIND | EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = ALL_EXTERNAL_OVERLAYS
 
 	feature_key = "wings"
 
