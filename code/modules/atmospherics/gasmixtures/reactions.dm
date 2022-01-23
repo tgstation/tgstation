@@ -485,7 +485,8 @@
 /datum/gas_reaction/bzformation/init_reqs()
 	requirements = list(
 		/datum/gas/nitrous_oxide = 10,
-		/datum/gas/plasma = 10
+		/datum/gas/plasma = 10,
+		"MAX_TEMP" = T20C + 20 // Yes, someone used this as a bomb timer. I hate players
 	)
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
@@ -493,6 +494,7 @@
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
 	var/old_heat_capacity = air.heat_capacity()
+	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
 	var/reaction_efficency = min(1 / ((pressure / (0.1 * ONE_ATMOSPHERE)) * (max(cached_gases[/datum/gas/plasma][MOLES] / cached_gases[/datum/gas/nitrous_oxide][MOLES], 1))), cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * INVERSE(2))
 	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
 	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
