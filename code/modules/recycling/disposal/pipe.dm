@@ -24,10 +24,6 @@
 /obj/structure/disposalpipe/Initialize(mapload, obj/structure/disposalconstruct/make_from)
 	. = ..()
 
-	associated_loc = get_turf(src)
-	if(associated_loc)
-		LAZYADD(associated_loc.nullspaced_contents, src)
-
 	if(!QDELETED(make_from))
 		setDir(make_from.dir)
 		make_from.forceMove(src)
@@ -52,7 +48,6 @@
 		if(initialize_dirs & DISP_DIR_DOWN)
 			dpdir |= DOWN
 
-	//AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, nullspace_target = TRUE)
 	AddElement(/datum/element/associated_loc_updater)
 	AddComponent(/datum/component/nullspace_undertile, invisibility_trait = TRAIT_T_RAY_VISIBLE, nullspace_when_underfloor_visible = FALSE)
 

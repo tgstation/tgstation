@@ -35,9 +35,9 @@
 /datum/component/nullspace_undertile/proc/on_hide(obj/source, underfloor_accessibility)
 	SIGNAL_HANDLER
 
-	var/turf/real_loc = source.associated_loc
+	var/turf/real_loc = source.associated_loc || get_turf(source)
 	if(!real_loc)
-		CRASH("[parent] had a nullspace_undertile component without a used associated_loc!")
+		CRASH("[parent] had a nullspace_undertile component without a used associated_loc or loc!")
 
 	switch(underfloor_accessibility)
 		if(UNDERFLOOR_HIDDEN)
