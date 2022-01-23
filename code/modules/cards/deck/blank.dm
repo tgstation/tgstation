@@ -3,7 +3,7 @@
 	desc = "A deck of playing cards that can be customized with writing."
 	icon_state = "deck_white_full"
 	deckstyle = "white"
-	custom_deck = TRUE
+	has_unique_card_icons = FALSE
 	/// Amount of blank cards in the deck
 	var/blanks = 25
 
@@ -11,7 +11,7 @@
 	icon_state = "deck_black_full"
 	deckstyle = "black"
 
-/obj/item/toy/cards/deck/cas/populate_deck()
+/obj/item/toy/cards/deck/blank/populate_deck()
 	for(var/x in 1 to blanks)
 		var/obj/item/toy/cards/singlecard/blank_card = generate_card("blank card")
 		blank_card.name = "blank card"

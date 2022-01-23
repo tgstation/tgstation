@@ -9,7 +9,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_white_full"
 	deckstyle = "white"
-	custom_deck = TRUE
+	has_unique_card_icons = FALSE
 
 /obj/item/toy/cards/deck/cas/black
 	name = "\improper CAS deck (black)"

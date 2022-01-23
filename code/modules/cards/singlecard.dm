@@ -51,10 +51,10 @@
 /obj/item/toy/cards/singlecard/update_icon_state()
 	if(!flipped) 
 		icon_state = "singlecard_down_[deckstyle]"
-	else if(custom_deck)
-		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
-	else
+	else if(has_unique_card_icons) // each card in a deck has a different icon
 		icon_state = "sc_[cardname]_[deckstyle]"
+	else // all cards are the same icon state (blank or scribble)
+		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
 
 	return ..()
 
