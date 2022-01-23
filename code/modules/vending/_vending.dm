@@ -282,12 +282,11 @@
 			var/datum/data/vending_product/R = record
 
 			//first dump any of the items that have been returned, in case they contain the nuke disk or something
-			if(LAZYLEN(R.returned_products))
-				for(var/obj/returned_obj_to_dump in R.returned_products)
-					R.returned_products -= returned_obj_to_dump
-					returned_obj_to_dump.forceMove(get_turf(src))
-					step(returned_obj_to_dump, pick(GLOB.alldirs))
-					R.amount--
+			for(var/obj/returned_obj_to_dump in R.returned_products)
+				R.returned_products -= returned_obj_to_dump
+				returned_obj_to_dump.forceMove(get_turf(src))
+				step(returned_obj_to_dump, pick(GLOB.alldirs))
+				R.amount--
 
 			if(R.amount <= 0) //Try to use a record that actually has something to dump.
 				continue
@@ -664,7 +663,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, span_notice("You insert [I] into [src]'s input compartment."))
 
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(istype(I, product_datum.product_path))
+		if(ispath(I, product_datum.product_path))
 			product_datum.amount++
 			product_datum.returned_products += I
 			return
