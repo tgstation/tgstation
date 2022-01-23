@@ -44984,6 +44984,9 @@
 	network = list("ss13","Security")
 	},
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/security/brig)
 "oIo" = (
