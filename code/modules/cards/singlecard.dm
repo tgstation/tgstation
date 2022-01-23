@@ -51,10 +51,8 @@
 /obj/item/toy/cards/singlecard/update_icon_state()
 	if(!flipped) 
 		icon_state = "singlecard_down_[deckstyle]"
-	else if(blank) // only appears in white cas decks for now
-		icon_state = "sc_blank_[deckstyle]"
-	else if(deckstyle == "cas_white" | deckstyle == "cas_black")
-		icon_state = "sc_scribble_[deckstyle]"
+	else if(custom_deck)
+		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
 	else
 		icon_state = "sc_[cardname]_[deckstyle]"
 

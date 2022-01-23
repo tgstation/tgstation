@@ -7,25 +7,17 @@
 	name = "\improper CAS deck (white)"
 	desc = "A deck for the game Cards Against Spess, still popular after all these centuries. Warning: may include traces of broken fourth wall. This is the white deck."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_cas_white_full"
-	deckstyle = "cas_white"
-	var/blanks = 25
+	icon_state = "deck_white_full"
+	deckstyle = "white"
+	custom_deck = TRUE
 
 /obj/item/toy/cards/deck/cas/black
 	name = "\improper CAS deck (black)"
 	desc = "A deck for the game Cards Against Spess, still popular after all these centuries. Warning: may include traces of broken fourth wall. This is the black deck."
-	icon_state = "deck_cas_black_full"
-	deckstyle = "cas_black"
-	blanks = 0
+	icon_state = "deck_black_full"
+	deckstyle = "black"
 
 /obj/item/toy/cards/deck/cas/populate_deck()
 	var/cards_against_space = world.file2list("strings/[deckstyle].txt")
 	for(var/card in cards_against_space)
 		cards += generate_card("[card]")
-	if(!blanks)
-		return
-	for(var/x in 1 to blanks)
-		var/obj/item/toy/cards/singlecard/blank_card = generate_card("blank card")
-		blank_card.name = "blank card"
-		blank_card.blank = TRUE
-		cards += blank_card

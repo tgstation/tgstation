@@ -11,6 +11,8 @@
 	worn_icon_state = "card"
 	///The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
+	///If the deck is custom then cards can only be scribble or blank icons
+	var/custom_deck = FALSE
 	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite
