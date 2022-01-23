@@ -99,10 +99,10 @@
 		qdel(H)
 
 /obj/item/holochip/AltClick(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, NEED_HANDS))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		return
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
-	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, NEED_HANDS) || loc != user)
+	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)) || loc != user)
 		return
 	var/new_credits = spend(split_amount, TRUE)
 	var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)
