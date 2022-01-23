@@ -413,12 +413,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 
 ////////////////////////Medical////////////////////////
-/datum/techweb_node/genetics
-	id = "genetics"
+/datum/techweb_node/cloning
+	id = "cloning"
 	display_name = "Genetic Engineering"
-	description = "We have the technology to change him."
+	description = "We have the technology to make him."
 	prereq_ids = list("biotech")
-	design_ids = list("dnascanner", "scan_console", "dna_disk")
+	design_ids = list("clonecontrol", "clonepod", "clonescanner", "scan_console", "cloning_disk")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/cryotech

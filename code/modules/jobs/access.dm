@@ -334,6 +334,8 @@
 			return "Weapon Permit"
 		if(ACCESS_NETWORK)
 			return "Network Access"
+		if(ACCESS_CLONING)
+			return "Cloning Room"
 		if(ACCESS_MECH_MINING)
 			return "Mining Mech Access"
 		if(ACCESS_MECH_MEDICAL)

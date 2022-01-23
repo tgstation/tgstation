@@ -275,6 +275,10 @@
 	return ..()
 
 //These are unused so far but I want to remember them to use them later
+/datum/mood_event/cloned_corpse
+	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
+	mood_change = -6
+
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>THEY'RE CUTTING ME OPEN!!</span>\n"
 	mood_change = -8

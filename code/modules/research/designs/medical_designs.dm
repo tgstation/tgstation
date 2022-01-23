@@ -90,10 +90,10 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/dna_disk
-	name = "Genetic Data Disk"
+/datum/design/cloning_disk
+	name = "Cloning Data Disk"
 	desc = "Produce additional disks for storing genetic data."
-	id = "dna_disk"
+	id = "cloning_disk"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
 	build_path = /obj/item/disk/data

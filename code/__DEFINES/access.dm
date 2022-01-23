@@ -26,7 +26,7 @@
 #define ACCESS_AI_UPLOAD 16
 #define ACCESS_TELEPORTER 17
 #define ACCESS_EVA 18
-/// Bridge, EVA storage windoors, gateway shutters, AI integrity restorer, comms console
+/// Bridge, EVA storage windoors, gateway shutters, AI integrity restorer, clone record deletion, comms console
 #define ACCESS_HEADS 19
 #define ACCESS_CAPTAIN 20
 #define ACCESS_ALL_PERSONAL_LOCKERS 21
@@ -77,6 +77,8 @@
 #define ACCESS_WEAPONS 66
 /// NTnet diagnostics/monitoring software
 #define ACCESS_NETWORK 67
+/// Cloning room and clone pod ejection
+#define ACCESS_CLONING 68
 /// Pharmacy access (Chemistry room in Medbay)
 #define ACCESS_PHARMACY 69 ///Nice.
 #define ACCESS_PSYCHOLOGY 70

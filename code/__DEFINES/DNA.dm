@@ -92,6 +92,10 @@
 #define DNA_MUTATION_BLOCKS 8
 #define DNA_UNIQUE_ENZYMES_LEN 32
 
+
+#define CLONER_FRESH_CLONE "fresh"
+#define CLONER_MATURE_CLONE "mature"
+
 //species traits for mutantraces
 #define MUTCOLORS 1
 #define HAIR 2

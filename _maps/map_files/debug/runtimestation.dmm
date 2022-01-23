@@ -848,7 +848,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/medical/medbay)
 "cK" = (
-/obj/machinery/light,
+/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1309,6 +1309,8 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "es" = (
+/obj/machinery/light,
+/obj/machinery/clonepod,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1960,9 +1962,11 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/iron,
-/area/cargo/miningoffice)
+/obj/machinery/computer/shuttle/mining{
+	dir = 2
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningoffice)
 "gk" = (
 /obj/structure/sign/departments/evac,
 /turf/closed/wall/r_wall,
@@ -2430,6 +2434,15 @@
 	},
 /turf/open/floor/iron,
 /area/science)
+"BB" = (
+/obj/machinery/computer/cloning{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white/corner,
+/area/medical/medbay)
 "BD" = (
 /obj/structure/closet/secure_closet/chief_medical{
 	locked = 0
@@ -2568,8 +2581,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	roundstart_template = /datum/map_template/shuttle/mining/box;
-	width = 7
+	width = 7;
+	roundstart_template = /datum/map_template/shuttle/mining/box
 	},
 /turf/open/floor/engine,
 /area/cargo/miningoffice)
@@ -8551,8 +8564,8 @@ dH
 by
 Qt
 by
-EB
-DW
+cm
+BB
 by
 cS
 cS

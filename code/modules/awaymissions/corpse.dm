@@ -56,6 +56,9 @@
 		return
 	if(QDELETED(src) || QDELETED(user))
 		return
+	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(ghost_role == "No" || !loc)
+		return
 	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)
 

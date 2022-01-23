@@ -222,18 +222,15 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "K" = (
-/obj/machinery/harvester,
+/obj/machinery/dna_scannernew,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "L" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/structure/closet/abductor,
-/obj/item/clothing/under/misc/pj/blue,
-/obj/item/clothing/shoes/sneakers/white,
-/obj/item/clothing/shoes/jackboots,
-/obj/item/clothing/glasses/eyepatch,
+/obj/machinery/computer/prototype_cloning,
+/turf/open/floor/plating/abductor,
+/area/shuttle/escape)
+"M" = (
+/obj/machinery/clonepod/experimental,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "N" = (
@@ -582,7 +579,7 @@ l
 l
 l
 c
-l
+K
 l
 l
 Y
@@ -605,7 +602,7 @@ l
 l
 l
 c
-l
+L
 l
 l
 l
@@ -628,7 +625,7 @@ l
 q
 s
 b
-K
+M
 O
 S
 Z
