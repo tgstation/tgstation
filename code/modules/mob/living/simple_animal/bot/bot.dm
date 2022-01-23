@@ -387,14 +387,17 @@
 	to_chat(user, span_notice("Controls are now [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
 	return TRUE
 
+/mob/living/simple_animal/bot/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!(bot_cover_flags & BOT_COVER_LOCKED))
+		bot_cover_flags ^= BOT_COVER_OPEN
+		to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
+	else
+		to_chat(user, span_warning("The maintenance panel is locked!"))
+
+	return TRUE
+
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(bot_cover_flags & BOT_COVER_LOCKED))
-			bot_cover_flags ^= BOT_COVER_OPEN
-			to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
-		else
-			to_chat(user, span_warning("The maintenance panel is locked!"))
-	else if(attacking_item.GetID())
+	if(attacking_item.GetID())
 		unlock_with_id(user)
 	else if(istype(attacking_item, /obj/item/paicard))
 		insertpai(user, attacking_item)
