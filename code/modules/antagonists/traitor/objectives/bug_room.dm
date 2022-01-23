@@ -8,7 +8,11 @@
 
 /datum/traitor_objective/bug_room
 	name = "Bug the %DEPARTMENT HEAD%'s office"
-	description = "Use the button below to materialize the bug within your hand, where you'll then be able to place it down in the %DEPARTMENT HEAD%'s office. If it gets destroyed before you are able to plant it, this objective will fail."
+	description = "Use the button below to materialize the bug within your hand, \
+		where you'll then be able to place it down in the %DEPARTMENT HEAD%'s office. \
+		If it gets destroyed before you are able to plant it, this objective will fail. \
+		Remember, planting the bug may leave behind fibers and fingerprints - \
+		be sure to clean it off with soap (or similar) to be safe!"
 
 	progression_reward = list(2 MINUTES, 8 MINUTES)
 	telecrystal_reward = list(0, 1)
@@ -101,20 +105,32 @@
 
 /obj/item/traitor_bug
 	name = "suspicious device"
-	desc = "It looks dangerous"
+	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bug"
 
-	/// The area at which this bug can be planted at Has to be a type.
+	/// The area at which this bug can be planted at. Has to be a type.
 	var/area/target_area_type
 	/// The object on which this bug can be planted on. Has to be a type.
 	var/obj/target_object_type
-	/// The object this bug is currently planted on
+	/// The object this bug is currently planted on.
 	var/obj/planted_on
-
+	/// The time it takes to place this bug.
 	var/deploy_time = 10 SECONDS
+
+/obj/item/traitor_bug/examine(mob/user)
+	. = ..()
+	if(planted_on)
+		return
+
+	if(user.mind?.has_antag_datum(/datum/antagonist/traitor))
+		if(target_area_type)
+			. += span_notice("This device must be placed by <b>using it in hand</b> inside the <b>[initial(target_area_type.name)]</b>.")
+		else if(target_object_type)
+			. += span_notice("This device must be placed by <b>clicking on the [initial(target_object_type.name)]</b> with it.")
+		. += span_notice("Remember, you may leave behind fingerprints or fibers on the device. Use <b>soap</b> or similar to scrub it clean to be safe!")
 
 /obj/item/traitor_bug/interact(mob/user)
 	. = ..()
@@ -129,7 +145,9 @@
 		return
 	if(!do_after(user, deploy_time, src))
 		return
-	new /obj/structure/traitor_bug(location)
+	var/obj/structure/traitor_bug/new_bug = new(location)
+	transfer_fingerprints_to(new_bug)
+	transfer_fibers_to(new_bug)
 	SEND_SIGNAL(src, COMSIG_TRAITOR_BUG_PLANTED_GROUND, location)
 	qdel(src)
 
@@ -172,7 +190,7 @@
 
 /obj/structure/traitor_bug
 	name = "suspicious device"
-	desc = "It looks dangerous. Best you leave this alone"
+	desc = "It looks dangerous. Best you leave this alone."
 
 	anchored = TRUE
 

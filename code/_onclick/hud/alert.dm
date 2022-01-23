@@ -629,6 +629,12 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
 	icon_state = "cell_overcharge"
 
+//MODsuit unique
+/atom/movable/screen/alert/nocore
+	name = "Missing Core"
+	desc = "Unit has no core. No modules available until a core is reinstalled. Robotics may provide assistance."
+	icon_state = "no_cell"
+
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked
 	name = "Hacked"
