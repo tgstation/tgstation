@@ -11,8 +11,6 @@
 	worn_icon_state = "card"
 	///The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
-	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
-	var/has_unique_card_icons = TRUE
 	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite

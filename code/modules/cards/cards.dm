@@ -8,6 +8,8 @@
 	var/datum/weakref/parentdeck
 	///Artistic style of the deck
 	var/deckstyle = "nanotrasen"
+	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	var/has_unique_card_icons = TRUE
 	var/card_hitsound = null
 	var/card_force = 0
 	var/card_throwforce = 0

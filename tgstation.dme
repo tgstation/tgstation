@@ -2223,6 +2223,7 @@
 #include "code\modules\cards\cardhand.dm"
 #include "code\modules\cards\cards.dm"
 #include "code\modules\cards\singlecard.dm"
+#include "code\modules\cards\deck\blank.dm"
 #include "code\modules\cards\deck\cas.dm"
 #include "code\modules\cards\deck\deck.dm"
 #include "code\modules\cards\deck\kotahi.dm"

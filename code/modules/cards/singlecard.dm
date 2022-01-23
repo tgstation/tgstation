@@ -161,6 +161,7 @@
 /obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
+	newobj.has_unique_card_icons = sourceobj.has_unique_card_icons
 	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
 	newobj.card_hitsound = sourceobj.card_hitsound
 	newobj.hitsound = newobj.card_hitsound
