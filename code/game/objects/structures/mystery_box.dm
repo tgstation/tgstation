@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/// The instantiated list that contains all of the valid items that can be chosen from. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
 	var/list/valid_types
 	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
-	var/spare_mag = TRUE
+	var/extra_mag = TRUE
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
