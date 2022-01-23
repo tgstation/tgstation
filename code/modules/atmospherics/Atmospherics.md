@@ -264,13 +264,7 @@ The MC entry for SSAir is very helpful for debugging, and it is good to understa
 
 *Figure 6.1: SSAir sitting doing little to nothing turf wise, only processing pipenets and atmos machines*
 
-As you can see here, SSAir is a bit of a jumble, don't worry, it'll make sense in a second. The first line is in this order: cost, tick_usage, tick_overrun, ticks.
-All of these are averages by the way.
-
-* *`cost`* Cost is the raw time spent running the subsystem in milliseconds
-* *`tick_usage`* The percent of each byond tick the last fire() took. Tends to be twice cost, good for comparing with overrun.
-* *`tick_overrun`* A percentage of how far past our allotted time we ran. This is what causes Time Dilation, it's bad.
-* *`ticks`* The amount of subsystem fires it takes to run through all the subprocesses once.
+If you aren't familiar with the default subsystem stats, you can see them explained here: [][http://codedocs.tgstation13.org/.github/guides/MC_tab.md]
 
 The second line is the cost each subprocess contributed per full cycle, this is a rolling average. It'll give you a good feel for what is misbehaving. (The only exception to this is pipenet rebuilds, the last entry. Because of its nature as something that can happen at any time, it doesn't have a rolling average, instead it just displays the time it used last process)
 
