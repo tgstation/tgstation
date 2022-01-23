@@ -243,6 +243,11 @@
 	icon_state = "swat"
 	inhand_icon_state = "swat"
 	clothing_flags = PLASMAMAN_HELMET_EXEMPT
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 
 
 /obj/item/clothing/head/helmet/thunderdome
