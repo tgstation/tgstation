@@ -773,7 +773,6 @@
 	togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
 /obj/machinery/airalarm/proc/togglelock(mob/living/user)
 	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_warning("It does nothing!"))
