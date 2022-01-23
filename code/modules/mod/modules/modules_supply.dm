@@ -34,6 +34,8 @@
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_clamp"
 	overlay_state_active = "module_clamp_on"
+	/// Time it takes to load a crate.
+	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
 	var/max_crates = 3
 	/// The crates stored in the module.
@@ -50,7 +52,7 @@
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")
 			return
-		if(!do_after(mod.wearer, 1 SECONDS, target = target))
+		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		stored_crates += picked_crate
@@ -62,7 +64,7 @@
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
-		if(!do_after(mod.wearer, 1 SECONDS, target = target))
+		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(target_turf.is_blocked_turf())
@@ -77,6 +79,15 @@
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
+
+/obj/item/mod/module/clamp/loader
+	name = "MOD loader hydraulic clamp module"
+	complexity = 0
+	removable = FALSE
+	overlay_state_inactive = null
+	overlay_state_active = "module_clamp_loader"
+	load_time = 1 SECONDS
+	max_crates = 5
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
@@ -176,12 +187,55 @@
 	drain_power(use_power_cost)
 
 /obj/item/mod/module/hydraulic
-	name = "MOD hydraulic arms module"
-	desc = "A pair of powerful hydraulic arms, installed to the MODsuit, enhancing the user's dexterity."
+	name = "MOD loader hydraulic arms module"
+	desc = "A pair of powerful hydraulic arms installed in a MODsuit."
 	icon_state = "hydraulic"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN*5
 	incompatible_modules = list(/obj/item/mod/module/hydraulic)
-	cooldown_time = 0.5 SECONDS
+	cooldown_time = 7.5 SECONDS
 	overlay_state_inactive = "module_hydraulic"
+	overlay_state_active = "module_hydraulic_active"
+	/// Time it takes to launch
+	var/launch_time = 2.5 SECONDS
+	/// User overlay
+	var/mutable_appearance/lightning
+
+/obj/item/mod/module/hydraulic/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/atom/game_renderer = mod.wearer.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
+	var/matrix/matrix = matrix(game_renderer.transform)
+	var/matrix/old_matrix = matrix(matrix)
+	matrix.Scale(1.25, 1.25)
+	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = matrix)
+	var/power = launch_time
+	var/current_time = world.time
+	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
+		blind_message = span_hear("You hear a whirring sound."))
+	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", plane = GAME_PLANE_FOV_HIDDEN)
+	mod.wearer.add_overlay(lightning)
+	balloon_alert(mod.wearer, "you start charging...")
+	if(!do_after(mod.wearer, launch_time, target = mod))
+		power = world.time - current_time
+		animate(game_renderer)
+	drain_power(use_power_cost)
+	game_renderer.transform = old_matrix
+	mod.wearer.cut_overlay(lightning)
+	var/angle = get_angle(mod.wearer, target)
+	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+	mod.wearer.throw_at(get_ranged_target_turf_direct(mod.wearer, target, power), \
+		max(round(0.8*power), 1), max(round(0.2*power), 1), mod.wearer, spin = FALSE, \
+		callback = CALLBACK(src, .proc/on_throw_end, target, -angle))
+
+/obj/item/mod/module/hydraulic/proc/on_throw_end(atom/target, angle)
+	if(!mod?.wearer)
+		return
+	mod.wearer.transform = mod.wearer.transform.Turn(angle)
+
+/obj/item/mod/module/disposal_selector
+	name = "MOD disposal selector module"
+	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal."
+	icon_state = "disposal"

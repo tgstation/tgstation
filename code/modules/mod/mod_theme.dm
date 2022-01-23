@@ -277,7 +277,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.25
 	slowdown_active = 0
-	inbuilt_modules = list(/obj/item/mod/module/hydraulic)
+	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader)
 	skins = list(
 		"loader" = list(
 			HELMET_LAYER = null,

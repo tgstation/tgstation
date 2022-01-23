@@ -48,8 +48,3 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/qm
-
-/datum/outfit/job/quartermaster/mod
-	name = "Quartermaster (MODsuit)"
-
-	back = /obj/item/mod/control/pre_equipped/loader

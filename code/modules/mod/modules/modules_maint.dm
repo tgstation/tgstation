@@ -235,6 +235,27 @@
 	drain_power(use_power_cost)
 	num_sheets_dispensed++
 
+/obj/item/mod/module/stamp
+	name = "MOD stamper module"
+	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
+		able to switch between accept and deny modes."
+	icon_state = "stamp"
+	module_type = MODULE_ACTIVE
+	complexity = 1
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	device = /obj/item/stamp/mod
+	incompatible_modules = list(/obj/item/mod/module/stamp)
+	cooldown_time = 0.5 SECONDS
+
+/obj/item/stamp/mod
+	name = "MOD electronic stamp"
+	desc = "A high-power stamp, able to switch between accept and deny mode when used."
+
+/obj/item/stamp/mod/attack_self(mob/user, modifiers)
+	. = ..()
+	icon_state = (icon_state == "stamp-ok") ? "stamp-deny" : "stamp-ok"
+	balloon_alert(user, "switched mode")
+
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
 	name = "MOD atrocinator module"
