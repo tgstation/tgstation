@@ -71,6 +71,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists -= src
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
+		UnregisterSignal(owner, COMSIG_MIND_TRANSFERRED)
 	QDEL_NULL(team_hud_ref)
 	owner = null
 	return ..()
