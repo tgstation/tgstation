@@ -285,6 +285,7 @@
 		return
 	if(!Adjacent(current_target))
 		return
+
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
 		current_target.update_handcuffed()
