@@ -628,8 +628,8 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
-					/obj/item/clothing/suit/space/swat,
-					/obj/item/clothing/suit/space/swat,
+					/obj/item/clothing/suit/armor/swat,								  ,
+					/obj/item/clothing/suit/armor/swat,								  ,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/storage/belt/military/assault,
