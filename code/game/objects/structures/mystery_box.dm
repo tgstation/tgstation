@@ -18,6 +18,55 @@
 /// How long after the box closes until it can go again
 #define MBOX_DURATION_STANDBY 2.7 SECONDS
 
+GLOBAL_LIST_INIT(mystery_box_guns, list(
+	/obj/item/gun/energy/lasercannon,
+	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
+	/obj/item/gun/energy/e_gun,
+	/obj/item/gun/energy/e_gun/advtaser,
+	/obj/item/gun/energy/e_gun/nuclear,
+	/obj/item/gun/energy/e_gun/turret,
+	/obj/item/gun/energy/laser,
+	/obj/item/gun/energy/laser/hellgun,
+	/obj/item/gun/energy/laser/captain,
+	/obj/item/gun/energy/laser/scatter,
+	/obj/item/gun/energy/temperature,
+	/obj/item/gun/ballistic/revolver/detective,
+	/obj/item/gun/ballistic/revolver/mateba,
+	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
+	/obj/item/gun/ballistic/automatic/pistol/suppressed,
+	/obj/item/gun/energy/pulse/carbine,
+	/obj/item/gun/energy/pulse/pistol,
+	/obj/item/gun/ballistic/shotgun/lethal,
+	/obj/item/gun/ballistic/shotgun/automatic/combat,
+	/obj/item/gun/ballistic/shotgun/bulldog,
+	/obj/item/gun/ballistic/rifle/boltaction,
+	/obj/item/gun/ballistic/automatic/ar,
+	/obj/item/gun/ballistic/automatic/proto,
+	/obj/item/gun/ballistic/automatic/c20r,
+	/obj/item/gun/ballistic/automatic/l6_saw,
+	/obj/item/gun/ballistic/automatic/m90,
+	/obj/item/gun/ballistic/automatic/tommygun,
+	/obj/item/gun/ballistic/automatic/wt550,
+	/obj/item/gun/ballistic/automatic/sniper_rifle,
+))
+
+GLOBAL_LIST_INIT(mystery_box_extended, list(
+	/obj/item/clothing/gloves/tackler/combat,
+	/obj/item/clothing/gloves/race,
+	/obj/item/clothing/gloves/rapid,
+	/obj/item/shield/riot/flash,
+	/obj/item/grenade/stingbang/mega,
+	/obj/item/storage/belt/sabre,
+	/obj/item/knife/combat,
+	/obj/item/melee/baton/security/loaded,
+	/obj/item/reagent_containers/hypospray/combat,
+	/obj/item/defibrillator/compact/combat/loaded/nanotrasen,
+	/obj/item/melee/energy/sword/saber,
+	/obj/item/spear,
+	/obj/item/circular_saw,
+))
+
+
 /obj/structure/mystery_box
 	name = "mystery box"
 	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear."
@@ -41,7 +90,8 @@
 	var/selectable_base_type = /obj/item
 	/// The instantiated list that contains all of the valid items that can be chosen from. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
 	var/list/valid_types
-
+	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
+	var/spare_mag = TRUE
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -117,6 +167,14 @@
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
 	var/obj/item/instantiated_weapon = new presented_item.selected_path(src)
 	user.put_in_hands(instantiated_weapon)
+	if(isgun(instantiated_weapon))
+		var/obj/item/gun/instantiated_gun = instantiated_weapon
+		instantiated_gun.unlock()
+		if(extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
+			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
+			if(!instantiated_ballistic.internal_magazine)
+				var/obj/item/ammo_box/magazine/extra_mag = new(loc)
+				user.put_in_hands(extra_mag)
 	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	close_box()
 
@@ -126,6 +184,12 @@
 
 /obj/structure/mystery_box/guns/generate_valid_types()
 	valid_types = GLOB.summoned_guns
+
+/obj/structure/mystery_box/tdome
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one seems focused on firearms."
+
+/obj/structure/mystery_box/tdome/generate_valid_types()
+	valid_types = GLOB.mystery_box_guns + GLOB.mystery_box_extended
 
 
 /// This represents the item that comes out of the box and is constantly changing before the box finishes deciding. Can probably be just an /atom or /movable.
