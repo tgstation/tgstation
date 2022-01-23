@@ -17,11 +17,17 @@
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
-	///How many fire alarm sources do we have?
-	var/triggered_firealarms = 0
+	///A var for whether the area allows for detecting fires/etc. Disabled or enabled at a fire alarm, checked by fire locks.
+	var/fire_detect = TRUE
+	///A list of all fire locks in this area. Used by fire alarm panels when resetting fire locks or activating all in an area
+	var/list/firedoors
+	///A list of firelocks currently active. Used by fire alarms when setting their icons.
+	var/list/active_firelocks
+	///A list of all fire alarms in this area. Used by fire locks and burglar alarms to tell the fire alarm to change its icon.
+	var/list/firealarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
-	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing
+	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.
 	var/datum/alarm_handler/alarm_manager
 
 	var/lightswitch = TRUE
@@ -65,10 +71,7 @@
 	var/list/ambientsounds
 	flags_1 = CAN_BE_DIRTY_1
 
-	var/list/firedoors
 	var/list/cameras
-	var/list/firealarms
-	var/firedoors_last_closed_on = 0
 
 	///Typepath to limit the areas (subtypes included) that atoms in this area can smooth with. Used for shuttles.
 	var/area/area_limited_icon_smoothing
@@ -242,84 +245,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	return ..()
 
 /**
- * Try to close all the firedoors in the area
- */
-/area/proc/ModifyFiredoors(opening)
-	if(firedoors)
-		firedoors_last_closed_on = world.time
-		for(var/FD in firedoors)
-			var/obj/machinery/door/firedoor/D = FD
-			if (D.being_held_open)
-				continue
-			var/cont = !D.welded
-			if(cont && opening) //don't open if adjacent area is on fire
-				for(var/I in D.affecting_areas)
-					var/area/A = I
-					if(A.fire)
-						cont = FALSE
-						break
-			if(cont && D.is_operational)
-				if(D.operating)
-					D.nextstate = opening ? FIREDOOR_OPEN : FIREDOOR_CLOSED
-				else if(!(D.density ^ opening))
-					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
-
-/**
- * Generate a firealarm alert for this area
- *
- * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
- *
- * Also starts the area processing on SSobj
- */
-/area/proc/firealert(obj/source)
-	if (!fire)
-		set_fire_alarm_effect()
-		ModifyFiredoors(FALSE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_appearance()
-	alarm_manager.send_alarm(ALARM_FIRE, source)
-	START_PROCESSING(SSobj, src)
-
-/**
- * Reset the firealarm alert for this area
- *
- * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
- * in the world
- *
- * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
- */
-/area/proc/firereset(obj/source)
-	var/should_reset_alarms = fire
-	if(source)
-		if(istype(source, /obj/machinery/firealarm))
-			var/obj/machinery/firealarm/alarm = source
-			if(alarm.triggered)
-				alarm.triggered = FALSE
-				triggered_firealarms -= 1
-		if(triggered_firealarms > 0)
-			should_reset_alarms = FALSE
-		should_reset_alarms = should_reset_alarms & power_environ //No resetting if there's no power
-
-	if (should_reset_alarms) // if there's a source, make sure there's no fire alarms left
-		unset_fire_alarm_effects()
-		ModifyFiredoors(TRUE)
-		for(var/item in firealarms)
-			var/obj/machinery/firealarm/F = item
-			F.update_appearance()
-	alarm_manager.clear_alarm(ALARM_FIRE, source)
-	STOP_PROCESSING(SSobj, src)
-
-/**
- * If 100 ticks has elapsed, toggle all the firedoors closed again
- */
-/area/process()
-	if(!triggered_firealarms)
-		firereset() //If there are no breaches or fires, and this alert was caused by a breach or fire, die
-	if(firedoors_last_closed_on + 100 < world.time) //every 10 seconds
-		ModifyFiredoors(FALSE)
-
-/**
  * Close and lock a door passed into this proc
  *
  * Does this need to exist on area? probably not
@@ -352,15 +277,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * Updates the fire light on fire alarms in the area and sets all lights to emergency mode
  */
 /area/proc/set_fire_alarm_effect()
+	if(fire)
+		return
 	fire = TRUE
-	if(!triggered_firealarms) //If there aren't any fires/breaches
-		triggered_firealarms = INFINITY //You're not allowed to naturally die
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
 	for(var/obj/machinery/light/L in src)
 		L.update()
+	for(var/obj/machinery/firealarm/firepanel in firealarms)
+		firepanel.set_status()
 
 /**
  * unset the fire alarm visual affects in an area
@@ -369,14 +293,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/proc/unset_fire_alarm_effects()
 	fire = FALSE
-	triggered_firealarms = 0
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	for(var/alarm in firealarms)
-		var/obj/machinery/firealarm/F = alarm
-		F.update_fire_light(fire)
-		F.triggered = FALSE
 	for(var/obj/machinery/light/L in src)
 		L.update()
+	for(var/obj/machinery/firealarm/firepanel in firealarms)
+		firepanel.set_status()
 
 /**
  * Update the icon state of the area
