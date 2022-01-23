@@ -1,14 +1,11 @@
 {
-	
 	"spurdo": {
-		"epic": "ebin",
-		"c": "g", 
+		"c": "g",
 		"ck": "gg",
+		"epic": "ebin",
 		"k": "g",
-		"t": "d",
 		"p": "b",
+		"t": "d",
 		"x": "gs"
-		}
-	
-	
+	}
 }

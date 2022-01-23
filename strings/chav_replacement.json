@@ -1,80 +1,78 @@
 {
-
-    "chav": {
-		"fucking": "bloody",
+	"chav": {
+		"bar": "pub",
+		"break": "do",
+		"chips": "crisps",
+		"coffee": "tea",
+		"credits": [
+			"pounds",
+			"quid"
+		],
 		"dick": "knob",
 		"dickhead": "bellend",
-		"coffee": "tea",
-		"pussy": "fanny",
-		"my": "me",
-		"stupid": "daft",
-		"looking at": "gawpin' at",
-		"head": "dome",
-		"bar": "pub",
-		"water": "wa'er",
-		"music": "tunes",
 		"dissapointed": "gutted",
-		"vacuum": "hoover",
-		"sus": "dodgy",
-		"sleep": "kip",
-		"tired": "knackered",
-		"fries": "chips",
-		"chips": "crisps",
-		"what": "wot",
-		"robust": "chin",
-		"windows": "windies",
-		"window": "windy",
-		"break": "do",
-		"your": "yer",
-		"no": "naw",
-		"mom": "mum",
-		"hair": "mop",
-		"nothing": "bugger all",
-		"food": "scran",
-		"security": [
-			"coppers",
-			"bobbies"
-		],
-		"friend": [
-			"mate",
-			"bruv",
-			"lad"
-		],
-		"great": [
-			"bangin'",
-			"sound"
-		],
-		"man": [
-			"mate",
-			"mans",
-			"bloke"
-		],
-		"isnt": [
-			"innit",
-			"aint it"
+		"drunk": [
+			"shitfaced",
+			"pissed"
 		],
 		"dumb": [
 			"daft",
 			"stupid"
 		],
+		"food": "scran",
+		"friend": [
+			"mate",
+			"bruv",
+			"lad"
+		],
+		"fries": "chips",
+		"fucking": "bloody",
+		"great": [
+			"bangin'",
+			"sound"
+		],
+		"hair": "mop",
+		"head": "dome",
 		"idiot": [
 			"wanker",
 			"tosser",
 			"prick"
 		],
+		"isnt": [
+			"innit",
+			"aint it"
+		],
 		"little": [
 			"tad",
 			"wee"
 		],
-		"credits": [
-			"pounds",
-			"quid"
+		"looking at": "gawpin' at",
+		"man": [
+			"mate",
+			"mans",
+			"bloke"
 		],
-		"drunk": [
-			"shitfaced",
-			"pissed"
+		"mom": "mum",
+		"music": "tunes",
+		"my": "me",
+		"no": "naw",
+		"nothing": "bugger all",
+		"pussy": "fanny",
+		"robust": "chin",
+		"security": [
+			"coppers",
+			"bobbies"
 		],
-		"tough": "big"
+		"sleep": "kip",
+		"stupid": "daft",
+		"sus": "dodgy",
+		"tired": "knackered",
+		"tough": "big",
+		"vacuum": "hoover",
+		"water": "wa'er",
+		"what": "wot",
+		"window": "windy",
+		"windows": "windies",
+		"your": "yer"
 	}
-
 }

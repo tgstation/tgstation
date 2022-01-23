@@ -1,4 +1,52 @@
 {
+	"alien_fauna": [
+		"xenomorph hunter",
+		"basilisk",
+		"very angry cow",
+		"unknown beast"
+	],
+	"fluff_generic": [
+		"You find nothing interesting.",
+		"This place is emptier than assisstant's credit account.",
+		"You find a huge pile of boredom."
+	],
+	"fluff_ruins": [
+		"You encounter a broken statue. You can't tell what was it's original shape.",
+		"You have to backtrack from a collapsed passage.",
+		"You pass through a corridor full of cracked tiles."
+	],
+	"fluff_space": [
+		"You detect stardrive activation readings nearby. By time time you arrive at the spot there's nothing there but space dust.",
+		"You pass by a small field of space debris. Nothing but useless junk."
+	],
+	"fluff_trading": [
+		"You encounter a maintenance drone busy at work. It ignores you completely.",
+		"You pass by security patrol. They give you suspicious stares.",
+		"You pass by a drunked local. Good thing smell is not conducted through the drone feed."
+	],
+	"planet_types": [
+		{
+			"civilized": false,
+			"description": "A barren planet with very thin atmosphere. Nothing but rocks.",
+			"habitable": false,
+			"name": "barren planet",
+			"tech": false
+		},
+		{
+			"civilized": false,
+			"description": "A planet covered in thick jungle. You detect numerous fauna and flora readings.",
+			"habitable": true,
+			"name": "jungle world",
+			"tech": false
+		},
+		{
+			"civilized": true,
+			"description": "A tiny rock covered with factories and automatons who seem to ignore your presence for the most part.",
+			"habitable": true,
+			"name": "robot moon",
+			"tech": true
+		}
+	],
 	"probe_names": [
 		"Voyager",
 		"Luna",
@@ -21,53 +69,5 @@
 		"Rocketing Deals",
 		"Cornerstore at the End of the Universe",
 		"Crazy Redd's Crazy Deals"
-	],
-	"planet_types": [
-		{
-			"name": "barren planet",
-			"description": "A barren planet with very thin atmosphere. Nothing but rocks.",
-			"habitable": false,
-			"civilized": false,
-			"tech": false
-		},
-		{
-			"name": "jungle world",
-			"description": "A planet covered in thick jungle. You detect numerous fauna and flora readings.",
-			"habitable": true,
-			"civilized": false,
-			"tech": false
-		},
-		{
-			"name": "robot moon",
-			"description": "A tiny rock covered with factories and automatons who seem to ignore your presence for the most part.",
-			"habitable": true,
-			"civilized": true,
-			"tech": true
-		}
-	],
-	"alien_fauna": [
-		"xenomorph hunter",
-		"basilisk",
-		"very angry cow",
-		"unknown beast"
-	],
-	"fluff_generic": [
-		"You find nothing interesting.",
-		"This place is emptier than assisstant's credit account.",
-		"You find a huge pile of boredom."
-	],
-	"fluff_space": [
-		"You detect stardrive activation readings nearby. By time time you arrive at the spot there's nothing there but space dust.",
-		"You pass by a small field of space debris. Nothing but useless junk."
-	],
-	"fluff_trading": [
-		"You encounter a maintenance drone busy at work. It ignores you completely.",
-		"You pass by security patrol. They give you suspicious stares.",
-		"You pass by a drunked local. Good thing smell is not conducted through the drone feed."
-	],
-	"fluff_ruins": [
-		"You encounter a broken statue. You can't tell what was it's original shape.",
-		"You have to backtrack from a collapsed passage.",
-		"You pass through a corridor full of cracked tiles."
 	]
 }

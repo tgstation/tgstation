@@ -1,38 +1,35 @@
 {
 	"honk": [
-	"honk",
-	"HONK",
-	"HONK!",
-	"HONK!!!",
-	"HENK",
-	"HOOOOOOONK"
-    ],
-
-    "rare": [
-	"HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
-	"damn",
-	":))))))))))))))))))))))))",
-	" :) ",
-	"Hink",
-	"HAHAHAA HEEHEEHEE",
-	" Laugh sound. ",
-	"Extreme Ruckus at the Party"
-    ],
-
-    "non-honk-clown-words": [
-	"bananas",
-	"chapiteau",
-	"entrée",
-	"pranking",
-	"peel",
-	"banana peel",
-	"party",
-	"juggling",
-	"... ",
-	"cat",
-	"balagan",
-	"pie",
-	"slip"
-    ]
-
+		"honk",
+		"HONK",
+		"HONK!",
+		"HONK!!!",
+		"HENK",
+		"HOOOOOOONK"
+	],
+	"non-honk-clown-words": [
+		"bananas",
+		"chapiteau",
+		"entrée",
+		"pranking",
+		"peel",
+		"banana peel",
+		"party",
+		"juggling",
+		"... ",
+		"cat",
+		"balagan",
+		"pie",
+		"slip"
+	],
+	"rare": [
+		"HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOONK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+		"damn",
+		":))))))))))))))))))))))))",
+		" :) ",
+		"Hink",
+		"HAHAHAA HEEHEEHEE",
+		" Laugh sound. ",
+		"Extreme Ruckus at the Party"
+	]
 }

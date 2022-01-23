@@ -1,4 +1,58 @@
 {
+	"rpg_action": [
+		"Annihilate",
+		"Ban",
+		"Defeat",
+		"Destroy",
+		"Mutilate",
+		"Nuke",
+		"Own",
+		"Perma",
+		"Pwn",
+		"Pulverize",
+		"Robust",
+		"Save",
+		"Stop",
+		"Strike",
+		"Valid",
+		"Yeet"
+	],
+	"rpg_action_halloween": [
+		"Amputate",
+		"Behead",
+		"Beware",
+		"Butcher",
+		"Dismember",
+		"Exorcise",
+		"Frighten",
+		"Horrify",
+		"Scare",
+		"Scythe",
+		"Slay",
+		"Spook",
+		"Vanquish"
+	],
+	"rpg_action_valentines": [
+		"Bewitch",
+		"Crush",
+		"Cuddle",
+		"Divorce",
+		"ERP",
+		"Romance",
+		"Seduce",
+		"Smooch",
+		"Titillate"
+	],
+	"rpg_action_xmas": [
+		"Freeze",
+		"Jingle",
+		"Nutcrack",
+		"Regift",
+		"Snowplow",
+		"Stuff",
+		"Unwrap",
+		"Wassail"
+	],
 	"rpg_adjective": [
 		"Anguished",
 		"Automatic",
@@ -15,26 +69,6 @@
 		"Space",
 		"Unrobust"
 	],
-
-	"rpg_adjective_valentines": [
-		"Amorous",
-		"Aphrodisiac",
-		"Carnal",
-		"Forever Alone",
-		"Infatuated",
-		"Jilted",
-		"Lascivious",
-		"Lewd",
-		"Lovelorn",
-		"Lusty",
-		"Moonstruck",
-		"Recently Dumped",
-		"Salacious",
-		"Sexy",
-		"Smitten",
-		"Steamy"
-	],
-
 	"rpg_adjective_halloween": [
 		"Bloodthirsty",
 		"Cadaverous",
@@ -65,7 +99,24 @@
 		"Terrifying",
 		"Undead"
 	],
-
+	"rpg_adjective_valentines": [
+		"Amorous",
+		"Aphrodisiac",
+		"Carnal",
+		"Forever Alone",
+		"Infatuated",
+		"Jilted",
+		"Lascivious",
+		"Lewd",
+		"Lovelorn",
+		"Lusty",
+		"Moonstruck",
+		"Recently Dumped",
+		"Salacious",
+		"Sexy",
+		"Smitten",
+		"Steamy"
+	],
 	"rpg_adjective_xmas": [
 		"Bleak Midwinter",
 		"Blustery",
@@ -78,65 +129,6 @@
 		"Tinselly",
 		"Yuletide"
 	],
-
-	"rpg_action": [
-		"Annihilate",
-		"Ban",
-		"Defeat",
-		"Destroy",
-		"Mutilate",
-		"Nuke",
-		"Own",
-		"Perma",
-		"Pwn",
-		"Pulverize",
-		"Robust",
-		"Save",
-		"Stop",
-		"Strike",
-		"Valid",
-		"Yeet"
-	],
-
-	"rpg_action_valentines": [
-		"Bewitch",
-		"Crush",
-		"Cuddle",
-		"Divorce",
-		"ERP",
-		"Romance",
-		"Seduce",
-		"Smooch",
-		"Titillate"
-	],
-
-	"rpg_action_halloween": [
-		"Amputate",
-		"Behead",
-		"Beware",
-		"Butcher",
-		"Dismember",
-		"Exorcise",
-		"Frighten",
-		"Horrify",
-		"Scare",
-		"Scythe",
-		"Slay",
-		"Spook",
-		"Vanquish"
-	],
-
-	"rpg_action_xmas": [
-		"Freeze",
-		"Jingle",
-		"Nutcrack",
-		"Regift",
-		"Snowplow",
-		"Stuff",
-		"Unwrap",
-		"Wassail"
-	],
-
 	"rpg_enemy": [
 		"Administrator",
 		"Bloopers",
@@ -159,21 +151,6 @@
 		"Tunnel Clown",
 		"Vhakoid"
 	],
-
-	"rpg_enemy_valentines": [
-		"Aphrodite",
-		"Comdom",
-		"Ex-Boyfriend",
-		"Ex-Girlfriend",
-		"Husbando",
-		"Maneater",
-		"Spess Casanova",
-		"Spess Don Juan",
-		"St. Valentine",
-		"Waifu",
-		"Xenomorph Maid"
-	],
-
 	"rpg_enemy_halloween": [
 		"Artificer",
 		"Banshee",
@@ -202,7 +179,19 @@
 		"Wraith",
 		"Zombie"
 	],
-
+	"rpg_enemy_valentines": [
+		"Aphrodite",
+		"Comdom",
+		"Ex-Boyfriend",
+		"Ex-Girlfriend",
+		"Husbando",
+		"Maneater",
+		"Spess Casanova",
+		"Spess Don Juan",
+		"St. Valentine",
+		"Waifu",
+		"Xenomorph Maid"
+	],
 	"rpg_enemy_xmas": [
 		"Abominable Snowman",
 		"Der Klown",
@@ -218,7 +207,6 @@
 		"Yeti",
 		"Yuki-Onna"
 	],
-
 	"rpg_weapon": [
 		"baseball bat",
 		"bike horn",
@@ -243,18 +231,6 @@
 		"toolbox",
 		"welder"
 	],
-	
-	"rpg_weapon_valentines": [
-		"bouquet of deathnettles",
-		"candy-heart shotgun",
-		"cupid's arrow",
-		"declaration of anguished feelings",
-		"razor-sharp breakup letter",
-		"still-beating heart",
-		"thorny rose",
-		"toolbox of chocolates"
-	],
-	
 	"rpg_weapon_halloween": [
 		"chainsaw",
 		"heavy gravestone",
@@ -265,7 +241,16 @@
 		"spectral blade",
 		"wooden stake"
 	],
-	
+	"rpg_weapon_valentines": [
+		"bouquet of deathnettles",
+		"candy-heart shotgun",
+		"cupid's arrow",
+		"declaration of anguished feelings",
+		"razor-sharp breakup letter",
+		"still-beating heart",
+		"thorny rose",
+		"toolbox of chocolates"
+	],
 	"rpg_weapon_xmas": [
 		"bike horn playing carols",
 		"blunt fruitcake",
@@ -278,5 +263,4 @@
 		"thrown snowball",
 		"whole Christmas tree"
 	]
-
 }

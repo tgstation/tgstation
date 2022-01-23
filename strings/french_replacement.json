@@ -1,91 +1,87 @@
 {
-
-    "french": {
-		"yes": "oui",
-		"no": "non",
-        "I'm": "j'", 
-        "am": "suis", 
+	"french": {
 		"a": "un",
-        "and": "et", 
-		"the": "l'",
-		"I": "j'",
-		"for": "pour",
-		"with": "avec",
-		"of": "de",
-		
-		
-        "assistant": "ravageur",
-        "assistants": "ravageurs",
-        "baby": [
-            "enfant", 
-            "petit baguette"
-        ], 
-        "bad": "mal", 
-        "bye": [
-            "bon voyage", 
-            "adieu",
+		"am": "suis",
+		"and": "et",
+		"assistant": "ravageur",
+		"assistants": "ravageurs",
+		"baby": [
+			"enfant",
+			"petit baguette"
+		],
+		"bad": "mal",
+		"bye": [
+			"bon voyage",
+			"adieu",
 			"au revoir"
-        ], 
+		],
 		"cake": "gateau",
-        "captain": "capitaine", 
+		"captain": "capitaine",
 		"changeling": "changeur",
-        "cheese": [
-            "brie", 
-            "roquefort",
+		"cheese": [
+			"brie",
+			"roquefort",
 			"camembert"
-        ], 
+		],
 		"cigarette": "clope",
-        "cook": "cuisinier", 
-        "dad": "papa", 
-        "enemy": "silly english dog", 
-        "friend": "ami", 
-        "good": "bon", 
-        "greytide": "les gitans", 
-        "greytider": "les gitans",
-        "greytiders": "les gitans",
+		"cook": "cuisinier",
+		"dad": "papa",
+		"enemy": "silly english dog",
+		"for": "pour",
+		"friend": "ami",
+		"good": "bon",
+		"greytide": "les gitans",
+		"greytider": "les gitans",
+		"greytiders": "les gitans",
 		"hardsuit": "burkini",
-        "hello": [
-            "'allo", 
-            "bonjour",
+		"hello": [
+			"'allo",
+			"bonjour",
 			"salut"
-        ], 
+		],
+		"I": "j'",
+		"I'm": "j'",
 		"maint": "les banlieues",
-        "meat": [
-            "coq au vin", 
-            "boeuf"
-        ], 
-        "mom": "maman", 
-        "my": "mon", 
-        "nuke": [
-			"grand bombe", 
+		"meat": [
+			"coq au vin",
+			"boeuf"
+		],
+		"mom": "maman",
+		"my": "mon",
+		"no": "non",
+		"nuke": [
+			"grand bombe",
 			"la baguette ultime"
 		],
-        "op": "boche", 
-        "operative": "boche", 
-        "operatives": "boches", 
-        "ops": "boches", 
-        "urity": "urite", 
-        "security": "securite", 
+		"of": "de",
+		"op": "boche",
+		"operative": "boche",
+		"operatives": "boches",
+		"ops": "boches",
+		"security": "securite",
 		"shit": "merde",
-        "shitcurity": [
+		"shitcurity": [
 			"gendarmerie",
 			"les keufs"
 		],
-        "shitsec": [
+		"shitsec": [
 			"gendarmerie",
 			"les keufs"
 		],
-        "spaghetti": "macaroni", 
-        "spicy": "epice", 
-        "thanks": "merci",  
+		"spaghetti": "macaroni",
+		"spicy": "epice",
+		"thanks": "merci",
+		"the": "l'",
 		"tomato": "tomate",
-        "traitor": "collaborateur", 
-        "want": "envie", 
-        "what's": "quel est", 
-        "who's": "qui est",  
-        "why": "porquois", 
-        "wine": "vin",
-		"wizard": "sorcier"
-		}
-		
+		"traitor": "collaborateur",
+		"urity": "urite",
+		"want": "envie",
+		"what's": "quel est",
+		"who's": "qui est",
+		"why": "porquois",
+		"wine": "vin",
+		"with": "avec",
+		"wizard": "sorcier",
+		"yes": "oui"
+	}
 }
