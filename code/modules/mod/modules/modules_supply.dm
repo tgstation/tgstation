@@ -277,13 +277,13 @@
 
 /obj/item/mod/module/magnet
 	name = "MOD loader hydraulic magnet module"
-	desc = "A powerful electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
-	icon_state = "magnet"
+	desc = "A powerful hydraulic electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
+	icon_state = "hydraulicmagnet"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
 	use_power_cost = DEFAULT_CHARGE_DRAIN*3
 	incompatible_modules = list(/obj/item/mod/module/magnet)
-	cooldown_time = 0.5 SECONDS
+	cooldown_time = 1.5 SECONDS
 	overlay_state_active = "module_magnet"
 
 /obj/item/mod/module/magnet/on_select_use(atom/target)
@@ -291,8 +291,10 @@
 	if(!.)
 		return
 	if(istype(mod.wearer.pulling, /obj/structure/closet))
-		mod.wearer.pulling.forceMove(mod.wearer.loc)
-		mod.wearer.pulling.throw_at(target, range = 7, speed = 4, thrower = mod.wearer, spin = FALSE)
+		var/obj/structure/closet/locker = mod.wearer.pulling
+		playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
+		locker.forceMove(mod.wearer.loc)
+		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
 	if(!(target in view(mod.wearer)) || !istype(target, /obj/structure/closet))
 		balloon_alert(mod.wearer, "invalid target!")
@@ -301,23 +303,30 @@
 	if(locker.anchored || locker.move_resist >= MOVE_FORCE_OVERPOWERING)
 		balloon_alert(mod.wearer, "target anchored!")
 		return
-	locker.throw_at(mod.wearer, range = 7, speed = 4, spin = FALSE, \
-		callback = CALLBACK(src, .proc/check_locker, locker), force = MOVE_FORCE_NORMAL)
+	new /obj/effect/temp_visual/mook_dust(get_turf(locker))
+	playsound(locker, 'sound/effects/gravhit.ogg', 75, TRUE)
+	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
+		callback = CALLBACK(src, .proc/check_locker, locker))
+
+/obj/item/mod/module/magnet/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(istype(mod.wearer.pulling, /obj/structure/closet))
+		mod.wearer.AddComponent(/datum/component/strong_pull)
+		RegisterSignal(mod.wearer.pulling, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
 
 /obj/item/mod/module/magnet/on_deactivation()
 	. = ..()
 	if(!.)
 		return
-	var/datum/pull_component = mod.wearer.GetComponent(/datum/component/strong_pull)
-	if(!pull_component)
-		return
-	qdel(pull_component)
-	mod.wearer.stop_pulling()
+	if(istype(mod.wearer.pulling, /obj/structure/closet))
+		mod.wearer.stop_pulling()
 
 /obj/item/mod/module/magnet/proc/check_locker(obj/structure/closet/locker)
 	if(!mod?.wearer)
 		return
-	if(!locker.Adjacent(mod.wearer))
+	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
 		return
 	mod.wearer.AddComponent(/datum/component/strong_pull)
 	mod.wearer.start_pulling(locker)
@@ -327,3 +336,4 @@
 	SIGNAL_HANDLER
 
 	qdel(mod.wearer.GetComponent(/datum/component/strong_pull))
+	UnregisterSignal(source, COMSIG_ATOM_NO_LONGER_PULLED)

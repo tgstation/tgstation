@@ -267,7 +267,15 @@
 /datum/mod_theme/loader
 	name = "loader"
 	desc = "An experimental powered harness manufactured by Scarborough Arms for quick and efficient munition supplies."
-	extended_desc = "An experimental powered harness, based on what."
+	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
+		This fully articulate titanium exoskeleton is Scarborough Arms' suit of choice for their munition delivery men, \
+		and what it lacks in EVA protection, it makes up for in strength and flexibility. The primary feature of \
+		this suit are the two manipulator arms, carefully synchronized with the user's thoughts and \
+		duplicating their motions almost exactly. These are driven by myomer, an artificial analog of muscles, \
+		requiring large amounts of voltage to function; occasionally sparking under load with the sheer power of a \
+		suit capable of lifting 250 tons. Even the legs in the suit have been tuned to incredible capacity, \
+		the user being able to run at greater speeds for much longer distances and times than an unsuited equivalent. \
+		A lot of people would say loading cargo is a dull job. You could not disagree more."
 	default_skin = "loader"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, FIRE = 25, ACID = 25, WOUND = 5)
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
@@ -277,7 +285,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.25
 	slowdown_active = 0
-	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader)
+	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
 	skins = list(
 		"loader" = list(
 			HELMET_LAYER = null,
