@@ -65,6 +65,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
+	RegisterSignal(owner.current, COMSIG_CARBON_LOSE_ORGAN, .proc/on_body_removal)
+
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
 	if(owner)
@@ -88,15 +90,25 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
-/datum/antagonist/proc/on_body_transfer(mob/living/old_body, mob/living/new_body)
-	SHOULD_CALL_PARENT(TRUE)
+/datum/antagonist/proc/on_body_removal(mob/living/old_body, obj/item/organ/organ)
+	SIGNAL_HANDLER
+
+	if (!istype(organ, /obj/item/organ/brain))
+		return FALSE
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
 	if(info_button)
 		info_button.Remove(old_body)
+	return TRUE
+
+
+///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
+/datum/antagonist/proc/on_body_transfer(mob/living/new_body)
+	SHOULD_CALL_PARENT(TRUE)
+	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
+	if(info_button)
 		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
 	if(!soft_antag && new_body.stat != DEAD)

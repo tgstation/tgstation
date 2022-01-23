@@ -23,9 +23,12 @@
 /datum/antagonist/ashwalker/get_team()
 	return ashie_team
 
-/datum/antagonist/ashwalker/on_body_transfer(mob/living/old_body, mob/living/new_body)
+/datum/antagonist/ashwalker/on_body_removal(mob/living/old_body)
 	. = ..()
 	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
+
+/datum/antagonist/ashwalker/on_body_transfer(mob/living/new_body)
+	. = ..()
 	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 
 /datum/antagonist/ashwalker/on_gain()
