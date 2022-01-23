@@ -303,6 +303,7 @@
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
 	back = /obj/item/mod/control/pre_equipped/corporate
+	internals_slot = ITEM_SLOT_SUITSTORE
 
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"

@@ -7,11 +7,11 @@
 /obj/item/his_grace
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
-	icon = 'goon/icons/obj/toolbox.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "green"
 	inhand_icon_state = "artistic_toolbox"
-	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
 	force = 12
 	attack_verb_continuous = list("robusts")

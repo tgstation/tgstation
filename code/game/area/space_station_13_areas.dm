@@ -857,6 +857,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
 
+/area/engineering/atmos/storage
+	name = "\improper Atmospherics Storage Room"
+
+/area/engineering/atmos/office
+	name = "\improper Atmospherics Office"
+
+/area/engineering/atmos/hfr_room
+	name = "\improper Atmospherics HFR Room"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"

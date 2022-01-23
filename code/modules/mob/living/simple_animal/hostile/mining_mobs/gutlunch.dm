@@ -17,7 +17,7 @@
 	turns_per_move = 8
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	move_to_delay = 15
+	move_to_delay = 7.5
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

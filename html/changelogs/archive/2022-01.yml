@@ -771,3 +771,141 @@
   - rscadd: Added thieves! Low level antagonists that want to steal, hoard, and escape
       with your goodies!
   - rscadd: They show up roundstart and midround, and do not have a license to kill.
+2022-01-21:
+  Ghommie:
+  - bugfix: Syndicate, ninja, fugitive hunter masks and some costume masks (cyborg
+      visor, plague doctor, carp, owl, monkey) no longer impair vision with field
+      of vision cones.
+  - bugfix: Restored the LACK OF pepperspray protection the aforementioned costume
+      masks (not the antag ones) had before the transition from gas mask tint to FoV.
+  JohnFulpWillard:
+  - bugfix: Tramstation's Brig lockers can now be used more than once.
+  - qol: Security Officers can right click Tramstation's permabrig lockers to open
+      them early, unregistering their ID.
+  OneAsianTortoise:
+  - bugfix: headset, spray can, card, crayon, seclite have correct suit slot sprite
+      now.
+  RandomGamer123:
+  - bugfix: Certain traitor objectives now fail when they are supposed to instead
+      of unintentionally succeeding, most notably when objective-critical items are
+      destroyed.
+  SuperNovaa41:
+  - admin: Adds logging to the tippable component, to catch all the new borg griefing.
+  TemporalOroboros:
+  - balance: The blastcannon's damage has become more spread out and it now may be
+      somewhat diminished by walls depending on config.
+  - balance: The base range of the blastcannon has been slightly buffed to compensate
+      for the new diminishing effect of walls.
+  neopythagorean:
+  - bugfix: Hitting cancel when renaming a paper now actually cancels the operation.
+2022-01-22:
+  AdipemDragon:
+  - imageadd: Chefs got a whole lot better at making visually apealing pizzas! Their
+      boxes got spiffied up to match, too.
+  ArcaneMusic:
+  - refactor: Boomerang behavior has been moved to a component.
+  ErdinyoBarboza:
+  - bugfix: Ready Meal Donkhiladas are now made with meat and vegetables that do not
+      vaporize when microwaved.
+  Fikou:
+  - bugfix: fixes modsuit devices fucking up if you couldnt equip them
+  - bugfix: fixes modsuit pins fucking up if you remove the module
+  - imageadd: modsuit jetpack now has unique assets
+  LemonInTheDark:
+  - bugfix: Fixes plants not maintaining their healthy size when picked up and put
+      back down
+  - bugfix: Fixes some weird behavior with items falling out of your hands when space
+      moving. Life is pain
+  - bugfix: Fixes things not properly flying out of ruptured disposal pipes
+  Melbert:
+  - expansion: 'Deltastation: Atmosphics, Engineering, and Service Maintenance revamp!'
+  Pickle-Coding:
+  - balance: Tritiumfire will need more tritium burned in order to release radiation.
+      The higher the volume of the gasmixture, the more tritium is needed.
+  - balance: Tritiumfire radiation pulse will always have a range of at least 6, but
+      will need more tritium in order to increase range.
+  - balance: Tritiumfire will be less likely to irradiate you if there is less tritium
+      getting burned.
+  RandomGamer123:
+  - bugfix: Soulful toolboxes, made by using a soulstone with a shade in it on a toolbox
+      now display their icon properly.
+  ShizCalev:
+  - bugfix: Camera assemblies are now upgradable again!
+  SkeletalElite:
+  - rscadd: new plasma cutter EMP effect, it sets you on fire
+  SuperNovaa41:
+  - bugfix: Fixed a dead bartender spawning in the beach biodome ruin.
+  Tastyfish:
+  - bugfix: Fixed delivery tagger destinations.
+  YakumoChen:
+  - qol: Traitors trying to steal a supermatter sliver should be reminded that magboots
+      are required near an active supermatter at all times.
+  cacogen:
+  - qol: Fire alarms prepend their area name
+  san7890:
+  - bugfix: Portable Scrubbers and Large Scrubbers should no longer display as large,
+      embittered ERROR icons for those who enjoy mapping.
+  - bugfix: Nanotrasen finally realized that when spraying decals on TramStation to
+      go UNDER any staircase accessories.
+  tastyfish:
+  - bugfix: Objects transitioning through z-levels in disposals no longer lose their
+      delivery destination tag.
+  - bugfix: Tramstation port-aft disposals loop containing part of service, and engineering
+      now work again.
+  zxaber:
+  - bugfix: Fixed cyborg light overlay not showing when the light is off.
+2022-01-23:
+  Blevruz:
+  - rscadd: Reflectors have been slotted with USB ports.
+  Iamgoofball:
+  - rscadd: Traitor Roboticists can now purchase the Springlock MODsuit Module from
+      the uplink.
+  - rscadd: This version of the Springlock MODsuit Module activates way, way faster.
+  LemonInTheDark:
+  - bugfix: Fixed aggressive mobs moving twice as slow as they should. This was the
+      result of a rather big refactor that moved us away from a BYOND thing. I don't
+      know how the BYOND thing fucking works internally, so the numbers might be a
+      bit off. If something seems (way) too fast/slow, lemme know yeah?
+  Melbert:
+  - bugfix: Fixes some decals and piping in Delta's Ordnance Lab
+  - expansion: 'Ninja / traitor comms hacking can now summon a wider variety of antags:
+      Pirates, Fugitives, More traitors, or a flat dynamic threat increase!'
+  Orion_the_Fox, Pirill:
+  - rscadd: Added several new Bamboo items, turfs, and more!
+  - imageadd: Updated existing Bamboo items to a less repulsive green.
+  Pickle-Coding:
+  - bugfix: Setting volume pump to 0L/S will no longer runtime.
+  PositiveEntropy:
+  - imageadd: resprite the toolboxes
+  - imagedel: removes the old Goon toolbox sprites
+  Semoro:
+  - bugfix: Avoid timer scheduling too far events into short queue
+  - bugfix: timers not removing from second queue on init
+  SuperNovaa41:
+  - refactor: Refactored AI law announcing.
+  - balance: Borgs can halve their selfuntip time with the power of roleplay.
+  itseasytosee:
+  - bugfix: fixed stacked cannonball sprites looking wack
+  jjpark-kb:
+  - bugfix: ghosts will now bob up and down
+  san7890:
+  - soundadd: The next time you work out at the gym, please appreciate the new crispness
+      of the sound when that machine starts to squeak as a result of your effort.
+      So refreshing.
+  zxaber:
+  - balance: Fire Locks now check for atmos issues on their own, rather than leaving
+      it to the Fire Alarm. This should cut down on a single breach turning the main
+      halls into a navigational mess.
+  - balance: 'Fire Locks will wait five seconds after a reset before triggering again.
+      tweak: Fire Alarms will still activate all Fire Locks in an area if manually
+      pulled. tweak: Fire Alarms are still used to reset Fire Locks, but now it''s
+      a right-click action. tweak: Emagging a Fire Alarm will apply the effect to
+      all Fire Locks in its area, behaving roughly the same as before. tweak: Disabling
+      Fire Detect is also still done at the Fire Alarm and should work closely as
+      it used to.'
+  - balance: Right-clicking a closed Fire Lock with a crowbar will open it for exactly
+      two seconds. Holding it open (left click) is unchanged.
+  - balance: 'Firelock emag functions (ignoring atmos detect) is now done by a doorjack
+      on the firelock itself. You can still emag a fire alarm to mute it, though.
+      sprite: Fire Locks now have lights that display the reason they are active.
+      Orange is Hot, Cyan means Cold, and White means a Fire Alarm was pulled.'
