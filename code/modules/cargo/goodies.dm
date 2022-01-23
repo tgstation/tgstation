@@ -67,11 +67,11 @@
 	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)
 
 /datum/supply_pack/goody/thermal_single
-	name = "Thermal Pistol Single-Pack"
-	desc = "Contains one thermal pistol, ready for use in the field."
+	name = "Thermal Pistol Holster Single-Pack"
+	desc = "Contains two thermal pistols in a holster, ready for use in the field."
 	cost = PAYCHECK_HARD * 15
 	access_view = ACCESS_ARMORY
-	contains = list(/obj/item/gun/energy/e_gun/thermal)
+	contains = list(/obj/item/storage/belt/holster/thermal)
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"

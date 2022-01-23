@@ -641,10 +641,10 @@
 
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
-	desc = "Contains two experimental thermal pistols, using nanites as the basis for their ammo. Requires Armory access to open."
+	desc = "Contains a pair of holsters each with two experimental thermal pistols, using nanites as the basis for their ammo. Requires Armory access to open."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/gun/energy/e_gun/thermal,
-					/obj/item/gun/energy/e_gun/thermal)
+	contains = list(/obj/item/storage/belt/holster/thermal,
+					/obj/item/storage/belt/holster/thermal)
 	crate_name = "wt-550 auto rifle crate"
 
 //////////////////////////////////////////////////////////////////////////////

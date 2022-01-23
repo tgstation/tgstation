@@ -393,10 +393,14 @@
 //Inferno Pistol
 /obj/item/gun/energy/e_gun/thermal
 	name = "thermal pistol"
-	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten/frozen angry robots into the bad guys."
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten/frozen angry robots into the bad guys. Shoot cold targets with hot or hot targets with cold to get more bang for your buck."
 	icon_state = "thermalpistol"
 	ammo_type = list(/obj/item/ammo_casing/energy/inferno, /obj/item/ammo_casing/energy/cryo)
 	charge_sections = 4
 	ammo_x_offset = 1
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	dual_wield_spread = 10 //as intended by the coders
+
+/obj/item/gun/energy/e_gun/thermal/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
