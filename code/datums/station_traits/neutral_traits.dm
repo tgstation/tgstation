@@ -217,6 +217,9 @@
 		outfit_datum.ears = initial(og_outfit_datum.ears)
 		outfit_datum.backpack_contents = initial(og_outfit_datum.backpack_contents)
 		outfit_datum.box = initial(og_outfit_datum.box)
+		outfit_datum.belt = initial(og_outfit_datum.belt)
+		outfit_datum.l_pocket = initial(og_outfit_datum.l_pocket)
+		outfit_datum.r_pocket = initial(og_outfit_datum.r_pocket)
 		spawned_human.equipOutfit(outfit_datum)
 
 		spawned_human.regenerate_icons()

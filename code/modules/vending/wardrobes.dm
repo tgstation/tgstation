@@ -216,6 +216,7 @@
 		/obj/item/clothing/under/trek/medsci/ent = 10,
 		/obj/item/clothing/suit/hooded/wintercoat = 10,
 		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/glasses/hud/diagnostic = 2,
 		/obj/item/clothing/shoes/sneakers/black = 10
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
@@ -249,6 +250,8 @@
 		/obj/item/clothing/under/trek/medsci/ent = 10,
 		/obj/item/clothing/suit/hooded/wintercoat = 10,
 		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/radio/headset/headset_sci = 3,
+		/obj/item/clothing/mask/gas = 3,
 		/obj/item/clothing/shoes/sneakers/black = 10
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
@@ -492,6 +495,7 @@
 		/obj/item/clothing/under/trek/srvcar/ent = 10,
 		/obj/item/clothing/suit/hooded/wintercoat = 10,
 		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/accessory/lawyers_badge = 2,
 		/obj/item/clothing/shoes/sneakers/black = 10
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
@@ -530,6 +534,7 @@
 	premium = list(/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
 					/obj/item/clothing/head/bishopmitre = 1)
 	trek_products = list(
+		/obj/item/choice_beacon/holy = 1,
 		/obj/item/clothing/under/trek/srvcar = 10,
 		/obj/item/clothing/under/trek/srvcar/next = 10,
 		/obj/item/clothing/under/trek/srvcar/ent = 10,
@@ -566,6 +571,8 @@
 		/obj/item/clothing/suit/hooded/wintercoat = 10,
 		/obj/item/storage/backpack/satchel/trek = 10,
 		/obj/item/clothing/shoes/sneakers/black = 10
+		/obj/item/storage/bag/chemistry = 2,
+		/obj/item/ph_booklet = 3
 	)
 	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
