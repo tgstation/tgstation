@@ -121,7 +121,7 @@
 		return
 	if(panel_open)
 		dir = turn(dir, -90)
-		to_chat(user, span_notice("You change [src]'s output direction to [dir2text(dir)]."))
+		balloon_alert(user, "rotated to [dir2text(dir)].")
 		return TRUE
 
 /**
