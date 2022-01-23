@@ -15,7 +15,7 @@
 	data_hud_type = DATA_HUD_SECURITY_BASIC //show jobs
 
 	baton_type = /obj/item/bikehorn
-	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_CHECK_RECORDS
+	security_mode_flags = SECBOT_CHECK_WEAPONS
 
 	///Keeping track of how much we honk to prevent spamming it
 	var/limiting_spam = FALSE
