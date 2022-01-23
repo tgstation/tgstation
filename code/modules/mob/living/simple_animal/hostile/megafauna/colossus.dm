@@ -78,10 +78,10 @@
 	dir_shots.Grant(src)
 	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
-	AddElement(/datum/element/bullet_shield)
+	AddElement(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
-	RemoveElement(/datum/element/bullet_shield)
+	RemoveElement(/datum/element/projectile_shield)
 	QDEL_NULL(spiral_shots)
 	QDEL_NULL(random_shots)
 	QDEL_NULL(shotgun_blast)
