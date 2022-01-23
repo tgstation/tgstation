@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
-	RegisterSignal(owner.current, COMSIG_CARBON_LOSE_ORGAN, .proc/on_body_removal)
+	RegisterSignal(owner, COMSIG_MIND_TRANSFERRED, .proc/on_body_removal)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -90,11 +90,9 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-/datum/antagonist/proc/on_body_removal(mob/living/old_body, obj/item/organ/organ)
+/datum/antagonist/proc/on_body_removal(datum/mind, mob/living/old_body)
 	SIGNAL_HANDLER
 
-	if (!istype(organ, /obj/item/organ/brain))
-		return FALSE
 	remove_innate_effects(old_body)
 	if(!soft_antag && old_body && old_body.stat != DEAD && !LAZYLEN(old_body.mind?.antag_datums))
 		old_body.remove_from_current_living_antags()
