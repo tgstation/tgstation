@@ -97,6 +97,9 @@
 	if(QDELETED(src) || !success) //Can happen
 		return
 
+	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
+		return
+
 	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
 
 ///Handles the actual move, overriden by children
@@ -424,7 +427,7 @@
 /datum/move_loop/has_target/dist_bound/move_to
 
 /datum/move_loop/has_target/dist_bound/move_to/check_dist()
-	return (get_dist(moving, target) >= distance) //If you get too close, stop moving closer
+	return (get_dist(moving, target) > distance) //If you get too close, stop moving closer
 
 /datum/move_loop/has_target/dist_bound/move_to/move()
 	. = ..()
@@ -457,7 +460,7 @@
 /datum/move_loop/has_target/dist_bound/move_away
 
 /datum/move_loop/has_target/dist_bound/move_away/check_dist()
-	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
+	return (get_dist(moving, target) < distance) //If you get too far out, stop moving away
 
 /datum/move_loop/has_target/dist_bound/move_away/move()
 	. = ..()
