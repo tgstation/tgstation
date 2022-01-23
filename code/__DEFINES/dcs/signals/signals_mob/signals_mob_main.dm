@@ -134,11 +134,3 @@
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
 /// From /datum/surgery_step/success(): (datum/surgey_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
 #define COMSIG_MOB_SURGERY_STEP_SUCCESS "mob_surgery_step_success"
-
-///Called when a mob plays a videogame
-#define COMSIG_MOB_PLAYED_VIDEOGAME "mob_played_videogame"
-///Called when a mob loses a videogame
-#define COMSIG_MOB_LOST_VIDEOGAME "mob_lost_videogame"
-///Called when a mob wins a videogame
-#define COMSIG_MOB_WON_VIDEOGAME "mob_won_videogame"
-
