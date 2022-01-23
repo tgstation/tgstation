@@ -215,6 +215,7 @@
 	var/current_time = world.time
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
 		blind_message = span_hear("You hear a whirring sound."))
+	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", plane = GAME_PLANE_FOV_HIDDEN)
 	mod.wearer.add_overlay(lightning)
 	balloon_alert(mod.wearer, "you start charging...")
@@ -222,6 +223,7 @@
 		power = world.time - current_time
 		animate(game_renderer)
 	drain_power(use_power_cost)
+	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	game_renderer.transform = old_matrix
 	mod.wearer.cut_overlay(lightning)
 	var/angle = get_angle(mod.wearer, target)
