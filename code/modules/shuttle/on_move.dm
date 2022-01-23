@@ -99,10 +99,13 @@ All ShuttleMove procs go here
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	return move_mode
 
-// Called on atoms to move the atom to the new location
+/// Called on atoms to move the atom to the new location
 /atom/movable/proc/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
+
+	if(associated_loc == oldT)
+		move_associated_loc(newT)//if we're nullspaced or nullspaceable, update our associated loc to the new turf
 
 	if(loc != oldT) // This is for multi tile objects
 		return
@@ -111,9 +114,9 @@ All ShuttleMove procs go here
 
 	return TRUE
 
-// Called on atoms after everything has been moved
+/// Called on atoms after everything has been moved
 /atom/movable/proc/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	var/turf/newT = get_turf(src)
+	var/turf/newT = get_turf(src) || associated_loc
 	if (newT.z != oldT.z)
 		on_changed_z_level(oldT, newT)
 

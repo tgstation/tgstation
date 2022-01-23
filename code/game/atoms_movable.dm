@@ -856,6 +856,21 @@
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 
+///move nullspace-relevant vars from the current associated_loc (if it exists) to new_associated_loc (if its a turf)
+/atom/movable/proc/move_associated_loc(turf/new_associated_loc)
+	if(associated_loc == new_associated_loc)
+		return FALSE
+
+	if(associated_loc)
+		LAZYREMOVE(associated_loc.nullspaced_contents, src)
+		associated_loc = null
+
+	if(isturf(new_associated_loc))
+		LAZYOR(new_associated_loc.nullspaced_contents, src)
+		associated_loc = new_associated_loc
+
+	return TRUE
+
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)
 	SHOULD_CALL_PARENT(TRUE)

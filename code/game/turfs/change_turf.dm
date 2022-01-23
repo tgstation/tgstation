@@ -112,7 +112,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	else
 		W.baseturfs = baseturfs_string_list(old_baseturfs, W) //Just to be safe
 
-	nullspaced_contents = old_nullspaced_contents
+	if(nullspaced_contents)
+		nullspaced_contents = nullspaced_contents | old_nullspaced_contents
+	else
+		nullspaced_contents = old_nullspaced_contents
 
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		W.AfterChange(flags, old_type)

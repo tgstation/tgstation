@@ -115,11 +115,10 @@
 		var/area/old_area = oldT.loc
 		var/move_mode = old_area.beforeShuttleMove(shuttle_areas) //areas
 
-		var/list/old_contents = oldT.contents
-		for(var/k in 1 to old_contents.len)
+		var/list/old_contents = oldT.nullspaced_contents ? oldT.contents | oldT.nullspaced_contents : oldT.contents
+		for(var/atom/movable/moving_atom as anything in old_contents)
 			CHECK_TICK
-			var/atom/movable/moving_atom = old_contents[k]
-			if(moving_atom.loc != oldT) //fix for multi-tile objects
+			if(moving_atom.loc != oldT && moving_atom.associated_loc != oldT) //fix for multi-tile objects and nullspaced movables
 				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode, src) //atoms
 
@@ -145,13 +144,12 @@
 			shuttle_area.onShuttleMove(oldT, newT, underlying_old_area) //areas
 
 		if(move_mode & MOVE_CONTENTS)
-			for(var/k in oldT)
-				var/atom/movable/moving_atom = k
-				if(moving_atom.loc != oldT) //fix for multi-tile objects
+			var/list/full_contents = oldT.nullspaced_contents ? oldT.contents | oldT.nullspaced_contents : oldT.contents
+			for(var/atom/movable/moving_atom as anything in full_contents)
+				if(moving_atom.loc != oldT && moving_atom.associated_loc != oldT) //fix for multi-tile objects and nullspaced contents
 					continue
 				moving_atom.onShuttleMove(newT, oldT, movement_force, movement_direction, old_dock, src) //atoms
 				moved_atoms[moving_atom] = oldT
-
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/moved_atoms, rotation, movement_direction, area/underlying_old_area)
 	underlying_old_area.afterShuttleMove()
