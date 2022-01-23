@@ -13,4 +13,4 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	actions_types = null
-	slowdown = 0.6
+	slowdown = 0.7
