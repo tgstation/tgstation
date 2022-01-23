@@ -70,21 +70,21 @@
 	forceMove(D.trunk.associated_loc)
 	active = TRUE
 	setDir(DOWN)
-	start_moving()
+	start_moving(D.trunk)
 
 /// Starts the movement process, persists while the holder is moving through pipes
-/obj/structure/disposalholder/proc/start_moving()
+/obj/structure/disposalholder/proc/start_moving(obj/structure/disposalpipe/starting_pipe)
 	var/delay = world.tick_lag
 	var/datum/move_loop/our_loop = SSmove_manager.move_disposals(src, delay = delay, timeout = delay * count)
 	if(our_loop)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
 		RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/try_expel)
 		RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/movement_stop)
-		current_pipe = loc
+		current_pipe = starting_pipe
 
 /obj/structure/disposalholder/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER
-	last_pipe = loc
+	last_pipe = current_pipe
 
 /obj/structure/disposalholder/proc/try_expel(datum/move_loop/source, succeed, visual_delay)
 	SIGNAL_HANDLER
@@ -102,9 +102,9 @@
 	. = ..()
 	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
 	//Moved to nullspace gang
-	if(!loc && !associated_loc)
+	if(!loc)
 		return
-	var/turf/turf_loc = get_turf(associated_loc)
+	var/turf/turf_loc = get_turf(src)
 
 	var/has_possible_loc = FALSE
 
