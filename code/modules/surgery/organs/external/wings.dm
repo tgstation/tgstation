@@ -104,7 +104,7 @@
 		buckled_obj.unbuckle_mob(human)
 		step(buckled_obj, olddir)
 	else
-		new /datum/forced_movement(human, get_ranged_target_turf(human, olddir, 4), 1, FALSE, CALLBACK(human, /mob/living/carbon/.proc/spin, 1, 1))
+		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE)
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly

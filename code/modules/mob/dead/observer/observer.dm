@@ -133,7 +133,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		remove_verb(src, /mob/dead/observer/verb/boo)
 		remove_verb(src, /mob/dead/observer/verb/possess)
 
-	animate(src, pixel_y = 2, time = 10, loop = -1)
+	AddElement(/datum/element/movetype_handler)
 
 	add_to_dead_mob_list()
 
@@ -867,10 +867,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	observetarget = null
 	client?.perspective = initial(client.perspective)
 	sight = initial(sight)
-	UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
-	if(target.observers)
-		target.observers -= src
-		UNSETEMPTY(target.observers)
+	if(target)
+		UnregisterSignal(target, COMSIG_MOVABLE_Z_CHANGED)
+		LAZYREMOVE(target.observers, src)
 
 /mob/dead/observer/verb/observe()
 	set name = "Observe"
@@ -913,8 +912,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, .proc/on_observing_z_changed)
 		if(mob_eye.hud_used)
 			client.screen = list()
-			LAZYINITLIST(mob_eye.observers)
-			mob_eye.observers |= src
+			LAZYOR(mob_eye.observers, src)
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)
 			observetarget = mob_eye
 

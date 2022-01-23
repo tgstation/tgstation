@@ -34,6 +34,21 @@
 	. = ..()
 	possible_gear = get_abductor_gear()
 
+/obj/machinery/abductor/console/Destroy()
+	if(gizmo)
+		gizmo.console = null
+		gizmo = null
+	if(experiment)
+		experiment.console = null
+		experiment = null
+	if(pad)
+		pad.console = null
+		pad = null
+	if(camera)
+		camera.console = null
+		camera = null
+	return ..()
+	
 /**
  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
  */
@@ -95,7 +110,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked_target?.resolve() ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -143,8 +158,9 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo?.marked)
-		pad.Retrieve(gizmo.marked)
+	var/mob/living/marked = gizmo.marked_target?.resolve()
+	if(pad && marked)
+		pad.Retrieve(marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
 	if(pad)
@@ -192,6 +208,7 @@
 	for(var/obj/machinery/abductor/pad/p in GLOB.machines)
 		if(p.team_number == team_number)
 			pad = p
+			pad.console = src
 			break
 
 	for(var/obj/machinery/abductor/experiment/e in GLOB.machines)

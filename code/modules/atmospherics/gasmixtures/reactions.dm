@@ -81,7 +81,7 @@
 			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
 			. = REACTING
 
-//tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
+//N2O decomposition.
 /datum/gas_reaction/nitrous_decomp
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Nitrous Oxide Decomposition"
@@ -147,7 +147,6 @@
 	else
 		location = get_turf(holder)
 	var/burned_fuel = 0
-
 	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
 		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES] / TRITIUM_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
@@ -170,8 +169,8 @@
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		cached_results["fire"] += burned_fuel * 10
 
-	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY)
-		radiation_pulse(location, max_range = min(sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 1.5, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 50)
+	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * air.volume / 2500) //Reduces chances of radiation getting released from the tritium getting formed from oxygen rich plasmafires in waste.
+		radiation_pulse(location, max_range = min(6 + sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 4, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 100 * (1 - 0.5 ** (energy_released / (600 * FIRE_HYDROGEN_ENERGY_RELEASED))))
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -486,7 +485,8 @@
 /datum/gas_reaction/bzformation/init_reqs()
 	requirements = list(
 		/datum/gas/nitrous_oxide = 10,
-		/datum/gas/plasma = 10
+		/datum/gas/plasma = 10,
+		"MAX_TEMP" = T20C + 20 // Yes, someone used this as a bomb timer. I hate players
 	)
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
@@ -494,6 +494,7 @@
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
 	var/old_heat_capacity = air.heat_capacity()
+	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
 	var/reaction_efficency = min(1 / ((pressure / (0.1 * ONE_ATMOSPHERE)) * (max(cached_gases[/datum/gas/plasma][MOLES] / cached_gases[/datum/gas/nitrous_oxide][MOLES], 1))), cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * INVERSE(2))
 	var/energy_released = 2 * reaction_efficency * FIRE_CARBON_ENERGY_RELEASED
 	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.

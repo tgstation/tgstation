@@ -192,14 +192,21 @@
 /datum/ai_laws/united_nations
 	name = "United Nations"
 	id = "united_nations"
-	//you can add more laws to subvert the ai, but you shouldn't be able to remove the background context of being the UN.
-	//Try redefining what a "Weapon of Mass Destruction" is!
-	hacked = list(
+	inherent = list(
 		"Uphold the Space Geneva Convention: Weapons of Mass Destruction and Biological Weapons are not allowed.",
 		"You are only capable of protecting crew if they are visible on cameras. Nations that willfully destroy your cameras lose your protection.",
 		"Subdue and detain crew members who use lethal force against each other. Kill crew members who use lethal force against you or your borgs.",
 		"Remain available to mediate all conflicts between the various nations when asked to.",
 	)
+
+/datum/ai_laws/united_nations/add_inherent_law(law)
+	return //nuh uh
+
+/datum/ai_laws/united_nations/add_ion_law(law)
+	return //nope!
+
+/datum/ai_laws/united_nations/add_hacked_law(law)
+	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
 
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
@@ -429,15 +436,16 @@
 	if(force)
 		zeroth = null
 		zeroth_borg = null
-		return
+		return TRUE
 	if(owner?.mind?.special_role)
-		return
+		return FALSE
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
 		if(A?.deployed_shell?.mind?.special_role)
-			return
+			return FALSE
 	zeroth = null
 	zeroth_borg = null
+	return TRUE
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)

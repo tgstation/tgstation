@@ -11,8 +11,18 @@
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor
 	minimum_required_age = 0
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 5
 	cost = 8 // Avoid raising traitor threat above this, as it is the default low cost ruleset.
@@ -97,8 +107,18 @@
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 2
 	weight = 2
 	cost = 12
@@ -146,8 +166,18 @@
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 3
 	cost = 16
@@ -185,8 +215,18 @@
 	name = "Heretics"
 	antag_flag = ROLE_HERETIC
 	antag_datum = /datum/antagonist/heretic
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 3
 	cost = 15
@@ -233,7 +273,10 @@
 	antag_datum = /datum/antagonist/wizard
 	flags = HIGH_IMPACT_RULESET
 	minimum_required_age = 14
-	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 1
 	weight = 2
 	cost = 20
@@ -276,7 +319,18 @@
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
-	restricted_roles = list(JOB_AI, JOB_CYBORG, JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_CHAPLAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHAPLAIN,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 2
 	weight = 3
 	cost = 20
@@ -334,7 +388,10 @@
 	antag_datum = /datum/antagonist/nukeop
 	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	minimum_required_age = 14
-	restricted_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY) // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+	) // Just to be sure that a nukie getting picked won't ever imply a Captain or HoS not getting drafted
 	required_candidates = 5
 	weight = 3
 	cost = 20
@@ -408,7 +465,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//               REVS                 //
+//               REVS                       //
 //                                          //
 //////////////////////////////////////////////
 
@@ -416,10 +473,23 @@
 	name = "Revolution"
 	persistent = TRUE
 	antag_flag = ROLE_REV_HEAD
-	antag_flag_override = ROLE_REV
+	antag_flag_override = ROLE_REV_HEAD
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
-	restricted_roles = list(JOB_AI, JOB_CYBORG, JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_RESEARCH_DIRECTOR, JOB_CHIEF_ENGINEER, JOB_CHIEF_MEDICAL_OFFICER)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 3
 	weight = 3
 	delay = 7 MINUTES
@@ -502,8 +572,20 @@
 	persistent = TRUE
 	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILIES
-	protected_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG, JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	protected_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_PRISONER,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 3
 	weight = 1
 	cost = 19
@@ -621,6 +703,50 @@
 	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)
+
+/// Ruleset for thieves
+/datum/dynamic_ruleset/roundstart/thieves
+	name = "Thieves"
+	antag_flag = ROLE_THIEF
+	antag_datum = /datum/antagonist/thief
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
+	required_candidates = 1
+	weight = 3
+	cost = 6 //very cheap cost for the round
+	scaling_cost = 9
+	requirements = list(8,8,8,8,8,8,8,8,8,8)
+	antag_cap = list("denominator" = 24)
+
+/datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
+	. = ..()
+	var/num_thieves = get_antag_cap(population) * (scaled_times + 1)
+	for (var/i = 1 to num_thieves)
+		if(candidates.len <= 0)
+			break
+		var/mob/chosen_mind = pick_n_take(candidates)
+		assigned += chosen_mind.mind
+		chosen_mind.mind.restricted_roles = restricted_roles
+		chosen_mind.mind.special_role = ROLE_THIEF
+		GLOB.pre_setup_antags += chosen_mind.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/thieves/execute()
+	for(var/datum/mind/chosen_mind as anything in assigned)
+		var/datum/antagonist/thief/new_antag = new antag_datum
+		chosen_mind.add_antag_datum(new_antag)
+		GLOB.pre_setup_antags -= chosen_mind
+	return TRUE
 
 /// Ruleset for Nations
 /datum/dynamic_ruleset/roundstart/nations

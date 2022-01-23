@@ -1,0 +1,4 @@
+author: "lewcc"
+delete-after: True
+changes: 
+  - bugfix: "Using screwdrivers on bots will no longer attack them."

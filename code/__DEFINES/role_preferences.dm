@@ -15,6 +15,7 @@
 #define ROLE_HERETIC "Heretic"
 #define ROLE_MALF "Malf AI"
 #define ROLE_OPERATIVE "Operative"
+#define ROLE_THIEF "Thief"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
 
@@ -31,12 +32,12 @@
 #define ROLE_NINJA "Space Ninja"
 #define ROLE_OBSESSED "Obsessed"
 #define ROLE_OPERATIVE_MIDROUND "Operative (Midround)"
+#define ROLE_OPPORTUNIST "Opportunist"
 #define ROLE_REV_HEAD "Head Revolutionary"
 #define ROLE_SENTIENT_DISEASE "Sentient Disease"
 #define ROLE_SLEEPER_AGENT "Syndicate Sleeper Agent"
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
-#define ROLE_SWARMER "Swarmer"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
 
 // Latejoin roles
@@ -62,7 +63,6 @@
 #define ROLE_DRONE "Drone"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_LAVALAND "Lavaland"
-#define ROLE_INTERNAL_AFFAIRS "Internal Affairs Agent"
 
 #define ROLE_POSITRONIC_BRAIN "Positronic Brain"
 #define ROLE_FREE_GOLEM "Free Golem"
@@ -97,6 +97,8 @@
 #define ROLE_SKELETON "Skeleton"
 #define ROLE_ZOMBIE "Zombie"
 #define ROLE_MAINTENANCE_DRONE "Maintenance Drone"
+#define ROLE_BATTLECRUISER_CREW "Battlecruiser Crew"
+#define ROLE_BATTLECRUISER_CAPTAIN "Battlecruiser Captain"
 
 
 /// This defines the antagonists you can operate with in the settings.
@@ -113,6 +115,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_MALF = 0,
 	ROLE_OPERATIVE = 14,
 	ROLE_REV_HEAD = 14,
+	ROLE_THIEF = 0,
 	ROLE_TRAITOR = 0,
 	ROLE_WIZARD = 14,
 
@@ -129,12 +132,12 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_NINJA = 0,
 	ROLE_OBSESSED = 0,
 	ROLE_OPERATIVE_MIDROUND = 14,
+	ROLE_OPPORTUNIST = 0,
 	ROLE_REVENANT = 0,
 	ROLE_SENTIENT_DISEASE = 0,
 	ROLE_SLEEPER_AGENT = 0,
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
-	ROLE_SWARMER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
 
 	// Latejoin
@@ -143,9 +146,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SYNDICATE_INFILTRATOR = 0,
 
 	// I'm not too sure why these are here, but they're not moving.
-	ROLE_REV = 14,
 	ROLE_PAI = 0,
-	ROLE_INTERNAL_AFFAIRS = 0,
 	ROLE_SENTIENCE = 0,
 ))
 

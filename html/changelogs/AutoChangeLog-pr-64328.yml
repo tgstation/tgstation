@@ -1,0 +1,4 @@
+author: "ReinaCoder"
+delete-after: True
+changes: 
+  - bugfix: "Tramstation brig's disposals now has a trunk under it"

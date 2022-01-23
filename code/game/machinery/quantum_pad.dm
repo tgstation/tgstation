@@ -55,7 +55,7 @@
 	teleport_cooldown -= (E * 100)
 
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "pad-idle-o", "qpad-idle", I))
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
 		return
 
 	if(panel_open)
@@ -137,53 +137,51 @@
 		ghost.forceMove(get_turf(linked_pad))
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
-	if(target_pad)
-		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
-		teleporting = TRUE
+	if(!target_pad)
+		return
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	teleporting = TRUE
 
-		spawn(teleport_speed)
-			if(!src || QDELETED(src))
-				teleporting = FALSE
-				return
-			if(machine_stat & NOPOWER)
-				if(user)
-					to_chat(user, span_warning("[src] is unpowered!"))
-				teleporting = FALSE
-				return
-			if(!target_pad || QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
-				if(user)
-					to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
-				teleporting = FALSE
-				return
+	addtimer(CALLBACK(src, .proc/teleport_contents, user, target_pad), teleport_speed)
 
-			teleporting = FALSE
-			last_teleport = world.time
+/obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
+	teleporting = FALSE
+	if(machine_stat & NOPOWER)
+		if(user)
+			to_chat(user, span_warning("[src] is unpowered!"))
+		return
+	if(QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
+		if(user)
+			to_chat(user, span_warning("Linked pad is not responding to ping. Teleport aborted."))
+		return
 
-			// use a lot of power
-			use_power(10000 / power_efficiency)
-			sparks()
-			target_pad.sparks()
+	last_teleport = world.time
 
-			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
-			flick("qpad-beam", target_pad)
-			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
-			for(var/atom/movable/ROI in get_turf(src))
-				if(QDELETED(ROI))
-					continue //sleeps in CHECK_TICK
+	// use a lot of power
+	use_power(10000 / power_efficiency)
+	sparks()
+	target_pad.sparks()
 
-				// if is anchored, don't let through
-				if(ROI.anchored)
-					continue
+	flick("qpad-beam", src)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	flick("qpad-beam", target_pad)
+	playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	for(var/atom/movable/ROI in get_turf(src))
+		if(QDELETED(ROI))
+			continue //sleeps in CHECK_TICK
 
-				if(isliving(ROI))
-					var/mob/living/living_subject = ROI
-					//only TP living mobs buckled to non anchored items
-					if(living_subject.buckled && living_subject.buckled.anchored)
-						continue
+		// if is anchored, don't let through
+		if(ROI.anchored)
+			continue
 
-				do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
-				CHECK_TICK
+		if(isliving(ROI))
+			var/mob/living/living_subject = ROI
+			//only TP living mobs buckled to non anchored items
+			if(living_subject.buckled && living_subject.buckled.anchored)
+				continue
+
+		do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
+		CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE

@@ -26,7 +26,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	vision_range = 9
 	aggro_vision_range = 9
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	rapid_melee = 2 // every second
 	melee_queue_distance = 20
 	ranged = TRUE
