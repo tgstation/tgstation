@@ -90,7 +90,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/specialization(datum/mind/new_owner)
 	return src
 
-/datum/antagonist/proc/on_body_removal(datum/mind, mob/living/old_body)
+/**
+ * Called on the owners mind transfer, to remove actions and effects from the original body
+ *
+ * Arguments:
+ * * datum/mind/mind - The owners mind
+ * * mob/living/old_body - The owners old body
+ */
+/datum/antagonist/proc/on_body_removal(datum/mind/mind, mob/living/old_body)
 	SIGNAL_HANDLER
 
 	remove_innate_effects(old_body)
@@ -99,8 +106,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/action/antag_info/info_button = info_button_ref?.resolve()
 	if(info_button)
 		info_button.Remove(old_body)
-	return TRUE
-
 
 ///Called by the transfer_to() mind proc after the mind (mind.current and new_character.mind) has moved but before the player (key and client) is transfered.
 /datum/antagonist/proc/on_body_transfer(mob/living/new_body)
