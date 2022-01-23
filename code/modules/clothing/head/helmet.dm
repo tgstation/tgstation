@@ -242,6 +242,8 @@
 	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
 	inhand_icon_state = "swat"
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT
+
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
