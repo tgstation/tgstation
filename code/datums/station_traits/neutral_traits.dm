@@ -142,7 +142,7 @@
 
 /datum/station_trait/new_uniform_standards/tos
 	name = "New Uniform Standards: TOS"
-	weight = 10
+	weight = 4
 	report_message = "We've issued some new original uniforms for the crew."
 	uniforms = list("command" = /datum/outfit/job/command_trek,
 							"engsec" = /datum/outfit/job/engsec_trek,
@@ -152,7 +152,7 @@
 
 /datum/station_trait/new_uniform_standards/tng
 	name = "New Uniform Standards: TNG"
-	weight = 10
+	weight = 4
 	report_message = "We've issued some new next generation uniforms for the crew."
 	uniforms = list("command" = /datum/outfit/job/command_trek_tng,
 							"engsec" = /datum/outfit/job/engsec_trek_tng,
@@ -162,7 +162,7 @@
 
 /datum/station_trait/new_uniform_standards/ent
 	name = "New Uniform Standards: ENT"
-	weight = 10
+	weight = 4
 	report_message = "We've issued some new enterprising uniforms for the crew."
 	uniforms = list("command" = /datum/outfit/job/command_trek_ent,
 							"engsec" = /datum/outfit/job/engsec_trek_ent,
@@ -215,6 +215,8 @@
 		outfit_datum.id = initial(og_outfit_datum.id)
 		outfit_datum.id_trim = initial(og_outfit_datum.id_trim)
 		outfit_datum.ears = initial(og_outfit_datum.ears)
+		outfit_datum.backpack_contents = initial(og_outfit_datum.backpack_contents)
+		outfit_datum.box = initial(og_outfit_datum.box)
 		spawned_human.equipOutfit(outfit_datum)
 
 		spawned_human.regenerate_icons()
