@@ -84,6 +84,13 @@
 	var/list/products = list()
 
 	/**
+	  * List of products this machine sells when the trek uniforms trait has rolled.
+	  *
+	  * form should be list(/type/path = amount, /type/path2 = amount2)
+	  */
+	var/list/trek_products
+
+	/**
 	  * List of products this machine sells when you hack it
 	  *
 	  * form should be list(/type/path = amount, /type/path2 = amount2)
@@ -182,6 +189,9 @@
  * * TRUE - all other cases
  */
 /obj/machinery/vending/Initialize(mapload)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS) && trek_products)
+		products = trek_products
+		premium = list()
 	var/build_inv = FALSE
 	if(!refill_canister)
 		circuit = null

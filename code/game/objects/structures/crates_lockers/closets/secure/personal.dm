@@ -6,20 +6,22 @@
 
 /obj/structure/closet/secure_closet/personal/PopulateContents()
 	..()
-	if(prob(50))
-		new /obj/item/storage/backpack/duffelbag(src)
-	if(prob(50))
-		new /obj/item/storage/backpack(src)
-	else
-		new /obj/item/storage/backpack/satchel(src)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		if(prob(50))
+			new /obj/item/storage/backpack/duffelbag(src)
+		if(prob(50))
+			new /obj/item/storage/backpack(src)
+		else
+			new /obj/item/storage/backpack/satchel(src)
 	new /obj/item/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
 /obj/structure/closet/secure_closet/personal/patient/PopulateContents()
-	new /obj/item/clothing/under/color/white( src )
-	new /obj/item/clothing/shoes/sneakers/white( src )
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		new /obj/item/clothing/under/color/white( src )
+		new /obj/item/clothing/shoes/sneakers/white( src )
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
@@ -31,7 +33,8 @@
 	close_sound_volume = 50
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
-	new /obj/item/storage/backpack/satchel/leather/withwallet( src )
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		new /obj/item/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/instrument/piano_synth(src)
 	new /obj/item/radio/headset( src )
 

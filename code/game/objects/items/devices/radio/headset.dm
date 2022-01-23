@@ -55,6 +55,11 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/Initialize(mapload)
 	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		name = replacetext(name, "headset", "combadge")
+		desc = "A com-badge that is used to communicate."
+		icon_state = "combadge"
+		worn_icon_state = "combadge"
 	set_listening(TRUE)
 	recalculateChannels()
 	possibly_deactivate_in_loc()
@@ -93,7 +98,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -124,7 +130,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -191,7 +198,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -213,7 +221,8 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads/hos/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"

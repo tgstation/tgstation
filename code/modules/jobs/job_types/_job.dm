@@ -254,11 +254,12 @@
 	var/backpack = /obj/item/storage/backpack
 	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
+	var/use_backpack_pref = TRUE
 
 	var/pda_slot = ITEM_SLOT_BELT
 
 /datum/outfit/job/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(ispath(back, /obj/item/storage/backpack))
+	if(ispath(back, /obj/item/storage/backpack) && use_backpack_pref)
 		switch(H.backpack)
 			if(GBACKPACK)
 				back = /obj/item/storage/backpack //Grey backpack

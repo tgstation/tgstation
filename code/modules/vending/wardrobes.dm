@@ -32,6 +32,14 @@
 					/obj/item/clothing/under/rank/security/officer/grey = 3,
 					/obj/item/clothing/under/pants/khaki = 3,
 					/obj/item/clothing/under/rank/security/officer/blueshirt = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/engsec = 10,
+		/obj/item/clothing/under/trek/engsec/next = 10,
+		/obj/item/clothing/under/trek/engsec/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	premium = list(/obj/item/clothing/under/rank/security/officer/formal = 3,
 					/obj/item/clothing/suit/security/officer = 3,
 					/obj/item/clothing/head/beret/sec/navyofficer = 3)
@@ -71,6 +79,14 @@
 					/obj/item/clothing/head/soft/paramedic = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
 
@@ -96,6 +112,14 @@
 					/obj/item/clothing/head/beret/engi = 3,
 					/obj/item/clothing/head/hardhat = 3,
 					/obj/item/clothing/head/hardhat/weldhat = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/engsec = 10,
+		/obj/item/clothing/under/trek/engsec/next = 10,
+		/obj/item/clothing/under/trek/engsec/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/engi_wardrobe
 	payment_department = ACCOUNT_ENG
 	light_color = COLOR_VIVID_YELLOW
@@ -118,6 +142,14 @@
 					/obj/item/clothing/under/rank/engineering/atmospheric_technician/skirt = 3,
 					/obj/item/clothing/head/beret/atmos = 3,
 					/obj/item/clothing/shoes/sneakers/black = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/engsec = 10,
+		/obj/item/clothing/under/trek/engsec/next = 10,
+		/obj/item/clothing/under/trek/engsec/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/atmos_wardrobe
 	payment_department = ACCOUNT_ENG
 	light_color = COLOR_VIVID_YELLOW
@@ -147,6 +179,14 @@
 		/obj/item/clothing/head/mailman = 1,
 		/obj/item/clothing/under/misc/mailman = 1
 	)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/cargo_wardrobe
 	payment_department = ACCOUNT_CAR
 
@@ -170,6 +210,14 @@
 					/obj/item/clothing/mask/bandana/skull = 2)
 	contraband = list(/obj/item/clothing/suit/hooded/techpriest = 2,
 					/obj/item/organ/tongue/robot = 2)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/robo_wardrobe
 	extra_price = PAYCHECK_HARD * 1.2
 	payment_department = ACCOUNT_SCI
@@ -195,6 +243,14 @@
 					/obj/item/clothing/shoes/sneakers/white = 3,
 					/obj/item/radio/headset/headset_sci = 3,
 					/obj/item/clothing/mask/gas = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/science_wardrobe
@@ -217,6 +273,14 @@
 					/obj/item/clothing/under/rank/civilian/hydroponics/skirt = 3,
 					/obj/item/clothing/mask/bandana = 3,
 					/obj/item/clothing/accessory/armband/hydro = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
@@ -246,6 +310,14 @@
 					/obj/item/clothing/glasses/regular = 2,
 					/obj/item/clothing/glasses/regular/jamjar = 1,
 					/obj/item/storage/bag/books = 1)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/curator_wardrobe
@@ -277,6 +349,23 @@
 					/obj/item/storage/dice/hazard = 1,
 					/obj/item/storage/bag/money = 2)
 	premium = list(/obj/item/storage/box/dishdrive = 1)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10,
+		/obj/item/reagent_containers/glass/rag = 2,
+		/obj/item/storage/box/beanbag = 1,
+		/obj/item/clothing/suit/armor/vest/alt = 1,
+		/obj/item/circuitboard/machine/dish_drive = 1,
+		/obj/item/clothing/glasses/sunglasses/reagent = 1,
+		/obj/item/clothing/neck/petcollar = 1,
+		/obj/item/storage/belt/bandolier = 1,
+		/obj/item/storage/dice/hazard = 1,
+		/obj/item/storage/bag/money = 2
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
 	extra_price = PAYCHECK_HARD
@@ -304,6 +393,14 @@
 					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -333,6 +430,26 @@
 					/obj/item/clothing/shoes/galoshes = 2,
 					/obj/item/watertank/janitor = 1,
 					/obj/item/storage/belt/janitor = 2)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10,
+		/obj/item/pushbroom = 2,
+		/obj/item/paint/paint_remover = 2,
+		/obj/item/melee/flyswatter = 2,
+		/obj/item/flashlight = 2,
+		/obj/item/clothing/suit/caution = 6,
+		/obj/item/holosign_creator = 2,
+		/obj/item/lightreplacer = 2,
+		/obj/item/soap/nanotrasen = 2,
+		/obj/item/storage/bag/trash = 2,
+		/obj/item/clothing/shoes/galoshes = 2,
+		/obj/item/watertank/janitor = 1,
+		/obj/item/storage/belt/janitor = 2
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	default_price = PAYCHECK_EASY
 	extra_price = PAYCHECK_HARD * 0.8
@@ -369,6 +486,14 @@
 					/obj/item/clothing/under/rank/civilian/lawyer/black/skirt = 1,
 					/obj/item/clothing/shoes/laceup = 2,
 					/obj/item/clothing/accessory/lawyers_badge = 2)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/law_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/law_wardrobe
@@ -404,6 +529,14 @@
 					/obj/item/clothing/head/clownmitre = 1)
 	premium = list(/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
 					/obj/item/clothing/head/bishopmitre = 1)
+	trek_products = list(
+		/obj/item/clothing/under/trek/srvcar = 10,
+		/obj/item/clothing/under/trek/srvcar/next = 10,
+		/obj/item/clothing/under/trek/srvcar/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chap_wardrobe
@@ -426,6 +559,14 @@
 					/obj/item/storage/backpack/duffelbag/chemistry = 2,
 					/obj/item/storage/bag/chemistry = 2,
 					/obj/item/ph_booklet = 3)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	contraband = list(/obj/item/reagent_containers/spray/syndicate = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chem_wardrobe
 	payment_department = ACCOUNT_MED
@@ -448,6 +589,14 @@
 		/obj/item/storage/backpack/satchel/gen = 2,
 		/obj/item/storage/backpack/duffelbag/genetics = 2
 	)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
 	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
@@ -469,6 +618,14 @@
 					/obj/item/storage/backpack/virology = 2,
 					/obj/item/storage/backpack/satchel/vir = 2,
 					/obj/item/storage/backpack/duffelbag/virology = 2)
+	trek_products = list(
+		/obj/item/clothing/under/trek/medsci = 10,
+		/obj/item/clothing/under/trek/medsci/next = 10,
+		/obj/item/clothing/under/trek/medsci/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/viro_wardrobe
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/viro_wardrobe
@@ -506,6 +663,14 @@
 					/obj/item/reagent_containers/food/drinks/flask/det = 2,
 					/obj/item/storage/fancy/cigarettes = 5)
 	premium = list(/obj/item/clothing/head/flatcap = 1)
+	trek_products = list(
+		/obj/item/clothing/under/trek/engsec = 10,
+		/obj/item/clothing/under/trek/engsec/next = 10,
+		/obj/item/clothing/under/trek/engsec/ent = 10,
+		/obj/item/clothing/suit/hooded/wintercoat = 10,
+		/obj/item/storage/backpack/satchel/trek = 10,
+		/obj/item/clothing/shoes/sneakers/black = 10
+	)
 	refill_canister = /obj/item/vending_refill/wardrobe/det_wardrobe
 	extra_price = PAYCHECK_COMMAND * 1.75
 	payment_department = ACCOUNT_SEC

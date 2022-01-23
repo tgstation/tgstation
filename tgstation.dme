@@ -2406,6 +2406,7 @@
 #include "code\modules\clothing\outfits\event.dm"
 #include "code\modules\clothing\outfits\plasmaman.dm"
 #include "code\modules\clothing\outfits\standard.dm"
+#include "code\modules\clothing\outfits\trek.dm"
 #include "code\modules\clothing\outfits\vr.dm"
 #include "code\modules\clothing\outfits\vv_outfit.dm"
 #include "code\modules\clothing\shoes\_shoes.dm"

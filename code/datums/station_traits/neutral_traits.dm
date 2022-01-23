@@ -127,3 +127,95 @@
 
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
+
+/datum/station_trait/new_uniform_standards
+	name = "New Uniform Standards: Base Trait (Shouldn't Run)"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 0
+	show_in_report = TRUE
+	report_message = "We've issued some new uniforms for the crew."
+	trait_to_give = STATION_TRAIT_NEW_UNIFORM_STANDARDS
+	var/list/uniforms = list("command" = /datum/outfit/job/command_trek,
+							"engsec" = /datum/outfit/job/engsec_trek,
+							"medsci" = /datum/outfit/job/medsci_trek,
+							"srvcar" = /datum/outfit/job/srvcar_trek)
+
+/datum/station_trait/new_uniform_standards/tos
+	name = "New Uniform Standards: TOS"
+	weight = 10
+	report_message = "We've issued some new original uniforms for the crew."
+	uniforms = list("command" = /datum/outfit/job/command_trek,
+							"engsec" = /datum/outfit/job/engsec_trek,
+							"medsci" = /datum/outfit/job/medsci_trek,
+							"srvcar" = /datum/outfit/job/srvcar_trek)
+	blacklist = list(/datum/station_trait/new_uniform_standards/tng, /datum/station_trait/new_uniform_standards/ent)
+
+/datum/station_trait/new_uniform_standards/tng
+	name = "New Uniform Standards: TNG"
+	weight = 10
+	report_message = "We've issued some new next generation uniforms for the crew."
+	uniforms = list("command" = /datum/outfit/job/command_trek_tng,
+							"engsec" = /datum/outfit/job/engsec_trek_tng,
+							"medsci" = /datum/outfit/job/medsci_trek_tng,
+							"srvcar" = /datum/outfit/job/srvcar_trek_tng)
+	blacklist = list(/datum/station_trait/new_uniform_standards/tos, /datum/station_trait/new_uniform_standards/ent)
+
+/datum/station_trait/new_uniform_standards/ent
+	name = "New Uniform Standards: ENT"
+	weight = 10
+	report_message = "We've issued some new enterprising uniforms for the crew."
+	uniforms = list("command" = /datum/outfit/job/command_trek_ent,
+							"engsec" = /datum/outfit/job/engsec_trek_ent,
+							"medsci" = /datum/outfit/job/medsci_trek_ent,
+							"srvcar" = /datum/outfit/job/srvcar_trek_ent)
+	blacklist = list(/datum/station_trait/new_uniform_standards/tos, /datum/station_trait/new_uniform_standards/tng)
+
+/datum/station_trait/new_uniform_standards/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
+
+/datum/station_trait/new_uniform_standards/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+	if(ishuman(spawned))
+		var/mob/living/carbon/human/spawned_human = spawned
+		if(isplasmaman(spawned))
+			return // hahahahahahahahahh no im not spriting this
+		var/datum/job_department/department_type = job.department_for_prefs || job.departments_list?[1]
+		if (isnull(department_type))
+			stack_trace("yo wheres the fucking DEPARTMENT bro???????")
+			return
+		if(department_type == /datum/job_department/silicon)
+			return // lmao
+		for(var/obj/item/item in spawned_human.get_equipped_items(TRUE))
+			qdel(item)
+		var/datum/outfit/outfit_datum
+		var/datum/outfit/og_outfit_datum = job.outfit
+		var/outfit_to_use
+		if(job.job_flags & JOB_BOLD_SELECT_TEXT) // heads of staff and the Captain
+			outfit_to_use = uniforms["command"]
+		else
+			switch(department_type) // i hate this
+				if(/datum/job_department/command)
+					outfit_to_use = uniforms["command"]
+				if(/datum/job_department/engineering)
+					outfit_to_use = uniforms["engsec"]
+				if(/datum/job_department/security)
+					outfit_to_use = uniforms["engsec"]
+				if(/datum/job_department/medical)
+					outfit_to_use = uniforms["medsci"]
+				if(/datum/job_department/science)
+					outfit_to_use = uniforms["medsci"]
+				if(/datum/job_department/service)
+					outfit_to_use = uniforms["srvcar"]
+				if(/datum/job_department/cargo)
+					outfit_to_use = uniforms["srvcar"]
+				if(/datum/job_department/assistant)
+					outfit_to_use = uniforms["srvcar"]
+		outfit_datum = new outfit_to_use
+		outfit_datum.id = initial(og_outfit_datum.id)
+		outfit_datum.id_trim = initial(og_outfit_datum.id_trim)
+		outfit_datum.ears = initial(og_outfit_datum.ears)
+		spawned_human.equipOutfit(outfit_datum)
+
+		spawned_human.regenerate_icons()
+

@@ -5,8 +5,8 @@
 
 /obj/structure/closet/secure_closet/engineering_chief/PopulateContents()
 	..()
-
-	new /obj/item/storage/bag/garment/engineering_chief (src)
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_NEW_UNIFORM_STANDARDS))
+		new /obj/item/storage/bag/garment/engineering_chief (src)
 	new /obj/item/cartridge/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)

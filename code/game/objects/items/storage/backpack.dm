@@ -304,6 +304,13 @@
 	icon_state = "satchel-cap"
 	inhand_icon_state = "satchel-cap"
 
+/obj/item/storage/backpack/satchel/trek
+	name = "holocamo satchel"
+	desc = "A satchel with advanced holographic technology. Completely invisible when worn!"
+	icon_state = "satchel-norm"
+	inhand_icon_state = "satchel-norm"
+	worn_icon_state = "satchel-invis"
+
 /obj/item/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."

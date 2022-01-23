@@ -28,6 +28,12 @@
 	icon_state = "trek_medsci"
 	inhand_icon_state = "b_suit"
 
+/obj/item/clothing/under/trek/srvcar
+	name = "srvcar uniform"
+	desc = "The uniform worn by service/cargo officers."
+	icon_state = "trek_srvcar"
+	inhand_icon_state = "b_suit"
+
 
 //TNG
 /obj/item/clothing/under/trek/command/next
@@ -41,6 +47,9 @@
 /obj/item/clothing/under/trek/medsci/next
 	icon_state = "trek_next_medsci"
 
+/obj/item/clothing/under/trek/srvcar/next
+	icon_state = "trek_next_srvcar"
+
 
 //ENT
 /obj/item/clothing/under/trek/command/ent
@@ -53,6 +62,10 @@
 
 /obj/item/clothing/under/trek/medsci/ent
 	icon_state = "trek_ent_medsci"
+	inhand_icon_state = "bl_suit"
+
+/obj/item/clothing/under/trek/srvcar/ent
+	icon_state = "trek_ent_srvcar"
 	inhand_icon_state = "bl_suit"
 
 
