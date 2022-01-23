@@ -19,7 +19,7 @@
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
-/obj/item/mod/module/reagent_scanner/on_deactivation()
+/obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -38,7 +38,7 @@
 	mod.wearer.research_scanner++
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
-/obj/item/mod/module/reagent_scanner/advanced/on_deactivation()
+/obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -182,7 +182,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
-/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation()
+/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

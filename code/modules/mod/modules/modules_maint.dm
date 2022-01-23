@@ -107,7 +107,7 @@
 	if(selection)
 		SEND_SOUND(mod.wearer, sound(selection.song_path, volume = 50, channel = CHANNEL_JUKEBOX))
 
-/obj/item/mod/module/visor/rave/on_deactivation()
+/obj/item/mod/module/visor/rave/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -283,7 +283,7 @@
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
-/obj/item/mod/module/atrocinator/on_deactivation()
+/obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE)
 	if(you_fucked_up)
 		to_chat(mod.wearer, span_danger("It's too late."))
 		return FALSE

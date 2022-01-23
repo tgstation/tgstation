@@ -96,7 +96,7 @@
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 		else
 			on_activation()
 	else
@@ -195,7 +195,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -247,7 +247,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation()
+		on_deactivation(display_message = TRUE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)

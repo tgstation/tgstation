@@ -109,7 +109,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
 
-/obj/item/mod/module/drill/on_deactivation()
+/obj/item/mod/module/drill/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -318,7 +318,7 @@
 		mod.wearer.AddComponent(/datum/component/strong_pull)
 		RegisterSignal(mod.wearer.pulling, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
 
-/obj/item/mod/module/magnet/on_deactivation()
+/obj/item/mod/module/magnet/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
