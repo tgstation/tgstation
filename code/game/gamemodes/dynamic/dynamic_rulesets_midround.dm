@@ -994,7 +994,7 @@
 	for(var/mob/living/carbon/human/candidate in candidates)
 		if( \
 			//no bigger antagonists getting smaller role
-			player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0) \
+			candidate.mind && (candidate.mind.special_role || candidate.mind.antag_datums?.len > 0) \
 			//no dead people
 			|| candidate.stat == DEAD \
 			//no people who don't want it
