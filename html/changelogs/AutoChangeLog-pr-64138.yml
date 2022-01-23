@@ -1,4 +1,0 @@
-author: "Semoro"
-delete-after: True
-changes: 
-  - bugfix: "timers not removing from second queue on init"

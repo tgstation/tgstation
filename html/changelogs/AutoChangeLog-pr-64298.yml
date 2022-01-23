@@ -1,5 +1,0 @@
-author: "PositiveEntropy"
-delete-after: True
-changes: 
-  - imageadd: "resprite the toolboxes"
-  - imagedel: "removes the old Goon toolbox sprites"

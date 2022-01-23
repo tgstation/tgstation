@@ -1,4 +1,0 @@
-author: "jjpark-kb"
-delete-after: True
-changes: 
-  - bugfix: "ghosts will now bob up and down"

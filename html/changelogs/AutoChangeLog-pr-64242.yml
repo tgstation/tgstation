@@ -1,4 +1,0 @@
-author: "Semoro"
-delete-after: True
-changes: 
-  - bugfix: "Avoid timer scheduling too far events into short queue"
