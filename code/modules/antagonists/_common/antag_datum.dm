@@ -65,8 +65,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	GLOB.antagonists += src
 	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
-	RegisterSignal(owner, COMSIG_MIND_TRANSFERRED, .proc/on_body_removal)
-
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
 	if(owner)
@@ -181,6 +179,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!soft_antag && owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
+	RegisterSignal(owner, COMSIG_MIND_TRANSFERRED, .proc/on_body_removal)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
 /**
