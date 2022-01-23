@@ -1,0 +1,4 @@
+author: "Semoro"
+delete-after: True
+changes: 
+  - bugfix: "Avoid runechat scheduling too far events into short queue (port from SStimer)"
