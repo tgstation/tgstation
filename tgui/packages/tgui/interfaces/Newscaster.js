@@ -1,9 +1,15 @@
 import { useBackend, useSharedState } from '../backend';
-import { BlockQuote, Button, Collapsible, Flex, LabeledList, Section, Stack, TextArea } from '../components';
+import { BlockQuote, Button, Collapsible, Flex, LabeledList, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
+  const {
+    index,
+    name = "Station Annoucements",
+    description,
+    icon,
+  } = props;
   return (
     <Window
       width={575}
@@ -11,32 +17,7 @@ export const Newscaster = (props, context) => {
       <Window.Content scrollable>
         <Flex mb={1}>
           <Flex.Item mr={1}>
-            <Section
-              minHeight="100%"
-              width={(window.innerWidth - 400) + "px"}>
-              <NewscasterButton
-                index={1}
-                icon="bullhorn"
-                name="Station Annoucements"
-                description={multiline`
-                  Station news from Centcom.
-                `} />
-              <NewscasterButton
-                index={2}
-                icon="coins"
-                name="Economic Updates"
-                description={multiline`
-                  Learn about the state of the market place,
-                  on the marker, every 5 minutes.
-                `} />
-              <NewscasterButton
-                index={3}
-                icon="fish"
-                name="Joe's Crab Shack!"
-                description={multiline`
-                  Catch the freshest catches, straight from Joes.
-                `} />
-            </Section>
+            <NewscasterChannelSelector />
           </Flex.Item>
           <Flex.Item grow={1} basis={0}>
             <NewscasterInfobox />
@@ -120,7 +101,7 @@ const NewscasterChannelBox = (props, context) => {
         <Section>
           <TextArea
             fluid
-            height={(window.innerHeight - 250) + "px"}
+            height={(window.innerHeight - 260) + "px"}
             backgroundColor="black"
             textColor="white"
             onChange={(e, value) => act('storyText', {
@@ -137,3 +118,25 @@ const NewscasterChannelBox = (props, context) => {
   );
 };
 
+const NewscasterChannelSelector = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    channels = [],
+  } = data;
+  return (
+    <Section
+      minHeight="100%"
+      width={(window.innerWidth - 400) + "px"}>
+      <Tabs vertical>
+        {channels.map(channel => (
+          <Tabs.Tab
+            key={channel.name}
+            selected={channel.name === activeChannelName}
+            onClick={() => setActiveChannelName(channel.name)}>
+            {channel.name}
+          </Tabs.Tab>
+        ))}
+      </Tabs>
+    </Section>
+  );
+};
