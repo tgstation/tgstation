@@ -52,18 +52,19 @@
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")
 			return
+		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		stored_crates += picked_crate
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up [picked_crate]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_power_cost)
 	else if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
+		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, load_time, target = target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
@@ -72,7 +73,6 @@
 		var/atom/movable/dropped_crate = pop(stored_crates)
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
-		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_power_cost)
 
 /obj/item/mod/module/clamp/on_suit_deactivation()
@@ -192,13 +192,13 @@
 	icon_state = "hydraulic"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
-	use_power_cost = DEFAULT_CHARGE_DRAIN*5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*10
 	incompatible_modules = list(/obj/item/mod/module/hydraulic)
-	cooldown_time = 7.5 SECONDS
+	cooldown_time = 4 SECONDS
 	overlay_state_inactive = "module_hydraulic"
 	overlay_state_active = "module_hydraulic_active"
 	/// Time it takes to launch
-	var/launch_time = 2.5 SECONDS
+	var/launch_time = 2 SECONDS
 	/// User overlay
 	var/mutable_appearance/lightning
 
@@ -223,6 +223,7 @@
 		power = world.time - current_time
 		animate(game_renderer)
 	drain_power(use_power_cost)
+	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
 	game_renderer.transform = old_matrix
 	mod.wearer.cut_overlay(lightning)
@@ -241,3 +242,32 @@
 	name = "MOD disposal selector module"
 	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal."
 	icon_state = "disposal"
+	complexity = 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	incompatible_modules = list(/obj/item/mod/module/disposal_selector)
+	var/disposal_tag = NONE
+
+/obj/item/mod/module/disposal_selector/Initialize(mapload)
+	. = ..()
+	disposal_tag = pick(GLOB.TAGGERLOCATIONS)
+
+/obj/item/mod/module/disposal_selector/on_suit_activation()
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+
+/obj/item/mod/module/disposal_selector/on_suit_deactivation()
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
+
+/obj/item/mod/module/disposal_selector/get_configuration()
+	. = ..()
+	.["disposal_tag"] = add_ui_configuration("Disposal Tag", "list", disposal_tag, GLOB.TAGGERLOCATIONS)
+
+/obj/item/mod/module/disposal_selector/configure_edit(key, value)
+	switch(key)
+		if("disposal_tag")
+			if(value in GLOB.TAGGERLOCATIONS)
+				disposal_tag = value
+
+/obj/item/mod/module/disposal_selector/proc/disposal_handling(datum/disposal_source, obj/structure/disposalholder/disposal_holder, obj/machinery/disposal/disposal_machine, hasmob)
+	SIGNAL_HANDLER
+
+	disposal_holder.destinationTag = disposal_tag
