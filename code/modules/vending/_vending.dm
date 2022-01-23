@@ -37,7 +37,7 @@
 	///Whether the product can be recolored by the GAGS system
 	var/colorable
 	///List of items that have been returned to the vending machine.
-	var/list/returned_products = list()
+	var/list/returned_products
 
 /**
  * # vending machines
