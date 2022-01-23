@@ -281,7 +281,7 @@
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
 	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
-	if(isturf(current_target.loc))
+	if(!isturf(current_target.loc))
 		return
 	if(!Adjacent(current_target))
 		return
