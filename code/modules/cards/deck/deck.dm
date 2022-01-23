@@ -134,4 +134,5 @@
 	resistance_flags = NONE
 	shuffle_time = DECK_SYNDIE_SHUFFLE_TIME
 
-#undef DECK_SHUFFLE_COOLDOWN
+#undef DECK_SHUFFLE_TIME
+#undef DECK_SYNDIE_SHUFFLE_TIME
