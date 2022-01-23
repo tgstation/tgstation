@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Heirlooms are now visible to everyone on examine."
