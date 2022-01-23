@@ -7510,6 +7510,7 @@
 	name = "Law Office Shutters Toggle";
 	req_access_txt = "38"
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/service/lawoffice)
 "aOY" = (
@@ -23409,6 +23410,16 @@
 /area/commons/locker)
 "cKR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/command/bridge)
 "cKV" = (
@@ -24903,7 +24914,6 @@
 /area/service/hydroponics)
 "dha" = (
 /obj/machinery/photocopier,
-/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -24912,6 +24922,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "dhc" = (
@@ -40130,6 +40141,9 @@
 	id = "brige-maint";
 	name = "Bridge Blast door"
 	},
+/obj/effect/turf_decal/siding/blue/corner{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "iqh" = (
@@ -46002,6 +46016,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/service/lawoffice)
 "kec" = (
@@ -60385,14 +60400,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/restaurant_portal/bar,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/effect/turf_decal/delivery/red,
 /obj/machinery/duct,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/service/bar/atrium)
 "oKX" = (
@@ -60472,6 +60487,7 @@
 	department = "Law Office";
 	name = "Law Office Requests Console"
 	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark,
 /area/service/lawoffice)
 "oMr" = (
@@ -63265,6 +63281,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
+/obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/dark,
 /area/security/courtroom)
 "pEB" = (
