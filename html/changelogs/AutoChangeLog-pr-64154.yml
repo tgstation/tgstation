@@ -1,0 +1,4 @@
+author: "Zonespace27"
+delete-after: True
+changes: 
+  - bugfix: "Simplebots can now have tools used on them without injuring them in the process."
