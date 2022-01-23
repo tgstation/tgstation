@@ -119,8 +119,12 @@
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
+		for (var/law in laws.inherent)
+			lawcheck += law
 	else
 		make_laws()
+		for (var/law in laws.inherent)
+			lawcheck += law
 
 	if(target_ai.mind)
 		target_ai.mind.transfer_to(src)
@@ -961,7 +965,7 @@
 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_shell"
 
-/datum/action/innate/deploy_shell/Trigger()
+/datum/action/innate/deploy_shell/Trigger(trigger_flags)
 	var/mob/living/silicon/ai/AI = owner
 	if(!AI)
 		return
@@ -974,7 +978,7 @@
 	button_icon_state = "ai_last_shell"
 	var/mob/living/silicon/robot/last_used_shell
 
-/datum/action/innate/deploy_last_shell/Trigger()
+/datum/action/innate/deploy_last_shell/Trigger(trigger_flags)
 	if(!owner)
 		return
 	if(last_used_shell)

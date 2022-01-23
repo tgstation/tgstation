@@ -309,13 +309,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //ADMIN TOOLS
 
-//Called when using admin tools to give antag status
+///Called when using admin tools to give antag status
 /datum/antagonist/proc/admin_add(datum/mind/new_owner,mob/admin)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(src)
 
-//Called when removing antagonist using admin tools
+///Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
 	if(!user)
 		return
@@ -488,7 +488,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = ..()
 	name += " [target]"
 
-/datum/action/antag_info/Trigger()
+/datum/action/antag_info/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

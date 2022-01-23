@@ -23,4 +23,6 @@ champagne_pop.ogg is credited to ultradust on freesound https://freesound.org/pe
 can_open.ogg adapted from https://freesound.org/people/MaxDemianAGL/sounds/130031/
 can_shake.ogg adapted from https://freesound.org/people/mcmast/sounds/456703/
 
+splatter.ogg adapted from https://freesound.org/people/Rocktopus/sounds/233418/
+
 mbox_full.ogg and mbox_end.ogg make use of The Ragtime Drummer by James Lent, in the public domain

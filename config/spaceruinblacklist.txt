@@ -51,4 +51,4 @@
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
-
+#_maps/RandomRuins/SpaceRuins/space_billboard.dmm

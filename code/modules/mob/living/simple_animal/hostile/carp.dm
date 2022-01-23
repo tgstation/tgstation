@@ -177,7 +177,7 @@
 	melee_damage_lower += rand(2, 10)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
-	move_to_delay = rand(3,7)
+	move_to_delay = rand(1.5,3.5)
 
 
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()

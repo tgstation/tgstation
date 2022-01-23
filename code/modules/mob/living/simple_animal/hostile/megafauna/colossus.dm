@@ -40,7 +40,7 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 10
-	move_to_delay = 10
+	move_to_delay = 5
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
@@ -98,20 +98,20 @@
 		ranged_cooldown = world.time + 30
 		telegraph()
 		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
-		move_to_delay = 3
+		move_to_delay = 1.5
 		return
 	else
 		move_to_delay = initial(move_to_delay)
 
 	if(prob(20+anger_modifier)) //Major attack
-		spiral_shots.Trigger(target)
+		spiral_shots.Trigger(target = target)
 	else if(prob(20))
-		random_shots.Trigger(target)
+		random_shots.Trigger(target = target)
 	else
 		if(prob(70))
-			shotgun_blast.Trigger(target)
+			shotgun_blast.Trigger(target = target)
 		else
-			dir_shots.Trigger(target)
+			dir_shots.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/telegraph()
 	for(var/mob/M in range(10,src))

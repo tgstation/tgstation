@@ -81,6 +81,9 @@
 /datum/effect_system/trail_follow/proc/set_dir(obj/effect/particle_effect/ion_trails/I)
 	I.setDir(holder.dir)
 
+/datum/effect_system/trail_follow/ion/grav_allowed
+	nograv_required = FALSE
+
 //Reagent-based explosion effect
 
 /datum/effect_system/reagents_explosion
