@@ -1,4 +1,5 @@
-#define DECK_SHUFFLE_COOLDOWN 5 SECONDS
+#define DECK_SHUFFLE_TIME 5 SECONDS
+#define DECK_SYNDIE_SHUFFLE_TIME 3 SECONDS
 
 /obj/item/toy/cards/deck
 	name = "deck of cards"
@@ -8,6 +9,8 @@
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "card"
+	///The amount of time it takes to shuffle
+	var/shuffle_time = DECK_SHUFFLE_TIME
 	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite
@@ -75,7 +78,7 @@
 /obj/item/toy/cards/deck/proc/shuffle_cards(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, shuffle_cooldown))
 		return
-	COOLDOWN_START(src, shuffle_cooldown, DECK_SHUFFLE_COOLDOWN)
+	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	cards = shuffle(cards)
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
@@ -129,5 +132,6 @@
 	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
 	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
+	shuffle_time = DECK_SYNDIE_SHUFFLE_TIME
 
 #undef DECK_SHUFFLE_COOLDOWN
