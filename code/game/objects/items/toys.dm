@@ -137,13 +137,13 @@
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
 		// Monkeys make money from popping bloons
-		pop_balloon(was_bloon = TRUE)
+		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
-/obj/item/toy/balloon/proc/pop_balloon(was_bloon = FALSE)
+/obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
-	if(was_bloon)
+	if(monkey_pop)
 		new /obj/item/coin/iron(src)
 	qdel()
 
