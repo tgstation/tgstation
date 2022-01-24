@@ -48,7 +48,8 @@
 		"Prizes for everyone!",
 	)
 	icon_prefix = "e_rabbit"
-	var/initial_egg_amount = 10 ///passed to egg_layer component as how many eggs it starts out as able to lay.
+	///passed to egg_layer component as how many eggs it starts out as able to lay.
+	var/initial_egg_amount = 10 
 
 /mob/living/simple_animal/rabbit/easter/space
 	icon_state = "s_rabbit_white"
