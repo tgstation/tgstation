@@ -283,7 +283,7 @@
 
 			//first dump any of the items that have been returned, in case they contain the nuke disk or something
 			for(var/obj/returned_obj_to_dump in R.returned_products)
-				R.returned_products -= returned_obj_to_dump
+				LAZYREMOVE(R.returned_products, returned_obj_to_dump)
 				returned_obj_to_dump.forceMove(get_turf(src))
 				step(returned_obj_to_dump, pick(GLOB.alldirs))
 				R.amount--
@@ -524,9 +524,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 			if(R.amount > LAZYLEN(R.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
 				new dump_path(get_turf(src))
 			else
-				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
-				R.returned_products -= obj_to_dump
-				obj_to_dump.forceMove(get_turf(src))
+				var/obj/returned_obj_to_dump = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
+				LAZYREMOVE(R.returned_products, returned_obj_to_dump)
+				returned_obj_to_dump.forceMove(get_turf(src))
 			R.amount--
 			break
 
@@ -665,7 +665,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
 		if(ispath(I, product_datum.product_path))
 			product_datum.amount++
-			product_datum.returned_products += I
+			LAZYADD(product_datum.returned_products, I)
 			return
 
 	if(vending_machine_input[format_text(I.name)])
@@ -969,11 +969,11 @@ GLOBAL_LIST_EMPTY(vending_products)
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
-	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid paywalling the nuke disk in a bag
+	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid walling a traitor objective in a bag behind paid items
 		vended_item = new R.product_path(get_turf(src))
 	else
-		vended_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
-		R.returned_products -= vended_item
+		vended_item = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
+		LAZYREMOVE(R.returned_products, vended_item)
 		vended_item.forceMove(get_turf(src))
 	if(greyscale_colors)
 		vended_item.set_greyscale(colors=greyscale_colors)
@@ -1045,9 +1045,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(R.amount > LAZYLEN(R.returned_products)) //always throw new stuff that costs before free returned stuff, because of the hacking effort and time between throws involved
 			throw_item = new dump_path(loc)
 		else
-			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
+			throw_item = LAZYACCESS(R.returned_products, LAZYLEN(R.returned_products)) //first in, last out
 			throw_item.forceMove(loc)
-			R.returned_products -= throw_item
+			LAZYREMOVE(R.returned_products, throw_item)
 		R.amount--
 		break
 	if(!throw_item)
