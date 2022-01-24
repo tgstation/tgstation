@@ -924,6 +924,7 @@
 #include "code\datums\elements\plant_backfire.dm"
 #include "code\datums\elements\point_of_interest.dm"
 #include "code\datums\elements\prevent_attacking_of_types.dm"
+#include "code\datums\elements\projectile_shield.dm"
 #include "code\datums\elements\radiation_protected_clothing.dm"
 #include "code\datums\elements\radioactive.dm"
 #include "code\datums\elements\ranged_attacks.dm"
