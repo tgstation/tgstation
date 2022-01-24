@@ -50,7 +50,6 @@ GLOBAL_LIST_INIT(huds, list(
 			for(var/atom/A in hudatoms)
 				remove_from_single_hud(M, A)
 
-
 /datum/atom_hud/proc/remove_from_hud(atom/A)
 	if(!A)
 		return FALSE
