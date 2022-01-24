@@ -1261,7 +1261,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 /obj/item/price_tagger/attack_self(mob/user)
 	var/chosen_price = tgui_input_number(user, "Set price", "Price", price, min_value = 1)
-	if(!chosen_price || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+	if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
 	price = chosen_price
 	to_chat(user, span_notice(" The [src] will now give things a [price] cr tag."))

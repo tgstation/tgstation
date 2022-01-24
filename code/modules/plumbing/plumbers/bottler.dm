@@ -68,7 +68,7 @@
 		to_chat(user, span_warning("A flashing notification on the screen reads: \"Output location error!\""))
 		return .
 	var/new_amount = tgui_input_number(user, "Set Amount to Fill", "Desired Amount", max_value = 100)
-	if(!new_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!new_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return .
 	wanted_amount = new_amount
 	to_chat(user, span_notice(" The [src] will now fill for [wanted_amount]u."))
