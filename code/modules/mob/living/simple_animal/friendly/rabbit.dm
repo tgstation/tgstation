@@ -1,5 +1,5 @@
 /**
- * # Rabbit
+ * ## Rabbit
  *
  * A creature that hops around with small tails and long ears.
  *
