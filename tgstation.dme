@@ -990,6 +990,7 @@
 #include "code\datums\keybinding\robot.dm"
 #include "code\datums\looping_sounds\_looping_sound.dm"
 #include "code\datums\looping_sounds\acid.dm"
+#include "code\datums\looping_sounds\cyborg.dm"
 #include "code\datums\looping_sounds\item_sounds.dm"
 #include "code\datums\looping_sounds\machinery_sounds.dm"
 #include "code\datums\looping_sounds\weather.dm"

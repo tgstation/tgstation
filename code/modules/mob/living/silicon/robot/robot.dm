@@ -738,11 +738,6 @@
 		for(var/trait in model.model_traits)
 			ADD_TRAIT(src, trait, MODEL_TRAIT)
 
-	if(model.clean_on_move)
-		AddElement(/datum/element/cleaning)
-	else
-		RemoveElement(/datum/element/cleaning)
-
 	hat_offset = model.hat_offset
 
 	INVOKE_ASYNC(src, .proc/updatename)

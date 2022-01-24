@@ -87,6 +87,8 @@
 #define REAGENT_IGNORE_STASIS (1<<6)
 ///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
 #define REAGENT_NO_RANDOM_RECIPE (1<<7)
+///Does this reagent clean things?
+#define REAGENT_CLEANS (1<<8)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
