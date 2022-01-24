@@ -210,7 +210,7 @@
 	diag_hud_set_botmode()
 
 	//If a bot has its own HUD (for player bots), provide it.
-	if(data_hud_type)
+	if(!isnull(data_hud_type))
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 		datahud.add_hud_to(src)
 	if(path_hud)
