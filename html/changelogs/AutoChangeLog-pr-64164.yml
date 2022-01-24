@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Fixed some problems with bullets (Not making you guilty to Honorbound, Monkeys wouldn't retaliate against you, and Stealth MODsuits wouldn't react at all)."
