@@ -369,6 +369,7 @@
 	ACCESS_LIBRARY, \
 	ACCESS_THEATRE, \
 	ACCESS_LAWYER, \
+	ACCESS_SERVICE, \
 )
 /// Name for the Security region.
 #define REGION_SECURITY "Security"
