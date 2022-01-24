@@ -21,6 +21,7 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
+	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 	populate_deck()
 
 /obj/item/toy/cards/deck/examine(mob/user)

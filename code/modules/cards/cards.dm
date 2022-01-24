@@ -119,5 +119,6 @@
 	else
 		user.visible_message(span_notice("[user] deals a card from the deck."), span_notice("You deal a card from the deck."))
 
+	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
 	update_appearance()
 	return card_to_draw
