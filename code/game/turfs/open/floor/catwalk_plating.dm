@@ -32,12 +32,11 @@
 /turf/open/floor/catwalk_floor/examine(mob/user)
 	. = ..()
 
-	switch(covered)
-		if(TRUE)
-			. += span_notice("You can <b>unscrew</b> it to reveal the contents beneath.")
-		else
-			. += span_notice("You can <b>screw</b> it to hide the contents beneath.")
-			. += span_notice("There's a <b>small crack</b> on the edge of it.")
+	if(covered)
+		. += span_notice("You can <b>unscrew</b> it to reveal the contents beneath.")
+	else
+		. += span_notice("You can <b>screw</b> it to hide the contents beneath.")
+		. += span_notice("There's a <b>small crack</b> on the edge of it.")
 
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
