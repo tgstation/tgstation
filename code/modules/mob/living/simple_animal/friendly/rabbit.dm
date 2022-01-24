@@ -1,5 +1,11 @@
-//Good ol' rabbits
-
+/**
+ * # Rabbit
+ *
+ * A creature that hops around with small tails and long ears.
+ *
+ * This contains the code for both your standard rabbit as well as the subtypes commonly found during Easter.
+ *
+ */
 /mob/living/simple_animal/rabbit
 	name = "\improper rabbit"
 	desc = "The hippiest hop around."
@@ -30,7 +36,8 @@
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	gold_core_spawnable = FRIENDLY_SPAWN
-	var/icon_prefix = "rabbit" //passed to animal_varity as the prefix icon.
+	//passed to animal_varity as the prefix icon.
+	var/icon_prefix = "rabbit"
 
 /mob/living/simple_animal/rabbit/Initialize(mapload)
 	. = ..()
@@ -48,9 +55,9 @@
 		"Prizes for everyone!",
 	)
 	icon_prefix = "e_rabbit"
-	///passed to egg_layer component as how many eggs it starts out as able to lay.
+	///passed to the egg_layer component as how many eggs it starts out as able to lay.
 	var/initial_egg_amount = 10
-	var/eggs_added_from_eating = rand(1, 4)
+	///passed to the egg_layer component as how many eggs it's allowed to hold at most.
 	var/max_eggs_held = 8
 
 /mob/living/simple_animal/rabbit/easter/space
@@ -65,6 +72,7 @@
 
 /mob/living/simple_animal/rabbit/easter/Initialize(mapload)
 	. = ..()
+	var/eggs_added_from_eating = rand(1, 4)
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
 	AddComponent(/datum/component/egg_layer,\
