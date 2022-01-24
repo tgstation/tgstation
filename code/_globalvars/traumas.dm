@@ -309,11 +309,8 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/suit/hooded/cultrobes,
 		/obj/item/clothing/suit/wizrobe,
 		/obj/item/clothing/under/rank/civilian/chaplain,
-		/obj/item/clothing/under/rank/civilian/chaplain,
 		/obj/item/cult_bastard,
 		/obj/item/gun/magic/staff,
-		/obj/item/gun/magic/staff,
-		/obj/item/gun/magic/wand,
 		/obj/item/gun/magic/wand,
 		/obj/item/melee/cultblade,
 		/obj/item/necromantic_stone,
@@ -333,6 +330,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/narsie,
 		/obj/structure/destructible/cult,
 		/obj/structure/spirit_board,
+		/obj/item/toy/cards/deck/tarot,
 	)),
 
 	"aliens" = typecacheof(list(
