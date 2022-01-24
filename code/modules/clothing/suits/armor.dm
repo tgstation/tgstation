@@ -244,8 +244,6 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
-
-
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/heavy
