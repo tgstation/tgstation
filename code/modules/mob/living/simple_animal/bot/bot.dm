@@ -387,14 +387,17 @@
 	to_chat(user, span_notice("Controls are now [bot_cover_flags & BOT_COVER_LOCKED ? "locked" : "unlocked"]."))
 	return TRUE
 
+/mob/living/simple_animal/bot/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!(bot_cover_flags & BOT_COVER_LOCKED))
+		bot_cover_flags ^= BOT_COVER_OPEN
+		to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
+	else
+		to_chat(user, span_warning("The maintenance panel is locked!"))
+
+	return TRUE
+
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(bot_cover_flags & BOT_COVER_LOCKED))
-			bot_cover_flags ^= BOT_COVER_OPEN
-			to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
-		else
-			to_chat(user, span_warning("The maintenance panel is locked!"))
-	else if(attacking_item.GetID())
+	if(attacking_item.GetID())
 		unlock_with_id(user)
 	else if(istype(attacking_item, /obj/item/paicard))
 		insertpai(user, attacking_item)
@@ -407,23 +410,22 @@
 				if (paicard)
 					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
 					ejectpai(user)
-	else
+	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-			if(health >= maxHealth)
-				to_chat(user, span_warning("[src] does not need a repair!"))
-				return
-			if(!(bot_cover_flags & BOT_COVER_OPEN))
-				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
-				return
+		if(health >= maxHealth)
+			to_chat(user, span_warning("[src] does not need a repair!"))
+			return
+		if(!(bot_cover_flags & BOT_COVER_OPEN))
+			to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
+			return
 
-			if(attacking_item.use_tool(src, user, 0, volume=40))
-				adjustHealth(-10)
-				user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
-		else
-			if(attacking_item.force) //if force is non-zero
-				do_sparks(5, TRUE, src)
-	..()
+		if(attacking_item.use_tool(src, user, 0, volume=40))
+			adjustHealth(-10)
+			user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
+	else
+		if(attacking_item.force) //if force is non-zero
+			do_sparks(5, TRUE, src)
+		..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))

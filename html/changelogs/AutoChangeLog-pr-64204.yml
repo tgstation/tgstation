@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Portable Scrubbers and Large Scrubbers should no longer display as large, embittered ERROR icons for those who enjoy mapping."

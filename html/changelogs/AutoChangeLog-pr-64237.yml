@@ -1,6 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixes modsuit devices fucking up if you couldnt equip them"
-  - bugfix: "fixes modsuit pins fucking up if you remove the module"
-  - imageadd: "modsuit jetpack now has unique assets"

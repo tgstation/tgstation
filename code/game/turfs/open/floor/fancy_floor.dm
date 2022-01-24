@@ -1,5 +1,6 @@
 /* In this file:
  * Wood floor
+ * Bamboo floor
  * Grass floor
  * Fake Basalt
  * Carpet floor
@@ -88,6 +89,24 @@
 
 /turf/open/floor/wood/large/setup_broken_states()
 	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
+
+/turf/open/floor/bamboo
+	desc = "A bamboo mat with a decorative trim."
+	icon = 'icons/turf/floors/bamboo_mat.dmi'
+	icon_state = "mat-0"
+	base_icon_state = "mat"
+	floor_tile = /obj/item/stack/tile/bamboo
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_BAMBOO_FLOOR)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_FLOOR)
+	flags_1 = NONE
+	footstep = FOOTSTEP_WOOD
+	barefootstep = FOOTSTEP_WOOD_BAREFOOT
+	clawfootstep = FOOTSTEP_WOOD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/bamboo/setup_broken_states()
+	return list("damaged")
 
 /turf/open/floor/grass
 	name = "grass patch"
