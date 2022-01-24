@@ -310,14 +310,6 @@
 	locker.throw_at(mod.wearer, range = 7, speed = 3, force = MOVE_FORCE_WEAK, \
 		callback = CALLBACK(src, .proc/check_locker, locker))
 
-/obj/item/mod/module/magnet/on_activation()
-	. = ..()
-	if(!.)
-		return
-	if(istype(mod.wearer.pulling, /obj/structure/closet))
-		mod.wearer.AddComponent(/datum/component/strong_pull)
-		RegisterSignal(mod.wearer.pulling, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
-
 /obj/item/mod/module/magnet/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
