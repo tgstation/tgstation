@@ -286,7 +286,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 
 	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
-	SEND_SIGNAL(usr, COMSIG_MOB_PLAYED_VIDEOGAME)
+	usr.played_game()
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
@@ -562,7 +562,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
-			SEND_SIGNAL(user, COMSIG_MOB_WON_VIDEOGAME)
+			user.won_game()
 
 	else if(player_hp <= 0)
 		if(timer_id)
@@ -577,7 +577,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if (istype(living_user))
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
-		SEND_SIGNAL(user, COMSIG_MOB_LOST_VIDEOGAME)
+		user.lost_game()
 
 	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
@@ -654,7 +654,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
 	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
-	SEND_SIGNAL(user, COMSIG_MOB_PLAYED_VIDEOGAME)
+	usr.played_game()
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
@@ -665,12 +665,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
-		SEND_SIGNAL(user, COMSIG_MOB_WON_VIDEOGAME)
+		user.won_game()
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, span_notice("You (wisely) decide against putting your hand in the machine."))
-		SEND_SIGNAL(user, COMSIG_MOB_LOST_VIDEOGAME)
+		user.lost_game()
 
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"

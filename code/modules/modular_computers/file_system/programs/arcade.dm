@@ -35,7 +35,7 @@
 			computer.update_appearance()
 		ticket_count += 1
 		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
-		SEND_SIGNAL(usr, COMSIG_MOB_WON_VIDEOGAME)
+		usr.won_game()
 		sleep(10)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
@@ -45,7 +45,7 @@
 		if(istype(computer))
 			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
-		SEND_SIGNAL(usr, COMSIG_MOB_LOST_VIDEOGAME)
+		usr.lost_game()
 		sleep(10)
 
 /datum/computer_file/program/arcade/proc/enemy_check(mob/user)
@@ -103,7 +103,7 @@
 		printer = computer.all_components[MC_PRINT]
 
 	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
-	SEND_SIGNAL(usr, COMSIG_MOB_PLAYED_VIDEOGAME)
+	usr.played_game()
 	
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0

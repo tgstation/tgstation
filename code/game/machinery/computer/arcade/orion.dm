@@ -212,8 +212,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 	var/xp_gained = 0
 
 	SEND_SIGNAL(gamer, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
-	
-	SEND_SIGNAL(gamer, COMSIG_MOB_PLAYED_VIDEOGAME)
+	gamer.played_game()
 
 	if(event)
 		event.response(src, action)
@@ -349,7 +348,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
-	SEND_SIGNAL(usr, COMSIG_MOB_LOST_VIDEOGAME)
+	usr.lost_game()
 	
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
@@ -477,7 +476,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
-	SEND_SIGNAL(usr, COMSIG_MOB_WON_VIDEOGAME)
+	usr.won_game()
 	
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
