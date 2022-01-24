@@ -203,3 +203,12 @@
 		/obj/structure/billboard/lizards_gas = 75,
 		/obj/structure/billboard/lizards_gas/defaced = 25,
 	)
+
+/obj/effect/spawner/random/structure/billboard/roadsigns //also pretty much only unifunctionally useful for gas stations
+	name = "\improper Gas Station billboard spawner"
+	loot = list(
+		/obj/structure/billboard/roadsign/two = 25,
+		/obj/structure/billboard/roadsign/twothousand = 25,
+		/obj/structure/billboard/roadsign/twomillion = 25,
+		/obj/structure/billboard/roadsign/error = 25,
+	)

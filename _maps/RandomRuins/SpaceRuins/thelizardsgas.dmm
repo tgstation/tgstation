@@ -183,6 +183,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
+"ua" = (
+/obj/effect/spawner/random/structure/billboard/roadsigns,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
 "uh" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -635,11 +639,11 @@ Qg
 Qg
 Qg
 Qg
-CA
-CA
-CA
-CA
-CA
+Um
+wb
+Qg
+wb
+wb
 CA
 CA
 CA
@@ -663,10 +667,10 @@ mR
 mR
 Qg
 Qg
-CA
-CA
-CA
-CA
+wb
+RB
+Um
+RB
 CA
 CA
 CA
@@ -691,9 +695,9 @@ ct
 mR
 Qg
 Qg
-CA
-CA
-CA
+wb
+bW
+wb
 CA
 CA
 CA
@@ -718,9 +722,9 @@ Zr
 ct
 mR
 Qg
-CA
-CA
-CA
+RB
+wb
+RB
 CA
 Jg
 CA
@@ -745,9 +749,9 @@ Gr
 UO
 mR
 Qg
-CA
-CA
-CA
+wb
+wb
+wb
 CA
 de
 CA
@@ -774,7 +778,7 @@ mR
 mR
 mR
 mR
-CA
+RB
 CA
 MB
 CA
@@ -1072,7 +1076,7 @@ mR
 Qg
 Qg
 wb
-bW
+ua
 wb
 CA
 CA
