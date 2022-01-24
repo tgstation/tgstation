@@ -144,8 +144,8 @@
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
 	if(monkey_pop)
-		new /obj/item/coin/iron(src)
-	qdel()
+		new /obj/item/coin/iron(get_turf(src))
+	qdel(src)
 
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
