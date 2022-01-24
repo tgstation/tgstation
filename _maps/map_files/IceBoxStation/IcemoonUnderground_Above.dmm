@@ -15397,7 +15397,7 @@
 /obj/effect/turf_decal/tile/dark,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/rack,
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/old,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Yn" = (

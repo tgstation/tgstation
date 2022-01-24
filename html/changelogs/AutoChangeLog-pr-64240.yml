@@ -1,0 +1,4 @@
+author: "SuperNovaa41"
+delete-after: True
+changes: 
+  - bugfix: "Ablative trenchcoats will no longer delete sechuds given from other sources."

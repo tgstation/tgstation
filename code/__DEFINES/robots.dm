@@ -19,6 +19,14 @@
 ///Alert when a Cyborg gets disconnected from their AI.
 #define AI_NOTIFICATION_CYBORG_DISCONNECTED 5
 
+//transfer_ai() defines. Main proc in ai_core.dm
+///Downloading AI to InteliCard
+#define AI_TRANS_TO_CARD 1
+///Uploading AI from InteliCard
+#define AI_TRANS_FROM_CARD 2
+///Malfunctioning AI hijacking mecha
+#define AI_MECH_HACK 3
+
 /** Cyborg defines */
 
 /// Special value to reset cyborg's lamp_cooldown

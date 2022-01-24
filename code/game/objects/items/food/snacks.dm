@@ -15,7 +15,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/candy/bronx
-	name = "South Bronx Paradise bar"
+	name = "\improper South Bronx Paradise bar"
 	desc = "Lose weight, guaranteed! Caramel Mocha Flavor. Something about product consumption..."
 	icon_state = "bronx"
 	inhand_icon_state = "candy"
@@ -54,7 +54,7 @@
 	if(!revelation && !isobserver(user))
 		. += span_notice("Geeze, you need to get to get your eyes checked. You should look again...")
 
-		name = "South Bronx Parasite bar"
+		name = "\improper South Bronx Parasite bar"
 		desc = "Lose weight, guaranteed! Caramel Mocha Flavor! WARNING: PRODUCT NOT FIT FOR HUMAN CONSUMPTION. CONTAINS LIVE DIAMPHIDIA SPECIMENS."
 		revelation = TRUE
 
@@ -102,7 +102,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/no_raisin
-	name = "4no raisins"
+	name = "\improper 4no raisins"
 	icon_state = "4no_raisins"
 	desc = "Best raisins in the universe. Not sure why."
 	trash_type = /obj/item/trash/raisins
@@ -123,7 +123,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spacetwinkie
-	name = "space twinkie"
+	name = "\improper Space Twinkie"
 	icon_state = "space_twinkie"
 	desc = "Guaranteed to survive longer than you will."
 	food_reagents = list(/datum/reagent/consumable/sugar = 4)
@@ -149,7 +149,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 4, /datum/reagent/ash = 3, /datum/reagent/drug/nicotine = 1)
 
 /obj/item/food/cheesiehonkers
-	name = "cheesie honkers"
+	name = "\improper Cheesie Honkers"
 	desc = "Bite sized cheesie snacks that will honk all over your mouth."
 	icon_state = "cheesie_honkers"
 	trash_type = /obj/item/trash/cheesie
@@ -160,7 +160,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/syndicake
-	name = "syndi-cakes"
+	name = "\improper Syndi-Cakes"
 	icon_state = "syndi_cakes"
 	desc = "An extremely moist snack cake that tastes just as good after being nuked."
 	trash_type = /obj/item/trash/syndi_cakes
@@ -170,7 +170,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/energybar
-	name = "High-power energy bars"
+	name = "\improper High-power energy bars"
 	icon_state = "energybar"
 	desc = "An energy bar with a lot of punch, you probably shouldn't eat this if you're not an Ethereal."
 	trash_type = /obj/item/trash/energybar
@@ -312,3 +312,38 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	qdel(sample)
 
 	. = ..()
+
+/obj/item/food/pistachios
+	name = "\improper Sweetie's Pistachios"
+	desc = "A pack of Sweetie's brand premium pistacios."
+	icon_state = "pistachio"
+	trash_type = /obj/item/trash/pistachios
+	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1) //a healthy but expensive snack
+	tastes = list("pistachios" = 4, "subtle sweetness" = 1)
+	foodtypes = JUNKFOOD | NUTS
+	custom_price = PAYCHECK_MEDIUM//pistachios are even more expensive.
+	junkiness = 10 //on par with peanuts
+	w_class = WEIGHT_CLASS_SMALL
+	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
+
+/obj/item/food/semki
+	name = "\improper Semki Sunflower Seeds"
+	desc = "A pack of roasted sunflower seeds. Beloved by space russians and babushka alike."
+	icon_state = "semki"
+	trash_type = /obj/item/trash/semki
+	food_reagents = list(/datum/reagent/consumable/cornoil  = 1, /datum/reagent/consumable/salt = 6) //1 cornoil is equal to 1.33 nutriment
+	tastes = list("sunflowers" = 5)
+	foodtypes = JUNKFOOD | NUTS
+	custom_price = PAYCHECK_ASSISTANT * 0.4 //sunflowers are cheap in real life.
+	bite_consumption = 1
+	junkiness = 25
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/semki/healthy
+	name = "roasted sunflower seeds"
+	desc = "Homemade roasted sunflower seeds in a paper cup. A healthy and filling snack to nibble as you watch people pass."
+	icon_state = "sunseeds"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/iron = 2)
+	junkiness = 5 //Homemade or not, sunflower seets are always kinda junky
+	foodtypes = JUNKFOOD | NUTS
+	trash_type = /obj/item/trash/semki/healthy
