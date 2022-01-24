@@ -885,6 +885,7 @@
 	color = "#A0A0A0" //mannitol is light grey, neurine is lighter grey
 	ph = 10.4
 	overdose_threshold = 15
+        taste_description = "sweetness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	purity = REAGENT_STANDARD_PURITY
 	impure_chem = /datum/reagent/impurity/mannitol
