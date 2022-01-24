@@ -16,7 +16,7 @@
 	ranged = 1
 	pixel_x = -16
 	base_pixel_x = -16
-	move_to_delay = 10
+	move_to_delay = 5
 	aggro_vision_range = 9
 	speak_emote = list("chitters")
 	attack_sound = 'sound/weapons/bladeslice.ogg'

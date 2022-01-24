@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscdel: "Removed another source of long timer singlecaps"

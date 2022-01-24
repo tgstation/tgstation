@@ -67,6 +67,7 @@
 #include "egg_glands.dm"
 #include "emoting.dm"
 #include "food_edibility_check.dm"
+#include "gas_transfer.dm"
 #include "greyscale_config.dm"
 #include "heretic_knowledge.dm"
 #include "holidays.dm"
@@ -80,7 +81,9 @@
 #include "metabolizing.dm"
 #include "mob_spawn.dm"
 #include "modsuit.dm"
+#include "modular_map_loader.dm"
 #include "ntnetwork_tests.dm"
+#include "objectives.dm"
 #include "outfit_sanity.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
@@ -108,9 +111,10 @@
 #include "teleporters.dm"
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
+#include "traitor.dm"
 #include "unit_test.dm"
 #include "wizard.dm"
-#ifdef REFERENCE_TRACKING //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
+#ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
 

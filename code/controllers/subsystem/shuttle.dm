@@ -153,23 +153,22 @@ SUBSYSTEM_DEF(shuttle)
 
 		supply_packs[pack.id] = pack
 
-	initial_load()
+	setup_shuttles(stationary_docking_ports)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/supply placed on the map!")
 	return ..()
 
-/datum/controller/subsystem/shuttle/proc/initial_load()
-	for(var/port in stationary_docking_ports)
-		var/obj/docking_port/stationary/stationary_port = port
-		stationary_port.load_roundstart()
+/datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
+	for(var/obj/docking_port/stationary/port as anything in stationary)
+		port.load_roundstart()
 		CHECK_TICK
 
 /datum/controller/subsystem/shuttle/fire()
@@ -819,11 +818,11 @@ SUBSYSTEM_DEF(shuttle)
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
-					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
+					log_mapping("Shuttle Template [S.mappath] has multiple mobile docking ports.")
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
-				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
+				log_mapping("Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
 		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
 		for(var/T in affected)

@@ -1,4 +1,0 @@
-author: "Jackraxxus"
-delete-after: True
-changes: 
-  - bugfix: "The HoS in mafia can now properly unselect their target for the night."
