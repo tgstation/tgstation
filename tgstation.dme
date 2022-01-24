@@ -3174,6 +3174,7 @@
 #include "code\modules\mob\living\simple_animal\friendly\mouse.dm"
 #include "code\modules\mob\living\simple_animal\friendly\penguin.dm"
 #include "code\modules\mob\living\simple_animal\friendly\pet.dm"
+#include "code\modules\mob\living\simple_animal\friendly\rabbit.dm"
 #include "code\modules\mob\living\simple_animal\friendly\robot_customer.dm"
 #include "code\modules\mob\living\simple_animal\friendly\sloth.dm"
 #include "code\modules\mob\living\simple_animal\friendly\snake.dm"
