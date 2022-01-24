@@ -184,7 +184,7 @@
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL has been executed.
 			if (!m.isFading)
-				var/sched_remaining = timeleft(m.fadertimer)
+				var/sched_remaining = timeleft(m.fadertimer, SSrunechat)
 				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 				if (remaining_time)
 					deltimer(m.fadertimer, SSrunechat)
