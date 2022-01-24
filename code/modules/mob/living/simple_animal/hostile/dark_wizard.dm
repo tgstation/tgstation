@@ -4,7 +4,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"
-	move_to_delay = 10
+	move_to_delay = 5
 	projectiletype = /obj/projectile/temp/earth_bolt
 	projectilesound = 'sound/magic/ethereal_enter.ogg'
 	ranged = TRUE

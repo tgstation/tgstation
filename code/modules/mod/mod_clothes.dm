@@ -4,23 +4,12 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "helmet"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 0)
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL|SNUG_FIT
-	resistance_flags = NONE
-	flash_protect = FLASH_PROTECTION_NONE
 	dynamic_hair_suffix = ""
-	dynamic_fhair_suffix = ""
-	flags_inv = HIDEFACIALHAIR
-	flags_cover = NONE
-	visor_flags = THICKMATERIAL|STOPSPRESSUREDAMAGE
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
-	visor_flags_cover = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF
-	item_flags = IMMUTABLE_SLOW
+	obj_flags = IMMUTABLE_SLOW
 	var/alternate_layer = NECK_LAYER
 	var/obj/item/mod/control/mod
 
@@ -41,18 +30,11 @@
 	icon_state = "chestplate"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
 	blood_overlay_type = "armor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 0)
 	body_parts_covered = CHEST|GROIN
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	visor_flags = STOPSPRESSUREDAMAGE
-	visor_flags_inv = HIDEJUMPSUIT
-	resistance_flags = NONE
-	item_flags = IMMUTABLE_SLOW
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	obj_flags = IMMUTABLE_SLOW
 	var/obj/item/mod/control/mod
 
 /obj/item/clothing/suit/mod/Destroy()
@@ -71,15 +53,11 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "gauntlets"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 0)
 	body_parts_covered = HANDS|ARMS
 	heat_protection = HANDS|ARMS
 	cold_protection = HANDS|ARMS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	resistance_flags = NONE
-	item_flags = IMMUTABLE_SLOW
+	obj_flags = IMMUTABLE_SLOW
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 
@@ -109,15 +87,13 @@
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "boots"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 0)
 	body_parts_covered = FEET|LEGS
 	heat_protection = FEET|LEGS
 	cold_protection = FEET|LEGS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	clothing_flags = THICKMATERIAL
-	resistance_flags = NONE
-	item_flags = IMMUTABLE_SLOW|IGNORE_DIGITIGRADE
+	obj_flags = IMMUTABLE_SLOW
+	item_flags = IGNORE_DIGITIGRADE
+	can_be_tied = FALSE
 	var/obj/item/mod/control/mod
 	var/obj/item/clothing/overslot
 

@@ -3,7 +3,7 @@
 /// Helper for getting the correct bucket for a given chatmessage
 #define BUCKET_POS(scheduled_destruction) (((round((scheduled_destruction - SSrunechat.head_offset) / world.tick_lag) + 1) % BUCKET_LEN) || BUCKET_LEN)
 /// Gets the maximum time at which messages will be handled in buckets, used for deferring to secondary queue
-#define BUCKET_LIMIT (world.time + TICKS2DS(min(BUCKET_LEN - (SSrunechat.practical_offset - DS2TICKS(world.time - SSrunechat.head_offset)) - 1, BUCKET_LEN - 1)))
+#define BUCKET_LIMIT (SSrunechat.head_offset + TICKS2DS(BUCKET_LEN + SSrunechat.practical_offset - 1))
 
 /**
  * # Runechat Subsystem

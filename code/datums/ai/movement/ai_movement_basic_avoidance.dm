@@ -1,39 +1,50 @@
 ///Uses Byond's basic obstacle avoidance mvovement
 /datum/ai_movement/basic_avoidance
-	requires_processing = TRUE
 	max_pathing_attempts = 10
 
-///Put your movement behavior in here!
-/datum/ai_movement/basic_avoidance/process(delta_time)
-	for(var/datum/ai_controller/controller as anything in moving_controllers)
-		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
-			continue
-		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
+/datum/ai_movement/basic_avoidance/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+	. = ..()
+	var/atom/movable/moving = controller.pawn
+	var/min_dist = controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE]
+	var/delay = controller.movement_delay
+	var/datum/move_loop/loop = SSmove_manager.move_to(moving, current_movement_target, min_dist, delay, subsystem = SSai_movement, extra_info = controller)
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
 
-		var/atom/movable/movable_pawn = controller.pawn
+/datum/ai_movement/basic_avoidance/proc/pre_move(datum/move_loop/has_target/dist_bound/source)
+	SIGNAL_HANDLER
+	var/atom/movable/pawn = source.moving
+	var/datum/ai_controller/controller = source.extra_info
+	source.delay = controller.movement_delay
+	source.distance = controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE]
 
-		// Check if this controller can actually run, so we don't chase people with corpses
-		if(!controller.able_to_run())
-			walk(controller.pawn, 0) //stop moving
-			controller.CancelActions()
-			continue
+	var/can_move = TRUE
+	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby)
+		can_move = FALSE
 
-		var/can_move = TRUE
+	// Check if this controller can actually run, so we don't chase people with corpses
+	if(!controller.able_to_run())
+		controller.CancelActions()
+		qdel(source) //stop moving
+		return MOVELOOP_SKIP_STEP
 
-		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
-			can_move = FALSE
+	if(!isturf(pawn.loc)) //No moving if not on a turf
+		can_move = FALSE
 
-		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
-			can_move = FALSE
+	var/turf/target_turf = get_step_to(pawn, source.target)
 
-		var/current_loc = get_turf(movable_pawn)
+	if(is_type_in_typecache(target_turf, GLOB.dangerous_turfs))
+		can_move = FALSE
 
-		var/turf/target_turf = get_step_towards(movable_pawn, controller.current_movement_target)
+	if(can_move)
+		return
+	increment_pathing_failures(controller)
+	return MOVELOOP_SKIP_STEP
 
-		if(!is_type_in_typecache(target_turf, GLOB.dangerous_turfs) && can_move)
-			step_to(movable_pawn, controller.current_movement_target, controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE], controller.movement_delay)
+/datum/ai_movement/basic_avoidance/proc/post_move(datum/move_loop/source, succeeded)
+	SIGNAL_HANDLER
+	if(succeeded)
+		return
+	var/datum/ai_controller/controller = source.extra_info
+	increment_pathing_failures(controller)
 
-		if(current_loc == get_turf(movable_pawn)) //Did we even move after trying to move?
-			controller.pathing_attempts++
-			if(controller.pathing_attempts >= max_pathing_attempts)
-				controller.CancelActions()
