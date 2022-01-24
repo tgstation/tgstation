@@ -31,22 +31,24 @@
 
 /obj/item/toy/cards/deck/tarot/haunted/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequip)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
-/obj/item/toy/cards/deck/tarot/haunted/proc/on_equip(datum/source, mob/equipper, slot)
+
+/// Triggered on wield of two handed item
+/// Gives the user the SIXTH SENSE trait to communicate with the dead
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	if(slot != ITEM_SLOT_HANDS)
-		return
+	wielded = TRUE
+	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
+	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
 
-	psychic = equipper
-	ADD_TRAIT(psychic, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
-	to_chat(psychic, span_notice("You can sense the dead souls calling out to you..."))
-
-/obj/item/toy/cards/deck/tarot/haunted/proc/on_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
+/// Triggered on unwield of two handed item
+/// Removes the SIXTH SENSE trait from the user
+/obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	REMOVE_TRAIT(psychic, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
-	to_chat(psychic, span_notice("The connection to the spirit realm is severed."))
-	psychic = null
+	wielded = FALSE
+	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
+	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
