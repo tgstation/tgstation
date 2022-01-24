@@ -212,10 +212,13 @@
 				if(/datum/job_department/assistant)
 					outfit_to_use = uniforms["srvcar"]
 		outfit_datum = new outfit_to_use
+		var/datum/outfit/fuck_this_stupid_engine = new og_outfit_datum
 		outfit_datum.id = initial(og_outfit_datum.id)
 		outfit_datum.id_trim = initial(og_outfit_datum.id_trim)
 		outfit_datum.ears = initial(og_outfit_datum.ears)
-		outfit_datum.backpack_contents = initial(og_outfit_datum.backpack_contents)
+		if(fuck_this_stupid_engine.backpack_contents)
+			outfit_datum.backpack_contents = fuck_this_stupid_engine.backpack_contents.Copy() // fuck you byond
+		qdel(fuck_this_stupid_engine)
 		outfit_datum.box = initial(og_outfit_datum.box)
 		outfit_datum.belt = initial(og_outfit_datum.belt)
 		outfit_datum.l_pocket = initial(og_outfit_datum.l_pocket)
