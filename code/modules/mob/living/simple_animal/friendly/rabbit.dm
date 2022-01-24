@@ -49,7 +49,9 @@
 	)
 	icon_prefix = "e_rabbit"
 	///passed to egg_layer component as how many eggs it starts out as able to lay.
-	var/initial_egg_amount = 10 
+	var/initial_egg_amount = 10
+	var/eggs_added_from_eating = rand(1, 4)
+	var/max_eggs_held = 8
 
 /mob/living/simple_animal/rabbit/easter/space
 	icon_state = "s_rabbit_white"
@@ -63,8 +65,6 @@
 
 /mob/living/simple_animal/rabbit/easter/Initialize(mapload)
 	. = ..()
-	var/eggs_added_from_eating = rand(1, 4)
-	var/max_eggs_held = 8
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
 	AddComponent(/datum/component/egg_layer,\
