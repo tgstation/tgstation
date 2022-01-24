@@ -17,6 +17,8 @@
 	var/obj/machinery/computer/holodeck/holo = null
 	///Cards in this deck
 	var/list/cards = list()
+	///Wielding status for holding with two hands
+	var/wielded = FALSE
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
