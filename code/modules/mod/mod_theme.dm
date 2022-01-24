@@ -283,7 +283,7 @@
 	permeability_coefficient = 0.5
 	siemens_coefficient = 0.25
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
-	slowdown_inactive = 0.25
+	slowdown_inactive = 0.5
 	slowdown_active = 0
 	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
 	skins = list(

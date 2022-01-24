@@ -209,11 +209,9 @@
 	if(!.)
 		return
 	var/atom/game_renderer = mod.wearer.hud_used.plane_masters["[RENDER_PLANE_GAME]"]
-	var/matrix/matrix = matrix(game_renderer.transform)
-	var/matrix/old_matrix = matrix(matrix)
-	matrix.Scale(1.25, 1.25)
-	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = matrix)
-	var/power = launch_time
+	var/matrix/render_matrix = matrix(game_renderer.transform)
+	render_matrix.Scale(1.25, 1.25)
+	animate(game_renderer, launch_time, flags = SINE_EASING|EASE_IN, transform = render_matrix)
 	var/current_time = world.time
 	mod.wearer.visible_message(span_warning("[mod.wearer] starts whirring!"), \
 		blind_message = span_hear("You hear a whirring sound."))
@@ -221,13 +219,14 @@
 	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", plane = GAME_PLANE_FOV_HIDDEN)
 	mod.wearer.add_overlay(lightning)
 	balloon_alert(mod.wearer, "you start charging...")
+	var/power = launch_time
 	if(!do_after(mod.wearer, launch_time, target = mod))
 		power = world.time - current_time
 		animate(game_renderer)
 	drain_power(use_power_cost)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 	playsound(src, 'sound/items/modsuit/loader_launch.ogg', 75, TRUE)
-	game_renderer.transform = old_matrix
+	game_renderer.transform = game_renderer.transform.Scale(0.8, 0.8)
 	mod.wearer.cut_overlay(lightning)
 	var/angle = get_angle(mod.wearer, target)
 	mod.wearer.transform = mod.wearer.transform.Turn(angle)
