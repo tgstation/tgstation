@@ -276,7 +276,7 @@
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	///Prevents spamming of the construction sound
+	///Var used to prevent spamming of the construction sound
 	var/next_beep = 0
 
 /obj/structure/foamedmetal/Initialize(mapload)
@@ -327,7 +327,7 @@
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40*platingmodifier, target = src))
-			if(sheet_for_plating.get_amount() < 2)
+			if(!sheet_for_plating.use(2))
 				return
 			sheet_for_plating.use(2)
 			to_chat(user, span_notice("You add the plating."))
@@ -337,12 +337,12 @@
 			qdel(src)
 		return
 	if(!sheet_for_plating.has_unique_girder)
-		if(sheet_for_plating.get_amount() < 2)
+		if(!sheet_for_plating.use(2))
 			to_chat(user, span_warning("You need at least two sheets to add plating!"))
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40, target = src))
-			if(sheet_for_plating.get_amount() < 2)
+			if(!sheet_for_plating.use(2))
 				return
 			sheet_for_plating.use(2)
 			to_chat(user, span_notice("You add the plating."))
