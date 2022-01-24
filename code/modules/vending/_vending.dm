@@ -663,7 +663,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	to_chat(user, span_notice("You insert [I] into [src]'s input compartment."))
 
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
-		if(ispath(I, product_datum.product_path))
+		if(ispath(I.type, product_datum.product_path))
 			product_datum.amount++
 			LAZYADD(product_datum.returned_products, I)
 			return
