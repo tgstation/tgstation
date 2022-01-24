@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - code_imp: "Move defines to their local .dm files"
-  - code_imp: "Remove code/__DEFINES/misc.dm"
-  - refactor: "Adds some documentation to defines"

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fix Deltastation engineering shared storage door access"
-  - bugfix: "Delta atmos has a CO2 -> waste filter, like all other maps"

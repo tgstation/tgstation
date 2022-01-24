@@ -909,3 +909,58 @@
       on the firelock itself. You can still emag a fire alarm to mute it, though.
       sprite: Fire Locks now have lights that display the reason they are active.
       Orange is Hot, Cyan means Cold, and White means a Fire Alarm was pulled.'
+2022-01-24:
+  ErdinyoBarboza:
+  - bugfix: Service Tech Storage now has proper kitchen appliance circuitboards
+  JohnFulpWillard:
+  - bugfix: Fixed some problems with bullets (Not making you guilty to Honorbound,
+      Monkeys wouldn't retaliate against you, and Stealth MODsuits wouldn't react
+      at all).
+  LemonInTheDark:
+  - bugfix: Fixed abductor consoles having infinite action buttons
+  - rscdel: Removed another source of long timer singlecaps
+  - bugfix: Kudzu will spread properly now
+  Melbert:
+  - bugfix: the powergame crowbar has been lifted out of icebox mining and replaced
+      with a more sane crowbar
+  - bugfix: Fix Deltastation engineering shared storage door access
+  - bugfix: Delta atmos has a CO2 -> waste filter, like all other maps
+  ORCACommander:
+  - bugfix: The Redundant Form of Redundancy Introduced by the redundant department
+      of redundancy has had its redundancy reduced redundantly
+  ReinaCoder:
+  - bugfix: Tramstation brig's disposals now has a trunk under it
+  Semoro:
+  - bugfix: Avoid runechat scheduling too far events into short queue (port from SStimer)
+  Thunder12345:
+  - bugfix: Tramstation's gulag processing room has been rearranged so prisoners can
+      disembark on their own instead of being trapped.
+  Zonespace27:
+  - bugfix: Simplebots can now have tools used on them without injuring them in the
+      process.
+  capsaicinz:
+  - rscadd: Adds supermatter spiders.
+  coldud13:
+  - spellcheck: removed a misplaced bracket in the modular computer printer display
+  itseasytosee:
+  - bugfix: skeleton wings had some missing sprites readded
+  lewcc:
+  - bugfix: Using screwdrivers on bots will no longer attack them.
+  mozi_h:
+  - refactor: filing cabinets now use tgui
+  necromanceranne:
+  - bugfix: Restores the cardborg helmet icon.
+  - bugfix: Launchpads no longer disappear when screwed open.
+  tf-4:
+  - spellcheck: Removed a duplicate exclamation mark from the dismemberment message.
+  timothymtorres:
+  - code_imp: Move defines to their local .dm files
+  - code_imp: Remove code/__DEFINES/misc.dm
+  - refactor: Adds some documentation to defines
+  tralezab:
+  - balance: hop can no longer get objectives to steal the hand tele.
+  - balance: Heirlooms are now visible to everyone on examine.
+  unit0016:
+  - expansion: Donk Co. Has finally seen fit to refurbish their lavaland bases - And
+      unlike those /other/ guys, now things aren't standardized across every installation!
+      To.. some executive's amusement.
