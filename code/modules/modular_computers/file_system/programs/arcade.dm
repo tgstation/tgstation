@@ -102,7 +102,6 @@
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
-	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	usr.played_game()
 	
 	var/gamerSkillLevel = 0

@@ -211,7 +211,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
-	SEND_SIGNAL(gamer, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	gamer.played_game()
 
 	if(event)

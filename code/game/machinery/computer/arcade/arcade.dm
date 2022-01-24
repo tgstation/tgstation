@@ -285,7 +285,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(usr?.mind)
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
 
-	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	usr.played_game()
 
 	if (!blocked && !gameover)
@@ -653,7 +652,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
 		return
 	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
-	SEND_SIGNAL(usr, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	usr.played_game()
 	if(do_after(c_user, 50, target = src))
 		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))

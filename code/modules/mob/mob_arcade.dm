@@ -20,4 +20,5 @@
  * This should be called by games whenever the gamer interacts with the device
  */
 /mob/proc/played_game()
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "gaming", /datum/mood_event/gaming)
 	SEND_SIGNAL(src, COMSIG_MOB_PLAYED_VIDEOGAME)
