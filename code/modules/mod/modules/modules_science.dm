@@ -9,7 +9,7 @@
 	icon_state = "scanner"
 	module_type = MODULE_TOGGLE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	cooldown_time = 0.5 SECONDS
 
@@ -64,7 +64,7 @@
 		to the HUD. Useful for universal translation, or perhaps as a calculator."
 	module_type = MODULE_USABLE
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
 	var/obj/item/integrated_circuit/circuit
@@ -80,10 +80,10 @@
 	)
 
 /obj/item/mod/module/circuit/on_install()
-	circuit.set_cell(mod.cell)
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_uninstall()
-	circuit.set_cell(mod.cell)
+	circuit.set_cell(mod.get_cell())
 
 /obj/item/mod/module/circuit/on_suit_activation()
 	circuit.set_on(TRUE)
@@ -159,3 +159,76 @@
 	if(!attached_module.mod?.wearer)
 		return
 	wearer.set_output(attached_module.mod.wearer)
+
+///Anti-Gravity - Makes the user weightless.
+/obj/item/mod/module/anomaly_locked/antigrav
+	name = "MOD anti-gravity module"
+	desc = "A module that uses a gravitational core to make the user completely weightless."
+	icon_state = "antigrav"
+	module_type = MODULE_TOGGLE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.7
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked, /obj/item/mod/module/atrocinator)
+	cooldown_time = 0.5 SECONDS
+	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
+
+/obj/item/mod/module/anomaly_locked/antigrav/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(mod.wearer.has_gravity())
+		new /obj/effect/temp_visual/mook_dust(get_turf(src))
+	mod.wearer.AddElement(/datum/element/forced_gravity, 0)
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
+	playsound(src, 'sound/effects/gravhit.ogg', 50)
+
+/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation()
+	. = ..()
+	if(!.)
+		return
+	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
+	mod.wearer.update_gravity(mod.wearer.has_gravity())
+	if(mod.wearer.has_gravity())
+		new /obj/effect/temp_visual/mook_dust(get_turf(src))
+	playsound(src, 'sound/effects/gravhit.ogg', 50)
+
+/obj/item/mod/module/anomaly_locked/antigrav/prebuilt
+	prebuilt = TRUE
+
+///Teleporter - Lets the user teleport to a nearby location.
+/obj/item/mod/module/anomaly_locked/teleporter
+	name = "MOD teleporter module"
+	desc = "A module that uses a bluespace core to let the user transport their particles elsewhere."
+	icon_state = "teleporter"
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
+	cooldown_time = 5 SECONDS
+	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
+	/// Time it takes to teleport
+	var/teleport_time = 3 SECONDS
+
+/obj/item/mod/module/anomaly_locked/teleporter/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/turf/open/target_turf = get_turf(target)
+	if(!istype(target_turf) || target_turf.is_blocked_turf_ignore_climbable() || !(target_turf in view(mod.wearer)))
+		balloon_alert(mod.wearer, "invalid target!")
+		return
+	balloon_alert(mod.wearer, "teleporting...")
+	var/matrix/user_matrix = matrix(mod.wearer.transform)
+	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
+	if(!do_after(mod.wearer, teleport_time, target = mod))
+		balloon_alert(mod.wearer, "interrupted!")
+		var/matrix/post_matrix = matrix(mod.wearer.transform)
+		animate(mod.wearer, teleport_time, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
+		return
+	var/matrix/post_matrix = matrix(mod.wearer.transform)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
+	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
+		return
+	drain_power(use_power_cost)
+
+/obj/item/mod/module/anomaly_locked/teleporter/prebuilt
+	prebuilt = TRUE

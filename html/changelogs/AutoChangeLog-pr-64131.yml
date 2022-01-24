@@ -1,0 +1,7 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "Added an action button to janitor cyborgs. It'll draw water from your bucket and clean the ground under you as you walk. More wasteful then mopping mind"
+  - rscdel: "Removed the janitor cyborg's autoclean feature"
+  - balance: "Swapped out the janitor cyborg's dense holosign projector for a non dense version. It doesn't have the 2 second wait attached to it"
+  - refactor: "Made being a cleaning chemical into a bitflag instead of having manual checks in mop code"

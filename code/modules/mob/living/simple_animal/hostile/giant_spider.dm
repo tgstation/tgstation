@@ -36,7 +36,7 @@
 	combat_mode = TRUE
 	faction = list("spiders")
 	pass_flags = PASSTABLE
-	move_to_delay = 6
+	move_to_delay = 3
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
@@ -86,7 +86,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/mob_negates_gravity()
-	return (locate(/obj/structure/spider/stickyweb) in loc) || ..()
+	if(locate(/obj/structure/spider/stickyweb) in loc)
+		return TRUE
+	return ..()
 
 /**
  * # Spider Hunter
@@ -106,7 +108,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	poison_per_bite = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	speed = -0.1
 	menu_description = "Fast spider variant specializing in catching running prey and toxin injection, but has less health and damage. Toxin injection of 10u per bite."
 
@@ -186,7 +188,7 @@
 	obj_damage = 100
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	poison_per_bite = 0
-	move_to_delay = 8
+	move_to_delay = 4
 	speed = 1
 	status_flags = NONE
 	mob_size = MOB_SIZE_LARGE
@@ -209,7 +211,7 @@
 /mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire()
 	if(client)
 		return
-	charge.Trigger(target)
+	charge.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
@@ -240,7 +242,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	poison_per_bite = 5
-	move_to_delay = 4
+	move_to_delay = 2
 	poison_type = /datum/reagent/toxin/venom
 	speed = -0.5
 	gold_core_spawnable = NO_SPAWN
@@ -528,7 +530,7 @@
 			return FALSE
 		return TRUE
 
-/datum/action/innate/spider/comm/Trigger()
+/datum/action/innate/spider/comm/Trigger(trigger_flags)
 	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command")
 	if(QDELETED(src) || !input || !IsAvailable())
 		return FALSE

@@ -184,8 +184,20 @@
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_SLEEPER_AGENT
 	antag_flag_override = ROLE_TRAITOR
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG, ROLE_POSITRONIC_BRAIN)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
 	required_candidates = 1
 	weight = 7
 	cost = 10
@@ -250,8 +262,20 @@
 	antag_datum = /datum/antagonist/gang
 	antag_flag = ROLE_FAMILY_HEAD_ASPIRANT
 	antag_flag_override = ROLE_FAMILIES
-	protected_roles = list(JOB_HEAD_OF_PERSONNEL, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG, JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	protected_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_PRISONER,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_candidates = 3
 	weight = 2
 	cost = 19
@@ -314,7 +338,15 @@
 	antag_datum = /datum/antagonist/malf_ai
 	antag_flag = ROLE_MALF_MIDROUND
 	antag_flag_override = ROLE_MALF
-	enemy_roles = list(JOB_RESEARCH_DIRECTOR, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_CHEMIST, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER)
+	enemy_roles = list(
+		JOB_CHEMIST,
+		JOB_CHIEF_ENGINEER,
+		JOB_HEAD_OF_SECURITY,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SCIENTIST,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	exclusive_roles = list(JOB_AI)
 	required_enemies = list(4,4,4,4,4,4,2,2,2,0)
 	required_candidates = 1
@@ -366,7 +398,12 @@
 	antag_datum = /datum/antagonist/wizard
 	antag_flag = ROLE_WIZARD_MIDROUND
 	antag_flag_override = ROLE_WIZARD
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 1
@@ -398,7 +435,14 @@
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_flag_override = ROLE_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop
-	enemy_roles = list(JOB_AI, JOB_CYBORG, JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(3,3,3,3,3,2,1,1,0,0)
 	required_candidates = 5
 	weight = 5
@@ -440,7 +484,12 @@
 	name = "Blob"
 	antag_datum = /datum/antagonist/blob
 	antag_flag = ROLE_BLOB
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
@@ -458,9 +507,25 @@
 	antag_datum = /datum/antagonist/blob/infection
 	antag_flag = ROLE_BLOB_INFECTION
 	antag_flag_override = ROLE_BLOB
-	protected_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER, JOB_DETECTIVE, JOB_PRISONER)
-	restricted_roles = list(JOB_AI, JOB_CYBORG, ROLE_POSITRONIC_BRAIN)
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
@@ -498,7 +563,12 @@
 	name = "Alien Infestation"
 	antag_datum = /datum/antagonist/xeno
 	antag_flag = ROLE_ALIEN
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
@@ -545,7 +615,12 @@
 	antag_datum = /datum/antagonist/nightmare
 	antag_flag = ROLE_NIGHTMARE
 	antag_flag_override = ROLE_ALIEN
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 3
@@ -591,7 +666,12 @@
 	antag_datum = /datum/antagonist/space_dragon
 	antag_flag = ROLE_SPACE_DRAGON
 	antag_flag_override = ROLE_SPACE_DRAGON
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -635,7 +715,12 @@
 	name = "Abductors"
 	antag_datum = /datum/antagonist/abductor
 	antag_flag = ROLE_ABDUCTOR
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 2
 	required_applicants = 2
@@ -665,40 +750,6 @@
 
 //////////////////////////////////////////////
 //                                          //
-//            SWARMERS    (GHOST)           //
-//                                          //
-//////////////////////////////////////////////
-
-/datum/dynamic_ruleset/midround/swarmers
-	name = "Swarmers"
-	antag_datum = /datum/antagonist/swarmer
-	antag_flag = ROLE_SWARMER
-	required_type = /mob/dead/observer
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
-	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
-	required_candidates = 0
-	weight = 3
-	cost = 10
-	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	repeatable = TRUE
-
-/datum/dynamic_ruleset/midround/swarmers/execute()
-	var/list/spawn_locs = list()
-	for(var/x in GLOB.xeno_spawn)
-		var/turf/spawn_turf = x
-		var/light_amount = spawn_turf.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			spawn_locs += spawn_turf
-	if(!spawn_locs.len)
-		message_admins("No valid spawn locations found in GLOB.xeno_spawn, aborting swarmer spawning...")
-		return MAP_ERROR
-	var/obj/structure/swarmer_beacon/new_beacon = new(pick(spawn_locs))
-	log_game("A Swarmer Beacon was spawned via Dynamic Mode.")
-	notify_ghosts("\A Swarmer Beacon has spawned!", source = new_beacon, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Swarmer Beacon Spawned")
-	return ..()
-
-//////////////////////////////////////////////
-//                                          //
 //            SPACE NINJA (GHOST)           //
 //                                          //
 //////////////////////////////////////////////
@@ -707,7 +758,12 @@
 	name = "Space Ninja"
 	antag_datum = /datum/antagonist/ninja
 	antag_flag = ROLE_NINJA
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -746,7 +802,12 @@
 	name = "Spiders"
 	antag_flag = ROLE_SPIDER
 	required_type = /mob/dead/observer
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 3
@@ -764,7 +825,12 @@
 	name = "Revenant"
 	antag_datum = /datum/antagonist/revenant
 	antag_flag = ROLE_REVENANT
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -829,7 +895,12 @@
 	name = "Space Pirates"
 	antag_flag = "Space Pirates"
 	required_type = /mob/dead/observer
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 0
 	weight = 4
@@ -851,8 +922,17 @@
 	name = "Obsessed"
 	antag_datum = /datum/antagonist/obsessed
 	antag_flag = ROLE_OBSESSED
-	restricted_roles = list(JOB_AI, JOB_CYBORG, ROLE_POSITRONIC_BRAIN)
-	enemy_roles = list(JOB_CAPTAIN, JOB_HEAD_OF_SECURITY, JOB_SECURITY_OFFICER, JOB_DETECTIVE)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	enemy_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 4
@@ -880,6 +960,53 @@
 	obsessed.gain_trauma(/datum/brain_trauma/special/obsessed)
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
+	return ..()
+
+/// Thief ruleset
+/datum/dynamic_ruleset/midround/opportunist
+	name = "Opportunist"
+	antag_datum = /datum/antagonist/thief
+	antag_flag = ROLE_OPPORTUNIST
+	antag_flag_override = ROLE_THIEF
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		ROLE_POSITRONIC_BRAIN,
+	)
+	required_candidates = 1
+	weight = 5
+	cost = 3 //Worth less than obsessed, but there's more of them.
+	requirements = list(10,10,10,10,10,10,10,10,10,10)
+	repeatable = TRUE
+
+/datum/dynamic_ruleset/midround/opportunist/trim_candidates()
+	..()
+	candidates = living_players
+	for(var/mob/living/carbon/human/candidate in candidates)
+		if( \
+			candidate.mind.has_antag_datum(antag_datum) \
+			|| candidate.stat == DEAD \
+			|| !(ROLE_OPPORTUNIST in candidate.client?.prefs?.be_special) \
+			|| !candidate.mind.assigned_role \
+		)
+			candidates -= candidate
+
+/datum/dynamic_ruleset/midround/opportunist/execute()
+	if(!candidates || !candidates.len)
+		return FALSE
+	var/mob/living/carbon/human/thief = pick_n_take(candidates)
+	thief.mind.add_antag_datum(antag_datum)
+	message_admins("[ADMIN_LOOKUPFLW(thief)] has been made a Thief by the midround ruleset.")
+	log_game("[key_name(thief)] was made a Thief by the midround ruleset.")
 	return ..()
 
 /// Probability the AI going malf will be accompanied by an ion storm announcement and some ion laws.

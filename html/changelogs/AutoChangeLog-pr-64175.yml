@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "The species of Rabbits signed a declaration saying that they no longer wanted to be a part of Easter.  After a long four-year separatist movement and a lot of bloodshed, they aren't!"
+  - rscadd: "While the rabbits, erm, breed like rabbits, you can now pet one of those adorable critters in the holodeck."
+  - bugfix: "If for some reason you wish to kill one of these creatures, the black and brown variants should now have their eyes comically turn into an X (because that wasn't there before)."

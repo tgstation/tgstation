@@ -78,3 +78,19 @@
 	icon_state = "bench_corner"
 	greyscale_config = /datum/greyscale_config/bench_corner
 	greyscale_colors = "#af7d28"
+
+// Bamboo benches
+/obj/structure/chair/sofa/bamboo
+	name = "bamboo bench"
+	desc = "A makeshift bench with a rustic aesthetic."
+	icon_state = "bamboo_sofamiddle"
+	resistance_flags = FLAMMABLE
+	max_integrity = 60
+	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
+	buildstackamount = 3
+
+/obj/structure/chair/sofa/bamboo/left
+	icon_state = "bamboo_sofaend_left"
+
+/obj/structure/chair/sofa/bamboo/right
+	icon_state = "bamboo_sofaend_right"

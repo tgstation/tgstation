@@ -320,6 +320,7 @@
 
 		// As of writing this this is calibrated to maxcap at 140L and 160atm.
 		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
+		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
 

@@ -167,11 +167,12 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
-	ui_sources[WEAKREF(M)] = source
+	ui_sources[WEAKREF(M)] = WEAKREF(source)
 	ui_interact(M)
 
 /datum/crewmonitor/ui_host(mob/user)
-	return ui_sources[WEAKREF(user)]
+	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]
+	return host_ref?.resolve()
 
 /datum/crewmonitor/ui_data(mob/user)
 	var/z = user.z
@@ -245,7 +246,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Binary living/dead status
 		if (sensor_mode >= SENSOR_LIVING)
-			entry["life_status"] = !tracked_living_mob.stat
+			entry["life_status"] = (tracked_living_mob.stat != DEAD)
 
 		// Damage
 		if (sensor_mode >= SENSOR_VITALS)

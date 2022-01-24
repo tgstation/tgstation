@@ -10,7 +10,7 @@
 	icon_state = "holster"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/holster)
 	cooldown_time = 0.5 SECONDS
 	/// Gun we have holstered.
@@ -52,4 +52,5 @@
 
 /obj/item/mod/module/criminalcapture
 	name = "MOD criminal capture module"
-	desc = "The private security that had orders to take in people alive wer."
+	desc = "The private security that had orders to take in people dead were quite \
+		happy with their space-proofed suit, but for those ."

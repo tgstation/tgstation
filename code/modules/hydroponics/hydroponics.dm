@@ -4,6 +4,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
@@ -937,7 +938,7 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
-	maxnutri = 10
+	maxnutri = 15
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()

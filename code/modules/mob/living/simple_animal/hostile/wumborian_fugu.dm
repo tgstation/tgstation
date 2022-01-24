@@ -21,7 +21,7 @@
 	health_doll_icon = "Fugu0"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_to_delay = 5
+	move_to_delay = 2.5
 	friendly_verb_continuous = "floats near"
 	friendly_verb_simple = "float near"
 	speak_emote = list("puffs")
@@ -103,7 +103,7 @@
 	F.throw_message = "is absorbed by the girth of the"
 	F.retreat_distance = null
 	F.minimum_distance = 1
-	F.move_to_delay = 6
+	F.move_to_delay = 3
 	F.environment_smash = ENVIRONMENT_SMASH_WALLS
 	F.mob_size = MOB_SIZE_LARGE
 	F.speed = 1
@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
-		walk(src, 0)
+		SSmove_manager.stop_looping(src)
 		wumbo = 0
 		icon_state = "Fugu0"
 		obj_damage = 0
@@ -121,7 +121,7 @@
 		throw_message = "is avoided by the"
 		retreat_distance = 9
 		minimum_distance = 9
-		move_to_delay = 2
+		move_to_delay = 1
 		inflate_cooldown = 4
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		mob_size = MOB_SIZE_SMALL

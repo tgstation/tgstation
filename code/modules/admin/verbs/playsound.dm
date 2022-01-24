@@ -1,3 +1,8 @@
+//world/proc/shelleo
+#define SHELLEO_ERRORLEVEL 1
+#define SHELLEO_STDOUT 2
+#define SHELLEO_STDERR 3
+
 /client/proc/play_sound(S as sound)
 	set category = "Admin.Fun"
 	set name = "Play Global Sound"
@@ -174,3 +179,8 @@
 		var/client/C = M.client
 		C?.tgui_panel?.stop_music()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop All Playing Sounds") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+//world/proc/shelleo
+#undef SHELLEO_ERRORLEVEL
+#undef SHELLEO_STDOUT
+#undef SHELLEO_STDERR
