@@ -337,7 +337,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		else
 			. += "The cover is closed."
 
-	. += span_notice("Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.")
+	. += span_notice("Right-click the APC to [ locked ? "unlock" : "lock"] the interface.")
 
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
@@ -775,14 +775,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 				return FALSE
 	return FALSE
 
-/obj/machinery/power/apc/AltClick(mob/user)
+/obj/machinery/power/apc/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!can_interact(user))
 		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
-	else
-		togglelock(user)
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)
