@@ -566,6 +566,6 @@
 	default = FALSE
 
 /datum/config_entry/number/pr_announcements_per_round
-	default = 0
+	default = 5
 	min_val = 0
 	integer = TRUE
