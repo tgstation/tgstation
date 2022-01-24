@@ -59,7 +59,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
 /area/ruin/space/djstation)
