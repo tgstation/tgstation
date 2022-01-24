@@ -117,8 +117,10 @@
 /obj/machinery/atmospherics/components/binary/temperature_gate/can_unwrench(mob/user)
 	. = ..()
 	if(. && on && is_operational)
-		to_chat(user, span_warning("You cannot unwrench [src], turn it off first!"))
-		return FALSE
+		on = !on
+		update_appearance()
+		to_chat(user, span_warning("You turn [src] off before unfastening it!"))
+		return TRUE
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
