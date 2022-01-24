@@ -412,7 +412,7 @@
 	switch(action)
 		if("change")
 			var/new_tag = round(text2num(params["index"]))
-			if(new_tag == currTag)
+			if(new_tag == currTag || new_tag < 1 || new_tag > length(GLOB.TAGGERLOCATIONS))
 				return
 			currTag = new_tag
 	return TRUE
