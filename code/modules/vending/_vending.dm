@@ -521,10 +521,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 			var/dump_path = R.product_path
 			if(!dump_path)
 				continue
-			if(R.amount > LAZYLEN(R.returned_products))
+			if(R.amount > LAZYLEN(R.returned_products)) //always give out new stuff that costs before free returned stuff, because of the risk getting gibbed involved
 				new dump_path(get_turf(src))
 			else
-				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
+				var/obj/obj_to_dump = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
 				R.returned_products -= obj_to_dump
 				obj_to_dump.forceMove(get_turf(src))
 			R.amount--
@@ -948,7 +948,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		if(coin_records.Find(R) || hidden_records.Find(R))
 			price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 		if(LAZYLEN(R.returned_products))
-			price_to_use = 0 //secondhand items are free
+			price_to_use = 0 //returned items are free
 		if(price_to_use && !account.adjust_money(-price_to_use))
 			say("You do not possess the funds to purchase [R.name].")
 			flick(icon_deny,src)
@@ -969,10 +969,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		flick(icon_vend,src)
 	playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 	var/obj/item/vended_item
-	if(!LAZYLEN(R.returned_products))
+	if(!LAZYLEN(R.returned_products)) //always give out free returned stuff first, e.g. to avoid paywalling the nuke disk in a bag
 		vended_item = new R.product_path(get_turf(src))
 	else
-		vended_item = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
+		vended_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
 		R.returned_products -= vended_item
 		vended_item.forceMove(get_turf(src))
 	if(greyscale_colors)
@@ -1042,10 +1042,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/dump_path = R.product_path
 		if(!dump_path)
 			continue
-		if(R.amount > LAZYLEN(R.returned_products))
+		if(R.amount > LAZYLEN(R.returned_products)) //always throw new stuff that costs before free returned stuff, because of the hacking effort and time between throws involved
 			throw_item = new dump_path(loc)
 		else
-			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //last in, first out
+			throw_item = R.returned_products[LAZYLEN(R.returned_products)] //first in, last out
 			throw_item.forceMove(loc)
 			R.returned_products -= throw_item
 		R.amount--
