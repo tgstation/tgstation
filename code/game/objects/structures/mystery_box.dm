@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(mystery_box_guns, list(
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/rifle/boltaction/brand_new,
 ))
 
 GLOBAL_LIST_INIT(mystery_box_extended, list(
@@ -91,7 +92,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	/// The instantiated list that contains all of the valid items that can be chosen from. Generated in [/obj/structure/mystery_box/proc/generate_valid_types]
 	var/list/valid_types
 	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
-	var/extra_mag = TRUE
+	var/grant_extra_mag = TRUE
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -138,6 +139,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /// The box has finished choosing, mark it as available for grabbing
 /obj/structure/mystery_box/proc/present_weapon()
+	visible_message(span_notice("[src] presents [presented_item]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	box_state = MYSTERY_BOX_PRESENTING
 	box_expire_timer = addtimer(CALLBACK(src, .proc/start_expire_offer), MBOX_DURATION_PRESENTING, TIMER_STOPPABLE)
 
@@ -167,14 +169,17 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /obj/structure/mystery_box/proc/grant_weapon(mob/living/user)
 	var/obj/item/instantiated_weapon = new presented_item.selected_path(src)
 	user.put_in_hands(instantiated_weapon)
-	if(isgun(instantiated_weapon))
+
+	if(isgun(instantiated_weapon)) // handle pins + possibly extra ammo
 		var/obj/item/gun/instantiated_gun = instantiated_weapon
 		instantiated_gun.unlock()
-		if(extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
+		if(grant_extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
 			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
 			if(!instantiated_ballistic.internal_magazine)
-				var/obj/item/ammo_box/magazine/extra_mag = new(loc)
+				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.mag_type(loc)
 				user.put_in_hands(extra_mag)
+
+	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
 	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	close_box()
 
@@ -186,7 +191,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	valid_types = GLOB.summoned_guns
 
 /obj/structure/mystery_box/tdome
-	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one seems focused on firearms."
+	desc = "A wooden crate that seems equally magical and mysterious, capable of granting the user all kinds of different pieces of gear. This one has an extended array of weaponry."
 
 /obj/structure/mystery_box/tdome/generate_valid_types()
 	valid_types = GLOB.mystery_box_guns + GLOB.mystery_box_extended
@@ -253,6 +258,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 		sleep(change_delay)
 
 	add_filter("ready_outline", 2, list("type" = "outline", "color" = "#FBFF23", "size" = 0.2))
+	name = initial(selected_item.name)
 	parent_box.present_weapon()
 	claimable = TRUE
 
