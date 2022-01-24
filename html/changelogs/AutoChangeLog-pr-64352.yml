@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "APCs/Air alarms are now locked/unlocked with Right click"
