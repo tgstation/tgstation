@@ -191,8 +191,10 @@
 		to_chat(user, span_notice("You open the panel and expose the wiring."))
 	else
 		to_chat(user, span_notice("You close the panel."))
+	return TRUE
 
 /obj/machinery/shieldgen/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
 	if(locked)
 		to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
 		return

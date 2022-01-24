@@ -305,6 +305,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 	else
 		to_chat(user, span_warning("This headset doesn't have any unique encryption keys! How useless..."))
+	tool.play_tool_sound(src, 10)
 	return TRUE
 
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)

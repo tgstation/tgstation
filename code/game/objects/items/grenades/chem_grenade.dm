@@ -100,6 +100,7 @@
 		wires.interact(user)
 
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TRUE
 	if(stage == GRENADE_WIRED)
 		if(beakers.len)
 			stage_change(GRENADE_READY)
@@ -112,17 +113,19 @@
 		if(landminemode)
 			landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
 
+		tool.play_tool_sound(src, 25)
 		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 	else
 		to_chat(user, span_warning("You need to add a wire!"))
 
 	return TRUE
 
-/obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
+/obj/item/grenade/chem_grenade/wirecutter_act(mob/living/user, obj/item/tool)
 	if(stage == GRENADE_READY && !active)
+		tool.play_tool_sound(src)
 		stage_change(GRENADE_WIRED)
 		to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
+		return TRUE
 
 /obj/item/grenade/chem_grenade/wrench_act(mob/living/user, obj/item/tool)
 	if(stage != GRENADE_WIRED)

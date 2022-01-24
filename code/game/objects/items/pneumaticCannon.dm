@@ -74,6 +74,7 @@
 	if(tank)
 		tool.play_tool_sound(src)
 		updateTank(tank, 1, user)
+	return TRUE
 
 /obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
 	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)

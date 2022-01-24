@@ -773,14 +773,18 @@
 	update_appearance()
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
-	if(user.CanReach(src))
-		user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
-	else //telekinesis
-		visible_message(span_notice("[tool] cuts down [note] from [src]."))
-	tool.play_tool_sound(src)
-	note.forceMove(tool.drop_location())
-	note = null
-	update_appearance()
+	if(note)
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		else //telekinesis
+			visible_message(span_notice("[tool] cuts down [note] from [src]."))
+		tool.play_tool_sound(src)
+		note.forceMove(tool.drop_location())
+		note = null
+		update_appearance()
+		return TRUE
+	else
+		return FALSE
 
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)

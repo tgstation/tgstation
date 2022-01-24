@@ -296,8 +296,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("Unable to locate a radio!"))
 	update_icons()
 
-	return TRUE
-
 /mob/living/silicon/robot/wrench_act(mob/living/user, obj/item/tool)
 	if(!(opened && !cell))	// Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		return FALSE

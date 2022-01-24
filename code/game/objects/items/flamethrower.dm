@@ -89,9 +89,9 @@
 
 /obj/item/flamethrower/wrench_act(mob/living/user, obj/item/tool)
 	. = TRUE
-	tool.play_tool_sound(src)
 	if(status)
 		return FALSE
+	tool.play_tool_sound(src)
 	var/turf/T = get_turf(src)
 	if(weldtool)
 		weldtool.forceMove(T)
@@ -106,7 +106,7 @@
 	qdel(src)
 
 /obj/item/flamethrower/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!igniter || lit)
+	if(igniter && !lit)
 		tool.play_tool_sound(src)
 		status = !status
 		to_chat(user, span_notice("[igniter] is now [status ? "secured" : "unsecured"]!"))

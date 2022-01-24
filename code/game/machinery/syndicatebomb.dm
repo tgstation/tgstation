@@ -164,7 +164,7 @@
 	to_chat(user, span_notice("You start to cut [src] apart..."))
 	if(tool.use_tool(src, user, 20, volume=50, amount=5)) // uses up 5 fuel
 		to_chat(user, span_notice("You cut [src] apart."))
-		new /obj/item/stack/sheet/plasteel( loc, 5)
+		new /obj/item/stack/sheet/plasteel(loc, 5)
 		qdel(src)
 	return TRUE
 
