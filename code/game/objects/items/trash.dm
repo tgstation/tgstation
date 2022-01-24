@@ -82,6 +82,10 @@
 	name = "semki pack"
 	icon_state = "semki_pack"
 
+/obj/item/trash/semki/healthy
+	name = "nibbled sunflower seeds"
+	icon_state = "sunseeds"
+
 /obj/item/trash/tray
 	name = "tray"
 	icon_state = "tray"

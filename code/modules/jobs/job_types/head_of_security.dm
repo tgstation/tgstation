@@ -85,3 +85,4 @@
 	suit = null
 	head = null
 	mask = /obj/item/clothing/mask/gas/sechailer
+	internals_slot = ITEM_SLOT_SUITSTORE

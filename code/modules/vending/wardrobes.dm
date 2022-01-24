@@ -9,9 +9,6 @@
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
-/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
-
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"

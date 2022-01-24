@@ -166,6 +166,15 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if(message_admins)
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")
 
+/// Logs the contents of the gasmix to the game log, prefixed by text
+/proc/log_atmos(text, datum/gas_mixture/mix)
+	var/message = text
+	message += "TEMP=[mix.temperature],MOL=[mix.total_moles()],VOL=[mix.volume]"
+	for(var/key in mix.gases)
+		var/list/gaslist = mix.gases[key]
+		message += "[gaslist[GAS_META][META_GAS_ID]]=[gaslist[MOLES]];"
+	log_game(message)
+
 /proc/log_say(text)
 	if (CONFIG_GET(flag/log_say))
 		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
@@ -266,8 +275,11 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
-/proc/log_mapping(text)
+/proc/log_mapping(text, skip_world_log)
 	WRITE_LOG(GLOB.world_map_error_log, text)
+	if(skip_world_log)
+		return
+	SEND_TEXT(world.log, text)
 
 /proc/log_perf(list/perf_info)
 	. = "[perf_info.Join(",")]\n"

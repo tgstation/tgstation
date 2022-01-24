@@ -1,0 +1,4 @@
+author: "the-orange-cow"
+delete-after: True
+changes: 
+  - qol: "In game tips now properly recommend Left 4 Zed as a means of mutating plants.  Please, stop using unstable mutagen."

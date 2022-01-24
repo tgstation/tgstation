@@ -936,4 +936,4 @@
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
 	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
-	foodtypes = GRAIN | DAIRY | JUNKFOOD
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD

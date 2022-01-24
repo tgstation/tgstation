@@ -60,6 +60,17 @@
 	force = 20
 	icon_state = "crowbar_powergame"
 
+/obj/item/crowbar/large/old
+	name = "old crowbar"
+	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
+	throwforce = 10
+	throw_speed = 2
+
+/obj/item/crowbar/large/old/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "crowbar_powergame"
+
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."

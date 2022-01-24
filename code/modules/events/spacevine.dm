@@ -531,6 +531,7 @@
 	//We can only do so much work per process, but we still want to process everything at some point
 	//So we shift the queue a bit
 	growth_queue += queue_end
+	queue_end = list()
 
 /// Updates the icon as the space vine grows
 /obj/structure/spacevine/proc/grow()
