@@ -570,7 +570,7 @@
 		/obj/item/clothing/under/trek/medsci/ent = 10,
 		/obj/item/clothing/suit/hooded/wintercoat = 10,
 		/obj/item/storage/backpack/satchel/trek = 10,
-		/obj/item/clothing/shoes/sneakers/black = 10
+		/obj/item/clothing/shoes/sneakers/black = 10,
 		/obj/item/storage/bag/chemistry = 2,
 		/obj/item/ph_booklet = 3
 	)
