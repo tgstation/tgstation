@@ -636,14 +636,14 @@
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
 	reqs = list(/obj/item/food/grown/poppy/lily =2,
-				/obj/item/grown/sunflower = 2,
+				/obj/item/food/grown/sunflower = 2,
 				/obj/item/food/grown/poppy/geranium = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/sunflower = 6)
+	reqs = list(/obj/item/food/grown/sunflower = 6)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet
