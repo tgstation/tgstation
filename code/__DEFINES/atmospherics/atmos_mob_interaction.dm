@@ -90,8 +90,12 @@
 
 //CLOTHES
 
+// Welcome to Tsu's explanation on: what is this shit? Basically, the minimum temp protection values dictates the absolute lowest of a temperature someone can handle before they
+// start taking temperature damage. The way it is setup makes it kind of seem like its "bounds" for what the temperature protection possibly "could" be, but nope!
+// Its what it is. Weird. Don't set space helmet temperature protections to 2.0, because then you can go naked into space and not be cold. This is bad.
+
 /// what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_HELM_MIN_TEMP_PROTECT 2.0
+#define SPACE_HELM_MIN_TEMP_PROTECT 72
 /// Thermal insulation works both ways /Malkevin
 #define SPACE_HELM_MAX_TEMP_PROTECT 1500
 /// what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
