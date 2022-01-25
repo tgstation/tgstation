@@ -1,8 +1,15 @@
 name: Autowiki
+# on:
+#   schedule:
+#   - cron: "5 4 * * *"
+#   workflow_dispatch:
 on:
-  schedule:
-  - cron: "5 4 * * *"
-  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 jobs:
   autowiki:
     runs-on: ubuntu-latest
