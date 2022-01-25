@@ -16,6 +16,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
+	w_class = WEIGHT_CLASS_BULKY
 	var/empty = FALSE
 	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 
@@ -149,6 +150,7 @@
 /obj/item/storage/firstaid/ancient/heirloom
 	desc = "A first aid kit with the ability to heal common types of injuries. You start thinking of the good old days just by looking at it."
 	empty = TRUE // long since been ransacked by hungry powergaming assistants breaking into med storage
+	w_class = WEIGHT_CLASS_NORMAL // old and backpack portable
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
