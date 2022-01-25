@@ -121,7 +121,7 @@
 
 /datum/reagent/vaccine/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	if(!islist(data) || !(methods & (INGEST|INJECT)))
+	if(!islist(data) || !(methods & INJECT) || reac_volume < 5)
 		return
 
 	for(var/thing in exposed_mob.diseases)
