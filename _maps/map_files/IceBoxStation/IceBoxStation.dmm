@@ -30066,7 +30066,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east,
 /turf/open/floor/iron,
 /area/commons/locker)
 "lPf" = (
