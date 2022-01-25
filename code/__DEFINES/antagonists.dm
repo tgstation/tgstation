@@ -183,9 +183,12 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a nuclear operative
 #define IS_NUKE_OP(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/nukeop))
 
+/// Checks if the given mob is a heretic.
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
-
+/// Check if the given mob is a heretic monster.
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
+/// Checks if the given mob is either a heretic or a heretic monster.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_MONSTER(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))

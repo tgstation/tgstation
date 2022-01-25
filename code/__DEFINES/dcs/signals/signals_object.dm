@@ -286,6 +286,10 @@
 
 // /obj/effect/proc_holder/spell signals
 
+///called from /obj/effect/proc_holder/spell/cast_check (src)
+#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
+  /// Return to cancel the cast from beginning.
+  #define COMPONENT_CANCEL_SPELL (1<<0)
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 

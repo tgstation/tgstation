@@ -202,7 +202,6 @@
 
 //Ascension knowledge
 /datum/heretic_knowledge/final
-
 	var/finished = FALSE
 
 /datum/heretic_knowledge/final/recipe_snowflake_check(list/atoms, loc, selected_atoms)
