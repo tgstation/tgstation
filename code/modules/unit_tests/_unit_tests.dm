@@ -73,6 +73,7 @@
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
+#include "icon_state_sanity.dm"
 #include "keybinding_init.dm"
 #include "load_map_security.dm"
 #include "machine_disassembly.dm"
