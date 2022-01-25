@@ -312,3 +312,35 @@
 	if(prob(break_chance))
 		user.visible_message("<span class='danger'>[user]'s spoon snaps into tiny pieces in their hand.</span>")
 		qdel(src)
+/obj/item/kitchen/knife/circumcision
+	name = "circumcision knife"
+	desc = "A small knife with a plastic handle, used to perform circumcisions."
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "shalom"
+	item_state = "shalom"
+	force = 6
+	throwforce = 6
+	armour_penetration = 8
+	attack_verb = list("circumcised", "foreskinned", "goyim'd")
+
+/obj/item/kitchen/knife/circumcision/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (user.a_intent == INTENT_HELP && user.zone_selected == BODY_ZONE_PRECISE_GROIN && H.gender == MALE)
+			if (H.circumcised)
+				user << "<span class = 'notice'>[H] is already circumcised!</span>"
+				return
+
+			visible_message("<span class = 'notice'>[user] starts to circumcise [H]...</span>")
+			if (do_after(user, 90, H) && !H.circumcised)
+				visible_message("<span class = 'notice'>[user] successfully circumcises [H].</span>")
+				H.circumcised = TRUE
+				return
+	return ..()
+
+/obj/item/kitchen/knife/circumcision/suicide_act(mob/user)
+	if (user.gender == MALE)
+		user.visible_message("<span class='suicide'>[user] tries to circumcise himself but there isn't any foreskin! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	else
+		user.visible_message("<span class='suicide'>[user] realizes she can't circumcise herself and slits her [pick("wrists", "throat")]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	return (BRUTELOSS)
