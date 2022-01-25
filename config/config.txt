@@ -601,4 +601,4 @@ CACHE_ASSETS 0
 PR_ANNOUNCEMENTS_PER_ROUND 5
 
 ## When enabled, grants those with R_DEBUG permissions to use the server profile debug functionality
-ALLOW_ADMIN_PROFILING 1
+ALLOW_ADMIN_PROFILING
