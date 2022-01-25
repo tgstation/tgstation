@@ -30,6 +30,6 @@
 
 	TEST_ASSERT_EQUAL( \
 		autowiki_api.include_template("Template", list("food" = list("fruit", "candy"))), \
-		"{{Template|food1=fruit|food2=candy", \
+		"{{Template|food1=fruit|food2=candy}}", \
 		"Template with array arguments did not format correctly" \
 	)
