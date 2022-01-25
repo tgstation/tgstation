@@ -317,11 +317,10 @@
 	desc = "A small knife with a plastic handle, used to perform circumcisions."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "shalom"
-	item_state = "shalom"
 	force = 6
 	throwforce = 6
 	armour_penetration = 8
-	attack_verb = list("circumcised", "foreskinned", "goyim'd")
+	attack_verb_simple = list("circumcised", "fucking jew", "goyim'd")
 
 /obj/item/kitchen/knife/circumcision/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if (ishuman(M))
