@@ -2,7 +2,7 @@
 /datum/unit_test/autowiki
 
 /datum/unit_test/autowiki/Run()
-	TEST_ASSERT(istext(generate_autowiki_output()))
+	TEST_ASSERT(istext(generate_autowiki_output()), "generate_autowiki_output() did not finish successfully!")
 
 /// Test that `include_template` produces reasonable results
 /datum/unit_test/autowiki_include_template
@@ -16,7 +16,7 @@
 		"Basic template did not format correctly" \
 	)
 
-	TEST_ASSERT_EQUAL(
+	TEST_ASSERT_EQUAL( \
 		autowiki_api.include_template("Template", list("name" = "Mothblocks")), \
 		"{{Template|name=Mothblocks}}", \
 		"Template with basic arguments did not format correctly" \
