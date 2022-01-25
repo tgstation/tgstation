@@ -66,7 +66,8 @@
 			return
 		display_results(user, target, span_notice("You begin to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]..."),
 			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)] with [tool]."),
-			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]."))
+			span_notice("[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]."),
+			playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 		display_pain(target, "The infection in your [parse_zone(user.zone_selected)] stings like hell! It feels like you're being stabbed!")
 	else
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
@@ -77,7 +78,8 @@
 		var/progress_text = get_progress(user, target, burn_wound)
 		display_results(user, target, span_notice("You successfully excise some of the infected flesh from [target]'s [parse_zone(target_zone)][progress_text]."),
 			span_notice("[user] successfully excises some of the infected flesh from [target]'s [parse_zone(target_zone)] with [tool]!"),
-			span_notice("[user] successfully excises some of the infected flesh from  [target]'s [parse_zone(target_zone)]!"))
+			span_notice("[user] successfully excises some of the infected flesh from  [target]'s [parse_zone(target_zone)]!"),
+			playsound(get_turf(target), 'sound/surgery/retractor2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 		log_combat(user, target, "excised infected flesh in", addition="COMBAT MODE: [uppertext(user.combat_mode)]")
 		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 		burn_wound.infestation -= infestation_removed
@@ -92,7 +94,8 @@
 	..()
 	display_results(user, target, span_notice("You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] carves away some of the healthy flesh from [target]'s [parse_zone(target_zone)] with [tool]!"),
-		span_notice("[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!"))
+		span_notice("[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!"),
+		playsound(get_turf(target), 'sound/surgery/organ1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	surgery.operated_bodypart.receive_damage(brute=rand(4,8), sharpness=TRUE)
 
 /datum/surgery_step/debride/initiate(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)

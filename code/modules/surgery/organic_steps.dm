@@ -112,7 +112,7 @@
 	display_results(user, target, span_notice("You begin to mend the incision in [target]'s [parse_zone(target_zone)]..."),
 		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
 		span_notice("[user] begins to mend the incision in [target]'s [parse_zone(target_zone)]."),
-		playsound(get_turf(target), 'sound/surgery/cautery.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
+		playsound(get_turf(target), 'sound/surgery/cautery1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "Your [parse_zone(target_zone)] is being burned!")
 
 /datum/surgery_step/close/tool_check(mob/user, obj/item/tool)
@@ -129,6 +129,7 @@
 		var/obj/item/bodypart/target_bodypart = human_target.get_bodypart(target_zone)
 		if(target_bodypart)
 			target_bodypart.generic_bleedstacks -= 3
+	playsound(get_turf(target), 'sound/surgery/cautery2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 	return ..()
 
 

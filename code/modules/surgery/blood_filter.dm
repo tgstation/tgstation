@@ -34,6 +34,7 @@
 			target.reagents.remove_reagent(chem.type, min(chem.volume * 0.22, 10))
 	display_results(user, target, span_notice("\The [tool] pings as it finishes filtering [target]'s blood."),
 		span_notice("\The [tool] pings as it stops pumping [target]'s blood."),
+		playsound(get_turf(target), 'sound/machines/ping.ogg', 25, TRUE, falloff_exponent = 12, falloff_distance = 1),
 		"\The [tool] pings as it stops pumping.")
 	return ..()
 

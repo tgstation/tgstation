@@ -32,7 +32,8 @@
 /datum/surgery_step/hepatectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s liver..."),
 		span_notice("[user] begins to make an incision in [target]."),
-		span_notice("[user] begins to make an incision in [target]."))
+		span_notice("[user] begins to make an incision in [target]."),
+		playsound(get_turf(target), 'sound/surgery/scalpel1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "Your abdomen burns in horrific stabbing pain!")
 
 /datum/surgery_step/hepatectomy/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
@@ -40,7 +41,8 @@
 	human_target.setOrganLoss(ORGAN_SLOT_LIVER, 10) //not bad, not great
 	display_results(user, target, span_notice("You successfully remove the damaged part of [target]'s liver."),
 		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
-		span_notice("[user] successfully removes the damaged part of [target]'s liver."))
+		span_notice("[user] successfully removes the damaged part of [target]'s liver."),
+		playsound(get_turf(target), 'sound/surgery/organ1.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "The pain receeds slightly.")
 	return ..()
 
@@ -49,5 +51,6 @@
 	human_target.adjustOrganLoss(ORGAN_SLOT_LIVER, 15)
 	display_results(user, target, span_warning("You cut the wrong part of [target]'s liver!"),
 		span_warning("[user] cuts the wrong part of [target]'s liver!"),
-		span_warning("[user] cuts the wrong part of [target]'s liver!"))
+		span_warning("[user] cuts the wrong part of [target]'s liver!"),
+		playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 	display_pain(target, "You feel a sharp stab inside your abdomen!")

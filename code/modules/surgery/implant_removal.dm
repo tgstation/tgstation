@@ -38,7 +38,8 @@
 	if(implant)
 		display_results(user, target, span_notice("You successfully remove [implant] from [target]'s [target_zone]."),
 			span_notice("[user] successfully removes [implant] from [target]'s [target_zone]!"),
-			span_notice("[user] successfully removes something from [target]'s [target_zone]!"))
+			span_notice("[user] successfully removes something from [target]'s [target_zone]!"),
+			playsound(get_turf(target), 'sound/surgery/organ2.ogg', 75, TRUE, falloff_exponent = 12, falloff_distance = 1))
 		display_pain(target, "You can feel your [implant] pulled out of you!")
 		implant.removed(target)
 
