@@ -182,7 +182,8 @@
 
 	var/list/part = list(
 		"name" = D.name,
-		"desc" = D.desc == "Desc" ? initial(built_item.desc) : D.desc,
+		// "desc" = D.desc == "Desc" ? initial(built_item.desc) : D.desc,
+		"desc" = D.get_description(),
 		"printTime" = get_construction_time_w_coeff(initial(D.construction_time))/10,
 		"cost" = cost,
 		"id" = D.id,

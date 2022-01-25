@@ -85,6 +85,10 @@ GLOBAL_VAR(restart_counter)
 	HandleTestRun()
 	#endif
 
+	#ifdef AUTOWIKI
+	setup_autowiki()
+	#endif
+
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
@@ -257,6 +261,11 @@ GLOBAL_VAR(restart_counter)
 
 	#ifdef UNIT_TESTS
 	FinishTestRun()
+	return
+	#endif
+
+	#ifdef AUTOWIKI
+	qdel(src)
 	return
 	#endif
 
