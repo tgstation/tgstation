@@ -22,7 +22,7 @@
 		"Template with basic arguments did not format correctly" \
 	)
 
-	TEST_ASSERT_EQUAL(
+	TEST_ASSERT_EQUAL( \
 		autowiki_api.include_template("Template", list("name" = autowiki_api.escape_value("P|peline"))), \
 		"{{Template|name=P{{!}}peline}}", \
 		"Template with escaped arguments did not format correctly" \
