@@ -69,7 +69,7 @@
 	src.singularity_size = singularity_size
 
 /datum/component/singularity/RegisterWithParent()
-	START_PROCESSING(SSfastprocess, src)
+	START_PROCESSING(SSsinguloprocess, src)
 
 	// The singularity stops drifting for no man!
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
@@ -108,7 +108,7 @@
 	return ..()
 
 /datum/component/singularity/UnregisterFromParent()
-	STOP_PROCESSING(SSfastprocess, src)
+	STOP_PROCESSING(SSsinguloprocess, src)
 
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
