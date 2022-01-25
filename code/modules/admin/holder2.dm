@@ -62,8 +62,9 @@ GLOBAL_PROTECT(href_token)
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
-	if(R.rights & R_DEBUG) //grant profile access
-		world.SetConfig("APP/admin", ckey, "role=admin")
+	if(CONFIG_GET(flag/allow_admin_profiling))
+		if(R.rights & R_DEBUG) //grant profile access
+			world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src

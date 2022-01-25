@@ -564,3 +564,6 @@
 
 /datum/config_entry/flag/station_name_in_hub_entry
 	default = FALSE
+
+/datum/config_entry/flag/allow_admin_profiling
+	default = TRUE
