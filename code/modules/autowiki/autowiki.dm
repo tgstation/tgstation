@@ -28,6 +28,6 @@
 		total_output += json_encode(list(
 			"title" = autowiki.page,
 			"text" = output,
-		))
+		)) + "\n"
 
 	return total_output

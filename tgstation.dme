@@ -2186,6 +2186,7 @@
 #include "code\modules\autowiki\autowiki.dm"
 #include "code\modules\autowiki\pages\base.dm"
 #include "code\modules\autowiki\pages\techweb.dm"
+#include "code\modules\autowiki\pages\vending.dm"
 #include "code\modules\awaymissions\away_props.dm"
 #include "code\modules\awaymissions\bluespaceartillery.dm"
 #include "code\modules\awaymissions\cordon.dm"

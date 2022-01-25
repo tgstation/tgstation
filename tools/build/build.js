@@ -127,6 +127,7 @@ export const AutowikiTarget = new Juke.Target({
       warningsAsErrors: get(WarningParameter).includes('error'),
     });
     Juke.rm('data/autowiki_edits.txt');
+    Juke.rm('data/autowiki_files', { recursive: true });
     Juke.rm('data/logs/ci', { recursive: true });
     await DreamDaemon(
       `${DME_NAME}.test.dmb`,

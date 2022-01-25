@@ -13,16 +13,23 @@ if (!PASSWORD) {
 	process.exit(1)
 }
 
-const FILENAME = process.argv[2]
+const PAGE_EDIT_FILENAME = process.argv[2]
 
-if (!FILENAME) {
-	console.error("No filename specified")
+if (!PAGE_EDIT_FILENAME) {
+	console.error("No filename specified to edit pages")
+	process.exit(1)
+}
+
+const FILE_EDIT_FILENAME = process.argv[3]
+
+if (!FILE_EDIT_FILENAME) {
+	console.error("No filename specified to edit files")
 	process.exit(1)
 }
 
 async function main() {
-	console.log(`Reading from ${FILENAME}`)
-	const file = await (await fs.readFile(FILENAME, "utf8")).split("\n")
+	console.log(`Reading from ${PAGE_EDIT_FILENAME}`)
+	const editFile = await (await fs.readFile(PAGE_EDIT_FILENAME, "utf8")).split("\n")
 
 	console.log(`Logging in as ${USERNAME}`)
 
@@ -37,12 +44,12 @@ async function main() {
 	console.log("Logged in")
 
 	// This is not Promise.all as to not flood with a bunch of traffic at once
-	for (const line of file) {
-		if (line.length === 0) {
+	for (const editLine of editFile) {
+		if (editLine.length === 0) {
 			continue
 		}
 
-		let { title, text } = JSON.parse(line)
+		let { title, text } = JSON.parse(editLine)
 		text = "<noinclude><b>This page is automated by Autowiki. Do NOT edit it manually.</b></noinclude>" + text
 
 		console.log(`Editing ${title}...`)
@@ -50,6 +57,19 @@ async function main() {
 			title,
 			text,
 			`Autowiki edit @ ${ new Date().toISOString() }`,
+		)
+	}
+
+	// Same here
+	for (const asset of await fs.readdir(FILE_EDIT_FILENAME)) {
+		const assetPath = `${FILE_EDIT_FILENAME}/${asset}`
+		const assetName = `Autowiki-${asset}`
+
+		console.log(`Replacing ${assetName}...`)
+		await bot.upload(
+			assetName,
+			assetPath,
+			`Autowiki upload @ ${ new Date().toISOString() }`,
 		)
 	}
 }

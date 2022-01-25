@@ -7,6 +7,7 @@
 	var/page
 
 /// Override and return the new text of the page.
+/// This proc can be impure, usually to call `upload_file`.
 /datum/autowiki/proc/generate()
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("[type] does not implement generate()!")
@@ -37,6 +38,15 @@
 	template_text += "}}"
 
 	return template_text
+
+/// Takes an icon and uploads it to Autowiki-name.png.
+/// Do your best to make sure this is unique, so it doesn't clash with other autowiki icons.
+/datum/autowiki/proc/upload_icon(icon/icon, name)
+	// Fuck you
+	if (IsAdminAdvancedProcCall())
+		return
+
+	fcopy(icon, "data/autowiki_files/[name].png")
 
 /// Escape a parameter such that it can be correctly put inside a wiki output
 /datum/autowiki/proc/escape_value(parameter)
