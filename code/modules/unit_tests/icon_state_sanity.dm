@@ -12,4 +12,6 @@
 		if(!ref_icon || !ref_state)
 			continue // This catches edge cases where we get the path to an abstract atom; i.e. mob holders
 		if(!(ref_state in icon_states(ref_icon)))
+			if(initial(atom_path.greyscale_config))
+				continue // If there is a GAGS config value, its covered by greyscale_config.dm. Checking for a valid GAGS config again here would be pointless.
 			Fail("cannot find icon_state '[ref_state]' for icon '[ref_icon]' for '[atom_path]'")
