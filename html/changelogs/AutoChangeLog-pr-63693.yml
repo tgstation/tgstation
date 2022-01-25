@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - refactor: "Honkbots have been made a subtype of Secbots, which means they trigger phobias of security, and their behavior has additionally been overhauled to work more like Beepsky."

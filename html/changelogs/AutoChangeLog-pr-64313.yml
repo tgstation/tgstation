@@ -1,4 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - qol: "The destination tagger UI now shows its items in alphabetical order (intentionally)."
