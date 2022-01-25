@@ -49,4 +49,8 @@ jobs:
       env:
         USERNAME: ${{ secrets.AUTOWIKI_USERNAME }}
         PASSWORD: ${{ secrets.AUTOWIKI_PASSWORD }}
-      run: node tools/autowiki/autowiki.js data/autowiki_edits.txt data/autowiki_files/
+      run: |
+        cd tools/autowiki
+        npm install
+        cd ../..
+        node tools/autowiki/autowiki.js data/autowiki_edits.txt data/autowiki_files/
