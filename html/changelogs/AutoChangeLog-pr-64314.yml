@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Items returned to vending machines no longer disappear. Instead, they increment that item's count and can be vended again immediately for free"
-  - expansion: "Nearly all vending machines accept returns (no refunds, though)"
