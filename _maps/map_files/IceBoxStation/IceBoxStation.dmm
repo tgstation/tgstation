@@ -30066,6 +30066,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/camera/directional/east,
 /turf/open/floor/iron,
 /area/commons/locker)
 "lPf" = (
@@ -49419,9 +49420,6 @@
 /turf/open/floor/glass/reinforced,
 /area/engineering/atmos)
 "vFL" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Locker Room South"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
