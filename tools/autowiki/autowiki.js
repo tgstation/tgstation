@@ -70,7 +70,13 @@ async function main() {
 			assetName,
 			assetPath,
 			`Autowiki upload @ ${ new Date().toISOString() }`,
-		)
+		).catch(error => {
+			if (error.code === "fileexists-no-change") {
+				console.log(`${assetName} is an exact duplicate`)
+			} else {
+				return Promise.reject(error)
+			}
+		})
 	}
 }
 
