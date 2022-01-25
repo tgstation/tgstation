@@ -23,8 +23,12 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 	populate_deck()
+
+/obj/item/toy/cards/deck/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
+
 
 /obj/item/toy/cards/deck/examine(mob/user)
 	. = ..()
@@ -109,9 +113,6 @@
 		else
 			icon_state = "deck_[deckstyle]_empty"
 	return ..()
-
-/obj/item/toy/cards/deck/attack_self(mob/living/user)
-	shuffle_cards(user)
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/cards/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
