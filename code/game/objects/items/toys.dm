@@ -136,7 +136,6 @@
 
 /obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
-		// Monkeys make money from popping bloons
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
@@ -147,9 +146,16 @@
 	else
 		return ..()
 
+/obj/item/toy/balloon/bullet_act(obj/projectile/P)
+	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
-	if(monkey_pop)
+	if(monkey_pop) // Monkeys make money from popping bloons
 		new /obj/item/coin/iron(get_turf(src))
 	qdel(src)
 
