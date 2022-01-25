@@ -9,29 +9,56 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
-	var/give_equipment = TRUE
+	var/give_objectives = TRUE
+	var/knowledge_points = 1
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
 	var/ascended = FALSE
 
+/datum/antagonist/heretic/ui_data(mob/user)
+	var/list/data = list()
+
+	data["charges"] = knowledge_points
+
+	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
+		var/list/knowledge_data = list()
+		knowledge_data["type"] = knowledge
+		knowledge_data["name"] = initial(knowledge.name)
+		knowledge_data["cost"] = initial(knowledge.cost)
+		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
+		knowledge_data["path"] = initial(knowledge.route)
+		knowledge_data["state"] = "Research"
+		knowledge_data["flavour"] = initial(knowledge.gain_text)
+		knowledge_data["desc"] = initial(knowledge.desc)
+
+		data["learnable_knowledge"] += list(knowledge_data)
+
+	for(var/path in researched_knowledge)
+		var/list/knowledge_data = list()
+		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
+		knowledge_data["name"] = found_knowledge.name
+		loknowledge_datare["cost"] = found_knowledge.cost
+		knowledge_data["disabled"] = TRUE
+		knowledge_data["path"] = found_knowledge.route
+		knowledge_data["state"] = "Researched"
+		knowledge_data["flavour"] = found_knowledge.gain_text
+		knowledge_data["desc"] = found_knowledge.desc
+
+		data["learned_knowledge"] += list(knowledge_data)
+
+	return data
+
 /datum/antagonist/heretic/ui_static_data(mob/user)
 	var/list/data = list()
+
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 	data["objectives"] = get_objectives()
-	return data
 
-/datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
-	give_equipment = FALSE
-	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has heresized [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
+	return data
 
 /datum/antagonist/heretic/greet()
 	. = ..()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, "</font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
-	owner.announce_objectives()
 	to_chat(owner, span_cult("<span class='warningplain'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>"))
 	var/policy = get_policy(ROLE_HERETIC)
 	if(policy)
@@ -63,17 +90,18 @@
 	return finish_preview_icon(icon)
 
 /datum/antagonist/heretic/on_gain()
-	var/mob/living/current = owner.current
-	if(ishuman(current))
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
+
+	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
+		gain_knowledge(starting_knowledge)
+
+	if(give_objectives)
 		forge_primary_objectives()
-		for(var/eldritch_knowledge in GLOB.heretic_start_knowledge)
-			gain_knowledge(eldritch_knowledge)
-	current.log_message("has been made into a heretic!", LOG_ATTACK, color="#960000")
+
 	GLOB.reality_smash_track.AddMind(owner)
 	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/on_death)
-	if(give_equipment)
-		equip_cultist()
+
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -82,40 +110,11 @@
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current)
 
-	owner.current.log_message("is no longer a heretic!", LOG_ATTACK, color="#960000")
-
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing, src)
-
 	on_death()
 
 	return ..()
-
-/datum/antagonist/heretic/proc/equip_cultist()
-	var/mob/living/carbon/heretic = owner.current
-	if(!istype(heretic))
-		return
-	. += ecult_give_item(/obj/item/forbidden_book, heretic)
-	. += ecult_give_item(/obj/item/living_heart, heretic)
-
-/datum/antagonist/heretic/proc/ecult_give_item(obj/item/item_path, mob/living/carbon/human/heretic)
-	var/list/slots = list(
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"left pocket" = ITEM_SLOT_LPOCKET,
-		"right pocket" = ITEM_SLOT_RPOCKET
-	)
-
-	var/T = new item_path(heretic)
-	var/item_name = initial(item_path.name)
-	var/where = heretic.equip_in_one_of_slots(T, slots)
-	if(!where)
-		to_chat(heretic, span_userdanger("Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1)."))
-		return FALSE
-	else
-		to_chat(heretic, span_danger("You have a [item_name] in your [where]."))
-		if(where == "backpack")
-			SEND_SIGNAL(heretic.back, COMSIG_TRY_STORAGE_SHOW, heretic)
-		return TRUE
 
 /datum/antagonist/heretic/process()
 
@@ -193,10 +192,6 @@
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "heretics"
 
-/datum/antagonist/heretic/get_admin_commands()
-	. = ..()
-	.["Equip"] = CALLBACK(src,.proc/equip_cultist)
-
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
 
@@ -233,6 +228,7 @@
 	parts += knowledge_message.Join(", ")
 
 	return parts.Join("<br>")
+
 ////////////////
 // Knowledge //
 ////////////////

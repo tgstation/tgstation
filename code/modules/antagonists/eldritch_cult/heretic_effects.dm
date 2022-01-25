@@ -122,6 +122,7 @@
 	targets.Cut()
 	smashes.Cut()
 	return ..()
+
 /**
  * Automatically fixes the target and smash network
  *
