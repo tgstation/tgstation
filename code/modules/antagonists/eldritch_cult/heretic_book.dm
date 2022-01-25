@@ -30,16 +30,16 @@
 	. = ..()
 	if(!proximity_flag || !IS_HERETIC(user))
 		return
-	if(istype(target,/obj/effect/eldritch))
+	if(istype(target,/obj/effect/heretic_rune))
 		remove_rune(target,user)
-	if(istype(target,/obj/effect/reality_smash))
+	if(istype(target,/obj/effect/heretic_influence))
 		get_power_from_influence(target,user)
 	if(istype(target,/turf/open))
 		draw_rune(target,user)
 
 ///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
-	var/obj/effect/reality_smash/RS = target
+	var/obj/effect/heretic_influence/RS = target
 	to_chat(user, span_danger("You start drawing power from influence..."))
 	if(do_after(user, 10 SECONDS, RS))
 		qdel(RS)
@@ -57,7 +57,7 @@
 
 	if(do_after(user,30 SECONDS,A))
 
-		new /obj/effect/eldritch/big(A)
+		new /obj/effect/heretic_rune/big(A)
 
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
@@ -90,7 +90,7 @@
 
 	for(var/X in to_know)
 		lore = list()
-		var/datum/eldritch_knowledge/EK = X
+		var/datum/heretic_knowledge/EK = X
 		lore["type"] = EK.type
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
@@ -103,7 +103,7 @@
 
 	for(var/X in known)
 		lore = list()
-		var/datum/eldritch_knowledge/EK = known[X]
+		var/datum/heretic_knowledge/EK = known[X]
 		lore["name"] = EK.name
 		lore["cost"] = EK.cost
 		lore["disabled"] = TRUE
@@ -127,7 +127,7 @@
 			var/datum/antagonist/heretic/cultie = last_user.mind.has_antag_datum(/datum/antagonist/heretic)
 			var/ekname = params["name"]
 			for(var/X in cultie.get_researchable_knowledge())
-				var/datum/eldritch_knowledge/EK = X
+				var/datum/heretic_knowledge/EK = X
 				if(initial(EK.name) != ekname)
 					continue
 				if(cultie.gain_knowledge(EK))

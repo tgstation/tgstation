@@ -61,7 +61,11 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
-GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/basic,/datum/eldritch_knowledge/living_heart,/datum/eldritch_knowledge/codex_cicatrix))
+GLOBAL_LIST_INIT(heretic_start_knowledge, list(
+	/datum/heretic_knowledge/spell/basic,
+	/datum/heretic_knowledge/living_heart,
+	/datum/heretic_knowledge/codex_cicatrix
+))
 
 
 #define PATH_SIDE "Side"

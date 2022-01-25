@@ -1,12 +1,12 @@
 
 /**
- * #Eldritch Knwoledge
+ * #Eldritch Knowledge
  *
  * Datum that makes eldritch cultist interesting.
  *
  * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
  */
-/datum/eldritch_knowledge
+/datum/heretic_knowledge
 	///Name of the knowledge
 	var/name = "Basic knowledge"
 	///Description of the knowledge
@@ -26,7 +26,7 @@
 	///What path is this on defaults to "Side"
 	var/route = PATH_SIDE
 
-/datum/eldritch_knowledge/New()
+/datum/heretic_knowledge/New()
 	. = ..()
 	var/list/temp_list
 	for(var/atom/required_atom as anything in required_atoms)
@@ -38,7 +38,7 @@
  *
  * This proc is called whenever a new eldritch knowledge is added to an antag datum
  */
-/datum/eldritch_knowledge/proc/on_gain(mob/user)
+/datum/heretic_knowledge/proc/on_gain(mob/user)
 	to_chat(user, span_warning("[gain_text]"))
 	return
 /**
@@ -46,14 +46,14 @@
  *
  * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
  */
-/datum/eldritch_knowledge/proc/on_lose(mob/user)
+/datum/heretic_knowledge/proc/on_lose(mob/user)
 	return
 /**
  * What happens every tick
  *
  * This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second
  */
-/datum/eldritch_knowledge/proc/on_life(mob/user)
+/datum/heretic_knowledge/proc/on_life(mob/user)
 	return
 
 /**
@@ -61,7 +61,7 @@
  *
  * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
  */
-/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms, loc)
+/datum/heretic_knowledge/proc/recipe_snowflake_check(list/atoms, loc)
 	return TRUE
 
 /**
@@ -69,7 +69,7 @@
  *
  * This proc is primarily used to end any soundloops when the heretic dies
  */
-/datum/eldritch_knowledge/proc/on_death(mob/user)
+/datum/heretic_knowledge/proc/on_death(mob/user)
 	return
 
 /**
@@ -77,7 +77,7 @@
  *
  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
  */
-/datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/atoms, loc)
 	if(!length(result_atoms))
 		return FALSE
 	for(var/result in result_atoms)
@@ -89,7 +89,7 @@
  *
  * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
  */
-/datum/eldritch_knowledge/proc/cleanup_atoms(list/atoms)
+/datum/heretic_knowledge/proc/cleanup_atoms(list/atoms)
 	for(var/atom/sacrificed as anything in atoms)
 		if(!isliving(sacrificed))
 			atoms -= sacrificed
@@ -101,7 +101,7 @@
  *
  * Gives addtional effects to mansus grasp spell
  */
-/datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/heretic_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	return FALSE
 
 
@@ -110,39 +110,39 @@
  *
  * Gives addtional effects to sickly blade weapon
  */
-/datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
+/datum/heretic_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
 	return
 
 /**
  * Sickly blade distant act
  *
- * Same as [/datum/eldritch_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
+ * Same as [/datum/heretic_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
  */
-/datum/eldritch_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
+/datum/heretic_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
 	return
 
 //////////////
 ///Subtypes///
 //////////////
 
-/datum/eldritch_knowledge/spell
+/datum/heretic_knowledge/spell
 	var/obj/effect/proc_holder/spell/spell_to_add
 
-/datum/eldritch_knowledge/spell/on_gain(mob/user)
+/datum/heretic_knowledge/spell/on_gain(mob/user)
 	spell_to_add = new spell_to_add
 	user.mind.AddSpell(spell_to_add)
 	return ..()
 
-/datum/eldritch_knowledge/spell/on_lose(mob/user)
+/datum/heretic_knowledge/spell/on_lose(mob/user)
 	user.mind.RemoveSpell(spell_to_add)
 	return ..()
 
-/datum/eldritch_knowledge/curse
+/datum/heretic_knowledge/curse
 	var/timer = 5 MINUTES
 	var/list/fingerprints = list()
 	var/list/dna = list()
 
-/datum/eldritch_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
+/datum/heretic_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
@@ -151,7 +151,7 @@
 		return FALSE
 	return TRUE
 
-/datum/eldritch_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
+/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
 
 	var/list/compiled_list = list()
 
@@ -171,17 +171,17 @@
 	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)
 	return TRUE
 
-/datum/eldritch_knowledge/curse/proc/curse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/proc/curse(mob/living/chosen_mob)
 	return
 
-/datum/eldritch_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
 	return
 
-/datum/eldritch_knowledge/summon
+/datum/heretic_knowledge/summon
 	//Mob to summon
 	var/mob/living/mob_to_summon
 
-/datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
 	//we need to spawn the mob first so that we can use it in poll_candidates_for_mob, we will move it from nullspace down the code
 	var/mob/living/summoned = new mob_to_summon(loc)
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
@@ -201,11 +201,11 @@
 	return TRUE
 
 //Ascension knowledge
-/datum/eldritch_knowledge/final
+/datum/heretic_knowledge/final
 
 	var/finished = FALSE
 
-/datum/eldritch_knowledge/final/recipe_snowflake_check(list/atoms, loc, selected_atoms)
+/datum/heretic_knowledge/final/recipe_snowflake_check(list/atoms, loc, selected_atoms)
 	if(finished)
 		return FALSE
 	var/counter = 0
@@ -216,13 +216,13 @@
 			return TRUE
 	return FALSE
 
-/datum/eldritch_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	finished = TRUE
 	var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	ascension.ascended = TRUE
 	return TRUE
 
-/datum/eldritch_knowledge/final/cleanup_atoms(list/atoms)
+/datum/heretic_knowledge/final/cleanup_atoms(list/atoms)
 	. = ..()
 	for(var/mob/living/carbon/human/sacrifices in atoms)
 		atoms -= sacrifices
@@ -233,17 +233,17 @@
 ///Base lore///
 ///////////////
 
-/datum/eldritch_knowledge/spell/basic
+/datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
 	desc = "Starts your journey in the Mansus. Allows you to select a target using a living heart on a transmutation rune."
 	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
-	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/base_void)
+	next_knowledge = list(/datum/heretic_knowledge/base_rust,/datum/heretic_knowledge/base_ash,/datum/heretic_knowledge/base_flesh,/datum/heretic_knowledge/base_void)
 	cost = 0
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	required_atoms = list(/obj/item/living_heart)
 	route = "Start"
 
-/datum/eldritch_knowledge/spell/basic/recipe_snowflake_check(list/atoms, loc)
+/datum/heretic_knowledge/spell/basic/recipe_snowflake_check(list/atoms, loc)
 	. = ..()
 	for(var/obj/item/living_heart/heart in atoms)
 		if(!heart.target)
@@ -252,7 +252,7 @@
 			return TRUE
 	return FALSE
 
-/datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
 	. = TRUE
 	var/mob/living/carbon/carbon_user = user
 	for(var/obj/item/living_heart/heart in atoms)
@@ -304,10 +304,10 @@
 			else
 				to_chat(user, span_warning("target could not be found for living heart."))
 
-/datum/eldritch_knowledge/spell/basic/cleanup_atoms(list/atoms)
+/datum/heretic_knowledge/spell/basic/cleanup_atoms(list/atoms)
 	return
 
-/datum/eldritch_knowledge/living_heart
+/datum/heretic_knowledge/living_heart
 	name = "Living Heart"
 	desc = "Allows you to create additional living hearts, using a heart, a pool of blood and a poppy. Living hearts when used on a transmutation rune will grant you a person to hunt and sacrifice on the rune. Every sacrifice gives you an additional charge in the book."
 	gain_text = "The Gates of Mansus open up to your mind."
@@ -316,7 +316,7 @@
 	result_atoms = list(/obj/item/living_heart)
 	route = "Start"
 
-/datum/eldritch_knowledge/codex_cicatrix
+/datum/heretic_knowledge/codex_cicatrix
 	name = "Codex Cicatrix"
 	desc = "Allows you to create a spare Codex Cicatrix if you have lost one, using a bible, human skin, a pen and a pair of eyes."
 	gain_text = "Their hand is at your throat, yet you see Them not."

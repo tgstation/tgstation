@@ -74,7 +74,7 @@
 	var/list/researched_knowledge = cultie.get_all_knowledge()
 
 	for(var/knowledge in researched_knowledge)
-		var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
 		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
 	if(use_charge)
@@ -100,7 +100,7 @@
 				carbon_user.stuttering += 13
 
 		for(var/knowledge in researched_knowledge)
-			var/datum/eldritch_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+			var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
 			eldritch_knowledge.on_mansus_grasp(carbon_user, carbon_user)
 
 		carbon_user.adjustBruteLoss(10)
@@ -516,10 +516,10 @@
 
 /obj/effect/proc_holder/spell/targeted/worm_contract/cast(list/targets, mob/user)
 	. = ..()
-	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
+	if(!istype(user,/mob/living/simple_animal/hostile/heretic_summon/armsy))
 		to_chat(user, span_userdanger("You try to contract your muscles but nothing happens..."))
 		return
-	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/armsy = user
 	armsy.contract_next_chain_into_single_tile()
 
 /obj/effect/temp_visual/cleave
@@ -584,7 +584,7 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/pointed/manse_link/cast(list/targets, mob/user)
-	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator = user
+	var/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/originator = user
 
 	var/mob/living/target = targets[1]
 
@@ -605,7 +605,7 @@
 	button_icon_state = "link_speech"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_ecult"
-	var/mob/living/simple_animal/hostile/eldritch/raw_prophet/originator
+	var/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/originator
 
 /datum/action/innate/mansus_speech/New(_originator)
 	. = ..()
@@ -734,7 +734,7 @@
 	var/mob/living/mob_inside = locate() in target.contents - target
 
 	if(!mob_inside)
-		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/outside = new(user.loc,TRUE,segment_length)
 		target.mind.transfer_to(outside, TRUE)
 		target.forceMove(outside)
 		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
@@ -749,7 +749,7 @@
 		return
 
 	if(iscarbon(mob_inside))
-		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
+		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/armsy = target
 		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
 			mob_inside.forceMove(armsy.loc)
 		armsy.mind.transfer_to(mob_inside, TRUE)
@@ -846,4 +846,3 @@
 
 		for(var/i in 1 to 3)
 			livies.forceMove(get_step_towards(livies,user))
-

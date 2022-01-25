@@ -79,7 +79,7 @@
 /datum/antagonist/heretic/on_removal()
 
 	for(var/knowledge_index in researched_knowledge)
-		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current)
 
 	owner.current.log_message("is no longer a heretic!", LOG_ATTACK, color="#960000")
@@ -123,7 +123,7 @@
 		return
 
 	for(var/knowledge_index in researched_knowledge)
-		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_life(owner.current)
 
 ///What happens to the heretic once he dies, used to remove any custom perks
@@ -131,7 +131,7 @@
 	SIGNAL_HANDLER
 
 	for(var/knowledge_index in researched_knowledge)
-		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
@@ -228,7 +228,7 @@
 	var/list/knowledge_message = list()
 	var/list/researched_knowledge = get_all_knowledge()
 	for(var/knowledge_index in researched_knowledge)
-		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge_message += "[knowledge.name]"
 	parts += knowledge_message.Join(", ")
 
@@ -240,7 +240,7 @@
 /datum/antagonist/heretic/proc/gain_knowledge(datum/eldritch_knowledge/knowledge)
 	if(get_knowledge(knowledge))
 		return FALSE
-	var/datum/eldritch_knowledge/initialized_knowledge = new knowledge
+	var/datum/heretic_knowledge/initialized_knowledge = new knowledge
 	researched_knowledge[initialized_knowledge.type] = initialized_knowledge
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
@@ -249,7 +249,7 @@
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
-		var/datum/eldritch_knowledge/knowledge = researched_knowledge[knowledge_index]
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		researchable_knowledge |= knowledge.next_knowledge
 		banned_knowledge |= knowledge.banned_knowledge
 		banned_knowledge |= knowledge.type

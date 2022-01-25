@@ -1,4 +1,4 @@
-/obj/effect/eldritch
+/obj/effect/heretic_rune
 	name = "Generic rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
 	anchored = TRUE
@@ -8,25 +8,25 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
-/obj/effect/eldritch/Initialize(mapload)
+/obj/effect/heretic_rune/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
 
-/obj/effect/eldritch/attack_hand(mob/living/user, list/modifiers)
+/obj/effect/heretic_rune/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	try_activate(user)
 
-/obj/effect/eldritch/proc/try_activate(mob/living/user)
+/obj/effect/heretic_rune/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
 
-/obj/effect/eldritch/proc/activate(mob/living/user)
+/obj/effect/heretic_rune/proc/activate(mob/living/user)
 	is_in_use = TRUE
 	// Have fun trying to read this proc.
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
@@ -45,7 +45,7 @@
 				continue
 		atoms_in_range += atom_in_range
 	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/current_eldritch_knowledge = knowledge[X]
+		var/datum/heretic_knowledge/current_eldritch_knowledge = knowledge[X]
 
 		//has to be done so that we can freely edit the local_required_atoms without fucking up the eldritch knowledge
 		var/list/local_required_atoms = list()
@@ -94,7 +94,7 @@
 	is_in_use = FALSE
 	to_chat(user,span_warning("Your ritual failed! You either used the wrong components or are missing something important!"))
 
-/obj/effect/eldritch/big
+/obj/effect/heretic_rune/big
 	name = "transmutation rune"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "eldritch_rune1"
@@ -104,7 +104,8 @@
 /**
  * #Reality smash tracker
  *
- * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+ * Stupid fucking list holder, DONT create new ones, it will break the game
+ * this is automatically created whenever eldritch cultists are created.
  *
  * Tracks relevant data, generates relevant data, useful tool
  */
@@ -116,9 +117,10 @@
 
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
-		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")
+		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support.")
 	QDEL_LIST(smashes)
 	targets.Cut()
+	smashes.Cut()
 	return ..()
 /**
  * Automatically fixes the target and smash network
@@ -127,13 +129,14 @@
  */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
 	SIGNAL_HANDLER
+
 	list_clear_nulls(smashes)
 	for(var/mind in targets)
 		if(isnull(mind))
 			stack_trace("A null somehow landed in a list of minds")
 			continue
 		for(var/X in smashes)
-			var/obj/effect/reality_smash/reality_smash = X
+			var/obj/effect/heretic_influence/reality_smash = X
 			reality_smash.AddMind(mind)
 
 /**
@@ -152,11 +155,11 @@
 		var/turf/chosen_location = get_safe_random_station_turf()
 
 		//we also dont want them close to each other, at least 1 tile of seperation
-		var/obj/effect/reality_smash/what_if_i_have_one = locate() in range(1, chosen_location)
-		var/obj/effect/broken_illusion/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
+		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in range(1, chosen_location)
+		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
-		new /obj/effect/reality_smash(chosen_location)
+		new /obj/effect/heretic_influence(chosen_location)
 	ReworkNetwork()
 
 /**
@@ -168,7 +171,7 @@
 	RegisterSignal(e_cultists.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= e_cultists
 	Generate()
-	for(var/obj/effect/reality_smash/reality_smash in smashes)
+	for(var/obj/effect/heretic_influence/reality_smash in smashes)
 		reality_smash.AddMind(e_cultists)
 
 
@@ -180,10 +183,10 @@
 /datum/reality_smash_tracker/proc/RemoveMind(datum/mind/e_cultists)
 	UnregisterSignal(e_cultists.current,COMSIG_MOB_LOGIN)
 	targets -= e_cultists
-	for(var/obj/effect/reality_smash/reality_smash in smashes)
+	for(var/obj/effect/heretic_influence/reality_smash in smashes)
 		reality_smash.RemoveMind(e_cultists)
 
-/obj/effect/broken_illusion
+/obj/effect/visible_heretic_influence
 	name = "pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
@@ -191,44 +194,52 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
-/obj/effect/broken_illusion/Initialize(mapload)
+/obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
 
-	var/image/I = image('icons/effects/eldritch.dmi',src,null,OBJ_LAYER)
-	I.override = TRUE
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", I)
+	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "pierced_reality", silicon_image)
 
-///Makes this obj appear out of nothing
-/obj/effect/broken_illusion/proc/show_presence()
-	animate(src,alpha = 255,time = 15 SECONDS)
+/*
+ * Makes the influence fade in after 15 seconds.
+ */
+/obj/effect/visible_heretic_influence/proc/show_presence()
+	animate(src, alpha = 255, time = 15 SECONDS)
 
-/obj/effect/broken_illusion/attack_hand(mob/living/user, list/modifiers)
+/obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
 	if(!ishuman(user))
 		return ..()
-	var/mob/living/carbon/human/human_user = user
-	if(IS_HERETIC(human_user))
+
+	if(IS_HERETIC(user))
 		to_chat(human_user,span_boldwarning("You know better than to tempt forces out of your control!"))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
+	if(prob(25))
+		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
+		arm.dismember()
+		qdel(arm)
 	else
-		var/obj/item/bodypart/arm = human_user.get_active_hand()
-		if(prob(25))
-			to_chat(human_user,span_userdanger("An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!"))
-			arm.dismember()
-			qdel(arm)
-		else
-			to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails trying to latch onto existance itself!"))
+		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
 
 
-/obj/effect/broken_illusion/attack_tk(mob/user)
+/obj/effect/visible_heretic_influence/attack_tk(mob/user)
 	if(!ishuman(user))
 		return
+
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
-	var/mob/living/carbon/human/human_user = user
-	if(IS_HERETIC(human_user))
-		to_chat(human_user,span_boldwarning("You know better than to tempt forces out of your control!"))
+
+	if(IS_HERETIC(user))
+		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
 		return
-	//a very elaborate way to suicide
-	to_chat(human_user,span_userdanger("Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!"))
+
+	var/mob/living/carbon/human/human_user = user
+
+	// A very elaborate way to suicide
+	to_chat(human_user, span_userdanger("Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!"))
 	human_user.ghostize()
 	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 	if(head)
@@ -241,65 +252,108 @@
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
 	explosion.start(src)
 
-
-/obj/effect/broken_illusion/examine(mob/user)
+/obj/effect/visible_heretic_influence/examine(mob/user)
 	. = ..()
-	if(!IS_HERETIC(user) && ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user,span_warning("Your mind burns as you stare at the tear!"))
-		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
-		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+	if(IS_HERETIC(user) || !ishuman(user))
+		return
 
-/obj/effect/reality_smash
+	var/mob/living/carbon/human/human_user = user
+	to_chat(human_user, span_userdanger("Your mind burns as you stare at the tear!"))
+	human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 190)
+	SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
+
+/obj/effect/heretic_influence
 	name = "reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
-	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
+	/// The icon state of the generated image for this influence.
 	var/image_state = "reality_smash"
-	///Who can see us?
+	/// A list of all minds that can see us.
 	var/list/minds = list()
-	///Tracked image
-	var/image/img
+	/// The image shown to heretics
+	var/image/heretic_image
 
-/obj/effect/reality_smash/Initialize(mapload)
+/obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	img = image(icon, src, image_state, OBJ_LAYER)
 	generate_name()
 
-/obj/effect/reality_smash/Destroy()
+/obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
-	on_destroy()
+	for(var/datum/mind/heretic in minds)
+		remove_mind(heretic)
+
+	heretic_image = null
 	return ..()
 
-/obj/effect/reality_smash/proc/on_destroy()
-	for(var/e_cultists in minds)
-		var/datum/mind/e_cultie = e_cultists
-		if(e_cultie.current?.client)
-			e_cultie.current.client.images -= img
-		//clear the list
-		minds -= e_cultie
-	img = null
-	var/obj/effect/broken_illusion/illusion = new /obj/effect/broken_illusion(drop_location())
-	illusion.name = pick("Researched","Siphoned","Analyzed","Emptied","Drained") + " " + name
+/obj/effect/heretic_influence/proc/drain_influence()
+	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
+	illusion.name = pick("Researched", "Siphoned", "Analyzed", "Emptied", "Drained") + " " + name
+	qdel(src)
 
-///Makes the mind able to see this effect
-/obj/effect/reality_smash/proc/AddMind(datum/mind/e_cultie)
-	minds |= e_cultie
-	if(e_cultie.current.client)
-		e_cultie.current.client.images |= img
+/*
+ * Add a mind to the list of tracked minds,
+ * making another person able to see us.
+ */
+/obj/effect/heretic_influence/proc/add_mind(datum/mind/heretic)
+	minds |= heretic
+	heretic.current?.client?.images |= heretic_image
 
-///Makes the mind not able to see this effect
-/obj/effect/reality_smash/proc/RemoveMind(datum/mind/e_cultie)
-	minds -= e_cultie
-	if(e_cultie.current.client)
-		e_cultie.current.client.images -= img
+/*
+ * Remove a mind present in our list
+ * from being able to see us.
+ */
+/obj/effect/heretic_influence/proc/remove_mind(datum/mind/heretic)
+	if(!(heretic in minds))
+		CRASH("[type] - remove_mind called with a mind not present in the minds list!")
 
-///Generates random name
-/obj/effect/reality_smash/proc/generate_name()
-	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful","Arrogant","Threatening","Peaceful","Aggressive")
-	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze","Grasp","Sight","Whisper","Flow","Touch","Veil","Thought","Imperfection","Blemish","Blush")
+	minds -= heretic
+	heretic.current?.client?.images -= heretic_image
+
+/*
+ * Generates a random name for the influence.
+ */
+/obj/effect/heretic_influence/proc/generate_name()
+	var/static/list/prefix = list(
+		"Omniscient",
+		"Thundering",
+		"Enlightening",
+		"Intrusive",
+		"Rejectful",
+		"Atomized",
+		"Subtle",
+		"Rising",
+		"Lowering",
+		"Fleeting",
+		"Towering",
+		"Blissful",
+		"Arrogant",
+		"Threatening",
+		"Peaceful",
+		"Aggressive",
+	)
+	var/static/list/postfix = list(
+		"Flaw",
+		"Presence",
+		"Crack",
+		"Heat",
+		"Cold",
+		"Memory",
+		"Reminder",
+		"Breeze",
+		"Grasp",
+		"Sight",
+		"Whisper",
+		"Flow",
+		"Touch",
+		"Veil",
+		"Thought",
+		"Imperfection",
+		"Blemish",
+		"Blush",
+	)
 
 	name = "\improper" + pick(prefix) + " " + pick(postfix)

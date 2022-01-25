@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/eldritch
+/mob/living/simple_animal/hostile/heretic_summon
 	name = "Demon"
 	real_name = "Demon"
 	desc = ""
@@ -34,7 +34,7 @@
 	///Innate spells that are supposed to be added when a beast is created
 	var/list/spells_to_add
 
-/mob/living/simple_animal/hostile/eldritch/Initialize(mapload)
+/mob/living/simple_animal/hostile/heretic_summon/Initialize(mapload)
 	. = ..()
 	add_spells()
 
@@ -43,11 +43,11 @@
  *
  * Goes through spells_to_add and adds each spell to the mind.
  */
-/mob/living/simple_animal/hostile/eldritch/proc/add_spells()
+/mob/living/simple_animal/hostile/heretic_summon/proc/add_spells()
 	for(var/spell in spells_to_add)
 		AddSpell(new spell())
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet
 	name = "Raw Prophet"
 	real_name = "Raw Prophet"
 	desc = "Abomination made from severed limbs."
@@ -63,15 +63,15 @@
 
 	var/list/linked_mobs = list()
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize(mapload)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
 	link_mob(src)
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Login()
 	. = ..()
 	client?.view_size.setTo(10)
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/link_mob(mob/living/mob_linked)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/link_mob(mob/living/mob_linked)
 	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
 		return FALSE
 	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
@@ -88,7 +88,7 @@
 	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)), .proc/unlink_mob)
 	return TRUE
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
 	SIGNAL_HANDLER
 
 	if(!linked_mobs[mob_linked])
@@ -103,12 +103,12 @@
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
 	linked_mobs -= mob_linked
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Destroy()
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Destroy()
 	for(var/linked_mob in linked_mobs)
 		unlink_mob(linked_mob)
 	return ..()
 
-/mob/living/simple_animal/hostile/eldritch/armsy
+/mob/living/simple_animal/hostile/heretic_summon/armsy
 	name = "Terror of the night"
 	real_name = "Armsy"
 	desc = "Abomination made from severed limbs."
@@ -125,9 +125,9 @@
 	ranged = TRUE
 	rapid = 1
 	///Previous segment in the chain
-	var/mob/living/simple_animal/hostile/eldritch/armsy/back
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/back
 	///Next segment in the chain
-	var/mob/living/simple_animal/hostile/eldritch/armsy/front
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/front
 	///Your old location
 	var/oldloc
 	///Allow / disallow pulling
@@ -140,7 +140,7 @@
 	var/follow = TRUE
 
 //I tried Initalize but it didnt work, like at all. This proc just wouldnt fire if it was Initalize instead of New
-/mob/living/simple_animal/hostile/eldritch/armsy/Initialize(mapload,spawn_more = TRUE,len = 6)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/Initialize(mapload,spawn_more = TRUE,len = 6)
 	. = ..()
 	if(len < 3)
 		stack_trace("Eldritch Armsy created with invalid len ([len]). Reverting to 3.")
@@ -154,9 +154,9 @@
 	maxHealth = len * maxHealth
 	health = maxHealth
 	///previous link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/prev = src
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = src
 	///current link
-	var/mob/living/simple_animal/hostile/eldritch/armsy/current
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/current
 	for(var/i in 1 to len)
 		current = new type(drop_location(),FALSE)
 		current.icon_state = "armsy_mid"
@@ -168,40 +168,40 @@
 	prev.icon_state = "armsy_end"
 	prev.icon_living = "armsy_end"
 
-/mob/living/simple_animal/hostile/eldritch/armsy/adjustBruteLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustBruteLoss(amount, updating_health, forced)
 	if(back)
 		back.adjustBruteLoss(amount, updating_health, forced)
 	else
 		return ..()
 
-/mob/living/simple_animal/hostile/eldritch/armsy/adjustFireLoss(amount, updating_health, forced)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/adjustFireLoss(amount, updating_health, forced)
 	if(back)
 		back.adjustFireLoss(amount, updating_health, forced)
 	else
 		return ..()
 
 //we are literally a vessel of otherworldly destruction, we bring our own gravity unto this plane
-/mob/living/simple_animal/hostile/eldritch/armsy/has_gravity(turf/T)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/has_gravity(turf/T)
 	return TRUE
 
 
-/mob/living/simple_animal/hostile/eldritch/armsy/can_be_pulled()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/can_be_pulled()
 	return FALSE
 
 ///Updates chain links to force move onto a single tile
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/contract_next_chain_into_single_tile()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/contract_next_chain_into_single_tile()
 	if(back)
 		back.forceMove(loc)
 		back.contract_next_chain_into_single_tile()
 	return
 
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/get_length()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/get_length()
 	. += 1
 	if(back)
 		. += back.get_length()
 
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/update_chain_links()
 	SIGNAL_HANDLER
 	if(!follow)
 		return
@@ -213,14 +213,14 @@
 		forceMove(front.oldloc)
 	oldloc = loc
 
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/gib_trail()
 	if(front) // head makes gibs
 		return
 	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
 	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
 	decal.setDir(dir)
 
-/mob/living/simple_animal/hostile/eldritch/armsy/Destroy()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/Destroy()
 	if(front)
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
@@ -229,7 +229,7 @@
 		QDEL_NULL(back) // chain destruction baby
 	return ..()
 
-/mob/living/simple_animal/hostile/eldritch/armsy/proc/heal()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/heal()
 	if(back)
 		back.heal()
 
@@ -239,7 +239,7 @@
 	if(health == maxHealth)
 		current_stacks++
 		if(current_stacks >= stacks_to_grow)
-			var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
+			var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = new type(drop_location(),spawn_more = FALSE)
 			icon_state = "armsy_mid"
 			icon_living = "armsy_mid"
 			back = prev
@@ -250,11 +250,11 @@
 			current_stacks = 0
 			return
 
-/mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/Shoot(atom/targeted_atom)
 	GiveTarget(targeted_atom)
 	AttackingTarget()
 
-/mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
+/mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
 		qdel(target)
 		heal()
@@ -288,7 +288,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/eldritch/armsy/prime
+/mob/living/simple_animal/hostile/heretic_summon/armsy/prime
 	name = "Lord of the Night"
 	real_name = "Master of Decay"
 	maxHealth = 400
@@ -296,13 +296,13 @@
 	melee_damage_lower = 30
 	melee_damage_upper = 50
 
-/mob/living/simple_animal/hostile/eldritch/armsy/prime/Initialize(mapload,spawn_more = TRUE,len = 9)
+/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/Initialize(mapload,spawn_more = TRUE,len = 9)
 	. = ..()
 	var/matrix/matrix_transformation = matrix()
 	matrix_transformation.Scale(1.4,1.4)
 	transform = matrix_transformation
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit
 	name = "Rust Walker"
 	real_name = "Rusty"
 	desc = "Incomprehensible abomination actively seeping life out of it's surrounding."
@@ -316,7 +316,7 @@
 	sight = SEE_TURFS
 	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/setDir(newdir)
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/setDir(newdir)
 	. = ..()
 	if(newdir == NORTH)
 		icon_state = "rust_walker_n"
@@ -324,11 +324,11 @@
 		icon_state = "rust_walker_s"
 	update_appearance()
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Moved()
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/footstep/rustystep1.ogg', 100, TRUE)
 
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/heretic_summon/rust_spirit/Life(delta_time = SSMOBS_DT, times_fired)
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
@@ -337,7 +337,7 @@
 		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()
 
-/mob/living/simple_animal/hostile/eldritch/ash_spirit
+/mob/living/simple_animal/hostile/heretic_summon/ash_spirit
 	name = "Ash Man"
 	real_name = "Ashy"
 	desc = "Incomprehensible abomination actively seeping life out of it's surrounding."
@@ -351,7 +351,7 @@
 	sight = SEE_TURFS
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/pointed/cleave,/obj/effect/proc_holder/spell/targeted/fire_sworn)
 
-/mob/living/simple_animal/hostile/eldritch/stalker
+/mob/living/simple_animal/hostile/heretic_summon/stalker
 	name = "Flesh Stalker"
 	real_name = "Flesh Stalker"
 	desc = "Abomination made from severed limbs."

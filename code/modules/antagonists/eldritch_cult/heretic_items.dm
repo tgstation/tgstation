@@ -80,7 +80,7 @@
 		return
 	var/list/knowledge = cultie.get_all_knowledge()
 	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/eldritch_knowledge_datum = knowledge[X]
+		var/datum/heretic_knowledge/eldritch_knowledge_datum = knowledge[X]
 		if(proximity_flag)
 			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 		else
