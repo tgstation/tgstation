@@ -174,11 +174,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "an" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -715,8 +710,10 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bC" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "bE" = (
@@ -1130,9 +1127,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "hH" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "nB" = (
@@ -1493,9 +1492,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Ue" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/bot,
 /obj/machinery/status_display/evac/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "Vz" = (
