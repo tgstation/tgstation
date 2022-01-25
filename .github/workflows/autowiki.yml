@@ -1,0 +1,45 @@
+name: Autowiki
+on:
+  schedule:
+  - cron: "5 4 * * *"
+  workflow_dispatch:
+jobs:
+  autowiki:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Check for AUTOWIKI_USERNAME"
+      id: secrets_set
+      env:
+        ENABLER_SECRET: ${{ secrets.AUTOWIKI_USERNAME }}
+      run: |
+        unset SECRET_EXISTS
+        if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
+        echo "::set-output name=SECRETS_ENABLED::$SECRET_EXISTS"
+    - name: Checkout
+      if: steps.secrets_set.outputs.SECRETS_ENABLED
+      uses: actions/checkout@v2
+    - name: Restore BYOND cache
+      if: steps.secrets_set.outputs.SECRETS_ENABLED
+      uses: actions/cache@v2
+      with:
+        path: ~/BYOND
+        key: ${{ runner.os }}-byond-${{ secrets.CACHE_PURGE_KEY }}
+    - name: Install rust-g
+      if: steps.secrets_set.outputs.SECRETS_ENABLED
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt update || true
+        sudo apt install -o APT::Immediate-Configure=false libssl1.1:i386
+        bash tools/ci/install_rust_g.sh
+    - name: Compile and generate Autowiki files
+      if: steps.secrets_set.outputs.SECRETS_ENABLED
+      run: |
+        bash tools/ci/install_byond.sh
+        source $HOME/BYOND/byond/bin/byondsetup
+        tools/build/build --ci autowiki
+    - name: Run Autowiki
+      if: steps.secrets_set.outputs.SECRETS_ENABLED
+      env:
+        USERNAME: ${{ secrets.AUTOWIKI_USERNAME }}
+        PASSWORD: ${{ secrets.AUTOWIKI_PASSWORD }}
+      run: node tools/autowiki/autowiki.js data/autowiki_edits.txt data/autowiki_files/
