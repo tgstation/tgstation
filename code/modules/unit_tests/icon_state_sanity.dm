@@ -1,8 +1,5 @@
 /datum/unit_test/icon_state_sanity/Run()
-	var/list/all_objs = typesof(/obj)
-	var/list/all_turfs = typesof(/turf)
-	var/list/all_mobs = typesof(/mob)
-	var/list/atoms_to_check = all_mobs | all_objs | all_turfs
+	var/list/atoms_to_check = typesof(/atom) - typesof(/area)
 	for(var/atom_path in atoms_to_check)
 		if(isnull(atom_path))
 			continue
