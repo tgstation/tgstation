@@ -1,0 +1,11 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes: 
+  - expansion: "Adds the MOD Action component for the circuit adapter module. When the circuit adapter is selected, a radial menu opens, allowing the wearer to trigger any of the installed Action components."
+  - qol: "The circuit adapter module can be printed in the component printer."
+  - qol: "The circuit adapter module can have its circuit removed. Because of this, the module no longer starts with an unremovable circuit pre-installed."
+  - spellcheck: "Renames the MOD component to the MOD circuit adapter core, as it is no longer the only MODsuit-related circuit component."
+  - bugfix: "The MOD circuit adapter core can now activate inactive MODsuits."
+  - qol: "The MOD circuit adapter core's \"Selected Module\" port is now a string port instead of an entity port."
+  - qol: "The MOD circuit adapter core now has a \"On Module Selected\" output signal."
+  - bugfix: "The BCI action component now properly typechecks if it was inserted into a BCI."
