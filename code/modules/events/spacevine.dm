@@ -575,7 +575,13 @@
 				for(var/datum/spacevine_mutation/mutation in mutations)
 					mutation.on_spread(src, stepturf) //Only do the on_spread proc if it actually spreads.
 					stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-				master.spawn_spacevine_piece(stepturf, src)
+				var/obj/structure/spacevine/spawning_vine = master.spawn_spacevine_piece(stepturf, src) //Let's do a cool little animate
+				if(NSCOMPONENT(direction))
+					spawning_vine.pixel_y = direction == NORTH ? -32 : 32
+					animate(spawning_vine, pixel_y = 0, time = 1 SECONDS)
+				else
+					spawning_vine.pixel_x = direction == EAST ? -32 : 32
+					animate(spawning_vine, pixel_x = 0, time = 1 SECONDS)
 
 /// Destroying an explosive vine sets off a chain reaction
 /obj/structure/spacevine/ex_act(severity, target)
