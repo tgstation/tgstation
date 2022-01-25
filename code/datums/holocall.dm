@@ -96,9 +96,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)//if the call is answered, then calling_holopad wont be in dialed_holopads and thus wont have set_holocall(src, FALSE) called
-		calling_holopad.calling = FALSE
-		calling_holopad.outgoing_call = null
-		calling_holopad.SetLightsAndPower()
+		calling_holopad.callee_hung_up()
 		calling_holopad = null
 	if(connected_holopad)
 		connected_holopad.SetLightsAndPower()
@@ -163,7 +161,7 @@
 	if(!Check())
 		return
 
-	calling_holopad.calling = FALSE
+	calling_holopad.callee_picked_up()
 	hologram = answering_holopad.activate_holo(user)
 	hologram.HC = src
 

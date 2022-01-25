@@ -1,7 +1,8 @@
 #define CAN_HEAR_MASTERS (1<<0)
 #define CAN_HEAR_ACTIVE_HOLOCALLS (1<<1)
 #define CAN_HEAR_RECORD_MODE (1<<2)
-#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE)
+#define CAN_HEAR_HOLOCALL_USER (1<<3)
+#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE|CAN_HEAR_HOLOCALL_USER)
 
 /* Holograms!
  * Contains:
@@ -575,6 +576,21 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	qdel(masters[user]) // Get rid of user's hologram
 	unset_holo(user)
 	return TRUE
+
+/**
+ * Called by holocall to inform outgoing_call that the receiver picked up.
+ */
+/obj/machinery/holopad/proc/callee_picked_up()
+	calling = FALSE
+	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER)
+
+/**
+ * Called by holocall to inform outgoing_call that the call is terminated.
+ */
+/obj/machinery/holopad/proc/callee_hung_up()
+	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER, set_flag = FALSE)
+	calling = FALSE
+	outgoing_call = null
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
