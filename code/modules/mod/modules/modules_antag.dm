@@ -266,8 +266,8 @@
 	icon_state = "cloak"
 	module_type = MODULE_TOGGLE
 	complexity = 4
-	active_power_cost = DEFAULT_CELL_DRAIN * 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 10
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
 	/// Whether or not the cloak turns off on bumping.
@@ -283,7 +283,7 @@
 		RegisterSignal(mod.wearer, COMSIG_LIVING_MOB_BUMP, .proc/unstealth)
 	RegisterSignal(mod.wearer, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_unarmed_attack)
 	RegisterSignal(mod.wearer, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
-	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_PAW, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
+	RegisterSignal(mod.wearer, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_HITBY, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED), .proc/unstealth)
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
@@ -328,6 +328,6 @@
 	icon_state = "cloak_ninja"
 	bumpoff = FALSE
 	stealth_alpha = 20
-	active_power_cost = DEFAULT_CELL_DRAIN
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS

@@ -20,11 +20,12 @@
 			deploy_bodybag(user, target)
 
 /obj/item/bodybag/proc/deploy_bodybag(mob/user, atom/location)
-	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
-	R.open(user)
-	R.add_fingerprint(user)
-	R.foldedbag_instance = src
+	var/obj/structure/closet/body_bag/item_bag = new unfoldedbag_path(location)
+	item_bag.open(user)
+	item_bag.add_fingerprint(user)
+	item_bag.foldedbag_instance = src
 	moveToNullspace()
+	return item_bag
 
 /obj/item/bodybag/suicide_act(mob/user)
 	if(isopenturf(user.loc))
@@ -62,15 +63,16 @@
 	return ..()
 
 /obj/item/bodybag/bluespace/deploy_bodybag(mob/user, atom/location)
-	var/obj/structure/closet/body_bag/R = new unfoldedbag_path(location)
-	for(var/atom/movable/A in contents)
-		A.forceMove(R)
-		if(isliving(A))
-			to_chat(A, span_notice("You suddenly feel air around you! You're free!"))
-	R.open(user)
-	R.add_fingerprint(user)
-	R.foldedbag_instance = src
+	var/obj/structure/closet/body_bag/item_bag = new unfoldedbag_path(location)
+	for(var/atom/movable/inside in contents)
+		inside.forceMove(item_bag)
+		if(isliving(inside))
+			to_chat(inside, span_notice("You suddenly feel air around you! You're free!"))
+	item_bag.open(user)
+	item_bag.add_fingerprint(user)
+	item_bag.foldedbag_instance = src
 	moveToNullspace()
+	return item_bag
 
 /obj/item/bodybag/bluespace/container_resist_act(mob/living/user)
 	if(user.incapacitated())
