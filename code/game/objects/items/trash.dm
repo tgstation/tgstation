@@ -45,6 +45,15 @@
 	icon_state = "boritos"
 	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
+/obj/item/trash/boritos/green
+	icon_state = "boritosgreen"
+
+/obj/item/trash/boritos/red
+	icon_state = "boritosred"
+
+/obj/item/trash/boritos/purple
+	icon_state = "boritospurple"
+
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
