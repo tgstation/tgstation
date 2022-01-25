@@ -264,11 +264,6 @@ GLOBAL_VAR(restart_counter)
 	return
 	#endif
 
-	#ifdef AUTOWIKI
-	qdel(src)
-	return
-	#endif
-
 	if(TgsAvailable())
 		var/do_hard_reboot
 		// check the hard reboot counter
