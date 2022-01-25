@@ -2,7 +2,7 @@
  * The base type for nearly all physical objects in SS13
 
  * Lots and lots of functionality lives here, although in general we are striving to move
- * as much as possible to the components/elements system
+ * as much as possible to the components/elements system, based isnt it
  */
 /atom
 	layer = TURF_LAYER
