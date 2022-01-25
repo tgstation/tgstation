@@ -198,6 +198,6 @@
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 	throwforce = 22	//Better to throw
 
-/obj/item/spear/bonespear/ComponentInitialize()
+/obj/item/spear/bamboospear/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")

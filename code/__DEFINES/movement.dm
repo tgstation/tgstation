@@ -82,3 +82,22 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_STAIRS_FLAGS (ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED)
 /// Used for falling down open space.
 #define ZMOVE_FALL_FLAGS (ZMOVE_FALL_CHECKS|ZMOVE_ALLOW_BUCKLED)
+
+//Diagonal movement is split into two cardinal moves
+/// The first step of the diagnonal movement
+#define FIRST_DIAG_STEP 1
+/// The second step of the diagnonal movement
+#define SECOND_DIAG_STEP 2
+
+/// Classic bluespace teleportation, requires a sender but no receiver
+#define TELEPORT_CHANNEL_BLUESPACE "bluespace"
+/// Quantum-based teleportation, requires both sender and receiver, but is free from normal disruption
+#define TELEPORT_CHANNEL_QUANTUM "quantum"
+/// Wormhole teleportation, is not disrupted by bluespace fluctuations but tends to be very random or unsafe
+#define TELEPORT_CHANNEL_WORMHOLE "wormhole"
+/// Magic teleportation, does whatever it wants (unless there's antimagic)
+#define TELEPORT_CHANNEL_MAGIC "magic"
+/// Cult teleportation, does whatever it wants (unless there's holiness)
+#define TELEPORT_CHANNEL_CULT "cult"
+/// Anything else
+#define TELEPORT_CHANNEL_FREE "free"

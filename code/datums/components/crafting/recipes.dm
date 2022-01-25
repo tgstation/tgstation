@@ -386,7 +386,7 @@
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/simple_animal/bot/honkbot
+	result = /mob/living/simple_animal/bot/secbot/honkbot
 	reqs = list(/obj/item/storage/box/clown = 1,
 				/obj/item/bodypart/r_arm/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
@@ -636,14 +636,14 @@
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
 	reqs = list(/obj/item/food/grown/poppy/lily =2,
-				/obj/item/grown/sunflower = 2,
+				/obj/item/food/grown/sunflower = 2,
 				/obj/item/food/grown/poppy/geranium = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/sunflower = 6)
+	reqs = list(/obj/item/food/grown/sunflower = 6)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet

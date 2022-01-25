@@ -211,6 +211,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
+	gamer.played_game()
+
 	if(event)
 		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
@@ -345,6 +347,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
+	usr.lost_game()
+	
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
@@ -471,6 +475,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
+	usr.won_game()
+	
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
