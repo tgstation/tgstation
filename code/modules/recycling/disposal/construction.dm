@@ -35,7 +35,7 @@
 
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-		rotcomp.BaseRot(null,ROTATION_FLIP)
+		rotcomp.Rotate(null,ROTATION_FLIP)
 
 	update_appearance()
 
