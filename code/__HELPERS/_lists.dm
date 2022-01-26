@@ -144,7 +144,7 @@
 	* COMPARISON: A define that takes an item to compare as input, and returns their comparable value
 	* COMPTYPE: How should the list be compared? Either COMPARE_KEY or COMPARE_VALUE.
 	*/
-		#define BINARY_INSERT_DEFINE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
+#define BINARY_INSERT_DEFINE(INPUT, LIST, TYPECONT, COMPARE, COMPARISON, COMPTYPE) \
 	do {\
 		var/list/__BIN_LIST = LIST;\
 		var/__BIN_CTTL = length(__BIN_LIST);\
@@ -154,7 +154,7 @@
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
 			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			var ##TYPECONT/__BIN_ITEM;\
+			UNLINT(var ##TYPECONT/__BIN_ITEM);\
 			while(__BIN_LEFT < __BIN_RIGHT) {\
 				__BIN_ITEM = COMPTYPE;\
 				if(##COMPARISON(__BIN_ITEM) <= ##COMPARISON(COMPARE)) {\
