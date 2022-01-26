@@ -5,6 +5,7 @@
 #define ROTATION_CLOCKWISE (1<<4)
 #define ROTATION_FLIP (1<<5)
 #define ROTATION_GHOSTS_ALLOWED (1<6)
+#define ROTATION_ANCHORED_ALLOWED (1<7)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
@@ -155,8 +156,11 @@
 	return FALSE
 
 /datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
-	var/atom/movable/AM = parent
-	return !AM.anchored
+	if(src.rotation_flags & ROTATION_ANCHORED_ALLOWED)
+		return TRUE
+	else
+		var/atom/movable/AM = parent
+		return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
