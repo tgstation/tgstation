@@ -257,7 +257,6 @@
 		return TRUE
 	return ..()
 
-// woo hoo, actual secondary procs
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
 	return TRUE
