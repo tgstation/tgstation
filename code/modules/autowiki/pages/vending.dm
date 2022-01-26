@@ -18,7 +18,7 @@
 		// Technically won't match if product amounts change, but this isn't likely
 		var/products_cache_key = vending_machine.products.Join("-") + "&" + vending_machine.contraband.Join("-") + "&" + vending_machine.premium.Join("-")
 
-		// MOTHBLOCKS TODO: Show all vending machines that have the same products?
+		// In the future, this should show all vending machines that have the same products
 		if (products_cache_key in cached_products)
 			qdel(vending_machine)
 			continue
