@@ -1,5 +1,17 @@
+
+
+/*
+ * Simple helper to generate a string of
+ * garbled symbols up to [length] characters.
+ */
+/proc/generate_heretic_text(length = 25)
+	. = ""
+	for(var/i in 1 to length)
+		. += pick("!", "$", "^", "@", "&", "#", "*", "(", ")", "?")
+
+/// The heretic antagonist itself.
 /datum/antagonist/heretic
-	name = "Heretic"
+	name = "\improper Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
 	ui_name = "AntagInfoHeretic"
@@ -13,6 +25,7 @@
 	var/knowledge_points = 1
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
+	var/high_value_sacrifices = 0
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/ui_data(mob/user)
@@ -99,7 +112,6 @@
 		forge_primary_objectives()
 
 	GLOB.reality_smash_track.AddMind(owner)
-	START_PROCESSING(SSprocessing, src)
 	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/on_death)
 
 	return ..()
@@ -111,19 +123,10 @@
 		knowledge.on_lose(owner.current)
 
 	GLOB.reality_smash_track.RemoveMind(owner)
-	STOP_PROCESSING(SSprocessing, src)
 	on_death()
+	UnregisterSignal(owner.current, COMSIG_LIVING_DEATH)
 
 	return ..()
-
-/datum/antagonist/heretic/process()
-
-	if(owner.current.stat == DEAD)
-		return
-
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_life(owner.current)
 
 ///What happens to the heretic once he dies, used to remove any custom perks
 /datum/antagonist/heretic/proc/on_death()
@@ -134,52 +137,22 @@
 		knowledge.on_death(owner.current)
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
-	var/list/assasination = list()
-	var/list/protection = list()
+	var/datum/objective/heretic_research/research_objective = new()
+	research_objective.owner = owner
+	objectives += research_objective
 
-	var/choose_list_begin = list("assassinate","protect")
-	var/choose_list_end = list("assassinate","hijack","protect","glory")
-
-	var/pck1 = pick(choose_list_begin)
-	var/pck2 = pick(choose_list_end)
-
-	forge_objective(pck1,assasination,protection)
-	forge_objective(pck2,assasination,protection)
-
-	var/datum/objective/sacrifice_ecult/sac_objective = new
+	var/datum/objective/minor_sacrifice/sac_objective = new()
 	sac_objective.owner = owner
-	sac_objective.update_explanation_text()
 	objectives += sac_objective
 
-/datum/antagonist/heretic/proc/forge_objective(string,assasination,protection)
-	switch(string)
-		if("assassinate")
-			var/datum/objective/assassinate/kill = new
-			kill.owner = owner
-			var/list/owners = kill.get_owners()
-			kill.find_target(owners,protection)
-			assasination += kill.target
-			objectives += kill
-		if("hijack")
-			var/datum/objective/hijack/hijack = new
-			hijack.owner = owner
-			objectives += hijack
-		if("glory")
-			var/datum/objective/martyr/martyrdom = new
-			martyrdom.owner = owner
-			objectives += martyrdom
-		if("protect")
-			var/datum/objective/protect/protect = new
-			protect.owner = owner
-			var/list/owners = protect.get_owners()
-			protect.find_target(owners,assasination)
-			protection += protect.target
-			objectives += protect
+	var/datum/objective/major_sacrifice/other_sac_objective = new()
+	other_sac_objective.owner = owner
+	objectives += other_sac_objective
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
-	handle_clown_mutation(our_mob, mob_override ? null : "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
+	handle_clown_mutation(our_mob, "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
 	our_mob.faction |= "heretics"
 	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/spell_check)
 
@@ -190,7 +163,6 @@
 	our_mob.faction -= "heretics"
 	UnregisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL)
 
-
 /*
  * Signal proc for [COMSIG_MOB_PRE_CAST_SPELL].
  *
@@ -198,7 +170,7 @@
  * If so, allow them to cast like normal.
  * If not, cancel the cast.
  */
-/datum/antagonist/heretic/proc/spell_check(datum/source, obj/effect/proc_holder/spell)
+/datum/antagonist/heretic/proc/spell_check(datum/source, obj/effect/proc_holder/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care
@@ -206,7 +178,7 @@
 		return
 
 	// If we've got the trait, we don't care
-	if(HAS_TRAIT(src, TRAIT_ALLOW_HERETIC_CASTING))
+	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
 		return
 
 	// We shouldn't be able to cast this! Cancel it.
@@ -215,25 +187,26 @@
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
 
-	var/cultiewin = TRUE
+	var/succeeded = TRUE
 
 	parts += printplayer(owner)
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 
 	if(length(objectives))
 		var/count = 1
-		for(var/o in objectives)
-			var/datum/objective/objective = o
+		for(var/datum/objective/objective as anything in objectives)
 			if(objective.check_completion())
-				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!</b>")]"
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_greentext("Success!")]"
 			else
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] [span_redtext("Fail.")]"
-				cultiewin = FALSE
+				succeeded = FALSE
 			count++
+
 	if(ascended)
 		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
+
 	else
-		if(cultiewin)
+		if(succeeded)
 			parts += span_greentext("The heretic was successful!")
 		else
 			parts += span_redtext("The heretic has failed.")
@@ -253,14 +226,21 @@
 // Knowledge //
 ////////////////
 
-/datum/antagonist/heretic/proc/gain_knowledge(datum/eldritch_knowledge/knowledge)
-	if(get_knowledge(knowledge))
+/*
+ * Learns the passed [typepath] of knowledge, creating a knowledge datum
+ * and adding it to our researched knowledge list.
+ */
+/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type)
+	if(get_knowledge(knowledge_type))
 		return FALSE
-	var/datum/heretic_knowledge/initialized_knowledge = new knowledge
-	researched_knowledge[initialized_knowledge.type] = initialized_knowledge
+	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
+	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
 
+/*
+ * Get a list of all knowledge TYPEPATHS that we can currently research.
+ */
 /datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
@@ -272,9 +252,15 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
+/*
+ * Check if the wanted type-path is in the list of research knowledge.
+ */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
+/*
+ * Returns all research knowledge. Assoc list of [typepath] to [instance].
+ */
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
 
@@ -282,27 +268,38 @@
 // Objectives //
 ////////////////
 
-/datum/objective/heretic_sacrifice
-	name = "sacrifice"
+/datum/objective/minor_sacrifice
+	name = "minor sacrifice"
 
-/datum/objective/heretic_sacrifice/New(text)
+/datum/objective/minor_sacrifice/New(text)
 	. = ..()
 	target_amount = rand(2, 3)
 	update_explanation_text()
 
-/datum/objective/heretic_sacrifice/update_explanation_text()
+/datum/objective/minor_sacrifice/update_explanation_text()
 	. = ..()
-	explanation_text = "Sacrifice at least [target_amount] people. This MUST be done to ascend!"
+	explanation_text = "Sacrifice at least [target_amount] crewmembers."
 
-/datum/objective/heretic_sacrifice/check_completion()
+/datum/objective/minor_sacrifice/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
 	if(!heretic_datum)
 		return FALSE
 	return heretic_datum.total_sacrifices >= target_amount
 
+/datum/objective/major_sacrifice
+	name = "major sacrifice"
+	target_amount = 1
+	explanation_text = "Sacrifice a high value crewmember."
+
+/datum/objective/major_sacrifice/check_completion()
+	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
+	if(!heretic_datum)
+		return FALSE
+	return heretic_datum.high_value_sacrifices >= target_amount
+
 /datum/objective/heretic_research
 	name = "research"
-	target_amount = 9 // 9's the length of one main pass, so basically make people take some side nodes
+	target_amount = 9 // 9's the length of the main paths, so basically make people take some side nodes
 
 /datum/objective/heretic_research/New(text)
 	. = ..()
@@ -311,7 +308,7 @@
 
 /datum/objective/heretic_research/update_explanation_text()
 	. = ..()
-	explanation_text = "Research at least [target_amount] knowledge from the Mansus. This MUST be done to ascend!"
+	explanation_text = "Research at least [target_amount] knowledge from the Mansus."
 
 /datum/objective/heretic_research/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
@@ -325,46 +322,7 @@
 	suit = /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	r_hand = /obj/item/melee/touch_attack/mansus_fist
 
-/datum/outfit/heretic/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/clothing/suit/hooded/hooded = locate() in H
+/datum/outfit/heretic/post_equip(mob/living/carbon/human/equipper, visualsOnly)
+	var/obj/item/clothing/suit/hooded/hooded = locate() in equipper
 	hooded.MakeHood() // This is usually created on Initialize, but we run before atoms
 	hooded.ToggleHood()
-
-
-
-
-
-// todo remove //
-/obj/item/living_heart
-	name = "Living Heart"
-	desc = "A link to the worlds beyond."
-	icon = 'icons/obj/eldritch.dmi'
-	icon_state = "living_heart"
-	w_class = WEIGHT_CLASS_SMALL
-	///Target
-	var/mob/living/carbon/human/target
-
-/obj/item/living_heart/attack_self(mob/user)
-	. = ..()
-	if(!IS_HERETIC(user))
-		return
-	if(!target)
-		to_chat(user,span_warning("No target could be found. Put the living heart on a transmutation rune and activate the rune to recieve a target."))
-		return
-	var/dist = get_dist(get_turf(user),get_turf(target))
-	var/dir = get_dir(get_turf(user),get_turf(target))
-	if(user.z != target.z)
-		to_chat(user,span_warning("[target.real_name] is on another plane of existence!"))
-	else
-		switch(dist)
-			if(0 to 15)
-				to_chat(user,span_warning("[target.real_name] is near you. They are to the [dir2text(dir)] of you!"))
-			if(16 to 31)
-				to_chat(user,span_warning("[target.real_name] is somewhere in your vicinity. They are to the [dir2text(dir)] of you!"))
-			if(32 to 127)
-				to_chat(user,span_warning("[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!"))
-			else
-				to_chat(user,span_warning("[target.real_name] is beyond our reach."))
-
-	if(target.stat == DEAD)
-		to_chat(user,span_warning("[target.real_name] is dead. Bring them to a transmutation rune!"))

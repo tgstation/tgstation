@@ -2,9 +2,17 @@
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. Allows you to transmute a kitchen knife, or its derivatives, with any trash item into a Rusty Blade."
 	gain_text = "'Let me tell you a story', said the Blacksmith, as he gazed deep into his rusty blade."
-	banned_knowledge = list(/datum/heretic_knowledge/base_ash,/datum/heretic_knowledge/base_flesh,/datum/heretic_knowledge/final/ash_final,/datum/heretic_knowledge/final/flesh_final,/datum/heretic_knowledge/final/void_final,/datum/heretic_knowledge/base_void)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/base_ash,
+		/datum/heretic_knowledge/base_flesh,
+		/datum/heretic_knowledge/final/ash_final,
+		/datum/heretic_knowledge/final/flesh_final,
+		/datum/heretic_knowledge/final/void_final,
+		/datum/heretic_knowledge/base_void,
+		)
+
 	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
-	required_atoms = list(/obj/item/knife,/obj/item/trash)
+	required_atoms = list(/obj/item/knife = 1, /obj/item/trash = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	cost = 1
 	route = PATH_RUST
@@ -25,26 +33,40 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/living/user, proximity_flag, click_parameters)
-	. = ..()
-	var/check = FALSE
-	if(ismob(target))
-		var/mob/living/mobster = target
-		if(!(mobster.mob_biotypes & MOB_ROBOTIC))
+	var/hit_a_robot = FALSE
+	if(isliving(target))
+		var/mob/living/hit_mob = target
+		if(!(hit_mob.mob_biotypes & MOB_ROBOTIC))
 			return FALSE
-		else
-			check = TRUE
-	if(user.combat_mode || check)
+		hit_a_robot = TRUE
+
+	if(user.combat_mode || hit_a_robot)
 		target.rust_heretic_act()
 		return TRUE
 
+	return ..()
+
 /datum/heretic_knowledge/rust_fist/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/victim = target
-		var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
-		if(effect)
-			effect.on_effect()
-			victim.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
+	if(!ishuman(target))
+		return
+
+	var/mob/living/carbon/human/victim = target
+	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
+	if(!effect)
+		return
+
+	var/static/list/possible_organs = list(
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_HEART,
+	)
+
+	effect.on_effect()
+	victim.adjustOrganLoss(pick(possible_organs), 25)
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
@@ -70,6 +92,7 @@
 		/datum/heretic_knowledge/essence,
 	)
 	route = PATH_RUST
+	processes_on_life = TRUE
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user)
 	. = ..()
@@ -86,9 +109,9 @@
 	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
 
 /datum/heretic_knowledge/rust_regen/on_life(mob/user)
-	. = ..()
-	var/turf/our_turf = get_turf(user)
-	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY) || !isliving(user))
+	if(!isliving(user))
+		return
+	if(!HAS_TRAIT(get_turf(user), TRAIT_RUSTY))
 		return
 
 	var/mob/living/living_user = user
@@ -109,11 +132,12 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(isliving(target))
-		. = TRUE
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/eldritch/rust)
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/eldritch/rust)
+	return TRUE
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
@@ -125,10 +149,11 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
 
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
@@ -136,7 +161,7 @@
 	gain_text = "Messengers of Hope, fear the Rustbringer!"
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
-	next_knowledge = list(/datum/heretic_knowledge/final/rust_final,/datum/heretic_knowledge/spell/cleave,/datum/heretic_knowledge/summon/rusty)
+	next_knowledge = list(/datum/heretic_knowledge/final/rust_final, /datum/heretic_knowledge/spell/cleave, /datum/heretic_knowledge/summon/rusty)
 	route = PATH_RUST
 
 /datum/heretic_knowledge/armor
@@ -144,8 +169,8 @@
 	desc = "You can now create Eldritch Armor using a table and a gas mask."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity."
 	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen,/datum/heretic_knowledge/cold_snap)
-	required_atoms = list(/obj/structure/table,/obj/item/clothing/mask/gas)
+	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/cold_snap)
+	required_atoms = list(/obj/structure/table = 1, /obj/item/clothing/mask/gas = 1)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 
 /datum/heretic_knowledge/essence
@@ -153,8 +178,8 @@
 	desc = "You can now transmute a tank of water and a glass shard into a bottle of eldritch water."
 	gain_text = "This is an old recipe. The Owl whispered it to me."
 	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen,/datum/heretic_knowledge/spell/ashen_shift)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank,/obj/item/shard)
+	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/spell/ashen_shift)
+	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/item/shard = 1)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
 
 /datum/heretic_knowledge/final/rust_final
@@ -162,52 +187,69 @@
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become extremely more resillient."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	cost = 3
-	required_atoms = list(/mob/living/carbon/human)
+	required_atoms = list(/mob/living/carbon/human = 3)
 	route = PATH_RUST
-	var/list/conditional_immunities = list(TRAIT_STUNIMMUNE,TRAIT_SLEEPIMMUNE,TRAIT_PUSHIMMUNE,TRAIT_SHOCKIMMUNE,TRAIT_NOSLIPALL,TRAIT_RADIMMUNE,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RESISTCOLD,TRAIT_RESISTHEAT,TRAIT_PIERCEIMMUNE,TRAIT_BOMBIMMUNE,TRAIT_NOBREATH)
-	///if this is set to true then immunities are active, if false then they are not active, simple as.
+	processes_on_life = TRUE
+	/// A list of traits we give to the heretic when on rust.
+	var/static/list/conditional_immunities = list(
+		TRAIT_STUNIMMUNE,
+		TRAIT_SLEEPIMMUNE,
+		TRAIT_PUSHIMMUNE,
+		TRAIT_SHOCKIMMUNE,
+		TRAIT_NOSLIPALL,
+		TRAIT_RADIMMUNE,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHEAT,
+		TRAIT_PIERCEIMMUNE,
+		TRAIT_BOMBIMMUNE,
+		TRAIT_NOBREATH,
+		)
+	/// If TRUE, then immunities are active.
 	var/immunities_active = FALSE
 
-/datum/heretic_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/mob/living/carbon/human/H = user
-	H.physiology.brute_mod *= 0.5
-	H.physiology.burn_mod *= 0.5
-	H.client?.give_award(/datum/award/achievement/misc/rust_ascension, H)
-	RegisterSignal(H,COMSIG_MOVABLE_MOVED,.proc/on_move)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
+/datum/heretic_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
-	return ..()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 
+/**
+ * Signal proc for [COMSIG_MOVABLE_MOVED].
+ *
+ * Gives our heretic buffs if they stand on rust.
+ */
 /datum/heretic_knowledge/final/rust_final/proc/on_move(mob/mover)
 	SIGNAL_HANDLER
-	var/atom/mover_turf = get_turf(mover)
-	var/mover_on_rust = HAS_TRAIT(mover_turf, TRAIT_RUSTY)
 
-	//We check if we are currently standing on a rust tile, but the immunities are not active, if so apply immunities, set immunities_active to TRUE
-	if(mover_on_rust && !immunities_active)
-		for(var/trait in conditional_immunities)
-			ADD_TRAIT(mover,trait,type)
-		immunities_active = TRUE
-		return
+	// If we're on a rusty turf, and haven't given out our traits, buff our guy
+	if(HAS_TRAIT(get_turf(mover), TRAIT_RUSTY))
+		if(!immunities_active)
+			for(var/trait in conditional_immunities)
+				ADD_TRAIT(mover, trait, MAGIC_TRAIT)
+			immunities_active = TRUE
 
-	//We check if we are NOT standing on a rust tile, if so we check if immunities are active, if immunities are active then we de-apply them and set immunities to FALSE
-	if(!mover_on_rust && immunities_active)
-		for(var/trait in conditional_immunities)
-			REMOVE_TRAIT(mover,trait,type)
-		immunities_active = FALSE
-
+	// If we're not on a rust turf, and we have given out our traits, nerf our guy
+	else
+		if(immunities_active)
+			for(var/trait in conditional_immunities)
+				REMOVE_TRAIT(mover,trait, MAGIC_TRAIT)
+			immunities_active = FALSE
 
 /datum/heretic_knowledge/final/rust_final/on_life(mob/user)
-	. = ..()
-	var/turf/user_loc_turf = get_turf(user)
-	if(!HAS_TRAIT(user_loc_turf, TRAIT_RUSTY) || !isliving(user) || !finished)
+	if(!isliving(user))
 		return
-	var/mob/living/carbon/human/human_user = user
-	human_user.adjustBruteLoss(-4, FALSE)
-	human_user.adjustFireLoss(-4, FALSE)
-	human_user.adjustToxLoss(-4, FALSE, forced = TRUE)
-	human_user.adjustOxyLoss(-4, FALSE)
-	human_user.adjustStaminaLoss(-20)
+	if(!HAS_TRAIT(get_turf(user), TRAIT_RUSTY))
+		return
+
+	var/mob/living/living_user = user
+	living_user.adjustBruteLoss(-4, FALSE)
+	living_user.adjustFireLoss(-4, FALSE)
+	living_user.adjustToxLoss(-4, FALSE, forced = TRUE)
+	living_user.adjustOxyLoss(-4, FALSE)
+	living_user.adjustStaminaLoss(-20)
 
 /**
  * #Rust spread datum

@@ -18,81 +18,104 @@
 	. = ..()
 	if(.)
 		return
-	try_activate(user)
+	INVOKE_ASYNC(src, .proc/try_activate, user)
 
 /obj/effect/heretic_rune/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
 		return
 	if(!is_in_use)
-		INVOKE_ASYNC(src, .proc/activate , user)
+		return
+
+	is_in_use = TRUE
+	INVOKE_ASYNC(src, .proc/activate , user)
+	is_in_use = FALSE
 
 /obj/effect/heretic_rune/proc/activate(mob/living/user)
-	is_in_use = TRUE
 	// Have fun trying to read this proc.
-	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/list/knowledge = cultie.get_all_knowledge()
+	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/list/knowledge = heretic_datum.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
-	for(var/A in range(1, src))
-		var/atom/atom_in_range = A
-		if(istype(atom_in_range,/area))
+	for(var/atom/close_atom as anything in range(1, src))
+		if(isturf(close_atom) || iseffect(close_atom))
 			continue
-		if(istype(atom_in_range,/turf)) // we dont want turfs
-			continue
-		if(istype(atom_in_range,/mob/living))
-			var/mob/living/living_in_range = atom_in_range
-			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
-				continue
-		atoms_in_range += atom_in_range
-	for(var/X in knowledge)
-		var/datum/heretic_knowledge/current_eldritch_knowledge = knowledge[X]
-
-		//has to be done so that we can freely edit the local_required_atoms without fucking up the eldritch knowledge
-		var/list/local_required_atoms = list()
-
-		if(!current_eldritch_knowledge.required_atoms || current_eldritch_knowledge.required_atoms.len == 0)
+		if(close_atom.invisibility)
 			continue
 
-		local_required_atoms += current_eldritch_knowledge.required_atoms
+		if(close_atom == user)
+			continue
 
+		// TODO removed dead check. Move to each place it's used?
+		atoms_in_range += close_atom
+
+	for(var/knowledge_key in knowledge)
+		var/datum/heretic_knowledge/current_eldritch_knowledge = knowledge[knowledge_key]
+
+		// It's not a ritual, we don't care.
+		if(!LAZYLEN(current_eldritch_knowledge.required_atoms))
+			continue
+
+		// A copy of our requirements list.
+		// We decrement the values of to determine if enough of each key is present.
+		var/list/requirements_list = current_eldritch_knowledge.required_atoms.Copy()
+		// A list of all atoms we've selected to use in this recipe.
 		var/list/selected_atoms = list()
 
-		if(!current_eldritch_knowledge.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
+		// Do the snowflake check to see if we can continue or not.
+		// selected_atoms is passed and can be modified by this proc.
+		if(!current_eldritch_knowledge.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
 			continue
 
-		for(var/LR in local_required_atoms)
-			var/list/local_required_atom_list = LR
+		// Now go through all our nearby atoms and see which are good for our ritual.
+		for(var/atom/nearby_atom as anything in atoms_in_range)
+			// Go through all of our required atoms
+			for(var/req_type in requirements_list)
+				// We already have enough of this type, skip
+				if(requirements_list[req_type] <= 0)
+					continue
+				if(!istype(nearby_atom, req_type))
+					continue
 
-			for(var/LAIR in atoms_in_range)
-				var/atom/local_atom_in_range = LAIR
-				if(is_type_in_list(local_atom_in_range,local_required_atom_list))
-					selected_atoms |= local_atom_in_range
-					local_required_atoms -= list(local_required_atom_list)
-					break
+				// This item is a valid type.
+				// Add it to our selected atoms list
+				// and decrement the value of our requirements list
+				selected_atoms |= nearby_atom
+				requirements_list[req_type]--
 
-		if(length(local_required_atoms) > 0)
+		// All of the atoms have been checked, let's see if the ritual was successful
+		var/requirements_fulfilled = TRUE
+		for(var/req_type in requirements_list)
+			// One if our requirements wasn't entirely filled
+			// This ritual failed, move on to the next one
+			if(requirements_list[req_type] > 0)
+				requirements_fulfilled = FALSE
+				break
+
+		if(!requirements_fulfilled)
 			continue
 
-		flick("[icon_state]_active",src)
+		// If we made it here, the ritual succeeded
+		// Do the animations and feedback
+		flick("[icon_state]_active", src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
-		//we are doing this since some on_finished_recipe subtract the atoms from selected_atoms making them invisible permanently.
+
+		// We temporarily make all of our chosen atoms invisible,
+		// as some rituals may sleep, and we don't want people to be able to run off with ritual items.
 		var/list/atoms_to_disappear = selected_atoms.Copy()
-		for(var/to_disappear in atoms_to_disappear)
-			var/atom/atom_to_disappear = to_disappear
-			//temporary so we dont have to deal with the bs of someone picking those up when they may be deleted
-			atom_to_disappear.invisibility = INVISIBILITY_ABSTRACT
-		if(current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc))
+		for(var/atom/to_disappear as anything in atoms_to_disappear)
+			to_disappear.invisibility = INVISIBILITY_ABSTRACT
+
+		// on_finished_recipe, in the case of some rituals like summons.
+		if(current_eldritch_knowledge.on_finished_recipe(user, selected_atoms, loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 
-		for(var/to_appear in atoms_to_disappear)
-			var/atom/atom_to_appear = to_appear
-			//we need to reappear the item just in case the ritual didnt consume everything... or something.
-			atom_to_appear.invisibility = initial(atom_to_appear.invisibility)
+		// Re-appear anything left in the list
+		for(var/atom/to_appear as anything in atoms_to_disappear)
+			to_appear.invisibility = initial(to_appear.invisibility)
 
-		is_in_use = FALSE
 		return
-	is_in_use = FALSE
-	to_chat(user,span_warning("Your ritual failed! You either used the wrong components or are missing something important!"))
+
+	to_chat(user, span_warning("Your ritual failed! You either used the wrong components or are missing something important."))
 
 /obj/effect/heretic_rune/big
 	name = "transmutation rune"
@@ -136,9 +159,8 @@
 		if(isnull(mind))
 			stack_trace("A null somehow landed in a list of minds")
 			continue
-		for(var/X in smashes)
-			var/obj/effect/heretic_influence/reality_smash = X
-			reality_smash.AddMind(mind)
+		for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
+			reality_smash.add_mind(mind)
 
 /**
  * Generates a set amount of reality smashes based on the N value
@@ -168,12 +190,12 @@
  *
  * Use this whenever you want to add someone to the list
  */
-/datum/reality_smash_tracker/proc/AddMind(datum/mind/e_cultists)
-	RegisterSignal(e_cultists.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
-	targets |= e_cultists
+/datum/reality_smash_tracker/proc/AddMind(datum/mind/heretic)
+	RegisterSignal(heretic.current, COMSIG_MOB_LOGIN, .proc/ReworkNetwork)
+	targets |= heretic
 	Generate()
-	for(var/obj/effect/heretic_influence/reality_smash in smashes)
-		reality_smash.AddMind(e_cultists)
+	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
+		reality_smash.add_mind(heretic)
 
 
 /**
@@ -181,11 +203,11 @@
  *
  * Use this whenever you want to remove someone from the list
  */
-/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/e_cultists)
-	UnregisterSignal(e_cultists.current,COMSIG_MOB_LOGIN)
-	targets -= e_cultists
-	for(var/obj/effect/heretic_influence/reality_smash in smashes)
-		reality_smash.RemoveMind(e_cultists)
+/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/heretic)
+	UnregisterSignal(heretic.current, COMSIG_MOB_LOGIN)
+	targets -= heretic
+	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
+		reality_smash.remove_mind(heretic)
 
 /obj/effect/visible_heretic_influence
 	name = "pierced reality"
@@ -214,15 +236,15 @@
 		return ..()
 
 	if(IS_HERETIC(user))
-		to_chat(human_user,span_boldwarning("You know better than to tempt forces out of your control!"))
+		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
 		return
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
 	if(prob(25))
 		to_chat(human_user, span_userdanger("An otherwordly presence tears and atomizes your [their_poor_arm.name] as you try to touch the hole in the very fabric of reality!"))
-		arm.dismember()
-		qdel(arm)
+		their_poor_arm.dismember()
+		qdel(their_poor_arm)
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
 
@@ -279,7 +301,7 @@
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
-	img = image(icon, src, image_state, OBJ_LAYER)
+	heretic_image = image(icon, src, image_state, OBJ_LAYER)
 	generate_name()
 
 /obj/effect/heretic_influence/Destroy()

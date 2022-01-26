@@ -8,10 +8,10 @@
 		/datum/heretic_knowledge/final/rust_final,
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/base_void
+		/datum/heretic_knowledge/base_void,
 	)
 	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
-	required_atoms = list(/obj/item/knife, /obj/item/match)
+	required_atoms = list(/obj/item/knife = 1, /obj/item/match = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
 	route = PATH_ASH
@@ -38,25 +38,28 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!iscarbon(target))
-		return
+		return ..()
+
 	var/mob/living/carbon/blind_victim = target
 	to_chat(blind_victim, span_danger("Your eyes burn horrifically!")) //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
 	blind_victim.become_nearsighted(EYE_DAMAGE)
 	blind_victim.blind_eyes(5)
 	blind_victim.blur_eyes(10)
+	return TRUE
 
 /datum/heretic_knowledge/ashen_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!iscarbon(target))
 		return
+
 	var/mob/living/carbon/victim = target
 	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
-	if(effect)
-		effect.on_effect()
-		for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
-			grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.
+	if(!effect)
+		return
+
+	effect.on_effect()
+	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
+		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.
 
 /datum/heretic_knowledge/ashen_eyes
 	name = "Ashen Eyes"
@@ -64,7 +67,7 @@
 	desc = "Allows you to craft thermal vision amulet by transmutating eyes with a glass shard."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/spell/ashen_shift,/datum/heretic_knowledge/flesh_ghoul)
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/shard)
+	required_atoms = list(/obj/item/organ/eyes = 1, /obj/item/shard = 1)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 
 /datum/heretic_knowledge/ash_mark
@@ -81,11 +84,12 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ash_mark/on_mansus_grasp(target,user,proximity_flag,click_parameters)
-	. = ..()
-	if(isliving(target))
-		. = TRUE
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
+	return TRUE
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
@@ -93,7 +97,7 @@
 	desc = "Allows you to transmute any mask, with a candle and a pair of eyes, to create a mask of madness, It causes passive stamina damage to everyone around the wearer and hallucinations, can be forced on a non believer to make him unable to take it off..."
 	cost = 1
 	result_atoms = list(/obj/item/clothing/mask/void_mask)
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/clothing/mask,/obj/item/candle)
+	required_atoms = list(/obj/item/organ/eyes = 1, /obj/item/clothing/mask = 1, /obj/item/candle = 1)
 	next_knowledge = list(
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/ash_blade_upgrade,
@@ -128,18 +132,19 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ash_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/burn_victim = target
-		burn_victim.adjust_fire_stacks(1)
-		burn_victim.IgniteMob()
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/burn_victim = target
+	burn_victim.adjust_fire_stacks(1)
+	burn_victim.IgniteMob()
 
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
 	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of vomit, a heart and an item that the victim touched  with their bare hands."
 	cost = 1
-	required_atoms = list(/obj/item/wirecutters,/obj/effect/decal/cleanable/vomit,/obj/item/organ/heart)
+	required_atoms = list(/obj/item/wirecutters = 1, /obj/effect/decal/cleanable/vomit = 1, /obj/item/organ/heart = 1)
 	next_knowledge = list(
 		/datum/heretic_knowledge/mad_mask,
 		/datum/heretic_knowledge/spell/area_conversion
@@ -159,8 +164,8 @@
 	gain_text = "Corrupt their flesh, make them bleed."
 	desc = "Curse someone for 5 minutes of inability to walk. Sacrifice a knife, a pool of blood, a pair of legs, a hatchet and an item that the victim touched with their bare hands. "
 	cost = 1
-	required_atoms = list(/obj/item/bodypart/l_leg,/obj/item/bodypart/r_leg,/obj/item/hatchet)
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask,/datum/heretic_knowledge/summon/raw_prophet)
+	required_atoms = list(/obj/item/bodypart/l_leg = 1, /obj/item/bodypart/r_leg = 1, /obj/item/hatchet = 1)
+	next_knowledge = list(/datum/heretic_knowledge/mad_mask, /datum/heretic_knowledge/summon/raw_prophet)
 	timer = 5 MINUTES
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
@@ -187,26 +192,22 @@
 	name = "Ashlord's Rite"
 	gain_text = "The Nightwatcher found the rite and shared it amongst mankind! For now I am one with the fire, WITNESS MY ASCENSION!"
 	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire, the vacuum of space, cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful ability that lets you create a wave of flames all around you."
-	required_atoms = list(/mob/living/carbon/human)
-	cost = 3
 	route = PATH_ASH
-	var/list/trait_list = list(
+	/// A list of all traits we apply on ascension.
+	var/static/list/traits_to_apply = list(
 		TRAIT_RESISTHEAT,
 		TRAIT_NOBREATH,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
-		TRAIT_NOFIRE
+		TRAIT_NOFIRE,
 	)
 
-/datum/heretic_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
+/datum/heretic_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	priority_announce("[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
-	var/mob/living/carbon/human/ascendant = user
-	ascendant.physiology.brute_mod *= 0.5
-	ascendant.physiology.burn_mod *= 0.5
-	ascendant.client?.give_award(/datum/award/achievement/misc/ash_ascension, ascendant)
-	for(var/trait in trait_list)
+	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
+	for(var/trait in traits_to_apply)
 		ADD_TRAIT(user, trait, MAGIC_TRAIT)
-	return ..()

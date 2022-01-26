@@ -31,20 +31,20 @@
 
 	if(istype(weapon, /obj/item/bodypart))
 		var/obj/item/bodypart/consumed = weapon
-		if(forced.status != BODYPART_ORGANIC)
+		if(consumed.status != BODYPART_ORGANIC)
 			return
 
-		try_consume(user, consumed)
+		consume_fuel(user, consumed)
 		return TRUE
 
 	if(istype(weapon, /obj/item/organ))
 		var/obj/item/organ/consumed = weapon
-		if(forced.status != BODYPART_ORGANIC)
+		if(consumed.status != ORGAN_ORGANIC)
 			return
 		if(consumed.organ_flags & ORGAN_VITAL)
 			return
 
-		try_consume(user, consumed)
+		consume_fuel(user, consumed)
 		return TRUE
 
 	return ..()
@@ -91,16 +91,15 @@
 	var/static/list/choices = list()
 	// Assoc list of [name] to [path] for after the radial, to spawn it
 	var/static/list/names_to_path = list()
-	if(!choices.len || !name_to_path.len)
+	if(!choices.len || !names_to_path.len)
 		for(var/obj/item/eldritch_potion/potion as anything in subtypesof(/obj/item/eldritch_potion))
-			name_to_path[initial(potion.name)] = potion
+			names_to_path[initial(potion.name)] = potion
 			choices[initial(potion.name)] = image(icon = initial(potion.icon), icon_state = initial(potion.icon_state))
 
 	var/picked_choice = show_radial_menu(
 		user,
 		src,
 		choices,
-		custom_check = CALLBACK(src, .proc/check_menu, user),
 		require_near = TRUE,
 		tooltips = TRUE,
 		)
@@ -108,7 +107,7 @@
 	if(isnull(picked_choice))
 		return
 
-	var/spawned_type = name_to_path[picked_choice]
+	var/spawned_type = names_to_path[picked_choice]
 	if(!ispath(spawned_type, /obj/item/eldritch_potion))
 		CRASH("[type] attempted to create a potion that wasn't an eldritch potion! (got: [spawned_type])")
 
@@ -152,7 +151,7 @@
 		balloon_alert(feeder, "crubile fed ([current_mass] / [max_mass])")
 
 	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-	visible_message(span_notice("[src] devours [consumed] and fills itself with a little bit of liquid!")))
+	visible_message(span_notice("[src] devours [consumed] and fills itself with a little bit of liquid!"))
 	current_mass++
 	qdel(consumed)
 	update_appearance(UPDATE_ICON_STATE)

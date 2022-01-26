@@ -11,10 +11,10 @@
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/final/rust_final,
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/base_void
+		/datum/heretic_knowledge/base_void,
 	)
 	next_knowledge = list(/datum/heretic_knowledge/flesh_grasp)
-	required_atoms = list(/obj/item/knife, /obj/effect/decal/cleanable/blood)
+	required_atoms = list(/obj/item/knife = 1, /obj/effect/decal/cleanable/blood = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	cost = 1
 	route = PATH_FLESH
@@ -24,7 +24,7 @@
 	desc = "Allows you to resurrect the dead as voiceless dead by sacrificing them on the transmutation rune with a poppy. Voiceless dead are mute and have 50 HP. You can only have 2 at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	cost = 1
-	required_atoms = list(/mob/living/carbon/human, /obj/item/food/grown/poppy)
+	required_atoms = list(/mob/living/carbon/human = 1, /obj/item/food/grown/poppy = 1)
 	next_knowledge = list(
 		/datum/heretic_knowledge/flesh_mark,
 		/datum/heretic_knowledge/void_cloak,
@@ -35,49 +35,59 @@
 	var/current_amt = 0
 	var/list/ghouls = list()
 
-/datum/heretic_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/mob/living/carbon/human/humie = locate() in atoms
-	if(QDELETED(humie) || humie.stat != DEAD)
-		return
+/datum/heretic_knowledge/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/mob/living/carbon/human/body in atoms)
+		if(body.stat != DEAD)
+			atoms -= body
+
+	return TRUE
+
+/datum/heretic_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
 	if(length(ghouls) >= max_amt)
-		return
-	if(HAS_TRAIT(humie,TRAIT_HUSK))
-		return
-	humie.grab_ghost()
+		return FALSE
+	if(HAS_TRAIT(soon_to_be_ghoul, TRAIT_HUSK))
+		return FALSE
+	soon_to_be_ghoul.grab_ghost()
 
-	if(!humie.mind || !humie.client)
-		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, ROLE_HERETIC, 5 SECONDS, humie)
+	if(!soon_to_be_ghoul.mind || !soon_to_be_ghoul.client)
+		message_admins("[ADMIN_LOOKUPFLW(user)] is creating a voiceless dead of a body with no player.")
+		var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [soon_to_be_ghoul.real_name], a voiceless dead?", ROLE_HERETIC, ROLE_HERETIC, 5 SECONDS, soon_to_be_ghoul)
 		if(!LAZYLEN(candidates))
-			return
+			to_chat(user, span_warning("Your ritual failed! The spirits lie dormant, and the body remains lifeless. Perhaps try later?"))
+			return FALSE
+
 		var/mob/dead/observer/chosen_candidate = pick(candidates)
-		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(humie)]) to replace an AFK player.")
-		humie.ghostize(0)
-		humie.key = chosen_candidate.key
+		message_admins("[key_name_admin(chosen_candidate)] has taken control of ([key_name_admin(soon_to_be_ghoul)]) to replace an AFK player.")
+		soon_to_be_ghoul.ghostize(FALSE)
+		soon_to_be_ghoul.key = chosen_candidate.key
 
-	ADD_TRAIT(humie, TRAIT_MUTE, MAGIC_TRAIT)
-	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
-	humie.revive(full_heal = TRUE, admin_revive = TRUE)
-	humie.setMaxHealth(MUTE_MAX_HEALTH)
-	humie.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
-	humie.become_husk()
-	humie.faction |= "heretics"
-	humie.apply_status_effect(/datum/status_effect/ghoul)
+	ADD_TRAIT(soon_to_be_ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(soon_to_be_ghoul)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
+	soon_to_be_ghoul.revive(full_heal = TRUE, admin_revive = TRUE)
+	soon_to_be_ghoul.setMaxHealth(MUTE_MAX_HEALTH)
+	soon_to_be_ghoul.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
+	soon_to_be_ghoul.become_husk()
+	soon_to_be_ghoul.faction |= "heretics"
+	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul)
 
-	var/datum/antagonist/heretic_monster/heretic_monster = humie.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+	var/datum/antagonist/heretic_monster/heretic_monster = soon_to_be_ghoul.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
-	atoms -= humie
-	RegisterSignal(humie,COMSIG_LIVING_DEATH, .proc/remove_ghoul)
-	ghouls += humie
+	selected_atoms -= soon_to_be_ghoul
+	ghouls += soon_to_be_ghoul
+	RegisterSignal(soon_to_be_ghoul, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
+	return TRUE
 
-/datum/heretic_knowledge/flesh_ghoul/proc/remove_ghoul(datum/source)
+/datum/heretic_knowledge/flesh_ghoul/proc/remove_ghoul(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
-	var/mob/living/carbon/human/humie = source
-	ghouls -= humie
-	humie.setMaxHealth(initial(humie.maxHealth))
-	humie.remove_status_effect(/datum/status_effect/ghoul)
-	humie.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
-	UnregisterSignal(source,COMSIG_LIVING_DEATH)
+
+	ghouls -= source
+	source.setMaxHealth(initial(source.maxHealth))
+	source.remove_status_effect(/datum/status_effect/ghoul)
+	source.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
 /datum/heretic_knowledge/flesh_grasp
 	name = "Grasp of Flesh"
@@ -85,32 +95,33 @@
 	desc = "Empowers your mansus grasp to be able to create a single ghoul out of a dead person. Ghouls have only 25 HP and look like husks to the heathens' eyes."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul)
+	route = PATH_FLESH
 	var/ghoul_amt = 1
 	var/list/spooky_scaries
-	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!ishuman(target) || target == user)
-		return
+		return ..()
 	var/mob/living/carbon/human/human_target = target
 	if(QDELETED(human_target) || human_target.stat != DEAD)
-		return
+		return FALSE
+
 	human_target.grab_ghost()
 	if(!human_target.mind || !human_target.client)
-		to_chat(user, span_warning("There is no soul connected to this body..."))
-		return
+		to_chat(user, span_warning("There is no soul within this body."))
+		return FALSE
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
-		to_chat(user, span_warning("You cannot revive a dead ghoul!"))
-		return
+		to_chat(user, span_warning("You cannot revive a husk!"))
+		return FALSE
 	if(LAZYLEN(spooky_scaries) >= ghoul_amt)
 		to_chat(user, span_warning("Your patron cannot support more ghouls on this plane!"))
-		return
+		return FALSE
+
 	LAZYADD(spooky_scaries, human_target)
-	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
-	//we change it to true only after we know they passed all the checks
-	. = TRUE
-	RegisterSignal(human_target,COMSIG_LIVING_DEATH,.proc/remove_ghoul)
+	log_game("[key_name(user)] created a ghoul, controlled by [key_name(human_target)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghuol, [ADMIN_LOOKUPFLW(human_target)].")
+
+	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
 	human_target.health = GHOUL_MAX_HEALTH
@@ -121,19 +132,24 @@
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
 
+	return TRUE
+
 /datum/heretic_knowledge/flesh_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/human_target = target
 	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh) || human_target.has_status_effect(/datum/status_effect/eldritch/void)
-	if(eldritch_effect)
-		eldritch_effect.on_effect()
-		if(iscarbon(target))
-			var/mob/living/carbon/carbon_target = target
-			var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-			var/datum/wound/slash/severe/crit_wound = new
-			crit_wound.apply_wound(bodypart)
+	if(!eldritch_effect)
+		return
+
+	eldritch_effect.on_effect()
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+	var/datum/wound/slash/severe/crit_wound = new
+	crit_wound.apply_wound(bodypart)
 
 /datum/heretic_knowledge/flesh_grasp/proc/remove_ghoul(datum/source)
 	SIGNAL_HANDLER
@@ -155,11 +171,12 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(isliving(target))
-		. = TRUE
-		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/eldritch/flesh)
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/eldritch/flesh)
+	return TRUE
 
 /datum/heretic_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
@@ -171,19 +188,20 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/carbon_target = target
-		var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
-		var/datum/wound/slash/severe/crit_wound = new
-		crit_wound.apply_wound(bodypart)
+	if(!iscarbon(target))
+		return
+
+	var/mob/living/carbon/carbon_target = target
+	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
+	var/datum/wound/slash/severe/crit_wound = new
+	crit_wound.apply_wound(bodypart)
 
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
 	gain_text = "The Uncanny Man, who walks alone in the valley between the worlds... I was able to summon his aid."
 	desc = "You can now summon a Raw Prophet by transmutating a pair of eyes, a left arm and a pool of blood. Raw prophets have increased seeing range, as well as X-Ray vision, but they are very fragile."
 	cost = 1
-	required_atoms = list(/obj/item/organ/eyes,/obj/effect/decal/cleanable/blood,/obj/item/bodypart/l_arm)
+	required_atoms = list(/obj/item/organ/eyes = 1, /obj/effect/decal/cleanable/blood = 1, /obj/item/bodypart/l_arm = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
 	next_knowledge = list(
 		/datum/heretic_knowledge/flesh_blade_upgrade,
@@ -197,7 +215,7 @@
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. An ever shapeshifting mass of flesh, it knew well my goals."
 	desc = "You can now summon a Stalker by transmutating a pair of eyes, a candle, a pen and a piece of paper. Stalkers can shapeshift into harmless animals to get close to the victim."
 	cost = 1
-	required_atoms = list(/obj/item/pen,/obj/item/organ/eyes,/obj/item/candle,/obj/item/paper)
+	required_atoms = list(/obj/item/pen = 1, /obj/item/organ/eyes = 1 ,/obj/item/candle = 1, /obj/item/paper = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/stalker
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/ashy,
@@ -211,18 +229,18 @@
 	gain_text = "I combined my principle of hunger with my desire for destruction. And the Nightwatcher knew my name."
 	desc = "You can now summon an Ash Man by transmutating a pile of ash, a head and a book."
 	cost = 1
-	required_atoms = list(/obj/effect/decal/cleanable/ash,/obj/item/bodypart/head,/obj/item/book)
+	required_atoms = list(/obj/effect/decal/cleanable/ash = 1, /obj/item/bodypart/head = 1, /obj/item/book = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
-	next_knowledge = list(/datum/heretic_knowledge/summon/stalker,/datum/heretic_knowledge/spell/flame_birth)
+	next_knowledge = list(/datum/heretic_knowledge/summon/stalker, /datum/heretic_knowledge/spell/flame_birth)
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
 	gain_text = "I combined my principle of hunger with my desire for corruption. And the Rusted Hills called my name."
 	desc = "You can now summon a Rust Walker by transmutating a vomit pool, a severed head and a book."
 	cost = 1
-	required_atoms = list(/obj/effect/decal/cleanable/vomit,/obj/item/book,/obj/item/bodypart/head)
+	required_atoms = list(/obj/effect/decal/cleanable/vomit = 1, /obj/item/book = 1, /obj/item/bodypart/head = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
-	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull,/datum/heretic_knowledge/spell/entropic_plume)
+	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull, /datum/heretic_knowledge/spell/entropic_plume)
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
@@ -236,25 +254,19 @@
 	name = "Priest's Final Hymn"
 	gain_text = "Men of this world. Hear me, for the time of the Lord of Arms has come! The Emperor of Flesh guides my army!"
 	desc = "Bring 3 bodies onto a transmutation rune to shed your human form and ascend to untold power."
-	required_atoms = list(/mob/living/carbon/human)
-	cost = 3
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Ever coiling vortex. Reality unfolded. THE LORD OF ARMS, [user.real_name] has ascended! Fear the ever twisting hand! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
+	priority_announce("[generate_heretic_text()] Ever coiling vortex. Reality unfolded. THE LORD OF ARMS, [user.real_name] has ascended! Fear the ever twisting hand! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/lord_of_arms = user
-	lord_of_arms.physiology.brute_mod *= 0.5
-	lord_of_arms.physiology.burn_mod *= 0.5
-	lord_of_arms.client?.give_award(/datum/award/achievement/misc/flesh_ascension, lord_of_arms)
+	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
+
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/datum/heretic_knowledge/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/flesh_grasp)
 	grasp_ghoul.ghoul_amt *= 3
-	var/datum/heretic_knowledge/flesh_ghoul/better_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/flesh_ghoul)
-	better_ghoul.max_amt *= 3
+	var/datum/heretic_knowledge/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/flesh_ghoul)
+	ritual_ghoul.max_amt *= 3
 
 #undef GHOUL_MAX_HEALTH
 #undef MUTE_MAX_HEALTH

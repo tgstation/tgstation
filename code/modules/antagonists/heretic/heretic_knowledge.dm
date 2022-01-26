@@ -19,19 +19,14 @@
 	var/list/next_knowledge = list()
 	///What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.
 	var/list/banned_knowledge = list()
-	///Used with rituals, how many items this needs
+	///Assoc list of [typepaths we need] to [amount needed].
 	var/list/required_atoms = list()
 	///What do we get out of this
 	var/list/result_atoms = list()
 	///What path is this on defaults to "Side"
 	var/route = PATH_SIDE
-
-/datum/heretic_knowledge/New()
-	. = ..()
-	var/list/temp_list
-	for(var/atom/required_atom as anything in required_atoms)
-		temp_list += list(typesof(required_atom))
-	required_atoms = temp_list
+	///Whether this knowledge processes on life ticks
+	var/processes_on_life = FALSE
 
 /**
  * What happens when this is assigned to an antag datum
@@ -39,29 +34,38 @@
  * This proc is called whenever a new eldritch knowledge is added to an antag datum
  */
 /datum/heretic_knowledge/proc/on_gain(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
 	to_chat(user, span_warning("[gain_text]"))
-	return
+	if(processes_on_life)
+		RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+
 /**
  * What happens when you loose this
  *
  * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(processes_on_life)
+		UnregisterSignal(user, COMSIG_LIVING_LIFE)
+
 /**
- * What happens every tick
+ * Signal proc for [COMSIG_LIVING_LIFE].
  *
- * This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second
+ * Used for effects done from knowledge of every life tick.
+ * Will not be called unless processes_on_life = TRUE.
  */
 /datum/heretic_knowledge/proc/on_life(mob/user)
-	return
+	SIGNAL_HANDLER
 
 /**
  * Special check for recipes
  *
  * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
  */
-/datum/heretic_knowledge/proc/recipe_snowflake_check(list/atoms, loc)
+/datum/heretic_knowledge/proc/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return TRUE
 
 /**
@@ -70,14 +74,13 @@
  * This proc is primarily used to end any soundloops when the heretic dies
  */
 /datum/heretic_knowledge/proc/on_death(mob/user)
-	return
 
 /**
  * What happens once the recipe is succesfully finished
  *
  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
  */
-/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/atoms, loc)
+/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	if(!length(result_atoms))
 		return FALSE
 	for(var/result in result_atoms)
@@ -89,12 +92,13 @@
  *
  * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
  */
-/datum/heretic_knowledge/proc/cleanup_atoms(list/atoms)
-	for(var/atom/sacrificed as anything in atoms)
-		if(!isliving(sacrificed))
-			atoms -= sacrificed
-			qdel(sacrificed)
-	return
+/datum/heretic_knowledge/proc/cleanup_atoms(list/selected_atoms)
+	for(var/atom/sacrificed as anything in selected_atoms)
+		if(isliving(sacrificed))
+			continue
+
+		selected_atoms -= sacrificed
+		qdel(sacrificed)
 
 /**
  * Mansus grasp act
@@ -142,7 +146,7 @@
 	var/list/fingerprints = list()
 	var/list/dna = list()
 
-/datum/heretic_knowledge/curse/recipe_snowflake_check(list/atoms, loc)
+/datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
 		fingerprints |= requirements.return_fingerprints()
@@ -151,7 +155,7 @@
 		return FALSE
 	return TRUE
 
-/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/atoms,loc)
+/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,loc)
 
 	var/list/compiled_list = list()
 
@@ -178,148 +182,71 @@
 	return
 
 /datum/heretic_knowledge/summon
-	//Mob to summon
+	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
-/datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/atoms, loc)
-	//we need to spawn the mob first so that we can use it in poll_candidates_for_mob, we will move it from nullspace down the code
+/datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
-	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [summoned.real_name]", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
+	// Fade in the summon while the ghost poll is ongoing.
+	summoned.alpha = 0
+	animate(summoned, 10 SECONDS, alpha = 155)
+
+
+	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
+	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
-		to_chat(user,span_warning("No ghost could be found..."))
+		to_chat(user, span_warning("Your ritual failed! The spirits lie dormant, and the summon falls apart. Perhaps try later?"))
 		qdel(summoned)
 		return FALSE
+
 	var/mob/dead/observer/picked_candidate = pick(candidates)
-	log_game("[key_name_admin(picked_candidate)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
+	summoned.alpha = 255
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
-	summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.has_antag_datum(/datum/antagonist/heretic_monster)
+
+	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(picked_candidate)].")
+
+	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	heretic_monster.set_owner(master)
+
 	return TRUE
 
 //Ascension knowledge
 /datum/heretic_knowledge/final
-	var/finished = FALSE
+	cost = 3
+	required_atoms = list(/mob/living/carbon/human = 3)
 
-/datum/heretic_knowledge/final/recipe_snowflake_check(list/atoms, loc, selected_atoms)
-	if(finished)
+/datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	if(heretic_datum.ascended)
 		return FALSE
-	var/counter = 0
-	for(var/mob/living/carbon/human/sacrifices in atoms)
-		selected_atoms |= sacrifices
-		counter++
-		if(counter == 3)
-			return TRUE
-	return FALSE
 
-/datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	finished = TRUE
-	var/datum/antagonist/heretic/ascension = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	ascension.ascended = TRUE
+	// Remove all non-dead humans from the atoms list.
+	// (We only want to sacrifice dead folk.)
+	for(var/mob/living/carbon/human/sacrifice in atoms)
+		if(sacrifice.stat != DEAD)
+			atoms -= sacrifice
+
+	// All the non-dead humans are removed in this proc.
+	// We handle checking if we have enough humans in the ritual itself.
 	return TRUE
 
-/datum/heretic_knowledge/final/cleanup_atoms(list/atoms)
-	. = ..()
-	for(var/mob/living/carbon/human/sacrifices in atoms)
-		atoms -= sacrifices
-		sacrifices.gib()
+/datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	heretic_datum.ascended = TRUE
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.physiology.brute_mod *= 0.5
+		human_user.physiology.burn_mod *= 0.5
 
-///////////////
-///Base lore///
-///////////////
+	return TRUE
 
-/datum/heretic_knowledge/spell/basic
-	name = "Break of Dawn"
-	desc = "Starts your journey in the Mansus. Allows you to select a target using a living heart on a transmutation rune."
-	gain_text = "Another day at a meaningless job. You feel a shimmer around you, as a realization of something strange in your backpack unfolds. You look at it, unknowingly opening a new chapter in your life."
-	next_knowledge = list(/datum/heretic_knowledge/base_rust,/datum/heretic_knowledge/base_ash,/datum/heretic_knowledge/base_flesh,/datum/heretic_knowledge/base_void)
-	cost = 0
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
-	required_atoms = list(/obj/item/living_heart)
-	route = "Start"
+/datum/heretic_knowledge/final/cleanup_atoms(list/selected_atoms)
+	for(var/mob/living/carbon/human/sacrifice in selected_atoms)
+		selected_atoms -= sacrifice
+		sacrifice.gib()
 
-/datum/heretic_knowledge/spell/basic/recipe_snowflake_check(list/atoms, loc)
-	. = ..()
-	for(var/obj/item/living_heart/heart in atoms)
-		if(!heart.target)
-			return TRUE
-		if(heart.target in atoms)
-			return TRUE
-	return FALSE
-
-/datum/heretic_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
-	. = TRUE
-	var/mob/living/carbon/carbon_user = user
-	for(var/obj/item/living_heart/heart in atoms)
-
-		if(heart.target && heart.target.stat == DEAD)
-			to_chat(carbon_user,span_danger("Your patrons accepts your offer.."))
-			var/mob/living/carbon/human/current_target = heart.target
-			current_target.spill_organs()
-			current_target.adjustBruteLoss(250)
-			new /obj/effect/gibspawner/generic(get_turf(current_target))
-			heart.target = null
-			var/datum/antagonist/heretic/heretic_datum = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
-
-			heretic_datum.total_sacrifices++
-			for(var/obj/item/forbidden_book/book as anything in carbon_user.get_all_gear())
-				if(!istype(book))
-					continue
-				book.charge += 2
-				break
-
-		if(!heart.target)
-			var/datum/objective/temp_objective = new
-			temp_objective.owner = user.mind
-			var/list/datum/team/teams = list()
-			for(var/datum/antagonist/antag as anything in user.mind.antag_datums)
-				var/datum/team/team = antag.get_team()
-				if(team)
-					teams |= team
-			var/list/targets = list()
-			for(var/i in 0 to 3)
-				var/datum/mind/targeted = temp_objective.find_target()//easy way, i dont feel like copy pasting that entire block of code
-				var/is_teammate = FALSE
-				for(var/datum/team/team as anything in teams)
-					if(targeted in team.members)
-						is_teammate = TRUE
-						break
-				if(!targeted)
-					break
-				targets["[targeted.current.real_name] the [targeted.assigned_role.title][is_teammate ? " (ally)" : ""]"] = targeted.current
-			var/chosen_target = tgui_input_list(user, "Choose a target", "Eldritch Targeting", targets)
-			if(isnull(chosen_target))
-				return FALSE
-			if(isnull(targets[chosen_target]))
-				return FALSE
-			heart.target = targets[chosen_target]
-			qdel(temp_objective)
-			if(heart.target)
-				to_chat(user,span_warning("Your new target has been selected, go and sacrifice [heart.target.real_name]!"))
-			else
-				to_chat(user, span_warning("target could not be found for living heart."))
-
-/datum/heretic_knowledge/spell/basic/cleanup_atoms(list/atoms)
-	return
-
-/datum/heretic_knowledge/living_heart
-	name = "Living Heart"
-	desc = "Allows you to create additional living hearts, using a heart, a pool of blood and a poppy. Living hearts when used on a transmutation rune will grant you a person to hunt and sacrifice on the rune. Every sacrifice gives you an additional charge in the book."
-	gain_text = "The Gates of Mansus open up to your mind."
-	cost = 0
-	required_atoms = list(/obj/item/organ/heart,/obj/effect/decal/cleanable/blood,/obj/item/food/grown/poppy)
-	result_atoms = list(/obj/item/living_heart)
-	route = "Start"
-
-/datum/heretic_knowledge/codex_cicatrix
-	name = "Codex Cicatrix"
-	desc = "Allows you to create a spare Codex Cicatrix if you have lost one, using a bible, human skin, a pen and a pair of eyes."
-	gain_text = "Their hand is at your throat, yet you see Them not."
-	cost = 0
-	required_atoms = list(/obj/item/organ/eyes,/obj/item/stack/sheet/animalhide/human,/obj/item/storage/book/bible,/obj/item/pen)
-	result_atoms = list(/obj/item/forbidden_book/ritual)
-	route = "Start"
+	return ..()

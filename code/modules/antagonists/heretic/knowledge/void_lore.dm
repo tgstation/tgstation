@@ -8,19 +8,23 @@
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/base_rust,
-		/datum/heretic_knowledge/final/rust_final
+		/datum/heretic_knowledge/final/rust_final,
 	)
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
-	required_atoms = list(/obj/item/knife)
+	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	cost = 1
 	route = PATH_VOID
 
-/datum/heretic_knowledge/base_void/recipe_snowflake_check(list/atoms, loc)
-	. = ..()
-	var/turf/open/turfie = loc
-	if(turfie.GetTemperature() > T0C)
+/datum/heretic_knowledge/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
 		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		return FALSE
+
+	return TRUE
 
 /datum/heretic_knowledge/void_grasp
 	name = "Grasp of Void"
@@ -31,24 +35,25 @@
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 
 /datum/heretic_knowledge/void_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!iscarbon(target))
-		return
+		return ..()
+
 	var/mob/living/carbon/carbon_target = target
-	var/turf/open/turfie = get_turf(carbon_target)
-	turfie.TakeTemperature(-20)
+	var/turf/open/target_turf = get_turf(carbon_target)
+	target_turf.TakeTemperature(-20)
 	carbon_target.adjust_bodytemperature(-40)
 	carbon_target.silent += 4
 	return TRUE
 
 /datum/heretic_knowledge/void_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!ishuman(target))
 		return
+
 	var/mob/living/carbon/human/victim = target
 	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
 	if(!effect)
 		return
+
 	effect.on_effect()
 	victim.silent += 3
 
@@ -75,9 +80,9 @@
 	desc = "A cloak that can become invisbile at will, hiding items you store in it. To create it transmute a glass shard, any item of clothing that you can fit over your uniform and any type of bedsheet."
 	gain_text = "Owl is the keeper of things that quite not are in practice, but in theory are."
 	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul,/datum/heretic_knowledge/cold_snap)
+	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul, /datum/heretic_knowledge/cold_snap)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
-	required_atoms = list(/obj/item/shard,/obj/item/clothing/suit,/obj/item/bedsheet)
+	required_atoms = list(/obj/item/shard = 1, /obj/item/clothing/suit = 1, /obj/item/bedsheet = 1)
 
 /datum/heretic_knowledge/void_mark
 	name = "Mark of Void"
@@ -93,12 +98,12 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
 	if(!isliving(target))
-		return
-	. = TRUE
+		return ..()
+
 	var/mob/living/living_target = target
 	living_target.apply_status_effect(/datum/status_effect/eldritch/void)
+	return TRUE
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
@@ -118,8 +123,8 @@
 	gain_text = "Etched, carved... eternal. I can carve the monolith and evoke their powers!"
 	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor that have various effects on nonbelievers who walk over them. They make quite a handy throwing weapon. To create the carving knife transmute a knife with a glass shard and a piece of paper."
 	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase,/datum/heretic_knowledge/summon/raw_prophet)
-	required_atoms = list(/obj/item/knife,/obj/item/shard,/obj/item/paper)
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase, /datum/heretic_knowledge/summon/raw_prophet)
+	required_atoms = list(/obj/item/knife = 1, /obj/item/shard = 1, /obj/item/paper = 1)
 	result_atoms = list(/obj/item/melee/rune_carver)
 
 /datum/heretic_knowledge/crucible
@@ -127,8 +132,8 @@
 	gain_text = "This is pure agony, i wasn't able to summon the dereliction of the emperor, but i stumbled upon a diffrent recipe..."
 	desc = "Allows you to create a mawed crucible, eldritch structure that allows you to create potions of various effects, to do so transmute a table with a watertank"
 	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase,/datum/heretic_knowledge/spell/area_conversion)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank,/obj/structure/table)
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase, /datum/heretic_knowledge/spell/area_conversion)
+	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/structure/table = 1)
 	result_atoms = list(/obj/structure/eldritch_crucible)
 
 /datum/heretic_knowledge/void_blade_upgrade
@@ -145,16 +150,18 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_blade_upgrade/on_ranged_attack_eldritch_blade(atom/target, mob/user, click_parameters)
-	. = ..()
 	if(!ishuman(target) || !iscarbon(user))
 		return
+
 	var/mob/living/carbon/carbon_human = user
 	var/mob/living/carbon/human/human_target = target
 	var/datum/status_effect/eldritch/effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh) || human_target.has_status_effect(/datum/status_effect/eldritch/void)
 	if(!effect)
 		return
+
 	var/dir = angle2dir(dir2angle(get_dir(user,human_target))+180)
 	carbon_human.forceMove(get_step(human_target,dir))
+
 	var/obj/item/melee/sickly_blade/blade = carbon_human.get_active_held_item()
 	blade.melee_attack_chain(carbon_human,human_target)
 
@@ -175,24 +182,22 @@
 	name = "Waltz at the End of Time"
 	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will automatically silence people around you and will summon a snow storm around you."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. Aristocrat stand before me, he motions to me. We will play a waltz to the whispers of dying reality, as the world is destroyed before our eyes."
-	cost = 3
-	required_atoms = list(/mob/living/carbon/human)
 	route = PATH_VOID
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
 
-/datum/heretic_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/mob/living/carbon/human/waltzing = user
-	waltzing.physiology.brute_mod *= 0.5
-	waltzing.physiology.burn_mod *= 0.5
-	ADD_TRAIT(waltzing, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
-	waltzing.client?.give_award(/datum/award/achievement/misc/void_ascension, waltzing)
-	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# The nobleman of void [waltzing.real_name] has arrived, step along the Waltz that ends worlds! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
+/datum/heretic_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	priority_announce("[generate_heretic_text()] The nobleman of void [user.real_name] has arrived, step along the Waltz that ends worlds! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
+	ADD_TRAIT(user, TRAIT_RESISTLOWPRESSURE, MAGIC_TRAIT)
 
+	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
-	return ..()
+	processes_on_life = TRUE
+	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /datum/heretic_knowledge/final/void_final/on_death()
 	if(sound_loop)
@@ -202,21 +207,16 @@
 		QDEL_NULL(storm)
 
 /datum/heretic_knowledge/final/void_final/on_life(mob/user)
-	. = ..()
-	if(!finished)
-		return
+	for(var/mob/living/carbon/close_carbon in spiral_range(7,user) - user)
+		if(IS_HERETIC_OR_MONSTER(close_carbon))
+			continue
+		close_carbon.silent += 1
+		close_carbon.adjust_bodytemperature(-20)
 
-	for(var/mob/living/carbon/livies in spiral_range(7,user)-user)
-		if(IS_HERETIC_MONSTER(livies) || IS_HERETIC(livies))
-			return
-		livies.silent += 1
-		livies.adjust_bodytemperature(-20)
-
-	var/turf/turfie = get_turf(user)
-	if(!isopenturf(turfie))
+	var/turf/open/user_turf = get_turf(user)
+	if(!isopenturf(user_turf))
 		return
-	var/turf/open/open_turfie = turfie
-	open_turfie.TakeTemperature(-20)
+	user_turf.TakeTemperature(-20)
 
 	var/area/user_area = get_area(user)
 	var/turf/user_turf = get_turf(user)
