@@ -10,8 +10,6 @@
 	var/list/sounds
 	///Uses left before the sound player deletes itself
 	var/uses
-	///List of all signals that must be recieved to trigger the sound
-	var/signal_list
 
 /datum/component/sound_player/Initialize(
 	volume = 30,
@@ -22,7 +20,6 @@
 	src.volume = volume
 	src.sounds = sounds
 	src.uses = uses
-	src.signal_list = signal_list
 
 	RegisterSignal(parent, signal_list, .proc/play_sound)
 
