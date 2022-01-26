@@ -26,7 +26,10 @@
 
 /obj/structure/c_transit_tube/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS,null,null,CALLBACK(src,.proc/after_rot))
+	AddComponent(/datum/component/simple_rotation, \
+		rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS, \
+		after_rotation = CALLBACK(src,.proc/after_rot) \
+	)
 
 /obj/structure/c_transit_tube/proc/after_rot(mob/user,rotation_type)
 	if(flipped_build_type && rotation_type == ROTATION_FLIP)
