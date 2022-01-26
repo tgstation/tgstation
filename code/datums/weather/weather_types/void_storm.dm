@@ -26,7 +26,7 @@
 
 /datum/weather/void_storm/can_weather_act(mob/living/mob_to_check)
 	. = ..()
-	if(IS_HERETIC(mob_to_check) || IS_HERETIC_MONSTER(mob_to_check))
+	if(IS_HERETIC_OR_MONSTER(mob_to_check))
 		return FALSE
 
 /datum/weather/void_storm/weather_act(mob/living/victim)
@@ -34,4 +34,3 @@
 	victim.adjustFireLoss(rand(1,3))
 	victim.adjust_blurriness(rand(0,1))
 	victim.adjust_bodytemperature(-rand(5,15))
-

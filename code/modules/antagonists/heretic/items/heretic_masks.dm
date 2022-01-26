@@ -19,7 +19,7 @@
 		local_user = user
 		START_PROCESSING(SSobj,src)
 
-		if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		if(IS_HERETIC_OR_MONSTER(user))
 			return
 		ADD_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
@@ -33,11 +33,11 @@
 	if(!local_user)
 		return PROCESS_KILL
 
-	if((IS_HERETIC(local_user) || IS_HERETIC_MONSTER(local_user)) && HAS_TRAIT(src,TRAIT_NODROP))
+	if(IS_HERETIC_OR_MONSTER(local_user) && HAS_TRAIT(src,TRAIT_NODROP))
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 	for(var/mob/living/carbon/human/human_in_range in spiral_range(9,local_user))
-		if(IS_HERETIC(human_in_range) || IS_HERETIC_MONSTER(human_in_range))
+		if(IS_HERETIC_OR_MONSTER(human_in_range))
 			continue
 
 		SEND_SIGNAL(human_in_range,COMSIG_VOID_MASK_ACT,rand(-2,-20)*delta_time)
