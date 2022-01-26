@@ -1,0 +1,4 @@
+author: "Zonespace27"
+delete-after: True
+changes: 
+  - bugfix: "Heads of Personnel can now be midround thieves, as intended."
