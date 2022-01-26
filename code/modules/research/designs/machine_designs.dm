@@ -572,14 +572,6 @@
 	category = list ("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
-/datum/design/board/paystand
-	name = "Machine Design (Pay Stand)"
-	desc = "The circuit board for a paystand."
-	id = "paystand"
-	build_path = /obj/item/circuitboard/machine/paystand
-	category = list ("Misc. Machinery")
-
-
 /datum/design/board/fat_sucker
 	name = "Machine Design (Lipid Extractor)"
 	desc = "The circuit board for a lipid extractor."

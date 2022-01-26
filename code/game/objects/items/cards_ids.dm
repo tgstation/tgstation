@@ -59,8 +59,8 @@
 	var/registered_name = null
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
-	/// Linked paystand.
-	var/obj/machinery/paystand/my_store
+	/// Linked holopay.
+	var/obj/machinery/holopay/my_store
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -94,8 +94,8 @@
 /obj/item/card/id/Destroy()
 	if (registered_account)
 		registered_account.bank_cards -= src
-	if (my_store && my_store.my_card == src)
-		my_store.my_card = null
+	if (my_store)
+		QDEL_NULL(my_store)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -382,6 +382,62 @@
 			minor = " <b>(MINOR)</b>"
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
+
+/obj/item/card/id/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	/// Right clicking will deactivate any current holopays
+	if(my_store)
+		QDEL_NULL(my_store)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!registered_account || !registered_account.account_job)
+		balloon_alert(user, "no account")
+		to_chat(user, span_warning("You need a valid bank account to do this."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	/// Determines where the holopay will be placed based on tile contents
+	var/turf/projection
+	var/turf/step_ahead = get_step(user, user.dir)
+	var/turf/user_loc = user.loc
+	if(can_proj_holopay(step_ahead))
+		projection = step_ahead
+	else if(can_proj_holopay(user_loc))
+		projection = user_loc
+	if(!projection)
+		balloon_alert(user, "no space")
+		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	/// Valid tile for holopay placement
+	my_store = new(projection, user, src, registered_account)
+	playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+	if(!my_store)
+		CRASH("Could not create holostand")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/**
+ * Determines whether a new holopay can be placed on the given turf.
+ *
+ * Arguments:
+ * * turf/target - The target turf to be checked for dense contents
+ * Returns:
+ * * TRUE if the target is a valid holopay location, FALSE otherwise.
+ */
+/obj/item/card/id/proc/can_proj_holopay(turf/target)
+	if(!isfloorturf(target))
+		return FALSE
+	if(target.density)
+		return FALSE
+	if(length(target.contents) > 5)
+		return FALSE
+	for(var/obj/checked_obj in target.contents)
+		if(checked_obj.density)
+			return FALSE
+		if(istype(checked_obj, /obj/machinery/holopay))
+			return FALSE
+	return TRUE
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()

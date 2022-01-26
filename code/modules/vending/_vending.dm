@@ -1128,7 +1128,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	light_mask = "custom-light-mask"
 	refill_canister = /obj/item/vending_refill/custom
 	/// where the money is sent
-	var/datum/bank_account/private_a
+	var/datum/bank_account/linked_account
 	/// max number of items that the custom vendor can hold
 	var/max_loaded_items = 20
 	/// Base64 cache of custom icons.
@@ -1139,9 +1139,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = FALSE
 	if(!isliving(user))
 		return FALSE
-	var/mob/living/L = user
-	var/obj/item/card/id/C = L.get_idcard(FALSE)
-	if(C?.registered_account && C.registered_account == private_a)
+	var/mob/living/living_user = user
+	var/obj/item/card/id/id_card = living_user.get_idcard(FALSE)
+	if(id_card?.registered_account && id_card.registered_account == linked_account)
 		return TRUE
 
 /obj/machinery/vending/custom/canLoadItem(obj/item/I, mob/user)
@@ -1157,6 +1157,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	if(I.custom_price)
 		return TRUE
+
+/obj/machinery/vending/custom/ui_interact(mob/user)
+	if(!linked_account)
+		balloon_alert(user, "no registered owner")
+		return FALSE
+	return ..()
 
 /obj/machinery/vending/custom/ui_data(mob/user)
 	. = ..()
@@ -1191,68 +1197,18 @@ GLOBAL_LIST_EMPTY(vending_products)
 		return
 	switch(action)
 		if("dispense")
-			. = TRUE
-			if(!vend_ready)
-				return
-			var/N = params["item"]
-			var/obj/item/S
-			vend_ready = FALSE
-			var/obj/item/card/id/C
 			if(isliving(usr))
-				var/mob/living/L = usr
-				C = L.get_idcard(TRUE)
-			if(!C)
-				say("No card found.")
-				flick(icon_deny,src)
-				vend_ready = TRUE
-				return
-			else if (!C.registered_account)
-				say("No account found.")
-				flick(icon_deny,src)
-				vend_ready = TRUE
-				return
-			var/datum/bank_account/account = C.registered_account
-			for(var/obj/O in contents)
-				if(format_text(O.name) == N)
-					S = O
-					break
-			if(S)
-				if(compartmentLoadAccessCheck(usr))
-					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-					S.forceMove(drop_location())
-					loaded_items--
-					use_power(5)
-					vend_ready = TRUE
-					updateUsrDialog()
-					return
-				if(account.has_money(S.custom_price))
-					account.adjust_money(-S.custom_price)
-					var/datum/bank_account/owner = private_a
-					if(owner)
-						owner.adjust_money(S.custom_price)
-						SSblackbox.record_feedback("amount", "vending_spent", S.custom_price)
-						log_econ("[S.custom_price] credits were spent on [src] buying a [S] by [owner.account_holder], owned by [private_a.account_holder].")
-					vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
-					S.forceMove(drop_location())
-					loaded_items--
-					use_power(5)
-					if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
-						say("Thank you for buying local and purchasing [S]!")
-						purchase_message_cooldown = world.time + 5 SECONDS
-						last_shopper = REF(usr)
-					vend_ready = TRUE
-					updateUsrDialog()
-					return
-				else
-					say("You do not possess the funds to purchase this.")
+				vend_act(usr, params["item"])
 			vend_ready = TRUE
+			updateUsrDialog()
+			return TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/I, mob/user, params)
-	if(!private_a && isliving(user))
+	if(!linked_account && isliving(user))
 		var/mob/living/L = user
 		var/obj/item/card/id/C = L.get_idcard(TRUE)
 		if(C?.registered_account)
-			private_a = C.registered_account
+			linked_account = C.registered_account
 			say("\The [src] has been linked to [C].")
 
 	if(compartmentLoadAccessCheck(user))
@@ -1276,6 +1232,52 @@ GLOBAL_LIST_EMPTY(vending_products)
 			I.forceMove(T)
 		explosion(src, devastation_range = -1, light_impact_range = 3)
 	return ..()
+
+/**
+ * Vends an item to the user. Handles all the logic:
+ * Updating stock, account transactions, alerting users.
+ * @return -- TRUE if a valid condition was met, FALSE otherwise.
+ */
+/obj/machinery/vending/custom/proc/vend_act(mob/living/user, choice)
+	if(!vend_ready)
+		return
+	var/obj/item/dispensed_item
+	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+	vend_ready = FALSE
+	if(!id_card || !id_card.registered_account || !id_card.registered_account.account_job)
+		balloon_alert(usr, "no card found")
+		flick(icon_deny, src)
+		return TRUE
+	var/datum/bank_account/payee = id_card.registered_account
+	for(var/obj/stock in contents)
+		if(format_text(stock.name) == choice)
+			dispensed_item = stock
+			break
+	if(!dispensed_item)
+		return FALSE
+	if(!compartmentLoadAccessCheck(user))
+		if(!payee.has_money(dispensed_item.custom_price))
+			balloon_alert(user, "insufficient funds")
+			return TRUE
+		payee.adjust_money(-dispensed_item.custom_price)
+		linked_account.adjust_money(dispensed_item.custom_price)
+		linked_account.bank_card_talk("You received [dispensed_item.custom_price] \
+		cr from a purchase made at your custom vendor by [payee.account_holder].")
+		SSblackbox.record_feedback("amount", "vending_spent", dispensed_item.custom_price)
+		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
+		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
+		if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
+			say("Thank you for your patronage [user]!")
+			purchase_message_cooldown = world.time + 5 SECONDS
+			last_shopper = REF(usr)
+	loaded_items--
+	use_power(5)
+	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)
+	if(user.CanReach(src) && user.put_in_hands(dispensed_item))
+		to_chat(user, span_notice("You take [dispensed_item.name] out of the slot."))
+	else
+		to_chat(user, span_warning("[capitalize(dispensed_item.name)] falls onto the floor!"))
+	return TRUE
 
 /obj/machinery/vending/custom/unbreakable
 	name = "Indestructible Vendor"
