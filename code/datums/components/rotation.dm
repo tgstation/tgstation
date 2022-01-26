@@ -1,10 +1,18 @@
+/// If an object can be rotated by alt clicking
 #define ROTATION_ALTCLICK (1<<0)
+/// If an object can be rotated with a wrench
 #define ROTATION_WRENCH (1<<1)
+/// If an object will have rotation options presented as verbs to a mob
 #define ROTATION_VERBS (1<<2)
+/// If an object can be rotated counterclockwise
 #define ROTATION_COUNTERCLOCKWISE (1<<3)
+/// If an object can be rotated clockwise
 #define ROTATION_CLOCKWISE (1<<4)
+/// If an object can be rotated 180 degrees
 #define ROTATION_FLIP (1<<5)
+/// If ghosts can rotate an object (if the ghost config is enabled)
 #define ROTATION_GHOSTS_ALLOWED (1<6)
+/// If an object can be rotated if it's anchored (used for chairs)
 #define ROTATION_ANCHORED_ALLOWED (1<7)
 
 /datum/component/simple_rotation
