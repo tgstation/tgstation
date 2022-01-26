@@ -1,0 +1,4 @@
+author: "magatsuchi"
+delete-after: True
+changes: 
+  - bugfix: "restructures some code to make airlocks hackable again"
