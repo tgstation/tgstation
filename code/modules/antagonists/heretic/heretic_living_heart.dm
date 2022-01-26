@@ -58,13 +58,13 @@
 	if(!.)
 		return
 
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = owner.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/datum/heretic_knowledge/living_heart_sacrificing/knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/living_heart_sacrificing)
 	if(!knowledge)
 		return FALSE
 
 	if(!LAZYLEN(knowledge.sac_targets))
-		to_chat(user, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
+		to_chat(owner, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
 		return TRUE
 
 	var/list/mob/living/carbon/human/human_targets = list()
@@ -78,7 +78,7 @@
 		var/dist = get_dist(get_turf(owner), get_turf(mob_target))
 		var/dir = get_dir(get_turf(owner), get_turf(mob_target))
 
-		if(isturf(target.loc) && owner.z != mob_target.z)
+		if(isturf(mob_target.loc) && owner.z != mob_target.z)
 			to_chat(owner, span_warning("[mob_target.real_name] is on another plane of existence!"))
 		else
 			switch(dist)

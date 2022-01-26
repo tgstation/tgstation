@@ -151,7 +151,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!(WEAKREF(sacrifice) in sac_targets))
 		CRASH("[type] sacrifice_process managed to get a non-target human. This is incorrect.")
 
-	LAZYADD(target_blacklist, WEAKREF(sacrifice.mind))
+	if(sacrifice.mind)
+		LAZYADD(target_blacklist, WEAKREF(sacrifice.mind))
 	LAZYREMOVE(sac_targets, WEAKREF(sacrifice))
 
 	to_chat(user, span_danger("Your patrons accepts your offer."))
@@ -219,10 +220,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
 
-	to_chat(user, span_warning("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
+	to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
 	for(var/datum/mind/chosen_mind as anything in final_targets)
 		LAZYADD(sac_targets, WEAKREF(chosen_mind.current))
-		to_chat(user, span_warning("[chosen_mind.current.real_name], the [chosen_mind.assigned_role]."))
+		to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role]."))
 
 /**
  * Allows the heretic to craft a spell focus.
