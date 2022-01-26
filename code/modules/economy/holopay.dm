@@ -209,11 +209,7 @@
 		return FALSE
 
 	/// If the user has enough money, ask them the amount or charge the force fee
-	var/amount
-	if(force_fee)
-		amount = force_fee
-	else
-		amount = tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
+	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
 
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
