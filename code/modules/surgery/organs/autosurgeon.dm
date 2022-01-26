@@ -22,10 +22,12 @@
 	var/organ_type = /obj/item/organ
 	var/starting_organ
 	var/obj/item/organ/storedorgan
+	var/surgery_speed = 1
 
 /obj/item/autosurgeon/organ/syndicate
 	name = "suspicious implant autosurgeon"
 	icon_state = "syndicate_autoimplanter"
+	surgery_speed = 0.75
 
 /obj/item/autosurgeon/organ/Initialize(mapload)
 	. = ..()
@@ -68,6 +70,20 @@
 		to_chat(user, span_notice("You insert the [weapon] into [src]."))
 	else
 		return ..()
+
+/obj/item/autosurgeon/organ/attack(mob/living/target, mob/living/user, params)
+	add_fingerprint(user)
+	to_chat(user, span_notice("You begin to prepare to use [src] on [target]."))
+	if(do_after(user, (8 SECONDS * surgery_speed), target))
+		user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
+		to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
+		playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
+		storedorgan = null
+		name = initial(name)
+		if(uses != INFINITE)
+			uses--
+		if(!uses)
+			desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(..())
