@@ -1,5 +1,5 @@
 /// Max range at which the hologram can be projected before it deletes
-#define MAX_HOLO_RANGE 3
+#define MAX_HOLO_RANGE 4
 /// Minimum forced fee for holopay stations. Registers as "pay what you want."
 #define MIN_FEE 0
 /// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
@@ -107,6 +107,7 @@
 			ui.send_full_update()
 			return TRUE
 		if("fee")
+			/// Input checks for fee amount
 			var/choice = params["amount"]
 			if(!isnum(choice))
 				stack_trace("User input a non number into the holopay fee field.")
@@ -122,7 +123,8 @@
 			return TRUE
 		if("pay")
 			ui.close()
-			return process_payment(usr)
+			process_payment(usr)
+			return TRUE
 		if("rename")
 			/// The stand name must be within the length limit
 			if(length(params["name"]) < 3 || length(params["name"]) > MAX_NAME_LEN)
@@ -139,34 +141,38 @@
 		if(!pay_card.registered_account || !pay_card.registered_account.account_job)
 			balloon_alert(user, "invalid account")
 			return FALSE
-
 		/// Delete the holopay if the master swipes on it
 		if(pay_card.registered_account == linked_account)
 			qdel(src)
 			return TRUE
 		process_payment(user)
 		return TRUE
-
 	/// Users can also pay by holochip
 	if(istype(held_item, /obj/item/holochip))
+		/// Account checks
 		var/obj/item/holochip/chip = held_item
 		if(!chip.credits)
 			balloon_alert(user, "holochip is empty")
 			to_chat(user, span_warning("There doesn't seem to be any credits here."))
 			return FALSE
-		var/cash_deposit = tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", 1, chip.credits, 1)
-		if(isnull(cash_deposit))
-			return TRUE
-		if(cash_deposit <= 0 || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(force_fee && chip.credits < force_fee)
+			balloon_alert(user, "insufficient credits")
+			to_chat(user, span_warning("You don't have enough credits to pay with this chip."))
 			return FALSE
-		cash_deposit = round(cash_deposit)
-		if(chip.spend(cash_deposit, FALSE))
-			alert_buyer(user, cash_deposit)
+		/// Charges force fee or uses pay what you want
+		var/cash_deposit = force_fee || tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", max_value = chip.credits)
+		/// Exit sanity checks
+		if(!cash_deposit)
 			return TRUE
-		else
-			balloon_alert(user, "insufficient funds")
-			to_chat(user, span_warning("You don't have enough credits to pay for this."))
+		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return FALSE
+		if(!chip.spend(cash_deposit, FALSE))
+			balloon_alert(user, "insufficient credits")
+			to_chat(user, span_warning("You don't have enough credits to pay with this chip."))
+			return FALSE
+		/// Success: Alert buyer
+		alert_buyer(user, cash_deposit)
+		return TRUE
 
 	/// Throws errors if they try to use space cash
 	if(istype(held_item, /obj/item/stack/spacecash))
@@ -189,7 +195,6 @@
 	// Preliminary sanity checks
 	if(!isliving(user) || issilicon(user))
 		return FALSE
-
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
@@ -202,15 +207,12 @@
 		balloon_alert(user, "invalid transaction")
 		to_chat(user, span_warning("You can't pay yourself."))
 		return FALSE
-	var/minimum = force_fee || 1
-	if(!payee.has_money(minimum))
+	if(!payee.has_money(force_fee || 1))
 		balloon_alert(user, "insufficient credits")
 		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE
-
 	/// If the user has enough money, ask them the amount or charge the force fee
 	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
-
 	/// Exit checks in case the user cancelled or entered an invalid amount
 	if(!amount || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return FALSE
@@ -218,7 +220,6 @@
 		balloon_alert(user, "insufficient credits")
 		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE
-
 	/// Success: Alert the buyer
 	alert_buyer(user, amount)
 	return TRUE
@@ -238,7 +239,6 @@
 	linked_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
-
 	/// Log the event
 	log_econ("[amount] credits were transferred from [payee]'s transaction to [linked_account.account_holder]")
 	SSblackbox.record_feedback("amount", "credits_transferred", amount)
