@@ -1,5 +1,5 @@
 /datum/autowiki/techweb
-	page = "User:Mothblocks/Techweb"
+	page = "Template:Autowiki/Techweb"
 
 /datum/autowiki/techweb/generate()
 	var/output = ""

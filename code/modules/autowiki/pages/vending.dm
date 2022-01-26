@@ -1,5 +1,5 @@
 /datum/autowiki/vending
-	page = "User:Mothblocks/Vending Machines"
+	page = "Template:Autowiki/VendingMachines"
 
 /datum/autowiki/vending/generate()
 	var/output = ""
