@@ -387,7 +387,6 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-
 	/// Right clicking will deactivate any current holopays
 	if(my_store)
 		QDEL_NULL(my_store)
@@ -396,7 +395,6 @@
 		balloon_alert(user, "no account")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	/// Determines where the holopay will be placed based on tile contents
 	var/turf/projection
 	var/turf/step_ahead = get_step(user, user.dir)
@@ -409,7 +407,6 @@
 		balloon_alert(user, "no space")
 		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	/// Valid tile for holopay placement
 	my_store = new(projection, user, src, registered_account)
 	playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
@@ -419,6 +416,8 @@
 
 /**
  * Determines whether a new holopay can be placed on the given turf.
+ * Checks if there are dense contents, too many contents, or another
+ * holopay already exists on the turf.
  *
  * Arguments:
  * * turf/target - The target turf to be checked for dense contents
