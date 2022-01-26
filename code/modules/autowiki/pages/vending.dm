@@ -10,8 +10,7 @@
 	// So we put it inside, something
 	var/obj/parent = new
 
-	// MOTHBLOCKS TODO: Stable sort
-	for (var/vending_type in subtypesof(/obj/machinery/vending))
+	for (var/vending_type in sort_list(subtypesof(/obj/machinery/vending), /proc/cmp_typepaths_asc))
 		var/obj/machinery/vending/vending_machine = new vending_type(parent)
 		vending_machine.use_power = FALSE
 		vending_machine.update_icon(UPDATE_ICON_STATE)
