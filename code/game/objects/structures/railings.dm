@@ -32,7 +32,7 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS , can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
@@ -126,6 +126,3 @@
 /obj/structure/railing/proc/check_anchored(checked_anchored)
 	if(anchored == checked_anchored)
 		return TRUE
-
-/obj/structure/railing/proc/after_rotation(mob/user,rotation_type)
-	add_fingerprint(user)
