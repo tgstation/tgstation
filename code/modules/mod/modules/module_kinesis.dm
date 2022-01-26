@@ -100,8 +100,8 @@
 			grabbed_item.pickup(mod.wearer)
 			mod.wearer.put_in_hands(grabbed_item)
 		return
-	var/pixel_x_change
-	var/pixel_y_change
+	var/pixel_x_change = 0
+	var/pixel_y_change = 0
 	var/direction = get_dir(grabbed_atom, next_turf)
 	if(direction & NORTH)
 		pixel_y_change = world.icon_size/2

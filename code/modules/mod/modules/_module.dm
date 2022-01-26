@@ -91,6 +91,8 @@
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+		if(mod.wearer)
+			balloon_alert(mod.wearer, "not active!")
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
@@ -125,6 +127,7 @@
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
+				mod.wearer.transferItemToLoc(device, src, force = TRUE)
 				return
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
@@ -142,7 +145,7 @@
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
 		if(device)
-			mod.wearer.transferItemToLoc(device, src, TRUE)
+			mod.wearer.transferItemToLoc(device, src, force = TRUE)
 			balloon_alert(mod.wearer, "[device] retracted")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else

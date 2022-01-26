@@ -55,7 +55,7 @@
 	teleport_cooldown -= (E * 100)
 
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "pad-idle-o", "qpad-idle", I))
+	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
 		return
 
 	if(panel_open)
