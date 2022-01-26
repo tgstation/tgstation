@@ -219,7 +219,6 @@
 	user_turf.TakeTemperature(-20)
 
 	var/area/user_area = get_area(user)
-	var/turf/user_turf = get_turf(user)
 
 	if(!storm)
 		storm = new /datum/weather/void_storm(list(user_turf.z))

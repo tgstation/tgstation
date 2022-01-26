@@ -245,7 +245,7 @@
 		to_chat(owner.current, span_danger("The Mansus has modified your targets. Go find them!"))
 		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role || "human"]."))
 
-	LAZYADD(knowledge.sac_targets, new_target)
+	LAZYADD(knowledge.sac_targets, WEAKREF(new_target))
 
 /*
  * Admin proc for removing a mob from a heretic's sac list.

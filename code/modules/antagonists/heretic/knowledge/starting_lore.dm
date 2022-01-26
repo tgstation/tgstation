@@ -107,6 +107,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		They must be in critical (or worse) condition."
 	gain_text = "You hear a heartbeat. Figures glow red in the distance."
 	cost = 0
+	required_atoms = list(/mob/living/carbon/human = 0)
 	route = PATH_START
 	/// Lazylist of weakrefs to humans that we have as targets.
 	var/list/datum/weakref/sac_targets

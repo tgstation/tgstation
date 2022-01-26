@@ -111,7 +111,8 @@
 /datum/heretic_knowledge/rust_regen/on_life(mob/user)
 	if(!isliving(user))
 		return
-	if(!HAS_TRAIT(get_turf(user), TRAIT_RUSTY))
+	var/turf/our_turf = get_turf(user)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
 	var/mob/living/living_user = user
@@ -225,7 +226,8 @@
 	SIGNAL_HANDLER
 
 	// If we're on a rusty turf, and haven't given out our traits, buff our guy
-	if(HAS_TRAIT(get_turf(mover), TRAIT_RUSTY))
+	var/turf/our_turf = get_turf(mover)
+	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
 			for(var/trait in conditional_immunities)
 				ADD_TRAIT(mover, trait, MAGIC_TRAIT)
@@ -241,7 +243,8 @@
 /datum/heretic_knowledge/final/rust_final/on_life(mob/user)
 	if(!isliving(user))
 		return
-	if(!HAS_TRAIT(get_turf(user), TRAIT_RUSTY))
+	var/turf/our_turf = get_turf(user)
+	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
 	var/mob/living/living_user = user

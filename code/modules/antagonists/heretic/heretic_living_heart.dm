@@ -1,6 +1,8 @@
 // TODO move to components folder //
 /datum/component/living_heart
 	var/datum/action/item_action/organ_action/track_target/action
+	var/old_icon
+	var/old_icon_state
 
 /datum/component/living_heart/Initialize()
 	if(!isorgan(parent))
@@ -19,10 +21,26 @@
 	ADD_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
+	// It's not technically visible,
+	// but the organ sprite shows up in the action
+	// So we'll do this anyways
+	parent.AddElement(/datum/element/update_icon_blocker)
+	old_icon = organ_parent.icon
+	old_icon_state = organ_parent.icon_state
+
+	organ_parent.icon = 'icons/obj/eldritch.dmi'
+	organ_parent.icon_state = "living_heart"
+
 /datum/component/living_heart/Destroy(force, silent)
 	QDEL_NULL(action)
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	UnregisterSignal(parent, COMSIG_ORGAN_REMOVED)
+
+	parent.RemoveElement(/datum/element/update_icon_blocker)
+	var/obj/item/organ/organ_parent = parent
+	organ_parent.icon = old_icon
+	organ_parent.icon_state = old_icon_state
+
 	return ..()
 
 /datum/component/living_heart/proc/on_organ_removed(obj/item/organ/source, mob/living/carbon/old_owner)
@@ -36,6 +54,8 @@
 	name = "Living Heartbeat"
 	desc = "Track your targets."
 	check_flags = AB_CHECK_CONSCIOUS
+	button_icon = 'icons/mob/actions/actions_ecult.dmi'
+	background_icon_state = "bg_ecult"
 
 /datum/action/item_action/organ_action/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
