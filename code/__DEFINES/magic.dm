@@ -38,3 +38,8 @@
 #define MAGIC_CASTING_RESTRICTION (1<<3)
 /// All magic resistances combined
 #define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION)
+
+///Spawns random guns near players and gives some players antag objectives
+#define SUMMON_GUNS "guns"
+///Spawns random wands and spellbooks near players and gives some players antag objectives
+#define SUMMON_MAGIC "magic"

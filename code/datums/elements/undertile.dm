@@ -1,3 +1,6 @@
+/// The alpha we give to stuff under tiles, if they want it
+#define ALPHA_UNDERTILE 128
+
 ///Add to an object if you want to be able to be hidden under tiles
 /datum/element/undertile
 	element_flags = ELEMENT_BESPOKE | COMPONENT_DUPE_HIGHLANDER
@@ -59,3 +62,5 @@
 	. = ..()
 
 	hide(AM, FALSE)
+
+#undef ALPHA_UNDERTILE

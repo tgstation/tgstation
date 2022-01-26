@@ -119,13 +119,13 @@
 	display_name = "Basic Modular Suits"
 	description = "Specialized back mounted power suits with various different modules."
 	design_ids = list(
-		"mod_armor_standard",
 		"mod_boots",
 		"mod_chestplate",
 		"mod_gauntlets",
 		"mod_helmet",
 		"mod_paint_kit",
 		"mod_shell",
+		"mod_armor_standard",
 		"mod_storage",
 		"mod_welding",
 		"mod_mouthhole",
@@ -133,6 +133,7 @@
 		"mod_longfall",
 		"mod_thermal_regulator",
 		"mod_plasma",
+		"mod_sign_radio",
 	)
 
 /datum/techweb_node/mech_tools
@@ -714,11 +715,12 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
+		"comp_mod_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
-		"mod_circuit",
+		"module_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
@@ -1461,7 +1463,6 @@
 		"mod_clamp",
 		"mod_drill",
 		"mod_orebag",
-		"mod_pathfinder",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1490,6 +1491,7 @@
 		"mod_jetpack",
 		"mod_rad_protection",
 		"mod_emp_shield",
+		"mod_storage_expanded",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
@@ -1532,6 +1534,7 @@
 		"mod_armor_cosmohonk",
 		"mod_bikehorn",
 		"mod_microwave_beam",
+		"mod_waddle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1544,7 +1547,17 @@
 		"mod_antigrav",
 		"mod_teleporter",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly_engi
+	id = "mod_anomaly_engi"
+	display_name = "Engineering Anomalock Modular Suits"
+	description = "Advanced modules for modular suits, using anomaly cores to become even better engineers."
+	prereq_ids = list("mod_advanced_engineering", "mod_anomaly")
+	design_ids = list(
+		"mod_kinesis",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha

@@ -448,7 +448,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 					chosen_target = tgui_input_list(user, "Choose the target for the spell", "Targeting", sort_names(possible_targets))
 					if(isnull(chosen_target))
 						return
-					if(ismob(chosen_target) || user.incapacitated())
+					if(!ismob(chosen_target) || user.incapacitated())
 						return
 				else
 					switch(random_target_priority)

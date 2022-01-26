@@ -41,6 +41,11 @@
 #define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
 #define RANDOM_PILL_STYLE 22 //Dont change this one though
 
+//used by chem masters and pill presses
+//update this if you add more patch icons
+#define PATCH_STYLE_LIST list("bandaid", "bandaid_brute", "bandaid_burn", "bandaid_both") //icon_state list
+#define DEFAULT_PATCH_STYLE "bandaid"
+
 //used by chem master
 #define CONDIMASTER_STYLE_AUTO "auto"
 #define CONDIMASTER_STYLE_FALLBACK "_"
@@ -82,6 +87,8 @@
 #define REAGENT_IGNORE_STASIS (1<<6)
 ///This reagent won't be used in most randomized recipes. Meant for reagents that could be synthetized but are normally inaccessible or TOO hard to get.
 #define REAGENT_NO_RANDOM_RECIPE (1<<7)
+///Does this reagent clean things?
+#define REAGENT_CLEANS (1<<8)
 
 //Chemical reaction flags, for determining reaction specialties
 ///Convert into impure/pure on reaction completion
@@ -180,3 +187,11 @@
 
 ///This is the center of a 1 degree deadband in which water will neither freeze to ice nor melt to liquid
 #define WATER_MATTERSTATE_CHANGE_TEMP 274.5
+
+//chem grenades defines
+/// Grenade is empty
+#define GRENADE_EMPTY 1
+/// Grenade has a activation trigger
+#define GRENADE_WIRED 2
+/// Grenade is ready to be finished
+#define GRENADE_READY 3

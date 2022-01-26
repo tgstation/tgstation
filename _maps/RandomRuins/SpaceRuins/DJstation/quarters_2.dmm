@@ -1,0 +1,145 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/djstation)
+"f" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/djstation)
+"i" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"k" = (
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"p" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/turf/template_noop,
+/area/template_noop)
+"v" = (
+/obj/structure/bed/maint,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/djstation)
+"B" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"J" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"M" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/structure/curtain,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"V" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/djstation)
+"W" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Y" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/dark/textured,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+p
+B
+J
+a
+W
+W
+"}
+(2,1,1) = {"
+a
+a
+i
+k
+Z
+Z
+v
+i
+a
+a
+"}
+(3,1,1) = {"
+Y
+a
+i
+M
+f
+d
+V
+i
+a
+Y
+"}
+(4,1,1) = {"
+Y
+W
+i
+J
+i
+i
+J
+i
+a
+a
+"}
+(5,1,1) = {"
+Y
+a
+W
+a
+a
+a
+a
+W
+a
+a
+"}
+(6,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+"}

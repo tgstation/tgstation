@@ -54,7 +54,7 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	ranged = TRUE
 	pixel_x = -16
 	base_pixel_x = -16
@@ -115,23 +115,23 @@
 	if(prob(15 + anger_modifier))
 		if(DRAKE_ENRAGED)
 			// Lava Arena
-			lava_swoop.Trigger(target)
+			lava_swoop.Trigger(target = target)
 			return
 		// Lava Pools
-		if(lava_swoop.Trigger(target))
+		if(lava_swoop.Trigger(target = target))
 			SLEEP_CHECK_DEATH(0, src)
 			fire_cone.StartCooldown(0)
-			fire_cone.Trigger(target)
+			fire_cone.Trigger(target = target)
 			meteors.StartCooldown(0)
 			INVOKE_ASYNC(meteors, /datum/action/proc/Trigger, target)
 			return
 	else if(prob(10+anger_modifier) && DRAKE_ENRAGED)
-		mass_fire.Trigger(target)
+		mass_fire.Trigger(target = target)
 		return
-	if(fire_cone.Trigger(target))
+	if(fire_cone.Trigger(target = target))
 		if(prob(50))
 			meteors.StartCooldown(0)
-			meteors.Trigger(target)
+			meteors.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
 	SIGNAL_HANDLER

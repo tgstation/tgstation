@@ -9,7 +9,7 @@
 	icon_state = "gps"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/gps/mod
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
@@ -29,7 +29,7 @@
 	icon_state = "clamp"
 	module_type = MODULE_ACTIVE
 	complexity = 3
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/clamp)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_clamp"
@@ -73,7 +73,7 @@
 		playsound(src, 'sound/mecha/hydraulic.ogg', 25, TRUE)
 		drain_power(use_power_cost)
 
-/obj/item/mod/module/clamp/on_uninstall()
+/obj/item/mod/module/clamp/on_suit_deactivation()
 	for(var/atom/movable/crate as anything in stored_crates)
 		crate.forceMove(drop_location())
 		stored_crates -= crate
@@ -86,7 +86,7 @@
 	icon_state = "drill"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
 
@@ -136,7 +136,7 @@
 	icon_state = "ore"
 	module_type = MODULE_USABLE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 0.2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
 	/// The ores stored in the bag.

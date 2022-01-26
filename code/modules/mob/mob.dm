@@ -1111,6 +1111,10 @@
 /mob/proc/update_health_hud()
 	return
 
+/// Changes the stamina HUD based on new information
+/mob/proc/update_stamina_hud()
+	return
+
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
 /mob/proc/update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)

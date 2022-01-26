@@ -903,9 +903,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/speed/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
-	. = ..()
 	if(!isitem(storage_holder))
-		return
+		return TRUE
 	if(istype(storage_holder, /obj/item/mod/control))
 		var/obj/item/mod/control/mod = storage_holder
 		return mod.slowdown_inactive <= 0
