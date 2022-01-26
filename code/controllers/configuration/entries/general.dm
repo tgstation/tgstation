@@ -70,6 +70,8 @@
 /datum/config_entry/flag/log_law/DeprecationUpdate(value)
 	return value
 
+/datum/config_entry/flag/log_tools // log using tools on machines
+
 /datum/config_entry/flag/log_game // log game events
 
 /datum/config_entry/flag/log_mecha // log mech data
