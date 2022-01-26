@@ -2,7 +2,7 @@
 /datum/config_entry/flag/autoadmin
 	protection = CONFIG_ENTRY_LOCKED
 
-// the rank given to autoadmins
+/// the rank given to autoadmins
 /datum/config_entry/string/autoadmin_rank
 	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
