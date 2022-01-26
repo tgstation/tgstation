@@ -1782,6 +1782,19 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark,
 /area/maintenance/fore)
+"aia" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/newscaster/directional/south,
+/obj/item/clipboard,
+/turf/open/floor/iron/dark,
+/area/commons/vacant_room/commissary)
 "aih" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -2896,9 +2909,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/central)
-"amy" = (
-/turf/closed/wall/r_wall/rust,
-/area/security/processing)
 "amz" = (
 /turf/closed/wall/r_wall/rust,
 /area/maintenance/port)
@@ -12088,6 +12098,19 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/science/xenobiology)
+"bhZ" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/folder/red,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/iron/dark,
+/area/maintenance/port)
 "bia" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -15160,23 +15183,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"bFL" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/sign/warning/electricshock{
-	pixel_y = -32
-	},
-/obj/effect/turf_decal/siding/red/corner{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/security/office)
 "bFM" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
@@ -15439,19 +15445,6 @@
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/maintenance/port)
-"bHb" = (
-/obj/structure/table,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/folder/red,
-/obj/structure/spider/stickyweb,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
 "bHf" = (
@@ -61907,19 +61900,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen)
-"qeX" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/newscaster/directional/south,
-/obj/item/clipboard,
-/turf/open/floor/iron/dark,
-/area/commons/vacant_room/commissary)
 "qeZ" = (
 /obj/machinery/computer/atmos_control/incinerator{
 	dir = 4
@@ -81149,6 +81129,25 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
+"xlg" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/sign/warning/electricshock{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/siding/red/corner{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/security/office)
 "xlm" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -94892,7 +94891,7 @@ amA
 cxp
 bDi
 bFD
-bHb
+bhZ
 cni
 wWY
 ajd
@@ -107263,7 +107262,7 @@ cHx
 lpU
 cHx
 cKg
-bFL
+xlg
 hdG
 akK
 anh
@@ -107520,7 +107519,7 @@ xcd
 eiX
 auD
 lZY
-amy
+amO
 amO
 dUK
 cJV
@@ -119581,7 +119580,7 @@ sZq
 mNY
 igV
 kqL
-qeX
+aia
 bEg
 coX
 chz
