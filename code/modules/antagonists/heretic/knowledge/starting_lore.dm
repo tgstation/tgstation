@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		They must be in critical (or worse) condition."
 	gain_text = "You hear a heartbeat. Figures glow red in the distance."
 	cost = 0
-	required_atoms = list(/mob/living/carbon/human = 0)
+	required_atoms = list(/mob/living/carbon/human = 1)
 	route = PATH_START
 	/// Lazylist of weakrefs to humans that we have as targets.
 	var/list/datum/weakref/sac_targets
@@ -123,6 +123,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// if we're standing on the rune,
 	// return TRUE so we can generate some
 	if(!LAZYLEN(sac_targets))
+		atoms += user
 		return (user in range(1, loc))
 
 	// Determine if livings in our atoms are valid
@@ -186,6 +187,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 		valid_targets += possible_target
 
+	if(!valid_targets.len)
+		to_chat(user, span_danger("No targets could be found!"))
+		return
+
 	// Now, let's try to get four targets.
 	// - One completely random
 	// - One from your department
@@ -220,6 +225,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	while(final_targets.len < 4 && valid_targets.len > 4 && target_sanity < 25)
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
+
+	list_clear_nulls(final_targets)
 
 	to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
 	for(var/datum/mind/chosen_mind as anything in final_targets)

@@ -3,6 +3,7 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
 	anchored = TRUE
 	icon_state = ""
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
@@ -14,24 +15,27 @@
 	I.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
 
-/obj/effect/heretic_rune/attack_hand(mob/living/user, list/modifiers)
+/obj/effect/heretic_rune/can_interact(mob/living/user)
 	. = ..()
-	if(.)
+	if(!.)
 		return
-	INVOKE_ASYNC(src, .proc/try_activate, user)
-
-/obj/effect/heretic_rune/proc/try_activate(mob/living/user)
 	if(!IS_HERETIC(user))
-		return
-	if(!is_in_use)
-		return
+		return FALSE
+	if(is_in_use)
+		return FALSE
+	return TRUE
 
+/obj/effect/heretic_rune/interact(mob/living/user)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/try_rituals, user)
+	return TRUE
+
+/obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
-	INVOKE_ASYNC(src, .proc/activate , user)
+	do_rituals(user)
 	is_in_use = FALSE
 
-/obj/effect/heretic_rune/proc/activate(mob/living/user)
-	// Have fun trying to read this proc.
+/obj/effect/heretic_rune/proc/do_rituals(mob/living/user)
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = heretic_datum.get_all_knowledge()
 	var/list/atoms_in_range = list()
@@ -41,11 +45,9 @@
 			continue
 		if(close_atom.invisibility)
 			continue
-
 		if(close_atom == user)
 			continue
 
-		// TODO removed dead check. Move to each place it's used?
 		atoms_in_range += close_atom
 
 	for(var/knowledge_key in knowledge)

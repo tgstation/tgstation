@@ -54,7 +54,6 @@
 	name = "Living Heartbeat"
 	desc = "Track your targets."
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	background_icon_state = "bg_ecult"
 
 /datum/action/item_action/organ_action/track_target/Grant(mob/granted)
