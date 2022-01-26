@@ -1,0 +1,4 @@
+author: "coldud13"
+delete-after: True
+changes: 
+  - qol: "Adds text to let players know that you can unscrew catwalk plating."

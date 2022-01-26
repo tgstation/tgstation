@@ -32,6 +32,10 @@
 
 	if(admin)
 		can_rotate = FALSE
+	
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/reflector,
+	))
 
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
@@ -288,3 +292,30 @@
 		return
 	else
 		return ..()
+
+//	USB
+
+/obj/item/circuit_component/reflector
+	display_name = "Reflector"
+	desc = "Allows you to adjust the angle of a reflector."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+	
+	///angle the reflector will be set to at trigger unless locked
+	var/datum/port/input/angle
+	
+	var/obj/structure/reflector/attached_reflector
+
+/obj/item/circuit_component/reflector/populate_ports()
+	angle = add_input_port("Angle", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/reflector/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/structure/reflector))
+		attached_reflector = parent
+
+/obj/item/circuit_component/reflector/unregister_usb_parent(atom/movable/parent)
+	attached_reflector = null
+	return ..()
+
+/obj/item/circuit_component/reflector/input_received(datum/port/input/port)
+	attached_reflector?.set_angle(angle.value)

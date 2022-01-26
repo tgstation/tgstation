@@ -409,11 +409,12 @@
 	. = ..()
 	if(.)
 		return
-	if(action != "change")
-		return
-	if(round(text2num(params["index"])) == currTag)
-		return
-	currTag = round(text2num(params["index"]))
+	switch(action)
+		if("change")
+			var/new_tag = round(text2num(params["index"]))
+			if(new_tag == currTag || new_tag < 1 || new_tag > length(GLOB.TAGGERLOCATIONS))
+				return
+			currTag = new_tag
 	return TRUE
 
 /obj/item/sales_tagger

@@ -1,6 +1,9 @@
 /// If we spawn an ERT with the "choose experienced leader" option, select the leader from the top X playtimes
 #define ERT_EXPERIENCED_LEADER_CHOOSE_TOP 3
 
+///Dummy mob reserve slot for admin use
+#define DUMMY_HUMAN_SLOT_ADMIN "admintools"
+
 // CENTCOM RESPONSE TEAM
 
 /datum/admins/proc/makeERTTemplateModified(list/settings)
@@ -227,3 +230,4 @@
 		log_admin("[key_name(usr)] failed to create a CentCom response team.")
 
 #undef ERT_EXPERIENCED_LEADER_CHOOSE_TOP
+#undef DUMMY_HUMAN_SLOT_ADMIN

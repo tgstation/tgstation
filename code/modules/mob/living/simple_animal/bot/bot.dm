@@ -210,7 +210,7 @@
 	diag_hud_set_botmode()
 
 	//If a bot has its own HUD (for player bots), provide it.
-	if(data_hud_type)
+	if(!isnull(data_hud_type))
 		var/datum/atom_hud/datahud = GLOB.huds[data_hud_type]
 		datahud.add_hud_to(src)
 	if(path_hud)
@@ -428,23 +428,22 @@
 				if (paicard)
 					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
 					ejectpai(user)
-	else
+	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-			if(health >= maxHealth)
-				to_chat(user, span_warning("[src] does not need a repair!"))
-				return
-			if(!(bot_cover_flags & BOT_COVER_OPEN))
-				to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
-				return
+		if(health >= maxHealth)
+			to_chat(user, span_warning("[src] does not need a repair!"))
+			return
+		if(!(bot_cover_flags & BOT_COVER_OPEN))
+			to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
+			return
 
-			if(attacking_item.use_tool(src, user, 0, volume=40))
-				adjustHealth(-10)
-				user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
-		else
-			if(attacking_item.force) //if force is non-zero
-				do_sparks(5, TRUE, src)
-	..()
+		if(attacking_item.use_tool(src, user, 0, volume=40))
+			adjustHealth(-10)
+			user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
+	else
+		if(attacking_item.force) //if force is non-zero
+			do_sparks(5, TRUE, src)
+		..()
 
 /mob/living/simple_animal/bot/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
 	if(Proj && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))

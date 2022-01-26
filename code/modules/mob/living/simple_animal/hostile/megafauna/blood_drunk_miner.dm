@@ -32,7 +32,7 @@ Difficulty: Medium
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
-	move_to_delay = 3
+	move_to_delay = 1.5
 	ranged = TRUE
 	ranged_cooldown_time = 1.6 SECONDS
 	pixel_x = -16
@@ -191,7 +191,7 @@ Difficulty: Medium
 	name = "hostile-environment miner"
 	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
 	speed = 8
-	move_to_delay = 8
+	move_to_delay = 4
 	ranged_cooldown_time = 0.8 SECONDS
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom/Initialize(mapload)
