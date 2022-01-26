@@ -13,11 +13,12 @@
 	. = ..()
 	if(!uplink_flag)
 		uplink_flag = src.uplink_flag
-	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = owner, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
+	var/datum/component/uplink/new_uplink = AddComponent(/datum/component/uplink, owner = owner.key, lockable = TRUE, enabled = FALSE, uplink_handler_override = uplink_handler, starting_tc = starting_tc)
 	new_uplink.unlock_text = "Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."
-	new_uplink.uplink_handler.owner = owner.mind
-	new_uplink.uplink_handler.assigned_role = owner.mind.assigned_role.title
-	new_uplink.uplink_handler.assigned_species = owner.dna.species.id
+	if(owner.mind)
+		new_uplink.uplink_handler.owner = owner.mind
+		new_uplink.uplink_handler.assigned_role = owner.mind.assigned_role.title
+		new_uplink.uplink_handler.assigned_species = owner.dna.species.id
 	RegisterSignal(src, COMSIG_COMPONENT_REMOVING, .proc/_component_removal)
 
 /**
