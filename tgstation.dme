@@ -743,7 +743,7 @@
 #include "code\datums\components\sizzle.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\soulstoned.dm"
-#include "code\datums\components\soundplayer.dm"
+#include "code\datums\components\sound_player.dm"
 #include "code\datums\components\spawner.dm"
 #include "code\datums\components\spill.dm"
 #include "code\datums\components\spinny.dm"
