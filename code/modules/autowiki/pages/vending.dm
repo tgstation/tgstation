@@ -1,5 +1,5 @@
 /datum/autowiki/vending
-	page = "Template:Autowiki/VendingMachines"
+	page = "Template:Autowiki/Content/VendingMachines"
 
 /datum/autowiki/vending/generate()
 	var/output = ""
