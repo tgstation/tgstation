@@ -140,7 +140,6 @@
 
 /datum/mutation/human/tourettes/on_life(delta_time, times_fired)
 	if(DT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), delta_time) && owner.stat == CONSCIOUS && !owner.IsStun())
-		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
