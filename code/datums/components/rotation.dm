@@ -4,6 +4,7 @@
 #define ROTATION_COUNTERCLOCKWISE (1<<3)
 #define ROTATION_CLOCKWISE (1<<4)
 #define ROTATION_FLIP (1<<5)
+#define ROTATION_GHOSTS_ALLOWED (1<6)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
@@ -46,7 +47,8 @@
 
 /datum/component/simple_rotation/proc/add_signals()
 	if(rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
+		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
+		RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
@@ -102,24 +104,37 @@
 	SIGNAL_HANDLER
 
 	if(rotation_flags & ROTATION_ALTCLICK)
-		examine_list += span_notice("Alt-click to rotate it clockwise.")
+		examine_list += span_notice("Alt-click + LMB to rotate it clockwise. Alt-click + RMB to rotate it counterclockwise.")
 
-/datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
+/datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user, rotation = default_rotation_direction)
 	SIGNAL_HANDLER
 
-	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
-		return
-	BaseRot(user, rotation)
+	if(rotation_flags & ROTATION_CLOCKWISE)
+		rotation = ROTATION_CLOCKWISE
+		Rotate(user, rotation)
+
+/datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user, rotation = default_rotation_direction)
+	SIGNAL_HANDLER
+
+	if(rotation_flags & ROTATION_COUNTERCLOCKWISE)
+		rotation = ROTATION_COUNTERCLOCKWISE
+		Rotate(user, rotation)
 
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
 
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-	BaseRot(user,default_rotation_direction)
+	Rotate(user,default_rotation_direction)
 	return COMPONENT_BLOCK_TOOL_ATTACK
 
-/datum/component/simple_rotation/proc/BaseRot(mob/user,rotation_type)
+/datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
+	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
+		// delete this message_admins logging
+		// reminder!  DO NOT FORGET before PR is merged... 
+		message_admins("[src] would not rotate properly and is being early returned")
+		return
+
 	var/atom/movable/AM = parent
 	var/rot_degree
 	switch(rotation_type)
@@ -133,9 +148,11 @@
 	after_rotation.Invoke(user,rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return FALSE
-	return TRUE
+	if(istype(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		return TRUE
+	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction) && (src.rotation_flags & ROTATION_GHOSTS_ALLOWED))
+		return TRUE	
+	return FALSE
 
 /datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
 	var/atom/movable/AM = parent
@@ -150,7 +167,7 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
+		rotcomp.Rotate(usr,ROTATION_CLOCKWISE)
 
 /atom/movable/proc/simple_rotate_counterclockwise()
 	set name = "Rotate Counter-Clockwise"
@@ -158,7 +175,7 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
+		rotcomp.Rotate(usr,ROTATION_COUNTERCLOCKWISE)
 
 /atom/movable/proc/simple_rotate_flip()
 	set name = "Flip"
@@ -166,4 +183,4 @@
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_FLIP)
+		rotcomp.Rotate(usr,ROTATION_FLIP)
