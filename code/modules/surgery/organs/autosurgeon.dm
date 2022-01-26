@@ -39,6 +39,14 @@
 	item.forceMove(src)
 	name = "[initial(name)] ([storedorgan.name])"
 
+/obj/item/autosurgeon/organ/proc/use_autosurgeon()
+	storedorgan = null
+	name = initial(name)
+	if(uses != INFINITE)
+		uses--
+	if(!uses)
+		desc = "[initial(desc)] Looks like it's been used up."
+
 /obj/item/autosurgeon/organ/attack_self(mob/user)//when the object it used...
 	if(!uses)
 		to_chat(user, span_alert("[src] has already been used. The tools are dull and won't reactivate."))
@@ -49,12 +57,7 @@
 	storedorgan.Insert(user)//insert stored organ into the user
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You feel a sharp sting as [src] plunges into your body."))
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
-	storedorgan = null
-	name = initial(name)
-	if(uses != INFINITE)
-		uses--
-	if(!uses)
-		desc = "[initial(desc)] Looks like it's been used up."
+	use_autosurgeon()
 
 /obj/item/autosurgeon/organ/attackby(obj/item/weapon, mob/user, params)
 	if(istype(weapon, organ_type))
@@ -73,17 +76,13 @@
 
 /obj/item/autosurgeon/organ/attack(mob/living/target, mob/living/user, params)
 	add_fingerprint(user)
-	to_chat(user, span_notice("You begin to prepare to use [src] on [target]."))
-	if(do_after(user, (8 SECONDS * surgery_speed), target))
-		user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
-		to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
-		playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
-		storedorgan = null
-		name = initial(name)
-		if(uses != INFINITE)
-			uses--
-		if(!uses)
-			desc = "[initial(desc)] Looks like it's been used up."
+	user.balloon_alert_to_viewers("Prepares to use [src] on [target].", "You begin to prepare to use [src] on [target].")
+	if(!do_after(user, (8 SECONDS * surgery_speed), target))
+		return
+	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
+	to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
+	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	use_autosurgeon()
 
 /obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/screwtool)
 	if(..())
@@ -97,11 +96,7 @@
 
 		to_chat(user, span_notice("You remove the [storedorgan] from [src]."))
 		screwtool.play_tool_sound(src)
-		storedorgan = null
-		if(uses != INFINITE)
-			uses--
-		if(!uses)
-			desc = "[initial(desc)] Looks like it's been used up."
+		use_autosurgeon()
 	return TRUE
 
 /obj/item/autosurgeon/organ/cmo
