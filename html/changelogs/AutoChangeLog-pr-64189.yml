@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "APOTHEOSIS! now forces you standing during your death animation, restoring the old (not forced) standing when I originally added APOTHEOSIS!"
