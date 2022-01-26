@@ -134,6 +134,31 @@
 	force = 0
 	var/random_color = TRUE
 
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+/obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+/obj/item/toy/balloon/bullet_act(obj/projectile/P)
+	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+
+/obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	if(monkey_pop) // Monkeys make money from popping bloons
+		new /obj/item/coin/iron(get_turf(src))
+	qdel(src)
+
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
 	if(random_color)
