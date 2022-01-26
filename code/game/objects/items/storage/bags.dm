@@ -40,6 +40,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
+	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
