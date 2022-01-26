@@ -28,6 +28,9 @@
 
 //Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+	if(istype(get_turf(src), /turf/closed))
+		to_chat(src, span_revenwarning("You can't quite materialize in this space! Try a more open space.")
+		return
 	if(!castcheck(0))
 		return
 	if(draining)
@@ -152,6 +155,8 @@
 		name = "[initial(name)] ([cast_amount]E)"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/can_cast(mob/living/simple_animal/revenant/user = usr)
+	if(istype(get_turf(src), /turf/closed))
+		return FALSE
 	if(charge_counter < charge_max)
 		return FALSE
 	if(!istype(user)) //Badmins, no. Badmins, don't do it.
