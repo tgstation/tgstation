@@ -21571,7 +21571,6 @@
 /obj/structure/table,
 /obj/machinery/firealarm/directional/north,
 /obj/item/stack/sheet/iron/five,
-/obj/item/circuitboard/machine/paystand,
 /obj/item/stack/cable_coil/five,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4

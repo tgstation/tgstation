@@ -61968,7 +61968,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/item/circuitboard/machine/paystand,
 /obj/item/stack/sheet/iron/five,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/iron,

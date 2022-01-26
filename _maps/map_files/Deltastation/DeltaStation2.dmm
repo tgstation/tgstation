@@ -55557,7 +55557,6 @@
 "kbN" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/five,
-/obj/item/circuitboard/machine/paystand,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
@@ -82185,7 +82184,6 @@
 /area/cargo/office)
 "qPc" = (
 /obj/structure/table/reinforced,
-/obj/item/circuitboard/machine/paystand,
 /obj/item/stack/cable_coil/five,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -97229,7 +97227,6 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/circuitboard/machine/paystand,
 /obj/item/wrench,
 /obj/item/screwdriver,
 /obj/effect/turf_decal/tile/neutral{
