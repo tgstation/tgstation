@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Antagonists cannot roll for thieves anymore, as you already have a larger amount of impact on the round than thief would give you."
+  - admin: "Admins no longer roll for thief while they sit around on centcom testing things."

@@ -81,7 +81,6 @@
 
 /obj/structure/disposalholder/proc/try_expel(datum/move_loop/source, succeed, visual_delay)
 	SIGNAL_HANDLER
-	current_pipe = loc
 	if(current_pipe || !active)
 		return
 	last_pipe.expel(src, get_turf(src), dir)

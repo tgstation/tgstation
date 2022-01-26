@@ -192,7 +192,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///Returns: gas_mixture with the gases removed
 /datum/gas_mixture/proc/remove_ratio(ratio)
 	if(ratio <= 0)
-		return null
+		var/datum/gas_mixture/removed = new(volume)
+		return removed
 	ratio = min(ratio, 1)
 
 	var/list/cached_gases = gases
@@ -554,13 +555,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/get_true_breath_pressure(partial_pressure)
 	return (partial_pressure * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * temperature)
 
-/** 
- * Counts how much pressure will there be if we impart MOLAR_ACCURACY amounts of our gas to the output gasmix. 
+/**
+ * Counts how much pressure will there be if we impart MOLAR_ACCURACY amounts of our gas to the output gasmix.
  * We do all of this without actually transferring it so dont worry about it changing the gasmix.
  * Returns: Resulting pressure (number).
- * Args: 
+ * Args:
  * - output_air (gasmix).
- */ 
+ */
 /datum/gas_mixture/proc/gas_pressure_minimum_transfer(datum/gas_mixture/output_air)
 	var/resulting_energy = output_air.thermal_energy() + (MOLAR_ACCURACY / total_moles() * thermal_energy())
 	var/resulting_capacity = output_air.heat_capacity() + (MOLAR_ACCURACY / total_moles() * heat_capacity())
@@ -603,20 +604,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	 * We have PV=nRT as a nice formula, we can rearrange it into nT = PV/R
 	 * But now both n and T can change, since any incoming moles also change our temperature.
 	 * So we need to unify both our n and T, somehow.
-	 * 
+	 *
 	 * We can rewrite T as (our old thermal energy + incoming thermal energy) divided by (our old heat capacity + incoming heat capacity)
 	 * T = (W1 + n/N2 * W2) / (C1 + n/N2 * C2). C being heat capacity, W being work, N being total moles.
-	 * 
+	 *
 	 * In total we now have our equation be: (N1 + n) * (W1 + n/N2 * W2) / (C1 + n/N2 * C2) = PV/R
 	 * Now you can rearrange this and find out that it's a quadratic equation and pretty much solvable with the formula. Will be a bit messy though.
-	 * 
-	 * W2/N2n^2 + 
-	 * (N1*W2/N2)n + W1n - ((PV/R)*C2/N2)n + 
+	 *
+	 * W2/N2n^2 +
+	 * (N1*W2/N2)n + W1n - ((PV/R)*C2/N2)n +
 	 * (-(PV/R)*C1) + N1W1 = 0
-	 * 
+	 *
 	 * We will represent each of these terms with A, B, and C. A for the n^2 part, B for the n^1 part, and C for the n^0 part.
 	 * We then put this into the famous (-b +/- sqrt(b^2-4ac)) / 2a formula.
-	 * 
+	 *
 	 * Oh, and one more thing. By "our" we mean the gasmix in the argument. We are the incoming one here. We are number 2, target is number 1.
 	 * If all this counting fucks up, we revert first to Newton's approximation, then the old simple formula.
 	 */
@@ -625,7 +626,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/w2 = thermal_energy()
 	var/n2 = total_moles()
 	var/c2 = heat_capacity()
-	
+
 	// Target thermal energy and moles
 	var/w1 = output_air.thermal_energy()
 	var/n1 = output_air.total_moles()
@@ -633,14 +634,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	/// The PV/R part in our equation.
 	var/pvr = pv / R_IDEAL_GAS_EQUATION
-	
+
 	/// x^2 in the quadratic
 	var/a_value = w2/n2
 	/// x^1 in the quadratic
 	var/b_value = ((n1*w2)/n2) + w1 - (pvr*c2/n2)
 	/// x^0 in the quadratic
 	var/c_value = (-1*pvr*c1) + n1 * w1
-	
+
 	. = gas_pressure_quadratic(a_value, b_value, c_value, lower_limit, upper_limit)
 	if(.)
 		return
@@ -655,7 +656,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/gas_pressure_quadratic(a, b, c, lower_limit, upper_limit)
 	var/solution
 	if(!IS_INF_OR_NAN(a) && !IS_INF_OR_NAN(b) && !IS_INF_OR_NAN(c))
-		solution = max(SolveQuadratic(a, b, c)) 
+		solution = max(SolveQuadratic(a, b, c))
 		if((solution > lower_limit) && (solution < upper_limit)) //SolveQuadratic can return nulls so be careful here
 			return solution
 	stack_trace("Failed to solve pressure quadratic equation. A: [a]. B: [b]. C:[c]. Current value = [solution]. Expected lower limit: [lower_limit]. Expected upper limit: [upper_limit].")
@@ -687,10 +688,11 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		var/datum/gas_mixture/temporary = remove_specific_ratio(specific_gas, 1)
 		transfer_moles = temporary.gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
 		removed = temporary.remove_specific(specific_gas, transfer_moles)
+		merge(temporary)
 	else
 		transfer_moles = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
 		removed = remove(transfer_moles)
-	
+
 	if(!removed)
 		return FALSE
 
@@ -701,19 +703,19 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/release_gas_to(datum/gas_mixture/output_air, target_pressure, rate=1)
 	var/output_starting_pressure = output_air.return_pressure()
 	var/input_starting_pressure = return_pressure()
-	
+
 	//Need at least 10 KPa difference to overcome friction in the mechanism
 	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
 		return FALSE
 	//Can not have a pressure delta that would cause output_pressure > input_pressure
 	target_pressure = output_starting_pressure + min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 	var/temperature_delta = abs(temperature - output_air.temperature)
-	
+
 	var/transfer_moles = gas_pressure_calculate(output_air, target_pressure, temperature_delta <= 5)
 
 	//Actually transfer the gas
 	var/datum/gas_mixture/removed = remove(transfer_moles * rate)
-	
+
 	if(!removed)
 		return FALSE
 

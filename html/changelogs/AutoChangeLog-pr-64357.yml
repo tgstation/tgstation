@@ -1,0 +1,4 @@
+author: "SkeletalElite"
+delete-after: True
+changes: 
+  - bugfix: "Kilo uses regular newscasters instead of security variants"

@@ -1,5 +1,5 @@
 //MODsuit signals
-/// Called when a module is selected to be the active one from on_select()
+/// Called when a module is selected to be the active one from on_select(obj/item/mod/module/module)
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
 /// Called when a MOD activation is called from toggle_activate(mob/user)
 #define COMSIG_MOD_ACTIVATE "mod_activate"

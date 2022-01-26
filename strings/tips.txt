@@ -57,7 +57,7 @@ As a Paramedic, your UV penlight can be used to stem infections in burn wounds! 
 As a Paramedic, embedded objects in a patient can be safely extracted by targeting the affected limb and using a hemostat on the patient.
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
-As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, unstable mutagen and saltpetre for botany as well as healing pills and patches for the front desk.
+As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, diethylamine and saltpetre for botany, as well as healing pills and patches for the front desk.
 As a Chemist, you can make 100u bottles from plastic sheets. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
 As a Chemist, you can recharge your chemical dispenser with an inducer or by replacing its cell.
 As a Chemist, Water and Potassium mixed together will create an explosion, with power scaling by amount used. Don't do it.
@@ -143,9 +143,9 @@ As the Chaplain, your null rod has anti magic functions: it can destroy cultist 
 As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
-As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen from chemistry or, as an alternative, grow glowshrooms for their radium which also mutates plants to start you up! You can also take uranium out of the servicelathe and grind that up to mutate plants, isn't science amazing?
+As a Botanist, you can mutate the plants growing in your hydroponics trays with Left 4 Zed from your NutriMax vendor.  Once you've ground up a few plants in the biogenerator, it can also produce Left 4 Zed.  Isn't science amazing?
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
-As a Botanist, you can combine production trait chemicals just like a Chemist. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
+As a Botanist, you can combine production trait chemicals just like a Chemist. Hydrogen(grass) + water(peas) + sugar(grapes) equal mannitol!
 As a Cook, you can load your food into smartfridges and custom vending machines.
 As a Cook, you can create a very wide variety of food with the crafting menu. You can find it by looking for the hammer icon near your combat mode indicator.
 As a Cook, you can rename your custom made food with a pen.

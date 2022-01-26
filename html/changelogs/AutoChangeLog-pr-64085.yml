@@ -1,0 +1,4 @@
+author: "neopythagorean"
+delete-after: True
+changes: 
+  - refactor: "the telecommunications server monitor now uses tgui."

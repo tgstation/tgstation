@@ -365,7 +365,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Radation storm shelter
 /area/maintenance/radshelter
 	name = "\improper Radstorm Shelter"
-	icon_state = "green"
+	icon_state = "radstorm_shelter"
 
 /area/maintenance/radshelter/medical
 	name = "\improper Medical Radstorm Shelter"
@@ -717,14 +717,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
-	icon_state = "abandoned_g_den"
-
-/area/service/abandoned_gambling_den/secondary
-	icon_state = "abandoned_g_den_2"
+	icon_state = "abandoned_gambling_den"
 
 /area/service/abandoned_gambling_den/gaming
 	name = "\improper Abandoned Gaming Den"
-	icon_state = "abandoned_g_den_2"
+	icon_state = "abandoned_gaming_den"
 
 /area/service/theater
 	name = "\improper Theater"

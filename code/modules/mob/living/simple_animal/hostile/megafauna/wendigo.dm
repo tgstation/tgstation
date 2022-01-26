@@ -33,7 +33,7 @@ Difficulty: Hard
 	vision_range = 9
 	aggro_vision_range = 18 // man-eating for a reason
 	speed = 6
-	move_to_delay = 6
+	move_to_delay = 3
 	rapid_melee = 8 // every 1/4 second
 	melee_queue_distance = 18 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
@@ -102,7 +102,7 @@ Difficulty: Hard
 	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
 	if(WENDIGO_ENRAGED)
 		speed = 4
-		move_to_delay = 4
+		move_to_delay = 2
 	else
 		stomp_range = initial(stomp_range)
 		speed = initial(speed)

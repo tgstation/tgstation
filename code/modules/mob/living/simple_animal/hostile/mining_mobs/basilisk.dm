@@ -9,7 +9,7 @@
 	icon_dead = "Basilisk_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	move_to_delay = 20
+	move_to_delay = 10
 	projectiletype = /obj/projectile/temp/basilisk
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = 1

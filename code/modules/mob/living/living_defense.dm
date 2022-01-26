@@ -50,6 +50,7 @@
 	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	. = ..()
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration, "", FALSE, P.weak_against_armour)
 	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)

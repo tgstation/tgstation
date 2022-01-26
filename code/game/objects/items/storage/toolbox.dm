@@ -1,11 +1,11 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
-	icon = 'goon/icons/obj/toolbox.dmi'
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_default"
 	inhand_icon_state = "toolbox_default"
-	lefthand_file = 'goon/icons/mob/inhands/equipment/toolbox_lefthand.dmi'
-	righthand_file = 'goon/icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	flags_1 = CONDUCT_1
 	force = 12
 	throwforce = 12
