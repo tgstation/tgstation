@@ -77,7 +77,7 @@
 	if(do_after(user, (8 SECONDS * surgery_speed), target))
 		user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 		to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
-		playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, TRUE)
+		playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
 		storedorgan = null
 		name = initial(name)
 		if(uses != INFINITE)
