@@ -422,13 +422,12 @@
 	else if(icon_state == "[initial_icon_state]_reverse") //so flipping doesn't overwrite an unexpected icon_state (e.g. an admin's)
 		icon_state = initial_icon_state
 
-/obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!unspooled)
-		return FALSE
-	to_chat(user, span_notice("You start winding the tape back in..."))
-	if(tool.use_tool(src, user, 120))
-		to_chat(user, span_notice("You wind the tape back in."))
-		respool()
+/obj/item/tape/attackby(obj/item/I, mob/user, params)
+	if(unspooled && (I.tool_behaviour == TOOL_SCREWDRIVER))
+		to_chat(user, span_notice("You start winding the tape back in..."))
+		if(I.use_tool(src, user, 120))
+			to_chat(user, span_notice("You wind the tape back in."))
+			respool()
 
 //Random colour tapes
 /obj/item/tape/random

@@ -34,12 +34,10 @@
 	target = null
 	return ..()
 
-/obj/item/grenade/c4/screwdriver_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
-	return TRUE
-
 /obj/item/grenade/c4/attackby(obj/item/item, mob/user, params)
-	if(is_wire_tool(item))
+	if(item.tool_behaviour == TOOL_SCREWDRIVER)
+		to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
+	else if(is_wire_tool(item))
 		wires.interact(user)
 	else
 		return ..()

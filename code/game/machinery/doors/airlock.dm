@@ -762,30 +762,6 @@
 	else
 		updateDialog()
 
-/obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(panel_open && detonated)
-		to_chat(user, span_warning("[src] has no maintenance panel!"))
-		return
-	panel_open = !panel_open
-	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
-	tool.play_tool_sound(src)
-	update_appearance()
-
-/obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
-	if(note)
-		if(user.CanReach(src))
-			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
-		else //telekinesis
-			visible_message(span_notice("[tool] cuts down [note] from [src]."))
-		tool.play_tool_sound(src)
-		note.forceMove(tool.drop_location())
-		note = null
-		update_appearance()
-		return TRUE
-	else
-		return FALSE
-
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
@@ -909,6 +885,23 @@
 											span_notice("You cut through \the [src]'s outer grille."))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
+	if(C.tool_behaviour == TOOL_SCREWDRIVER)
+		if(panel_open && detonated)
+			to_chat(user, span_warning("[src] has no maintenance panel!"))
+			return
+		panel_open = !panel_open
+		to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
+		C.play_tool_sound(src)
+		update_appearance()
+	else if((C.tool_behaviour == TOOL_WIRECUTTER) && note)
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		else //telekinesis
+			visible_message(span_notice("[C] cuts down [note] from [src]."))
+		C.play_tool_sound(src)
+		note.forceMove(C.drop_location())
+		note = null
+		update_appearance()
 	else if(is_wire_tool(C) && panel_open)
 		attempt_wire_interaction(user)
 		return

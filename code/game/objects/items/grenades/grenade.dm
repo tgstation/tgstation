@@ -144,32 +144,26 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
-/obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/grenade/attackby(obj/item/weapon, mob/user, params)
 	if(active)
-		return FALSE
-	if(change_det_time())
-		tool.play_tool_sound(src)
-		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
-		return TRUE
+		return ..()
 
-/obj/item/grenade/multitool_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(active)
-		return FALSE
-
-	. = TRUE
-
-	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
-	if (isnull(newtime))
+	if(weapon.tool_behaviour == TOOL_MULTITOOL)
+		var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+		if (isnull(newtime))
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		if(newtime == "Instant" && change_det_time(0))
+			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+			return
+		newtime = round(newtime)
+		if(change_det_time(newtime))
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	if(newtime == "Instant" && change_det_time(0))
-		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
-		return
-	newtime = round(newtime)
-	if(change_det_time(newtime))
-		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
+		if(change_det_time())
+			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE

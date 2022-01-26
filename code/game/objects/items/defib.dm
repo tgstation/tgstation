@@ -132,15 +132,6 @@
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-/obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(cell)
-		cell.update_appearance()
-		cell.forceMove(get_turf(src))
-		cell = null
-		tool.play_tool_sound(src, 50)
-		to_chat(user, span_notice("You remove the cell from [src]."))
-		update_power()
-
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
 		toggle_paddles()
@@ -156,6 +147,13 @@
 				return
 			cell = W
 			to_chat(user, span_notice("You install a cell in [src]."))
+			update_power()
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(cell)
+			cell.update_appearance()
+			cell.forceMove(get_turf(src))
+			cell = null
+			to_chat(user, span_notice("You remove the cell from [src]."))
 			update_power()
 	else
 		return ..()

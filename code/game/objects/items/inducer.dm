@@ -59,21 +59,20 @@
 		return TRUE
 	return FALSE
 
-/obj/item/inducer/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	tool.play_tool_sound(src)
-	if(!opened)
-		to_chat(user, span_notice("You unscrew the battery compartment."))
-		opened = TRUE
-		update_appearance()
-		return
-	else
-		to_chat(user, span_notice("You close the battery compartment."))
-		opened = FALSE
-		update_appearance()
-		return
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		W.play_tool_sound(src)
+		if(!opened)
+			to_chat(user, span_notice("You unscrew the battery compartment."))
+			opened = TRUE
+			update_appearance()
+			return
+		else
+			to_chat(user, span_notice("You close the battery compartment."))
+			opened = FALSE
+			update_appearance()
+			return
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(opened)
 			if(!cell)

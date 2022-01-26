@@ -59,17 +59,16 @@
 	if(board)
 		. += "button-board"
 
-/obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
-	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "button-open", "[skin]", tool)
-		update_appearance()
-	else
-		to_chat(user, span_alert("Maintenance Access Denied."))
-		flick("[skin]-denied", src)
-
-	return TRUE
-
 /obj/machinery/button/attackby(obj/item/W, mob/living/user, params)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(panel_open || allowed(user))
+			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
+			update_appearance()
+		else
+			to_chat(user, span_alert("Maintenance Access Denied."))
+			flick("[skin]-denied", src)
+		return
+
 	if(panel_open)
 		if(!device && istype(W, /obj/item/assembly))
 			if(!user.transferItemToLoc(W, src))

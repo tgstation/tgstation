@@ -53,23 +53,20 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
-/obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src)
-	panel_open = !panel_open
-	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
-	update_appearance()
-	return TRUE
-
-/obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return TRUE
-
-/obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
-	if(!panel_open || !(machine_stat & BROKEN))
-		return FALSE
-	to_chat(user, span_notice("You reset [src]'s firmware."))
-	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
+/obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
+	if(P.tool_behaviour == TOOL_SCREWDRIVER)
+		P.play_tool_sound(src)
+		panel_open = !panel_open
+		to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
+		update_appearance()
+	else if(default_deconstruction_crowbar(P))
+		return
+	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (machine_stat & BROKEN))
+		to_chat(user, span_notice("You reset [src]'s firmware."))
+		set_machine_stat(machine_stat & ~BROKEN)
+		update_appearance()
+	else
+		return ..()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")

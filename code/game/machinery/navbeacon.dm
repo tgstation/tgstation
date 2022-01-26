@@ -96,18 +96,17 @@
 	icon_state = "[base_icon_state][open]"
 	return ..()
 
-/obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
-	add_fingerprint(user)
-	open = !open
-	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
-	update_appearance()
-	tool.play_tool_sound(src, 50)
-	return TRUE
-
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
+
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		open = !open
+
+		user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
+
+		update_appearance()
 
 	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)

@@ -427,11 +427,6 @@
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
-/obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tryremovecell(user))
-		tool.play_tool_sound(src)
-	return TRUE
-
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/active_cell = item
@@ -446,6 +441,9 @@
 			cell = item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_appearance()
+
+	else if(item.tool_behaviour == TOOL_SCREWDRIVER)
+		tryremovecell(user)
 	else
 		return ..()
 
@@ -453,8 +451,6 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
-		return TRUE
-	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)

@@ -409,32 +409,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 		Radio.set_frequency(radio_freq)
 		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
-/obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
-
-	tool.play_tool_sound(src, 50)
-	if(open)
-		to_chat(user, span_notice("You close the maintenance panel."))
-		open = FALSE
-	else
-		to_chat(user, span_notice("You open the maintenance panel."))
-		open = TRUE
-	update_appearance()
-	return TRUE
-
-/obj/machinery/requests_console/screwdriver_act(mob/living/user, obj/item/tool)
-	if(open)
-		hackState = !hackState
-		if(hackState)
-			to_chat(user, span_notice("You modify the wiring."))
-		else
-			to_chat(user, span_notice("You reset the wiring."))
-		update_appearance()
-		tool.play_tool_sound(src, 50)
-	else
-		to_chat(user, span_warning("You must open the maintenance panel first!"))
-	return TRUE
-
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_CROWBAR)
+		if(open)
+			to_chat(user, span_notice("You close the maintenance panel."))
+			open = FALSE
+		else
+			to_chat(user, span_notice("You open the maintenance panel."))
+			open = TRUE
+		update_appearance()
+		return
+	if(O.tool_behaviour == TOOL_SCREWDRIVER)
+		if(open)
+			hackState = !hackState
+			if(hackState)
+				to_chat(user, span_notice("You modify the wiring."))
+			else
+				to_chat(user, span_notice("You reset the wiring."))
+			update_appearance()
+		else
+			to_chat(user, span_warning("You must open the maintenance panel first!"))
+		return
+
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)

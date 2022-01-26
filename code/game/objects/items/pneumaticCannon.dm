@@ -70,24 +70,6 @@
 		out += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
 	. += out.Join("\n")
 
-/obj/item/pneumatic_cannon/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tank)
-		tool.play_tool_sound(src)
-		updateTank(tank, 1, user)
-	return TRUE
-
-/obj/item/pneumatic_cannon/wrench_act(mob/living/user, obj/item/tool)
-	playsound(src, 'sound/items/ratchet.ogg', 50, TRUE)
-	switch(pressureSetting)
-		if(1)
-			pressureSetting = 2
-		if(2)
-			pressureSetting = 3
-		if(3)
-			pressureSetting = 1
-	to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
-	return TRUE
-
 /obj/item/pneumatic_cannon/attackby(obj/item/W, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
@@ -110,6 +92,9 @@
 			if(3)
 				pressureSetting = 1
 		to_chat(user, span_notice("You tweak \the [src]'s pressure output to [pressureSetting]."))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
+		if(tank)
+			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
 		to_chat(user, span_warning("\The [src] can't hold any more items!"))
 	else if(isitem(W))

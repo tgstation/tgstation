@@ -96,16 +96,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 		return FALSE
 	return ..()
 
-/obj/machinery/sparker/screwdriver_act(mob/living/user, obj/item/tool)
-	add_fingerprint(user)
-	tool.play_tool_sound(src, 50)
-	disable = !disable
-	if (disable)
-		user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
-	if (!disable)
-		user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
-	update_appearance()
-	return TRUE
+/obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
+	if (W.tool_behaviour == TOOL_SCREWDRIVER)
+		add_fingerprint(user)
+		disable = !disable
+		if (disable)
+			user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
+		if (!disable)
+			user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+		update_appearance()
+	else
+		return ..()
 
 /obj/machinery/sparker/attack_ai()
 	if (anchored)

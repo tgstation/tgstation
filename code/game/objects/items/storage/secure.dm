@@ -44,38 +44,35 @@
 	if(can_hack_open)
 		. += "The service panel is currently <b>[panel_open ? "unscrewed" : "screwed shut"]</b>."
 
-/obj/item/storage/secure/tool_act(mob/living/user, obj/item/tool)
+/obj/item/storage/secure/attackby(obj/item/weapon, mob/user, params)
 	if(can_hack_open && SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
-		return ..()
-	else
-		return FALSE
+		if (weapon.tool_behaviour == TOOL_SCREWDRIVER)
+			if (weapon.use_tool(src, user, 20))
+				panel_open = !panel_open
+				to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
+			return
+		if (weapon.tool_behaviour == TOOL_WIRECUTTER)
+			to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
+			return
+		if (weapon.tool_behaviour == TOOL_MULTITOOL)
+			if(lock_hacking)
+				to_chat(user, span_danger("This safe is already being hacked."))
+				return
+			if(panel_open == TRUE)
+				to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
+				lock_hacking = TRUE
+				if (weapon.use_tool(src, user, 400))
+					to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
+					lock_set = FALSE
 
-/obj/item/storage/secure/wirecutter_act(mob/living/user, obj/item/tool)
-	to_chat(user, span_danger("[src] is protected from this sort of tampering, yet it appears the internal memory wires can still be <b>pulsed</b>."))
-	return
+				lock_hacking = FALSE
+				return
 
-/obj/item/storage/secure/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 20))
-		panel_open = !panel_open
-		to_chat(user, span_notice("You [panel_open ? "open" : "close"] the service panel."))
-		return TRUE
+			to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
+			return
 
-/obj/item/storage/secure/multitool_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(lock_hacking)
-		to_chat(user, span_danger("This safe is already being hacked."))
-		return
-	if(panel_open == TRUE)
-		to_chat(user, span_danger("Now attempting to reset internal memory, please hold."))
-		lock_hacking = TRUE
-		if (tool.use_tool(src, user, 400))
-			to_chat(user, span_danger("Internal memory reset - lock has been disengaged."))
-			lock_set = FALSE
-
-		lock_hacking = FALSE
-		return
-
-	to_chat(user, span_warning("You must <b>unscrew</b> the service panel before you can pulse the wiring!"))
+	// -> storage/attackby() what with handle insertion, etc
+	return ..()
 
 /obj/item/storage/secure/attack_self(mob/user)
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)

@@ -39,12 +39,13 @@
 	var/customjob = "Admin"
 	var/custommessage = "This is a test, please ignore."
 
-/obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
-	if(obj_flags & EMAGGED)
+
+/obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, span_warning("It is too hot to mess with!"))
-		return TRUE
-	return ..()
+	else
+		return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
