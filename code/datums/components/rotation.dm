@@ -23,7 +23,7 @@
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
 
-/datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
+/datum/component/simple_rotation/Initialize(rotation_flags = NONE, can_user_rotate, can_be_rotated, after_rotation)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -172,6 +172,7 @@
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
+	add_fingerprint(user)
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"
