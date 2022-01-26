@@ -1,0 +1,4 @@
+author: "blessedmulligan"
+delete-after: True
+changes: 
+  - bugfix: "You can now remove attachments from weapons without standing across the room"
