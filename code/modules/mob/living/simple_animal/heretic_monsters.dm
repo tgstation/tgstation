@@ -29,7 +29,7 @@
 	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself."
-	faction = list("heretics")
+	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
 	/// Innate spells that are added when a beast is created.
 	var/list/spells_to_add

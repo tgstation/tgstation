@@ -69,7 +69,7 @@
 	soon_to_be_ghoul.setMaxHealth(MUTE_MAX_HEALTH)
 	soon_to_be_ghoul.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
 	soon_to_be_ghoul.become_husk()
-	soon_to_be_ghoul.faction |= "heretics"
+	soon_to_be_ghoul.faction |= FACTION_HERETIC
 	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = soon_to_be_ghoul.mind.add_antag_datum(/datum/antagonist/heretic_monster)
@@ -128,7 +128,7 @@
 	human_target.health = GHOUL_MAX_HEALTH
 	human_target.become_husk()
 	human_target.apply_status_effect(/datum/status_effect/ghoul)
-	human_target.faction |= "heretics"
+	human_target.faction |= FACTION_HERETIC
 
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)

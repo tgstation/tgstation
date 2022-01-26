@@ -3,6 +3,8 @@
 /*
  * Simple helper to generate a string of
  * garbled symbols up to [length] characters.
+ *
+ * Used in creating spooky-text for heretic ascension announcements.
  */
 /proc/generate_heretic_text(length = 25)
 	. = ""
@@ -21,11 +23,17 @@
 	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
+	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
+	/// A list of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
+	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
+	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
+	/// A list of TOTAL how many high value sacrifices completed.
 	var/high_value_sacrifices = 0
+	/// Whether we've ascended!
 	var/ascended = FALSE
 
 /datum/antagonist/heretic/ui_data(mob/user)
@@ -153,14 +161,14 @@
 	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
-	our_mob.faction |= "heretics"
+	our_mob.faction |= FACTION_HERETIC
 	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/spell_check)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
-	our_mob.faction -= "heretics"
+	our_mob.faction -= FACTION_HERETIC
 	UnregisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL)
 
 /*

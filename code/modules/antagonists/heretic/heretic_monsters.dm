@@ -6,6 +6,7 @@
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
 	antag_hud_name = "heretic_beast"
+	suicide_cry = "MY MASTER SMILES UPON ME!!"
 	show_in_antagpanel = FALSE
 	/// Our master (a heretic)'s mind.
 	var/datum/mind/master
