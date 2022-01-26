@@ -167,7 +167,7 @@
 	icon_state = "gizmo_scan"
 	inhand_icon_state = "silencer"
 	var/mode = GIZMO_SCAN
-	var/datum/weakref/marked_target 
+	var/datum/weakref/marked_target
 	var/obj/machinery/abductor/console/console
 
 /obj/item/abductor/gizmo/attack_self(mob/user)
@@ -652,10 +652,9 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
-/obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		return // Stops humans from disassembling abductor headsets.
-	return ..()
+// Stops humans from disassembling abductor headsets.
+/obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"

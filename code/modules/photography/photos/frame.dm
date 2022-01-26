@@ -116,6 +116,24 @@
 	if(in_range(src, user))
 		framed?.show(user)
 
+/// Internal proc
+/obj/structure/sign/picture_frame/proc/try_decon(mob/living/user, obj/item/tool)
+	if(!can_decon)
+		return FALSE
+	to_chat(user, span_notice("You start unsecuring [name]..."))
+	if(tool.use_tool(src, user, 30, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		to_chat(user, span_notice("You unsecure [name]."))
+		deconstruct()
+	return TRUE
+
+/obj/structure/sign/picture_frame/screwdriver_act(mob/living/user, obj/item/tool)
+	return try_decon(user, tool)
+
+/obj/structure/sign/picture_frame/wrench_act(mob/living/user, obj/item/tool)
+	return try_decon(user, tool)
+
+
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
 		to_chat(user, span_notice("You start unsecuring [name]..."))

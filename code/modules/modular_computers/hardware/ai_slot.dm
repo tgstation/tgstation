@@ -60,10 +60,9 @@
 		return TRUE
 	return FALSE
 
-/obj/item/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
+/obj/item/computer_hardware/ai_slot/screwdriver_act(mob/living/user, obj/item/tool)
 	if(..())
 		return
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
-		try_eject(user, TRUE)
-		return
+	to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
+	try_eject(user, TRUE)
+	return TRUE

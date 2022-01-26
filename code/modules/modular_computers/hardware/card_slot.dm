@@ -102,16 +102,18 @@
 
 	return TRUE
 
+/obj/item/computer_hardware/card_slot/screwdriver_act(mob/living/user, obj/item/tool)
+	if(stored_card)
+		to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
+		try_eject(user)
+		return TRUE
+	swap_slot()
+	to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
+	return TRUE
+
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(stored_card)
-			to_chat(user, span_notice("You press down on the manual eject button with \the [I]."))
-			try_eject(user)
-			return
-		swap_slot()
-		to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
 
 /**
  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.

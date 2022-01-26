@@ -101,32 +101,33 @@
 			span_warning("You bash [src]!"))
 		playsound(src, bash_sound, 100, TRUE)
 
-/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
+/obj/machinery/door/firedoor/wrench_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(operating)
+	if(operating || !welded)
+		return FALSE
+
+	. = TRUE
+	if(boltslocked)
+		to_chat(user, span_notice("There are screws locking the bolts in place!"))
 		return
-	if(welded)
-		if(C.tool_behaviour == TOOL_WRENCH)
-			if(boltslocked)
-				to_chat(user, span_notice("There are screws locking the bolts in place!"))
-				return
-			C.play_tool_sound(src)
-			user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
-				span_notice("You start unfastening [src]'s floor bolts..."))
-			if(!C.use_tool(src, user, DEFAULT_STEP_TIME))
-				return
-			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
-				span_notice("You undo [src]'s floor bolts."))
-			deconstruct(TRUE)
-			return
-		if(C.tool_behaviour == TOOL_SCREWDRIVER)
-			user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
+	tool.play_tool_sound(src)
+	user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
+		span_notice("You start unfastening [src]'s floor bolts..."))
+	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
+		return
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
+		span_notice("You undo [src]'s floor bolts."))
+	deconstruct(TRUE)
+
+/obj/machinery/door/firedoor/screwdriver_act(mob/living/user, obj/item/tool)
+	if(operating || !welded)
+		return FALSE
+	user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
 				span_notice("You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts."))
-			C.play_tool_sound(src)
-			boltslocked = !boltslocked
-			return
-	return ..()
+	tool.play_tool_sound(src)
+	boltslocked = !boltslocked
+	return TRUE
 
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return

@@ -148,21 +148,13 @@
 	..()
 	reached_target = FALSE
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		. = ..()
-		update_appearance()
-	else if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
-		if(cell)
-			to_chat(user, span_warning("[src] already has a power cell!"))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		cell = I
-		diag_hud_set_mulebotcell()
-		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
-						span_notice("You insert [cell] into [src]."))
-	else if(I.tool_behaviour == TOOL_CROWBAR && bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
+/mob/living/simple_animal/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	update_appearance()
+
+/mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
+	if(bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
+		. = TRUE
 		if(!cell)
 			to_chat(user, span_warning("[src] doesn't have a power cell!"))
 			return
@@ -175,6 +167,18 @@
 						span_notice("You pry [cell] out of [src]."))
 		cell = null
 		diag_hud_set_mulebotcell()
+
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
+	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+		if(cell)
+			to_chat(user, span_warning("[src] already has a power cell!"))
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		cell = I
+		diag_hud_set_mulebotcell()
+		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
+						span_notice("You insert [cell] into [src]."))
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider

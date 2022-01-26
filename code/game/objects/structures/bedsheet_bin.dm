@@ -538,6 +538,22 @@ LINEN BINS
 		update_appearance()
 	..()
 
+/obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return FALSE
+	if(amount)
+		to_chat(user, span_warning("The [src] must be empty first!"))
+		return TRUE
+	if(tool.use_tool(src, user, 5, volume=50))
+		to_chat(user, span_notice("You disassemble the [src]."))
+		new /obj/item/stack/rods(loc, 2)
+		qdel(src)
+		return TRUE
+
+/obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
+	return default_unfasten_wrench(user, tool, 5)
+
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))
 		if(!user.transferItemToLoc(I, src))
@@ -546,20 +562,6 @@ LINEN BINS
 		amount++
 		to_chat(user, span_notice("You put [I] in [src]."))
 		update_appearance()
-
-	else if(default_unfasten_wrench(user, I, 5))
-		return
-
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(flags_1 & NODECONSTRUCT_1)
-			return
-		if(amount)
-			to_chat(user, span_warning("The [src] must be empty first!"))
-			return
-		if(I.use_tool(src, user, 5, volume=50))
-			to_chat(user, span_notice("You disassemble the [src]."))
-			new /obj/item/stack/rods(loc, 2)
-			qdel(src)
 
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))

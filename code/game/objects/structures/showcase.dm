@@ -108,25 +108,29 @@
 //Showcases can be any sprite, so it makes sense that they can't be constructed.
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
-/obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
-		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
-			to_chat(user, span_notice("You screw the screws back into the showcase."))
-			W.play_tool_sound(src, 100)
-			deconstruction_state = SHOWCASE_CONSTRUCTED
-		else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
-			to_chat(user, span_notice("You unscrew the screws."))
-			W.play_tool_sound(src, 100)
-			deconstruction_state = SHOWCASE_SCREWDRIVERED
+/obj/structure/showcase/screwdriver_act(mob/living/user, obj/item/tool)
+	if(anchored)
+		return FALSE
+	if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
+		to_chat(user, span_notice("You screw the screws back into the showcase."))
+		tool.play_tool_sound(src, 100)
+		deconstruction_state = SHOWCASE_CONSTRUCTED
+	else if (deconstruction_state == SHOWCASE_CONSTRUCTED)
+		to_chat(user, span_notice("You unscrew the screws."))
+		tool.play_tool_sound(src, 100)
+		deconstruction_state = SHOWCASE_SCREWDRIVERED
+	return TRUE
 
-	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
-		if(W.use_tool(src, user, 20, volume=100))
-			to_chat(user, span_notice("You start to crowbar the showcase apart..."))
-			new /obj/item/stack/sheet/iron(drop_location(), 4)
-			qdel(src)
+/obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, 20, volume=100))
+		to_chat(user, span_notice("You start to crowbar the showcase apart..."))
+		new /obj/item/stack/sheet/iron(drop_location(), 4)
+		qdel(src)
+	return TRUE
 
-	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, W))
-		return
+/obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
+	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, tool))
+		return TRUE
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 

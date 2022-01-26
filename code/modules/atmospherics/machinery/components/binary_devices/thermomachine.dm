@@ -259,25 +259,28 @@
 	use_power(power_usage)
 	update_parents()
 
-/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/item, mob/user, params)
-	if(!on && item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!anchored)
-			to_chat(user, span_notice("Anchor [src] first!"))
-			return
-		if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", item))
-			change_pipe_connection(panel_open)
-			return
-	if(default_change_direction_wrench(user, item))
-		return
-	if(default_deconstruction_crowbar(item))
-		return
+/obj/machinery/atmospherics/components/binary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(on)
+		to_chat("You can't open [src] while it's on!")
+		return FALSE
+	if(!anchored)
+		to_chat(user, span_notice("Anchor [src] first!"))
+		return FALSE
+	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
+		change_pipe_connection(panel_open)
+		return TRUE
 
-	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
-		piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
-		to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
-		update_appearance()
-		return
-	return ..()
+/obj/machinery/atmospherics/components/binary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
+
+/obj/machinery/atmospherics/components/binary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
+	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
+	update_appearance()
+	return TRUE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())

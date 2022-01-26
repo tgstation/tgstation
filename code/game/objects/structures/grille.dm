@@ -171,28 +171,33 @@
 	if(istype(caller))
 		. = . || (caller.pass_flags & PASSGRILLE)
 
+/obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!shock(user, 100))
+		tool.play_tool_sound(src, 100)
+		deconstruct()
+		return TRUE
+
+/obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!shock(user, 90))
+		tool.play_tool_sound(src, 100)
+		set_anchored(!anchored)
+		user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
+			span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
+		return TRUE
+
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		if(!shock(user, 100))
-			W.play_tool_sound(src, 100)
-			deconstruct()
-	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && (isturf(loc) || anchored))
-		if(!shock(user, 90))
-			W.play_tool_sound(src, 100)
-			set_anchored(!anchored)
-			user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
-				span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
-			return
-	else if(istype(W, /obj/item/stack/rods) && broken)
+	if(istype(W, /obj/item/stack/rods) && broken)
 		var/obj/item/stack/rods/R = W
 		if(!shock(user, 90))
 			user.visible_message(span_notice("[user] rebuilds the broken grille."), \
 				span_notice("You rebuild the broken grille."))
 			repair_grille()
 			R.use(1)
-			return
+			return TRUE
 
 //window placing begin
 	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))

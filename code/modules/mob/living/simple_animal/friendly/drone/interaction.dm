@@ -90,28 +90,30 @@
 		to_chat(user, span_warning("You need to remain still to reactivate [src]!"))
 
 
-/mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat != DEAD)
-		if(health < maxHealth)
-			to_chat(user, span_notice("You start to tighten loose screws on [src]..."))
-			if(I.use_tool(src, user, 80))
-				adjustBruteLoss(-getBruteLoss())
-				visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
-			else
-				to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
+/mob/living/simple_animal/drone/screwdriver_act(mob/living/user, obj/item/tool)
+	if(stat == DEAD)
+		return FALSE
+	. = TRUE
+	if(health < maxHealth)
+		to_chat(user, span_notice("You start to tighten loose screws on [src]..."))
+		if(tool.use_tool(src, user, 80))
+			adjustBruteLoss(-getBruteLoss())
+			visible_message(span_notice("[user] tightens [src == user ? "[user.p_their()]" : "[src]'s"] loose screws!"), span_notice("[src == user ? "You tighten" : "[user] tightens"] your loose screws."))
 		else
-			to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
-		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
-		user.visible_message(span_notice("[user] starts resetting [src]..."), \
-			span_notice("You press down on [src]'s factory reset control..."))
-		if(I.use_tool(src, user, 50, volume=50))
-			user.visible_message(span_notice("[user] resets [src]!"), \
-				span_notice("You reset [src]'s directives to factory defaults!"))
-			update_drone_hack(FALSE)
-		return
+			to_chat(user, span_warning("You need to remain still to tighten [src]'s screws!"))
 	else
-		..()
+		to_chat(user, span_warning("[src]'s screws can't get any tighter!"))
+
+/mob/living/simple_animal/drone/wrench_act(mob/living/user, obj/item/tool)
+	if(user == src)
+		return FALSE
+	user.visible_message(span_notice("[user] starts resetting [src]..."), \
+		span_notice("You press down on [src]'s factory reset control..."))
+	if(tool.use_tool(src, user, 50, volume=50))
+		user.visible_message(span_notice("[user] resets [src]!"), \
+			span_notice("You reset [src]'s directives to factory defaults!"))
+		update_drone_hack(FALSE)
+	return TRUE
 
 /mob/living/simple_animal/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
 	return item in internal_storage && ..()

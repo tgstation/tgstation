@@ -169,21 +169,25 @@
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
 
+/obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+		return FALSE
+	to_chat(user, span_notice("You start disassembling [src]..."))
+	if(tool.use_tool(src, user, 20, volume=50))
+		deconstruct(TRUE)
+	return TRUE
+
+/obj/structure/table/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
+		return FALSE
+	to_chat(user, span_notice("You start deconstructing [src]..."))
+	if(tool.use_tool(src, user, 40, volume=50))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct(TRUE, 1)
+	return TRUE
+
 /obj/structure/table/attackby(obj/item/I, mob/living/user, params)
 	var/list/modifiers = params2list(params)
-	if(!(flags_1 & NODECONSTRUCT_1) && LAZYACCESS(modifiers, RIGHT_CLICK))
-		if(I.tool_behaviour == TOOL_SCREWDRIVER && deconstruction_ready)
-			to_chat(user, span_notice("You start disassembling [src]..."))
-			if(I.use_tool(src, user, 20, volume=50))
-				deconstruct(TRUE)
-			return
-
-		if(I.tool_behaviour == TOOL_WRENCH && deconstruction_ready)
-			to_chat(user, span_notice("You start deconstructing [src]..."))
-			if(I.use_tool(src, user, 40, volume=50))
-				playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-				deconstruct(TRUE, 1)
-			return
 
 	if(istype(I, /obj/item/storage/bag/tray))
 		var/obj/item/storage/bag/tray/T = I

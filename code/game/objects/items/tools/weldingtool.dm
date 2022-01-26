@@ -98,11 +98,12 @@
 	user.visible_message(span_suicide("[user] welds [user.p_their()] every orifice closed! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (FIRELOSS)
 
+/obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
+	flamethrower_screwdriver(tool, user)
+	return TRUE
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
-	if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-		flamethrower_screwdriver(tool, user)
-	else if(istype(tool, /obj/item/stack/rods))
+	if(istype(tool, /obj/item/stack/rods))
 		flamethrower_rods(tool, user)
 	else
 		. = ..()

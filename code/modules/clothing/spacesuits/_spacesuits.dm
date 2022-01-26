@@ -135,25 +135,27 @@
 			else
 				. += "\The [cell] is firmly in place."
 
+/obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
+	toggle_spacesuit_cell(user)
+	return TRUE
+
+/obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	var/range_low = 20 // Default min temp c
+	var/range_high = 45 // default max temp c
+	if(obj_flags & EMAGGED)
+		range_low = -20 // emagged min temp c
+		range_high = 120 // emagged max temp c
+
+	var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
+		([range_low]-[range_high] degrees celcius)") as null|num
+	if(deg_c && deg_c >= range_low && deg_c <= range_high)
+		temperature_setting = round(T0C + deg_c, 0.1)
+		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		toggle_spacesuit_cell(user)
-		return
-	else if(cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/range_low = 20 // Default min temp c
-		var/range_high = 45 // default max temp c
-		if(obj_flags & EMAGGED)
-			range_low = -20 // emagged min temp c
-			range_high = 120 // emagged max temp c
-
-		var/deg_c = input(user, "What temperature would you like to set the thermal regulator to? \
-			([range_low]-[range_high] degrees celcius)") as null|num
-		if(deg_c && deg_c >= range_low && deg_c <= range_high)
-			temperature_setting = round(T0C + deg_c, 0.1)
-			to_chat(user, span_notice("You see the readout change to [deg_c] c."))
-		return
-	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
+	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
 			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
