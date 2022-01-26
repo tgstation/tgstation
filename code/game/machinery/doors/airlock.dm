@@ -793,7 +793,52 @@
 			return
 	add_fingerprint(user)
 
-	if(panel_open)
+	if(is_wire_tool(C) && panel_open)
+		attempt_wire_interaction(user)
+		return
+	else if(istype(C, /obj/item/pai_cable))
+		var/obj/item/pai_cable/cable = C
+		cable.plugin(src, user)
+	else if(istype(C, /obj/item/airlock_painter))
+		change_paintjob(C, user)
+	else if(istype(C, /obj/item/door_seal)) //adding the seal
+		var/obj/item/door_seal/airlockseal = C
+		if(!density)
+			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
+			return
+		if(seal)
+			to_chat(user, span_warning("[src] has already been sealed!"))
+			return
+		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
+		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+		if(!do_after(user, airlockseal.seal_time, target = src))
+			return
+		if(!density)
+			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
+			return
+		if(seal)
+			to_chat(user, span_warning("[src] has already been sealed!"))
+			return
+		if(!user.transferItemToLoc(airlockseal, src))
+			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
+			return
+		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
+		seal = airlockseal
+		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
+		update_appearance()
+
+	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
+		if(note)
+			to_chat(user, span_warning("There's already something pinned to this airlock! Use wirecutters to remove it."))
+			return
+		if(!user.transferItemToLoc(C, src))
+			to_chat(user, span_warning("For some reason, you can't attach [C]!"))
+			return
+		user.visible_message(span_notice("[user] pins [C] to [src]."), span_notice("You pin [C] to [src]."))
+		note = C
+		update_appearance()
+	else if(panel_open)
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
 				if(istype(C, /obj/item/stack/sheet/iron))
@@ -909,51 +954,6 @@
 											span_notice("You cut through \the [src]'s outer grille."))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
-	else if(is_wire_tool(C) && panel_open)
-		attempt_wire_interaction(user)
-		return
-	else if(istype(C, /obj/item/pai_cable))
-		var/obj/item/pai_cable/cable = C
-		cable.plugin(src, user)
-	else if(istype(C, /obj/item/airlock_painter))
-		change_paintjob(C, user)
-	else if(istype(C, /obj/item/door_seal)) //adding the seal
-		var/obj/item/door_seal/airlockseal = C
-		if(!density)
-			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
-			return
-		if(seal)
-			to_chat(user, span_warning("[src] has already been sealed!"))
-			return
-		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
-		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
-		if(!do_after(user, airlockseal.seal_time, target = src))
-			return
-		if(!density)
-			to_chat(user, span_warning("[src] must be closed before you can seal it!"))
-			return
-		if(seal)
-			to_chat(user, span_warning("[src] has already been sealed!"))
-			return
-		if(!user.transferItemToLoc(airlockseal, src))
-			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
-			return
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
-		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
-		seal = airlockseal
-		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
-		update_appearance()
-
-	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
-		if(note)
-			to_chat(user, span_warning("There's already something pinned to this airlock! Use wirecutters to remove it."))
-			return
-		if(!user.transferItemToLoc(C, src))
-			to_chat(user, span_warning("For some reason, you can't attach [C]!"))
-			return
-		user.visible_message(span_notice("[user] pins [C] to [src]."), span_notice("You pin [C] to [src]."))
-		note = C
-		update_appearance()
 	else
 		return ..()
 
