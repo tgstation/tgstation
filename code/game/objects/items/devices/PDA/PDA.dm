@@ -1070,7 +1070,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
 	else
 		sig_list += list(COMSIG_ATOM_ATTACK_HAND)
-	target.AddComponent(/datum/component/sound_player, 30, list('sound/items/bikehorn.ogg'), rand(15,20), sig_list)
+	target.AddComponent(/datum/component/sound_player, uses = rand(15,20), signal_list = sig_list)
 	installed_cartridge.charges--
 	return TRUE
 
