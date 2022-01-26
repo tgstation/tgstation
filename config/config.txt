@@ -596,6 +596,6 @@ CACHE_ASSETS 0
 ## BYOND staff have gotten upset at us in the past for inappropriate station names.
 #STATION_NAME_IN_HUB_ENTRY
 
-## The number of unique PR announcements allowed per round
-## This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+## The number of PR announcements allowed for the same pull request per round
+## This makes sure that somebody can only spam a few reopens and closes before being ignored
 PR_ANNOUNCEMENTS_PER_ROUND 5
