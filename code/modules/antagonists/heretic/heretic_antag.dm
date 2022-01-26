@@ -78,17 +78,6 @@
 
 	return data
 
-/datum/antagonist/heretic/greet()
-	. = ..()
-	to_chat(owner, span_cult("<span class='warningplain'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>"))
-	var/policy = get_policy(ROLE_HERETIC)
-	if(policy)
-		to_chat(owner, policy)
-
-/datum/antagonist/heretic/farewell()
-	to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
-	owner.announce_objectives()
-
 /datum/antagonist/heretic/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 
@@ -110,66 +99,53 @@
 
 	return finish_preview_icon(icon)
 
+/datum/antagonist/heretic/greet()
+	. = ..()
+	var/policy = get_policy(ROLE_HERETIC)
+	if(policy)
+		to_chat(owner, policy)
+
+/datum/antagonist/heretic/farewell()
+	if(!silent)
+		to_chat(owner.current, span_userdanger("Your mind begins to flare as the otherwordly knowledge escapes your grasp!"))
+	return ..()
+
 /datum/antagonist/heretic/on_gain()
+	if(give_objectives)
+		forge_primary_objectives()
+
+	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
 
-	if(give_objectives)
-		forge_primary_objectives()
-
-	GLOB.reality_smash_track.AddMind(owner)
-	RegisterSignal(owner.current, COMSIG_LIVING_DEATH, .proc/on_death)
-
-	return ..()
+	GLOB.reality_smash_track.add_tracked_mind(owner)
 
 /datum/antagonist/heretic/on_removal()
-
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_lose(owner.current)
 
-	GLOB.reality_smash_track.RemoveMind(owner)
-	on_death()
-	UnregisterSignal(owner.current, COMSIG_LIVING_DEATH)
+	on_death() // removal is like death
+	GLOB.reality_smash_track.remove_tracked_mind(owner)
 
+	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 
-///What happens to the heretic once he dies, used to remove any custom perks
-/datum/antagonist/heretic/proc/on_death()
-	SIGNAL_HANDLER
-
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_death(owner.current)
-
-/datum/antagonist/heretic/proc/forge_primary_objectives()
-	var/datum/objective/heretic_research/research_objective = new()
-	research_objective.owner = owner
-	objectives += research_objective
-
-	var/datum/objective/minor_sacrifice/sac_objective = new()
-	sac_objective.owner = owner
-	objectives += sac_objective
-
-	var/datum/objective/major_sacrifice/other_sac_objective = new()
-	other_sac_objective.owner = owner
-	objectives += other_sac_objective
-
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
-	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
-	handle_clown_mutation(our_mob, "Ancient knowledge described in the book allows you to overcome your clownish nature, allowing you to use complex items effectively.")
+	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
-	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/spell_check)
+	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
+	RegisterSignal(our_mob, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
-	. = ..()
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL)
+	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN))
 
 /*
  * Signal proc for [COMSIG_MOB_PRE_CAST_SPELL].
@@ -178,7 +154,7 @@
  * If so, allow them to cast like normal.
  * If not, cancel the cast.
  */
-/datum/antagonist/heretic/proc/spell_check(datum/source, obj/effect/proc_holder/spell/spell)
+/datum/antagonist/heretic/proc/on_spell_cast(datum/source, obj/effect/proc_holder/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care
@@ -191,6 +167,45 @@
 
 	// We shouldn't be able to cast this! Cancel it.
 	return COMPONENT_CANCEL_SPELL
+
+/*
+ * Signal proc for [COMSIG_LIVING_DEATH].
+ *
+ * Used to remove any custom perks from
+ * knowlede or such when the heretic dies.
+ */
+/datum/antagonist/heretic/proc/on_death(datum/source)
+	SIGNAL_HANDLER
+
+	for(var/knowledge_index in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		knowledge.on_death(owner.current)
+
+/*
+ * Signal proc for [COMSIG_MOB_LOGIN].
+ *
+ * Calls rework_network() on our reality smash tracker
+ * whenever a login / client change happens, to ensure
+ * influence client visibility is fixed.
+ */
+/datum/antagonist/heretic/proc/fix_influence_network(mob/source)
+	SIGNAL_HANDLER
+
+	GLOB.reality_smash_track.rework_network()
+
+/// Forge our objectives for our heretic.
+/datum/antagonist/heretic/proc/forge_primary_objectives()
+	var/datum/objective/heretic_research/research_objective = new()
+	research_objective.owner = owner
+	objectives += research_objective
+
+	var/datum/objective/minor_sacrifice/sac_objective = new()
+	sac_objective.owner = owner
+	objectives += sac_objective
+
+	var/datum/objective/major_sacrifice/other_sac_objective = new()
+	other_sac_objective.owner = owner
+	objectives += other_sac_objective
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
@@ -322,10 +337,7 @@
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
 
-////////////////
-// Objectives //
-////////////////
-
+/// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"
 
@@ -344,6 +356,7 @@
 		return FALSE
 	return heretic_datum.total_sacrifices >= target_amount
 
+/// Heretic's major sacrifice objective. "Major sacrifices" are heads of staff.
 /datum/objective/major_sacrifice
 	name = "major sacrifice"
 	target_amount = 1
@@ -355,18 +368,36 @@
 		return FALSE
 	return heretic_datum.high_value_sacrifices >= target_amount
 
+/// Heretic's research objective. "Research" is heretic knowledge nodes (You start with some).
 /datum/objective/heretic_research
 	name = "research"
-	target_amount = 9 // 9's the length of the main paths, so basically make people take some side nodes
+	/// The length of a main path. Calculated once in New().
+	var/static/main_path_length = 0
 
 /datum/objective/heretic_research/New(text)
 	. = ..()
-	target_amount += length(GLOB.heretic_start_knowledge) + rand(3, 4)
+
+	if(!main_path_length)
+		// Let's find the length of a main path. We'll use rust because it's the coolest.
+		// (All the main paths are (should be) the same length, so it doesn't matter.)
+		var/rust_paths_found = 0
+		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
+			if(initial(knowledge.route) == PATH_RUST)
+				rust_paths_found++
+
+		main_path_length = rust_paths_found
+
+	// Factor in the length of the main path first.
+	target_amount = main_path_length
+	// Add in the base research we spawn with, otherwise it'd be too easy.
+	target_amount += length(GLOB.heretic_start_knowledge)
+	// And add in some buffer, to require some sidepathing.
+	target_amount += rand(2, 4)
 	update_explanation_text()
 
 /datum/objective/heretic_research/update_explanation_text()
 	. = ..()
-	explanation_text = "Research at least [target_amount] knowledge from the Mansus."
+	explanation_text = "Research at least [target_amount] knowledge from the Mansus. You start with [length(GLOB.heretic_start_knowledge)] researched."
 
 /datum/objective/heretic_research/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)

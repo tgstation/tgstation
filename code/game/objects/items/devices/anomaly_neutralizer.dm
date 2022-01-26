@@ -1,6 +1,6 @@
 /obj/item/anomaly_neutralizer
 	name = "anomaly neutralizer"
-	desc = "A one-use device capable of instantly neutralizing anomalies."
+	desc = "A one-use device capable of instantly neutralizing anomalous or otherworldly entities."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer2"
 	inhand_icon_state = "electronic"
@@ -13,9 +13,10 @@
 
 /obj/item/anomaly_neutralizer/Initialize(mapload)
 	. = ..()
+
 	// Can be used to delete drained heretic influences
 	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You close %THEEFFECT with %THEWEAPON, frying its circuitry in the process.",
+		success_feedback = "You close %THEEFFECT with %THEWEAPON, frying its circuitry in the process.", \
 		on_clear_callback = CALLBACK(src, .proc/on_use), \
 		effects_we_clear = list(/obj/effect/visible_heretic_influence))
 

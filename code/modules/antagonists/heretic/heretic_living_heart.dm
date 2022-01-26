@@ -30,6 +30,7 @@
 
 	organ_parent.icon = 'icons/obj/eldritch.dmi'
 	organ_parent.icon_state = "living_heart"
+	action.UpdateButtonIcon()
 
 /datum/component/living_heart/Destroy(force, silent)
 	QDEL_NULL(action)
@@ -92,7 +93,7 @@
 		if(!QDELETED(real_target))
 			human_targets += real_target
 
-	playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+	playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE, SILENCED_SOUND_EXTRARANGE)
 	for(var/mob/living/carbon/human/mob_target as anything in human_targets)
 		var/dist = get_dist(get_turf(owner), get_turf(mob_target))
 		var/dir = get_dir(get_turf(owner), get_turf(mob_target))

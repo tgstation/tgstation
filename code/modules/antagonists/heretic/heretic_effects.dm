@@ -139,17 +139,17 @@
  * Tracks relevant data, generates relevant data, useful tool
  */
 /datum/reality_smash_tracker
-	///list of tracked reality smashes
-	var/list/smashes = list()
-	///List of mobs with ability to see the smashes
-	var/list/targets = list()
+	/// List of tracked influences (reality smashes)
+	var/list/obj/effect/heretic_influence/smashes = list()
+	/// List of minds with the ability to see influences
+	var/list/datum/mind/tracked_heretics = list()
 
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
-		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support.")
+		stack_trace("[type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
+		message_admins("The [type] was deleted. Heretics may no longer access any influences. Fix it, or call coder support.")
 	QDEL_LIST(smashes)
-	targets.Cut()
-	smashes.Cut()
+	tracked_heretics.Cut()
 	return ..()
 
 /**
@@ -157,53 +157,77 @@
  *
  * Fixes any bugs that are caused by late Generate() or exchanging clients
  */
-/datum/reality_smash_tracker/proc/ReworkNetwork()
+/datum/reality_smash_tracker/proc/rework_network()
 	SIGNAL_HANDLER
 
 	list_clear_nulls(smashes)
-	for(var/mind in targets)
+	for(var/mind in tracked_heretics)
 		if(isnull(mind))
-			stack_trace("A null somehow landed in a list of minds")
+			stack_trace("A null somehow landed in the [type] list of minds. How?")
+			tracked_heretics -= mind
 			continue
-		for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-			reality_smash.add_mind(mind)
+
+		add_to_smashes(mind)
 
 /**
- * Generates a set amount of reality smashes based on the N value
- *
- * Automatically creates more reality smashes
+ * Allow [to_add] to see all tracked reality smashes.
  */
-/datum/reality_smash_tracker/proc/Generate(mob/caller)
-	if(istype(caller))
-		targets += caller
-	var/number_of_heretics = length(targets)
+/datum/reality_smash_tracker/proc/add_to_smashes(datum/mind/to_add)
+	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
+		if(QDELETED(reality_smash))
+			smashes -= reality_smash
+			continue
+
+		reality_smash.add_mind(to_add)
+
+/**
+ * Stop [to_remove] from seeing any tracked reality smashes.
+ */
+/datum/reality_smash_tracker/proc/remove_from_smashes(datum/mind/to_remove)
+	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
+		if(QDELETED(reality_smash))
+			smashes -= reality_smash
+			continue
+
+		reality_smash.remove_mind(to_remove)
+
+
+/**
+ * Generates a set amount of reality smashes
+ * based on the number of already existing smashes
+ * and the number of minds we're tracking.
+ */
+/datum/reality_smash_tracker/proc/generate_new_influences()
+	var/number_of_heretics = length(tracked_heretics)
 	var/number_of_smashes = length(smashes)
 	var/how_many_should_we_make = max(number_of_heretics * (4 - (number_of_heretics - 1)) - number_of_smashes, 1)
 
 	for(var/i in 0 to how_many_should_we_make)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
-		//we also dont want them close to each other, at least 1 tile of seperation
+		// We don't want them close to each other - at least 1 tile of seperation
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in range(1, chosen_location)
 		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
-		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
+		if(what_if_i_have_one || what_if_i_had_one_but_got_used)
 			continue
+
 		new /obj/effect/heretic_influence(chosen_location)
 
-	ReworkNetwork()
+	rework_network()
 
 /**
  * Adds a mind to the list of people that can see the reality smashes
  *
  * Use this whenever you want to add someone to the list
  */
-/datum/reality_smash_tracker/proc/AddMind(datum/mind/heretic)
-	RegisterSignal(heretic.current, COMSIG_MOB_LOGIN, .proc/ReworkNetwork)
-	targets |= heretic
+/datum/reality_smash_tracker/proc/add_tracked_mind(datum/mind/heretic)
+	tracked_heretics |= heretic
+
+	// If our heretic's on station, generate some new influences
 	if(ishuman(heretic.current) && is_station_level(heretic.current.z))
-		Generate()
-	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		reality_smash.add_mind(heretic)
+		generate_new_influences()
+
+	add_to_smashes(heretic)
 
 
 /**
@@ -211,11 +235,11 @@
  *
  * Use this whenever you want to remove someone from the list
  */
-/datum/reality_smash_tracker/proc/RemoveMind(datum/mind/heretic)
+/datum/reality_smash_tracker/proc/remove_tracked_mind(datum/mind/heretic)
 	UnregisterSignal(heretic.current, COMSIG_MOB_LOGIN)
-	targets -= heretic
-	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		reality_smash.remove_mind(heretic)
+	tracked_heretics -= heretic
+
+	remove_from_smashes(heretic)
 
 /obj/effect/visible_heretic_influence
 	name = "pierced reality"
@@ -242,7 +266,7 @@
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 	if(!ishuman(user))
 		return
