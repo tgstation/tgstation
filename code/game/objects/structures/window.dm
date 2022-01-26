@@ -187,6 +187,7 @@
 	if(!can_be_reached(user))
 		return TRUE //skip the afterattack
 	add_fingerprint(user)
+	return ..()
 
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -212,6 +213,8 @@
 		return TRUE
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
+	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+		return FALSE
 	if(anchored)
 		return FALSE
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
@@ -225,6 +228,8 @@
 	return TRUE
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
+	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+		return FALSE
 	if(!(reinf && (state == WINDOW_OUT_OF_FRAME) && anchored))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window into the frame..."))

@@ -32,7 +32,7 @@
 
 	if(admin)
 		can_rotate = FALSE
-	
+
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/reflector,
 	))
@@ -78,6 +78,7 @@
 /obj/structure/reflector/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(admin)
 		return FALSE
+	return ..()
 
 /obj/structure/reflector/screwdriver_act(mob/living/user, obj/item/tool)
 	can_rotate = !can_rotate
@@ -299,10 +300,10 @@
 	display_name = "Reflector"
 	desc = "Allows you to adjust the angle of a reflector."
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
-	
+
 	///angle the reflector will be set to at trigger unless locked
 	var/datum/port/input/angle
-	
+
 	var/obj/structure/reflector/attached_reflector
 
 /obj/item/circuit_component/reflector/populate_ports()

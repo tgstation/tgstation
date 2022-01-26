@@ -83,10 +83,11 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool)
 	if(opening)
 		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 		return TRUE
+	return ..()
 
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE

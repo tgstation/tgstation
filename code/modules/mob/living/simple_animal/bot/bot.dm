@@ -388,6 +388,7 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
 	if(!(bot_cover_flags & BOT_COVER_LOCKED))
 		bot_cover_flags ^= BOT_COVER_OPEN
 		to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
@@ -409,10 +410,6 @@
 		if(tool.use_tool(src, user, 0, volume=40))
 			adjustHealth(-10)
 			user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
-	else
-		if(tool.force) //if force is non-zero
-			do_sparks(5, TRUE, src)
-			return FALSE
 
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
@@ -428,18 +425,6 @@
 				if (paicard)
 					user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"),span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
 					ejectpai(user)
-	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode)
-		user.changeNext_move(CLICK_CD_MELEE)
-		if(health >= maxHealth)
-			to_chat(user, span_warning("[src] does not need a repair!"))
-			return
-		if(!(bot_cover_flags & BOT_COVER_OPEN))
-			to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
-			return
-
-		if(attacking_item.use_tool(src, user, 0, volume=40))
-			adjustHealth(-10)
-			user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 	else
 		if(attacking_item.force) //if force is non-zero
 			do_sparks(5, TRUE, src)

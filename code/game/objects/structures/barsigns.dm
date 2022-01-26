@@ -76,6 +76,7 @@
 
 /obj/structure/sign/barsign/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
+	tool.play_tool_sound(src)
 	if(!panel_open)
 		to_chat(user, span_notice("You open the maintenance panel."))
 		set_sign(new /datum/barsign/hiddensigns/signoff)

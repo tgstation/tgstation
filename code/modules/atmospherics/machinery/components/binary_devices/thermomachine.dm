@@ -325,18 +325,20 @@
 	if(parents[2])
 		nullify_pipenet(parents[2])
 
-/obj/machinery/atmospherics/components/binary/thermomachine/attackby_secondary(obj/item/item, mob/user, params)
-	. = ..()
-	if(panel_open && item.tool_behaviour == TOOL_WRENCH && !check_pipe_on_turf())
-		if(default_unfasten_wrench(user, item))
-			return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(panel_open && item.tool_behaviour == TOOL_MULTITOOL)
+/obj/machinery/atmospherics/components/binary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open && !check_pipe_on_turf())
+		if(default_unfasten_wrench(user, tool))
+			return TRUE
+	return FALSE
+
+/obj/machinery/atmospherics/components/binary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
 		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
 		pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
 		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
 		update_appearance()
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	return SECONDARY_ATTACK_CONTINUE_CHAIN
+		return TRUE
+	return FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
 	for(var/obj/machinery/atmospherics/device in get_turf(src))
