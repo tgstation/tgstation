@@ -4,8 +4,7 @@
 /datum/autowiki/techweb/generate()
 	var/output = ""
 
-	// MOTHBLOCKS TODO: Stable sort, ideally in order of requirements
-	for (var/node_id in SSresearch.techweb_nodes)
+	for (var/node_id in sort_list(SSresearch.techweb_nodes, /proc/sort_research_nodes))
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
 		if (!node.show_on_wiki)
 			continue
@@ -42,3 +41,12 @@
 
 	return output
 
+/proc/sort_research_nodes(node_id_a, node_id_b)
+	var/datum/techweb_node/node_a = SSresearch.techweb_nodes[node_id_a]
+	var/datum/techweb_node/node_b = SSresearch.techweb_nodes[node_id_b]
+
+	var/experiment_difference = node_a.required_experiments.len - node_b.required_experiments.len
+	if (experiment_difference != 0)
+		return experiment_difference
+
+	return sorttext(node_b.display_name, node_a.display_name)
