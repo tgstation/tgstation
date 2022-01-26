@@ -2,6 +2,7 @@
 //NOTICE: /unpowered means you never get power. Thanks Fikou
 
 /area/ruin/powered/beach
+	name = "\improper Beach"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/clownplanet
@@ -14,9 +15,11 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/snow_biodome
+	name = "\improper Snow Biodome"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/gluttony
+	name = "\improper Gluttony Ruin"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/golem_ship
@@ -24,6 +27,7 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/greed
+	name = "\improper Greed Ruin"
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/hierophant
@@ -31,9 +35,11 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/pride
+	name = "\improper Pride Ruin"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/seedvault
+	name = "\improper Seed Vault"
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/elephant_graveyard
@@ -41,7 +47,7 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/graveyard_shuttle
-	name = "\improper Elephant Graveyard"
+	name = "\improper Graveyard Shuttle"
 	icon_state = "green"
 
 /area/ruin/syndicate_lava_base
@@ -99,8 +105,10 @@
 	power_light = FALSE
 //ash walker nest
 /area/ruin/unpowered/ash_walkers
+	name = "\improper Ash Walkers' Nest"
 	icon_state = "red"
 
 /area/ruin/unpowered/ratvar
+	name = "\improper Ratvar's Ruin"
 	icon_state = "dk_yellow"
 	outdoors = TRUE

@@ -38,11 +38,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	sound_environment = SOUND_AREA_SPACE
 
 /area/space/nearstation
+	name = "Nearstation"
 	icon_state = "space_near"
 	area_flags = UNIQUE_AREA | NO_ALERTS | AREA_USES_STARLIGHT
 
 /area/start
-	name = "start area"
+	name = "Start Area"
 	icon_state = "start"
 	requires_power = FALSE
 	static_lighting = FALSE
@@ -1258,9 +1259,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "checkpoint1"
 
 /area/security/checkpoint/auxiliary
+	name = "\improper Auxiliary Checkpoint"
 	icon_state = "checkpoint_aux"
 
 /area/security/checkpoint/escape
+	name = "Security Post - Escape"
 	icon_state = "checkpoint_esc"
 
 /area/security/checkpoint/supply

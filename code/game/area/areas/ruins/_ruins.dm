@@ -12,10 +12,13 @@
 
 
 /area/ruin/unpowered
+	name = "\improper Powerless Ruin" //let's be honest, you shouldn't be using these names
 	always_unpowered = TRUE
 
 /area/ruin/unpowered/no_grav
+	name = "\improper Gravityless and Powerless Ruin"
 	has_gravity = FALSE
 
 /area/ruin/powered
+	name = "\improper Powered Ruin"
 	requires_power = FALSE
