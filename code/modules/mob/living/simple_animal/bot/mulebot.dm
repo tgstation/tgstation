@@ -153,20 +153,22 @@
 	update_appearance()
 
 /mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
-	if(bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
-		. = TRUE
-		if(!cell)
-			to_chat(user, span_warning("[src] doesn't have a power cell!"))
-			return
-		cell.add_fingerprint(user)
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(cell)
-		else
-			cell.forceMove(drop_location())
-		visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-						span_notice("You pry [cell] out of [src]."))
-		cell = null
-		diag_hud_set_mulebotcell()
+	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+		return
+
+	. = TRUE
+	if(!cell)
+		to_chat(user, span_warning("[src] doesn't have a power cell!"))
+		return
+	cell.add_fingerprint(user)
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(cell)
+	else
+		cell.forceMove(drop_location())
+	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
+					span_notice("You pry [cell] out of [src]."))
+	cell = null
+	diag_hud_set_mulebotcell()
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)

@@ -398,18 +398,20 @@
 
 /mob/living/simple_animal/bot/welder_act(mob/living/user, obj/item/tool)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(!user.combat_mode)  // dunno if this change is needed
-		. = TRUE
-		if(health >= maxHealth)
-			to_chat(user, span_warning("[src] does not need a repair!"))
-			return
-		if(!(bot_cover_flags & BOT_COVER_OPEN))
-			to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
-			return
+	if(user.combat_mode)
+		return
 
-		if(tool.use_tool(src, user, 0, volume=40))
-			adjustHealth(-10)
-			user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
+	. = TRUE
+	if(health >= maxHealth)
+		to_chat(user, span_warning("[src] does not need a repair!"))
+		return
+	if(!(bot_cover_flags & BOT_COVER_OPEN))
+		to_chat(user, span_warning("Unable to repair with the maintenance panel closed!"))
+		return
+
+	if(tool.use_tool(src, user, 0, volume=40))
+		adjustHealth(-10)
+		user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 
 /mob/living/simple_animal/bot/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(attacking_item.GetID())
