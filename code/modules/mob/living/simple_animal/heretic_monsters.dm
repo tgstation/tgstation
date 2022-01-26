@@ -66,8 +66,8 @@
 		/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch,
 	)
 
-	/// A assoc list of [mob] to [action] - all the mobs linked to our mansus network.
-	var/list/linked_mobs = list()
+	/// A assoc list of [mob/living ref] to [datum/action ref] - all the mobs linked to our mansus network.
+	var/list/mob/living/linked_mobs = list()
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()

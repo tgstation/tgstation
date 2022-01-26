@@ -1,3 +1,7 @@
+
+/// JSON string file for all of our heretic influence names.
+#define HERETIC_INFLUENCE_FILE "heretic_influences.json"
+
 /obj/effect/heretic_rune
 	name = "Generic rune"
 	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
@@ -172,11 +176,11 @@
 /datum/reality_smash_tracker/proc/Generate(mob/caller)
 	if(istype(caller))
 		targets += caller
-	var/targ_len = length(targets)
-	var/smash_len = length(smashes)
-	var/number = max(targ_len * (4-(targ_len-1)) - smash_len,1)
+	var/number_of_heretics = length(targets)
+	var/number_of_smashes = length(smashes)
+	var/how_many_should_we_make = max(number_of_heretics * (4 - (number_of_heretics - 1)) - number_of_smashes, 1)
 
-	for(var/i in 0 to number)
+	for(var/i in 0 to how_many_should_we_make)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
 		//we also dont want them close to each other, at least 1 tile of seperation
@@ -185,6 +189,7 @@
 		if(what_if_i_have_one || what_if_i_had_one_but_got_used) //we dont want to spawn
 			continue
 		new /obj/effect/heretic_influence(chosen_location)
+
 	ReworkNetwork()
 
 /**
@@ -195,7 +200,8 @@
 /datum/reality_smash_tracker/proc/AddMind(datum/mind/heretic)
 	RegisterSignal(heretic.current, COMSIG_MOB_LOGIN, .proc/ReworkNetwork)
 	targets |= heretic
-	Generate()
+	if(ishuman(heretic.current) && is_station_level(heretic.current.z))
+		Generate()
 	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
 		reality_smash.add_mind(heretic)
 
@@ -216,12 +222,13 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
 	anchored = TRUE
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
 /obj/effect/visible_heretic_influence/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
+	addtimer(CALLBACK(src, .proc/show_presence), 15 SECONDS)
 
 	var/image/silicon_image = image('icons/effects/eldritch.dmi', src, null, OBJ_LAYER)
 	silicon_image.override = TRUE
@@ -234,12 +241,15 @@
 	animate(src, alpha = 255, time = 15 SECONDS)
 
 /obj/effect/visible_heretic_influence/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!.)
+		return
 	if(!ishuman(user))
-		return ..()
+		return
 
 	if(IS_HERETIC(user))
 		to_chat(user, span_boldwarning("You know better than to tempt forces out of your control!"))
-		return
+		return TRUE
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/bodypart/their_poor_arm = human_user.get_active_hand()
@@ -249,7 +259,7 @@
 		qdel(their_poor_arm)
 	else
 		to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails, trying to latch onto existance itself!"))
-
+	return TRUE
 
 /obj/effect/visible_heretic_influence/attack_tk(mob/user)
 	if(!ishuman(user))
@@ -291,10 +301,13 @@
 	name = "reality smash"
 	icon = 'icons/effects/eldritch.dmi'
 	anchored = TRUE
+	interaction_flags_atom = INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	invisibility = INVISIBILITY_OBSERVER
-	/// The icon state of the generated image for this influence.
-	var/image_state = "reality_smash"
+	/// Whether we're currently being drained or not.
+	var/being_drained = FALSE
+	/// The icon state applied to the image created for this influence.
+	var/real_icon_state = "reality_smash"
 	/// A list of all minds that can see us.
 	var/list/minds = list()
 	/// The image shown to heretics
@@ -303,7 +316,7 @@
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
-	heretic_image = image(icon, src, image_state, OBJ_LAYER)
+	heretic_image = image(icon, src, real_icon_state, OBJ_LAYER)
 	generate_name()
 
 /obj/effect/heretic_influence/Destroy()
@@ -314,10 +327,72 @@
 	heretic_image = null
 	return ..()
 
-/obj/effect/heretic_influence/proc/drain_influence()
+/obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
+	if(!IS_HERETIC(user)) // Shouldn't be able to do this, but just in case
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(being_drained)
+		balloon_alert(user, "already being drained!")
+	else
+		INVOKE_ASYNC(src, .proc/drain_influence, user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/**
+ * Begin to drain the influence, setting being_drained,
+ * registering an examine signal, and beginning a do_after.
+ *
+ * If successful, the influence is drained and deleted.
+ */
+/obj/effect/heretic_influence/proc/drain_influence(mob/living/user)
+
+	being_drained = TRUE
+	balloon_alert(user, "draining influence...")
+	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+
+	if(!do_after(user, 10 SECONDS, src))
+		being_drained = FALSE
+		balloon_alert(user, "interrupted!")
+		UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
+		return
+
+	// We don't need to set being_drained back since we delete after anyways
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
+	balloon_alert(user, "influence drained")
+
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	heretic_datum.knowledge_points++
+
+	// Aaand now we delete it
+	after_drain(user)
+
+/*
+ * Handle the effects of the drain.
+ */
+/obj/effect/heretic_influence/proc/after_drain(mob/living/user)
+	if(user)
+		var/static/list/drain_messages = strings(HERETIC_INFLUENCE_FILE, "drain_message")
+		to_chat(user, span_hypnophrase(pick(drain_messages)))
+		to_chat(user, span_warning("[src] begins to fade into reality!"))
+
+	var/static/list/drained_prefixes = strings(HERETIC_INFLUENCE_FILE, "drained")
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
-	illusion.name = pick("Researched", "Siphoned", "Analyzed", "Emptied", "Drained") + " " + name
+	illusion.name = "\improper" + pick(drained_prefixes) + " " + format_text(name)
+
 	qdel(src)
+
+/*
+ * Signal proc for [COMSIG_PARENT_EXAMINE], registered on the user draining the influence.
+ *
+ * Gives a chance for examiners to see that the heretic is interacting with an infuence.
+ */
+/obj/effect/heretic_influence/proc/on_examine(atom/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(prob(50))
+		return
+
+	examine_list += span_warning("[source]'s hand seems to be glowing a strange purple...")
 
 /*
  * Add a mind to the list of tracked minds,
@@ -342,43 +417,9 @@
  * Generates a random name for the influence.
  */
 /obj/effect/heretic_influence/proc/generate_name()
-	var/static/list/prefix = list(
-		"Omniscient",
-		"Thundering",
-		"Enlightening",
-		"Intrusive",
-		"Rejectful",
-		"Atomized",
-		"Subtle",
-		"Rising",
-		"Lowering",
-		"Fleeting",
-		"Towering",
-		"Blissful",
-		"Arrogant",
-		"Threatening",
-		"Peaceful",
-		"Aggressive",
-	)
-	var/static/list/postfix = list(
-		"Flaw",
-		"Presence",
-		"Crack",
-		"Heat",
-		"Cold",
-		"Memory",
-		"Reminder",
-		"Breeze",
-		"Grasp",
-		"Sight",
-		"Whisper",
-		"Flow",
-		"Touch",
-		"Veil",
-		"Thought",
-		"Imperfection",
-		"Blemish",
-		"Blush",
-	)
+	var/static/list/prefixes = strings(HERETIC_INFLUENCE_FILE, "prefix")
+	var/static/list/postfixes = strings(HERETIC_INFLUENCE_FILE, "postfix")
 
-	name = "\improper" + pick(prefix) + " " + pick(postfix)
+	name = "\improper" + pick(prefixes) + " " + pick(postfixes)
+
+#undef HERETIC_INFLUENCE_FILE
