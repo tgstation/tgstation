@@ -1025,3 +1025,45 @@
   the-orange-cow:
   - qol: In game tips now properly recommend Left 4 Zed as a means of mutating plants.  Please,
       stop using unstable mutagen.
+2022-01-26:
+  ErdinyoBarboza:
+  - spellcheck: Gives mannitol an actual taste.
+  - expansion: Boritos Corn Chips can now be bought from Snack Vendors
+  - bugfix: Made the trash of Ready Donkmeal nicer
+  - bugfix: Updates food spawners to include Boritos, Semki's and Pistachios
+  Kokonut (Maxymax13):
+  - imageadd: Touches up the new toolboxes' appearance.
+  PositiveEntropy, Axietheaxolotl:
+  - imageadd: Resprites/Reshades the Head of Security's Trenchcoat!
+  - imageadd: Resprites commander caps into peaked caps! Flex your naval prowess with
+      them!
+  - imagedel: Removes the old captain parade tunic, replacing it with Captain's Parade
+      Jacket!
+  Riggle:
+  - admin: gamemode panel now correctly displays the time
+  SmoSmoSmoSmok:
+  - bugfix: Vending machine doesn't fall over if its weightless
+  Y0SH1M4S73R:
+  - expansion: Adds the MOD Action component for the circuit adapter module. When
+      the circuit adapter is selected, a radial menu opens, allowing the wearer to
+      trigger any of the installed Action components.
+  - qol: The circuit adapter module can be printed in the component printer.
+  - qol: The circuit adapter module can have its circuit removed. Because of this,
+      the module no longer starts with an unremovable circuit pre-installed.
+  - spellcheck: Renames the MOD component to the MOD circuit adapter core, as it is
+      no longer the only MODsuit-related circuit component.
+  - bugfix: The MOD circuit adapter core can now activate inactive MODsuits.
+  - qol: The MOD circuit adapter core's "Selected Module" port is now a string port
+      instead of an entity port.
+  - qol: The MOD circuit adapter core now has a "On Module Selected" output signal.
+  - bugfix: The BCI action component now properly typechecks if it was inserted into
+      a BCI.
+  coldud13:
+  - qol: Adds text to let players know that you can unscrew catwalk plating.
+  jjpark-kb:
+  - rscadd: spacevines now have a spawning animation
+  lewcc:
+  - refactor: Reworks some tool interactions to use specific tool procs
+  tralezab:
+  - bugfix: APOTHEOSIS! now forces you standing during your death animation, restoring
+      the old (not forced) standing when I originally added APOTHEOSIS!

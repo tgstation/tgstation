@@ -1,4 +1,0 @@
-author: "Riggle"
-delete-after: True
-changes: 
-  - admin: "gamemode panel now correctly displays the time"
