@@ -329,34 +329,9 @@
 		if (do_after(user, 40*platingmodifier, target = src))
 			if(!sheet_for_plating.use(2))
 				return
-			sheet_for_plating.use(2)
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
 			T.PlaceOnTop(/turf/closed/wall)
-			transfer_fingerprints_to(T)
-			qdel(src)
-		return
-	if(!sheet_for_plating.has_unique_girder)
-		if(!sheet_for_plating.use(2))
-			to_chat(user, span_warning("You need at least two sheets to add plating!"))
-			return
-		to_chat(user, span_notice("You start adding plating to the foam structure..."))
-		if (do_after(user, 40, target = src))
-			if(!sheet_for_plating.use(2))
-				return
-			sheet_for_plating.use(2)
-			to_chat(user, span_notice("You add the plating."))
-			var/turf/T = get_turf(src)
-			if(sheet_for_plating.walltype)
-				T.PlaceOnTop(sheet_for_plating.walltype)
-			else
-				var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
-				var/list/material_list = list()
-				if(sheet_for_plating.material_type)
-					material_list[GET_MATERIAL_REF(sheet_for_plating.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
-				if(material_list)
-					newturf.set_custom_materials(material_list)
-
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return
