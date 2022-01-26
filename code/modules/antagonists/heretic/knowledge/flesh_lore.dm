@@ -73,10 +73,11 @@
 	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul)
 
 	var/datum/antagonist/heretic_monster/heretic_monster = soon_to_be_ghoul.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	heretic_monster.set_owner(master)
+	heretic_monster.set_owner(user.mind)
+
 	selected_atoms -= soon_to_be_ghoul
 	ghouls += soon_to_be_ghoul
+
 	RegisterSignal(soon_to_be_ghoul, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	return TRUE
 
@@ -128,9 +129,9 @@
 	human_target.become_husk()
 	human_target.apply_status_effect(/datum/status_effect/ghoul)
 	human_target.faction |= "heretics"
+
 	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	var/datum/antagonist/heretic/master = user.mind.has_antag_datum(/datum/antagonist/heretic)
-	heretic_monster.set_owner(master)
+	heretic_monster.set_owner(user.mind)
 
 	return TRUE
 
@@ -167,7 +168,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Flesh on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Flesh causes additional bleeding."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
-	banned_knowledge = list(/datum/heretic_knowledge/rust_mark,/datum/heretic_knowledge/ash_mark,/datum/heretic_knowledge/void_mark)
+	banned_knowledge = list(/datum/heretic_knowledge/rust_mark, /datum/heretic_knowledge/ash_mark, /datum/heretic_knowledge/void_mark)
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
@@ -220,7 +221,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/final/flesh_final
+		/datum/heretic_knowledge/final/flesh_final,
 	)
 	route = PATH_FLESH
 

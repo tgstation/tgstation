@@ -61,7 +61,7 @@
 		CRASH("[src] attempted to make a hood on a non-carbon thing: [loc]")
 
 	var/mob/living/carbon/carbon_user = loc
-	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
+	if(IS_HERETIC_OR_MONSTER(carbon_user))
 		. = ..()
 		to_chat(carbon_user,span_notice("The light shifts around you making the cloak invisible!"))
 		item_flags |= EXAMINE_SKIP

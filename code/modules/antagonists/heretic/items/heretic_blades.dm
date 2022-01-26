@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
+	if(!IS_HERETIC_OR_MONSTER(user))
 		to_chat(user,span_danger("You feel a pulse of alien intellect lash out at your mind!"))
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
@@ -28,7 +28,7 @@
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
 	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
-	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+	if(IS_HERETIC_OR_MONSTER(user))
 		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
 			to_chat(user,span_warning("As you shatter [src], you feel a gust of energy flow through your body. The Rusted Hills heard your call..."))
 		else
@@ -55,7 +55,7 @@
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
-	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+	if(IS_HERETIC_OR_MONSTER(user))
 		. += span_notice("<B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B>")
 
 /obj/item/melee/sickly_blade/rust

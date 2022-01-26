@@ -516,11 +516,12 @@
 
 /obj/effect/proc_holder/spell/targeted/worm_contract/cast(list/targets, mob/user)
 	. = ..()
-	if(!istype(user,/mob/living/simple_animal/hostile/heretic_summon/armsy))
-		to_chat(user, span_userdanger("You try to contract your muscles but nothing happens..."))
+	if(!istype(user, /mob/living/simple_animal/hostile/heretic_summon/armsy))
+		to_chat(user, span_userdanger("You try to contract your muscles, but nothing happens..."))
 		return
-	var/mob/living/simple_animal/hostile/heretic_summon/armsy/armsy = user
-	armsy.contract_next_chain_into_single_tile()
+
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/lord_of_night = user
+	lord_of_night.contract_next_chain_into_single_tile()
 
 /obj/effect/temp_visual/cleave
 	icon = 'icons/effects/eldritch.dmi'
@@ -697,7 +698,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
+	if(victim.anti_magic_check() || IS_HERETIC_OR_MONSTER(victim))
 		return
 	victim.apply_status_effect(STATUS_EFFECT_AMOK)
 	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
@@ -734,12 +735,12 @@
 	var/mob/living/mob_inside = locate() in target.contents - target
 
 	if(!mob_inside)
-		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/outside = new(user.loc,TRUE,segment_length)
+		var/mob/living/simple_animal/hostile/heretic_summon/armsy/prime/outside = new(user.loc, TRUE, segment_length)
 		target.mind.transfer_to(outside, TRUE)
 		target.forceMove(outside)
 		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
 		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
-			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
+			if(IS_HERETIC_OR_MONSTER(humie))
 				continue
 			SEND_SIGNAL(humie, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 			///They see the very reality uncoil before their eyes.
@@ -788,12 +789,12 @@
 	new /obj/effect/temp_visual/voidout(targeted_turf)
 
 	for(var/mob/living/living_mob in range(1,user)-user)
-		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+		if(IS_HERETIC_OR_MONSTER(living_mob))
 			continue
 		living_mob.adjustBruteLoss(40)
 
 	for(var/mob/living/living_mob in range(1,targeted_turf)-user)
-		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+		if(IS_HERETIC_OR_MONSTER(living_mob))
 			continue
 		living_mob.adjustBruteLoss(40)
 
@@ -832,7 +833,7 @@
 /obj/effect/proc_holder/spell/targeted/void_pull/cast(list/targets, mob/user)
 	. = ..()
 	for(var/mob/living/living_mob in range(1,user)-user)
-		if(IS_HERETIC(living_mob) || IS_HERETIC_MONSTER(living_mob))
+		if(IS_HERETIC_OR_MONSTER(living_mob))
 			continue
 		living_mob.adjustBruteLoss(30)
 
