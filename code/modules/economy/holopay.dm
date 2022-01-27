@@ -49,6 +49,12 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
+/obj/structure/holopay/Destroy()
+	. = ..()
+	var/obj/item/card/id/linked_card = card_ref.resolve()
+	if(linked_card)
+		QDEL_NULL(linked_card.my_store)
+
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -210,11 +216,10 @@
  */
 /obj/structure/holopay/proc/dissapate()
 	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(!linked_card || !istype(linked_card, /obj/item/card/id))
-		qdel(src)
-	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
-	visible_message(span_notice("The pay stand vanishes."))
-	QDEL_NULL(linked_card.my_store)
+	if(linked_card)
+		playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
+		visible_message(span_notice("The pay stand vanishes."))
+		QDEL_NULL(linked_card.my_store)
 
 /**
  * Initiates a transaction between accounts.
