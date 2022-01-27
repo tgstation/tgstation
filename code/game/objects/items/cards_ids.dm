@@ -394,7 +394,7 @@
 	/// Sanity checks
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	var/obj/structure/holopay/my_store = holopay_ref.resolve()
+	var/obj/structure/holopay/my_store = holopay_ref?.resolve()
 	if(my_store)
 		my_store.dissapate()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

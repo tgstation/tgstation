@@ -49,9 +49,62 @@
 		if(BURN)
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
+/obj/structure/holopay/deconstruct()
+	dissapate()
+	return ..()
+
+/obj/structure/holopay/attackby(obj/item/held_item, mob/user, params)
+	/// Sanity checks
+	var/obj/item/card/id/linked_card = get_card()
+	/// Users can pay with an ID to skip the UI
+	if(istype(held_item, /obj/item/card/id))
+		var/obj/item/card/id/pay_card = held_item
+		if(!pay_card.registered_account || !pay_card.registered_account.account_job)
+			balloon_alert(user, "invalid account")
+			return FALSE
+		/// Delete the holopay if the master swipes on it
+		if(pay_card.registered_account == linked_card.registered_account)
+			qdel(src)
+			return TRUE
+		process_payment(user)
+		return TRUE
+	/// Users can also pay by holochip
+	if(istype(held_item, /obj/item/holochip))
+		/// Account checks
+		var/obj/item/holochip/chip = held_item
+		if(!chip.credits)
+			balloon_alert(user, "holochip is empty")
+			to_chat(user, span_warning("There doesn't seem to be any credits here."))
+			return FALSE
+		/// Charges force fee or uses pay what you want
+		var/cash_deposit = force_fee || tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", max_value = chip.credits)
+		/// Exit sanity checks
+		if(!cash_deposit)
+			return TRUE
+		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return FALSE
+		if(!chip.spend(cash_deposit, FALSE))
+			balloon_alert(user, "insufficient credits")
+			to_chat(user, span_warning("You don't have enough credits to pay with this chip."))
+			return FALSE
+		/// Success: Alert buyer
+		alert_buyer(user, cash_deposit)
+		return TRUE
+	/// Throws errors if they try to use space cash
+	if(istype(held_item, /obj/item/stack/spacecash))
+		to_chat(user, "What is this, the 2000s? We only take card here.")
+		return TRUE
+	if(istype(held_item, /obj/item/coin))
+		to_chat(user, "What is this, the 1800s? We only take card here.")
+		return TRUE
+	return ..()
+
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	if(.)
+		return FALSE
+	var/mob/living/interactor = user
+	if(!isliving(interactor) || interactor.combat_mode)
 		return FALSE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -65,9 +118,8 @@
 
 /obj/structure/holopay/ui_static_data(mob/user)
 	. = list()
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(!linked_card || !istype(linked_card, /obj/item/card/id))
-		return .
+	/// Sanity checks
+	var/obj/item/card/id/linked_card = get_card()
 	.["available_logos"] = available_logos
 	.["description"] = desc
 	.["force_fee"] = force_fee
@@ -124,53 +176,6 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/user, params)
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(!linked_card || !istype(linked_card, /obj/item/card/id))
-		CRASH("Holopay was hit but not linked to a card.")
-	/// Users can pay with an ID to skip the UI
-	if(istype(held_item, /obj/item/card/id))
-		var/obj/item/card/id/pay_card = held_item
-		if(!pay_card.registered_account || !pay_card.registered_account.account_job)
-			balloon_alert(user, "invalid account")
-			return FALSE
-		/// Delete the holopay if the master swipes on it
-		if(pay_card.registered_account == linked_card.registered_account)
-			qdel(src)
-			return TRUE
-		process_payment(user)
-		return TRUE
-	/// Users can also pay by holochip
-	if(istype(held_item, /obj/item/holochip))
-		/// Account checks
-		var/obj/item/holochip/chip = held_item
-		if(!chip.credits)
-			balloon_alert(user, "holochip is empty")
-			to_chat(user, span_warning("There doesn't seem to be any credits here."))
-			return FALSE
-		/// Charges force fee or uses pay what you want
-		var/cash_deposit = force_fee || tgui_input_number(user, "How much? (Max: [chip.credits])", "Patronage", max_value = chip.credits)
-		/// Exit sanity checks
-		if(!cash_deposit)
-			return TRUE
-		if(QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-			return FALSE
-		if(!chip.spend(cash_deposit, FALSE))
-			balloon_alert(user, "insufficient credits")
-			to_chat(user, span_warning("You don't have enough credits to pay with this chip."))
-			return FALSE
-		/// Success: Alert buyer
-		alert_buyer(user, cash_deposit)
-		return TRUE
-	/// Throws errors if they try to use space cash
-	if(istype(held_item, /obj/item/stack/spacecash))
-		to_chat(user, "What is this, the 2000s? We only take card here.")
-		return TRUE
-	if(istype(held_item, /obj/item/coin))
-		to_chat(user, "What is this, the 1800s? We only take card here.")
-		return TRUE
-	return ..()
-
 /**
  * Links the source card to the holopay. Begins checking if its in range.
  *
@@ -187,10 +192,9 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	if(!card.loc)
-		return FALSE
 	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	if(card.loc)
+		RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
 	return TRUE
 
 /**
@@ -199,21 +203,33 @@
  */
 /obj/structure/holopay/proc/check_operation()
 	SIGNAL_HANDLER
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(!linked_card || !linked_card.loc)
-		qdel(src)
+	var/obj/item/card/id/linked_card = get_card()
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range) || !IN_GIVEN_RANGE(src, linked_card.loc, max_holo_range))
 		dissapate()
 
 /**
  * Creates holopay vanishing effects.
+ * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissapate()
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(linked_card)
-		playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
-		visible_message(span_notice("The pay stand vanishes."))
-		QDEL_NULL(linked_card.holopay_ref)
+	var/obj/item/card/id/linked_card = get_card()
+	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
+	visible_message(span_notice("The pay stand vanishes."))
+	QDEL_NULL(linked_card.holopay_ref)
+
+/**
+ * Checks that the card is still linked.
+ * Deletes the holopay if not.
+ *
+ * Returns:
+ * * /obj/item/card/id/card - The card that is linked to the holopay
+ */
+/obj/structure/holopay/proc/get_card()
+	var/obj/item/card/id/linked_card = card_ref?.resolve()
+	if(!linked_card || !istype(linked_card, /obj/item/card/id))
+		stack_trace("Could not link a holopay to a valid card.")
+		qdel(src)
+	return linked_card
 
 /**
  * Initiates a transaction between accounts.
@@ -224,10 +240,8 @@
  * * TRUE - transaction was successful
  */
 /obj/structure/holopay/proc/process_payment(mob/living/user)
-	var/obj/item/card/id/linked_card = card_ref.resolve()
 	// Preliminary sanity checks
-	if(!linked_card || !istype(linked_card, /obj/item/card/id) || !isliving(user) || issilicon(user))
-		CRASH("A payment failed at a holopay stand.")
+	var/obj/item/card/id/linked_card = get_card()
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
@@ -264,11 +278,10 @@
  */
 /obj/structure/holopay/proc/alert_buyer(payee, amount)
 	/// Sanity checks
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(!linked_card || !istype(linked_card, /obj/item/card/id))
-		CRASH("Could not transfer money to owner in a holopay transaction.")
+	var/obj/item/card/id/linked_card = get_card()
+	/// Pay the owner
 	linked_card.registered_account.adjust_money(amount)
-	/// Alert owner, nearby users
+	/// Make alerts
 	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
