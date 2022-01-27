@@ -93,5 +93,5 @@
 		wizard.status_flags &= ~GODMODE
 		wizard.notransform = FALSE
 		wizard.forceMove(get_turf(src))
-		wizard = null
+		our_wizard = null
 	qdel(src)
