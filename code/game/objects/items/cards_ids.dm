@@ -474,9 +474,8 @@
  */
 /obj/item/card/id/proc/set_holopay_logo(new_logo)
 	if(!available_logos.Find(new_logo))
-		CRASH("User input a shop logo that didn't exist.")
-	else
-		holopay_logo = new_logo
+		CRASH("User input a holopay shop logo that didn't exist.")
+	holopay_logo = new_logo
 
 /**
  * Setter for changing the force fee on a holopay.
@@ -489,8 +488,7 @@
 		CRASH("User input a non number into the holopay fee field.")
 	if(new_fee < holopay_min_fee || new_fee > holopay_max_fee)
 		CRASH("User input a number outside of the valid range into the holopay fee field.")
-	else
-		holopay_fee = new_fee
+	holopay_fee = new_fee
 
 /**
  * Setter for changing the holopay name.
