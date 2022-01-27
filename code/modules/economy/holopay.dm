@@ -10,21 +10,12 @@
 	layer = FLY_LAYER
 	/// ID linked to the holopay
 	var/datum/weakref/card_ref
-	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
-	var/force_fee = 0
-	/// Minimum forced fee for holopay stations. Registers as "pay what you want."
-	var/min_fee = 0
-	/// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
-	var/max_fee = 5000
 	/// Max range at which the hologram can be projected before it deletes
 	var/max_holo_range = 4
-	/// List of logos available for customization - via font awesome 5
-	var/static/list/available_logos = list("angry", "ankh", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
-	"cross", "cut", "donate", "dna", "flask", "glass-cheers", "glass-martini-alt", "hand-holding-usd", "heart", "heart-broken",
-	"hamburger", "hat-cowboy-side", "money-check-alt", "music", "pizza-slice", "prescription-bottle-alt", "radiation", "robot", "smile",
-	"tram", "trash")
-	/// The brand icon chosen by the user
+	/// The holopay shop icon displayed in the UI
 	var/shop_logo = "donate"
+	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
+	var/force_fee = 0
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -53,19 +44,12 @@
 	dissapate()
 	return ..()
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/user, params)
-	/// Sanity checks
-	var/obj/item/card/id/linked_card = get_card()
+/obj/structure/holopay/attackby(obj/item/held_item, mob/holder, params)
+	var/mob/living/user = holder
+	if(!isliving(user))
+		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(istype(held_item, /obj/item/card/id))
-		var/obj/item/card/id/pay_card = held_item
-		if(!pay_card.registered_account || !pay_card.registered_account.account_job)
-			balloon_alert(user, "invalid account")
-			return FALSE
-		/// Delete the holopay if the master swipes on it
-		if(pay_card.registered_account == linked_card.registered_account)
-			qdel(src)
-			return TRUE
 		process_payment(user)
 		return TRUE
 	/// Users can also pay by holochip
@@ -104,7 +88,7 @@
 	if(.)
 		return FALSE
 	var/mob/living/interactor = user
-	if(!isliving(interactor) || interactor.combat_mode)
+	if(isliving(interactor) && interactor.combat_mode)
 		return FALSE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -120,9 +104,9 @@
 	. = list()
 	/// Sanity checks
 	var/obj/item/card/id/linked_card = get_card()
-	.["available_logos"] = available_logos
+	.["available_logos"] = linked_card.available_logos
 	.["description"] = desc
-	.["max_fee"] = max_fee
+	.["max_fee"] = linked_card.holopay_max_fee
 	.["owner"] = linked_card.registered_account?.account_holder || null
 	.["shop_logo"] = shop_logo
 
@@ -144,36 +128,24 @@
 	. = ..()
 	if(.)
 		return FALSE
+	var/obj/item/card/id/linked_card = get_card()
 	switch(action)
 		if("done")
 			ui.send_full_update()
 			return TRUE
 		if("fee")
-			/// Input sanitization for fee amount
-			var/choice = params["amount"]
-			if(!isnum(choice))
-				stack_trace("User input a non number into the holopay fee field.")
-				return FALSE
-			if(choice < min_fee || choice > max_fee)
-				stack_trace("User input a number outside of the valid range into the holopay fee field.")
-				return FALSE
-			/// If the fee is valid, apply it
-			force_fee = params["amount"]
-			return TRUE
+			linked_card.set_holopay_fee(params["amount"])
+			force_fee = linked_card.holopay_fee
 		if("logo")
-			shop_logo = params["logo"]
-			return TRUE
+			linked_card.set_holopay_logo(params["logo"])
+			shop_logo = linked_card.holopay_logo
 		if("pay")
 			ui.close()
 			process_payment(usr)
 			return TRUE
 		if("rename")
-			/// The stand name must be within the length limit
-			if(length(params["name"]) < 3 || length(params["name"]) > MAX_NAME_LEN)
-				to_chat(usr, span_warning("Must be between 3 - 42 characters."))
-				return FALSE
-			name = html_encode(trim(params["name"], MAX_NAME_LEN))
-			return TRUE
+			linked_card.set_holopay_name(params["name"])
+			name = linked_card.holopay_name
 	return FALSE
 
 /**
@@ -188,6 +160,9 @@
 /obj/structure/holopay/proc/assign_card(turf/target, obj/item/card/id/card)
 	card_ref = WEAKREF(card)
 	desc = "Pays directly into [card.registered_account.account_holder]'s bank account."
+	force_fee = card.holopay_fee
+	shop_logo = card.holopay_logo
+	name = card.holopay_name
 	add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))

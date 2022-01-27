@@ -111,8 +111,8 @@ export class RestrictedInput extends Component {
     const { maxValue, minValue } = this.props;
     const { editing } = this.state;
     const prevValue = prevProps.value;
-    const nextValue = this.props.value && this.props.value.toString();
     const input = this.inputRef.current;
+    const nextValue = this.props.value.toString();
     if (input && !editing && prevValue !== nextValue) {
       input.value = getSafeNumber(nextValue, minValue, maxValue);
     }

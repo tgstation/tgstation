@@ -11,7 +11,6 @@ type HoloPayData = {
   name: string;
   owner: string;
   shop_logo: string;
-  signaler_threshold: number;
   user: { name: string; balance: number };
 };
 
@@ -161,7 +160,6 @@ const SetupDisplay = (props, context) => {
     max_fee,
     name,
     shop_logo,
-    signaler_threshold,
   } = data;
   const { onClick } = props;
   const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
@@ -222,20 +220,6 @@ const SetupDisplay = (props, context) => {
             />
           </Tooltip>
         </Stack.Item>
-        {!!signaler_threshold && (
-          <Stack.Item>
-            <Tooltip content="Set the threshold pay that will trigger connected signalers.">
-              <Box bold color="label">
-                Signaler Threshold
-              </Box>
-              <RestrictedInput
-                fluid
-                onChange={(_, value) => act('threshold', { amount: value })}
-                value={signaler_threshold}
-              />
-            </Tooltip>
-          </Stack.Item>
-        )}
       </Stack>
     </Section>
   );

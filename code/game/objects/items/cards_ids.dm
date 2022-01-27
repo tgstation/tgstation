@@ -62,10 +62,27 @@
 	var/registered_name = null
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
+
 	/// Linked holopay.
 	var/datum/weakref/holopay_ref
 	/// Cooldown between projecting holopays
 	COOLDOWN_DECLARE(last_holopay_projection)
+	/// List of logos available for holopay customization - via font awesome 5
+	var/static/list/available_logos = list("angry", "ankh", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
+	"cross", "cut", "donate", "dna", "flask", "glass-cheers", "glass-martini-alt", "hand-holding-usd", "heart", "heart-broken",
+	"hamburger", "hat-cowboy-side", "money-check-alt", "music", "pizza-slice", "prescription-bottle-alt", "radiation", "robot", "smile",
+	"tram", "trash")
+	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
+	var/holopay_fee = 0
+	/// The holopay icon chosen by the user
+	var/holopay_logo = "donate"
+	/// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
+	var/holopay_max_fee = 5000
+	/// Minimum forced fee for holopay stations. Registers as "pay what you want."
+	var/holopay_min_fee = 0
+	/// The holopay name chosen by the user
+	var/holopay_name = "holographic pay stand"
+
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -448,6 +465,45 @@
 		if(istype(checked_obj, /obj/structure/holopay))
 			return FALSE
 	return TRUE
+
+/**
+ * Setter for the shop logo on linked holopays
+ *
+ * Arguments:
+ * * new_logo - The new logo to be set.
+ */
+/obj/item/card/id/proc/set_holopay_logo(new_logo)
+	if(!available_logos.Find(new_logo))
+		CRASH("User input a shop logo that didn't exist.")
+	else
+		holopay_logo = new_logo
+
+/**
+ * Setter for changing the force fee on a holopay.
+ *
+ * Arguments:
+ * * new_fee - The new fee to be set.
+ */
+/obj/item/card/id/proc/set_holopay_fee(new_fee)
+	if(!isnum(new_fee))
+		CRASH("User input a non number into the holopay fee field.")
+	if(new_fee < holopay_min_fee || new_fee > holopay_max_fee)
+		CRASH("User input a number outside of the valid range into the holopay fee field.")
+	else
+		holopay_fee = new_fee
+
+/**
+ * Setter for changing the holopay name.
+ *
+ * Arguments:
+ * * new_name - The new name to be set.
+ */
+/obj/item/card/id/proc/set_holopay_name(name)
+	if(length(name) < 3 || length(name) > MAX_NAME_LEN)
+		to_chat(usr, span_warning("Must be between 3 - 42 characters."))
+	else
+		holopay_name = html_encode(trim(name, MAX_NAME_LEN))
+
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
