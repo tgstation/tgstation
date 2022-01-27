@@ -19,7 +19,7 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/gluttony
-	name = "\improper Gluttony Ruin"
+	name = "\improper Testament to Gluttony"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/golem_ship
@@ -27,7 +27,19 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/greed
-	name = "\improper Greed Ruin"
+	name = "\improper Testament to Greed"
+	icon_state = "dk_yellow"
+
+/area/ruin/unpowered/envy
+	name = "\improper Testament to Envy"
+	icon_state = "dk_yellow"
+
+/area/ruin/unpowered/sloth
+	name = "\improper Testament to Sloth"
+	icon_state = "dk_yellow"
+
+/area/ruin/unpowered/pizzaparty
+	name = "\improper Pizza Party"
 	icon_state = "dk_yellow"
 
 /area/ruin/unpowered/hierophant
@@ -35,7 +47,7 @@
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/pride
-	name = "\improper Pride Ruin"
+	name = "\improper Testament to Pride"
 	icon_state = "dk_yellow"
 
 /area/ruin/powered/seedvault
@@ -50,17 +62,21 @@
 	name = "\improper Graveyard Shuttle"
 	icon_state = "green"
 
-/area/ruin/syndicate_lava_base
-	name = "\improper Secret Base"
-	icon_state = "dk_yellow"
-	ambience_index = AMBIENCE_DANGER
-
 /area/ruin/unpowered/cultaltar
 	name = "\improper Cult Altar"
 	area_flags = CULT_PERMITTED
 	ambience_index = AMBIENCE_SPOOKY
 
+/area/ruin/unpowered/ufocrashsite
+	name = "\improper UFO Crash Site"
+	icon_state = "dk_yellow"
+
 //Syndicate lavaland base
+
+/area/ruin/syndicate_lava_base
+	name = "\improper Secret Base"
+	icon_state = "dk_yellow"
+	ambience_index = AMBIENCE_DANGER
 
 /area/ruin/syndicate_lava_base/engineering
 	name = "Syndicate Lavaland Engineering"
@@ -109,6 +125,6 @@
 	icon_state = "red"
 
 /area/ruin/unpowered/ratvar
-	name = "\improper Ratvar's Ruin"
+	name = "\improper Ratvar's Rest"
 	icon_state = "dk_yellow"
 	outdoors = TRUE

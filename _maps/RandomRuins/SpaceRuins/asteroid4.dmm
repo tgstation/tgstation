@@ -4,37 +4,28 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
-"c" = (
-/turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered/no_grav)
-"d" = (
-/turf/closed/mineral/random,
-/area/ruin/unpowered)
-"e" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "f" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered)
 "g" = (
 /turf/closed/mineral/bananium,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "h" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "i" = (
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "j" = (
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "k" = (
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 15
 	},
 /turf/closed/wall/mineral/titanium,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "m" = (
 /obj/structure/chair{
 	dir = 1
@@ -49,7 +40,7 @@
 	amount = 15
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "n" = (
 /obj/structure/chair{
 	dir = 1
@@ -58,22 +49,25 @@
 	pixel_x = -26
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "o" = (
 /obj/structure/shuttle/engine/propulsion/burst,
 /turf/closed/wall/mineral/titanium/overspace,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
 "p" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/ruin/unpowered)
+/area/ruin/unpowered/no_grav/asteroid/four)
+"K" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered/no_grav/asteroid/four)
 
 (1,1,1) = {"
 a
-c
-c
+K
+K
 b
 b
 a
@@ -92,11 +86,11 @@ a
 "}
 (2,1,1) = {"
 b
-c
-c
+K
+K
 b
-e
-e
+h
+h
 a
 a
 a
@@ -112,12 +106,12 @@ a
 "}
 (3,1,1) = {"
 b
-c
-c
+K
+K
 b
-e
-e
-e
+h
+h
+h
 a
 a
 a
@@ -136,8 +130,8 @@ b
 b
 b
 b
-e
-e
+h
+h
 a
 a
 a
@@ -157,8 +151,8 @@ b
 b
 b
 b
-e
-e
+h
+h
 a
 a
 a
@@ -173,12 +167,12 @@ a
 (6,1,1) = {"
 a
 b
-c
+K
 b
 b
 b
-e
-e
+h
+h
 a
 a
 a
@@ -197,8 +191,8 @@ b
 b
 b
 b
-e
-e
+h
+h
 a
 a
 a
@@ -242,8 +236,8 @@ a
 a
 a
 a
-d
-d
+b
+b
 h
 h
 a
@@ -255,18 +249,18 @@ a
 a
 a
 b
-c
-c
+K
+K
 a
 a
 a
 a
-d
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
+b
 a
 a
 "}
@@ -281,8 +275,8 @@ a
 a
 a
 a
-d
-d
+b
+b
 g
 j
 j
@@ -301,7 +295,7 @@ a
 a
 a
 f
-f
+K
 g
 g
 k
@@ -321,8 +315,8 @@ a
 a
 a
 f
-f
-d
+K
+b
 i
 j
 j
@@ -337,16 +331,16 @@ a
 a
 a
 a
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 a
 a
 "}
@@ -354,18 +348,18 @@ a
 a
 a
 a
-d
-d
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
+b
+b
 a
 a
-f
-f
-d
+K
+K
+b
 a
 a
 a
@@ -373,11 +367,11 @@ a
 (16,1,1) = {"
 a
 a
-d
-d
-d
-d
-d
+b
+b
+b
+b
+b
 a
 a
 a
@@ -395,7 +389,7 @@ a
 a
 a
 a
-d
+b
 a
 a
 a

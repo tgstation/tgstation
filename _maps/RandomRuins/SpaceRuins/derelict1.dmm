@@ -8,77 +8,77 @@
 /area/template_noop)
 "c" = (
 /turf/closed/wall,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "d" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "e" = (
 /obj/structure/girder,
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "f" = (
 /obj/structure/alien/weeds,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "g" = (
 /obj/structure/alien/weeds,
 /obj/structure/table_frame,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "h" = (
 /obj/structure/alien/weeds/node,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "i" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "j" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "k" = (
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "l" = (
 /obj/structure/alien/resin/membrane,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "m" = (
 /obj/structure/alien/weeds,
 /obj/structure/table,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "n" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/remains/robot,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "o" = (
 /obj/structure/alien/weeds/node,
 /obj/structure/table,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "p" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "q" = (
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 "r" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered)
+/area/ruin/space/has_grav/derelictoutpost)
 
 (1,1,1) = {"
 a

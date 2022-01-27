@@ -4,30 +4,30 @@
 /area/template_noop)
 "b" = (
 /turf/closed/wall/mineral/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "c" = (
 /obj/structure/healingfountain,
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "d" = (
 /obj/structure/fluff/divine/conduit,
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "e" = (
 /obj/structure/sacrificealtar,
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "f" = (
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "g" = (
 /mob/living/simple_animal/butterfly,
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 "h" = (
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/engine/cult,
-/area/ruin/unpowered)
+/area/ruin/unpowered/fountainhall)
 
 (1,1,1) = {"
 a

@@ -424,3 +424,41 @@
 	name = "\improper Hell Factory Office"
 	icon_state = "red"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT
+
+//Cleric's Den
+/area/ruin/unpowered/no_grav/clericsden
+	name = "\improper Cleric's Den"
+
+//Miscellaneous Derelict Station Bits
+
+/area/ruin/unpowered/derelict/miscellaenous
+	name = "\improper Miscelleanous Derelict Station"
+
+/area/ruin/unpowered/derelict/miscellaenous/one
+	name = "\improper Ravaged Sectionings"
+
+/area/ruin/unpowered/derelict/miscellaneous/two
+	name = "\improper Haute Cuisine"
+
+//Asteroids
+
+/area/ruin/unpowered/no_grav/asteroid
+	name = "\improper Asteroid"
+
+/area/ruin/unpowered/no_grav/asteroid/one
+	name = "\improper Asteroid One"
+
+/area/ruin/unpowered/no_grav/asteroid/two
+	name = "\improper Asteroid Two"
+
+/area/ruin/unpowered/no_grav/asteroid/three
+	name = "\improper Asteroid Three"
+
+/area/ruin/unpowered/no_grav/asteroid/four
+	name = "\improper Asteroid Four"
+
+/area/ruin/unpowered/no_grav/asteroid/five
+	name = "\improper Asteroid Five"
+
+/area/ruin/unpowered/no_grav/asteroid/six
+	name = "\improper Asteroid Six"

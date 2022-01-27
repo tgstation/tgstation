@@ -4,17 +4,17 @@
 /area/template_noop)
 "o" = (
 /turf/closed/mineral/asteroid,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/six)
 "p" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/six)
 "M" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/six)
 "T" = (
 /turf/closed/wall/rock,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/six)
 
 (1,1,1) = {"
 a

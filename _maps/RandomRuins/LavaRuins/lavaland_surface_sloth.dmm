@@ -1,41 +1,41 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/riveted,
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "b" = (
 /turf/open/lava/smooth/lava_land_surface,
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "c" = (
 /obj/item/paper/fluff/stations/lavaland/sloth/note,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "d" = (
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "e" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "f" = (
 /obj/structure/table/wood,
 /obj/item/food/grown/citrus/orange,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 "g" = (
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/sepia{
 	slowdown = 10
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/sloth)
 
 (1,1,1) = {"
 a

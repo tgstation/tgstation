@@ -18,6 +18,9 @@
 	smoothing_flags = NONE
 	canSmoothWith = null
 
+/area/ruin/unpowered/icemoon_mining_site
+	name = "Mining Site"
+
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"
 	icon_state = "dk_yellow"

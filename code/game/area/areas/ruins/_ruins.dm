@@ -22,3 +22,8 @@
 /area/ruin/powered
 	name = "\improper Powered Ruin"
 	requires_power = FALSE
+
+
+//Anywhere Ruins
+/area/ruin/unpowered/fountainhall
+	name = "\improper Fountain Hall"

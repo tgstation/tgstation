@@ -4,7 +4,7 @@
 /area/icemoon/surface/outdoors)
 "b" = (
 /turf/closed/wall/mineral/wood/nonmetal,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "c" = (
 /obj/structure/closet/toolcloset,
 /obj/item/wrench,
@@ -14,7 +14,7 @@
 /obj/item/wirecutters,
 /obj/item/radio/off,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "d" = (
 /turf/open/openspace/icemoon,
 /area/icemoon/surface/outdoors)
@@ -28,14 +28,14 @@
 /obj/structure/closet,
 /obj/item/clothing/shoes/winterboots/ice_boots,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "f" = (
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "g" = (
 /obj/structure/fireplace,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "h" = (
 /obj/structure/flora/rock/icy,
 /turf/closed/mineral/random/snow,
@@ -43,27 +43,27 @@
 "j" = (
 /obj/structure/sink/kitchen,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "k" = (
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "l" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "n" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "o" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "p" = (
 /obj/machinery/light/broken/directional/east,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/pen,
@@ -73,18 +73,18 @@
 	text = ""
 	},
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/effect/mob_spawn/corpse/human/miner/explorer,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "s" = (
 /obj/effect/decal/cleanable/trail_holder,
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "t" = (
 /turf/template_noop,
 /area/template_noop)
@@ -93,7 +93,7 @@
 	travel_time = 40
 	},
 /turf/open/floor/wood,
-/area/ruin/unpowered)
+/area/ruin/unpowered/icemoon_mining_site)
 "W" = (
 /turf/open/openspace/icemoon,
 /area/template_noop)

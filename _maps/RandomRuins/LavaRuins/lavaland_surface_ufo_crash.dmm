@@ -5,12 +5,9 @@
 "b" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"c" = (
-/turf/closed/wall/mineral/abductor,
-/area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall/mineral/abductor,
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "j" = (
 /obj/machinery/abductor/experiment{
 	team_number = 100
@@ -18,12 +15,12 @@
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "k" = (
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "l" = (
 /obj/machinery/abductor/pad{
 	team_number = 100
@@ -31,59 +28,59 @@
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "o" = (
 /obj/item/hemostat/alien,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "p" = (
 /obj/effect/mob_spawn/corpse/human/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "q" = (
 /obj/structure/closet/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "s" = (
 /obj/structure/table/optable/abductor,
 /obj/item/cautery/alien,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "t" = (
 /obj/structure/table/abductor,
 /obj/item/storage/box/alienhandcuffs,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "v" = (
 /obj/item/scalpel/alien,
 /obj/item/surgical_drapes,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "w" = (
 /obj/item/retractor/alien,
 /obj/item/paper/guides/antag/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "y" = (
 /obj/machinery/abductor/gland_dispenser,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "z" = (
 /obj/structure/table/abductor,
 /obj/item/surgicaldrill/alien,
@@ -91,13 +88,13 @@
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 "A" = (
 /obj/structure/bed/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
-/area/ruin/unpowered)
+/area/ruin/unpowered/ufocrashsite)
 
 (1,1,1) = {"
 a
@@ -127,7 +124,7 @@ a
 a
 a
 a
-c
+d
 a
 a
 a
@@ -138,7 +135,7 @@ a
 (4,1,1) = {"
 a
 a
-c
+d
 d
 a
 a
@@ -186,24 +183,24 @@ a
 (8,1,1) = {"
 a
 a
-c
+d
 d
 q
 t
 q
 d
-c
+d
 a
 "}
 (9,1,1) = {"
 a
 a
 b
-c
 d
 d
 d
-c
+d
+d
 b
 a
 "}

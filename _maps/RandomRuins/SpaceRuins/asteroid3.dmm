@@ -4,21 +4,21 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/three)
 "c" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/three)
 "d" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/three)
 "e" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/three)
 "f" = (
 /obj/item/pickaxe/diamond,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/three)
 
 (1,1,1) = {"
 a

@@ -10,13 +10,13 @@
 /area/lavaland/surface/outdoors)
 "d" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "e" = (
 /obj/structure/mirror/directional/west,
 /obj/item/clothing/suit/hooded/bloated_human,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "f" = (
 /obj/structure/mirror/directional/east{
 	icon_state = "mirror_broke"
@@ -24,55 +24,55 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "g" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "h" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "i" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "j" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "k" = (
 /obj/structure/mirror/directional/north{
 	icon_state = "mirror_broke"
 	},
 /obj/item/knife/envy,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "l" = (
 /obj/structure/mirror/directional/east{
 	icon_state = "mirror_broke"
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "m" = (
 /obj/structure/mirror/directional/west,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "n" = (
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "o" = (
 /obj/structure/mirror/directional/west,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "p" = (
 /obj/machinery/door/airlock/hatch,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/envy)
 "A" = (
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

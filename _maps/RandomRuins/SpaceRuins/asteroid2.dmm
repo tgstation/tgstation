@@ -4,13 +4,13 @@
 /area/template_noop)
 "b" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/two)
 "c" = (
 /turf/closed/mineral/random,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/two)
 "d" = (
 /turf/closed/mineral/random/high_chance,
-/area/ruin/unpowered/no_grav)
+/area/ruin/unpowered/no_grav/asteroid/two)
 
 (1,1,1) = {"
 a
