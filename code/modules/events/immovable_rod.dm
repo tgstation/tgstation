@@ -270,24 +270,28 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	for(var/mob/M in urange(8, src))
-		if(M.stat != CONSCIOUS)
+	for(var/mob/nearby_mob in urange(8, src))
+		if(nearby_mob.stat != CONSCIOUS)
 			continue
-		shake_camera(M, 2, 3)
+		shake_camera(nearby_mob, 2, 3)
 
-	if(wizard)
-		user.visible_message(span_boldwarning("[src] transforms into [wizard] as [user] suplexes them!"), span_warning("As you grab [src], it suddenly turns into [wizard] as you suplex them!"))
-		to_chat(wizard, span_boldwarning("You're suddenly jolted out of rod-form as [user] somehow manages to grab you, slamming you into the ground!"))
-		wizard.Stun(60)
-		wizard.apply_damage(25, BRUTE)
-		qdel(src)
-	else
-		user.client.give_award(/datum/award/achievement/misc/feat_of_strength, user) //rod-form wizards would probably make this a lot easier to get so keep it to regular rods only
-		user.visible_message(span_boldwarning("[user] suplexes [src] into the ground!"), span_warning("You suplex [src] into the ground!"))
-		new /obj/structure/festivus/anchored(drop_location())
-		new /obj/effect/anomaly/flux(drop_location())
-		qdel(src)
+	return suplex_rod(user)
 
+/**
+ * Called when someone manages to suplex the rod.
+ *
+ * Arguments
+ * * strongman - the suplexer of the rod.
+ */
+/obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
+	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
+	strongman.visible_message(
+		span_boldwarning("[strongman] suplexes [src] into the ground!"),
+		span_warning("You suplex [src] into the ground!")
+		)
+	new /obj/structure/festivus/anchored(drop_location())
+	new /obj/effect/anomaly/flux(drop_location())
+	qdel(src)
 	return TRUE
 
 /* Below are a couple of admin helper procs when dealing with immovable rod memes. */
