@@ -148,7 +148,8 @@
 		"progression_reward" = progression_reward,
 		"original_progression" = original_progression,
 		"objective_state" = objective_state,
-		"forced" = forced
+		"forced" = forced,
+		"time_of_creation" = time_of_creation
 	)
 
 /// Converts the type into a useful debug string to be used for logging and debug display.
