@@ -122,14 +122,14 @@
 	var/obj/item/card/id/linked_card = get_card()
 	.["available_logos"] = available_logos
 	.["description"] = desc
-	.["force_fee"] = force_fee
 	.["max_fee"] = max_fee
-	.["name"] = name
 	.["owner"] = linked_card.registered_account?.account_holder || null
 	.["shop_logo"] = shop_logo
 
 /obj/structure/holopay/ui_data(mob/user)
 	. = list()
+	.["force_fee"] = force_fee
+	.["name"] = name
 	if(!isliving(user))
 		return .
 	var/mob/living/card_holder = user
