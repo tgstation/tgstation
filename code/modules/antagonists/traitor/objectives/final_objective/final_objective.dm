@@ -1,14 +1,13 @@
 /datum/traitor_objective_category/final_objective
 	name = "Final Objective"
 	objectives = list(
-		/datum/traitor_objective/final/romerol = 1,
-		/datum/traitor_objective/final/battlecruiser = 1,
+		/datum/traitor_objective/final/battlecruiser = 1
 	)
 	weight = 100
 
 /datum/traitor_objective/final
 	abstract_type = /datum/traitor_objective/final
-	progression_minimum = 140 MINUTES
+	progression_minimum = 280 MINUTES
 
 	var/progression_points_in_objectives = 20 MINUTES
 
