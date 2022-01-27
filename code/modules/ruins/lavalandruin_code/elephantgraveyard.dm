@@ -122,7 +122,8 @@
 	anchorable = FALSE
 	anchored = TRUE
 	locked = TRUE
-	breakout_time = 900
+	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
+	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
