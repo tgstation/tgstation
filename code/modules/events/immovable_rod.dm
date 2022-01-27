@@ -56,8 +56,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	movement_type = PHASING | FLYING
-	var/z_original = 0
-	var/destination
+	/// The turf we're looking to coast to.
+	var/turf/destination_turf
+	/// Whether we notify ghosts.
 	var/notify = TRUE
 	///We can designate a specific target to aim for, in which case we'll try to snipe them rather than just flying in a random direction
 	var/atom/special_target
@@ -76,7 +77,8 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
-	destination = end
+	var/turf/real_destination = isturf(end) ? end : get_turf(end)
+	destination_turf = real_destination
 	special_target = aimed_at
 	loopy_rod = force_looping
 
@@ -87,12 +89,12 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	if(special_target)
 		SSmove_manager.home_onto(src, special_target)
 	else
-		SSmove_manager.move_towards(src, destination)
+		SSmove_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
 	SSaugury.unregister_doom(src)
-
+	destination_turf = null
 	return ..()
 
 /obj/effect/immovablerod/examine(mob/user)
@@ -160,12 +162,11 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return ..()
 
 	// If we have a destination turf, let's make sure it's also still valid.
-	if(destination)
-		var/turf/target_turf = get_turf(destination)
+	if(destination_turf)
 
 		// If the rod is a loopy_rod, run complete_trajectory() to get a new edge turf to fly to.
 		// Otherwise, qdel the rod.
-		if(target_turf.z != z)
+		if(destination_turf.z != z)
 			if(loopy_rod)
 				complete_trajectory()
 				return ..()
@@ -176,7 +177,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
-		if(loc == get_turf(destination))
+		if(loc == destination_turf)
 			qdel(src)
 			return
 
@@ -328,5 +329,5 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
  * * direction - The direction to walk the rod towards: NORTH, SOUTH, EAST, WEST.
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
-	destination = get_edge_target_turf(src, direction)
-	SSmove_manager.move_towards(src, destination)
+	destination_turf = get_edge_target_turf(src, direction)
+	SSmove_manager.move_towards(src, destination_turf)
