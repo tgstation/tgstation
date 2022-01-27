@@ -241,7 +241,10 @@ const KnowledgeShop = (props, context) => {
 
   return (
     <Stack.Item grow>
-      <Section title="Potential Knowledge" fill scrollable>
+      <Section
+        title="Potential Knowledge"
+        fill
+        scrollable>
         {!learnableKnowledge.length && "None!"
           || learnableKnowledge.map(toLearn => (
             <Stack.Item key={toLearn.name} mb={1}>
