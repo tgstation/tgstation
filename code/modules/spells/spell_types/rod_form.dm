@@ -42,6 +42,10 @@
 	/// The turf the rod started from, to calcuate distance.
 	var/turf/start_turf
 
+/obj/effect/immovablerod/wizard/Destroy(force)
+	start_turf = null
+	return ..()
+
 /obj/effect/immovablerod/wizard/Moved()
 	. = ..()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
@@ -90,5 +94,4 @@
 		wizard.notransform = FALSE
 		wizard.forceMove(get_turf(src))
 		wizard = null
-	start_turf = null
 	qdel(src)
