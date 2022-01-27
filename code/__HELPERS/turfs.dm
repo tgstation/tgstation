@@ -103,21 +103,21 @@ Turf and target are separate in case you want to teleport some distance from a t
  * will return the mob because it's on the turf.
  *
  * Arguments
- * * atom_on_turf - a movable within the turf.
+ * * something_in_turf - a movable within the turf, somewhere.
  * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
  **/
-/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
 	if(!istype(atom_on_turf))
 		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(atom_on_turf) ? "null":"type: [atom_on_turf.type]"]")
 
-	var/atom/thing_in_turf = atom_on_turf
+	var/atom/movable/topmost_thing = something_in_turf
 
-	while(thing_in_turf?.loc && !isturf(thing_on_turf.loc))
-		thing_in_turf = thing_in_turf.loc
-		if(stop_type && istype(thing_in_turf, stop_type))
+	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
+		topmost_thing = topmost_thing.loc
+		if(stop_type && istype(topmost_thing, stop_type))
 			break
 
-	return thing_in_turf
+	return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
