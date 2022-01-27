@@ -1000,7 +1000,6 @@
 "dx" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/cleanable/cobweb,
-/obj/item/sord,
 /turf/open/floor/wood,
 /area/awaymission/caves/northblock)
 "dy" = (
