@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - admin: "Tool usage is now (config-locked) logged!"
