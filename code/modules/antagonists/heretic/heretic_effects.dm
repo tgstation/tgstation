@@ -395,13 +395,11 @@
  */
 /obj/effect/heretic_influence/proc/after_drain(mob/living/user)
 	if(user)
-		var/static/list/drain_messages = strings(HERETIC_INFLUENCE_FILE, "drain_message")
-		to_chat(user, span_hypnophrase(pick(drain_messages)))
+		to_chat(user, span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))))
 		to_chat(user, span_warning("[src] begins to fade into reality!"))
 
-	var/static/list/drained_prefixes = strings(HERETIC_INFLUENCE_FILE, "drained")
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
-	illusion.name = "\improper" + pick(drained_prefixes) + " " + format_text(name)
+	illusion.name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "drained")) + " " + format_text(name)
 
 	qdel(src)
 
@@ -441,9 +439,6 @@
  * Generates a random name for the influence.
  */
 /obj/effect/heretic_influence/proc/generate_name()
-	var/static/list/prefixes = strings(HERETIC_INFLUENCE_FILE, "prefix")
-	var/static/list/postfixes = strings(HERETIC_INFLUENCE_FILE, "postfix")
-
-	name = "\improper" + pick(prefixes) + " " + pick(postfixes)
+	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
 
 #undef HERETIC_INFLUENCE_FILE

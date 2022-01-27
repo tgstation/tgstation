@@ -36,6 +36,13 @@
 	/// Whether we've ascended!
 	var/ascended = FALSE
 
+	/// Whether we're drawing a rune or not
+	var/drawing_rune = FALSE
+	/// A static typecache of all tools we can scribe with.
+	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
+	/// A blacklist of turfs we cannot scribe on.
+	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
 
@@ -167,13 +174,14 @@
 	our_mob.faction |= FACTION_HERETIC
 	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
 	RegisterSignal(our_mob, COMSIG_LIVING_DEATH, .proc/on_death)
+	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_LIVING_DEATH, COMSIG_MOB_LOGIN))
+	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_LIVING_DEATH, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
 
 /*
  * Signal proc for [COMSIG_MOB_PRE_CAST_SPELL].
@@ -182,7 +190,7 @@
  * If so, allow them to cast like normal.
  * If not, cancel the cast.
  */
-/datum/antagonist/heretic/proc/on_spell_cast(datum/source, obj/effect/proc_holder/spell/spell)
+/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, obj/effect/proc_holder/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care
@@ -195,7 +203,7 @@
 	if(ascended)
 		return
 
-	balloon_alert("need a focus!")
+	source.balloon_alert(source, "you need a focus!")
 	// We shouldn't be able to cast this! Cancel it.
 	return COMPONENT_CANCEL_SPELL
 
@@ -211,6 +219,81 @@
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
 		knowledge.on_death(owner.current)
+
+/*
+ * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].
+ *
+ * If a heretic is holding a pen in their main hand,
+ * and have mansus grasp active in their offhand,
+ * they're able to draw a transmutation rune.
+ */
+/datum/antagonist/heretic/proc/on_item_afterattack(mob/living/source, atom/target, obj/item/weapon, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
+	if(!is_type_in_typecache(weapon, scribing_tools))
+		return
+	if(!isturf(target) || !isliving(source) || !proximity_flag)
+		return
+
+	var/obj/item/offhand = source.get_inactive_held_item()
+	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
+		return
+
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target))
+		if(!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_rune_turfs))
+			target.balloon_alert(source, "invalid placement for rune!")
+			return
+
+	if(locate(/obj/effect/heretic_rune/big) in range(3, target))
+		target.balloon_alert(source, "to close to another rune!")
+		return
+
+	if(drawing_rune)
+		source.balloon_alert(source, "already drawing a rune!")
+		return
+
+	INVOKE_ASYNC(src, .proc/draw_rune, source, weapon, target)
+
+/**
+ * The actual process of drawing a rune.
+ *
+ * Arguments
+ * * user - the mob drawing the rune
+ * * scribing_tool - the object being used to draw the rune
+ * * target_turf - the place the rune's being drawn
+ */
+/datum/antagonist/heretic/proc/draw_rune(mob/living/user, obj/item/scribing_tool, turf/target_turf)
+	drawing_rune = TRUE
+
+	target_turf.balloon_alert(user, "drawing rune...")
+	if(!do_after(user, 30 SECONDS, target_turf, extra_checks = CALLBACK(src, .proc/rune_drawing_checks, user, scribing_tool)))
+		target_turf.balloon_alert(user, "interrupted!")
+		drawing_rune = FALSE
+		return
+
+	target_turf.balloon_alert(user, "rune created")
+	new /obj/effect/heretic_rune/big(target_turf)
+	drawing_rune = FALSE
+
+/**
+ * Callback for use in draw_rune to check that the user
+ * doesn't drop their tool or hide their hand.
+ *
+ * Arguments
+ * * user - the mob drawing the rune
+ * * scribing_tool - the object being used to draw the rune
+ */
+/datum/antagonist/heretic/proc/rune_drawing_checks(mob/living/user, obj/item/scribing_tool)
+
+	var/obj/item/mainhand = user.get_active_held_item()
+	if(QDELETED(mainhand) || mainhand != scribing_tool)
+		return FALSE
+
+	var/obj/item/offhand = user.get_inactive_held_item()
+	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
+		return FALSE
+
+	return TRUE
 
 /*
  * Signal proc for [COMSIG_MOB_LOGIN].

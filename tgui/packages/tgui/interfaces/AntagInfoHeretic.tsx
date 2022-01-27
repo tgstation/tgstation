@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button } from '../components';
+import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 
@@ -118,7 +118,7 @@ const GuideSection = () => {
         <Stack.Item>
           - The Old Ones have special interest in certain crewmembers.
           Capture them and bring them to a&nbsp;
-          <span style={hereticGreen}>transmutation circle</span> to&nbsp;
+          <span style={hereticGreen}>transmutation rune</span> to&nbsp;
           <span style={hereticRed}>sacrifice</span> them for&nbsp;
           <span style={hereticBlue}>knowledge points</span>.&nbsp;
           <span style={hereticRed}>
@@ -133,6 +133,13 @@ const GuideSection = () => {
           but be warned: pulsing it will produce a
           heartbeat sound that nearby people may hear.
           Should you lose your heart, you can complete a ritual to regain it.
+        </Stack.Item>
+        <Stack.Item>
+          - You can draw a&nbsp;
+          <span style={hereticGreen}>transmutation rune</span> by using a
+          drawing tool (a pen or crayon) while having Mansus Grasp
+          active in your other hand. This rune allows you to complete
+          rituals and sacrifices.
         </Stack.Item>
         <Stack.Item>
           - Complete all of your objectives and
@@ -259,9 +266,9 @@ const KnowledgeShop = (props, context) => {
                 tooltip={toLearn.desc}
                 onClick={() => act("research", { path: toLearn.path })} />
               {!!toLearn.gainFlavor && (
-                <Box>
+                <BlockQuote>
                   <i>{toLearn.gainFlavor}</i>
-                </Box>
+                </BlockQuote>
               )}
             </Stack.Item>
           )) }
