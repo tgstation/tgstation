@@ -38,27 +38,34 @@
 	next_knowledge = list(/datum/heretic_knowledge/spell/ashen_shift)
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ashen_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!iscarbon(target))
-		return ..()
+/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
+/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+
+/datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	if(!iscarbon(target))
+		return
+
+	//pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
 	var/mob/living/carbon/blind_victim = target
-	to_chat(blind_victim, span_danger("Your eyes burn horrifically!")) //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
+	to_chat(blind_victim, span_danger("Your eyes burn horrifically!"))
 	blind_victim.become_nearsighted(EYE_DAMAGE)
 	blind_victim.blind_eyes(5)
 	blind_victim.blur_eyes(10)
-	return TRUE
 
-/datum/heretic_knowledge/ashen_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!iscarbon(target))
-		return
+/datum/heretic_knowledge/ashen_grasp/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
 
-	var/mob/living/carbon/victim = target
-	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
-	if(!effect)
-		return
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	mark?.on_effect()
 
-	effect.on_effect()
 	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
 		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.
 
@@ -84,17 +91,22 @@
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/flesh_mark,
-		/datum/heretic_knowledge/void_mark
+		/datum/heretic_knowledge/void_mark,
 	)
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ash_mark/on_mansus_grasp(target,user,proximity_flag,click_parameters)
-	if(!isliving(target))
-		return ..()
+/datum/heretic_knowledge/ash_mark/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
-	var/mob/living/living_target = target
-	living_target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
-	return TRUE
+/datum/heretic_knowledge/ash_mark/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+
+/datum/heretic_knowledge/ash_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
@@ -139,13 +151,19 @@
 	)
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ash_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!iscarbon(target))
-		return
+/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
-	var/mob/living/carbon/burn_victim = target
-	burn_victim.adjust_fire_stacks(1)
-	burn_victim.IgniteMob()
+/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
+
+/datum/heretic_knowledge/ash_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
+
+	target.adjust_fire_stacks(1)
+	target.IgniteMob()
 
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"

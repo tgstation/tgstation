@@ -40,18 +40,13 @@
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-
-	var/datum/antagonist/heretic/cultie = user.mind?.has_antag_datum(/datum/antagonist/heretic)
-
-	if(!cultie)
+	if(!isliving(target))
 		return
-	var/list/knowledge = cultie.get_all_knowledge()
-	for(var/X in knowledge)
-		var/datum/heretic_knowledge/eldritch_knowledge_datum = knowledge[X]
-		if(proximity_flag)
-			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
-		else
-			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
+
+	if(proximity_flag)
+		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target)
+	else
+		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target)
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()

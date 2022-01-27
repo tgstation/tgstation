@@ -20,7 +20,7 @@
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. You only rust surfaces and machinery while in combat mode."
+		Already rusted surfaces are destroyed. You only rust surfaces and machinery with Right Click."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
@@ -33,27 +33,36 @@
 	))
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/living/user, proximity_flag, click_parameters)
-	var/hit_a_robot = FALSE
-	if(isliving(target))
-		var/mob/living/hit_mob = target
-		if(!(hit_mob.mob_biotypes & MOB_ROBOTIC))
-			return FALSE
-		hit_a_robot = TRUE
+/datum/heretic_knowledge/rust_fist/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
-	if(user.combat_mode || hit_a_robot)
-		target.rust_heretic_act()
-		return TRUE
+/datum/heretic_knowledge/rust_fist/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, COMSIG_HERETIC_BLADE_ATTACK))
 
-	return ..()
+/datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
 
-/datum/heretic_knowledge/rust_fist/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!ishuman(target))
+	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
-	var/mob/living/carbon/human/victim = target
-	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
-	if(!effect)
+	target.rust_heretic_act()
+
+/datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
+	SIGNAL_HANDLER
+
+	target.rust_heretic_act()
+
+/datum/heretic_knowledge/rust_fist/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
+
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	mark?.on_effect()
+
+	if(!iscarbon(target))
 		return
 
 	var/static/list/possible_organs = list(
@@ -66,8 +75,7 @@
 		ORGAN_SLOT_HEART,
 	)
 
-	effect.on_effect()
-	victim.adjustOrganLoss(pick(possible_organs), 25)
+	target.adjustOrganLoss(pick(possible_organs), 25)
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
@@ -99,15 +107,24 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-/datum/heretic_knowledge/rust_regen/proc/on_move(mob/mover)
+/datum/heretic_knowledge/rust_regen/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+
+/*
+ * Signal proc for [COMSIG_MOVABLE_MOVED].
+ *
+ * Checks if we should have stun resistance on the new turf.
+ */
+/datum/heretic_knowledge/rust_regen/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
-	var/turf/mover_turf = get_turf(mover)
+	var/turf/mover_turf = get_turf(source)
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
-		ADD_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
+		ADD_TRAIT(source, TRAIT_STUNRESISTANCE, type)
 		return
 
-	REMOVE_TRAIT(mover, TRAIT_STUNRESISTANCE, type)
+	REMOVE_TRAIT(source, TRAIT_STUNRESISTANCE, type)
 
 /datum/heretic_knowledge/rust_regen/on_life(mob/user)
 	if(!isliving(user))
@@ -136,13 +153,18 @@
 	banned_knowledge = list(/datum/heretic_knowledge/ash_mark,/datum/heretic_knowledge/flesh_mark,/datum/heretic_knowledge/void_mark)
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_mark/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!isliving(target))
-		return ..()
+/datum/heretic_knowledge/rust_mark/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
-	var/mob/living/living_target = target
-	living_target.apply_status_effect(/datum/status_effect/eldritch/rust)
-	return TRUE
+/datum/heretic_knowledge/rust_mark/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+
+/datum/heretic_knowledge/rust_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	target.apply_status_effect(/datum/status_effect/eldritch/rust)
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
@@ -153,12 +175,18 @@
 	banned_knowledge = list(/datum/heretic_knowledge/ash_blade_upgrade,/datum/heretic_knowledge/flesh_blade_upgrade,/datum/heretic_knowledge/void_blade_upgrade)
 	route = PATH_RUST
 
-/datum/heretic_knowledge/rust_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
-	if(!iscarbon(target))
-		return
+/datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
+	. = ..()
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
-	var/mob/living/carbon/carbon_target = target
-	carbon_target.reagents.add_reagent(/datum/reagent/eldritch, 5)
+/datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
+
+/datum/heretic_knowledge/rust_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
+
+	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
 
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
@@ -232,22 +260,22 @@
  *
  * Gives our heretic buffs if they stand on rust.
  */
-/datum/heretic_knowledge/final/rust_final/proc/on_move(mob/mover)
+/datum/heretic_knowledge/final/rust_final/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
 
 	// If we're on a rusty turf, and haven't given out our traits, buff our guy
-	var/turf/our_turf = get_turf(mover)
+	var/turf/our_turf = get_turf(source)
 	if(HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		if(!immunities_active)
 			for(var/trait in conditional_immunities)
-				ADD_TRAIT(mover, trait, MAGIC_TRAIT)
+				ADD_TRAIT(source, trait, type)
 			immunities_active = TRUE
 
 	// If we're not on a rust turf, and we have given out our traits, nerf our guy
 	else
 		if(immunities_active)
 			for(var/trait in conditional_immunities)
-				REMOVE_TRAIT(mover,trait, MAGIC_TRAIT)
+				REMOVE_TRAIT(source, trait, type)
 			immunities_active = FALSE
 
 /datum/heretic_knowledge/final/rust_final/on_life(mob/user)

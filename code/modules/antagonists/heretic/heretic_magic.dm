@@ -52,46 +52,64 @@
 	qdel(src)
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-
-	if(!proximity_flag || target == user)
+	if(!proximity_flag || !isliving(target) || !IS_HERETIC(user) || target == user)
 		return
-	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
-
-	if(ishuman(target))
-		playsound(user, 'sound/items/welder.ogg', 75, TRUE)
-		var/mob/living/carbon/human/human_target = target
-		if(human_target.anti_magic_check())
-			human_target.visible_message(
-				span_danger("The spell bounces off of [human_target]!"),
-				span_danger("The spell bounces off of you!"),
-			)
-			return ..()
-
-	var/datum/antagonist/heretic/heretic_datum = user.mind?.has_antag_datum(/datum/antagonist/heretic)
-	if(heretic_datum)
-		return
-
-	var/list/researched_knowledge = cultie.get_all_knowledge()
-
-	var/use_charge = FALSE
-	if(iscarbon(target))
-		use_charge = TRUE
-		var/mob/living/carbon/carbon_target = target
-		carbon_target.adjustBruteLoss(10)
-		carbon_target.AdjustKnockdown(5 SECONDS)
-		carbon_target.adjustStaminaLoss(80)
-
-	for(var/knowledge in researched_knowledge)
-		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
-		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
-			use_charge = TRUE
-
-	if(use_charge)
+	if(ishuman(target) && antimagic_backfire(target, user))
 		return ..()
 
+	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
+
+	if(!on_mob_hit(target, user))
+		return
+
+	return ..()
+
 /obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag || !IS_HERETIC(user) || target == user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(isliving(target)) // if it's a living mob, go with our normal afterattack
+		return SECONDARY_ATTACK_CALL_NORMAL
 
+	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 
+	if(SEND_SIGNAL(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, target) & COMPONENT_BLOCK_CHARGE_USE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	return ..()
+
+/**
+ * Checks if the [target] has some form of anti-magic.
+ *
+ * Returns TRUE If the attack was blocked. FALSE otherwise.
+ */
+/obj/item/melee/touch_attack/mansus_fist/proc/antimagic_backfire(mob/living/carbon/human/target, mob/living/carbon/user)
+	if(target.anti_magic_check())
+		playsound(user, 'sound/items/welder.ogg', 75, TRUE)
+		target.visible_message(
+			span_danger("The spell bounces off of [target]!"),
+			span_danger("The spell bounces off of you!"),
+		)
+		return TRUE
+	return FALSE
+
+/**
+ * Called with [hit] is successfully hit by a mansus grasp by [heretic].
+ *
+ * Sends signal COMSIG_HERETIC_MANSUS_GRASP_ATTACK.
+ * If it returns COMPONENT_BLOCK_CHARGE_USE, the proc returns FALSE.
+ * Otherwise, returns TRUE.
+ */
+/obj/item/melee/touch_attack/mansus_fist/proc/on_mob_hit(mob/living/hit, mob/living/heretic)
+	hit.adjustBruteLoss(10)
+	if(iscarbon(hit))
+		var/mob/living/carbon/carbon_hit = hit
+		carbon_hit.AdjustKnockdown(5 SECONDS)
+		carbon_hit.adjustStaminaLoss(80)
+
+	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
+		return FALSE
+
+	return TRUE
 
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -113,28 +131,11 @@
 				carbon_user.emote("scream")
 				carbon_user.stuttering += 13
 
-		apply_primary_effects(user.mind.has_antag_datum(/datum/antagonist/heretic), user, user)
+		on_mob_hit(user, user)
 
-		carbon_user.adjustBruteLoss(10)
-		carbon_user.AdjustKnockdown(5 SECONDS)
-		carbon_user.adjustStaminaLoss(80)
 		escape_our_torment++
 		stoplag(0.4 SECONDS)
 	return FIRELOSS
-
-/obj/item/melee/touch_attack/mansus_fist/proc/apply_primary_effects(datum/antagonist/heretic/heretic_datum, ...)
-
-	var/list/researched_knowledge = heretic_datum.get_all_knowledge()
-	for(var/knowledge in researched_knowledge)
-		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
-		eldritch_knowledge.on_mansus_grasp(arglist(args.Copy(2)))
-
-/obj/item/melee/touch_attack/mansus_fist/proc/apply_secondary_effects(datum/antagonist/heretic/heretic_datum, ...)
-
-	var/list/researched_knowledge = heretic_datum.get_all_knowledge()
-	for(var/knowledge in researched_knowledge)
-		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
-		eldritch_knowledge.on_secondary_mansus_grasp(arglist(args.Copy(2)))
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"

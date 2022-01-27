@@ -30,22 +30,28 @@
 	var/processes_on_life = FALSE
 
 /**
- * What happens when this is assigned to an antag datum
- *
- * This proc is called whenever a new eldritch knowledge is added to an antag datum
+ * Called when the knowledge is first researched.
  */
-/datum/heretic_knowledge/proc/on_gain(mob/user)
+/datum/heretic_knowledge/proc/on_research(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
+	on_gain(user)
+
+/**
+ * Called when the knowledge is applied to a mob.
+ */
+/datum/heretic_knowledge/proc/on_gain(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(processes_on_life)
 		RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /**
- * What happens when you loose this
- *
- * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
+ * Called when the knowledge is removed from a mob,
+ * either due to a heretic being de-heretic'd
+ * or bodyswap memery.
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
@@ -102,36 +108,8 @@
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
-/**
- * Mansus grasp act
- *
- * Gives addtional effects to mansus grasp spell
- */
-/datum/heretic_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
-	return FALSE
-
-
-/**
- * Sickly blade act
- *
- * Gives addtional effects to sickly blade weapon
- */
-/datum/heretic_knowledge/proc/on_eldritch_blade(atom/target,mob/user,proximity_flag,click_parameters)
-	return
-
-/**
- * Sickly blade distant act
- *
- * Same as [/datum/heretic_knowledge/proc/on_eldritch_blade] but works on targets that are not in proximity to you.
- */
-/datum/heretic_knowledge/proc/on_ranged_attack_eldritch_blade(atom/target,mob/user,click_parameters)
-	return
-
-//////////////
-///Subtypes///
-//////////////
-
 /datum/heretic_knowledge/spell
+	/// The proc holder spell we add to the heretic. Typepath that becomes an instance on gain.
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)

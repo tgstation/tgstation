@@ -158,9 +158,6 @@
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(owner.current)
 
 	on_death() // removal is like death
 	GLOB.reality_smash_track.remove_tracked_mind(owner)
@@ -182,6 +179,13 @@
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
 	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_LIVING_DEATH, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+
+/datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	. = ..()
+	for(var/knowledge_index in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		knowledge.on_lose(old_body)
+		knowledge.on_gain(new_body)
 
 /*
  * Signal proc for [COMSIG_MOB_PRE_CAST_SPELL].
@@ -427,7 +431,7 @@
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
 	researched_knowledge[knowledge_type] = initialized_knowledge
-	initialized_knowledge.on_gain(owner.current)
+	initialized_knowledge.on_research(owner.current)
 	return TRUE
 
 /*

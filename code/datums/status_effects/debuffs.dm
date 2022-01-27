@@ -383,6 +383,7 @@
 	..()
 
 /datum/status_effect/eldritch
+	id = "heretic_mark"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
@@ -398,13 +399,12 @@
 
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
+		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
 		owner.update_appearance()
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_appearance()
 	return ..()
 
@@ -423,25 +423,25 @@
  * Adds actual functionality to each mark
  */
 /datum/status_effect/eldritch/proc/on_effect()
+	SIGNAL_HANDLER
+
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
-	id = "flesh_mark"
 	effect_sprite = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
-
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
-		var/datum/wound/slash/severe/crit_wound = new
+		var/mob/living/carbon/human/human_owner = owner
+		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
+		var/datum/wound/slash/severe/crit_wound = new()
 		crit_wound.apply_wound(bodypart)
+
 	return ..()
 
 /datum/status_effect/eldritch/ash
-	id = "ash_mark"
 	effect_sprite = "emark2"
 	///Dictates how much damage and stamina loss this mark will cause.
 	var/repetitions = 1
@@ -455,34 +455,33 @@
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.adjustStaminaLoss(10 * repetitions)
 		carbon_owner.adjustFireLoss(5 * repetitions)
-		for(var/mob/living/carbon/victim in range(1,carbon_owner))
+		for(var/mob/living/carbon/victim in range(1, carbon_owner))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
 				continue
-			victim.apply_status_effect(type,repetitions-1)
+			victim.apply_status_effect(type, repetitions - 1)
 			break
+
 	return ..()
 
 /datum/status_effect/eldritch/rust
-	id = "rust_mark"
 	effect_sprite = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/I in carbon_owner.get_all_gear())
+	for(var/obj/item/thing in carbon_owner.get_all_gear())
 		//Affects roughly 75% of items
-		if(!QDELETED(I) && prob(75)) //Just in case
-			I.take_damage(100)
+		if(!QDELETED(thing) && prob(75)) //Just in case
+			thing.take_damage(100)
 	return ..()
 
 /datum/status_effect/eldritch/void
-	id = "void_mark"
 	effect_sprite = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
-	var/turf/open/turfie = get_turf(owner)
-	turfie.TakeTemperature(-40)
+	var/turf/open/our_turf = get_turf(owner)
+	our_turf.TakeTemperature(-40)
 	owner.adjust_bodytemperature(-20)
 	return ..()
 
