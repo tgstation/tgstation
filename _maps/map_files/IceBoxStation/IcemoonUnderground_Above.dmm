@@ -494,10 +494,8 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "by" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "bz" = (
 /obj/structure/disposalpipe/trunk/multiz,
 /obj/effect/turf_decal/stripes/line,
@@ -1718,6 +1716,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
+"gc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "gd" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
@@ -2554,7 +2558,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/mine/living_quarters)
+/area/mine/laborcamp/security)
 "iB" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -4789,7 +4793,6 @@
 	},
 /area/service/chapel)
 "pV" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
@@ -5606,6 +5609,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "sx" = (
@@ -5675,6 +5679,12 @@
 "sG" = (
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"sH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp/security)
 "sJ" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
@@ -5867,6 +5877,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "tk" = (
@@ -6024,6 +6035,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "tP" = (
@@ -6584,6 +6596,10 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
+"vM" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp/security)
 "vN" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 9
@@ -6989,6 +7005,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "xi" = (
@@ -8230,6 +8247,7 @@
 /obj/machinery/newscaster/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Bq" = (
@@ -9209,7 +9227,7 @@
 /obj/item/cigbutt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/mine/living_quarters)
+/area/mine/laborcamp/security)
 "Ez" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -11675,6 +11693,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"Mw" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "Mx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/operating,
@@ -12113,6 +12138,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "NX" = (
@@ -13214,6 +13240,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Rq" = (
@@ -13271,6 +13298,7 @@
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Rx" = (
@@ -15214,6 +15242,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "XP" = (
@@ -49904,18 +49934,18 @@ YU
 Ml
 XJ
 XJ
-XJ
-XJ
-XJ
-XJ
-XJ
-nR
-nR
-XJ
+Mw
+Mw
+Mw
+Mw
+Mw
+gc
+gc
+Mw
 sw
 Rw
-Pu
-bh
+sH
+vM
 oU
 Hd
 iz
@@ -50161,7 +50191,7 @@ mS
 aq
 bk
 Ee
-XJ
+Mw
 Ee
 Bl
 eF
@@ -50418,7 +50448,7 @@ aq
 aq
 aq
 CH
-XJ
+Mw
 Ee
 FU
 pf
@@ -50675,7 +50705,7 @@ io
 XB
 aq
 Vd
-XJ
+Mw
 Ee
 PE
 wZ
@@ -50932,7 +50962,7 @@ ox
 XJ
 CA
 nR
-XJ
+Mw
 EB
 st
 Tk
@@ -51196,7 +51226,7 @@ aq
 aq
 aq
 yr
-yr
+Hd
 Hd
 SV
 cB
@@ -51703,7 +51733,7 @@ yy
 aq
 BI
 FV
-XJ
+Mw
 XJ
 Sq
 XJ
@@ -51960,7 +51990,7 @@ Ee
 aq
 aq
 aq
-nR
+gc
 Ee
 aq
 aq
@@ -52731,7 +52761,7 @@ He
 XJ
 XJ
 RK
-XJ
+Mw
 Ee
 aq
 aq
@@ -53245,7 +53275,7 @@ Ta
 az
 nq
 aq
-XJ
+Mw
 XJ
 FI
 XJ
