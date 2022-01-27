@@ -174,7 +174,7 @@
 /area/mine/laborcamp/security)
 "aE" = (
 /obj/structure/sign/warning/coldtemp{
-	pixel_x = -30
+	pixel_x = -29
 	},
 /obj/structure/sign/warning/gasmask{
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
@@ -3772,12 +3772,6 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"my" = (
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = -30
-	},
-/turf/open/floor/plating/elevatorshaft,
-/area/mine/storage)
 "mA" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -6135,6 +6129,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_y = -32
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -13158,6 +13155,9 @@
 	opacity = 0
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 29
+	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "QX" = (
@@ -15025,12 +15025,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
-"WK" = (
-/obj/structure/sign/warning/xeno_mining{
-	pixel_x = -30
-	},
-/turf/open/floor/iron/dark,
-/area/mine/storage)
 "WM" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -15965,10 +15959,6 @@
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
-"ZN" = (
-/obj/structure/sign/warning/xeno_mining,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/mine/storage)
 "ZP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -44187,7 +44177,7 @@ ak
 NH
 NH
 qG
-my
+Fj
 Fj
 Fj
 Hv
@@ -44959,7 +44949,7 @@ Hv
 Hy
 fw
 ic
-WK
+BJ
 QW
 aE
 YZ
@@ -47019,7 +47009,7 @@ ak
 ak
 ak
 NH
-ZN
+NH
 NH
 NH
 ak
