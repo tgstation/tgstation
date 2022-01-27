@@ -227,7 +227,7 @@
 /datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
 	isFading = TRUE
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, .proc/Destroy), fadetime, TIMER_DELETE_ME, SSrunechat)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), fadetime, TIMER_DELETE_ME, SSrunechat)
 
 /**
  * Creates a message overlay at a defined location for a given speaker
