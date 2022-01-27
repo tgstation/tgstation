@@ -16488,6 +16488,7 @@
 	dir = 4
 	},
 /obj/item/multitool,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "eYB" = (
