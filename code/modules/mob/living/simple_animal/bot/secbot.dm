@@ -279,13 +279,18 @@
 	addtimer(CALLBACK(src, .proc/handcuff_target, current_target), 6 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if((!(bot_mode_flags & BOT_MODE_ON)) || !isturf(current_target.loc) || !Adjacent(current_target) || current_target.handcuffed  ) //if he's in a closet or not adjacent, we cancel cuffing.
+	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
 		return
-	current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
-	current_target.update_handcuffed()
-	playsound(src, "law", 50, FALSE)
-	back_to_idle()
-	return TRUE
+	if(!isturf(current_target.loc))
+		return
+	if(!Adjacent(current_target))
+		return
+	if(!current_target.handcuffed)
+		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
+		current_target.update_handcuffed()
+		playsound(src, "law", 50, FALSE)
+		back_to_idle()
+
 
 
 
