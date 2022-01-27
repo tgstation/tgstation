@@ -163,6 +163,9 @@
 	else
 		to_chat(user, span_notice("The grave has already been dug up."))
 
+/obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
+	return
+
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.
 		if(!opened)
