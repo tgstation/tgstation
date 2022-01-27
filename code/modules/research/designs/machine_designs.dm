@@ -58,8 +58,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/thermomachine
-	name = "Machine Design (Freezer/Heater Board)"
-	desc = "The circuit board for a freezer/heater."
+	name = "Machine Design (Thermomachine Board)"
+	desc = "The circuit board for a thermomachine."
 	id = "thermomachine"
 	build_path = /obj/item/circuitboard/machine/thermomachine
 	category = list ("Engineering Machinery")
@@ -687,7 +687,7 @@
 
 /datum/design/board/HFR_fuel_input
 	name = "Machine Design (HFR fuel input)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR fuel input."
 	id = "HFR_fuel_input"
 	build_path = /obj/item/circuitboard/machine/HFR_fuel_input
 	category = list ("Engineering Machinery")
@@ -695,7 +695,7 @@
 
 /datum/design/board/HFR_waste_output
 	name = "Machine Design (HFR waste output)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR waste output."
 	id = "HFR_waste_output"
 	build_path = /obj/item/circuitboard/machine/HFR_waste_output
 	category = list ("Engineering Machinery")
@@ -703,7 +703,7 @@
 
 /datum/design/board/HFR_moderator_input
 	name = "Machine Design (HFR moderator input)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR moderator input."
 	id = "HFR_moderator_input"
 	build_path = /obj/item/circuitboard/machine/HFR_moderator_input
 	category = list ("Engineering Machinery")
@@ -711,7 +711,7 @@
 
 /datum/design/board/HFR_corner
 	name = "Machine Design (HFR corner)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR corner."
 	id = "HFR_corner"
 	build_path = /obj/item/circuitboard/machine/HFR_corner
 	category = list ("Engineering Machinery")
@@ -719,7 +719,7 @@
 
 /datum/design/board/HFR_interface
 	name = "Machine Design (HFR interface)"
-	desc = "The circuit board for a freezer/heater."
+	desc = "The circuit board for an HFR interface."
 	id = "HFR_interface"
 	build_path = /obj/item/circuitboard/machine/HFR_interface
 	category = list ("Engineering Machinery")
