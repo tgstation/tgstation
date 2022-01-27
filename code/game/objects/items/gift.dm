@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 		M.visible_message(span_danger("Oh no! The present that [M] opened had nothing inside it!"))
 
 /obj/item/a_gift/proc/get_gift_type()
-	var/gift_type_list = list(/obj/item/sord,
+	var/gift_type_list = list(
 		/obj/item/storage/wallet,
 		/obj/item/storage/photo_album,
 		/obj/item/storage/box/snappops,
