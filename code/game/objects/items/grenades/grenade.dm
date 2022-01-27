@@ -13,7 +13,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCT_1 | PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
@@ -144,26 +144,32 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
-/obj/item/grenade/attackby(obj/item/weapon, mob/user, params)
+/obj/item/grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
-		return ..()
+		return FALSE
+	if(change_det_time())
+		tool.play_tool_sound(src)
+		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+		return TRUE
 
-	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
-		if (isnull(newtime))
-			return
-		if(!user.canUseTopic(src, BE_CLOSE))
-			return
-		if(newtime == "Instant" && change_det_time(0))
-			to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
-			return
-		newtime = round(newtime)
-		if(change_det_time(newtime))
-			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+/obj/item/grenade/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(active)
+		return FALSE
+
+	. = TRUE
+
+	var/newtime = tgui_input_list(user, "Please enter a new detonation time", "Detonation Timer", list("Instant", 3, 4, 5))
+	if (isnull(newtime))
 		return
-	else if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
-		if(change_det_time())
-			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(newtime == "Instant" && change_det_time(0))
+		to_chat(user, span_notice("You modify the time delay. It's set to be instantaneous."))
+		return
+	newtime = round(newtime)
+	if(change_det_time(newtime))
+		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
 
 /obj/item/grenade/proc/change_det_time(time) //Time uses real time.
 	. = TRUE
@@ -192,7 +198,7 @@
 		log_game("A projectile ([hitby]) detonated a grenade held by [key_name(owner)] at [COORD(source_turf)]")
 		message_admins("A projectile ([hitby]) detonated a grenade held by [key_name_admin(owner)] at [ADMIN_COORDJMP(source_turf)]")
 		detonate()
-		
+
 		if(!QDELETED(src)) // some grenades don't detonate but we want them destroyed
 			qdel(src)
 		return TRUE //It hit the grenade, not them

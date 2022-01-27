@@ -47,6 +47,7 @@
 	icon_state = "white"
 	plane = LIGHTING_PLANE
 	blend_mode = BLEND_ADD
+	luminosity = 1
 
 /obj/effect/abstract/marker
 	name = "marker"

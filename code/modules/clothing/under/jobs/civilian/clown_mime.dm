@@ -16,7 +16,7 @@
 
 /obj/item/clothing/under/rank/civilian/mime/sexy
 	name = "sexy mime outfit"
-	desc = "The only time when you DON'T enjoy looking at someone's rack."
+	desc = "Pretty inappropriate for a circus."
 	icon_state = "sexymime"
 	inhand_icon_state = "sexymime"
 	body_parts_covered = CHEST|GROIN|LEGS

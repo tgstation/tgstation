@@ -1,0 +1,4 @@
+author: "jjpark-kb"
+delete-after: True
+changes: 
+  - qol: "safes now use balloon alerts for the hint"

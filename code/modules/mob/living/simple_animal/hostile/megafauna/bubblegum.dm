@@ -47,7 +47,7 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	retreat_distance = 5
 	minimum_distance = 5
 	rapid_melee = 8 // every 1/4 second
@@ -55,6 +55,8 @@ Difficulty: Hard
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
+	maptext_height = 96
+	maptext_width = 96
 	del_on_death = TRUE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
@@ -97,6 +99,8 @@ Difficulty: Hard
 	hallucination_charge_surround.spawn_blood = TRUE
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+	if(spawn_blood)
+		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
 	QDEL_NULL(triple_charge)
@@ -117,15 +121,14 @@ Difficulty: Hard
 		return
 
 	if(!try_bloodattack() || prob(25 + anger_modifier))
-		blood_warp.Trigger(target)
+		blood_warp.Trigger(target = target)
 
 	if(!BUBBLEGUM_SMASH)
-		triple_charge.Trigger(target)
+		triple_charge.Trigger(target = target)
+	else if(prob(50 + anger_modifier))
+		hallucination_charge.Trigger(target = target)
 	else
-		if(prob(50 + anger_modifier))
-			hallucination_charge.Trigger(target)
-		else
-			hallucination_charge_surround.Trigger(target)
+		hallucination_charge_surround.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood(mob/target)
 	var/list/targets = list(target)
@@ -245,7 +248,7 @@ Difficulty: Hard
 		return FALSE
 	enrage_till = world.time + enrage_time
 	update_approach()
-	INVOKE_ASYNC(src, .proc/change_move_delay, 3.75)
+	INVOKE_ASYNC(src, .proc/change_move_delay, 2)
 	add_atom_colour(COLOR_BUBBLEGUM_RED, TEMPORARY_COLOUR_PRIORITY)
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
 	addtimer(cb, enrage_time)
@@ -303,12 +306,6 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	update_approach()
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	if(spawn_blood)
-		new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"

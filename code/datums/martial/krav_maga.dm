@@ -10,7 +10,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "neckchop"
 
-/datum/action/neck_chop/Trigger()
+/datum/action/neck_chop/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return
@@ -26,7 +26,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "legsweep"
 
-/datum/action/leg_sweep/Trigger()
+/datum/action/leg_sweep/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return
@@ -42,7 +42,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "lungpunch"
 
-/datum/action/lung_punch/Trigger()
+/datum/action/lung_punch/Trigger(trigger_flags)
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't use [name] while you're incapacitated."))
 		return

@@ -127,6 +127,11 @@
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
+	
+/datum/mood_event/claustrophobia
+	description = "<span class='warning'>Why do I feel trapped?!  Let me out!!!</span>\n"
+	mood_change = -7
+	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
 	description = "<span class='boldwarning'>I hate it in the light...I need to find a darker place...</span>\n"
@@ -356,3 +361,12 @@
 	description = "<span class='boldwarning'>I hate being sprayed with water!</span>\n"
 	mood_change = -1
 	timeout = 30 SECONDS
+
+/datum/mood_event/gamer_withdrawal
+	description = span_warning("I wish I was gaming right now...\n")
+	mood_change = -5
+
+/datum/mood_event/gamer_lost
+	description = span_boldwarning("If I'm not good at video games, can I truly call myself a gamer?\n")
+	mood_change = -10
+	timeout = 10 MINUTES

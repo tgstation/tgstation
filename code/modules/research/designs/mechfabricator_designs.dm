@@ -1031,8 +1031,8 @@
 	construction_time = 15 SECONDS
 	build_path = /obj/item/mod/construction/armor
 	category = list("MOD Construction", "Equipment")
-	research_icon = 'icons/obj/mod.dmi'
-	research_icon_state = "standard-armor"
+	research_icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
+	research_icon_state = "standard-plating"
 
 /datum/design/mod_armor/New()
 	. = ..()
@@ -1046,35 +1046,35 @@
 	build_path = /obj/item/mod/construction/armor/engineering
 	materials = list(/datum/material/iron = 6000, /datum/material/gold = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	research_icon_state = "engineering-armor"
+	research_icon_state = "engineering-plating"
 
 /datum/design/mod_armor/atmospheric
 	id = "mod_armor_atmospheric"
 	build_path = /obj/item/mod/construction/armor/atmospheric
 	materials = list(/datum/material/iron = 6000, /datum/material/titanium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
-	research_icon_state = "atmospheric-armor"
+	research_icon_state = "atmospheric-plating"
 
 /datum/design/mod_armor/medical
 	id = "mod_armor_medical"
 	build_path = /obj/item/mod/construction/armor/medical
 	materials = list(/datum/material/iron = 6000, /datum/material/silver = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	research_icon_state = "medical-armor"
+	research_icon_state = "medical-plating"
 
 /datum/design/mod_armor/security
 	id = "mod_armor_security"
 	build_path = /obj/item/mod/construction/armor/security
 	materials = list(/datum/material/iron = 6000, /datum/material/uranium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	research_icon_state = "security-armor"
+	research_icon_state = "security-plating"
 
 /datum/design/mod_armor/cosmohonk
 	id = "mod_armor_cosmohonk"
 	build_path = /obj/item/mod/construction/armor/cosmohonk
 	materials = list(/datum/material/iron = 6000, /datum/material/bananium = 2000, /datum/material/glass = 1000, /datum/material/plasma = 1000)
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-	research_icon_state = "cosmohonk-armor"
+	research_icon_state = "cosmohonk-plating"
 
 /datum/design/mod_paint_kit
 	name = "MOD paint kit"
@@ -1105,6 +1105,12 @@
 	id = "mod_storage"
 	materials = list(/datum/material/iron = 2500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/storage
+
+/datum/design/module/mod_storage_expanded
+	name = "MOD Module: Expanded Storage"
+	id = "mod_storage_expanded"
+	materials = list(/datum/material/iron = 5000, /datum/material/uranium = 2000)
+	build_path = /obj/item/mod/module/storage/large_capacity
 
 /datum/design/module/mod_visor_medhud
 	name = "MOD Module: Medical Visor"
@@ -1137,7 +1143,7 @@
 /datum/design/module/mod_visor_welding
 	name = "MOD Module: Welding Protection"
 	id = "mod_welding"
-	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/welding
 	department_type = MODULE_ENGINEERING
 
@@ -1261,6 +1267,13 @@
 	build_path = /obj/item/mod/module/injector
 	department_type = MODULE_MEDICAL
 
+/datum/design/module/mod_bikehorn
+	name = "MOD Module: Bike Horn"
+	id = "mod_bikehorn"
+	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
+	build_path = /obj/item/mod/module/bikehorn
+	department_type = MODULE_SERVICE
+
 /datum/design/module/mod_microwave_beam
 	name = "MOD Module: Microwave Beam"
 	id = "mod_microwave_beam"
@@ -1268,11 +1281,11 @@
 	build_path = /obj/item/mod/module/microwave_beam
 	department_type = MODULE_SERVICE
 
-/datum/design/module/mod_bikehorn
-	name = "MOD Module: Bike Horn"
-	id = "mod_bikehorn"
-	materials = list(/datum/material/plastic = 500, /datum/material/iron = 500)
-	build_path = /obj/item/mod/module/bikehorn
+/datum/design/module/mod_waddle
+	name = "MOD Module: Waddle"
+	id = "mod_waddle"
+	materials = list(/datum/material/plastic = 1000, /datum/material/iron = 1000)
+	build_path = /obj/item/mod/module/waddle
 	department_type = MODULE_SERVICE
 
 /datum/design/module/mod_clamp
@@ -1315,15 +1328,35 @@
 	materials = list(/datum/material/diamond = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/dna_lock
 
-/datum/design/module/mod_circuit
-	name = "MOD Module: Circuit Adapter"
-	id = "mod_circuit"
-	materials = list(/datum/material/glass = 2000)
-	build_path = /obj/item/mod/module/circuit
-	department_type = MODULE_SCIENCE
-
 /datum/design/module/mod_plasma_stabilizer
 	name = "MOD Module: Plasma Stabilizer"
 	id = "mod_plasma"
 	materials = list(/datum/material/plasma = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/plasma_stabilizer
+
+/datum/design/module/mod_glove_translator
+	name = "MOD Module: Glove Translator"
+	id = "mod_sign_radio"
+	materials = list(/datum/material/iron = 750, /datum/material/glass = 500)
+	build_path = /obj/item/mod/module/signlang_radio
+
+/datum/design/module/mod_antigrav
+	name = "MOD Module: Anti-Gravity"
+	id = "mod_antigrav"
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 2000)
+	build_path = /obj/item/mod/module/anomaly_locked/antigrav
+	department_type = MODULE_SCIENCE
+
+/datum/design/module/mod_teleporter
+	name = "MOD Module: Teleporter"
+	id = "mod_teleporter"
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/bluespace = 2000)
+	build_path = /obj/item/mod/module/anomaly_locked/teleporter
+	department_type = MODULE_SCIENCE
+
+/datum/design/module/mod_kinesis
+	name = "MOD Module: Kinesis"
+	id = "mod_kinesis"
+	materials = list(/datum/material/iron = 2500, /datum/material/glass = 2000, /datum/material/uranium = 1000, /datum/material/bluespace = 1000)
+	build_path = /obj/item/mod/module/anomaly_locked/kinesis
+	department_type = MODULE_ENGINEERING

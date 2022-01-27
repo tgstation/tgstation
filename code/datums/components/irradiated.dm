@@ -12,7 +12,6 @@
 
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
-/// Items will attempt to irradiate whoever is holding them, as well as whatever they are inside.
 /datum/component/irradiated
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 

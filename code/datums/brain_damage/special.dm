@@ -141,6 +141,10 @@
 
 		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
 
+/obj/effect/hallucination/simple/bluespace_stream/attack_tk(mob/user)
+	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 /datum/brain_trauma/special/quantum_alignment
 	name = "Quantum Alignment"
 	desc = "Patient is prone to frequent spontaneous quantum entanglement, against all odds, causing spatial anomalies."

@@ -110,45 +110,70 @@
 	else
 		. = timer_set
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && can_unanchor)
-		if(!anchored)
-			if(!isturf(loc) || isspaceturf(loc))
-				to_chat(user, span_notice("The bomb must be placed on solid ground to attach it."))
-			else
-				to_chat(user, span_notice("You firmly wrench the bomb to the floor."))
-				I.play_tool_sound(src)
-				set_anchored(TRUE)
-				if(active)
-					to_chat(user, span_notice("The bolts lock in place."))
+/obj/machinery/syndicatebomb/wrench_act(mob/living/user, obj/item/tool)
+	if(!can_unanchor)
+		return FALSE
+	if(!anchored)
+		if(!isturf(loc) || isspaceturf(loc))
+			to_chat(user, span_notice("The bomb must be placed on solid ground to attach it."))
 		else
-			if(!active)
-				to_chat(user, span_notice("You wrench the bomb from the floor."))
-				I.play_tool_sound(src)
-				set_anchored(FALSE)
-			else
-				to_chat(user, span_warning("The bolts are locked down!"))
+			to_chat(user, span_notice("You firmly wrench the bomb to the floor."))
+			tool.play_tool_sound(src)
+			set_anchored(TRUE)
+			if(active)
+				to_chat(user, span_notice("The bolts lock in place."))
+	else
+		if(!active)
+			to_chat(user, span_notice("You wrench the bomb from the floor."))
+			tool.play_tool_sound(src)
+			set_anchored(FALSE)
+		else
+			to_chat(user, span_warning("The bolts are locked down!"))
 
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		open_panel = !open_panel
-		update_appearance()
-		to_chat(user, span_notice("You [open_panel ? "open" : "close"] the wire panel."))
+	return TRUE
 
-	else if(is_wire_tool(I) && open_panel)
+/obj/machinery/syndicatebomb/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	open_panel = !open_panel
+	update_appearance()
+	to_chat(user, span_notice("You [open_panel ? "open" : "close"] the wire panel."))
+	return TRUE
+
+/obj/machinery/syndicatebomb/crowbar_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(open_panel && wires.is_all_cut())
+		if(payload)
+			tool.play_tool_sound(src, 25) // sshhh
+			to_chat(user, span_notice("You carefully pry out [payload]."))
+			payload.forceMove(drop_location())
+			payload = null
+		else
+			to_chat(user, span_warning("There isn't anything in here to remove!"))
+	else if (open_panel)
+		to_chat(user, span_warning("The wires connecting the shell to the explosives are holding it down!"))
+	else
+		to_chat(user, span_warning("The cover is screwed on, it won't pry off!"))
+
+/obj/machinery/syndicatebomb/welder_act(mob/living/user, obj/item/tool)
+	if(payload || !wires.is_all_cut() || !open_panel)
+		return FALSE
+
+	if(!tool.tool_start_check(user, amount=5))  //uses up 5 fuel
+		return TRUE
+
+	to_chat(user, span_notice("You start to cut [src] apart..."))
+	if(tool.use_tool(src, user, 20, volume=50, amount=5)) // uses up 5 fuel
+		to_chat(user, span_notice("You cut [src] apart."))
+		new /obj/item/stack/sheet/plasteel(loc, 5)
+		qdel(src)
+	return TRUE
+
+
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+
+	if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
 
-	else if(I.tool_behaviour == TOOL_CROWBAR)
-		if(open_panel && wires.is_all_cut())
-			if(payload)
-				to_chat(user, span_notice("You carefully pry out [payload]."))
-				payload.forceMove(drop_location())
-				payload = null
-			else
-				to_chat(user, span_warning("There isn't anything in here to remove!"))
-		else if (open_panel)
-			to_chat(user, span_warning("The wires connecting the shell to the explosives are holding it down!"))
-		else
-			to_chat(user, span_warning("The cover is screwed on, it won't pry off!"))
 	else if(istype(I, /obj/item/bombcore))
 		if(!payload)
 			if(!user.transferItemToLoc(I, src))
@@ -157,22 +182,10 @@
 			to_chat(user, span_notice("You place [payload] into [src]."))
 		else
 			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
-	else if(I.tool_behaviour == TOOL_WELDER)
-		if(payload || !wires.is_all_cut() || !open_panel)
-			return
-
-		if(!I.tool_start_check(user, amount=5))  //uses up 5 fuel
-			return
-
-		to_chat(user, span_notice("You start to cut [src] apart..."))
-		if(I.use_tool(src, user, 20, volume=50, amount=5)) //uses up 5 fuel
-			to_chat(user, span_notice("You cut [src] apart."))
-			new /obj/item/stack/sheet/plasteel( loc, 5)
-			qdel(src)
 	else
 		var/old_integ = atom_integrity
 		. = ..()
-		if((old_integ > atom_integrity) && active  && (payload in src))
+		if((old_integ > atom_integrity) && active && (payload in src))
 			to_chat(user, span_warning("That seems like a really bad idea..."))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
@@ -273,6 +286,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 // We detonate upon being exploded.
 	resistance_flags = FLAMMABLE //Burnable (but the casing isn't)
 	var/adminlog = null
 	var/range_heavy = 3

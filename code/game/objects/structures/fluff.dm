@@ -74,6 +74,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "drake_statue"
 	pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	density = TRUE
 	deconstructible = FALSE
 	layer = EDGED_TURF_LAYER
@@ -228,7 +230,7 @@
 
 /obj/structure/fluff/clockwork
 	name = "Clockwork Fluff"
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/fluff.dmi'
 	deconstructible = FALSE
 
 /obj/structure/fluff/clockwork/alloy_shards

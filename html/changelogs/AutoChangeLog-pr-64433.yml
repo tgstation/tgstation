@@ -1,0 +1,6 @@
+author: "axietheaxolotl"
+delete-after: True
+changes: 
+  - imageadd: "New sprites for the Parcel Parceaux, base Mime mask, Mime outfit and skirt, and mime sexy outfit."
+  - imageadd: "new sprites for lace-up shoes."
+  - code_imp: "Mimes spawn with lace-ups instead of black shoes"
