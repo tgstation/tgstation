@@ -103,7 +103,7 @@
 		It can also be forced onto a heathan, to make them unable to take it off..."
 	gain_text = "He walks the world, unnoticed by the masses."
 	cost = 1
-	result_atoms = list(/obj/item/clothing/mask/void_mask)
+	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	required_atoms = list(/obj/item/organ/eyes = 1, /obj/item/clothing/mask = 1, /obj/item/candle = 1)
 	next_knowledge = list(
 		/datum/heretic_knowledge/curse/corrosion,

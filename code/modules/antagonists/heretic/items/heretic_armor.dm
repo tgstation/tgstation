@@ -8,6 +8,13 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
 
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/examine(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+
+	. += span_notice("Allows you to cast heretic spells while the hood is up.")
+
 /obj/item/clothing/suit/hooded/cultrobes/eldritch
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
@@ -19,6 +26,13 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
 	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, FIRE = 20, ACID = 20)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+
+	. += span_notice("Allows you to cast heretic spells while the hood is up.")
 
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void

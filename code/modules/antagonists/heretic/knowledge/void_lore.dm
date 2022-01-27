@@ -144,7 +144,7 @@
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase, /datum/heretic_knowledge/spell/area_conversion)
 	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/structure/table = 1)
-	result_atoms = list(/obj/structure/eldritch_crucible)
+	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 
 /datum/heretic_knowledge/void_blade_upgrade
 	name = "Seeking blade"

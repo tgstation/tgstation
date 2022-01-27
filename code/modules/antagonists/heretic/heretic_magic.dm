@@ -56,35 +56,49 @@
 	if(!proximity_flag || target == user)
 		return
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
+
 	if(ishuman(target))
-		var/mob/living/carbon/human/tar = target
-		if(tar.anti_magic_check())
-			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
+		playsound(user, 'sound/items/welder.ogg', 75, TRUE)
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.anti_magic_check())
+			human_target.visible_message(
+				span_danger("The spell bounces off of [human_target]!"),
+				span_danger("The spell bounces off of you!"),
+			)
 			return ..()
-	var/datum/mind/M = user.mind
-	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
+
+	var/datum/antagonist/heretic/heretic_datum = user.mind?.has_antag_datum(/datum/antagonist/heretic)
+	if(heretic_datum)
+		return
+
+	var/list/researched_knowledge = cultie.get_all_knowledge()
 
 	var/use_charge = FALSE
 	if(iscarbon(target))
 		use_charge = TRUE
-		var/mob/living/carbon/C = target
-		C.adjustBruteLoss(10)
-		C.AdjustKnockdown(5 SECONDS)
-		C.adjustStaminaLoss(80)
-	var/list/researched_knowledge = cultie.get_all_knowledge()
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.adjustBruteLoss(10)
+		carbon_target.AdjustKnockdown(5 SECONDS)
+		carbon_target.adjustStaminaLoss(80)
 
 	for(var/knowledge in researched_knowledge)
 		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
 		if(eldritch_knowledge.on_mansus_grasp(target, user, proximity_flag, click_parameters))
 			use_charge = TRUE
+
 	if(use_charge)
 		return ..()
 
+/obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+
+
+
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
-	var/mob/living/carbon/carbon_user = user	//iscarbon already used in spell's parent
-	var/datum/antagonist/heretic/cultie = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/list/researched_knowledge = cultie.get_all_knowledge()
+	var/mob/living/carbon/carbon_user = user //iscarbon already used in spell's parent
+	if(!IS_HERETIC(user))
+		return
+
 	var/escape_our_torment = 0
 	while(carbon_user.stat == CONSCIOUS)
 		if(QDELETED(src) || QDELETED(user))
@@ -99,9 +113,7 @@
 				carbon_user.emote("scream")
 				carbon_user.stuttering += 13
 
-		for(var/knowledge in researched_knowledge)
-			var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
-			eldritch_knowledge.on_mansus_grasp(carbon_user, carbon_user)
+		apply_primary_effects(user.mind.has_antag_datum(/datum/antagonist/heretic), user, user)
 
 		carbon_user.adjustBruteLoss(10)
 		carbon_user.AdjustKnockdown(5 SECONDS)
@@ -109,6 +121,20 @@
 		escape_our_torment++
 		stoplag(0.4 SECONDS)
 	return FIRELOSS
+
+/obj/item/melee/touch_attack/mansus_fist/proc/apply_primary_effects(datum/antagonist/heretic/heretic_datum, ...)
+
+	var/list/researched_knowledge = heretic_datum.get_all_knowledge()
+	for(var/knowledge in researched_knowledge)
+		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+		eldritch_knowledge.on_mansus_grasp(arglist(args.Copy(2)))
+
+/obj/item/melee/touch_attack/mansus_fist/proc/apply_secondary_effects(datum/antagonist/heretic/heretic_datum, ...)
+
+	var/list/researched_knowledge = heretic_datum.get_all_knowledge()
+	for(var/knowledge in researched_knowledge)
+		var/datum/heretic_knowledge/eldritch_knowledge = researched_knowledge[knowledge]
+		eldritch_knowledge.on_secondary_mansus_grasp(arglist(args.Copy(2)))
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
