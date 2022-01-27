@@ -2086,7 +2086,6 @@
 #include "code\modules\antagonists\traitor\objectives\steal.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\battlecruiser.dm"
 #include "code\modules\antagonists\traitor\objectives\final_objective\final_objective.dm"
-#include "code\modules\antagonists\traitor\objectives\final_objective\romerol.dm"
 #include "code\modules\antagonists\valentines\heartbreaker.dm"
 #include "code\modules\antagonists\valentines\valentine.dm"
 #include "code\modules\antagonists\wishgranter\wishgranter.dm"
