@@ -419,7 +419,7 @@
 		implant = TRUE
 
 	if(implant)
-		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob, traitor_mob)
+		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
 			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
