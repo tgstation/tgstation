@@ -7,6 +7,9 @@
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
+/// Max time interval between projecting holopays
+#define HOLOPAY_PROJECTION_INTERVAL 7
+
 /* Cards
  * Contains:
  * DATA CARD
@@ -60,7 +63,9 @@
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 	/// Linked holopay.
-	var/obj/machinery/holopay/my_store
+	var/obj/effect/overlay/holopay/my_store
+	/// Cooldown between projecting holopays
+	COOLDOWN_DECLARE(last_holopay_projection)
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -78,6 +83,7 @@
 
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
+
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -391,6 +397,9 @@
 	if(my_store)
 		QDEL_NULL(my_store)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
+		balloon_alert(user, "still recharging")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!registered_account || !registered_account.account_job)
 		balloon_alert(user, "no account")
 		to_chat(user, span_warning("You need a valid bank account to do this."))
@@ -407,11 +416,11 @@
 		balloon_alert(user, "no space")
 		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	/// Valid tile for holopay placement
-	my_store = new(projection, user, src, registered_account)
-	playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
-	if(!my_store)
-		CRASH("Could not create holostand")
+	/// Success: Valid tile for holopay placement
+	my_store = new()
+	if(my_store?.assign_card(projection, src))
+		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
+		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
@@ -434,7 +443,7 @@
 	for(var/obj/checked_obj in target.contents)
 		if(checked_obj.density)
 			return FALSE
-		if(istype(checked_obj, /obj/machinery/holopay))
+		if(istype(checked_obj, /obj/effect/overlay/holopay))
 			return FALSE
 	return TRUE
 
