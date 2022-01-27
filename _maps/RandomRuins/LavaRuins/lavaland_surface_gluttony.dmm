@@ -56,39 +56,31 @@
 /area/ruin/powered/gluttony)
 "r" = (
 /obj/effect/gluttony,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "t" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "v" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "z" = (
 /obj/item/plate,
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "A" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)
 "R" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/ruin/powered/gluttony)
 "S" = (
-/obj/machinery/door/airlock/uranium,
+/obj/machinery/door/airlock/uranium/safe,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/gluttony)

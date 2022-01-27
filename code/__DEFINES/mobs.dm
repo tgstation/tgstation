@@ -5,13 +5,6 @@
 //Ready states at roundstart for mob/dead/new_player
 #define PLAYER_NOT_READY 0
 #define PLAYER_READY_TO_PLAY 1
-#define PLAYER_READY_TO_OBSERVE 2
-
-//Game mode list indexes
-#define CURRENT_LIVING_PLAYERS "living_players_list"
-#define CURRENT_LIVING_ANTAGS "living_antags_list"
-#define CURRENT_DEAD_PLAYERS "dead_players_list"
-#define CURRENT_OBSERVERS "current_observers_list"
 
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
@@ -57,11 +50,11 @@
 #define MOB_PLANT (1 << 10)
 
 //Organ defines for carbon mobs
-#define ORGAN_ORGANIC   1
-#define ORGAN_ROBOTIC   2
+#define ORGAN_ORGANIC 1
+#define ORGAN_ROBOTIC 2
 
-#define BODYPART_ORGANIC   1
-#define BODYPART_ROBOTIC   2
+#define BODYPART_ORGANIC 1
+#define BODYPART_ROBOTIC 2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
@@ -69,10 +62,25 @@
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
+
+
+///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
+#define HUMAN_BODY (1 << 0)
+#define MONKEY_BODY (1 << 1)
+#define ALIEN_BODY (1 << 2)
+#define LARVA_BODY (1 << 3)
 /*see __DEFINES/inventory.dm for bodypart bitflag defines*/
 
 // Health/damage defines
 #define MAX_LIVING_HEALTH 100
+
+//for determining which type of heartbeat sound is playing
+///Heartbeat is beating fast for hard crit
+#define BEAT_FAST 1
+///Heartbeat is beating slow for soft crit
+#define BEAT_SLOW 2
+///Heartbeat is gone... He's dead Jim :(
+#define BEAT_NONE 0
 
 #define HUMAN_MAX_OXYLOSS 3
 #define HUMAN_CRIT_MAX_OXYLOSS (SSMOBS_DT/3)
@@ -287,9 +295,26 @@
 //ED209's ignore monkeys
 #define JUDGE_IGNOREMONKEYS (1<<4)
 
-#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
-
 #define SHADOW_SPECIES_LIGHT_THRESHOLD 0.2
+
+#define COOLDOWN_UPDATE_SET_MELEE "set_melee"
+#define COOLDOWN_UPDATE_ADD_MELEE "add_melee"
+#define COOLDOWN_UPDATE_SET_RANGED "set_ranged"
+#define COOLDOWN_UPDATE_ADD_RANGED "add_ranged"
+#define COOLDOWN_UPDATE_SET_ENRAGE "set_enrage"
+#define COOLDOWN_UPDATE_ADD_ENRAGE "add_enrage"
+#define COOLDOWN_UPDATE_SET_SPAWN "set_spawn"
+#define COOLDOWN_UPDATE_ADD_SPAWN "add_spawn"
+#define COOLDOWN_UPDATE_SET_HELP "set_help"
+#define COOLDOWN_UPDATE_ADD_HELP "add_help"
+#define COOLDOWN_UPDATE_SET_DASH "set_dash"
+#define COOLDOWN_UPDATE_ADD_DASH "add_dash"
+#define COOLDOWN_UPDATE_SET_TRANSFORM "set_transform"
+#define COOLDOWN_UPDATE_ADD_TRANSFORM "add_transform"
+#define COOLDOWN_UPDATE_SET_CHASER "set_chaser"
+#define COOLDOWN_UPDATE_ADD_CHASER "add_chaser"
+#define COOLDOWN_UPDATE_SET_ARENA "set_arena"
+#define COOLDOWN_UPDATE_ADD_ARENA "add_arena"
 
 // Offsets defines
 
@@ -357,17 +382,17 @@
 //Badmin magic mirror
 #define MIRROR_BADMIN (1<<0)
 //Standard magic mirror (wizard)
-#define MIRROR_MAGIC  (1<<1)
+#define MIRROR_MAGIC (1<<1)
 //Pride ruin mirror
-#define MIRROR_PRIDE  (1<<2)
+#define MIRROR_PRIDE (1<<2)
 //Race swap wizard event
-#define RACE_SWAP     (1<<3)
+#define RACE_SWAP (1<<3)
 //ERT spawn template (avoid races that don't function without correct gear)
-#define ERT_SPAWN     (1<<4)
+#define ERT_SPAWN (1<<4)
 //xenobio black crossbreed
 #define SLIME_EXTRACT (1<<5)
 //Wabbacjack staff projectiles
-#define WABBAJACK     (1<<6)
+#define WABBAJACK (1<<6)
 
 // Reasons a defibrilation might fail
 #define DEFIB_POSSIBLE (1<<0)
@@ -379,26 +404,41 @@
 #define DEFIB_FAIL_FAILING_BRAIN (1<<6)
 #define DEFIB_FAIL_NO_BRAIN (1<<7)
 #define DEFIB_FAIL_NO_INTELLIGENCE (1<<8)
+#define DEFIB_FAIL_BLACKLISTED (1<<9)
+#define DEFIB_NOGRAB_AGHOST (1<<10)
 
 // Bit mask of possible return values by can_defib that would result in a revivable patient
 #define DEFIB_REVIVABLE_STATES (DEFIB_FAIL_NO_HEART | DEFIB_FAIL_FAILING_HEART | DEFIB_FAIL_HUSK | DEFIB_FAIL_TISSUE_DAMAGE | DEFIB_FAIL_FAILING_BRAIN | DEFIB_POSSIBLE)
 
-#define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define SLEEP_CHECK_DEATH(X, A) \
+	sleep(X); \
+	if(QDELETED(A)) return; \
+	if(ismob(A)) { \
+		var/mob/sleep_check_death_mob = A; \
+		if(sleep_check_death_mob.stat == DEAD) return; \
+	}
+
 
 #define DOING_INTERACTION(user, interaction_key) (LAZYACCESS(user.do_afters, interaction_key))
 #define DOING_INTERACTION_LIMIT(user, interaction_key, max_interaction_count) ((LAZYACCESS(user.do_afters, interaction_key) || 0) >= max_interaction_count)
 #define DOING_INTERACTION_WITH_TARGET(user, target) (LAZYACCESS(user.do_afters, target))
 #define DOING_INTERACTION_WITH_TARGET_LIMIT(user, target, max_interaction_count) ((LAZYACCESS(user.do_afters, target) || 0) >= max_interaction_count)
 
+// recent examine defines
+/// How long it takes for an examined atom to be removed from recent_examines. Should be the max of the below time windows
+#define RECENT_EXAMINE_MAX_WINDOW 2 SECONDS
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
-#define EXAMINE_MORE_TIME 1 SECONDS
+#define EXAMINE_MORE_WINDOW 1 SECONDS
+/// If you examine another mob who's successfully examined you during this duration of time, you two try to make eye contact. Cute!
+#define EYE_CONTACT_WINDOW 2 SECONDS
+/// If you yawn while someone nearby has examined you within this time frame, it will force them to yawn as well. Tradecraft!
+#define YAWN_PROPAGATION_EXAMINE_WINDOW 2 SECONDS
+
 /// How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE 5
 
-#define SILENCE_RANGED_MESSAGE (1<<0)
 
-///Swarmer flags
-#define SWARMER_LIGHT_ON (1<<0)
+#define SILENCE_RANGED_MESSAGE (1<<0)
 
 /// Returns whether or not the given mob can succumb
 #define CAN_SUCCUMB(target) (HAS_TRAIT(target, TRAIT_CRITICAL_CONDITION) && !HAS_TRAIT(target, TRAIT_NODEATH))
@@ -449,3 +489,136 @@
 #define THROW_MODE_TOGGLE 1
 #define THROW_MODE_HOLD 2
 
+//Saves a proc call, life is suffering. If who has no targets_from var, we assume it's just who
+#define GET_TARGETS_FROM(who) (who.targets_from ? who.get_targets_from() : who)
+
+//defines for grad_color and grad_styles list access keys
+#define GRADIENT_HAIR_KEY 1
+#define GRADIENT_FACIAL_HAIR_KEY 2
+//Keep up to date with the highest key value
+#define GRADIENTS_LEN 2
+
+// /datum/sprite_accessory/gradient defines
+#define GRADIENT_APPLIES_TO_HAIR (1<<0)
+#define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
+
+/// Sign Language defines
+#define SIGN_ONE_HAND 0
+#define SIGN_HANDS_FULL 1
+#define SIGN_ARMLESS 2
+#define SIGN_TRAIT_BLOCKED 3
+#define SIGN_CUFFED 4
+
+// Mob Overlays Indexes
+/// Total number of layers for mob overlays
+#define TOTAL_LAYERS 31 //KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+/// Mutations layer - Tk headglows, cold resistance glow, etc
+#define MUTATIONS_LAYER 31 
+/// Mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODY_BEHIND_LAYER 30
+/// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODYPARTS_LAYER 29
+/// Mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_ADJ_LAYER 28
+/// Underwear, undershirts, socks, eyes, lips(makeup)
+#define BODY_LAYER 27
+/// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define FRONT_MUTATIONS_LAYER 26
+/// Damage indicators (cuts and burns)
+#define DAMAGE_LAYER 25
+/// Jumpsuit clothing layer
+#define UNIFORM_LAYER 24
+/// ID card layer (might be deprecated)
+#define ID_LAYER 23
+/// ID card layer
+#define ID_CARD_LAYER 22
+/// Hands body part layer (or is this for the arm? not sure...)
+#define HANDS_PART_LAYER 21
+/// Gloves layer
+#define GLOVES_LAYER 20
+/// Shoes layer
+#define SHOES_LAYER 19
+/// Ears layer (Spessmen have ears? Wow)
+#define EARS_LAYER 18
+/// Suit layer (armor, hardsuits, etc.)
+#define SUIT_LAYER 17
+/// Glasses layer
+#define GLASSES_LAYER 16
+/// Belt layer
+#define BELT_LAYER 15 //Possible make this an overlay of somethign required to wear a belt?
+/// Suit storage layer (tucking a gun or baton underneath your armor)
+#define SUIT_STORE_LAYER 14
+/// Neck layer (for wearing ties and bedsheets)
+#define NECK_LAYER 13
+/// Back layer (for backpacks and equipment on your back)
+#define BACK_LAYER 12
+/// Hair layer (mess with the fro and you got to go!)
+#define HAIR_LAYER 11 //TODO: make part of head layer?
+/// Facemask layer (gas masks, breath masks, etc.)
+#define FACEMASK_LAYER 10
+/// Head layer (hats, helmets, etc.)
+#define HEAD_LAYER 9
+/// Handcuff layer (when your hands are cuffed)
+#define HANDCUFF_LAYER 8
+/// Legcuff layer (when your feet are cuffed)
+#define LEGCUFF_LAYER 7
+/// Hands layer (for the actual hand, not the arm... I think?)
+#define HANDS_LAYER 6
+/// Body front layer. Usually used for mutant bodyparts that need to be in front of stuff (e.g. cat ears)
+#define BODY_FRONT_LAYER 5
+/// Special body layer that actually require to be above the hair (e.g. lifted welding goggles)
+#define ABOVE_BODY_FRONT_GLASSES_LAYER 4
+/// Special body layer for the rare cases where something on the head needs to be above everything else (e.g. flowers)
+#define ABOVE_BODY_FRONT_HEAD_LAYER 3
+/// Blood cult ascended halo layer, because there's currently no better solution for adding/removing
+#define HALO_LAYER 2
+/// Fire layer when you're on fire
+#define FIRE_LAYER 1
+
+//Bitflags for the layers an external organ can draw on (organs can be drawn on multiple layers)
+/// Draws organ on the BODY_FRONT_LAYER
+#define EXTERNAL_FRONT (1 << 1)
+/// Draws organ on the BODY_ADJ_LAYER
+#define EXTERNAL_ADJACENT (1 << 2)
+/// Draws organ on the BODY_BEHIND_LAYER
+#define EXTERNAL_BEHIND (1 << 3)
+/// Draws organ on all EXTERNAL layers
+#define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND
+
+//Mob Overlay Index Shortcuts for alternate_worn_layer, layers
+//Because I *KNOW* somebody will think layer+1 means "above"
+//IT DOESN'T OK, IT MEANS "UNDER"
+/// The layer underneath the suit
+#define UNDER_SUIT_LAYER (SUIT_LAYER+1)
+/// The layer underneath the head (for hats)
+#define UNDER_HEAD_LAYER (HEAD_LAYER+1)
+
+//AND -1 MEANS "ABOVE", OK?, OK!?!
+/// The layer above shoes
+#define ABOVE_SHOES_LAYER (SHOES_LAYER-1)
+/// The layer above mutant body parts
+#define ABOVE_BODY_FRONT_LAYER (BODY_FRONT_LAYER-1)
+
+//used by canUseTopic()
+/// If silicons need to be next to the atom to use this
+#define BE_CLOSE TRUE 
+/// If other mobs (monkeys, aliens, etc) can use this 
+#define NO_DEXTERITY TRUE // I had to change 20+ files because some non-dnd-playing fuckchumbis can't spell "dexterity"
+// If telekinesis you can use it from a distance
+#define NO_TK TRUE
+/// If mobs can use this while resting
+#define FLOOR_OKAY TRUE
+
+/// The default mob sprite size (used for shrinking or enlarging the mob sprite to regular size)
+#define RESIZE_DEFAULT_SIZE 1
+
+/// Get the client from the var
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+/// The mob will vomit a green color
+#define VOMIT_TOXIC 1
+/// The mob will vomit a purple color
+#define VOMIT_PURPLE 2
+
+/// Possible value of [/atom/movable/buckle_lying]. If set to a different (positive-or-zero) value than this, the buckling thing will force a lying angle on the buckled.
+#define NO_BUCKLE_LYING -1

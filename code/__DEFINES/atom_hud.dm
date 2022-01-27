@@ -38,8 +38,6 @@
 #define GLAND_HUD "17"
 #define SENTIENT_DISEASE_HUD "18"
 #define AI_DETECT_HUD "19"
-#define NANITE_HUD "20"
-#define DIAG_NANITE_FULL_HUD "21"
 /// Displays launchpads' targeting reticle
 #define DIAG_LAUNCHPAD_HUD "22"
 //for antag huds. these are used at the /mob level
@@ -63,23 +61,6 @@
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
-
-//antag HUD defines
-#define ANTAG_HUD_CULT 11
-#define ANTAG_HUD_REV 12
-#define ANTAG_HUD_OPS 13
-#define ANTAG_HUD_WIZ 14
-#define ANTAG_HUD_SHADOW 15
-#define ANTAG_HUD_TRAITOR 16
-#define ANTAG_HUD_NINJA 17
-#define ANTAG_HUD_CHANGELING 18
-#define ANTAG_HUD_ABDUCTOR 19
-#define ANTAG_HUD_BROTHER 20
-#define ANTAG_HUD_OBSESSED 21
-#define ANTAG_HUD_FUGITIVE 22
-#define ANTAG_HUD_GANGSTER 23
-#define ANTAG_HUD_SPACECOP 24
-#define ANTAG_HUD_HERETIC 25
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

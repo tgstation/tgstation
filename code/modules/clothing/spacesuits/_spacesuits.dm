@@ -6,10 +6,10 @@
 	name = "space helmet"
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
 	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
@@ -30,13 +30,12 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
 	slowdown = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, RAD = 50, FIRE = 80, ACID = 70)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
@@ -50,6 +49,7 @@
 	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high /// If this is a path, this gets created as an object in Initialize.
 	var/cell_cover_open = FALSE /// Status of the cell cover on the suit
 	var/thermal_on = FALSE /// Status of the thermal regulator
+	var/show_hud = TRUE /// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
@@ -92,7 +92,7 @@
 	if(!cell.use(THERMAL_REGULATOR_COST))
 		toggle_spacesuit()
 		update_hud_icon(user)
-		to_chat(user, "<span class='warning'>The thermal regulator cuts off as [cell] runs out of charge.</span>")
+		to_chat(user, span_warning("The thermal regulator cuts off as [cell] runs out of charge."))
 		return
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
@@ -102,7 +102,7 @@
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
-	if(cell)
+	if(isatom(cell))
 		QDEL_NULL(cell)
 	var/mob/living/carbon/human/human = src.loc
 	if(istype(human))
@@ -151,15 +151,15 @@
 			([range_low]-[range_high] degrees celcius)") as null|num
 		if(deg_c && deg_c >= range_low && deg_c <= range_high)
 			temperature_setting = round(T0C + deg_c, 0.1)
-			to_chat(user, "<span class='notice'>You see the readout change to [deg_c] c.</span>")
+			to_chat(user, span_notice("You see the readout change to [deg_c] c."))
 		return
 	else if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
 		if(cell)
-			to_chat(user, "<span class='warning'>[src] already has a cell installed.</span>")
+			to_chat(user, span_warning("[src] already has a cell installed."))
 			return
 		if(user.transferItemToLoc(I, src))
 			cell = I
-			to_chat(user, "<span class='notice'>You successfully install \the [cell] into [src].</span>")
+			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
 			return
 	return ..()
 
@@ -184,8 +184,8 @@
 /// Remove the cell from the suit if the cell cover is open
 /obj/item/clothing/suit/space/proc/remove_cell(mob/user)
 	if(cell_cover_open && cell)
-		user.visible_message("<span class='notice'>[user] removes \the [cell] from [src]!</span>", \
-			"<span class='notice'>You remove [cell].</span>")
+		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
+			span_notice("You remove [cell]."))
 		cell.add_fingerprint(user)
 		user.put_in_hands(cell)
 		cell = null
@@ -193,7 +193,7 @@
 /// Toggle the space suit's cell cover
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
 	cell_cover_open = !cell_cover_open
-	to_chat(user, "<span class='notice'>You [cell_cover_open ? "open" : "close"] the cell cover on \the [src].</span>")
+	to_chat(user, span_notice("You [cell_cover_open ? "open" : "close"] the cell cover on \the [src]."))
 
 /// Toggle the space suit's thermal regulator status
 /obj/item/clothing/suit/space/proc/toggle_spacesuit()
@@ -202,26 +202,29 @@
 	// thermal protection value and should just return out early.
 	var/mob/living/carbon/human/user = src.loc
 	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
-		to_chat(user, "<span class='warning'>The thermal regulator on \the [src] has no charge.</span>")
+		to_chat(user, span_warning("The thermal regulator on \the [src] has no charge."))
 		return
 
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	if(user)
-		to_chat(user, "<span class='notice'>You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator.</span>")
+		to_chat(user, span_notice("You turn [thermal_on ? "on" : "off"] \the [src]'s thermal regulator."))
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
 
 // let emags override the temperature settings
 /obj/item/clothing/suit/space/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
-		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
+		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
 	var/mob/living/carbon/human/human = user
+
+	if(!show_hud)
+		return
 
 	if(!cell)
 		human.update_spacesuit_hud_icon("missing")
@@ -252,5 +255,21 @@
 		return
 	if(cell)
 		cell.emp_act(severity)
+
+/obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
+	var/datum/gas_mixture/environment = user.loc.return_air()
+	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+	user.say("You want proof? I'll give you proof! Here's proof of what'll happen to you if you stay here with your stuff!", forced = "space helmet suicide")
+	user.visible_message(span_suicide("[user] is removing [user.p_their()] helmet to make a point! Yo, holy shit, [user.p_they()] dead!")) //the use of p_they() instead of p_their() here is intentional
+	user.adjust_bodytemperature(-300)
+	user.apply_status_effect(/datum/status_effect/freon)
+	if(!ishuman(user))
+		return FIRELOSS
+	var/mob/living/carbon/human/humanafterall = user
+	var/datum/disease/advance/cold/pun = new //in the show, arnold survives his stunt, but catches a cold because of it
+	humanafterall.ForceContractDisease(pun, FALSE, TRUE) //this'll show up on health analyzers and the like
+	return FIRELOSS
 
 #undef THERMAL_REGULATOR_COST

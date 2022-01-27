@@ -23,13 +23,13 @@
 		if(number_of_pages == 50)
 			icon_state = "pHbooklet_open"
 		if(!number_of_pages)
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			to_chat(user, span_warning("[src] is empty!"))
 			add_fingerprint(user)
 			return
 		var/obj/item/ph_paper/page = new(get_turf(user))
 		page.add_fingerprint(user)
 		user.put_in_active_hand(page)
-		to_chat(user, "<span class='notice'>You take [page] out of \the [src].</span>")
+		to_chat(user, span_notice("You take [page] out of \the [src]."))
 		number_of_pages--
 		playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 		add_fingerprint(user)
@@ -48,7 +48,7 @@
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
 	if(!number_of_pages)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 		add_fingerprint(user)
 		return
 	if(number_of_pages == 50)
@@ -56,7 +56,7 @@
 	var/obj/item/ph_paper/P = new(get_turf(user))
 	P.add_fingerprint(user)
 	user.put_in_active_hand(P)
-	to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+	to_chat(user, span_notice("You take [P] out of \the [src]."))
 	number_of_pages--
 	playsound(user.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	add_fingerprint(user)
@@ -83,7 +83,7 @@
 		return
 	var/obj/item/reagent_containers/cont = target
 	if(used == TRUE)
-		to_chat(user, "<span class='warning'>[src] has already been used!</span>")
+		to_chat(user, span_warning("[src] has already been used!"))
 		return
 	if(!LAZYLEN(cont.reagents.reagent_list))
 		return
@@ -106,10 +106,10 @@
 
 /obj/item/ph_meter/attack_self(mob/user)
 	if(scanmode == SHORTENED_CHEM_OUTPUT)
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to provide a detailed description of each reagent.</span>")
+		to_chat(user, span_notice("You switch the chemical analyzer to provide a detailed description of each reagent."))
 		scanmode = DETAILED_CHEM_OUTPUT
 	else
-		to_chat(user, "<span class='notice'>You switch the chemical analyzer to not include reagent descriptions in it's report.</span>")
+		to_chat(user, span_notice("You switch the chemical analyzer to not include reagent descriptions in it's report."))
 		scanmode = SHORTENED_CHEM_OUTPUT
 
 /obj/item/ph_meter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -124,16 +124,17 @@
 	out_message += "<span class='notice'><b>Total volume: [round(cont.volume, 0.01)] Current temperature: [round(cont.reagents.chem_temp, 0.1)]K Total pH: [round(cont.reagents.ph, 0.01)]\n"
 	out_message += "Chemicals found in the beaker:</b>\n"
 	if(cont.reagents.is_reacting)
-		out_message += "<span class='warning'>A reaction appears to be occuring currently.</span><span class='notice'>\n"
+		out_message += "[span_warning("A reaction appears to be occuring currently.")]<span class='notice'>\n"
 	for(var/datum/reagent/reagent in cont.reagents.reagent_list)
 		if(reagent.purity < 1) //If the reagent is impure
 			if(reagent.purity < reagent.inverse_chem_val && reagent.inverse_chem) //Below level and has an inverse
 				var/datum/reagent/inverse_reagent = GLOB.chemical_reagents_list[reagent.inverse_chem]
-				out_message += "<span class='warning'>Inverted reagent detected: </span><span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-			else if(reagent.impure_chem) //Otherwise has an impure
-				var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+				out_message += "[span_warning("Inverted reagent detected: ")]<span class='notice'><b>[round(reagent.volume, 0.01)]u of [inverse_reagent.name]</b>, <b>Purity:</b> [round(1 - reagent.purity, 0.01)*100]%, [(scanmode?"[(inverse_reagent.overdose_threshold?"<b>Overdose:</b> [inverse_reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(inverse_reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
+			else //Otherwise it is an impure reagent
 				out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
-				out_message += "<span class='warning'>Impurities detected: </span><span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
+				if(reagent.impure_chem) // might not have impure chem, like multiver
+					var/datum/reagent/impure_reagent = GLOB.chemical_reagents_list[reagent.impure_chem]
+					out_message += "[span_warning("Impurities detected: ")]<span class='notice'><b>[round(reagent.volume - (reagent.volume * reagent.purity), 0.01)]u of [impure_reagent.name]</b>, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]":"")]\n"
 		else
 			out_message += "<b>[round(reagent.volume, 0.01)]u of [reagent.name]</b>, <b>Purity:</b> [round(reagent.purity, 0.01)*100]%, [(scanmode?"[(reagent.overdose_threshold?"<b>Overdose:</b> [reagent.overdose_threshold]u, ":"")]<b>Base pH:</b> [initial(reagent.ph)], <b>Current pH:</b> [reagent.ph].":"<b>Current pH:</b> [reagent.ph].")]\n"
 		if(scanmode)
@@ -158,7 +159,7 @@
 	///What the creation reagent is
 	var/reagent_type = /datum/reagent/consumable/ethanol
 
-/obj/item/burner/Initialize()
+/obj/item/burner/Initialize(mapload)
 	. = ..()
 	create_reagents(max_volume, TRANSPARENT)//We have our own refillable - since we want to heat and pour
 	if(reagent_type)
@@ -170,25 +171,25 @@
 		if(lit)
 			var/obj/item/reagent_containers/container = I
 			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, "<span class='notice'>You heat up the [I] with the [src].</span>")
+			to_chat(user, span_notice("You heat up the [I] with the [src]."))
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
 		else if(I.is_drainable()) //Transfer FROM it TO us. Special code so it only happens when flame is off.
 			var/obj/item/reagent_containers/container = I
 			if(!container.reagents.total_volume)
-				to_chat(user, "<span class='warning'>[container] is empty and can't be poured!</span>")
+				to_chat(user, span_warning("[container] is empty and can't be poured!"))
 				return
 
 			if(reagents.holder_full())
-				to_chat(user, "<span class='warning'>[src] is full.</span>")
+				to_chat(user, span_warning("[src] is full."))
 				return
 
 			var/trans = container.reagents.trans_to(src, container.amount_per_transfer_from_this, transfered_by = user)
-			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [container].</span>")
+			to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [container]."))
 	if(I.heat < 1000)
 		return
 	set_lit(TRUE)
-	user.visible_message("<span class='notice'>[user] lights up the [src].</span>")
+	user.visible_message(span_notice("[user] lights up the [src]."))
 
 /obj/item/burner/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -196,14 +197,14 @@
 		if(is_reagent_container(target))
 			var/obj/item/reagent_containers/container = target
 			container.reagents.expose_temperature(get_temperature())
-			to_chat(user, "<span class='notice'>You heat up the [src].</span>")
+			to_chat(user, span_notice("You heat up the [src]."))
 			playsound(user.loc, 'sound/chemistry/heatdam.ogg', 50, TRUE)
 			return
 	else if(isitem(target))
 		var/obj/item/item = target
 		if(item.heat > 1000)
 			set_lit(TRUE)
-			user.visible_message("<span class='notice'>[user] lights up the [src].</span>")
+			user.visible_message(span_notice("[user] lights up the [src]."))
 
 /obj/item/burner/update_icon_state()
 	. = ..()
@@ -217,8 +218,8 @@
 		force = 5
 		damtype = BURN
 		hitsound = 'sound/items/welder.ogg'
-		attack_verb_continuous = string_list(list("burns", "sings"))
-		attack_verb_simple = string_list(list("burn", "sing"))
+		attack_verb_continuous = string_list(list("burns", "singes"))
+		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
 	else
 		hitsound = "swing_hit"
@@ -238,7 +239,7 @@
 		return
 	if(lit)
 		set_lit(FALSE)
-		user.visible_message("<span class='notice'>[user] snuffs out [src]'s flame.</span>")
+		user.visible_message(span_notice("[user] snuffs out [src]'s flame."))
 
 /obj/item/burner/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(lit && M.IgniteMob())
@@ -299,7 +300,7 @@
 		if(!user.transferItemToLoc(src, target))
 			return
 		attached_to_reagents = target.reagents
-		to_chat(user, "<span class='notice'>You add the [src] to the [target].</span>")
+		to_chat(user, span_notice("You add the [src] to the [target]."))
 		ui_interact(usr, null)
 
 /obj/item/thermometer/ui_interact(mob/user, datum/tgui/ui)
@@ -310,7 +311,7 @@
 
 /obj/item/thermometer/ui_close(mob/user)
 	. = ..()
-	remove_thermometer(user)
+	INVOKE_ASYNC(src, .proc/remove_thermometer, user)
 
 /obj/item/thermometer/ui_status(mob/user)
 	if(!(in_range(src, user)))
@@ -332,7 +333,7 @@
 	attached_to_reagents = null
 
 /obj/item/thermometer/proc/try_put_in_hand(obj/object, mob/living/user)
-	to_chat(user, "<span class='notice'>You remove the [src] from the [attached_to_reagents.my_atom].</span>")
+	to_chat(user, span_notice("You remove the [src] from the [attached_to_reagents.my_atom]."))
 	if(!issilicon(user) && in_range(src.loc, user))
 		user.put_in_hands(object)
 	else

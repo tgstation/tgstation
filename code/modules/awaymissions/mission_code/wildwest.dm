@@ -88,13 +88,13 @@
 	else
 		chargesa--
 		insistinga = 0
-		var/wish = input("You want...","Wish") as null|anything in sortList(list("Power","Wealth","Immortality","Peace"))
+		var/wish = input("You want...","Wish") as null|anything in sort_list(list("Power","Wealth","Immortality","Peace"))
 		switch(wish)
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
 				user.dna.add_mutation(LASEREYES)
-				user.dna.add_mutation(SPACEMUT)
+				user.dna.add_mutation(PRESSUREADAPT)
 				user.dna.add_mutation(XRAY)
 				user.set_species(/datum/species/shadow)
 			if("Wealth")
@@ -126,8 +126,15 @@
 	icon_state = "blobpod"
 	var/triggered = 0
 
-/obj/effect/meatgrinder/Crossed(atom/movable/AM)
+/obj/effect/meatgrinder/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/meatgrinder/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	Bumped(AM)
 
 /obj/effect/meatgrinder/Bumped(atom/movable/AM)
@@ -140,13 +147,13 @@
 	var/mob/living/carbon/human/M = AM
 
 	if(M.stat != DEAD && M.ckey)
-		visible_message("<span class='warning'>[M] triggered [src]!</span>")
+		visible_message(span_warning("[M] triggered [src]!"))
 		triggered = 1
 
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(3, 1, src)
 		s.start()
-		explosion(M, 1, 0, 0, 0)
+		explosion(src, devastation_range = 1, explosion_cause = src)
 		qdel(src)
 
 /////For the Wishgranter///////////
@@ -157,10 +164,10 @@
 
 	var/mob/living/carbon/C = usr
 	if(!C.stat)
-		to_chat(C, "<span class='notice'>You're not dead yet!</span>")
+		to_chat(C, span_notice("You're not dead yet!"))
 		return
 	if(C.has_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT))
-		to_chat(C, "<span class='warning'>You're already resurrecting!</span>")
+		to_chat(C, span_warning("You're already resurrecting!"))
 		return
 	C.apply_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT)
 	return 1

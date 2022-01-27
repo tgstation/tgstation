@@ -118,9 +118,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "at" = (
@@ -129,9 +127,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "au" = (
@@ -157,7 +153,7 @@
 /turf/closed/wall/mineral/wood,
 /area/awaymission/cabin)
 "ay" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/item/storage/backpack/bannerpack{
 	pixel_y = 7
 	},
@@ -176,24 +172,16 @@
 /obj/structure/toilet{
 	dir = 8
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -32
-	},
+/obj/machinery/light/small/directional/west,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aC" = (
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 32
-	},
+/obj/machinery/light/small/directional/east,
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aD" = (
@@ -214,11 +202,7 @@
 	},
 /area/awaymission/cabin)
 "aF" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "cabin APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -237,9 +221,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "aI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -255,9 +237,7 @@
 /area/awaymission/cabin)
 "aK" = (
 /obj/structure/table/optable,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "aL" = (
@@ -325,7 +305,7 @@
 /obj/structure/janitorialcart,
 /obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
-/obj/item/caution,
+/obj/item/clothing/suit/caution,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -398,9 +378,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bf" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -411,7 +389,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bh" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bi" = (
@@ -425,15 +403,11 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_y = 32
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bk" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bl" = (
@@ -449,9 +423,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bn" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bo" = (
@@ -467,22 +439,16 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bq" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/machinery/vending/cigarette,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "br" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bs" = (
-/obj/machinery/newscaster{
-	pixel_y = 32
-	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bt" = (
@@ -613,9 +579,7 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/snowforest)
 "bT" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/item/instrument/guitar,
 /obj/item/instrument/violin,
 /obj/item/instrument/accordion,
@@ -635,9 +599,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "bW" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/microwave,
 /turf/open/floor/iron/cafeteria,
@@ -647,9 +609,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "bY" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/processor,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
@@ -769,15 +729,11 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer/on{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cv" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "cx" = (
@@ -788,9 +744,7 @@
 /turf/closed/indestructible/riveted,
 /area/awaymission/cabin/caves/mountain)
 "cz" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/cable,
 /obj/structure/musician/piano{
 	desc = "Very theatrical.";
@@ -827,9 +781,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cE" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -883,9 +835,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cL" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -922,9 +872,8 @@
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/snowforest)
 "cS" = (
-/obj/machinery/button/door{
-	id = "garage_cabin";
-	pixel_y = 24
+/obj/machinery/button/door/directional/north{
+	id = "garage_cabin"
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
@@ -935,9 +884,7 @@
 	},
 /area/awaymission/cabin)
 "cU" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "cV" = (
@@ -1299,7 +1246,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ec" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -1309,7 +1256,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ee" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "ef" = (
@@ -1356,9 +1303,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/snowforest)
 "en" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /obj/effect/light_emitter{
 	set_cap = 1;
 	set_luminosity = 4
@@ -1570,9 +1515,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/snowforest)
 "eP" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1774,9 +1717,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/cabin/caves/mountain)
 "fm" = (
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2547,7 +2488,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "gN" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
@@ -2602,7 +2543,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/item/clothing/shoes/sneakers/brown,
 /obj/item/clothing/head/helmet/police{
-	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20);
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 15, "bio" = 0, "fire" = 20, "acid" = 20);
 	desc = "I am the law!"
 	},
 /obj/structure/closet{
@@ -2610,7 +2551,7 @@
 	name = "uniform closet"
 	},
 /obj/item/clothing/under/rank/security/officer/spacepol{
-	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10);
+	armor = list("melee" = 2, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "fire" = 10, "acid" = 10);
 	desc = "Anyone enjoying their time while working in a megacorporation, planetary government, or band of pirates is under the jurisdiction of the fun police."
 	},
 /turf/open/floor/iron/dark,
@@ -2725,9 +2666,7 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
 "hj" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2786,7 +2725,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "ht" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -2884,7 +2823,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "hH" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
@@ -2931,7 +2870,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hQ" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "hR" = (
@@ -2968,7 +2907,7 @@
 	name = "Who"
 	},
 /obj/item/clothing/head/helmet/knight/yellow{
-	armor = list("melee" = 11, "bullet" = 2, "laser" = 1, "energy" = 1, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 10);
+	armor = list("melee" = 11, "bullet" = 2, "laser" = 1, "energy" = 1, "bomb" = 5, "bio" = 2, "fire" = 0, "acid" = 10);
 	desc = "A classic metal helmet. The cold has made it unreliable though.";
 	name = "old medieval helmet";
 	pixel_y = 7
@@ -3091,7 +3030,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "il" = (
-/obj/item/toy/prize/deathripley{
+/obj/item/toy/mecha/deathripley{
 	desc = "The mining mecha of the exploration team.";
 	name = "exploraton squad Ripley";
 	pixel_y = 15
@@ -3106,15 +3045,11 @@
 /area/awaymission/cabin/caves/sovietcave)
 "in" = (
 /obj/structure/cable,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "io" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -24
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ip" = (
@@ -3222,7 +3157,7 @@
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iJ" = (
-/obj/structure/bed/alien,
+/obj/structure/bed/abductor,
 /turf/open/floor/plating/snowed,
 /area/awaymission/cabin/caves)
 "iK" = (
@@ -3387,102 +3322,44 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "jf" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "fightingcommunity60";
 	name = "shutter button";
-	pixel_x = -8;
-	pixel_y = 30
+	pixel_x = -8
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "WheresTheSyndiBalloon";
-	name = "airlock button";
-	pixel_x = 8;
-	pixel_y = 30
+	pixel_x = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jg" = (
-/obj/machinery/button/door{
-	id = "snowdinbutworse2";
-	name = "airlock button";
-	pixel_y = -27
+/obj/machinery/button/door/directional/south{
+	id = "snowdinbutworse2"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jh" = (
-/obj/machinery/button/door{
-	id = "snowdinbutworse1";
-	name = "airlock button";
-	pixel_y = -27
+/obj/machinery/button/door/directional/south{
+	id = "snowdinbutworse1"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ji" = (
-/obj/machinery/button/door{
-	id = "snowdinbutworse3";
-	name = "airlock button";
-	pixel_y = -27
+/obj/machinery/button/door/directional/south{
+	id = "snowdinbutworse3"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jj" = (
-/obj/machinery/button/door{
-	id = "snowdinbutworse4";
-	name = "airlock button";
-	pixel_y = -27
+/obj/machinery/button/door/directional/south{
+	id = "snowdinbutworse4"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jk" = (
-/obj/machinery/button/door{
-	id = "snowdinbutworse5";
-	name = "airlock button";
-	pixel_y = -27
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"jl" = (
-/obj/machinery/button/door{
-	id = "fightingcommunity10";
-	name = "shutter button";
-	pixel_x = -28;
-	pixel_y = 30
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"jm" = (
-/obj/machinery/button/door{
-	id = "fightingcommunity20";
-	name = "shutter button";
-	pixel_x = 28;
-	pixel_y = 30
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"jn" = (
-/obj/machinery/button/door{
-	id = "fightingcommunity30";
-	name = "shutter button";
-	pixel_x = -28;
-	pixel_y = 30
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"jo" = (
-/obj/machinery/button/door{
-	id = "fightingcommunity40";
-	name = "shutter button";
-	pixel_x = 28;
-	pixel_y = 30
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"jp" = (
-/obj/machinery/button/door{
-	id = "fightingcommunity50";
-	name = "shutter button";
-	pixel_x = -28;
-	pixel_y = 30
+/obj/machinery/button/door/directional/south{
+	id = "snowdinbutworse5"
 	},
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -3497,9 +3374,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "jr" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
@@ -3511,9 +3386,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "js" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/brute,
@@ -3521,9 +3394,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "jt" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
@@ -3535,9 +3406,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ju" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
@@ -3549,9 +3418,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jv" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
@@ -3563,9 +3430,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "jw" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/personal/cabinet{
 	anchored = 1
 	},
@@ -3681,9 +3546,7 @@
 /area/awaymission/cabin/lumbermill)
 "jN" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -3866,9 +3729,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "kk" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
@@ -4084,18 +3945,14 @@
 /area/awaymission/cabin/caves/sovietcave)
 "kG" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "kH" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -4126,9 +3983,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/head/helmet/rus_ushanka,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -4199,7 +4054,7 @@
 /area/awaymission/cabin/caves)
 "kR" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/carpet,
@@ -4397,7 +4252,7 @@
 /area/awaymission/cabin/caves)
 "lr" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/shiv/carrot,
+/obj/item/knife/shiv/carrot,
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
@@ -4446,7 +4301,7 @@
 	name = "icy wind"
 	},
 /obj/item/clothing/head/helmet/skull{
-	armor = list("melee" = 15, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 10, "bio" = 5, "rad" = 20, "fire" = 20, "acid" = 20);
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 5, "energy" = 2, "bomb" = 10, "bio" = 5, "fire" = 20, "acid" = 20);
 	desc = "It's not bloody for some reason. Dear god.";
 	name = "human skull"
 	},
@@ -4514,11 +4369,11 @@
 /area/awaymission/cabin/caves)
 "lH" = (
 /obj/effect/decal/remains/human,
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lI" = (
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "lJ" = (
@@ -4673,9 +4528,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/caves)
 "mf" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -4698,9 +4551,7 @@
 	},
 /area/awaymission/cabin/caves)
 "mh" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
@@ -4927,7 +4778,7 @@
 /area/awaymission/cabin/caves)
 "mI" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
 	},
@@ -4957,9 +4808,7 @@
 	},
 /area/awaymission/cabin/caves/sovietcave)
 "mO" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red{
 	name = "soviet floor"
@@ -5227,13 +5076,11 @@
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "nN" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nO" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table/wood,
 /obj/machinery/chem_dispenser/drinks{
 	dir = 8
@@ -5242,22 +5089,18 @@
 /area/awaymission/cabin)
 "nR" = (
 /obj/structure/cable,
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nS" = (
-/obj/machinery/newscaster{
-	pixel_y = -32
-	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nT" = (
 /obj/structure/window{
 	dir = 4
 	},
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "nU" = (
@@ -5273,6 +5116,42 @@
 	name = "Maintenance"
 	},
 /turf/open/floor/plating,
+/area/awaymission/cabin)
+"zv" = (
+/obj/structure/dresser,
+/obj/machinery/button/door/directional/north{
+	id = "fightingcommunity40";
+	name = "shutter button"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"Na" = (
+/obj/machinery/button/door/directional/north{
+	id = "fightingcommunity10";
+	name = "shutter button"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"Nq" = (
+/obj/machinery/button/door/directional/north{
+	id = "fightingcommunity20";
+	name = "shutter button"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"So" = (
+/obj/machinery/button/door/directional/north{
+	id = "fightingcommunity30";
+	name = "shutter button"
+	},
+/turf/open/floor/wood,
+/area/awaymission/cabin)
+"Vg" = (
+/obj/machinery/button/door/directional/north{
+	id = "fightingcommunity50";
+	name = "shutter button"
+	},
+/turf/open/floor/wood,
 /area/awaymission/cabin)
 
 (1,1,1) = {"
@@ -25216,7 +25095,7 @@ ac
 dB
 an
 an
-aq
+Na
 aV
 jr
 au
@@ -25473,7 +25352,7 @@ ac
 dB
 iZ
 aN
-jl
+aq
 az
 bb
 bb
@@ -28557,7 +28436,7 @@ gP
 dB
 ja
 bp
-jm
+aq
 az
 az
 bb
@@ -28814,7 +28693,7 @@ ac
 dB
 an
 an
-aq
+Nq
 aA
 aI
 aA
@@ -29328,7 +29207,7 @@ ac
 dB
 an
 an
-aq
+So
 aV
 ju
 au
@@ -29585,7 +29464,7 @@ ac
 dB
 jb
 aN
-jn
+aq
 az
 bb
 bb
@@ -32669,7 +32548,7 @@ ac
 dB
 jc
 bp
-jo
+aq
 az
 bb
 bb
@@ -32926,7 +32805,7 @@ ac
 dB
 an
 an
-au
+zv
 aA
 aI
 aA
@@ -33440,7 +33319,7 @@ ac
 dB
 an
 an
-aq
+Vg
 aV
 jw
 au
@@ -33697,7 +33576,7 @@ ac
 dB
 jd
 aN
-jp
+aq
 az
 bb
 bb

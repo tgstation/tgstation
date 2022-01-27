@@ -50,10 +50,12 @@ Key procs
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/owner
+	var/atom/owner
 
 /// Initializes, and copies in the languages from the current atom if available.
-/datum/language_holder/New(_owner)
+/datum/language_holder/New(atom/_owner)
+	if(_owner && QDELETED(_owner))
+		CRASH("Langauge holder added to a qdeleting thing, what the fuck \ref[_owner]")
 	owner = _owner
 	if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -63,6 +65,7 @@ Key procs
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
+	owner = null
 	return ..()
 
 /// Grants the supplied language.
@@ -293,11 +296,6 @@ Key procs
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/slime = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/slime = list(LANGUAGE_ATOM))
-
-/datum/language_holder/swarmer
-	understood_languages = list(/datum/language/swarmer = list(LANGUAGE_ATOM))
-	spoken_languages = list(/datum/language/swarmer = list(LANGUAGE_ATOM))
-	blocked_languages = list(/datum/language/common = list(LANGUAGE_ATOM))
 
 /datum/language_holder/venus
 	understood_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))

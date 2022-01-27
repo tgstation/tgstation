@@ -43,7 +43,7 @@
 	if(stored_pda || stored_id_card)
 		. += "[initial(icon_state)]-closed"
 
-/obj/machinery/pdapainter/Initialize()
+/obj/machinery/pdapainter/Initialize(mapload)
 	. = ..()
 
 	if(!target_dept)
@@ -108,15 +108,15 @@
 		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(!O.tool_start_check(user, amount=0))
 				return
-			user.visible_message("<span class='notice'>[user] is repairing [src].</span>", \
-							"<span class='notice'>You begin repairing [src]...</span>", \
-							"<span class='hear'>You hear welding.</span>")
+			user.visible_message(span_notice("[user] is repairing [src]."), \
+							span_notice("You begin repairing [src]..."), \
+							span_hear("You hear welding."))
 			if(O.use_tool(src, user, 40, volume=50))
 				if(!(machine_stat & BROKEN))
 					return
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				to_chat(user, span_notice("You repair [src]."))
 				set_machine_stat(machine_stat & ~BROKEN)
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance(UPDATE_ICON)
 			return
 		return ..()
@@ -127,11 +127,11 @@
 
 	// Chameleon checks first so they can exit the logic early if they're detected.
 	if(istype(O, /obj/item/card/id/advanced/chameleon))
-		to_chat(user, "<span class='warning'>The machine rejects your [O]. This ID card does not appear to be compatible with the PDA Painter.</span>")
+		to_chat(user, span_warning("The machine rejects your [O]. This ID card does not appear to be compatible with the PDA Painter."))
 		return
 
 	if(istype(O, /obj/item/pda/chameleon))
-		to_chat(user, "<span class='warning'>The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter.</span>")
+		to_chat(user, span_warning("The machine rejects your [O]. This PDA does not appear to be compatible with the PDA Painter."))
 		return
 
 	if(istype(O, /obj/item/pda))
@@ -140,7 +140,7 @@
 
 	if(istype(O, /obj/item/card/id))
 		if(stored_id_card)
-			to_chat(user, "<span class='warning'>There is already an ID card inside!</span>")
+			to_chat(user, span_warning("There is already an ID card inside!"))
 			return
 
 		if(!user.transferItemToLoc(O, src))
@@ -154,7 +154,7 @@
 	return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	obj_break()
+	atom_break()
 
 /**
  * Insert a PDA into the machine.
@@ -314,13 +314,20 @@
 				return TRUE
 
 			var/selection = params["selection"]
-			for(var/path in pda_types)
-				if(!(pda_types[path] == selection))
-					continue
+			var/obj/item/pda/pda_path = /obj/item/pda
 
-				var/obj/item/pda/pda_path = path
-				stored_pda.icon_state = initial(pda_path.icon_state)
-				stored_pda.desc = initial(pda_path.desc)
+			for(var/path in pda_types)
+				if(pda_types[path] == selection)
+					pda_path = path
+					break
+
+			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
+				stored_pda.set_greyscale(initial(pda_path.greyscale_colors), initial(pda_path.greyscale_config))
+			else
+				stored_pda.icon = initial(pda_path.icon)
+			stored_pda.icon_state = initial(pda_path.icon_state)
+			stored_pda.desc = initial(pda_path.desc)
+
 			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)
@@ -334,7 +341,14 @@
 				if(SSid_access.apply_trim_to_card(stored_id_card, path, copy_access = FALSE))
 					return TRUE
 
-				to_chat(usr, "<span class='warning'>The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data.</span>")
+				to_chat(usr, span_warning("The trim you selected could not be added to \the [stored_id_card]. You will need a rarer ID card to imprint that trim data."))
+
+			return TRUE
+		if("reset_card")
+			if((machine_stat & BROKEN) || !stored_id_card)
+				return TRUE
+
+			stored_id_card.clear_account()
 
 			return TRUE
 

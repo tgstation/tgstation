@@ -99,7 +99,7 @@
 		if("id")
 			if(params["value"])
 				if(length(params["value"]) > 32)
-					to_chat(operator, "<span class='warning'>Error: Machine ID too long!</span>")
+					to_chat(operator, span_warning("Error: Machine ID too long!"))
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
@@ -109,12 +109,12 @@
 		if("network")
 			if(params["value"])
 				if(length(params["value"]) > 15)
-					to_chat(operator, "<span class='warning'>Error: Network name too long!</span>")
+					to_chat(operator, span_warning("Error: Network name too long!"))
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 					return
 				else
 					for(var/obj/machinery/telecomms/T in links)
-						T.links.Remove(src)
+						remove_link(T)
 					network = params["value"]
 					links = list()
 					log_game("[key_name(operator)] has changed the network for [src] at [AREACOORD(src)] to [network].")
@@ -123,14 +123,13 @@
 			if(params["value"])
 				tempfreq = text2num(params["value"]) * 10
 		if("freq")
-			var/newfreq = tempfreq * 10
-			if(newfreq == FREQ_SYNDICATE)
-				to_chat(operator, "<span class='warning'>Error: Interference preventing filtering frequency: \"[newfreq / 10] GHz\"</span>")
+			if(tempfreq == FREQ_SYNDICATE)
+				to_chat(operator, span_warning("Error: Interference preventing filtering frequency: \"[tempfreq / 10] kHz\""))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 			else
-				if(!(newfreq in freq_listening) && newfreq < 10000)
-					freq_listening.Add(newfreq)
-					log_game("[key_name(operator)] added frequency [newfreq] for [src] at [AREACOORD(src)].")
+				if(!(tempfreq in freq_listening))
+					freq_listening.Add(tempfreq)
+					log_game("[key_name(operator)] added frequency [tempfreq] for [src] at [AREACOORD(src)].")
 					. = TRUE
 		if("delete")
 			freq_listening.Remove(params["value"])
@@ -139,22 +138,11 @@
 		if("unlink")
 			var/obj/machinery/telecomms/T = links[text2num(params["value"])]
 			if(T)
-				// Remove link entries from both T and src.
-				if(T.links)
-					T.links.Remove(src)
-				links.Remove(T)
-				log_game("[key_name(operator)] unlinked [src] and [T] at [AREACOORD(src)].")
-				. = TRUE
+				. = remove_link(T, operator)
 		if("link")
 			if(heldmultitool)
 				var/obj/machinery/telecomms/T = heldmultitool.buffer
-				if(istype(T) && T != src)
-					if(!(src in T.links))
-						T.links += src
-					if(!(T in links))
-						links += T
-						log_game("[key_name(operator)] linked [src] for [T] at [AREACOORD(src)].")
-						. = TRUE
+				. = add_new_link(T, operator)
 		if("buffer")
 			heldmultitool.buffer = src
 			. = TRUE
@@ -164,6 +152,42 @@
 
 	add_act(action, params)
 	. = TRUE
+
+///adds new_connection to src's links list AND vice versa. also updates links_by_telecomms_type
+/obj/machinery/telecomms/proc/add_new_link(obj/machinery/telecomms/new_connection, mob/user)
+	if(!istype(new_connection) || new_connection == src)
+		return FALSE
+
+	if((new_connection in links) && (src in new_connection.links))
+		return FALSE
+
+	links |= new_connection
+	new_connection.links |= src
+
+	LAZYADDASSOCLIST(links_by_telecomms_type, new_connection.telecomms_type, new_connection)
+	LAZYADDASSOCLIST(new_connection.links_by_telecomms_type, telecomms_type, src)
+
+	if(user)
+		log_game("[key_name(user)] linked [src] for [new_connection] at [AREACOORD(src)].")
+	return TRUE
+
+///removes old_connection from src's links list AND vice versa. also updates links_by_telecomms_type
+/obj/machinery/telecomms/proc/remove_link(obj/machinery/telecomms/old_connection, mob/user)
+	if(!istype(old_connection) || old_connection == src)
+		return FALSE
+
+	if(old_connection in links)
+		links -= old_connection
+		LAZYREMOVEASSOC(links_by_telecomms_type, old_connection.telecomms_type, old_connection)
+
+	if(src in old_connection.links)
+		old_connection.links -= src
+		LAZYREMOVEASSOC(old_connection.links_by_telecomms_type, telecomms_type, src)
+
+	if(user)
+		log_game("[key_name(user)] unlinked [src] and [old_connection] at [AREACOORD(src)].")
+
+	return TRUE
 
 /obj/machinery/telecomms/proc/add_option()
 	return

@@ -322,13 +322,43 @@ var statcontentdiv = document.getElementById('statcontent');
 var storedimages = [];
 var split_admin_tabs = false;
 
+var connected = false;
+var commandQueue = [];
+
+// Any BYOND verb call must go through this, as if a verb is sent during reconnect then
+// it will cause the reconnect to fail.
+// This function will either call immediately, or queue until
+// BYOND confirms we are connected.
+function send_byond_command(command) {
+	var href = "byond://winset?command=" + command;
+
+	if (connected) {
+		window.location.href = href;
+	} else {
+		commandQueue.push(href);
+	}
+}
+
 // Any BYOND commands that could result in the client's focus changing go through this
 // to ensure that when we relinquish our focus, we don't do it after the result of
 // a command has already taken focus for itself.
-function send_byond_focus_command(url) {
-	setTimeout(function() {
-		window.location.href = url;
-	}, 0);
+function run_after_focus(callback) {
+	setTimeout(callback, 0);
+}
+
+function connected_to_server() {
+	if (connected) {
+		return;
+	}
+
+	connected = true;
+
+	for (var index = 0; index < commandQueue.length; index++) {
+		// This is just setting it a lot, is this not going to cancel?
+		window.location.href = commandQueue[index];
+	}
+
+	commandQueue = [];
 }
 
 function update_split_admin_tabs(status) {
@@ -497,7 +527,7 @@ function wipe_verbs() {
 
 function update_verbs() {
 	wipe_verbs();
-	window.location.href = "byond://winset?command=Update-Verbs";
+	send_byond_command("Update-Verbs");
 }
 
 function add_verb_list(v) {
@@ -544,6 +574,7 @@ function remove_verb_list(v) {
 // passes a 2D list of (verbcategory, verbname) creates tabs and adds verbs to respective list
 // example (IC, Say)
 function init_verbs(c, v) {
+	connected_to_server();
 	wipe_verbs(); // remove all verb categories so we can replace them
 	checkStatusTab(); // remove all status tabs
 	verb_tabs = JSON.parse(c);
@@ -576,12 +607,12 @@ function SendTabsToByond(){
 }
 
 function SendTabToByond(tab) {
-	window.location.href = "byond://winset?command=Send-Tabs " + tab;
+	send_byond_command("Send-Tabs " + tab);
 }
 
 //Byond can't have this tab anymore since we're removing it
 function TakeTabFromByond(tab) {
-	window.location.href = "byond://winset?command=Remove-Tabs " + tab;
+	send_byond_command("Remove-Tabs " + tab);
 }
 
 function update(global_data, ping_entry, other_entries) {
@@ -697,8 +728,9 @@ function tab_change(tab) {
 }
 
 function set_byond_tab(tab){
-	window.location.href = "byond://winset?command=Set-Tab " + tab;
+	send_byond_command("Set-Tab " + tab);
 }
+
 function draw_debug() {
 	statcontentdiv[textContentKey] = "";
 	var wipeverbstabs = document.createElement("div");
@@ -788,7 +820,7 @@ function draw_status() {
 	}
 	if(verb_tabs.length == 0 || !verbs)
 	{
-		window.location.href = "byond://winset?command=Fix-Stat-Panel";
+		send_byond_command("Fix-Stat-Panel");
 	}
 }
 
@@ -862,7 +894,6 @@ function remove_tickets() {
 function remove_interviews() {
 	if(tickets) {
 		tickets = [];
-		update_verbs();
 	}
 	checkStatusTab();
 }
@@ -938,7 +969,17 @@ function draw_listedturf() {
 			// rather than every onmousedown getting the "part" of the last entry.
 			return function(e) {
 				e.preventDefault();
-				clickcatcher = "?src=" + part[1] + ";statpanel_item_click=1";
+				clickcatcher = "?src=" + part[1];
+				switch(e.button){
+					case 1:
+						clickcatcher += ";statpanel_item_click=middle"
+						break;
+					case 2:
+						clickcatcher += ";statpanel_item_click=right"
+						break;
+					default:
+						clickcatcher += ";statpanel_item_click=left"
+				}
 				if(e.shiftKey){
 					clickcatcher += ";statpanel_item_shiftclick=1";
 				}
@@ -975,7 +1016,7 @@ function draw_sdql2(){
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[2] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[2] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -1001,12 +1042,12 @@ function draw_tickets() {
 		var td2 = document.createElement("td");
 		if(part[2]) {
 			var a = document.createElement("a");
-			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=1;action=ticket" ;
+			a.href = "?_src_=holder;admin_token=" + href_token + ";ahelp=" + part[2] + ";ahelp_action=ticket;statpanel_item_click=left;action=ticket" ;
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else if(part[3]){
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[1];
 			td2.appendChild(a);
 		} else {
@@ -1028,7 +1069,7 @@ function draw_interviews() {
 	manDiv.className = "interview_panel_controls"
 	var manLink = document.createElement("a");
 	manLink[textContentKey] = "Open Interview Manager Panel";
-	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=1";
+	manLink.href = "?_src_=holder;admin_token=" + href_token + ";interview_man=1;statpanel_item_click=left";
 	manDiv.appendChild(manLink);
 	body.appendChild(manDiv);
 
@@ -1060,7 +1101,7 @@ function draw_interviews() {
 		var td = document.createElement("td");
 		var a = document.createElement("a");
 		a[textContentKey] = part["status"];
-		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=1";
+		a.href = "?_src_=holder;admin_token=" + href_token + ";interview=" + part["ref"] + ";statpanel_item_click=left";
 		td.appendChild(a);
 		tr.appendChild(td);
 		table.appendChild(tr);
@@ -1080,7 +1121,7 @@ function draw_spells(cat) {
 		var td2 = document.createElement("td");
 		if(part[3]) {
 			var a = document.createElement("a");
-			a.href = "?src=" + part[3] + ";statpanel_item_click=1";
+			a.href = "?src=" + part[3] + ";statpanel_item_click=left";
 			a[textContentKey] = part[2];
 			td2.appendChild(a);
 		} else {
@@ -1095,7 +1136,9 @@ function draw_spells(cat) {
 
 function make_verb_onclick(command) {
 	return function() {
-		send_byond_focus_command("byond://winset?command=" + command);
+		run_after_focus(function() {
+			send_byond_command(command);
+		});
 	};
 }
 
@@ -1172,7 +1215,7 @@ function set_style_sheet(sheet) {
 		var currentSheet = document.getElementById("goonStyle");
 		currentSheet.parentElement.removeChild(currentSheet);
 	}
-	var head  = document.getElementsByTagName('head')[0];
+	var head = document.getElementsByTagName('head')[0];
 	var sheetElement = document.createElement("link");
 	sheetElement.id = "goonStyle";
 	sheetElement.rel = "stylesheet";
@@ -1183,7 +1226,9 @@ function set_style_sheet(sheet) {
 }
 
 function restoreFocus() {
-	send_byond_focus_command("byond://winset?map.focus=true")
+	run_after_focus(function() {
+		window.location.href = "byond://winset?map.focus=true";
+	});
 }
 
 document[addEventListenerKey]("mouseup", restoreFocus);

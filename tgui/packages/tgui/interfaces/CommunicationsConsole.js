@@ -13,7 +13,13 @@ const STATE_MESSAGES = "messages";
 // Used for whether or not you need to swipe to confirm an alert level change
 const SWIPE_NEEDED = "SWIPE_NEEDED";
 
-const sortByCreditCost = sortBy(shuttle => shuttle.creditCost);
+const EMAG_SHUTTLE_NOTICE
+  = "This shuttle is deemed significantly dangerous to the crew, and is only supplied by the Syndicate.";
+
+const sortShuttles = sortBy(
+  shuttle => !shuttle.emagOnly,
+  shuttle => shuttle.creditCost
+);
 
 const AlertButton = (props, context) => {
   const { act, data } = useBackend(context);
@@ -157,7 +163,7 @@ const PageBuyingShuttle = (props, context) => {
         Budget: <b>{data.budget.toLocaleString()}</b> credits
       </Section>
 
-      {sortByCreditCost(data.shuttles).map(shuttle => (
+      {sortShuttles(data.shuttles).map(shuttle => (
         <Section
           title={(
             <span
@@ -172,6 +178,7 @@ const PageBuyingShuttle = (props, context) => {
           buttons={(
             <Button
               content={`${shuttle.creditCost.toLocaleString()} credits`}
+              color={shuttle.emagOnly ? "red" : "default"}
               disabled={data.budget < shuttle.creditCost}
               onClick={() => act("purchaseShuttle", {
                 shuttle: shuttle.ref,
@@ -179,7 +186,7 @@ const PageBuyingShuttle = (props, context) => {
               tooltip={
                 data.budget < shuttle.creditCost
                   ? `You need ${shuttle.creditCost - data.budget} more credits.`
-                  : undefined
+                  : (shuttle.emagOnly ? EMAG_SHUTTLE_NOTICE : undefined)
               }
               tooltipPosition="left"
             />
@@ -310,6 +317,7 @@ const PageMain = (props, context) => {
     canSetAlertLevel,
     canToggleEmergencyAccess,
     emagged,
+    syndicate,
     emergencyAccess,
     importantActionReady,
     sectors,
@@ -336,48 +344,50 @@ const PageMain = (props, context) => {
 
   return (
     <Box>
-      <Section title="Emergency Shuttle">
-        {shuttleCalled && (
-          <Button.Confirm
-            icon="space-shuttle"
-            content="Recall Emergency Shuttle"
-            color="bad"
-            disabled={!canRecallShuttles || !shuttleRecallable}
-            tooltip={(
-              canRecallShuttles && (
-                !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
-              ) || (
-                "You do not have permission to recall the emergency shuttle."
-              )
-            )}
-            tooltipPosition="bottom-right"
-            onClick={() => act("recallShuttle")}
-          />
-        ) || (
-          <Button
-            icon="space-shuttle"
-            content="Call Emergency Shuttle"
-            disabled={shuttleCanEvacOrFailReason !== 1}
-            tooltip={
-              shuttleCanEvacOrFailReason !== 1
-                ? shuttleCanEvacOrFailReason
-                : undefined
-            }
-            tooltipPosition="bottom-right"
-            onClick={() => setCallingShuttle(true)}
-          />
-        )}
-        {!!shuttleCalledPreviously && (
-          shuttleLastCalled && (
-            <Box>
-              Most recent shuttle call/recall traced to:
-              {" "}<b>{shuttleLastCalled}</b>
-            </Box>
+      {!syndicate && (
+        <Section title="Emergency Shuttle">
+          {!!shuttleCalled && (
+            <Button.Confirm
+              icon="space-shuttle"
+              content="Recall Emergency Shuttle"
+              color="bad"
+              disabled={!canRecallShuttles || !shuttleRecallable}
+              tooltip={(
+                canRecallShuttles && (
+                  !shuttleRecallable && "It's too late for the emergency shuttle to be recalled."
+                ) || (
+                  "You do not have permission to recall the emergency shuttle."
+                )
+              )}
+              tooltipPosition="bottom-end"
+              onClick={() => act("recallShuttle")}
+            />
           ) || (
-            <Box>Unable to trace most recent shuttle/recall signal.</Box>
-          )
-        )}
-      </Section>
+            <Button
+              icon="space-shuttle"
+              content="Call Emergency Shuttle"
+              disabled={shuttleCanEvacOrFailReason !== 1}
+              tooltip={
+                shuttleCanEvacOrFailReason !== 1
+                  ? shuttleCanEvacOrFailReason
+                  : undefined
+              }
+              tooltipPosition="bottom-end"
+              onClick={() => setCallingShuttle(true)}
+            />
+          )}
+          {!!shuttleCalledPreviously && (
+            shuttleLastCalled && (
+              <Box>
+                Most recent shuttle call/recall traced to:
+                {" "}<b>{shuttleLastCalled}</b>
+              </Box>
+            ) || (
+              <Box>Unable to trace most recent shuttle/recall signal.</Box>
+            )
+          )}
+        </Section>
+      )}
 
       {!!canSetAlertLevel && (
         <Section title="Alert Level">
@@ -427,11 +437,13 @@ const PageMain = (props, context) => {
             onClick={() => act("toggleEmergencyAccess")}
           />}
 
-          <Button
-            icon="desktop"
-            content="Set Status Display"
-            onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
-          />
+          {!syndicate && (
+            <Button
+              icon="desktop"
+              content="Set Status Display"
+              onClick={() => act("setState", { state: STATE_CHANGING_STATUS })}
+            />
+          )}
 
           <Button
             icon="envelope-o"
@@ -464,7 +476,7 @@ const PageMain = (props, context) => {
             onClick={() => setRequestingNukeCodes(true)}
           />}
 
-          {!!emagged && <Button
+          {(!!emagged && !syndicate) && <Button
             icon="undo"
             content="Restore Backup Routing Data"
             onClick={() => act("restoreBackupRoutingData")}

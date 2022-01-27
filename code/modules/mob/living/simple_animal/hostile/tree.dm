@@ -35,7 +35,7 @@
 	emote_taunt = list("growls")
 	taunt_chance = 20
 
-	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 2, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 2.5
 	minbodytemp = 0
 	maxbodytemp = 1200
@@ -47,7 +47,7 @@
 
 	var/is_tree = TRUE
 
-/mob/living/simple_animal/hostile/tree/Initialize()
+/mob/living/simple_animal/hostile/tree/Initialize(mapload)
 	. = ..()
 	add_cell_sample()
 
@@ -71,8 +71,8 @@
 		var/mob/living/carbon/C = target
 		if(prob(15))
 			C.Paralyze(60)
-			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
-					"<span class='userdanger'>\The [src] knocks you down!</span>")
+			C.visible_message(span_danger("\The [src] knocks down \the [C]!"), \
+					span_userdanger("\The [src] knocks you down!"))
 
 /mob/living/simple_animal/hostile/tree/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -92,13 +92,13 @@
 	loot = list(/obj/item/stack/rods)
 	speak_emote = list("polls")
 	faction = list()
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	is_tree = FALSE
 
 /mob/living/simple_animal/hostile/tree/festivus/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 	if(!user.combat_mode)
-		visible_message("<span class='warning'>[src] crackles with static electricity!</span>")
+		visible_message(span_warning("[src] crackles with static electricity!"))
 		for(var/obj/item/stock_parts/cell/C in range(2, get_turf(src)))
 			C.give(75)
 		for(var/mob/living/silicon/robot/R in range(2, get_turf(src)))

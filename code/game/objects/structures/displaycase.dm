@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	resistance_flags = ACID_PROOF
-	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 70, ACID = 100)
+	armor = list(MELEE = 30, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 70, ACID = 100)
 	max_integrity = 200
 	integrity_failure = 0.25
 	var/obj/item/showpiece = null
@@ -20,8 +20,10 @@
 	var/list/start_showpieces = list() //Takes sublists in the form of list("type" = /obj/item/bikehorn, "trophy_message" = "henk")
 	var/trophy_message = ""
 	var/glass_fix = TRUE
+	///Represents a signel source of screaming when broken
+	var/datum/alarm_handler/alarm_manager
 
-/obj/structure/displaycase/Initialize()
+/obj/structure/displaycase/Initialize(mapload)
 	. = ..()
 	if(start_showpieces.len && !start_showpiece_type)
 		var/list/showpiece_entry = pick(start_showpieces)
@@ -32,6 +34,7 @@
 	if(start_showpiece_type)
 		showpiece = new start_showpiece_type (src)
 	update_appearance()
+	alarm_manager = new(src)
 
 /obj/structure/displaycase/vv_edit_var(vname, vval)
 	. = ..()
@@ -49,14 +52,15 @@
 /obj/structure/displaycase/Destroy()
 	QDEL_NULL(electronics)
 	QDEL_NULL(showpiece)
+	QDEL_NULL(alarm_manager)
 	return ..()
 
 /obj/structure/displaycase/examine(mob/user)
 	. = ..()
 	if(alert)
-		. += "<span class='notice'>Hooked up with an anti-theft system.</span>"
+		. += span_notice("Hooked up with an anti-theft system.")
 	if(showpiece)
-		. += "<span class='notice'>There's \a [showpiece] inside.</span>"
+		. += span_notice("There's \a [showpiece] inside.")
 	if(trophy_message)
 		. += "The plaque reads:\n [trophy_message]"
 
@@ -82,9 +86,10 @@
 			trigger_alarm()
 	qdel(src)
 
-/obj/structure/displaycase/obj_break(damage_flag)
+/obj/structure/displaycase/atom_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		density = FALSE
+		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
 		playsound(src, "shatter", 70, TRUE)
@@ -97,6 +102,10 @@
 		return
 	var/area/alarmed = get_area(src)
 	alarmed.burglaralert(src)
+
+	alarm_manager.send_alarm(ALARM_BURGLAR)
+	addtimer(CALLBACK(alarm_manager, /datum/alarm_handler/proc/clear_alarm, ALARM_BURGLAR), 1 MINUTES)
+
 	playsound(src, 'sound/effects/alert.ogg', 50, TRUE)
 
 /obj/structure/displaycase/update_overlays()
@@ -118,58 +127,58 @@
 /obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
 	if(W.GetID() && !broken && openable)
 		if(allowed(user))
-			to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
+			to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 			toggle_lock(user)
 		else
-			to_chat(user,  "<span class='alert'>Access denied.</span>")
+			to_chat(user, span_alert("Access denied."))
 	else if(W.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=5))
 				return
 
-			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(W.use_tool(src, user, 40, amount=5, volume=50))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				to_chat(user, span_notice("You repair [src]."))
 		else
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 	else if(!alert && W.tool_behaviour == TOOL_CROWBAR && openable) //Only applies to the lab cage and player made display cases
 		if(broken)
 			if(showpiece)
-				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
+				to_chat(user, span_warning("Remove the displayed object first!"))
 			else
-				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
+				to_chat(user, span_notice("You remove the destroyed case."))
 				qdel(src)
 		else
-			to_chat(user, "<span class='notice'>You start to [open ? "close":"open"] [src]...</span>")
+			to_chat(user, span_notice("You start to [open ? "close":"open"] [src]..."))
 			if(W.use_tool(src, user, 20))
-				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] [src].</span>")
+				to_chat(user,  span_notice("You [open ? "close":"open"] [src]."))
 				toggle_lock(user)
 	else if(open && !showpiece)
 		insert_showpiece(W, user)
 	else if(glass_fix && broken && istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(G.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
+			to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 			return
-		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+		to_chat(user, span_notice("You start fixing [src]..."))
 		if(do_after(user, 20, target = src))
 			G.use(2)
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 	else
 		return ..()
 
 /obj/structure/displaycase/proc/insert_showpiece(obj/item/wack, mob/user)
 	if(showpiece_type && !istype(wack, showpiece_type))
-		to_chat(user, "<span class='notice'>This doesn't belong in this kind of display.</span>")
+		to_chat(user, span_notice("This doesn't belong in this kind of display."))
 		return TRUE
 	if(user.transferItemToLoc(wack, src))
 		showpiece = wack
-		to_chat(user, "<span class='notice'>You put [wack] on display.</span>")
+		to_chat(user, span_notice("You put [wack] on display."))
 		update_appearance()
 
 /obj/structure/displaycase/proc/toggle_lock(mob/user)
@@ -185,7 +194,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if (showpiece && (broken || open))
-		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
+		to_chat(user, span_notice("You deactivate the hover field built into the case."))
 		log_combat(user, src, "deactivates the hover field of")
 		dump()
 		add_fingerprint(user)
@@ -198,7 +207,7 @@
 			if(!user.is_blind())
 				user.examinate(src)
 			return
-		user.visible_message("<span class='danger'>[user] kicks the display case.</span>", null, null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(span_danger("[user] kicks the display case."), null, null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "kicks")
 		user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 		take_damage(2)
@@ -215,7 +224,7 @@
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH) //The player can only deconstruct the wooden frame
-		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+		to_chat(user, span_notice("You start disassembling [src]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -223,15 +232,15 @@
 			qdel(src)
 
 	else if(istype(I, /obj/item/electronics/airlock))
-		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
+		to_chat(user, span_notice("You start installing the electronics into [src]..."))
 		I.play_tool_sound(src)
 		if(do_after(user, 30, target = src) && user.transferItemToLoc(I,src))
 			electronics = I
-			to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
+			to_chat(user, span_notice("You install the airlock electronics."))
 
 	else if(istype(I, /obj/item/stock_parts/card_reader))
 		var/obj/item/stock_parts/card_reader/C = I
-		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
+		to_chat(user, span_notice("You start adding [C] to [src]..."))
 		if(do_after(user, 20, target = src))
 			var/obj/structure/displaycase/forsale/sale = new(src.loc)
 			if(electronics)
@@ -247,9 +256,9 @@
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 10)
-			to_chat(user, "<span class='warning'>You need ten glass sheets to do this!</span>")
+			to_chat(user, span_warning("You need ten glass sheets to do this!"))
 			return
-		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
+		to_chat(user, span_notice("You start adding [G] to [src]..."))
 		if(do_after(user, 20, target = src))
 			G.use(10)
 			var/obj/structure/displaycase/noalert/display = new(src.loc)
@@ -287,7 +296,7 @@
 	integrity_failure = 0
 	openable = FALSE
 
-/obj/structure/displaycase/trophy/Initialize()
+/obj/structure/displaycase/trophy/Initialize(mapload)
 	. = ..()
 	GLOB.trophy_cases += src
 
@@ -301,39 +310,41 @@
 		return
 	if(user.combat_mode)
 		return ..()
+	if(W.tool_behaviour == TOOL_WELDER && !broken)
+		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
 			is_locked = !is_locked
-			to_chat(user, "<span class='notice'>You [!is_locked ? "un" : ""]lock the case.</span>")
+			to_chat(user, span_notice("You [!is_locked ? "un" : ""]lock the case."))
 		else
-			to_chat(user, "<span class='warning'>The lock is stuck shut!</span>")
+			to_chat(user, span_warning("The lock is stuck shut!"))
 		return
 
 	if(is_locked)
-		to_chat(user, "<span class='warning'>The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		to_chat(user, span_warning("The case is shut tight with an old-fashioned physical lock. Maybe you should ask the curator for the key?"))
 		return
 
 	if(!added_roundstart)
-		to_chat(user, "<span class='warning'>You've already put something new in this case!</span>")
+		to_chat(user, span_warning("You've already put something new in this case!"))
 		return
 
 	if(is_type_in_typecache(W, GLOB.blacklisted_cargo_types))
-		to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
+		to_chat(user, span_warning("The case rejects the [W]!"))
 		return
 
-	for(var/a in W.GetAllContents())
+	for(var/a in W.get_all_contents())
 		if(is_type_in_typecache(a, GLOB.blacklisted_cargo_types))
-			to_chat(user, "<span class='warning'>The case rejects the [W]!</span>")
+			to_chat(user, span_warning("The case rejects the [W]!"))
 			return
 
 	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
-			to_chat(user, "<span class='notice'>You press a button, and [showpiece] descends into the floor of the case.</span>")
+			to_chat(user, span_notice("You press a button, and [showpiece] descends into the floor of the case."))
 			QDEL_NULL(showpiece)
 
-		to_chat(user, "<span class='notice'>You insert [W] into the case.</span>")
+		to_chat(user, span_notice("You insert [W] into the case."))
 		showpiece = W
 		added_roundstart = FALSE
 		update_appearance()
@@ -342,26 +353,26 @@
 
 		trophy_message = W.desc //default value
 
-		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque")
+		var/chosen_plaque = tgui_input_text(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque", trophy_message)
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
-				to_chat(user, "<span class='notice'>You set the plaque's text.</span>")
+				to_chat(user, span_notice("You set the plaque's text."))
 			else
-				to_chat(user, "<span class='warning'>You are too far to set the plaque's text!</span>")
+				to_chat(user, span_warning("You are too far to set the plaque's text!"))
 
 		SSpersistence.SaveTrophy(src)
 		return TRUE
 
 	else
-		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
+		to_chat(user, span_warning("\The [W] is stuck to your hand, you can't put it in the [src.name]!"))
 
 	return
 
 /obj/structure/displaycase/trophy/dump()
 	if (showpiece)
 		if(added_roundstart)
-			visible_message("<span class='danger'>The [showpiece] crumbles to dust!</span>")
+			visible_message(span_danger("The [showpiece] crumbles to dust!"))
 			new /obj/effect/decal/cleanable/ash(loc)
 			QDEL_NULL(showpiece)
 		else
@@ -396,8 +407,6 @@
 	var/sale_price = 20
 	///The Account which will receive payment for purchases. Set by the first ID to swipe the tray.
 	var/datum/bank_account/payments_acc = null
-	///We're using the same trick as paper does in order to cache the image, and only load the UI when messed with.
-	var/list/viewing_ui = list()
 
 /obj/structure/displaycase/forsale/update_icon_state()
 	icon_state = "[initial(icon_state)][broken ? "_broken" : (open ? "_open" : (!showpiece ? "_empty" : null))]"
@@ -413,7 +422,6 @@
 	if(!ui)
 		ui = new(user, src, "Vendatray", name)
 		ui.set_autoupdate(FALSE)
-		viewing_ui[user] = ui
 		ui.open()
 
 /obj/structure/displaycase/forsale/ui_data(mob/user)
@@ -442,32 +450,32 @@
 	switch(action)
 		if("Buy")
 			if(!showpiece)
-				to_chat(usr, "<span class='notice'>There's nothing for sale.</span>")
+				to_chat(usr, span_notice("There's nothing for sale."))
 				return TRUE
 			if(broken)
-				to_chat(usr, "<span class='notice'>[src] appears to be broken.</span>")
+				to_chat(usr, span_notice("[src] appears to be broken."))
 				return TRUE
 			if(!payments_acc)
-				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
 			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return TRUE
 			if(!potential_acc)
-				to_chat(usr, "<span class='notice'>No ID card detected.</span>")
+				to_chat(usr, span_notice("No ID card detected."))
 				return
 			var/datum/bank_account/account = potential_acc.registered_account
 			if(!account)
-				to_chat(usr, "<span class='notice'>[potential_acc] has no account registered!</span>")
+				to_chat(usr, span_notice("[potential_acc] has no account registered!"))
 				return
 			if(!account.has_money(sale_price))
-				to_chat(usr, "<span class='notice'>You do not possess the funds to purchase this.</span>")
+				to_chat(usr, span_notice("You do not possess the funds to purchase this."))
 				return TRUE
 			else
 				account.adjust_money(-sale_price)
 				if(payments_acc)
 					payments_acc.adjust_money(sale_price)
 				usr.put_in_hands(showpiece)
-				to_chat(usr, "<span class='notice'>You purchase [showpiece] for [sale_price] credits.</span>")
+				to_chat(usr, span_notice("You purchase [showpiece] for [sale_price] credits."))
 				playsound(src, 'sound/effects/cashregister.ogg', 40, TRUE)
 				flick("[initial(icon_state)]_vend", src)
 				showpiece = null
@@ -476,7 +484,7 @@
 				return TRUE
 		if("Open")
 			if(!payments_acc)
-				to_chat(usr, "<span class='notice'>[src] hasn't been registered yet.</span>")
+				to_chat(usr, span_notice("[src] hasn't been registered yet."))
 				return TRUE
 			if(!potential_acc || !potential_acc.registered_account)
 				return
@@ -500,16 +508,16 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000, 1)
 			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
-				to_chat(usr, "<span class='warning'>[src] rejects your new price.</span>")
+				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
 			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
-				to_chat(usr, "<span class='warning'>You need to get closer!</span>")
+				to_chat(usr, span_warning("You need to get closer!"))
 				return
-			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
+			new_price_input = round(new_price_input)
 			sale_price = new_price_input
-			to_chat(usr, "<span class='notice'>The cost is now set to [sale_price].</span>")
+			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)
 			return TRUE
 	. = TRUE
@@ -518,7 +526,7 @@
 		//Card Registration
 		var/obj/item/card/id/potential_acc = I
 		if(!potential_acc.registered_account)
-			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
+			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
 		if(payments_acc == potential_acc.registered_account)
 			playsound(src, 'sound/machines/click.ogg', 20, TRUE)
@@ -532,11 +540,11 @@
 
 /obj/structure/displaycase/forsale/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(obj_integrity <= (integrity_failure *  max_integrity))
-		to_chat(user, "<span class='notice'>You start recalibrating [src]'s hover field...</span>")
+	if(atom_integrity <= (integrity_failure *  max_integrity))
+		to_chat(user, span_notice("You start recalibrating [src]'s hover field..."))
 		if(do_after(user, 20, target = src))
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 		return TRUE
 
@@ -544,36 +552,37 @@
 	. = ..()
 	if(open && !user.combat_mode)
 		if(anchored)
-			to_chat(user, "<span class='notice'>You start unsecuring [src]...</span>")
+			to_chat(user, span_notice("You start unsecuring [src]..."))
 		else
-			to_chat(user, "<span class='notice'>You start securing [src]...</span>")
+			to_chat(user, span_notice("You start securing [src]..."))
 		if(I.use_tool(src, user, 16, volume=50))
 			if(QDELETED(I))
 				return
 			if(anchored)
-				to_chat(user, "<span class='notice'>You unsecure [src].</span>")
+				to_chat(user, span_notice("You unsecure [src]."))
 			else
-				to_chat(user, "<span class='notice'>You secure [src].</span>")
+				to_chat(user, span_notice("You secure [src]."))
 			set_anchored(!anchored)
 			return TRUE
 	else if(!open && !user.combat_mode)
-		to_chat(user, "<span class='notice'>[src] must be open to move it.</span>")
+		to_chat(user, span_notice("[src] must be open to move it."))
 		return
 
 /obj/structure/displaycase/forsale/emag_act(mob/user)
 	. = ..()
 	payments_acc = null
 	req_access = list()
-	to_chat(user, "<span class='warning'>[src]'s card reader fizzles and smokes, and the account owner is reset.</span>")
+	to_chat(user, span_warning("[src]'s card reader fizzles and smokes, and the account owner is reset."))
 
 /obj/structure/displaycase/forsale/examine(mob/user)
 	. = ..()
 	if(showpiece && !open)
-		. += "<span class='notice'>[showpiece] is for sale for [sale_price] credits.</span>"
+		. += span_notice("[showpiece] is for sale for [sale_price] credits.")
 	if(broken)
-		. += "<span class='notice'>[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.</span>"
+		. += span_notice("[src] is sparking and the hover field generator seems to be overloaded. Use a multitool to fix it.")
 
-/obj/structure/displaycase/forsale/obj_break(damage_flag)
+/obj/structure/displaycase/forsale/atom_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
 		playsound(src, "shatter", 70, TRUE)

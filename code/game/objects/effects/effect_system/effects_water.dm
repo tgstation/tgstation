@@ -3,12 +3,12 @@
 /obj/effect/particle_effect/water
 	name = "water"
 	icon_state = "extinguish"
-	pass_flags = PASSTABLE | PASSMACHINE | PASSSTRUCTURE | PASSGRILLE
+	pass_flags = PASSTABLE | PASSMACHINE | PASSSTRUCTURE | PASSGRILLE | PASSBLOB | PASSVEHICLE
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 
-/obj/effect/particle_effect/water/Initialize()
+/obj/effect/particle_effect/water/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 70)
 
@@ -24,6 +24,17 @@
 	if(A.reagents)
 		A.reagents.expose_temperature(-25)
 	return ..()
+
+///Extinguisher snowflake
+/obj/effect/particle_effect/water/extinguisher
+
+/obj/effect/particle_effect/water/extinguisher/Move()
+	. = ..()
+	if(!reagents)
+		return
+	reagents.expose(get_turf(src))
+	for(var/atom/thing as anything in get_turf(src))
+		reagents.expose(thing)
 
 
 /////////////////////////////////////////////
@@ -46,7 +57,7 @@
 	icon_state = "extinguish"
 	density = FALSE
 
-/obj/effect/particle_effect/steam/Initialize()
+/obj/effect/particle_effect/steam/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 20)
 

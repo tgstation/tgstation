@@ -1,0 +1,563 @@
+2017-03-01:
+  Cyberboss:
+  - bugfix: Lobby music is no longer delayed
+2017-03-02:
+  Gun Hog:
+  - tweak: Advanced camera, Slime Management, and Base Construction consoles may now
+      be operated by drones and cyborgs.
+  Robustin:
+  - rscadd: The syndicate power beacon will now announce the distance and direction
+      of any engines every 10 seconds.
+  Steelpoint:
+  - rscadd: Robotics and Mech Bay have seen a mapping overhaul on Boxstation.
+  - rscadd: A cautery surgical tool has been added to the Robotics surgical area on
+      Boxstation.
+  XDTM:
+  - tweak: Hallucinations have been modified to increase the creepiness factor and
+      reduce the boring factor.
+  - rscadd: Added some new hallucinations.
+  - bugfix: Fixed a bug where the singularity hallucination was stunning for longer
+      than intended and leaving the fake HUD crit icon permanently.
+  coiax:
+  - rscadd: Ghosts are polled if they want to play an alien larva that is about to
+      chestburst. They are also told who is the (un)lucky victim.
+  - bugfix: Clones no longer gasp for air while in cloning pods.
+  - rscadd: Adds a new reagent, "Mime's Bane", that prevents all emoting while it
+      is in a victim's system. Currently admin only.
+  - experiment: Mappers now have an easier time adding posters, and specifying whether
+      they're random, random official, random contraband or a specific poster.
+  - rscdel: Posters no longer have serial numbers when rolled up; their names are
+      visible instead.
+  kevinz000:
+  - rscadd: You can now craft pressure plates.
+  - rscadd: Pressure plates are hidden under the floor like smuggler satchels are,
+      but you can attach a signaller to them to have it signal when a mob passes over
+      them!
+  - experiment: Bomb armor is now effective in lessening the chance of being knocked
+      out by bombs.
+2017-03-03:
+  Cyberboss:
+  - tweak: You can now repair shuttles in transit space
+  Incoming5643:
+  - imageadd: 'Server Owners: There is a new system for title screens accessible from
+      config/title_screen folder.'
+  - rscadd: This system allows for multiple rotating title screens as well as map
+      specific title screens.
+  - rscadd: It also allows for hosting title screens in formats other than DMI.
+  - rscadd: 'See the readme.txt in config/title_screen for full details. remove: The
+      previous method of title screen selection, the define TITLESCREEN, has been
+      depreciated by this change.'
+  Sligneris:
+  - imageadd: Updated sprites for the small xeno queen mode
+2017-03-04:
+  Cyberboss:
+  - bugfix: You can build lattice in space again
+  Hyena:
+  - tweak: Detective revolver/ammo now starts in their shoulder holster
+  Joan:
+  - tweak: Weaker cult talismans take less time to imbue.
+  PJB3005:
+  - rscadd: Rebased to /vg/station lighting code.
+  Supermichael777:
+  - rscadd: Grey security uniforms have unique names and descriptions
+  Tofa01:
+  - rscadd: Adds the new Centcomm Raven Battlecruiser to the purchasable shuttle list
+      buy now get one free!
+  coiax:
+  - rscadd: CTF players start with their helmet toggled off, better to see the whites
+      of their opponents eyes. Very briefly.
+  - bugfix: Existing CTF barricades are repaired between rounds, and deploy instantly
+      when replaced.
+  - tweak: Healing non-critical CTF damage is faster. Remember though, if you drop
+      into crit, YOU DIE.
+  - rscadd: Admin ghosts can just click directly on the CTF controller to enable them,
+      in addition to using the Secrets panel.
+  - bugfix: Cyborg radios can no longer have their inaccessible wires pulsed by EMPs.
+2017-03-06:
+  Cyberboss:
+  - experiment: Map rotation has been made smoother
+  Gun Hog:
+  - bugfix: The Aux Base Construction Console now directs to the correct Base Management
+      Console.
+  - bugfix: The missing Science Department access has been added to the Auxiliary
+      Base Management Console.
+  Hyena:
+  - rscdel: Space bar is out of bussiness
+  MrStonedOne:
+  - bugfix: patched a hacky workaround for /vg/lights memory leaking crashing the
+      server
+  Penguaro:
+  - bugfix: Changed DIR of Gas Filter for O2 in Waste Loop from 1 to 4
+  Sligneris:
+  - imageadd: '''xeno queen'' AI hologram now actually uses the xeno queen sprite
+      as a reference'
+  Tofa01:
+  - bugfix: '[Omega] Fixes missing walls and wires new dock to the powergrid'
+  XDTM:
+  - rscadd: Changelings can now click their fake clothing to remove it, without needing
+      to drop the full disguise.
+  coiax:
+  - rscadd: The Bardrone and Barmaid are neutral, even in the face of reality altering
+      elder gods.
+2017-03-07:
+  Supermichael777:
+  - rscadd: Wannabe ninjas have been found carrying an experimental chameleon belt.
+      The Spider clan has disavowed any involvement.
+2017-03-08:
+  Cyberboss:
+  - imageadd: Added roundstart animation
+  - experiment: Roundstart should now be a smoother experience... again
+  - bugfix: You can now scan storage items with the forensic scanner
+  - bugfix: Unfolding paper planes no longer deletes them
+  - bugfix: Plastic no longer conducts electricity
+  - tweak: The map rotation message will only show if the map is actually changing
+  Francinum:
+  - bugfix: Holopads now require power.
+  Fun Police:
+  - tweak: Reject Adminhelp and IC Issue buttons have a cooldown.
+  Joan:
+  - rscadd: Circuit tiles now glow faintly.
+  - rscadd: Glowshrooms now have colored light.
+  - tweak: Tweaked the potency scaling for glowshroom/glowberry light; high-potency
+      plantss no longer light up a huge area, but are slightly brighter.
+  Kor:
+  - rscadd: People with mutant parts (cat ears) are no longer outright barred from
+      selecting command roles in their preferences, but will have their mutant parts
+      removed on spawning if they are selected for that role.
+  LanCartwright:
+  - rscadd: Adds scaling damage to buckshot.
+  Robustin:
+  - tweak: The DNA Vault has 2 new powers
+  - tweak: The DNA Vault requires super capacitors instead of quadratic
+  - tweak: Cargo's Vault Pack now includes DNA probes
+  Supermichael777:
+  - rscadd: Robust Soft Drinks LLC is proud to announce Premium canned air for select
+      markets.  There is not an air shortage.  Robust Soft Drinks has never engaged
+      in any form of profiteering.
+  TalkingCactus:
+  - rscadd: Energy swords (and other energy melee weapons) now have a colored light
+      effect when active.
+  Tofa01:
+  - bugfix: '[All Maps] Fixes syndicate shuttles spawning too close to stations by
+      moving their spawn further from the station'
+  - rscadd: '[Omegastation] This station now has a syndicate shuttle and syndicate
+      shuttle spawn.'
+  coiax:
+  - rscadd: Wizards now have a new spell "The Traps" in their spellbook. Summon an
+      array of temporary and permanent hazards for your foes, but don't fall into
+      your own trap(s)!
+  - rscadd: Permanent wizard traps can be triggered relatively safely by throwing
+      objects across the trap, or examining it at close range. The trap will then
+      be on cooldown for a minute.
+  - rscadd: Toy magic eightballs can now be found around the station in maintenance
+      and arcade machines. Ask your question aloud, and then shake for guidance.
+  - rscadd: Adds new Librarian traitor item, the Haunted Magic Eightball. Although
+      identical in appearance to the harmless toys, this occult device reaches into
+      the spirit world to find its answers. Be warned, that spirits are often capricious
+      or just little assholes.
+  - rscadd: You only have a headache looking at the supermatter if you're a human
+      without mesons.
+  - rscadd: The supermatter now speaks in a robotic fashion.
+  - rscadd: Admins have a "Rename Station Name" option, under Secrets.
+  - rscadd: A special admin station charter exists, that has unlimited uses and can
+      be used at any time.
+  - rscadd: Added glowsticks. Found in maintenance, emergency toolboxes and Party
+      Crates.
+  kevinz000:
+  - rscadd: The Syndicate reports a breakthrough in chameleon laser gun technology
+      that will disguise its projectiles to be just like the real thing!
+2017-03-10:
+  Cyberboss:
+  - bugfix: You should no longer be seeing entities with `\improper` in front of their
+      name
+  - rscadd: The arrivals shuttle will now ferry new arrivals to the station. It will
+      not depart if any intelligent living being is on board. It will remain docked
+      if it is depressurized.
+  - tweak: You now late-join spawn buckled to arrivals shuttle chairs
+  - tweak: Ghost spawn points have been moved to the center of the station
+  - tweak: Departing shuttles will now try and shut their docking airlocks
+  - bugfix: The arrivals shuttle airlocks are now properly cycle-linked
+  - bugfix: You can now hear hyperspace sounds outside of shuttles
+  - experiment: The map loader is faster
+  - tweak: Lavaland will now load instantly when the game starts
+  Jordie0608:
+  - tweak: The Banning Panel now organises search results into pages of 15 each.
+  XDTM:
+  - bugfix: Slimes can now properly latch onto humans.
+  - bugfix: Slimes won't aggro neutral mobs anymore. This includes blood-spawned gold
+      slime mobs.
+  - rscadd: Clicking on a tile with another tile and a crowbar in hand directly replaces
+      the tile.
+  Xhuis:
+  - imageadd: Ratvar and Nar-Sie now have fancy colored lighting!
+  coiax:
+  - rscadd: Wizards can now use their magic to make ghosts visible to haunt the crew,
+      and possibly attempt to betray the wizard.
+  - rscadd: When someone dies, if their body is no longer present, the (F) link will
+      instead jump to the turf they previously occupied.
+  - bugfix: Stacks of materials will automatically merge together when created. You
+      may notice differences when ejecting metal, glass or using the cash machine
+      in the vault.
+  - rscadd: You can find green and red glowsticks in YouTool vending machines.
+  fludd12:
+  - bugfix: Modifying/deconstructing skateboards while riding them no longer nails
+      you to the sky.
+  lordpidey:
+  - rscadd: Glitter bombs have been added to arcade prizes.
+2017-03-11:
+  AnturK:
+  - rscadd: Traitors now have access to radio jammers for 10 TC
+  Hyena:
+  - bugfix: fixes anti toxin pill naming
+  Joan:
+  - tweak: Window construction steps are slightly faster; normal windows now take
+      6 seconds with standard tools, from 7 and reinforced windows now take 12 seconds
+      with standard tools, from 14.
+  - tweak: Brass windows take 8 seconds with standard tools, from 7.
+  - rscadd: Added Shadowshrooms as a glowshroom mutation. They do exactly what you'd
+      expect.
+  - rscdel: Removed His Grace ascension.
+  PKPenguin321:
+  - tweak: Cryoxadone's ability to heal cloneloss has been greatly reduced.
+  - rscadd: Clonexadone has been readded. It functions exactly like cryoxadone, but
+      only heals cloneloss, and at a decent rate. Brew it with 1 part cryoxadone,
+      1 part sodium, and 5 units of plasma for a catalyst.
+  Penguaro:
+  - tweak: Adjusted table locations
+  - tweak: Moved chair and Cargo Tech start location
+  - tweak: Moved filing cabinet
+  - rscdel: Removed Stock Computer
+  Tofa01:
+  - bugfix: '[Meta] Fixes Supermatter Shutters Not Working'
+  coiax:
+  - rscadd: Swarmer lights are coloured cyan.
+  kevinz000:
+  - bugfix: Deadchat no longer has huge amount of F's.
+2017-03-12:
+  JStheguy:
+  - imageadd: Changed Desert Eagle sprites, changed .50 AE magazine sprites, added
+      Desert Eagle magazine overlay to icons/obj/guns/projectile.dmi.
+  - tweak: The empty Desert Eagle sprite now only displays on an empty chamber. The
+      existence or lack thereof of the magazine is rendered using an overlay instead.
+  Lzimann:
+  - tweak: Braindead has a more intuitive message
+  coiax:
+  - rscdel: A cloner that is EMP'd will merely eject the clone early, rather than
+      gibbing it. Emagging the cloner will still gib the clone.
+2017-03-13:
+  Cyberboss:
+  - tweak: You must now be on any intent EXCEPT help to weld an airlock shut
+  - rscadd: You can now repair airlocks with welding tools on help intent (broken
+      airlocks still need their wires mended though)
+  Cyberboss, Bgobandit, and Yogstation:
+  - rscadd: The HoP can now prioritze roles for late-joiners
+  Every coder, player, and admin in Space Station 13:
+  - rscadd: Adds the Tomb Of The Unknown Employee to Central Command,
+  - rscadd: Rest in peace, those who died after contributing to Space Station 13.
+  Hyena:
+  - bugfix: Surplus leg r/l name fixed
+  - bugfix: You can now carry honey in plant bags
+  Lordpidey:
+  - bugfix: Devils can no longer break into areas with sheer force of disco funk
+  - rscadd: The pitchfork of an ascended devil can now break down walls.
+  - rscadd: Hell has decided to at least clothe it's devils when sending them a brand
+      new body.
+  - rscadd: Pitchforks glow red now.
+  Penguaro:
+  - rscdel: '**Engineering** - Removed Tables, paper bin, and pen'
+  - rscadd: '**Engineering** - Replaced with Welder and Electrical Lockers'
+  - rscadd: '**Engineering** - Moved First-Aid Burn kit to Engineering Foyer'
+  - tweak: '**Chapel** - Replaced one Window with Win-Door for Coffin Storage'
+  Space Bicycle Consortium:
+  - bugfix: Bicycles now only cost 10,000 yen, down from 1,000,000 yen.
+  coiax:
+  - rscadd: The egg spawner on Metastation will generate a station message and inform
+      the admins if an egg is spawned. (It's only a two percent chance, but live in
+      hope.)
+  - rscadd: Glowsticks can now be found in "Swarmer Cyan" colors.
+2017-03-14:
+  Joan:
+  - rscadd: Shuttles now have dynamic lighting; you can remove the lights on them
+      and use your own lights.
+  - tweak: All maps now use Deltastation's fancy syndicate shuttle.
+  - tweak: Shadowshrooms of lower potency are much less able to blanket the station
+      in darkness.
+  PKPenguin321:
+  - tweak: Lattices now require wirecutters to deconstruct, rather than welding tools.
+2017-03-15:
+  Cyberboss:
+  - bugfix: You can no longer depart on the arrivals shuttle by hiding inside things
+  Joan:
+  - tweak: Proselytizers converting clockwork floors to walls now always take 10 seconds,
+      regardless of how fast the proselytizer is.
+  - tweak: Clockwork grilles no longer provide CV.
+  Penguaro:
+  - bugfix: '**Engineering** - Changed Access Level from **24** (_Atmo_) to **10**
+      (_Engine_) on **Radiation Shutter Control**'
+  TrustyGun:
+  - tweak: Traitor Mimes with the finger guns spell now fire 3 bullets at a time,
+      as opposed to just 1.
+  octareenroon91:
+  - rscadd: Allow new reflector frames to be built from metal sheets.
+  oranges:
+  - rscdel: Removed patting
+2017-03-16:
+  BASILMAN YOUR MAIN MAN:
+  - rscadd: The BM Speedwagon has been improved both in terms of aesthetics and performance!
+  Cyberboss:
+  - bugfix: The shield generators in Boxstation Xenobiology now have the correct access
+  Joan:
+  - rscadd: Cult structures that emitted light now have colored light.
+  MrPerson:
+  - rscadd: Humans can see in darkness slightly again. This is only so you can see
+      where you are when the lights go out.
+  MrStonedOne:
+  - bugfix: Fixed lighting not updating when a opaque object was deleted
+  Penguaro:
+  - tweak: Increased Synchronization Range on Exosuit Fabricator
+  Tofa01:
+  - bugfix: '[Delta] Fixes telecoms temperature and gas mixing / being contaminated.'
+  - bugfix: '[Delta] Fixes some doubled up turfs causing items and objects to get
+      stuck to stuff'
+  - tweak: '[Omega] Makes telecoms room cool down and be cold.'
+  Tokiko1:
+  - rscadd: Most gases now have unique effects when surrounding the supermatter crystal.
+  - tweak: The supermatter crystal can now take damage from too much energy and too
+      much gas.
+  - rscadd: Added a dangerous overcharged state to the supermatter crystal.
+  - rscadd: Readded explosion delaminations, a new tesla delamination and allowed
+      the singulo delamination to absorb the supermatter.
+  - tweak: The type of delamination now depends on the state of the supermatter crystal.
+  - tweak: Various supermatter engine rebalancing and fixes.
+  kevinz000:
+  - rscadd: SDQL2 now supports outputting proccalls to variables, and associative
+      lists
+  peoplearestrange:
+  - bugfix: Fixed buildmodes full tile window to be correct path
+  rock:
+  - tweak: if we can have glowsticks in toolvends why not flashlights amirite guys
+2017-03-17:
+  BeeSting12:
+  - bugfix: Moved Metastation's deep fryer so that the chef can walk all the way around
+      the table.
+  Cobby:
+  - tweak: The gulag mineral ratio has been tweaked so there are PLENTY of iron ore,
+      nice bits of silver/plasma, with the negative of having less really high valued
+      ores. If you need minerals, it may be a good time to ask the warden now!
+  Joan:
+  - rscadd: You can now place lights and most wall objects on shuttles.
+  Xhuis:
+  - rscadd: Added the power flow control console, which allows remote manipulation
+      of most APCs on the z-level. You can find them in the Chief Engineer's office
+      on all maps.
+2017-03-18:
+  Supermichael777:
+  - rscadd: Free golems can now buy new ids for 250 points.
+  XDTM:
+  - rscadd: You can now complete a golem shell with runed metal, if you somehow manage
+      to get both.
+  - rscadd: Runic golems don't have passive bonuses over golems, but they have some
+      special abilities.
+  coiax:
+  - bugfix: The alert level is no longer lowered by a nuke's detonation.
+2017-03-19:
+  BeeSting12:
+  - rscadd: Nanotrasen has decided to better equip the box-class emergency shuttles
+      with a recharger on a table in the cockpit.
+  Cheridan:
+  - tweak: The slime created by a pyroclastic anomaly detonating is now adult and
+      player-controlled! Reminder that if you see an anomaly alert, you should grab
+      an analyzer and head to the announced location to scan it, and then signal the
+      given frequency on a signaller!
+  Penguaro:
+  - bugfix: change access variables for turrets and shield gens
+  - bugfix: Box Station - Replaces the smiling table grilles with their more serious
+      counterparts.
+  coiax:
+  - tweak: The Syndicate lavaland base now has a single self destruct bomb located
+      next to the Communications Room. Guaranteed destruction of the base is guaranteed
+      by payloads embedded in the walls.
+  octareenroon91:
+  - bugfix: Fixes infinite vaping bug.
+  uraniummeltdown:
+  - rscadd: Plant data disks have new sprites.
+  - bugfix: Fixed Monkey Recycler board not showing in Circuit Imprinter
+  - tweak: Kinetic Accelerator Range Mod now takes up 25% space instead of 24%
+2017-03-21:
+  ExcessiveUseOfCobblestone:
+  - experiment: All core traits [Hydroponics] scale with the parts in the gene machine.
+      Time to beg Duke's Guide Read.... I mean RND!
+  - tweak: Data disks with genes on them will have just the name of the gene instead
+      of the prefix "plant data disk".
+  - tweak: If you were unaware, you can rename these disks with a pen. Now, you can
+      also change the description if you felt inclined to.
+  Joan:
+  - experiment: Caches produce components every 70 seconds, from every 90, but each
+      other linked, component-producing cache slows down cache generation by 10 seconds.
+  Lombardo2:
+  - rscadd: The tentacle changeling mutation now changes the arm appearance when activated.
+  MrPerson:
+  - bugfix: Everyone's eyes aren't white anymore.
+  Penguaro:
+  - tweak: Box Station - The Vents and Scrubbers for the Supermatter Air Alarm are
+      now isolated from the rest of the Air Alarms in Engineering.
+  Supermichael777:
+  - bugfix: Chasms now smooth properly.
+  Tokiko1:
+  - tweak: Minor supermatter balancing changes.
+  - tweak: Supermatter now announces its damage half as frequently.
+  - tweak: Badly unstable supermatter now occasionally zaps nearby engineers and causes
+      anomalies to appear nearby, similar to overcharged supermatter.
+  XDTM:
+  - rscadd: Golem Shells can now be completed with medical gauze or cloth to form
+      cloth golems, which are weaker and extremely flammable. However, if they die,
+      they turn into a pile of cloth that will eventually re-animate back into full
+      health. That is, unless someone lights it on fire.
+2017-03-22:
+  BeeSting12:
+  - rscadd: Added an autolathe circuit board to deltastation's tech storage.
+  - rscadd: Added 49 sheets of metal to deltastation's auxiliary tool storage.
+  Iamgoofball:
+  - bugfix: Freon no longer bypasses atmos hardsuits.
+  Penguaro:
+  - rscadd: Meta - Added Tool Belts to Engineering and Engineering Foyer
+  - rscdel: Meta - Removed Coffee Machine from Permabrig
+  - rscadd: Added Cameras for Supermatter Chamber (to view rad collectors and crystal)
+  - tweak: Adjusted Engine Camera Names for Station Consistency
+  - bugfix: Adjusted Monitor Names / Networks to view the Engine Cameras
+  coiax:
+  - rscadd: APCs now glow faintly with their charging lights. So red is not charging,
+      blue is charging, green is full. Emagged APCs are also blue. Broken APCs do
+      not emit light.
+  - rscadd: Alien glowing resin now glows.
+2017-03-23:
+  Joan:
+  - tweak: Clock cults always have to summon Ratvar, but that always involves a proselytization
+      burst.
+  - rscdel: The proselytization burst will no longer convert heretics, leaving Ratvar
+      free to chase them down.
+  - spellcheck: Places that referred to the Ark of the Clockwork Justicar as the "Gateway
+      to the Celestial Derelict" have been corrected to always refer to the Ark.
+  Penguaro:
+  - bugfix: Wizard Ship - Bolts that floating light to the wall.
+  XDTM:
+  - rscadd: Medical Gauze now stacks up to 12
+  - bugfix: Pressure plates are now craftable.
+  bgobandit:
+  - tweak: Alt-clicking a command headset toggles HIGH VOLUME mode.
+  coiax:
+  - bugfix: A dead AI no longer counts as an "unconverted AI" for clockcult.
+2017-03-24:
+  BeeSting12:
+  - bugfix: Auxiliary base maintenance airlock now requires the proper access. Sorry
+      greyshirts, no loot for you!
+  Cyberboss:
+  - tweak: The recycler's base reclaim rate has been buffed from 1% to 50%. Manipulator
+      upgrades now give +12.5% per level instead of +25%
+  - bugfix: You can now successfully remove a pen from a PDA while it's in a container
+  Fox McCloud:
+  - rscadd: Modular receiver removed from the protolathe to autolathe
+  - tweak: Modular receiver cost is now 15,000 metal
+  Joan:
+  - bugfix: Fixes structures being unable to go through spatial gateways.
+  - tweak: Blazing Oil blobs take 33% less damage from water.
+  Penguaro:
+  - rscadd: '[Meta] Replaced Power Monitoring Console in Engineering with Modular
+      Engineering Console'
+  - rscadd: '[Pubby] Replaced Power Monitoring Console in Engineering with Modular
+      Engineering Console'
+  - rscadd: '[Omega] Replaced Power Monitoring Console in Engineering with Modular
+      Engineering Console'
+  - rscadd: '[Omega] Added RD and Command Modular Consoles to Bridge'
+  - rscadd: '[Delta] Replaced Power Monitoring Console in Engineering with Modular
+      Engineering Console'
+  - rscadd: '[Delta] Replaced duplicate Atmospherics Monitoring Console in Atmo with
+      Modular Engineering Console'
+  coiax:
+  - rscadd: Destroying a lich's body does not destroy the lich permanently, provided
+      the phylactery is intact.
+  - rscadd: A lich will respawn three minutes after its death, provided the phylactery
+      is intact.
+  - rscadd: The Soul Bind spell is forgotten after cast, respawn is now automatic.
+  - rscdel: Stationloving objects like the nuke disk are not valid objects for a phylactery.
+  - rscadd: Explosive implants can always be triggered via action button, even if
+      unconscious.
+  rock:
+  - tweak: lizards are hurt slightly more by cold but less by heat. this does not
+      mean they are more resistant to being lasered, fortunately.
+2017-03-26:
+  BeeSting12:
+  - spellcheck: The bar shuttle's buckable bar stools are now buckleable bar stools.
+  Gun Hog and Shadowlight213:
+  - rscadd: The AI may now deploy to cyborgs prepared as AI shells. The module to
+      do this may be research in the exosuit fabricator. Simply slot the module into
+      a completed cyborg frame as with an MMI, or into a playerless (with no ckey)
+      cyborg.
+  - rscadd: AI shells and AIs controlling a shell can be determined through the Diagnostic
+      HUD.
+  - rscadd: AIs can deploy to a shell using the new action buttons or by simply clicking
+      on it.
+  - experiment: An AI shell will always have the laws of its controlling AI.
+  Penguaro:
+  - rscadd: Brig - Added Air Alarm
+  - rscdel: Engineering - Removed Brig Shutter
+  - tweak: Omega, Meta, & Delta Stations - The Vents and Scrubbers for the Supermatter
+      Air Alarm are now isolated from the rest of the Air Alarms in Engineering.
+  Qbopper:
+  - spellcheck: Drones are now given OOC guidelines to follow as well as their IC
+      lawset.
+  Robustin:
+  - rscadd: Added the prototype canister with expanded volume, valve pressure, and
+      access/timer features
+  TrustyGun:
+  - bugfix: Deconstructing display cases and coffins now drop the correct amount of
+      wood.
+  XDTM:
+  - tweak: Some golems now spawn with more thematic names.
+  - tweak: Adamantine Golems are no longer numbered, but receive a random golem name.
+  - bugfix: Airlocks properly remove the shock overlay when a temporary shock runs
+      out.
+  coiax:
+  - bugfix: Teams playing CTF have their own radio channels, rather than using the
+      Centcom and Syndicate channels.
+  - bugfix: Actually actually makes CTF barricades repair between rounds.
+  - bugfix: Blue CTF lasers have little blue effects when they hit things, rather
+      than red effects.
+2017-03-28:
+  Supermichael777:
+  - rscadd: Backup operatives now get the nukes code.
+  XDTM:
+  - bugfix: Wooden tiles can now be quick-replaced with a screwdriver instead of a
+      crowbar, preserving the floor tile.
+  octareenroon91:
+  - bugfix: Bonfires that have a metal rod added should buckle instead of runtiming.
+2017-03-29:
+  BeeSting12:
+  - rscadd: Adds emergency launch console to the backup emergency shuttle.
+  Joan:
+  - rscdel: Putting sec armour and a helmet on a corgi no longer makes the corgi immune
+      to item attacks.
+  - rscadd: All items with armour will now grant corgis actual armour.
+  Kevinz000:
+  - rscadd: High-powered floodlights may be constructed with 5 sheets of metal, a
+      wrench, a screwdriver, 5 cable coils, and a light tube. They require a powernet
+      connection via direct wire node.
+  coiax:
+  - bugfix: All tophats, rather than just the ones in maintenance, hurt a tiny bit
+      if you throw them at people.
+  - bugfix: Supermatter anomalies are more shortlived than regular anomalies, as intended.
+2017-03-30:
+  coiax:
+  - rscadd: Autoimplanters have been renamed to autosurgeons. Currently only the CMO
+      and nuclear operatives have access to autosurgeons. What is the CMO hiding?
+  - bugfix: All upgraded organs for purchase by nuclear operatives now actually come
+      in an autosurgeon, for speed of surgery.
+2017-03-31:
+  Cobby:
+  - tweak: Shot glasses are now more ambiguous [EASIER TO MAINTAIN]
+  Cyberboss:
+  - bugfix: Temperature changes will now properly cause atmospherics simulation to
+      activate
+  - bugfix: The command report for random xeno eggs will now be delivered along with
+      the rest of the roundstart reports
+  - bugfix: Drones can no longer be irradiated

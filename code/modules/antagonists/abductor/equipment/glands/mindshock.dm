@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/mindshock
-	true_name = "neural crosstalk uninhibitor"
+	abductor_hint = "neural crosstalk uninhibitor. The abductee emits a disrupting psychic wave every so often. This will either stun, cause hallucinations or deal random brain damage to people nearby."
 	cooldown_low = 400
 	cooldown_high = 700
 	uses = -1
@@ -9,7 +9,7 @@
 	var/list/mob/living/carbon/human/broadcasted_mobs = list()
 
 /obj/item/organ/heart/gland/mindshock/activate()
-	to_chat(owner, "<span class='notice'>You get a headache.</span>")
+	to_chat(owner, span_notice("You get a headache."))
 
 	var/turf/T = get_turf(owner)
 	for(var/mob/living/carbon/H in orange(4,T))
@@ -17,10 +17,10 @@
 			continue
 		switch(pick(1,3))
 			if(1)
-				to_chat(H, "<span class='userdanger'>You hear a loud buzz in your head, silencing your thoughts!</span>")
+				to_chat(H, span_userdanger("You hear a loud buzz in your head, silencing your thoughts!"))
 				H.Stun(50)
 			if(2)
-				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
+				to_chat(H, span_warning("You hear an annoying buzz in your head."))
 				H.add_confusion(15)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 10, 160)
 			if(3)
@@ -38,8 +38,8 @@
 			continue
 
 		broadcasted_mobs += H
-		to_chat(H, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
-		to_chat(H, "<span class='mind_control'>[command]</span>")
+		to_chat(H, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
+		to_chat(H, span_mind_control("[command]"))
 
 		message_admins("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
 		log_game("[key_name(user)] broadcasted an abductor mind control message from [key_name(owner)] to [key_name(H)]: [command]")
@@ -59,7 +59,7 @@
 		return FALSE
 	for(var/M in broadcasted_mobs)
 		var/mob/living/carbon/human/H = M
-		to_chat(H, "<span class='userdanger'>You feel the compulsion fade, and you <i>completely forget</i> about your previous orders.</span>")
+		to_chat(H, span_userdanger("You feel the compulsion fade, and you <i>completely forget</i> about your previous orders."))
 		H.clear_alert("mind_control")
 	active_mind_control = FALSE
 	return TRUE

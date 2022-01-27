@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 import { Window } from '../layouts';
 
@@ -113,10 +113,6 @@ const SCANNER_GATE_ROUTES = {
     title: 'Scanner Mode: Nutrition',
     component: () => ScannerGateNutrition,
   },
-  Nanites: {
-    title: 'Scanner Mode: Nanites',
-    component: () => ScannerGateNanites,
-  },
 };
 
 const ScannerGateControl = (props, context) => {
@@ -165,9 +161,6 @@ const ScannerGateOff = (props, context) => {
         <Button
           content="Nutrition"
           onClick={() => act('set_mode', { new_mode: 'Nutrition' })} />
-        <Button
-          content="Nanites"
-          onClick={() => act('set_mode', { new_mode: 'Nanites' })} />
       </Box>
     </>
   );
@@ -293,35 +286,6 @@ const ScannerGateNutrition = (props, context) => {
               new_nutrition: nutrition.name,
             })} />
         ))}
-      </Box>
-      <ScannerGateMode />
-    </>
-  );
-};
-
-const ScannerGateNanites = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { reverse, nanite_cloud } = data;
-  return (
-    <>
-      <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'}
-        {' '}nanite cloud {nanite_cloud}.
-      </Box>
-      <Box mb={2}>
-        <LabeledList>
-          <LabeledList.Item label="Cloud ID">
-            <NumberInput
-              value={nanite_cloud}
-              width="65px"
-              minValue={1}
-              maxValue={100}
-              stepPixelSize={2}
-              onChange={(e, value) => act('set_nanite_cloud', {
-                new_cloud: value,
-              })} />
-          </LabeledList.Item>
-        </LabeledList>
       </Box>
       <ScannerGateMode />
     </>

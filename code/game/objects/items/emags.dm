@@ -22,7 +22,7 @@
 
 /obj/item/card/emag/attack_self(mob/user) //for traitors with balls of plastitanium
 	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [name].</span>", "<span class='notice'>You show [src].</span>")
+		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
 /obj/item/card/emag/bluespace
@@ -48,7 +48,7 @@
 
 /obj/item/card/emagfake/attack_self(mob/user) //for assistants with balls of plasteel
 	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [name].</span>", "<span class='notice'>You show [src].</span>")
+		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [name]."), span_notice("You show [src]."))
 	add_fingerprint(user)
 
 /obj/item/card/emagfake/afterattack()
@@ -57,7 +57,7 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/attack()
 	return
@@ -75,7 +75,7 @@
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
 	for (var/subtypelist in type_blacklist)
 		if (target.type in subtypelist)
-			to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
+			to_chat(user, span_warning("The [target] cannot be affected by the [src]! A more specialized hacking device is required."))
 			return FALSE
 	return TRUE
 
@@ -95,11 +95,11 @@
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
-	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
-	to_chat(user, "<span class='notice'>You use [src]. It now has [charges] charges remaining.</span>")
+	to_chat(user, span_notice("You use [src]. It now has [charges] charges remaining."))
 	charge_timers.Add(addtimer(CALLBACK(src, .proc/recharge), charge_time, TIMER_STOPPABLE))
 
 /obj/item/card/emag/doorjack/proc/recharge(mob/user)
@@ -109,20 +109,49 @@
 
 /obj/item/card/emag/doorjack/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It has [charges] charges remaining.</span>"
+	. += span_notice("It has [charges] charges remaining.")
 	if (length(charge_timers))
-		. += "<span class='notice'><b>A small display on the back reads:</span></b>"
+		. += "[span_notice("<b>A small display on the back reads:")]</b>"
 	for (var/i in 1 to length(charge_timers))
 		var/timeleft = timeleft(charge_timers[i])
 		var/loadingbar = num2loadingbar(timeleft/charge_time)
-		. += "<span class='notice'><b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b></span>"
+		. += span_notice("<b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b>")
 
 /obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
-		to_chat(user, "<span class='warning'>[src] is recharging!</span>")
+		to_chat(user, span_warning("[src] is recharging!"))
 		return FALSE
 	for (var/list/subtypelist in type_whitelist)
 		if (target.type in subtypelist)
 			return TRUE
-	to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
+	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
 	return FALSE
+
+/*
+ * Battlecruiser Access
+ */
+/obj/item/card/emag/battlecruiser
+	name = "battlecruiser coordinates upload card"
+	desc = "An ominous card that contains the location of the station, and when applied to a communications console, \
+	the ability to long-distance contact the Syndicate fleet."
+	icon_state = "battlecruisercaller"
+	worn_icon_state = "battlecruisercaller"
+	///whether we have called the battlecruiser
+	var/used = FALSE
+
+/obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
+	used = TRUE
+	to_chat(user, span_boldwarning("You use [src], and it interfaces with the communication console. No going back..."))
+
+/obj/item/card/emag/battlecruiser/examine(mob/user)
+	. = ..()
+	. += span_notice("It can only be used on the communications console.")
+
+/obj/item/card/emag/battlecruiser/can_emag(atom/target, mob/user)
+	if(used)
+		to_chat(user, span_warning("[src] is used up."))
+		return FALSE
+	if(!istype(target, /obj/machinery/computer/communications))
+		to_chat(user, span_warning("[src] is unable to interface with this. It only seems to interface with the communication console."))
+		return FALSE
+	return TRUE

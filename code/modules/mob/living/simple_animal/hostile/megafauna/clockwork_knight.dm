@@ -18,7 +18,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	weather_immunities = list("snow")
+	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 20
@@ -26,7 +26,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	vision_range = 9
 	aggro_vision_range = 9
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	rapid_melee = 2 // every second
 	melee_queue_distance = 20
 	ranged = TRUE
@@ -39,6 +39,10 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	deathsound = "bodyfall"
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
+
+/mob/living/simple_animal/hostile/megafauna/clockwork_defender/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/clockwork_defender/OpenFire()
 	return

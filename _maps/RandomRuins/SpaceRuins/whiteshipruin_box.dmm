@@ -3,13 +3,11 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/space/has_grav/whiteship/box)
 "bN" = (
-/obj/structure/light_construct/small,
+/obj/structure/light_construct/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "cw" = (
-/obj/structure/light_construct/small{
-	dir = 1
-	},
+/obj/structure/light_construct/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "eD" = (
@@ -35,7 +33,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "gO" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/whiteship/box)
 "hT" = (
@@ -60,9 +58,7 @@
 /obj/structure/frame/computer{
 	anchored = 1
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "jb" = (
@@ -74,9 +70,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/ruin/space/has_grav/whiteship/box)
 "lR" = (
-/obj/structure/light_construct/small{
-	dir = 4
-	},
+/obj/machinery/light/small/built/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "mE" = (
@@ -93,7 +87,7 @@
 	anchored = 1;
 	dir = 1
 	},
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "nH" = (
@@ -108,9 +102,7 @@
 "nL" = (
 /obj/structure/table,
 /obj/item/screwdriver,
-/obj/structure/light_construct{
-	dir = 1
-	},
+/obj/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "pq" = (
@@ -118,7 +110,7 @@
 	dir = 8
 	},
 /obj/effect/decal/remains/human,
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "pu" = (
@@ -129,15 +121,11 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qz" = (
-/obj/structure/light_construct/small{
-	dir = 8
-	},
+/obj/machinery/light/small/built/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qI" = (
-/obj/structure/light_construct{
-	dir = 8
-	},
+/obj/machinery/light/built/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "qZ" = (
@@ -212,9 +200,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "HR" = (
-/obj/structure/light_construct{
-	dir = 1
-	},
+/obj/structure/light_construct/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "HT" = (
@@ -271,9 +257,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Ud" = (
-/obj/structure/light_construct{
-	dir = 4
-	},
+/obj/machinery/light/built/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Vt" = (
@@ -295,7 +279,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/whiteship/box)
 "Xt" = (
-/obj/structure/light_construct,
+/obj/structure/light_construct/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "Xy" = (

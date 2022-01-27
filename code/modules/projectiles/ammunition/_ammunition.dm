@@ -9,6 +9,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 500)
+	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
 	///Which kind of guns it can be loaded into
@@ -37,7 +38,7 @@
 	name = "spent bullet casing"
 	loaded_projectile = null
 
-/obj/item/ammo_casing/Initialize()
+/obj/item/ammo_casing/Initialize(mapload)
 	. = ..()
 	if(projectile_type)
 		loaded_projectile = new projectile_type(src)
@@ -47,12 +48,36 @@
 	update_appearance()
 
 /obj/item/ammo_casing/Destroy()
-	. = ..()
-
 	var/turf/T = get_turf(src)
 	if(T && !loaded_projectile && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 	QDEL_NULL(loaded_projectile)
+	return ..()
+
+/obj/item/ammo_casing/add_weapon_description()
+	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ammo)
+
+/**
+ *
+ * Outputs type-specific weapon stats for ammunition based on the projectile loaded inside the casing.
+ * Distinguishes between critting and stam-critting in separate lines
+ *
+ */
+/obj/item/ammo_casing/proc/add_notes_ammo()
+	// Try to get a projectile to derive stats from
+	var/obj/projectile/exam_proj = projectile_type
+	if(!ispath(exam_proj) || pellets == 0)
+		return
+
+	var/list/readout = list()
+	// No dividing by 0
+	if(initial(exam_proj.damage) > 0)
+		readout += "Most monkeys our legal team subjected to these [span_warning(caliber)] rounds succumbed to their wounds after [span_warning("[HITS_TO_CRIT(initial(exam_proj.damage) * pellets)] shot\s")] at point-blank, taking [span_warning("[pellets] shot\s")] per round"
+	if(initial(exam_proj.stamina) > 0)
+		readout += "[!readout.len ? "Most monkeys" : "More fortunate monkeys"] collapsed from exhaustion after [span_warning("[HITS_TO_CRIT(initial(exam_proj.stamina) * pellets)] impact\s")] of these [span_warning("[caliber]")] rounds"
+	if(!readout.len) // Everything else failed, give generic text
+		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric"
+	return readout.Join("\n") // Sending over a single string, rather than the whole list
 
 /obj/item/ammo_casing/update_icon_state()
 	icon_state = "[initial(icon_state)][loaded_projectile ? "-live" : null]"
@@ -94,9 +119,9 @@
 					continue
 			if (boolets > 0)
 				box.update_appearance()
-				to_chat(user, "<span class='notice'>You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s.</span>")
+				to_chat(user, span_notice("You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s."))
 			else
-				to_chat(user, "<span class='warning'>You fail to collect anything!</span>")
+				to_chat(user, span_warning("You fail to collect anything!"))
 	else
 		return ..()
 

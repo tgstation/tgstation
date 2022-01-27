@@ -1,5 +1,3 @@
-import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section, Table, NoticeBox, NumberInput, LabeledControls, Box } from '../components';
 import { RADIO_CHANNELS } from '../constants';
@@ -99,7 +97,7 @@ export const Telecomms = (props, context) => {
                     </Table.Cell>
                     <NumberInput
                       animate
-                      unit="GHz"
+                      unit="kHz"
                       step={0.2}
                       stepPixelSize={10}
                       minValue={minfreq / 10}
@@ -153,7 +151,7 @@ export const Telecomms = (props, context) => {
                 {frequencies.map(entry => (
                   <Table.Row key={frequencies.i} className="candystripe">
                     <Table.Cell bold>
-                      {entry/10} GHz
+                      {entry/10} kHz
                     </Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS
@@ -202,7 +200,7 @@ export const Telecomms = (props, context) => {
                     <Table.Cell>
                       <NumberInput
                         animate
-                        unit="GHz"
+                        unit="kHz"
                         step={0.2}
                         stepPixelSize={10}
                         minValue={minfreq / 10}

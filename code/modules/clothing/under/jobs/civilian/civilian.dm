@@ -107,7 +107,7 @@
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
 	name = "janitor's jumpsuit"
 	icon_state = "janitor"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"
@@ -149,16 +149,18 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/rank/civilian/lawyer/female
-	name = "female black suit"
-	icon_state = "black_suit_fem"
-	inhand_icon_state = "black_suit_fem"
+/obj/item/clothing/under/rank/civilian/lawyer/beige
+	name = "good lawyer's suit"
+	desc = "A tacky suit perfect for a CRIMINAL lawyer!"
+	icon_state = "good_suit"
+	inhand_icon_state = "good_suit"
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 
-/obj/item/clothing/under/rank/civilian/lawyer/female/skirt
-	name = "female black suitskirt"
-	icon_state = "black_suit_fem_skirt"
-	inhand_icon_state = "black_suit_fem_skirt"
+/obj/item/clothing/under/rank/civilian/lawyer/beige/skirt
+	name = "good lawyer's suitskirt"
+	desc = "A tacky suitskirt perfect for a CRIMINAL lawyer!"
+	icon_state = "good_suit_skirt"
+	inhand_icon_state = "good_suit"
 	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
@@ -236,3 +238,4 @@
 	name = "grilling shorts"
 	desc = "For when all you want in life is to grill for god's sake!"
 	icon_state = "cookjorts"
+	can_adjust = FALSE

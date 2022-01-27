@@ -1,3 +1,6 @@
+/**
+ * Players can use this item to put obj/item/implant's in living mobs. Can be renamed with a pen.
+ */
 /obj/item/implanter
 	name = "implanter"
 	desc = "A sterile automatic implant injector."
@@ -10,54 +13,57 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
+	///The implant in our implanter
 	var/obj/item/implant/imp = null
+	///Type of implant this will spawn as imp upon being spawned
 	var/imp_type = null
-
 
 /obj/item/implanter/update_icon_state()
 	icon_state = "implanter[imp ? 1 : 0]"
 	return ..()
 
-
-/obj/item/implanter/attack(mob/living/M, mob/user)
-	if(!istype(M))
+/obj/item/implanter/attack(mob/living/target, mob/user)
+	if(!(istype(target) && user && imp))
 		return
-	if(user && imp)
-		if(M != user)
-			M.visible_message("<span class='warning'>[user] is attempting to implant [M].</span>")
 
-		var/turf/T = get_turf(M)
-		if(T && (M == user || do_mob(user, M, 50)))
-			if(src && imp)
-				if(imp.implant(M, user))
-					if (M == user)
-						to_chat(user, "<span class='notice'>You implant yourself.</span>")
-					else
-						M.visible_message("<span class='notice'>[user] implants [M].</span>", "<span class='notice'>[user] implants you.</span>")
-					imp = null
-					update_appearance()
-				else
-					to_chat(user, "<span class='warning'>[src] fails to implant [M].</span>")
+	if(target != user)
+		target.visible_message(span_warning("[user] is attempting to implant [target]."))
 
-/obj/item/implanter/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You prod at [src] with [W]!</span>")
-			return
-		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_held_item() != W)
-			return
-		if(!user.canUseTopic(src, BE_CLOSE))
-			return
-		if(t)
-			name = "implanter ([t])"
+	var/turf/target_on = get_turf(target)
+	if(!(target_on && (target == user || do_mob(user, target, 5 SECONDS))))
+		return
+	if(!(src && imp))
+		return
+
+	if(imp.implant(target, user))
+		if (target == user)
+			to_chat(user, span_notice("You implant yourself."))
 		else
-			name = "implanter"
+			target.visible_message(span_notice("[user] implants [target]."), span_notice("[user] implants you."))
+		imp = null
+		update_appearance()
 	else
+		to_chat(user, span_warning("[src] fails to implant [target]."))
+
+/obj/item/implanter/attackby(obj/item/I, mob/living/user, params)
+	if(!istype(I, /obj/item/pen))
 		return ..()
+	if(!user.is_literate())
+		to_chat(user, span_notice("You prod at [src] with [I]!"))
+		return
+
+	var/new_name = tgui_input_text(user, "What would you like the label to be?", name, max_length = MAX_NAME_LEN)
+	if(user.get_active_held_item() != I)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(new_name)
+		name = "implanter ([new_name])"
+	else
+		name = "implanter"
 
 /obj/item/implanter/Initialize(mapload)
 	. = ..()
-	if(imp_type)
+	if(!imp && imp_type)
 		imp = new imp_type(src)
 	update_appearance()

@@ -19,7 +19,7 @@
 
 /obj/machinery/plumbing/Initialize(mapload, bolt = TRUE)
 	. = ..()
-	anchored = bolt
+	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
@@ -28,7 +28,7 @@
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.</span>"
+	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.")
 
 /obj/machinery/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -36,21 +36,21 @@
 	return TRUE
 
 /obj/machinery/plumbing/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
-	to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
+	to_chat(user, span_notice("You start furiously plunging [name]."))
 	if(do_after(user, 30, target = src))
-		to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
+		to_chat(user, span_notice("You finish plunging the [name]."))
 		reagents.expose(get_turf(src), TOUCH) //splash on the floor
 		reagents.clear_reagents()
 
 /obj/machinery/plumbing/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(anchored)
-		to_chat(user, "<span class='warning'>The [name] needs to be unbolted to do that!</span")
+		to_chat(user, span_warning("The [name] needs to be unbolted to do that!"))
 	if(I.tool_start_check(user, amount=0))
-		to_chat(user, "<span class='notice'>You start slicing the [name] apart.</span")
+		to_chat(user, span_notice("You start slicing the [name] apart."))
 		if(I.use_tool(src, user, (1.5 SECONDS), volume=50))
 			deconstruct(TRUE)
-			to_chat(user, "<span class='notice'>You slice the [name] apart.</span")
+			to_chat(user, span_notice("You slice the [name] apart."))
 			return TRUE
 
 ///We can empty beakers in here and everything
@@ -58,6 +58,7 @@
 	name = "input gate"
 	desc = "Can be manually filled with reagents from containers."
 	icon_state = "pipe_input"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | REFILLABLE
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
@@ -69,6 +70,7 @@
 	name = "output gate"
 	desc = "A manual output for plumbing systems, for taking reagents directly into containers."
 	icon_state = "pipe_output"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // Small
 	reagent_flags = TRANSPARENT | DRAINABLE
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)

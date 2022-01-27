@@ -1,8 +1,10 @@
 # This list auto requests reviews from the specified org members
 # when a PR that modifies the file in question is opened
-# This list is alphabetized by User -> Filename KEEP IT THAT WAY
-# In the event that multiple org members are to be informed of changes
-# to the same file or dir, add them to the end under Multiple Owners
+# This list is alphabetized by User -> Filename and separated into sections for Maintainers/Contributors KEEP IT THAT WAY
+# In the event that people are to be informed of changes
+# to the same file or dir, add them to the end of under Multiple Owners
+
+# MAINTAINERS
 
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
@@ -25,12 +27,6 @@
 /code/modules/admin/verbs/adminhelp.dm @Cyberboss
 /code/modules/admin/verbs/adminpm.dm @Cyberboss
 /code/modules/mapping/ @Cyberboss
-/tools/LinuxOneShot/ @Cyberboss
-/tools/tgs4_scripts/ @Cyberboss
-
-# Mothblocks
-
-/code/modules/unit_tests/ @Mothblocks
 
 # Jordie0608
 
@@ -38,10 +34,70 @@
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
+# Kylerace
+/code/__DEFINES/spatial_gridmap.dm @Kylerace
+/code/controllers/subsystem/spatial_gridmap.dm @Kylerace
+
 # LemonInTheDark
 
-/code/__DEFINES/atmospherics.dm @LemonInTheDark
+/code/__DEFINES/atmospherics/ @LemonInTheDark
 /code/modules/atmospherics/ @LemonInTheDark
+
+# Mothblocks
+
+/code/modules/unit_tests/ @Mothblocks
+/code/modules/client/preferences/ @Mothblocks
+/code/modules/preferences.dm @Mothblocks
+/code/modules/preferences_menu.dm @Mothblocks
+/code/modules/preferences_savefile.dm @Mothblocks
+/tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
+
+# MrMelbert
+/code/modules/hydroponics/ @MrMelbert
+
+# ninjanomnom
+
+/code/__DEFINES/dcs/ @ninjanomnom
+/code/controllers/subsystem/dcs.dm @ninjanomnom
+/code/controllers/subsystem/shuttle.dm @ninjanomnom
+/code/datums/components/ @ninjanomnom
+/code/datums/elements/ @ninjanomnom
+/code/modules/shuttle/ @ninjanomnom
+
+# stylemistake
+
+/code/__DEFINES/chat.dm @stylemistake
+/code/__DEFINES/tgui.dm @stylemistake
+/code/controllers/subsystem/chat.dm @stylemistake
+/code/controllers/subsystem/tgui.dm @stylemistake
+/code/modules/tgchat @stylemistake
+/code/modules/tgui @stylemistake
+/code/modules/tgui_panel @stylemistake
+/tgui @stylemistake
+
+# tralezab
+
+/code/datums/ai/ @tralezab
+
+# Watermelon914
+
+/code/modules/wiremod/ @Watermelon914
+
+# CONTRIBUTORS
+
+# Fikou
+
+/code/modules/mod/ @Fikou
+
+# Ghilker
+
+/code/__DEFINES/atmospherics/ @Ghilker
+/code/modules/atmospherics/ @Ghilker
+
+# JohnFulpWizard
+
+/code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
+/goon/ @JohnFulpWillard
 
 # MrStonedOne
 
@@ -55,35 +111,19 @@
 /code/controllers/configuration/entries @MrStonedOne
 /config/ @MrStonedOne
 
-# ninjanomnom
+# NamelessFairy
 
-/code/__DEFINES/dcs/ @ninjanomnom
-/code/controllers/subsystem/dcs.dm @ninjanomnom
-/code/controllers/subsystem/shuttle.dm @ninjanomnom
-/code/datums/components/ @ninjanomnom
-/code/datums/elements/ @ninjanomnom
-/code/modules/shuttle/ @ninjanomnom
+/code/modules/capture_the_flag/ @NamelessFairy
+/_maps/map_files/CTF/ @NamelessFairy
 
-# ShizCalev
+# MULTIPLE OWNERS
 
-/sound/ @ShizCalev
-
-# stylemistake
-
-/code/__DEFINES/chat.dm @stylemistake
-/code/__DEFINES/tgui.dm @stylemistake
-/code/controllers/subsystem/chat.dm @stylemistake
-/code/controllers/subsystem/tgui.dm @stylemistake
-/code/modules/tgchat @stylemistake
-/code/modules/tgui @stylemistake
-/code/modules/tgui_panel @stylemistake
-/tgui @stylemistake
-
-# Multiple Owners
-
-/icons/ @Twaticus @ShizCalev
+/icons/ @Twaticus @Krysonism @Imaginos16
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
-/_maps/ @EOBGames @ShizCalev
+/_maps/ @EOBGames @ShizCalev @Maurukas
+/tools/build/ @MrStonedOne @stylemistake
+/tools/LinuxOneShot/ @Cyberboss @MrStonedOne
+/tools/tgs4_scripts/ @Cyberboss @MrStonedOne
 
 #SIC SEMPER TYRANNIS
 /code/modules/hydroponics/grown/citrus.dm @optimumtact

@@ -63,6 +63,11 @@
 		"Transmission 6" = "Removes penalty for only being close to space.",
 	)
 
+#define STARLIGHT_CAN_HEAL 2
+#define STARLIGHT_CAN_HEAL_WITH_PENALTY 1
+#define STARLIGHT_CANNOT_HEAL 0
+#define STARLIGHT_MAX_RANGE 2
+
 /datum/symptom/heal/starlight/Start(datum/disease/advance/A)
 	. = ..()
 	if(!.)
@@ -72,19 +77,86 @@
 	if(A.totalStageSpeed() >= 6)
 		power = 2
 
-/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	if(istype(get_turf(M), /turf/open/space))
-		return power
+/datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
+	if(direction == ZTRAIT_UP)
+		turf_to_check = turf_to_check.above()
+		if(!turf_to_check)
+			return STARLIGHT_CANNOT_HEAL
+	var/area/area_to_check = get_area(turf_to_check)
+	var/levels_of_glass = 0 // Since starlight condensation only works 2 tiles to the side anyways, it shouldn't work with like 100 z-levels of glass
+	while(levels_of_glass <= STARLIGHT_MAX_RANGE)
+		// Outdoors covers lavaland and unroofed areas but with tiles under,
+		// while space covers normal space and those caused by explosions,
+		// if there is a floor tile when checking above, that means
+		// a roof exists so the outdoors should only work downwards
+		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN))
+			if (levels_of_glass)
+				return STARLIGHT_CAN_HEAL_WITH_PENALTY // Glass gives a penalty.
+			return STARLIGHT_CAN_HEAL // No glass = can heal fully.
+
+		// Our turf is transparent, but it's NOT openspace - it's something like glass which reduces power
+		if(istransparentturf(turf_to_check) && !(istype(turf_to_check, /turf/open/openspace)))
+			levels_of_glass += 1
+
+		// Our turf is transparent OR openspace - we can check higher or lower z-levels
+		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
+			// Check above or below us
+			if(direction == ZTRAIT_UP)
+				turf_to_check = turf_to_check.above()
+			else
+				turf_to_check = turf_to_check.below()
+
+			// If we found a turf above or below us,
+			// then we can rerun the loop on the newly found turf / area
+			// (Probably, with +1 to levels_of_glass)
+			if(turf_to_check)
+				area_to_check = get_area(turf_to_check)
+				continue
+
+			// If we didn't find a turf above or below us -
+			// Checking below, we assume that space is below us (as we're standing on station)
+			// Checking above, we check that the area is "outdoors" before assuming if it is space or not.
+			else
+				if(direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))
+					if (levels_of_glass)
+						return STARLIGHT_CAN_HEAL_WITH_PENALTY
+					return STARLIGHT_CAN_HEAL
+
+		return STARLIGHT_CANNOT_HEAL // Hit a non-space, Non-transparent turf - no healsies
+
+/datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
+	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
+	if(current_heal_level == STARLIGHT_CAN_HEAL)
+		return current_heal_level
+	if(current_heal_level && satisfied_with_penalty) // do not care if there is a healing penalty or no
+		return current_heal_level
+	var/heal_level_from_above = CanTileHealDirectional(original_turf, ZTRAIT_UP)
+	if(heal_level_from_above > current_heal_level)
+		return heal_level_from_above
 	else
-		for(var/turf/T in view(M, 2))
-			if(istype(T, /turf/open/space))
-				return power * nearspace_penalty
+		return current_heal_level
+
+/datum/symptom/heal/starlight/CanHeal(datum/disease/advance/A)
+	var/mob/living/affected_mob = A.affected_mob
+	var/turf/turf_of_mob = get_turf(affected_mob)
+	switch(CanTileHeal(turf_of_mob, FALSE))
+		if(STARLIGHT_CAN_HEAL_WITH_PENALTY)
+			return power * nearspace_penalty
+		if(STARLIGHT_CAN_HEAL)
+			return power
+	for(var/turf/turf_to_check in view(affected_mob, STARLIGHT_MAX_RANGE))
+		if(CanTileHeal(turf_to_check, TRUE))
+			return power * nearspace_penalty
+
+#undef STARLIGHT_CAN_HEAL
+#undef STARLIGHT_CAN_HEAL_WITH_PENALTY
+#undef STARLIGHT_CANNOT_HEAL
+#undef STARLIGHT_MAX_RANGE
 
 /datum/symptom/heal/starlight/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 	if(M.getToxLoss() && prob(5))
-		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
+		to_chat(M, span_notice("Your skin tingles as the starlight seems to heal you."))
 
 	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
 
@@ -132,7 +204,7 @@
 		if(food_conversion)
 			M.adjust_nutrition(0.3)
 		if(prob(2))
-			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
+			to_chat(M, span_notice("You feel a mild warmth as your blood purifies itself."))
 	return 1
 
 
@@ -171,7 +243,7 @@
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
 	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
+		to_chat(C, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
 	return 1
 
 /datum/symptom/heal/darkness
@@ -212,7 +284,7 @@
 		return
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>The darkness soothes and mends your wounds.</span>")
+		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, null, BODYPART_ORGANIC)) //more effective on brute
@@ -283,7 +355,7 @@
 		if(SOFT_CRIT)
 			return power * 0.5
 	if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
-		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
+		to_chat(M, span_warning("You feel yourself slip into a regenerative coma..."))
 		active_coma = TRUE
 		addtimer(CALLBACK(src, .proc/coma, M), 60)
 
@@ -368,7 +440,7 @@
 		return
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>You feel yourself absorbing the water around you to soothe your damaged skin.</span>")
+		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, null, BODYPART_ORGANIC))
@@ -419,23 +491,23 @@
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. +=  power * 0.75
+		. += power * 0.75
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
 
 	if(prob(5))
-		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
+		to_chat(M, span_notice("You feel yourself absorbing plasma inside and around you..."))
 
 	var/target_temp = M.get_body_temp_normal()
 	if(M.bodytemperature > target_temp)
 		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, target_temp)
 		if(prob(5))
-			to_chat(M, "<span class='notice'>You feel less hot.</span>")
+			to_chat(M, span_notice("You feel less hot."))
 	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
 		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, 0, target_temp)
 		if(prob(5))
-			to_chat(M, "<span class='notice'>You feel warmer.</span>")
+			to_chat(M, span_notice("You feel warmer."))
 
 	M.adjustToxLoss(-heal_amt)
 
@@ -443,7 +515,7 @@
 	if(!parts.len)
 		return
 	if(prob(5))
-		to_chat(M, "<span class='notice'>The pain from your wounds fades rapidly.</span>")
+		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
 			M.update_damage_overlays()
@@ -477,20 +549,7 @@
 		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
-	var/mob/living/M = A.affected_mob
-	switch(M.radiation)
-		if(0)
-			return FALSE
-		if(1 to RAD_MOB_SAFE)
-			return 0.25
-		if(RAD_MOB_SAFE to RAD_BURN_THRESHOLD)
-			return 0.5
-		if(RAD_BURN_THRESHOLD to RAD_MOB_MUTATE)
-			return 0.75
-		if(RAD_MOB_MUTATE to RAD_MOB_KNOCKDOWN)
-			return 1
-		else
-			return 1.5
+	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
 
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
@@ -506,7 +565,7 @@
 		return
 
 	if(prob(4))
-		to_chat(M, "<span class='notice'>Your skin glows faintly, and you feel your wounds mending themselves.</span>")
+		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
 	for(var/obj/item/bodypart/L in parts)
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))

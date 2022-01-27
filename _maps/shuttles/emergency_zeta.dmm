@@ -6,7 +6,7 @@
 /turf/closed/wall/mineral/abductor,
 /area/shuttle/escape)
 "c" = (
-/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "d" = (
@@ -44,9 +44,7 @@
 /area/shuttle/escape)
 "j" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "k" = (
@@ -77,15 +75,11 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "r" = (
@@ -123,9 +117,7 @@
 "w" = (
 /obj/structure/table/abductor,
 /obj/item/storage/box/alienhandcuffs,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "x" = (
@@ -136,10 +128,8 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "y" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/item/kirbyplants/photosynthetic,
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "z" = (
@@ -160,9 +150,7 @@
 /area/shuttle/escape)
 "C" = (
 /obj/structure/chair/office,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "D" = (
@@ -226,14 +214,12 @@
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "L" = (
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/structure/closet/abductor,
 /obj/item/clothing/under/misc/pj/blue,
 /obj/item/clothing/shoes/sneakers/white,
 /obj/item/clothing/shoes/jackboots,
 /obj/item/clothing/glasses/eyepatch,
+/obj/machinery/light/directional/west,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "N" = (
@@ -258,15 +244,13 @@
 /area/shuttle/escape)
 "Q" = (
 /obj/item/kirbyplants/photosynthetic,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "S" = (
 /obj/item/lazarus_injector,
 /obj/structure/table/abductor,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
 "T" = (

@@ -68,7 +68,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
-	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, RAD = 0, FIRE = 90, ACID = 90)
+	armor = list(MELEE = 70, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 0, BIO = 0, FIRE = 90, ACID = 90)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/update_appearance(updates=ALL)
 	. = ..()
@@ -97,7 +99,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	icon_state = "[base_icon_state]0"
 	return ..()
 
-/obj/machinery/requests_console/Initialize()
+/obj/machinery/requests_console/Initialize(mapload)
 	. = ..()
 	name = "\improper [department] requests console"
 	GLOB.allConsoles += src
@@ -116,7 +118,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	GLOB.req_console_ckey_departments[ckey(department)] = department
 
 	Radio = new /obj/item/radio(src)
-	Radio.listening = 0
+	Radio.set_listening(FALSE)
 
 /obj/machinery/requests_console/Destroy()
 	QDEL_NULL(Radio)
@@ -244,7 +246,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	if(href_list["write"])
 		to_department = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
 
-		var/new_message = (to_department in GLOB.req_console_ckey_departments) && stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
+		var/new_message = (to_department in GLOB.req_console_ckey_departments) && tgui_input_text(usr, "Write your message", "Awaiting Input")
 		if(new_message)
 			to_department = GLOB.req_console_ckey_departments[to_department]
 			message = new_message
@@ -252,7 +254,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			priority = clamp(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
+		var/new_message = reject_bad_text(tgui_input_text(usr, "Write your message", "Awaiting Input"))
 		if(new_message)
 			message = new_message
 			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
@@ -273,7 +275,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
-		deadchat_broadcast(" made a station announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type=DEADCHAT_ANNOUNCEMENT)
+		deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
 		announceAuth = FALSE
 		message = ""
 		screen = REQ_SCREEN_MAIN
@@ -407,28 +409,32 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		Radio.set_frequency(radio_freq)
 		Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
 
-/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_CROWBAR)
-		if(open)
-			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
-			open = FALSE
-		else
-			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
-			open = TRUE
-		update_appearance()
-		return
-	if(O.tool_behaviour == TOOL_SCREWDRIVER)
-		if(open)
-			hackState = !hackState
-			if(hackState)
-				to_chat(user, "<span class='notice'>You modify the wiring.</span>")
-			else
-				to_chat(user, "<span class='notice'>You reset the wiring.</span>")
-			update_appearance()
-		else
-			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
-		return
+/obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 
+	tool.play_tool_sound(src, 50)
+	if(open)
+		to_chat(user, span_notice("You close the maintenance panel."))
+		open = FALSE
+	else
+		to_chat(user, span_notice("You open the maintenance panel."))
+		open = TRUE
+	update_appearance()
+	return TRUE
+
+/obj/machinery/requests_console/screwdriver_act(mob/living/user, obj/item/tool)
+	if(open)
+		hackState = !hackState
+		if(hackState)
+			to_chat(user, span_notice("You modify the wiring."))
+		else
+			to_chat(user, span_notice("You reset the wiring."))
+		update_appearance()
+		tool.play_tool_sound(src, 50)
+	else
+		to_chat(user, span_warning("You must open the maintenance panel first!"))
+	return TRUE
+
+/obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
 	var/obj/item/card/id/ID = O.GetID()
 	if(ID)
 		if(screen == REQ_SCREEN_AUTHENTICATE)
@@ -439,13 +445,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				announceAuth = TRUE
 			else
 				announceAuth = FALSE
-				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
+				to_chat(user, span_warning("You are not authorized to send announcements!"))
 			updateUsrDialog()
 		return
 	if (istype(O, /obj/item/stamp))
 		if(screen == REQ_SCREEN_AUTHENTICATE)
 			var/obj/item/stamp/T = O
-			msgStamped = "<span class='boldnotice'>Stamped with the [T.name]</span>"
+			msgStamped = span_boldnotice("Stamped with the [T.name]")
 			updateUsrDialog()
 		return
 	return ..()

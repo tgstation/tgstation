@@ -18,7 +18,7 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "ae" = (
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
@@ -69,9 +69,7 @@
 	pixel_x = -32
 	},
 /obj/item/clipboard,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/item/folder/red,
 /obj/item/toy/figure/syndie,
 /obj/effect/turf_decal/tile/neutral{
@@ -123,9 +121,7 @@
 	pixel_x = 32
 	},
 /obj/item/storage/fancy/donut_box,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -281,9 +277,7 @@
 	dir = 4;
 	name = "tactical chair"
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -301,9 +295,7 @@
 	dir = 8;
 	name = "tactical chair"
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -397,19 +389,16 @@
 /area/shuttle/syndicate/airlock)
 "aU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "aV" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "aW" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "Ready Room";
 	req_access_txt = "150"
 	},
@@ -431,9 +420,7 @@
 	name = "tactical chair"
 	},
 /obj/effect/turf_decal/bot_white,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
 "aY" = (
@@ -441,27 +428,15 @@
 	id = "smindicate";
 	name = "outer blast door"
 	},
-/obj/machinery/button/door{
-	id = "smindicate";
-	name = "external door control";
-	pixel_y = 26;
-	req_access_txt = "150"
-	},
-/obj/docking_port/mobile{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
-	hidden = 1;
-	id = "syndicate";
-	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
-	name = "syndicate infiltrator";
-	port_direction = 4;
-	width = 23
-	},
+/obj/docking_port/mobile/infiltrator,
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/button/door/directional/north{
+	id = "smindicate";
+	name = "external door control";
+	req_access_txt = "150"
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
@@ -469,7 +444,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "ba" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	name = "E.V.A. Gear Storage";
 	req_access_txt = "150"
 	},
@@ -486,7 +461,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/eva)
 "bb" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -516,13 +491,11 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "bg" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/eva)
 "bh" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
 "bi" = (
@@ -569,9 +542,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bs" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bt" = (
@@ -618,13 +589,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bv" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/medical)
 "bw" = (
-/obj/structure/grille,
-/obj/structure/window/plasma/reinforced/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/armory)
 "bx" = (
@@ -650,9 +619,7 @@
 /obj/item/wrench,
 /obj/item/assembly/infra,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/armory)
 "bA" = (
@@ -691,9 +658,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "bE" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -707,9 +672,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/hallway)
 "bF" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -994,9 +957,7 @@
 /obj/item/surgicaldrill,
 /obj/item/circular_saw,
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1014,9 +975,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	pixel_x = 30
-	},
+/obj/structure/mirror/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -1034,9 +993,7 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
 "cn" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

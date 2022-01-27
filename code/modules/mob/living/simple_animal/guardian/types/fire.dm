@@ -14,6 +14,13 @@
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! You caught one! OH GOD, EVERYTHING'S ON FIRE. Except you and the fish.</span>"
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Plasma, the bringer of fire.</span>"
 
+/mob/living/simple_animal/hostile/guardian/fire/Initialize(mapload, theme)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /mob/living/simple_animal/hostile/guardian/fire/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(summoner)
@@ -25,8 +32,8 @@
 	if(. && ishuman(target) && target != summoner)
 		new /datum/hallucination/delusion(target,TRUE,"custom",200,0, icon_state,icon)
 
-/mob/living/simple_animal/hostile/guardian/fire/Crossed(AM as mob|obj)
-	..()
+/mob/living/simple_animal/hostile/guardian/fire/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	collision_ignite(AM)
 
 /mob/living/simple_animal/hostile/guardian/fire/Bumped(atom/movable/AM)

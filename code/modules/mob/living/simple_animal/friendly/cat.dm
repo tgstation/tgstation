@@ -9,7 +9,7 @@
 	speak = list("Meow!", "Esp!", "Purr!", "HSSSSS")
 	speak_emote = list("purrs", "meows")
 	emote_hear = list("meows.", "mews.")
-	emote_see = list("shakes its head.", "shivers.")
+	emote_see = list("shakes their head.", "shivers.")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
@@ -20,7 +20,7 @@
 	maxbodytemp = 400
 	unsuitable_atmos_damage = 0.5
 	animal_species = /mob/living/simple_animal/pet/cat
-	childtype = list(/mob/living/simple_animal/pet/cat/kitten)
+	childtype = list(/mob/living/simple_animal/pet/cat/kitten = 1)
 	butcher_results = list(/obj/item/food/meat/slab = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1, /obj/item/stack/sheet/animalhide/cat = 1)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
@@ -29,18 +29,11 @@
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
 	mobility_flags = MOBILITY_FLAGS_REST_CAPABLE_DEFAULT
-	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-	///Limits how often cats can spam chasing mice.
-	COOLDOWN_DECLARE(emote_cooldown)
-	///Can this cat catch special mice?
-	var/inept_hunter = FALSE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "cat"
 	can_be_held = TRUE
 	held_state = "cat2"
-	pet_bonus = TRUE
-	pet_bonus_emote = "purrs!"
 	///In the case 'melee_damage_upper' is somehow raised above 0
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
@@ -49,8 +42,9 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
-/mob/living/simple_animal/pet/cat/Initialize()
+/mob/living/simple_animal/pet/cat/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/pet_bonus, "purrs!")
 	add_verb(src, /mob/living/proc/toggle_resting)
 	add_cell_sample()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
@@ -61,7 +55,7 @@
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
-	desc = "It's a cat... in space!"
+	desc = "They're a cat... in space!"
 	icon_state = "spacecat"
 	icon_living = "spacecat"
 	icon_dead = "spacecat_dead"
@@ -72,7 +66,7 @@
 
 /mob/living/simple_animal/pet/cat/breadcat
 	name = "bread cat"
-	desc = "It's a cat... with a bread!"
+	desc = "They're a cat... with a bread!"
 	icon_state = "breadcat"
 	icon_living = "breadcat"
 	icon_dead = "breadcat_dead"
@@ -123,7 +117,7 @@
 	var/memory_saved = FALSE
 	held_state = "cat"
 
-/mob/living/simple_animal/pet/cat/runtime/Initialize()
+/mob/living/simple_animal/pet/cat/runtime/Initialize(mapload)
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
@@ -210,10 +204,10 @@
 /mob/living/simple_animal/pet/cat/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!stat && !buckled && !client)
 		if(DT_PROB(0.5, delta_time))
-			manual_emote(pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
+			manual_emote(pick("stretches out for a belly rub.", "wags [p_their()] tail.", "lies down."))
 			set_resting(TRUE)
 		else if(DT_PROB(0.5, delta_time))
-			manual_emote(pick("sits down.", "crouches on its hind legs.", "looks alert."))
+			manual_emote(pick("sits down.", "crouches on [p_their()] hind legs.", "looks alert."))
 			set_resting(TRUE)
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
@@ -222,7 +216,7 @@
 				manual_emote(pick("gets up and meows.", "walks around.", "stops resting."))
 				set_resting(FALSE)
 			else
-				manual_emote(pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
+				manual_emote(pick("grooms [p_their()] fur.", "twitches [p_their()] whiskers.", "shakes out [p_their()] coat."))
 
 	//MICE!
 	if((src.loc) && isturf(src.loc))
@@ -230,7 +224,7 @@
 			for(var/mob/living/simple_animal/mouse/M in view(1,src))
 				if(istype(M, /mob/living/simple_animal/mouse/brown/tom) && inept_hunter)
 					if(COOLDOWN_FINISHED(src, emote_cooldown))
-						visible_message("<span class='warning'>[src] chases [M] around, to no avail!</span>")
+						visible_message(span_warning("[src] chases [M] around, to no avail!"))
 						step(M, pick(GLOB.cardinals))
 						COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 					break
@@ -242,7 +236,7 @@
 					break
 			for(var/obj/item/toy/cattoy/T in view(1,src))
 				if (T.cooldown < (world.time - 400))
-					manual_emote("bats \the [T] around with its paw!")
+					manual_emote("bats \the [T] around with \his paw!")
 					T.cooldown = world.time
 
 	..()
@@ -252,7 +246,7 @@
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
 		if(turns_since_scan > 5)
-			walk_to(src, 0)
+			SSmove_manager.stop_looping(src)
 			turns_since_scan = 0
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
@@ -266,7 +260,7 @@
 						break
 			if(movement_target)
 				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
+				SSmove_manager.move_to(src, movement_target, 0, 1.5)
 
 /mob/living/simple_animal/pet/cat/jerry //Holy shit we left jerry on donut ~ Arcane ~Fikou
 	name = "Jerry"
@@ -276,7 +270,7 @@
 
 /mob/living/simple_animal/pet/cat/cak //I told you I'd do it, Remie
 	name = "Keeki"
-	desc = "It's a cat made out of cake."
+	desc = "She is a cat made out of cake."
 	icon_state = "cak"
 	icon_living = "cak"
 	icon_dead = "cak_dead"
@@ -289,7 +283,7 @@
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
-	deathmessage = "loses its false life and collapses!"
+	deathmessage = "loses her false life and collapses!"
 	deathsound = "bodyfall"
 	held_state = "cak"
 
@@ -305,9 +299,9 @@
 	to_chat(src, "<span class='big bold'>You are a cak!</span><b> You're a harmless cat/cake hybrid that everyone loves. People can take bites out of you if they're hungry, but you regenerate health \
 	so quickly that it generally doesn't matter. You're remarkably resilient to any damage besides this and it's hard for you to really die at all. You should go around and bring happiness and \
 	free cake to the station!</b>")
-	var/new_name = stripped_input(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change")
+	var/new_name = tgui_input_text(src, "Enter your name, or press \"Cancel\" to stick with Keeki.", "Name Change", max_length = MAX_NAME_LEN)
 	if(new_name)
-		to_chat(src, "<span class='notice'>Your name is now <b>\"new_name\"</b>!</span>")
+		to_chat(src, span_notice("Your name is now <b>\"new_name\"</b>!"))
 		name = new_name
 
 /mob/living/simple_animal/pet/cat/cak/Life(delta_time = SSMOBS_DT, times_fired)

@@ -24,7 +24,7 @@
 		else //this ONLY happens if someone uses a phasing effect to try to land in a NOTELEPORT zone after it is created, AKA trying to exploit.
 			if(isliving(phasing_in))
 				var/mob/living/living_cheaterson = phasing_in
-				to_chat(living_cheaterson, "<span class='userdanger'>This area has a heavy universal force occupying it, and you are scattered to the cosmos!</span>")
+				to_chat(living_cheaterson, span_userdanger("This area has a heavy universal force occupying it, and you are scattered to the cosmos!"))
 				if(ishuman(living_cheaterson))
 					shake_camera(living_cheaterson, 20, 1)
 					addtimer(CALLBACK(living_cheaterson, /mob/living/carbon.proc/vomit), 2 SECONDS)
@@ -55,10 +55,10 @@
 	var/area/destination_area = newloc.loc
 	movedelay = world.time + movespeed
 	if(newloc.flags_1 & NOJAUNT)
-		to_chat(user, "<span class='warning'>Some strange aura is blocking the way.</span>")
+		to_chat(user, span_warning("Some strange aura is blocking the way."))
 		return
-	if(destination_area.area_flags & NOTELEPORT)
-		to_chat(user, "<span class='danger'>Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous.</span>")
+	if(destination_area.area_flags & NOTELEPORT || SSmapping.level_trait(newloc.z, ZTRAIT_NOPHASE))
+		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
 	return newloc
 

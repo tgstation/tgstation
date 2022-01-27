@@ -64,8 +64,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 "o" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
-	dir = 4
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian{
+	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
@@ -209,7 +209,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "L" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -221,6 +221,10 @@
 /area/shuttle/hunter)
 "Q" = (
 /obj/item/book/manual/ripley_build_and_repair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/hunter)
+"V" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "Y" = (
@@ -449,7 +453,7 @@ a
 a
 a
 b
-o
+V
 k
 r
 z

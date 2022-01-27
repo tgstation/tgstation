@@ -37,30 +37,30 @@
 	return ..()
 
 /obj/item/reagent_containers/food/condiment/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!</span>")
+	user.visible_message(span_suicide("[user] is trying to eat the entire [src]! It looks like [user.p_they()] forgot how food works!"))
 	return OXYLOSS
 
 /obj/item/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
+		to_chat(user, span_warning("None of [src] left, oh no!"))
 		return FALSE
 
 	if(!canconsume(M, user))
 		return FALSE
 
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] swallows some of the contents of \the [src].</span>", \
-			"<span class='notice'>You swallow some of the contents of \the [src].</span>")
+		user.visible_message(span_notice("[user] swallows some of the contents of \the [src]."), \
+			span_notice("You swallow some of the contents of \the [src]."))
 	else
-		M.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>", \
-			"<span class='warning'>[user] attempts to feed you from [src].</span>")
+		M.visible_message(span_warning("[user] attempts to feed [M] from [src]."), \
+			span_warning("[user] attempts to feed you from [src]."))
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The condiment might be empty after the delay.
-		M.visible_message("<span class='warning'>[user] fed [M] from [src].</span>", \
-			"<span class='warning'>[user] fed you from [src].</span>")
+		M.visible_message(span_warning("[user] fed [M] from [src]."), \
+			span_warning("[user] fed you from [src]."))
 		log_combat(user, M, "fed", reagents.log_list())
 	reagents.trans_to(M, 10, transfered_by = user, methods = INGEST)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
@@ -73,26 +73,26 @@
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty!</span>")
+			to_chat(user, span_warning("[target] is empty!"))
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>[src] is full!</span>")
+			to_chat(user, span_warning("[src] is full!"))
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_drainable() || IS_EDIBLE(target))
 		if(!reagents.total_volume)
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			to_chat(user, span_warning("[src] is empty!"))
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>you can't add anymore to [target]!</span>")
+			to_chat(user, span_warning("you can't add anymore to [target]!"))
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
+		to_chat(user, span_notice("You transfer [trans] units of the condiment to [target]."))
 
 /obj/item/reagent_containers/food/condiment/enzyme
 	name = "universal enzyme"
@@ -106,8 +106,8 @@
 	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
 	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
 	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
-	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
-	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+	. += span_notice("[milk_required] milk, [enzyme_required] enzyme and you got cheese.")
+	. += span_warning("Remember, the enzyme isn't used up, so return it to the bottle, dingus!")
 
 /obj/item/reagent_containers/food/condiment/sugar
 	name = "sugar sack"
@@ -125,7 +125,7 @@
 	var/flour_required = recipe.required_reagents[/datum/reagent/consumable/flour]
 	var/eggyolk_required = recipe.required_reagents[/datum/reagent/consumable/eggyolk]
 	var/sugar_required = recipe.required_reagents[/datum/reagent/consumable/sugar]
-	. += "<span class='notice'>[flour_required] flour, [eggyolk_required] egg yolk (or soy milk), [sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
+	. += span_notice("[flour_required] flour, [eggyolk_required] egg yolk (or soy milk), [sugar_required] sugar makes cake dough. You can make pie dough from it.")
 
 /obj/item/reagent_containers/food/condiment/saltshaker //Separate from above since it's a small shaker rather then
 	name = "salt shaker" // a large one.
@@ -140,7 +140,7 @@
 	fill_icon_thresholds = null
 
 /obj/item/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
@@ -154,9 +154,9 @@
 		return
 	if(isturf(target))
 		if(!reagents.has_reagent(/datum/reagent/consumable/salt, 2))
-			to_chat(user, "<span class='warning'>You don't have enough salt to make a pile!</span>")
+			to_chat(user, span_warning("You don't have enough salt to make a pile!"))
 			return
-		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
+		user.visible_message(span_notice("[user] shakes some salt onto [target]."), span_notice("You shake some salt onto [target]."))
 		reagents.remove_reagent(/datum/reagent/consumable/salt, 2)
 		new/obj/effect/decal/cleanable/food/salt(target)
 		return
@@ -188,8 +188,8 @@
 	var/datum/chemical_reaction/recipe = GLOB.chemical_reactions_list[/datum/chemical_reaction/food/cheesewheel]
 	var/milk_required = recipe.required_reagents[/datum/reagent/consumable/milk]
 	var/enzyme_required = recipe.required_catalysts[/datum/reagent/consumable/enzyme]
-	. += "<span class='notice'>[milk_required] milk, [enzyme_required] enzyme and you got cheese.</span>"
-	. += "<span class='warning'>Remember, the enzyme isn't used up, so return it to the bottle, dingus!</span>"
+	. += span_notice("[milk_required] milk, [enzyme_required] enzyme and you got cheese.")
+	. += span_warning("Remember, the enzyme isn't used up, so return it to the bottle, dingus!")
 
 /obj/item/reagent_containers/food/condiment/flour
 	name = "flour sack"
@@ -211,8 +211,8 @@
 	var/cakebatter_eggyolk_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/eggyolk]
 	var/cakebatter_sugar_required = recipe_cakebatter.required_reagents[/datum/reagent/consumable/sugar]
 	. += "<b><i>You retreat inward and recall the teachings of... Making Dough...</i></b>"
-	. += "<span class='notice'>[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.</span>"
-	. += "<span class='notice'>[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.</span>"
+	. += span_notice("[dough_flour_required] flour, [dough_water_required] water makes normal dough. You can make flat dough from it.")
+	. += span_notice("[cakebatter_flour_required] flour, [cakebatter_eggyolk_required] egg yolk (or soy milk), [cakebatter_sugar_required] sugar makes cake dough. You can make pie dough from it.")
 
 /obj/item/reagent_containers/food/condiment/soymilk
 	name = "soy milk"
@@ -234,6 +234,22 @@
 	list_reagents = list(/datum/reagent/consumable/rice = 30)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/cornmeal
+	name = "cornmeal box"
+	desc = "A big box of cornmeal. Great for southern style cooking."
+	icon_state = "cornmeal"
+	inhand_icon_state = "carton"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	list_reagents = list(/datum/reagent/consumable/cornmeal = 30)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/bbqsauce
+	name = "bbq sauce"
+	desc = "Hand wipes not included."
+	icon_state = "bbqsauce"
+	list_reagents = list(/datum/reagent/consumable/bbqsauce = 50)
+
 /obj/item/reagent_containers/food/condiment/soysauce
 	name = "soy sauce"
 	desc = "A salty soy-based flavoring."
@@ -248,6 +264,27 @@
 	list_reagents = list(/datum/reagent/consumable/mayonnaise = 50)
 	fill_icon_thresholds = null
 
+/obj/item/reagent_containers/food/condiment/vinegar
+	name = "vinegar"
+	desc = "Perfect for chips, if you're feeling Space British."
+	icon_state = "vinegar"
+	list_reagents = list(/datum/reagent/consumable/vinegar = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/quality_oil
+	name = "quality oil"
+	desc = "For the fancy chef inside everyone."
+	icon_state = "oliveoil"
+	list_reagents = list(/datum/reagent/consumable/quality_oil = 50)
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/food/condiment/yoghurt
+	name = "yoghurt carton"
+	desc = "Creamy and smooth."
+	icon_state = "yoghurt"
+	list_reagents = list(/datum/reagent/consumable/yoghurt = 50)
+	fill_icon_thresholds = null
+
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
 /obj/item/reagent_containers/food/condiment/pack
@@ -256,7 +293,7 @@
 	icon_state = "condi_empty"
 	volume = 10
 	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(10)
 	/**
 	  * List of possible styles (list(<icon_state>, <name>, <desc>)) for condiment packs.
 	  * Since all of them differs only in color should probably be replaced with usual reagentfillings instead
@@ -295,15 +332,15 @@
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(IS_EDIBLE(target))
 		if(!reagents.total_volume)
-			to_chat(user, "<span class='warning'>You tear open [src], but there's nothing in it.</span>")
+			to_chat(user, span_warning("You tear open [src], but there's nothing in it."))
 			qdel(src)
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>" )
+			to_chat(user, span_warning("You tear open [src], but [target] is stacked so high that it just drips off!") )
 			qdel(src)
 			return
 		else
-			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
+			to_chat(user, span_notice("You tear open [src] above [target] and the condiments drip onto it."))
 			src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 			qdel(src)
 			return

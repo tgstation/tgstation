@@ -18,13 +18,17 @@
 	var/overheat_max = 40
 	var/heat_diffusion = 0.5
 
-/obj/item/minigunpack/Initialize()
+/obj/item/minigunpack/Initialize(mapload)
 	. = ..()
 	gun = new(src)
 	battery = new(src)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/minigunpack/Destroy()
+	if(!QDELETED(gun))
+		qdel(gun)
+	gun = null
+	QDEL_NULL(battery)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -39,12 +43,12 @@
 				armed = TRUE
 				if(!user.put_in_hands(gun))
 					armed = FALSE
-					to_chat(user, "<span class='warning'>You need a free hand to hold the gun!</span>")
+					to_chat(user, span_warning("You need a free hand to hold the gun!"))
 					return
 				update_appearance()
 				user.update_inv_back()
 		else
-			to_chat(user, "<span class='warning'>You are already holding the gun!</span>")
+			to_chat(user, span_warning("You are already holding the gun!"))
 	else
 		..()
 
@@ -86,9 +90,9 @@
 	gun.forceMove(src)
 	armed = FALSE
 	if(user)
-		to_chat(user, "<span class='notice'>You attach the [gun.name] to the [name].</span>")
+		to_chat(user, span_notice("You attach the [gun.name] to the [name]."))
 	else
-		src.visible_message("<span class='warning'>The [gun.name] snaps back onto the [name]!</span>")
+		src.visible_message(span_warning("The [gun.name] snaps back onto the [name]!"))
 	update_appearance()
 	user.update_inv_back()
 
@@ -110,18 +114,19 @@
 	can_charge = FALSE
 	var/obj/item/minigunpack/ammo_pack
 
-/obj/item/gun/energy/minigun/Initialize()
-	if(istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
-		ammo_pack = loc
-	else
+/obj/item/gun/energy/minigun/Initialize(mapload)
+	if(!istype(loc, /obj/item/minigunpack)) //We should spawn inside an ammo pack so let's use that one.
 		return INITIALIZE_HINT_QDEL //No pack, no gun
-
-	return ..()
-
-/obj/item/gun/energy/minigun/ComponentInitialize()
-	. = ..()
+	ammo_pack = loc
 	AddElement(/datum/element/update_icon_blocker)
 	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+	return ..()
+
+/obj/item/gun/energy/minigun/Destroy()
+	if(!QDELETED(ammo_pack))
+		qdel(ammo_pack)
+	ammo_pack = null
+	return ..()
 
 /obj/item/gun/energy/minigun/attack_self(mob/living/user)
 	return
@@ -135,10 +140,10 @@
 
 /obj/item/gun/energy/minigun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
-		to_chat(user, "<span class='warning'>The gun's heat sensor locked the trigger to prevent lens damage!</span>")
+		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
 	..()
-	ammo_pack.overheat += burst_size
+	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/totransfer = min(100, ammo_pack.battery.charge)
 		var/transferred = cell.give(totransfer)
@@ -147,7 +152,7 @@
 
 /obj/item/gun/energy/minigun/afterattack(atom/target, mob/living/user, flag, params)
 	if(!ammo_pack || ammo_pack.loc != user)
-		to_chat(user, "<span class='warning'>You need the backpack power source to fire the gun!</span>")
+		to_chat(user, span_warning("You need the backpack power source to fire the gun!"))
 	. = ..()
 
 /obj/item/stock_parts/cell/minigun

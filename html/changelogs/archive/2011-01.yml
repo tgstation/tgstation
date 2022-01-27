@@ -1,0 +1,129 @@
+2011-01-08:
+  /tg/station ss13 team:
+  - unknown: "Holograms (AI controled psudo-mobs) added. Currently only admin spawn.\n\
+      \t"
+  - unknown: "Pre-spawned pills no longer have randomized image.\n\t"
+  - unknown: "Bridge reorganized.\n\t"
+  - unknown: "Automated turrets now less dumb. Additionally, turrets won't target\
+      \ people laying down.\n\t"
+  - unknown: "Cultists now automatically start known words for add cultist ritual.\
+      \ Also, converted cultists start knowning a word.\n\t"
+  - unknown: "Supply ship no longer can transport monkeys. Also, monkeys are no longer\
+      \ orderable from QM.\n\t"
+  - unknown: "Meat Crate added to QM.\n\t"
+  - unknown: "Corn can now be blended in a blender to produce corn oil which is used\
+      \ to create glycern.\n\t"
+  - unknown: "Request Consoles added across the station. Can be used to request things\
+      \ from departments (and slightly easier to notice then the radio).\n\t"
+  - unknown: "Centcom reoragnized a fair bit. Not that players care but admins might\
+      \ enjoy it.\n\t"
+  - unknown: "There is now a toggable verb that changes whether you'll turn into an\
+      \ alium or not.\n\t"
+  - unknown: "Hair sprited modified.\n\t"
+  - unknown: "Napalm and Incendiary Grenades both work now. Have fun setting things\
+      \ on fire.\n\t"
+  - unknown: "Binary Translater traitor item added. It allows traitors to hear the\
+      \ AI (it functions like a headset).\n\t"
+  - unknown: "New Disease: Pierrot's Throat. Enjoy, HONK!\n\t"
+  - unknown: "Robotic Transformation (from Robrugers) and Xenomorph Transformation\
+      \ (from xenoburgers) now curable.\n\t"
+  - unknown: "Mining added. Only accessible by admins (and those sent by admins).\
+      \ Very much WIP.\n\t"
+  - unknown: "Alium Overhaul. Divided into multiple castes with distinct abilities.\n\
+      \t"
+  - unknown: "New AI Modules: The goody two-shoes P.A.L.A.D.I.N. module and it's evil\
+      \ twin T.Y.R.A.N.T. Only the former actually spawns on the station.\n\t"
+  - unknown: "Lizards added. They run away and shit.\n\t"
+  - unknown: "PDA overhaul. Doesn't change anything for humans, just makes coders\
+      \ happy.\n\t"
+  - unknown: "Firesuits redone to look less like pajamas and instead like firesuits.\
+      \ Fire lockers also added.\n\t"
+  - unknown: "New Mecha: H.O.N.K.\n\t"
+  - unknown: "Deployable barriers added. Can be locked and unlocked.\n\t"
+  - unknown: "Mecha bay (with recharging stations) added.\n\t"
+  - unknown: "Bunny Ears, Security Backpacks, Medical Backpacks, Clown Backpacks,\
+      \ and skirt added.\n\t"
+  - unknown: "Various wizard changes. New Wizard Spell: Mind Swap. Swap your mind\
+      \ with the targets. Be careful, however: You may lose one of your spells. Wizards\
+      \ are no longer part of the crew and get a random name like the AI does. Wizards\
+      \ can change their known spells with their spellbook but only while on the wizard\
+      \ shuttle.\n\t"
+  - unknown: "Circuit Imprinter: Using disks from the various deparments, new circuit\
+      \ boards and AI modules can be produced.\n\t"
+  - unknown: "Heat Exchanging pipes added and various pipe/atmos changes.\n\t"
+  - unknown: 'Ghost/Observer teleport now works 100% of the time.
+
+      '
+2011-01-14:
+  /tg/station ss13 team:
+  - unknown: "Changlings Overhauled. Now function kinda like alium (using an internal\
+      \ chemical reserve instead of plasma) with each ability requiring a certain\
+      \ amount of chemicals to activate. Both venoms removed. Several \"Dart\" abiliites\
+      \ added. They allow the changling to deafen, blind, mute, paralyze, or even\
+      \ transform (dead) targets.\n\t"
+  - unknown: "Carp meat now contaminated with Carpotoxin. Anti-toxin negates the poison,\
+      \ however.\n\t"
+  - unknown: "New Reagent: Zombie Powder: Puts subjects into a deathlike state (they\
+      \ remain aware, though). Each unit of Zombie Powder requires 5 units of Carpotoxin,\
+      \ Sleeping Toxin, and Copper.\n\t"
+  - unknown: "Various alium fixes.\n\t"
+  - unknown: "Matches now available from smokes machine.\n\t"
+  - unknown: "Megabomb bug fixed. Bombs with timers/signalers won't detonate after\
+      \ the timer/ signaler is removed.\n\t"
+  - unknown: "New Disease: Rhumba Beat. Functions like GBS with a few exceptions.\
+      \ Not only available by admindickery.\n\t"
+  - unknown: "More mining fixes/changes.\n\t"
+  - unknown: "Ghost can now teleport to AI sat, Thunderdome, and Derelict.\n\t"
+  - unknown: "New gimmick clothes\n\t"
+  - unknown: "Constructing Glass Airlocks now use one sheet of R.Glass.\n\t"
+  - unknown: "Windows mow always appear above grills and pipes always above lattices.\n\
+      \t"
+  - unknown: "Added FireFighter mecha and various mecha fixes.\n\t"
+  - unknown: "Deconstructed walls now leave proper floor tiles (that can be pried\
+      \ up like normal) and remember what kind of floor they were before the wall\
+      \ was made.\n\t"
+  - unknown: "Carded AIs no longer take damage while in unpowered areas.\n\t"
+  - unknown: "Chaplains can now name their religion at round start.\n\t"
+  - unknown: "New Recipies: Clown Burger (1 Clown wig, 5 flour), Mime Burger (1 beret,\
+      \ 5 flour), Cuban Carp (1 carp fillet, 1 chili, 5 flour).\n\t"
+  - unknown: "Napalm nerfed a bit. Produces ~25% less plasma but it's all concentrated\
+      \ in a single tile (will still spread, though).\n\t"
+  - unknown: "Reagent bottles can, once again, be put into grenades.\n\t"
+  - unknown: 'Various minor map changes.
+
+      '
+2011-01-20:
+  /tg/station ss13 team:
+  - unknown: "Pipes can now be removed and re-attached by wrenching them.\n\t"
+  - unknown: "Mining system continues to develop. Still unaccessible to players.\n\
+      \t"
+  - unknown: "Various map changes. Some minor lag causing things were fixed.\n\t"
+  - unknown: "Admins have a new tool: They can now give any spell to anyone. Hurray!\n\
+      \t"
+  - unknown: "Imadolazine now works. Maybe?\n\t"
+  - unknown: "Singularity now releases itself if fed too much and will potentially\
+      \ explode.\n\t"
+  - unknown: "Magboots now successfully prevent you from getting pulled into the singularity.\n\
+      \t"
+  - unknown: "Strike teams immune to facehuggers. Why? I dunno.\n\t"
+  - unknown: "Many reagent containers are adjustable so you can pour the exact amount\
+      \ you need.\n\t"
+  - unknown: "No more emitters working in space, Collectors and collector controllers\
+      \ now ID lockable.\n\t"
+  - unknown: "Christmas Contest plaque finally added. It's near the armor/warden's\
+      \ office.\n\t"
+  - unknown: "Rocks fall, everyone dies.\n\t"
+  - unknown: "All cyborgs and robots can now be named. Just use a pen on the cyborg's\
+      \ frame before the brain is inserted.\n\t"
+  - unknown: "Knock spell now unbolts doors as well as opens them.\n\t"
+  - unknown: "New cultist runs and other changes.\n\t"
+  - unknown: "Added surgery tools for eventual surgery system.\n\t"
+  - unknown: "Autolathe and Circuit Printer animations redone. Yay pretty icons.\n\
+      \t"
+  - unknown: "AI law changes/uploads are now tracked (admin viewable).\n\t"
+  - unknown: "Revheads now get a PDA uplink instead of a headset one.\n\t"
+  - unknown: "Added a penlight.\n\t"
+  - unknown: 'Science Research and Development tech tree uploaded. Not really accessible
+      by anyone yet, though.
+
+      '

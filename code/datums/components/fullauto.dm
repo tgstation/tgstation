@@ -21,7 +21,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
 	if(_autofire_shot_delay)
 		autofire_shot_delay = _autofire_shot_delay
-	if(ismob(gun.loc))
+	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
 		var/mob/user = gun.loc
 		wake_up(src, user)
 
@@ -31,55 +31,48 @@
 	return ..()
 
 /datum/component/automatic_fire/process(delta_time)
-	if(!(autofire_stat & AUTOFIRE_STAT_FIRING))
+	if(autofire_stat != AUTOFIRE_STAT_FIRING)
 		STOP_PROCESSING(SSprojectiles, src)
 		return
-
-	if(!COOLDOWN_FINISHED(src, next_shot_cd))
-		return
-
 	process_shot()
 
 /datum/component/automatic_fire/proc/wake_up(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(autofire_stat & (AUTOFIRE_STAT_ALERT))
+	if(autofire_stat == AUTOFIRE_STAT_ALERT)
 		return //We've updated the firemode. No need for more.
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //Let's stop shooting to avoid issues.
 		return
-
-	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
-
 	if(iscarbon(user))
-		var/mob/living/carbon/shooter = user
-		if(shooter.is_holding(parent))
-			autofire_on(shooter.client)
-		else
-			autofire_off()
-
+		var/mob/living/carbon/arizona_ranger = user
+		if(arizona_ranger.is_holding(parent))
+			autofire_on(arizona_ranger.client)
 
 // There is a gun and there is a user wielding it. The component now waits for the mouse click.
 /datum/component/automatic_fire/proc/autofire_on(client/usercli)
 	SIGNAL_HANDLER
-	if(autofire_stat & (AUTOFIRE_STAT_ALERT|AUTOFIRE_STAT_FIRING))
+
+	if(autofire_stat != AUTOFIRE_STAT_IDLE)
 		return
 	autofire_stat = AUTOFIRE_STAT_ALERT
-	clicker = usercli
-	shooter = clicker.mob
-	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
-	RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
+	if(!QDELETED(usercli))
+		clicker = usercli
+		shooter = clicker.mob
+		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
 	if(!QDELETED(shooter))
+		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
 		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
+	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
 	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
 	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
 
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
 	SIGNAL_HANDLER
-	if(autofire_stat & (AUTOFIRE_STAT_IDLE))
+	if(autofire_stat == AUTOFIRE_STAT_IDLE)
 		return
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring()
 
 	autofire_stat = AUTOFIRE_STAT_IDLE
@@ -88,8 +81,8 @@
 		UnregisterSignal(clicker, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
 	mouse_status = AUTOFIRE_MOUSEUP //In regards to the component there's no click anymore to care about.
 	clicker = null
-	RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
 	if(!QDELETED(shooter))
+		RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
 		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
 	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
 	shooter = null
@@ -104,6 +97,7 @@
 		autofire_on(source.client)
 
 /datum/component/automatic_fire/proc/on_mouse_down(client/source, atom/_target, turf/location, control, params)
+	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params) //If they're shift+clicking, for example, let's not have them accidentally shoot.
 
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
@@ -123,10 +117,11 @@
 	if(get_dist(source.mob, _target) < 2) //Adjacent clicking.
 		return
 
-	if(isnull(location)) //Clicking on a screen object.
+	if(isnull(location) || istype(_target, /atom/movable/screen)) //Clicking on a screen object.
 		if(_target.plane != CLICKCATCHER_PLANE) //The clickcatcher is a special case. We want the click to trigger then, under it.
 			return //If we click and drag on our worn backpack, for example, we want it to open instead.
-		_target = params2turf(modifiers["screen-loc"], get_turf(source.eye), source)
+		_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
+		params = list2params(modifiers)
 		if(!_target)
 			CRASH("Failed to get the turf under clickcatcher")
 
@@ -135,21 +130,21 @@
 
 	source.click_intercept_time = world.time //From this point onwards Click() will no longer be triggered.
 
-	if(autofire_stat & (AUTOFIRE_STAT_IDLE))
+	if(autofire_stat == (AUTOFIRE_STAT_IDLE))
 		CRASH("on_mouse_down() called with [autofire_stat] autofire_stat")
-	if(autofire_stat & AUTOFIRE_STAT_FIRING)
+	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring() //This can happen if we click and hold and then alt+tab, printscreen or other such action. MouseUp won't be called then and it will keep autofiring.
 
 	target = _target
 	target_loc = get_turf(target)
 	mouse_parameters = params
-	start_autofiring()
+	INVOKE_ASYNC(src, .proc/start_autofiring)
 
 
 //Dakka-dakka
 /datum/component/automatic_fire/proc/start_autofiring()
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
-		return //Already pew-pewing.
+		return
 	autofire_stat = AUTOFIRE_STAT_FIRING
 
 	clicker.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
@@ -187,9 +182,8 @@
 
 /datum/component/automatic_fire/proc/stop_autofiring(datum/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
-	switch(autofire_stat)
-		if(AUTOFIRE_STAT_IDLE, AUTOFIRE_STAT_ALERT)
-			return
+	if(autofire_stat != AUTOFIRE_STAT_FIRING)
+		return
 	STOP_PROCESSING(SSprojectiles, src)
 	autofire_stat = AUTOFIRE_STAT_ALERT
 	if(clicker)
@@ -206,7 +200,8 @@
 	SIGNAL_HANDLER
 	if(isnull(over_location)) //This happens when the mouse is over an inventory or screen object, or on entering deep darkness, for example.
 		var/list/modifiers = params2list(params)
-		var/new_target = params2turf(modifiers["screen-loc"], get_turf(source.eye), source)
+		var/new_target = parse_caught_click_modifiers(modifiers, get_turf(source.eye), source)
+		params = list2params(modifiers)
 		mouse_parameters = params
 		if(!new_target)
 			if(QDELETED(target)) //No new target acquired, and old one was deleted, get us out of here.
@@ -225,7 +220,9 @@
 
 /datum/component/automatic_fire/proc/process_shot()
 	if(autofire_stat != AUTOFIRE_STAT_FIRING)
-		return
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, next_shot_cd))
+		return TRUE
 	if(QDELETED(target) || get_turf(target) != target_loc) //Target moved or got destroyed since we last aimed.
 		target = target_loc //So we keep firing on the emptied tile until we move our mouse and find a new target.
 	if(get_dist(shooter, target) <= 0)
@@ -235,7 +232,10 @@
 		stop_autofiring() //Elvis has left the building.
 		return FALSE
 	shooter.face_atom(target)
-	COOLDOWN_START(src, next_shot_cd, autofire_shot_delay)
+	var/next_delay = autofire_shot_delay
+	if(HAS_TRAIT(shooter, TRAIT_DOUBLE_TAP))
+		next_delay = round(next_delay * 0.5)
+	COOLDOWN_START(src, next_shot_cd, next_delay)
 	if(SEND_SIGNAL(parent, COMSIG_AUTOFIRE_SHOT, target, shooter, mouse_parameters) & COMPONENT_AUTOFIRE_SHOT_SUCCESS)
 		return TRUE
 	stop_autofiring()
@@ -244,11 +244,14 @@
 // Gun procs.
 
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
-	if(!can_shoot(shooter) || !can_trigger_gun(shooter) || semicd)
+	if(semicd || shooter.incapacitated() || !can_trigger_gun(shooter))
+		return FALSE
+	if(!can_shoot())
+		shoot_with_empty_chamber(shooter)
 		return FALSE
 	var/obj/item/bodypart/other_hand = shooter.has_hand_for_held_index(shooter.get_inactive_hand_index())
 	if(weapon_weight == WEAPON_HEAVY && (shooter.get_inactive_held_item() || !other_hand))
-		to_chat(shooter, "<span class='warning'>You need two hands to fire [src]!</span>")
+		to_chat(shooter, span_warning("You need two hands to fire [src]!"))
 		return FALSE
 	return TRUE
 
@@ -261,6 +264,8 @@
 
 /obj/item/gun/proc/do_autofire(datum/source, atom/target, mob/living/shooter, params)
 	SIGNAL_HANDLER
+	if(semicd || shooter.incapacitated())
+		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return NONE

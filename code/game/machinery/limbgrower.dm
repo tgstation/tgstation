@@ -12,7 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/limbgrower
 
 	/// The category of limbs we're browing in our UI.
-	var/selected_category = "human"
+	var/selected_category = SPECIES_HUMAN
 	/// If we're currently printing something.
 	var/busy = FALSE
 	/// How efficient our machine is. Better parts = less chemicals used and less power used. Range of 1 to 0.25.
@@ -24,9 +24,9 @@
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/stored_research
 	/// All the categories of organs we can print.
-	var/list/categories = list("human", "lizard", "moth", "plasmaman", "ethereal", "other")
+	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, "other")
 
-/obj/machinery/limbgrower/Initialize()
+/obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
@@ -105,13 +105,13 @@
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
-		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
 		return
 
 	if(istype(user_item, /obj/item/disk/design_disk/limbs))
-		user.visible_message("<span class='notice'>[user] begins to load \the [user_item] in \the [src]...</span>",
-			"<span class='notice'>You begin to load designs from \the [user_item]...</span>",
-			"<span class='hear'>You hear the clatter of a floppy drive.</span>")
+		user.visible_message(span_notice("[user] begins to load \the [user_item] in \the [src]..."),
+			span_notice("You begin to load designs from \the [user_item]..."),
+			span_hear("You hear the clatter of a floppy drive."))
 		busy = TRUE
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = user_item
 		if(do_after(user, 2 SECONDS, target = src))
@@ -137,7 +137,7 @@
 		return
 
 	if (busy)
-		to_chat(usr, "<span class='danger'>The limb grower is busy. Please wait for completion of previous operation.</span>")
+		to_chat(usr, span_warning("The limb grower is busy. Please wait for completion of previous operation."))
 		return
 
 	switch(action)
@@ -159,7 +159,7 @@
 			for(var/reagent_id in consumed_reagents_list)
 				consumed_reagents_list[reagent_id] *= production_coefficient
 				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
-					audible_message("<span class='notice'>The [src] buzzes.</span>")
+					audible_message(span_notice("The [src] buzzes."))
 					playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 					return
 
@@ -187,7 +187,7 @@
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
 	for(var/reagent_id in modified_consumed_reagents_list)
 		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
-			audible_message("<span class='notice'>The [src] buzzes.</span>")
+			audible_message(span_notice("The [src] buzzes."))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 			break
 
@@ -216,12 +216,12 @@
 	/// The limb we're making with our buildpath, so we can edit it.
 	var/obj/item/bodypart/limb = new buildpath(loc)
 	/// Species with greyscale limbs.
-	var/list/greyscale_species = list("human", "lizard", "ethereal")
+	var/list/greyscale_species = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_ETHEREAL)
 	if(selected_category in greyscale_species) //Species with greyscale parts should be included here
-		if(selected_category == "human") //humans don't use the full colour spectrum, they use random_skin_tone
+		if(selected_category == SPECIES_HUMAN) //humans don't use the full colour spectrum, they use random_skin_tone
 			limb.skin_tone = random_skin_tone()
 		else
-			limb.species_color = random_short_color()
+			limb.species_color = "#[random_color()]"
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 		limb.should_draw_greyscale = TRUE
 	else
@@ -248,7 +248,7 @@
 /obj/machinery/limbgrower/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of reagents.<br>Reagent consumption rate at <b>[production_coefficient * 100]%</b>.</span>"
+		. += span_notice("The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of reagents.<br>Reagent consumption rate at <b>[production_coefficient * 100]%</b>.")
 
 /*
  * Checks our reagent list to see if a design can be built.
@@ -263,6 +263,19 @@
 			return FALSE
 	return TRUE
 
+/obj/machinery/limbgrower/fullupgrade //Inherently cheaper organ production. This is to NEVER be inherently emagged, no valids.
+	desc = "It grows new limbs using Synthflesh. This alien model seems more efficient."
+	obj_flags = CAN_BE_HIT
+	flags_1 = NODECONSTRUCT_1
+	circuit = /obj/item/circuitboard/machine/limbgrower/fullupgrade
+
+/obj/machinery/limbgrower/fullupgrade/Initialize(mapload)
+	. = ..()
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
+		if((found_design.build_type & LIMBGROWER) && !("emagged" in found_design.category))
+			stored_research.add_design(found_design)
+
 /// Emagging a limbgrower allows you to build synthetic armblades.
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -271,6 +284,6 @@
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(design_id)
 		if((found_design.build_type & LIMBGROWER) && ("emagged" in found_design.category))
 			stored_research.add_design(found_design)
-	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
+	to_chat(user, span_warning("Safety overrides have been deactivated!"))
 	obj_flags |= EMAGGED
 	update_static_data(user)

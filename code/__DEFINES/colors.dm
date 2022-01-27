@@ -1,5 +1,17 @@
 // This is eventually for wjohn to add more color standardization stuff like I keep asking him >:(
 
+//different types of atom colorations
+/// Only used by rare effects like greentext coloring mobs and when admins varedit color
+#define ADMIN_COLOUR_PRIORITY 1
+/// e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define TEMPORARY_COLOUR_PRIORITY 2
+/// Color splashed onto an atom (e.g. paint on turf)
+#define WASHABLE_COLOUR_PRIORITY 3
+/// Color inherent to the atom (e.g. blob color)
+#define FIXED_COLOUR_PRIORITY 4
+///how many colour priority levels there are.
+#define COLOUR_PRIORITY_AMOUNT 4
+
 #define COLOR_INPUT_DISABLED "#F0F0F0"
 #define COLOR_INPUT_ENABLED "#D3B5B5"
 
@@ -25,6 +37,7 @@
 #define COLOR_VIVID_RED "#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED "#E4C7C5"
 #define COLOR_SOFT_RED "#FA8282"
+#define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
 
 #define COLOR_YELLOW "#FFFF00"
@@ -74,6 +87,14 @@
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
 #define COLOR_ORANGE_BROWN "#a9734f"
+
+//Color defines used by the soapstone (based on readability against grey tiles)
+#define COLOR_SOAPSTONE_PLASTIC "#a19d94"
+#define COLOR_SOAPSTONE_IRON "#b2b2b2"
+#define COLOR_SOAPSTONE_BRONZE "#FE8001"
+#define COLOR_SOAPSTONE_SILVER "#FFFFFF"
+#define COLOR_SOAPSTONE_GOLD "#FFD900"
+#define COLOR_SOAPSTONE_DIAMOND "#00ffee"
 
 #define COLOR_GREEN_GRAY       "#99BB76"
 #define COLOR_RED_GRAY         "#B4696A"
@@ -135,7 +156,7 @@
 #define LIGHT_COLOR_CYAN       "#7DE1E1"
 /// Electric cyan rgb(0, 255, 255)
 #define LIGHT_COLOR_ELECTRIC_CYAN "#00FFFF"
-/// More-saturated cyan. rgb(16, 21, 22)
+/// More-saturated cyan. rgb(64, 206, 255)
 #define LIGHT_COLOR_LIGHT_CYAN "#40CEFF"
 /// Saturated blue. rgb(51, 117, 248)
 #define LIGHT_COLOR_DARK_BLUE  "#6496FA"
@@ -169,3 +190,32 @@
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF"
 /// Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA"
+
+//The GAGS greyscale_colors for each department's computer/machine circuits
+#define CIRCUIT_COLOR_GENERIC "#1A7A13"
+#define CIRCUIT_COLOR_COMMAND "#1B4594"
+#define CIRCUIT_COLOR_SECURITY "#9A151E"
+#define CIRCUIT_COLOR_SCIENCE "#BC4A9B"
+#define CIRCUIT_COLOR_SERVICE "#92DCBA"
+#define CIRCUIT_COLOR_MEDICAL "#00CCFF"
+#define CIRCUIT_COLOR_ENGINEERING "#F8D700"
+#define CIRCUIT_COLOR_SUPPLY "#C47749"
+
+/// Colors for pride week
+#define COLOR_PRIDE_RED "#FF6666"
+#define COLOR_PRIDE_ORANGE "#FC9F3C"
+#define COLOR_PRIDE_YELLOW "#EAFF51"
+#define COLOR_PRIDE_GREEN "#41FC66"
+#define COLOR_PRIDE_BLUE "#42FFF2"
+#define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+/// The default color for admin say, used as a fallback when the preference is not enabled
+#define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
+
+#define DEFAULT_HEX_COLOR_LEN 6
+
+// Color filters
+/// Icon filter that creates ambient occlusion
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
+/// Icon filter that creates gaussian blur
+#define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)

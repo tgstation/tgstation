@@ -25,6 +25,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("pie" = 1)
 	foodtypes = GRAIN
+	burns_in_oven = TRUE
 
 /obj/item/food/pie/cream
 	name = "banana cream pie"
@@ -43,8 +44,8 @@
 /obj/item/food/pie/cream/proc/splat(atom/movable/hit_atom)
 	if(isliving(loc)) //someone caught us!
 		return
-	var/turf/T = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/food/pie_smudge(T)
+	var/turf/hit_turf = get_turf(hit_atom)
+	new/obj/effect/decal/cleanable/food/pie_smudge(hit_turf)
 	if(reagents?.total_volume)
 		reagents.expose(hit_atom, TOUCH)
 	if(isliving(hit_atom))
@@ -52,7 +53,7 @@
 		if(stunning)
 			living_target_getting_hit.Paralyze(20) //splat!
 		living_target_getting_hit.adjust_blurriness(1)
-		living_target_getting_hit.visible_message("<span class='warning'>[living_target_getting_hit] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
 		playsound(living_target_getting_hit, "desecration", 50, TRUE)
 	if(is_type_in_typecache(hit_atom, GLOB.creamable))
 		hit_atom.AddComponent(/datum/component/creamed, src)
@@ -93,7 +94,7 @@
 	desc = "A delicious tofu pie."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("pie" = 1, "tofu" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | VEGETABLES
 
 /obj/item/food/pie/amanita_pie
 	name = "amanita pie"
@@ -112,7 +113,7 @@
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtypes = GRAIN | VEGETABLES
 
-/obj/item/food/pie/plump_pie/Initialize()
+/obj/item/food/pie/plump_pie/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump pie"
@@ -150,7 +151,7 @@
 	icon_state = "pumpkinpie"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "pumpkin" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/food/pie/pumpkinpie/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/pumpkin, 5, 20)
@@ -161,7 +162,7 @@
 	icon_state = "pumpkinpieslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "pumpkin" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | VEGETABLES | SUGAR
 
 /obj/item/food/pie/appletart
 	name = "golden apple streusel tart"
@@ -228,7 +229,7 @@
 	icon_state = "dulcedebatata"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = VEGETABLES | SUGAR
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/pie/dulcedebatata/MakeProcessable()
@@ -240,7 +241,7 @@
 	icon_state = "dulcedebatataslice"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = VEGETABLES | SUGAR
 
 /obj/item/food/pie/frostypie
 	name = "frosty pie"
@@ -256,7 +257,7 @@
 	icon_state = "baklava"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 12, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("nuts" = 1, "pie" = 1)
-	foodtypes = GRAIN
+	foodtypes = NUTS | SUGAR
 
 /obj/item/food/pie/baklava/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/pieslice/baklava, 6, 20)
@@ -266,4 +267,4 @@
 	desc = "A portion of a delightful healthy snack made of nut layers with thin bread"
 	icon_state = "baklavaslice"
 	tastes = list("nuts" = 1, "pie" = 1)
-	foodtypes = GRAIN
+	foodtypes = NUTS | SUGAR

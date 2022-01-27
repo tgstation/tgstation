@@ -26,22 +26,18 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ah" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ai" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
 "aj" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/turretedoutpost)
 "ak" = (
@@ -71,14 +67,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aq" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "ar" = (
-/obj/machinery/power/apc{
-	name = "Worn-out APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "as" = (
@@ -89,7 +82,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "at" = (
@@ -104,9 +97,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "au" = (
 /obj/item/rack_parts,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -168,18 +159,14 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_y = 32
-	},
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /obj/item/gps/spaceruin,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aD" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/item/radio,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -223,9 +210,7 @@
 "aK" = (
 /obj/structure/bed,
 /obj/item/bedsheet/orange,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "aL" = (
@@ -236,7 +221,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aM" = (
@@ -292,7 +277,7 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aS" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/item/camera_bug,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
@@ -335,12 +320,12 @@
 /area/ruin/space/has_grav/turretedoutpost)
 "aY" = (
 /obj/structure/rack,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "aZ" = (
@@ -349,15 +334,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/turretedoutpost)
 "ba" = (
 /obj/structure/table/wood,
 /obj/item/food/breadslice/meat,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "tK" = (
@@ -374,7 +357,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/turretedoutpost)
 "Nu" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

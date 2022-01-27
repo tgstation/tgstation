@@ -13,17 +13,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=50)
 	drop_sound = 'sound/items/handling/crowbar_drop.ogg'
-	pickup_sound =  'sound/items/handling/crowbar_pickup.ogg'
+	pickup_sound = 'sound/items/handling/crowbar_pickup.ogg'
 
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 	tool_behaviour = TOOL_CROWBAR
 	toolspeed = 1
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
 	var/force_opens = FALSE
 
 /obj/item/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is beating [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
@@ -36,6 +36,7 @@
 	desc = "A hard-light crowbar. It appears to pry by itself, without any effort required."
 	icon = 'icons/obj/abductor.dmi'
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
+	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
 	toolspeed = 0.1
 
@@ -53,24 +54,64 @@
 	worn_icon_state = "crowbar"
 	toolspeed = 0.7
 
+/obj/item/crowbar/large/heavy //from space ruin
+	name = "heavy crowbar"
+	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
+	force = 20
+	icon_state = "crowbar_powergame"
+
+/obj/item/crowbar/large/old
+	name = "old crowbar"
+	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
+	throwforce = 10
+	throw_speed = 2
+
+/obj/item/crowbar/large/old/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "crowbar_powergame"
+
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."
-	icon_state = "jaws_pry"
+	icon_state = "jaws"
 	inhand_icon_state = "jawsoflife"
 	worn_icon_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=150,/datum/material/silver=50,/datum/material/titanium=25)
+	custom_materials = list(/datum/material/iron = 4500, /datum/material/silver = 2500, /datum/material/titanium = 3500)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.7
 	force_opens = TRUE
 
+/obj/item/crowbar/power/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between crowbar and wirecutters and gives feedback to the user.
+ */
+/obj/item/crowbar/power/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_WIRECUTTER : TOOL_CROWBAR)
+	balloon_alert(user, "attached [active ? "cutting" : "prying"]")
+	playsound(user ? user : src, 'sound/items/change_jaws.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
+
 /obj/item/crowbar/power/syndicate
 	name = "Syndicate jaws of life"
 	desc = "A re-engineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in its crowbar configuration."
-	icon_state = "jaws_pry_syndie"
+	icon_state = "jaws_syndie"
 	toolspeed = 0.5
 	force_opens = TRUE
 
@@ -80,51 +121,30 @@
 
 /obj/item/crowbar/power/suicide_act(mob/user)
 	if(tool_behaviour == TOOL_CROWBAR)
-		user.visible_message("<span class='suicide'>[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is putting [user.p_their()] head in [src], it looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(loc, 'sound/items/jaws_pry.ogg', 50, TRUE, -1)
 	else
-		user.visible_message("<span class='suicide'>[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!</span>")
+		user.visible_message(span_suicide("[user] is wrapping \the [src] around [user.p_their()] neck. It looks like [user.p_theyre()] trying to rip [user.p_their()] head off!"))
 		playsound(loc, 'sound/items/jaws_cut.ogg', 50, TRUE, -1)
 		if(iscarbon(user))
-			var/mob/living/carbon/C = user
-			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
-			if(BP)
-				BP.drop_limb()
+			var/mob/living/carbon/suicide_victim = user
+			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
+			if(target_bodypart)
+				target_bodypart.drop_limb()
 				playsound(loc, "desecration", 50, TRUE, -1)
 	return (BRUTELOSS)
 
-/obj/item/crowbar/power/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CROWBAR)
-		tool_behaviour = TOOL_WIRECUTTER
-		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
-		usesound = 'sound/items/jaws_cut.ogg'
-		update_appearance()
-
-	else
-		tool_behaviour = TOOL_CROWBAR
-		to_chat(user, "<span class='notice'>You attach the prying jaws to [src].</span>")
-		usesound = 'sound/items/jaws_pry.ogg'
-		update_appearance()
-
-/obj/item/crowbar/power/update_icon_state()
-	if(tool_behaviour == TOOL_WIRECUTTER)
-		icon_state = "jaws_cutter"
-	else
-		icon_state = "jaws_pry"
-	return ..()
-
-/obj/item/crowbar/power/syndicate/update_icon_state()
-	if(tool_behaviour == TOOL_WIRECUTTER)
-		icon_state = "jaws_cutter_syndie"
-	else
-		icon_state = "jaws_pry_syndie"
-	return ..()
-
-/obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
-	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
-		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
-		qdel(C.handcuffed)
+/obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
+	if(istype(attacked_carbon) && attacked_carbon.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
+		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
+		qdel(attacked_carbon.handcuffed)
+		return
+	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND) && tool_behaviour == TOOL_WIRECUTTER)
+		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
+		if(do_after(user, 1.5 SECONDS, attacked_carbon))
+			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
+			attacked_carbon.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			playsound(loc, usesound, 50, TRUE, -1)
 		return
 	else
 		..()

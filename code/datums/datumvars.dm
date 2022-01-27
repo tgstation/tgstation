@@ -27,9 +27,12 @@
 	VV_DROPDOWN_OPTION("", "---")
 	VV_DROPDOWN_OPTION(VV_HK_CALLPROC, "Call Proc")
 	VV_DROPDOWN_OPTION(VV_HK_MARK, "Mark Object")
+	VV_DROPDOWN_OPTION(VV_HK_TAG, "Tag Datum")
 	VV_DROPDOWN_OPTION(VV_HK_DELETE, "Delete")
 	VV_DROPDOWN_OPTION(VV_HK_EXPOSE, "Show VV To Player")
 	VV_DROPDOWN_OPTION(VV_HK_ADDCOMPONENT, "Add Component/Element")
+	VV_DROPDOWN_OPTION(VV_HK_REMOVECOMPONENT, "Remove Component/Element")
+	VV_DROPDOWN_OPTION(VV_HK_MASS_REMOVECOMPONENT, "Mass Remove Component/Element")
 	VV_DROPDOWN_OPTION(VV_HK_MODIFY_TRAITS, "Modify Traits")
 
 //This proc is only called if everything topic-wise is verified. The only verifications that should happen here is things like permission checks!

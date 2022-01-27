@@ -1,11 +1,9 @@
-/mob/var/suiciding = FALSE
-
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
 	if(suicide_state)
-		GLOB.suicided_mob_list += src
+		add_to_mob_suicide_list()
 	else
-		GLOB.suicided_mob_list -= src
+		remove_from_mob_suicide_list()
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()
@@ -26,19 +24,21 @@
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(ckey != oldkey)
 		return
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		if(suiciding)
-			to_chat(src, "<span class='warning'>You're already trying to commit suicide!</span>")
+			to_chat(src, span_warning("You're already trying to commit suicide!"))
 			return
 		set_suicide(TRUE) //need to be called before calling suicide_act as fuck knows what suicide_act will do with your suicider
 		var/obj/item/held_item = get_active_held_item()
-		if(held_item)
-			var/damagetype = held_item.suicide_act(src)
+		var/damagetype = SEND_SIGNAL(src, COMSIG_HUMAN_SUICIDE_ACT)
+		if(held_item || damagetype)
+			if(!damagetype && held_item)
+				damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
@@ -103,7 +103,7 @@
 								"[src] is twisting [p_their()] own neck! It looks like [p_theyre()] trying to commit suicide.", \
 								"[src] is holding [p_their()] breath! It looks like [p_theyre()] trying to commit suicide.")
 
-		visible_message("<span class='danger'>[suicide_message]</span>", "<span class='userdanger'>[suicide_message]</span>")
+		visible_message(span_danger("[suicide_message]"), span_userdanger("[suicide_message]"))
 
 		suicide_log()
 
@@ -115,13 +115,13 @@
 	set hidden = TRUE
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>", \
-						"<span class='userdanger'>[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live.</span>")
+		visible_message(span_danger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."), \
+						span_userdanger("[src]'s brain is growing dull and lifeless. [p_they(TRUE)] look[p_s()] like [p_theyve()] lost the will to live."))
 
 		suicide_log()
 
@@ -132,13 +132,13 @@
 	set hidden = TRUE
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+		visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
+				span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
 
 		suicide_log()
 
@@ -151,13 +151,13 @@
 	set hidden = TRUE
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is powering down. It looks like [p_theyre()] trying to commit suicide.</span>")
+		visible_message(span_danger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."), \
+				span_userdanger("[src] is powering down. It looks like [p_theyre()] trying to commit suicide."))
 
 		suicide_log()
 
@@ -168,11 +168,11 @@
 
 /mob/living/silicon/pai/verb/suicide()
 	set hidden = TRUE
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(confirm == "Yes")
 		var/turf/T = get_turf(src.loc)
-		T.visible_message("<span class='notice'>[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\"</span>", null, \
-			"<span class='notice'>[src] bleeps electronically.</span>")
+		T.visible_message(span_notice("[src] flashes a message across its screen, \"Wiping core files. Please acquire a new personality to continue using pAI device functions.\""), null, \
+			span_notice("[src] bleeps electronically."))
 
 		suicide_log()
 
@@ -185,14 +185,14 @@
 	set hidden = TRUE
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='userdanger'>[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide.</span>", \
-				"<span class='hear'>You hear thrashing.</span>")
+		visible_message(span_danger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
+				span_userdanger("[src] is thrashing wildly! It looks like [p_theyre()] trying to commit suicide."), \
+				span_hear("You hear thrashing."))
 
 		suicide_log()
 
@@ -205,13 +205,13 @@
 	set hidden = TRUE
 	if(!canSuicide())
 		return
-	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")
+	var/confirm = tgui_alert(usr,"Are you sure you want to commit suicide?", "Confirm Suicide", list("Yes", "No"))
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
 		set_suicide(TRUE)
-		visible_message("<span class='danger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>", \
-						"<span class='userdanger'>[src] begins to fall down. It looks like [p_theyve()] lost the will to live.</span>")
+		visible_message(span_danger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."), \
+						span_userdanger("[src] begins to fall down. It looks like [p_theyve()] lost the will to live."))
 
 		suicide_log()
 
@@ -227,23 +227,23 @@
 /mob/living/proc/canSuicide()
 	var/area/A = get_area(src)
 	if(A.area_flags & BLOCK_SUICIDE)
-		to_chat(src, "<span class='warning'>You can't commit suicide here! You can ghost if you'd like.</span>")
+		to_chat(src, span_warning("You can't commit suicide here! You can ghost if you'd like."))
 		return
 	switch(stat)
 		if(CONSCIOUS)
 			return TRUE
 		if(SOFT_CRIT)
-			to_chat(src, "<span class='warning'>You can't commit suicide while in a critical condition!</span>")
+			to_chat(src, span_warning("You can't commit suicide while in a critical condition!"))
 		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(src, "<span class='warning'>You need to be conscious to commit suicide!</span>")
+			to_chat(src, span_warning("You need to be conscious to commit suicide!"))
 		if(DEAD)
-			to_chat(src, "<span class='warning'>You're already dead!</span>")
+			to_chat(src, span_warning("You're already dead!"))
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!(mobility_flags & MOBILITY_USE)) //just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		to_chat(src, "<span class='warning'>You can't commit suicide whilst immobile! ((You can type Ghost instead however.))</span>")
+		to_chat(src, span_warning("You can't commit suicide whilst immobile! ((You can type Ghost instead however.))"))
 		return
 	return TRUE

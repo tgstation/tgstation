@@ -12,11 +12,12 @@
 /turf/open/floor/mineral
 	name = "mineral floor"
 	icon_state = ""
+	material_flags = MATERIAL_EFFECTS
 	var/list/icons
 	tiled_dirt = FALSE
 
 
-/turf/open/floor/mineral/Initialize()
+/turf/open/floor/mineral/Initialize(mapload)
 	. = ..()
 	icons = typelist("icons", icons)
 
@@ -36,26 +37,6 @@
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
 	custom_materials = list(/datum/material/plasma = 500)
-
-/turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
-/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-		log_game("Plasma flooring was ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(W.get_temperature())
-		return
-	..()
-
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn(temperature)
-	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=[temperature]")
-
-/turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
 
 //Plasma floor that can't be removed, for disco inferno
 
@@ -184,6 +165,7 @@
 
 /turf/open/floor/mineral/plastitanium/red
 	icon_state = "plastitanium_red"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium/red
 
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -199,13 +181,15 @@
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
 	custom_materials = list(/datum/material/bananium = 500)
+	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The custom mat one should still slip.
 	var/sound_cooldown = 0
 
-/turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
-	.=..()
-	if(!.)
-		if(isliving(AM))
-			squeak()
+/turf/open/floor/mineral/bananium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(.)
+		return
+	if(isliving(arrived))
+		squeak()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
 	.=..()
@@ -256,11 +240,12 @@
 	var/last_event = 0
 	var/active = null
 
-/turf/open/floor/mineral/uranium/Entered(atom/movable/AM)
-	.=..()
-	if(!.)
-		if(ismob(AM))
-			radiate()
+/turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(.)
+		return
+	if(isliving(arrived))
+		radiate()
 
 /turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, params)
 	.=..()
@@ -281,7 +266,13 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = TRUE
-			radiation_pulse(src, 10)
+			radiation_pulse(
+				src,
+				max_range = 1,
+				threshold = RAD_VERY_LIGHT_INSULATION,
+				chance = (URANIUM_IRRADIATION_CHANCE / 3),
+				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+			)
 			for(var/turf/open/floor/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -297,7 +288,7 @@
 	baseturfs = /turf/open/floor/plating/abductor2
 	custom_materials = list(/datum/material/alloy/alien = 500)
 
-/turf/open/floor/mineral/abductor/Initialize()
+/turf/open/floor/mineral/abductor/Initialize(mapload)
 	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
 

@@ -80,3 +80,19 @@
 	price_max = 200
 	stock_max = 3
 	availability_prob = 50
+
+/**
+ * # Fake N-spect scanner black market entry
+ */
+/datum/blackmarket_item/tool/fake_scanner
+	name = "Clowny N-spect scanner"
+	desc = "This UPGRADED N-spect scanner can play FIVE HIGH-QUALITY SOUNDS (fork required for sound adjustment not included) and print reports \
+	LIGHTNING FAST (screwdriver necessary to activate maximum speed not included). We make no claims as to the usefulness of the reports printed by this. \
+	Any and all implied warranties are void if the device is touched, moved, kicked, thrown or modified with bananium sheets. Batteries included. \
+	Crowbar necessary to change batteries and adjust settings not included."
+	item = /obj/item/inspector/clown
+
+	price_min = 230
+	price_max = 323
+	stock_max = 2
+	availability_prob = 50

@@ -2,1778 +2,1307 @@
 "aa" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
-"ab" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"ac" = (
-/obj/effect/mob_spawn/human/engineer/rig,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"ad" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"ae" = (
-/turf/closed/wall/r_wall,
-/area/icemoon/surface/outdoors)
-"af" = (
-/obj/structure/lattice,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "ag" = (
 /obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
 "ah" = (
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"ai" = (
-/obj/item/disk/holodisk/ruin/snowengieruin,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"aj" = (
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ak" = (
-/turf/closed/wall/ice,
-/area/icemoon/surface/outdoors)
-"al" = (
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/obj/machinery/space_heater,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
 "am" = (
-/obj/machinery/power/emitter,
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/end{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/open/floor/iron,
+/area/ruin/planetengi)
 "an" = (
-/turf/closed/wall/mineral/snow,
-/area/icemoon/surface/outdoors)
+/turf/open/floor/engine/n2,
+/area/ruin/planetengi)
 "ao" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"ap" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine/n2,
+/area/ruin/planetengi)
 "aq" = (
-/obj/machinery/field/generator,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/disk/holodisk/ruin/snowengieruin,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
 "ar" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/obj/item/construction/rcd,
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/planetengi)
 "as" = (
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"at" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 8
 	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
 "au" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"av" = (
-/obj/item/clothing/under/rank/engineering/chief_engineer,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aw" = (
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ax" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/engine/o2,
-/area/icemoon/surface/outdoors)
-"ay" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume,
-/turf/open/floor/engine/o2,
-/area/icemoon/surface/outdoors)
-"az" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/engine/n2,
-/area/icemoon/surface/outdoors)
-"aA" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume,
-/turf/open/floor/engine/n2,
-/area/icemoon/surface/outdoors)
-"aB" = (
-/turf/closed/wall,
-/area/icemoon/surface/outdoors)
-"aC" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/engine/o2,
-/area/icemoon/surface/outdoors)
-"aE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/turf/open/floor/engine/o2,
-/area/icemoon/surface/outdoors)
-"aF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/engine/n2,
-/area/icemoon/surface/outdoors)
-"aG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/turf/open/floor/engine/n2,
-/area/icemoon/surface/outdoors)
-"aH" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"aI" = (
-/obj/item/pda/engineering{
-	note = "To-do: Check on singularity status. Get a pint at eat. Nag the research manager for RCDs."
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"aJ" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"aK" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aL" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aM" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"aO" = (
-/turf/closed/wall/r_wall/rust,
-/area/icemoon/surface/outdoors)
-"aP" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aQ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aR" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aV" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aW" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"aX" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ba" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bc" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"bd" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"be" = (
-/obj/item/card/id/advanced/engioutpost,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"bf" = (
-/obj/effect/gibspawner/generic,
-/obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/blood/gibs/core,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"bi" = (
-/obj/machinery/door/airlock/engineering{
-	name = "The Singularity Engine"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"bj" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bk" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bl" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Engine Entry";
-	req_access_txt = "204"
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bm" = (
-/obj/structure/cable,
+/obj/machinery/rnd/production/circuit_imprinter/offstation,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"br" = (
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bs" = (
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bx" = (
-/obj/machinery/power/apc/unlocked{
-	dir = 4;
-	pixel_x = 26
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"by" = (
-/obj/item/stack/rods{
-	amount = 2
-	},
-/obj/item/shard/plasma,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"bz" = (
-/obj/item/clothing/suit/space/hardsuit/engine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"bA" = (
-/obj/item/flashlight/flare,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"bB" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"bC" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"bD" = (
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/item/book/manual/wiki/engineering_singulo_tesla,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bE" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bG" = (
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bH" = (
-/obj/effect/turf_decal/trimline/yellow/filled/warning{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bI" = (
-/obj/item/pda/clear{
-	note = "Chief's asked me to check on the machinery inside PDA. He's also worried about Build, but i'm sure Harry'll handle the construction. I just need to work on Internals. Fuck i'm hungry"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 1;
-	icon_state = "manifold-2"
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bQ" = (
-/obj/machinery/atmospherics/components/binary/pump,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bR" = (
-/obj/effect/spawner/structure/window/plasma,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"bS" = (
-/obj/structure/cable,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"bT" = (
-/obj/item/pipe_dispenser,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"bU" = (
-/obj/structure/sign/poster/official/build{
-	pixel_x = -32
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bV" = (
-/obj/effect/mob_spawn/human/corpse/assistant,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4;
-	icon_state = "scrub_map_on-2"
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"bZ" = (
-/obj/structure/sign/poster/official/safety_internals{
-	pixel_x = 32
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ca" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	icon_state = "pump_map-2"
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cb" = (
-/obj/item/flashlight,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cc" = (
-/obj/item/book/manual/wiki/atmospherics,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cd" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4;
-	icon_state = "connector_map-2"
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ce" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible{
-	dir = 4;
-	icon_state = "manifold-2"
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cf" = (
-/obj/machinery/airalarm/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cg" = (
-/obj/item/wallframe/apc,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"ch" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"av" = (
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ci" = (
-/obj/machinery/light/broken,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cj" = (
-/obj/structure/sign/poster/official/pda_ad{
-	pixel_y = -32
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"ck" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cl" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"aw" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"ax" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/obj/machinery/light/dim{
+/obj/structure/statue/snow/snowman,
+/turf/open/floor/grass/snow/actually_safe,
+/area/ruin/planetengi)
+"ay" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"az" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aA" = (
+/obj/machinery/rnd/production/protolathe/department/engineering,
+/obj/effect/turf_decal/trimline/yellow/filled/warning{
+	dir = 9
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/item/rcd_upgrade/frames,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aC" = (
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"aD" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"aE" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cm" = (
-/obj/structure/sign/poster/contraband/atmosia_independence{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cp" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cs" = (
-/obj/machinery/light/dim{
+/obj/item/toy/snowball,
+/turf/open/floor/grass/snow/actually_safe,
+/area/ruin/planetengi)
+"aF" = (
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/planetengi)
+"aG" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/turf/open/floor/engine/n2,
+/area/ruin/planetengi)
+"aH" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/icemoon,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aI" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aJ" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on,
+/turf/open/floor/engine/n2,
+/area/ruin/planetengi)
+"aL" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"aM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on,
+/turf/open/floor/engine/o2,
+/area/ruin/planetengi)
+"aQ" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
-"ct" = (
+"aR" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"aT" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/grass/snow/actually_safe,
+/area/ruin/planetengi)
+"aV" = (
+/obj/machinery/autolathe,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aW" = (
+/obj/item/clothing/under/rank/engineering/chief_engineer,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"aX" = (
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"ba" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"bc" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bd" = (
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"be" = (
+/obj/machinery/atmospherics/components/binary/pump,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bi" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"bj" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"bl" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"bm" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/manifold{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"bo" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"bq" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Production Room";
 	req_access_txt = "204"
 	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cu" = (
-/obj/structure/girder,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
-"cv" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/heater{
-	dir = 4
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"br" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/obj/structure/sign/poster/official/build{
+	pixel_x = -32
 	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cx" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cC" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"cD" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"cE" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors)
-"cF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"cG" = (
-/obj/structure/cable,
-/obj/machinery/field/generator,
-/obj/effect/turf_decal/stripes/line{
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bs" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 6
 	},
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"cH" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cI" = (
-/obj/machinery/modular_computer/console/preset/civilian,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cJ" = (
-/obj/item/construction/rcd,
-/obj/structure/rack,
-/obj/item/rcd_ammo,
-/obj/item/rcd_ammo,
-/obj/item/rcd_upgrade/frames,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cK" = (
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cL" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/yellow/filled/line{
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bv" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cN" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/machinery/space_heater,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cO" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cP" = (
-/obj/machinery/atmospherics/components/binary/pump,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cQ" = (
-/obj/effect/turf_decal/stripes/corner,
-/obj/effect/turf_decal/stripes/corner{
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bx" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/o2{
 	dir = 8
 	},
-/obj/machinery/light/small,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cR" = (
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cS" = (
-/obj/effect/turf_decal/stripes/corner{
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"by" = (
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bz" = (
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bA" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/window/reinforced/plasma/spawner/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 8
 	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cT" = (
-/obj/machinery/power/emitter{
-	dir = 1
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"bB" = (
+/obj/structure/window/reinforced/plasma/spawner,
+/obj/structure/window/reinforced/plasma/spawner/east,
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
 	},
-/obj/structure/cable,
-/obj/effect/turf_decal/stripes/end,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"bD" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
-"cU" = (
-/obj/structure/cable,
-/obj/effect/mob_spawn/human/engineer/rig,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"cV" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/space_heater,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cW" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cY" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
+"bF" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bG" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/warning{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bH" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 4
 	},
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"cZ" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"db" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"dc" = (
-/obj/machinery/power/rad_collector,
-/obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dd" = (
-/obj/machinery/power/rad_collector,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"de" = (
-/obj/machinery/rnd/production/circuit_imprinter/offstation,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"df" = (
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/obj/machinery/light/small/broken,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dg" = (
-/obj/machinery/autolathe,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dh" = (
-/obj/structure/sign/poster/contraband/grey_tide,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/closed/wall,
-/area/icemoon/surface/outdoors)
-"di" = (
-/obj/machinery/door/airlock,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dj" = (
-/turf/closed/wall/rust,
-/area/icemoon/surface/outdoors)
-"dk" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/engine/air,
-/area/icemoon/surface/outdoors)
-"dl" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/turf/open/floor/engine/air,
-/area/icemoon/surface/outdoors)
-"dn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible,
-/turf/open/floor/engine/vacuum,
-/area/icemoon/surface/outdoors)
-"do" = (
-/obj/machinery/power/port_gen/pacman,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/oil/streak,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dp" = (
-/obj/machinery/light/built,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dq" = (
-/obj/item/tank/internals/plasma,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dr" = (
-/obj/machinery/power/floodlight,
-/obj/structure/cable,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"ds" = (
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bI" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 1
+	},
 /obj/structure/tank_dispenser,
-/turf/open/floor/plating/icemoon,
-/area/icemoon/surface/outdoors)
-"dt" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bL" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
+	dir = 6
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"du" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bQ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dv" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bR" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bS" = (
+/obj/structure/table,
+/obj/item/flashlight{
+	pixel_y = 4
 	},
-/obj/machinery/airalarm/directional/north,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bT" = (
+/turf/open/floor/iron/corner{
+	dir = 4
 	},
-/turf/open/floor/engine/air,
-/area/icemoon/surface/outdoors)
-"dx" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1
-	},
-/turf/open/floor/engine/air,
-/area/icemoon/surface/outdoors)
-"dy" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1
-	},
-/turf/open/floor/engine/vacuum,
-/area/icemoon/surface/outdoors)
-"dz" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{
-	dir = 1
-	},
-/turf/open/floor/engine/vacuum,
-/area/icemoon/surface/outdoors)
-"dA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1;
-	icon_state = "scrub_map_on-2"
-	},
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/turf_decal/weather/snow/corner{
+/area/ruin/planetengi)
+"bU" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/floor/iron/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors)
-"dB" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"dC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8;
-	icon_state = "vent_map_on-2"
+"bV" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 1
 	},
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/iron/icemoon,
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bW" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bY" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"bZ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ca" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cd" = (
+/obj/machinery/atmospherics/components/trinary/mixer/airmix,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ce" = (
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
+	dir = 6
+	},
+/turf/open/floor/iron/corner,
+/area/ruin/planetengi)
+"cf" = (
+/obj/machinery/atmospherics/components/trinary/filter/flipped{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cg" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ch" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 9
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors)
+"ci" = (
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cj" = (
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ck" = (
+/obj/machinery/atmospherics/components/binary/volume_pump{
+	dir = 4
+	},
+/turf/open/floor/iron/corner{
+	dir = 8
+	},
+/area/ruin/planetengi)
+"cl" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cm" = (
+/obj/item/book/manual/wiki/atmospherics,
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cn" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cp" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cs" = (
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"ct" = (
+/obj/structure/window/reinforced/plasma/spawner/north,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/planetengi)
+"cu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 10
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cv" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"cx" = (
+/obj/item/pipe_dispenser,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cD" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cE" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cF" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering Access";
+	req_access_txt = "204"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cG" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"cI" = (
+/obj/item/pda/clear{
+	note = "Chief's asked me to check on the machinery inside PDA. He's also worried about Build, but i'm sure Harry'll handle the construction. I just need to work on Internals. Fuck i'm hungry"
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cJ" = (
+/obj/item/pda/engineering{
+	note = "To-do: Check on SM status. Get a pint at eat. Nag the research manager for RCDs."
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cL" = (
+/obj/effect/decal/remains/human,
+/obj/item/mod/control/pre_equipped/engineering,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	icon_state = "damaged3"
+	},
+/area/ruin/planetengi)
+"cM" = (
+/turf/open/floor/iron{
+	icon_state = "damaged2"
+	},
+/area/ruin/planetengi)
+"cN" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
+/turf/open/floor/iron/corner{
+	dir = 1
+	},
+/area/ruin/planetengi)
+"cO" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"cP" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cQ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cR" = (
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cS" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cU" = (
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"cV" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/blue/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"cW" = (
+/turf/open/floor/iron{
+	icon_state = "damaged1"
+	},
+/area/ruin/planetengi)
+"cX" = (
+/obj/structure/cable,
+/obj/machinery/power/emitter/welded{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/ruin/planetengi)
+"cY" = (
+/obj/item/stack/sheet/plasmarglass,
+/obj/item/card/id/advanced/engioutpost,
+/turf/open/floor/iron{
+	icon_state = "damaged4"
+	},
+/area/ruin/planetengi)
+"cZ" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"db" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"de" = (
+/turf/template_noop,
+/area/template_noop)
+"df" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/structure/sign/poster/official/pda_ad{
+	pixel_y = -32
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dg" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible/layer4,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dh" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"di" = (
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dj" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"dk" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line,
+/turf/open/floor/iron{
+	icon_state = "damaged5"
+	},
+/area/ruin/planetengi)
+"dl" = (
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"dn" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"do" = (
+/turf/closed/wall,
+/area/ruin/planetengi)
+"dp" = (
+/turf/closed/wall/ice,
+/area/ruin/planetengi)
+"dq" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"dr" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/mob_spawn/corpse/human/engineer/mod,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"ds" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"dt" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor/closed,
+/obj/item/shard,
+/turf/open/floor/plating,
+/area/ruin/planetengi)
+"du" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"dv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 1
+	},
+/turf/open/floor/engine/air,
+/area/ruin/planetengi)
+"dw" = (
+/turf/open/floor/engine/air,
+/area/ruin/planetengi)
+"dx" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/engine/air,
+/area/ruin/planetengi)
+"dy" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"dz" = (
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"dA" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"dB" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/grey_tide{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"dC" = (
+/obj/machinery/airalarm/directional/north,
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
 "dD" = (
-/obj/structure/girder,
-/turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
+/turf/closed/wall/rust,
+/area/ruin/planetengi)
 "dE" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"gK" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"kS" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"na" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
+"sc" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"tH" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/air,
+/area/ruin/planetengi)
+"vD" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/planetengi)
+"xA" = (
+/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/engine/vacuum,
+/area/ruin/planetengi)
+"yF" = (
+/mob/living/simple_animal/hostile/construct/proteon,
+/turf/open/floor/iron,
+/area/ruin/planetengi)
+"Ai" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface/outdoors)
+"GG" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"Iy" = (
+/obj/effect/turf_decal/tile/yellow,
+/mob/living/simple_animal/hostile/construct/proteon,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"Je" = (
 /obj/structure/door_assembly/door_assembly_eng,
 /turf/open/floor/iron/icemoon,
-/area/icemoon/surface/outdoors)
-"na" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"tH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
-"xA" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/brown,
-/turf/open/floor/engine/airless,
-/area/icemoon/surface/outdoors)
+/area/ruin/planetengi)
+"KU" = (
+/turf/closed/wall/mineral/snow,
+/area/ruin/planetengi)
+"Lh" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 1
+	},
+/turf/open/floor/plating/icemoon,
+/area/ruin/planetengi)
+"Nd" = (
+/obj/structure/girder/displaced,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/box/corners,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
 "UK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/turf/open/floor/engine/vacuum,
-/area/icemoon/surface/outdoors)
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
+"Wh" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/icemoon,
+/area/ruin/planetengi)
 
 (1,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+de
+de
+do
+do
+do
+do
+do
+cE
+cE
+vD
+cE
+cE
+do
+do
+do
+do
+do
+de
+de
 "}
 (2,1,1) = {"
-aa
-aa
-ak
+de
+de
+do
 an
-ak
-ae
-an
-ab
-aa
+aG
+ba
+br
+cg
+bd
 by
 bR
-bR
-ae
-ae
-ae
-ae
-ae
-aO
-aa
+cP
+aI
+bo
+dv
+dw
+do
+de
+de
 "}
 (3,1,1) = {"
-aa
-aa
-aa
-ao
-ab
-al
-al
-ab
-ab
-ab
-ab
-ab
-ab
-al
-al
-al
+de
+de
 do
-ae
-aa
+ao
+an
+cE
+bs
+bL
+cb
+cb
+cb
+cb
+cZ
+cE
+dw
+tH
+do
+de
+de
 "}
 (4,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-ao
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-ag
-ak
-aa
+de
+de
+do
+an
+aK
+bo
+bv
+aI
+cc
+be
+cp
+bW
+db
+ba
+dx
+dw
+do
+de
+de
 "}
 (5,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
+de
+de
+do
+do
+do
+do
 aH
-aH
+bd
 bc
-bc
+cm
 bS
-bc
-bc
-cC
-cT
-ag
-ag
-aO
-aa
+bZ
+df
+do
+do
+do
+do
+de
+de
 "}
 (6,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-af
-al
+de
+de
+do
+aC
+aL
+ba
+bx
+bM
+cd
+cn
+cn
+cQ
+dg
 cD
-ag
-al
-al
-aO
-aa
+dy
+dz
+do
+de
+de
 "}
 (7,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-bd
-aa
-aa
-aa
-af
+de
+de
+do
+aD
+aC
 cE
-ag
-dc
-al
-ae
-aa
+bF
+bc
+yF
+bd
+cx
+cR
+dh
+cE
+dz
+xA
+do
+de
+de
 "}
 (8,1,1) = {"
-ab
-ab
-aa
-aa
-aa
-aa
+de
+de
+do
+aC
+aM
+bo
 aI
-aa
+bQ
 be
-aa
-aa
-aa
-af
-af
-ag
-ag
-al
-ak
-aa
+cp
+cI
+cS
+di
+dn
+dA
+dz
+do
+de
+de
 "}
 (9,1,1) = {"
-ac
-ab
-al
-ap
-aa
-aa
-aa
-aa
-bf
+de
+do
+do
+do
+do
+do
+cE
+vD
 bz
-aa
-aa
-af
-af
-ag
-dc
+bz
+bz
+do
+cE
+do
+do
+do
 dp
-ae
-aa
+do
+de
 "}
 (10,1,1) = {"
-ab
-ab
-ag
-ap
-al
-aa
-aa
-aa
-aa
-aa
+vD
+do
+ax
+aE
+aT
+do
+bG
+bV
+ce
+cs
 bT
-aa
-af
-ab
-ag
-dd
+cV
+bG
+do
+dB
+UK
 dq
-ak
-aa
+dD
+Ai
 "}
 (11,1,1) = {"
-ad
+vD
 ag
-ag
+ay
 aq
-ab
-aa
-aa
-aa
-aa
+aV
+cG
+bd
+bW
+cf
 bA
-aa
-aa
-af
-cE
-ag
-dc
-al
-ak
-aa
+cJ
+cW
+bd
+cG
+cU
+kS
+Wh
+Je
+Ai
 "}
 (12,1,1) = {"
-ab
-ab
-ag
-ap
-al
-ab
+do
+av
+az
+aF
+aW
+bq
 aJ
-aa
-aa
-aa
-aa
-ab
-ab
+bY
+ci
+ct
+cL
+cX
+bd
 cF
 cU
-al
-al
-aO
-aa
+GG
+Wh
+dp
+Ai
 "}
 (13,1,1) = {"
-ab
-ab
+do
+aw
 am
 ar
-at
-at
-at
-at
-at
-bB
-bB
-bB
-at
+bd
 cG
-cT
-ag
+bH
+bZ
+cj
+bB
+cM
+cY
+dj
+cG
+cU
+Iy
 dr
-ae
+KU
 aa
 "}
 (14,1,1) = {"
-ab
+do
 ah
-al
+aA
 as
 au
-as
-as
-as
-ag
-al
-al
+cG
+bI
+bZ
+ck
+cu
+cN
 cg
-ag
-al
-al
-al
-al
-ae
+dk
+dt
+cU
+GG
+Nd
+KU
 aa
 "}
 (15,1,1) = {"
-ab
-ai
-al
-al
-al
-al
-al
-al
-ag
-bC
-al
-al
-ag
-al
-al
-al
+do
+do
+do
+do
+do
+do
+do
+ca
+cl
+vD
+cG
+ca
+vD
+vD
+dC
+sc
 ds
-ae
-aa
+Lh
+gK
 "}
 (16,1,1) = {"
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-aO
+de
+de
+aa
+aa
+aa
+aa
+aa
+bD
 bi
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-aa
-"}
-(17,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-aP
+cv
 bj
 bD
-ae
+aa
+do
+dD
+do
+dp
+KU
+gK
+"}
+(17,1,1) = {"
+de
 aa
 aa
 aa
+aX
 aa
 aa
+aQ
+bj
+bD
+cO
+bD
 aa
+aa
+dE
+du
+du
 aa
 aa
 "}
 (18,1,1) = {"
+de
+de
 aa
 aa
 aa
 aa
 aa
-aa
-ae
-aj
-bk
-aj
-ae
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-"}
-(19,1,1) = {"
-af
-aa
-aa
-aa
-an
-aB
-ae
 aQ
 bl
+bD
+cO
+bD
+dl
+du
+na
+de
+aa
+aa
+de
+"}
+(19,1,1) = {"
+de
+de
+de
+de
+aa
+aa
+aa
 aQ
-ae
-aB
-aB
-aB
-aB
-aB
-aB
+bl
+bD
+cO
+bD
 aa
 aa
+de
+de
+de
+de
+de
 "}
 (20,1,1) = {"
-af
-af
-aj
+de
+de
+de
+de
+de
+de
 aa
-aa
-af
-aK
 aR
 bm
-bE
+ch
 bU
 ch
-ct
-cH
-cK
+aa
 de
-aB
-aa
-aa
-"}
-(21,1,1) = {"
-af
-aj
-aj
-af
-af
-aj
-aj
-aj
-aT
-aj
-bV
-ci
-aB
-cI
-aj
-df
-aB
-aa
-aa
-"}
-(22,1,1) = {"
-aa
-aa
-af
-aj
-aj
-aj
-aj
-aj
-aT
-aj
-bW
-aj
-aQ
-cJ
-aj
-dg
-aB
-aa
-aa
-"}
-(23,1,1) = {"
-ab
-aa
-af
-aj
-av
-aj
-aj
-aj
-aw
-aj
-ck
-cj
-aB
-aB
-aQ
-aB
-aB
-ab
-aa
-"}
-(24,1,1) = {"
-aa
-af
-aj
-ag
-aw
-aw
-aw
-aT
-bo
-aj
-ck
-aj
-aj
-cK
-cV
-aB
-dj
-ak
-ak
-"}
-(25,1,1) = {"
-aa
-af
-aj
-aj
-aj
-aj
-aj
-aj
-bF
-aj
-ck
-ck
-ck
-ck
-cW
-dh
-dt
-dA
-ak
-"}
-(26,1,1) = {"
-aa
-af
-af
-an
-an
-aj
-aj
-aj
-bq
-bF
-bY
-bF
-bF
-cL
-cX
-di
-du
-dB
-dD
-"}
-(27,1,1) = {"
-aa
-aa
-aa
-aa
-an
-aC
-aL
-aC
-br
-bG
-bZ
-cl
-aC
-cM
-cY
-aB
-dv
-dC
-dE
-"}
-(28,1,1) = {"
-aa
-aa
-aa
-aa
-an
-an
-aB
-ae
-bs
-bH
-ae
-aB
-cu
-cu
-aB
-dj
-ak
-ak
-dj
-"}
-(29,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-aT
-bI
-ae
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ak
-"}
-(30,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-aw
-ck
-ae
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ak
-"}
-(31,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-aw
-ck
-ae
-ae
-ae
-ae
-ae
-aa
-aa
-aa
-aa
-"}
-(32,1,1) = {"
-aa
-aa
-aa
-ae
-ae
-ae
-ae
-ae
-aw
-bL
-ca
-cm
-cv
-cN
-ae
-ae
-ae
-ae
-aa
-"}
-(33,1,1) = {"
-aa
-aa
-aa
-ae
-ax
-aD
-aM
-aV
-aw
-bM
-ca
-cn
-cn
-cO
-cZ
-dk
-dw
-ae
-aa
-"}
-(34,1,1) = {"
-aa
-aa
-aa
-ae
-ay
-aE
-xA
-aW
-bv
-aj
-aj
-aj
-cx
-cP
-tH
-dl
-dx
-ae
-aa
-"}
-(35,1,1) = {"
-aa
-aa
-aa
-ae
-ae
-ae
-ae
-aX
-aw
-aj
-cb
-cp
-cx
-cQ
-ae
-ae
-ae
-ae
-aa
-"}
-(36,1,1) = {"
-aa
-aa
-aa
-ae
-az
-aF
-aM
-aV
-aw
-aj
-cc
-cx
-cx
-cO
-db
-dn
-dy
-ae
-aa
-"}
-(37,1,1) = {"
-aa
-aa
-aa
-ae
-aA
-aG
-tH
-aW
-bv
-aj
-cd
-aj
-cx
-cR
-na
-UK
-dz
-ae
-aa
-"}
-(38,1,1) = {"
-aa
-aa
-aa
-ae
-ae
-ae
-ae
-ba
-aw
-aj
-ce
-aj
-cx
-cS
-ae
-ae
-ae
-ae
-aa
-"}
-(39,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-cx
-bx
-bQ
-cf
-cs
-cx
-aj
-ae
-aa
-aa
-aa
-aa
-"}
-(40,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-aa
-aa
-aa
-aa
+de
+de
+de
+de
+de
 "}

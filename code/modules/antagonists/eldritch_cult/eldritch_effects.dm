@@ -8,7 +8,7 @@
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
-/obj/effect/eldritch/Initialize()
+/obj/effect/eldritch/Initialize(mapload)
 	. = ..()
 	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	I.override = TRUE
@@ -25,13 +25,6 @@
 		return
 	if(!is_in_use)
 		INVOKE_ASYNC(src, .proc/activate , user)
-
-/obj/effect/eldritch/attackby(obj/item/I, mob/living/user)
-	. = ..()
-	if(istype(I,/obj/item/nullrod))
-		user.say("BEGONE FOUL MAGIKS!!", forced = "nullrod")
-		to_chat(user, "<span class='danger'>You disrupt the magic of [src] with [I].</span>")
-		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
 	is_in_use = TRUE
@@ -99,7 +92,7 @@
 		is_in_use = FALSE
 		return
 	is_in_use = FALSE
-	to_chat(user,"<span class='warning'>Your ritual failed! You either used the wrong components or are missing something important!</span>")
+	to_chat(user,span_warning("Your ritual failed! You either used the wrong components or are missing something important!"))
 
 /obj/effect/eldritch/big
 	name = "transmutation rune"
@@ -133,7 +126,8 @@
  * Fixes any bugs that are caused by late Generate() or exchanging clients
  */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
-	listclearnulls(smashes)
+	SIGNAL_HANDLER
+	list_clear_nulls(smashes)
 	for(var/mind in targets)
 		if(isnull(mind))
 			stack_trace("A null somehow landed in a list of minds")
@@ -197,7 +191,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	alpha = 0
 
-/obj/effect/broken_illusion/Initialize()
+/obj/effect/broken_illusion/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src,.proc/show_presence),15 SECONDS)
 
@@ -214,15 +208,15 @@
 		return ..()
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
-		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+		to_chat(human_user,span_boldwarning("You know better than to tempt forces out of your control!"))
 	else
 		var/obj/item/bodypart/arm = human_user.get_active_hand()
 		if(prob(25))
-			to_chat(human_user,"<span class='userdanger'>An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!</span>")
+			to_chat(human_user,span_userdanger("An otherwordly presence tears and atomizes your arm as you try to touch the hole in the very fabric of reality!"))
 			arm.dismember()
 			qdel(arm)
 		else
-			to_chat(human_user,"<span class='danger'>You pull your hand away from the hole as the eldritch energy flails trying to latch onto existance itself!</span>")
+			to_chat(human_user,span_danger("You pull your hand away from the hole as the eldritch energy flails trying to latch onto existance itself!"))
 
 
 /obj/effect/broken_illusion/attack_tk(mob/user)
@@ -231,10 +225,10 @@
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/human/human_user = user
 	if(IS_HERETIC(human_user))
-		to_chat(human_user,"<span class='boldwarning'>You know better than to tempt forces out of your control!</span>")
+		to_chat(human_user,span_boldwarning("You know better than to tempt forces out of your control!"))
 		return
 	//a very elaborate way to suicide
-	to_chat(human_user,"<span class='userdanger'>Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!</span>")
+	to_chat(human_user,span_userdanger("Eldritch energy lashes out, piercing your fragile mind, tearing it to pieces!"))
 	human_user.ghostize()
 	var/obj/item/bodypart/head/head = locate() in human_user.bodyparts
 	if(head)
@@ -245,14 +239,14 @@
 
 	var/datum/effect_system/reagents_explosion/explosion = new()
 	explosion.set_up(1, get_turf(human_user), TRUE, 0)
-	explosion.start()
+	explosion.start(src)
 
 
 /obj/effect/broken_illusion/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user,"<span class='warning'>Your mind burns as you stare at the tear!</span>")
+		to_chat(human_user,span_warning("Your mind burns as you stare at the tear!"))
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10,190)
 		SEND_SIGNAL(human_user, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
@@ -269,7 +263,7 @@
 	///Tracked image
 	var/image/img
 
-/obj/effect/reality_smash/Initialize()
+/obj/effect/reality_smash/Initialize(mapload)
 	. = ..()
 	GLOB.reality_smash_track.smashes += src
 	img = image(icon, src, image_state, OBJ_LAYER)

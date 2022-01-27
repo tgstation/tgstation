@@ -34,7 +34,7 @@
 		"Standard" = /obj/machinery/door/airlock
 	)
 
-/obj/item/airlock_painter/Initialize()
+/obj/item/airlock_painter/Initialize(mapload)
 	. = ..()
 	ink = new /obj/item/toner(src)
 
@@ -53,10 +53,10 @@
 //because you're expecting user input.
 /obj/item/airlock_painter/proc/can_use(mob/user)
 	if(!ink)
-		to_chat(user, "<span class='warning'>There is no toner cartridge installed in [src]!</span>")
+		to_chat(user, span_warning("There is no toner cartridge installed in [src]!"))
 		return FALSE
 	else if(ink.charges < 1)
-		to_chat(user, "<span class='warning'>[src] is out of ink!</span>")
+		to_chat(user, span_warning("[src] is out of ink!"))
 		return FALSE
 	else
 		return TRUE
@@ -65,7 +65,7 @@
 	var/obj/item/organ/lungs/L = user.getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(can_use(user) && L)
-		user.visible_message("<span class='suicide'>[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is inhaling toner from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 		use(user)
 
 		// Once you've inhaled the toner, you throw up your lungs
@@ -91,27 +91,27 @@
 
 		// TODO maybe add some colorful vomit?
 
-		user.visible_message("<span class='suicide'>[user] vomits out [user.p_their()] [L]!</span>")
+		user.visible_message(span_suicide("[user] vomits out [user.p_their()] [L]!"))
 		playsound(user.loc, 'sound/effects/splat.ogg', 50, TRUE)
 
 		L.forceMove(T)
 
 		return (TOXLOSS|OXYLOSS)
 	else if(can_use(user) && !L)
-		user.visible_message("<span class='suicide'>[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+		user.visible_message(span_suicide("[user] is spraying toner on [user.p_them()]self from [src]! It looks like [user.p_theyre()] trying to commit suicide."))
 		user.reagents.add_reagent(/datum/reagent/colorful_reagent, 1)
 		user.reagents.expose(user, TOUCH, 1)
 		return TOXLOSS
 
 	else
-		user.visible_message("<span class='suicide'>[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner.</span>")
+		user.visible_message(span_suicide("[user] is trying to inhale toner from [src]! It might be a suicide attempt if [src] had any toner."))
 		return SHAME
 
 
 /obj/item/airlock_painter/examine(mob/user)
 	. = ..()
 	if(!ink)
-		. += "<span class='notice'>It doesn't have a toner cartridge installed.</span>"
+		. += span_notice("It doesn't have a toner cartridge installed.")
 		return
 	var/ink_level = "high"
 	if(ink.charges < 1)
@@ -120,17 +120,17 @@
 		ink_level = "low"
 	else if((ink.charges/ink.max_charges) > 1) //Over 100% (admin var edit)
 		ink_level = "dangerously high"
-	. += "<span class='notice'>Its ink levels look [ink_level].</span>"
+	. += span_notice("Its ink levels look [ink_level].")
 
 
 /obj/item/airlock_painter/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toner))
 		if(ink)
-			to_chat(user, "<span class='warning'>[src] already contains \a [ink]!</span>")
+			to_chat(user, span_warning("[src] already contains \a [ink]!"))
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
-		to_chat(user, "<span class='notice'>You install [W] into [src].</span>")
+		to_chat(user, span_notice("You install [W] into [src]."))
 		ink = W
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	else
@@ -141,7 +141,7 @@
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		ink.forceMove(user.drop_location())
 		user.put_in_hands(ink)
-		to_chat(user, "<span class='notice'>You remove [ink] from [src].</span>")
+		to_chat(user, span_notice("You remove [ink] from [src]."))
 		ink = null
 
 /obj/item/airlock_painter/decal
@@ -171,16 +171,16 @@
 	. = ..()
 	var/turf/open/floor/F = target
 	if(!proximity)
-		to_chat(user, "<span class='notice'>You need to get closer!</span>")
+		to_chat(user, span_notice("You need to get closer!"))
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, CLEAN_TYPE_PAINT, color, null, null, alpha)
+		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, CLEAN_TYPE_PAINT, null)
 
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()
 	ui_interact(user)
 
-/obj/item/airlock_painter/decal/Initialize()
+/obj/item/airlock_painter/decal/Initialize(mapload)
 	. = ..()
 	ink = new /obj/item/toner/large(src)
 
@@ -244,6 +244,6 @@
 	name = "extreme decal painter"
 	icon_state = "decal_sprayer_ex"
 
-/obj/item/airlock_painter/decal/debug/Initialize()
+/obj/item/airlock_painter/decal/debug/Initialize(mapload)
 	. = ..()
 	ink = new /obj/item/toner/extreme(src)

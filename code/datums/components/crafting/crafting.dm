@@ -29,9 +29,12 @@
 					CAT_BURGER,
 					CAT_CAKE,
 					CAT_EGG,
+					CAT_LIZARD,
 					CAT_ICE,
 					CAT_MEAT,
+					CAT_SEAFOOD,
 					CAT_MISCFOOD,
+					CAT_MOTH,
 					CAT_PASTRY,
 					CAT_PIE,
 					CAT_PIZZA,
@@ -42,6 +45,7 @@
 				),
 				CAT_DRINK = CAT_NONE,
 				CAT_CLOTHING = CAT_NONE,
+				CAT_ATMOSPHERIC = CAT_NONE,
 			)
 
 	var/cur_category = CAT_NONE
@@ -115,7 +119,7 @@
 		return
 
 	for(var/atom/movable/AM in range(radius_range, a))
-		if((AM.flags_1 & HOLOGRAM_1)  || (blacklist && (AM.type in blacklist)))
+		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
 		. += AM
 
@@ -433,19 +437,20 @@
 	switch(action)
 		if("make")
 			var/mob/user = usr
-			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
+			var/datum/crafting_recipe/crafting_recipe = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
 			ui_interact(user)
-			var/atom/movable/result = construct_item(user, TR)
+			var/atom/movable/result = construct_item(user, crafting_recipe)
 			if(!istext(result)) //We made an item and didn't get a fail message
 				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
 					user.put_in_hands(result)
 				else
 					result.forceMove(user.drop_location())
-				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
-				TR.on_craft_completion(user, result)
+				to_chat(user, span_notice("[crafting_recipe.name] constructed."))
+				user.investigate_log("[key_name(user)] crafted [crafting_recipe]", INVESTIGATE_CRAFTING)
+				crafting_recipe.on_craft_completion(user, result)
 			else
-				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
+				to_chat(user, span_warning("Construction failed[result]"))
 			busy = FALSE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only

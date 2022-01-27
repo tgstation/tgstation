@@ -92,12 +92,14 @@
 	return FALSE
 
 /datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
+	SIGNAL_HANDLER
 	var/atom/real_location = parent
 	if(A in real_location)
 		usr = null
 		remove_from_storage(A, null)
 
 /datum/component/storage/concrete/proc/on_deconstruct(datum/source, disassembled)
+	SIGNAL_HANDLER
 	if(drop_all_on_deconstruct)
 		do_quick_empty()
 

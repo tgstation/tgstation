@@ -2,7 +2,7 @@
 
 /obj/item/sparkler
 	name = "sparkler"
-	desc = "A little stick coated with metal power and barium nitrate, burns with a pleasing sparkle."
+	desc = "A little stick coated with metal powder and barium nitrate, burns with a pleasing sparkle."
 	icon = 'icons/obj/holiday_misc.dmi'
 	icon_state = "sparkler"
 	w_class = WEIGHT_CLASS_TINY
@@ -14,8 +14,8 @@
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/sparkler/attackby(obj/item/W, mob/user, params)
-	var/ignition_msg = W.ignition_effect(src, user)
+/obj/item/sparkler/attackby(obj/item/item, mob/user, params)
+	var/ignition_msg = item.ignition_effect(src, user)
 	if(ignition_msg)
 		light(user, ignition_msg)
 	else
@@ -49,10 +49,10 @@
 
 /obj/item/sparkler/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	..()
+	return ..()
 
-/obj/item/sparkler/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>[user] gracefully lights [A] with [src].</span>"
+/obj/item/sparkler/ignition_effect(atom/atom, mob/user)
+	. = span_notice("[user] gracefully lights [atom] with [src].")
 
 /obj/item/sparkler/get_temperature()
 	return lit * heat
@@ -75,8 +75,8 @@
 /obj/item/grenade/firecracker/attack_self(mob/user) // You need to light it manually.
 	return
 
-/obj/item/grenade/firecracker/attackby(obj/item/W, mob/user, params)
-	var/ignition_msg = W.ignition_effect(src, user)
+/obj/item/grenade/firecracker/attackby(obj/item/item, mob/user, params)
+	var/ignition_msg = item.ignition_effect(src, user)
 	if(ignition_msg && !active)
 		visible_message(ignition_msg)
 		arm_grenade(user)
@@ -86,25 +86,24 @@
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
 	detonate()
 
-/obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/I)
+/obj/item/grenade/firecracker/wirecutter_act(mob/living/user, obj/item/item)
 	if(active)
 		return
 	if(det_time)
 		det_time -= 10
-		to_chat(user, "<span class='notice'>You shorten the fuse of [src] with [I].</span>")
+		to_chat(user, span_notice("You shorten the fuse of [src] with [item]."))
 		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
 		icon_state = initial(icon_state) + "_[det_time]"
 		update_appearance()
 	else
-		to_chat(user, "<span class='danger'>You've already removed all of the fuse!</span>")
+		to_chat(user, span_danger("You've already removed all of the fuse!"))
 
 /obj/item/grenade/firecracker/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 80)
-	var/turf/T = get_turf(src)
-	log_grenade(user, T)
+	log_grenade(user)
 	if(user)
 		add_fingerprint(user)
 		if(msg)
-			to_chat(user, "<span class='warning'>You prime [src]! [capitalize(DisplayTimeText(det_time))]!</span>")
+			to_chat(user, span_warning("You prime [src]! [capitalize(DisplayTimeText(det_time))]!"))
 	playsound(src, 'sound/effects/fuse.ogg', volume, TRUE)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
@@ -113,8 +112,7 @@
 /obj/item/grenade/firecracker/detonate(mob/living/lanced_by)
 	. = ..()
 	update_mob()
-	var/explosion_loc = get_turf(src)
+	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2)
 	qdel(src)
-	explosion(explosion_loc,-1,-1,2)
 
 

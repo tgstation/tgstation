@@ -1,16 +1,21 @@
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
-	id = "mush"
+	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
-	fixed_mut_color = "DBBF92"
-	hair_color = "FF4B19" //cap color, spot color uses eye color
+	fixed_mut_color = "#DBBF92"
+	hair_color = "#FF4B19" //cap color, spot color uses eye color
 	nojumpsuit = TRUE
 
 	say_mod = "poofs" //what does a mushroom sound like
 	species_traits = list(MUTCOLORS, NOEYESPRITES, NO_UNDERWEAR, HAS_FLESH, HAS_BONE)
-	inherent_traits = list(TRAIT_ADVANCEDTOOLUSER,TRAIT_NOBREATH, TRAIT_NOFLASH)
+	inherent_traits = list(
+		TRAIT_ADVANCEDTOOLUSER,
+		TRAIT_CAN_STRIP,
+		TRAIT_NOBREATH,
+		TRAIT_NOFLASH,
+	)
 	inherent_factions = list("mushroom")
 	speedmod = 1.5 //faster than golems but not by much
 

@@ -1,0 +1,566 @@
+2016-03-02:
+  CoreOverload:
+  - rscadd: A new "breathing tube" mouth implant. It allows you to use internals without
+      a mask and protects you from being choked. It doesn't protect you from the grab
+      itself.
+  - tweak: Arm cannon implants are now actually implanted into the arms, not into
+      the chest.
+  - bugfix: Arm cannons have an action button again.
+  - tweak: Heart removal is no longer instakill. It puts you in condition similar
+      to heart attack instead. You can fix it by installing a new heart and applying
+      defibrillator if it wasn't beating.
+  - rscadd: You can now make a stopped heart beat again by squeezing it. It will stop
+      beating very soon, so you better be quick if you want to install it without
+      using defibrillator.
+  - rscadd: There is now a chance to recover some of the internal organs when butchering
+      aliens or monkeys.
+  - rscadd: A new organ - lungs. When removed, it will give you breathing and speaking
+      troubles.
+  - rscadd: Human burgers are, once again, named after the generous meat donors that
+      made them possible.
+  Fox McCloud:
+  - rscadd: Gibbing mobs will now throw their internal organs
+  Gun Hog:
+  - rscadd: Ghost security HUDs now show arrest status and implants.
+  - tweak: The Alien queen, upon her death, will now severely weaken the remaining
+      alien forces.
+  Joan:
+  - tweak: Replicating Foam has a lower chance to expand when hit.
+  - tweak: Penetrating Spines is now purple instead of sea green.
+  - imageadd: Blobbernauts now have a brief animation when produced.
+  - experiment: Adds five new blob chemicals. This is a total of 25 blob chemicals.
+      Will it ever stop?
+  - rscadd: Draining Spikes, which is reddish pink and does medium brute damage, and
+      drains blood from targets.
+  - rscadd: Shifting Fragments, which is tan and does medium brute damage, and shifts
+      position when attacked.
+  - rscadd: Flammable Goo, which is reddish orange and does low burn and toxin damage,
+      and when hit with burn damage, emits a burst of flame. It takes more damage
+      from burn, though.
+  - rscadd: Poisonous Strands, which is lavender and does burn, fire, and toxin damage
+      over a few seconds, instead of instantly.
+  - rscadd: Adaptive Nexuses, which is dark blue and does medium brute damage, and
+      reaps 5-10 resources from unconscious humans, killing them in the process.
+  - wip: Confused about what the chemical you're fighting does? Look at https://tgstation13.org/wiki/Blob#Blob_Chemicals
+  - rscadd: Adds 'Support and Mechanized Exosuits' and 'Space Suits and Hardsuits'
+      categories to the syndicate uplink.
+  - rscadd: Nuke op reinforcements and mechs have been moved to the first category.
+      Syndicate space suits and hardsuits have been moved to the second category.
+  - bugfix: Traitors can now properly buy the blood-red hardsuit for 8 TC.
+  - tweak: Nuke ops can no longer buy the blood-red hardsuit, as the elite hardsuit
+      costs the same amount while being absolutely better.
+  Kor:
+  - rscadd: Added door control remotes. Clicking on doors while holding them will
+      let you open/bolt/toggle emergency access depending on the mode. They will not
+      work on doors that have their IDscan disabled (rogue AIs take note!)
+  - rscadd: The Captain, RD, CE, HoS, CMO, and QM all now have door control remotes
+      in their lockers.
+  LanCartwright:
+  - rscadd: Adds Uranium to Virus reaction. Will create a random symptom between 5
+      and 6 when mixed with blood.
+  - rscadd: Adds Virus rations, which creates a level 1 symptom when mixed with blood.
+  - rscadd: Adds Mutagenic agar, which creates a level 3 symptom.
+  - rscadd: Adds Sucrose agar which creates a level 4 symptom.
+  - rscadd: Adds Weak virus plasma, which creates a level 5 symptom.
+  - rscadd: Adds Virus plasma, which creates a level 6 symptom.
+  - rscadd: Adds Virus food and Mutagen reaction, creating Mutagenic agar.
+  - rscadd: Adds Virus food and Synaptizine reaction, creating Virus rations.
+  - rscadd: Adds Virus food and Plasma reaction, creating Virus plasma.
+  - rscadd: Adds Synaptizine and Virus plasma reaction, creating weakened virus plasma.
+  - rscadd: Adds Sugar and Mutagenic agar reaction, creating sucrose agar.
+  - rscadd: Adds Saline glucose solution and Mutagenic agar reaction, creating sucrose
+      agar.
+  - rscadd: Adds Viral self-adaptation symptom, which boosts stealth and resistance,
+      but lowers stage speed.
+  - rscadd: Adds Viral evolutionary acceleration, which bosts stage speed and transmittability,
+      but lowers stealth and resistance.
+  - rscadd: Flypeople now vomit when they eat nutriment.
+  - rscadd: Flypeople can now suck the vomit off the floor to gain it's nutritional
+      content.
+  - rscadd: Flypeople now must suck puke chunks and vomit to fill themselves of food
+      content.
+  Malkevin:
+  - tweak: Sec officers have two sets of cuffs again (one on spawn, one in locker)
+  - tweak: Done some optimisation of sec spawn equipment lists and lockers to remove
+      some of the repetitive clicking, sec belts are now preloaded with equipment.
+  - tweak: HoS has a full baton instead of the collapsible one
+  - tweak: Detective has a classic police baton and pepper spray instead of the collapsible
+      baton (someone made police batons shit, so don't get overly happy)
+  - bugfix: pop scaled additional lockers spawned were the wrong type, changed them
+      to the right type which has batons now (actually belts now that I've changed
+      them).
+  MrStonedOne:
+  - tweak: Suit sensors will now favor higher levels for starting amount with the
+      exception of the max level, that remains unchanged.
+  - tweak: 'Old odds: 25% off 25% binary lifesigns 25% full lifesigns 25% coordinates'
+  - tweak: 'New odds: 12.5% off 25% binary lifesigns 37.5% full lifesigns 25% coordinates'
+  PKPenguin321:
+  - rscadd: Bolas are now in the game. They're a simple device fashioned from a cable
+      and two weights on the end, designed to entangle enemies by wrapping around
+      their legs upon being thrown at them. The victim can remove them rather quickly,
+      however.
+  - rscadd: Bolas can be crafted by applying 6 metal sheets to cablecuffs. They can
+      also be tablecrafted.
+  Sestren413:
+  - rscadd: Botanists have access to a new banana mutation now, bluespace bananas.
+      These will teleport anyone unfortunate enough to slip on their peel.
+  Shadowlight213:
+  - rscadd: A wave of dark energy has been detected in the area. Corgi births may
+      be affected.
+  Shadowlight213 and Robustin:
+  - rscadd: '"Old Cult is back baby!"'
+  - tweak: '"Cult survival objective disabled"'
+  - tweak: '"Imbuing talismans now consumes the imbue rune"'
+  - tweak: '"Invoking the stun talisman now hurts the cultist more"'
+  - tweak: '"The stun talisman duration is nerfed by 10%, mute is nerfed by 60% but
+      a stutter and special new slur effect will last much longer"'
+  - tweak: '"The old cult has retained the rune of time stop, now requiring 3 cultists
+      to invoke"'
+  - rscdel: '"New Cult is removed!"'
+  bgobandit:
+  - rscadd: CentComm has been informed that cargo is receiving new forms of contraband
+      in crates. Remember, Nanotrasen has a zero-tolerance contraband policy!
+  lordpidey:
+  - rscadd: New virology symptom, projectile vomiting.  It is a level four symptom.
+2016-03-03:
+  Joan:
+  - tweak: Blobbernauts now die slowly when not near a blob.
+  - rscadd: Blobbernauts can now see their health and the core health of the overmind
+      that created them.
+2016-03-05:
+  CoreOverload:
+  - imageadd: Cyborg tools (screwdriver, crowbar, wrench, etc) now have new fancy
+      sprites.
+  - tweak: Said cyborg tools have received a buff and are now two times faster than
+      their non-cyborg counterparts.
+  Joan:
+  - tweak: Replicating Foam has lower expand chances when hit and on normal expand.
+  - bugfix: Shifting Fragments will no longer try and fail to swap with invalid blobs
+      when hit.
+  - tweak: Electromagnetic Web no longer always EMPs targets, instead doing it at
+      a 25% chance.
+  - tweak: Synchronous Mesh now only takes bonus damage from fire, bombs, and flashbangs.
+  - tweak: Synchronous Mesh no longer tries to split damage to blob cores or nodes.
+      Cores and nodes still split damage to nearby blobs, however.
+  - tweak: Blobbernauts now attack much slower.
+  - tweak: Blobbernauts are now maximum one per factory, reduce that factory's health
+      drastically, and die slowly if that factory is destroyed.
+  - experiment: Factories must still have above 50% health to produce blobbernauts.
+2016-03-07:
+  WJohnston:
+  - tweak: Queens and praetorians have new sprites!
+2016-03-09:
+  Joan:
+  - rscadd: Blobs can now attack people that end up on top of blob tiles with Left-Click
+      or the Expand/Attack Blob verb.
+  - tweak: The Toxin Filter virology symptom now heals 4-8 toxin damage instead of
+      8-14.
+  - tweak: The Damage Converter virology symptom will now do toxin damage for each
+      limb healed.
+  MrStonedOne:
+  - tweak: Centcom has improved the the tesla generator! The generated tesla energy
+      balls should now be more stable! Growing quicker and dissipating slower. It
+      seems to also move around a touch more but that shouldn't be an issue as the
+      the tesla escaping containment is unheard of!
+2016-03-10:
+  Joan:
+  - rscadd: The blob can now be shocked by the tesla.
+  - tweak: Strong blobs are now much more resistant to brute damage.
+  - wip: Tweaks blob reagents;
+  - rscdel: Removes Ripping Tendrils.
+  - rscdel: Removes Draining Spikes.
+  - tweak: Cryogenic Liquid does less burn damage.
+  - tweak: Pressurized Slime does less brute damage.
+  - tweak: Reactive Gelatin now has a lower minimum damage.
+  - tweak: Poisonous Strands applies its damage over a longer period of time.
+  - tweak: Sporing Pods now does much less damage, and is less likely to produce spores
+      when killed.
+  - tweak: Regenerative Materia, Hallucinogenic Nectar, and Envenomed Filaments do
+      less toxin damage.
+  - rscadd: Energized Fibers no longer heals when hit with stamina damage, and is
+      instead immune to the tesla.
+  - rscadd: Boiling Oil now takes damage from extinguisher blasts. Boiling Oil blobbernauts,
+      however, do not.
+  - tweak: Replicating Foam now takes increased brute damage and when expanding from
+      damage, will not expand again.
+  - tweak: Flammable Goo takes 50% increased burn damage, from 30%.
+  - tweak: Explosive Lattice now takes much higher damage from fire, flashbangs, and
+      the tesla.
+  - experiment: Electromagnetic Web takes full brute damage, lasers will now one-hit
+      normal blobs, and the death EMP is smaller.
+2016-03-12:
+  Joan:
+  - bugfix: Blobbernauts and blob spores can now move near blob tiles in no gravity.
+  - tweak: Boiling Oil does slightly more damage and takes slightly less damage when
+      extinguished.
+  - rscadd: Flammable Goo now applies firestacks to targets, but does not ignite them.
+  Jordie0608:
+  - rscadd: Show Server Revision will now tell you if a PR is test merged currently.
+  PKPenguin321:
+  - rscadd: Added reinforced bolas. They do a very short stun in addition to normal
+      functions, and take twice as long to break out of when compared to regular bolas.
+  - tweak: The traitor's Throwing Star Box has been made into the Throwing Weapons
+      Box. It now contains two reinforced bolas in addition to its old contents. It
+      also costs 5 TCs, down from 6.
+  tkdrg:
+  - tweak: The detective's revolver now takes three full seconds to reload.
+  xxalpha:
+  - rscadd: Detective can be a Traitor/Double Agent.
+  - tweak: Removed Detective's access to security lockers and secbots.
+  - tweak: Removed bowman's headset from Detective's locker.
+  - tweak: Box Brig Security Office and Locker Room require a higher access level
+      (Security Officer level).
+2016-03-13:
+  Dorsisdwarf:
+  - rscadd: 'Adds Robo-Doctor board (The Hippocratic Oath: Now on your beepbot)'
+  - rscadd: Adds Reporter board (The truth will set ye free (termsandconditionsmayapply))
+  - rscadd: Adds Live and Let Live board
+  - rscadd: Adds Thermodynamics as a dangerous board.
+  Impisi:
+  - tweak: Improvised shells now deal more far more damage but are more inaccurate.
+  - tweak: Overloaded shells now require liquid plasma in addition to black powder.
+      Shells now fire explosive pellets that are good at hurting you and everything
+      in front of you.
+  Joan:
+  - rscdel: Blob gamemode blobs will no longer burst from people.
+  - rscadd: Instead, the blob gamemode spawns overminds, which can place their blob
+      core underneath them in an unobserved area.
+  - rscadd: The overminds can, until they have placed a blob core, move to any non-space,
+      non-shuttle tile.
+  - rscadd: If the overminds fail to place a blob core within a time limit, it will
+      be automatically placed for them at a random blob spawnpoint.
+  - tweak: The time before the overmind automatically places the core is slightly
+      lower than the previous average time it'd take a blob to burst.
+2016-03-15:
+  Cuboos:
+  - soundadd: Modded the current door sound and added a few new ones, unique sound
+      for closing, bolting up/down and a nifty denied sound.
+  Isratosh:
+  - rscadd: Security flashlights can now be attached to the bulletproof helmets.
+  Joan:
+  - tweak: Resource blobs produce resources for their overmind slightly slower for
+      each resource blob their overmind has.
+  - rscadd: Blob overminds get one free chemical reroll.
+  - rscadd: Blob overminds can no longer place resource and factory blobs out of range
+      of cores and nodes, unless they Toggle Node Requirement off. It is on by default.
+  - rscadd: Blob UI buttons now have tooltips.
+  - tweak: Cores and nodes will expand slightly slower.
+  - tweak: Blob Chemicals no longer trigger effects on dead mobs.
+  - tweak: Shifting Fragments has a lower chance to move shields with normal expansion
+      and will no longer shift blobs to the location of a dying blob.
+  - tweak: Flammable Goo no longer applies fire to tiles with blobs.
+  - tweak: Electromagnetic Web has a slightly higher EMP range.
+  Kor:
+  - rscadd: Hunger was accidentally disabled sometime back in October 2015. We finally
+      noticed and fixed it.
+  Kor (And all the lovely maintainers and spriters who helped me along the way):
+  - rscadd: Adds a new, lava themed planet to mine on,with randomly generated rivers
+      of lava and islands of volcanic rock. This mine is used on Box and Metastation.
+      Other mappers may enable it at their discretion.
+  - rscadd: Added deadly ash storms to mining.
+  - rscadd: Added slightly deadlier variants of mining mobs to lavaland, with sprites
+      done by my girlfriend.
+  - rscadd: Added portable survival capsules to mining equipment lockers. Don't forget
+      these, or you might get caught out by a storm. You may purchase more at the
+      venders.
+  - rscadd: Added randomly loaded ruins to mining. These maps contain new and unique
+      items not seen elsewhere in thegame. There are around a dozen of them added
+      with the "release" of lavaland, though I plan for many more.
+  - rscadd: Some ruins contain sleepers which allow you to spawn as various roles,
+      such as survivors of a shuttle crash stranded in the wilderness. You can find
+      these sleepers in the orbit list.
+  - rscadd: You can now fly the abandoned white ship to lavaland.
+  LanCartwright:
+  - tweak: Choking now deals damage based on virus' Stage speed and virus Stealth.
+  - tweak: Fever heats the body based on Transmittability and Stage speed.
+  - tweak: Spontaneous Combustion now adjusts firestacks based on stage speed minus
+      Stealth.
+  - tweak: Necrotizing Fasciitis now deals damage based on lower Stealth values.
+  - tweak: Toxic Filter now heals based on Stage speed.
+  - tweak: Deoxyribonucleic Acid Restoration now heals brain damage based on Stage
+      speed minus Stealth.
+  - tweak: Shivering now chills based on Stealth and Resistance.
+  - rscadd: Proc for the total stage speed of a virus' symptoms.
+  - rscadd: Proc for the total stealth of a virus' symptoms.
+  - rscadd: Proc for the total resistance of a virus' symptoms.
+  - rscadd: Proc for the total transmittance speed of a virus' symptoms.
+  MrStonedOne:
+  - rscdel: 'Lag has been removed from the following systems: mob life()/virus process,
+      machine/object/event processing, atmos, deletion subsystem, lighting, explosions,
+      singularity''s eat(), timers, wall smoothing, mass var edit, mass proc calls(and
+      all of sdql2), map loader, and the away mission loader.'
+  - rscdel: Removed limit on bomb cap of 32,64,128, it can now go to the MOON.
+  - tweak: Minimap generation is now a config option that defaults to off so coders
+      don't have to wait for it to generate to test their code, server operators should
+      note that they need to enable it on production servers that want minimap generation.
+  - wip: if you find any things that still lag, please report them to MrStonedOne
+      for lag removal.
+  - experiment: I'm gonna take this time to shill out that, Lummox JR, byond's only
+      dev, coded the tool that made this change possible, he lives off of byond membership
+      donations, if you like the lag removal, become a byond member or at least throw
+      5 bucks byond's way for doing this.
+  - experiment: Feel free to ask for bomb cap removals when solo antag, but remember,
+      the later in the round it is, the more likely you'll get it.
+  PKPenguin321:
+  - rscadd: Scooters and skateboards have been added.
+  - rscadd: Use rods to make a scooter frame. From there, apply metal to make wheels,
+      creating a skateboard. Apply a few more rods to make a full scooter. You can
+      also use tablecrafting to create them, their recipes can be found under the
+      Misc. category.
+  - rscadd: Each step of scooter deconstruction is performed with either a wrench
+      or a screwdriver, depending on the step.
+  xxalpha:
+  - rscadd: Scrubber clog event now ejects cockroaches.
+2016-03-17:
+  CoreOverload:
+  - rscdel: The recent jetpacks nerf is finally reverted. Turbo mode is dead and stabilization
+      is once again can be toggled on and off.
+  - rscadd: 'Added a new chest cyberimplant: implantable thrusters set. This implant
+      is a built-in jetpack that has no stabilization mode at all and can use gas
+      from environment (if 30+ kPa) or from internals. It can also use plasma from
+      plasma vessel organ, if you have one.'
+  Joan:
+  - tweak: Moved the security hud's icons down slightly to allow it to coexist with
+      medical and antag huds.
+  Shadowlight213:
+  - rscadd: HOG deity can now be heard by all of its followers!
+  - tweak: The prophet no longer needs to wear his hat to speak with his deity.
+  - rscadd: The prophet's hat and staff have a new functionality! Use the staff inhand
+      to reveal hidden structures.
+  - rscadd: Deities can now hide their structures from view! Pretend to be a book
+      club when sec bursts in. experiment:Only enemy prophets or your own deity can
+      reveal these structures and they are disabled when hidden.
+2016-03-19:
+  Joan:
+  - imageadd: Xray lasers now have unique inhands.
+  - imageadd: Xray lasers have been recolored to match R&D equipment.
+  Zombehz:
+  - rscadd: Adds 'chicken' nuggets* in 4 shapes, including regular, star, corgi, and
+      lizard. it. They are made with one cutlet of meat.
+2016-03-20:
+  Joan:
+  - rscadd: Nar-Sie will now corrupt airlocks, tables, windows, and windoors.
+  - rscadd: Corrupted airlocks have no access restrictions.
+  - tweak: Nar-Sie no longer causes destruction while moving around in favor of additional
+      corruption.
+  - tweak: The surplus crate is less likely to give you eight space suits.
+  - bugfix: Nukeops can once again buy noslips. The nuke op magboots are still better
+      than noslips, buy them instead.
+  Kor:
+  - rscadd: Runtime now has a chance to spawn with a more classic look.
+  - rscadd: Killing a necropolis tendril will now drop a chest full of spooky loot.
+  - rscadd: Killing a necropolis tendril will now cause the ground to collapse around
+      it after 5 seconds.
+2016-03-21:
+  CoreOverload:
+  - rscadd: You can now construct and deconstruct wall mounted flashes by using a
+      wrench on empty wall flash. A crate with four linked "flash frame - flash controller"
+      pairs is added to cargo.
+  Joan:
+  - rscadd: Explosive Holoparasites now have a 33% chance to explosively teleport
+      attacked targets, doing damage to everyone near the target's appearance point.
+  - tweak: Explosive Holoparasite bombs can now detonate when living mobs bump them.
+  - rscadd: Adds lightning holoparasites, which have medium damage resist, a weak
+      attack, have a lightning chain to their summoner, and apply lightning chains
+      when attacking targets.
+  - rscadd: Lightning chains shock everyone nearby, doing low burn damage. This is
+      excluding the parasite and summoner; chains will shock enemies they're attached
+      to.
+  - tweak: Holoparasites can now smash tables and lockers.
+  PKPenguin321 && !JJRcop:
+  - rscadd: Milk, which is good for your bones, is now extra beneficial to species
+      that are mostly comprised of bones.
+  kingofkosmos:
+  - rscdel: The backpack close-button has got a visual overhaul.
+  - rscadd: All storage items can be closed by clicking on them again.
+2016-03-23:
+  Iamgoofball:
+  - rscadd: Cargo now works off of Credits.
+  - rscadd: Cargo now plays the Stock Market.
+  - rscadd: Buy Low, Sell High
+2016-03-24:
+  Iamgoofball:
+  - rscadd: CLF3 now melts, burns, and destroys floors a lot more often, as it should
+      be.
+  - rscadd: CLF3 now makes 3x3 fireballs on tiles it touches now, instead of a single
+      fireball.
+  Joan:
+  - tweak: Lightning Holoparasites will actually shock relatively often instead of
+      'sometimes, maybe, if you're really lucky'
+  PKPenguin321:
+  - tweak: Sand now fits in your pockets
+  - rscadd: Sand can now be thrown into people's eyes, doing slight stamina damage,
+      making their vision slightly blurry, and making them stumble when they walk
+      for a short time.
+  RemieRichards:
+  - rscadd: BEES
+  - rscadd: Hydroponics can now manage bee colonies, bees produce honeycombs that
+      can be grinded to obtain honey, a decent nutriment+healing chemical
+  - rscadd: Hydroponics can inject a queen bee with a syringe of a reagent to alter
+      her DNA to match that reagent, meaning all honeycombs produced will contain
+      that reagent in small amounts
+  - rscadd: Bees with reagents will attack with that reagent
+  Xhuis:
+  - experiment: Alcohol has received multiple tweaks.
+  - tweak: Drunkenness will now be displayed on examine as long as the target's face
+      is not hidden, ranging from a slight flush to being a completely drunken wreck.
+      This also helps to measure alcohol poisoning, although the appearance will remain
+      for thirty seconds after the alcohol leaves the imbiber's bloodstream.
+  - tweak: Alcohol poisoning now has different effects. It begins with standard things
+      such as confusion, dizziness, and slurring, but eventually escalates to constant
+      vomiting, blacking out, and toxin damage.
+  - tweak: Drinks now have a wide variety of alcoholism. Grog is barely a drink whatsoever,
+      for instance, but Manly Dorf will completely floor you with too much consumption.
+      Note that drinks based off of whiskey and vodka are the hardest, whereas beer
+      and wine are the softest.
+  - tweak: The speed of alcohol poisoning has been slightly reduced.
+  - rscadd: Some drinks have received unique effects. Experiment!
+  - rscadd: A new base alcohol joins the lineup! Absinthe has been added, and is very
+      strong.
+  - rscadd: Whiskey Sour, made with Whiskey, Lemon Juice, and Sugar, simply expands
+      the existing whiskey-based lineup.
+  - rscadd: Fetching Fizz, made with Nuka-Cola and Iron, will pull all nearby ores
+      in the direction of the imbiber.
+  - rscadd: Hearty Punch, made with Brave Bull, Syndicate Bomb, and Absinthe, will
+      provide extreme healing in critical condition.
+  - rscadd: Bacchus' Blessing, made with four of the most powerful alcohols on the
+      station, is over three times stronger than any other alcohol on the station.
+      Consume in small amounts or risk death.
+2016-03-26:
+  CPTANT:
+  - tweak: Nanotrasen found a new taser supplier. The new tasers hold 12 shots, down
+      people with 2 hits and hybrid tasers now have a light laser attached.
+  CoreOverload:
+  - tweak: Sorting junctions now support multiple sorting tags.
+  Fox McCloud:
+  - bugfix: Fixes Shadowlings not being spaceproof to pressure
+  - bugfix: Fixes being able to receive multiple spells as a Lesser Shadowling
+  Joan:
+  - rscadd: Adds assassin holoparasites, which do low damage and take full damage,
+      but can go invisible, causing their next attack to do massive damage and ignore
+      armor.
+  - rscadd: Assassin holoparasite stealth will be broken by attacking or taking damage,
+      which will briefly prevent the parasite from recalling.
+  - rscadd: Traitor holoparasite injectors include this parasite type.
+  Kor:
+  - rscadd: There are a couple new lavaland ruins, including one with a new ghost
+      role.
+  PKPenguin321:
+  - tweak: The RD's reactive teleport armor now has a cooldown between teleports.
+      EMPing it will cause it to shut down and have a longer cooldown applied.
+  - imageadd: Bolas, both reinforced and regular, now have newer, sexier sprites.
+2016-03-29:
+  Bawhoppen:
+  - tweak: Bruisepacks, ointment, and gauze now will apply significanty faster.
+  - rscdel: SWAT crates no longer contain combat knives.
+  - rscadd: SWAT crates now contain combat gloves.
+  - rscadd: Combat knives now can be ordered in their own crate.
+  Iamsaltball:
+  - rscadd: GRAB SUPER NERFED
+  - rscadd: IT'S WAY EASIER TO ESCAPE GRABS NOW
+  - rscadd: IT TAKES WAY LONGER TO UPGRADE GRABS NOW
+  - rscadd: 'YOU CAN ACTUALLY FUCKING ESCAPE GRABS NOW TOO #WOW #WHOA'
+  - rscadd: GRAB TEXT IS ALL BIG BOLD AND RED MUCH LIKE YOUR MOM LAST NIGHT
+  - experiment: GIT GUDDERS GO FUCK YOURSELVES YOU CAN'T GET GOOD AGAINST "LOL INSTANT
+      PERMASTUN THAT ISN'T OBVIOUS IN CHAT LIKE THE REST OF THE STUNS"
+  Joan:
+  - tweak: Ghost revival/body creation alerts now use the ghost's hud style.
+  - imageadd: Support holoparasites now have a healing effect with their color when
+      successfully healing a target.
+  - tweak: Ranged holoparasite projectiles now take on the color of the holoparasite.
+  - bugfix: Holoparasite communication(holo->summoner) now sends the message to all
+      holoparasites the summoner has.
+  - bugfix: If you have multiple holoparasites for some reason, Reset Guardian allows
+      you to choose which to reset.
+  - tweak: Resetting a holoparasite also resets its color and name, to make it more
+      obvious it's a new player.
+  - rscadd: Holoparasites can now see their summoner's health and various ability
+      cooldowns from the status panel.
+  - rscadd: Blobbernauts are now alerted when their factory is destroyed.
+  KazeEspada:
+  - bugfix: Blob Mobs no longer swap with other mobs.
+  RemieRichards:
+  - rscadd: Added the ability to make Apiaries and Honey frames with wood
+  - rscadd: Added the ability to make Royal Bee Jelly from 10 Mutagen and 40 Honey
+  - rscadd: Added the ability to make more Queen Bees from Royal Bee Jelly by using
+      it on an existing Queen, to split her into two Queens
+  - tweak: Made homeless bees more obvious
+  - bugfix: Fixed a typo that made almost all bees homeless, severely reducing the
+      odds of getting honeycomb
+  - tweak: Made bee progress reports (50% towards new honeycomb, etc.) always show,
+      even if it's 0%
+  - tweak: Made some feedback text more obvious
+  - bugfix: Fixed being able to duplicate the bee holder object, this was not exploity,
+      just weird
+  - bugfix: Fixed being able to put two (or more) queens in the same apiary
+  - bugfix: Fixed some runtimes from hydro code assuming a plant gene exists
+  - bugfix: Fixed runtime when you use a honeycomb in your hand
+  - tweak: It now takes and uses 5u of a reagent to give a bee that reagent
+  - rscdel: Removed unused icon file
+  Ricotez:
+  - imageadd: The default white ghost form now has directional sprites.
+  - rscadd: The default white ghost form now also has (your) hair! Here's how it works.
+  - experiment: If you ghost from a body, you'll get the hair from that body. If it
+      has hair.
+  - experiment: If you hit Observe, you'll get the hair from the character you had
+      active in your setup window. If they had hair.
+  - wip: This only works with the default white ghost form right now (because the
+      other forms have the wrong shape or lack directional sprites), and with human
+      bodies since they're the only ones that have hair. Sorry lizards and plasmamen!
+      You'll get your turn next time.
+  - rscadd: A new preference called Ghost Accessories. This lets you configure if
+      you want your ghost sprite to show both hair and directional sprites, only directional
+      sprites or just use its original default version without directional sprites.
+  - rscadd: 'A new preference called Ghosts of Others. This preference is clientside
+      and lets you configure how other ghosts appear to you: as their own setting,
+      as the form they chose but without any hair or directional sprites, or as the
+      simple white ghost sprite if you''re sick of those premium users with their
+      rainbow ghosts.'
+  - experiment: The layout of the ghost preference buttons has slightly changed. The
+      old Choose Ghost Form and Choose Ghost Orbit are now a part of Ghost Customization,
+      which also contains the new Ghost Accessories button. Clicking Ghost Customization
+      will send you directly to Ghost Accessories if you don't have premium. The Preferences
+      tab now also contains the Ghost Display button, which lets you configure how
+      other ghosts appear to you.
+  - bugfix: Fixed a bug where the toggles for Ghost Accessories and Ghosts of Others
+      in the Preferences menu wouldn't save your preference update to your save file.
+  - bugfix: Renamed the "Ghost Display Settings" preference toggle button to "Ghosts
+      of Others", so it fits with the name the preference has everywhere else.
+  TehZombehz:
+  - rscadd: Paper sacks are now craftable by tablecrafting with 5 sheets of paper.
+  - rscadd: 'Comes in 5 different designs: Use a pen on a paper sack to change the
+      design.'
+  - rscadd: Certain paper sack designs can be modified with a sharp object to craft
+      a (creepy) paper sack hat.
+  Xhuis:
+  - bugfix: Portal storm messages now use the station name rather than the world name.
+  - bugfix: Shadowlings can no longer glare while shadow walking.
+  - bugfix: Progress bars are now properly shown when reloading revolvers.
+  - bugfix: Cyborgs and AIs are no longer knocked out when being stuffed into lockers.
+  - bugfix: Plasmamen can no longer be the patient zero of the space retrovirus.
+  - bugfix: Cyborgs and AIs now properly display death messages.
+  - bugfix: Revenants can no longer be closed into lockers.
+  - bugfix: Airlocks no longer play sounds or flash lights when denying access if
+      the airlock has no power.
+  - bugfix: Job spawn icons in mapping have been fixed.
+  - bugfix: Gibtonite's disarm message no longer include the outside viewer.
+  - bugfix: Cult walls and girders are now more streamlined and can be built with
+      runed metal.
+  - bugfix: Positronic brains and MMIs can no longer see ghosts.
+  - rscadd: When someone is turned into a statue, the statue now appears as a greyscale
+      version of them.
+  - rscadd: Returning from a statue to a human now knocks you down.
+  - rscdel: Flesh to Stone no longer works on dead mobs.
+  - bugfix: Wall-mounted flasher crates now have the proper price.
+  - bugfix: Wall-mounted flasher frames now have icons.
+  - bugfix: Upgraded resonators now have an inhand sprite.
+2016-03-30:
+  Coiax:
+  - rscadd: Geiger counters can now be stored in the suit storage of radiation suits
+  RemieRichards:
+  - bugfix: fixes shift-clicking action buttons not instantly resetting their location.
+      (I'm only making a changelog for this because apparently barely noone even knows
+      you can move the buttons, let alone reset them...)
+  TehZombehz:
+  - rscadd: Honey buns and honey nut bars are now craftable using honey.
+  - tweak: Brewing mead now requires actual honey.

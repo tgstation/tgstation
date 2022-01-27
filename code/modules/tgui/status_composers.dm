@@ -2,6 +2,7 @@
 /proc/default_ui_state(mob/user, atom/source)
 	return min(
 		ui_status_user_is_abled(user, source),
+		ui_status_user_has_free_hands(user, source),
 		ui_status_user_is_advanced_tool_user(user),
 		ui_status_only_living(user),
 		max(
@@ -14,10 +15,10 @@
 /// far away users will be able to see, and anyone farther won't see anything.
 /// Dead users will receive updates no matter what, though you likely want to add
 /// a [`ui_status_only_living`] check for finer observer interactions.
-/proc/ui_status_user_is_adjacent(mob/user, atom/source)
+/proc/ui_status_user_is_adjacent(mob/user, atom/source, allow_tk = TRUE)
 	if (isliving(user))
 		var/mob/living/living_user = user
-		return living_user.shared_living_ui_distance(source)
+		return living_user.shared_living_ui_distance(source, allow_tk = allow_tk)
 	else
 		return UI_UPDATE
 
@@ -47,7 +48,12 @@
 /proc/ui_status_user_is_abled(mob/user, atom/source)
 	return user.shared_ui_interaction(source)
 
-/// Returns a UI status such that advanced tool users will be able to update,
+/// Returns a UI status such that those without blocked hands will be able to interact,
+/// but everyone else can only watch.
+/proc/ui_status_user_has_free_hands(mob/user, atom/source)
+	return HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) ? UI_UPDATE : UI_INTERACTIVE
+
+/// Returns a UI status such that advanced tool users will be able to interact,
 /// but everyone else can only watch.
 /proc/ui_status_user_is_advanced_tool_user(mob/user)
 	return ISADVANCEDTOOLUSER(user) ? UI_INTERACTIVE : UI_UPDATE
@@ -96,3 +102,11 @@
 	return (living_user.body_position == LYING_DOWN && living_user.stat == CONSCIOUS) \
 		? UI_INTERACTIVE \
 		: UI_UPDATE
+
+/// Return UI_INTERACTIVE if the user is strictly adjacent to the target atom, whether they can see it or not.
+/// Return UI_CLOSE otherwise.
+/proc/ui_status_user_strictly_adjacent(mob/user, atom/target)
+	if(get_dist(target, user) > 1)
+		return UI_CLOSE
+
+	return UI_INTERACTIVE

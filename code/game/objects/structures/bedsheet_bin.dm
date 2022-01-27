@@ -4,6 +4,10 @@ BEDSHEETS
 LINEN BINS
 */
 
+#define BEDSHEET_ABSTRACT "abstract"
+#define BEDSHEET_SINGLE "single"
+#define BEDSHEET_DOUBLE "double"
+
 /obj/item/bedsheet
 	name = "bedsheet"
 	desc = "A surprisingly soft linen bedsheet."
@@ -14,6 +18,7 @@ LINEN BINS
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -23,11 +28,16 @@ LINEN BINS
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	var/list/dream_messages = list("white")
+	var/stack_amount = 3
+	var/bedsheet_type = BEDSHEET_SINGLE
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/surgery_initiator)
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+	if(bedsheet_type == BEDSHEET_DOUBLE)
+		stack_amount *= 2
+		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
 
 /obj/item/bedsheet/attack_self(mob/user)
 	if(!user.CanReach(src)) //No telekenetic grabbing.
@@ -36,23 +46,24 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
+		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
-		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
+		to_chat(user, span_notice("You smooth [src] out beneath you."))
 	add_fingerprint(user)
 	return
 
 /obj/item/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if (!(flags_1 & HOLOGRAM_1))
-			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), 3)
-			transfer_fingerprints_to(shreds)
-			shreds.add_fingerprint(user)
+			var/obj/item/stack/sheet/cloth/shreds = new (get_turf(src), stack_amount)
+			if(!QDELETED(shreds)) //stacks merged
+				transfer_fingerprints_to(shreds)
+				shreds.add_fingerprint(user)
 		qdel(src)
-		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
+		to_chat(user, span_notice("You tear [src] up."))
 	else
 		return ..()
 
@@ -251,23 +262,37 @@ LINEN BINS
 	icon_state = "random_bedsheet"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
-	slot_flags = null
+	bedsheet_type = BEDSHEET_ABSTRACT
+	var/static/list/bedsheet_list
+	var/spawn_type = BEDSHEET_SINGLE
 
-/obj/item/bedsheet/random/Initialize()
+/obj/item/bedsheet/random/Initialize(mapload)
 	..()
-	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
-	new type(loc)
+	if(!LAZYACCESS(bedsheet_list, spawn_type))
+		var/list/spawn_list = list()
+		var/list/possible_types = typesof(/obj/item/bedsheet)
+		for(var/obj/item/bedsheet/sheet as anything in possible_types)
+			if(initial(sheet.bedsheet_type) == spawn_type)
+				spawn_list += sheet
+		LAZYSET(bedsheet_list, spawn_type, spawn_list)
+	var/chosen_type = pick(bedsheet_list[spawn_type])
+	new chosen_type(loc)
 	return INITIALIZE_HINT_QDEL
+
+/obj/item/bedsheet/random/double
+	icon_state = "random_bedsheet"
+	spawn_type = BEDSHEET_DOUBLE
 
 /obj/item/bedsheet/dorms
 	icon_state = "random_bedsheet"
 	name = "random dorms bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+	bedsheet_type = BEDSHEET_DOUBLE
 	slot_flags = null
 
-/obj/item/bedsheet/dorms/Initialize()
+/obj/item/bedsheet/dorms/Initialize(mapload)
 	..()
-	var/type = pickweight(list("Colors" = 80, "Special" = 20))
+	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
 			type = pick(list(/obj/item/bedsheet,
@@ -286,6 +311,186 @@ LINEN BINS
 				/obj/item/bedsheet/ian,
 				/obj/item/bedsheet/cosmos,
 				/obj/item/bedsheet/nanotrasen))
+	new type(loc)
+	return INITIALIZE_HINT_QDEL
+
+/obj/item/bedsheet/double
+	icon_state = "double_sheetwhite"
+	worn_icon_state = "sheetwhite"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/blue/double
+	icon_state = "double_sheetblue"
+	worn_icon_state = "sheetblue"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/green/double
+	icon_state = "double_sheetgreen"
+	worn_icon_state = "sheetgreen"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/grey/double
+	icon_state = "double_sheetgrey"
+	worn_icon_state = "sheetgrey"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/orange/double
+	icon_state = "double_sheetorange"
+	worn_icon_state = "sheetorange"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/purple/double
+	icon_state = "double_sheetpurple"
+	worn_icon_state = "sheetpurple"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/patriot/double
+	icon_state = "double_sheetUSA"
+	worn_icon_state = "sheetUSA"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/rainbow/double
+	icon_state = "double_sheetrainbow"
+	worn_icon_state = "sheetrainbow"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/red/double
+	icon_state = "double_sheetred"
+	worn_icon_state = "sheetred"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/yellow/double
+	icon_state = "double_sheetyellow"
+	worn_icon_state = "sheetyellow"
+	dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/mime/double
+	icon_state = "double_sheetmime"
+	worn_icon_state = "sheetmime"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/clown/double
+	icon_state = "double_sheetclown"
+	worn_icon_state = "sheetclown"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/captain/double
+	icon_state = "double_sheetcaptain"
+	worn_icon_state = "sheetcaptain"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/rd/double
+	icon_state = "double_sheetrd"
+	worn_icon_state = "sheetrd"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/medical/double
+	icon_state = "double_sheetmedical"
+	worn_icon_state = "sheetmedical"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cmo/double
+	icon_state = "double_sheetcmo"
+	worn_icon_state = "sheetcmo"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/hos/double
+	icon_state = "double_sheethos"
+	worn_icon_state = "sheethos"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/hop/double
+	icon_state = "double_sheethop"
+	worn_icon_state = "sheethop"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/ce/double
+	icon_state = "double_sheetce"
+	worn_icon_state = "sheetce"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/qm/double
+	icon_state = "double_sheetqm"
+	worn_icon_state = "sheetqm"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/chaplain/double
+	icon_state = "double_sheetchap"
+	worn_icon_state = "sheetchap"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/brown/double
+	icon_state = "double_sheetbrown"
+	worn_icon_state = "sheetbrown"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/black/double
+	icon_state = "double_sheetblack"
+	worn_icon_state = "sheetblack"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/centcom/double
+	icon_state = "double_sheetcentcom"
+	worn_icon_state = "sheetcentcom"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/syndie/double
+	icon_state = "double_sheetsyndie"
+	worn_icon_state = "sheetsyndie"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cult/double
+	icon_state = "double_sheetcult"
+	worn_icon_state = "sheetcult"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/wiz/double
+	icon_state = "double_sheetwiz"
+	worn_icon_state = "sheetwiz"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/nanotrasen/double
+	icon_state = "double_sheetNT"
+	worn_icon_state = "sheetNT"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/ian/double
+	icon_state = "double_sheetian"
+	worn_icon_state = "sheetian"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/cosmos/double
+	icon_state = "double_sheetcosmos"
+	worn_icon_state = "sheetcosmos"
+	bedsheet_type = BEDSHEET_DOUBLE
+
+/obj/item/bedsheet/dorms_double
+	icon_state = "random_bedsheet"
+	bedsheet_type = BEDSHEET_ABSTRACT
+
+/obj/item/bedsheet/dorms_double/Initialize()
+	..()
+	var/type = pick_weight(list("Colors" = 80, "Special" = 20))
+	switch(type)
+		if("Colors")
+			type = pick(list(/obj/item/bedsheet,
+				/obj/item/bedsheet/blue/double,
+				/obj/item/bedsheet/green/double,
+				/obj/item/bedsheet/grey/double,
+				/obj/item/bedsheet/orange/double,
+				/obj/item/bedsheet/purple/double,
+				/obj/item/bedsheet/red/double,
+				/obj/item/bedsheet/yellow/double,
+				/obj/item/bedsheet/brown/double,
+				/obj/item/bedsheet/black/double))
+		if("Special")
+			type = pick(list(/obj/item/bedsheet/patriot/double,
+				/obj/item/bedsheet/rainbow/double,
+				/obj/item/bedsheet/ian/double,
+				/obj/item/bedsheet/cosmos/double,
+				/obj/item/bedsheet/nanotrasen/double))
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -339,7 +544,7 @@ LINEN BINS
 			return
 		sheets.Add(I)
 		amount++
-		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+		to_chat(user, span_notice("You put [I] in [src]."))
 		update_appearance()
 
 	else if(default_unfasten_wrench(user, I, 5))
@@ -349,19 +554,19 @@ LINEN BINS
 		if(flags_1 & NODECONSTRUCT_1)
 			return
 		if(amount)
-			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
+			to_chat(user, span_warning("The [src] must be empty first!"))
 			return
 		if(I.use_tool(src, user, 5, volume=50))
-			to_chat(user, "<span clas='notice'>You disassemble the [src].</span>")
+			to_chat(user, span_notice("You disassemble the [src]."))
 			new /obj/item/stack/rods(loc, 2)
 			qdel(src)
 
 	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY) //make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
+			to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot hide it among the sheets!"))
 			return
 		hidden = I
-		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
+		to_chat(user, span_notice("You hide [I] among the sheets."))
 
 
 /obj/structure/bedsheetbin/attack_paw(mob/user, list/modifiers)
@@ -388,12 +593,12 @@ LINEN BINS
 
 		B.forceMove(drop_location())
 		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
+		to_chat(user, span_notice("You take [B] out of [src]."))
 		update_appearance()
 
 		if(hidden)
 			hidden.forceMove(drop_location())
-			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
+			to_chat(user, span_notice("[hidden] falls out of [B]!"))
 			hidden = null
 
 	add_fingerprint(user)
@@ -412,7 +617,7 @@ LINEN BINS
 			B = new /obj/item/bedsheet(loc)
 
 		B.forceMove(drop_location())
-		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
+		to_chat(user, span_notice("You telekinetically remove [B] from [src]."))
 		update_appearance()
 
 		if(hidden)
@@ -421,3 +626,7 @@ LINEN BINS
 
 	add_fingerprint(user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+#undef BEDSHEET_ABSTRACT
+#undef BEDSHEET_SINGLE
+#undef BEDSHEET_DOUBLE

@@ -6,20 +6,20 @@
 # Your changelog will be merged with a master changelog. (New stuff added only, and only on the date entry for the day it was merged.)
 # When it is, any changes listed below will disappear.
 #
-# Valid Prefixes: 
+# Valid Prefixes:
 #   bugfix
 #     - (fixes bugs)
 #   wip
 #     - (work in progress)
-#   tweak
-#     - (tweaks something)
+#   qol
+#     - (quality of life)
 #   soundadd
 #     - (adds a sound)
 #   sounddel
 #     - (removes a sound)
-#   rscdel
-#     - (adds a feature)
 #   rscadd
+#     - (adds a feature)
+#   rscdel
 #     - (removes a feature)
 #   imageadd
 #     - (adds an image or sprite)
@@ -29,8 +29,6 @@
 #     - (fixes spelling or grammar)
 #   experiment
 #     - (experimental change)
-#   tgs
-#     - (TGS change)
 #   balance
 #     - (balance changes)
 #   code_imp
@@ -45,7 +43,7 @@
 #     - (miscellaneous changes to server)
 #################################
 
-# Your name.  
+# Your name.
 author: "
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
@@ -56,6 +54,6 @@ delete-after: True
 # SCREW THIS UP AND IT WON'T WORK.
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
-changes: 
+changes:
   - rscadd: "Added a changelog editing system that should cause fewer conflicts and more accurate timestamps."
   - rscdel: "Killed innocent kittens."

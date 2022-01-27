@@ -17,7 +17,7 @@
 
 	for(var/mob/living/silicon/ai/A in GLOB.ai_list)
 	//AIs are always aware of processor overload
-		to_chat(A, "<br><span class='warning'><b>[alert]</b></span><br>")
+		to_chat(A, "<br>[span_warning("<b>[alert]</b>")]<br>")
 
 	// Announce most of the time, but leave a little gap so people don't know
 	// whether it's, say, a tesla zapping tcomms, or some selective
@@ -31,7 +31,7 @@
 		if(prob(10))
 			announce_to_ghosts(P)
 			// Damage the surrounding area to indicate that it popped
-			explosion(get_turf(P), 0, 0, 2)
+			explosion(P, light_impact_range = 2, explosion_cause = src)
 			// Only a level 1 explosion actually damages the machine
 			// at all
 			SSexplosions.high_mov_atom += P

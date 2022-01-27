@@ -3,7 +3,7 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack, Box } from '../components';
+import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section, Stack } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { Window } from '../layouts';
 
@@ -87,7 +87,7 @@ export const BluespaceVendor = (props, context) => {
                 <Button
                   color="transparent"
                   icon="info"
-                  tooltipPosition="bottom-left"
+                  tooltipPosition="bottom-start"
                   tooltip={multiline`
                   Quick guide for machine use: prepare a tank to create a
                   new one in the machine, pick how much you want it filled,
@@ -117,7 +117,7 @@ export const BluespaceVendor = (props, context) => {
                             icon="play"
                             tooltipPosition="left"
                             tooltip={"Start adding " + gas.name + "."}
-                            disabled={data.pumping || !data.inserted_tank}
+                            disabled={!data.inserted_tank}
                             onClick={() => act('start_pumping', {
                               gas_id: gas.id,
                             })} />

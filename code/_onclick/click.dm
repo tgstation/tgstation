@@ -75,10 +75,11 @@
 	if(notransform)
 		return
 
-	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+	var/list/modifiers = params2list(params)
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, modifiers) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
-	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 			ShiftMiddleClickOn(A)
@@ -89,7 +90,10 @@
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
-		MiddleClickOn(A, params)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			CtrlMiddleClickOn(A)
+		else
+			MiddleClickOn(A, params)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -118,16 +122,21 @@
 		return
 
 	if(throw_mode)
-		changeNext_move(CLICK_CD_THROW)
-		throw_item(A)
+		if(throw_item(A))
+			changeNext_move(CLICK_CD_THROW)
 		return
 
 	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
-		W.attack_self(src, modifiers)
-		update_inv_hands()
-		return
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			W.attack_self_secondary(src, modifiers)
+			update_inv_hands()
+			return
+		else
+			W.attack_self(src, modifiers)
+			update_inv_hands()
+			return
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
@@ -137,6 +146,7 @@
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
+
 			UnarmedAttack(A, FALSE, modifiers)
 		return
 
@@ -226,7 +236,7 @@
 	return ..() + contents
 
 /mob/living/DirectAccess(atom/target)
-	return ..() + GetAllContents()
+	return ..() + get_all_contents()
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -299,6 +309,8 @@
  * Useful for mobs that have their abilities mapped to right click.
  */
 /mob/proc/ranged_secondary_attack(atom/target, modifiers)
+	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED_SECONDARY, target, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 /**
  * Middle click
@@ -320,7 +332,7 @@
 	return
 
 /atom/proc/ShiftClick(mob/user)
-	var/flags = SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
+	var/flags = SEND_SIGNAL(user, COMSIG_CLICK_SHIFT, src)
 	if(user.client && (user.client.eye == user || user.client.eye == user.loc || flags & COMPONENT_ALLOW_EXAMINATE))
 		user.examinate(src)
 	return
@@ -339,9 +351,11 @@
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
+	if(!can_interact(user))
+		return FALSE
 
 /mob/living/CtrlClick(mob/user)
-	if(!isliving(user) || !Adjacent(user) || user.incapacitated())
+	if(!isliving(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
@@ -357,7 +371,7 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 
-	if(!ishuman(user) ||!Adjacent(user) || user.incapacitated())
+	if(!ishuman(user) || !user.CanReach(src) || user.incapacitated())
 		return ..()
 
 	if(world.time < user.next_move)
@@ -370,6 +384,13 @@
 
 	return ..()
 
+/mob/proc/CtrlMiddleClickOn(atom/A)
+	if(check_rights_for(client, R_ADMIN))
+		client.toggle_tag_datum(A)
+	else
+		A.CtrlClick(src)
+	return
+
 /**
  * Alt click
  * Unused except for AI
@@ -381,6 +402,8 @@
 	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
+	if(!can_interact(user))
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT, user) & COMPONENT_CANCEL_CLICK_ALT)
 		return
 	var/turf/T = get_turf(src)
@@ -397,7 +420,12 @@
 
 ///The base proc of when something is right clicked on when alt is held
 /atom/proc/alt_click_secondary(mob/user)
+	if(!can_interact(user))
+		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_CLICK_ALT_SECONDARY, user) & COMPONENT_CANCEL_CLICK_ALT_SECONDARY)
+		return
+	if(isobserver(user) && user.client && check_rights_for(user.client, R_DEBUG))
+		user.client.toggle_tag_datum(src)
 		return
 
 /// Use this instead of [/mob/proc/AltClickOn] where you only want turf content listing without additional atom alt-click interaction
@@ -423,7 +451,9 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
+	if(!can_interact(user))
+		return FALSE
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT, user)
 	return
 
 /*
@@ -498,10 +528,10 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
-		params += "&catcher=1"
-		if(T)
-			T.Click(location, control, params)
+		var/turf/click_turf = parse_caught_click_modifiers(modifiers, get_turf(usr.client ? usr.client.eye : usr), usr.client)
+		if (click_turf)
+			modifiers["catcher"] = TRUE
+			click_turf.Click(click_turf, control, list2params(modifiers))
 	. = 1
 
 /// MouseWheelOn

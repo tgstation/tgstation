@@ -1,8 +1,18 @@
-//Vehicle control flags
+//Vehicle control flags. control flags describe access to actions in a vehicle.
 
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-#define VEHICLE_CONTROL_KIDNAPPED 4 //Can't leave vehicle voluntarily, has to resist.
+///controls the vehicles movement
+#define VEHICLE_CONTROL_DRIVE (1<<0)
+///Can't leave vehicle voluntarily, has to resist.
+#define VEHICLE_CONTROL_KIDNAPPED (1<<1)
+///melee attacks/shoves a vehicle may have
+#define VEHICLE_CONTROL_MELEE (1<<2)
+///using equipment/weapons on the vehicle
+#define VEHICLE_CONTROL_EQUIPMENT (1<<3)
+///changing around settings and the like.
+#define VEHICLE_CONTROL_SETTINGS (1<<4)
+
+///ez define for giving a single pilot mech all the flags it needs.
+#define FULL_MECHA_CONTROL ALL
 
 //Ridden vehicle flags
 
@@ -24,3 +34,12 @@
 #define CLOWN_CANNON_INACTIVE 0
 #define CLOWN_CANNON_BUSY 1
 #define CLOWN_CANNON_READY 2
+
+//Vim defines
+///cooldown between uses of the sound maker
+#define VIM_SOUND_COOLDOWN 1 SECONDS
+///how much vim heals per weld
+#define VIM_HEAL_AMOUNT 20
+
+/// The vehicle being ridden requires pixel offsets for all directions
+#define RIDING_OFFSET_ALL "ALL"

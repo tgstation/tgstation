@@ -36,5 +36,5 @@
 	var/area/A = get_area(loc)
 
 	if(alert_s && A && stat != DEAD)
-		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
+		var/msg = span_boldnotice("DRONE PING: [name]: [alert_s] priority alert in [A.name]!")
 		alert_drones(msg)

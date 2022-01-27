@@ -23,7 +23,7 @@
  *  power_channel (num)
  *     What channel to draw from when drawing power for power mode
  *     Possible Values:
- *        AREA_USAGE_EQUIP:0 -- Equipment Channel
+ *        AREA_USAGE_EQUIP:1 -- Equipment Channel
  *        AREA_USAGE_LIGHT:2 -- Lighting Channel
  *        AREA_USAGE_ENVIRON:3 -- Environment Channel
  *
@@ -39,18 +39,22 @@
  *        EMPED -- temporary broken by EMP pulse
  *
  *Class Procs:
- *  Initialize()                     'game/machinery/machine.dm'
+ *  Initialize()
  *
- *  Destroy()                   'game/machinery/machine.dm'
+ *  Destroy()
  *
- *  auto_use_power()            'game/machinery/machine.dm'
- *     This proc determines how power mode power is deducted by the machine.
- *     'auto_use_power()' is called by the 'master_controller' game_controller every
- *     tick.
+ *	update_mode_power_usage()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the idle or active power usage has been changed.
  *
- *     Return Value:
- *        return:1 -- if object is powered
- *        return:0 -- if object is not powered.
+ *	update_power_channel()
+ *		updates the static_power_usage var of this machine and makes its static power usage from its area accurate.
+ *		called after the power_channel var has been changed or called to change the var itself.
+ *
+ *	unset_static_power()
+ *		completely removes the current static power usage of this machine from its area.
+ *		used in the other power updating procs to then readd the correct power usage.
+ *
  *
  *     Default definition uses 'use_power', 'power_channel', 'active_power_usage',
  *     'idle_power_usage', 'powered()', and 'use_power()' implement behavior.
@@ -95,14 +99,19 @@
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	var/machine_stat = NONE
 	var/use_power = IDLE_POWER_USE
-		//0 = dont run the auto
-		//1 = run auto, use idle
-		//2 = run auto, use active
+		//0 = dont use power
+		//1 = use idle_power_usage
+		//2 = use active_power_usage
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = IDLE_POWER_USE
 	var/idle_power_usage = 0
+	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = 0
+	///the current amount of static power usage this machine is taking from its area
+	var/static_power_usage = 0
 	var/power_channel = AREA_USAGE_EQUIP
 		//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	///A combination of factors such as having power, not being broken and so on. Boolean.
@@ -128,10 +137,16 @@
 
 	// For storing and overriding ui id
 	var/tgui_id // ID of TGUI interface
+	///Is this machine currently in the atmos machinery queue?
+	var/atmos_processing = FALSE
+	/// world.time of last use by [/mob/living]
+	var/last_used_time = 0
+	/// Mobtype of last user. Typecast to [/mob/living] for initial() usage
+	var/mob/living/last_user_mobtype
 
-/obj/machinery/Initialize()
+/obj/machinery/Initialize(mapload)
 	if(!armor)
-		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -145,7 +160,68 @@
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
 
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
+	}
+
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/LateInitialize()
+	. = ..()
+	power_change()
+	if(use_power == NO_POWER_USE)
+		return
+
+	update_current_power_usage()
+	setup_area_power_relationship()
+
+/obj/machinery/Destroy()
+	GLOB.machines.Remove(src)
+	end_processing()
+	dump_inventory_contents()
+	QDEL_LIST(component_parts)
+	QDEL_NULL(circuit)
+	unset_static_power()
+	return ..()
+
+/**
+ * proc to call when the machine starts to require power after a duration of not requiring power
+ * sets up power related connections to its area if it exists and becomes area sensitive
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/setup_area_power_relationship()
+	become_area_sensitive(INNATE_TRAIT)
+
+	var/area/our_area = get_area(src)
+	if(our_area)
+		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
+	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+
+/**
+ * proc to call when the machine stops requiring power after a duration of requiring power
+ * saves memory by removing the power relationship with its area if it exists and loses area sensitivity
+ * does not affect power usage itself
+ */
+/obj/machinery/proc/remove_area_power_relationship()
+	var/area/our_area = get_area(src)
+	if(our_area)
+		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
+
+	lose_area_sensitivity(INNATE_TRAIT)
+	UnregisterSignal(src, COMSIG_ENTER_AREA)
+	UnregisterSignal(src, COMSIG_EXIT_AREA)
+
+/obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
+	SIGNAL_HANDLER
+	update_current_power_usage()
+	power_change()
+	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+
+/obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
+	SIGNAL_HANDLER
+	unset_static_power()
+	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)
@@ -162,20 +238,6 @@
 /obj/machinery/proc/end_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)
-
-/obj/machinery/LateInitialize()
-	. = ..()
-	power_change()
-	become_area_sensitive(ROUNDSTART_TRAIT)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
-
-/obj/machinery/Destroy()
-	GLOB.machines.Remove(src)
-	end_processing()
-	dump_inventory_contents()
-	QDEL_LIST(component_parts)
-	QDEL_NULL(circuit)
-	return ..()
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -198,10 +260,12 @@
 
 ///Called when the value of `machine_stat` changes, so we can react to it.
 /obj/machinery/proc/on_set_machine_stat(old_value)
-	if(old_value & (NOPOWER|BROKEN|MAINT))
-		if(!(machine_stat & (NOPOWER|BROKEN|MAINT))) //From off to on.
-			set_is_operational(TRUE)
-	else if(machine_stat & (NOPOWER|BROKEN|MAINT)) //From on to off.
+	//From off to on.
+	if((old_value & (NOPOWER|BROKEN|MAINT)) && !(machine_stat & (NOPOWER|BROKEN|MAINT)))
+		set_is_operational(TRUE)
+		return
+	//From on to off.
+	if(machine_stat & (NOPOWER|BROKEN|MAINT))
 		set_is_operational(FALSE)
 
 
@@ -220,7 +284,7 @@
  */
 /obj/machinery/proc/open_machine(drop = TRUE)
 	state_open = TRUE
-	density = FALSE
+	set_density(FALSE)
 	if(drop)
 		dump_inventory_contents()
 	update_appearance()
@@ -282,24 +346,24 @@
 	else
 		object.forceMove(drop_location())
 
-/obj/machinery/proc/can_be_occupant(atom/movable/am)
-	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
+/obj/machinery/proc/can_be_occupant(atom/movable/occupant_atom)
+	return occupant_typecache ? is_type_in_typecache(occupant_atom, occupant_typecache) : isliving(occupant_atom)
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
-	density = TRUE
+	set_density(TRUE)
 	if(!target)
-		for(var/am in loc)
-			if (!(can_be_occupant(am)))
+		for(var/atom in loc)
+			if (!(can_be_occupant(atom)))
 				continue
-			var/atom/movable/AM = am
-			if(AM.has_buckled_mobs())
+			var/atom/movable/current_atom = atom
+			if(current_atom.has_buckled_mobs())
 				continue
-			if(isliving(AM))
-				var/mob/living/L = am
-				if(L.buckled || L.mob_size >= MOB_SIZE_LARGE)
+			if(isliving(current_atom))
+				var/mob/living/current_mob = atom
+				if(current_mob.buckled || current_mob.mob_size >= MOB_SIZE_LARGE)
 					continue
-			target = am
+			target = atom
 
 	var/mob/living/mobtarget = target
 	if(target && !target.has_buckled_mobs() && (!isliving(target) || !mobtarget.buckled))
@@ -308,15 +372,119 @@
 	updateUsrDialog()
 	update_appearance()
 
-/obj/machinery/proc/auto_use_power()
-	if(!powered(power_channel))
+///updates the use_power var for this machine and updates its static power usage from its area to reflect the new value
+/obj/machinery/proc/update_use_power(new_use_power)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_use_power == use_power)
 		return FALSE
-	if(use_power == 1)
-		use_power(idle_power_usage,power_channel)
-	else if(use_power >= 2)
-		use_power(active_power_usage,power_channel)
+
+	unset_static_power()
+
+	var/new_usage = 0
+	switch(new_use_power)
+		if(IDLE_POWER_USE)
+			new_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			new_usage = active_power_usage
+
+	if(use_power == NO_POWER_USE)
+		setup_area_power_relationship()
+	else if(new_use_power == NO_POWER_USE)
+		remove_area_power_relationship()
+
+	static_power_usage = new_usage
+
+	if(new_usage)
+		var/area/our_area = get_area(src)
+		our_area?.addStaticPower(new_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	use_power = new_use_power
+
 	return TRUE
 
+///updates the power channel this machine uses. removes the static power usage from the old channel and readds it to the new channel
+/obj/machinery/proc/update_power_channel(new_power_channel)
+	SHOULD_CALL_PARENT(TRUE)
+	if(new_power_channel == power_channel)
+		return FALSE
+
+	var/usage = unset_static_power()
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && usage)
+		our_area.addStaticPower(usage, DYNAMIC_TO_STATIC_CHANNEL(new_power_channel))
+
+	power_channel = new_power_channel
+
+	return TRUE
+
+///internal proc that removes all static power usage from the current area
+/obj/machinery/proc/unset_static_power()
+	SHOULD_NOT_OVERRIDE(TRUE)
+	var/old_usage = static_power_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area && old_usage)
+		our_area.removeStaticPower(old_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+		static_power_usage = 0
+
+	return old_usage
+
+/**
+ * sets the power_usage linked to the specified use_power_mode to new_usage
+ * e.g. update_mode_power_usage(ACTIVE_POWER_USE, 10) sets active_power_use = 10 and updates its power draw from the machines area if use_power == ACTIVE_POWER_USE
+ *
+ * Arguments:
+ * * use_power_mode - the use_power power mode to change. if IDLE_POWER_USE changes idle_power_usage, ACTIVE_POWER_USE changes active_power_usage
+ * * new_usage - the new value to set the specified power mode var to
+ */
+/obj/machinery/proc/update_mode_power_usage(use_power_mode, new_usage)
+	SHOULD_CALL_PARENT(TRUE)
+	if(use_power_mode == NO_POWER_USE)
+		stack_trace("trying to set the power usage associated with NO_POWER_USE in update_mode_power_usage()!")
+		return FALSE
+
+	unset_static_power() //completely remove our static_power_usage from our area, then readd new_usage
+
+	switch(use_power_mode)
+		if(IDLE_POWER_USE)
+			idle_power_usage = new_usage
+		if(ACTIVE_POWER_USE)
+			active_power_usage = new_usage
+
+	if(use_power_mode == use_power)
+		static_power_usage = new_usage
+
+	var/area/our_area = get_area(src)
+
+	if(our_area)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	return TRUE
+
+///makes this machine draw power from its area according to which use_power mode it is set to
+/obj/machinery/proc/update_current_power_usage()
+	if(static_power_usage)
+		unset_static_power()
+
+	var/area/our_area = get_area(src)
+	if(!our_area)
+		return FALSE
+
+	switch(use_power)
+		if(IDLE_POWER_USE)
+			static_power_usage = idle_power_usage
+		if(ACTIVE_POWER_USE)
+			static_power_usage = active_power_usage
+		if(NO_POWER_USE)
+			return
+
+	if(static_power_usage)
+		our_area.addStaticPower(static_power_usage, DYNAMIC_TO_STATIC_CHANNEL(power_channel))
+
+	return TRUE
 
 ///Called when we want to change the value of the `is_operational` variable. Boolean.
 /obj/machinery/proc/set_is_operational(new_value)
@@ -336,16 +504,15 @@
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
-	if(isAdminGhostAI(user))
-		return TRUE //if you're an admin, you probably know what you're doing (or at least have permission to do what you're doing)
-
-	if(!isliving(user))
-		return FALSE //no ghosts in the machine allowed, sorry
-
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return FALSE
 
-	var/mob/living/living_user = user
+
+	if(isAdminGhostAI(user))
+		return TRUE //the Gods have unlimited power and do not care for things such as range or blindness
+
+	if(!isliving(user))
+		return FALSE //no ghosts allowed, sorry
 
 	var/is_dextrous = FALSE
 	if(isanimal(user))
@@ -363,13 +530,14 @@
 		if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN) && !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-		return TRUE //silicons don't care about petty mortal concerns like needing to be next to a machine to use it
+		return user.can_interact_with(src) //AIs don't care about petty mortal concerns like needing to be next to a machine to use it, but borgs do care somewhat
 
-	if(living_user.incapacitated()) //idk why silicons aren't supposed to care about incapacitation when interacting with machines, but it was apparently like this before
+	. = ..()
+	if(!.)
 		return FALSE
 
 	if((interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SIGHT) && user.is_blind())
-		to_chat(user, "<span class='warning'>This machine requires sight to use.</span>")
+		to_chat(user, span_warning("This machine requires sight to use."))
 		return FALSE
 
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN))
@@ -378,37 +546,31 @@
 	if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) //if the user was a silicon, we'd have returned out earlier, so the user must not be a silicon
 		return FALSE
 
-	if(!Adjacent(user)) // Next make sure we are next to the machine unless we have telekinesis
-		var/mob/living/carbon/carbon_user = living_user
-		if(!istype(carbon_user) || !carbon_user.has_dna() || !carbon_user.dna.check_mutation(TK))
-			return FALSE
-
 	return TRUE // If we passed all of those checks, woohoo! We can interact with this machine.
 
 /obj/machinery/proc/check_nap_violations()
 	if(!SSeconomy.full_ancap)
 		return TRUE
-	if(occupant && !state_open)
-		var/mob/living/L = occupant
-		var/obj/item/card/id/I = L.get_idcard(TRUE)
-		if(I)
-			var/datum/bank_account/insurance = I.registered_account
-			if(!insurance)
-				say("[market_verb] NAP Violation: No bank account found.")
-				nap_violation(L)
-				return FALSE
-			else
-				if(!insurance.adjust_money(-fair_market_price))
-					say("[market_verb] NAP Violation: Unable to pay.")
-					nap_violation(L)
-					return FALSE
-				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-				if(D)
-					D.adjust_money(fair_market_price)
-		else
-			say("[market_verb] NAP Violation: No ID card found.")
-			nap_violation(L)
-			return FALSE
+	if(!occupant || state_open)
+		return TRUE
+	var/mob/living/occupant_mob = occupant
+	var/obj/item/card/id/occupant_id = occupant_mob.get_idcard(TRUE)
+	if(!occupant_id)
+		say("[market_verb] NAP Violation: No ID card found.")
+		nap_violation(occupant_mob)
+		return FALSE
+	var/datum/bank_account/insurance = occupant_id.registered_account
+	if(!insurance)
+		say("[market_verb] NAP Violation: No bank account found.")
+		nap_violation(occupant_mob)
+		return FALSE
+	if(!insurance.adjust_money(-fair_market_price))
+		say("[market_verb] NAP Violation: Unable to pay.")
+		nap_violation(occupant_mob)
+		return FALSE
+	var/datum/bank_account/department_account = SSeconomy.get_dep_account(payment_department)
+	if(department_account)
+		department_account.adjust_money(fair_market_price)
 	return TRUE
 
 /obj/machinery/proc/nap_violation(mob/violator)
@@ -420,10 +582,12 @@
 /obj/machinery/interact(mob/user, special_state)
 	if(interaction_flags_machine & INTERACT_MACHINE_SET_MACHINE)
 		user.set_machine(src)
+	update_last_used(user)
 	. = ..()
 
 /obj/machinery/ui_act(action, list/params)
 	add_fingerprint(usr)
+	update_last_used(usr)
 	return ..()
 
 /obj/machinery/Topic(href, href_list)
@@ -433,6 +597,7 @@
 	if(!usr.canUseTopic(src))
 		return TRUE
 	add_fingerprint(usr)
+	update_last_used(usr)
 	return FALSE
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -440,11 +605,10 @@
 /obj/machinery/attack_paw(mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		return attack_hand(user)
-	else
-		user.changeNext_move(CLICK_CD_MELEE)
-		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-		user.visible_message("<span class='danger'>[user.name] smashes against \the [src.name] with its paws.</span>", null, null, COMBAT_MESSAGE_RANGE)
-		take_damage(4, BRUTE, MELEE, 1)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.visible_message(span_danger("[user.name] smashes against \the [src.name] with its paws."), null, null, COMBAT_MESSAGE_RANGE)
+	take_damage(4, BRUTE, MELEE, 1)
 
 /obj/machinery/attack_hulk(mob/living/carbon/user)
 	. = ..()
@@ -453,20 +617,26 @@
 		return
 	if(arm.bodypart_disabled)
 		return
-	var/damage = damage_deflection / 10
+	var/damage = damage_deflection * 0.1
 	arm.receive_damage(brute=damage, wound_bonus = CANT_WOUND)
 
 /obj/machinery/attack_robot(mob/user)
 	if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON) && !isAdminGhostAI(user))
 		return FALSE
-	if(Adjacent(user) && can_buckle && has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
-		if(buckled_mobs.len > 1)
-			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
-			if(user_unbuckle_mob(unbuckled,user))
-				return TRUE
-		else
-			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return TRUE
+
+	if(!Adjacent(user) || !can_buckle || !has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
+		return _try_interact(user)
+
+	if(length(buckled_mobs) <= 1)
+		if(user_unbuckle_mob(buckled_mobs[1],user))
+			return TRUE
+
+	var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+	if(isnull(unbuckled))
+		return FALSE
+	if(user_unbuckle_mob(unbuckled,user))
+		return TRUE
+
 	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
@@ -474,13 +644,32 @@
 		return FALSE
 	if(iscyborg(user))// For some reason attack_robot doesn't work
 		return attack_robot(user)
-	else
-		return _try_interact(user)
+	return _try_interact(user)
+
+/obj/machinery/attackby(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	update_last_used(user)
+
+/obj/machinery/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	update_last_used(user)
+
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
+		return TOOL_ACT_MELEE_CHAIN_BLOCKING
+	. = ..()
+	if(. & TOOL_ACT_SIGNAL_BLOCKING)
+		return
+	update_last_used(user)
 
 /obj/machinery/_try_interact(mob/user)
 	if((interaction_flags_machine & INTERACT_MACHINE_WIRES_IF_OPEN) && panel_open && (attempt_wire_interaction(user) == WIRE_INTERACTION_BLOCK))
 		return TRUE
-	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE)
+	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_INTERACT)
 		return TRUE
 	return ..()
 
@@ -491,27 +680,32 @@
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
 
-/obj/machinery/proc/default_pry_open(obj/item/I)
-	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		I.play_tool_sound(src, 50)
-		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
-		open_machine()
+/obj/machinery/proc/default_pry_open(obj/item/crowbar)
+	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	if(!.)
+		return
+	crowbar.play_tool_sound(src, 50)
+	visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
+	open_machine()
 
-/obj/machinery/proc/default_deconstruction_crowbar(obj/item/I, ignore_panel = 0, custom_deconstruct = FALSE)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_CROWBAR
-	if(. && !custom_deconstruct)
-		I.play_tool_sound(src, 50)
-		deconstruct(TRUE)
+/obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
+	if(!. || custom_deconstruct)
+		return
+	crowbar.play_tool_sound(src, 50)
+	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		on_deconstruction()
-		if(LAZYLEN(component_parts))
-			spawn_frame(disassembled)
-			for(var/obj/item/I in component_parts)
-				I.forceMove(loc)
-			LAZYCLEARLIST(component_parts)
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..() //Just delete us, no need to call anything else.
+
+	on_deconstruction()
+	if(!LAZYLEN(component_parts))
+		return ..() //we don't have any parts.
+	spawn_frame(disassembled)
+	for(var/obj/item/part in component_parts)
+		part.forceMove(loc)
+	LAZYCLEARLIST(component_parts)
 	return ..()
 
 /**
@@ -539,12 +733,11 @@
 	. = new_frame
 	new_frame.set_anchored(anchored)
 	if(!disassembled)
-		new_frame.obj_integrity = new_frame.max_integrity * 0.5 //the frame is already half broken
+		new_frame.update_integrity(new_frame.max_integrity * 0.5) //the frame is already half broken
 	transfer_fingerprints_to(new_frame)
 
 
-/obj/machinery/obj_break(damage_flag)
-	SHOULD_CALL_PARENT(TRUE)
+/obj/machinery/atom_break(damage_flag)
 	. = ..()
 	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		set_machine_stat(machine_stat | BROKEN)
@@ -564,75 +757,78 @@
 		if(EXPLODE_LIGHT)
 			SSexplosions.low_mov_atom += occupant
 
-/obj/machinery/handle_atom_del(atom/A)
-	if(A == occupant)
+/obj/machinery/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == occupant)
 		set_occupant(null)
 		update_appearance()
 		updateUsrDialog()
 		return ..()
 
 	// The circuit should also be in component parts, so don't early return.
-	if(A == circuit)
+	if(deleting_atom == circuit)
 		circuit = null
-	if((A in component_parts) && !QDELETED(src))
-		component_parts.Remove(A)
+	if((deleting_atom in component_parts) && !QDELETED(src))
+		component_parts.Remove(deleting_atom)
 		// It would be unusual for a component_part to be qdel'd ordinarily.
 		deconstruct(FALSE)
 	return ..()
 
-/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
-		I.play_tool_sound(src, 50)
-		if(!panel_open)
-			panel_open = TRUE
-			icon_state = icon_state_open
-			to_chat(user, "<span class='notice'>You open the maintenance hatch of [src].</span>")
-		else
-			panel_open = FALSE
-			icon_state = icon_state_closed
-			to_chat(user, "<span class='notice'>You close the maintenance hatch of [src].</span>")
-		return TRUE
-	return FALSE
+/obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
+	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+		return FALSE
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
-	if(panel_open && I.tool_behaviour == TOOL_WRENCH)
-		I.play_tool_sound(src, 50)
-		setDir(turn(dir,-90))
-		to_chat(user, "<span class='notice'>You rotate [src].</span>")
-		return TRUE
-	return FALSE
+	screwdriver.play_tool_sound(src, 50)
+	if(!panel_open)
+		panel_open = TRUE
+		icon_state = icon_state_open
+		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
+	else
+		panel_open = FALSE
+		icon_state = icon_state_closed
+		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+	return TRUE
+
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
+	if(!panel_open || wrench.tool_behaviour != TOOL_WRENCH)
+		return FALSE
+
+	wrench.play_tool_sound(src, 50)
+	setDir(turn(dir,-90))
+	to_chat(user, span_notice("You rotate [src]."))
+	return TRUE
 
 /obj/proc/can_be_unfasten_wrench(mob/user, silent) //if we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 	if(!(isfloorturf(loc) || istype(loc, /turf/open/indestructible)) && !anchored)
-		to_chat(user, "<span class='warning'>[src] needs to be on the floor to be secured!</span>")
+		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
-/obj/proc/default_unfasten_wrench(mob/user, obj/item/I, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_WRENCH)
-		var/turf/ground = get_turf(src)
-		if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-			to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
-			return CANT_UNFASTEN
-		var/can_be_unfasten = can_be_unfasten_wrench(user)
-		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
-			return can_be_unfasten
-		if(time)
-			to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>")
-		I.play_tool_sound(src, 50)
-		var/prev_anchored = anchored
-		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(I.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
-			if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
-				to_chat(user, "<span class='notice'>You fail to secure [src].</span>")
-				return CANT_UNFASTEN
-			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [src].</span>")
-			set_anchored(!anchored)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
-			return SUCCESSFUL_UNFASTEN
+/obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
+	if((flags_1 & NODECONSTRUCT_1) || wrench.tool_behaviour != TOOL_WRENCH)
+		return CANT_UNFASTEN
+
+	var/turf/ground = get_turf(src)
+	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		to_chat(user, span_notice("You fail to secure [src]."))
+		return CANT_UNFASTEN
+	var/can_be_unfasten = can_be_unfasten_wrench(user)
+	if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
+		return can_be_unfasten
+	if(time)
+		to_chat(user, span_notice("You begin [anchored ? "un" : ""]securing [src]..."))
+	wrench.play_tool_sound(src, 50)
+	var/prev_anchored = anchored
+	//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
+	if(!wrench.use_tool(src, user, time, extra_checks = CALLBACK(src, .proc/unfasten_wrench_check, prev_anchored, user)))
 		return FAILED_UNFASTEN
-	return CANT_UNFASTEN
+	if(!anchored && ground.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		to_chat(user, span_notice("You fail to secure [src]."))
+		return CANT_UNFASTEN
+	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+	set_anchored(!anchored)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	SEND_SIGNAL(src, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, anchored)
+	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/unfasten_wrench_check(prev_anchored, mob/user) //for the do_after, this checks if unfastening conditions are still valid
 	if(anchored != prev_anchored)
@@ -641,82 +837,92 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
-	if(!istype(W))
+/obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
+	if(!istype(replacer_tool))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
+
+	if((flags_1 & NODECONSTRUCT_1) && !replacer_tool.works_from_distance)
 		return FALSE
+
 	var/shouldplaysound = 0
-	if(component_parts)
-		if(panel_open || W.works_from_distance)
-			var/obj/item/circuitboard/machine/CB = locate(/obj/item/circuitboard/machine) in component_parts
-			var/required_type
-			if(W.works_from_distance)
-				to_chat(user, display_parts(user))
-			if(!CB)
-				return FALSE
-			for(var/obj/item/A in component_parts)
-				for(var/design_type in CB.req_components)
-					if(ispath(A.type, design_type))
-						required_type = design_type
-						break
-				for(var/obj/item/B in W.contents)
-					if(istype(B, required_type) && istype(A, required_type))
-						// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
-						if(istype(B, /obj/item/stock_parts/cell) && W.works_from_distance)
-							var/obj/item/stock_parts/cell/checked_cell = B
-							// If it's rigged or corrupted, max the charge. Then explode it.
-							if(checked_cell.rigged || checked_cell.corrupted)
-								checked_cell.charge = checked_cell.maxcharge
-								checked_cell.explode()
-						if(B.get_part_rating() > A.get_part_rating())
-							if(istype(B,/obj/item/stack)) //conveniently this will mean A is also a stack and I will kill the first person to prove me wrong
-								var/obj/item/stack/SA = A
-								var/obj/item/stack/SB = B
-								var/used_amt = SA.get_amount()
-								if(!SB.use(used_amt))
-									continue //if we don't have the exact amount to replace we don't
-								var/obj/item/stack/SN = new SB.merge_type(null,used_amt)
-								component_parts += SN
-							else
-								if(SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE, B, src))
-									component_parts += B
-									B.forceMove(src)
-							SEND_SIGNAL(W, COMSIG_TRY_STORAGE_INSERT, A, null, null, TRUE)
-							component_parts -= A
-							to_chat(user, "<span class='notice'>[capitalize(A.name)] replaced with [B.name].</span>")
-							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
-							break
-			RefreshParts()
-		else
-			to_chat(user, display_parts(user))
+	if(!component_parts)
+		return FALSE
+
+	if(!panel_open && !replacer_tool.works_from_distance)
+		to_chat(user, display_parts(user))
 		if(shouldplaysound)
-			W.play_rped_sound()
-		return TRUE
-	return FALSE
+			replacer_tool.play_rped_sound()
+		return FALSE
+
+	var/obj/item/circuitboard/machine/machine_board = locate(/obj/item/circuitboard/machine) in component_parts
+	var/required_type
+	if(replacer_tool.works_from_distance)
+		to_chat(user, display_parts(user))
+	if(!machine_board)
+		return FALSE
+
+	for(var/obj/item/primary_part as anything in component_parts)
+		for(var/design_type in machine_board.req_components)
+			if(ispath(primary_part.type, design_type))
+				required_type = design_type
+				break
+		for(var/obj/item/secondary_part in replacer_tool.contents)
+			if(!istype(secondary_part, required_type) || !istype(primary_part, required_type))
+				continue
+			// If it's a corrupt or rigged cell, attempting to send it through Bluespace could have unforeseen consequences.
+			if(istype(secondary_part, /obj/item/stock_parts/cell) && replacer_tool.works_from_distance)
+				var/obj/item/stock_parts/cell/checked_cell = secondary_part
+				// If it's rigged or corrupted, max the charge. Then explode it.
+				if(checked_cell.rigged || checked_cell.corrupted)
+					checked_cell.charge = checked_cell.maxcharge
+					checked_cell.explode()
+			if(secondary_part.get_part_rating() > primary_part.get_part_rating())
+				if(istype(secondary_part,/obj/item/stack)) //conveniently this will mean primary_part is also a stack and I will kill the first person to prove me wrong
+					var/obj/item/stack/primary_stack = primary_part
+					var/obj/item/stack/secondary_stack = secondary_part
+					var/used_amt = primary_stack.get_amount()
+					if(!secondary_stack.use(used_amt))
+						continue //if we don't have the exact amount to replace we don't
+					var/obj/item/stack/secondary_inserted = new secondary_stack.merge_type(null,used_amt)
+					component_parts += secondary_inserted
+				else
+					if(SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_TAKE, secondary_part, src))
+						component_parts += secondary_part
+						secondary_part.forceMove(src)
+				SEND_SIGNAL(replacer_tool, COMSIG_TRY_STORAGE_INSERT, primary_part, null, null, TRUE)
+				component_parts -= primary_part
+				to_chat(user, span_notice("[capitalize(primary_part.name)] replaced with [secondary_part.name]."))
+				shouldplaysound = 1 //Only play the sound when parts are actually replaced!
+				break
+
+	RefreshParts()
+
+	if(shouldplaysound)
+		replacer_tool.play_rped_sound()
+	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
 	. = list()
-	. += "<span class='notice'>It contains the following parts:</span>"
+	. += span_notice("It contains the following parts:")
 	for(var/obj/item/C in component_parts)
-		. += "<span class='notice'>[icon2html(C, user)] \A [C].</span>"
+		. += span_notice("[icon2html(C, user)] \A [C].")
 	. = jointext(., "")
 
 /obj/machinery/examine(mob/user)
 	. = ..()
 	if(machine_stat & BROKEN)
-		. += "<span class='notice'>It looks broken and non-functional.</span>"
+		. += span_notice("It looks broken and non-functional.")
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			. += "<span class='warning'>It's on fire!</span>"
-		var/healthpercent = (obj_integrity/max_integrity) * 100
+			. += span_warning("It's on fire!")
+		var/healthpercent = (atom_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
 				. += "It looks slightly damaged."
 			if(25 to 50)
 				. += "It appears heavily damaged."
 			if(0 to 25)
-				. += "<span class='warning'>It's falling apart!</span>"
+				. += span_warning("It's falling apart!")
 	if(user.research_scanner && component_parts)
 		. += display_parts(user, TRUE)
 
@@ -733,7 +939,7 @@
 
 /obj/machinery/zap_act(power, zap_flags)
 	if(prob(85) && (zap_flags & ZAP_MACHINE_EXPLOSIVE) && !(resistance_flags & INDESTRUCTIBLE))
-		explosion(src, 1, 2, 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
+		explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flame_range = 2, adminlog = FALSE, smoke = FALSE)
 	else if(zap_flags & ZAP_OBJ_DAMAGE)
 		take_damage(power * 0.0005, BURN, ENERGY)
 		if(prob(40))
@@ -741,21 +947,21 @@
 		power -= power * 0.0005
 	return ..()
 
-/obj/machinery/Exited(atom/movable/AM, atom/newloc)
+/obj/machinery/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(AM == occupant)
+	if(gone == occupant)
 		set_occupant(null)
-	if(AM == circuit)
-		LAZYREMOVE(component_parts, AM)
+	if(gone == circuit)
+		LAZYREMOVE(component_parts, gone)
 		circuit = null
 
-/obj/machinery/proc/adjust_item_drop_location(atom/movable/AM) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
-	var/md5 = md5(AM.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
+/obj/machinery/proc/adjust_item_drop_location(atom/movable/dropped_atom) // Adjust item drop location to a 3x3 grid inside the tile, returns slot id from 0 to 8
+	var/md5 = md5(dropped_atom.name) // Oh, and it's deterministic too. A specific item will always drop from the same slot.
 	for (var/i in 1 to 32)
 		. += hex2num(md5[i])
 	. = . % 9
-	AM.pixel_x = -8 + ((.%3)*8)
-	AM.pixel_y = -8 + (round( . / 3)*8)
+	dropped_atom.pixel_x = -8 + ((.%3)*8)
+	dropped_atom.pixel_y = -8 + (round( . / 3)*8)
 
 /obj/machinery/rust_heretic_act()
 	take_damage(500, BRUTE, MELEE, 1)
@@ -774,6 +980,11 @@
  * However, the proc may also be used elsewhere.
  */
 /obj/machinery/proc/AI_notify_hack()
-	var/alertstr = "<span class='userdanger'>Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].</span>"
+	var/alertstr = span_userdanger("Network Alert: Hacking attempt detected[get_area(src)?" in [get_area_name(src, TRUE)]":". Unable to pinpoint location"].")
 	for(var/mob/living/silicon/ai/AI in GLOB.player_list)
 		to_chat(AI, alertstr)
+
+/obj/machinery/proc/update_last_used(mob/user)
+	if(isliving(user))
+		last_used_time = world.time
+		last_user_mobtype = user.type

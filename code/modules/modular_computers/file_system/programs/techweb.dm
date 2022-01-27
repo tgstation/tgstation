@@ -81,7 +81,7 @@
 	var/obj/item/computer_hardware/card_slot/card_slot
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
-	var/obj/item/card/id/user_id_card = card_slot.stored_card
+	var/obj/item/card/id/user_id_card = card_slot?.stored_card
 
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
@@ -91,12 +91,12 @@
 	switch (action)
 		if ("toggleLock")
 			if(computer.obj_flags & EMAGGED)
-				to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to access locking protocols.</span>")
+				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
 			if(ACCESS_RND in user_id_card?.access)
 				locked = !locked
 			else
-				to_chat(usr, "<span class='boldwarning'>Unauthorized Access. Please insert research ID card.</span>")
+				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
 			return TRUE
 		if ("researchNode")
 			if(!SSresearch.science_tech.available_nodes[params["node_id"]])
@@ -197,6 +197,8 @@
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
@@ -208,7 +210,7 @@
 					var/obj/item/card/id/id_card_of_human_user = worn.GetID()
 					if(istype(id_card_of_human_user))
 						logname = "User: [id_card_of_human_user.registered_name]"
-			stored_research.research_logs = list(list(tech_node.display_name, price["General Research"], logname, "[get_area(src)] ([computer.x],[computer.y],[computer.z])"))
+			stored_research.research_logs += list(list(tech_node.display_name, price["General Research"], logname, "[get_area(computer)] ([user.x],[user.y],[user.z])"))
 			return TRUE
 		else
 			computer.say("Failed to research node: Internal database error!")

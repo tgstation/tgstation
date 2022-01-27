@@ -36,44 +36,38 @@
 	var/icon_vomit = "vomit"
 	var/icon_vomit_end = "vomit_end"
 	var/message_cooldown = 0
-	var/list/nummies = list()
 	var/choking = FALSE
 
-/mob/living/simple_animal/hostile/retaliate/goose/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goose/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
 	if(stat == DEAD)
 		return
-	nummies.Cut()
-	nummies += loc.contents
 	if(prob(5) && random_retaliate)
 		Retaliate()
 
 /mob/living/simple_animal/hostile/retaliate/goose/handle_automated_action()
-	if(length(nummies))
-		var/obj/item/E = locate() in nummies
-		if(E && E.loc == loc)
-			feed(E)
-		nummies -= E
+	var/obj/item/eat_it_motherfucker = pick(locate(/obj/item) in loc)
+	if(!eat_it_motherfucker)
+		return
+	feed(eat_it_motherfucker)
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/handle_automated_action()
-	if(length(nummies))
-		var/obj/item/E = pick(nummies)
-		if(!E.has_material_type(/datum/material/plastic))
-			nummies -= E // remove non-plastic item from queue
-			E = locate(/obj/item/reagent_containers/food) in nummies // find food
-		if(E && E.loc == loc)
-			feed(E)
-		nummies -= E
+	for(var/obj/item/eat_it_motherfucker in loc)
+		if(!eat_it_motherfucker.has_material_type(/datum/material/plastic))
+			continue
+		feed(eat_it_motherfucker)
+		break
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/feed(obj/item/suffocator)
 	if(stat == DEAD || choking) // plapatin I swear to god
 		return FALSE
 	if(suffocator.has_material_type(/datum/material/plastic)) // dumb goose'll swallow food or drink with plastic in it
-		visible_message("<span class='danger'>[src] hungrily gobbles up \the [suffocator]! </span>")
-		visible_message("<span class='boldwarning'>[src] is choking on \the [suffocator]! </span>")
+		visible_message(span_danger("[src] hungrily gobbles up \the [suffocator]! "))
+		visible_message(span_boldwarning("[src] is choking on \the [suffocator]! "))
 		suffocator.forceMove(src)
 		choke(suffocator)
 		choking = TRUE
@@ -97,7 +91,7 @@
 	var/vomitTimeBonus = 0
 	var/datum/action/cooldown/vomit/goosevomit
 
-/mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize()
+/mob/living/simple_animal/hostile/retaliate/goose/vomit/Initialize(mapload)
 	. = ..()
 	goosevomit = new
 	goosevomit.Grant(src)
@@ -113,7 +107,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/examine(user)
 	. = ..()
-	. += "<span class='notice'>Somehow, it still looks hungry.</span>"
+	. += span_notice("Somehow, it still looks hungry.")
 
 /mob/living/simple_animal/hostile/retaliate/goose/attackby(obj/item/O, mob/user)
 	. = ..()
@@ -126,11 +120,11 @@
 		return FALSE
 	if (contents.len > GOOSE_SATIATED)
 		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] looks too full to eat \the [tasty]!</span>")
+			visible_message(span_notice("[src] looks too full to eat \the [tasty]!"))
 			message_cooldown = world.time + 5 SECONDS
 		return FALSE
 	if (tasty.foodtype & GROSS)
-		visible_message("<span class='notice'>[src] hungrily gobbles up \the [tasty]!</span>")
+		visible_message(span_notice("[src] hungrily gobbles up \the [tasty]!"))
 		tasty.forceMove(src)
 		playsound(src,'sound/items/eatfood.ogg', 70, TRUE)
 		vomitCoefficient += 3
@@ -138,7 +132,7 @@
 		return TRUE
 	else
 		if(message_cooldown < world.time)
-			visible_message("<span class='notice'>[src] refuses to eat \the [tasty].</span>")
+			visible_message(span_notice("[src] refuses to eat \the [tasty]."))
 			message_cooldown = world.time + 5 SECONDS
 			return FALSE
 
@@ -151,7 +145,7 @@
 	if(stat == DEAD || choking)
 		return
 	if(prob(25))
-		visible_message("<span class='warning'>[src] is gagging on \the [plastic]!</span>")
+		visible_message(span_warning("[src] is gagging on \the [plastic]!"))
 		manual_emote("gags!")
 		addtimer(CALLBACK(src, .proc/vomit), 300)
 	else
@@ -174,7 +168,7 @@
 	if (stat == DEAD)
 		return
 	var/turf/T = get_turf(src)
-	var/obj/item/reagent_containers/food/consumed = locate() in contents //Barf out a single food item from our guts
+	var/obj/item/consumed = locate() in contents //Barf out a single food item from our guts
 	choking = FALSE // assume birdboat is vomiting out whatever he was choking on
 	if (prob(50) && consumed)
 		barf_food(consumed)
@@ -226,7 +220,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	. = ..()
 	if(vomiting)
-		vomit() // its supposed to keep vomiting if you move
+		INVOKE_ASYNC(src, .proc/vomit) // its supposed to keep vomiting if you move
 		return
 	if(prob(vomitCoefficient * 0.2))
 		vomit_prestart(vomitTimeBonus + 25)
@@ -252,14 +246,16 @@
 	icon_icon = 'icons/mob/animal.dmi'
 	cooldown_time = 250
 
-/datum/action/cooldown/vomit/Trigger()
-	if(!..())
-		return FALSE
+/datum/action/cooldown/vomit/Activate(atom/target)
 	if(!istype(owner, /mob/living/simple_animal/hostile/retaliate/goose/vomit))
 		return FALSE
-	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/vomit = owner
-	if(!vomit.vomiting)
-		vomit.vomit_prestart(vomit.vomitTimeBonus + 25)
-		vomit.vomitCoefficient = 1
-		vomit.vomitTimeBonus = 0
+
+	StartCooldown(10 SECONDS)
+	var/mob/living/simple_animal/hostile/retaliate/goose/vomit/probably_birdboat = owner
+	if(!probably_birdboat.vomiting)
+		probably_birdboat.vomit_prestart(probably_birdboat.vomitTimeBonus + 25)
+		probably_birdboat.vomitCoefficient = 1
+		probably_birdboat.vomitTimeBonus = 0
+
+	StartCooldown()
 	return TRUE

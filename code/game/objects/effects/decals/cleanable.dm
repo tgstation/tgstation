@@ -6,7 +6,7 @@
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 	var/beauty = 0
-	///The type of cleaning required to clean the decal, CLEAN_TYPE_LIGHT_DECAL can be cleaned with mops and soap, CLEAN_TYPE_HARD_DECAL can be cleaned by soap, see __DEFINES/cleaning.dm for the others
+	///The type of cleaning required to clean the decal. See __DEFINES/cleaning.dm for the options
 	var/clean_type = CLEAN_TYPE_LIGHT_DECAL
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
@@ -33,6 +33,10 @@
 	var/turf/T = get_turf(src)
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_created", 1, name)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/decal/cleanable/Destroy()
 	var/turf/T = get_turf(src)
@@ -49,12 +53,12 @@
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
-				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
+				to_chat(user, span_notice("[src] isn't thick enough to scoop up!"))
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[W] is full!</span>")
+				to_chat(user, span_notice("[W] is full!"))
 				return
-			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
+			to_chat(user, span_notice("You scoop up [src] into [W]!"))
 			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
@@ -65,15 +69,9 @@
 		else
 			var/hotness = W.get_temperature()
 			reagents.expose_temperature(hotness)
-			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
+			to_chat(user, span_notice("You heat [name] with [W]!"))
 	else
 		return ..()
-
-/obj/effect/decal/cleanable/ex_act()
-	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act()
-	return ..()
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
@@ -83,8 +81,8 @@
 
 //Add "bloodiness" of this blood's type, to the human's shoes
 //This is on /cleanable because fuck this ancient mess
-/obj/effect/decal/cleanable/Crossed(atom/movable/AM)
-	..()
+/obj/effect/decal/cleanable/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(iscarbon(AM) && blood_state && bloodiness >= 40)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 		update_appearance()

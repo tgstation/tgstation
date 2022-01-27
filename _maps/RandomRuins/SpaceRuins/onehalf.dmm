@@ -56,7 +56,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aq" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -126,9 +126,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aB" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/item/storage/firstaid/brute{
 	pixel_x = 3;
@@ -138,19 +136,15 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aC" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
-/obj/effect/spawner/lootdrop/space/syndiecosmetic,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
+/obj/effect/spawner/random/exotic/syndie,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/dorms_med)
 "aD" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -197,11 +191,7 @@
 /obj/item/healthanalyzer,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/item/reagent_containers/blood/o_minus,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Crew Quarters APC";
-	pixel_x = 24
-	},
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/onehalf/dorms_med)
@@ -277,11 +267,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "aY" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining Drone Bay APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -296,32 +282,30 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "ba" = (
-/obj/machinery/button/door{
-	id = "onehalf_drone2int";
-	name = "Drone 2 Internal Hatch Override";
-	pixel_x = 8;
-	pixel_y = 27
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "onehalf_drone2ext";
 	name = "Drone 2 External Hatch Override";
 	pixel_x = 8;
-	pixel_y = 37
+	pixel_y = 32
 	},
-/obj/machinery/button/door{
-	id = "onehalf_drone1int";
-	name = "Drone 1 Internal Hatch Override";
-	pixel_x = -8;
-	pixel_y = 27
-	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "onehalf_drone1ext";
 	name = "Drone 1 External Hatch Override";
 	pixel_x = -8;
-	pixel_y = 37
+	pixel_y = 32
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone2int";
+	name = "Drone 2 Internal Hatch Override";
+	pixel_x = 8
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone1int";
+	name = "Drone 1 Internal Hatch Override";
+	pixel_x = -8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -332,32 +316,30 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bc" = (
-/obj/machinery/button/door{
-	id = "onehalf_drone3int";
-	name = "Drone 3 Internal Hatch Override";
-	pixel_x = -8;
-	pixel_y = 27
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
-/obj/machinery/button/door{
-	id = "onehalf_drone3ext";
-	name = "Drone 3 External Hatch Override";
-	pixel_x = -8;
-	pixel_y = 37
-	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/north{
 	id = "onehalf_drone4ext";
 	name = "Drone 4 External Hatch Override";
 	pixel_x = 8;
-	pixel_y = 37
+	pixel_y = 32
 	},
-/obj/machinery/button/door{
-	id = "onehalf_drone4int";
+/obj/machinery/button/door/directional/north{
+	id = "onehalf_drone3ext";
+	name = "Drone 3 External Hatch Override";
+	pixel_x = -8;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone4int";
 	name = "Drone 4 Internal Hatch Override";
-	pixel_x = 8;
-	pixel_y = 27
+	pixel_x = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
+/obj/machinery/button/door/directional/north{
+	custom_acid_overlay = "onehalf_drone3int";
+	name = "Drone 3 Internal Hatch Override";
+	pixel_x = -8
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -467,9 +449,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
@@ -522,10 +502,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	name = "Hallway APC";
-	pixel_y = -23
-	},
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/onehalf/hallway)
@@ -561,7 +538,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/drone_bay)
 "bF" = (
@@ -686,9 +663,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cd" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/frame/computer,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -697,17 +672,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cf" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Bridge APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cg" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/cashmoney,
+/obj/effect/spawner/random/entertainment/money_large,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "ch" = (
@@ -778,7 +749,7 @@
 /area/ruin/space/has_grav/onehalf/bridge)
 "cp" = (
 /obj/structure/table/reinforced,
-/obj/effect/spawner/lootdrop/space/fancytech,
+/obj/effect/spawner/random/exotic/technology,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cq" = (
@@ -826,7 +797,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cx" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cy" = (
@@ -858,7 +829,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "cF" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -901,9 +872,7 @@
 	},
 /area/ruin/space/has_grav/onehalf/hallway)
 "cM" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
@@ -961,7 +930,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
 "db" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
 /turf/open/floor/iron,
@@ -1001,7 +970,7 @@
 /turf/template_noop,
 /area/template_noop)
 "ms" = (
-/obj/item/stack/tile/iron,
+/obj/item/stack/tile/iron/base,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)

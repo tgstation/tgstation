@@ -15,7 +15,7 @@
 	radio_connection = null
 	return ..()
 
-/obj/item/integrated_signaler/Initialize()
+/obj/item/integrated_signaler/Initialize(mapload)
 	. = ..()
 	if (frequency < MIN_FREE_FREQ || frequency > MAX_FREE_FREQ)
 		frequency = sanitize_frequency(frequency)

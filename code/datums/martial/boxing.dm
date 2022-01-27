@@ -3,11 +3,11 @@
 	id = MARTIALART_BOXING
 
 /datum/martial_art/boxing/disarm_act(mob/living/A, mob/living/D)
-	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
+	to_chat(A, span_warning("Can't disarm while boxing!"))
 	return TRUE
 
 /datum/martial_art/boxing/grab_act(mob/living/A, mob/living/D)
-	to_chat(A, "<span class='warning'>Can't grab while boxing!</span>")
+	to_chat(A, span_warning("Can't grab while boxing!"))
 	return TRUE
 
 /datum/martial_art/boxing/harm_act(mob/living/A, mob/living/D)
@@ -22,9 +22,9 @@
 	var/damage = rand(5, 8) + species.punchdamagelow
 	if(!damage)
 		playsound(D.loc, species.miss_sound, 25, TRUE, -1)
-		D.visible_message("<span class='warning'>[A]'s [atk_verb] misses [D]!</span>", \
-						"<span class='danger'>You avoid [A]'s [atk_verb]!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, A)
-		to_chat(A, "<span class='warning'>Your [atk_verb] misses [D]!</span>")
+		D.visible_message(span_warning("[A]'s [atk_verb] misses [D]!"), \
+						span_danger("You avoid [A]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, A)
+		to_chat(A, span_warning("Your [atk_verb] misses [D]!"))
 		log_combat(A, D, "attempted to hit", atk_verb)
 		return FALSE
 
@@ -34,18 +34,18 @@
 
 	playsound(D.loc, species.attack_sound, 25, TRUE, -1)
 
-	D.visible_message("<span class='danger'>[A] [atk_verb]ed [D]!</span>", \
-					"<span class='userdanger'>You're [atk_verb]ed by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
-	to_chat(A, "<span class='danger'>You [atk_verb]ed [D]!</span>")
+	D.visible_message(span_danger("[A] [atk_verb]ed [D]!"), \
+					span_userdanger("You're [atk_verb]ed by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
+	to_chat(A, span_danger("You [atk_verb]ed [D]!"))
 
 	D.apply_damage(damage, STAMINA, affecting, armor_block)
 	log_combat(A, D, "punched (boxing) ")
 	if(D.getStaminaLoss() > 50 && istype(D.mind?.martial_art, /datum/martial_art/boxing))
 		var/knockout_prob = D.getStaminaLoss() + rand(-15,15)
 		if((D.stat != DEAD) && prob(knockout_prob))
-			D.visible_message("<span class='danger'>[A] knocks [D] out with a haymaker!</span>", \
-							"<span class='userdanger'>You're knocked unconscious by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
-			to_chat(A, "<span class='danger'>You knock [D] out with a haymaker!</span>")
+			D.visible_message(span_danger("[A] knocks [D] out with a haymaker!"), \
+							span_userdanger("You're knocked unconscious by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, A)
+			to_chat(A, span_danger("You knock [D] out with a haymaker!"))
 			D.apply_effect(200,EFFECT_KNOCKDOWN,armor_block)
 			D.SetSleeping(100)
 			log_combat(A, D, "knocked out (boxing) ")

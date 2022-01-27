@@ -32,10 +32,10 @@
 	if (!area_constraint)
 		return TRUE
 	if(!istype(build_area, area_constraint))
-		to_chat(owner, "<span class='warning'>You can only build within [area_constraint]!</span>")
+		to_chat(owner, span_warning("You can only build within [area_constraint]!"))
 		return FALSE
 	if(only_station_z && !is_station_level(build_target.z))
-		to_chat(owner, "<span class='warning'>[area_constraint] has launched and can no longer be modified.</span>")
+		to_chat(owner, span_warning("[area_constraint] has launched and can no longer be modified."))
 		return FALSE
 	return TRUE
 
@@ -67,7 +67,11 @@
 	if(..())
 		return
 	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
-	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
+	var/buildmode = tgui_input_list(owner, "Set construction mode", "Base Console", buildlist)
+	if(isnull(buildmode))
+		return
+	if(isnull(buildlist[buildmode]))
+		return
 	check_rcd()
 	base_console.internal_rcd.construction_mode = buildlist[buildmode]
 	to_chat(owner, "Build mode is now [buildmode].")
@@ -104,17 +108,17 @@
 		return
 	var/turf/place_turf = get_turf(remote_eye)
 	if(!base_console.structures[structure_name])
-		to_chat(owner, "<span class='warning'>[base_console] is out of [structure_name]!</span>")
+		to_chat(owner, span_warning("[base_console] is out of [structure_name]!"))
 		return
 	if(!check_spot())
 		return
 	//Can't place inside a closed turf
 	if(place_turf.density)
-		to_chat(owner, "<span class='warning'>[structure_name] may only be placed on a floor.</span>")
+		to_chat(owner, span_warning("[structure_name] may only be placed on a floor."))
 		return
 	//Can't place two dense objects inside eachother
 	if(initial(structure_path.density) && place_turf.is_blocked_turf())
-		to_chat(owner, "<span class='warning'>Location is obstructed by something. Please clear the location and try again.</span>")
+		to_chat(owner, span_warning("Location is obstructed by something. Please clear the location and try again."))
 		return
 	var/obj/placed_structure = new structure_path(place_turf)
 	base_console.structures[structure_name]--
@@ -131,10 +135,10 @@
 	button_icon_state = "build_fan"
 	structure_name = "fans"
 	structure_path = /obj/structure/fans/tiny
-	place_sound =  'sound/machines/click.ogg'
+	place_sound = 'sound/machines/click.ogg'
 
-/datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
-	to_chat(owner, "<span class='notice'>Tiny fan placed. [remaining] fans remaining.</span>")
+/datum/action/innate/construction/place_structure/fan/after_place(obj/placed_structure, remaining)
+	to_chat(owner, span_notice("Tiny fan placed. [remaining] fans remaining."))
 
 /datum/action/innate/construction/place_structure/turret
 	name = "Install Plasma Anti-Wildlife Turret"
@@ -146,7 +150,8 @@
 /datum/action/innate/construction/place_structure/turret/after_place(obj/placed_structure, remaining)
 	var/obj/machinery/computer/auxiliary_base/turret_controller = locate() in get_area(placed_structure)
 	if(!turret_controller)
-		to_chat(owner, "<span class='notice'><b>Warning:</b> Aux base controller not found. Turrets might not work properly.</span>")
+		to_chat(owner, span_notice("<b>Warning:</b> Aux base controller not found. Turrets might not work properly."))
 		return
-	turret_controller.turrets += placed_structure
-	to_chat(owner, "<span class='notice'>You've constructed an additional turret. [remaining] turrets remaining.</span>")
+
+	LAZYADD(turret_controller.turrets, WEAKREF(placed_structure))
+	to_chat(owner, span_notice("You've constructed an additional turret. [remaining] turrets remaining."))

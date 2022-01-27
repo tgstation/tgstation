@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE //time to stop tracking stats?
 	var/list/versions = list("antagonists" = 3,
 							"admin_secrets_fun_used" = 2,
-							"explosion" = 2,
+							"explosion" = 3,
 							"time_dilation_current" = 3,
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	if(CONFIG_GET(flag/use_exp_tracking))
 		if((triggertime < 0) || (world.time > (triggertime +3000))) //subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
-			update_exp(10,FALSE)
+			update_exp(10)
 
 /datum/controller/subsystem/blackbox/proc/CheckPlayerCount()
 	set waitfor = FALSE
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(blackbox)
 //no touchie
 /datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return debug_variable(var_name, deepCopyList(feedback), 0, src)
+		return debug_variable(var_name, deep_copy_list(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
@@ -288,14 +288,25 @@ Versioning
 	key = new_key
 	key_type = new_key_type
 
-/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender)
+/datum/controller/subsystem/blackbox/proc/LogAhelp(ticket, action, message, recipient, sender, urgent = FALSE)
 	if(!SSdbcore.Connect())
 		return
 
 	var/datum/db_query/query_log_ahelp = SSdbcore.NewQuery({"
-		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp)
-		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time)
-	"}, list("ticket" = ticket, "action" = action, "message" = message, "recipient" = recipient, "sender" = sender, "server_ip" = world.internet_address || "0", "server_port" = world.port, "round_id" = GLOB.round_id, "time" = SQLtime()))
+		INSERT INTO [format_table_name("ticket")] (ticket, action, message, recipient, sender, server_ip, server_port, round_id, timestamp, urgent)
+		VALUES (:ticket, :action, :message, :recipient, :sender, INET_ATON(:server_ip), :server_port, :round_id, :time, :urgent)
+	"}, list(
+		"ticket" = ticket,
+		"action" = action,
+		"message" = message,
+		"recipient" = recipient,
+		"sender" = sender,
+		"server_ip" = world.internet_address || "0",
+		"server_port" = world.port,
+		"round_id" = GLOB.round_id,
+		"time" = SQLtime(),
+		"urgent" = urgent,
+	))
 	query_log_ahelp.Execute()
 	qdel(query_log_ahelp)
 
@@ -309,8 +320,7 @@ Versioning
 	if(!L.suiciding && !first_death.len)
 		first_death["name"] = "[(L.real_name == L.name) ? L.real_name : "[L.real_name] as [L.name]"]"
 		first_death["role"] = null
-		if(L.mind.assigned_role)
-			first_death["role"] = L.mind.assigned_role
+		first_death["role"] = L.mind.assigned_role.title
 		first_death["area"] = "[AREACOORD(L)]"
 		first_death["damage"] = "<font color='#FF5555'>[L.getBruteLoss()]</font>/<font color='orange'>[L.getFireLoss()]</font>/<font color='lightgreen'>[L.getToxLoss()]</font>/<font color='lightblue'>[L.getOxyLoss()]</font>/<font color='pink'>[L.getCloneLoss()]</font>"
 		first_death["last_words"] = L.last_words
@@ -324,7 +334,7 @@ Versioning
 	"}, list(
 		"name" = L.real_name,
 		"key" = L.ckey,
-		"job" = L.mind.assigned_role,
+		"job" = L.mind.assigned_role.title,
 		"special" = L.mind.special_role,
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
@@ -350,3 +360,48 @@ Versioning
 	if(query_report_death)
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
+
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, fine = 0, paid = 0)
+	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
+	(server_ip,
+	server_port,
+	round_id,
+	citation,
+	action,
+	sender,
+	sender_ic,
+	recipient,
+	crime,
+	fine,
+	paid,
+	timestamp) VALUES (
+	INET_ATON(:server_ip),
+	:port,
+	:round_id,
+	:citation,
+	:action,
+	:sender,
+	:sender_ic,
+	:recipient,
+	:message,
+	:fine,
+	:paid,
+	:timestamp
+	) ON DUPLICATE KEY UPDATE
+	paid = paid + VALUES(paid)"}, list(
+		"server_ip" = world.internet_address || "0",
+		"port" = "[world.port]",
+		"round_id" = GLOB.round_id,
+		"citation" = citation,
+		"action" = "Citation Created",
+		"sender" = sender,
+		"sender_ic" = sender_ic,
+		"recipient" = recipient,
+		"message" = message,
+		"fine" = fine,
+		"paid" = paid,
+		"timestamp" = SQLtime()
+	))
+	if(query_report_citation)
+		query_report_citation.Execute(async = TRUE)
+		qdel(query_report_citation)

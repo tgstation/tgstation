@@ -1,0 +1,738 @@
+2019-06-01:
+  AffectedArc07:
+  - tweak: The taskbar icon for the game is now the TG logo
+  Akrilla:
+  - bugfix: Fixes the examine text on jackboots/winter boots to properly show what
+      items can be stored inside.
+  - bugfix: Can now, as originally intended, store a Luchador mask inside the champion
+      belt.
+  - refactor: Work on storage code.
+  Ghommie:
+  - bugfix: Fixes splashed cooking oil bypassing any sort of mob impermeability. Also
+      cut off message/sound spam from being repeatedly splashed within a minimal delay.
+  - balance: Upped the cooking oil damage cap from 35 to 38 to account the mild bio
+      protection of the average crewmember's attire. Also made hot deep fryer swirlies
+      account the user's head covering gear's impermeability.
+  - refactor: Standarized monkeys/humans get_permeability_coefficient().
+  Naksu:
+  - code_imp: reagent IDs have been removed in favor using reagent typepaths where
+      applicable
+  - bugfix: mechas, borg hyposprays etc no longer display internal reagent ids to
+      the player
+  Rockdtben:
+  - rscadd: Security can now print out Missing Persons Posters
+  Skoglol:
+  - tweak: Moved machine and computer frames below objects, parts are now always on
+      top.
+  - tweak: Moved structures (chairs, closets, windows, cult altars etc etc) below
+      objects.
+  - tweak: Moves mineral doors to airlock layers
+  weeeeesoda:
+  - rscadd: You can now purify soulstones! This can be done by any crew member using
+      a bible on one.
+  - rscadd: Purified constructs can be created by using a purifed soulstone on a construct
+      shell. Amongst their normal abilities, purified constructs can dispel cult runes
+      by clicking on them.
+  - rscdel: Ability to place chaplains soulstone or mining soulstones in construct
+      shells
+  - imageadd: angelplasm, angelic sprites, purifed sprites
+  zxaber:
+  - tweak: Linen bins can now be (un)achored with a wrench, or disassembled with a
+      screwdriver (when empty).
+  - rscadd: You can now make linen bins using two rods.
+2019-06-04:
+  4dplanner:
+  - rscadd: stamina damage now pauses natural stamina regen for 10 seconds
+  - rscadd: stamina regenerates fully when it can.
+  - balance: disabler damage reduced
+  - tweak: stamina damage no longer stacks with normal damage for the purposes of
+      damage slowdown and crit
+  - balance: many sources of stamina damage have been adjusted, check PR for details
+  - bugfix: thrown objects (but not mobs) no longer hit the thrower
+  - bugfix: mirror shield rebound no longer depends on the original thrower's momentum
+  AffectedArc07 and Shazbot:
+  - imageadd: Added 9 new sock styles
+  Dennok:
+  - rscadd: Added teleport station calibration animation.
+  MMMiracles:
+  - bugfix: Air alarm for Donut's telecomms server is the proper type
+  Naksu:
+  - admin: '"Spawn reagent container" verb has been added to the Debug tab. It can
+      be used to spawn reagent containers and grenades with fully customized contents.'
+  Rockdtben:
+  - rscadd: WJohnston - Created a minimalist font.
+  - rscadd: Security can put custom headings on wanter/missing posters.
+  SuicidalPickles:
+  - tweak: Rolls of gauze now works on corpses.
+  Whoneedspacee:
+  - rscadd: 'New RPGLoot modifiers: Vampirism which heals you when you attack, Pyromantic
+      which sets things you hit on fire. Shrapnel which causes projectiles fired from
+      a gun to fire projectiles in a radius when they hit something. Finally, Summoning
+      which summons mobs that sometimes aid you in combat.'
+  actioninja:
+  - rscadd: Added support for a widescreen toggle, actual widescreen will require
+      a config change.
+  - tweak: Auto-fit view is now the default. This will only apply to new players.
+  kriskog:
+  - bugfix: windoors can now be closed manually after bumping open without having
+      them close again.
+  nemvar:
+  - balance: The timer of all grenades can now be adjusted with a screwdriver. Possible
+      values are instant, 3 seconds and 5 seconds.
+  - rscadd: You can now adjust the timer of grenades with a multitool. You can put
+      it anywhere between 3 and 5 seconds. Instant detonations are also possible.
+  - tweak: Advanced release grenades now open a window if you want to change the amount
+      of units released.
+  - tweak: The default timer on smoke grenades is now 3 seconds.
+2019-06-05:
+  4dplanner:
+  - bugfix: lightning holoparasite will no longer zap across the entire zlevel after
+      death
+  BeloneX:
+  - balance: 'Changed bone bracers armour stats from: `melee= 15, bullet= 35, laser=
+      35, energy= 20, bomb= 35, bio= 35, rad= 35, fire= 0, acid= 0)` to: `melee =
+      15, bullet = 25, laser= 15, energy= 15, bomb= 20, bio= 10, rad= 0, fire= 0,
+      acid = 0`'
+  Garen:
+  - bugfix: You can no longer do custom emotes with fists of the north star.
+  Naksu:
+  - bugfix: Odysseus chem synthesizing now works again
+  Razharas:
+  - tweak: Menucrafting is internally a component now
+  - bugfix: Fixed menucrafting opening new window when finishing construction
+  Skoglol:
+  - bugfix: Airlock cycling no long breaks if something is in the way. As a bonus,
+      you can now door crush people.
+  TheChosenEvilOne:
+  - rscadd: Added map voting in vote verb
+  - config: map config can define which maps are votable
+  - config: renamed ALLOW_MAP_VOTE to PREFERENCE_MAP_VOTING
+  WJohn:
+  - imagedel: Fixed stray white pixel on durathread helmet.
+  - bugfix: Raven emergency shuttle's turrets no longer shoot at ian.
+  blargety & WJohnston:
+  - imageadd: Caution sign resprited
+  - rscadd: You can now wear the caution sign on your armor slot
+  nemvar:
+  - tweak: Slimes now lose interal reagents over time.
+  - bugfix: Above ground smugglers satchels no longer leave a phantom object behind
+      on t-ray scanners
+  ninjanomnom:
+  - bugfix: Tactical should no longer leave the disguise on you in some cases
+  spessbro:
+  - rscadd: Added new chaplain book option
+  - rscadd: Added hypertool null rod option
+  - imageadd: added Insuls book to storage.dmi
+  - imageadd: added hypertool icon to device.dmi
+  zxaber:
+  - tweak: Most headgear now fit on borgs.
+2019-06-07:
+  Floyd / Qustinnus:
+  - balance: Crab-17 machine has higher health and higher drain rate now.
+  Granpawalton:
+  - rscadd: Added a new plant called the corpse flower that produces miasma while
+      it is harvestable
+  - tweak: Harebells no longer mutate from starthistle
+  - balance: miasma's science and cargo point values have been reduced by 75%
+  Naksu:
+  - code_imp: Cleaned up saycode
+  PHDby:
+  - rscadd: Reconstruction is now available roundstart (nerfed)
+  - tweak: You can upgrade both the Burn/Brute trees via techwebs
+  - rscadd: Advancing far enough into the tree enables Mixed reconstruction surgery,
+      which heals less of each but is considerably faster. Get alien tech for the
+      best of the best!
+  Rowell:
+  - rscadd: Added thigh-high and knee-high bee socks.
+  Tlaltecuhtli:
+  - rscadd: bamboo which can be used to build punji sticks/ blowguns available as
+      a sugarcane mutation or in exotic seed crate (instead of banana seeds)
+  - bugfix: sugar cane is available at the mega seed vendor
+  YPOQ:
+  - bugfix: Fixed changeling's strained muscles not doing stamina
+  actioninja:
+  - tweak: Clown shoes now make you waddle by default.
+  - rscdel: Removed the antimatter engine
+  bandit:
+  - tweak: Surgical incisions cause actual bleeding now. Clamping bleeders and/or
+      cauterizing the incision stops that bleeding.
+  cO2by:
+  - rscdel: Salbu has been replaced in all roundstart items with the PERFect chem
+  - rscadd: Salbu is now a T3 sleeper upgrade
+  - balance: Perf now converts O2 deprivation to lesser amounts of Toxin more evenly
+      than before
+  - rscadd: Perf effects scale based on O2 deprivation and how long perf is in your
+      system
+  - balance: Perf now has a 35u OD which ignores O2dep adjustment (You will take scaled
+      toxin damage regardless of healed oxygen damage)
+  nemvar:
+  - rscadd: Added gutlunch babies.
+  - bugfix: Gutlunches now actually reproduce.
+  - bugfix: Charcoal now purges other chemicals again. It will no longer purge itself.
+  - rscadd: Botanists can now get beeplushies as an heirloom.
+  plapatin:
+  - rscdel: deletes null crates
+2019-06-08:
+  Skoglol:
+  - rscadd: Rolling blood brother now has a sound alert and bigger text.
+  TheChosenEvilOne:
+  - bugfix: Fixed multiple map voting issues when DEFAULT_NO_VOTE is not enabled
+  Tlaltecuhtli:
+  - bugfix: syringes with the o2 medicine work
+  YPOQ:
+  - bugfix: Cult constructs can invoke runes again
+  nemvar:
+  - bugfix: Gutlunches will no longer be too shy to feast near other mobs. This results
+      in them being more much inclined to eat.
+  py01:
+  - balance: Radio jammers fully halt outgoing communications now.
+2019-06-09:
+  Onule:
+  - imageadd: New stasis bed sprites!
+  bandit:
+  - rscadd: Art now affects mood depending on its quality.
+  nemvar:
+  - rscadd: You can now craft a firebrand with two pieces of wood.
+2019-06-10:
+  81Denton:
+  - rscdel: Nurse spiders no longer spawn from gold slime core and life chemical reactions.
+  AnturK:
+  - rscadd: You can now view special server rules for your current character with
+      "Show Policy" verb in OOC tab
+  - rscadd: Hourglasses now available in library game vending machine.
+  Arkatos:
+  - tweak: Examine tooltips now work on items put into storage, such as backpacks
+  Couls:
+  - rscadd: suit sensors are now randomized when caught in an EMP
+  Joe Berry:
+  - rscadd: Player controlled megafauna support. Now if you control any megafauna,
+      or the space dragon, you have action buttons to choose the different moves you
+      can use.
+  - refactor: Fixed up megafauna code.
+  Naksu:
+  - code_imp: hearing code should now be more better
+  Skoglol:
+  - bugfix: Chem dispenser buttons are now sorted alphabetically again.
+  SuicidalPickles:
+  - tweak: EMP flashlights have had their cost changed to 4 telecrystals.
+  actioninja:
+  - rscadd: fireman carrying. Aggressive grab then click drag onto yourself.
+  - tweak: pulling prone mobs slows you down.
+  - tweak: carrying another human slows you down.
+  - tweak: pacifists can aggressive grab.
+  kittymaster0:
+  - tweak: Cleaned up Syndiebase after TC station removal.
+  nemvar:
+  - tweak: Shovels can now be stored in explorers webbing.
+  - balance: The sonic jackhammer can no longer be stored in the explorers webbing.
+  - rscadd: Dehydrated carp suicide.
+  - rscadd: Ethereals now have a stomach that stores their charge.
+  - bugfix: Ethereals are no longer immune to disgust.
+  - balance: Liquid electricity is now better at restoring charge to ethereals.
+  - rscadd: You can now craft bolas and spears with sinew restraints.
+  - tweak: Replaced the water tank in the ashlizard base with a puddle.
+  - rscadd: Nicotine now kills pest and add toxicity when added to a plant tray.
+2019-06-12:
+  4dplanner:
+  - balance: HoS gun has ion mode to replace taser mode, which fires weak ion bolts
+      (ion bolts with 0 heavy and light range)
+  - tweak: HoS gun now cycles disabler -> laser -> ion
+  - bugfix: spiral_range properly includes turf contents if dist = 0
+  - bugfix: weak ion bolts are no longer stronger than strong ion bolts
+  Mickyan:
+  - balance: Most high paying jobs have had their paychecks reduced
+  - balance: The payout bonus from the NEET quirk has been reduced
+  - code_imp: The maximum amount of departmental cash intake now has a hard cap
+  - code_imp: Economy subsistem vars are more sensibly named
+  Naksu:
+  - code_imp: small cleanup to id and bounty console html generation
+  Skoglol:
+  - tweak: Advanced surgical tools can now be found in the tool section with their
+      basic counterparts.
+  - tweak: Special .38 ammo now can be found in the ammo section with the other ammo
+      types.
+  - tweak: Create object admin tool enter key behaviour changed.
+  Tlaltecuhtli:
+  - refactor: 'how to make a custom primed grenade now: apply wire, apply beakers,
+      interact with the wire by multitool or hitting the grenade with an assembly,
+      attach assembly to wire.\n if its an proxy sensor when you prime it it ll activate
+      the activation mode of the sensor with whatever time it was set in the prox
+      sensor ( you can screwdrive to speed set it to 5 or 3 s)\n if its a timer it
+      ll change the det_time to whatever the timer had( you can screwdrive to speed
+      set it to 5 or 3 s)\n'
+  - bugfix: phazon construction message is fixed
+  - bugfix: attaching something to a mech wont auto select it
+  WJohnston:
+  - rscdel: The Daniel shuttle can no longer be purchased and is now admin only.
+  nemvar:
+  - bugfix: Phobias will no longer make you scared of yourself.
+  - rscadd: You can now make caramel by heating sugar. Be careful not to overcook
+      it.
+  - rscadd: Adjusted the candied apple recipe
+  spessbro:
+  - bugfix: fixed the hypertool and insuls book
+2019-06-13:
+  Tlaltecuhtli:
+  - tweak: surgical drapes and syringes can be printed by medlathe
+2019-06-14:
+  Citinited:
+  - bugfix: Fixes an exploit allowing you to move enabled emitters
+  Naksu:
+  - rscdel: Free nanomeds have been removed from mining capsules
+  WJohnston:
+  - bugfix: Having very high sanity no longer takes away your action speed bonus.
+  - bugfix: Sanity no longer constantly dips beyond its maximum/minimum, which caused
+      issues.
+  XDTM:
+  - bugfix: Decreased the cost of the advanced surgery node to 1500 from 2500, as
+      was intended when adding the Improved Wound Mending node.
+  - bugfix: Interrupting a surgery step or finishing a repeatable surgery step no
+      longer uses the tool on the target, attacking or forcefeeding them.
+  actioninja:
+  - tweak: Being fat is no longer lessened by flying
+  fludd12:
+  - bugfix: A bunch of minor issues with xenobiology are no more!
+  nemvar:
+  - rscadd: 'A new objective type: "Protect Object". Please use it at leasure for
+      badminnery.'
+  - rscadd: Ashlizards are now more savage and like stuff like sacrificing and head
+      spikes.
+  - bugfix: The "toggle open" verb from closets works now.
+2019-06-15:
+  Shaps/Ryll:
+  - tweak: NT has updated its personnel policies and allowed for employees to register
+      as gender neutral, with standard support for they/them pronouns.
+2019-06-16:
+  AffectedArc07:
+  - tweak: The jobs menu has been given a new coat of paint. Yay.
+  Arkatos:
+  - tweak: Jump to Node ability now shows a location of each Blob node
+  JJRcop:
+  - tweak: Airlocks open when items hit them
+  - rscdel: Removed the piping overlay from the Lifeform Stasis Unit
+  Naksu:
+  - rscdel: /datum/reagent/vanilla ice cream has been replaced with regular vanilla
+      ice cream in the borgs' treat fabricator
+  - bugfix: Spamming the "create virus culture bottle" button in the pandemic no longer
+      sometimes results in multiple bottles being created.
+  XDTM:
+  - bugfix: Breaking limbs with damage now properly makes you drop the item you're
+      holding with it.
+  europaisch:
+  - tweak: updated the miasma canister sprites
+  wesoda gamer the twenty fifth:
+  - tweak: changed text on gender options to make them grammatically correct and visually
+      pleasing
+2019-06-18:
+  4dplanner:
+  - balance: max stamina damage to the chest is now 120.
+  - bugfix: stamcrit and stuns now stack properly (stamcrit cleanse no longer cleanses
+      other stuns)
+  - bugfix: stam paralysis now ends instantly on healing stamina damage to below 100
+  - bugfix: stamina damage will no longer spam exhaustion messages if you are stunimmune
+  - tweak: stamcrit will still respect stun immunity, but not stun reduction (as it
+      has no well-defined duration).
+  AarontheIdiot:
+  - tweak: Changed the Syndibase walls to look more evil.
+  Akrilla:
+  - rscadd: Syndicate Contracts. Use the new contract uplink to select a contract,
+      and bring the assigned target dead or alive to the designated drop off. Call
+      for the extraction pod and send them off for your TC payment, with much higher
+      rewards for keeping them alive. A high risk, high reward choice for a traitor
+      who wants a real challenge.
+  - rscadd: New 20 TC contract kit - supplies you with your contractor loadout and
+      uplink.
+  - rscadd: Targets successfully extracted will be held for ransom by the Syndicate
+      after their use to them is fulfilled. Central command covers the cost, but they'll
+      be taking a cut out of station funds to offset their loss...
+  AnturK:
+  - rscadd: Recipe for fabled secret sauce can now be found in the deepest reaches
+      of space.
+  Naksu:
+  - rscdel: 'Removed mining points. Miners now earn cold hard cash in return for their
+      efforts. Their regular paycheck has been reduced to compensate for this extra
+      income. change: ORM laser upgrades now increase the yield rather than the amount
+      of mining points.'
+  - rscadd: Golems' mining IDs are now linked to the Liberator's account.
+  - tweak: Half of the gulag points earned go to the prisoner as cash and the other
+      half is put into the security budget, unless the prisoner's real ID is not in
+      the gulag reclamation console in which case the full sum is awarded to the prisoner.
+  - code_imp: Server maintenance subsystem now clears a handful of lists containing
+      players of nulls periodically
+  - bugfix: Electromagnetic web blob strain now has its in-game descriptions back.
+  - rscdel: Removed individual buttons text in crayon/spraycan UI, speeding it up.
+  - bugfix: Text mode buffer is actually visible in the UI.
+  - tweak: Last letter of a text mode buffer no longer rotates out to be replaced
+      with "a", allowing the text mode to be used for individual symbols.
+  Onule:
+  - imageadd: Corpse flowers have been given proper sprites
+  Rowell:
+  - rscdel: Removed black stockings
+  XDTM:
+  - rscadd: Cloners now have the option to "Empty Clone" a record, creating a mindless
+      replica of that person.
+  - rscadd: To aid the above function, cloners can now do Body-Only scans, which can
+      be used to create empty clones but not real clones, but bypass the sentience
+      restrictions on scans. They can also be deleted without requiring access.
+  - rscadd: Surgery steps are now shown in detail only to the surgeon and anyone standing
+      adjacent to them; the patient and people watching from further away get a more
+      vague/ambiguous description.
+  - bugfix: Reagents now stop their passive effects (for example, stun immunity) if
+      the liver stops working while they're active.
+  - bugfix: Beepskys spawned from Beepsky Smash can no longer be heard by bystanders.
+  - bugfix: The beepsky smash trauma can no longer be gained as a special trauma.
+  nemvar:
+  - rscadd: Added wooden farming implements to the ashwalker base.
+  - rscadd: Makes rakes and wooden buckets craftable.
+  - code_imp: Turns art into a component.
+  - bugfix: The mop can now be printed at the autolathe.
+  - imageadd: The smallstache beard now looks slightly less silly.
+  py01:
+  - balance: Various hivemind abilities have been changed.
+  wesoda25:
+  - imageadd: New Hygiene Sprite
+  zxaber:
+  - balance: Utility mechs no longer automatically get beacons.
+  - balance: Tracking beacons no longer delete themselves when EMPing a mech, and
+      instead have a ten-second cooldown in-between EMPs. They also now do heavy EMP
+      damage rather than light.
+  - balance: Mechs that take EMP damage lose the use of their weapons and equipment
+      temporarily. Movement and abilities are not effected.
+  - balance: Mechs taking EMP damage no longer roll for a random malfunction.
+2019-06-19:
+  ATHATH:
+  - balance: Doubled the damage of the bullets fired by the Finger Guns spell (from
+      the Guide to Advanced Mimery Vol 2 book) and the Reticence's unique carbine.
+  FrankFo:
+  - bugfix: If your name is a valid url, it won't be linkified in deadchat anymore.
+  Hulkamania:
+  - admin: IC button changed to clarify that the issue should be dealt with IC, not
+      display rule 10.
+  Naksu:
+  - code_imp: 'Resolved some #define overlap'
+  Tlaltecuhtli:
+  - bugfix: mortar grinds food
+  XDTM:
+  - rscadd: 'Added a new advanced surgery, Muscled Veins: it makes the patient able
+      to survive without a heart.'
+  - rscadd: Using the wrong surgery tool during surgery no longer attacks the patient,
+      if on help or disarm intent.
+  - bugfix: Fixed teleportation deleting mob spawners like golem shells and ashwalker
+      eggs.
+  YPOQ:
+  - bugfix: Fixed obsessed random event ignoring preferences
+  - bugfix: Fixed snails retaining their lube crawling after changing to a different
+      species
+  - bugfix: Fixed silicon items (e.g. cyborg modules) being destroyed by explosion
+      epicenters
+  - bugfix: Revenants will no longer be hit by projectiles while hidden
+  - bugfix: Fixed livers not being damaged by toxins
+  Zxaber:
+  - bugfix: Fixed all mechs being fire/lava proof.
+  actioninja:
+  - bugfix: borgs can properly carry incapacitated individuals
+  granpawalton:
+  - tweak: miasma now only spawns below 315 kpa
+  - bugfix: miasma now spawns at room temperature instead of 0 kelvin
+  nemvar:
+  - rscadd: Lavaland plants now have the fireproof gene.
+  - tweak: Napalm now always burns weeds, even if the plant is fireproof.
+  - bugfix: Lavaland plants now get their reagents from their genes.
+  - tweak: The lavaland clown ruin has some new pranks ready.
+  - tweak: Some changes to the lavaland hermits base and their starting equipment.
+  - bugfix: The 3d orange now gives you the proper seeds.
+  wesoda25:
+  - rscadd: Updates recon, stealth, hacker, bond, sabotage, mad scientist, bee, and
+      mr freeze bundles with several new items (most already in code) to make them
+      less trash.
+  - rscadd: Bee Sword (literally just a yellow, weaker esword variant, needed it for
+      another piece of code)
+  - rscadd: A weaker variant of the decloner gun.
+2019-06-21:
+  Arkatos:
+  - rscadd: Added SlimeHUD, which means slimes will have their own custom health display
+      indicator and red corner injury overlay
+  Naksu:
+  - refactor: Refactored examine-code
+  Tlaltecuhtli:
+  - rscadd: the bee syndicate kit now contains a rapier
+  XDTM:
+  - rscadd: Hypnosis and mind control now have alerts on the right side of the screen
+      when active.
+  - rscadd: Hovering over the hypnosis alert will display the hypno-phrase.
+  - rscadd: Clicking the mind control alert will display the order again.
+  - bugfix: Fixed not being able to uninstall Voice Sensor nanite programs from the
+      cloud console.
+  ike709:
+  - rscadd: IC chat can now be filtered via config to prevent things like netspeak
+      or anything else against the rules.
+  ninjanomnom:
+  - bugfix: Shuttles that go to a custom dock are no longer forever trapped by their
+      hubris
+2019-06-22:
+  4dplanner:
+  - bugfix: stamina damage instantly updates health
+  - bugfix: high amounts of other damage types in a limb will no longer make you stamina
+      damage resistant in that limb
+  - balance: stamina damage to limbs increased
+  - bugfix: legion core damage slowdown is temporary, like all things
+  Akrilla:
+  - rscadd: Adds a third random item, as well as a small guide on using the contract
+      kit. Also added new possible items that can appear.
+  - rscadd: Contractors now receive a small portion of the ransom into their equipped
+      ID.
+  - tweak: Supplied space suit in the contract kit is now an improved variant on the
+      normal Syndicate version.
+  - balance: TC payouts adjusted to be a bit more fair to the contractor. Total payout
+      can never be below a certain threshold.
+  - bugfix: Broken dropoff locations work again, and general bugfixes.
+  Dennok:
+  - bugfix: Cable layer work again.
+  Floyd / Qustinnus:
+  - rscadd: 'New scientist traitor item: Australian Slime Mutator / Spider Injector,
+      use it on a gold slime extract to create 3 neutral broodmother spiders, make
+      them sentient and start your own hive.'
+  Naksu:
+  - bugfix: Fixed some examine messages I broke earlier.
+  - tweak: Slightly refactored blob examine code, debris devourer blobstrain now shows
+      the acquired damage reduction for observers, the blob, and medhud owners.
+  Skoglol:
+  - bugfix: Fixed a slime runtime.
+  Tetr4:
+  - bugfix: Suicides are permanent for the nth time
+  Tlaltecuhtli:
+  - bugfix: refill for autodrobe and BODA work
+  - bugfix: fixes russian helmets not holding both a vodka and a glass
+  - bugfix: alt clicking the emitter now rotates it instead of only flipping
+  WJohnston:
+  - tweak: Build Your Own Shuttle kit has been made smaller, comes with construction
+      materials, and is pressurized.
+  - balance: Lowered value from -7500 to -2500. It still doesn't come with a brig
+      or console, so you cannot greentext antags or launch early.
+  XDTM:
+  - rscadd: Launchpads now gain 15 range instead of 1 when upgraded, up to a maximum
+      of 60.
+  - rscadd: Launchpads now have a targeting reticle which is visible on Diagnostic
+      HUD. It also indicates if the launchpad is currently sending or receiving.
+  - tweak: Launchpad Consoles now use TGUI and are far more responsive. They can also
+      set their coordinate offsets manually instead of only using arrows.
+  actioninja and wjohn:
+  - rscadd: Cables have been completely reworked. Simple per tile connection logic,
+      automatically connects to things above it. Think minecraft redstone.
+  - rscadd: 'Old cables have been kept as pipe cleaner. They are non-functional in
+      terms of power, but otherwise have the same connection logic. Also can go on
+      top of tiles. remove: mech cable layer has been removed because it was terrible
+      shitcode nobody used'
+  - tweak: (sort of balance) cable stack sized has been reduced to 15.
+  nemvar:
+  - balance: The staff of the honkmother now slips people. Honk.
+  - bugfix: The CNS rebooter now purges stuns after 4 seconds of not being stunned,
+      instead of doing nothing.
+  - bugfix: Cult teleport rune will no longer teleport ghosts or camera mobs.
+  - tweak: Nar'Sie now EMPs mechs, instead of turning the pilot into a harvester.
+  nicbn:
+  - bugfix: Icons will no longer extend past cryo.
+  - imagedel: Xenos and monkeys no longer have snowflake icons for cryo.
+  optimum wesoda:
+  - imageadd: Sprites for Meat and Chaos Donuts
+2019-06-23:
+  bgobandit:
+  - rscadd: After receiving many complaints about mimes who never pantomime, Nanotrasen
+      has liquidated its mime personnel and hired new mimes who know more routines.
+  - rscadd: 'The mime gets the choice of two new spells: Invisible Chair and Invisible
+      Box. They work much like the Invisible Wall spell does and disappear after a
+      short span of time. The invisible chair can be buckled to like usual chairs;
+      the box works like a standard inventory box item.'
+  - tweak: Mime spells are now granted via a spellbook that starts out in the mime's
+      inventory. Mimes can choose one of these three.
+2019-06-25:
+  Arkatos:
+  - rscadd: Action buttons can now be dragged onto each other to swap places
+  Arkatos1:
+  - imageadd: Normal carps now spawn with a random color! There might even be some
+      really rare color variant.. try asking Cayenne about it.
+  Fikou:
+  - rscadd: 'NEWS REPORT: The latest alien technology allows them to abduct cows instantly,
+      this is a great tragedy for all farm owners, better watch the garden!'
+  - bugfix: Centcom's Death Commando got a paycheck and jumpsuits of quality more
+      similar to the rest of Centcom's staf- KS13 DOESN'T EXIST, THERE IS NO SUCH
+      THING AS A DEATH COMMANDO
+  Floyd / Qustinnus:
+  - balance: the bag of holding now requires a higher level of research to be unlocked
+      as well as janitor tech (trashbags of holding)
+  - balance: the bluespace bodybag is now unlocked with mini BS research
+  Jerry Derpington, baldest of the balds:
+  - rscdel: Nanotrasen has lost communication to two away mission sites that contained
+      a beach for Nanotrasen employees.
+  - rscadd: Nanotrasen has been able to locate a new away mission site that ALSO has
+      a beach. Nanotrasen employees will be able to enjoy the beach after all!
+  Jgta4444:
+  - bugfix: Dna scanner now correctly calculate its precision coefficient
+  Skoglol:
+  - bugfix: Slimes should now feed properly again.
+  TetraK1:
+  - bugfix: Suiciding with an anomaly core kills you properly
+  - rscadd: Service borgs get pipe cleaners for wire art
+  - rscadd: you can altclick to pull up pipe cleaners
+  - bugfix: Fixed cutting and joining pipe cleaners on floor tiles
+  Trilbyspaceclone and nemvar:
+  - rscadd: You can now craft more fancy boxes with cardboard.
+  XDTM:
+  - bugfix: Antimagic items now also properly work when held in hand, instead of only
+      when equipped.
+  - bugfix: Fixed abductor scientists not being able to perform advanced surgery.
+  - tweak: Quantum teleportation now makes pretty rainbow sparks instead of the normal
+      ones.
+  - bugfix: Non-bluespace teleportation (spells etc.) no longer makes sparks.
+  imsxz:
+  - balance: diseases from miasma now become stronger the more miasma there is in
+      the air
+  nemvar:
+  - rscdel: Removed all sleepers from escape shuttles and replaced them with stasis
+      units. Some shuttles have gotten surgery and new medical vendors added.
+  spookydonut:
+  - admin: Removes shuttle manipulator.
+2019-06-26:
+  123chess456:
+  - rscadd: Non-binary changelings will now have the honorific "Mx." instead of "Mr.",
+      reflecting the Syndicate's growing acceptance of non-binary operatives.
+  FlufflyCthulu:
+  - bugfix: Fixes an issue with clown hulk simple mobs
+  Naksu:
+  - rscadd: Mining base now has a common area accessible via a new shuttle on the
+      medium-highpop maps, and a security office connecting the gulag and the mining
+      base. Gulag also has functional atmos.
+  jcll:
+  - bugfix: added geo-bypass
+  kriskog:
+  - bugfix: Space heaters no longer steal focus upon screwdrivering.
+  nemvar:
+  - bugfix: The enchanted bolt action rifle
+  - imageadd: Blood barrage has a new projectile icon.
+  - code_imp: Fixed an arcane barrage runtime
+  - rscadd: The bee sabre now has it's own suicide and no longer uses the one of the
+      captains rapier.
+  - bugfix: The bee sabre uses the correct articles and actually has icons now.
+2019-06-27:
+  Naksu:
+  - bugfix: Fixed a couple of map issues in DeltaStation
+  actioninja:
+  - bugfix: removed mech rcl from the research node so it stops spamming a warning
+      in log
+  - bugfix: cables now disconnect machines when cut
+  - bugfix: terminal linking/not linking behavior with smeses has been improved
+  - bugfix: couple of small mapping fixes
+  - tweak: changed cable coils back to 30
+  - tweak: changed the box smes room a little to prevent stacking terminals
+  - tweak: removed the rpcl from engineering on every map because it's not used for
+      wiring anymore
+2019-06-29:
+  81Denton:
+  - bugfix: Incomplete and non-teleport reactive armors can no longer be used to complete
+      the traitor objective.
+  AffectedArc07:
+  - rscadd: You can now link your ingame account to your discord account
+  - rscadd: You can now set notify status ingame, and be notified on discord when
+      a round restarts
+  - admin: There is now an admin panel to lookup IDs to ckeys, and vice versa
+  Akrilla:
+  - bugfix: Fix bad icon state for bounty console printouts
+  - rscadd: Contract kit's specialist space suit now has its custom sprite.
+  - rscadd: Assigning to tablet now plays greeting soundclip.
+  AnturK:
+  - tweak: Quirks no longer apply to off-station roundstart antagonists.
+  CobbyzzzZzzz:
+  - balance: Stasis are now the second best option for surgery probability (surgical
+      tables are still number 1)
+  JJRcop:
+  - bugfix: Stasis lets reagents know processing was stopped, fixing some issues.
+  - tweak: Amanitin's damage only triggers when it is completely removed from your
+      system, not when processing stops.
+  JJRcop and Bobbahbrown:
+  - tweak: When attempting to say a blocked word in character you will be notified
+      which ones were blocked.
+  Krysonism:
+  - tweak: player added items now appear above the standard selection in vending machines.
+  MCterra10:
+  - bugfix: database requests for admins no longer fail on MySQL version > 8.0.2
+  Mickyan:
+  - rscadd: DIY Dish Drive Kit now available at your local bardrobe. Start saving
+      those tips!
+  - tweak: The Dish Drive no longer sends reusable items into the disposal bin
+  Shaps/Ryll:
+  - tweak: Mosin Nagants are now bulky, but can be sawed off to fit in a bag
+  ShizCalev:
+  - bugfix: Setting a defibrillator unit on fire will now make it's paddles appear
+      on fire too when pulled out!
+  - bugfix: Setting defibrillator paddles on fire will now cause the flames to run
+      along it's cables and set the main unit on fire as well.
+  Skoglol:
+  - rscadd: Heaters/freezers now support ctrl clicking to turn on and alt clicking
+      to min/max target temperature.
+  - rscadd: Heaters/freezers now shows target temperature and part status on examine.
+  Tetr4:
+  - bugfix: Turning a tile with gas effects into space now gets rid of the effects.
+  Tlaltecuhtli:
+  - code_imp: Health sensor no longer displays a giant window with 1 button on it,
+      instead can change states with alt click and use in hand.
+  - bugfix: the TB antidotes injectors now actually cure TB and have some omnizine
+      so you dont die from perfluoride
+  - tweak: stacks no longer give you a pop up window when you alt click on one on
+      the floor
+  Twaticus:
+  - rscadd: added department skirts
+  - bugfix: fixed secskirt dixel
+  XDTM:
+  - rscadd: Added a new abductor gland that randomizes blood type into a random reagent
+      periodically.
+  - rscadd: Added a new abductor gland that links to other people, and swaps their
+      position with the owner. Mind control on this gland will affect the linked person.
+  - rscadd: Added a new abductor gland that grants all access to the owner.
+  - bugfix: Abductor scientists can now properly see the true name of glands when
+      examining them.
+  - rscadd: Mind control on mindshock glands now "broadcasts" the mind control, affecting
+      bystanders but not the abductee.
+  - tweak: Species gland now has 7 mind control uses, instead of 5 (duration is still
+      30 seconds).
+  - bugfix: Viral healing symptoms that are tied to reagents now also require a functioning
+      liver to work.
+  - tweak: Holy water, Pyrosium, Cryostilane, Napalm and Phlogiston no longer need
+      a liver to have their effects.
+  YPOQ:
+  - bugfix: Monkeys can wear collars again
+  bobbahbrown:
+  - tweak: Deaths are now logged to the game log.
+  kittymaster0:
+  - rscadd: gives scientists a chance to spawn with an awesome tie
+  nemvar:
+  - code_imp: Replaced most instances where cables referenced their maximum size with
+      a define
+  - bugfix: Turned off energy weapons can no longer cut down trees, destroy wooden
+      walls, harvest lavaland plants and make planks.
+  - refactor: get_eye_protection and get_ear_protection now looks less ugly.
+  ninjanomnom:
+  - rscadd: Lavaland atmos is no longer a preset gas mixture and varies per round
+  - tweak: Bonfire minimum oxygen content has been reduced
+  partykp:
+  - tweak: replaced the lower disposal bin in chemistry with a glass table and put
+      half of the top table contents on it (metastation).
+  plapatin, sprites by cogwerks and edited by mrdoombringer:
+  - rscadd: vomi/tg/oose
+  zxaber:
+  - balance: Mecha ballistics weapons now require ammo created from an Exosuit Fabricator
+      or the Security Protolathe, though they will start with a full magazine and
+      in most cases enough for one full reload. Reloading these weapons no longer
+      chunks your power cell. Clown (and mime) mecha equipment have not changed.
+  - balance: The SRM-8 Missile Launcher has been replaced with the BRM-6 Breaching
+      Missile Launcher in techwebs (Nukie Mauler remains equipped with the SRM-8).
+  - balance: Both Missile Launchers and the Clusterbang Launcher do not have an ammo
+      cache, and cannot be reloaded by the pilot. Once the initial loaded ammo has
+      been spent, you can use the appropriate ammo box to load the weapon directly.
+  - rscadd: Utility mechs that have a clamp equipped can load ammo from their own
+      cargo hold into other mechs.
+  - rscadd: Nuke Ops can purchase spare ammo duffel bags for their mecha weapons,
+      should they run low.
+2019-06-30:
+  Yakumo Chen:
+  - balance: Nar'Sie plushes have been purged of their heretical stuffing and can't
+      be used to invoke runes any more.

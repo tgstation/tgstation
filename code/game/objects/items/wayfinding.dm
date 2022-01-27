@@ -9,10 +9,11 @@
 	desc = "A machine given the thankless job of trying to sell wayfinding pinpointers. They point to common locations."
 	density = FALSE
 	layer = HIGH_OBJ_LAYER
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, RAD = 0, FIRE = 100, ACID = 80)
+	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
 	payment_department = ACCOUNT_CIV
 	light_power = 0.5
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	speech_span = SPAN_ROBOT
 	///List of user-specific cooldowns to prevent pinpointer spam.
 	var/list/user_spawn_cooldowns = list()
 	///List of user-specific cooldowns to prevent message spam.
@@ -89,13 +90,14 @@
 	say(slogan)
 	COOLDOWN_START(src, next_slogan_tick, COOLDOWN_SLOGAN)
 
-/obj/machinery/pinpointer_dispenser/Destroy()
+//Do this when someone breaks you/blows you up. The bombs are funny
+/obj/machinery/pinpointer_dispenser/deconstruct()
 	for(var/i in 1 to rand(3, 9)) //Doesn't synthesise them in real time and instead stockpiles completed ones (though this is not how the cooldown works)
 		new /obj/item/pinpointer/wayfinding (loc)
 	say("Ouch.")
 	//An inexplicable explosion is never not funny plus it kind of explains why the machine just disappears
 	if(!isnull(loc))
-		explosion(get_turf(src), devastation_range = 0, heavy_impact_range = 0, light_impact_range = 1, flash_range = 3, flame_range = 1, smoke = TRUE)
+		explosion(src, light_impact_range = 1, flame_range = 1, flash_range = 3, smoke = TRUE)
 	return ..()
 
 /obj/machinery/pinpointer_dispenser/attack_hand(mob/living/user, list/modifiers)
@@ -106,14 +108,14 @@
 
 	if(world.time < user_interact_cooldowns[user.real_name])
 		set_expression("veryhappy", 2 SECONDS)
-		to_chat(user, "<span class='notice'>It just grins at you. Maybe you should give it a bit?</span>") //telling instead of showing but I'm lazy
+		to_chat(user, span_notice("It just grins at you. Maybe you should give it a bit?")) //telling instead of showing but I'm lazy
 		return
 
 	user_interact_cooldowns[user.real_name] = world.time + COOLDOWN_INTERACT
 
-	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.GetAllContents())
+	for(var/obj/item/pinpointer/wayfinding/held_pinpointer in user.get_all_contents())
 		set_expression("veryhappy", 2 SECONDS)
-		say("<span class='robot'>You already have a pinpointer!</span>")
+		say("You already have a pinpointer!")
 		return
 
 	var/msg
@@ -125,7 +127,7 @@
 
 	if(pnpts_found)
 		set_expression("veryhappy", 2 SECONDS)
-		say("<span class='robot'>[pnpts_found == 1 ? "There's a pinpointer" : "There are pinpointers"] there!</span>")
+		say("[pnpts_found == 1 ? "There's a pinpointer" : "There are pinpointers"] there!")
 		return
 
 	if(world.time < user_spawn_cooldowns[user.real_name])
@@ -147,10 +149,10 @@
 
 	if(!dispense)
 		set_expression("sad", 2 SECONDS)
-		say("<span class='robot'>Sorry, [user.first_name()]! You'll need [msg]!</span>")
+		say("Sorry, [user.first_name()]! You'll need [msg]!")
 	else
 		set_expression("veryhappy", 2 SECONDS)
-		say("<span class='robot'>Here's your pinpointer!</span>")
+		say("Here's your pinpointer!")
 		var/obj/item/pinpointer/wayfinding/P = new /obj/item/pinpointer/wayfinding(get_turf(src))
 		user_spawn_cooldowns[user.real_name] = world.time + COOLDOWN_SPAWN
 		user.put_in_hands(P)
@@ -168,14 +170,14 @@
 			itsmypinpointer = FALSE
 
 		var/is_a_thing = "are [refund_amt] credit\s."
-		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !attacking_pinpointer.roundstart)
+		if(refund_amt > 0 && synth_acc.has_money(refund_amt) && !attacking_pinpointer.from_quirk)
 			synth_acc.adjust_money(-refund_amt)
 			var/obj/item/holochip/holochip = new (user.loc)
 			holochip.credits = refund_amt
 			holochip.name = "[holochip.credits] credit holochip"
 			user.put_in_hands(holochip)
 		else if(!itsmypinpointer)
-			var/costume = pick(subtypesof(/obj/effect/spawner/bundle/costume))
+			var/costume = pick(subtypesof(/obj/effect/spawner/costume))
 			new costume(user.loc)
 			is_a_thing = "is a freshly synthesised costume!"
 			if(prob(funnyprob))
@@ -191,11 +193,11 @@
 		if(!itsmypinpointer)
 			the_pinpointer = "that pinpointer"
 
-		to_chat(user, "<span class='notice'>You put [attacking_pinpointer] in the return slot.</span>")
+		to_chat(user, span_notice("You put [attacking_pinpointer] in the return slot."))
 		qdel(attacking_pinpointer)
 
 		set_expression("veryhappy", 2 SECONDS)
-		say("<span class='robot'>Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]</span>")
+		say("Thank you for [recycling] [the_pinpointer]! Here [is_a_thing]")
 		return
 
 	else if(istype(I, /obj/item/pinpointer))
@@ -205,7 +207,7 @@
 		//Any other type of pinpointer can make it throw up.
 		if(COOLDOWN_FINISHED(src, next_spew_tick))
 			I.forceMove(loc)
-			visible_message("<span class='warning'>[src] smartly rejects [I].</span>")
+			visible_message(span_warning("[src] smartly rejects [I]."))
 			say("BLEURRRRGH!")
 			I.throw_at(user, 2, 3)
 			COOLDOWN_START(src, next_spew_tick, COOLDOWN_SPEW)
@@ -230,7 +232,7 @@
 
 /obj/machinery/pinpointer_dispenser/point_at(A)
 	. = ..()
-	visible_message("<span class='name'>[src]</span> points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]")
+	visible_message("<span class='emote'>[span_name("[src]")] points at [A]. [prob(funnyprob) ? "How'd it do that?" : ""]</span>")
 
 //Pinpointer itself
 /obj/item/pinpointer/wayfinding //Help players new to a station find their way around
@@ -240,39 +242,43 @@
 	worn_icon_state = "pinpointer_way"
 	var/owner = null
 	var/list/beacons = list()
-	var/roundstart = FALSE
+	var/from_quirk = FALSE
 
 /obj/item/pinpointer/wayfinding/attack_self(mob/living/user)
 	if(active)
 		toggle_on()
-		to_chat(user, "<span class='notice'>You deactivate your pinpointer.</span>")
+		to_chat(user, span_notice("You deactivate your pinpointer."))
 		return
 
 	if (!owner)
 		owner = user.real_name
 
-	if(beacons.len)
+	if(length(beacons))
 		beacons.Cut()
 	for(var/obj/machinery/navbeacon/B in GLOB.wayfindingbeacons)
 		beacons[B.codes["wayfinding"]] = B
 
-	if(!beacons.len)
-		to_chat(user, "<span class='notice'>Your pinpointer fails to detect a signal.</span>")
+	if(!length(beacons))
+		to_chat(user, span_notice("Your pinpointer fails to detect a signal."))
 		return
 
-	var/A = input(user, "", "Pinpoint") as null|anything in sortList(beacons)
-	if(!A || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+	var/wayfind_target = tgui_input_list(user, "Select a location", "Pinpoint", sort_list(beacons))
+	if(isnull(wayfind_target))
 		return
-
-	target = beacons[A]
+	if(isnull(beacons[wayfind_target]))
+		to_chat(user, span_warning("Your pinpointer fails to detect a signal."))
+		return
+	if(QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated())
+		return
+	target = beacons[wayfind_target]
 	toggle_on()
-	to_chat(user, "<span class='notice'>You activate your pinpointer.</span>")
+	to_chat(user, span_notice("You activate your pinpointer."))
 
 /obj/item/pinpointer/wayfinding/examine(mob/user)
 	. = ..()
 	var/msg = "Its tracking indicator reads "
 	if(target)
-		var/obj/machinery/navbeacon/wayfinding/B  = target
+		var/obj/machinery/navbeacon/wayfinding/B = target
 		msg += "\"[B.codes["wayfinding"]]\"."
 	else
 		msg = "Its tracking indicator is blank."

@@ -57,8 +57,8 @@
 	tool_behaviour = TOOL_CAUTERY
 	toolspeed = 1
 
-/obj/item/cautery/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>[user] touches the end of [src] to \the [A], igniting it with a puff of smoke.</span>"
+/obj/item/cautery/ignition_effect(atom/ignitable_atom, mob/user)
+	. = span_notice("[user] touches the end of [src] to \the [ignitable_atom], igniting it with a puff of smoke.")
 
 /obj/item/cautery/augment
 	desc = "A heated element that cauterizes wounds."
@@ -68,28 +68,40 @@
 	name = "searing tool"
 	desc = "It projects a high power laser used for medical applications."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cautery_a"
+	icon_state = "e_cautery"
+	custom_materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	hitsound = 'sound/items/welder.ogg'
 	toolspeed = 0.7
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_color = COLOR_SOFT_RED
 
+/obj/item/cautery/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/cautery/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/weapons/tap.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_CAUTERY)
-		tool_behaviour = TOOL_DRILL
-		to_chat(user, "<span class='notice'>You dilate the lenses of [src], it is now in drilling mode.</span>")
-		icon_state = "surgicaldrill_a"
-	else
-		tool_behaviour = TOOL_CAUTERY
-		to_chat(user, "<span class='notice'>You focus the lenses of [src], it is now in mending mode.</span>")
-		icon_state = "cautery_a"
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between drill and cautery and gives feedback to the user.
+ */
+/obj/item/cautery/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_DRILL : TOOL_CAUTERY)
+	balloon_alert(user, "lenses set to [active ? "drill" : "mend"]")
+	playsound(user ? user : src, 'sound/weapons/tap.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/cautery/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_CAUTERY ? "mending" : "drilling"] mode.")
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -101,7 +113,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL | EYE_STAB
+	item_flags = SURGICAL_TOOL
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("drills")
@@ -112,8 +124,12 @@
 	wound_bonus = 10
 	bare_wound_bonus = 10
 
+/obj/item/surgicaldrill/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/eyestab)
+
 /obj/item/surgicaldrill/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] rams [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to commit suicide!"))
 	addtimer(CALLBACK(user, /mob/living/carbon.proc/gib, null, null, TRUE, TRUE), 25)
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
@@ -135,7 +151,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	inhand_icon_state = "scalpel"
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL | EYE_STAB
+	item_flags = SURGICAL_TOOL
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -148,19 +164,20 @@
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
-	wound_bonus = 15
+	wound_bonus = 10
 	bare_wound_bonus = 15
 
-/obj/item/scalpel/Initialize()
+/obj/item/scalpel/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+	AddElement(/datum/element/eyestab)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."
 	toolspeed = 0.5
 
 /obj/item/scalpel/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 
@@ -172,7 +189,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/weapons/circsawhit.ogg'
-	mob_throw_hit_sound =  'sound/weapons/pierce.ogg'
+	mob_throw_hit_sound = 'sound/weapons/pierce.ogg'
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
 	force = 15
@@ -189,7 +206,7 @@
 	wound_bonus = 15
 	bare_wound_bonus = 10
 
-/obj/item/circular_saw/Initialize()
+/obj/item/circular_saw/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
@@ -213,7 +230,7 @@
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator, null)
+	AddElement(/datum/element/surgery_initiator)
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -224,20 +241,20 @@
 	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
 
-/obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
+/obj/item/surgical_processor/afterattack(obj/item/design_holder, mob/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
-	if(istype(O, /obj/item/disk/surgery))
-		to_chat(user, "<span class='notice'>You load the surgery protocol from [O] into [src].</span>")
-		var/obj/item/disk/surgery/D = O
-		if(do_after(user, 10, target = O))
-			advanced_surgeries |= D.surgeries
+	if(istype(design_holder, /obj/item/disk/surgery))
+		to_chat(user, span_notice("You load the surgery protocol from [design_holder] into [src]."))
+		var/obj/item/disk/surgery/surgery_disk = design_holder
+		if(do_after(user, 10, target = design_holder))
+			advanced_surgeries |= surgery_disk.surgeries
 		return TRUE
-	if(istype(O, /obj/machinery/computer/operating))
-		to_chat(user, "<span class='notice'>You copy surgery protocols from [O] into [src].</span>")
-		var/obj/machinery/computer/operating/OC = O
-		if(do_after(user, 10, target = O))
+	if(istype(design_holder, /obj/machinery/computer/operating))
+		to_chat(user, span_notice("You copy surgery protocols from [design_holder] into [src]."))
+		var/obj/machinery/computer/operating/OC = design_holder
+		if(do_after(user, 10, target = design_holder))
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
@@ -246,7 +263,8 @@
 	name = "laser scalpel"
 	desc = "An advanced scalpel which uses laser technology to cut."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "scalpel_a"
+	icon_state = "e_scalpel"
+	custom_materials = list(/datum/material/iron = 6000, /datum/material/glass = 1500, /datum/material/silver = 2000, /datum/material/gold = 1500, /datum/material/diamond = 200, /datum/material/titanium = 4000)
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.7
@@ -255,47 +273,75 @@
 	light_color = LIGHT_COLOR_GREEN
 	sharpness = SHARP_EDGED
 
+/obj/item/scalpel/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force + 1, \
+		throwforce_on = throwforce, \
+		throw_speed_on = throw_speed, \
+		sharpness_on = sharpness, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-/obj/item/scalpel/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/machines/click.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_SCALPEL)
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between saw and scalpel and updates the light / gives feedback to the user.
+ */
+/obj/item/scalpel/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	if(active)
 		tool_behaviour = TOOL_SAW
-		to_chat(user, "<span class='notice'>You increase the power of [src], now it can cut bones.</span>")
 		set_light_range(2)
-		force += 1 //we don't want to ruin sharpened stuff
-		icon_state = "saw_a"
 	else
 		tool_behaviour = TOOL_SCALPEL
-		to_chat(user, "<span class='notice'>You lower the power of [src], it can no longer cut bones.</span>")
 		set_light_range(1)
-		force -= 1
-		icon_state = "scalpel_a"
+
+	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
+	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/scalpel/advanced/examine()
 	. = ..()
-	. += " It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode."
+	. += span_notice("It's set to [tool_behaviour == TOOL_SCALPEL ? "scalpel" : "saw"] mode.")
 
 /obj/item/retractor/advanced
 	name = "mechanical pinches"
 	desc = "An agglomerate of rods and gears."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "retractor_a"
+	custom_materials = list(/datum/material/iron = 12000, /datum/material/glass = 4000, /datum/material/silver = 4000, /datum/material/titanium = 5000)
+	icon_state = "adv_retractor"
 	toolspeed = 0.7
 
-/obj/item/retractor/advanced/attack_self(mob/user)
-	playsound(get_turf(user), 'sound/items/change_drill.ogg', 50, TRUE)
-	if(tool_behaviour == TOOL_RETRACTOR)
-		tool_behaviour = TOOL_HEMOSTAT
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in hemostat mode.</span>")
-		icon_state = "hemostat_a"
-	else
-		tool_behaviour = TOOL_RETRACTOR
-		to_chat(user, "<span class='notice'>You configure the gears of [src], they are now in retractor mode.</span>")
-		icon_state = "retractor_a"
+/obj/item/retractor/advanced/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/transforming, \
+		force_on = force, \
+		throwforce_on = throwforce, \
+		hitsound_on = hitsound, \
+		w_class_on = w_class, \
+		clumsy_check = FALSE)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+
+/*
+ * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
+ *
+ * Toggles between retractor and hemostat and gives feedback to the user.
+ */
+/obj/item/retractor/advanced/proc/on_transform(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+
+	tool_behaviour = (active ? TOOL_HEMOSTAT : TOOL_RETRACTOR)
+	balloon_alert(user, "gears set to [active ? "clamp" : "retract"]")
+	playsound(user ? user : src, 'sound/items/change_drill.ogg', 50, TRUE)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 
 /obj/item/retractor/advanced/examine()
 	. = ..()
-	. += " It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"]."
+	. += span_notice("It resembles a [tool_behaviour == TOOL_RETRACTOR ? "retractor" : "hemostat"].")
 
 /obj/item/shears
 	name = "amputation shears"
@@ -304,7 +350,7 @@
 	icon_state = "shears"
 	flags_1 = CONDUCT_1
 	item_flags = SURGICAL_TOOL
-	toolspeed  = 1
+	toolspeed = 1
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 6
@@ -316,17 +362,17 @@
 	sharpness = SHARP_EDGED
 	custom_premium_price = PAYCHECK_MEDIUM * 14
 
-/obj/item/shears/attack(mob/living/M, mob/living/user)
-	if(!iscarbon(M) || user.combat_mode)
+/obj/item/shears/attack(mob/living/amputee, mob/living/user)
+	if(!iscarbon(amputee) || user.combat_mode)
 		return ..()
 
 	if(user.zone_selected == BODY_ZONE_CHEST)
 		return ..()
 
-	var/mob/living/carbon/patient = M
+	var/mob/living/carbon/patient = amputee
 
 	if(HAS_TRAIT(patient, TRAIT_NODISMEMBER))
-		to_chat(user, "<span class='warning'>The patient's limbs look too sturdy to amputate.</span>")
+		to_chat(user, span_warning("The patient's limbs look too sturdy to amputate."))
 		return
 
 	var/candidate_name
@@ -336,20 +382,20 @@
 	if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
 		tail_snip_candidate = patient.getorganslot(ORGAN_SLOT_TAIL)
 		if(!tail_snip_candidate)
-			to_chat(user, "<span class='warning'>[patient] does not have a tail.</span>")
+			to_chat(user, span_warning("[patient] does not have a tail."))
 			return
 		candidate_name = tail_snip_candidate.name
 
 	else
 		limb_snip_candidate = patient.get_bodypart(check_zone(user.zone_selected))
 		if(!limb_snip_candidate)
-			to_chat(user, "<span class='warning'>[patient] is already missing that limb, what more do you want?</span>")
+			to_chat(user, span_warning("[patient] is already missing that limb, what more do you want?"))
 			return
 		candidate_name = limb_snip_candidate.name
 
 	var/amputation_speed_mod = 1
 
-	patient.visible_message("<span class='danger'>[user] begins to secure [src] around [patient]'s [candidate_name].</span>", "<span class='userdanger'>[user] begins to secure [src] around your [candidate_name]!</span>")
+	patient.visible_message(span_danger("[user] begins to secure [src] around [patient]'s [candidate_name]."), span_userdanger("[user] begins to secure [src] around your [candidate_name]!"))
 	playsound(get_turf(patient), 'sound/items/ratchet.ogg', 20, TRUE)
 	if(patient.stat >= UNCONSCIOUS || HAS_TRAIT(patient, TRAIT_INCAPACITATED)) //if you're incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly line up a snip
 		amputation_speed_mod *= 0.5
@@ -363,10 +409,10 @@
 			tail_snip_candidate.forceMove(get_turf(patient))
 		else
 			limb_snip_candidate.dismember()
-		user.visible_message("<span class='danger'>[src] violently slams shut, amputating [patient]'s [candidate_name].</span>", "<span class='notice'>You amputate [patient]'s [candidate_name] with [src].</span>")
+		user.visible_message(span_danger("[src] violently slams shut, amputating [patient]'s [candidate_name]."), span_notice("You amputate [patient]'s [candidate_name] with [src]."))
 
 /obj/item/shears/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is pinching [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/timer = 1 SECONDS
 	for(var/obj/item/bodypart/thing in user.bodyparts)
 		if(thing.body_part == CHEST)
@@ -404,6 +450,6 @@
 	item_flags = SURGICAL_TOOL
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb_continuous = list("pumps", "siphons")
-	attack_verb_simple = list("pumps", "siphons")
+	attack_verb_simple = list("pump", "siphon")
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1

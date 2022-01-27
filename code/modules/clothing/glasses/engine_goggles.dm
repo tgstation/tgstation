@@ -3,26 +3,28 @@
 #define MODE_NONE ""
 #define MODE_MESON "meson"
 #define MODE_TRAY "t-ray"
-#define MODE_RAD "radiation"
 #define MODE_SHUTTLE "shuttle"
+#define MODE_PIPE_CONNECTABLE "connectable"
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode lets you see objects contaminated by radiation."
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls and the T-ray Scanner mode lets you see underfloor objects such as cables and pipes."
 	icon_state = "trayson-meson"
 	inhand_icon_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
+	gender = PLURAL
 
 	vision_flags = NONE
 	darkness_view = 2
 	invis_view = SEE_INVISIBLE_LIVING
 
-	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_RAD, MODE_RAD = MODE_NONE)
+	var/list/modes = list(MODE_NONE = MODE_MESON, MODE_MESON = MODE_TRAY, MODE_TRAY = MODE_NONE)
 	var/mode = MODE_NONE
 	var/range = 1
+	var/list/connection_images = list()
 
-/obj/item/clothing/glasses/meson/engine/Initialize()
+/obj/item/clothing/glasses/meson/engine/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_appearance()
@@ -38,7 +40,8 @@
 /obj/item/clothing/glasses/meson/engine/proc/toggle_mode(mob/user, voluntary)
 	mode = modes[mode]
 	to_chat(user, "<span class='[voluntary ? "notice":"warning"]'>[voluntary ? "You turn the goggles":"The goggles turn"] [mode ? "to [mode] mode":"off"][voluntary ? ".":"!"]</span>")
-
+	if(connection_images.len)
+		connection_images.Cut()
 	switch(mode)
 		if(MODE_MESON)
 			vision_flags = SEE_TURFS
@@ -52,8 +55,8 @@
 			lighting_alpha = null
 			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
-		if(MODE_RAD)
-			change_glass_color(user, /datum/client_colour/glass_colour/lightgreen)
+		if(MODE_PIPE_CONNECTABLE)
+			change_glass_color(user, /datum/client_colour/glass_colour/lightblue)
 
 		if(MODE_SHUTTLE)
 			change_glass_color(user, /datum/client_colour/glass_colour/red)
@@ -67,9 +70,7 @@
 			H.update_sight()
 
 	update_appearance()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+	update_action_buttons()
 
 /obj/item/clothing/glasses/meson/engine/attack_self(mob/user)
 	toggle_mode(user, TRUE)
@@ -83,34 +84,10 @@
 	switch(mode)
 		if(MODE_TRAY)
 			t_ray_scan(user, 8, range)
-		if(MODE_RAD)
-			show_rads()
 		if(MODE_SHUTTLE)
 			show_shuttle()
-
-/obj/item/clothing/glasses/meson/engine/proc/show_rads()
-	var/mob/living/carbon/human/user = loc
-	var/list/rad_places = list()
-	for(var/datum/component/radioactive/thing in SSradiation.processing)
-		var/atom/owner = thing.parent
-		var/turf/place = get_turf(owner)
-		if(rad_places[place])
-			rad_places[place] += thing.strength
-		else
-			rad_places[place] = thing.strength
-
-	for(var/i in rad_places)
-		var/turf/place = i
-		if(get_dist(user, place) >= range*5) //Rads are easier to see than wires under the floor
-			continue
-		var/strength = round(rad_places[i] / 1000, 0.1)
-		var/image/pic = image(loc = place)
-		var/mutable_appearance/MA = new()
-		MA.maptext = MAPTEXT("[strength]k")
-		MA.color = "#04e604"
-		MA.plane = RAD_TEXT_PLANE
-		pic.appearance = MA
-		flick_overlay(pic, list(user.client), 10)
+		if(MODE_PIPE_CONNECTABLE)
+			show_connections()
 
 /obj/item/clothing/glasses/meson/engine/proc/show_shuttle()
 	var/mob/living/carbon/human/user = loc
@@ -130,6 +107,30 @@
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
 			flick_overlay(pic, list(user.client), 8)
 
+/obj/item/clothing/glasses/meson/engine/proc/show_connections()
+	var/mob/living/carbon/human/user = loc
+
+	for(var/obj/machinery/atmospherics/pipe/smart/smart in connection_images)
+		if(get_dist(loc, smart.loc) > range)
+			connection_images -= smart
+
+	for(var/obj/machinery/atmospherics/pipe/smart/smart in orange(range, user))
+		if(!connection_images[smart])
+			connection_images[smart] = list()
+		for(var/direction in GLOB.cardinals)
+			if(!(smart.get_init_directions() & direction))
+				continue
+			if(!connection_images[smart][dir2text(direction)])
+				var/image/arrow
+				arrow = new('icons/obj/atmospherics/pipes/simple.dmi', get_turf(smart), "connection_overlay")
+				arrow.dir = direction
+				arrow.layer = smart.layer
+				arrow.color = smart.pipe_color
+				PIPING_LAYER_DOUBLE_SHIFT(arrow, smart.piping_layer)
+				connection_images[smart][dir2text(direction)] = arrow
+			if(connection_images.len)
+				flick_overlay(connection_images[smart][dir2text(direction)], list(user.client), 1.5 SECONDS)
+
 /obj/item/clothing/glasses/meson/engine/update_icon_state()
 	icon_state = inhand_icon_state = "trayson-[mode]"
 	return ..()
@@ -141,7 +142,12 @@
 	desc = "Used by engineering staff to see underfloor objects such as cables and pipes."
 	range = 2
 
-	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_NONE)
+	modes = list(MODE_NONE = MODE_TRAY, MODE_TRAY = MODE_PIPE_CONNECTABLE, MODE_PIPE_CONNECTABLE = MODE_NONE)
+
+/obj/item/clothing/glasses/meson/engine/tray/dropped(mob/user)
+	. = ..()
+	if(connection_images.len)
+		connection_images.Cut()
 
 /obj/item/clothing/glasses/meson/engine/shuttle
 	name = "shuttle region scanner"
@@ -154,5 +160,5 @@
 #undef MODE_NONE
 #undef MODE_MESON
 #undef MODE_TRAY
-#undef MODE_RAD
 #undef MODE_SHUTTLE
+#undef MODE_PIPE_CONNECTABLE

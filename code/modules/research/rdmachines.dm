@@ -18,7 +18,7 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
-/obj/machinery/rnd/Initialize()
+/obj/machinery/rnd/Initialize(mapload)
 	. = ..()
 	stored_research = SSresearch.science_tech
 	wires = new /datum/wires/rnd(src)
@@ -40,19 +40,44 @@
 		return FALSE
 
 /obj/machinery/rnd/attackby(obj/item/O, mob/user, params)
-	if (default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), O))
-		return
-	if(default_deconstruction_crowbar(O))
-		return
-	if(panel_open && is_wire_tool(O))
-		wires.interact(user)
-		return TRUE
 	if(is_refillable() && O.is_drainable())
 		return FALSE //inserting reagents into the machine
 	if(Insert_Item(O, user))
 		return TRUE
-	else
-		return ..()
+
+	return ..()
+
+/obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/rnd/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+
+/obj/machinery/rnd/multitool_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/multitool_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
+
+/obj/machinery/rnd/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(panel_open)
+		wires.interact(user)
+		return TRUE
 
 //proc used to handle inserting items or reagents into rnd machines
 /obj/machinery/rnd/proc/Insert_Item(obj/item/I, mob/user)
@@ -61,22 +86,22 @@
 //whether the machine can have an item inserted in its current state.
 /obj/machinery/rnd/proc/is_insertion_ready(mob/user)
 	if(panel_open)
-		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
+		to_chat(user, span_warning("You can't load [src] while it's opened!"))
 		return FALSE
 	if(disabled)
-		to_chat(user, "<span class='warning'>The insertion belts of [src] won't engage!</span>")
+		to_chat(user, span_warning("The insertion belts of [src] won't engage!"))
 		return FALSE
 	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
+		to_chat(user, span_warning("[src] is busy right now."))
 		return FALSE
 	if(machine_stat & BROKEN)
-		to_chat(user, "<span class='warning'>[src] is broken.</span>")
+		to_chat(user, span_warning("[src] is broken."))
 		return FALSE
 	if(machine_stat & NOPOWER)
-		to_chat(user, "<span class='warning'>[src] has no power.</span>")
+		to_chat(user, span_warning("[src] has no power."))
 		return FALSE
 	if(loaded_item)
-		to_chat(user, "<span class='warning'>[src] is already loaded.</span>")
+		to_chat(user, span_warning("[src] is already loaded."))
 		return FALSE
 	return TRUE
 

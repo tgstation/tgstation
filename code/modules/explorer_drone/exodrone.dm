@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	/// Used to provide source to the regex replacement function. DO NOT MODIFY DIRECTLY
 	var/static/obj/item/exodrone/_regex_context
 
-/obj/item/exodrone/Initialize()
+/obj/item/exodrone/Initialize(mapload)
 	. = ..()
 	name = pick(strings(EXODRONE_FILE,"probe_names"))
 	if(name_counter[name])
@@ -342,40 +342,46 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /// Exploration drone launcher
 /obj/machinery/exodrone_launcher
 	name = "exploration drone launcher"
+	desc = "A launch pad designed to send exploration drones into the great beyond."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "launcher"
 	/// Loaded fuel pellet.
 	var/obj/item/fuel_pellet/fuel_canister
 
-/obj/machinery/exodrone_launcher/Initialize()
+/obj/machinery/exodrone_launcher/Initialize(mapload)
 	. = ..()
 	GLOB.exodrone_launchers += src
 
-/obj/machinery/exodrone_launcher/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/fuel_pellet))
+/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, params)
+	if(istype(weapon, /obj/item/fuel_pellet))
 		if(fuel_canister)
-			to_chat(user, "<span class='warning'>There's already a fuel tank inside [src]!</span>")
+			to_chat(user, span_warning("There's already fuel loaded inside [src]!"))
 			return TRUE
-		if(!user.transferItemToLoc(I, src))
+		if(!user.transferItemToLoc(weapon, src))
 			return
-		fuel_canister = I
+		fuel_canister = weapon
 		update_icon()
 		return TRUE
-	else if(istype(I,/obj/item/exodrone) && user.transferItemToLoc(I, drop_location()))
-		return TRUE
-	else
-		return ..()
 
-/obj/machinery/exodrone_launcher/crowbar_act(mob/living/user, obj/item/I)
-	. = ..()
-	if(fuel_canister)
-		to_chat(user, "<span class='notie'>You remove the fuel tank from [src].</span>")
-		fuel_canister.forceMove(drop_location())
-		fuel_canister = null
+	if(istype(weapon, /obj/item/exodrone) && user.transferItemToLoc(weapon, drop_location()))
+		return TRUE
+
+	return ..()
+
+/obj/machinery/exodrone_launcher/crowbar_act(mob/living/user, obj/item/crowbar)
+	if(!fuel_canister)
+		return
+
+	to_chat(user, span_notice("You remove [fuel_canister] from [src]."))
+	fuel_canister.forceMove(drop_location())
+	fuel_canister = null
+	update_icon()
+	return TRUE
 
 /obj/machinery/exodrone_launcher/Destroy()
-	. = ..()
 	GLOB.exodrone_launchers -= src
+	QDEL_NULL(fuel_canister)
+	return ..()
 
 /obj/machinery/exodrone_launcher/update_overlays()
 	. = ..()
@@ -388,6 +394,9 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 			if(FUEL_EXOTIC)
 				. += "launchpad_fuel_exotic"
 
+/*
+ * Gets the fuel travel coefficient for what type of fuel is within the launcher.
+ */
 /obj/machinery/exodrone_launcher/proc/get_fuel_coefficent()
 	if(!fuel_canister)
 		return
@@ -399,10 +408,19 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		if(FUEL_EXOTIC)
 			return EXOTIC_FUEL_TIME_COST
 
+/*
+ * Use up some of the fuel within the launcher to power the drone.
+ *
+ * drone - the drone that's being fuelled by our launcher.
+ */
 /obj/machinery/exodrone_launcher/proc/fuel_up(obj/item/exodrone/drone)
 	drone.travel_cost_coeff = get_fuel_coefficent()
 	fuel_canister.use()
+	update_icon()
 
+/*
+ * Plays an effect on the pad, with a sound effect to boot.
+ */
 /obj/machinery/exodrone_launcher/proc/launch_effect()
 	playsound(src,'sound/effects/podwoosh.ogg',50, FALSE)
 	do_smoke(1,get_turf(src))
@@ -425,22 +443,26 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/fuel_pellet
 	name = "standard fuel pellet"
-	desc = "compressed fuel pellet for long-distance flight"
+	desc = "A compressed fuel pellet for long-distance drone flight."
 	icon = 'icons/obj/exploration.dmi'
 	icon_state = "fuel_basic"
+	/// The type of fuel this pellet has within.
 	var/fuel_type = FUEL_BASIC
+	/// The amount of uses left in this fuel pellet.
 	var/uses = 5
 
 /obj/item/fuel_pellet/use()
 	uses--
-	if(uses < 0)
+	if(uses <= 0)
 		qdel(src)
 
 /obj/item/fuel_pellet/advanced
+	name = "advanced fuel pellet"
 	fuel_type = FUEL_ADVANCED
 	icon_state = "fuel_advanced"
 
 /obj/item/fuel_pellet/exotic
+	name = "exotic fuel pellet"
 	fuel_type = FUEL_EXOTIC
 	icon_state = "fuel_exotic"
 

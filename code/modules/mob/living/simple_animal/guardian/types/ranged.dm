@@ -39,7 +39,7 @@
 			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = initial(range)
-			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
+			to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
 			toggle = FALSE
 		else
 			ranged = 0
@@ -49,10 +49,10 @@
 			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
-			to_chat(src, "<span class='danger'><B>You switch to scout mode.</span></B>")
+			to_chat(src, "[span_danger("<B>You switch to scout mode.")]</B>")
 			toggle = TRUE
 	else
-		to_chat(src, "<span class='danger'><B>You have to be recalled to toggle modes!</span></B>")
+		to_chat(src, "[span_danger("<B>You have to be recalled to toggle modes!")]</B>")
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
@@ -77,32 +77,33 @@
 			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 			msg = "You deactivate your night vision."
 
-	to_chat(src, "<span class='notice'>[msg]</span>")
+	to_chat(src, span_notice("[msg]"))
 
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/Snare()
 	set name = "Set Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
-	if(snares.len <6)
+	if(length(snares) < 6)
 		var/turf/snare_loc = get_turf(loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		snares |= S
-		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
+		to_chat(src, "[span_danger("<B>Surveillance snare deployed!")]</B>")
 	else
-		to_chat(src, "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
+		to_chat(src, "[span_danger("<B>You have too many snares deployed. Remove some first.")]</B>")
 
 /mob/living/simple_animal/hostile/guardian/ranged/verb/DisarmSnare()
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(snares)
-	if(picked_snare)
-		snares -= picked_snare
-		qdel(picked_snare)
-		to_chat(src, "<span class='danger'><B>Snare disarmed.</span></B>")
+	var/picked_snare = tgui_input_list(src, "Pick which snare to remove", "Remove Snare", sort_names(snares))
+	if(isnull(picked_snare))
+		return
+	snares -= picked_snare
+	qdel(picked_snare)
+	to_chat(src, "[span_danger("<B>Snare disarmed.")]</B>")
 
 /obj/effect/snare
 	name = "snare"
@@ -110,14 +111,20 @@
 	var/mob/living/simple_animal/hostile/guardian/spawner
 	invisibility = INVISIBILITY_ABSTRACT
 
-
-/obj/effect/snare/Crossed(AM as mob|obj)
+/obj/effect/snare/Initialize(mapload)
 	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/snare/proc/on_entered(datum/source, AM as mob|obj)
+	SIGNAL_HANDLER
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
-		to_chat(spawner.summoner, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
+		to_chat(spawner.summoner, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
 		var/list/guardians = spawner.summoner.hasparasites()
 		for(var/para in guardians)
-			to_chat(para, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
+			to_chat(para, "[span_danger("<B>[AM] has crossed surveillance snare, [name].")]</B>")
 
 /obj/effect/snare/singularity_act()
 	return

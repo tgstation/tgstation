@@ -20,19 +20,19 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
-	name = "Hallway"
+	name = "\improper Hallway"
 	icon_state = "hallC"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
-	name = "Mining Drone Bay"
+	name = "\improper Mining Drone Bay"
 	icon_state = "engine"
 
 /area/ruin/space/has_grav/onehalf/dorms_med
-	name = "Crew Quarters"
+	name = "\improper Crew Quarters"
 	icon_state = "Sleep"
 
 /area/ruin/space/has_grav/onehalf/bridge
-	name = "Bridge"
+	name = "\improper Bridge"
 	icon_state = "bridge"
 
 
@@ -41,10 +41,10 @@
 	name = "Dinner for Two"
 
 /area/ruin/space/has_grav/powered/cat_man
-	name = "Kitty Den"
+	name = "\improper Kitty Den"
 
 /area/ruin/space/has_grav/powered/authorship
-	name = "Authorship"
+	name = "\improper Authorship"
 
 /area/ruin/space/has_grav/powered/aesthetic
 	name = "Aesthetic"
@@ -54,61 +54,65 @@
 //Ruin of Hotel
 
 /area/ruin/space/has_grav/hotel
-	name = "Hotel"
+	name = "\improper Hotel"
 
 /area/ruin/space/has_grav/hotel/guestroom
-	name = "Hotel Guest Room"
+	name = "\improper Hotel Guest Room"
 	icon_state = "Sleep"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_1
-	name = "Hotel Guest Room 1"
+	name = "\improper Hotel Guest Room 1"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_2
-	name = "Hotel Guest Room 2"
+	name = "\improper Hotel Guest Room 2"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_3
-	name = "Hotel Guest Room 3"
+	name = "\improper Hotel Guest Room 3"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_4
-	name = "Hotel Guest Room 4"
+	name = "\improper Hotel Guest Room 4"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_5
-	name = "Hotel Guest Room 5"
+	name = "\improper Hotel Guest Room 5"
 
 /area/ruin/space/has_grav/hotel/guestroom/room_6
-	name = "Hotel Guest Room 6"
+	name = "\improper Hotel Guest Room 6"
 
 /area/ruin/space/has_grav/hotel/security
-	name = "Hotel Security Post"
+	name = "\improper Hotel Security Post"
 	icon_state = "security"
 
 /area/ruin/space/has_grav/hotel/pool
-	name = "Hotel Pool Room"
+	name = "\improper Hotel Pool Room"
 	icon_state = "fitness"
 
 /area/ruin/space/has_grav/hotel/bar
-	name = "Hotel Bar"
+	name = "\improper Hotel Bar"
 	icon_state = "cafeteria"
 
 /area/ruin/space/has_grav/hotel/power
-	name = "Hotel Power Room"
+	name = "\improper Hotel Power Room"
 	icon_state = "engine_smes"
 
 /area/ruin/space/has_grav/hotel/custodial
-	name = "Hotel Custodial Closet"
+	name = "\improper Hotel Custodial Closet"
 	icon_state = "janitor"
 
 /area/ruin/space/has_grav/hotel/shuttle
-	name = "Hotel Shuttle"
+	name = "\improper Hotel Shuttle"
 	icon_state = "shuttle"
 	requires_power = FALSE
 
 /area/ruin/space/has_grav/hotel/dock
-	name = "Hotel Shuttle Dock"
+	name = "\improper Hotel Shuttle Dock"
 	icon_state = "start"
 
 /area/ruin/space/has_grav/hotel/workroom
-	name = "Hotel Staff Room"
+	name = "\improper Hotel Staff Room"
+	icon_state = "crew_quarters"
+
+/area/ruin/space/has_grav/hotel/storeroom
+	name = "\improper Hotel Staff Storage"
 	icon_state = "crew_quarters"
 
 
@@ -117,50 +121,50 @@
 //Ruin of Derelict Oupost
 
 /area/ruin/space/has_grav/derelictoutpost
-	name = "Derelict Outpost"
+	name = "\improper Derelict Outpost"
 	icon_state = "green"
 
 /area/ruin/space/has_grav/derelictoutpost/cargostorage
-	name = "Derelict Outpost Cargo Storage"
+	name = "\improper Derelict Outpost Cargo Storage"
 	icon_state = "storage"
 
 /area/ruin/space/has_grav/derelictoutpost/cargobay
-	name = "Derelict Outpost Cargo Bay"
+	name = "\improper Derelict Outpost Cargo Bay"
 	icon_state = "quartstorage"
 
 /area/ruin/space/has_grav/derelictoutpost/powerstorage
-	name = "Derelict Outpost Power Storage"
+	name = "\improper Derelict Outpost Power Storage"
 	icon_state = "engine_smes"
 
 /area/ruin/space/has_grav/derelictoutpost/dockedship
-	name = "Derelict Outpost Docked Ship"
+	name = "\improper Derelict Outpost Docked Ship"
 	icon_state = "red"
 
 //Ruin of turretedoutpost
 
 /area/ruin/space/has_grav/turretedoutpost
-	name = "Turreted Outpost"
+	name = "\improper Turreted Outpost"
 	icon_state = "red"
 
 
 //Ruin of old teleporter
 
 /area/ruin/space/oldteleporter
-	name = "Old Teleporter"
+	name = "\improper Old Teleporter"
 	icon_state = "teleporter"
 
 
 //Ruin of mech transport
 
 /area/ruin/space/has_grav/powered/mechtransport
-	name = "Mech Transport"
+	name = "\improper Mech Transport"
 	icon_state = "green"
 
 
-//Ruin of gas the lizard
+//Ruin of The Lizard's Gas (Station)
 
-/area/ruin/space/has_grav/gasthelizard
-	name = "Gas the lizard"
+/area/ruin/space/has_grav/thelizardsgas
+	name = "\improper The Lizard's Gas"
 
 
 //Ruin of Deep Storage
@@ -170,11 +174,11 @@
 	icon_state = "storage"
 
 /area/ruin/space/has_grav/deepstorage/airlock
-	name = "Deep Storage Airlock"
+	name = "\improper Deep Storage Airlock"
 	icon_state = "quart"
 
 /area/ruin/space/has_grav/deepstorage/power
-	name = "Deep Storage Power and Atmospherics Room"
+	name = "\improper Deep Storage Power and Atmospherics Room"
 	icon_state = "engi_storage"
 
 /area/ruin/space/has_grav/deepstorage/hydroponics
@@ -182,30 +186,30 @@
 	icon_state = "garden"
 
 /area/ruin/space/has_grav/deepstorage/armory
-	name = "Deep Storage Secure Storage"
+	name = "\improper Deep Storage Secure Storage"
 	icon_state = "armory"
 
 /area/ruin/space/has_grav/deepstorage/storage
-	name = "Deep Storage Storage"
+	name = "\improper Deep Storage Storage"
 	icon_state = "storage_wing"
 
 /area/ruin/space/has_grav/deepstorage/dorm
-	name = "Deep Storage Dormitory"
+	name = "\improper Deep Storage Dormitory"
 	icon_state = "crew_quarters"
 
 /area/ruin/space/has_grav/deepstorage/kitchen
-	name = "Deep Storage Kitchen"
+	name = "\improper Deep Storage Kitchen"
 	icon_state = "kitchen"
 
 /area/ruin/space/has_grav/deepstorage/crusher
-	name = "Deep Storage Recycler"
+	name = "\improper Deep Storage Recycler"
 	icon_state = "storage"
 
 
 //Ruin of Abandoned Zoo
 
 /area/ruin/space/has_grav/abandonedzoo
-	name = "Abandoned Zoo"
+	name = "\improper Abandoned Zoo"
 	icon_state = "green"
 
 
@@ -249,7 +253,7 @@
 	icon_state = "garden"
 
 /area/ruin/space/has_grav/ancientstation/kitchen
-	name = "Charlie Station Kitchen"
+	name = "\improper Charlie Station Kitchen"
 	icon_state = "kitchen"
 
 /area/ruin/space/has_grav/ancientstation/sec
@@ -261,15 +265,15 @@
 	icon_state = "green"
 
 /area/ruin/space/has_grav/ancientstation/proto
-	name = "Delta Station Prototype Lab"
-	icon_state = "toxlab"
+	name = "\improper Delta Station Prototype Lab"
+	icon_state = "ordlab"
 
 /area/ruin/space/has_grav/ancientstation/rnd
 	name = "Delta Station Research and Development"
-	icon_state = "toxlab"
+	icon_state = "ordlab"
 
 /area/ruin/space/has_grav/ancientstation/deltaai
-	name = "Delta Station AI Core"
+	name = "\improper Delta Station AI Core"
 	icon_state = "ai"
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
@@ -282,80 +286,80 @@
 	icon_state = "medbay"
 
 /area/ruin/space/has_grav/ancientstation/betastorage
-	name = "Beta Station Storage"
+	name = "\improper Beta Station Storage"
 	icon_state = "storage"
 
 /area/solars/ancientstation
-	name = "Charlie Station Solar Array"
+	name = "\improper Charlie Station Solar Array"
 	icon_state = "panelsP"
 
 //DERELICT
 
 /area/ruin/space/derelict
-	name = "Derelict Station"
+	name = "\improper Derelict Station"
 	icon_state = "storage"
 
 /area/ruin/space/derelict/hallway/primary
-	name = "Derelict Primary Hallway"
+	name = "\improper Derelict Primary Hallway"
 	icon_state = "hallP"
 
 /area/ruin/space/derelict/hallway/secondary
-	name = "Derelict Secondary Hallway"
+	name = "\improper Derelict Secondary Hallway"
 	icon_state = "hallS"
 
 /area/ruin/space/derelict/hallway/primary/port
-	name = "Derelict Port Hallway"
+	name = "\improper Derelict Port Hallway"
 	icon_state = "hallFP"
 
 /area/ruin/space/derelict/arrival
-	name = "Derelict Arrival Centre"
+	name = "\improper Derelict Arrival Centre"
 	icon_state = "yellow"
 
 /area/ruin/space/derelict/storage/equipment
-	name = "Derelict Equipment Storage"
+	name = "\improper Derelict Equipment Storage"
 
 /area/ruin/space/derelict/bridge
-	name = "Derelict Control Room"
+	name = "\improper Derelict Control Room"
 	icon_state = "bridge"
 
 /area/ruin/space/derelict/bridge/access
-	name = "Derelict Control Room Access"
+	name = "\improper Derelict Control Room Access"
 	icon_state = "auxstorage"
 
 /area/ruin/space/derelict/bridge/ai_upload
-	name = "Derelict Computer Core"
+	name = "\improper Derelict Computer Core"
 	icon_state = "ai"
 
 /area/ruin/space/derelict/solar_control
-	name = "Derelict Solar Control"
+	name = "\improper Derelict Solar Control"
 	icon_state = "engine"
 
 /area/ruin/space/derelict/se_solar
-	name = "South East Solars"
+	name = "\improper South East Solars"
 	icon_state = "engine"
 
 /area/ruin/space/derelict/medical
-	name = "Derelict Medbay"
+	name = "\improper Derelict Medbay"
 	icon_state = "medbay"
 
 /area/ruin/space/derelict/medical/chapel
-	name = "Derelict Chapel"
+	name = "\improper Derelict Chapel"
 	icon_state = "chapel"
 
 /area/solars/derelict_starboard
-	name = "Derelict Starboard Solar Array"
+	name = "\improper Derelict Starboard Solar Array"
 	icon_state = "panelsS"
 
 /area/solars/derelict_aft
-	name = "Derelict Aft Solar Array"
+	name = "\improper Derelict Aft Solar Array"
 	icon_state = "yellow"
 
 /area/ruin/space/derelict/singularity_engine
-	name = "Derelict Singularity Engine"
+	name = "\improper Derelict Singularity Engine"
 	icon_state = "engine"
 
 /area/ruin/space/derelict/gravity_generator
-	name = "Derelict Gravity Generator Room"
+	name = "\improper Derelict Gravity Generator Room"
 	icon_state = "red"
 
 /area/ruin/space/derelict/atmospherics
@@ -365,52 +369,58 @@
 //DJSTATION
 
 /area/ruin/space/djstation
-	name = "Ruskie DJ Station"
+	name = "\improper Ruskie DJ Station"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
 
 /area/ruin/space/djstation/solars
-	name = "DJ Station Solars"
+	name = "\improper DJ Station Solars"
+	icon_state = "DJ"
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	has_gravity = STANDARD_GRAVITY
+
+/area/ruin/space/djstation/service
+	name = "\improper DJ Station Service"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
 
 //ABANDONED TELEPORTER
 
 /area/ruin/space/abandoned_tele
-	name = "Abandoned Teleporter"
+	name = "\improper Abandoned Teleporter"
 	icon_state = "teleporter"
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/signal.ogg')
 
 //OLD AI SAT
 
 /area/tcommsat/oldaisat
-	name = "Abandoned Satellite"
+	name = "\improper Abandoned Satellite"
 	icon_state = "tcomsatcham"
 
 //ABANDONED BOX WHITESHIP
 
 /area/ruin/space/has_grav/whiteship/box
 
-	name = "Abandoned Ship"
+	name = "\improper Abandoned Ship"
 	icon_state = "red"
 
 
 //SYNDICATE LISTENING POST STATION
 
 /area/ruin/space/has_grav/listeningstation
-	name = "Listening Post"
+	name = "\improper Listening Post"
 	icon_state = "yellow"
 
 /area/ruin/space/has_grav/powered/ancient_shuttle
-	name = "Ancient Shuttle"
+	name = "\improper Ancient Shuttle"
 	icon_state = "yellow"
 
 //HELL'S FACTORY OPERATING FACILITY
 /area/ruin/space/has_grav/hellfactory
-	name = "Hell Factory"
+	name = "\improper Hell Factory"
 	icon_state = "yellow"
 
 /area/ruin/space/has_grav/hellfactoryoffice
-	name = "Hell Factory Office"
+	name = "\improper Hell Factory Office"
 	icon_state = "red"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | NOTELEPORT

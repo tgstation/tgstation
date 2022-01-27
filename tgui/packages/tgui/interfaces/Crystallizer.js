@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, Flex, Input, LabeledList, ProgressBar, Section, Table, NumberInput, Box } from '../components';
+import { Button, LabeledList, ProgressBar, Section, NumberInput, Box } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
@@ -68,9 +68,7 @@ export const Crystallizer = (props, context) => {
                 }} />
             </LabeledList.Item>
             <LabeledList.Item label="Recipe">
-              <Box m={1} style={{
-                'white-space': 'pre-wrap',
-              }}>
+              <Box m={1} preserveWhitespace>
                 {requirements}
               </Box>
             </LabeledList.Item>

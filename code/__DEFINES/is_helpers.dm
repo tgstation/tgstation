@@ -2,7 +2,12 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 
+/// Within given range, but not counting z-levels
+#define IN_GIVEN_RANGE(source, other, given_range) (get_dist(source, other) <= given_range && (get_step(source, 0)?:z) == (get_step(other, 0)?:z))
+
 #define isatom(A) (isloc(A))
+
+#define isdatum(thing) (istype(thing, /datum))
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
@@ -66,12 +71,12 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define ismoth(A) (is_species(A, /datum/species/moth))
-#define ishumanbasic(A) (is_species(A, /datum/species/human))
 #define isfelinid(A) (is_species(A, /datum/species/human/felinid))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
+#define isandroid(A) (is_species(A, /datum/species/android))
 
 //more carbon mobs
 
@@ -100,6 +105,12 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ispAI(A) (istype(A, /mob/living/silicon/pai))
 
+// basic mobs
+#define isbasicmob(A) (istype(A, /mob/living/basic))
+
+/// returns whether or not the atom is either a basic mob OR simple animal
+#define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
+
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))
 
@@ -111,7 +122,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
-#define iscow(A) (istype(A, /mob/living/simple_animal/cow))
+#define iscow(A) (istype(A, /mob/living/basic/cow))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
@@ -128,8 +139,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
 
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
-
-#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
@@ -182,7 +191,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define ismedicalmecha(A) (istype(A, /obj/vehicle/sealed/mecha/medical))
 
-#define ismopable(A) (A && (A.layer <= HIGH_SIGIL_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
+#define ismopable(A) (A && (A.layer <= FLOOR_CLEAN_LAYER)) //If something can be cleaned by floor-cleaning devices such as mops or clean bots
 
 #define isorgan(A) (istype(A, /obj/item/organ))
 
@@ -232,3 +241,17 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/book,
 	/obj/item/spellbook,
 	/obj/item/storage/book)))
+
+
+// Jobs
+#define is_job(job_type)  (istype(job_type, /datum/job))
+#define is_assistant_job(job_type) (istype(job_type, /datum/job/assistant))
+#define is_bartender_job(job_type) (istype(job_type, /datum/job/bartender))
+#define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
+#define is_chaplain_job(job_type) (istype(job_type, /datum/job/chaplain))
+#define is_clown_job(job_type) (istype(job_type, /datum/job/clown))
+#define is_detective_job(job_type) (istype(job_type, /datum/job/detective))
+#define is_scientist_job(job_type) (istype(job_type, /datum/job/scientist))
+#define is_security_officer_job(job_type) (istype(job_type, /datum/job/security_officer))
+#define is_research_director_job(job_type) (istype(job_type, /datum/job/research_director))
+#define is_unassigned_job(job_type) (istype(job_type, /datum/job/unassigned))

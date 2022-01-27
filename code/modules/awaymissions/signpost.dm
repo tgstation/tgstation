@@ -7,7 +7,7 @@
 	var/question = "Travel back?"
 	var/list/zlevels
 
-/obj/structure/signpost/Initialize()
+/obj/structure/signpost/Initialize(mapload)
 	. = ..()
 	set_light(2)
 	zlevels = SSmapping.levels_by_trait(ZTRAIT_STATION)
@@ -16,7 +16,7 @@
 	. = ..()
 	if(.)
 		return
-	if(alert(question,name,"Yes","No") == "Yes" && Adjacent(user))
+	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
 		var/turf/T = find_safe_turf(zlevels=zlevels)
 
 		if(T)
@@ -26,7 +26,7 @@
 			user.forceMove(T)
 			if(AM)
 				user.start_pulling(AM)
-			to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
+			to_chat(user, span_notice("You blink and find yourself in [get_area_name(T)]."))
 		else
 			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 
@@ -63,7 +63,7 @@
 		exit the area."
 	question = "Leave? You might never come back."
 
-/obj/structure/signpost/exit/Initialize()
+/obj/structure/signpost/exit/Initialize(mapload)
 	. = ..()
 	zlevels = list()
 	for(var/i in 1 to world.maxz)

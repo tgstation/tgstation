@@ -155,9 +155,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aJ" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "aK" = (
@@ -169,9 +167,7 @@
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "aM" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "aN" = (
@@ -209,9 +205,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "aU" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "aV" = (
@@ -318,14 +312,14 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bj" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bk" = (
 /obj/machinery/power/emitter/ctf{
 	dir = 1
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bl" = (
@@ -358,9 +352,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bp" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "br" = (
@@ -418,16 +410,12 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "by" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "bz" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
@@ -550,9 +538,7 @@
 /area/awaymission/challenge/main)
 "bR" = (
 /obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
@@ -572,7 +558,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bU" = (
@@ -585,13 +571,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bW" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/filingcabinet,
 /turf/open/floor/carpet,
 /area/awaymission/challenge/end)
@@ -608,15 +592,11 @@
 /turf/open/floor/carpet,
 /area/awaymission/challenge/end)
 "bZ" = (
-/obj/structure/mirror{
-	pixel_y = 28
-	},
+/obj/structure/mirror/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/challenge/end)
 "ca" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/heavy,
 /turf/open/floor/wood,
@@ -627,10 +607,6 @@
 "cc" = (
 /obj/structure/chair{
 	dir = 1
-	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 28
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
@@ -659,10 +635,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "cg" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -27
-	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/carpet,
 /area/awaymission/challenge/end)
 "ch" = (
@@ -798,15 +771,11 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cD" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cE" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cF" = (
@@ -814,9 +783,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "cG" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "cH" = (
@@ -981,7 +948,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "do" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dp" = (
@@ -1002,6 +969,19 @@
 "ds" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/circuit,
+/area/awaymission/challenge/end)
+"hR" = (
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching evil areas.";
+	name = "Security Monitor";
+	network = "";
+	pixel_y = 30
+	},
+/obj/structure/table/reinforced,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 
 (1,1,1) = {"
@@ -26856,7 +26836,7 @@ aA
 aa
 aa
 bP
-bS
+hR
 cc
 cl
 cb
@@ -27627,7 +27607,7 @@ bI
 bM
 aF
 bP
-bS
+hR
 cc
 cd
 cu

@@ -32,11 +32,11 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if(!is_insertion_ready(user))
 			return
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in the [src.name]!</span>")
+			to_chat(user, span_warning("\The [O] is stuck to your hand, you cannot put it in the [src.name]!"))
 			return
 		busy = TRUE
 		loaded_item = O
-		to_chat(user, "<span class='notice'>You add the [O.name] to the [src.name]!</span>")
+		to_chat(user, span_notice("You add the [O.name] to the [src.name]!"))
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 		updateUsrDialog()
@@ -90,8 +90,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 				differences[i] = value
 		if(length(worths) && !length(differences))
 			return FALSE
-		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
-		if(choice == "Cancel")
+		var/choice = tgui_alert(user, "Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?", "Destructive Analyzer", list("Proceed", "Cancel"))
+		if(choice != "Proceed")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
@@ -106,7 +106,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		var/user_mode_string = ""
 		if(length(point_value))
 			user_mode_string = " for [json_encode(point_value)] points"
-		var/choice = input("Are you sure you want to destroy [loaded_item][user_mode_string]?") in list("Proceed", "Cancel")
+		var/choice = tgui_alert(usr, "Are you sure you want to destroy [loaded_item][user_mode_string]?",, list("Proceed", "Cancel"))
 		if(choice == "Cancel")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
@@ -209,7 +209,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	if(ls["eject_item"]) //Eject the item inside the destructive analyzer.
 		if(busy)
-			to_chat(usr, "<span class='danger'>The destructive analyzer is busy at the moment.</span>")
+			to_chat(usr, span_danger("The destructive analyzer is busy at the moment."))
 			return
 		if(loaded_item)
 			unload_item()
@@ -218,3 +218,6 @@ Note: Must be placed within 3 tiles of the R&D Console
 			say("Destructive analysis failed!")
 
 	updateUsrDialog()
+
+/obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE

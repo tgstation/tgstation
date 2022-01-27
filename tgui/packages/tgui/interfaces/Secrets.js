@@ -76,12 +76,12 @@ const HelpfulTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <Button
-              icon="clipboard"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Show Gamemode"
-              onClick={() => act("showgm")} />
+              height={lineHeightNormal}>
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -252,12 +252,12 @@ const FunTab = (props, context) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="robot"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Make N.E.R.D."
+              onClick={() => act("makeNerd")} />
           </Stack.Item>
           <Stack.Item>
             <NoticeBox
@@ -556,7 +556,8 @@ export const Secrets = (props, context) => {
     <Window
       title="Secrets Panel"
       width={500}
-      height={488}>
+      height={488}
+      theme="admin">
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

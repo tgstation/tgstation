@@ -10,7 +10,7 @@
 	desc = "A radio beacon used for bot navigation and crew wayfinding."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
-	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 
 	var/open = FALSE // true if cover is open
 	var/locked = TRUE // true if controls are locked
@@ -22,7 +22,7 @@
 
 	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
-/obj/machinery/navbeacon/Initialize()
+/obj/machinery/navbeacon/Initialize(mapload)
 	. = ..()
 
 	if(wayfinding)
@@ -44,11 +44,11 @@
 	glob_lists_deregister()
 	return ..()
 
-/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
-	if (GLOB.navbeacons["[old_z]"])
-		GLOB.navbeacons["[old_z]"] -= src
-	if (GLOB.navbeacons["[new_z]"])
-		GLOB.navbeacons["[new_z]"] += src
+/obj/machinery/navbeacon/on_changed_z_level(turf/old_turf, turf/new_turf)
+	if (GLOB.navbeacons["[old_turf?.z]"])
+		GLOB.navbeacons["[old_turf?.z]"] -= src
+	if (GLOB.navbeacons["[new_turf?.z]"])
+		GLOB.navbeacons["[new_turf?.z]"] += src
 	..()
 
 // set the transponder codes assoc list from codes_txt
@@ -79,6 +79,8 @@
 /obj/machinery/navbeacon/proc/glob_lists_register(init=FALSE)
 	if(!init)
 		glob_lists_deregister()
+	if(!codes)
+		return
 	if(codes["patrol"])
 		if(!GLOB.navbeacons["[z]"])
 			GLOB.navbeacons["[z]"] = list()
@@ -94,28 +96,29 @@
 	icon_state = "[base_icon_state][open]"
 	return ..()
 
+/obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	open = !open
+	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
+	update_appearance()
+	tool.play_tool_sound(src, 50)
+	return TRUE
+
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
-
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		open = !open
-
-		user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the beacon's cover.</span>", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
-
-		update_appearance()
 
 	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked
-				to_chat(user, "<span class='notice'>Controls are now [src.locked ? "locked" : "unlocked"].</span>")
+				to_chat(user, span_notice("Controls are now [src.locked ? "locked" : "unlocked"]."))
 			else
-				to_chat(user, "<span class='danger'>Access denied.</span>")
+				to_chat(user, span_danger("Access denied."))
 			updateDialog()
 		else
-			to_chat(user, "<span class='warning'>You must open the cover first!</span>")
+			to_chat(user, span_warning("You must open the cover first!"))
 	else
 		return ..()
 
@@ -129,11 +132,11 @@
 	. = ..()
 	var/ai = isAI(user)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
 	if(!open && !ai) // can't alter controls if not open, unless you're an AI
-		to_chat(user, "<span class='warning'>The beacon's control cover is closed!</span>")
+		to_chat(user, span_warning("The beacon's control cover is closed!"))
 		return
 
 

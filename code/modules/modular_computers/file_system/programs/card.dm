@@ -15,6 +15,8 @@
 	/// If TRUE, this program is authenticated with limited departmental access.
 	var/minor = FALSE
 	/// The name/assignment combo of the ID card used to authenticate.
+	var/authenticated_card
+	/// The name of the registered user, related to `authenticated_card`.
 	var/authenticated_user
 	/// The regions this program has access to based on the authenticated ID.
 	var/list/region_access = list()
@@ -46,7 +48,8 @@
 	// If the program isn't locked to a specific department or is_centcom and we have ACCESS_CHANGE_IDS in our auth card, we're not minor.
 	if((!target_dept || is_centcom) && (ACCESS_CHANGE_IDS in id_card.access))
 		minor = FALSE
-		authenticated_user = "[id_card.name]"
+		authenticated_card = "[id_card.name]"
+		authenticated_user = id_card.registered_name ? id_card.registered_name : "Unknown"
 		job_templates = is_centcom ? SSid_access.centcom_job_templates.Copy() : SSid_access.station_job_templates.Copy()
 		valid_access = is_centcom ? SSid_access.get_region_access_list(list(REGION_CENTCOM)) : SSid_access.get_region_access_list(list(REGION_ALL_STATION))
 		update_static_data(user)
@@ -64,7 +67,7 @@
 	if(length(region_access))
 		minor = TRUE
 		valid_access |= SSid_access.get_region_access_list(region_access)
-		authenticated_user = "[id_card.name] \[LIMITED ACCESS\]"
+		authenticated_card = "[id_card.name] \[LIMITED ACCESS\]"
 		update_static_data(user)
 		return TRUE
 
@@ -100,6 +103,7 @@
 				return TRUE
 		// Log out.
 		if("PRG_logout")
+			authenticated_card = null
 			authenticated_user = null
 			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
 			return TRUE
@@ -107,10 +111,10 @@
 		if("PRG_print")
 			if(!computer || !printer)
 				return TRUE
-			if(!authenticated_user)
+			if(!authenticated_card)
 				return TRUE
 			var/contents = {"<h4>Access Report</h4>
-						<u>Prepared By:</u> [user_id_card?.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+						<u>Prepared By:</u> [authenticated_user]<br>
 						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
 						<hr>
 						<u>Assignment:</u> [target_id_card.assignment]<br>
@@ -122,12 +126,12 @@
 				if(A in known_access_rights)
 					contents += "  [SSid_access.get_access_desc(A)]"
 
-			if(!printer.print_text(contents,"access report"))
-				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
+			if(!printer.print_text(contents,"access report - [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]"))
+				to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
 				return TRUE
 			else
 				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
-				computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
+				computer.visible_message(span_notice("\The [computer] prints out a paper."))
 			return TRUE
 		// Eject the ID used to log on to the ID app.
 		if("PRG_ejectauthid")
@@ -144,7 +148,7 @@
 			if(!computer || !card_slot2)
 				return TRUE
 			if(target_id_card)
-				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment, target_id_card.get_trim_assignment())
 				return card_slot2.try_eject(user)
 			else
 				var/obj/item/I = user.get_active_held_item()
@@ -153,11 +157,11 @@
 			return TRUE
 		// Used to fire someone. Wipes all access from their card and modifies their assignment.
 		if("PRG_terminate")
-			if(!computer || !authenticated_user)
+			if(!computer || !authenticated_card)
 				return TRUE
 			if(minor)
 				if(!(target_id_card.trim?.type in job_templates))
-					to_chat(usr, "<span class='notice'>Software error: You do not have the necessary permissions to demote this card.</span>")
+					to_chat(usr, span_notice("Software error: You do not have the necessary permissions to demote this card."))
 					return TRUE
 
 			// Set the new assignment then remove the trim.
@@ -168,7 +172,7 @@
 			return TRUE
 		// Change ID card assigned name.
 		if("PRG_edit")
-			if(!computer || !authenticated_user || !target_id_card)
+			if(!computer || !authenticated_card || !target_id_card)
 				return TRUE
 
 			var/old_name = target_id_card.registered_name
@@ -190,7 +194,7 @@
 			new_name = reject_bad_name(new_name, allow_numbers = TRUE)
 
 			if(!new_name)
-				to_chat(usr, "<span class='notice'>Software error: The ID card rejected the new name as it contains prohibited characters.</span>")
+				to_chat(usr, span_notice("Software error: The ID card rejected the new name as it contains prohibited characters."))
 				return TRUE
 
 			target_id_card.registered_name = new_name
@@ -202,7 +206,7 @@
 			return TRUE
 		// Change age
 		if("PRG_age")
-			if(!computer || !authenticated_user || !target_id_card)
+			if(!computer || !authenticated_card || !target_id_card)
 				return TRUE
 
 			var/new_age = params["id_age"]
@@ -215,7 +219,7 @@
 			return TRUE
 		// Change assignment
 		if("PRG_assign")
-			if(!computer || !authenticated_user || !target_id_card)
+			if(!computer || !authenticated_card || !target_id_card)
 				return TRUE
 			var/new_asignment = sanitize(params["assignment"])
 			target_id_card.assignment = new_asignment
@@ -224,7 +228,7 @@
 			return TRUE
 		// Add/remove access.
 		if("PRG_access")
-			if(!computer || !authenticated_user || !target_id_card)
+			if(!computer || !authenticated_card || !target_id_card)
 				return TRUE
 			playsound(computer, "terminal_type", 50, FALSE)
 			var/access_type = params["access_target"]
@@ -239,7 +243,7 @@
 				return TRUE
 
 			if(!target_id_card.add_access(list(access_type), try_wildcard))
-				to_chat(usr, "<span class='notice'>ID error: ID card rejected your attempted access modification.</span>")
+				to_chat(usr, span_notice("ID error: ID card rejected your attempted access modification."))
 				LOG_ID_ACCESS_CHANGE(user, target_id_card, "failed to add [SSid_access.get_access_desc(access_type)][try_wildcard ? " with wildcard [try_wildcard]" : ""]")
 				return TRUE
 
@@ -249,7 +253,7 @@
 			return TRUE
 		// Apply template to ID card.
 		if("PRG_template")
-			if(!computer || !authenticated_user || !target_id_card)
+			if(!computer || !authenticated_card || !target_id_card)
 				return TRUE
 
 			playsound(computer, "terminal_type", 50, FALSE)
@@ -323,7 +327,7 @@
 	var/obj/item/card/id/auth_card = card_slot.stored_card
 	data["authIDName"] = auth_card ? auth_card.name : "-----"
 
-	data["authenticatedUser"] = authenticated_user
+	data["authenticatedUser"] = authenticated_card
 
 	var/obj/item/card/id/id_card = card_slot2.stored_card
 	data["has_id"] = !!id_card

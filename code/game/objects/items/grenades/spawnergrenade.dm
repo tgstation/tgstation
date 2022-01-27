@@ -12,13 +12,13 @@
 	update_mob()
 	if(spawner_type && deliveryamt)
 		// Make a quick flash
-		var/turf/T = get_turf(src)
-		playsound(T, 'sound/effects/phasein.ogg', 100, TRUE)
-		for(var/mob/living/carbon/C in viewers(T, null))
-			C.flash_act()
+		var/turf/target_turf = get_turf(src)
+		playsound(target_turf, 'sound/effects/phasein.ogg', 100, TRUE)
+		for(var/mob/living/carbon/target_carbon in viewers(target_turf, null))
+			target_carbon.flash_act()
 
 		// Spawn some hostile syndicate critters and spread them out
-		var/list/spawned = spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
+		var/list/spawned = spawn_and_random_walk(spawner_type, target_turf, deliveryamt, walk_chance = 50, admin_spawn = ((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
 		afterspawn(spawned)
 
 	qdel(src)
@@ -44,7 +44,7 @@
 	name = "Buzzkill grenade"
 	desc = "The label reads: \"WARNING: DEVICE WILL RELEASE LIVE SPECIMENS UPON ACTIVATION. SEAL SUIT BEFORE USE.\" It is warm to the touch and vibrates faintly."
 	icon_state = "holy_grenade"
-	spawner_type = /mob/living/simple_animal/hostile/poison/bees/toxin
+	spawner_type = /mob/living/simple_animal/hostile/bee/toxin
 	deliveryamt = 10
 
 /obj/item/grenade/spawnergrenade/clown

@@ -13,14 +13,14 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
-	if(severity == EXPLODE_DEVASTATE)
+	if(severity >= EXPLODE_DEVASTATE)
 		adjustBruteLoss(400) //if in protector mode, will do 20 damage and not actually necessarily kill the summoner
 	else
 		. = ..()
 	if(QDELETED(src))
 		return FALSE
 	if(toggle)
-		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
+		visible_message(span_danger("The explosion glances off [src]'s energy shielding!"))
 
 /mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -40,7 +40,7 @@
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
 		damage_coeff = list(BRUTE = 0.4, BURN = 0.4, TOX = 0.4, CLONE = 0.4, STAMINA = 0, OXY = 0.4)
-		to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
+		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
 		toggle = FALSE
 	else
 		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
@@ -51,7 +51,7 @@
 		melee_damage_upper = 2
 		speed = 1
 		damage_coeff = list(BRUTE = 0.05, BURN = 0.05, TOX = 0.05, CLONE = 0.05, STAMINA = 0, OXY = 0.05) //damage? what's damage?
-		to_chat(src, "<span class='danger'><B>You switch to protection mode.</span></B>")
+		to_chat(src, "[span_danger("<B>You switch to protection mode.")]</B>")
 		toggle = TRUE
 
 /mob/living/simple_animal/hostile/guardian/protector/snapback() //snap to what? snap to the guardian!
@@ -60,12 +60,12 @@
 			return
 		else
 			if(istype(summoner.loc, /obj/effect))
-				to_chat(src, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>")
-				visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
+				to_chat(src, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!"))
+				visible_message(span_danger("\The [src] jumps back to its user."))
 				Recall(TRUE)
 			else
-				to_chat(summoner, "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardiancolor]\"><b>[real_name]</b></font>!</span>")
-				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
+				to_chat(summoner, span_holoparasite("You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[guardiancolor]\"><b>[real_name]</b></font>!"))
+				summoner.visible_message(span_danger("\The [summoner] jumps back to [summoner.p_their()] protector."))
 				new /obj/effect/temp_visual/guardian/phase/out(get_turf(summoner))
 				summoner.forceMove(get_turf(src))
 				new /obj/effect/temp_visual/guardian/phase(get_turf(summoner))

@@ -38,7 +38,7 @@
 	spawn_mecha_type = null
 	search_objects = 2
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize()
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/no_mech/Initialize(mapload)
 	. = ..()
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 
@@ -58,7 +58,7 @@
 	faction = list("nanotrasen")
 
 
-/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize()
+/mob/living/simple_animal/hostile/syndicate/mecha_pilot/Initialize(mapload)
 	. = ..()
 	if(spawn_mecha_type)
 		var/obj/vehicle/sealed/mecha/M = new spawn_mecha_type (get_turf(src))
@@ -69,9 +69,9 @@
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/enter_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
 		return 0
-	target = null //Target was our mecha, so null it out
+	LoseTarget() //Target was our mecha, so null it out
 	M.aimob_enter_mech(src)
-	targets_from = M
+	targets_from = WEAKREF(M)
 	allow_movement_on_non_turfs = TRUE //duh
 	var/do_ranged = 0
 	for(var/equip in mecha.equipment)
@@ -88,8 +88,8 @@
 	wanted_objects = list()
 	search_objects = 0
 	if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
-		var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
-		action.Trigger(TRUE)
+		var/datum/action/vehicle/sealed/mecha/mech_defense_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+		action.Trigger(forced_state = TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/exit_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
@@ -97,21 +97,21 @@
 
 	mecha.aimob_exit_mech(src)
 	allow_movement_on_non_turfs = FALSE
-	targets_from = src
+	targets_from = null
 
 	//Find a new mecha
 	wanted_objects = typecacheof(/obj/vehicle/sealed/mecha/combat, TRUE)
 	var/search_aggressiveness = 2
 	for(var/obj/vehicle/sealed/mecha/combat/C in range(vision_range,src))
 		if(is_valid_mecha(C))
-			target = C
+			GiveTarget(C)
 			search_aggressiveness = 3 //We can see a mech? RUN FOR IT, IGNORE MOBS!
 			break
 	search_objects = search_aggressiveness
 	ranged = 0
 	minimum_distance = 1
 
-	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
+	SSmove_manager.stop_looping(src)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/vehicle/sealed/mecha/M)
@@ -121,7 +121,7 @@
 		return FALSE
 	if(!M.has_charge(required_mecha_charge))
 		return FALSE
-	if(M.obj_integrity < M.max_integrity*0.5)
+	if(M.get_integrity() < M.max_integrity*0.5)
 		return FALSE
 	return TRUE
 
@@ -188,7 +188,7 @@
 				return
 			else
 				if(!CanAttack(M))
-					target = null
+					LoseTarget()
 					return
 
 		return target.attack_animal(src)
@@ -201,7 +201,7 @@
 	if(!mecha)
 		for(var/obj/vehicle/sealed/mecha/combat/mecha_in_range in range(src,vision_range))
 			if(is_valid_mecha(mecha_in_range))
-				target = mecha_in_range //Let's nab it!
+				GiveTarget(mecha_in_range) //Let's nab it!
 				minimum_distance = 1
 				ranged = 0
 				break
@@ -215,7 +215,7 @@
 			return
 
 			//Too Much Damage - Eject
-		if(mecha.obj_integrity < mecha.max_integrity*0.1)
+		if(mecha.get_integrity() < mecha.max_integrity*0.1)
 			exit_mecha(mecha)
 			return
 
@@ -226,19 +226,19 @@
 				action.Trigger()
 
 		//Heavy damage - Defense Power or Retreat
-		if(mecha.obj_integrity < mecha.max_integrity*0.25)
+		if(mecha.get_integrity() < mecha.max_integrity*0.25)
 			if(prob(defense_mode_chance))
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
-					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
-					action.Trigger(TRUE)
+					var/datum/action/vehicle/sealed/mecha/mech_defense_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+					action.Trigger(forced_state = TRUE)
 					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_defense_mode.proc/Trigger, FALSE), 100) //10 seconds of defense, then toggle off
 
 			else if(prob(retreat_chance))
 				//Speed boost if possible
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_overload_mode) && !mecha.leg_overload_mode)
-					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_overload_mode]
+					var/datum/action/vehicle/sealed/mecha/mech_overload_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_overload_mode]
 					mecha.leg_overload_mode = FALSE
-					action.Trigger(TRUE)
+					action.Trigger(forced_state = TRUE)
 					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_overload_mode.proc/Trigger, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 				retreat_distance = 50
@@ -290,6 +290,6 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		walk_to(mecha, target, minimum_distance, mecha.movedelay)
+		SSmove_manager.move_to(mecha, target, minimum_distance, mecha.movedelay)
 	else
 		..()

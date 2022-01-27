@@ -109,6 +109,17 @@
 	category_index = CATEGORY_FRUITS_VEGGIES
 	item_instance = /obj/item/food/grown/cocoapod
 
+/datum/orderable_item/herbs
+	name = "Bundle of Herbs"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/herbs
+	cost_per_order = 5
+
+/datum/orderable_item/bell_pepper
+	name = "Bell Pepper"
+	category_index = CATEGORY_FRUITS_VEGGIES
+	item_instance = /obj/item/food/grown/bell_pepper
+
 //Milk and Eggs
 
 /datum/orderable_item/milk
@@ -129,6 +140,12 @@
 	item_instance = /obj/item/reagent_containers/food/drinks/bottle/cream
 	cost_per_order = 40
 
+/datum/orderable_item/yoghurt
+	name = "Yoghurt"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/reagent_containers/food/condiment/yoghurt
+	cost_per_order = 40
+
 /datum/orderable_item/eggs
 	name = "Egg Carton"
 	category_index = CATEGORY_MILK_EGGS
@@ -145,6 +162,60 @@
 	name = "Spider Eggs"
 	category_index = CATEGORY_MILK_EGGS
 	item_instance = /obj/item/food/spidereggs
+
+/datum/orderable_item/moonfish_eggs
+	name = "Moonfish Eggs"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/moonfish_eggs
+	cost_per_order = 30
+
+/datum/orderable_item/desert_snails
+	name = "Canned Desert Snails"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/desert_snails
+	cost_per_order = 20
+
+/datum/orderable_item/canned_jellyfish
+	name = "Canned Gunner Jellyfish"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/canned_jellyfish
+	cost_per_order = 20
+
+/datum/orderable_item/canned_larvae
+	name = "Canned Larvae"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/larvae
+	cost_per_order = 20
+
+/datum/orderable_item/canned_tomatoes
+	name = "Canned San Marzano Tomatoes"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/canned/tomatoes
+	cost_per_order = 30
+
+/datum/orderable_item/canned_pine_nuts
+	name = "Canned Pine Nuts"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/canned/pine_nuts
+	cost_per_order = 20
+
+/datum/orderable_item/ready_donk
+	name = "Ready-Donk Meal: Bachelor Chow"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk
+	cost_per_order = 40
+
+/datum/orderable_item/ready_donk_mac
+	name = "Ready-Donk Meal: Donk-a-Roni"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk/mac_n_cheese
+	cost_per_order = 40
+
+/datum/orderable_item/ready_donk_mex
+	name = "Ready-Donk Meal: Donkhiladas"
+	category_index = CATEGORY_MILK_EGGS
+	item_instance = /obj/item/food/ready_donk/donkhiladas
+	cost_per_order = 40
 
 //Reagents
 
@@ -164,6 +235,12 @@
 	name = "Rice Sack"
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/rice
+	cost_per_order = 30
+
+/datum/orderable_item/cornmeal
+	name = "Cornmeal Box"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/cornmeal
 	cost_per_order = 30
 
 /datum/orderable_item/enzyme
@@ -189,3 +266,21 @@
 	category_index = CATEGORY_SAUCES_REAGENTS
 	item_instance = /obj/item/reagent_containers/food/condiment/soysauce
 	cost_per_order = 15
+
+/datum/orderable_item/bbqsauce
+	name = "BBQ Sauce"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/bbqsauce
+	cost_per_order = 60
+
+/datum/orderable_item/vinegar
+	name = "Vinegar"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/vinegar
+	cost_per_order = 30
+
+/datum/orderable_item/quality_oil
+	name = "Quality Oil"
+	category_index = CATEGORY_SAUCES_REAGENTS
+	item_instance = /obj/item/reagent_containers/food/condiment/quality_oil
+	cost_per_order = 120 //Extra Virgin, just like you, the reader

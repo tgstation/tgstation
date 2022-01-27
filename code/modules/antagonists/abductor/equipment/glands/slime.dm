@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/slime
-	true_name = "gastric animation galvanizer"
+	abductor_hint = "gastric animation galvanizer. The abductee occasionally vomits slimes. Slimes will no longer attack the abductee."
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
@@ -18,9 +18,9 @@
 	..()
 
 /obj/item/organ/heart/gland/slime/activate()
-	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")
+	to_chat(owner, span_warning("You feel nauseated!"))
 	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
-	Slime.Friends = list(owner)
-	Slime.Leader = owner
+	Slime.set_friends(list(owner))
+	Slime.set_leader(owner)

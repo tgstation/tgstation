@@ -41,12 +41,26 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"l" = (
-/obj/machinery/vending/wallmed,
-/turf/closed/wall/mineral/titanium,
+"i" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
+"j" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/south{
+	use_power = 0
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "m" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "n" = (
@@ -65,7 +79,9 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "r" = (
@@ -84,14 +100,12 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "v" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "w" = (
@@ -129,7 +143,7 @@
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "E" = (
@@ -183,35 +197,29 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "Q" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "R" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "S" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "T" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "V" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "W" = (
@@ -236,6 +244,12 @@
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"Z" = (
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -279,15 +293,15 @@ Y
 "}
 (4,1,1) = {"
 d
-l
-n
+d
+Z
 n
 R
 d
 T
 J
-H
-l
+j
+d
 d
 "}
 (5,1,1) = {"
@@ -296,7 +310,7 @@ d
 d
 w
 f
-l
+d
 f
 K
 d
@@ -309,7 +323,7 @@ d
 s
 r
 s
-s
+i
 s
 r
 s

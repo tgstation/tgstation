@@ -1,29 +1,4 @@
 
-#define DRONE_HANDS_LAYER 1
-#define DRONE_HEAD_LAYER 2
-#define DRONE_TOTAL_LAYERS 2
-
-/// Message displayed when new drone spawns in drone network
-#define DRONE_NET_CONNECT "<span class='notice'>DRONE NETWORK: [name] connected.</span>"
-/// Message displayed when drone in network dies
-#define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
-
-/// Maintenance Drone icon_state (multiple colors)
-#define MAINTDRONE "drone_maint"
-/// Repair Drone icon_state
-#define REPAIRDRONE "drone_repair"
-/// Scout Drone icon_state
-#define SCOUTDRONE "drone_scout"
-/// Clockwork Drone icon_state
-#define CLOCKDRONE "drone_clock"
-
-/// [MAINTDRONE] hacked icon_state
-#define MAINTDRONE_HACKED "drone_maint_red"
-/// [REPAIRDRONE] hacked icon_state
-#define REPAIRDRONE_HACKED "drone_repair_hacked"
-/// [SCOUTDRONE] hacked icon_state
-#define SCOUTDRONE_HACKED "drone_scout_hacked"
-
 /**
  * # Maintenance Drone
  *
@@ -45,8 +20,8 @@
 	icon_state = "drone_maint_grey"
 	icon_living = "drone_maint_grey"
 	icon_dead = "drone_maint_dead"
-	health = 30
-	maxHealth = 30
+	health = 45
+	maxHealth = 45
 	unsuitable_atmos_damage = 0
 	minbodytemp = 0
 	maxbodytemp = 0
@@ -64,7 +39,7 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	has_unlimited_silicon_privilege = 1
+	has_unlimited_silicon_privilege = TRUE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
@@ -88,8 +63,8 @@
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
 	/// Amount of damage sustained if hit by a heavy EMP pulse
 	var/heavy_emp_damage = 25
-	/// List of active alarms. See [/mob/living/simple_animal/drone/proc/triggerAlarm] and [/mob/living/simple_animal/drone/proc/cancelAlarm]
-	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
+	///Alarm listener datum, handes caring about alarm events and such
+	var/datum/alarm_listener/listener
 	/// Internal storage slot. Fits any item
 	var/obj/item/internal_storage
 	/// Headwear slot
@@ -122,27 +97,35 @@
 	"<span class='notice'>     - Interacting with living beings (communication, attacking, healing, etc.)</span>\n"+\
 	"<span class='notice'>     - Interacting with non-living beings (dragging bodies, looting bodies, etc.)</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
-	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>\n"+\
+	"<span class='notice'>Prefix your message with :b to speak in Drone Chat.</span>\n"
 	/// blacklisted drone areas, direct
 	var/list/drone_area_blacklist_flat = list(/area/engineering/atmos, /area/engineering/atmospherics_engine)
 	/// blacklisted drone areas, recursive/includes descendants
 	var/list/drone_area_blacklist_recursive = list(/area/engineering/supermatter)
-	/// whitelisted drone machines, direct
-	var/list/drone_machinery_whitelist_flat
-	/// whitelisted drone machines, recursive/includes descendants
-	var/list/drone_machinery_whitelist_recursive = list(
-		/obj/machinery/atmospherics,
-		/obj/machinery/autolathe,
-		/obj/machinery/cell_charger,
-		/obj/machinery/disposal,
-		/obj/machinery/drone_dispenser,
-		/obj/machinery/light,
-		/obj/machinery/pipedispenser,
-		/obj/machinery/recharger,
-		/obj/machinery/rnd/production,
+	/// blacklisted drone machines, direct
+	var/list/drone_machinery_blacklist_flat
+	/// blacklisted drone machines, recursive/includes descendants
+	var/list/drone_machinery_blacklist_recursive = list(
+		/obj/machinery/airalarm,
+		/obj/machinery/computer,
+		/obj/machinery/modular_computer,
 	)
+	/// cancels out blacklisted machines, direct
+	var/list/drone_machinery_whitelist_flat
+	/// cancels out blacklisted machines, recursive/includes descendants
+	var/list/drone_machinery_whitelist_recursive = list(
+		/obj/machinery/computer/arcade,
+		/obj/machinery/computer/monitor,
+		/obj/machinery/computer/pod,
+		/obj/machinery/computer/station_alert,
+		/obj/machinery/computer/teleporter,
+	)
+	/// blacklisted drone machine typecache, compiled from [var/drone_machinery_blacklist_flat], [var/list/drone_machinery_blacklist_recursive], negated by their whitelist counterparts
+	var/list/drone_machinery_blacklist_compiled
 	/// whitelisted drone items, direct
 	var/list/drone_item_whitelist_flat = list(
+		/obj/item/chisel,
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
 		/obj/item/wrench/drone,
@@ -166,11 +149,17 @@
 		/obj/item/stack/tile,
 		/obj/item/stock_parts,
 		/obj/item/toner,
+		/obj/item/wallframe,
 		/obj/item/clothing/head,
 		/obj/item/clothing/mask,
 	)
+	/// machines whitelisted from being shy with
+	var/list/shy_machine_whitelist = list(
+		/obj/machinery/atmospherics/components/unary/vent_pump,
+		/obj/machinery/atmospherics/components/unary/vent_scrubber,
+	)
 
-/mob/living/simple_animal/drone/Initialize()
+/mob/living/simple_animal/drone/Initialize(mapload)
 	. = ..()
 	GLOB.drones_list += src
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
@@ -196,6 +185,13 @@
 		diag_hud.add_to_hud(src)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
+
+	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
+	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -216,7 +212,8 @@
 
 /mob/living/simple_animal/drone/Destroy()
 	GLOB.drones_list -= src
-	qdel(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(access_card) //Otherwise it ends up on the floor!
+	QDEL_NULL(listener)
 	return ..()
 
 /mob/living/simple_animal/drone/Login()
@@ -273,21 +270,21 @@
 
 	//Hacked
 	if(hacked)
-		. += "<span class='warning'>Its display is glowing red!</span>"
+		. += span_warning("Its display is glowing red!")
 
 	//Damaged
 	if(health != maxHealth)
 		if(health > maxHealth * 0.33) //Between maxHealth and about a third of maxHealth, between 30 and 10 for normal drones
-			. += "<span class='warning'>Its screws are slightly loose.</span>"
+			. += span_warning("Its screws are slightly loose.")
 		else //otherwise, below about 33%
-			. += "<span class='boldwarning'>Its screws are very loose!</span>"
+			. += span_boldwarning("Its screws are very loose!")
 
 	//Dead
 	if(stat == DEAD)
 		if(client)
-			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".</span>"
+			. += span_deadsay("A message repeatedly flashes on its display: \"REBOOT -- REQUIRED\".")
 		else
-			. += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>"
+			. += span_deadsay("A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".")
 	. += "*---------*</span>"
 
 
@@ -299,66 +296,32 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	Stun(100)
-	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
+	Stun(70)
+	to_chat(src, span_danger("<b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)..."))
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
-		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
+		to_chat(src, span_userdanger("HeAV% DA%^MMA+G TO I/O CIR!%UUT!"))
 
+/mob/living/simple_animal/drone/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm detected in [source_area.name]!")
 
-/**
- * Alerts drones about different priorities of alarms
- *
- * Arguments:
- * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
- * * A - [/area] the alarm occurs
- * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
- * * alarmsource - [/atom] source of the alarm
- */
-/mob/living/simple_animal/drone/proc/triggerAlarm(class, area/home, cameras, obj/source)
-	if(source.z != z)
-		return
-	if(stat == DEAD)
-		return
-	var/list/our_sort = alarms[class]
-	for(var/areaname in our_sort)
-		if (areaname == home.name)
-			var/list/alarm = our_sort[areaname]
-			var/list/sources = alarm[2]
-			if (!(source in sources))
-				sources += source
-			return TRUE
+/mob/living/simple_animal/drone/proc/alarm_cleared(datum/source, alarm_type, area/source_area)
+	SIGNAL_HANDLER
+	to_chat(src, "--- [alarm_type] alarm in [source_area.name] has been cleared.")
 
-	our_sort[home.name] = list(home, list(source))
-	to_chat(src, "--- [class] alarm detected in [home.name]!")
+/mob/living/simple_animal/drone/proc/blacklist_on_try_use_machine(datum/source, obj/machinery/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, span_warning("Using [machine] could break your laws."))
+		return COMPONENT_CANT_USE_MACHINE_INTERACT | COMPONENT_CANT_USE_MACHINE_TOOLS
 
-///This isn't currently needed since drones do jack shit with cameras. I hate this code so much
-/mob/living/simple_animal/drone/proc/freeCamera(area/home, obj/machinery/camera/cam)
-	return
+/mob/living/simple_animal/drone/proc/blacklist_on_try_wires_interact(datum/source, atom/machine)
+	SIGNAL_HANDLER
+	if(GLOB.drone_machine_blacklist_enabled && is_type_in_typecache(machine, drone_machinery_blacklist_compiled))
+		to_chat(src, span_warning("Using [machine] could break your laws."))
+		return COMPONENT_CANT_INTERACT_WIRES
 
-/**
- * Clears alarm and alerts drones
- *
- * Arguments:
- * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
- * * A - [/area] the alarm occurs
- * * alarmsource - [/atom] source of the alarm
- */
-/mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat != DEAD)
-		var/list/L = alarms[class]
-		var/cleared = 0
-		for (var/I in L)
-			if (I == A.name)
-				var/list/alarm = L[I]
-				var/list/srcs  = alarm[2]
-				if (origin in srcs)
-					srcs -= origin
-				if (srcs.len == 0)
-					cleared = 1
-					L -= I
-		if(cleared)
-			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/proc/set_shy(new_shy)
 	shy = new_shy
@@ -366,20 +329,28 @@
 
 /mob/living/simple_animal/drone/proc/shy_update()
 	var/list/drone_bad_areas = make_associative(drone_area_blacklist_flat) + typecacheof(drone_area_blacklist_recursive)
-	var/list/drone_good_machines = make_associative(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive)
 	var/list/drone_good_items = make_associative(drone_item_whitelist_flat) + typecacheof(drone_item_whitelist_recursive)
+
+	var/list/drone_bad_machinery = make_associative(drone_machinery_blacklist_flat) + typecacheof(drone_machinery_blacklist_recursive)
+	var/list/drone_good_machinery = LAZYCOPY(drone_machinery_whitelist_flat) + typecacheof(drone_machinery_whitelist_recursive) // not a valid typecache, only intended for negation against drone_bad_machinery
+	drone_machinery_blacklist_compiled = drone_bad_machinery - drone_good_machinery
+
+	var/static/list/not_shy_of = typecacheof(list(/mob/living/simple_animal/drone, /mob/living/simple_animal/bot))
 	if(shy)
 		ADD_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		LoadComponent(/datum/component/shy, typecacheof(/mob/living/simple_animal/drone), 4, "Your laws prevent this action near %TARGET.", TRUE)
+		LoadComponent(/datum/component/shy, mob_whitelist=not_shy_of, shy_range=3, message="Your laws prevent this action near %TARGET.", dead_shy=FALSE, dead_shy_immediate=TRUE, machine_whitelist=shy_machine_whitelist)
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
-		LoadComponent(/datum/component/technointrovert, drone_good_machines, "Using %TARGET could break your laws.")
+		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
+		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
+		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technointrovert))
+		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
+		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
@@ -387,15 +358,6 @@
 /mob/living/simple_animal/drone/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash, length = 25)
 	if(affect_silicon)
 		return ..()
-
-/mob/living/simple_animal/drone/mob_negates_gravity()
-	return TRUE
-
-/mob/living/simple_animal/drone/mob_has_gravity()
-	return ..() || mob_negates_gravity()
-
-/mob/living/simple_animal/drone/experience_pressure_difference(pressure_difference, direction)
-	return
 
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?

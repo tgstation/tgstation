@@ -42,7 +42,7 @@
 		update_chassis_page()
 		log_message("[src] is destroyed.", LOG_MECHA)
 		if(LAZYLEN(chassis.occupants))
-			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)]<span class='danger'>[src] is destroyed!</span>")
+			to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_danger("[src] is destroyed!")]")
 			playsound(chassis, destroy_sound, 50)
 		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
 			chassis.max_equip--
@@ -54,9 +54,9 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
 		attach(M)
-		user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
+		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 		return TRUE
-	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
+	to_chat(user, span_warning("You are unable to attach [src] to [M]!"))
 	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
@@ -84,13 +84,13 @@
 	if(chassis.is_currently_ejecting)
 		return FALSE
 	if(chassis.equipment_disabled)
-		to_chat(chassis.occupants, "<span=warn>Error -- Equipment control unit is unresponsive.</span>")
+		to_chat(chassis.occupants, span_warning("Error -- Equipment control unit is unresponsive."))
 		return FALSE
 	if(TIMER_COOLDOWN_CHECK(chassis, COOLDOWN_MECHA_EQUIPMENT))
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, params)
+/obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT, equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
 	send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
 	chassis.use_power(energy_drain)

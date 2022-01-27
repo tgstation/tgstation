@@ -11,7 +11,7 @@
 	var/obj/machinery/power/master = null
 
 
-/obj/machinery/power/terminal/Initialize()
+/obj/machinery/power/terminal/Initialize(mapload)
 	. = ..()
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
@@ -42,15 +42,15 @@
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I)
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.intact)
-			to_chat(user, "<span class='warning'>You must first expose the power terminal!</span>")
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
+			to_chat(user, span_warning("You must first expose the power terminal!"))
 			return
 
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message("<span class='notice'>[user.name] dismantles the power terminal from [master].</span>",
-		"<span class='notice'>You begin to cut the cables...</span>")
+	user.visible_message(span_notice("[user.name] dismantles the power terminal from [master]."),
+		span_notice("You begin to cut the cables..."))
 
 	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 50))
@@ -62,7 +62,7 @@
 			return
 
 		new /obj/item/stack/cable_coil(drop_location(), 10)
-		to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
+		to_chat(user, span_notice("You cut the cables and dismantle the power terminal."))
 		qdel(src)
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)

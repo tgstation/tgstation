@@ -22,11 +22,7 @@
 				<script language='javascript' type='text/javascript'>
 					[js_byjax]
 					[js_dropdowns]
-					function SSticker() {
-						setInterval(function(){
-							window.location='byond://?src=[REF(src)]&update_content=1';
-						}, 1000);
-					}
+					[get_ssticker_function()]
 
 					window.onload = function() {
 						dropdowns();
@@ -51,9 +47,19 @@
 			</body>
 		</html>"}
 
+//Returns the autoupdate javascript script functions for the mecha ui.
+/obj/vehicle/sealed/mecha/proc/get_ssticker_function()
+	. = {"
+		function SSticker() {
+			setInterval(function(){
+				window.location='byond://?src=[REF(src)]&update_content=1';
+			}, 1000);
+		}
+	"}
+
 ///Returns the status of the mech.
 /obj/vehicle/sealed/mecha/proc/get_stats_part(mob/user)
-	var/integrity = obj_integrity/max_integrity*100
+	var/integrity = atom_integrity/max_integrity*100
 	var/cell_charge = get_charge()
 	var/datum/gas_mixture/int_tank_air = 0
 	var/tank_pressure = 0
@@ -65,13 +71,13 @@
 		tank_temperature = internal_tank ? int_tank_air.temperature : "Unknown"
 		cabin_pressure = round(return_pressure(),0.01)
 	. = {"[report_internal_damage()]
-		[integrity<30?"<span class='userdanger'>DAMAGE LEVEL CRITICAL</span><br>":null]
+		[integrity<30?"[span_userdanger("DAMAGE LEVEL CRITICAL")]<br>":null]
 		<b>Integrity: </b> [integrity]%<br>
 		<b>Power cell charge: </b>[isnull(cell_charge)?"No power cell installed":"[cell.percent()]%"]<br>
 		<b>Air source: </b>[internal_tank?"[use_internal_tank?"Internal Airtank":"Environment"]":"Environment"]<br>
 		<b>Airtank pressure: </b>[internal_tank?"[tank_pressure]kPa":"N/A"]<br>
 		<b>Airtank temperature: </b>[internal_tank?"[tank_temperature]&deg;K|[tank_temperature - T0C]&deg;C":"N/A"]<br>
-		<b>Cabin pressure: </b>[internal_tank?"[cabin_pressure>WARNING_HIGH_PRESSURE ? "<span class='danger'>[cabin_pressure]</span>": cabin_pressure]kPa":"N/A"]<br>
+		<b>Cabin pressure: </b>[internal_tank?"[cabin_pressure>WARNING_HIGH_PRESSURE ? span_danger("[cabin_pressure]"): cabin_pressure]kPa":"N/A"]<br>
 		<b>Cabin temperature: </b> [internal_tank?"[return_temperature()]&deg;K|[return_temperature() - T0C]&deg;C":"N/A"]<br>
 		[dna_lock?"<b>DNA-locked:</b><br> <span style='font-size:10px;letter-spacing:-1px;'>[dna_lock]</span> \[<a href='?src=[REF(src)];reset_dna=1'>Reset</a>\]<br>":""]<br>"}
 	. += "[get_actions(user)]<br>"
@@ -90,11 +96,11 @@
 /obj/vehicle/sealed/mecha/proc/report_internal_damage()
 	. = ""
 	var/list/dam_reports = list(
-		"[MECHA_INT_FIRE]" = "<span class='userdanger'>INTERNAL FIRE</span>",
-		"[MECHA_INT_TEMP_CONTROL]" = "<span class='userdanger'>LIFE SUPPORT SYSTEM MALFUNCTION</span>",
-		"[MECHA_INT_TANK_BREACH]" = "<span class='userdanger'>GAS TANK BREACH</span>",
-		"[MECHA_INT_CONTROL_LOST]" = "<span class='userdanger'>COORDINATION SYSTEM CALIBRATION FAILURE</span> - <a href='?src=[REF(src)];repair_int_control_lost=1'>Recalibrate</a>",
-		"[MECHA_INT_SHORT_CIRCUIT]" = "<span class='userdanger'>SHORT CIRCUIT</span>"
+		"[MECHA_INT_FIRE]" = span_userdanger("INTERNAL FIRE"),
+		"[MECHA_INT_TEMP_CONTROL]" = span_userdanger("LIFE SUPPORT SYSTEM MALFUNCTION"),
+		"[MECHA_INT_TANK_BREACH]" = span_userdanger("GAS TANK BREACH"),
+		"[MECHA_INT_CONTROL_LOST]" = "[span_userdanger("COORDINATION SYSTEM CALIBRATION FAILURE")] - <a href='?src=[REF(src)];repair_int_control_lost=1'>Recalibrate</a>",
+		"[MECHA_INT_SHORT_CIRCUIT]" = span_userdanger("SHORT CIRCUIT")
 								)
 	for(var/tflag in dam_reports)
 		var/intdamflag = text2num(tflag)
@@ -102,7 +108,7 @@
 			. += dam_reports[tflag]
 			. += "<br />"
 	if(return_pressure() > WARNING_HIGH_PRESSURE)
-		. += "<span class='userdanger'>DANGEROUSLY HIGH CABIN PRESSURE</span><br />"
+		. += "[span_userdanger("DANGEROUSLY HIGH CABIN PRESSURE")]<br />"
 
 ///HTML for list of equipment.
 /obj/vehicle/sealed/mecha/proc/get_equipment_list() //outputs mecha equipment list in html
@@ -122,14 +128,14 @@
 			<b>Radio settings:</b><br>
 			Microphone:
 			[radio? "<a href='?src=[REF(src)];rmictoggle=1'>\
-			<span id=\"rmicstate\">[radio.broadcasting?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+			<span id=\"rmicstate\">[radio.get_broadcasting()?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 			Speaker:
 			[radio? "<a href='?src=[REF(src)];rspktoggle=1'><span id=\"rspkstate\">\
-			[radio.listening?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+			[radio.get_listening()?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 			Frequency:
 			[radio? "<a href='?src=[REF(src)];rfreq=-10'>-</a>":"-"]
 			[radio? "<a href='?src=[REF(src)];rfreq=-2'>-</a>":"-"]
-			<span id=\"rfreq\">[radio?"[format_frequency(radio.frequency)]":"Error"]</span>
+			<span id=\"rfreq\">[radio?"[format_frequency(radio.get_frequency())]":"Error"]</span>
 			[radio? "<a href='?src=[REF(src)];rfreq=2'>+</a>":"+"]
 			[radio? "<a href='?src=[REF(src)];rfreq=10'>+</a>":"+"]<br>
 		</div>
@@ -183,7 +189,7 @@
 			continue //there's some strange access without a name
 		. += "[a_name] - <a href='?src=[REF(src)];add_req_access=[a];user=[REF(user)];id_card=[REF(id_card)]'>Add</a><br>"
 	. +={"<hr><a href='?src=[REF(src)];finish_req_access=1;user=[REF(user)]'>Lock ID panel</a><br>
-		<span class='danger'>(Warning! The ID upload panel can be unlocked only through Exosuit Interface.)</span>
+		[span_danger("(Warning! The ID upload panel can be unlocked only through Exosuit Interface.)")]
 		</body>
 		</html>"}
 	user << browse(., "window=exosuit_add_access")
@@ -253,10 +259,10 @@
 					return
 				if(construction_state == MECHA_LOCKED)
 					construction_state = MECHA_SECURE_BOLTS
-					to_chat(usr, "<span class='notice'>The securing bolts are now exposed.</span>")
+					to_chat(usr, span_notice("The securing bolts are now exposed."))
 				else if(construction_state == MECHA_SECURE_BOLTS)
 					construction_state = MECHA_LOCKED
-					to_chat(usr, "<span class='notice'>The securing bolts are now hidden.</span>")
+					to_chat(usr, span_notice("The securing bolts are now hidden."))
 				output_maintenance_dialog(id_card,usr)
 				return
 			if(href_list["drop_cell"])
@@ -305,7 +311,7 @@
 			if(isnull(new_pressure) || usr.incapacitated() || !construction_state)
 				return
 			internal_tank_valve = new_pressure
-			to_chat(usr, "<span class='notice'>The internal pressure valve has been set to [internal_tank_valve]kPa.</span>")
+			to_chat(usr, span_notice("The internal pressure valve has been set to [internal_tank_valve]kPa."))
 			return
 
 	//Start of all internal topic stuff.
@@ -322,33 +328,34 @@
 		if(!equip || !equip.selectable)
 			return
 		selected = equip
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You switch to [equip].</span>")
-		visible_message("<span class='notice'>[src] raises [equip].</span>")
+		to_chat(occupants, "[icon2html(src, occupants)][span_notice("You switch to [equip].")]")
+		visible_message(span_notice("[src] raises [equip]."))
 		send_byjax(usr, "exosuit.browser", "eq_list", get_equipment_list())
+		playsound(src,'sound/machines/piston_raise.ogg', 40, TRUE)
 		return
 
 	//Toggles radio broadcasting
 	if(href_list["rmictoggle"])
-		radio.broadcasting = !radio.broadcasting
-		send_byjax(usr,"exosuit.browser","rmicstate",(radio.broadcasting?"Engaged":"Disengaged"))
+		radio.set_broadcasting(!radio.get_broadcasting())
+		send_byjax(usr,"exosuit.browser","rmicstate",(radio.get_broadcasting()?"Engaged":"Disengaged"))
 		return
 
 	//Toggles radio listening
 	if(href_list["rspktoggle"])
-		radio.listening = !radio.listening
-		send_byjax(usr,"exosuit.browser","rspkstate",(radio.listening?"Engaged":"Disengaged"))
+		radio.set_listening(!radio.get_listening())
+		send_byjax(usr,"exosuit.browser","rspkstate",(radio.get_listening()?"Engaged":"Disengaged"))
 		return
 
 	//Changes radio freqency.
 	if(href_list["rfreq"])
-		var/new_frequency = radio.frequency + text2num(href_list["rfreq"])
+		var/new_frequency = radio.get_frequency() + text2num(href_list["rfreq"])
 		radio.set_frequency(sanitize_frequency(new_frequency, radio.freerange))
-		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
+		send_byjax(usr,"exosuit.browser","rfreq","[format_frequency(radio.get_frequency())]")
 		return
 
 	//Changes the exosuit name.
 	if(href_list["change_name"])
-		var/userinput = stripped_input(usr, "Choose a new exosuit name.", "Rename exosuit", "", MAX_NAME_LEN)
+		var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN)
 		if(!userinput || !locate(usr) in occupants || usr.incapacitated())
 			return
 		name = userinput
@@ -363,7 +370,7 @@
 	//Toggles main access.
 	if(href_list["toggle_maint_access"])
 		if(construction_state)
-			to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Maintenance protocols in effect</span>")
+			to_chat(occupants, "[icon2html(src, occupants)][span_danger("Maintenance protocols in effect")]")
 			return
 		mecha_flags ^= ADDING_MAINT_ACCESS_POSSIBLE
 		send_byjax(usr,"exosuit.browser","t_maint_access","[(mecha_flags & ADDING_MAINT_ACCESS_POSSIBLE)?"Forbid":"Permit"] maintenance protocols")
@@ -373,18 +380,18 @@
 	if (href_list["toggle_port_connection"])
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
-				to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Disconnected from the air system port.</span>")
+				to_chat(occupants, "[icon2html(src, occupants)][span_notice("Disconnected from the air system port.")]")
 				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
-				to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to disconnect from the air system port!</span>")
+				to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to disconnect from the air system port!")]")
 				return
 		else
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
-				to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Connected to the air system port.</span>")
+				to_chat(occupants, "[icon2html(src, occupants)][span_notice("Connected to the air system port.")]")
 				log_message("Connected to gas port.", LOG_MECHA)
 			else
-				to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Unable to connect with air system port!</span>")
+				to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to connect with air system port!")]")
 				return
 		send_byjax(occupants,"exosuit.browser","t_port_connection","[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port")
 		return
@@ -393,10 +400,10 @@
 	if(href_list["dna_lock"])
 		var/mob/living/carbon/user = usr
 		if(!istype(user) || !user.dna)
-			to_chat(user, "[icon2html(src, occupants)]<span class='notice'>You can't create a DNA lock with no DNA!.</span>")
+			to_chat(user, "[icon2html(src, occupants)][span_notice("You can't create a DNA lock with no DNA!.")]")
 			return
 		dna_lock = user.dna.unique_enzymes
-		to_chat(user, "[icon2html(src, occupants)]<span class='notice'>You feel a prick as the needle takes your DNA sample.</span>")
+		to_chat(user, "[icon2html(src, occupants)][span_notice("You feel a prick as the needle takes your DNA sample.")]")
 		return
 
 	//Resets the DNA lock
@@ -406,7 +413,7 @@
 
 	//Repairs internal damage
 	if(href_list["repair_int_control_lost"])
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Recalibrating coordination system...</span>")
+		to_chat(occupants, "[icon2html(src, occupants)][span_notice("Recalibrating coordination system...")]")
 		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		addtimer(CALLBACK(src, .proc/stationary_repair, loc), 100, TIMER_UNIQUE)
 
@@ -414,8 +421,8 @@
 /obj/vehicle/sealed/mecha/proc/stationary_repair(location)
 	if(location == loc)
 		clear_internal_damage(MECHA_INT_CONTROL_LOST)
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>Recalibration successful.</span>")
+		to_chat(occupants, "[icon2html(src, occupants)][span_notice("Recalibration successful.")]")
 		log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
 	else
-		to_chat(occupants, "[icon2html(src, occupants)]<span class='warning'>Recalibration failed!</span>")
+		to_chat(occupants, "[icon2html(src, occupants)][span_warning("Recalibration failed!")]")
 		log_message("Recalibration of coordination system failed with 1 error.", LOG_MECHA, color="red")

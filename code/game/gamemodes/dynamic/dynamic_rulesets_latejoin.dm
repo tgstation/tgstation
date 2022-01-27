@@ -6,29 +6,25 @@
 
 /datum/dynamic_ruleset/latejoin/trim_candidates()
 	for(var/mob/P in candidates)
-		if(!P.client || !P.mind || !P.mind.assigned_role) // Are they connected?
+		if(!P.client || !P.mind || is_unassigned_job(P.mind.assigned_role)) // Are they connected?
 			candidates.Remove(P)
-		else if(!mode.check_age(P.client, minimum_required_age))
+		else if (P.client.get_remaining_days(minimum_required_age) > 0)
 			candidates.Remove(P)
-		else if(P.mind.assigned_role in restricted_roles) // Does their job allow for it?
+		else if(P.mind.assigned_role.title in restricted_roles) // Does their job allow for it?
 			candidates.Remove(P)
-		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role in exclusive_roles)) // Is the rule exclusive to their job?
+		else if((exclusive_roles.len > 0) && !(P.mind.assigned_role.title in exclusive_roles)) // Is the rule exclusive to their job?
 			candidates.Remove(P)
-		else if(antag_flag_override)
-			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(P)
-		else
-			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+		else if (!((antag_preference || antag_flag) in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(P)
 
 /datum/dynamic_ruleset/latejoin/ready(forced = 0)
 	if (!forced)
 		var/job_check = 0
 		if (enemy_roles.len > 0)
-			for (var/mob/M in mode.current_players[CURRENT_LIVING_PLAYERS])
+			for (var/mob/M in GLOB.alive_player_list)
 				if (M.stat == DEAD)
 					continue // Dead players cannot count as opponents
-				if (M.mind && M.mind.assigned_role && (M.mind.assigned_role in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role in restricted_roles)))
+				if (M.mind && (M.mind.assigned_role.title in enemy_roles) && (!(M in candidates) || (M.mind.assigned_role.title in restricted_roles)))
 					job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 		var/threat = round(mode.threat_level/10)
@@ -52,13 +48,24 @@
 /datum/dynamic_ruleset/latejoin/infiltrator
 	name = "Syndicate Infiltrator"
 	antag_datum = /datum/antagonist/traitor
-	antag_flag = ROLE_TRAITOR
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain")
-	restricted_roles = list("AI","Cyborg")
+	antag_flag = ROLE_SYNDICATE_INFILTRATOR
+	antag_flag_override = ROLE_TRAITOR
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 7
 	cost = 5
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(5,5,5,5,5,5,5,5,5,5)
 	repeatable = TRUE
 
 //////////////////////////////////////////////
@@ -71,10 +78,31 @@
 	name = "Provocateur"
 	persistent = TRUE
 	antag_datum = /datum/antagonist/rev/head
-	antag_flag = ROLE_REV_HEAD
-	antag_flag_override = ROLE_REV
-	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
-	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
+	antag_flag = ROLE_PROVOCATEUR
+	antag_flag_override = ROLE_REV_HEAD
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_CYBORG,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
 	weight = 2
@@ -95,8 +123,8 @@
 	if(!..())
 		return FALSE
 	var/head_check = 0
-	for(var/mob/player in mode.current_players[CURRENT_LIVING_PLAYERS])
-		if (player.mind.assigned_role in GLOB.command_positions)
+	for(var/mob/player in GLOB.alive_player_list)
+		if (player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			head_check++
 	return (head_check >= required_heads_of_staff)
 
@@ -140,18 +168,30 @@
 
 //////////////////////////////////////////////
 //                                          //
-//           HERETIC SMUGGLER //
+//           HERETIC SMUGGLER               //
 //                                          //
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/latejoin/heretic_smuggler
 	name = "Heretic Smuggler"
 	antag_datum = /datum/antagonist/heretic
-	antag_flag = ROLE_HERETIC
-	protected_roles = list("Security Officer", "Warden", "Head of Personnel", "Detective", "Head of Security", "Captain","Prisoner")
-	restricted_roles = list("AI","Cyborg")
+	antag_flag = ROLE_HERETIC_SMUGGLER
+	antag_flag_override = ROLE_HERETIC
+	protected_roles = list(
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_PRISONER,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	restricted_roles = list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 	required_candidates = 1
 	weight = 4
 	cost = 10
-	requirements = list(40,30,20,10,10,10,10,10,10,10)
+	requirements = list(101,101,101,10,10,10,10,10,10,10)
 	repeatable = TRUE

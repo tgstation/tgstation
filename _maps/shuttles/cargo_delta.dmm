@@ -20,9 +20,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "e" = (
@@ -102,33 +100,27 @@
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "p" = (
-/obj/machinery/button/door{
-	id = "cargounload";
-	name = "Loading Doors";
-	pixel_x = -24;
-	pixel_y = 8
-	},
-/obj/machinery/button/door{
-	id = "cargoload";
-	name = "Loading Doors";
-	pixel_x = -24;
-	pixel_y = -8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/button/door/directional/west{
+	id = "cargoload";
+	name = "Loading Doors";
+	pixel_y = -8
 	},
+/obj/machinery/button/door/directional/west{
+	id = "cargounload";
+	name = "Loading Doors";
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "q" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/supply)
 "r" = (

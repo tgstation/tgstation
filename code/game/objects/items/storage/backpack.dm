@@ -56,7 +56,7 @@
 	inhand_icon_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 60, ACID = 50)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 60, ACID = 50)
 	component_type = /datum/component/storage/concrete/bluespace/bag_of_holding
 
 /obj/item/storage/backpack/holding/ComponentInitialize()
@@ -67,7 +67,7 @@
 	STR.max_combined_w_class = 35
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message(span_suicide("[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide."))
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
@@ -81,7 +81,7 @@
 	inhand_icon_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/storage/backpack/santabag/Initialize()
+/obj/item/storage/backpack/santabag/Initialize(mapload)
 	. = ..()
 	regenerate_presents()
 
@@ -92,7 +92,7 @@
 	STR.max_combined_w_class = 60
 
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit...</span>")
+	user.visible_message(span_suicide("[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit..."))
 	return (OXYLOSS)
 
 /obj/item/storage/backpack/santabag/proc/regenerate_presents()
@@ -181,8 +181,8 @@
 /obj/item/storage/backpack/science
 	name = "science backpack"
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
-	icon_state = "toxpack"
-	inhand_icon_state = "toxpack"
+	icon_state = "scipack"
+	inhand_icon_state = "scipack"
 
 /obj/item/storage/backpack/virology
 	name = "virology backpack"
@@ -274,11 +274,11 @@
 	icon_state = "satchel-gen"
 	inhand_icon_state = "satchel-gen"
 
-/obj/item/storage/backpack/satchel/tox
+/obj/item/storage/backpack/satchel/science
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
-	icon_state = "satchel-tox"
-	inhand_icon_state = "satchel-tox"
+	icon_state = "satchel-sci"
+	inhand_icon_state = "satchel-sci"
 
 /obj/item/storage/backpack/satchel/hyd
 	name = "botanist satchel"
@@ -330,7 +330,7 @@
 	qdel(C)
 
 /obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
-	new /obj/item/stack/tile/iron(src)
+	new /obj/item/stack/tile/iron/base(src)
 	new /obj/item/crowbar(src)
 
 	..()
@@ -361,62 +361,10 @@
 	///counts time passed since it ate food
 	var/hunger = 0
 
-/obj/item/storage/backpack/duffelbag/cursed/examine(mob/user)
+/obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
-
-	if(hunger > 25)
-		. += "<span class='danger'>The bag is growling for food...</span>"
-
-/obj/item/storage/backpack/duffelbag/cursed/equipped(mob/living/carbon/human/user, slot)
-	. = ..()
-	START_PROCESSING(SSobj,src)
-	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
-	ADD_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-
-/obj/item/storage/backpack/duffelbag/cursed/dropped(mob/living/carbon/human/user)
-	REMOVE_TRAIT(user, TRAIT_DUFFEL_CURSED, CURSED_ITEM_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_CLUMSY, CURSED_ITEM_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_PACIFISM, CURSED_ITEM_TRAIT)
-	STOP_PROCESSING(SSobj,src)
-
-	var/turf/T = get_turf(user)
-	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
-	new /obj/effect/decal/cleanable/vomit(T)
-
-	. = ..()
-
-/obj/item/storage/backpack/duffelbag/cursed/process()
-
-	var/mob/living/carbon/user = loc
-	///check hp
-	if(obj_integrity == 0)
-		user.dropItemToGround(src, TRUE)
-	hunger++
-	///check hunger
-	if((hunger > 50) && prob(20))
-		for(var/obj/item/I in contents)
-			if(IS_EDIBLE(I))
-				var/obj/item/food/hunger_breaks = I //If you fed them poundland microwave meals, it probably would kill them
-				hunger_breaks.forceMove(user.loc)
-				playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-				///poisoned food damages it
-				if(istype(hunger_breaks, /obj/item/food/badrecipe))
-					to_chat(user, "<span class='warning'>The [name] grumbles!</span>")
-					obj_integrity -= 50
-				else
-					to_chat(user, "<span class='notice'>The [name] eats your [hunger_breaks]!</span>")
-				QDEL_NULL(hunger_breaks)
-				hunger = 0
-				return
-		///no food found: it bites you and loses some hp
-		var/affecting = user.get_bodypart(BODY_ZONE_CHEST)
-		user.apply_damage(60, BRUTE, affecting)
-		hunger = initial(hunger)
-		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-		to_chat(user, "<span class='warning'>The [name] eats your back!</span>")
-		obj_integrity -= 25
+	var/add_dropdel = TRUE //clarified boolean
+	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"
@@ -458,11 +406,11 @@
 	icon_state = "duffel-genetics"
 	inhand_icon_state = "duffel-genetics"
 
-/obj/item/storage/backpack/duffelbag/toxins
+/obj/item/storage/backpack/duffelbag/science
 	name = "scientist's duffel bag"
 	desc = "A large duffel bag for holding extra scientific components."
-	icon_state = "duffel-toxins"
-	inhand_icon_state = "duffel-toxins"
+	icon_state = "duffel-sci"
+	inhand_icon_state = "duffel-sci"
 
 /obj/item/storage/backpack/duffelbag/virology
 	name = "virologist's duffel bag"
@@ -694,12 +642,12 @@
 		new /obj/item/grenade/c4/x4(src)
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter
-	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite hardsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
+	desc = "A large duffel bag containing a New Russian pyro backpack sprayer, Elite MODsuit, a Stechkin APS pistol, minibomb, ammo, and other equipment."
 
 /obj/item/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/watertank/op(src)
-	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
+	new /obj/item/mod/control/pre_equipped/elite(src)
 	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
@@ -732,3 +680,4 @@
 	name = "police bag"
 	desc = "A large duffel bag for holding extra police gear."
 	slowdown = 0
+

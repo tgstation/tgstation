@@ -3,7 +3,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "b" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
@@ -33,9 +33,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
 /obj/item/book/manual/random,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "h" = (
@@ -81,10 +79,7 @@
 /area/shuttle/escape)
 "o" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
+/obj/effect/spawner/random/maintenance/eight,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -101,20 +96,16 @@
 /area/shuttle/escape)
 "r" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/turf_decal/bot,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "s" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "t" = (
@@ -130,14 +121,12 @@
 /area/shuttle/escape)
 "v" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "w" = (
 /obj/structure/closet/crate/secure/weapon,
-/obj/effect/spawner/lootdrop/armory_contraband,
+/obj/effect/spawner/random/contraband/armory,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/escape)

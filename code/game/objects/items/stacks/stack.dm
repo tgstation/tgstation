@@ -1,3 +1,9 @@
+//stack recipe placement check types
+/// Checks if there is an object of the result type in any of the cardinal directions
+#define STACK_CHECK_CARDINALS "cardinals"
+/// Checks if there is an object of the result type within one tile
+#define STACK_CHECK_ADJACENT "adjacent"
+
 /* Stack type objects!
  * Contains:
  * Stacks
@@ -33,6 +39,8 @@
 		// The following are all for medical treatment, they're here instead of /stack/medical because sticky tape can be used as a makeshift bandage or splint
 	/// If set and this used as a splint for a broken bone wound, this is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
 	var/splint_factor
+	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
+	var/burn_cleanliness_bonus
 	/// How much blood flow this stack can absorb if used as a bandage on a cut wound, note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
 	var/absorption_capacity
 	/// How quickly we lower the blood flow on a cut wound we're bandaging. Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate, or until the cut heals, whichever comes first
@@ -60,9 +68,13 @@
 
 	. = ..()
 	if(merge)
-		for(var/obj/item/stack/S in loc)
-			if(can_merge(S))
-				INVOKE_ASYNC(src, .proc/merge, S)
+		for(var/obj/item/stack/item_stack in loc)
+			if(item_stack == src)
+				continue
+			if(can_merge(item_stack))
+				INVOKE_ASYNC(src, .proc/merge_without_del, item_stack)
+				if(is_zero_amount(delete_if_zero = FALSE))
+					return INITIALIZE_HINT_QDEL
 	var/list/temp_recipes = get_main_recipes()
 	recipes = temp_recipes.Copy()
 	if(material_type)
@@ -77,6 +89,10 @@
 					recipes += temp
 	update_weight()
 	update_appearance()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_movable_entered_occupied_turf,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /** Sets the amount of materials per unit for this stack.
  *
@@ -107,7 +123,7 @@
 
 /obj/item/stack/grind_requirements()
 	if(is_cyborg)
-		to_chat(usr, "<span class='warning'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		to_chat(usr, span_warning("[src] is electronically synthesized in your chassis and can't be ground up!"))
 		return
 	return TRUE
 
@@ -152,7 +168,7 @@
 		. += "There are [get_amount()] in the stack."
 	else
 		. += "There is [get_amount()] in the stack."
-	. += "<span class='notice'><b>Right-click</b> with an empty hand to take a custom amount.</span>"
+	. += span_notice("<b>Right-click</b> with an empty hand to take a custom amount.")
 
 /obj/item/stack/proc/get_amount()
 	if(is_cyborg)
@@ -247,7 +263,7 @@
 				return
 			if(recipe.time)
 				var/adjusted_time = 0
-				usr.visible_message("<span class='notice'>[usr] starts building \a [recipe.title].</span>", "<span class='notice'>You start building \a [recipe.title]...</span>")
+				usr.visible_message(span_notice("[usr] starts building \a [recipe.title]."), span_notice("You start building \a [recipe.title]..."))
 				if(HAS_TRAIT(usr, recipe.trait_booster))
 					adjusted_time = (recipe.time * recipe.trait_modifier)
 				else
@@ -281,9 +297,9 @@
 			if(QDELETED(O))
 				return //It's a stack and has already been merged
 
+			O.add_fingerprint(usr) //Add fingerprints first, otherwise O might already be deleted because of stack merging
 			if(isitem(O))
 				usr.put_in_hands(O)
-			O.add_fingerprint(usr)
 
 			//BubbleWrap - so newly formed boxes are empty
 			if(istype(O, /obj/item/storage))
@@ -305,9 +321,9 @@
 /obj/item/stack/proc/building_checks(datum/stack_recipe/recipe, multiplier)
 	if (get_amount() < recipe.req_amount*multiplier)
 		if (recipe.req_amount*multiplier>1)
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!</span>")
+			to_chat(usr, span_warning("You haven't got enough [src] to build \the [recipe.req_amount*multiplier] [recipe.title]\s!"))
 		else
-			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [recipe.title]!</span>")
+			to_chat(usr, span_warning("You haven't got enough [src] to build \the [recipe.title]!"))
 		return FALSE
 	var/turf/dest_turf = get_turf(usr)
 
@@ -315,16 +331,16 @@
 	if(ispath(recipe.result_type, /obj/structure/window))
 		var/obj/structure/window/result_path = recipe.result_type
 		if(!valid_window_location(dest_turf, usr.dir, is_fulltile = initial(result_path.fulltile)))
-			to_chat(usr, "<span class='warning'>The [recipe.title] won't fit here!</span>")
+			to_chat(usr, span_warning("The [recipe.title] won't fit here!"))
 			return FALSE
 
 	if(recipe.one_per_turf && (locate(recipe.result_type) in dest_turf))
-		to_chat(usr, "<span class='warning'>There is another [recipe.title] here!</span>")
+		to_chat(usr, span_warning("There is another [recipe.title] here!"))
 		return FALSE
 
 	if(recipe.on_floor)
 		if(!isfloorturf(dest_turf))
-			to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed on the floor!</span>")
+			to_chat(usr, span_warning("\The [recipe.title] must be constructed on the floor!"))
 			return FALSE
 
 		for(var/obj/object in dest_turf)
@@ -336,8 +352,8 @@
 				var/obj/structure/window/window_structure = object
 				if(!window_structure.fulltile)
 					continue
-			if(object.density)
-				to_chat(usr, "<span class='warning'>There is \a [object.name] here. You cant make \a [recipe.title] here!</span>")
+			if(object.density || NO_BUILD & object.obj_flags)
+				to_chat(usr, span_warning("There is \a [object.name] here. You can\'t make \a [recipe.title] here!"))
 				return FALSE
 	if(recipe.placement_checks)
 		switch(recipe.placement_checks)
@@ -346,23 +362,23 @@
 				for(var/direction in GLOB.cardinals)
 					step = get_step(dest_turf, direction)
 					if(locate(recipe.result_type) in step)
-						to_chat(usr, "<span class='warning'>\The [recipe.title] must not be built directly adjacent to another!</span>")
+						to_chat(usr, span_warning("\The [recipe.title] must not be built directly adjacent to another!"))
 						return FALSE
 			if(STACK_CHECK_ADJACENT)
 				if(locate(recipe.result_type) in range(1, dest_turf))
-					to_chat(usr, "<span class='warning'>\The [recipe.title] must be constructed at least one tile away from others of its type!</span>")
+					to_chat(usr, span_warning("\The [recipe.title] must be constructed at least one tile away from others of its type!"))
 					return FALSE
 	return TRUE
 
 /obj/item/stack/use(used, transfer = FALSE, check = TRUE) // return 0 = borked; return 1 = had enough
-	if(check && zero_amount())
+	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return FALSE
 	if(is_cyborg)
 		return source.use_charge(used * cost)
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check && zero_amount())
+	if(check && is_zero_amount(delete_if_zero = TRUE))
 		return TRUE
 	if(length(mats_per_unit))
 		update_custom_materials()
@@ -374,21 +390,28 @@
 	if(get_amount() < amount)
 		if(singular_name)
 			if(amount > 1)
-				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name]\s to do this!</span>")
+				to_chat(user, span_warning("You need at least [amount] [singular_name]\s to do this!"))
 			else
-				to_chat(user, "<span class='warning'>You need at least [amount] [singular_name] to do this!</span>")
+				to_chat(user, span_warning("You need at least [amount] [singular_name] to do this!"))
 		else
-			to_chat(user, "<span class='warning'>You need at least [amount] to do this!</span>")
+			to_chat(user, span_warning("You need at least [amount] to do this!"))
 
 		return FALSE
 
 	return TRUE
 
-/obj/item/stack/proc/zero_amount()
+/**
+ * Returns TRUE if the item stack is the equivalent of a 0 amount item.
+ *
+ * Also deletes the item if delete_if_zero is TRUE and the stack does not have
+ * is_cyborg set to true.
+ */
+/obj/item/stack/proc/is_zero_amount(delete_if_zero = TRUE)
 	if(is_cyborg)
 		return source.energy < cost
 	if(amount < 1)
-		qdel(src)
+		if(delete_if_zero)
+			qdel(src)
 		return TRUE
 	return FALSE
 
@@ -415,32 +438,65 @@
 /obj/item/stack/proc/can_merge(obj/item/stack/check)
 	if(!istype(check, merge_type))
 		return FALSE
-	if(mats_per_unit != check.mats_per_unit)
+	if(mats_per_unit ~! check.mats_per_unit) // ~! in case of lists this operator checks only keys, but not values
 		return FALSE
 	if(is_cyborg) // No merging cyborg stacks into other stacks
 		return FALSE
 	return TRUE
 
-///Merges src into S, as much as possible. If present, the limit arg overrides S.max_amount for transfer.
-/obj/item/stack/proc/merge(obj/item/stack/S, limit)
-	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
-		return
+/**
+ * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
+ *
+ * This calls use() without check = FALSE, preventing the item from qdeling itself if it reaches 0 stack size.
+ *
+ * As a result, this proc can leave behind a 0 amount stack.
+ */
+/obj/item/stack/proc/merge_without_del(obj/item/stack/target_stack, limit)
+	// Cover edge cases where multiple stacks are being merged together and haven't been deleted properly.
+	// Also cover edge case where a stack is being merged into itself, which is supposedly possible.
+	if(QDELETED(target_stack))
+		CRASH("Stack merge attempted on qdeleted target stack.")
+	if(QDELETED(src))
+		CRASH("Stack merge attempted on qdeleted source stack.")
+	if(target_stack == src)
+		CRASH("Stack attempted to merge into itself.")
+
 	var/transfer = get_amount()
-	if(S.is_cyborg)
-		transfer = min(transfer, round((S.source.max_energy - S.source.energy) / S.cost))
+	if(target_stack.is_cyborg)
+		transfer = min(transfer, round((target_stack.source.max_energy - target_stack.source.energy) / target_stack.cost))
 	else
-		transfer = min(transfer, (limit ? limit : S.max_amount) - S.amount)
+		transfer = min(transfer, (limit ? limit : target_stack.max_amount) - target_stack.amount)
 	if(pulledby)
-		pulledby.start_pulling(S)
-	S.copy_evidences(src)
-	use(transfer, TRUE)
-	S.add(transfer)
+		pulledby.start_pulling(target_stack)
+	target_stack.copy_evidences(src)
+	use(transfer, transfer = TRUE, check = FALSE)
+	target_stack.add(transfer)
+	if(target_stack.mats_per_unit != mats_per_unit) // We get the average value of mats_per_unit between two stacks getting merged
+		var/list/temp_mats_list = list() // mats_per_unit is passed by ref into this coil, and that same ref is used in other places. If we didn't make a new list here we'd end up contaminating those other places, which leads to batshit behavior
+		for(var/mat_type in target_stack.mats_per_unit)
+			temp_mats_list[mat_type] = (target_stack.mats_per_unit[mat_type] * (target_stack.amount - transfer) + mats_per_unit[mat_type] * transfer) / target_stack.amount
+		target_stack.mats_per_unit = temp_mats_list
 	return transfer
 
-/obj/item/stack/Crossed(atom/movable/crossing)
-	if(!crossing.throwing && can_merge(crossing))
-		merge(crossing)
-	. = ..()
+/**
+ * Merges as much of src into target_stack as possible. If present, the limit arg overrides target_stack.max_amount for transfer.
+ *
+ * This proc deletes src if the remaining amount after the transfer is 0.
+ */
+/obj/item/stack/proc/merge(obj/item/stack/target_stack, limit)
+	. = merge_without_del(target_stack, limit)
+	is_zero_amount(delete_if_zero = TRUE)
+
+/// Signal handler for connect_loc element. Called when a movable enters the turf we're currently occupying. Merges if possible.
+/obj/item/stack/proc/on_movable_entered_occupied_turf(datum/source, atom/movable/arrived)
+	SIGNAL_HANDLER
+
+	// Edge case. This signal will also be sent when src has entered the turf. Don't want to merge with ourselves.
+	if(arrived == src)
+		return
+
+	if(!arrived.throwing && can_merge(arrived))
+		INVOKE_ASYNC(src, .proc/merge, arrived)
 
 /obj/item/stack/hitby(atom/movable/hitting, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(can_merge(hitting))
@@ -450,23 +506,30 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/stack/attack_hand(mob/user, list/modifiers)
 	if(user.get_inactive_held_item() == src)
-		if(zero_amount())
+		if(is_zero_amount(delete_if_zero = TRUE))
 			return
 		return split_stack(user, 1)
 	else
 		. = ..()
 
 /obj/item/stack/attack_hand_secondary(mob/user, modifiers)
-	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)) || zero_amount())
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(is_cyborg || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(is_zero_amount(delete_if_zero = TRUE))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/max = get_amount()
-	var/stackmaterial = round(input(user, "How many sheets do you wish to take out of this stack? (Maximum [max])", "Stack Split") as null|num)
-	max = get_amount()
+	var/stackmaterial = round(tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max))
+	if(isnull(stackmaterial))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	stackmaterial = min(max, stackmaterial)
-	if(stackmaterial == null || stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+	if(stackmaterial <= 0 || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	split_stack(user, stackmaterial)
-	to_chat(user, "<span class='notice'>You take [stackmaterial] sheets out of the stack.</span>")
+	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /** Splits the stack into two stacks.
@@ -486,13 +549,14 @@
 			F.forceMove(user.drop_location())
 		add_fingerprint(user)
 		F.add_fingerprint(user)
-	zero_amount()
+
+	is_zero_amount(delete_if_zero = TRUE)
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
 	if(can_merge(W))
 		var/obj/item/stack/S = W
 		if(merge(S))
-			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
 	else
 		. = ..()
 
@@ -500,7 +564,7 @@
 	add_blood_DNA(from.return_blood_DNA())
 	add_fingerprint_list(from.return_fingerprints())
 	add_hiddenprint_list(from.return_hiddenprints())
-	fingerprintslast  = from.fingerprintslast
+	fingerprintslast = from.fingerprintslast
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
@@ -547,3 +611,6 @@
 /datum/stack_recipe_list/New(title, recipes)
 	src.title = title
 	src.recipes = recipes
+
+#undef STACK_CHECK_CARDINALS
+#undef STACK_CHECK_ADJACENT

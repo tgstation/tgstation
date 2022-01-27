@@ -23,16 +23,20 @@
 	QDEL_NULL(song)
 	return ..()
 
-/obj/item/instrument/proc/should_stop_playing(mob/user)
-	return user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user))) // sorry, no more TK playing.
+/obj/item/instrument/proc/should_stop_playing(atom/music_player)
+	if(!ismob(music_player))
+		return STOP_PLAYING
+	var/mob/user = music_player
+	if(user.incapacitated() || !((loc == user) || (isturf(loc) && Adjacent(user)))) // sorry, no more TK playing.
+		return STOP_PLAYING
 
 /obj/item/instrument/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/instrument/attack_self(mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return TRUE
 	interact(user)
 
@@ -40,7 +44,7 @@
 	ui_interact(user)
 
 /obj/item/instrument/ui_interact(mob/living/user)
-	if(!isliving(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!isliving(user) || user.stat != CONSCIOUS || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !ispAI(user)))
 		return
 
 	user.set_machine(src)
@@ -60,61 +64,6 @@
 	icon_state = "golden_violin"
 	inhand_icon_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-
-/obj/item/instrument/piano_synth
-	name = "synthesizer"
-	desc = "An advanced electronic synthesizer that can be used as various instruments."
-	icon_state = "synth"
-	inhand_icon_state = "synth"
-	allowed_instrument_ids = "piano"
-
-/obj/item/instrument/piano_synth/Initialize(mapload)
-	. = ..()
-	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
-
-/obj/item/instrument/piano_synth/headphones
-	name = "headphones"
-	desc = "Unce unce unce unce. Boop!"
-	icon = 'icons/obj/clothing/accessories.dmi'
-	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
-	icon_state = "headphones"
-	inhand_icon_state = "headphones"
-	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
-	force = 0
-	w_class = WEIGHT_CLASS_SMALL
-	custom_price = PAYCHECK_ASSISTANT * 2.5
-	instrument_range = 1
-
-/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-	RegisterSignal(src, COMSIG_SONG_START, .proc/start_playing)
-	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
-
-/**
- * Called by a component signal when our song starts playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/start_playing()
-	icon_state = "[initial(icon_state)]_on"
-	update_appearance()
-
-/**
- * Called by a component signal when our song stops playing.
- */
-/obj/item/instrument/piano_synth/headphones/proc/stop_playing()
-	icon_state = "[initial(icon_state)]"
-	update_appearance()
-
-/obj/item/instrument/piano_synth/headphones/spacepods
-	name = "\improper Nanotrasen space pods"
-	desc = "Flex your money, AND ignore what everyone else says, all at once!"
-	icon_state = "spacepods"
-	inhand_icon_state = "spacepods"
-	slot_flags = ITEM_SLOT_EARS
-	strip_delay = 100 //air pods don't fall out
-	instrument_range = 0 //you're paying for quality here
-	custom_premium_price = PAYCHECK_ASSISTANT * 36 //Save up 5 shifts worth of pay just to lose it down a drainpipe on the sidewalk
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -177,9 +126,9 @@
 	attack_verb_continuous = list("plays", "jazzes", "trumpets", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trumpet", "mourn", "doot", "spook")
 
-/obj/item/instrument/trumpet/spectral/Initialize()
+/obj/item/instrument/trumpet/spectral/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trumpet/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/En4.mid', 100,1,-1)
@@ -201,9 +150,9 @@
 	attack_verb_continuous = list("plays", "jazzes", "saxxes", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "sax", "mourn", "doot", "spook")
 
-/obj/item/instrument/saxophone/spectral/Initialize()
+/obj/item/instrument/saxophone/spectral/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/saxophone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/saxophone/En4.mid', 100,1,-1)
@@ -225,9 +174,9 @@
 	attack_verb_continuous = list("plays", "jazzes", "trombones", "mourns", "doots", "spooks")
 	attack_verb_simple = list("play", "jazz", "trombone", "mourn", "doot", "spook")
 
-/obj/item/instrument/trombone/spectral/Initialize()
+/obj/item/instrument/trombone/spectral/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/spooky)
+	AddElement(/datum/element/spooky)
 
 /obj/item/instrument/trombone/spectral/attack(mob/living/carbon/C, mob/user)
 	playsound (src, 'sound/runtime/instruments/trombone/Cn4.mid', 100,1,-1)
@@ -253,8 +202,9 @@
 	actions_types = list(/datum/action/item_action/instrument)
 
 /obj/item/instrument/harmonica/proc/handle_speech(datum/source, list/speech_args)
+	SIGNAL_HANDLER
 	if(song.playing && ismob(loc))
-		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		to_chat(loc, span_warning("You stop playing the harmonica to talk..."))
 		song.playing = FALSE
 
 /obj/item/instrument/harmonica/equipped(mob/M, slot)

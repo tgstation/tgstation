@@ -2,6 +2,12 @@
  * A component to reset the parent to its previous state after some time passes
  */
 /datum/component/dejavu
+
+	///message sent when dejavu rewinds
+	var/rewind_message = "You remember a time not so long ago..."
+	///message sent when dejavu is out of rewinds
+	var/no_rewinds_message = "But the memory falls out of your reach."
+
 	/// The turf the parent was on when this components was applied, they get moved back here after the duration
 	var/turf/starting_turf
 	/// Determined by the type of the parent so different behaviours can happen per type
@@ -56,7 +62,7 @@
 
 	else if(isobj(parent))
 		var/obj/O = parent
-		integrity = O.obj_integrity
+		integrity = O.get_integrity()
 		rewind_type = .proc/rewind_obj
 
 	addtimer(CALLBACK(src, rewind_type), rewind_interval)
@@ -67,13 +73,13 @@
 	return ..()
 
 /datum/component/dejavu/proc/rewind()
-	to_chat(parent, "<span class=notice>You remember a time not so long ago...</span>")
+	to_chat(parent, span_notice(rewind_message))
 
 	//comes after healing so new limbs comically drop to the floor
 	if(starting_turf)
 		var/area/destination_area = starting_turf.loc
 		if(destination_area.area_flags & NOTELEPORT)
-			to_chat(parent, "<span class='warning'>For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force.</span>")
+			to_chat(parent, span_warning("For some reason, your head aches and fills with mental fog when you try to think of where you were... It feels like you're now going against some dull, unstoppable universal force."))
 		else
 			var/atom/movable/master = parent
 			master.forceMove(starting_turf)
@@ -82,7 +88,7 @@
 	if(rewinds_remaining)
 		addtimer(CALLBACK(src, rewind_type), rewind_interval)
 	else
-		to_chat(parent, "<span class=notice>But the memory falls out of your reach.</span>")
+		to_chat(parent, span_notice(no_rewinds_message))
 		qdel(src)
 
 /datum/component/dejavu/proc/rewind_living()
@@ -107,5 +113,14 @@
 
 /datum/component/dejavu/proc/rewind_obj()
 	var/obj/master = parent
-	master.obj_integrity = integrity
+	master.update_integrity(integrity)
 	rewind()
+
+///differently themed dejavu for modsuits.
+/datum/component/dejavu/timeline
+	rewind_message = "Your suit rewinds, pulling you through spacetime!"
+	no_rewinds_message = "\"Rewind complete. You have arrived at: 10 seconds ago.\""
+
+/datum/component/dejavu/timeline/rewind()
+	playsound(get_turf(parent), 'sound/items/modsuit/rewinder.ogg')
+	. = ..()

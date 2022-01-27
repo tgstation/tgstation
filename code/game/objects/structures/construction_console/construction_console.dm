@@ -12,7 +12,7 @@
 	desc = "An industrial computer integrated with a camera-assisted rapid construction drone."
 	networks = list("ss13")
 	circuit = /obj/item/circuitboard/computer/base_construction
-	off_action = new/datum/action/innate/camera_off/base_construction
+	off_action = /datum/action/innate/camera_off/base_construction
 	jump_action = null
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
@@ -23,8 +23,6 @@
 	var/list/structures = list()
 	///Internal RCD. Some construction actions rely on having this.
 	var/obj/item/construction/rcd/internal/internal_rcd
-	///Actions given to the console user to help with base building. Actions are generally carried out at the location of the eyeobj
-	var/list/datum/action/innate/construction_actions
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	. = ..()
@@ -38,10 +36,10 @@
  * Fill the construction_actios list with actions
  *
  * Instantiate each action object that we'll be giving to users of
- * this console, and put it in the construction actions list.
+ * this console, and put it in the actions list
  */
 /obj/machinery/computer/camera_advanced/base_construction/proc/populate_actions_list()
-	construction_actions = list()
+	return
 
 /**
  * Reload materials used by the console
@@ -81,11 +79,6 @@
 ///Go through every action object in the construction_action list (which should be fully initialized by now) and grant it to the user.
 /obj/machinery/computer/camera_advanced/base_construction/GrantActions(mob/living/user)
 	..()
-	for (var/datum/action/innate/construction_action in construction_actions)
-		if(construction_action)
-			construction_action.target = src
-			construction_action.Grant(user)
-			actions += construction_action
 	//When the eye is in use, make it visible to players so they know when someone is building.
 	eyeobj.invisibility = 0
 
@@ -113,10 +106,13 @@
 
 /mob/camera/ai_eye/remote/base_construction/Initialize(mapload, obj/machinery/computer/camera_advanced/console_link)
 	linked_console = console_link
+	if(!linked_console)
+		stack_trace("A base consturuction drone was created with no linked console")
+		return INITIALIZE_HINT_QDEL
 	return ..()
 
-/mob/camera/ai_eye/remote/base_construction/setLoc(t)
-	var/area/curr_area = get_area(t)
+/mob/camera/ai_eye/remote/base_construction/setLoc(turf/destination, force_update = FALSE)
+	var/area/curr_area = get_area(destination)
 	//Only move if we're in the allowed area. If no allowed area is defined, then we're free to move wherever.
 	if(!linked_console.allowed_area || istype(curr_area, linked_console.allowed_area))
 		return ..()

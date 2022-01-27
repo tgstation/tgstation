@@ -69,7 +69,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 			new_dpdir = new_dpdir | angle2dir(rotation+dir2angle(D))
 	dpdir = new_dpdir
 
-/obj/structure/table/wood/bar/shuttleRotate(rotation, params)
+/obj/structure/table/wood/shuttle_bar/shuttleRotate(rotation, params)
 	. = ..()
 	boot_dir = angle2dir(rotation + dir2angle(boot_dir))
 
@@ -80,13 +80,13 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 /************************************Machine rotate procs************************************/
 
 /obj/machinery/atmospherics/shuttleRotate(rotation, params)
-	var/list/real_node_connect = getNodeConnects()
+	var/list/real_node_connect = get_node_connects()
 	for(var/i in 1 to device_type)
 		real_node_connect[i] = angle2dir(rotation+dir2angle(real_node_connect[i]))
 
 	. = ..()
-	SetInitDirections()
-	var/list/supposed_node_connect = getNodeConnects()
+	set_init_directions()
+	var/list/supposed_node_connect = get_node_connects()
 	var/list/nodes_copy = nodes.Copy()
 
 	for(var/i in 1 to device_type)

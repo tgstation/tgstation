@@ -65,7 +65,11 @@
 
 		//while buckled, you can still connect to and control things like doors, but you can't use your modules
 		if(buckled)
-			to_chat(src, "<span class='warning'>You can't use modules while buckled to [buckled]!</span>")
+			to_chat(src, span_warning("You can't use modules while buckled to [buckled]!"))
+			return
+
+		//if your "hands" are blocked you shouldn't be able to use modules
+		if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 			return
 
 		if(W == A)

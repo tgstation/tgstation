@@ -10,16 +10,16 @@ Charged extracts:
 	effect = "charged"
 	icon_state = "charged"
 
-/obj/item/slimecross/charged/Initialize()
+/obj/item/slimecross/charged/Initialize(mapload)
 	. = ..()
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
 	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
-		to_chat(user, "<span class='warning'>This extract needs to be full of plasma to activate!</span>")
+		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
-	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
+	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	do_effect(user)
@@ -34,7 +34,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/grey/do_effect(mob/user)
 	new /obj/item/slimepotion/slime_reviver(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/orange
@@ -54,7 +54,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
 	new /obj/item/slimecrossbeaker/omnizine(get_turf(user))
-	user.visible_message("<span class='notice'>[src] sparks, and floods with a regenerative solution!</span>")
+	user.visible_message(span_notice("[src] sparks, and floods with a regenerative solution!"))
 	..()
 
 /obj/item/slimecross/charged/blue
@@ -63,7 +63,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/blue/do_effect(mob/user)
 	new /obj/item/slimepotion/slime/chargedstabilizer(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/metal
@@ -73,7 +73,7 @@ Charged extracts:
 /obj/item/slimecross/charged/metal/do_effect(mob/user)
 	new /obj/item/stack/sheet/iron(get_turf(user), 25)
 	new /obj/item/stack/sheet/plasteel(get_turf(user), 10)
-	user.visible_message("<span class='notice'>[src] grows into a plethora of metals!</span>")
+	user.visible_message(span_notice("[src] grows into a plethora of metals!"))
 	..()
 
 /obj/item/slimecross/charged/yellow
@@ -82,7 +82,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
 	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
-	user.visible_message("<span class='notice'>[src] sparks violently, and swells with electric power!</span>")
+	user.visible_message(span_notice("[src] sparks violently, and swells with electric power!"))
 	..()
 
 /obj/item/slimecross/charged/darkpurple
@@ -91,7 +91,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/darkpurple/do_effect(mob/user)
 	new /obj/item/stack/sheet/mineral/plasma(get_turf(user), 10)
-	user.visible_message("<span class='notice'>[src] produces a large amount of plasma!</span>")
+	user.visible_message(span_notice("[src] produces a large amount of plasma!"))
 	..()
 
 /obj/item/slimecross/charged/darkblue
@@ -100,7 +100,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/darkblue/do_effect(mob/user)
 	new /obj/item/slimepotion/spaceproof(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/silver
@@ -112,7 +112,7 @@ Charged extracts:
 	for(var/i in 1 to 10)
 		var/drink_type = get_random_drink()
 		new drink_type(get_turf(user))
-	user.visible_message("<span class='notice'>[src] produces a party's worth of cake and drinks!</span>")
+	user.visible_message(span_notice("[src] produces a party's worth of cake and drinks!"))
 	..()
 
 /obj/item/slimecross/charged/bluespace
@@ -121,7 +121,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/bluespace/do_effect(mob/user)
 	new /obj/item/stack/sheet/bluespace_crystal(get_turf(user), 10)
-	user.visible_message("<span class='notice'>[src] produces several sheets of polycrystal!</span>")
+	user.visible_message(span_notice("[src] produces several sheets of polycrystal!"))
 	..()
 
 /obj/item/slimecross/charged/sepia
@@ -130,7 +130,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/sepia/do_effect(mob/user)
 	new /obj/item/camera/spooky(get_turf(user))
-	user.visible_message("<span class='notice'>[src] flickers in a strange, ethereal manner, and produces a camera!</span>")
+	user.visible_message(span_notice("[src] flickers in a strange, ethereal manner, and produces a camera!"))
 	..()
 
 /obj/item/slimecross/charged/cerulean
@@ -139,7 +139,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/cerulean/do_effect(mob/user)
 	new /obj/item/slimepotion/enhancer/max(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/pyrite
@@ -148,7 +148,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pyrite/do_effect(mob/user)
 	new /obj/item/stack/sheet/mineral/bananium(get_turf(user), 10)
-	user.visible_message("<span class='warning'>[src] solidifies with a horrifying banana stench!</span>")
+	user.visible_message(span_warning("[src] solidifies with a horrifying banana stench!"))
 	..()
 
 /obj/item/slimecross/charged/red
@@ -157,7 +157,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/red/do_effect(mob/user)
 	new /obj/item/slimepotion/lavaproof(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/green
@@ -167,16 +167,16 @@ Charged extracts:
 /obj/item/slimecross/charged/green/do_effect(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
-		to_chat(user, "<span class='warning'>You must be a humanoid to use this!</span>")
+		to_chat(user, span_warning("You must be a humanoid to use this!"))
 		return
-	var/racechoice = input(H, "Choose your slime subspecies.", "Slime Selection") as null|anything in sortList(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc)
-	if(!racechoice)
-		to_chat(user, "<span class='notice'>You decide not to become a slime for now.</span>")
+	var/racechoice = tgui_input_list(H, "Choose your slime subspecies", "Slime Selection", sort_list(subtypesof(/datum/species/jelly), /proc/cmp_typepaths_asc))
+	if(isnull(racechoice))
+		to_chat(user, span_notice("You decide not to become a slime for now."))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	H.set_species(racechoice, icon_update=1)
-	H.visible_message("<span class='warning'>[H] suddenly shifts form as [src] dissolves into [H.p_their()] skin!</span>")
+	H.visible_message(span_warning("[H] suddenly shifts form as [src] dissolves into [H.p_their()] skin!"))
 	..()
 
 /obj/item/slimecross/charged/pink
@@ -185,7 +185,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/pink/do_effect(mob/user)
 	new /obj/item/slimepotion/lovepotion(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/gold
@@ -195,20 +195,20 @@ Charged extracts:
 	var/spawned = 0
 
 /obj/item/slimecross/charged/gold/do_effect(mob/user)
-	user.visible_message("<span class='warning'>[src] starts shuddering violently!</span>")
+	user.visible_message(span_warning("[src] starts shuddering violently!"))
 	addtimer(CALLBACK(src, .proc/startTimer), 50)
 
 /obj/item/slimecross/charged/gold/proc/startTimer()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/slimecross/charged/gold/process()
-	visible_message("<span class='warning'>[src] lets off a spark, and produces a living creature!</span>")
+	visible_message(span_warning("[src] lets off a spark, and produces a living creature!"))
 	new /obj/effect/particle_effect/sparks(get_turf(src))
 	playsound(get_turf(src), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
-		visible_message("<span class='warning'>[src] collapses into a puddle of goo.</span>")
+		visible_message(span_warning("[src] collapses into a puddle of goo."))
 		qdel(src)
 
 /obj/item/slimecross/charged/gold/Destroy()
@@ -220,11 +220,11 @@ Charged extracts:
 	effect_desc = "Creates an explosion after a few seconds."
 
 /obj/item/slimecross/charged/oil/do_effect(mob/user)
-	user.visible_message("<span class='danger'>[src] begins to shake with rapidly increasing force!</span>")
+	user.visible_message(span_danger("[src] begins to shake with rapidly increasing force!"))
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/charged/oil/proc/boom()
-	explosion(get_turf(src), 2, 3, 4) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
+	explosion(src, devastation_range = 2, heavy_impact_range = 3, light_impact_range = 4, explosion_cause = src) //Much smaller effect than normal oils, but devastatingly strong where it does hit.
 	qdel(src)
 
 /obj/item/slimecross/charged/black
@@ -234,7 +234,7 @@ Charged extracts:
 /obj/item/slimecross/charged/black/do_effect(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H))
-		to_chat(user, "<span class='warning'>You have to be able to have a species to get your species changed.</span>")
+		to_chat(user, span_warning("You have to be able to have a species to get your species changed."))
 		return
 	var/list/allowed_species = list()
 	for(var/stype in subtypesof(/datum/species))
@@ -245,7 +245,7 @@ Charged extracts:
 	var/datum/species/changed = pick(allowed_species)
 	if(changed)
 		H.set_species(changed, icon_update = 1)
-		to_chat(H, "<span class='danger'>You feel very different!</span>")
+		to_chat(H, span_danger("You feel very different!"))
 	..()
 
 /obj/item/slimecross/charged/lightpink
@@ -254,7 +254,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/lightpink/do_effect(mob/user)
 	new /obj/item/slimepotion/peacepotion(get_turf(user))
-	user.visible_message("<span class='notice'>[src] distills into a potion!</span>")
+	user.visible_message(span_notice("[src] distills into a potion!"))
 	..()
 
 /obj/item/slimecross/charged/adamantine
@@ -262,8 +262,8 @@ Charged extracts:
 	effect_desc = "Creates a completed golem shell."
 
 /obj/item/slimecross/charged/adamantine/do_effect(mob/user)
-	user.visible_message("<span class='notice'>[src] produces a fully formed golem shell!</span>")
-	new /obj/effect/mob_spawn/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
+	user.visible_message(span_notice("[src] produces a fully formed golem shell!"))
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(get_turf(src), /datum/species/golem/adamantine, user)
 	..()
 
 /obj/item/slimecross/charged/rainbow
@@ -271,7 +271,7 @@ Charged extracts:
 	effect_desc = "Produces three living slimes of random colors."
 
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
-	user.visible_message("<span class='warning'>[src] swells and splits into three new slimes!</span>")
+	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
 		var/mob/living/simple_animal/slime/S = new(get_turf(user))
 		S.random_colour()

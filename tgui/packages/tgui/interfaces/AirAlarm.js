@@ -255,10 +255,10 @@ const AirAlarmControlThresholds = (props, context) => {
       <thead>
         <tr>
           <td />
-          <td className="color-bad">min2</td>
-          <td className="color-average">min1</td>
-          <td className="color-average">max1</td>
-          <td className="color-bad">max2</td>
+          <td className="color-bad">hazard_min</td>
+          <td className="color-average">warning_min</td>
+          <td className="color-average">warning_max</td>
+          <td className="color-bad">hazard_max</td>
         </tr>
       </thead>
       <tbody>

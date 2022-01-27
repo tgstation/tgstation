@@ -6,9 +6,10 @@
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "mixer0"
-	base_icon_state = "mixer"
-	use_power = TRUE
+	icon_state = "pandemic0"
+	icon_keyboard = null
+	base_icon_state = "pandemic"
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
@@ -17,7 +18,7 @@
 	var/datum/symptom/selected_symptom
 	var/obj/item/reagent_containers/beaker
 
-/obj/machinery/computer/pandemic/Initialize()
+/obj/machinery/computer/pandemic/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -34,7 +35,7 @@
 			is_close = TRUE
 		else
 			. += "It has a beaker inside it."
-		. += "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>"
+		. += span_info("Alt-click to eject [is_close ? beaker : "the beaker"].")
 
 /obj/machinery/computer/pandemic/AltClick(mob/user)
 	. = ..()
@@ -153,7 +154,10 @@
 	data["is_ready"] = !wait
 	if(beaker)
 		data["has_beaker"] = TRUE
-		data["beaker_empty"] = (!beaker.reagents.total_volume || !beaker.reagents.reagent_list)
+		data["beaker"] = list(
+			"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
+			"capacity" = beaker.volume,
+		)
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE
@@ -204,7 +208,7 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = SSdisease.archive_diseases[id]
 			if(!istype(A) || !A.mutable)
-				to_chat(usr, "<span class='warning'>ERROR: Cannot replicate virus strain.</span>")
+				to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 				return
 			A = A.Copy()
 			var/list/data = list("viruses" = list(A))
@@ -238,13 +242,13 @@
 		if(machine_stat & (NOPOWER|BROKEN))
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+			to_chat(user, span_warning("A container is already loaded into [src]!"))
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 
 		beaker = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, span_notice("You insert [I] into [src]."))
 		update_appearance()
 	else
 		return ..()

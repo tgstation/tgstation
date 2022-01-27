@@ -3,6 +3,7 @@
 /datum/venue/restaurant
 	name = "restaurant"
 	req_access = ACCESS_KITCHEN
+	venue_type = VENUE_RESTAURANT
 	min_time_between_visitor = 80 SECONDS
 	max_time_between_visitor = 100 SECONDS
 	customer_types = list(
@@ -52,7 +53,7 @@
 /datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
 	. = ..()
 	var/obj/item/food/ordered_food = order_item
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!</span>", "<span class='danger'>You push [ordered_food] into your mouth-shaped hole.</span>")
+	customer_pawn.visible_message(span_danger("[customer_pawn] pushes [ordered_food] into their mouth-shaped hole!"), span_danger("You push [ordered_food] into your mouth-shaped hole."))
 	playsound(get_turf(customer_pawn),'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	customers_served += 1
 	qdel(ordered_food)
@@ -74,6 +75,7 @@
 /datum/venue/bar
 	name = "bar"
 	req_access = ACCESS_BAR
+	venue_type = VENUE_BAR
 	min_time_between_visitor = 40 SECONDS
 	max_time_between_visitor = 60 SECONDS
 	customer_types = list(
@@ -89,7 +91,7 @@
 	)
 
 /datum/venue/bar/order_food(mob/living/simple_animal/robot_customer/customer_pawn, datum/customer_data/customer_data)
-	var/datum/reagent/reagent_to_order = pickweight(customer_data.orderable_objects[type])
+	var/datum/reagent/reagent_to_order = pick_weight(customer_data.orderable_objects[venue_type])
 
 	var/glass_visual
 
@@ -125,7 +127,7 @@
 			continue
 		SEND_SIGNAL(reagent, COMSIG_ITEM_SOLD_TO_CUSTOMER, customer_pawn, order_item)
 
-	customer_pawn.visible_message("<span class='danger'>[customer_pawn] slurps up [order_item] in one go!</span>", "<span class='danger'>You slurp up [order_item] in one go.</span>")
+	customer_pawn.visible_message(span_danger("[customer_pawn] slurps up [order_item] in one go!"), span_danger("You slurp up [order_item] in one go."))
 	playsound(get_turf(customer_pawn), 'sound/items/drink.ogg', 50, TRUE)
 	customers_served += 1
 	order_item.reagents.clear_reagents()

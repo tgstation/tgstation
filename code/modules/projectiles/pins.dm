@@ -27,7 +27,7 @@
 			var/obj/item/gun/G = target
 			var/obj/item/firing_pin/old_pin = G.pin
 			if(old_pin && (force_replace || old_pin.pin_removeable))
-				to_chat(user, "<span class='notice'>You remove [old_pin] from [G].</span>")
+				to_chat(user, span_notice("You remove [old_pin] from [G]."))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
@@ -38,15 +38,15 @@
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return
 				gun_insert(user, G)
-				to_chat(user, "<span class='notice'>You insert [src] into [G].</span>")
+				to_chat(user, span_notice("You insert [src] into [G]."))
 			else
-				to_chat(user, "<span class='notice'>This firearm already has a firing pin installed.</span>")
+				to_chat(user, span_notice("This firearm already has a firing pin installed."))
 
 /obj/item/firing_pin/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+	to_chat(user, span_notice("You override the authentication mechanism."))
 
 /obj/item/firing_pin/proc/gun_insert(mob/living/user, obj/item/gun/G)
 	gun = G
@@ -67,9 +67,9 @@
 		user.show_message(fail_message, MSG_VISUAL)
 	if(selfdestruct)
 		if(user)
-			user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", MSG_VISUAL)
-			to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
-		explosion(get_turf(gun), -1, 0, 2, 3)
+			user.show_message("[span_danger("SELF-DESTRUCTING...")]<br>", MSG_VISUAL)
+			to_chat(user, span_userdanger("[gun] explodes!"))
+		explosion(src, devastation_range = -1, light_impact_range = 2, flash_range = 3)
 		if(gun)
 			qdel(gun)
 
@@ -147,7 +147,7 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
 		return TRUE
 	if(user.mind)
-		if(user.mind.assigned_role == "Clown") //traitor clowns can use this, even though they're technically not clumsy
+		if(is_clown_job(user.mind.assigned_role)) //traitor clowns can use this, even though they're technically not clumsy
 			return TRUE
 		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
 			return TRUE
@@ -185,7 +185,7 @@
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
+			to_chat(user, span_notice("DNA-LOCK SET."))
 
 /obj/item/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(user && user.dna && user.dna.unique_enzymes)
@@ -197,7 +197,7 @@
 	if(!unique_enzymes)
 		if(user && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
+			to_chat(user, span_notice("DNA-LOCK SET."))
 	else
 		..()
 
@@ -221,24 +221,24 @@
 
 /obj/item/firing_pin/paywall/attack_self(mob/user)
 	multi_payment = !multi_payment
-	to_chat(user, "<span class='notice'>You set the pin to [( multi_payment ) ? "process payment for every shot" : "one-time license payment"].</span>")
+	to_chat(user, span_notice("You set the pin to [( multi_payment ) ? "process payment for every shot" : "one-time license payment"]."))
 
 /obj/item/firing_pin/paywall/examine(mob/user)
 	. = ..()
 	if(pin_owner)
-		. += "<span class='notice'>This firing pin is currently authorized to pay into the account of [pin_owner.registered_name].</span>"
+		. += span_notice("This firing pin is currently authorized to pay into the account of [pin_owner.registered_name].")
 
 /obj/item/firing_pin/paywall/gun_insert(mob/living/user, obj/item/gun/G)
 	if(!pin_owner)
-		to_chat(user, "<span class='warning'>ERROR: Please swipe valid identification card before installing firing pin!</span>")
+		to_chat(user, span_warning("ERROR: Please swipe valid identification card before installing firing pin!"))
 		return
 	gun = G
 	forceMove(gun)
 	gun.pin = src
 	if(multi_payment)
-		gun.desc += "<span class='notice'> This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
+		gun.desc += span_notice(" This [gun.name] has a per-shot cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
 		return
-	gun.desc += "<span class='notice'> This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].</span>"
+	gun.desc += span_notice(" This [gun.name] has a license permit cost of [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""].")
 	return
 
 
@@ -250,28 +250,25 @@
 	if(istype(M, /obj/item/card/id))
 		var/obj/item/card/id/id = M
 		if(!id.registered_account)
-			to_chat(user, "<span class='warning'>ERROR: Identification card lacks registered bank account!</span>")
+			to_chat(user, span_warning("ERROR: Identification card lacks registered bank account!"))
 			return
 		if(id != pin_owner && owned)
-			to_chat(user, "<span class='warning'>ERROR: This firing pin has already been authorized!</span>")
+			to_chat(user, span_warning("ERROR: This firing pin has already been authorized!"))
 			return
 		if(id == pin_owner)
-			to_chat(user, "<span class='notice'>You unlink the card from the firing pin.</span>")
+			to_chat(user, span_notice("You unlink the card from the firing pin."))
 			gun_owners -= user
 			pin_owner = null
 			owned = FALSE
 			return
-		var/transaction_amount = input(user, "Insert valid deposit amount for gun purchase", "Money Deposit") as null|num
-		if(transaction_amount < 1)
-			to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
-			return
-		if(!transaction_amount)
+		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit", 1, 10000, 1)
+		if(isnull(transaction_amount))
 			return
 		pin_owner = id
 		owned = TRUE
-		payment_amount = transaction_amount
+		payment_amount = round(transaction_amount)
 		gun_owners += user
-		to_chat(user, "<span class='notice'>You link the card to the firing pin.</span>")
+		to_chat(user, span_notice("You link the card to the firing pin."))
 
 /obj/item/firing_pin/paywall/pin_auth(mob/living/user)
 	if(!istype(user))//nice try commie
@@ -282,11 +279,11 @@
 			if(credit_card_details.adjust_money(-payment_amount))
 				pin_owner.registered_account.adjust_money(payment_amount)
 				return TRUE
-			to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
+			to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 			return FALSE
 		return TRUE
 	if(credit_card_details && !active_prompt)
-		var/license_request = alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", "Yes", "No")
+		var/license_request = tgui_alert(user, "Do you wish to pay [payment_amount] credit[( payment_amount > 1 ) ? "s" : ""] for [( multi_payment ) ? "each shot of [gun.name]" : "usage license of [gun.name]"]?", "Weapon Purchase", list("Yes", "No"))
 		active_prompt = TRUE
 		if(!user.canUseTopic(src, BE_CLOSE))
 			active_prompt = FALSE
@@ -296,15 +293,15 @@
 				if(credit_card_details.adjust_money(-payment_amount))
 					pin_owner.registered_account.adjust_money(payment_amount)
 					gun_owners += user
-					to_chat(user, "<span class='notice'>Gun license purchased, have a secure day!</span>")
+					to_chat(user, span_notice("Gun license purchased, have a secure day!"))
 					active_prompt = FALSE
 					return FALSE //we return false here so you don't click initially to fire, get the prompt, accept the prompt, and THEN the gun
-				to_chat(user, "<span class='warning'>ERROR: User balance insufficent for successful transaction!</span>")
+				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
 				return FALSE
 			if("No")
-				to_chat(user, "<span class='warning'>ERROR: User has declined to purchase gun license!</span>")
+				to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
 				return FALSE
-	to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
+	to_chat(user, span_warning("ERROR: User has no valid bank account to substract neccesary funds from!"))
 	return FALSE
 
 // Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
@@ -318,7 +315,7 @@
 /obj/item/firing_pin/explorer/pin_auth(mob/living/user)
 	var/turf/station_check = get_turf(user)
 	if(!station_check||is_station_level(station_check.z))
-		to_chat(user, "<span class='warning'>You cannot use your weapon while on the station!</span>")
+		to_chat(user, span_warning("You cannot use your weapon while on the station!"))
 		return FALSE
 	return TRUE
 
@@ -335,7 +332,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return TRUE
-	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
+	to_chat(user, span_warning("You need to be wearing [tagcolor] laser tag armor!"))
 	return FALSE
 
 /obj/item/firing_pin/tag/red

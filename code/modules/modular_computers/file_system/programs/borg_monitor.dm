@@ -43,7 +43,7 @@
 	var/obj/item/card/id/stored_card = computer.GetID()
 	if(istype(stored_card) && stored_card.registered_name)
 		username = "user [stored_card.registered_name]"
-	to_chat(borgo, "<span class='userdanger'>Request received from [username] for the system log file. Upload in progress.</span>")//Damning evidence may be contained, so warn the borg
+	to_chat(borgo, span_userdanger("Request received from [username] for the system log file. Upload in progress."))//Damning evidence may be contained, so warn the borg
 	borgo.logevent("File request by [username]: /var/logs/syslog")
 	return TRUE
 
@@ -55,7 +55,7 @@
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(DL_source)
 	if(!here.Adjacent(there))//If someone walked away, cancel the download
-		to_chat(DL_source, "<span class='danger'>Log upload failed: general connection error.</span>")//Let the borg know the upload stopped
+		to_chat(DL_source, span_danger("Log upload failed: general connection error."))//Let the borg know the upload stopped
 		DL_source = null
 		DL_progress = -1
 		return
@@ -129,16 +129,16 @@
 			if(!ID)
 				return
 			if(R.stat == DEAD) //Dead borgs will listen to you no longer
-				to_chat(usr, "<span class='warn'>Error -- Could not open a connection to unit:[R]</span>")
-			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
+				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
+			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
 			if(!message)
 				return
-			to_chat(R, "<br><br><span class='notice'>Message from [ID] -- \"[message]\"</span><br>")
+			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
 			to_chat(usr, "Message sent to [R]: [message]")
 			R.logevent("Message from [ID] -- \"[message]\"")
 			SEND_SOUND(R, 'sound/machines/twobeep_high.ogg')
 			if(R.connected_ai)
-				to_chat(R.connected_ai, "<br><br><span class='notice'>Message from [ID] to [R] -- \"[message]\"</span><br>")
+				to_chat(R.connected_ai, "<br><br>[span_notice("Message from [ID] to [R] -- \"[message]\"")]<br>")
 				SEND_SOUND(R.connected_ai, 'sound/machines/twobeep_high.ogg')
 			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[ID]\" to [R]")
 
@@ -150,7 +150,7 @@
 		return FALSE
 	return TRUE
 
-///Gets the ID's name, if one is inserted into the device. This is a seperate proc solely to be overridden by the syndicate version of the app.
+///Gets the ID's name, if one is inserted into the device. This is a separate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)

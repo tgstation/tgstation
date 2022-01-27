@@ -6,6 +6,7 @@
 	name = "automatic buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
 	icon_state = "buffer"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
 
 	var/datum/buffer_net/buffer_net
@@ -29,13 +30,14 @@
 	return NONE
 
 /obj/machinery/plumbing/buffer/proc/on_reagent_change()
+	SIGNAL_HANDLER
 	if(!buffer_net)
 		return
-	if(reagents.total_volume >= activation_volume && mode == UNREADY)
+	if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL >= activation_volume && mode == UNREADY)
 		mode = IDLE
 		buffer_net.check_active()
 
-	else if(reagents.total_volume < activation_volume && mode != UNREADY)
+	else if(reagents.total_volume + CHEMICAL_QUANTISATION_LEVEL < activation_volume && mode != UNREADY)
 		mode = UNREADY
 		buffer_net.check_active()
 
@@ -70,17 +72,22 @@
 
 /obj/machinery/plumbing/buffer/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
-
-	var/new_volume = input(user, "Enter new activation threshold", "Beepityboop", activation_volume) as num|null
-	if(!new_volume)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
-	activation_volume = round(clamp(new_volume, 0, buffer))
-	to_chat(user, "<span class='notice'>New activation threshold is now [activation_volume].</span>")
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
+	if(isnull(new_volume))
+		return
+
+	activation_volume = round(new_volume)
+	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
+	return
 
 /obj/machinery/plumbing/buffer/attackby(obj/item/item, mob/user, params)
 	if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='notice'>You reset the automatic buffer.</span>")
+		to_chat(user, span_notice("You reset the automatic buffer."))
 
 		//reset the net
 		buffer_net?.destruct()

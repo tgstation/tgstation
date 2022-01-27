@@ -3,7 +3,6 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
-$include antag_rep.txt
 $include resources.txt
 $include interviews.txt
 
@@ -91,8 +90,14 @@ LOG_ADMIN
 ## log admin chat
 LOG_ADMINCHAT
 
+## log asset debug logs
+#LOG_ASSET
+
 ## log client access (logon/logoff)
 LOG_ACCESS
+
+## Enables log entries for logins that failed due to suspicious circumstances (banned player, CID randomiser, spoofed BYOND version, etc.) to a dedicated file.
+LOG_SUSPICIOUS_LOGIN
 
 ## log game actions (start of round, results, etc.)
 LOG_GAME
@@ -121,13 +126,13 @@ LOG_TELECOMMS
 ## log prayers
 LOG_PRAYER
 
-## log lawchanges
-LOG_LAW
+## log silicons
+LOG_SILICON
 
 ## log economy actions
 LOG_ECON
 
-## log crew manifest to seperate file
+## log crew manifest to separate file
 LOG_MANIFEST
 
 ## log job divide debugging information
@@ -141,7 +146,7 @@ LOG_MANIFEST
 # LOG_TWITTER
 
 ## Enable logging pictures
-# LOG_PICTURES
+LOG_PICTURES
 
 ## log mecha actions
 # LOG_MECHA
@@ -154,6 +159,9 @@ LOG_CLONING
 
 ## log shuttle actions
 LOG_SHUTTLE
+
+## Log all timers on timer auto reset
+# LOG_TIMERS_ON_BUCKET_RESET
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -281,9 +289,9 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
-## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
-#POPUP_ADMIN_PM
+## Uncomment to give admins the ability to send a maptext popup to players.
+## Only fires when an admin requests it, not every ahelp.
+POPUP_ADMIN_PM
 
 ## Uncomment to allow special 'Easter-egg' events on special holidays such as seasonal holidays and stuff like 'Talk Like a Pirate Day' :3 YAARRR
 ALLOW_HOLIDAYS
@@ -313,6 +321,9 @@ TICKLAG 0.5
 NOTE_FRESH_DAYS 91.31055
 ## Notes older then this will be completely faded out.
 NOTE_STALE_DAYS 365.2422
+
+## Uncomment to allow drastic performence enhancemet measures to turn on automatically once there are equal or more clients than the configured amount (will also prompt admin for veto)
+#AUTO_LAG_SWITCH_POP 75
 
 ##Note: all population caps can be used with each other if desired.
 
@@ -521,6 +532,11 @@ DEFAULT_VIEW_SQUARE 15x15
 ## If enabled, only bans from these servers will be shown to admins using CentCom. The default sources list is an example.
 #CENTCOM_SOURCE_WHITELIST Beestation MRP,TGMC,FTL13
 
+## If uncommented, this will enable admin 2FA (two-factor authentication).
+## The URL admins will be asked to go to will be here, with %ID% being the ID
+## of their connection attempt.
+#ADMIN_2FA_URL https://example.com/id/%ID%
+
 #### DISCORD STUFFS ####
 ## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
 ## Discord IDs can be obtained by following this guide: https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
@@ -536,3 +552,50 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Add the ID of the role you want assigning here
 #DISCORD_ROLEID 000000000000000000
+
+## How long in seconds after which a hard delete is treated as causing lag. This can be a float and supports a precision as low as nanoseconds.
+#HARD_DELETES_OVERRUN_THRESHOLD 0.5
+
+## Once a typepath causes overrun from hard deletes this many times, stop hard deleting it on garbage collection failures. (set to 0 to disable)
+#HARD_DELETES_OVERRUN_LIMIT 0
+
+## The URL to the webhook for adminhelps to relay the urgent ahelp message to
+## If not set, will disable urgent ahelps.
+#ADMINHELP_WEBHOOK_URL
+
+## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
+URGENT_AHELP_COOLDOWN 300
+
+## The message that is sent to the discord if an urgent ahelp is sent. Useful for sending a role ping.
+#URGENT_AHELP_MESSAGE Ban ban ban ban
+
+## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
+#URGENT_AHELP_USER_PROMPT This'll ping the admins!
+
+## The URL for the pfp of the webhook
+#ADMINHELP_WEBHOOK_PFP
+
+## The name of the webhook
+#ADMINHELP_WEBHOOK_NAME
+
+## Sets an MOTD of the server.
+## You can use this multiple times, and the MOTDs will be appended in order.
+## Based on config directory, so "motd.txt" points to "config/motd.txt"
+MOTD motd.txt
+#MOTD motd_extra.txt
+
+## Assets can opt-in to caching their results into `tmp`.
+## This is important, as preferences assets take upwards of 30 seconds (without sleeps) to collect.
+## The cache is assumed to be cleared by TGS recompiling, which deletes `tmp`.
+## This should be disabled (through `CACHE_ASSETS 0`) on development,
+## but enabled on production (the default).
+CACHE_ASSETS 0
+
+## Uncomment to allow the station name to be in the hub entry.
+## You should only enable this if you can guarantee a station name doesn't break BYOND's TOS.
+## BYOND staff have gotten upset at us in the past for inappropriate station names.
+#STATION_NAME_IN_HUB_ENTRY
+
+## The number of PR announcements allowed for the same pull request per round
+## This makes sure that somebody can only spam a few reopens and closes before being ignored
+PR_ANNOUNCEMENTS_PER_ROUND 5

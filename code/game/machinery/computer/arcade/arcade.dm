@@ -10,19 +10,24 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/crayons = 2,
 		/obj/item/toy/spinningtoy = 2,
 		/obj/item/toy/balloon/arrest = 2,
-		/obj/item/toy/prize/ripley = 1,
-		/obj/item/toy/prize/fireripley = 1,
-		/obj/item/toy/prize/deathripley = 1,
-		/obj/item/toy/prize/gygax = 1,
-		/obj/item/toy/prize/durand = 1,
-		/obj/item/toy/prize/honk = 1,
-		/obj/item/toy/prize/marauder = 1,
-		/obj/item/toy/prize/seraph = 1,
-		/obj/item/toy/prize/mauler = 1,
-		/obj/item/toy/prize/odysseus = 1,
-		/obj/item/toy/prize/phazon = 1,
-		/obj/item/toy/prize/reticence = 1,
-		/obj/item/toy/prize/clarke = 1,
+		/obj/item/toy/mecha/ripley = 1,
+		/obj/item/toy/mecha/ripleymkii = 1,
+		/obj/item/toy/mecha/hauler = 1,
+		/obj/item/toy/mecha/clarke = 1,
+		/obj/item/toy/mecha/odysseus = 1,
+		/obj/item/toy/mecha/gygax = 1,
+		/obj/item/toy/mecha/durand = 1,
+		/obj/item/toy/mecha/savannahivanov = 1,
+		/obj/item/toy/mecha/phazon = 1,
+		/obj/item/toy/mecha/honk = 1,
+		/obj/item/toy/mecha/darkgygax = 1,
+		/obj/item/toy/mecha/mauler = 1,
+		/obj/item/toy/mecha/darkhonk = 1,
+		/obj/item/toy/mecha/deathripley = 1,
+		/obj/item/toy/mecha/reticence = 1,
+		/obj/item/toy/mecha/marauder = 1,
+		/obj/item/toy/mecha/seraph = 1,
+		/obj/item/toy/mecha/firefighter = 1,
 		/obj/item/toy/cards/deck = 2,
 		/obj/item/toy/nuke = 2,
 		/obj/item/toy/minimeteor = 2,
@@ -64,7 +69,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
 	var/list/prize_override
@@ -72,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/proc/Reset()
 	return
 
-/obj/machinery/computer/arcade/Initialize()
+/obj/machinery/computer/arcade/Initialize(mapload)
 	. = ..()
 
 	Reset()
@@ -81,25 +86,25 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	SEND_SIGNAL(src, COMSIG_ARCADE_PRIZEVEND, user, prizes)
 	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
 		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
-		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
+		span_notice("You hear a flurry of buttons being pressed."))
 		say("CODE ACTIVATED: EXTRA PRIZES.")
 		prizes *= 2
-	for(var/i = 0, i < prizes, i++)
+	for(var/i in 1 to prizes)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 		if(prob(0.0001)) //1 in a million
 			new /obj/item/gun/energy/pulse/prize(src)
-			visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
+			visible_message(span_notice("[src] dispenses.. woah, a gun! Way past cool."), span_notice("You hear a chime and a shot."))
 			user.client.give_award(/datum/award/achievement/misc/pulse, user)
 			return
 
 		var/prizeselect
 		if(prize_override)
-			prizeselect = pickweight(prize_override)
+			prizeselect = pick_weight(prize_override)
 		else
-			prizeselect = pickweight(GLOB.arcade_prize_pool)
+			prizeselect = pick_weight(GLOB.arcade_prize_pool)
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+		visible_message(span_notice("[src] dispenses [the_prize]!"), span_notice("You hear a chime and a clunk."))
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -119,24 +124,24 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
 		if(override)
-			empprize = pickweight(prize_override)
+			empprize = pick_weight(prize_override)
 		else
-			empprize = pickweight(GLOB.arcade_prize_pool)
+			empprize = pick_weight(GLOB.arcade_prize_pool)
 		new empprize(loc)
-	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
+	explosion(src, devastation_range = -1, light_impact_range = 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
 /obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/arcadeticket))
 		var/obj/item/stack/arcadeticket/T = O
 		var/amount = T.get_amount()
 		if(amount <2)
-			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			to_chat(user, span_warning("You need 2 tickets to claim a prize!"))
 			return
 		prizevend(user)
 		T.pay_tickets()
 		T.update_appearance()
 		O = T
-		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		to_chat(user, span_notice("You turn in 2 tickets to the [src] and claim a prize!"))
 		return
 
 // ** BATTLE ** //
@@ -279,6 +284,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gamerSkill = 0
 	if(usr?.mind)
 		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+
+	usr.played_game()
 
 	if (!blocked && !gameover)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
@@ -554,6 +561,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
+			user.won_game()
 
 	else if(player_hp <= 0)
 		if(timer_id)
@@ -568,6 +576,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			if (istype(living_user))
 				living_user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+		user.lost_game()
 
 	if(gameover)
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
@@ -593,20 +602,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return ..() //well boys we did it, lists are no more
 
 /obj/machinery/computer/arcade/battle/examine_more(mob/user)
-	var/list/msg = list("<span class='notice'><i>You notice some writing scribbled on the side of [src]...</i></span>")
-	msg += "\t<span class='info'>smart -> defend, defend, light attack</span>"
-	msg += "\t<span class='info'>shotgun -> defend, defend, power attack</span>"
-	msg += "\t<span class='info'>short temper -> counter, counter, counter</span>"
-	msg += "\t<span class='info'>poisonous -> light attack, light attack, light attack</span>"
-	msg += "\t<span class='info'>chonker -> power attack, power attack, power attack</span>"
-	msg += "\t<span class='info'>magical -> defend until outmagiced</span>"
+	var/list/msg = list(span_notice("<i>You notice some writing scribbled on the side of [src]...</i>"))
+	msg += "\t[span_info("smart -> defend, defend, light attack")]"
+	msg += "\t[span_info("shotgun -> defend, defend, power attack")]"
+	msg += "\t[span_info("short temper -> counter, counter, counter")]"
+	msg += "\t[span_info("poisonous -> light attack, light attack, light attack")]"
+	msg += "\t[span_info("chonker -> power attack, power attack, power attack")]"
+	msg += "\t[span_info("magical -> defend until outmagiced")]"
 	return msg
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 
-	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
+	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
@@ -636,14 +645,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	circuit = /obj/item/circuitboard/computer/arcade/amputation
 
 /obj/machinery/computer/arcade/amputation/attack_hand(mob/user, list/modifiers)
+	. = ..()
 	if(!iscarbon(user))
 		return
 	var/mob/living/carbon/c_user = user
 	if(!c_user.get_bodypart(BODY_ZONE_L_ARM) && !c_user.get_bodypart(BODY_ZONE_R_ARM))
 		return
-	to_chat(c_user, "<span class='warning'>You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it...</span>")
+	to_chat(c_user, span_warning("You move your hand towards the machine, and begin to hesitate as a bloodied guillotine emerges from inside of it..."))
+	usr.played_game()
 	if(do_after(c_user, 50, target = src))
-		to_chat(c_user, "<span class='userdanger'>The guillotine drops on your arm, and the machine sucks it in!</span>")
+		to_chat(c_user, span_userdanger("The guillotine drops on your arm, and the machine sucks it in!"))
 		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		var/which_hand = BODY_ZONE_L_ARM
 		if(!(c_user.active_hand_index % 2))
@@ -652,10 +663,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		chopchop.dismember()
 		qdel(chopchop)
 		user.mind?.adjust_experience(/datum/skill/gaming, 100)
+		user.won_game()
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE)
 		prizevend(user, rand(3,5))
 	else
-		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+		to_chat(c_user, span_notice("You (wisely) decide against putting your hand in the machine."))
+		user.lost_game()
 
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"

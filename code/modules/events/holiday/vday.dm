@@ -60,7 +60,7 @@
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/valentine/Initialize()
+/obj/item/valentine/Initialize(mapload)
 	. = ..()
 	message = pick(strings(VALENTINE_FILE, "valentines"))
 
@@ -68,10 +68,10 @@
 	..()
 	if(istype(W, /obj/item/pen) || istype(W, /obj/item/toy/crayon))
 		if(!user.is_literate())
-			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
+			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
-		var/recipient = stripped_input(user, "Who is receiving this valentine?", "To:", null , 20)
-		var/sender = stripped_input(user, "Who is sending this valentine?", "From:", null , 20)
+		var/recipient = tgui_input_text(user, "Who is receiving this valentine?", "To:", max_length = MAX_NAME_LEN)
+		var/sender = tgui_input_text(user, "Who is sending this valentine?", "From:", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(recipient && sender)
@@ -87,7 +87,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[message]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		. += "<span class='notice'>It is too far away.</span>"
+		. += span_notice("It is too far away.")
 
 /obj/item/valentine/attack_self(mob/user)
 	user.examinate(src)
@@ -100,7 +100,7 @@
 	food_reagents = list(/datum/reagent/consumable/sugar = 2)
 	junkiness = 5
 
-/obj/item/food/candyheart/Initialize()
+/obj/item/food/candyheart/Initialize(mapload)
 	. = ..()
 	desc = pick(strings(VALENTINE_FILE, "candyhearts"))
 	icon_state = pick("candyheart", "candyheart2", "candyheart3", "candyheart4")

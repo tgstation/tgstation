@@ -12,6 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
@@ -31,8 +32,8 @@
 	slippery_foam = FALSE
 	var/absorbed_plasma = 0
 
-/obj/effect/particle_effect/foam/firefighting/ComponentInitialize()
-	..()
+/obj/effect/particle_effect/foam/firefighting/Initialize(mapload)
+	. = ..()
 	RemoveElement(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/firefighting/process()
@@ -89,15 +90,12 @@
 /obj/effect/particle_effect/foam/long_life
 	lifetime = 150
 
-/obj/effect/particle_effect/foam/Initialize()
+/obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
-
-/obj/effect/particle_effect/foam/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
@@ -147,7 +145,7 @@
 			continue
 		if(isturf(O.loc))
 			var/turf/T = O.loc
-			if(T.intact && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
+			if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				continue
 		if(lifetime % reagent_divisor)
 			reagents.expose(O, VAPOR, fraction)
@@ -177,6 +175,7 @@
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
+	//This should just be atmos adjacent turfs, come on guys
 	for(var/turf/T in t_loc.reachableAdjacentTurfs())
 		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
@@ -204,8 +203,10 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect_system/foam_spread
-	var/amount = 10 // the size of the foam spread.
-	var/obj/chemholder
+	/// the size of the foam spread.
+	var/amount = 10
+	/// Stupid hack alertm exists to hold chems for us
+	var/atom/movable/chem_holder/chemholder
 	effect_type = /obj/effect/particle_effect/foam
 	var/metal = 0
 
@@ -223,14 +224,11 @@
 
 /datum/effect_system/foam_spread/New()
 	..()
-	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //same as above
-	chemholder.reagents = R
-	R.my_atom = chemholder
+	chemholder = new()
+	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
-	qdel(chemholder)
-	chemholder = null
+	QDEL_NULL(chemholder)
 	return ..()
 
 /datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = 0)
@@ -247,7 +245,17 @@
 /datum/effect_system/foam_spread/start()
 	var/obj/effect/particle_effect/foam/F = new effect_type(location)
 	var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
-	chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
+	// To prevent insane reagent multiplication with 1u foam
+	// I am capping amount of reagent foam recieves by limiting how low it can go
+	// Any radius of foam less than 3 makes foam recieve same amount of reagents as foam of radius 3
+	// Maximum multiplication of reagents is about 166% (3 times as low as before, it was about 500% with 1u foam)
+	//
+	// amount is radius of the foam
+	// 10u foam has radius of 3
+	// 5u foam has radius of 2
+	// 1u foam has radius of 1
+	var/effective_amount = chemholder.reagents.total_volume / max(amount, 3)
+	chemholder.reagents.copy_to(F, effective_amount)
 	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	F.amount = amount
 	F.metal = metal
@@ -267,9 +275,9 @@
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
 	max_integrity = 20
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 
-/obj/structure/foamedmetal/Initialize()
+/obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
 	air_update_turf(TRUE, TRUE)
 
@@ -294,7 +302,7 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	to_chat(user, "<span class='warning'>You hit [src] but bounce off it!</span>")
+	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
 /obj/structure/foamedmetal/iron
@@ -311,7 +319,7 @@
 	max_integrity = 10
 	pass_flags_self = PASSGLASS
 
-/obj/structure/foamedmetal/resin/Initialize()
+/obj/structure/foamedmetal/resin/Initialize(mapload)
 	. = ..()
 	if(isopenturf(loc))
 		var/turf/open/O = loc
@@ -331,7 +339,7 @@
 			if(!U.welded)
 				U.welded = TRUE
 				U.update_appearance()
-				U.visible_message("<span class='danger'>[U] sealed shut!</span>")
+				U.visible_message(span_danger("[U] sealed shut!"))
 		for(var/mob/living/L in O)
 			L.extinguish_mob()
 		for(var/obj/item/Item in O)

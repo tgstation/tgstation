@@ -61,9 +61,7 @@
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /obj/structure/tubes,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "n" = (
@@ -79,11 +77,11 @@
 /area/lavaland/surface/outdoors)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/kitchen/knife/combat/survival,
+/obj/item/knife/combat/survival,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
 "q" = (
-/obj/effect/mob_spawn/human/miner/explorer{
+/obj/effect/mob_spawn/corpse/human/miner/explorer{
 	brute_damage = 150;
 	oxy_damage = 50
 	},

@@ -146,11 +146,11 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider)
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/nurse)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/nurse)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/giant_spider/hunter)
 
 				var/turf/T = pick_n_take(empty_shuttle_turfs)
 
@@ -163,9 +163,9 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
+				var/obj/effect/mob_spawn/corpse/human/assistant/infected_assistant = pick(/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection, /obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection, /obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i in 1 to 10)
 					if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
@@ -206,10 +206,10 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/bee_terrorist)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/no_mag)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag)
 				shuttle_spawns.Add(/obj/item/honey_frame)
@@ -220,7 +220,7 @@
 				shuttle_spawns.Add(/obj/structure/closet/crate/hydroponics)
 
 				for(var/i in 1 to 8)
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/bees/toxin)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bee/toxin)
 
 				for(var/i in 1 to 5)
 					var/decal = pick(/obj/effect/decal/cleanable/blood, /obj/effect/decal/cleanable/insectguts)
@@ -258,7 +258,7 @@
 	name = "Objectives of a Bee Liberation Front Operative"
 	info = "<b>Objective #1</b>. Liberate all bees on the NT transport vessel 2416/B. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
 
-/obj/machinery/syndicatebomb/shuttle_loan/Initialize()
+/obj/machinery/syndicatebomb/shuttle_loan/Initialize(mapload)
 	. = ..()
 	set_anchored(TRUE)
 	timer_set = rand(480, 600) //once the supply shuttle docks (after 5 minutes travel time), players have between 3-5 minutes to defuse the bomb

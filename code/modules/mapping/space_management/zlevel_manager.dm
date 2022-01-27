@@ -7,7 +7,7 @@
 	var/list/default_map_traits = DEFAULT_MAP_TRAITS
 
 	if (default_map_traits.len != world.maxz)
-		WARNING("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
+		log_mapping("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
 		if (default_map_traits.len > world.maxz)
 			default_map_traits.Cut(world.maxz + 1)
 
@@ -17,7 +17,8 @@
 		z_list += S
 
 /datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
-	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, args)
+	UNTIL(!adding_new_zlevel)
+	adding_new_zlevel = TRUE
 	var/new_z = z_list.len + 1
 	if (world.maxz < new_z)
 		world.incrementMaxZ()
@@ -25,6 +26,8 @@
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, traits)
 	z_list += S
+	adding_new_zlevel = FALSE
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_Z, S)
 	return S
 
 /datum/controller/subsystem/mapping/proc/get_level(z)

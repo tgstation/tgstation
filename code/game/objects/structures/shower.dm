@@ -34,16 +34,20 @@
 	/// Whether to allow players to toggle the water reclaimer.
 	var/can_toggle_refill = TRUE
 
-/obj/machinery/shower/Initialize()
+/obj/machinery/shower/Initialize(mapload)
 	. = ..()
 	create_reagents(reagent_capacity)
 	reagents.add_reagent(reagent_id, reagent_capacity)
-	soundloop = new(list(src), FALSE)
+	soundloop = new(src, FALSE)
 	AddComponent(/datum/component/plumbing/simple_demand)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.</span>"
+	. += span_notice("[reagents.total_volume]/[reagents.maximum_volume] liquids remaining.")
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
@@ -52,7 +56,7 @@
 
 /obj/machinery/shower/interact(mob/M)
 	if(reagents.total_volume < 5)
-		to_chat(M,"<span class='notice'>\The [src] is dry.</span>")
+		to_chat(M,span_notice("\The [src] is dry."))
 		return FALSE
 	on = !on
 	update_appearance()
@@ -70,7 +74,7 @@
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_ANALYZER)
-		to_chat(user, "<span class='notice'>The water temperature seems to be [current_temperature].</span>")
+		to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
 	else
 		return ..()
 
@@ -80,14 +84,14 @@
 		return
 
 	can_refill = !can_refill
-	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
+	to_chat(user, span_notice("You [can_refill ? "en" : "dis"]able the shower's water recycler."))
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	return TRUE
 
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>")
+	to_chat(user, span_notice("You begin to adjust the temperature valve with \the [I]..."))
 	if(I.use_tool(src, user, 50))
 		switch(current_temperature)
 			if(SHOWER_NORMAL)
@@ -96,7 +100,7 @@
 				current_temperature = SHOWER_BOILING
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
-		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [current_temperature] temperature.</span>")
+		user.visible_message(span_notice("[user] adjusts the shower with \the [I]."), span_notice("You adjust the shower with \the [I] to [current_temperature] temperature."))
 		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
@@ -133,14 +137,13 @@
 		qdel(mist)
 
 
-/obj/machinery/shower/Crossed(atom/movable/AM)
-	..()
+/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(on && reagents.total_volume)
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/target)
-	target.wash(CLEAN_RAD | CLEAN_TYPE_WEAK) // Clean radiation non-instantly
-	target.wash(CLEAN_WASH)
+	target.wash(CLEAN_RAD | CLEAN_WASH)
 	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
 	if(isliving(target))
@@ -175,12 +178,12 @@
 	if(current_temperature == SHOWER_FREEZING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, "<span class='warning'>[src] is freezing!</span>")
+		to_chat(L, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(35, 0, 500)
 		L.adjustFireLoss(5)
-		to_chat(L, "<span class='danger'>[src] is searing!</span>")
+		to_chat(L, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe
@@ -199,13 +202,13 @@
 		return
 	return ..()
 
-/obj/structure/showerframe/Initialize()
+/obj/structure/showerframe/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 
 /obj/structure/showerframe/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
-		to_chat(user, "<span class='warning'>It is fastened to the floor!</span>")
+		to_chat(user, span_warning("It is fastened to the floor!"))
 	return !anchored
 
 /obj/effect/mist

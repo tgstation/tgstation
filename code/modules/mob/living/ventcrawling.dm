@@ -11,35 +11,35 @@
 	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
 		return
 	if(stat)
-		to_chat(src, "<span class='warning'>You must be conscious to do this!</span>")
+		to_chat(src, span_warning("You must be conscious to do this!"))
 		return
 	if(HAS_TRAIT(src, TRAIT_IMMOBILIZED))
-		to_chat(src, "<span class='warning'>You currently can't move into the vent!</span>")
+		to_chat(src, span_warning("You currently can't move into the vent!"))
 		return
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
-		to_chat(src, "<span class='warning'>You need to be able to use your hands to ventcrawl!</span>")
+		to_chat(src, span_warning("You need to be able to use your hands to ventcrawl!"))
 		return
 	if(has_buckled_mobs())
-		to_chat(src, "<span class='warning'>You can't vent crawl with other creatures on you!</span>")
+		to_chat(src, span_warning("You can't vent crawl with other creatures on you!"))
 		return
 	if(buckled)
-		to_chat(src, "<span class='warning'>You can't vent crawl while buckled!</span>")
+		to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
 		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
-			to_chat(src, "<span class='warning'>You can't crawl around in the ventilation ducts with items!</span>")
+			to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
 	if(ventcrawl_target.welded)
-		to_chat(src, "<span class='warning'>You can't crawl around a welded vent!</span>")
+		to_chat(src, span_warning("You can't crawl around a welded vent!"))
 		return
 
 	if(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED)
 		//Handle the exit here
 		if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
-			visible_message("<span class='notice'>[src] begins climbing out from the ventilation system...</span>" ,"<span class='notice'>You begin climbing out from the ventilation system...</span>")
+			visible_message(span_notice("[src] begins climbing out from the ventilation system...") ,span_notice("You begin climbing out from the ventilation system..."))
 			if(!client)
 				return
-			visible_message("<span class='notice'>[src] scrambles out from the ventilation ducts!</span>","<span class='notice'>You out from the ventilation ducts.</span>")
+			visible_message(span_notice("[src] scrambles out from the ventilation ducts!"),span_notice("You scramble out from the ventilation ducts."))
 			forceMove(ventcrawl_target.loc)
 			REMOVE_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
 			update_pipe_vision()
@@ -47,25 +47,35 @@
 		//Entrance here
 		else
 			var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
-			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmosmch))
-				visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
+			if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
+				flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), ventcrawl_target, 2 SECONDS)
+				visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
 				if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target))
 					return
 				if(!client)
 					return
-				visible_message("<span class='notice'>[src] scrambles into the ventilation ducts!</span>","<span class='notice'>You climb into the ventilation ducts.</span>")
-				forceMove(ventcrawl_target)
-				ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
-				update_pipe_vision()
+				flick_overlay_static(image('icons/effects/vent_indicator.dmi', "insert", ABOVE_MOB_LAYER), ventcrawl_target, 1 SECONDS)
+				visible_message(span_notice("[src] scrambles into the ventilation ducts!"),span_notice("You climb into the ventilation ducts."))
+				move_into_vent(ventcrawl_target)
 			else
-				to_chat(src, "<span class='warning'>This ventilation duct is not connected to anything!</span>")
-
+				to_chat(src, span_warning("This ventilation duct is not connected to anything!"))
 
 /mob/living/simple_animal/slime/handle_ventcrawl(atom/A)
 	if(buckled)
 		to_chat(src, "<i>I can't vent crawl while feeding...</i>")
 		return
 	return ..()
+
+/**
+ * Moves living mob directly into the vent as a ventcrawler
+ *
+ * Arguments:
+ * * ventcrawl_target - The vent into which we are moving the mob
+ */
+/mob/living/proc/move_into_vent(obj/machinery/atmospherics/components/ventcrawl_target)
+	forceMove(ventcrawl_target)
+	ADD_TRAIT(src, TRAIT_MOVE_VENTCRAWLING, VENTCRAWLING_TRAIT)
+	update_pipe_vision()
 
 /**
  * Everything related to pipe vision on ventcrawling is handled by update_pipe_vision().
@@ -84,9 +94,9 @@
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics) && movement_type & VENTCRAWLING)
 		var/list/total_members = list()
 		var/obj/machinery/atmospherics/current_location = loc
-		for(var/datum/pipeline/location_pipeline in current_location.returnPipenets())
+		for(var/datum/pipeline/location_pipeline in current_location.return_pipenets())
 			total_members += location_pipeline.members
-			total_members += location_pipeline.other_atmosmch
+			total_members += location_pipeline.other_atmos_machines
 
 		if(!total_members.len)
 			return
@@ -96,7 +106,7 @@
 				// If the machinery is not in view or is not meant to be seen, continue
 				if(!in_view_range(client.mob, pipenet_part))
 					continue
-				if(!pipenet_part.vent_movement & VENTCRAWL_CAN_SEE)
+				if(!(pipenet_part.vent_movement & VENTCRAWL_CAN_SEE))
 					continue
 
 				if(!pipenet_part.pipe_vision_img)

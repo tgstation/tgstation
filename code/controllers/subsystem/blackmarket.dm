@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackmarket)
-	name  = "Blackmarket"
-	flags  = SS_BACKGROUND
-	init_order  = INIT_ORDER_DEFAULT
+	name = "Blackmarket"
+	flags = SS_BACKGROUND
+	init_order = INIT_ORDER_DEFAULT
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(
@@ -65,7 +65,7 @@ SUBSYSTEM_DEF(blackmarket)
 
 				var/obj/machinery/ltsrbt/pad = pick(telepads)
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being processed by [pad].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being processed by [pad]."))
 
 				queued_purchases -= purchase
 				pad.add_to_queue(purchase)
@@ -76,7 +76,7 @@ SUBSYSTEM_DEF(blackmarket)
 				if (!targetturf)
 					continue
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds.</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting that the order is being teleported to [get_area(targetturf)] in 60 seconds."))
 
 				// do_teleport does not want to teleport items from nullspace, so it just forceMoves and does sparks.
 				addtimer(CALLBACK(src, /datum/controller/subsystem/blackmarket/proc/fake_teleport, purchase.entry.spawn_item(), targetturf), 60 SECONDS)
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(blackmarket)
 				var/atom/movable/item = purchase.entry.spawn_item(pickedloc)
 				item.throw_at(purchase.uplink, 3, 3, spin = FALSE)
 
-				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), "<span class='notice'>[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)].</span>")
+				to_chat(recursive_loc_check(purchase.uplink.loc, /mob), span_notice("[purchase.uplink] flashes a message noting the order is being launched at the station from [dir2text(startSide)]."))
 
 				queued_purchases -= purchase
 				qdel(purchase)

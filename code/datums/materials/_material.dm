@@ -14,7 +14,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/id
 
 	///Base color of the material, is used for greyscale. Item isn't changed in color if this is null.
+	///Deprecated, use greyscale_color instead.
 	var/color
+	///Determines the color palette of the material. Formatted the same as atom/var/greyscale_colors
+	var/greyscale_colors
 	///Base alpha of the material, is used for greyscale icons.
 	var/alpha = 255
 	///Bitflags that influence how SSmaterials handles this material.
@@ -30,7 +33,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///This is the amount of value per 1 unit of the material
 	var/value_per_unit = 0
 	///Armor modifiers, multiplies an items normal armor vars by these amounts.
-	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, RAD = 1, FIRE = 1, ACID = 1)
+	var/armor_modifiers = list(MELEE = 1, BULLET = 1, LASER = 1, ENERGY = 1, BOMB = 1, BIO = 1, FIRE = 1, ACID = 1)
 	///How beautiful is this material per unit.
 	var/beauty_modifier = 0
 	///Can be used to override the sound items make, lets add some SLOSHing.
@@ -71,6 +74,10 @@ Simple datum which is instanced once per type and is used for every object of sa
 			ADD_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 			source.add_filter("material_texture_[name]",1,layering_filter(icon=cached_texture_filter_icon,blend_mode=BLEND_INSET_OVERLAY))
 
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/config_path = get_greyscale_config_for(source.greyscale_config)
+		source.set_greyscale(greyscale_colors, config_path)
+
 	if(alpha < 255)
 		source.opacity = FALSE
 	if(material_flags & MATERIAL_ADD_PREFIX)
@@ -82,13 +89,13 @@ Simple datum which is instanced once per type and is used for every object of sa
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
 
-	if(istype(source, /turf)) //turfs
+	else if(istype(source, /turf)) //turfs
 		on_applied_turf(source, amount, material_flags)
 
 	source.mat_update_desc(src)
 
 ///This proc is called when a material updates an object's description
-/atom/proc/mat_update_desc(/datum/material/mat)
+/atom/proc/mat_update_desc(datum/material/mat)
 	return
 
 ///This proc is called when the material is added to an object specifically.
@@ -108,17 +115,29 @@ Simple datum which is instanced once per type and is used for every object of sa
 		for(var/i in current_armor)
 			temp_armor_list[i] = current_armor[i] * armor_modifiers[i]
 		o.armor = getArmor(arglist(temp_armor_list))
+
 	if(!isitem(o))
 		return
-	var/obj/item/I = o
+	var/obj/item/item = o
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		var/worn_path = get_greyscale_config_for(item.greyscale_config_worn)
+		var/lefthand_path = get_greyscale_config_for(item.greyscale_config_inhand_left)
+		var/righthand_path = get_greyscale_config_for(item.greyscale_config_inhand_right)
+		item.set_greyscale(
+			new_worn_config = worn_path,
+			new_inhand_left = lefthand_path,
+			new_inhand_right = righthand_path
+		)
+
 	if(!item_sound_override)
 		return
-	I.hitsound = item_sound_override
-	I.usesound = item_sound_override
-	I.mob_throw_hit_sound = item_sound_override
-	I.equip_sound = item_sound_override
-	I.pickup_sound = item_sound_override
-	I.drop_sound = item_sound_override
+	item.hitsound = item_sound_override
+	item.usesound = item_sound_override
+	item.mob_throw_hit_sound = item_sound_override
+	item.equip_sound = item_sound_override
+	item.pickup_sound = item_sound_override
+	item.drop_sound = item_sound_override
 
 /datum/material/proc/on_applied_turf(turf/T, amount, material_flags)
 	if(isopenturf(T))
@@ -129,8 +148,16 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.clawfootstep = turf_sound_override
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
-		T.AddElement(/datum/element/turf_z_transparency, TRUE)
+		T.AddElement(/datum/element/turf_z_transparency)
 	return
+
+/datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)
+	if(!config_path)
+		return
+	for(var/datum/greyscale_config/path as anything in subtypesof(config_path))
+		if(type != initial(path.material_skin))
+			continue
+		return path
 
 ///This proc is called when the material is removed from an object.
 /datum/material/proc/on_removed(atom/source, amount, material_flags)
@@ -141,6 +168,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 			source.remove_filter("material_texture_[name]")
 			REMOVE_KEEP_TOGETHER(source, MATERIAL_SOURCE(src))
 		source.alpha = initial(source.alpha)
+
+	if(material_flags & MATERIAL_GREYSCALE)
+		source.set_greyscale(initial(source.greyscale_colors), initial(source.greyscale_config))
 
 	if(material_flags & MATERIAL_ADD_PREFIX)
 		source.name = initial(source.name)
@@ -162,9 +192,17 @@ Simple datum which is instanced once per type and is used for every object of sa
 		o.force = initial(o.force)
 		o.throwforce = initial(o.throwforce)
 
+	if(isitem(o) && (material_flags & MATERIAL_GREYSCALE))
+		var/obj/item/item = o
+		item.set_greyscale(
+			new_worn_config = initial(item.greyscale_config_worn),
+			new_inhand_left = initial(item.greyscale_config_inhand_left),
+			new_inhand_right = initial(item.greyscale_config_inhand_right)
+		)
+
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	if(alpha < 255)
-		T.RemoveElement(/datum/element/turf_z_transparency, FALSE)
+		T.RemoveElement(/datum/element/turf_z_transparency)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.

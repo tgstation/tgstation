@@ -6,7 +6,7 @@
 
 	density = TRUE
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/bluespace_sender
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
@@ -24,7 +24,7 @@
 	///Amount of credits gained from each vendor
 	var/credits_gained = 0
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize()
+/obj/machinery/atmospherics/components/unary/bluespace_sender/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 	bluespace_network = new
@@ -40,7 +40,6 @@
 	if(bluespace_network.total_moles())
 		var/turf/local_turf = get_turf(src)
 		local_turf.assume_air(bluespace_network)
-		local_turf.air_update_turf(FALSE, FALSE)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
@@ -50,14 +49,14 @@
 	if(on && is_operational)
 		icon_state = "[base_icon]_on"
 		return ..()
-	icon_state =  "[base_icon]_off"
+	icon_state = "[base_icon]_off"
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_overlays()
 	. = ..()
-	. += getpipeimage(icon, "pipe", dir, , piping_layer)
+	. += get_pipe_image(icon, "pipe", dir, , piping_layer)
 	if(showpipe)
-		. += getpipeimage(icon, "pipe", initialize_directions)
+		. += get_pipe_image(icon, "pipe", initialize_directions)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/process_atmos()
 	if(!is_operational || !on || !nodes[1])  //if it has no power or its switched off, dont process atmos
@@ -87,27 +86,27 @@
 /obj/machinery/atmospherics/components/unary/bluespace_sender/default_change_direction_wrench(mob/user, obj/item/item)
 	if(!..())
 		return FALSE
-	SetInitDirections()
+	set_init_directions()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
 		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
 			node.disconnect(src)
 		nodes[1] = null
 	if(parents[1])
-		nullifyPipenet(parents[1])
+		nullify_pipenet(parents[1])
 
-	atmosinit()
+	atmos_init()
 	node = nodes[1]
 	if(node)
-		node.atmosinit()
-		node.addMember(src)
+		node.atmos_init()
+		node.add_member(src)
 	SSair.add_to_rebuild_queue(src)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/multitool_act(mob/living/user, obj/item/item)
 	var/obj/item/multitool/multitool = item
 	multitool.buffer = src
-	to_chat(user, "<span class='notice'>You store linkage information in [item]'s buffer.</span>")
+	to_chat(user, span_notice("You store linkage information in [item]'s buffer."))
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/ui_interact(mob/user, datum/tgui/ui)

@@ -14,19 +14,15 @@
 		user.transferItemToLoc(W, src)
 	else if(SEND_SIGNAL(W, COMSIG_CONTAINS_STORAGE))
 		SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/stack/ore, src)
-		to_chat(user, "<span class='notice'>You empty the ore in [W] into \the [src].</span>")
+		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
 	else
 		return ..()
 
-/obj/structure/ore_box/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
-
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
-		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
-			"<span class='notice'>You pry apart \the [src].</span>",
-			"<span class='hear'>You hear splitting wood.</span>")
+		user.visible_message(span_notice("[user] pries \the [src] apart."),
+			span_notice("You pry apart \the [src]."),
+			span_hear("You hear splitting wood."))
 		deconstruct(TRUE, user)
 	return TRUE
 
@@ -89,14 +85,15 @@
 	switch(action)
 		if("removeall")
 			dump_box_contents()
-			to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
+			to_chat(usr, span_notice("You open the release hatch on the box.."))
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
 	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
-	if(user)
+	if(user && !QDELETED(WD))
 		WD.add_fingerprint(user)
 	dump_box_contents()
 	qdel(src)
 
-/obj/structure/ore_box/onTransitZ()
-	return
+/// Special override for notify_contents = FALSE.
+/obj/structure/ore_box/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = FALSE)
+	return ..()

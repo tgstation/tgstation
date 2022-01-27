@@ -1,3 +1,4 @@
+
 // check_pierce() return values
 /// Default behavior: hit and delete self
 #define PROJECTILE_PIERCE_NONE 0

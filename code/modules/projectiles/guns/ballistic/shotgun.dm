@@ -15,7 +15,7 @@
 	load_sound = 'sound/weapons/gun/shotgun/insert_shell.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
-	flags_1 =  CONDUCT_1
+	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
 	semi_auto = FALSE
@@ -47,7 +47,7 @@
 	fire_delay = 8
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
-	can_be_sawn_off  = TRUE
+	can_be_sawn_off = TRUE
 
 // Automatic Shotguns//
 
@@ -80,9 +80,9 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to pump it.</span>"
+	. += span_notice("Alt-click to pump it.")
 
-/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize()
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/Initialize(mapload)
 	. = ..()
 	if (!alternate_magazine)
 		alternate_magazine = new mag_type(src)
@@ -100,9 +100,9 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		to_chat(user, "<span class='notice'>You switch to tube B.</span>")
+		to_chat(user, span_notice("You switch to tube B."))
 	else
-		to_chat(user, "<span class='notice'>You switch to tube A.</span>")
+		to_chat(user, span_notice("You switch to tube A."))
 
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
@@ -168,7 +168,7 @@
 						)
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
-	can_be_sawn_off  = TRUE
+	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
@@ -202,13 +202,13 @@
 	//our hook gun!
 	var/obj/item/gun/magic/hook/bounty/hook
 
-/obj/item/gun/ballistic/shotgun/hook/Initialize()
+/obj/item/gun/ballistic/shotgun/hook/Initialize(mapload)
 	. = ..()
 	hook = new /obj/item/gun/magic/hook/bounty(src)
 
 /obj/item/gun/ballistic/shotgun/hook/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Right-click to shoot the hook.</span>"
+	. += span_notice("Right-click to shoot the hook.")
 
 /obj/item/gun/ballistic/shotgun/hook/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	hook.afterattack(target, user, proximity_flag, click_parameters)

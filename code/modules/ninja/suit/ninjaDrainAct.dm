@@ -107,37 +107,49 @@
 
 	return drain_total
 
-//RDCONSOLE//
-/obj/machinery/computer/rdconsole/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
+//RD SERVER//
+/obj/machinery/rnd/server/master/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
 
-	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
+	// If the traitor theft objective is still present, this will destroy it...
+	if(!source_code_hdd)
+		return ..()
+
+	to_chat(ninja, span_notice("Hacking \the [src]..."))
 	AI_notify_hack()
+	to_chat(ninja, span_notice("Encrypted source code detected. Overloading storage device..."))
+	if(do_after(ninja, 30 SECONDS, target = src))
+		overload_source_code_hdd()
+		to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
+		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+		if(!ninja_antag)
+			return
+		var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
+		if(objective)
+			objective.completed = TRUE
 
-	if(stored_research)
-		to_chat(ninja, "<span class='notice'>Copying files...</span>")
-		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
-			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, "<span class='notice'>Data analyzed. Process finished.</span>")
-
-//RD SERVER//
 /obj/machinery/rnd/server/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
 	if(!ninja_suit || !ninja || !ninja_gloves)
 		return INVALID_DRAIN
 
 	. = DRAIN_RD_HACK_FAILED
 
-	to_chat(ninja, "<span class='notice'>Hacking \the [src]...</span>")
-	AI_notify_hack()
+	to_chat(ninja, span_notice("Research notes detected. Corrupting data..."))
 
-	if(stored_research)
-		to_chat(ninja, "<span class='notice'>Copying files...</span>")
-		if(do_after(ninja, ninja_suit.s_delay, target = src) && src)
-			stored_research.copy_research_to(ninja_suit.stored_research)
-	to_chat(ninja, "<span class='notice'>Data analyzed. Process finished.</span>")
+	if(!do_after(ninja, 30 SECONDS, target = src))
+		return
+
+	SSresearch.science_tech.modify_points_all(0)
+	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	if(!ninja_antag)
+		return
+	var/datum/objective/research_secrets/objective = locate() in ninja_antag.objectives
+	if(objective)
+		objective.completed = TRUE
 
 //SECURITY CONSOLE//
 /obj/machinery/computer/secure_data/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
@@ -145,7 +157,7 @@
 		return INVALID_DRAIN
 	AI_notify_hack()
 	if(do_after(ninja, 200))
-		for(var/datum/data/record/rec in sortRecord(GLOB.data_core.general, sortBy, order))
+		for(var/datum/data/record/rec in sort_record(GLOB.data_core.general, sortBy, order))
 			for(var/datum/data/record/security_record in GLOB.data_core.security)
 				security_record.fields["criminal"] = "*Arrest*"
 		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
@@ -161,25 +173,19 @@
 		return INVALID_DRAIN
 	if(ninja_gloves.communication_console_hack_success)
 		return
+	if(machine_stat & (NOPOWER|BROKEN))
+		return
 	AI_notify_hack()
-	if(do_after(ninja, 300))
-		var/announcement_pick = rand(0, 1)
-		switch(announcement_pick)
-			if(0)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/spawn_swarmer/swarmer_event = new/datum/round_event_control/spawn_swarmer
-				swarmer_event.runEvent()
-			if(1)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-				pirate_event.runEvent()
-		ninja_gloves.communication_console_hack_success = TRUE
-		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-		if(!ninja_antag)
-			return
-		var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
-		if(objective)
-			objective.completed = TRUE
+	if(!do_after(ninja, 30 SECONDS, src))
+		return
+	hack_console(ninja)
+	ninja_gloves.communication_console_hack_success = TRUE
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	if(!ninja_antag)
+		return
+	var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
+	if(objective)
+		objective.completed = TRUE
 
 //AIRLOCK//
 /obj/machinery/door/airlock/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
@@ -243,7 +249,7 @@
 	var/drain = 0 //Drain amount
 	var/drain_total = 0
 
-	to_chat(occupants, "[icon2html(src, occupants)]<span class='danger'>Warning: Unauthorized access through sub-route 4, block H, detected.</span>")
+	to_chat(occupants, "[icon2html(src, occupants)][span_danger("Warning: Unauthorized access through sub-route 4, block H, detected.")]")
 	if(get_charge())
 		while(cell.charge > 0 && !maxcapacity)
 			drain = rand(ninja_gloves.mindrain, ninja_gloves.maxdrain)
@@ -268,11 +274,11 @@
 	if(!ninja_suit || !ninja || !ninja_gloves || (ROLE_NINJA in faction))
 		return INVALID_DRAIN
 
-	to_chat(src, "<span class='danger'>Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2...</span>")
+	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
 	if (do_after(ninja, 60, target = src))
 		spark_system.start()
 		playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		to_chat(src, "<span class='danger'>UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING...</span>")
+		to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 		faction = list(ROLE_NINJA)
 		bubble_icon = "syndibot"
 		UnlinkSelf()
@@ -301,5 +307,5 @@
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
 		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-		visible_message("<span class='danger'>[ninja] electrocutes [src] with [ninja.p_their()] touch!</span>", "<span class='userdanger'>[ninja] electrocutes you with [ninja.p_their()] touch!</span>")
+		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
 		Knockdown(3 SECONDS)

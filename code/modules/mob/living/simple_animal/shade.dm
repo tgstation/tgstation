@@ -25,18 +25,19 @@
 	attack_verb_simple = "metaphysically strike"
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	speed = -1 //they don't have to lug a body made of runed metal around
 	stop_automated_movement = 1
 	faction = list("cult")
 	status_flags = CANPUSH
-	is_flying_animal = TRUE
 	loot = list(/obj/item/ectoplasm)
 	del_on_death = TRUE
 	initial_language_holder = /datum/language_holder/construct
 
-/mob/living/simple_animal/shade/Initialize()
+/mob/living/simple_animal/shade/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -53,21 +54,21 @@
 /mob/living/simple_animal/shade/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isconstruct(user))
 		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair_constructs)
+		if(!doll.can_repair)
 			return
 		if(health < maxHealth)
 			adjustHealth(-25)
 			Beam(user,icon_state="sendbeam", time = 4)
-			user.visible_message("<span class='danger'>[user] heals \the <b>[src]</b>.</span>", \
-					   "<span class='cult'>You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+			user.visible_message(span_danger("[user] heals \the <b>[src]</b>."), \
+					   span_cult("You heal <b>[src]</b>, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
 		else
-			to_chat(user, "<span class='cult'>You cannot heal <b>[src]</b>, as [p_theyre()] unharmed!</span>")
+			to_chat(user, span_cult("You cannot heal <b>[src]</b>, as [p_theyre()] unharmed!"))
 	else if(src != user)
 		return ..()
 
-/mob/living/simple_animal/shade/attackby(obj/item/O, mob/user, params)  //Marker -Agouri
-	if(istype(O, /obj/item/soulstone))
-		var/obj/item/soulstone/SS = O
-		SS.transfer_soul("SHADE", src, user)
+/mob/living/simple_animal/shade/attackby(obj/item/item, mob/user, params)  //Marker -Agouri
+	if(istype(item, /obj/item/soulstone))
+		var/obj/item/soulstone/stone = item
+		stone.capture_shade(src, user)
 	else
 		. = ..()

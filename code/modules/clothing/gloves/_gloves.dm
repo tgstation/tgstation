@@ -23,16 +23,18 @@
 		return TRUE
 
 /obj/item/clothing/gloves/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!</span>")
+	user.visible_message(span_suicide("\the [src] are forcing [user]'s hands around [user.p_their()] neck! It looks like the gloves are possessed!"))
 	return OXYLOSS
 
-/obj/item/clothing/gloves/worn_overlays(isinhands = FALSE)
-	. = list()
+/obj/item/clothing/gloves/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+	. = ..()
 	if(!isinhands)
-		if(damaged_clothes)
-			. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
-		if(HAS_BLOOD_DNA(src))
-			. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
+		return
+
+	if(damaged_clothes)
+		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
+	if(HAS_BLOOD_DNA(src))
+		. += mutable_appearance('icons/effects/blood.dmi', "bloodyhands")
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()

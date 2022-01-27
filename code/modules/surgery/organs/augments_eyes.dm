@@ -15,20 +15,20 @@
 	var/HUD_type = 0
 	var/HUD_trait = null
 
-/obj/item/organ/cyberimp/eyes/hud/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = FALSE)
+/obj/item/organ/cyberimp/eyes/hud/Insert(mob/living/carbon/eye_owner, special = 0, drop_if_replaced = FALSE)
 	..()
 	if(HUD_type)
-		var/datum/atom_hud/H = GLOB.huds[HUD_type]
-		H.add_hud_to(M)
+		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
+		hud.add_hud_to(eye_owner)
 	if(HUD_trait)
-		ADD_TRAIT(M, HUD_trait, ORGAN_TRAIT)
+		ADD_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 
-/obj/item/organ/cyberimp/eyes/hud/Remove(mob/living/carbon/M, special = 0)
+/obj/item/organ/cyberimp/eyes/hud/Remove(mob/living/carbon/eye_owner, special = 0)
 	if(HUD_type)
-		var/datum/atom_hud/H = GLOB.huds[HUD_type]
-		H.remove_hud_from(M)
+		var/datum/atom_hud/hud = GLOB.huds[HUD_type]
+		hud.remove_hud_from(eye_owner)
 	if(HUD_trait)
-		REMOVE_TRAIT(M, HUD_trait, ORGAN_TRAIT)
+		REMOVE_TRAIT(eye_owner, HUD_trait, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/cyberimp/eyes/hud/medical

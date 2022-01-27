@@ -16,12 +16,13 @@
 		battery = new battery_type(src)
 
 /obj/item/computer_hardware/battery/Destroy()
-	battery = null
+	if(battery)
+		QDEL_NULL(battery)
 	return ..()
 
 ///What happens when the battery is removed (or deleted) from the module, through try_eject() or not.
-/obj/item/computer_hardware/battery/Exited(atom/A, atom/newloc)
-	if(A == battery)
+/obj/item/computer_hardware/battery/Exited(atom/movable/gone, direction)
+	if(battery == gone)
 		battery = null
 		if(holder?.enabled && !holder.use_power())
 			holder.shutdown_computer()
@@ -35,29 +36,29 @@
 		return FALSE
 
 	if(battery)
-		to_chat(user, "<span class='warning'>You try to connect \the [I] to \the [src], but its connectors are occupied.</span>")
+		to_chat(user, span_warning("You try to connect \the [I] to \the [src], but its connectors are occupied."))
 		return FALSE
 
 	if(I.w_class > holder.max_hardware_size)
-		to_chat(user, "<span class='warning'>This power cell is too large for \the [holder]!</span>")
+		to_chat(user, span_warning("This power cell is too large for \the [holder]!"))
 		return FALSE
 
 	if(user && !user.transferItemToLoc(I, src))
 		return FALSE
 
 	battery = I
-	to_chat(user, "<span class='notice'>You connect \the [I] to \the [src].</span>")
+	to_chat(user, span_notice("You connect \the [I] to \the [src]."))
 
 	return TRUE
 
 /obj/item/computer_hardware/battery/try_eject(mob/living/user, forced = FALSE)
 	if(!battery)
-		to_chat(user, "<span class='warning'>There is no power cell connected to \the [src].</span>")
+		to_chat(user, span_warning("There is no power cell connected to \the [src]."))
 		return FALSE
 	else
 		if(user)
 			user.put_in_hands(battery)
-			to_chat(user, "<span class='notice'>You detach \the [battery] from \the [src].</span>")
+			to_chat(user, span_notice("You detach \the [battery] from \the [src]."))
 		else
 			battery.forceMove(drop_location())
 		return TRUE

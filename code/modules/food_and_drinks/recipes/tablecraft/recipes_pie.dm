@@ -173,7 +173,7 @@
 		/datum/reagent/consumable/milk = 5,
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pie/plain = 1,
-		/obj/item/food/grown/blumpkin = 1
+		/obj/item/food/grown/pumpkin/blumpkin = 1
 	)
 	result = /obj/item/food/pie/blumpkinpie
 	subcategory = CAT_PIE

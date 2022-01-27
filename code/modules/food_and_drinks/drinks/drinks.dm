@@ -18,31 +18,31 @@
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
 
 	if(!canconsume(M, user))
 		return FALSE
 
 	if (!is_drainable())
-		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
+		to_chat(user, span_warning("[src]'s lid hasn't been opened!"))
 		return FALSE
 
 	if(M == user)
-		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", \
-			"<span class='notice'>You swallow a gulp of [src].</span>")
+		user.visible_message(span_notice("[user] swallows a gulp of [src]."), \
+			span_notice("You swallow a gulp of [src]."))
 		if(HAS_TRAIT(M, TRAIT_VORACIOUS))
 			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
-		M.visible_message("<span class='danger'>[user] attempts to feed [M] the contents of [src].</span>", \
-			"<span class='userdanger'>[user] attempts to feed you the contents of [src].</span>")
+		M.visible_message(span_danger("[user] attempts to feed [M] the contents of [src]."), \
+			span_userdanger("[user] attempts to feed you the contents of [src]."))
 		if(!do_mob(user, M))
 			return
 		if(!reagents || !reagents.total_volume)
 			return // The drink might be empty after the delay, such as by spam-feeding
-		M.visible_message("<span class='danger'>[user] fed [M] the contents of [src].</span>", \
-			"<span class='userdanger'>[user] fed you the contents of [src].</span>")
+		M.visible_message(span_danger("[user] fed [M] the contents of [src]."), \
+			span_userdanger("[user] fed you the contents of [src]."))
 		log_combat(user, M, "fed", reagents.log_list())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
@@ -79,43 +79,45 @@
 
 	if(target.is_refillable() && is_drainable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class='warning'>[src] is empty.</span>")
+			to_chat(user, span_warning("[src] is empty."))
 			return
 
 		if(target.reagents.holder_full())
-			to_chat(user, "<span class='warning'>[target] is full.</span>")
+			to_chat(user, span_warning("[target] is full."))
 			return
 
 		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
+		to_chat(user, span_notice("You transfer [trans] units of the solution to [target]."))
 
-		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves (and only with consumable drinks), but drain the borg's cell
+			if (!ispath(refill, /datum/reagent/consumable))
+				return
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if (!is_refillable())
-			to_chat(user, "<span class='warning'>[src]'s tab isn't open!</span>")
+			to_chat(user, span_warning("[src]'s tab isn't open!"))
 			return
 
 		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			to_chat(user, span_warning("[target] is empty."))
 			return
 
 		if(reagents.holder_full())
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			to_chat(user, span_warning("[src] is full."))
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
+		to_chat(user, span_notice("You fill [src] with [trans] units of the contents of [target]."))
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+		to_chat(user, span_notice("You heat [name] with [I]!"))
 
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
@@ -123,11 +125,11 @@
 		if(extinguisher.safety)
 			return
 		if(extinguisher.reagents.total_volume < 1)
-			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
+			to_chat(user, span_warning("\The [extinguisher] is empty!"))
 			return
 		var/cooling = (0 - reagents.chem_temp) * (extinguisher.cooling_power * 2)
 		reagents.expose_temperature(cooling)
-		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
+		to_chat(user, span_notice("You cool the [name] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 	..()
@@ -182,7 +184,7 @@
 	throwforce = 1
 	amount_per_transfer_from_this = 5
 	custom_materials = list(/datum/material/iron=100)
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(5)
 	volume = 5
 	flags_1 = CONDUCT_1
 	spillable = TRUE
@@ -250,7 +252,7 @@
 /obj/item/reagent_containers/food/drinks/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
-	list_reagents  = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
+	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
 
 /obj/item/reagent_containers/food/drinks/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -306,7 +308,7 @@
 	var/flip_chance = 10
 	custom_price = PAYCHECK_PRISONER * 0.8
 
-/obj/item/reagent_containers/food/drinks/waterbottle/Initialize()
+/obj/item/reagent_containers/food/drinks/waterbottle/Initialize(mapload)
 	. = ..()
 	cap_overlay = mutable_appearance(icon, cap_icon_state)
 	if(cap_on)
@@ -321,16 +323,16 @@
 /obj/item/reagent_containers/food/drinks/waterbottle/examine(mob/user)
 	. = ..()
 	if(cap_lost)
-		. += "<span class='notice'>The cap seems to be missing.</span>"
+		. += span_notice("The cap seems to be missing.")
 	else if(cap_on)
-		. += "<span class='notice'>The cap is firmly on to prevent spilling. Alt-click to remove the cap.</span>"
+		. += span_notice("The cap is firmly on to prevent spilling. Alt-click to remove the cap.")
 	else
-		. += "<span class='notice'>The cap has been taken off. Alt-click to put a cap on.</span>"
+		. += span_notice("The cap has been taken off. Alt-click to put a cap on.")
 
 /obj/item/reagent_containers/food/drinks/waterbottle/AltClick(mob/user)
 	. = ..()
 	if(cap_lost)
-		to_chat(user, "<span class='warning'>The cap seems to be missing! Where did it go?</span>")
+		to_chat(user, span_warning("The cap seems to be missing! Where did it go?"))
 		return
 
 	var/fumbled = HAS_TRAIT(user, TRAIT_CLUMSY) && prob(5)
@@ -339,14 +341,14 @@
 		spillable = TRUE
 		animate(src, transform = null, time = 2, loop = 0)
 		if(fumbled)
-			to_chat(user, "<span class='warning'>You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?</span>")
+			to_chat(user, span_warning("You fumble with [src]'s cap! The cap falls onto the ground and simply vanishes. Where the hell did it go?"))
 			cap_lost = TRUE
 		else
-			to_chat(user, "<span class='notice'>You remove the cap from [src].</span>")
+			to_chat(user, span_notice("You remove the cap from [src]."))
 	else
 		cap_on = TRUE
 		spillable = FALSE
-		to_chat(user, "<span class='notice'>You put the cap on [src].</span>")
+		to_chat(user, span_notice("You put the cap on [src]."))
 	update_appearance()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/is_refillable()
@@ -364,20 +366,20 @@
 		return
 
 	if(cap_on && reagents.total_volume && istype(target))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
 
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/living/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && !user.combat_mode)))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+		to_chat(user, span_warning("You must remove the cap before you can do that!"))
 		return
 
 	else if(istype(target, /obj/item/reagent_containers/food/drinks/waterbottle))
 		var/obj/item/reagent_containers/food/drinks/waterbottle/WB = target
 		if(WB.cap_on)
-			to_chat(user, "<span class='warning'>[WB] has a cap firmly twisted on!</span>")
+			to_chat(user, span_warning("[WB] has a cap firmly twisted on!"))
 	. = ..()
 
 // heehoo bottle flipping
@@ -385,7 +387,7 @@
 	. = ..()
 	if(!QDELETED(src) && cap_on && reagents.total_volume)
 		if(prob(flip_chance)) // landed upright
-			src.visible_message("<span class='notice'>[src] lands upright!</span>")
+			src.visible_message(span_notice("[src] lands upright!"))
 			if(throwingdatum.thrower)
 				SEND_SIGNAL(throwingdatum.thrower, COMSIG_ADD_MOOD_EVENT, "bottle_flip", /datum/mood_event/bottle_flip)
 		else // landed on it's side
@@ -419,44 +421,20 @@
 	desc = "A bottle quite similar to a water bottle, but with some words scribbled on with a marker. It seems to be radiating some kind of energy."
 	flip_chance = 100 // FLIPP
 
-/obj/item/reagent_containers/food/drinks/waterbottle/relic/Initialize()
+/obj/item/reagent_containers/food/drinks/waterbottle/relic/Initialize(mapload)
 	var/reagent_id = get_random_reagent_id()
 	var/datum/reagent/random_reagent = new reagent_id
 	list_reagents = list(random_reagent.type = 50)
 	. = ..()
-	desc +=  "<span class='notice'>The writing reads '[random_reagent.name]'.</span>"
+	desc += span_notice("The writing reads '[random_reagent.name]'.")
 	update_appearance()
 
-/obj/item/reagent_containers/food/drinks/beer
-	name = "space beer"
-	desc = "Beer. In space."
-	icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
-
-/obj/item/reagent_containers/food/drinks/beer/almost_empty
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 1)
-
-/obj/item/reagent_containers/food/drinks/beer/light
-	name = "Carp Lite"
-	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
-
-/obj/item/reagent_containers/food/drinks/ale
-	name = "Magm-Ale"
-	desc = "A true dorf's drink of choice."
-	icon_state = "alebottle"
-	inhand_icon_state = "beer"
-	list_reagents = list(/datum/reagent/consumable/ethanol/ale = 30)
-	foodtype = GRAIN | ALCOHOL
-	custom_price = PAYCHECK_EASY
 
 /obj/item/reagent_containers/food/drinks/sillycup
 	name = "paper cup"
 	desc = "A paper water cup."
 	icon_state = "water_cup_e"
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = list(10)
 	volume = 10
 	spillable = TRUE
 	isGlass = FALSE
@@ -596,12 +574,14 @@
 	/// Allows the lean sprite to display upon crafting
 	var/random_sprite = TRUE
 
-/obj/item/reagent_containers/food/drinks/colocup/Initialize()
+/obj/item/reagent_containers/food/drinks/colocup/Initialize(mapload)
 	.=..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	if (random_sprite)
 		icon_state = "colocup[rand(0, 6)]"
+		if (icon_state == "colocup6")
+			desc = "A cheap, mass produced style of cup, typically used at parties. Woah, this one is in red! What the hell?"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -647,6 +627,10 @@
 
 //////////////////////////soda_cans//
 //These are in their own group to be used as IED's in /obj/item/grenade/ghettobomb.dm
+/// How much fizziness is added to the can of soda by throwing it, in percentage points
+#define SODA_FIZZINESS_THROWN 15
+/// How much fizziness is added to the can of soda by shaking it, in percentage points
+#define SODA_FIZZINESS_SHAKE 5
 
 /obj/item/reagent_containers/food/drinks/soda_cans
 	name = "soda can"
@@ -657,8 +641,11 @@
 	isGlass = FALSE
 	custom_price = PAYCHECK_ASSISTANT * 0.9
 	obj_flags = CAN_BE_HIT
+	throwforce = 12 // set to 0 upon being opened. Have you ever been domed by a soda can? Those things fucking hurt
+	/// If the can hasn't been opened yet, this is the measure of how fizzed up it is from being shaken or thrown around. When opened, this is rolled as a percentage chance to burst
+	var/fizziness = 0
 
-/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
+/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize(mapload)
 	..()
 	var/T = pick(subtypesof(/obj/item/reagent_containers/food/drinks/soda_cans) - /obj/item/reagent_containers/food/drinks/soda_cans/random)
 	new T(loc)
@@ -666,12 +653,12 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
-		H.visible_message("<span class='warning'>[H] is trying to take a big sip from [src]... The can is empty!</span>")
+		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
 		return SHAME
 	if(!is_drainable())
 		open_soda()
 		sleep(10)
-	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
+	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
 	playsound(H,'sound/items/drink.ogg', 80, TRUE)
 	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
 	sleep(5)
@@ -688,9 +675,9 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/living/user)
 	if(istype(M, /mob/living/carbon) && !reagents.total_volume && user.combat_mode && user.zone_selected == BODY_ZONE_HEAD)
 		if(M == user)
-			user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
+			user.visible_message(span_warning("[user] crushes the can of [src] on [user.p_their()] forehead!"), span_notice("You crush the can of [src] on your forehead."))
 		else
-			user.visible_message("<span class='warning'>[user] crushes the can of [src] on [M]'s forehead!</span>", "<span class='notice'>You crush the can of [src] on [M]'s forehead.</span>")
+			user.visible_message(span_warning("[user] crushes the can of [src] on [M]'s forehead!"), span_notice("You crush the can of [src] on [M]'s forehead."))
 		playsound(M,'sound/weapons/pierce.ogg', rand(10,50), TRUE)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(M.loc)
 		crushed_can.icon_state = icon_state
@@ -709,15 +696,83 @@
 		return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
-	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	if(prob(fizziness))
+		user.visible_message(span_danger("[user] opens [src], and is suddenly sprayed by the fizzing contents!"), span_danger("You pull back the tab of [src], and are suddenly sprayed with a torrent of liquid! Ahhh!!"))
+		burst_soda(user)
+		return
+
+	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
 	playsound(src, "can_open", 50, TRUE)
 	spillable = TRUE
+	throwforce = 0
+
+/**
+ * Burst the soda open on someone. Fun! Opens and empties the soda can, but does not crush it.
+ *
+ * Arguments:
+ * * target - Who's getting covered in soda
+ * * hide_message - Stops the generic fizzing message, so you can do your own
+ */
+/obj/item/reagent_containers/food/drinks/soda_cans/proc/burst_soda(atom/target, hide_message = FALSE)
+	if(!target)
+		return
+
+	if(ismob(target))
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "soda_spill", /datum/mood_event/soda_spill, src)
+		for(var/mob/living/iter_mob in view(src, 7))
+			if(iter_mob != target)
+				SEND_SIGNAL(iter_mob, COMSIG_ADD_MOOD_EVENT, "observed_soda_spill", /datum/mood_event/observed_soda_spill, target, src)
+
+	playsound(src, 'sound/effects/can_pop.ogg', 80, TRUE)
+	if(!hide_message)
+		visible_message(span_danger("[src] spills over, fizzing its contents all over [target]!"))
+	spillable = TRUE
+	reagents.flags |= OPENCONTAINER
+	reagents.expose(target, TOUCH)
+	reagents.clear_reagents()
+	throwforce = 0
+
+/obj/item/reagent_containers/food/drinks/soda_cans/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(. || spillable || !reagents.total_volume) // if it was caught, already opened, or has nothing in it
+		return
+
+	fizziness += SODA_FIZZINESS_THROWN
+	if(!prob(fizziness))
+		return
+
+	burst_soda(hit_atom, hide_message = TRUE)
+	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
+	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+	crushed_can.icon_state = icon_state
+	moveToNullspace()
+	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
 		open_soda(user)
+		return
 	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/attack_self_secondary(mob/user)
+	if(!is_drainable())
+		playsound(src, 'sound/effects/can_shake.ogg', 50, TRUE)
+		user.visible_message(span_danger("[user] shakes [src]!"), span_danger("You shake up [src]!"), vision_distance=2)
+		fizziness += SODA_FIZZINESS_SHAKE
+		return
+	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/examine_more(mob/user)
+	. = ..()
+	if(!in_range(user, src))
+		return
+	if(fizziness > 30 && prob(fizziness * 2))
+		. += span_notice("<i>You examine [src] closer, and note the following...</i>")
+		. += "\t[span_warning("You get a menacing aura of fizziness from it...")]"
+
+#undef SODA_FIZZINESS_THROWN
+#undef SODA_FIZZINESS_SHAKE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
@@ -746,7 +801,7 @@
 	list_reagents = list(/datum/reagent/consumable/lemon_lime = 30)
 	foodtype = FRUIT
 
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
+/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize(mapload)
 	. = ..()
 	name = "lemon-lime soda"
 

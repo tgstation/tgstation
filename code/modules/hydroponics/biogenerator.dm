@@ -18,7 +18,7 @@
 	/// Currently selected category in the UI
 	var/selected_cat
 
-/obj/machinery/biogenerator/Initialize()
+/obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/biogenerator
 
@@ -61,7 +61,7 @@
 /obj/machinery/biogenerator/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.</span>"
+		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.")
 
 /obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
@@ -81,7 +81,7 @@
 		return ..()
 
 	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
+		to_chat(user, span_warning("The biogenerator is currently processing."))
 		return
 
 	if(default_deconstruction_screwdriver(user, "biogen-empty-o", "biogen-empty", O))
@@ -96,19 +96,12 @@
 		return
 
 	if(istype(O, /obj/item/reagent_containers/glass))
-		. = 1 //no afterattack
-		if(!panel_open)
-			if(beaker)
-				to_chat(user, "<span class='warning'>A container is already loaded into the machine.</span>")
-			else
-				if(!user.transferItemToLoc(O, src))
-					return
-				beaker = O
-				to_chat(user, "<span class='notice'>You add the container to the machine.</span>")
-				update_appearance()
+		if(panel_open)
+			to_chat(user, span_warning("Close the maintenance panel first."))
 		else
-			to_chat(user, "<span class='warning'>Close the maintenance panel first.</span>")
-		return
+			insert_beaker(user, O)
+
+		return TRUE
 
 	else if(istype(O, /obj/item/storage/bag/plants))
 		var/obj/item/storage/bag/plants/PB = O
@@ -116,7 +109,7 @@
 		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is already full! Activate it.</span>")
+			to_chat(user, span_warning("The biogenerator is already full! Activate it."))
 		else
 			for(var/obj/item/food/grown/G in PB.contents)
 				if(i >= max_items)
@@ -124,11 +117,11 @@
 				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
 					i++
 			if(i<max_items)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
+				to_chat(user, span_info("You empty the plant bag into the biogenerator."))
 			else if(PB.contents.len == 0)
-				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator, filling it to its capacity.</span>")
+				to_chat(user, span_info("You empty the plant bag into the biogenerator, filling it to its capacity."))
 			else
-				to_chat(user, "<span class='info'>You fill the biogenerator to its capacity.</span>")
+				to_chat(user, span_info("You fill the biogenerator to its capacity."))
 		return TRUE //no afterattack
 
 	else if(istype(O, /obj/item/food/grown))
@@ -136,15 +129,15 @@
 		for(var/obj/item/food/grown/G in contents)
 			i++
 		if(i >= max_items)
-			to_chat(user, "<span class='warning'>The biogenerator is full! Activate it.</span>")
+			to_chat(user, span_warning("The biogenerator is full! Activate it."))
 		else
 			if(user.transferItemToLoc(O, src))
-				to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
+				to_chat(user, span_info("You put [O.name] in [src.name]"))
 		return TRUE //no afterattack
 	else if (istype(O, /obj/item/disk/design_disk))
-		user.visible_message("<span class='notice'>[user] begins to load \the [O] in \the [src]...</span>",
-			"<span class='notice'>You begin to load a design from \the [O]...</span>",
-			"<span class='hear'>You hear the chatter of a floppy drive.</span>")
+		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
+			span_notice("You begin to load a design from \the [O]..."),
+			span_hear("You hear the chatter of a floppy drive."))
 		processing = TRUE
 		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 10, target = src))
@@ -154,12 +147,12 @@
 		processing = FALSE
 		return TRUE
 	else
-		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
+		to_chat(user, span_warning("You cannot put this in [src.name]!"))
 
 /obj/machinery/biogenerator/AltClick(mob/living/user)
 	. = ..()
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
-		detach(user)
+		eject_beaker(user)
 
 /**
  * activate: Activates biomass processing and converts all inserted grown products into biomass
@@ -173,7 +166,7 @@
 	if(machine_stat != NONE)
 		return
 	if(processing)
-		to_chat(user, "<span class='warning'>The biogenerator is in the process of working.</span>")
+		to_chat(user, span_warning("The biogenerator is in the process of working."))
 		return
 	var/S = 0
 	for(var/obj/item/food/grown/I in contents)
@@ -244,14 +237,51 @@
 	update_appearance()
 	return .
 
-/obj/machinery/biogenerator/proc/detach(mob/living/user)
+/*
+ * Insert a new beaker into the biogenerator, replacing/swapping our current beaker if there is one.
+ *
+ * user - the mob inserting the beaker
+ * inserted_beaker - the beaker we're inserting into the biogen
+ */
+/obj/machinery/biogenerator/proc/insert_beaker(mob/living/user, obj/item/reagent_containers/glass/inserted_beaker)
+	if(!can_interact(user))
+		return
+
+	if(!user.transferItemToLoc(inserted_beaker, src))
+		return
+
 	if(beaker)
-		if(can_interact(user))
-			user.put_in_hands(beaker)
-		else
-			beaker.drop_location(get_turf(src))
-		beaker = null
-		update_appearance()
+		to_chat(user, span_notice("You swap out [beaker] in [src] for [inserted_beaker]."))
+		eject_beaker(user, silent = TRUE)
+	else
+		to_chat(user, span_notice("You add [inserted_beaker] to [src]."))
+
+	beaker = inserted_beaker
+	update_appearance()
+
+/*
+ * Eject the current stored beaker either into the user's hands or onto the ground.
+ *
+ * user - the mob ejecting the beaker
+ * silent - whether to give a message to the user that the beaker was ejected.
+ */
+/obj/machinery/biogenerator/proc/eject_beaker(mob/living/user, silent = FALSE)
+	if(!beaker)
+		return
+
+	if(!can_interact(user))
+		return
+
+	if(user.put_in_hands(beaker))
+		if(!silent)
+			to_chat(user, span_notice("You eject [beaker] from [src]."))
+	else
+		if(!silent)
+			to_chat(user, span_notice("You eject [beaker] from [src] onto the ground."))
+		beaker.forceMove(drop_location())
+
+	beaker = null
+	update_appearance()
 
 /obj/machinery/biogenerator/ui_status(mob/user)
 	if(machine_stat & BROKEN || panel_open)
@@ -317,8 +347,8 @@
 		if("activate")
 			activate(usr)
 			return TRUE
-		if("detach")
-			detach(usr)
+		if("eject")
+			eject_beaker(usr)
 			return TRUE
 		if("create")
 			var/amount = text2num(params["amount"])

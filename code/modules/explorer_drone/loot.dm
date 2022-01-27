@@ -29,9 +29,9 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /datum/adventure_loot_generator/maintenance/generate()
 	var/list/all_loot = list()
 	for(var/i in 1 to amount)
-		var/lootspawn = pickweight(GLOB.maintenance_loot)
+		var/lootspawn = pick_weight(GLOB.maintenance_loot)
 		while(islist(lootspawn))
-			lootspawn = pickweight(lootspawn)
+			lootspawn = pick_weight(lootspawn)
 		var/atom/movable/loot = new lootspawn()
 		all_loot += loot
 	return all_loot
@@ -84,7 +84,12 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /// Assorted weaponry
 /datum/adventure_loot_generator/simple/weapons
 	id = "weapons"
-	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/loaded)
+	loot_list = list(/obj/item/gun/energy/laser,/obj/item/melee/baton/security/loaded)
+
+/// Rare fish! Of the syndicate variety
+/datum/adventure_loot_generator/simple/syndicate_fish
+	id = "syndicate_fish"
+	loot_list = list(/obj/item/storage/fish_case/syndicate)
 
 /// Pets and pet accesories in carriers
 /datum/adventure_loot_generator/pet
@@ -124,10 +129,10 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /obj/item/trade_chip/proc/try_to_unlock_contract(mob/user)
 	var/datum/supply_pack/pack_singleton = SSshuttle.supply_packs[unlocked_pack_type]
 	if(!unlocked_pack_type || !pack_singleton || !pack_singleton.special)
-		to_chat(user,"<span class='danger'>This chip is invalid!</span>")
+		to_chat(user,span_danger("This chip is invalid!"))
 		return
 	pack_singleton.special_enabled = TRUE
-	to_chat(user,"<span class='notice'>Contract accepted into nanotrasen supply database.</span>")
+	to_chat(user,span_notice("Contract accepted into nanotrasen supply database."))
 	qdel(src)
 
 
@@ -145,7 +150,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	var/charge_per_use = 200
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/firelance/Initialize()
+/obj/item/firelance/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
 	AddComponent(/datum/component/two_handed)
@@ -161,21 +166,22 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /obj/item/firelance/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!HAS_TRAIT(src,TRAIT_WIELDED))
-		to_chat(user,"<span class='notice'>You need to wield [src] in two hands before you can fire it.</span>")
+		to_chat(user,span_notice("You need to wield [src] in two hands before you can fire it."))
 		return
 	if(LAZYACCESS(user.do_afters, "firelance"))
 		return
 	if(!cell.use(charge_per_use))
-		to_chat(user,"<span class='warning'>[src] battery ran dry!</span>")
+		to_chat(user,span_warning("[src] battery ran dry!"))
+		return
 	ADD_TRAIT(user,TRAIT_IMMOBILIZED,src)
-	to_chat(user,"<span class='notice'>You begin to charge [src]</span>")
+	to_chat(user,span_notice("You begin to charge [src]"))
 	inhand_icon_state = "firelance_charging"
 	user.update_inv_hands()
 	if(do_after(user,windup_time,interaction_key="firelance",extra_checks = CALLBACK(src, .proc/windup_checks)))
 		var/turf/start_turf = get_turf(user)
 		var/turf/last_turf = get_ranged_target_turf(start_turf,user.dir,melt_range)
 		start_turf.Beam(last_turf,icon_state="solar_beam",time=1 SECONDS)
-		for(var/turf/turf_to_melt in getline(start_turf,last_turf))
+		for(var/turf/turf_to_melt in get_line(start_turf,last_turf))
 			if(turf_to_melt.density)
 				turf_to_melt.Melt()
 	inhand_icon_state = initial(inhand_icon_state)

@@ -43,22 +43,22 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/proc/cost_check(check_turf = FALSE, mob/living/carbon/user, silent = FALSE)
 	if(user.stat)
 		if(!silent)
-			to_chat(user, "<span class='noticealien'>You must be conscious to do this.</span>")
+			to_chat(user, span_noticealien("You must be conscious to do this."))
 		return FALSE
 	if(user.getPlasma() < plasma_cost)
 		if(!silent)
-			to_chat(user, "<span class='noticealien'>Not enough plasma stored.</span>")
+			to_chat(user, span_noticealien("Not enough plasma stored."))
 		return FALSE
 	if(check_turf && (!isturf(user.loc) || isspaceturf(user.loc)))
 		if(!silent)
-			to_chat(user, "<span class='noticealien'>Bad place for a garden!</span>")
+			to_chat(user, span_noticealien("Bad place for a garden!"))
 		return FALSE
 	return TRUE
 
 /obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
 	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
 	if(atmos_thing)
-		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
+		var/rusure = tgui_alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", list("Yes", "No"))
 		if(rusure != "Yes")
 			return FALSE
 	return TRUE
@@ -72,9 +72,9 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
-		to_chat(user, "<span class='warning'>There's already a weed node here!</span>")
+		to_chat(user, span_warning("There's already a weed node here!"))
 		return FALSE
-	user.visible_message("<span class='alertalien'>[user] plants some alien weeds!</span>")
+	user.visible_message(span_alertalien("[user] plants some alien weeds!"))
 	new/obj/structure/alien/weeds/node(user.loc)
 	return TRUE
 
@@ -85,31 +85,33 @@ Doesn't work on other aliens/AI.*/
 	action_icon_state = "alien_whisper"
 
 /obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/user)
-	var/list/options = list()
-	for(var/mob/living/Ms in oview(user))
-		options += Ms
-	var/mob/living/M = input("Select who to whisper to:","Whisper to?",null) as null|mob in sortNames(options)
-	if(!M)
+	var/list/possible_recipients = list()
+	for(var/mob/living/recipient in oview(user))
+		possible_recipients.Add(recipient)
+	if(!length(possible_recipients))
+		to_chat(user, span_noticealien("There's no one around to whisper to."))
 		return FALSE
-	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(user, "<span class='noticealien'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+	var/mob/living/chosen_recipient = tgui_input_list(user, "Select whisper recipient", "Whisper", sort_names(possible_recipients))
+	if(isnull(chosen_recipient))
 		return FALSE
-	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
-	if(msg)
-		if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))
-			to_chat(user, "<span class='notice'>As you try to communicate with [M], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
-			return
-		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
-		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
-		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
-		for(var/ded in GLOB.dead_mob_list)
-			if(!isobserver(ded))
-				continue
-			var/follow_link_user = FOLLOW_LINK(ded, user)
-			var/follow_link_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_link_user] <span class='name'>[user]</span> <span class='alertalien'>Alien Whisper --> </span> [follow_link_whispee] <span class='name'>[M]</span> <span class='noticealien'>[msg]</span>")
-	else
+	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(user, span_noticealien("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
 		return FALSE
+	var/msg = tgui_input_text(user, title = "Alien Whisper")
+	if(isnull(msg))
+		return FALSE
+	if(chosen_recipient.anti_magic_check(FALSE, FALSE, TRUE, 0))
+		to_chat(user, span_notice("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+		return
+	log_directed_talk(user, chosen_recipient, msg, LOG_SAY, tag="alien whisper")
+	to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][msg]")
+	to_chat(user, span_noticealien("You said: \"[msg]\" to [chosen_recipient]"))
+	for(var/ded in GLOB.dead_mob_list)
+		if(!isobserver(ded))
+			continue
+		var/follow_link_user = FOLLOW_LINK(ded, user)
+		var/follow_link_whispee = FOLLOW_LINK(ded, chosen_recipient)
+		to_chat(ded, "[follow_link_user] [span_name("[user]")] [span_alertalien("Alien Whisper --> ")] [follow_link_whispee] [span_name("[chosen_recipient]")] [span_noticealien("[msg]")]")
 	return TRUE
 
 /obj/effect/proc_holder/alien/transfer
@@ -120,23 +122,28 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
-	for(var/mob/living/carbon/A  in oview(user))
-		if(A.getorgan(/obj/item/organ/alien/plasmavessel))
-			aliens_around.Add(A)
-	var/mob/living/carbon/M = input("Select who to transfer to:","Transfer plasma to?",null) as mob in sortNames(aliens_around)
-	if(!M)
-		return
-	var/amount = input("Amount:", "Transfer Plasma to [M]") as num|null
-	if (amount)
-		amount = min(abs(round(amount)), user.getPlasma())
-		if (get_dist(user,M) <= 1)
-			M.adjustPlasma(amount)
-			user.adjustPlasma(-amount)
-			to_chat(M, "<span class='noticealien'>[user] has transferred [amount] plasma to you.</span>")
-			to_chat(user, "<span class='noticealien'>You transfer [amount] plasma to [M].</span>")
-		else
-			to_chat(user, "<span class='noticealien'>You need to be closer!</span>")
-	return
+	for(var/mob/living/carbon/alien in oview(user))
+		if(isalien(alien))
+			aliens_around.Add(alien)
+	if(!length(aliens_around))
+		to_chat(user, span_noticealien("There are no other aliens around."))
+		return FALSE
+	var/mob/living/carbon/donation_target = tgui_input_list(user, "Target to transfer to", "Plasma Donation", sort_names(aliens_around))
+	if(isnull(donation_target))
+		return FALSE
+	var/amount = tgui_input_number(user, "Amount", "Transfer Plasma to [donation_target]", max_value = user.getPlasma())
+	if(isnull(amount))
+		return FALSE
+
+	amount = min(abs(round(amount)), user.getPlasma())
+	if (get_dist(user, donation_target) <= 1)
+		donation_target.adjustPlasma(amount)
+		user.adjustPlasma(-amount)
+		to_chat(donation_target, span_noticealien("[user] has transferred [amount] plasma to you."))
+		to_chat(user, span_noticealien("You transfer [amount] plasma to [donation_target]."))
+	else
+		to_chat(user, span_noticealien("You need to be closer!"))
+
 
 /obj/effect/proc_holder/alien/acid
 	name = "Corrosive Acid"
@@ -150,25 +157,31 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/acid/on_lose(mob/living/carbon/user)
 	remove_verb(user, /mob/living/carbon/proc/corrosive_acid)
 
-/obj/effect/proc_holder/alien/acid/proc/corrode(atom/target,mob/living/carbon/user = usr)
-	if(target in oview(1,user))
-		if(target.acid_act(200, 1000))
-			user.visible_message("<span class='alertalien'>[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!</span>")
-			return TRUE
-		else
-			to_chat(user, "<span class='noticealien'>You cannot dissolve this object.</span>")
-			return FALSE
-
-	to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
-	return FALSE
-
+/obj/effect/proc_holder/alien/acid/proc/corrode(atom/target, mob/living/carbon/user = usr)
+	if(!(target in oview(1,user)))
+		to_chat(src, span_noticealien("[target] is too far away."))
+		return FALSE
+	if(target.acid_act(200, 1000))
+		user.visible_message(span_alertalien("[user] vomits globs of vile stuff all over [target]. It begins to sizzle and melt under the bubbling mess of acid!"))
+		return TRUE
+	else
+		to_chat(user, span_noticealien("You cannot dissolve this object."))
+		return FALSE
 
 /obj/effect/proc_holder/alien/acid/fire(mob/living/carbon/alien/user)
-	var/O = input("Select what to dissolve:","Dissolve",null) as obj|turf in oview(1,user)
-	if(!O || user.incapacitated())
+	var/list/nearby_targets = list()
+	for(var/atom/target in oview(1, user))
+		nearby_targets.Add(target)
+	if(!length(nearby_targets))
+		to_chat(user, span_noticealien("There's nothing to corrode."))
 		return FALSE
-	else
-		return corrode(O,user)
+	var/atom/dissolve_target = tgui_input_list(user, "Select a target to dissolve", "Dissolve", nearby_targets)
+	if(isnull(dissolve_target))
+		return FALSE
+	if(QDELETED(dissolve_target) || user.incapacitated())
+		return FALSE
+
+	return corrode(dissolve_target, user)
 
 /mob/living/carbon/proc/corrosive_acid(O as obj|turf in oview(1)) // right click menu verb ugh
 	set name = "Corrosive Acid"
@@ -191,10 +204,10 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
 	var/message
 	if(active)
-		message = "<span class='notice'>You empty your neurotoxin gland.</span>"
+		message = span_notice("You empty your neurotoxin gland.")
 		remove_ranged_ability(message)
 	else
-		message = "<span class='notice'>You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B></span>"
+		message = span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>")
 		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/alien/neurotoxin/update_icon()
@@ -214,7 +227,7 @@ Doesn't work on other aliens/AI.*/
 	var/mob/living/carbon/user = ranged_ability_user
 
 	if(user.getPlasma() < p_cost)
-		to_chat(user, "<span class='warning'>You need at least [p_cost] plasma to spit.</span>")
+		to_chat(user, span_warning("You need at least [p_cost] plasma to spit."))
 		remove_ranged_ability()
 		return FALSE
 
@@ -224,9 +237,10 @@ Doesn't work on other aliens/AI.*/
 		return FALSE
 
 	var/modifiers = params2list(params)
-	user.visible_message("<span class='danger'>[user] spits neurotoxin!</span>", "<span class='alertalien'>You spit neurotoxin.</span>")
+	user.visible_message(span_danger("[user] spits neurotoxin!"), span_alertalien("You spit neurotoxin."))
 	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(user.loc)
 	neurotoxin.preparePixelProjectile(target, user, modifiers)
+	neurotoxin.firer = user
 	neurotoxin.fire()
 	user.newtonian_move(get_dir(U, T))
 	user.adjustPlasma(-p_cost)
@@ -264,19 +278,21 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
-		to_chat(user, "<span class='warning'>There is already a resin structure there!</span>")
+		to_chat(user, span_warning("There is already a resin structure there!"))
 		return FALSE
 
 	if(!check_vent_block(user))
 		return FALSE
 
-	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
-	if(!choice)
+	var/choice = tgui_input_list(user, "Select a shape to build", "Resin building", structures)
+	if(isnull(choice))
+		return FALSE
+	if(isnull(structures[choice]))
 		return FALSE
 	if (!cost_check(check_turf,user))
 		return FALSE
-	to_chat(user, "<span class='notice'>You shape a [choice].</span>")
-	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
+	to_chat(user, span_notice("You shape a [choice]."))
+	user.visible_message(span_notice("[user] vomits up a thick purple substance and begins to shape it."))
 
 	choice = structures[choice]
 	new choice(user.loc)
@@ -294,12 +310,12 @@ Doesn't work on other aliens/AI.*/
 		user.alpha = 75 //Still easy to see in lit areas with bright tiles, almost invisible on resin.
 		user.sneaking = 1
 		active = 1
-		to_chat(user, "<span class='noticealien'>You blend into the shadows...</span>")
+		to_chat(user, span_noticealien("You blend into the shadows..."))
 	else
 		user.alpha = initial(user.alpha)
 		user.sneaking = 0
 		active = 0
-		to_chat(user, "<span class='noticealien'>You reveal yourself!</span>")
+		to_chat(user, span_noticealien("You reveal yourself!"))
 
 
 /mob/living/carbon/proc/getPlasma()

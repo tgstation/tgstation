@@ -16,10 +16,12 @@
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 
-	if(click_cooldown_override)
-		user.changeNext_move(click_cooldown_override)
-	else
-		user.changeNext_move(CLICK_CD_RANGE)
+	var/next_delay = click_cooldown_override || CLICK_CD_RANGE
+	if(HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
+		next_delay = round(next_delay * 0.5)
+
+	user.changeNext_move(next_delay)
+
 	user.newtonian_move(get_dir(target, user))
 	update_appearance()
 	return TRUE
@@ -30,6 +32,7 @@
 	loaded_projectile.original = target
 	loaded_projectile.firer = user
 	loaded_projectile.fired_from = fired_from
+	loaded_projectile.hit_prone_targets = user.combat_mode
 	if (zone_override)
 		loaded_projectile.def_zone = zone_override
 	else
@@ -63,8 +66,9 @@
 	if(!direct_target)
 		var/modifiers = params2list(params)
 		loaded_projectile.preparePixelProjectile(target, user, modifiers, spread)
-	loaded_projectile.fire(null, direct_target)
+	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
+	loaded_projectile_cache.fire(null, direct_target)
 	return TRUE
 
 /obj/item/ammo_casing/proc/spread(turf/target, turf/current, distro)

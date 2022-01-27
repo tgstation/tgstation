@@ -1,14 +1,10 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Dimmer, Flex, Icon, LabeledList, Section, Tabs } from '../components';
+import { Button, Dimmer, Icon, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const PersonalCrafting = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    busy,
-    display_craftable_only,
-    display_compact,
-  } = data;
+  const { busy, display_craftable_only, display_compact } = data;
   const crafting_recipes = data.crafting_recipes || {};
   // Sort everything into flat categories
   const categories = [];
@@ -52,41 +48,18 @@ export const PersonalCrafting = (props, context) => {
     }
   }
   // Sort out the tab state
-  const [tab, setTab] = useLocalState(
-    context, 'tab', categories[0]?.name);
-  const shownRecipes = recipes
-    .filter(recipe => recipe.category === tab);
+  const [tab, setTab] = useLocalState(context, 'tab', categories[0]?.name);
+  const shownRecipes = recipes.filter((recipe) => recipe.category === tab);
   return (
-    <Window
-      title="Crafting Menu"
-      width={700}
-      height={800}>
-      <Window.Content scrollable>
-        {!!busy && (
-          <Dimmer fontSize="32px">
-            <Icon name="cog" spin={1} />
-            {' Crafting...'}
-          </Dimmer>
-        )}
-        <Section
-          title="Personal Crafting"
-          buttons={(
-            <>
-              <Button.Checkbox
-                content="Compact"
-                checked={display_compact}
-                onClick={() => act('toggle_compact')} />
-              <Button.Checkbox
-                content="Craftable Only"
-                checked={display_craftable_only}
-                onClick={() => act('toggle_recipes')} />
-            </>
-          )}>
-          <Flex>
-            <Flex.Item>
+    <Window title="Crafting Menu" width={700} height={700}>
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item grow={1}>
+            <Section fill scrollable title="Category">
               <Tabs vertical>
-                {categories.map(category => (
+                {categories.map((category) => (
                   <Tabs.Tab
+                    height={2}
                     key={category.name}
                     selected={category.name === tab}
                     onClick={() => {
@@ -100,28 +73,49 @@ export const PersonalCrafting = (props, context) => {
                   </Tabs.Tab>
                 ))}
               </Tabs>
-            </Flex.Item>
-            <Flex.Item grow={1} basis={0}>
-              <CraftingList craftables={shownRecipes} />
-            </Flex.Item>
-          </Flex>
-        </Section>
+            </Section>
+          </Stack.Item>
+          <Stack.Item grow={3}>
+            <Section
+              fill
+              title="Recipes"
+              buttons={
+                <>
+                  <Button.Checkbox
+                    content="Compact"
+                    checked={display_compact}
+                    onClick={() => act('toggle_compact')}
+                  />
+                  <Button.Checkbox
+                    content="Craftable Only"
+                    checked={display_craftable_only}
+                    onClick={() => act('toggle_recipes')}
+                  />
+                </>
+              }>
+              <Section fill scrollable>
+                {busy ? (
+                  <Dimmer fontSize="32px">
+                    <Icon name="cog" spin={1} />
+                    {' Crafting...'}
+                  </Dimmer>
+                ) : (
+                  <CraftingList craftables={shownRecipes} />
+                )}
+              </Section>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
 };
 
 const CraftingList = (props, context) => {
-  const {
-    craftables = [],
-  } = props;
+  const { craftables = [] } = props;
   const { act, data } = useBackend(context);
-  const {
-    craftability = {},
-    display_compact,
-    display_craftable_only,
-  } = data;
-  return craftables.map(craftable => {
+  const { craftability = {}, display_compact, display_craftable_only } = data;
+  return craftables.map((craftable) => {
     if (display_craftable_only && !craftability[craftable.ref]) {
       return null;
     }
@@ -132,19 +126,21 @@ const CraftingList = (props, context) => {
           key={craftable.name}
           label={craftable.name}
           className="candystripe"
-          buttons={(
+          buttons={
             <Button
               icon="cog"
               content="Craft"
               disabled={!craftability[craftable.ref]}
-              tooltip={craftable.tool_text && (
-                'Tools needed: ' + craftable.tool_text
-              )}
+              tooltip={
+                craftable.tool_text && 'Tools needed: ' + craftable.tool_text
+              }
               tooltipPosition="left"
-              onClick={() => act('make', {
-                recipe: craftable.ref,
-              })} />
-          )}>
+              onClick={() =>
+                act('make', {
+                  recipe: craftable.ref,
+                })}
+            />
+          }>
           {craftable.req_text}
         </LabeledList.Item>
       );
@@ -155,15 +151,17 @@ const CraftingList = (props, context) => {
         key={craftable.name}
         title={craftable.name}
         level={2}
-        buttons={(
+        buttons={
           <Button
             icon="cog"
             content="Craft"
             disabled={!craftability[craftable.ref]}
-            onClick={() => act('make', {
-              recipe: craftable.ref,
-            })} />
-        )}>
+            onClick={() =>
+              act('make', {
+                recipe: craftable.ref,
+              })}
+          />
+        }>
         <LabeledList>
           {!!craftable.req_text && (
             <LabeledList.Item label="Required">

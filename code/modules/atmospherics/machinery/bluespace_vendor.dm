@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmospherics/components/bluespace_gas_selling.dmi'
 	icon_state = "bluespace_vendor_open"
 	result_path = /obj/machinery/bluespace_vendor/built
+	pixel_shift = 30
 
 ///Defines for the mode of the vendor
 #define BS_MODE_OFF 1
@@ -18,7 +19,7 @@
 	desc = "Sells gas tanks with custom mixes for all the family!"
 
 	max_integrity = 300
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 80, ACID = 30)
 	layer = OBJ_LAYER
 
 	///The bluespace sender that this vendor is connected to
@@ -51,35 +52,17 @@
 	map_spawned = FALSE
 	mode = BS_MODE_OPEN
 
-/obj/machinery/bluespace_vendor/north //Pixel offsets get overwritten on New()
-	dir = SOUTH
-	pixel_y = 30
-
-/obj/machinery/bluespace_vendor/south
-	dir = NORTH
-	pixel_y = -30
-
-/obj/machinery/bluespace_vendor/east
-	dir = WEST
-	pixel_x = 30
-
-/obj/machinery/bluespace_vendor/west
-	dir = EAST
-	pixel_x = -30
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bluespace_vendor, 30)
 
 /obj/machinery/bluespace_vendor/New(loc, ndir, nbuild)
 	. = ..()
-	if(ndir)
-		setDir(ndir)
 
 	if(nbuild)
 		panel_open = TRUE
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -30 : 30)
-		pixel_y = (dir & 3)? (dir == 1 ? -30 : 30) : 0
 
 	update_appearance()
 
-/obj/machinery/bluespace_vendor/Initialize()
+/obj/machinery/bluespace_vendor/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/payment, tank_cost, SSeconomy.get_dep_account(ACCOUNT_ENG), PAYMENT_ANGRY)
 
@@ -106,27 +89,40 @@
 			icon_state = "[base_icon]_open"
 	return ..()
 
+/obj/machinery/bluespace_vendor/Exited(atom/movable/gone, direction)
+	if(gone == internal_tank)
+		internal_tank = null
+	return ..()
+
 /obj/machinery/bluespace_vendor/process()
 	if(mode == BS_MODE_OPEN)
 		return
 	if(!selected_gas)
 		return
 	var/gas_path = gas_id2path(selected_gas)
-	connected_machine.bluespace_network.pump_gas_to(internal_tank.air_contents, (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
+
+	if(!connected_machine.bluespace_network.gases[gas_path])
+		pumping = FALSE
+		selected_gas = null
+		mode = BS_MODE_IDLE
+		update_appearance()
+		return
+
+	connected_machine.bluespace_network.pump_gas_to(internal_tank.return_air(), (tank_filling_amount * 0.01) * 10 * ONE_ATMOSPHERE, gas_path)
 
 /obj/machinery/bluespace_vendor/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!istype(multitool))
 		return
 	if(!istype(multitool.buffer, /obj/machinery/atmospherics/components/unary/bluespace_sender))
-		to_chat(user, "<span class='notice'>Wrong machine type in [multitool] buffer...</span>")
+		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
 	if(connected_machine)
-		to_chat(user, "<span class='notice'>Changing [src] bluespace network...</span>")
+		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
 	playsound(get_turf(user), 'sound/machines/click.ogg', 10, TRUE)
 	register_machine(multitool.buffer)
-	to_chat(user, "<span class='notice'>You link [src] to the console in [multitool]'s buffer.</span>")
+	to_chat(user, span_notice("You link [src] to the console in [multitool]'s buffer."))
 	return TRUE
 
 /obj/machinery/bluespace_vendor/attackby(obj/item/item, mob/living/user)
@@ -148,11 +144,11 @@
 /obj/machinery/bluespace_vendor/examine(mob/user)
 	. = ..()
 	if(empty_tanks > 1)
-		. += "<span class='notice'>There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.</span>"
+		. += span_notice("There are currently [empty_tanks] empty tanks available, more can be made by inserting iron sheets in the machine.")
 	else if(empty_tanks == 1)
-		. += "<span class='notice'>There is only one empty tank available, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is only one empty tank available, please refill the machine by using iron sheets.")
 	else
-		. += "<span class='notice'>There is no available tank, please refill the machine by using iron sheets.</span>"
+		. += span_notice("There is no available tank, please refill the machine by using iron sheets.")
 
 ///Check what is the current operating mode
 /obj/machinery/bluespace_vendor/proc/check_mode()
@@ -174,22 +170,25 @@
 
 ///Unregister the connected_machine (either when qdel this or the sender)
 /obj/machinery/bluespace_vendor/proc/unregister_machine()
-	UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
-	LAZYREMOVE(connected_machine.vendors, src)
-	connected_machine = null
+	SIGNAL_HANDLER
+	if(connected_machine)
+		UnregisterSignal(connected_machine, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(connected_machine.vendors, src)
+		connected_machine = null
 	mode = BS_MODE_OFF
 	update_appearance()
 
 ///Check the price of the current tank, if the user doesn't have the money the gas will be merged back into the network
 /obj/machinery/bluespace_vendor/proc/check_price(mob/user)
 	var/temp_price = 0
-	var/list/gases = internal_tank.air_contents.gases
+	var/datum/gas_mixture/working_mix = internal_tank.return_air()
+	var/list/gases = working_mix.gases
 	for(var/gas_id in gases)
 		temp_price += gases[gas_id][MOLES] * connected_machine.base_prices[gas_id]
 	gas_price = temp_price
 
 	if(attempt_charge(src, user, gas_price) & COMPONENT_OBJ_CANCEL_CHARGE)
-		var/datum/gas_mixture/remove = internal_tank.air_contents.remove(internal_tank.air_contents.total_moles())
+		var/datum/gas_mixture/remove = working_mix.remove_ratio(1)
 		connected_machine.bluespace_network.merge(remove)
 		return
 	connected_machine.credits_gained += gas_price + tank_cost
@@ -233,7 +232,8 @@
 	data["inserted_tank"] = inserted_tank
 	var/total_tank_pressure
 	if(internal_tank)
-		total_tank_pressure = internal_tank.air_contents.return_pressure()
+		var/datum/gas_mixture/working_mix = internal_tank.return_air()
+		total_tank_pressure = working_mix.return_pressure()
 	else
 		total_tank_pressure = 0
 	data["tank_full"] = total_tank_pressure

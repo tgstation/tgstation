@@ -31,36 +31,42 @@
 	var/timer_duration = 0
 
 	var/timing = FALSE // boolean, true/1 timer is on, false/0 means it's not timing
-	var/list/obj/machinery/targets = list()
+	///List of weakrefs to nearby doors
+	var/list/doors = list()
+	///List of weakrefs to nearby flashers
+	var/list/flashers = list()
+	///List of weakrefs to nearby closets
+	var/list/closets = list()
+
 	var/obj/item/radio/Radio //needed to send messages to sec radio
 
 	maptext_height = 26
 	maptext_width = 32
 	maptext_y = -1
 
-/obj/machinery/door_timer/Initialize()
+/obj/machinery/door_timer/Initialize(mapload)
 	. = ..()
 
 	Radio = new/obj/item/radio(src)
-	Radio.listening = 0
+	Radio.set_listening(FALSE)
 
-/obj/machinery/door_timer/Initialize()
+/obj/machinery/door_timer/Initialize(mapload)
 	. = ..()
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
-				targets += M
+				doors += WEAKREF(M)
 
 		for(var/obj/machinery/flasher/F in urange(20, src))
 			if(F.id == id)
-				targets += F
+				flashers += WEAKREF(F)
 
 		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 			if(C.id == id)
-				targets += C
+				closets += WEAKREF(C)
 
-	if(!targets.len)
-		obj_break()
+	if(!length(doors) && !length(flashers) && length(closets))
+		atom_break()
 	update_appearance()
 
 
@@ -85,18 +91,26 @@
 	activation_time = world.time
 	timing = TRUE
 
-	for(var/obj/machinery/door/window/brigdoor/door in targets)
+	for(var/datum/weakref/door_ref as anything in doors)
+		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
+		if(!door)
+			doors -= door_ref
+			continue
 		if(door.density)
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/close)
 
-	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)
+	for(var/datum/weakref/closet_ref as anything in closets)
+		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
+		if(!closet)
+			closets -= closet_ref
 			continue
-		if(C.opened && !C.close())
+		if(closet.broken)
 			continue
-		C.locked = TRUE
-		C.update_appearance()
+		if(closet.opened && !closet.close())
+			continue
+		closet.locked = TRUE
+		closet.update_appearance()
 	return 1
 
 
@@ -114,18 +128,26 @@
 	set_timer(0)
 	update_appearance()
 
-	for(var/obj/machinery/door/window/brigdoor/door in targets)
+	for(var/datum/weakref/door_ref as anything in doors)
+		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
+		if(!door)
+			doors -= door_ref
+			continue
 		if(!door.density)
 			continue
 		INVOKE_ASYNC(door, /obj/machinery/door/window/brigdoor.proc/open)
 
-	for(var/obj/structure/closet/secure_closet/brig/C in targets)
-		if(C.broken)
+	for(var/datum/weakref/closet_ref as anything in closets)
+		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
+		if(!closet)
+			closets -= closet_ref
 			continue
-		if(C.opened)
+		if(closet.broken)
 			continue
-		C.locked = FALSE
-		C.update_appearance()
+		if(closet.opened)
+			continue
+		closet.locked = FALSE
+		closet.update_appearance()
 
 	return 1
 
@@ -196,8 +218,12 @@
 	data["minutes"] = round((time_left - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
-	for(var/obj/machinery/flasher/F in targets)
-		if(F.last_flash && (F.last_flash + 15 SECONDS) > world.time)
+	for(var/datum/weakref/flash_ref as anything in flashers)
+		var/obj/machinery/flasher/flasher = flash_ref.resolve()
+		if(!flasher)
+			flashers -= flash_ref
+			continue
+		if(flasher.last_flash && (flasher.last_flash + 15 SECONDS) > world.time)
 			data["flash_charging"] = TRUE
 			break
 	return data
@@ -213,7 +239,7 @@
 	var/mob/user = usr
 
 	if(!allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		to_chat(usr, span_warning("Access denied."))
 		return FALSE
 
 	switch(action)
@@ -234,8 +260,12 @@
 		if("flash")
 			investigate_log("[key_name(usr)] has flashed cell [id]", INVESTIGATE_RECORDS)
 			user.log_message("[key_name(usr)] has flashed cell [id]", LOG_ATTACK)
-			for(var/obj/machinery/flasher/F in targets)
-				F.flash()
+			for(var/datum/weakref/flash_ref as anything in flashers)
+				var/obj/machinery/flasher/flasher = flash_ref.resolve()
+				if(!flasher)
+					flashers -= flash_ref
+					continue
+				flasher.flash()
 		if("preset")
 			var/preset = params["preset"]
 			var/preset_time = time_left()

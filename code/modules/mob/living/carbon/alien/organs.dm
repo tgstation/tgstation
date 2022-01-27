@@ -1,9 +1,10 @@
 /obj/item/organ/alien
 	icon_state = "xgibmid2"
+	visual = FALSE
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/toxin/acid = 10)
 	var/list/alien_powers = list()
 
-/obj/item/organ/alien/Initialize()
+/obj/item/organ/alien/Initialize(mapload)
 	. = ..()
 	for(var/A in alien_powers)
 		if(ispath(A))
@@ -114,11 +115,11 @@
 /obj/item/organ/alien/hivenode/Insert(mob/living/carbon/M, special = 0)
 	..()
 	M.faction |= ROLE_ALIEN
-	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	ADD_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/alien/hivenode/Remove(mob/living/carbon/M, special = 0)
 	M.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, "xeno immune")
+	REMOVE_TRAIT(M, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 	..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -126,13 +127,13 @@
 	if(!owner|| owner.stat == DEAD)
 		return
 	if(isalien(owner)) //Different effects for aliens than humans
-		to_chat(owner, "<span class='userdanger'>Your Queen has been struck down!</span>")
-		to_chat(owner, "<span class='danger'>You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed.</span>")
+		to_chat(owner, span_userdanger("Your Queen has been struck down!"))
+		to_chat(owner, span_danger("You are struck with overwhelming agony! You feel confused, and your connection to the hivemind is severed."))
 		owner.emote("roar")
 		owner.Stun(200) //Actually just slows them down a bit.
 
 	else if(ishuman(owner)) //Humans, being more fragile, are more overwhelmed by the mental backlash.
-		to_chat(owner, "<span class='danger'>You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!</span>")
+		to_chat(owner, span_danger("You feel a splitting pain in your head, and are struck with a wave of nausea. You cannot hear the hivemind anymore!"))
 		owner.emote("scream")
 		owner.Paralyze(100)
 
@@ -151,7 +152,7 @@
 	recent_queen_death = FALSE
 	if(!owner) //In case the xeno is butchered or subjected to surgery after death.
 		return
-	to_chat(owner, "<span class='noticealien'>The pain of the queen's death is easing. You begin to hear the hivemind again.</span>")
+	to_chat(owner, span_noticealien("The pain of the queen's death is easing. You begin to hear the hivemind again."))
 	owner.clear_alert("alien_noqueen")
 
 #undef QUEEN_DEATH_DEBUFF_DURATION

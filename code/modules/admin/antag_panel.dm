@@ -34,9 +34,8 @@ GLOBAL_VAR(antag_prototypes)
 	var/command_part = commands.Join(" | ")
 	var/data_part = antag_panel_data()
 	var/objective_part = antag_panel_objectives()
-	var/memory_part = antag_panel_memory()
 
-	var/list/parts = listtrim(list(command_part,data_part,objective_part,memory_part))
+	var/list/parts = listtrim(list(command_part, data_part, objective_part))
 
 	return parts.Join("<br>")
 
@@ -46,18 +45,12 @@ GLOBAL_VAR(antag_prototypes)
 		result += "EMPTY<br>"
 	else
 		var/obj_count = 1
-		for(var/datum/objective/objective in objectives)
+		for(var/datum/objective/objective as anything in objectives)
 			result += "<B>[obj_count]</B>: [objective.explanation_text] <a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> <a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> <a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a><br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
 	result += "<a href='?src=[REF(owner)];obj_announce=1'>Announce objectives</a><br>"
 	return result
-
-/datum/antagonist/proc/antag_panel_memory()
-	var/out = "<b>Memory:</b><br>"
-	out += antag_memory
-	out += "<br><a href='?src=[REF(src)];memory_edit=1'>Edit memory</a><br>"
-	return out
 
 /datum/mind/proc/get_common_admin_commands()
 	var/common_commands = "<span>Common Commands:</span>"
@@ -91,15 +84,15 @@ GLOBAL_VAR(antag_prototypes)
 
 /datum/mind/proc/traitor_panel()
 	if(!SSticker.HasRoundStarted())
-		alert("Not before round-start!", "Alert")
+		tgui_alert(usr, "Not before round-start!", "Alert")
 		return
 	if(QDELETED(src))
-		alert("This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
+		tgui_alert(usr, "This mind doesn't have a mob, or is deleted! For some reason!", "Edit Memory")
 		return
 
 	var/out = "<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role.title]. <a href='?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
 	var/special_statuses = get_special_statuses()
@@ -146,7 +139,7 @@ GLOBAL_VAR(antag_prototypes)
 
 		if(!current_antag) //Show antagging options
 			if(possible_admin_antags.len)
-				antag_header_parts += "<span class='highlight'>None</span>"
+				antag_header_parts += span_highlight("None")
 				antag_header_parts += possible_admin_antags
 			else
 				//If there's no antags to show in this category skip the section completely
@@ -195,19 +188,20 @@ GLOBAL_VAR(antag_prototypes)
 		if(U)
 			uplink_info += "<a href='?src=[REF(src)];common=takeuplink'>take</a>"
 			if (check_rights(R_FUN, 0))
-				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.telecrystals]</a> TC"
+				uplink_info += ", <a href='?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
+				if(U.uplink_handler.has_progression)
+					uplink_info += ", <a href='?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
+				if(U.uplink_handler.has_objectives)
+					uplink_info += ", <a href='?src=[REF(src)];common=give_objective'>Force Give Objective</a>"
 			else
-				uplink_info += ", [U.telecrystals] TC"
+				uplink_info += ", [U.uplink_handler.telecrystals] TC"
+				if(U.uplink_handler.has_progression)
+					uplink_info += ", [U.uplink_handler.progression_points] PR"
 		else
 			uplink_info += "<a href='?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar
 
 		out += uplink_info + "<br>"
-	//Common Memory
-	var/common_memory = "<span>Common Memory:</span>"
-	common_memory += memory
-	common_memory += "<a href='?src=[REF(src)];memory_edit=1'>Edit Memory</a>"
-	out += common_memory + "<br>"
 	//Other stuff
 	out += get_common_admin_commands()
 

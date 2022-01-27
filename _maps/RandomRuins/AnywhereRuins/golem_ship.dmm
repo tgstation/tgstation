@@ -71,7 +71,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "m" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "n" = (
@@ -92,9 +92,7 @@
 	dir = 4;
 	name = "shrine of the liberator"
 	},
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "r" = (
@@ -102,9 +100,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "t" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "u" = (
@@ -143,9 +139,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "z" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "A" = (
@@ -161,7 +155,7 @@
 /obj/item/storage/firstaid/fire,
 /obj/structure/table/wood,
 /obj/item/storage/firstaid/fire,
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "C" = (
@@ -198,7 +192,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "I" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "K" = (
@@ -210,32 +204,24 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "L" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "M" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "N" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "O" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "Q" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "T" = (
@@ -244,14 +230,12 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "U" = (
-/obj/effect/mob_spawn/human/golem/adamantine,
-/obj/machinery/light/small,
+/obj/effect/mob_spawn/ghost_role/human/golem/adamantine,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "V" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
 "Y" = (

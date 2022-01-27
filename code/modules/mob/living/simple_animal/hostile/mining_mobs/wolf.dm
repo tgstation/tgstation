@@ -11,7 +11,7 @@
 	friendly_verb_simple = "howl at"
 	speak_emote = list("howls")
 	speed = 5
-	move_to_delay = 5
+	move_to_delay = 2.5
 	maxHealth = 130
 	health = 130
 	obj_damage = 15
@@ -49,7 +49,7 @@
 		retreat_distance = initial(retreat_distance)
 		return
 	if(!retreat_message_said && target)
-		visible_message("<span class='danger'>The [name] tries to flee from [target]!</span>")
+		visible_message(span_danger("The [name] tries to flee from [target]!"))
 		retreat_message_said = TRUE
 	retreat_distance = 30
 

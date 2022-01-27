@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/electric
-	true_name = "electron accumulator/discharger"
+	abductor_hint = "electron accumulator/discharger. The abductee becomes fully immune to electric shocks. Additionally, they will randomly discharge electric bolts."
 	cooldown_low = 800
 	cooldown_high = 1200
 	icon_state = "species"
@@ -16,8 +16,8 @@
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
-	owner.visible_message("<span class='danger'>[owner]'s skin starts emitting electric arcs!</span>",\
-	"<span class='warning'>You feel electric energy building up inside you!</span>")
+	owner.visible_message(span_danger("[owner]'s skin starts emitting electric arcs!"),\
+	span_warning("You feel electric energy building up inside you!"))
 	playsound(get_turf(owner), "sparks", 100, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
 

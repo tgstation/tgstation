@@ -4,7 +4,7 @@
 /area/icemoon/underground/unexplored)
 "e" = (
 /obj/structure/trap/cult,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/icemoon/underground)
 "h" = (
 /obj/item/paper{
@@ -22,7 +22,7 @@
 /obj/machinery/door/airlock/cult/friendly{
 	use_power = 0
 	},
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/icemoon/underground)
 "y" = (
 /mob/living/simple_animal/hostile/megafauna/dragon{
@@ -32,14 +32,14 @@
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground)
 "A" = (
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/icemoon/underground)
 "E" = (
 /obj/item/grown/bananapeel,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/icemoon/underground)
 "J" = (
 /turf/closed/wall/mineral/cult,
@@ -51,7 +51,7 @@
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground)
 "T" = (
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/icemoon/underground)
 "V" = (
 /obj/item/storage/toolbox/mechanical/old/clean,

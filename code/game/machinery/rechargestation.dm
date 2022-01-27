@@ -1,6 +1,6 @@
 /obj/machinery/recharge_station
-	name = "cyborg recharging station"
-	desc = "This device recharges cyborgs and resupplies them with materials."
+	name = "recharging station"
+	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
@@ -16,7 +16,7 @@
 	var/repairs
 
 
-/obj/machinery/recharge_station/Initialize()
+/obj/machinery/recharge_station/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	if(is_operational)
@@ -36,9 +36,9 @@
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.</span>"
+		. += span_notice("The status display reads: Recharging <b>[recharge_speed]J</b> per cycle.")
 		if(repairs)
-			. += "<span class='notice'>[src] has been upgraded to support automatic repairs.</span>"
+			. += span_notice("[src] has been upgraded to support automatic repairs.")
 
 
 /obj/machinery/recharge_station/on_set_is_operational(old_value)
@@ -90,12 +90,12 @@
 
 /obj/machinery/recharge_station/open_machine()
 	. = ..()
-	use_power = IDLE_POWER_USE
+	update_use_power(IDLE_POWER_USE)
 
 /obj/machinery/recharge_station/close_machine()
 	. = ..()
 	if(occupant)
-		use_power = ACTIVE_POWER_USE //It always tries to charge, even if it can't.
+		update_use_power(ACTIVE_POWER_USE) //It always tries to charge, even if it can't.
 		add_fingerprint(occupant)
 
 /obj/machinery/recharge_station/update_icon_state()

@@ -16,12 +16,12 @@
 	custom_price = PAYCHECK_ASSISTANT * 0.8
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/burger/plain/Initialize()
+/obj/item/food/burger/plain/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new/obj/effect/particle_effect/smoke(get_turf(src))
 		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
-		visible_message("<span class='warning'>Oh, ye gods! [src] is ruined! But what if...?</span>")
+		visible_message(span_warning("Oh, ye gods! [src] is ruined! But what if...?"))
 		name = "steamed ham"
 		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
 		"And you call these steamed hams despite the fact that they are obviously microwaved?",
@@ -34,22 +34,16 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bun" = 2, "long pig" = 4)
 	foodtypes = MEAT | GRAIN | GROSS
-	var/subjectname = ""
-	var/subjectjob = null
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/burger/human/CheckParts(list/parts_list)
 	..()
-	var/obj/item/food/meat/M = locate(/obj/item/food/meat/steak/plain/human) in contents
-	if(M)
-		subjectname = M.subjectname
-		subjectjob = M.subjectjob
-		if(subjectname)
-			name = "[subjectname] burger"
-		else if(subjectjob)
-			name = "[subjectjob] burger"
-		qdel(M)
-
+	var/obj/item/food/patty/human/human_patty = locate(/obj/item/food/patty/human) in contents
+	for(var/datum/material/meat/mob_meat/mob_meat_material in human_patty.custom_materials)
+		if(mob_meat_material.subjectname)
+			name = "[mob_meat_material.subjectname] burger"
+		else if(mob_meat_material.subjectjob)
+			name = "[mob_meat_material.subjectjob] burger"
 
 /obj/item/food/burger/corgi
 	name = "corgi burger"
@@ -74,7 +68,7 @@
 	icon_state = "fishburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 4, "fish" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/burger/tofu
@@ -158,7 +152,7 @@
 	verb_yell = "wails"
 	venue_value = FOOD_PRICE_EXOTIC
 
-/obj/item/food/burger/ghost/Initialize()
+/obj/item/food/burger/ghost/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -169,7 +163,7 @@
 	switch(paranormal_activity)
 		if(97 to 100)
 			audible_message("[src] rattles a length of chain.")
-			playsound(loc,'sound/spookoween/chain_rattling.ogg', 300, TRUE)
+			playsound(loc, 'sound/misc/chain_rattling.ogg', 300, TRUE)
 		if(91 to 96)
 			say(pick("OoOoOoo.", "OoooOOooOoo!!"))
 		if(84 to 90)
@@ -178,15 +172,14 @@
 		if(71 to 83)
 			step(src, dir)
 		if(65 to 70)
-			var/obj/machinery/light/L = locate(/obj/machinery/light) in view(4, src)
-			if(L)
-				L.flicker()
+			var/obj/machinery/light/light = locate(/obj/machinery/light) in view(4, src)
+			light?.flicker()
 		if(62 to 64)
-			playsound(loc,pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
+			playsound(loc, pick('sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg'), 50, TRUE, ignore_walls = FALSE)
 		if(61)
 			visible_message("[src] spews out a glob of ectoplasm!")
 			new /obj/effect/decal/cleanable/greenglow/ecto(loc)
-			playsound(loc,'sound/effects/splat.ogg', 200, TRUE)
+			playsound(loc, 'sound/effects/splat.ogg', 200, TRUE)
 
 		//If i was less lazy i would make the burger forcefeed itself to a nearby mob here.
 
@@ -304,6 +297,12 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_EXOTIC
 
+/obj/item/food/burger/superbite/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] starts to eat [src] in one bite, it looks like [user.p_theyre()] trying to commit suicide!"))
+	var/datum/component/edible/component = GetComponent(/datum/component/edible)
+	component?.TakeBite(user, user)
+	return OXYLOSS
+
 /obj/item/food/burger/fivealarm
 	name = "five alarm burger"
 	desc = "HOT! HOT!"
@@ -343,10 +342,18 @@
 	name = "empowered burger"
 	desc = "It's shockingly good, if you live off of electricity that is."
 	icon_state = "empoweredburger"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity = 5)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/liquidelectricity/enriched = 6)
 	tastes = list("bun" = 2, "pure electricity" = 4)
 	foodtypes = GRAIN | TOXIC
 	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/burger/catburger
+	name = "catburger"
+	desc = "Finally those cats and catpeople are worth something!"
+	icon_state = "catburger"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 2)
+	tastes = list("bun" = 4, "meat" = 2, "cat" = 2)
+	foodtypes = GRAIN | MEAT | GROSS
 
 /obj/item/food/burger/crab
 	name = "crab burger"
@@ -354,7 +361,7 @@
 	icon_state = "crabburger"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("bun" = 2, "crab meat" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN | SEAFOOD
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/burger/soylent
@@ -402,7 +409,7 @@
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/burger/cheese/Initialize()
+/obj/item/food/burger/cheese/Initialize(mapload)
 	. = ..()
 	if(prob(33))
 		icon_state = "cheeseburgeralt"
@@ -415,7 +422,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/capsaicin = 3, /datum/reagent/consumable/condensedcapsaicin = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	foodtypes = GRAIN | MEAT | DAIRY
 
-/obj/item/food/burger/crazy/Initialize()
+/obj/item/food/burger/crazy/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 

@@ -1,0 +1,84 @@
+{
+	"coatwinter": [
+		{
+			"type": "icon_state",
+			"icon_state": "neck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sleeves",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "arms",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodytop",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodymiddle",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodybottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		}
+	],
+	"coatwinter_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "neck",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sleeves",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "arms",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodytop",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodymiddle",
+			"blend_mode": "overlay",
+			"color_ids": [ 5 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bodybottom",
+			"blend_mode": "overlay",
+			"color_ids": [ 6 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "hood",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

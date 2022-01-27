@@ -1,32 +1,124 @@
 /obj/item/clothing/mask/gas
 	name = "gas mask"
-	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
+	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"
-	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	///Max numbers of installable filters
+	var/max_filters = 1
+	///List to keep track of each filter
+	var/list/gas_filters
+	///Type of filter that spawns on roundstart
+	var/starting_filter_type = /obj/item/gas_filter
+	///Does the mask have an FOV?
+	var/has_fov = TRUE
+
+/obj/item/clothing/mask/gas/Initialize(mapload)
+	. = ..()
+	init_fov()
+	if(!max_filters || !starting_filter_type)
+		return
+
+	for(var/i in 1 to max_filters)
+		var/obj/item/gas_filter/inserted_filter = new starting_filter_type(src)
+		LAZYADD(gas_filters, inserted_filter)
+	has_filter = TRUE
+
+/obj/item/clothing/mask/gas/Destroy()
+	QDEL_LAZYLIST(gas_filters)
+	return..()
+
+/obj/item/clothing/mask/gas/examine(mob/user)
+	. = ..()
+	if(max_filters > 0)
+		. += "<span class='notice'>[src] has [max_filters] slot\s for filters.</span>"
+	if(LAZYLEN(gas_filters) > 0)
+		. += "<span class='notice'>Currently there [LAZYLEN(gas_filters) == 1 ? "is" : "are"] [LAZYLEN(gas_filters)] filter\s with [get_filter_durability()]% durability.</span>"
+		. += "<span class='notice'>The filters can be removed by right-clicking with an empty hand on [src].</span>"
+
+/obj/item/clothing/mask/gas/attackby(obj/item/tool, mob/user)
+	if(!istype(tool, /obj/item/gas_filter))
+		return ..()
+	if(LAZYLEN(gas_filters) >= max_filters)
+		return ..()
+	if(!user.transferItemToLoc(tool, src))
+		return ..()
+	LAZYADD(gas_filters, tool)
+	has_filter = TRUE
+	return TRUE
+
+/obj/item/clothing/mask/gas/attack_hand_secondary(mob/user, list/modifiers)
+	if(!has_filter || !max_filters)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	for(var/i in 1 to max_filters)
+		var/obj/item/gas_filter/filter = locate() in src
+		if(!filter)
+			continue
+		user.put_in_hands(filter)
+		LAZYREMOVE(gas_filters, filter)
+	if(LAZYLEN(gas_filters) <= 0)
+		has_filter = FALSE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+///Check _masks.dm for this one
+/obj/item/clothing/mask/gas/consume_filter(datum/gas_mixture/breath)
+	if(LAZYLEN(gas_filters) <= 0 || max_filters == 0)
+		return breath
+	var/obj/item/gas_filter/gas_filter = pick(gas_filters)
+	var/datum/gas_mixture/filtered_breath = gas_filter.reduce_filter_status(breath)
+	if(gas_filter.filter_status <= 0)
+		LAZYREMOVE(gas_filters, gas_filter)
+		qdel(gas_filter)
+	if(LAZYLEN(gas_filters) <= 0)
+		has_filter = FALSE
+	return filtered_breath
+
+/// Initializes the FoV component for the gas mask
+/obj/item/clothing/mask/gas/proc/init_fov()
+	if (has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/**
+ * Getter for overall filter durability, takes into consideration all filters filter_status
+ */
+/obj/item/clothing/mask/gas/proc/get_filter_durability()
+	var/max_filters_durability = LAZYLEN(gas_filters) * 100
+	var/current_filters_durability
+	for(var/obj/item/gas_filter/gas_filter as anything in gas_filters)
+		current_filters_durability += gas_filter.filter_status
+	var/durability = (current_filters_durability / max_filters_durability) * 100
+	return durability
 
 /obj/item/clothing/mask/gas/atmos
 	name = "atmospheric gas mask"
-	desc = "Improved gas mask utilized by atmospheric technicians. Still not very good at blocking gas flow, but it's flameproof!"
+	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	icon_state = "gas_atmos"
 	inhand_icon_state = "gas_atmos"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 10, FIRE = 20, ACID = 10)
-	w_class = WEIGHT_CLASS_SMALL
-	gas_transfer_coefficient = 0.001 //cargo cult time, this var does nothing but just in case someone actually makes it do something
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
+	max_filters = 3
 
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
 	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
 	icon_state = "gas_cap"
 	inhand_icon_state = "gas_cap"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/mask/gas/atmos/centcom
+	name = "\improper CentCom gas mask"
+	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
+	icon = 'icons/obj/clothing/masks.dmi'
+	worn_icon = 'icons/mob/clothing/mask.dmi'
+	worn_icon_state = "centcomspace"
+	icon_state = "gas_centcom"
+	inhand_icon_state = "gas_centcom"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 // **** Welding gas mask ****
@@ -38,7 +130,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 55)
+	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 55)
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES
@@ -51,8 +143,8 @@
 
 /obj/item/clothing/mask/gas/welding/up
 
-/obj/item/clothing/mask/gas/welding/up/Initialize()
-	..()
+/obj/item/clothing/mask/gas/welding/up/Initialize(mapload)
+	. = ..()
 	visor_toggling()
 
 // ********************************************************************
@@ -63,14 +155,18 @@
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "gas_mask"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, FIRE = 0, ACID = 0)
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "syndicate"
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -85,7 +181,11 @@
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 	var/list/clownmask_designs = list()
+
+/obj/item/clothing/mask/gas/clown_hat/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
 	.=..()
@@ -116,10 +216,8 @@
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
 		user.update_inv_wear_mask()
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
-		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
+		update_action_buttons()
+		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -131,6 +229,7 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -143,7 +242,11 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 	var/list/mimemask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
 
 /obj/item/clothing/mask/gas/mime/Initialize(mapload)
 	.=..()
@@ -171,10 +274,8 @@
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
 		user.update_inv_wear_mask()
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
-		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
+		update_action_buttons()
+		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
 
 /obj/item/clothing/mask/gas/monkeymask
@@ -185,6 +286,7 @@
 	inhand_icon_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -195,12 +297,15 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -209,11 +314,14 @@
 	clothing_flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
@@ -222,6 +330,8 @@
 	inhand_icon_state = "tiki_eyebrow"
 	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.25)
 	resistance_flags = FLAMMABLE
+	has_fov = FALSE
+	flags_cover = MASKCOVERSEYES
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
@@ -252,10 +362,8 @@
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
 		user.update_inv_wear_mask()
-		for(var/X in actions)
-			var/datum/action/A = X
-			A.UpdateButtonIcon()
-		to_chat(M, "<span class='notice'>The Tiki Mask has now changed into the [choice] Mask!</span>")
+		update_action_buttons()
+		to_chat(M, span_notice("The Tiki Mask has now changed into the [choice] Mask!"))
 		return 1
 
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
@@ -269,3 +377,12 @@
 	inhand_icon_state = "hunter"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
+	has_fov = FALSE
+
+/obj/item/clothing/mask/gas/driscoll
+	name = "driscoll mask"
+	desc = "Great for train hijackings. Works like a normal full face gas mask, but won't conceal your identity."
+	icon_state = "driscoll_mask"
+	flags_inv = HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	inhand_icon_state = "driscoll_mask"

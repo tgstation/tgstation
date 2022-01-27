@@ -7,7 +7,7 @@
 	name = "research director's vest suit"
 	icon_state = "director"
 	inhand_icon_state = "lb_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 35)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, FIRE = 0, ACID = 35)
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
@@ -21,7 +21,6 @@
 	icon_state = "director_skirt"
 	inhand_icon_state = "lb_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
@@ -30,7 +29,6 @@
 	name = "research director's tan suit"
 	icon_state = "rdwhimsy"
 	inhand_icon_state = "rdwhimsy"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
@@ -48,7 +46,6 @@
 	name = "research director's turtleneck"
 	icon_state = "rdturtle"
 	inhand_icon_state = "p_suit"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
 
@@ -64,15 +61,14 @@
 /obj/item/clothing/under/rank/rnd/scientist
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
 	name = "scientist's jumpsuit"
-	icon_state = "toxins"
+	icon_state = "science"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/scientist/skirt
 	name = "scientist's jumpskirt"
 	desc = "It's made of a special fiber that provides minor protection against explosives. It has markings that denote the wearer as a scientist."
-	icon_state = "toxinswhite_skirt"
+	icon_state = "sciwhite_skirt"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
@@ -100,7 +96,7 @@
 	icon_state = "genetics"
 	inhand_icon_state = "w_suit"
 	permeability_coefficient = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
 /obj/item/clothing/under/rank/rnd/geneticist/skirt
 	name = "geneticist's jumpskirt"

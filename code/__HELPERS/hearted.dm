@@ -4,6 +4,9 @@
 		return
 
 	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * CONFIG_GET(number/commendation_percent_poll)) + rand(0,1)
+	if(number_to_ask == 0)
+		message_admins("Not enough eligible players to poll for commendations.")
+		return
 	message_admins("Polling [number_to_ask] players for commendations.")
 
 	for(var/i in GLOB.joined_player_list)
@@ -31,7 +34,7 @@
 
 /// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up
 /mob/proc/query_heart(attempt=1)
-	if(!mind || !client || attempt > 3)
+	if(!client || attempt > 3)
 		return
 	if(attempt == 1 && tgui_alert(src, "Was there another character you noticed being kind this round that you would like to anonymously thank?", "<3?", list("Yes", "No"), timeout = 30 SECONDS) != "Yes")
 		return
@@ -39,11 +42,11 @@
 	var/heart_nominee
 	switch(attempt)
 		if(1)
-			heart_nominee = input(src, "What was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "What was their name? Just a first or last name may be enough.", "<3?")
 		if(2)
-			heart_nominee = input(src, "Try again, what was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "Try again, what was their name? Just a first or last name may be enough.", "<3?")
 		if(3)
-			heart_nominee = input(src, "One more try, what was their name? Just a first or last name may be enough. (Leave blank to cancel)", "<3?")
+			heart_nominee = tgui_input_text(src, "One more try, what was their name? Just a first or last name may be enough.", "<3?")
 
 	if(isnull(heart_nominee) || heart_nominee == "")
 		return
@@ -62,7 +65,7 @@
 
 		switch(tgui_alert(src, "Is this the person: [heart_contender.real_name]?", "<3?", list("Yes!", "Nope", "Cancel"), timeout = 15 SECONDS))
 			if("Yes!")
-				nominate_heart(heart_contender)
+				heart_contender.receive_heart(src)
 				return
 			if("Nope")
 				continue
@@ -74,18 +77,21 @@
 /*
 * Once we've confirmed who we're commending, either set their status now or log it for the end of the round
 *
+* This used to be reversed, being named nominate_heart and being called on the mob sending the commendation and the first argument being
+* the heart_recepient, but that was confusing and unintuitive, so now src is the person being commended and the sender is now the first argument.
+*
 * Arguments:
-* * heart_recepient: The reference to the mob who we want to commend. Note that if we delay to the end of the round, we log the mob's current ckey in case they change bodies
+* * heart_sender: The reference to the mob who sent the commendation, just for the purposes of logging
 * * duration: How long from the moment it's applied the heart will last
 * * instant: If TRUE (or if the round is already over), we'll give them the heart status now, if FALSE, we wait until the end of the round (which is the standard behavior)
 */
-/mob/proc/nominate_heart(mob/heart_recepient, duration = 24 HOURS, instant = FALSE)
-	if(!mind || !client || !heart_recepient?.client)
+/mob/proc/receive_heart(mob/heart_sender, duration = 24 HOURS, instant = FALSE)
+	if(!client)
 		return
-	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
-	message_admins("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
-	log_admin("[key_name(src)] commended [key_name(heart_recepient)] [instant ? "" : "(roundend)"]")
+	to_chat(heart_sender, span_nicegreen("Commendation sent!"))
+	message_admins("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
+	log_admin("[key_name(heart_sender)] commended [key_name(src)] [instant ? "(instant)" : ""]")
 	if(instant || SSticker.current_state == GAME_STATE_FINISHED)
-		heart_recepient.client?.adjust_heart(duration)
+		client.adjust_heart(duration)
 	else
-		LAZYADD(SSticker.hearts, heart_recepient.ckey)
+		LAZYADD(SSticker.hearts, ckey)

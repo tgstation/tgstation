@@ -10,10 +10,10 @@
 	var/bg_color = "#7f7f7f"
 
 /obj/item/folder/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/folder/Initialize()
+/obj/item/folder/Initialize(mapload)
 	update_icon()
 	. = ..()
 
@@ -26,15 +26,15 @@
 
 /obj/item/folder/examine()
 	. = ..()
-	if(contents)
-		. += "<span class='notice'>Right-click to remove [contents[1]].</span>"
+	if(length(contents))
+		. += span_notice("Right-click to remove [contents[1]].")
 
 /obj/item/folder/proc/rename(mob/user)
 	if(!user.is_literate())
-		to_chat(user, "<span class='notice'>You scribble illegibly on the cover of [src]!</span>")
+		to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 		return
 
-	var/inputvalue = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", "", MAX_NAME_LEN)
+	var/inputvalue = tgui_input_text(user, "What would you like to label the folder?", "Folder Labelling", max_length = MAX_NAME_LEN)
 
 	if(!inputvalue)
 		return
@@ -46,11 +46,11 @@
 	if(istype(Item))
 		Item.forceMove(user.loc)
 		user.put_in_hands(Item)
-		to_chat(user, "<span class='notice'>You remove [Item] from [src].</span>")
+		to_chat(user, span_notice("You remove [Item] from [src]."))
 		update_icon()
 
 /obj/item/folder/attack_hand(mob/user, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+	if(length(contents) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		remove_item(contents[1], user)
 		return TRUE
 	. = ..()
@@ -67,7 +67,7 @@
 		//Add paper, photo or documents into the folder
 		if(!user.transferItemToLoc(weapon, src))
 			return
-		to_chat(user, "<span class='notice'>You put [weapon] into [src].</span>")
+		to_chat(user, span_notice("You put [weapon] into [src]."))
 		update_appearance()
 	else if(istype(weapon, /obj/item/pen))
 		rename(user)

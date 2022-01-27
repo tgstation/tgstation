@@ -56,6 +56,8 @@
 		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
 	if(istype(parent, /obj/machinery/destructive_scanner))
 		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
+	if(istype(parent, /obj/machinery/computer/operating))
+		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
 
 	// Determine UI display mode
 	switch(config_mode)
@@ -101,7 +103,7 @@
 	if (!proximity_flag || (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE)))
 		return
 	playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-	to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
+	to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 /**
  * Checks that an experiment can be run using the provided target, used for preventing the cancellation of the attack chain inappropriately
@@ -126,16 +128,16 @@
  */
 /datum/component/experiment_handler/proc/try_run_handheld_experiment_async(datum/source, atom/target, mob/user, params)
 	if (selected_experiment == null && !(config_flags & EXPERIMENT_CONFIG_ALWAYS_ACTIVE))
-		to_chat(user, "<span class='notice'>You do not have an experiment selected!</span>")
+		to_chat(user, span_notice("You do not have an experiment selected!"))
 		return
 	if(!do_after(user, 1 SECONDS, target = target))
 		return
 	if(action_experiment(source, target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
-		to_chat(user, "<span class='notice'>You scan [target].</span>")
+		to_chat(user, span_notice("You scan [target]."))
 	else
 		playsound(user, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(user, "<span class='notice'>[target] is not related to your currently selected experiment.</span>")
+		to_chat(user, span_notice("[target] is not related to your currently selected experiment."))
 
 
 /**
@@ -146,7 +148,7 @@
 	var/atom/movable/our_scanner = parent
 	if (selected_experiment == null)
 		playsound(our_scanner, 'sound/machines/buzz-sigh.ogg', 25)
-		to_chat(our_scanner, "<span class='notice'>No experiment selected!</span>")
+		to_chat(our_scanner, span_notice("No experiment selected!"))
 		return
 	var/successful_scan
 	for(var/scan_target in scanned_atoms)
@@ -155,7 +157,7 @@
 			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
-		to_chat(our_scanner, "<span class='notice'>The scan succeeds.</span>")
+		to_chat(our_scanner, span_notice("The scan succeeds."))
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_scanner.say("The scan did not result in anything.")
@@ -172,6 +174,16 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_array.say("Insufficient explosion to contribute to current experiment.")
+
+/// Hooks on a successful dissection experiment
+/datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	if (action_experiment(source, target))
+		playsound(source, 'sound/machines/ping.ogg', 25)
+	else
+		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
+		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
 
 /**
  * Announces a message to all experiment handlers
@@ -237,7 +249,8 @@
  * * user - The user to show the experiment configuration panel to
  */
 /datum/component/experiment_handler/proc/configure_experiment(datum/source, mob/user)
-	ui_interact(user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/ui_interact, user)
 
 /**
  * Attempts to show the user the experiment configuration panel
@@ -246,7 +259,8 @@
  * * user - The user to show the experiment configuration panel to
  */
 /datum/component/experiment_handler/proc/configure_experiment_click(datum/source, mob/user)
-	ui_interact(user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, /datum/proc/ui_interact, user)
 
 /**
  * Attempts to link this experiment_handler to a provided techweb
@@ -286,18 +300,20 @@
 	selected_experiment = null
 
 /**
- * Attempts to get rnd servers on the same z-level as a provided turf
+ * Attempts to get rnd servers that are on the station z-level, also checks if provided turf is on the station z-level
  *
  * Arguments:
- * * turf_to_check_for_servers - The turf to get servers on the same z-level of
+ * * turf_to_check_for_servers - The turf to check if its on the station z-level
  */
 /datum/component/experiment_handler/proc/get_available_servers(turf/turf_to_check_for_servers = null)
 	if (!turf_to_check_for_servers)
 		turf_to_check_for_servers = get_turf(parent)
 	var/list/local_servers = list()
+	if (!SSmapping.level_trait(turf_to_check_for_servers.z,ZTRAIT_STATION))
+		return local_servers
 	for (var/obj/machinery/rnd/server/server in SSresearch.servers)
 		var/turf/position_of_this_server_machine = get_turf(server)
-		if (turf_to_check_for_servers && position_of_this_server_machine && position_of_this_server_machine.z == turf_to_check_for_servers.z)
+		if (position_of_this_server_machine && SSmapping.level_trait(position_of_this_server_machine.z,ZTRAIT_STATION))
 			local_servers += server
 	return local_servers
 

@@ -51,7 +51,7 @@
 /datum/addiction/proc/lose_addiction(datum/mind/victim_mind)
 	SEND_SIGNAL(victim_mind.current, COMSIG_CLEAR_MOOD_EVENT, "[type]_addiction")
 	SEND_SIGNAL(victim_mind.current, COMSIG_CARBON_LOSE_ADDICTION, victim_mind)
-	to_chat(victim_mind.current, "<span class='notice'>You feel like you've gotten over your need for drugs.</span>")
+	to_chat(victim_mind.current, span_notice("You feel like you've gotten over your need for drugs."))
 	end_withdrawal(victim_mind.current)
 	LAZYREMOVE(victim_mind.active_addictions, type)
 
@@ -123,15 +123,14 @@
 /// Called when addiction is in stage 1 every process
 /datum/addiction/proc/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, delta_time)
 	if(DT_PROB(5, delta_time))
-		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[1]]</span>")
+		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[1]]"))
 
 /// Called when addiction is in stage 2 every process
 /datum/addiction/proc/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, delta_time)
 	if(DT_PROB(10, delta_time) )
-		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[2]]</span>")
-
+		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[2]]"))
 
 /// Called when addiction is in stage 3 every process
 /datum/addiction/proc/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	if(DT_PROB(15, delta_time))
-		to_chat(affected_carbon, "<span class='danger'>[withdrawal_stage_messages[3]]</span>")
+		to_chat(affected_carbon, span_danger("[withdrawal_stage_messages[3]]"))

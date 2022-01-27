@@ -2,8 +2,9 @@
 	see_invisible = SEE_INVISIBLE_LIVING
 	sight = 0
 	see_in_dark = 2
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,NANITE_HUD,DIAG_NANITE_FULL_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
 	pressure_resistance = 10
+	plane = GAME_PLANE_FOV_HIDDEN
 
 	hud_type = /datum/hud/living
 
@@ -62,7 +63,7 @@
 	  */
 	var/incorporeal_move = FALSE
 
-	var/list/roundstart_quirks = list()
+	var/list/quirks = list()
 
 	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
 	///Mob specific surgery speed modifier
@@ -72,7 +73,8 @@
 
 	var/cameraFollow = null
 
-	var/tod = null /// Time of death
+	/// Time of death
+	var/tod = null
 
 	var/on_fire = FALSE ///The "Are we on fire?" var
 	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
@@ -82,7 +84,7 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	var/mob_biotypes = MOB_ORGANIC
 	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
-	var/has_limbs = 0 ///does the mob have distinct limbs?(arms,legs, chest,head)
+	var/has_limbs = FALSE ///does the mob have distinct limbs?(arms,legs, chest,head)
 
 	///How many legs does this mob have by default. This shouldn't change at runtime.
 	var/default_num_legs = 2
@@ -114,8 +116,6 @@
 	var/list/guaranteed_butcher_results = null ///these will always be yielded from butchering
 	var/butcher_difficulty = 0 ///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 
-	var/list/weather_immunities
-
 	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
 	var/blood_volume = 0 ///how much blood the mob has
@@ -138,10 +138,13 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	var/can_be_held = FALSE //whether this can be picked up and held.
-	var/worn_slot_flags = NONE //if it can be held, can it be equipped to any slots? (think pAI's on head)
+	///whether this can be picked up and held.
+	var/can_be_held = FALSE
+	/// The w_class of the holder when held.
+	var/held_w_class = WEIGHT_CLASS_NORMAL
+	///if it can be held, can it be equipped to any slots? (think pAI's on head)
+	var/worn_slot_flags = NONE
 
-	var/radiation = 0 ///If the mob is irradiated.
 	var/ventcrawl_layer = PIPING_LAYER_DEFAULT
 	var/losebreath = 0
 
@@ -170,3 +173,10 @@
 	var/body_position_pixel_x_offset = 0
 	///The x amount a mob's sprite should be offset due to the current position they're in
 	var/body_position_pixel_y_offset = 0
+
+	/// FOV view that is applied from either nativeness or traits
+	var/fov_view
+	/// Native FOV that will be applied if a config is enabled
+	var/native_fov = FOV_90_DEGREES
+	/// Lazy list of FOV traits that will apply a FOV view when handled.
+	var/list/fov_traits

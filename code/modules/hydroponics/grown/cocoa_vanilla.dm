@@ -38,7 +38,7 @@
 	plantname = "Vanilla Tree"
 	product = /obj/item/food/grown/vanillapod
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/vanilla = 0.25, /datum/reagent/consumable/nutriment = 0.1)
 
 /obj/item/food/grown/vanillapod
@@ -46,6 +46,7 @@
 	name = "vanilla pod"
 	desc = "Fattening... Mmmmm... vanilla."
 	icon_state = "vanillapod"
+	bite_consumption_mod = 2
 	foodtypes = FRUIT
 	tastes = list("vanilla" = 1)
 	distill_reagent = /datum/reagent/consumable/vanilla //Takes longer, but you can get even more vanilla from it.
@@ -62,7 +63,7 @@
 	yield = 3
 	production = 7
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list()
+	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/enzyme = 0.1, /datum/reagent/consumable/nutriment = 0.1)
 	growthstages = 4
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -75,6 +76,7 @@
 	name = "bungo fruit"
 	desc = "A strange fruit, tough leathery skin protects its juicy flesh and large poisonous seed."
 	icon_state = "bungo"
+	bite_consumption_mod = 2
 	trash_type = /obj/item/food/grown/bungopit
 	foodtypes = FRUIT
 	juice_results = list(/datum/reagent/consumable/bungojuice = 0)
@@ -85,6 +87,7 @@
 	seed = /obj/item/seeds/cocoapod/bungotree
 	name = "bungo pit"
 	icon_state = "bungopit"
+	bite_consumption_mod = 5
 	desc = "A large seed, it is said to be potent enough to be able to stop a mans heart."
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5
@@ -93,7 +96,7 @@
 	foodtypes = TOXIC
 	tastes = list("acrid bitterness" = 1)
 
-/obj/item/food/grown/bungopit/Initialize()
+/obj/item/food/grown/bungopit/Initialize(mapload)
 	. =..()
 	reagents.clear_reagents()
 	reagents.add_reagent(/datum/reagent/toxin/bungotoxin, seed.potency * 0.10) //More than this will kill at too low potency

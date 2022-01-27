@@ -1,0 +1,255 @@
+2017-09-01:
+  Fury McFlurry:
+  - rscadd: Added more halloween costumes.
+  - rscadd: Among them are a lobster suit, a cold villain costume and some gothic
+      clothes
+  More Robust Than You:
+  - rscdel: Finally fucking removed gangs
+  MrStonedOne:
+  - rscadd: Player notes can now be configured to fade out over time to allow admins
+      to quickly see how recent notes are. Server Operators, check the config for
+      more info
+  Pubby:
+  - rscdel: The multiverse sword is toast
+  YPOQ:
+  - bugfix: Pouring radium into a ninja suit restores adrenaline boosts.
+  - bugfix: Adrenaline boost works while unconscious again.
+  - bugfix: Energy nets can be used again!
+2017-09-02:
+  Frozenguy5:
+  - tweak: Added new station prefixes, names and suffixes!
+  Tortellini Tony:
+  - tweak: Round-end credits can now be toggled on or off in the server game options.
+  XDTM:
+  - tweak: The Disease Outbreak event now can generate random advanced viruses, with
+      more symptoms and higher level as round time goes on.
+2017-09-11:
+  Anonmare:
+  - balance: Altered pressure plate crafting recipe
+  Basilman:
+  - rscadd: A strange asteroid has drifted nearby...
+  Firecage:
+  - rscadd: The NanoTrasen Department for Cybernetics (NDC) would like to announce
+      the creation of Cybernetic Lungs. Both a stock variety to replace traditional
+      stock human lungs in emergencies, and a more enhanced variety allowing greater
+      tolerance of breathing cold air, toxins, and CO2.
+  JJRcop:
+  - rscadd: Admins can now play media content from the web to players.
+  - rscadd: Adds a volume slider for admin midis to the chat options menu.
+  Jay:
+  - bugfix: Goliaths can be butchered again
+  Joan:
+  - tweak: While below 0 health but above -30 health, you will be able to crawl slowly
+      if not pulled, whisper, hear speech, and see with worsening vision.
+  - wip: The previous softcrit got reverted, for changelog context.
+  - rscdel: Standard attacks, such as swords, hulk punches, mech punches, xeno slashes,
+      and slime glomps, will no longer damage clothing.
+  Kor:
+  - rscadd: People in soft crit will take oxyloss more slowly than people in full
+      crit if they remain still.
+  - rscadd: People dragging themselves in critical condition will now leave blood
+      trails. This will rapidly deal oxyloss to you.
+  MrStonedOne:
+  - rscadd: Admins may now show the variables interface to players to help contributors
+      debug their new additions
+  Naksu:
+  - rscadd: Added TGUI interfaces to various smartfridges of different kinds, drying
+      racks and the disk compartmentalizer
+  Pubby:
+  - bugfix: Escape pods and PubbyStation's monastery shuttle are back in commission
+  Robustin:
+  - tweak: Golem shells no longer fit in standard crew bags.
+  Supermichael777:
+  - bugfix: Stands now check if their user got queue deleted somehow
+  VexingRaven:
+  - bugfix: Hearty Punch once again pulls people out of crit.
+  Xhuis:
+  - spellcheck: Various grammar in the Orion Trail arcade game has been tweaked.
+  - rscadd: You can now kill yourself in fun and creative ways with the hierophant
+      club.
+  - rscadd: Common lavaland mobs now have rare mutations! Keep an eye out for rare
+      Poke- err, monsters.
+  - imageadd: The hand drill and jaws of life now have sprites on the toolbelt.
+  YPOQ:
+  - bugfix: Windoors open when emagged again
+  as334:
+  - rscadd: Added a mass spectrometer to the detective's closet
+  basilman:
+  - rscadd: penguins may now have shamebreros, noot noot
+2017-09-13:
+  BeeSting12:
+  - balance: The stetchkin APS pistol is smaller.
+  - rscadd: The 9mm pistol magazines can be purchased from nuke op uplinks at two
+      telecrystals each.
+  Kor:
+  - rscadd: Added Nightmares. They're admin only currently, so as usual, make sure
+      to beg admins to be one.
+  - rscadd: The Chaplain may now choose the Unholy Blessing as a null rod skin.
+  KorPhaeron:
+  - rscadd: Added Jacob's ladder to the necropolis chest
+  Lordpidey:
+  - bugfix: Centcom roundstart threat reports are fixed, and can now be used to narrow
+      down the types of threats facing the station.
+  MrROBUST:
+  - rscadd: Mechs now can be connected to atmos ports
+  VexingRaven:
+  - bugfix: Changeling Augmented Eyesight ability now grants flash protection when
+      toggled off
+  - bugfix: Changeling Augmented Eyesight ability can now be toggled properly
+  - bugfix: Changeling Augmented Eyesight ability is properly removed when readapting
+  - bugfix: The syndicate have once again stocked the toy C20r and L6 Saw with riot
+      darts.
+  Xhuis:
+  - rscadd: You can now use metal rods and departmental jumpsuits to craft departments
+      for each banner.
+  - tweak: The lavaland animal hospital ruin has been remapped, including more supplies
+      as well as light sources.
+2017-09-14:
+  BeeSting12:
+  - balance: Deltastation's and Metastation's armory now starts with three riot shotguns!
+  Fun Police:
+  - rscdel: Removed some of the free lag.
+  Kor:
+  - bugfix: It is possible to multitool the cargo computer circuitboard for contraband
+      again
+  ShizCalev:
+  - bugfix: Holding a potted plant will no longer put you above objects on walls.
+  - bugfix: Replaced leftover references to loyalty implants with mindshield implants.
+  ninjanomnom:
+  - bugfix: Shuttle transit parallax should be working again
+2017-09-16:
+  Basilman:
+  - rscadd: Gondolas are now procedural generated.
+  Mey-Ha-Zah:
+  - imageadd: Updated the knife sprite.
+  Naksu:
+  - bugfix: Evidence bags will no longer show ghosts of items such as primed flashbangs
+      after the flashbang inside explodes
+  - bugfix: Prevents dead monkeys from fleeing their attackers or escaping His Grace
+      only to be eaten again
+  - rscdel: Corgis can no longer be targeted by facehuggers
+  - rscdel: Removed unused vine floors and their sprite.
+  Robustin:
+  - rscadd: Due to budget cuts, airlocks that control access to non-functional maint
+      rooms and other abandoned areas now have a chance to spawn welded, bolted, screwdrivered,
+      or flat out replaced by a wall at roundstart.
+  - bugfix: Dice will now roll when thrown
+  YPOQ:
+  - rscadd: Ninja adrenaline boost removes stamina damage
+  - bugfix: Depowered AIs can no longer use abilities or interact with machinery
+  - bugfix: The doomsday device will again periodically announce the time until its
+      activation
+  - bugfix: Crafting stackable items results in the right stack sizes
+2017-09-18:
+  More Robust Than you:
+  - balance: Blobbernauts are healed quicker by cores and nodes
+  Naksu:
+  - bugfix: OOC for dead people is now (re-)enabled at round-end
+  - bugfix: Fixed chemfridges being unable to display items with dots in their name
+  Pubby:
+  - rscadd: Traitorbro gamemode
+  Supermichael777:
+  - bugfix: Airlocks now check metal for upgrades using the standard get_amount()
+      proc instead of checking the amount var, this means it is compatible with cyborgs.
+  TungstenOxide:
+  - tweak: Swapped the action of purchasing a pAI software and subtracting the RAM
+      from available pool.
+  Xhuis:
+  - balance: Brave Bull now increases your max HP by 10, up from 5.
+  - rscadd: Tequila Sunrise now makes you radiate dim light while it's in your body.
+  - rscadd: Dwarves are now very resistant to the intense alcohol content of the Manly
+      Dorf and can freely quaff them without too much worry.
+  - rscadd: Bloody Mary now restores lost blood.
+2017-09-20:
+  PopNotes:
+  - imageadd: Airlocks animate faster. This doesn't change the time it takes to pass
+      through an airlock, but it does visually match up much better so you don't just
+      appear to glide through the airlock while it's half-open.
+  Pubby:
+  - bugfix: Atmos pipenets are less glitchy
+  TehZombehz:
+  - rscadd: Several new plushie dolls are now available in toy crates.
+2017-09-22:
+  AutomaticFrenzy:
+  - bugfix: Mice spawning finds the station z level properly
+  CPTANT:
+  - balance: Knockdown and unconcious now let you regenerate stamina damage.
+  - rscadd: Sleeping regenerates more stamina damage.
+  Naksu:
+  - bugfix: Admin ghosts can no longer unintentionally make a mess of things.
+2017-09-23:
+  Armhulen:
+  - rscadd: Rare Spider Variants have arrived! Every spiderling has a rare chance
+      of growing up to a rare version of their original spider type!
+  - rscadd: Special thanks to Onule for the sprites, you're the best!
+  JJRcop:
+  - rscadd: Suiciding with a ballistic gun now actually blows your brain out.
+  More Robust Than You:
+  - tweak: Taking the beaker out of a cryotube now tries to put it into your hand
+  - code_imp: Removed some spawn()s from secbot code
+  - bugfix: Using a soulstone on somebody now transfers your languages to the shade
+  - bugfix: Zombies now stay dead if they suicide
+  - rscadd: If a zombie suicides, they now rip their head off!
+  - bugfix: pAIs now transfer their languages to bots
+  - bugfix: Support Holoparasites must be manifested to heal
+  Robustin:
+  - balance: A zombie's automatic self-healing is stopped for 6 seconds after taking
+      damage.
+  - bugfix: Deconverted revs will now always get a message, logs will now include
+      more details.
+  YPOQ:
+  - bugfix: Pet persistence works again
+2017-09-27:
+  Arianya:
+  - balance: Lesser ash drakes no longer drop ash drake hide when butchered.
+  GLA Coding:
+  - tweak: Cells must now be installed in mechs when being constructed, this step
+      is always before the application of internal armor.
+  - bugfix: Combat mechs now get stats upgrades from their scanning modules and capacitors
+  Improvedname:
+  - rscadd: Adds racial equality to color burgers
+  More Robust Than You:
+  - rscadd: Implant Chairs now also support organs
+  Naksu:
+  - bugfix: Fixed jump boots breaking if used when you can't jump, such as when inside
+      a sleeper.
+  - code_imp: Removed meteor-related free lag.
+  - bugfix: Syndicate MMIs will now properly transfer their laws to newly-constructed
+      AIs
+  Pubby:
+  - rscadd: Bluespace pipes to atmospherics, which create a single pipenet with all
+      bluespace pipes in existence.
+2017-09-28:
+  RandomMarine:
+  - imageadd: Air tanks (o2+n2) now have a different appearance from oxygen tanks.
+  Robustin:
+  - tweak: Revheads no longer spawn with chameleon glasses or a spraycan, instead
+      they will start with a cybernetic security HUD implanted into their eyes.
+  Xhuis:
+  - rscadd: Ian has recently communed with unspeakable horrors and may now be warped
+      by their power if Nar-Sie passes near them.
+  - rscadd: In order to fight back against their ancient foe Ian, Poly has struck
+      a bargain with Ratvar and will be transformed into a machine by their presence.
+  Y0SH1_M4S73R:
+  - bugfix: AFK players count as dead for the assassinate objective.
+2017-09-29:
+  Kor:
+  - rscadd: Gunfire can now leave bullet holes/dents in walls. Sprites by JStheguy.
+  RandomMarine:
+  - rscadd: You can now light your cigs with people that are on fire. The surgeon
+      general is spinning in their grave.
+  Robustin:
+  - tweak: Hacking a secure container with a multitool now takes longer, but no longer
+      has a chance to fail.
+  XDTM:
+  - rscadd: Nurse spiders can now set a directive that will be seen by their spiderlings,
+      when they get controlled by a player.
+  - rscadd: Spiders' actions are now action buttons instead of verbs.
+  - rscadd: Wrapping stuff in a cocoon is now a targeted action!
+  kevinz000:
+  - rscadd: The syndicate have recently begun sending agents to extract vital research
+      information from Nanotrasen.
+  - bugfix: 'Timestop fields will now stop thrown objects experimental: Timestops
+      will now be much quicker to react.'
+  kingofkosmos:
+  - spellcheck: You can now find out if an item uses alt-clicking by examining it.

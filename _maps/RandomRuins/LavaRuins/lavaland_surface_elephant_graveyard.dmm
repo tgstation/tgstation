@@ -12,7 +12,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/crate/grave/filled/lead_researcher,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "ae" = (
@@ -159,15 +159,14 @@
 /area/ruin/unpowered/elephant_graveyard)
 "aG" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/random/decoration/glowstick,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "aH" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered/graveyard_shuttle)
 "aI" = (
-/obj/effect/spawner/structure/window/shuttle,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/powered/graveyard_shuttle)
 "aJ" = (
@@ -304,7 +303,7 @@
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "bk" = (
-/obj/item/kitchen/knife/combat/bone,
+/obj/item/knife/combat/bone,
 /obj/item/organ/tongue,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
@@ -569,7 +568,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "cl" = (
 /obj/structure/closet/crate/grave/filled,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cm" = (
@@ -630,7 +629,7 @@
 "cw" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cx" = (

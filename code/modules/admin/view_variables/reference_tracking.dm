@@ -1,26 +1,18 @@
 #ifdef REFERENCE_TRACKING
 
-/datum/verb/find_refs()
-	set category = "Debug"
-	set name = "Find References"
-	set src in world
-
-	find_references(FALSE)
-
-
 /datum/proc/find_references(skip_alert)
 	running_find_references = type
 	if(usr?.client)
 		if(usr.client.running_find_references)
-			testing("CANCELLED search for references to a [usr.client.running_find_references].")
+			log_reftracker("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
 			//restart the garbage collector
 			SSgarbage.can_fire = TRUE
-			SSgarbage.next_fire = world.time + world.tick_lag
+			SSgarbage.update_nextfire(reset_time = TRUE)
 			return
 
-		if(!skip_alert && alert("Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", "Yes", "No") != "Yes")
+		if(!skip_alert && tgui_alert(usr,"Running this will lock everything up for about 5 minutes.  Would you like to begin the search?", "Find References", list("Yes", "No")) != "Yes")
 			running_find_references = null
 			return
 
@@ -30,51 +22,51 @@
 	if(usr?.client)
 		usr.client.running_find_references = type
 
-	testing("Beginning search for references to a [type].")
+	log_reftracker("Beginning search for references to a [type].")
 
 	var/starting_time = world.time
 
-	DoSearchVar(GLOB, "GLOB") //globals
+	//Time to search the whole game for our ref
+	DoSearchVar(GLOB, "GLOB", search_time = starting_time) //globals
+	log_reftracker("Finished searching globals")
+
+	//Yes we do actually need to do this. The searcher refuses to read weird lists
+	//And global.vars is a really weird list
+	var/global_vars = list()
+	for(var/key in global.vars)
+		global_vars[key] = global.vars[key]
+
+	DoSearchVar(global_vars, "Native Global", search_time = starting_time)
+	log_reftracker("Finished searching native globals")
+
 	for(var/datum/thing in world) //atoms (don't beleive its lies)
 		DoSearchVar(thing, "World -> [thing.type]", search_time = starting_time)
+	log_reftracker("Finished searching atoms")
 
 	for(var/datum/thing) //datums
 		DoSearchVar(thing, "Datums -> [thing.type]", search_time = starting_time)
+	log_reftracker("Finished searching datums")
 
+	//Warning, attempting to search clients like this will cause crashes if done on live. Watch yourself
+#ifndef REFERENCE_DOING_IT_LIVE
 	for(var/client/thing) //clients
 		DoSearchVar(thing, "Clients -> [thing.type]", search_time = starting_time)
+	log_reftracker("Finished searching clients")
+#endif
 
-	testing("Completed search for references to a [type].")
+	log_reftracker("Completed search for references to a [type].")
+
 	if(usr?.client)
 		usr.client.running_find_references = null
 	running_find_references = null
 
 	//restart the garbage collector
 	SSgarbage.can_fire = TRUE
-	SSgarbage.next_fire = world.time + world.tick_lag
-
-
-/datum/verb/qdel_then_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References"
-	set src in world
-
-	qdel(src, TRUE) //force a qdel
-	if(!running_find_references)
-		find_references(TRUE)
-
-
-/datum/verb/qdel_then_if_fail_find_references()
-	set category = "Debug"
-	set name = "qdel() then Find References if GC failure"
-	set src in world
-
-	qdel_and_find_ref_if_fail(src, TRUE)
-
+	SSgarbage.update_nextfire(reset_time = TRUE)
 
 /datum/proc/DoSearchVar(potential_container, container_name, recursive_limit = 64, search_time = world.time)
 	#ifdef REFERENCE_TRACKING_DEBUG
-	if(!found_refs)
+	if(SSgarbage.should_save_refs && !found_refs)
 		found_refs = list()
 	#endif
 
@@ -82,8 +74,13 @@
 		return
 
 	if(!recursive_limit)
-		testing("Recursion limit reached. [container_name]")
+		log_reftracker("Recursion limit reached. [container_name]")
 		return
+
+	//Check each time you go down a layer. This makes it a bit slow, but it won't effect the rest of the game at all
+	#ifndef FIND_REF_NO_CHECK_TICK
+	CHECK_TICK
+	#endif
 
 	if(istype(potential_container, /datum))
 		var/datum/datum_container = potential_container
@@ -94,48 +91,61 @@
 		var/list/vars_list = datum_container.vars
 
 		for(var/varname in vars_list)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
 			if (varname == "vars" || varname == "vis_locs") //Fun fact, vis_locs don't count for references
 				continue
 			var/variable = vars_list[varname]
 
 			if(variable == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[varname] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[varname] = TRUE
+					continue //End early, don't want these logging
 				#endif
-				testing("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				log_reftracker("Found [type] \ref[src] in [datum_container.type]'s \ref[datum_container] [varname] var. [container_name]")
+				continue
 
-			else if(islist(variable))
+			if(islist(variable))
 				DoSearchVar(variable, "[container_name] \ref[datum_container] -> [varname] (list)", recursive_limit - 1, search_time)
 
 	else if(islist(potential_container))
 		var/normal = IS_NORMAL_LIST(potential_container)
-		for(var/element_in_list in potential_container)
+		var/list/potential_cache = potential_container
+		for(var/element_in_list in potential_cache)
+			#ifndef FIND_REF_NO_CHECK_TICK
+			CHECK_TICK
+			#endif
 			//Check normal entrys
 			if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
 				#endif
-				testing("Found [type] \ref[src] in list [container_name].")
+				log_reftracker("Found [type] \ref[src] in list [container_name].")
+				continue
 
+			var/assoc_val = null
+			if(!isnum(element_in_list) && normal)
+				assoc_val = potential_cache[element_in_list]
 			//Check assoc entrys
-			else if(element_in_list && !isnum(element_in_list) && normal && potential_container[element_in_list] == src)
+			if(assoc_val == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
-				found_refs[potential_container] = TRUE
+				if(SSgarbage.should_save_refs)
+					found_refs[potential_cache] = TRUE
+					continue //End early, don't want these logging
 				#endif
-				testing("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
-
+				log_reftracker("Found [type] \ref[src] in list [container_name]\[[element_in_list]\]")
+				continue
+			//We need to run both of these checks, since our object could be hiding in either of them
 			//Check normal sublists
-			else if(islist(element_in_list))
+			if(islist(element_in_list))
 				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", recursive_limit - 1, search_time)
-
 			//Check assoc sublists
-			else if(element_in_list && !isnum(element_in_list) && normal && islist(potential_container[element_in_list]))
-				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [potential_container[element_in_list]] (list)", recursive_limit - 1, search_time)
-
-	#ifndef FIND_REF_NO_CHECK_TICK
-	CHECK_TICK
-	#endif
-
+			if(islist(assoc_val))
+				DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", recursive_limit - 1, search_time)
 
 /proc/qdel_and_find_ref_if_fail(datum/thing_to_del, force = FALSE)
 	thing_to_del.qdel_and_find_ref_if_fail(force)

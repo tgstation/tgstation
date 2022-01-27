@@ -9,7 +9,7 @@
 	light_on = FALSE
 	integrity_failure = 0.5
 	max_integrity = 100
-	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, RAD = 100, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 
 	var/enabled = 0 // Whether the computer is turned on.
 	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
@@ -52,8 +52,7 @@
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
 
-
-/obj/item/modular_computer/Initialize()
+/obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)
@@ -61,20 +60,21 @@
 	comp_light_color = "#FFFFFF"
 	idle_threads = list()
 	if(looping_sound)
-		soundloop = new(list(src), enabled)
+		soundloop = new(src, enabled)
 	update_appearance()
 
 /obj/item/modular_computer/Destroy()
-	kill_program(forced = TRUE)
+	wipe_program(forced = TRUE)
+	for(var/datum/computer_file/program/idle as anything in idle_threads)
+		idle.kill_program(TRUE)
+	idle_threads.Cut()
 	STOP_PROCESSING(SSobj, src)
+	for(var/port in all_components)
+		var/obj/item/computer_hardware/component = all_components[port]
+		qdel(component)
+	all_components.Cut() //Die demon die
+	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
-	for(var/H in all_components)
-		var/obj/item/computer_hardware/CH = all_components[H]
-		if(CH.holder == src)
-			CH.on_remove(src)
-			CH.holder = null
-			all_components.Remove(CH.device_type)
-			qdel(CH)
 	physical = null
 	return ..()
 
@@ -209,13 +209,13 @@
 	if(enabled)
 		ui_interact(user)
 	else if(isAdminGhostAI(user))
-		var/response = alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", "Yes", "No")
+		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
 			turn_on(user)
 
 /obj/item/modular_computer/emag_act(mob/user)
 	if(!enabled)
-		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		to_chat(user, span_warning("You'd need to turn the [src] on first."))
 		return FALSE
 	obj_flags |= EMAGGED //Mostly for consistancy purposes; the programs will do their own emag handling
 	var/newemag = FALSE
@@ -226,17 +226,17 @@
 		if(app.run_emag())
 			newemag = TRUE
 	if(newemag)
-		to_chat(user, "<span class='notice'>You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past.</span>")
+		to_chat(user, span_notice("You swipe \the [src]. A console window momentarily fills the screen, with white text rapidly scrolling past."))
 		return TRUE
-	to_chat(user, "<span class='notice'>You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it.</span>")
+	to_chat(user, span_notice("You swipe \the [src]. A console window fills the screen, but it quickly closes itself after only a few lines are written to it."))
 	return FALSE
 
 /obj/item/modular_computer/examine(mob/user)
 	. = ..()
-	if(obj_integrity <= integrity_failure * max_integrity)
-		. += "<span class='danger'>It is heavily damaged!</span>"
-	else if(obj_integrity < max_integrity)
-		. += "<span class='warning'>It is damaged.</span>"
+	if(atom_integrity <= integrity_failure * max_integrity)
+		. += span_danger("It is heavily damaged!")
+	else if(atom_integrity < max_integrity)
+		. += span_warning("It is damaged.")
 
 	. += get_modular_computer_parts_examine(user)
 
@@ -251,7 +251,7 @@
 
 	if(enabled)
 		. += active_program?.program_icon_state || icon_state_menu
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		. += "bsod"
 		. += "broken"
 
@@ -265,11 +265,11 @@
 
 /obj/item/modular_computer/proc/turn_on(mob/user)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		if(issynth)
-			to_chat(user, "<span class='warning'>You send an activation signal to \the [src], but it responds with an error code. It must be damaged.</span>")
+			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
 		else
-			to_chat(user, "<span class='warning'>You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again.</span>")
+			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
 	// If we have a recharger, enable it automatically. Lets computer without a battery work.
@@ -279,9 +279,9 @@
 
 	if(all_components[MC_CPU] && use_power()) // use_power() checks if the PC is powered
 		if(issynth)
-			to_chat(user, "<span class='notice'>You send an activation signal to \the [src], turning it on.</span>")
+			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
 		else
-			to_chat(user, "<span class='notice'>You press the power button and start up \the [src].</span>")
+			to_chat(user, span_notice("You press the power button and start up \the [src]."))
 		if(looping_sound)
 			soundloop.start()
 		enabled = 1
@@ -290,9 +290,9 @@
 		return TRUE
 	else // Unpowered
 		if(issynth)
-			to_chat(user, "<span class='warning'>You send an activation signal to \the [src] but it does not respond.</span>")
+			to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
 		else
-			to_chat(user, "<span class='warning'>You press the power button but \the [src] does not respond.</span>")
+			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
@@ -301,7 +301,7 @@
 		last_power_usage = 0
 		return
 
-	if(obj_integrity <= integrity_failure * max_integrity)
+	if(atom_integrity <= integrity_failure * max_integrity)
 		shutdown_computer()
 		return
 
@@ -348,10 +348,10 @@
 	if(!caller || !caller.alert_able || caller.alert_silenced || !alerttext) //Yeah, we're checking alert_able. No, you don't get to make alerts that the user can't silence.
 		return
 	playsound(src, sound, 50, TRUE)
-	visible_message("<span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+	visible_message(span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]"))
 	var/mob/living/holder = loc
 	if(istype(holder))
-		to_chat(holder, "[icon2html(src)] <span class='notice'>The [src] displays a [caller.filedesc] notification: [alerttext]</span>")
+		to_chat(holder, "[icon2html(src)] [span_notice("The [src] displays a [caller.filedesc] notification: [alerttext]")]")
 
 // Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
 /obj/item/modular_computer/proc/get_header_data()
@@ -396,7 +396,7 @@
 		if(3)
 			data["PC_ntneticon"] = "sig_lan.gif"
 
-	if(idle_threads.len)
+	if(length(idle_threads))
 		var/list/program_headers = list()
 		for(var/I in idle_threads)
 			var/datum/computer_file/program/P = I
@@ -413,14 +413,20 @@
 	data["PC_showexitprogram"] = active_program ? 1 : 0 // Hides "Exit Program" button on mainscreen
 	return data
 
+///Wipes the computer's current program. Doesn't handle any of the niceties around doing this
+/obj/item/modular_computer/proc/wipe_program(forced)
+	if(!active_program)
+		return
+	active_program.kill_program(forced)
+	active_program = null
+
 // Relays kill program request to currently active program. Use this to quit current program.
 /obj/item/modular_computer/proc/kill_program(forced = FALSE)
-	if(active_program)
-		active_program.kill_program(forced)
-		active_program = null
+	wipe_program(forced)
 	var/mob/user = usr
 	if(user && istype(user))
-		ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
+		//Here to prevent programs sleeping in destroy
+		INVOKE_ASYNC(src, /datum/proc/ui_interact, user) // Re-open the UI on this computer. It should show the main screen now.
 	update_appearance()
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
@@ -446,7 +452,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(loud)
-		physical.visible_message("<span class='notice'>\The [src] shuts down.</span>")
+		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = 0
 	update_appearance()
 
@@ -454,7 +460,7 @@
  * Toggles the computer's flashlight, if it has one.
  *
  * Called from ui_act(), does as the name implies.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight()
 	if(!has_light)
@@ -470,7 +476,7 @@
  * Sets the computer's light color, if it has a light.
  *
  * Called from ui_act(), this proc takes a color string and applies it.
- * It is seperated from ui_act() to be overwritten as needed.
+ * It is separated from ui_act() to be overwritten as needed.
  * Arguments:
  ** color is the string that holds the color value that we should use. Proc auto-fails if this is null.
 */
@@ -483,17 +489,17 @@
 	return TRUE
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
-	if(!all_components.len)
-		to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
+	if(!length(all_components))
+		balloon_alert(user, "no components installed!")
 		return
 	var/list/component_names = list()
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]
 		component_names.Add(H.name)
 
-	var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
+	var/choice = tgui_input_list(user, "Component to uninstall", "Computer maintenance", sort_list(component_names))
 
-	if(!choice)
+	if(isnull(choice))
 		return
 
 	if(!Adjacent(user))
@@ -504,6 +510,7 @@
 	if(!H)
 		return
 
+	tool.play_tool_sound(src, user, 20, volume=20)
 	uninstall_component(H, user)
 	return
 
@@ -525,29 +532,36 @@
 			return
 
 	if(W.tool_behaviour == TOOL_WRENCH)
-		if(all_components.len)
-			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
+		if(length(all_components))
+			balloon_alert(user, "remove the other components!")
 			return
+		W.play_tool_sound(src, user, 20, volume=20)
 		new /obj/item/stack/sheet/iron( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message("<span class='notice'>\The [src] is disassembled by [user].</span>")
+		user.balloon_alert(user,"disassembled")
 		relay_qdel()
 		qdel(src)
 		return
 
 	if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity == max_integrity)
-			to_chat(user, "<span class='warning'>\The [src] does not require repairs.</span>")
+		if(atom_integrity == max_integrity)
+			to_chat(user, span_warning("\The [src] does not require repairs."))
 			return
 
 		if(!W.tool_start_check(user, amount=1))
 			return
 
-		to_chat(user, "<span class='notice'>You begin repairing damage to \the [src]...</span>")
+		to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
 		if(W.use_tool(src, user, 20, volume=50, amount=1))
-			obj_integrity = max_integrity
-			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
+			atom_integrity = max_integrity
+			to_chat(user, span_notice("You repair \the [src]."))
 		return
 
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	// Check to see if we have an ID inside, and a valid input for money
+	if(card_slot?.GetID() && iscash(W))
+		var/obj/item/card/id/id = card_slot.GetID()
+		id.attackby(W, user) // If we do, try and put that attacking object in
+		return
 	..()
 
 // Used by processor to relay qdel() to machinery type.

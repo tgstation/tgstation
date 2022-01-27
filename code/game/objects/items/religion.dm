@@ -12,23 +12,25 @@
 	var/inspiration_available = TRUE //If this banner can be used to inspire crew
 	var/morale_time = 0
 	var/morale_cooldown = 600 //How many deciseconds between uses
-	var/list/job_loyalties //Mobs with any of these assigned roles will be inspired
-	var/list/role_loyalties //Mobs with any of these special roles will be inspired
+	/// Mobs with assigned roles whose department bitflags match these will be inspired.
+	var/job_loyalties = NONE
+	/// Mobs with any of these special roles will be inspired
+	var/list/role_loyalties
 	var/warcry
 
 /obj/item/banner/examine(mob/user)
 	. = ..()
 	if(inspiration_available)
-		. += "<span class='notice'>Activate it in your hand to inspire nearby allies of this banner's allegiance!</span>"
+		. += span_notice("Activate it in your hand to inspire nearby allies of this banner's allegiance!")
 
 /obj/item/banner/attack_self(mob/living/carbon/human/user)
 	if(!inspiration_available)
 		return
 	if(morale_time > world.time)
-		to_chat(user, "<span class='warning'>You aren't feeling inspired enough to flourish [src] again yet.</span>")
+		to_chat(user, span_warning("You aren't feeling inspired enough to flourish [src] again yet."))
 		return
 	user.visible_message("<span class='big notice'>[user] flourishes [src]!</span>", \
-	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
+	span_notice("You raise [src] skywards, inspiring your allies!"))
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
 		user.say("[warcry]", forced="banner")
@@ -38,14 +40,14 @@
 	morale_time = world.time + morale_cooldown
 
 	var/list/inspired = list()
-	var/has_job_loyalties = LAZYLEN(job_loyalties)
+	var/has_job_loyalties = job_loyalties != NONE
 	var/has_role_loyalties = LAZYLEN(role_loyalties)
 	inspired += user //The user is always inspired, regardless of loyalties
 	for(var/mob/living/carbon/human/H in range(4, get_turf(src)))
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
+			if(has_job_loyalties && (H.mind.assigned_role.departments_bitflags & job_loyalties))
 				inspired += H
 			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
@@ -55,7 +57,7 @@
 	for(var/V in inspired)
 		var/mob/living/carbon/human/H = V
 		if(H != user)
-			to_chat(H, "<span class='notice'>Your confidence surges as [user] flourishes [user.p_their()] [name]!</span>")
+			to_chat(H, span_notice("Your confidence surges as [user] flourishes [user.p_their()] [name]!"))
 		inspiration(H)
 		special_inspiration(H)
 
@@ -84,9 +86,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
-/obj/item/banner/security/Initialize()
+/obj/item/banner/security/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.security_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SECURITY
 
 /obj/item/banner/security/mundane
 	inspiration_available = FALSE
@@ -108,9 +110,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "No wounds cannot be healed!"
 
-/obj/item/banner/medical/Initialize()
+/obj/item/banner/medical/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.medical_positions
+	job_loyalties = DEPARTMENT_BITFLAG_MEDICAL
 
 /obj/item/banner/medical/mundane
 	inspiration_available = FALSE
@@ -140,15 +142,15 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "For Cuban Pete!"
 
-/obj/item/banner/science/Initialize()
+/obj/item/banner/science/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.science_positions
+	job_loyalties = DEPARTMENT_BITFLAG_SCIENCE
 
 /obj/item/banner/science/mundane
 	inspiration_available = FALSE
 
 /obj/item/banner/science/check_inspiration(mob/living/carbon/human/H)
-	return H.on_fire //Sciencia is pleased by dedication to the art of Toxins
+	return H.on_fire //Sciencia is pleased by dedication to the art of Ordnance
 
 /datum/crafting_recipe/science_banner
 	name = "Sciencia Banner"
@@ -167,9 +169,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "Hail Cargonia!"
 
-/obj/item/banner/cargo/Initialize()
+/obj/item/banner/cargo/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.supply_positions
+	job_loyalties = DEPARTMENT_BITFLAG_CARGO
 
 /obj/item/banner/cargo/mundane
 	inspiration_available = FALSE
@@ -191,15 +193,15 @@
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	warcry = "All hail lord Singuloth!!"
 
-/obj/item/banner/engineering/Initialize()
+/obj/item/banner/engineering/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.engineering_positions
+	job_loyalties = DEPARTMENT_BITFLAG_ENGINEERING
 
 /obj/item/banner/engineering/mundane
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	H.radiation = 0
+	qdel(H.GetComponent(/datum/component/irradiated))
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -215,9 +217,9 @@
 	//No icon state here since the default one is the NT banner
 	warcry = "Hail Nanotrasen!"
 
-/obj/item/banner/command/Initialize()
+/obj/item/banner/command/Initialize(mapload)
 	. = ..()
-	job_loyalties = GLOB.command_positions
+	job_loyalties = DEPARTMENT_BITFLAG_COMMAND
 
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE
@@ -250,7 +252,7 @@
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "bannerpack"
 
-/obj/item/storage/backpack/bannerpack/Initialize()
+/obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
@@ -273,7 +275,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -287,7 +289,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -299,13 +301,10 @@
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
-	worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = null
 	flags_1 = 0
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, RAD = 50, FIRE = 60, ACID = 60) //religion protects you from disease and radiation, honk.
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	clothing_flags = LARGE_WORN_ICON
+	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 70, BIO = 50, FIRE = 60, ACID = 60) //religion protects you from disease, honk.
+	worn_y_offset = 6
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
@@ -329,7 +328,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
+	user.visible_message(span_notice("[user] chants deeply and waves [user.p_their()] staff!"))
 	if(do_after(user, 2 SECONDS, src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
@@ -363,7 +362,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, RAD = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 60, BIO = 0, FIRE = 60, ACID = 60) //does this even do anything on boots?
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

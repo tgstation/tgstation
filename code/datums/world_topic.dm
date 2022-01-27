@@ -75,7 +75,7 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-	var/final_composed = "<span class='announce'>PR: [input[keyword]]</span>"
+	var/final_composed = span_announce("PR: [input[keyword]]")
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
 
@@ -84,11 +84,13 @@
 	require_comms_key = TRUE
 
 /datum/world_topic/ahelp_relay/Run(list/input)
-	relay_msg_admins("<span class='adminnotice'><b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b></span>")
+	relay_msg_admins(span_adminnotice("<b><font color=red>HELP: </font> [input["source"]] [input["message_sender"]]: [input["message"]]</b>"))
 
 /datum/world_topic/comms_console
 	keyword = "Comms_Console"
 	require_comms_key = TRUE
+
+	var/list/timers
 
 /datum/world_topic/comms_console/Run(list/input)
 	// Reject comms messages from other servers that are not on our configured network,
@@ -97,10 +99,58 @@
 	if (configured_network && configured_network != input["network"])
 		return
 
+	// We can't add the timer without the timer ID, but we can't get the timer ID without the timer!
+	// To solve this, we just use a list that we mutate later.
+	var/list/data = list("input" = input)
+	var/timer_id = addtimer(CALLBACK(src, .proc/receive_cross_comms_message, data), CROSS_SECTOR_CANCEL_TIME, TIMER_STOPPABLE)
+	data["timer_id"] = timer_id
+
+	LAZYADD(timers, timer_id)
+
+	to_chat(
+		GLOB.admins,
+		span_adminnotice( \
+			"<b color='orange'>CROSS-SECTOR MESSAGE (INCOMING):</b> [input["sender_ckey"]] (from [input["source"]]) is about to send \
+			the following message (will autoapprove in [DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
+			<b><a href='?src=[REF(src)];reject_cross_comms_message=[timer_id]'>REJECT</a></b><br> \
+			[html_encode(input["message"])]" \
+		)
+	)
+
+/datum/world_topic/comms_console/Topic(href, list/href_list)
+	. = ..()
+	if (.)
+		return
+
+	if (href_list["reject_cross_comms_message"])
+		if (!usr.client?.holder)
+			log_game("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
+			message_admins("[key_name(usr)] tried to reject an incoming cross-comms message without being an admin.")
+			return
+
+		var/timer_id = href_list["reject_cross_comms_message"]
+		if (!(timer_id in timers))
+			to_chat(usr, span_warning("It's too late!"))
+			return
+
+		deltimer(timer_id)
+		LAZYREMOVE(timers, timer_id)
+
+		log_admin("[key_name(usr)] has cancelled the incoming cross-comms message.")
+		message_admins("[key_name(usr)] has cancelled the incoming cross-comms message.")
+
+		return TRUE
+
+/datum/world_topic/comms_console/proc/receive_cross_comms_message(list/data)
+	var/list/input = data["input"]
+	var/timer_id = data["timer_id"]
+
+	LAZYREMOVE(timers, timer_id)
+
 	minor_announce(input["message"], "Incoming message from [input["message_sender"]]")
 	message_admins("Receiving a message from [input["sender_ckey"]] at [input["source"]]")
-	for(var/obj/machinery/computer/communications/CM in GLOB.machines)
-		CM.override_cooldown()
+	for(var/obj/machinery/computer/communications/communications_console in GLOB.machines)
+		communications_console.override_cooldown()
 
 /datum/world_topic/news_report
 	keyword = "News_Report"
@@ -141,10 +191,8 @@
 /datum/world_topic/status/Run(list/input)
 	. = list()
 	.["version"] = GLOB.game_version
-	.["mode"] = GLOB.master_mode
 	.["respawn"] = config ? !CONFIG_GET(flag/norespawn) : FALSE
-	.["enter"] = GLOB.enter_allowed
-	.["vote"] = CONFIG_GET(flag/allow_vote_mode)
+	.["enter"] = !LAZYACCESS(SSlag_switch.measures, DISABLE_NON_OBSJOBS)
 	.["ai"] = CONFIG_GET(flag/allow_ai)
 	.["host"] = world.host ? world.host : null
 	.["round_id"] = GLOB.round_id
@@ -164,9 +212,6 @@
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()
-		if(SSticker.HasRoundStarted())
-			.["real_mode"] = SSticker.mode.name
-			// Key-authed callers may know the truth behind the "secret"
 
 	.["security_level"] = get_security_level()
 	.["round_duration"] = SSticker ? round((world.time-SSticker.round_start_time)/10) : 0

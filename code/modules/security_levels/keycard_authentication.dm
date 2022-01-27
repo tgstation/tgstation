@@ -22,7 +22,9 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	var/mob/triggerer = null
 	var/waiting = FALSE
 
-/obj/machinery/keycard_auth/Initialize()
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
+
+/obj/machinery/keycard_auth/Initialize(mapload)
 	. = ..()
 	ev = GLOB.keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
@@ -50,11 +52,14 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	return data
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
-	if(isanimal(user))
-		var/mob/living/simple_animal/A = user
-		if(!A.dextrous)
-			to_chat(user, "<span class='warning'>You are too primitive to use this device!</span>")
-			return UI_CLOSE
+	if(isdrone(user))
+		return UI_CLOSE
+	if(!isanimal(user))
+		return ..()
+	var/mob/living/simple_animal/A = user
+	if(!A.dextrous)
+		to_chat(user, span_warning("You are too primitive to use this device!"))
+		return UI_CLOSE
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
@@ -107,10 +112,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	message_admins("[ADMIN_LOOKUPFLW(triggerer)] triggered and [ADMIN_LOOKUPFLW(confirmer)] confirmed event [event]")
 
 	var/area/A1 = get_area(triggerer)
-	deadchat_broadcast(" triggered [event] at <span class='name'>[A1.name]</span>.", "<span class='name'>[triggerer]</span>", triggerer, message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" triggered [event] at [span_name("[A1.name]")].", span_name("[triggerer]"), triggerer, message_type=DEADCHAT_ANNOUNCEMENT)
 
 	var/area/A2 = get_area(confirmer)
-	deadchat_broadcast(" confirmed [event] at <span class='name'>[A2.name]</span>.", "<span class='name'>[confirmer]</span>", confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
+	deadchat_broadcast(" confirmed [event] at [span_name("[A2.name]")].", span_name("[confirmer]"), confirmer, message_type=DEADCHAT_ANNOUNCEMENT)
 	switch(event)
 		if(KEYCARD_RED_ALERT)
 			set_security_level(SEC_LEVEL_RED)

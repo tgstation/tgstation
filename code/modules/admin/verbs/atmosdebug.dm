@@ -11,15 +11,18 @@
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
 
-	//Manifolds
-	for(var/obj/machinery/atmospherics/pipe/smart/manifold4w/pipe in GLOB.machines)
+	//Pipes
+	for(var/obj/machinery/atmospherics/pipe/pipe in GLOB.machines)
+		if(istype(pipe, /obj/machinery/atmospherics/pipe/smart) || istype(pipe, /obj/machinery/atmospherics/pipe/layer_manifold))
+			continue
 		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
 			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
 
-	//Pipes
-	for(var/obj/machinery/atmospherics/pipe/smart/manifold4w/pipe in GLOB.machines)
-		if(pipe.z && (!pipe.nodes || !pipe.nodes.len || (null in pipe.nodes)))
-			to_chat(usr, "Unconnected [pipe.name] located at [ADMIN_VERBOSEJMP(pipe)]", confidential = TRUE)
+	//Nodes
+	for(var/obj/machinery/atmospherics/node1 in GLOB.machines)
+		for(var/obj/machinery/atmospherics/node2 in node1.nodes)
+			if(!(node1 in node2.nodes))
+				to_chat(usr, "One-way connection in [node1.name] located at [ADMIN_VERBOSEJMP(node1)]", confidential = TRUE)
 
 /client/proc/powerdebug()
 	set category = "Mapping"

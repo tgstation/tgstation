@@ -13,18 +13,18 @@
 	COOLDOWN_DECLARE(retaliate_cooldown)
 
 /datum/blobstrain/reagent/reactive_spines/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if(damage && ((damage_type == BRUTE) || (damage_type == BURN)) && B.obj_integrity - damage > 0 && COOLDOWN_FINISHED(src, retaliate_cooldown)) // Is there any damage, is it burn or brute, will we be alive, and has the cooldown finished?
+	if(damage && ((damage_type == BRUTE) || (damage_type == BURN)) && B.get_integrity() - damage > 0 && COOLDOWN_FINISHED(src, retaliate_cooldown)) // Is there any damage, is it burn or brute, will we be alive, and has the cooldown finished?
 		COOLDOWN_START(src, retaliate_cooldown, 2.5 SECONDS) // 2.5 seconds before auto-retaliate can whack everything within 1 tile again
-		B.visible_message("<span class='boldwarning'>The blob retaliates, lashing out!</span>")
+		B.visible_message(span_boldwarning("The blob retaliates, lashing out!"))
 		for(var/atom/A in range(1, B))
 			var/attacked_turf = get_turf(A)
-			if(isliving(A) && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed. 
+			if(isliving(A) && !isblobmonster(A)) // Make sure to inject strain-reagents with automatic attacks when needed.
 				B.blob_attack_animation(attacked_turf, overmind)
 				attack_living(A)
 
 			else if(A.blob_act(B)) // After checking for mobs, whack everything else with the standard attack
 				B.blob_attack_animation(attacked_turf, overmind) // Only play the animation if the attack did something meaningful
-				
+
 	return ..()
 
 /datum/reagent/blob/reactive_spines

@@ -24,7 +24,41 @@
 	/// If the configuration is loaded
 	var/loaded = FALSE
 
+	/// A regex that matches words blocked IC
 	var/static/regex/ic_filter_regex
+
+	/// A regex that matches words blocked OOC
+	var/static/regex/ooc_filter_regex
+
+	/// A regex that matches words blocked IC, but not in PDAs
+	var/static/regex/ic_outside_pda_filter_regex
+
+	/// A regex that matches words soft blocked IC
+	var/static/regex/soft_ic_filter_regex
+
+	/// A regex that matches words soft blocked OOC
+	var/static/regex/soft_ooc_filter_regex
+
+	/// A regex that matches words soft blocked IC, but not in PDAs
+	var/static/regex/soft_ic_outside_pda_filter_regex
+
+	/// An assoc list of blocked IC words to their reasons
+	var/static/list/ic_filter_reasons
+
+	/// An assoc list of words that are blocked IC, but not in PDAs, to their reasons
+	var/static/list/ic_outside_pda_filter_reasons
+
+	/// An assoc list of words that are blocked both IC and OOC to their reasons
+	var/static/list/shared_filter_reasons
+
+	/// An assoc list of soft blocked IC words to their reasons
+	var/static/list/soft_ic_filter_reasons
+
+	/// An assoc list of words that are soft blocked IC, but not in PDAs, to their reasons
+	var/static/list/soft_ic_outside_pda_filter_reasons
+
+	/// An assoc list of words that are soft blocked both IC and OOC to their reasons
+	var/static/list/soft_shared_filter_reasons
 
 /datum/controller/configuration/proc/admin_reload()
 	if(IsAdminAdvancedProcCall())
@@ -42,7 +76,6 @@
 	if(entries)
 		CRASH("/datum/controller/configuration/Load() called more than once!")
 	InitEntries()
-	LoadModes()
 	if(fexists("[directory]/config.txt") && LoadEntries("config.txt") <= 1)
 		var/list/legacy_configs = list("game_options.txt", "dbconfig.txt", "comms.txt")
 		for(var/I in legacy_configs)
@@ -148,6 +181,16 @@
 				++.
 			continue
 
+		// Reset directive, used for setting a config value back to defaults. Useful for string list config types
+		if (entry == "$reset")
+			var/datum/config_entry/resetee = _entries[lowertext(value)]
+			if (!value || !resetee)
+				log_config("Warning: invalid $reset directive: [value]")
+				continue
+			resetee.set_default()
+			log_config("Reset configured value for [value] to original defaults")
+			continue
+
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -221,40 +264,26 @@
 		return
 	return E.ValidateAndSet("[new_val]")
 
-/datum/controller/configuration/proc/LoadModes()
-	gamemode_cache = typecacheof(/datum/game_mode, TRUE)
-	modes = list()
-	mode_names = list()
-	mode_reports = list()
-	mode_false_report_weight = list()
-	votable_modes = list()
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	for(var/T in gamemode_cache)
-		// I wish I didn't have to instance the game modes in order to look up
-		// their information, but it is the only way (at least that I know of).
-		var/datum/game_mode/M = new T()
-
-		if(M.config_tag)
-			if(!(M.config_tag in modes)) // ensure each mode is added only once
-				modes += M.config_tag
-				mode_names[M.config_tag] = M.name
-				probabilities[M.config_tag] = M.probability
-				mode_reports[M.report_type] = M.generate_report()
-				if(probabilities[M.config_tag]>0)
-					mode_false_report_weight[M.report_type] = M.false_report_weight
-				else
-					//"impossible" modes will still falsly show up occasionally, else they'll stick out like a sore thumb if an admin decides to force a disabled gamemode.
-					mode_false_report_weight[M.report_type] = min(1, M.false_report_weight)
-				if(M.votable)
-					votable_modes += M.config_tag
-		qdel(M)
-	votable_modes += "secret"
-
 /datum/controller/configuration/proc/LoadMOTD()
-	motd = file2text("[directory]/motd.txt")
+	var/list/motd_contents = list()
+
+	var/list/motd_list = CONFIG_GET(str_list/motd)
+	if (motd_list.len == 0 && fexists("[directory]/motd.txt"))
+		motd_list = list("motd.txt")
+
+	for (var/motd_file in motd_list)
+		if (fexists("[directory]/[motd_file]"))
+			motd_contents += file2text("[directory]/[motd_file]")
+		else
+			log_config("MOTD file [motd_file] didn't exist")
+			DelayedMessageAdmins("MOTD file [motd_file] didn't exist")
+
+	motd = motd_contents.Join("\n")
+
 	var/tm_info = GLOB.revdata.GetTestMergeInfo()
 	if(motd || tm_info)
 		motd = motd ? "[motd]<br>[tm_info]" : tm_info
+
 /*
 Policy file should be a json file with a single object.
 Value is raw html.
@@ -268,7 +297,7 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	"Assistant" : "Don't kill everyone",
+	JOB_ASSISTANT : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }
@@ -319,9 +348,11 @@ Example config:
 
 		switch (command)
 			if ("map")
-				currentmap = load_map_config("_maps/[data].json")
+				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
-					log_config("Failed to load map config for [data]!")
+					var/error_message = "Failed to load map config for [data]!"
+					log_config(error_message)
+					log_mapping(error_message, TRUE)
 					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)
@@ -342,83 +373,100 @@ Example config:
 			else
 				log_config("Unknown command in map vote config: '[command]'")
 
-
-/datum/controller/configuration/proc/pick_mode(mode_name)
-	// I wish I didn't have to instance the game modes in order to look up
-	// their information, but it is the only way (at least that I know of).
-	// ^ This guy didn't try hard enough
-	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = T
-		var/ct = initial(M.config_tag)
-		if(ct && ct == mode_name)
-			return new T
-	return new /datum/game_mode/extended()
-
-/datum/controller/configuration/proc/get_runnable_modes()
-	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
-	var/list/repeated_mode_adjust = Get(/datum/config_entry/number_list/repeated_mode_adjust)
-	for(var/T in gamemode_cache)
-		var/datum/game_mode/M = new T()
-		if(!(M.config_tag in modes))
-			qdel(M)
-			continue
-		if(probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if(min_pop[M.config_tag])
-			M.required_players = min_pop[M.config_tag]
-		if(max_pop[M.config_tag])
-			M.maximum_players = max_pop[M.config_tag]
-		if(M.can_start())
-			var/final_weight = probabilities[M.config_tag]
-			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
-				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
-				var/adjustment = 0
-				while(recent_round)
-					adjustment += repeated_mode_adjust[recent_round]
-					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
-				final_weight *= ((100-adjustment)/100)
-			runnable_modes[M] = final_weight
-	return runnable_modes
-
-/datum/controller/configuration/proc/get_runnable_midround_modes(crew)
-	var/list/datum/game_mode/runnable_modes = new
-	var/list/probabilities = Get(/datum/config_entry/keyed_list/probability)
-	var/list/min_pop = Get(/datum/config_entry/keyed_list/min_pop)
-	var/list/max_pop = Get(/datum/config_entry/keyed_list/max_pop)
-	for(var/T in (gamemode_cache - SSticker.mode.type))
-		var/datum/game_mode/M = new T()
-		if(!(M.config_tag in modes))
-			qdel(M)
-			continue
-		if(probabilities[M.config_tag]<=0)
-			qdel(M)
-			continue
-		if(min_pop[M.config_tag])
-			M.required_players = min_pop[M.config_tag]
-		if(max_pop[M.config_tag])
-			M.maximum_players = max_pop[M.config_tag]
-		if(M.required_players <= crew)
-			if(M.maximum_players >= 0 && M.maximum_players < crew)
-				continue
-			runnable_modes[M] = probabilities[M.config_tag]
-	return runnable_modes
-
 /datum/controller/configuration/proc/LoadChatFilter()
-	var/list/in_character_filter = list()
-	if(!fexists("[directory]/in_character_filter.txt"))
+	if(!fexists("[directory]/word_filter.toml"))
+		load_legacy_chat_filter()
 		return
+
+	log_config("Loading config file word_filter.toml...")
+
+	var/list/word_filter = rustg_read_toml_file("[directory]/word_filter.toml")
+	if (!islist(word_filter))
+		var/message = "The word filter configuration did not output a list, contact someone with configuration access to make sure it's setup properly."
+		log_config(message)
+		DelayedMessageAdmins(message)
+		return
+
+	ic_filter_reasons = try_extract_from_word_filter(word_filter, "ic")
+	ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "ic_outside_pda")
+	shared_filter_reasons = try_extract_from_word_filter(word_filter, "shared")
+	soft_ic_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic")
+	soft_ic_outside_pda_filter_reasons = try_extract_from_word_filter(word_filter, "soft_ic_outside_pda")
+	soft_shared_filter_reasons = try_extract_from_word_filter(word_filter, "soft_shared")
+
+	update_chat_filter_regexes()
+
+/datum/controller/configuration/proc/load_legacy_chat_filter()
+	if (!fexists("[directory]/in_character_filter.txt"))
+		return
+
 	log_config("Loading config file in_character_filter.txt...")
-	for(var/line in world.file2list("[directory]/in_character_filter.txt"))
-		if(!line)
+
+	ic_filter_reasons = list()
+	ic_outside_pda_filter_reasons = list()
+	shared_filter_reasons = list()
+	soft_ic_filter_reasons = list()
+	soft_ic_outside_pda_filter_reasons = list()
+	soft_shared_filter_reasons = list()
+
+	for (var/line in world.file2list("[directory]/in_character_filter.txt"))
+		if (!line)
 			continue
-		if(findtextEx(line,"#",1,2))
+		if (findtextEx(line, "#", 1, 2))
 			continue
-		in_character_filter += REGEX_QUOTE(line)
-	ic_filter_regex = in_character_filter.len ? regex("\\b([jointext(in_character_filter, "|")])\\b", "i") : null
+		// The older filter didn't apply to PDA
+		ic_outside_pda_filter_reasons[line] = "No reason available"
+
+	update_chat_filter_regexes()
+
+/// Will update the internal regexes of the chat filter based on the filter reasons
+/datum/controller/configuration/proc/update_chat_filter_regexes()
+	ic_filter_regex = compile_filter_regex(ic_filter_reasons + ic_outside_pda_filter_reasons + shared_filter_reasons)
+	ic_outside_pda_filter_regex = compile_filter_regex(ic_filter_reasons + shared_filter_reasons)
+	ooc_filter_regex = compile_filter_regex(shared_filter_reasons)
+	soft_ic_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_ic_outside_pda_filter_reasons + soft_shared_filter_reasons)
+	soft_ic_outside_pda_filter_regex = compile_filter_regex(soft_ic_filter_reasons + soft_shared_filter_reasons)
+	soft_ooc_filter_regex = compile_filter_regex(soft_shared_filter_reasons)
+
+/datum/controller/configuration/proc/try_extract_from_word_filter(list/word_filter, key)
+	var/list/banned_words = word_filter[key]
+
+	if (isnull(banned_words))
+		return list()
+	else if (!islist(banned_words))
+		var/message = "The word filter configuration's '[key]' key was invalid, contact someone with configuration access to make sure it's setup properly."
+		log_config(message)
+		DelayedMessageAdmins(message)
+		return list()
+
+	var/list/formatted_banned_words = list()
+
+	for (var/banned_word in banned_words)
+		formatted_banned_words[lowertext(banned_word)] = banned_words[banned_word]
+	return formatted_banned_words
+
+/datum/controller/configuration/proc/compile_filter_regex(list/banned_words)
+	if (isnull(banned_words) || banned_words.len == 0)
+		return null
+
+	var/static/regex/should_join_on_word_bounds = regex(@"^\w+$")
+
+	// Stuff like emoticons needs another split, since there's no way to get ":)" on a word bound.
+	// Furthermore, normal words need to be on word bounds, so "(adminhelp)" gets filtered.
+	var/list/to_join_on_whitespace_splits = list()
+	var/list/to_join_on_word_bounds = list()
+
+	for (var/banned_word in banned_words)
+		if (findtext(banned_word, should_join_on_word_bounds))
+			to_join_on_word_bounds += REGEX_QUOTE(banned_word)
+		else
+			to_join_on_whitespace_splits += REGEX_QUOTE(banned_word)
+
+	// We don't want a whitespace_split part if there's no stuff that requires it
+	var/whitespace_split = to_join_on_whitespace_splits.len > 0 ? @"(?:(?:^|\s+)(" + jointext(to_join_on_whitespace_splits, "|") + @")(?:$|\s+))" : ""
+	var/word_bounds = @"(\b(" + jointext(to_join_on_word_bounds, "|") + @")\b)"
+	var/regex_filter = whitespace_split != "" ? "([whitespace_split]|[word_bounds])" : word_bounds
+	return regex(regex_filter, "i")
 
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)

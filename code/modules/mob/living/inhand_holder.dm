@@ -20,6 +20,7 @@
 		righthand_file = rh_icon
 	if(worn_slot_flags)
 		slot_flags = worn_slot_flags
+	w_class = M.held_w_class
 	deposit(M)
 	. = ..()
 
@@ -53,17 +54,18 @@
 		if(del_on_release && !destroying)
 			qdel(src)
 		return FALSE
+	var/mob/living/released_mob = held_mob
+	held_mob = null // stops the held mob from being release()'d twice.
 	if(isliving(loc))
 		var/mob/living/L = loc
 		if(display_messages)
-			to_chat(L, "<span class='warning'>[held_mob] wriggles free!</span>")
+			to_chat(L, span_warning("[released_mob] wriggles free!"))
 		L.dropItemToGround(src)
-	held_mob.forceMove(get_turf(held_mob))
-	held_mob.reset_perspective()
-	held_mob.setDir(SOUTH)
+	released_mob.forceMove(drop_location())
+	released_mob.reset_perspective()
+	released_mob.setDir(SOUTH)
 	if(display_messages)
-		held_mob.visible_message("<span class='warning'>[held_mob] uncurls!</span>")
-	held_mob = null
+		released_mob.visible_message(span_warning("[released_mob] uncurls!"))
 	if(del_on_release && !destroying)
 		qdel(src)
 	return TRUE
@@ -76,10 +78,16 @@
 
 /obj/item/clothing/head/mob_holder/on_found(mob/finder)
 	if(held_mob?.will_escape_storage())
-		to_chat(finder, "<span class='warning'>\A [held_mob.name] pops out! </span>")
-		finder.visible_message("<span class='warning'>\A [held_mob.name] pops out of the container [finder] is opening!</span>", ignored_mobs = finder)
+		to_chat(finder, span_warning("\A [held_mob.name] pops out! "))
+		finder.visible_message(span_warning("\A [held_mob.name] pops out of the container [finder] is opening!"), ignored_mobs = finder)
 		release(TRUE, FALSE)
 		return
+
+/obj/item/clothing/head/mob_holder/drone/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
+	//If we're not being put onto a drone, end it all
+	if(!isdrone(M))
+		return INITIALIZE_HINT_QDEL
+	return ..()
 
 /obj/item/clothing/head/mob_holder/drone/deposit(mob/living/L)
 	. = ..()

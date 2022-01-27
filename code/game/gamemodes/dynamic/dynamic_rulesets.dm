@@ -3,6 +3,8 @@
 
 /datum/dynamic_ruleset
 	/// For admin logging and round end screen.
+	// If you want to change this variable name, the force latejoin/midround rulesets
+	// to not use sort_names.
 	var/name = ""
 	/// For admin logging and round end screen, do not change this unless making a new rule type.
 	var/ruletype = ""
@@ -16,7 +18,7 @@
 	var/list/mob/candidates = list()
 	/// List of players that were selected for this rule
 	var/list/datum/mind/assigned = list()
-	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag
+	/// Preferences flag such as ROLE_WIZARD that need to be turned on for players to be antag.
 	var/antag_flag = null
 	/// The antagonist datum that is assigned to the mobs mind on ruleset execution.
 	var/datum/antagonist/antag_datum = null
@@ -26,7 +28,7 @@
 	var/list/protected_roles = list()
 	/// If set, rule will deny candidates from those roles always.
 	var/list/restricted_roles = list()
-	/// If set, rule will only accept candidates from those roles, IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
 	/// If set, there needs to be a certain amount of players doing those roles (among the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
@@ -55,6 +57,8 @@
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
 	var/antag_flag_override = null
+	/// If set, will check this preference instead of antag_flag.
+	var/antag_preference = null
 	/// If a ruleset type which is in this list has been executed, then the ruleset will not be executed.
 	var/list/blocking_rules = list()
 	/// The minimum amount of players required for the rule to be considered.
@@ -76,13 +80,15 @@
 	/// If written as a linear equation, will be in the form of `list("denominator" = denominator, "offset" = offset).
 	var/antag_cap = 0
 
-
 /datum/dynamic_ruleset/New()
+	// Rulesets can be instantiated more than once, such as when an admin clicks
+	// "Execute Midround Ruleset". Thus, it would be wrong to perform any
+	// side effects here. Dynamic rulesets should be stateless anyway.
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	mode = SSticker.mode
+
 	..()
-	if (istype(SSticker.mode, /datum/game_mode/dynamic))
-		mode = SSticker.mode
-	else if (!SSticker.is_mode("dynamic")) // This is here to make roundstart forced ruleset function.
-		qdel(src)
 
 /datum/dynamic_ruleset/roundstart // One or more of those drafted at roundstart
 	ruletype = "Roundstart"
@@ -190,20 +196,43 @@
 
 /// Checks if candidates are connected and if they are banned or don't want to be the antagonist.
 /datum/dynamic_ruleset/roundstart/trim_candidates()
-	for(var/mob/dead/new_player/P in candidates)
-		var/client/client = GET_CLIENT(P)
-		if (!client || !P.mind) // Are they connected?
-			candidates.Remove(P)
-		else if(!mode.check_age(client, minimum_required_age))
-			candidates.Remove(P)
-		else if(P.mind.special_role) // We really don't want to give antag to an antag.
-			candidates.Remove(P)
-		else if(antag_flag_override)
-			if(!(antag_flag_override in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
-				candidates.Remove(P)
-		else
-			if(!(antag_flag in client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
-				candidates.Remove(P)
+	for(var/mob/dead/new_player/candidate_player in candidates)
+		var/client/candidate_client = GET_CLIENT(candidate_player)
+		if (!candidate_client || !candidate_player.mind) // Are they connected?
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
+			candidates.Remove(candidate_player)
+			continue
+
+		if(candidate_player.mind.special_role) // We really don't want to give antag to an antag.
+			candidates.Remove(candidate_player)
+			continue
+
+		if (!((antag_preference || antag_flag) in candidate_client.prefs.be_special))
+			candidates.Remove(candidate_player)
+			continue
+
+		if (is_banned_from(candidate_player.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+			candidates.Remove(candidate_player)
+			continue
+
+		// If this ruleset has exclusive_roles set, we want to only consider players who have those
+		// job prefs enabled and are eligible to play that job. Otherwise, continue as before.
+		if(length(exclusive_roles))
+			var/exclusive_candidate = FALSE
+			for(var/role in exclusive_roles)
+				var/datum/job/job = SSjob.GetJob(role)
+
+				if((role in candidate_client.prefs.job_preferences) && SSjob.check_job_eligibility(candidate_player, job, "Dynamic Roundstart TC", add_job_to_log = TRUE)==JOB_AVAILABLE)
+					exclusive_candidate = TRUE
+					break
+
+			// If they didn't have any of the required job prefs enabled or were banned from all enabled prefs,
+			// they're not eligible for this antag type.
+			if(!exclusive_candidate)
+				candidates.Remove(candidate_player)
 
 /// Do your checks if the ruleset is ready to be executed here.
 /// Should ignore certain checks if forced is TRUE

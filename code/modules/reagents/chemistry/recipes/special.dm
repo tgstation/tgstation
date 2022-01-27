@@ -1,32 +1,40 @@
 GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
 GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 
+#define VALID_RANDOM_RECIPE_REAGENT(chemical_flags) (chemical_flags & REAGENT_CAN_BE_SYNTHESIZED && !(chemical_flags & REAGENT_NO_RANDOM_RECIPE))
+
 /proc/build_reagents_to_food()
 	. = list()
 	for (var/type in subtypesof(/obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/item = new type()
-		for(var/r in item.list_reagents)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.list_reagents)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 	//dang plant snowflake
 	for (var/type in subtypesof(/obj/item/seeds))
 		var/obj/item/seeds/item = new type()
-		for(var/r in item.reagents_add)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
+		for(var/datum/reagent/reagent as anything in item.reagents_add)
+			var/chem_flags = initial(reagent.chemical_flags)
+			if(!VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+				continue
+			if (!.[reagent])
+				.[reagent] = list()
+			.[reagent] += type
 		qdel(item)
 
 ///Just grab every craftable medicine you can think off
 /proc/build_medicine_reagents()
 	. = list()
 
-	for(var/A in subtypesof(/datum/reagent/medicine))
-		var/datum/reagent/R = A
-		if(initial(R.chemical_flags) & REAGENT_CAN_BE_SYNTHESIZED)
-			. += R
+	for(var/datum/reagent/reagent as anything in subtypesof(/datum/reagent/medicine))
+		var/chem_flags = initial(reagent.chemical_flags)
+		if(VALID_RANDOM_RECIPE_REAGENT(chem_flags))
+			. += reagent
 
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
@@ -212,10 +220,12 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	if(!temp_results)
 		return FALSE
 	results = temp_results
-	var/containerpath = text2path(recipe_data["required_container"])
-	if(!containerpath)
-		return FALSE
-	required_container =  containerpath
+	var/raw_container_path = recipe_data["required_container"]
+	if(raw_container_path)
+		var/containerpath = text2path(raw_container_path)
+		if(!containerpath)
+			return FALSE
+		required_container = containerpath
 	return TRUE
 
 /datum/chemical_reaction/randomized/secret_sauce
@@ -259,12 +269,7 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	///The one we actually end up displaying
 	var/recipe_id = null
 
-/obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
-	if(isobserver(user))
-		return list()
-	. = ..()
-
-/obj/item/paper/secretrecipe/Initialize()
+/obj/item/paper/secretrecipe/Initialize(mapload)
 	. = ..()
 
 	recipe_id = pick(possible_recipes)
@@ -273,6 +278,17 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 		UpdateInfo()
 	else
 		SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+
+/obj/item/paper/secretrecipe/ui_static_data(mob/living/user)
+	. = ..()
+	if(!istype(user) || user.stat == DEAD)
+		.["text"] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, \
+		sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \
+		Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris \
+		nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in \
+		reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \
+		pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa \
+		qui officia deserunt mollit anim id est laborum."
 
 /obj/item/paper/secretrecipe/proc/UpdateInfo()
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
@@ -315,3 +331,5 @@ GLOBAL_LIST_INIT(medicine_reagents, build_medicine_reagents())
 	dat += "."
 	info = dat.Join("")
 	update_appearance()
+
+#undef VALID_RANDOM_RECIPE_REAGENT

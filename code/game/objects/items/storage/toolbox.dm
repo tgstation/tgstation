@@ -1,6 +1,7 @@
 /obj/item/storage/toolbox
 	name = "toolbox"
 	desc = "Danger. Very robust."
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_default"
 	inhand_icon_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
@@ -16,13 +17,13 @@
 	attack_verb_simple = list("robust")
 	hitsound = 'sound/weapons/smash.ogg'
 	drop_sound = 'sound/items/handling/toolbox_drop.ogg'
-	pickup_sound =  'sound/items/handling/toolbox_pickup.ogg'
-	material_flags = MATERIAL_COLOR
+	pickup_sound = 'sound/items/handling/toolbox_pickup.ogg'
+	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	var/latches = "single_latch"
 	var/has_latches = TRUE
 	wound_bonus = 5
 
-/obj/item/storage/toolbox/Initialize()
+/obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
 	if(has_latches)
 		if(prob(10))
@@ -38,7 +39,7 @@
 
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] robusts [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (BRUTELOSS)
 
 /obj/item/storage/toolbox/emergency
@@ -62,6 +63,7 @@
 
 /obj/item/storage/toolbox/emergency/old
 	name = "rusty red toolbox"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_red_old"
 	has_latches = FALSE
 	material_flags = NONE
@@ -84,6 +86,7 @@
 
 /obj/item/storage/toolbox/mechanical/old
 	name = "rusty blue toolbox"
+	icon = 'icons/obj/storage.dmi'
 	icon_state = "toolbox_blue_old"
 	has_latches = FALSE
 	has_soul = TRUE
@@ -108,7 +111,7 @@
 
 /obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
 	var/power = 0
-	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
+	for (var/obj/item/stack/telecrystal/TC in get_all_contents())
 		power += TC.amount
 	force = 19 + power
 	throwforce = 22 + power
@@ -215,11 +218,15 @@
 
 /obj/item/storage/toolbox/ammo
 	name = "ammo box"
+	icon = 'icons/obj/storage.dmi'
 	desc = "It contains a few clips."
 	icon_state = "ammobox"
 	inhand_icon_state = "ammobox"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
+	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
-	pickup_sound =  'sound/items/handling/ammobox_pickup.ogg'
+	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
 /obj/item/storage/toolbox/ammo/PopulateContents()
 	new /obj/item/ammo_box/a762(src)
@@ -232,9 +239,11 @@
 
 /obj/item/storage/toolbox/maint_kit
 	name = "gun maintenance kit"
+	icon = 'icons/obj/storage.dmi'
 	desc = "It contains some gun maintenance supplies"
 	icon_state = "maint_kit"
 	inhand_icon_state = "ammobox"
+	has_latches = FALSE
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 
@@ -245,9 +254,12 @@
 
 /obj/item/storage/toolbox/infiltrator
 	name = "insidious case"
+	icon = 'icons/obj/storage.dmi'
 	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
 	icon_state = "infiltrator_case"
 	inhand_icon_state = "infiltrator_case"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	force = 15
 	throwforce = 18
 	w_class = WEIGHT_CLASS_NORMAL
@@ -262,7 +274,7 @@
 		/obj/item/clothing/head/helmet/infiltrator,
 		/obj/item/clothing/suit/armor/vest/infiltrator,
 		/obj/item/clothing/under/syndicate/bloodred,
-		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/gloves/color/infiltrator,
 		/obj/item/clothing/mask/infiltrator,
 		/obj/item/clothing/shoes/combat/sneakboots,
 		/obj/item/gun/ballistic/automatic/pistol,
@@ -274,7 +286,7 @@
 	new /obj/item/clothing/head/helmet/infiltrator(src)
 	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
 	new /obj/item/clothing/under/syndicate/bloodred(src)
-	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/gloves/color/infiltrator(src)
 	new /obj/item/clothing/mask/infiltrator(src)
 	new /obj/item/clothing/shoes/combat/sneakboots(src)
 
@@ -292,7 +304,7 @@
 	if(!is_type_in_list(src, allowed_toolbox) && (type != /obj/item/storage/toolbox))
 		return
 	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
+		to_chat(user, span_warning("They won't fit in, as there is already stuff inside!"))
 		return
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
@@ -310,10 +322,10 @@
 				B.toolbox_color = "s"
 		user.put_in_hands(B)
 		B.update_appearance()
-		to_chat(user, "<span class='notice'>You add the tiles into the empty [name]. They protrude from the top.</span>")
+		to_chat(user, span_notice("You add the tiles into the empty [name]. They protrude from the top."))
 		qdel(src)
 	else
-		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
+		to_chat(user, span_warning("You need 10 floor tiles to start building a floorbot!"))
 		return
 
 

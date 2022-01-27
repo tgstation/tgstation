@@ -61,22 +61,17 @@ All the important duct code:
 		if(D == src)
 			continue
 		if(D.duct_layer & duct_layer)
-			disconnect_duct()
+			return INITIALIZE_HINT_QDEL //If we have company, end it all
 
-	if(active)
-		attempt_connect()
-
+	attempt_connect()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-			if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-				continue
-			var/datum/component/plumbing/plumb = plumber
-			if(plumb.active)
+		for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
+			if(plumber.active)
 				disconnect_duct() //let's not built under plumbing machinery
 				return
 
@@ -93,9 +88,7 @@ All the important duct code:
 	if(istype(AM, /obj/machinery/duct))
 		return connect_duct(AM, direction, ignore_color)
 
-	for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-		if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-			continue
+	for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct
@@ -132,9 +125,11 @@ All the important duct code:
 		else
 			create_duct()
 			duct.add_duct(D)
+
 	add_neighbour(D, direction)
-	//tell our buddy its time to pass on the torch of connecting to pipes. This shouldn't ever infinitely loop since it only works on pipes that havent been inductrinated
-	D.attempt_connect()
+
+	//Delegate to timer subsystem so its handled the next tick and doesnt cause byond to mistake it for an infinite loop and kill the game
+	addtimer(CALLBACK(D, .proc/attempt_connect))
 
 	return TRUE
 
@@ -166,34 +161,11 @@ All the important duct code:
 	lose_neighbours()
 	reset_connects(0)
 	update_appearance()
-	if(ispath(drop_on_wrench) && !QDELING(src))
+	if(ispath(drop_on_wrench))
 		new drop_on_wrench(drop_location())
+		drop_on_wrench = null
+	if(!QDELETED(src))
 		qdel(src)
-
-///''''''''''''''''optimized''''''''''''''''' proc for quickly reconnecting after a duct net was destroyed
-/obj/machinery/duct/proc/reconnect()
-	if(neighbours.len && !duct)
-		create_duct()
-	for(var/atom/movable/AM in neighbours)
-		if(istype(AM, /obj/machinery/duct))
-			var/obj/machinery/duct/D = AM
-			if(D.duct)
-				if(D.duct == duct) //we're already connected
-					continue
-				else
-					duct.assimilate(D.duct)
-					continue
-			else
-				duct.add_duct(D)
-				D.reconnect()
-		else
-			if(AM in get_step(src, neighbours[AM])) //did we move?
-				for(var/plumber in AM.GetComponents(/datum/component/plumbing))
-					if(!plumber) //apparently yes it will be null hahahaasahsdvashufv
-						return
-					connect_plumber(plumber, neighbours[AM])
-			else
-				neighbours -= AM //we moved
 
 ///Special proc to draw a new connect frame based on neighbours. not the norm so we can support multiple duct kinds
 /obj/machinery/duct/proc/generate_connects()
@@ -298,8 +270,8 @@ All the important duct code:
 		set_anchored(!anchored)
 		user.visible_message( \
 		"[user] [anchored ? null : "un"]fastens \the [src].", \
-		"<span class='notice'>You [anchored ? null : "un"]fasten \the [src].</span>", \
-		"<span class='hear'>You hear ratcheting.</span>")
+		span_notice("You [anchored ? null : "un"]fasten \the [src]."), \
+		span_hear("You hear ratcheting."))
 	return TRUE
 
 ///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
@@ -317,7 +289,7 @@ All the important duct code:
 /obj/machinery/duct/doMove(destination)
 	. = ..()
 	disconnect_duct()
-	anchored = FALSE
+	set_anchored(FALSE)
 
 /obj/machinery/duct/Destroy()
 	disconnect_duct()
@@ -329,7 +301,7 @@ All the important duct code:
 	var/obj/machinery/duct/D = A
 	var/obj/item/I = user.get_active_held_item()
 	if(I?.tool_behaviour != TOOL_WRENCH)
-		to_chat(user, "<span class='warning'>You need to be holding a wrench in your active hand to do that!</span>")
+		to_chat(user, span_warning("You need to be holding a wrench in your active hand to do that!"))
 		return
 	if(get_dist(src, D) != 1)
 		return
@@ -357,7 +329,7 @@ All the important duct code:
 	item_flags = NOBLUDGEON
 	merge_type = /obj/item/stack/ducts
 	///Color of our duct
-	var/duct_color = "grey"
+	var/duct_color = "omni"
 	///Default layer of our duct
 	var/duct_layer = "Default Layer"
 	///Assoc index with all the available layers. yes five might be a bit much. Colors uses a global by the way
@@ -365,13 +337,13 @@ All the important duct code:
 
 /obj/item/stack/ducts/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.</span>"
+	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
 	if(new_layer)
 		duct_layer = new_layer
-	var/new_color = input("Select a color", "Color") as null|anything in GLOB.pipe_paint_colors
+	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors)
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)

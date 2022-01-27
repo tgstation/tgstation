@@ -5,19 +5,9 @@
 	secure = TRUE
 	locked = TRUE
 	max_integrity = 500
-	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 30, BULLET = 50, LASER = 50, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 	var/tamperproof = 0
 	damage_deflection = 25
-
-/obj/structure/closet/crate/secure/update_overlays()
-	. = ..()
-	if(broken)
-		. += "securecrateemag"
-		return
-	if(locked)
-		. += "securecrater"
-		return
-	. += "securecrateg"
 
 /obj/structure/closet/crate/secure/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
@@ -25,14 +15,13 @@
 	else
 		return ..()
 
-
 /obj/structure/closet/crate/secure/proc/boom(mob/user)
 	if(user)
-		to_chat(user, "<span class='danger'>The crate's anti-tamper system activates!</span>")
+		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	for(var/atom/movable/AM in src)
-		qdel(AM)
-	explosion(get_turf(src), 0, 1, 5, 5)
+	for(var/obj/loot in src)
+		SSexplosions.high_mov_atom += loot
+	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
 /obj/structure/closet/crate/secure/weapon
@@ -68,7 +57,7 @@
 
 /obj/structure/closet/crate/secure/freezer/pizza/PopulateContents()
 	. = ..()
-	new /obj/effect/spawner/lootdrop/pizzaparty(src)
+	new /obj/effect/spawner/random/food_or_drink/pizzaparty(src)
 
 /obj/structure/closet/crate/secure/engineering
 	desc = "A crate with a lock on it, painted in the scheme of the station's engineers."
@@ -95,7 +84,7 @@
 
 /obj/structure/closet/crate/secure/owned/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It's locked with a privacy lock, and can only be unlocked by the buyer's ID.</span>"
+	. += span_notice("It's locked with a privacy lock, and can only be unlocked by the buyer's ID.")
 
 /obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
 	. = ..()
@@ -114,16 +103,16 @@
 						if(iscarbon(user))
 							add_fingerprint(user)
 						locked = !locked
-						user.visible_message("<span class='notice'>[user] unlocks [src]'s privacy lock.</span>",
-										"<span class='notice'>You unlock [src]'s privacy lock.</span>")
+						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
+										span_notice("You unlock [src]'s privacy lock."))
 						privacy_lock = FALSE
 						update_appearance()
 					else if(!silent)
-						to_chat(user, "<span class='notice'>Bank account does not match with buyer!</span>")
+						to_chat(user, span_warning("Bank account does not match with buyer!"))
 				else if(!silent)
-					to_chat(user, "<span class='notice'>No linked bank account detected!</span>")
+					to_chat(user, span_warning("No linked bank account detected!"))
 			else if(!silent)
-				to_chat(user, "<span class='notice'>No ID detected!</span>")
+				to_chat(user, span_warning("No ID detected!"))
 		else if(!silent)
-			to_chat(user, "<span class='warning'>[src] is broken!</span>")
+			to_chat(user, span_warning("[src] is broken!"))
 	else ..()

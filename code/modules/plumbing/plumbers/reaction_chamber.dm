@@ -1,7 +1,7 @@
-///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents seperated and only reacts under your given terms
+///a reaction chamber for plumbing. pretty much everything can react, but this one keeps the reagents separated and only reacts under your given terms
 /obj/machinery/plumbing/reaction_chamber
 	name = "reaction chamber"
-	desc = "Keeps chemicals seperated until given conditions are met."
+	desc = "Keeps chemicals separated until given conditions are met."
 	icon_state = "reaction_chamber"
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
@@ -22,7 +22,7 @@
 	var/target_temperature = 300
 	///cool/heat power
 	var/heater_coefficient = 0.05 //same lvl as acclimator
-	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a seperate thing. It's a small (50u) beaker
+	///Beaker that holds the acidic buffer. I don't want to deal with snowflaking so it's just a separate thing. It's a small (50u) beaker
 	var/obj/item/reagent_containers/glass/beaker/acidic_beaker
 	///beaker that holds the alkaline buffer.
 	var/obj/item/reagent_containers/glass/beaker/alkaline_beaker
@@ -36,6 +36,12 @@
 
 	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
 	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
+
+/// Make sure beakers are deleted when being deconstructed
+/obj/machinery/plumbing/reaction_chamber/Destroy()
+	QDEL_NULL(acidic_beaker)
+	QDEL_NULL(alkaline_beaker)
+	. = ..()
 
 /obj/machinery/plumbing/reaction_chamber/create_reagents(max_vol, flags)
 	. = ..()
@@ -83,11 +89,14 @@
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
 	var/list/data = list()
 
-	var/list/text_reagents = list()
+	var/list/reagents_data = list()
 	for(var/datum/reagent/required_reagent as anything in required_reagents) //make a list where the key is text, because that looks alot better in the ui than a typepath
-		text_reagents[initial(required_reagent.name)] = required_reagents[required_reagent]
+		var/list/reagent_data = list()
+		reagent_data["name"] = initial(required_reagent.name)
+		reagent_data["required_reagent"] = required_reagents[required_reagent]
+		reagents_data += list(reagent_data)
 
-	data["reagents"] = text_reagents
+	data["reagents"] = reagents_data
 	data["emptying"] = emptying
 	data["temperature"] = round(reagents.chem_temp, 0.1)
 	data["ph"] = round(reagents.ph, 0.01)

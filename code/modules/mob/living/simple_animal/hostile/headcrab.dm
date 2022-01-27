@@ -24,7 +24,7 @@
 	var/datum/mind/origin
 	var/egg_lain = 0
 
-/mob/living/simple_animal/hostile/headcrab/Initialize()
+/mob/living/simple_animal/hostile/headcrab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -37,8 +37,8 @@
 		egg.origin = mind
 	for(var/obj/item/organ/I in src)
 		I.forceMove(egg)
-	visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
-					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
+	visible_message(span_warning("[src] plants something in [victim]'s flesh!"), \
+					span_danger("We inject our egg into [victim]'s body!"))
 	egg_lain = 1
 
 /mob/living/simple_animal/hostile/headcrab/AttackingTarget()
@@ -48,10 +48,10 @@
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
 			if(HAS_TRAIT(C, TRAIT_XENO_HOST))
-				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
+				to_chat(src, span_userdanger("A foreign presence repels us from this body. Perhaps we should try to infest another?"))
 				return
 			Infect(target)
-			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
+			to_chat(src, span_userdanger("With our egg laid, our death approaches rapidly..."))
 			addtimer(CALLBACK(src, .proc/death), 100)
 
 /obj/item/organ/body_egg/changeling_egg
@@ -62,30 +62,30 @@
 
 /obj/item/organ/body_egg/changeling_egg/egg_process(delta_time, times_fired)
 	// Changeling eggs grow in dead people
-	time += delta_time
+	time += delta_time * 10
 	if(time >= EGG_INCUBATION_TIME)
 		Pop()
 		Remove(owner)
 		qdel(src)
 
 /obj/item/organ/body_egg/changeling_egg/proc/Pop()
-	var/mob/living/carbon/human/species/monkey/M = new(owner)
+	var/mob/living/carbon/human/species/monkey/spawned_monkey = new(owner)
 
 	for(var/obj/item/organ/I in src)
-		I.Insert(M, 1)
+		I.Insert(spawned_monkey, 1)
 
 	if(origin && (origin.current ? (origin.current.stat == DEAD) : origin.get_ghost()))
-		origin.transfer_to(M)
-		var/datum/antagonist/changeling/C = origin.has_antag_datum(/datum/antagonist/changeling)
-		if(!C)
-			C = origin.add_antag_datum(/datum/antagonist/changeling/xenobio)
-		if(C.can_absorb_dna(owner))
-			C.add_new_profile(owner)
+		origin.transfer_to(spawned_monkey)
+		spawned_monkey.key = origin.key
+		var/datum/antagonist/changeling/changeling_datum = origin.has_antag_datum(/datum/antagonist/changeling)
+		if(!changeling_datum)
+			changeling_datum = origin.add_antag_datum(/datum/antagonist/changeling/headslug)
+		if(changeling_datum.can_absorb_dna(owner))
+			changeling_datum.add_new_profile(owner)
 
 		var/datum/action/changeling/humanform/hf = new
-		C.purchasedpowers += hf
-		C.regain_powers()
-		M.key = origin.key
+		changeling_datum.purchased_powers += hf
+		changeling_datum.regain_powers()
 	owner.gib()
 
 #undef EGG_INCUBATION_TIME

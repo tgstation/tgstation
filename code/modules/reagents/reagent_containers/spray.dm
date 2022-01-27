@@ -14,15 +14,16 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 7
-	var/stream_mode = 0 //whether we use the more focused mode
+	var/stream_mode = FALSE //whether we use the more focused mode
 	var/current_range = 3 //the range of tiles the sprayer will reach.
 	var/spray_range = 3 //the range of tiles the sprayer will reach when in spray mode.
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
-	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/can_fill_from_container = TRUE
+	/// Are we able to toggle between stream and spray modes, which change the distance and amount sprayed?
+	var/can_toggle_range = TRUE
 	amount_per_transfer_from_this = 5
 	volume = 250
-	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
+	possible_transfer_amounts = list(5,10)
 
 /obj/item/reagent_containers/spray/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -31,19 +32,19 @@
 
 	if((target.is_drainable() && !target.is_refillable()) && (get_dist(src, target) <= 1) && can_fill_from_container)
 		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			to_chat(user, span_warning("[target] is empty."))
 			return
 
 		if(reagents.holder_full())
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			to_chat(user, span_warning("[src] is full."))
 			return
 
 		var/trans = target.reagents.trans_to(src, 50, transfered_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
-		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [target].</span>")
+		to_chat(user, span_notice("You fill \the [src] with [trans] units of the contents of \the [target]."))
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='warning'>Not enough left!</span>")
+		to_chat(user, span_warning("Not enough left!"))
 		return
 
 	spray(target, user)
@@ -80,72 +81,37 @@
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	set waitfor = FALSE
-
-	var/puff_reagents_string = reagent_puff.reagents.log_list()
-
-	for(var/travelled_distance in 1 to range)
-		var/has_travelled_max_distance = (travelled_distance == range)
-
-		step_towards(reagent_puff, target)
-		sleep(wait_step)
-
-		for(var/atom/turf_atom in get_turf(reagent_puff))
-			if(turf_atom == reagent_puff || turf_atom.invisibility) //we ignore the puff itself and stuff below the floor
-				continue
-
-			if(puff_reagent_left <= 0)
-				break
-
-			if(stream_mode)
-				if(isliving(turf_atom))
-					var/mob/living/turf_mob = turf_atom
-
-					if(!turf_mob.can_inject())
-						continue
-
-					if((turf_mob.body_position == STANDING_UP) || has_travelled_max_distance)
-						reagent_puff.reagents.expose(turf_mob, VAPOR)
-						log_combat(user, turf_mob, "sprayed", src, addition="which had [puff_reagents_string]")
-						puff_reagent_left -= 1
-				else if(has_travelled_max_distance)
-					reagent_puff.reagents.expose(turf_atom, VAPOR)
-					log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
-					puff_reagent_left -= 1
-			else
-				reagent_puff.reagents.expose(turf_atom, VAPOR)
-				log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
-				if(ismob(turf_atom))
-					puff_reagent_left -= 1
-
-		if(puff_reagent_left > 0 && (!stream_mode || has_travelled_max_distance))
-			var/turf/puff_turf = get_turf(reagent_puff)
-			reagent_puff.reagents.expose(puff_turf, VAPOR)
-			log_combat(user, puff_turf, "sprayed", src, addition="which had [puff_reagents_string]")
-			puff_reagent_left -= 1
-
-		// Did we use up all the puff early? Time to delete the puff and return.
-		if(puff_reagent_left <= 0)
-			qdel(reagent_puff)
-			return
-
-	qdel(reagent_puff)
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	reagent_puff.user = user
+	reagent_puff.sprayer = src
+	reagent_puff.lifetime = puff_reagent_left
+	reagent_puff.stream = stream_mode
+	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, /obj/effect/decal/chempuff/proc/loop_ended)
+	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, /obj/effect/decal/chempuff/proc/check_move)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
+	. = ..()
+	toggle_stream_mode(user)
+
+/obj/item/reagent_containers/spray/attack_self_secondary(mob/user)
+	. = ..()
+	toggle_stream_mode(user)
+
+/obj/item/reagent_containers/spray/proc/toggle_stream_mode(mob/user)
+	if(stream_range == spray_range || !stream_range || !spray_range || possible_transfer_amounts.len > 2 || !can_toggle_range)
+		return
 	stream_mode = !stream_mode
 	if(stream_mode)
-		amount_per_transfer_from_this = stream_amount
 		current_range = stream_range
 	else
-		amount_per_transfer_from_this = initial(amount_per_transfer_from_this)
 		current_range = spray_range
-	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
+	to_chat(user, span_notice("You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]."))
 
 /obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
+		to_chat(user, span_notice("You heat [name] with [I]!"))
 
 	//Cooling method
 	if(istype(I, /obj/item/extinguisher))
@@ -153,11 +119,11 @@
 		if(extinguisher.safety)
 			return
 		if (extinguisher.reagents.total_volume < 1)
-			to_chat(user, "<span class='warning'>\The [extinguisher] is empty!</span>")
+			to_chat(user, span_warning("\The [extinguisher] is empty!"))
 			return
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
-		to_chat(user, "<span class='notice'>You cool the [name] with the [I]!</span>")
+		to_chat(user, span_notice("You cool the [name] with the [I]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
 
@@ -169,10 +135,10 @@
 	set src in usr
 	if(usr.incapacitated())
 		return
-	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
+	if (tgui_alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", list("Yes", "No")) != "Yes")
 		return
 	if(isturf(usr.loc) && src.loc == usr)
-		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
+		to_chat(usr, span_notice("You empty \the [src] onto the floor."))
 		reagents.expose(usr.loc)
 		log_combat(usr, usr.loc, "emptied onto", src, addition="which had [reagents.log_list()]")
 		src.reagents.clear_reagents()
@@ -205,20 +171,20 @@
 	volume = 100
 	list_reagents = list(/datum/reagent/space_cleaner = 100)
 	amount_per_transfer_from_this = 2
-	stream_amount = 5
+	possible_transfer_amounts = list(2,5)
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
-			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
-			src.spray(user)
+			user.visible_message(span_suicide("[user] pulls the trigger!"))
+			spray(user)
 			return BRUTELOSS
 		else
-			user.visible_message("<span class='suicide'>[user] pulls the trigger...but \the [src] is empty!</span>")
+			user.visible_message(span_suicide("[user] pulls the trigger...but \the [src] is empty!"))
 			return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
+		user.visible_message(span_suicide("[user] decided life was worth living."))
 		return MANUAL_SUICIDE_NONLETHAL
 
 //spray tan
@@ -247,7 +213,7 @@
 	list_reagents = null
 
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")
+	user.visible_message(span_suicide("[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!"))
 	return OXYLOSS
 
 // Fix pepperspraying yourself
@@ -264,11 +230,11 @@
 	icon_state = "sunflower"
 	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1)
+	can_toggle_range = FALSE
+	current_range = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
-
-/obj/item/reagent_containers/spray/waterflower/attack_self(mob/user) //Don't allow changing how much the flower sprays
-	return
 
 ///Subtype used for the lavaland clown ruin.
 /obj/item/reagent_containers/spray/waterflower/superlube
@@ -298,7 +264,7 @@
 	generate_amount = 1
 	generate_delay = 40 //deciseconds
 
-/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize()
+/obj/item/reagent_containers/spray/waterflower/cyborg/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -313,7 +279,7 @@
 	generate_reagents()
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/empty()
-	to_chat(usr, "<span class='warning'>You can not empty this!</span>")
+	to_chat(usr, span_warning("You can not empty this!"))
 	return
 
 /obj/item/reagent_containers/spray/waterflower/cyborg/proc/generate_reagents()
@@ -350,7 +316,7 @@
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T,T1,T2)
 
-	for(var/i=1, i<=3, i++) // intialize sprays
+	for(var/i in 1 to 3) // intialize sprays
 		if(reagents.total_volume < 1)
 			return
 		..(the_targets[i], user)
@@ -375,7 +341,7 @@
 	var/last_generate = 0
 	var/generate_delay = 10 //deciseconds
 
-/obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
+/obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
@@ -414,7 +380,7 @@
 	volume = 100
 	custom_premium_price = PAYCHECK_HARD * 2
 
-/obj/item/reagent_containers/spray/syndicate/Initialize()
+/obj/item/reagent_containers/spray/syndicate/Initialize(mapload)
 	. = ..()
 	icon_state = pick("sprayer_sus_1", "sprayer_sus_2", "sprayer_sus_3", "sprayer_sus_4", "sprayer_sus_5","sprayer_sus_6", "sprayer_sus_7", "sprayer_sus_8")
 

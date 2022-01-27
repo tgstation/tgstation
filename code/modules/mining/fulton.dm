@@ -19,38 +19,32 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/B in GLOB.total_extraction_beacons)
-		var/obj/structure/extraction_point/EP = B
-		if(EP.beacon_network in beacon_networks)
-			possible_beacons += EP
-
-	if(!possible_beacons.len)
-		to_chat(user, "<span class='warning'>There are no extraction beacons in existence!</span>")
+	for(var/obj/structure/extraction_point/extraction_point as anything in GLOB.total_extraction_beacons)
+		if(extraction_point.beacon_network in beacon_networks)
+			possible_beacons += extraction_point
+	if(!length(possible_beacons))
+		to_chat(user, span_warning("There are no extraction beacons in existence!"))
 		return
-
 	else
-		var/A
-
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sortNames(possible_beacons)
-
-		if(!A)
+		var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+		if(isnull(chosen_beacon))
 			return
-		beacon = A
-		to_chat(user, "<span class='notice'>You link the extraction pack to the beacon system.</span>")
+		beacon = chosen_beacon
+		to_chat(user, span_notice("You link the extraction pack to the beacon system."))
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
 	. = ..()
 	if(!beacon)
-		to_chat(user, "<span class='warning'>[src] is not linked to a beacon, and cannot be used!</span>")
+		to_chat(user, span_warning("[src] is not linked to a beacon, and cannot be used!"))
 		return
 	if(!(beacon in GLOB.total_extraction_beacons))
 		beacon = null
-		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
+		to_chat(user, span_warning("The connected beacon has been destroyed!"))
 		return
 	if(!can_use_indoors)
 		var/area/area = get_area(A)
 		if(!area.outdoors)
-			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
+			to_chat(user, span_warning("[src] can only be used on things that are outdoors!"))
 			return
 	if(!flag)
 		return
@@ -58,15 +52,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		return
 	else
 		if(!safe_for_living_creatures && check_for_living_mobs(A))
-			to_chat(user, "<span class='warning'>[src] is not safe for use with living creatures, they wouldn't survive the trip back!</span>")
+			to_chat(user, span_warning("[src] is not safe for use with living creatures, they wouldn't survive the trip back!"))
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
-		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
+		to_chat(user, span_notice("You start attaching the pack to [A]..."))
 		if(do_after(user,50,target=A))
-			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
+			to_chat(user, span_notice("You attach the pack to [A] and activate it."))
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
 				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
@@ -83,7 +77,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 					M.buckled.unbuckle_mob(M, TRUE) // Unbuckle them to prevent anchoring problems
 			else
 				A.set_anchored(TRUE)
-				A.density = FALSE
+				A.set_density(FALSE)
 			var/obj/effect/extraction_holder/holder_obj = new(A.loc)
 			holder_obj.appearance = A.appearance
 			A.forceMove(holder_obj)
@@ -113,7 +107,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			if(ishuman(A))
 				var/mob/living/carbon/human/L = A
 				L.SetUnconscious(0)
-				L.drowsyness = 0
+				L.set_drowsyness(0)
 				L.SetSleeping(0)
 			sleep(30)
 			var/list/flooring_near_beacon = list()
@@ -134,7 +128,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			sleep(4)
 			holder_obj.cut_overlay(balloon3)
 			A.set_anchored(FALSE) // An item has to be unanchored to be extracted in the first place.
-			A.density = initial(A.density)
+			A.set_density(initial(A.density))
 			animate(holder_obj, pixel_z = 0, time = 5)
 			sleep(5)
 			A.forceMove(holder_obj.loc)
@@ -163,14 +157,14 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	density = FALSE
 	var/beacon_network = "station"
 
-/obj/structure/extraction_point/Initialize()
+/obj/structure/extraction_point/Initialize(mapload)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	GLOB.total_extraction_beacons += src
 
 /obj/structure/extraction_point/Destroy()
 	GLOB.total_extraction_beacons -= src
-	..()
+	return ..()
 
 /obj/effect/extraction_holder
 	name = "extraction holder"
@@ -182,7 +176,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		var/mob/living/L = A
 		if(L.stat != DEAD)
 			return TRUE
-	for(var/thing in A.GetAllContents())
+	for(var/thing in A.get_all_contents())
 		if(isliving(A))
 			var/mob/living/L = A
 			if(L.stat != DEAD)

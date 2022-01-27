@@ -47,7 +47,7 @@
 	head = /obj/item/clothing/head/helmet/thunderdome
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	l_hand = /obj/item/gun/energy/pulse/destroyer
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/grenade/smokebomb
 
 /datum/outfit/tournament/green
@@ -73,7 +73,7 @@
 	suit = null
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
-		/obj/item/stack/tile/iron = 6,
+		/obj/item/stack/tile/iron/base = 6,
 )
 	head = null
 	r_pocket = /obj/item/grenade/chem_grenade/cleaner
@@ -116,6 +116,8 @@
 /datum/outfit/pirate
 	name = "Space Pirate"
 
+	id = /obj/item/card/id/advanced
+	id_trim = /datum/id_trim/pirate
 	uniform = /obj/item/clothing/under/costume/pirate
 	suit = /obj/item/clothing/suit/pirate/armored
 	ears = /obj/item/radio/headset/syndicate
@@ -140,12 +142,12 @@
 /datum/outfit/pirate/captain
 	name = "Space Pirate Captain"
 
+	id_trim = /datum/id_trim/pirate/captain
 	head = /obj/item/clothing/head/pirate/armored
 
 /datum/outfit/pirate/space
 	name = "Space Pirate (EVA)"
 
-	id = /obj/item/card/id/advanced
 	suit = /obj/item/clothing/suit/space/pirate
 	suit_store = /obj/item/tank/internals/oxygen
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
@@ -171,7 +173,7 @@
 /datum/outfit/pirate/silverscale/captain
 	name = "Silver Scale Captain"
 
-	id_trim = /datum/id_trim/pirate/silverscale/captain
+	id_trim = /datum/id_trim/pirate/captain/silverscale
 	head = /obj/item/clothing/head/crown
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	l_pocket = /obj/item/lighter
@@ -212,7 +214,7 @@
 	gloves = /obj/item/clothing/gloves/color/latex
 	head = /obj/item/clothing/head/welding
 	mask = /obj/item/clothing/mask/surgical
-	l_pocket = /obj/item/kitchen/knife
+	l_pocket = /obj/item/knife/kitchen
 	r_pocket = /obj/item/scalpel
 	l_hand = /obj/item/fireaxe
 
@@ -234,7 +236,7 @@
 	gloves = /obj/item/clothing/gloves/color/black
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/black
-	l_pocket = /obj/item/melee/transforming/energy/sword/saber
+	l_pocket = /obj/item/melee/energy/sword/saber
 	l_hand = /obj/item/storage/secure/briefcase
 
 /datum/outfit/assassin/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -293,6 +295,16 @@
 	W.update_icon()
 	..()
 
+/datum/outfit/centcom/commander/mod
+	name = "CentCom Commander (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/sechailer
+	back = /obj/item/mod/control/pre_equipped/corporate
+	internals_slot = ITEM_SLOT_SUITSTORE
+
 /datum/outfit/ghost_cultist
 	name = "Cultist Ghost"
 
@@ -309,19 +321,19 @@
 	back = /obj/item/storage/backpack
 	backpack_contents = list(
 		/obj/item/storage/box/survival = 1,
+		/obj/item/spellbook = 1,
 )
 	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/wizard
 	shoes = /obj/item/clothing/shoes/sandal/magic
 	r_pocket = /obj/item/teleportation_scroll
 	l_hand = /obj/item/staff
-	r_hand = /obj/item/spellbook
 
 /datum/outfit/wizard/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/spellbook/S = locate() in H.held_items
+	var/obj/item/spellbook/S = locate() in H.back
 	if(S)
 		S.owner = H
 
@@ -331,6 +343,7 @@
 	r_pocket = /obj/item/teleportation_scroll/apprentice
 	r_hand = null
 	l_hand = null
+	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /datum/outfit/wizard/red
 	name = "Red Wizard"
@@ -343,7 +356,7 @@
 
 	suit = /obj/item/clothing/suit/wizrobe/marisa
 	head = /obj/item/clothing/head/wizard/marisa
-	shoes = /obj/item/clothing/shoes/sandal/marisa
+	shoes = /obj/item/clothing/shoes/sneakers/marisa
 
 /datum/outfit/centcom/soviet
 	name = "Soviet Admiral"
@@ -397,22 +410,25 @@
 	name = "Timeline Eradication Agent"
 
 	uniform = /obj/item/clothing/under/color/white
-	suit = /obj/item/clothing/suit/space/chronos
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/chrono_eraser
-	head = /obj/item/clothing/head/helmet/space/chronos
 	mask = /obj/item/clothing/mask/breath
+	back = /obj/item/mod/control/pre_equipped/chrono
 
-/datum/outfit/debug //Debug objs plus hardsuit
+/datum/outfit/chrono_agent/post_equip(mob/living/carbon/human/agent, visualsOnly)
+	. = ..()
+	var/obj/item/mod/control/mod = agent.back
+	var/obj/item/mod/module/eradication_lock/lock = locate(/obj/item/mod/module/eradication_lock) in mod.modules
+	lock.true_owner_ckey = agent.ckey
+
+/datum/outfit/debug //Debug objs plus MODsuit
 	name = "Debug outfit"
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/debug
 	backpack_contents = list(
-		/obj/item/melee/transforming/energy/axe = 1,
+		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,
@@ -440,11 +456,10 @@
 
 	id = /obj/item/card/id/advanced/debug
 	uniform = /obj/item/clothing/under/misc/patriotsuit
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite/admin
 	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/storage/backpack/holding
+	back = /obj/item/mod/control/pre_equipped/administrative
 	backpack_contents = list(
-		/obj/item/melee/transforming/energy/axe = 1,
+		/obj/item/melee/energy/axe = 1,
 		/obj/item/storage/part_replacer/bluespace/tier4 = 1,
 		/obj/item/gun/magic/wand/resurrection/debug = 1,
 		/obj/item/gun/magic/wand/death/debug = 1,

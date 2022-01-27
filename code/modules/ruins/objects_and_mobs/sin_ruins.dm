@@ -3,11 +3,18 @@
 /obj/structure/cursed_slot_machine //Greed's slot machine: Used in the Greed ruin. Deals clone damage on each use, with a successful use giving a d20 of fate.
 	name = "greed's slot machine"
 	desc = "High stakes, high rewards."
-	icon = 'icons/obj/economy.dmi'
-	icon_state = "slots1"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "slots"
+	var/icon_screen = "slots_screen"
+	var/brightness_on = 1
 	anchored = TRUE
 	density = TRUE
 	var/win_prob = 5
+
+/obj/structure/cursed_slot_machine/Initialize(mapload)
+	. = ..()
+	update_appearance()
+	set_light(brightness_on)
 
 /obj/structure/cursed_slot_machine/interact(mob/living/carbon/human/user)
 	if(!istype(user))
@@ -17,28 +24,35 @@
 	obj_flags |= IN_USE
 	user.adjustCloneLoss(20)
 	if(user.stat)
-		to_chat(user, "<span class='userdanger'>No... just one more try...</span>")
+		to_chat(user, span_userdanger("No... just one more try..."))
 		user.gib()
 	else
-		user.visible_message("<span class='warning'>[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!</span>", "<span class='warning'>You feel a draining as you pull the lever, but you \
+		user.visible_message(span_warning("[user] pulls [src]'s lever with a glint in [user.p_their()] eyes!"), "<span class='warning'>You feel a draining as you pull the lever, but you \
 		know it'll be worth it.</span>")
-	icon_state = "slots2"
+	icon_screen = "slots_screen_working"
+	update_appearance()
 	playsound(src, 'sound/lavaland/cursed_slot_machine.ogg', 50, FALSE)
 	addtimer(CALLBACK(src, .proc/determine_victor, user), 50)
 
 /obj/structure/cursed_slot_machine/proc/determine_victor(mob/living/user)
-	icon_state = "slots1"
+	icon_screen = "slots_screen"
+	update_appearance()
 	obj_flags &= ~IN_USE
 	if(prob(win_prob))
 		playsound(src, 'sound/lavaland/cursed_slot_machine_jackpot.ogg', 50, FALSE)
 		new/obj/structure/cursed_money(get_turf(src))
 		if(user)
-			to_chat(user, "<span class='boldwarning'>You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place.</span>")
+			to_chat(user, span_boldwarning("You've hit jackpot. Laughter echoes around you as your reward appears in the machine's place."))
 		qdel(src)
 	else
 		if(user)
-			to_chat(user, "<span class='boldwarning'>Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?</span>")
+			to_chat(user, span_boldwarning("Fucking machine! Must be rigged. Still... one more try couldn't hurt, right?"))
 
+/obj/structure/cursed_slot_machine/update_overlays()
+	. = ..()
+	var/overlay_state = icon_screen
+	. += mutable_appearance(icon, overlay_state)
+	. += emissive_appearance(icon, overlay_state)
 
 /obj/structure/cursed_money
 	name = "bag of money"
@@ -48,7 +62,7 @@
 	anchored = FALSE
 	density = TRUE
 
-/obj/structure/cursed_money/Initialize()
+/obj/structure/cursed_money/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/collapse), 600)
 
@@ -63,7 +77,7 @@
 		return
 	user.visible_message("<span class='warning'>[user] opens the bag and \
 		and removes a die. The bag then vanishes.</span>",
-		"<span class='boldwarning'>You open the bag...!</span>\n\
+		"[span_boldwarning("You open the bag...!")]\n\
 		<span class='danger'>And see a bag full of dice. Confused, \
 		you take one... and the bag vanishes.</span>")
 	var/turf/T = get_turf(user)
@@ -80,51 +94,24 @@
 	icon = 'icons/mob/blob.dmi'
 	color = rgb(145, 150, 0)
 
-/obj/effect/gluttony/CanAllowThrough(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+/obj/effect/gluttony/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.
 	. = ..()
 	if(ishuman(mover))
 		var/mob/living/carbon/human/H = mover
 		if(H.nutrition >= NUTRITION_LEVEL_FAT)
-			H.visible_message("<span class='warning'>[H] pushes through [src]!</span>", "<span class='notice'>You've seen and eaten worse than this.</span>")
+			H.visible_message(span_warning("[H] pushes through [src]!"), span_notice("You've seen and eaten worse than this."))
 			return TRUE
 		else
-			to_chat(H, "<span class='warning'>You're repulsed by even looking at [src]. Only a pig could force themselves to go through it.</span>")
+			to_chat(H, span_warning("You're repulsed by even looking at [src]. Only a pig could force themselves to go through it."))
 	if(istype(mover, /mob/living/simple_animal/hostile/morph))
 		return TRUE
 
-/obj/structure/mirror/magic/pride //Pride's mirror: Used in the Pride ruin.
-	name = "pride's mirror"
-	desc = "Pride cometh before the..."
-	icon_state = "magic_mirror"
-
-/obj/structure/mirror/magic/pride/New()
-	for(var/speciestype in subtypesof(/datum/species))
-		var/datum/species/S = speciestype
-		if(initial(S.changesource_flags) & MIRROR_PRIDE)
-			choosable_races += initial(S.id)
-	..()
-
-/obj/structure/mirror/magic/pride/curse(mob/user)
-	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
-	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")
-
-	var/turf/T = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if (levels.len)
-		dest = locate(T.x, T.y, pick(levels))
-
-	T.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/C = T
-	C.set_target(dest)
-	C.drop(user)
-
 //can't be bothered to do sloth right now, will make later
 
-/obj/item/kitchen/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
+/obj/item/knife/envy //Envy's knife: Found in the Envy ruin. Attackers take on the appearance of whoever they strike.
 	name = "envy's knife"
 	desc = "Their success will be yours."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "render"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -134,7 +121,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
-/obj/item/kitchen/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
+/obj/item/knife/envy/afterattack(atom/movable/AM, mob/living/carbon/human/user, proximity)
 	. = ..()
 	if(!proximity)
 		return
@@ -147,5 +134,5 @@
 			H.dna.transfer_identity(user, transfer_SE=1)
 			user.updateappearance(mutcolor_update=1)
 			user.domutcheck()
-			user.visible_message("<span class='warning'>[user]'s appearance shifts into [H]'s!</span>", \
-			"<span class='boldannounce'>[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't.</span>")
+			user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \
+			span_boldannounce("[H.p_they(TRUE)] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))

@@ -1,5 +1,5 @@
 import { AppTechweb } from './Techweb.js';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { createLogger } from '../logging';
 
 const logger = createLogger('backend');

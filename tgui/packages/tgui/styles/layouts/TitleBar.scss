@@ -35,6 +35,7 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
 
 .TitleBar__title {
   position: absolute;
+  display: inline-block;
   top: 0;
   left: 46px;
   left: base.rem(46px);
@@ -44,6 +45,14 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   line-height: 31px;
   line-height: base.rem(31px);
   white-space: nowrap;
+  pointer-events: none;
+}
+
+.TitleBar__buttons {
+  pointer-events: initial;
+  display: inline-block;
+  width: 100%;
+  margin-left: 10px;
 }
 
 .TitleBar__dragZone {

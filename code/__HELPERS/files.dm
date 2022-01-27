@@ -1,3 +1,10 @@
+/**
+ * For FTP requests. (i.e. downloading runtime logs.)
+ *
+ * However it'd be ok to use for accessing attack logs and such too, which are even laggier.
+ */
+GLOBAL_VAR_INIT(fileaccess_timer, 0)
+
 /client/proc/browse_files(root_type=BROWSE_ROOT_ALL_LOGS, max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
 	// wow why was this ever a parameter
 	var/root = "data/logs/"
@@ -8,12 +15,12 @@
 			root = "[GLOB.log_directory]/"
 	var/path = root
 
-	for(var/i=0, i<max_iterations, i++)
+	for(var/i in 1 to max_iterations)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
 
-		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sortList(choices)
+		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in sort_list(choices)
 		switch(choice)
 			if(null)
 				return
@@ -84,7 +91,27 @@
 	var/static/notch = 0
 	// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
-	notch = WRAP(notch+1, 0, 2^15)
+	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
 	. = md5filepath(filename)
 	fdel(filename)
+
+/**
+ * Sanitizes the name of each node in the path.
+ *
+ * Im case you are wondering when to use this proc and when to use SANITIZE_FILENAME,
+ *
+ * You use SANITIZE_FILENAME to sanitize the name of a file [e.g. example.txt]
+ *
+ * You use sanitize_filepath sanitize the path of a file [e.g. root/node/example.txt]
+ *
+ * If you use SANITIZE_FILENAME to sanitize a file path things will break.
+ */
+/proc/sanitize_filepath(path)
+	. = ""
+	var/delimiter = "/" //Very much intentionally hardcoded
+	var/list/all_nodes = splittext(path, delimiter)
+	for(var/node in all_nodes)
+		if(.)
+			. += delimiter // Add the delimiter before each successive node.
+		. += SANITIZE_FILENAME(node)

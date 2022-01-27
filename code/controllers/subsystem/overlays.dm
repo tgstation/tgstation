@@ -7,12 +7,8 @@ SUBSYSTEM_DEF(overlays)
 
 	var/list/queue
 	var/list/stats
-	var/list/overlay_icon_state_caches
-	var/list/overlay_icon_cache
 
 /datum/controller/subsystem/overlays/PreInit()
-	overlay_icon_state_caches = list()
-	overlay_icon_cache = list()
 	queue = list()
 	stats = list()
 
@@ -32,8 +28,6 @@ SUBSYSTEM_DEF(overlays)
 
 
 /datum/controller/subsystem/overlays/Recover()
-	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
-	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	queue = SSoverlays.queue
 
 
@@ -65,36 +59,21 @@ SUBSYSTEM_DEF(overlays)
 				break
 		else
 			CHECK_TICK
-
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0
 
+
 /proc/iconstate2appearance(icon, iconstate)
 	var/static/image/stringbro = new()
-	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
-	var/list/cached_icon = icon_states_cache[icon]
-	if (cached_icon)
-		var/cached_appearance = cached_icon["[iconstate]"]
-		if (cached_appearance)
-			return cached_appearance
 	stringbro.icon = icon
 	stringbro.icon_state = iconstate
-	if (!cached_icon) //not using the macro to save an associated lookup
-		cached_icon = list()
-		icon_states_cache[icon] = cached_icon
-	var/cached_appearance = stringbro.appearance
-	cached_icon["[iconstate]"] = cached_appearance
-	return cached_appearance
+	return stringbro.appearance
 
 /proc/icon2appearance(icon)
 	var/static/image/iconbro = new()
-	var/list/icon_cache = SSoverlays.overlay_icon_cache
-	. = icon_cache[icon]
-	if (!.)
-		iconbro.icon = icon
-		. = iconbro.appearance
-		icon_cache[icon] = .
+	iconbro.icon = icon
+	return iconbro.appearance
 
 /atom/proc/build_appearance_list(old_overlays)
 	var/static/image/appearance_bro = new()
@@ -105,6 +84,14 @@ SUBSYSTEM_DEF(overlays)
 		if(!overlay)
 			continue
 		if (istext(overlay))
+#ifdef UNIT_TESTS
+			// This is too expensive to run normally but running it during CI is a good test
+			var/list/icon_states_available = icon_states(icon)
+			if(!(overlay in icon_states_available))
+				var/icon_file = "[icon]" || "Unknown Generated Icon"
+				stack_trace("Invalid overlay: Icon object '[icon_file]' [REF(icon)] used in '[src]' [type] is missing icon state [overlay].")
+				continue
+#endif
 			new_overlays += iconstate2appearance(icon, overlay)
 		else if(isicon(overlay))
 			new_overlays += icon2appearance(overlay)

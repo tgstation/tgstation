@@ -9,13 +9,13 @@
 	idle_power_usage = 2
 	active_power_usage = 4
 	max_integrity = 300
-	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, RAD = 0, FIRE = 100, ACID = 70)
+	armor = list(MELEE = 50, BULLET = 30, LASER = 70, ENERGY = 50, BOMB = 20, BIO = 0, FIRE = 100, ACID = 70)
 	resistance_flags = FIRE_PROOF
 	var/id = null
 	var/on = FALSE
 
-/obj/machinery/igniter/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+/obj/machinery/igniter/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
 
 /obj/machinery/igniter/incinerator_atmos
 	id = INCINERATOR_ATMOS_IGNITER
@@ -44,7 +44,7 @@
 			location.hotspot_expose(1000,500,1)
 	return 1
 
-/obj/machinery/igniter/Initialize()
+/obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	icon_state = "igniter[on]"
 
@@ -69,10 +69,12 @@
 	var/last_spark = 0
 	var/datum/effect_system/spark_spread/spark_system
 
-/obj/machinery/sparker/toxmix
-	id = INCINERATOR_TOXMIX_IGNITER
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 
-/obj/machinery/sparker/Initialize()
+/obj/machinery/sparker/ordmix
+	id = INCINERATOR_ORDMIX_IGNITER
+
+/obj/machinery/sparker/Initialize(mapload)
 	. = ..()
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -94,17 +96,16 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
-	if (W.tool_behaviour == TOOL_SCREWDRIVER)
-		add_fingerprint(user)
-		disable = !disable
-		if (disable)
-			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
-		if (!disable)
-			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
-		update_appearance()
-	else
-		return ..()
+/obj/machinery/sparker/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	tool.play_tool_sound(src, 50)
+	disable = !disable
+	if (disable)
+		user.visible_message(span_notice("[user] disables \the [src]!"), span_notice("You disable the connection to \the [src]."))
+	if (!disable)
+		user.visible_message(span_notice("[user] reconnects \the [src]!"), span_notice("You fix the connection to \the [src]."))
+	update_appearance()
+	return TRUE
 
 /obj/machinery/sparker/attack_ai()
 	if (anchored)

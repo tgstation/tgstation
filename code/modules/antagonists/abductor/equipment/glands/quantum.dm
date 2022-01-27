@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/quantum
-	true_name = "quantic de-observation matrix"
+	abductor_hint = "quantic de-observation matrix. Periodically links with a random person in view, then the abductee later swaps positions with that person."
 	cooldown_low = 150
 	cooldown_high = 150
 	uses = -1
@@ -23,18 +23,18 @@
 		entangled_mob = null
 		return
 	var/turf/T = get_turf(owner)
-	do_teleport(owner, get_turf(entangled_mob),null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
-	do_teleport(entangled_mob, T,null,TRUE,channel = TELEPORT_CHANNEL_QUANTUM)
-	to_chat(owner, "<span class='warning'>You suddenly find yourself somewhere else!</span>")
-	to_chat(entangled_mob, "<span class='warning'>You suddenly find yourself somewhere else!</span>")
+	do_teleport(owner, get_turf(entangled_mob), null, channel = TELEPORT_CHANNEL_QUANTUM)
+	do_teleport(entangled_mob, T, null, channel = TELEPORT_CHANNEL_QUANTUM)
+	to_chat(owner, span_warning("You suddenly find yourself somewhere else!"))
+	to_chat(entangled_mob, span_warning("You suddenly find yourself somewhere else!"))
 	if(!active_mind_control) //Do not reset entangled mob while mind control is active
 		entangled_mob = null
 
 /obj/item/organ/heart/gland/quantum/mind_control(command, mob/living/user)
 	if(..())
 		if(entangled_mob && ishuman(entangled_mob) && (entangled_mob.stat < DEAD))
-			to_chat(entangled_mob, "<span class='userdanger'>You suddenly feel an irresistible compulsion to follow an order...</span>")
-			to_chat(entangled_mob, "<span class='mind_control'>[command]</span>")
+			to_chat(entangled_mob, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
+			to_chat(entangled_mob, span_mind_control("[command]"))
 			var/atom/movable/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert("mind_control", /atom/movable/screen/alert/mind_control)
 			mind_alert.command = command
 			message_admins("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
@@ -43,6 +43,6 @@
 
 /obj/item/organ/heart/gland/quantum/clear_mind_control()
 	if(active_mind_control)
-		to_chat(entangled_mob, "<span class='userdanger'>You feel the compulsion fade, and you completely forget about your previous orders.</span>")
+		to_chat(entangled_mob, span_userdanger("You feel the compulsion fade, and you completely forget about your previous orders."))
 		entangled_mob.clear_alert("mind_control")
 	..()

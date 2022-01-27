@@ -26,9 +26,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "ha" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "hv" = (
@@ -39,7 +37,7 @@
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "ii" = (
-/obj/effect/mob_spawn/human/hermit,
+/obj/effect/mob_spawn/ghost_role/human/hermit,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "lH" = (
@@ -65,12 +63,8 @@
 /area/ruin/powered/shuttle)
 "sM" = (
 /obj/structure/chair/comfy/beige,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/west,
+/obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/shuttle)
 "wH" = (
@@ -110,9 +104,7 @@
 /area/ruin/powered/shuttle)
 "ON" = (
 /obj/machinery/hydroponics/soil,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "OU" = (
@@ -128,7 +120,7 @@
 "UL" = (
 /obj/item/pickaxe/improvised,
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/combat,
+/obj/item/knife/combat,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Wb" = (
@@ -148,9 +140,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "XI" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "Yi" = (

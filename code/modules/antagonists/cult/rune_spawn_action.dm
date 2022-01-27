@@ -23,13 +23,13 @@
 	if(!T)
 		return FALSE
 	if(isspaceturf(T))
-		to_chat(owner, "<span class='warning'>You cannot scribe runes in space!</span>")
+		to_chat(owner, span_warning("You cannot scribe runes in space!"))
 		return FALSE
 	if(locate(/obj/effect/rune) in T)
-		to_chat(owner, "<span class='cult'>There is already a rune here.</span>")
+		to_chat(owner, span_cult("There is already a rune here."))
 		return FALSE
 	if(!is_station_level(T.z) && !is_mining_level(T.z))
-		to_chat(owner, "<span class='warning'>The veil is not weak enough here.</span>")
+		to_chat(owner, span_warning("The veil is not weak enough here."))
 		return FALSE
 	return TRUE
 
@@ -39,20 +39,20 @@
 	if(turf_check(T))
 		var/chosen_keyword
 		if(initial(rune_type.req_keyword))
-			chosen_keyword = stripped_input(owner, "Enter a keyword for the new rune.", "Words of Power")
+			chosen_keyword = tgui_input_text(owner, "Enter a keyword for the new rune.", "Words of Power", max_length = MAX_NAME_LEN)
 			if(!chosen_keyword)
 				return
 	//the outer ring is always the same across all runes
 		var/obj/effect/temp_visual/cult/rune_spawn/R1 = new(T, scribe_time, rune_color)
 	//the rest are not always the same, so we need types for em
 		var/obj/effect/temp_visual/cult/rune_spawn/R2
-		if(rune_word_type)
+		if(ispath(rune_word_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R2 = new rune_word_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R3
-		if(rune_innerring_type)
+		if(ispath(rune_innerring_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R3 = new rune_innerring_type(T, scribe_time, rune_color)
 		var/obj/effect/temp_visual/cult/rune_spawn/R4
-		if(rune_center_type)
+		if(ispath(rune_center_type, /obj/effect/temp_visual/cult/rune_spawn))
 			R4 = new rune_center_type(T, scribe_time, rune_color)
 
 		cooldown = base_cooldown + world.time
@@ -67,8 +67,7 @@
 			scribe_mod *= 0.5
 		playsound(T, 'sound/magic/enter_blood.ogg', 100, FALSE)
 		if(do_after(owner, scribe_mod, target = owner, extra_checks = CALLBACK(owner, /mob.proc/break_do_after_checks, health, action_interrupt)))
-			var/obj/effect/rune/new_rune = new rune_type(owner.loc)
-			new_rune.keyword = chosen_keyword
+			new rune_type(owner.loc, chosen_keyword)
 		else
 			qdel(R1)
 			if(R2)

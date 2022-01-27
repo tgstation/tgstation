@@ -1,0 +1,1049 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"au" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"az" = (
+/obj/item/food/grown/coffee,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"aG" = (
+/obj/structure/sign/warning/coldtemp,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"ba" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
+"bK" = (
+/obj/structure/holobox,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"cg" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"ch" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"dC" = (
+/obj/effect/turf_decal/siding/yellow,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/machinery/vending/coffee,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"dG" = (
+/turf/template_noop,
+/area/template_noop)
+"dR" = (
+/obj/structure/fence,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"ft" = (
+/obj/structure/holobox,
+/obj/effect/turf_decal/stripes/red/box,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"gi" = (
+/obj/structure/holobox,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"gO" = (
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 4
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/powered/mailroom)
+"hj" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/item/storage/fancy/heart_box,
+/obj/item/food/tinychocolate,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"hk" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"hN" = (
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"iO" = (
+/obj/item/food/grown/coffee/robusta,
+/obj/machinery/light_switch/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"iV" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"jh" = (
+/obj/structure/closet/crate/bin,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"jm" = (
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"jx" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/flashlight/glowstick/orange,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"kZ" = (
+/obj/structure/filingcabinet/chestdrawer/wheeled,
+/obj/item/valentine,
+/obj/item/grenade/c4,
+/obj/item/clothing/accessory/medal/conduct,
+/obj/item/paper/crumpled/muddy/fluff/instructions,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"lw" = (
+/obj/machinery/modular_computer/console/preset/civilian{
+	dir = 8
+	},
+/turf/open/floor/carpet/green,
+/area/ruin/powered/mailroom)
+"lI" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/underground/unexplored)
+"ms" = (
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"mA" = (
+/obj/structure/fence/corner,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"np" = (
+/obj/machinery/ticket_machine/directional/north,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"nM" = (
+/obj/machinery/telecomms/relay/preset/mining,
+/obj/effect/turf_decal/siding/thinplating,
+/turf/open/floor/iron,
+/area/ruin/powered/mailroom)
+"nS" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"nT" = (
+/turf/closed/indestructible/rock,
+/area/icemoon/underground/explored)
+"oI" = (
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"oU" = (
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"pd" = (
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/explored)
+"qp" = (
+/obj/item/pressure_plate/hologrid{
+	reward = /obj/item/keycard/icebox/office
+	},
+/obj/effect/turf_decal/trimline/brown/arrow_ccw{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/mailroom)
+"qv" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/explored)
+"qP" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/light/small/red/directional/west,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"tN" = (
+/obj/effect/turf_decal/plaque,
+/turf/open/floor/carpet/green,
+/area/ruin/powered/mailroom)
+"uA" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"uI" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/floor/carpet/green,
+/area/ruin/powered/mailroom)
+"uK" = (
+/obj/effect/decal/cleanable/plasma,
+/obj/machinery/light/small/red/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"vU" = (
+/obj/structure/sign/departments/cargo,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"vV" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"wc" = (
+/obj/effect/turf_decal/trimline/yellow/arrow_ccw{
+	dir = 4
+	},
+/obj/item/pressure_plate/hologrid{
+	reward = /mob/living/simple_animal/pet/dog/bullterrier
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/mailroom)
+"xL" = (
+/obj/item/trash/can,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"yb" = (
+/obj/item/screwdriver{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"zr" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"AP" = (
+/obj/structure/closet/crate/secure,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"AS" = (
+/obj/structure/filingcabinet,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"AX" = (
+/obj/structure/sign/warning/nosmoking/circle,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"BZ" = (
+/obj/effect/turf_decal/trimline/white/arrow_ccw{
+	dir = 4
+	},
+/obj/item/pressure_plate/hologrid{
+	reward = /obj/item/toy/plush/moth
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/mailroom)
+"CW" = (
+/obj/structure/sign/poster/official/obey,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"DR" = (
+/obj/structure/fence/post{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"DY" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/machinery/door/window{
+	dir = 2
+	},
+/obj/structure/window/spawner/east,
+/obj/item/toy/figure/cargotech,
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/mailroom/waiting,
+/turf/open/floor/noslip,
+/area/ruin/powered/mailroom)
+"FC" = (
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"Gn" = (
+/obj/structure/sign/poster/ripped,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"HH" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 4
+	},
+/area/ruin/powered/mailroom)
+"HL" = (
+/obj/structure/table/greyscale,
+/obj/item/flashlight/lamp,
+/obj/item/trash/candle,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"IZ" = (
+/obj/item/food/strawberryicecreamsandwich,
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
+/area/ruin/powered/mailroom)
+"Jd" = (
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"Js" = (
+/obj/structure/fence/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"KK" = (
+/obj/machinery/light/cold/directional/east,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"LN" = (
+/obj/machinery/door/airlock/mining/glass,
+/turf/open/floor/noslip,
+/area/ruin/powered/mailroom)
+"Mi" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"Mr" = (
+/obj/machinery/computer/launchpad,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"Mz" = (
+/turf/open/floor/iron/smooth_half,
+/area/ruin/powered/mailroom)
+"MC" = (
+/obj/effect/decal/cleanable/wrapping,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/iron/smooth_half,
+/area/ruin/powered/mailroom)
+"MP" = (
+/obj/structure/filingcabinet,
+/obj/effect/turf_decal/siding/thinplating/corner{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"MT" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/light/cold/directional/north,
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
+"Nq" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/obj/machinery/light/cold/directional/south,
+/obj/item/clothing/suit/hooded/wintercoat,
+/turf/open/floor/iron/textured,
+/area/ruin/powered/mailroom)
+"NE" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_corner,
+/area/ruin/powered/mailroom)
+"NN" = (
+/turf/open/floor/carpet/green,
+/area/ruin/powered/mailroom)
+"Pk" = (
+/obj/item/multitool,
+/obj/structure/ice_stasis,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"PD" = (
+/obj/structure/holobox,
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"PO" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/turf_decal/siding/thinplating/corner,
+/obj/item/paper/crumpled/fluff/poem,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"PQ" = (
+/obj/machinery/door/keycard/icebox/processing,
+/turf/open/floor/plating/grass,
+/area/ruin/powered/mailroom)
+"Qb" = (
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"Qx" = (
+/obj/structure/sign/poster/official/obey,
+/turf/closed/wall/r_wall,
+/area/ruin/powered/mailroom)
+"QU" = (
+/obj/effect/turf_decal/bot,
+/obj/item/pressure_plate/hologrid{
+	reward = /obj/item/keycard/icebox/processing
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/mailroom)
+"Rn" = (
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"Se" = (
+/obj/item/ticket_machine_ticket,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"SA" = (
+/obj/structure/table/greyscale,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"SY" = (
+/obj/machinery/launchpad,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"To" = (
+/obj/effect/decal/cleanable/wrapping,
+/obj/item/c_tube,
+/obj/effect/turf_decal/siding/yellow,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"TN" = (
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/door/keycard/icebox/office,
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"UB" = (
+/obj/structure/flora/rock/icy,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"US" = (
+/obj/item/food/grown/coffee/robusta,
+/turf/open/floor/iron/smooth_half,
+/area/ruin/powered/mailroom)
+"Vq" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Vz" = (
+/obj/item/paper_bin{
+	pixel_y = 5
+	},
+/obj/structure/table/rolling,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"VG" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/obj/effect/turf_decal/stripes/red/box,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/ruin/powered/mailroom)
+"Wj" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/ice{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"Wr" = (
+/obj/structure/closet/crate/mail{
+	icon_state = "mailopen"
+	},
+/obj/effect/turf_decal/siding/yellow,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/obj/item/mail/junkmail,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/powered/mailroom)
+"WE" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered/mailroom)
+"Xa" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/indestructible/reinforced,
+/area/ruin/powered/mailroom)
+"XO" = (
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/ruin/powered/mailroom)
+"XU" = (
+/turf/open/floor/iron/white,
+/area/ruin/powered/mailroom)
+"Yk" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/ruin/powered/mailroom)
+"YS" = (
+/obj/structure/fence/door,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"Ze" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+"ZV" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered/mailroom)
+
+(1,1,1) = {"
+dG
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+dG
+dG
+dG
+dG
+"}
+(2,1,1) = {"
+lI
+yb
+zr
+qv
+pd
+iV
+lI
+iV
+iV
+qv
+zr
+lI
+iV
+iV
+iV
+iV
+lI
+lI
+lI
+lI
+dG
+"}
+(3,1,1) = {"
+lI
+iV
+nT
+iV
+iV
+iV
+iV
+iV
+iV
+iV
+zr
+lI
+Pk
+lI
+iV
+iV
+iV
+iV
+iV
+iV
+lI
+"}
+(4,1,1) = {"
+iV
+iV
+zr
+bK
+iV
+iV
+iV
+iV
+iV
+pd
+zr
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+iV
+lI
+"}
+(5,1,1) = {"
+iV
+iV
+zr
+qv
+iV
+xL
+pd
+iV
+pd
+qv
+YS
+iV
+iV
+iV
+iV
+lI
+lI
+iV
+iV
+iV
+lI
+"}
+(6,1,1) = {"
+iV
+iV
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+iV
+iV
+iV
+lI
+lI
+iV
+lI
+lI
+"}
+(7,1,1) = {"
+lI
+iV
+ms
+ms
+ms
+Gn
+ms
+ms
+ms
+ms
+ms
+Yk
+ms
+dR
+Js
+iV
+lI
+lI
+iV
+iV
+lI
+"}
+(8,1,1) = {"
+lI
+iV
+ms
+SY
+iO
+MC
+Wr
+Xa
+Wj
+ch
+Mi
+jx
+ms
+UB
+DR
+iV
+iV
+lI
+lI
+iV
+lI
+"}
+(9,1,1) = {"
+lI
+iV
+ms
+Mr
+NE
+IZ
+az
+TN
+XU
+XU
+XU
+Se
+DY
+iV
+DR
+iV
+iV
+iV
+iV
+iV
+lI
+"}
+(10,1,1) = {"
+lI
+iV
+ms
+Vz
+Mz
+hN
+dC
+WE
+np
+Se
+XU
+XU
+LN
+iV
+YS
+iV
+iV
+iV
+iV
+iV
+lI
+"}
+(11,1,1) = {"
+lI
+iV
+CW
+jh
+XO
+HH
+Jd
+AX
+MT
+ba
+ba
+Nq
+vU
+iV
+zr
+iV
+iV
+iV
+lI
+lI
+lI
+"}
+(12,1,1) = {"
+iV
+iV
+ms
+jm
+vV
+US
+To
+aG
+QU
+BZ
+wc
+qp
+ms
+dR
+mA
+iV
+iV
+iV
+lI
+lI
+lI
+"}
+(13,1,1) = {"
+lI
+iV
+ms
+Yk
+Yk
+Yk
+Yk
+ms
+ms
+Qx
+ms
+ms
+ms
+ms
+ms
+ms
+ms
+iV
+iV
+iV
+lI
+"}
+(14,1,1) = {"
+lI
+iV
+ms
+cg
+Qb
+cg
+cg
+PD
+qP
+cg
+ms
+AS
+FC
+Rn
+au
+hj
+ms
+iV
+iV
+iV
+lI
+"}
+(15,1,1) = {"
+lI
+iV
+ms
+nS
+nS
+nS
+nS
+nS
+nS
+uA
+ms
+Ze
+NN
+NN
+lw
+HL
+ms
+Vq
+iV
+lI
+lI
+"}
+(16,1,1) = {"
+lI
+iV
+ms
+uK
+nS
+nS
+nS
+nS
+nS
+nS
+ms
+PO
+NN
+tN
+uI
+Rn
+PQ
+iV
+iV
+lI
+lI
+"}
+(17,1,1) = {"
+lI
+iV
+ms
+AP
+nS
+nS
+oU
+nS
+nS
+nS
+ms
+nM
+NN
+NN
+gO
+SA
+ms
+iV
+iV
+iV
+lI
+"}
+(18,1,1) = {"
+lI
+iV
+ms
+ft
+nS
+VG
+nS
+VG
+oI
+gi
+ms
+MP
+hk
+KK
+ZV
+kZ
+ms
+iV
+iV
+iV
+lI
+"}
+(19,1,1) = {"
+iV
+iV
+ms
+ms
+CW
+ms
+ms
+Gn
+ms
+ms
+ms
+Gn
+CW
+Gn
+CW
+CW
+ms
+iV
+iV
+lI
+lI
+"}
+(20,1,1) = {"
+lI
+iV
+iV
+iV
+lI
+lI
+lI
+iV
+iV
+iV
+iV
+iV
+lI
+iV
+iV
+iV
+iV
+iV
+iV
+lI
+lI
+"}
+(21,1,1) = {"
+lI
+iV
+UB
+iV
+lI
+lI
+iV
+iV
+UB
+iV
+lI
+iV
+iV
+iV
+lI
+lI
+lI
+iV
+iV
+iV
+lI
+"}
+(22,1,1) = {"
+dG
+lI
+lI
+iV
+iV
+iV
+iV
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+lI
+dG
+lI
+iV
+lI
+lI
+dG
+"}

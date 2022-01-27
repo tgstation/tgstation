@@ -3,11 +3,12 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	job_rank = ROLE_OBSESSED
-	antag_hud_type = ANTAG_HUD_OBSESSED
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
+	suicide_cry = "FOR MY LOVE!!"
+	preview_outfit = /datum/outfit/obsessed
 	var/datum/brain_trauma/special/obsessed/trauma
 
 /datum/antagonist/obsessed/admin_add(datum/mind/new_owner,mob/admin)
@@ -27,7 +28,7 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 	var/policy = get_policy(ROLE_OBSESSED)
 	if(policy)
-		to_chat(policy)
+		to_chat(owner, policy)
 	owner.announce_objectives()
 
 /datum/antagonist/obsessed/Destroy()
@@ -35,30 +36,58 @@
 		qdel(trauma)
 	. = ..()
 
-/datum/antagonist/obsessed/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
+/datum/antagonist/obsessed/get_preview_icon()
+	var/mob/living/carbon/human/dummy/consistent/victim_dummy = new
+	victim_dummy.hair_color = "#bb9966" // Brown
+	victim_dummy.hairstyle = "Messy"
+	victim_dummy.update_hair()
 
-/datum/antagonist/obsessed/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
+	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
+	obsessed_icon.Blend(icon('icons/effects/blood.dmi', "uniformblood"), ICON_OVERLAY)
+
+	var/icon/final_icon = finish_preview_icon(obsessed_icon)
+
+	final_icon.Blend(
+		icon('icons/ui_icons/antags/obsessed.dmi', "obsession"),
+		ICON_OVERLAY,
+		ANTAGONIST_PREVIEW_ICON_SIZE - 30,
+		20,
+	)
+
+	return final_icon
+
+/datum/outfit/obsessed
+	name = "Obsessed (Preview only)"
+
+	uniform = /obj/item/clothing/under/misc/overalls
+	gloves = /obj/item/clothing/gloves/color/latex
+	mask = /obj/item/clothing/mask/surgical
+	neck = /obj/item/camera
+	suit = /obj/item/clothing/suit/apron
+
+/datum/outfit/obsessed/post_equip(mob/living/carbon/human/H)
+	for(var/obj/item/carried_item in H.get_equipped_items(TRUE))
+		carried_item.add_mob_blood(H)//Oh yes, there will be blood...
+	H.regenerate_icons()
 
 /datum/antagonist/obsessed/proc/forge_objectives(datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner
 	kill.target = obsessionmind
-	var/datum/quirk/family_heirloom/family_heirloom
+	var/obj/family_heirloom
 
-	for(var/datum/quirk/quirky in obsessionmind.current.roundstart_quirks)
-		if(istype(quirky, /datum/quirk/family_heirloom))
-			family_heirloom = quirky
+	for(var/datum/quirk/quirky in obsessionmind.current.quirks)
+		if(istype(quirky, /datum/quirk/item_quirk/family_heirloom))
+			var/datum/quirk/item_quirk/family_heirloom/heirloom_quirk = quirky
+			family_heirloom = heirloom_quirk.heirloom?.resolve()
 			break
-	if(family_heirloom)//oh, they have an heirloom? Well you know we have to steal that.
+	if(family_heirloom)
 		objectives_left += "heirloom"
 
-	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain")
-		objectives_left += "jealous"//if they have no coworkers, jealousy will pick someone else on the station. this will never be a free objective, nice.
+	// If they have no coworkers, jealousy will pick someone else on the station. This will never be a free objective.
+	if(!is_captain_job(obsessionmind.assigned_role))
+		objectives_left += "jealous"
 
 	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
@@ -83,7 +112,7 @@
 				var/datum/objective/steal/heirloom_thief/heirloom_thief = new
 				heirloom_thief.owner = owner
 				heirloom_thief.target = obsessionmind//while you usually wouldn't need this for stealing, we need the name of the obsession
-				heirloom_thief.steal_target = family_heirloom.heirloom
+				heirloom_thief.steal_target = family_heirloom
 				objectives += heirloom_thief
 			if("jealous")
 				var/datum/objective/assassinate/jealous/jealous = new
@@ -115,11 +144,11 @@
 				break
 	if(trauma)
 		if(trauma.total_time_creeping > 0)
-			report += "<span class='greentext'>The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!</span>"
+			report += span_greentext("The [name] spent a total of [DisplayTimeText(trauma.total_time_creeping)] being near [trauma.obsession]!")
 		else
-			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive!</span>"
+			report += span_redtext("The [name] did not go near their obsession the entire round! That's extremely impressive!")
 	else
-		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
+		report += span_redtext("The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!")
 
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
@@ -137,7 +166,7 @@
 /datum/objective/assassinate/obsessed/update_explanation_text()
 	..()
 	if(target?.current)
-		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] obsessed objectives forged without an obsession!")
 		explanation_text = "Free Objective"
@@ -153,54 +182,29 @@
 	else
 		explanation_text = "Free Objective"
 
+
 /datum/objective/assassinate/jealous/proc/find_coworker(datum/mind/oldmind)//returning null = free objective
-	if(!oldmind.assigned_role)
+	if(is_unassigned_job(oldmind.assigned_role))
 		return
 	var/list/viable_coworkers = list()
 	var/list/all_coworkers = list()
-	var/chosen_department
-	var/their_chosen_department
-	//note that command and sillycone are gone because borgs can't be obsessions and the heads have their respective department. Sorry cap, your place is more with centcom or something
-	if(oldmind.assigned_role in GLOB.security_positions)
-		chosen_department = "security"
-	if(oldmind.assigned_role in GLOB.engineering_positions)
-		chosen_department = "engineering"
-	if(oldmind.assigned_role in GLOB.medical_positions)
-		chosen_department = "medical"
-	if(oldmind.assigned_role in GLOB.science_positions)
-		chosen_department = "science"
-	if(oldmind.assigned_role in GLOB.supply_positions)
-		chosen_department = "supply"
-	if(oldmind.assigned_role in GLOB.service_positions)
-		chosen_department = "service"
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(!H.mind)
+	var/our_departments = oldmind.assigned_role.departments_bitflags
+	for(var/mob/living/carbon/human/human_alive in GLOB.alive_mob_list)
+		if(!human_alive.mind)
 			continue
-		if(!SSjob.GetJob(H.mind.assigned_role) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/obsessed))
+		if(human_alive == oldmind.current || human_alive.mind.assigned_role.faction != FACTION_STATION || human_alive.mind.has_antag_datum(/datum/antagonist/obsessed))
 			continue //the jealousy target has to have a job, and not be the obsession or obsessed.
-		all_coworkers += H.mind
-		//this won't be called often thankfully.
-		if(H.mind.assigned_role in GLOB.security_positions)
-			their_chosen_department = "security"
-		if(H.mind.assigned_role in GLOB.engineering_positions)
-			their_chosen_department = "engineering"
-		if(H.mind.assigned_role in GLOB.medical_positions)
-			their_chosen_department = "medical"
-		if(H.mind.assigned_role in GLOB.science_positions)
-			their_chosen_department = "science"
-		if(H.mind.assigned_role in GLOB.supply_positions)
-			their_chosen_department = "supply"
-		if(H.mind.assigned_role in GLOB.service_positions)
-			their_chosen_department = "service"
-		if(their_chosen_department != chosen_department)
+		all_coworkers += human_alive.mind
+		if(!(our_departments & human_alive.mind.assigned_role.departments_bitflags))
 			continue
-		viable_coworkers += H.mind
+		viable_coworkers += human_alive.mind
 
-	if(viable_coworkers.len > 0)//find someone in the same department
+	if(length(viable_coworkers))//find someone in the same department
 		target = pick(viable_coworkers)
-	else if(all_coworkers.len > 0)//find someone who works on the station
+	else if(length(all_coworkers))//find someone who works on the station
 		target = pick(all_coworkers)
 	return oldmind
+
 
 /datum/objective/spendtime //spend some time around someone, handled by the obsessed trauma since that ticks
 	name = "spendtime"
@@ -255,11 +259,11 @@
 	for(var/datum/mind/M in owners)
 		if(!isliving(M.current))
 			continue
-		var/list/all_items = M.current.GetAllContents() //this should get things in cheesewheels, books, etc.
+		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(istype(I, /obj/item/photo))
 				var/obj/item/photo/P = I
-				if(P.picture && (target.current in P.picture.mobs_seen) && !(target.current in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
+				if(P.picture && (WEAKREF(target.current) in P.picture.mobs_seen) && !(WEAKREF(target.current) in P.picture.dead_seen)) //Does the picture exist and is the target in it and is the target not dead
 					return TRUE
 	return FALSE
 

@@ -7,6 +7,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -17,6 +18,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/ice = 4)
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 
 
 /obj/item/food/spacefreezy
@@ -75,6 +77,7 @@
 	food_reagents = list(/datum/reagent/water = 11) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
+	food_flags = FOOD_FINGER_FOOD
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -162,6 +165,7 @@
 	icon_state = "mime_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nothing = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "nothing" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/clown
 	name = "clown snowcone"
@@ -169,6 +173,7 @@
 	icon_state = "clown_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/laughter = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "jokes" = 5, "brainfreeze" = 5, "joy" = 5)
+	foodtypes = SUGAR | FRUIT
 
 /obj/item/food/snowcones/soda
 	name = "space cola snowcone"
@@ -176,6 +181,7 @@
 	icon_state = "soda_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/space_cola = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "cola" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/spacemountainwind
 	name = "Space Mountain Wind snowcone"
@@ -183,6 +189,7 @@
 	icon_state = "mountainwind_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/spacemountainwind = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "mountain wind" = 5)
+	foodtypes = SUGAR
 
 
 /obj/item/food/snowcones/pwrgame
@@ -191,6 +198,7 @@
 	icon_state = "pwrgame_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/pwr_game = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "valid" = 5, "salt" = 5, "wats" = 5)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/honey
 	name = "honey snowcone"
@@ -198,6 +206,7 @@
 	icon_state = "amber_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/honey = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "flowers" = 5, "sweetness" = 5, "wax" = 1)
+	foodtypes = SUGAR
 
 /obj/item/food/snowcones/rainbow
 	name = "rainbow snowcone"
@@ -205,6 +214,7 @@
 	icon_state = "rainbow_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/laughter = 25, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "sunlight" = 5, "light" = 5, "slime" = 5, "paint" = 3, "clouds" = 3)
+	foodtypes = SUGAR
 
 /obj/item/food/popsicle
 	name = "bug popsicle"
@@ -215,14 +225,18 @@
 	tastes = list("beetlejuice")
 	trash_type = /obj/item/popsicle_stick
 	w_class = WEIGHT_CLASS_SMALL
+	foodtypes = DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
+
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
 	var/bitecount = 0
-	foodtypes = DAIRY | SUGAR
 
-/obj/item/food/popsicle/Initialize()
+
+/obj/item/food/popsicle/Initialize(mapload)
 	. = ..()
 	bite_consumption = reagents.total_volume / bite_states
+	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/MakeEdible()
 	AddComponent(/datum/component/edible,\
@@ -254,8 +268,8 @@
 	name = "popsicle stick"
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "popsicle_stick"
-	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this atlassian burden."
-	custom_materials = list(/datum/material/wood=20)
+	desc = "This humble little stick usually carries a frozen treat, at the moment it seems freed from this Atlassian burden."
+	custom_materials = list(/datum/material/wood = 20)
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 
@@ -274,13 +288,13 @@
 
 /obj/item/food/popsicle/jumbo
 	name = "jumbo icecream"
-	desc = "A luxurius icecream covered in rich chocolate. It seems smaller than you remember it being."
+	desc = "A luxurious icecream covered in rich chocolate. It seems smaller than you remember it being."
 	food_reagents = list(/datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 3, /datum/reagent/consumable/sugar = 2)
 	overlay_state = "jumbo"
 
 /obj/item/food/popsicle/nogga_black
 	name = "nogga black"
-	desc = "A salty licorice icecream recently reintroduced due to all the records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
+	desc = "A salty licorice icecream recently reintroduced due to all records of the controversy being lost to time. Those who cannot remember the past are doomed to repeat it."
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/salt = 1,  /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/sugar = 4)
 	tastes = list("salty liquorice")
 	overlay_state = "nogga_black"

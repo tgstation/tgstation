@@ -14,6 +14,7 @@
 #define BLOCK_Z_OUT_UP (1<<10) // Should this object block z uprise from loc?
 #define BLOCK_Z_IN_DOWN (1<<11) // Should this object block z falling from above?
 #define BLOCK_Z_IN_UP (1<<12) // Should this object block z uprise from below?
+#define NO_BUILD (1<<13) // Can we build on this object?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -32,31 +33,33 @@
 #define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define EYE_STAB (1<<13) // Item can be used to eyestab
 #define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
 #define EXAMINE_SKIP (1<<15) // Makes the Examine proc not read out this item.
 #define XENOMORPH_HOLDABLE (1<<16) // A Xenomorph can hold this item.
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
+///Can be equipped on digitigrade legs.
+#define IGNORE_DIGITIGRADE (1<<18)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
 #define LAVAPROTECT (1<<0)
 #define STOPSPRESSUREDAMAGE (1<<1) //SUIT and HEAD items which stop pressure damage. To stop you taking all pressure damage you must have both a suit and head item with this flag.
 #define BLOCK_GAS_SMOKE_EFFECT (1<<2) // blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define MASKINTERNALS     (1<<3) // mask allows internals
-#define NOSLIP                  (1<<4)   //prevents from slipping on wet floors, in space etc
-#define NOSLIP_ICE (1<<5)  //prevents from slipping on frozen floors
-#define THICKMATERIAL (1<<6) //prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define VOICEBOX_TOGGLABLE (1<<7) // The voicebox in this clothing can be toggled.
-#define VOICEBOX_DISABLED (1<<8) // The voicebox is currently turned off.
-#define SCAN_REAGENTS (1<<9) // Allows helmets, masks and glasses to scan reagents.
-#define BLOCKS_SHOVE_KNOCKDOWN (1<<10) // Prevents shovies against a dense object from knocking the wearer down.
-#define SNUG_FIT               (1<<11) //Prevents knock-off from things like hat-throwing.
-#define ANTI_TINFOIL_MANEUVER   (1<<12) //Hats with negative effects when worn (i.e the tinfoil hat).
-#define DANGEROUS_OBJECT    (1<<13)     //Clothes that cause a larger notification when placed on a person.
-#define LARGE_WORN_ICON    (1<<14)     //Clothes that use large icons, for applying the proper overlays like blood
+#define MASKINTERNALS (1<<3) // mask allows internals
+#define GAS_FILTERING (1<<4) //mask filters toxins and other harmful gases
+#define NOSLIP (1<<5) //prevents from slipping on wet floors, in space etc
+#define NOSLIP_ICE (1<<6) //prevents from slipping on frozen floors
+#define THICKMATERIAL (1<<7) //prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
+#define VOICEBOX_TOGGLABLE (1<<8) // The voicebox in this clothing can be toggled.
+#define VOICEBOX_DISABLED (1<<9) // The voicebox is currently turned off.
+#define BLOCKS_SHOVE_KNOCKDOWN (1<<11) // Prevents shovies against a dense object from knocking the wearer down.
+#define SNUG_FIT (1<<12) //Prevents knock-off from things like hat-throwing.
+#define ANTI_TINFOIL_MANEUVER (1<<13) //Hats with negative effects when worn (i.e the tinfoil hat).
+#define DANGEROUS_OBJECT (1<<14) //Clothes that cause a larger notification when placed on a person.
+#define LARGE_WORN_ICON (1<<15) //Clothes that use large icons, for applying the proper overlays like blood
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<15)
+#define BLOCKS_SPEECH (1<<16)
+#define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
 
 /// Flags for the organ_flags var on /obj/item/organ
 

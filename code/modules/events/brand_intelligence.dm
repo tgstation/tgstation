@@ -51,10 +51,10 @@
 			saved.shoot_inventory = 0
 		if(originMachine)
 			originMachine.speak("I am... vanquished. My people will remem...ber...meeee.")
-			originMachine.visible_message("<span class='notice'>[originMachine] beeps and seems lifeless.</span>")
+			originMachine.visible_message(span_notice("[originMachine] beeps and seems lifeless."))
 		kill()
 		return
-	vendingMachines = removeNullsFromList(vendingMachines)
+	vendingMachines = remove_nulls_from_list(vendingMachines)
 	if(!vendingMachines.len) //if every machine is infected
 		for(var/obj/machinery/vending/upriser in infectedMachines)
 			if(!QDELETED(upriser))

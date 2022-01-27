@@ -10,7 +10,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
 
-	var/damage_coeff  = 1
+	var/damage_coeff = 1
 	var/list/fields
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
@@ -22,13 +22,12 @@
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
 			M.dna.remove_mutation(HM)
 		for(var/HM in add_mutations)
 			if(HM == RACEMUT)
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] [span_danger("(MONKEY)")]")
 				log_msg += " (MONKEY)"
 			if(M.dna.mutation_in_sequence(HM))
 				M.dna.activate_mutation(HM)
@@ -41,18 +40,21 @@
 				M.name = M.real_name
 				M.dna.blood_type = fields["blood_type"]
 			if(fields["UI"]) //UI+UE
-				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
-				M.updateappearance(mutations_overlay_update=1)
+				M.dna.unique_identity = merge_text(M.dna.unique_identity, fields["UI"])
+			if(fields["UF"])
+				M.dna.unique_features = merge_text(M.dna.unique_features, fields["UF"])
+			if(fields["UI"] || fields["UF"])
+				M.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE
 
 /obj/item/dnainjector/attack(mob/target, mob/user)
 	if(!ISADVANCEDTOOLUSER(user))
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return
 	if(used)
-		to_chat(user, "<span class='warning'>This injector is used up!</span>")
+		to_chat(user, span_warning("This injector is used up!"))
 		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
@@ -61,20 +63,20 @@
 	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", \
-			"<span class='userdanger'>[user] is trying to inject you with [src]!</span>")
+		target.visible_message(span_danger("[user] is trying to inject [target] with [src]!"), \
+			span_userdanger("[user] is trying to inject you with [src]!"))
 		if(!do_mob(user, target) || used)
 			return
-		target.visible_message("<span class='danger'>[user] injects [target] with the syringe with [src]!</span>", \
-						"<span class='userdanger'>[user] injects you with the syringe with [src]!</span>")
+		target.visible_message(span_danger("[user] injects [target] with the syringe with [src]!"), \
+						span_userdanger("[user] injects you with the syringe with [src]!"))
 
 	else
-		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
+		to_chat(user, span_notice("You inject yourself with [src]."))
 
 	log_combat(user, target, "injected", src)
 
 	if(!inject(target, user)) //Now we actually do the heavy lifting.
-		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
+		to_chat(user, span_notice("It appears that [target] does not have compatible DNA."))
 
 	used = 1
 	icon_state = "dnainjector0"
@@ -173,14 +175,24 @@
 	remove_mutations = list(NERVOUS)
 
 /obj/item/dnainjector/antifire
-	name = "\improper DNA injector (Anti-Fire)"
+	name = "\improper DNA injector (Anti-Temp Adaptation)"
 	desc = "Cures fire."
-	remove_mutations = list(SPACEMUT)
+	remove_mutations = list(TEMPADAPT)
 
 /obj/item/dnainjector/firemut
-	name = "\improper DNA injector (Fire)"
+	name = "\improper DNA injector (Temp Adaptation)"
 	desc = "Gives you fire."
-	add_mutations = list(SPACEMUT)
+	add_mutations = list(TEMPADAPT)
+
+/obj/item/dnainjector/antipressure
+	name = "\improper DNA injector (Anti-Pressure Adaptation)"
+	desc = "Cures fire."
+	remove_mutations = list(PRESSUREADAPT)
+
+/obj/item/dnainjector/pressuremut
+	name = "\improper DNA injector (Pressure Adaptation)"
+	desc = "Gives you fire."
+	add_mutations = list(PRESSUREADAPT)
 
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
@@ -241,6 +253,14 @@
 /obj/item/dnainjector/wackymut
 	name = "\improper DNA injector (Wacky)"
 	add_mutations = list(WACKY)
+
+/obj/item/dnainjector/piglatinmut
+	name = "\improper DNA injector (Pig Latin)"
+	add_mutations = list(PIGLATIN)
+
+/obj/item/dnainjector/antipiglatin
+	name = "\improper DNA injector (Anti-Pig Latin)"
+	remove_mutations = list(PIGLATIN)
 
 /obj/item/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
@@ -433,16 +453,23 @@
 	name = "\improper DNA injector (Anti-Antiglowy)"
 	remove_mutations = list(ANTIGLOWY)
 
+/obj/item/dnainjector/webbing
+	name = "\improper DNA injector (Webbing)"
+	add_mutations = list(SPIDER_WEB)
+
+/obj/item/dnainjector/antiwebbing
+	name = "\improper DNA injector (Anti-Webbing)"
+	remove_mutations = list(SPIDER_WEB)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
 	if(M.stat == DEAD) //prevents dead people from having their DNA changed
-		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
+		to_chat(user, span_notice("You can't modify [M]'s DNA while [M.p_theyre()] dead."))
 		return FALSE
 
 	if(M.has_dna() && !(HAS_TRAIT(M, TRAIT_BADDNA)))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
 		for(var/mutation in remove_mutations)
@@ -456,7 +483,7 @@
 			if(M.dna.get_mutation(mutation))
 				continue //Skip permanent mutations we already have.
 			if(mutation == RACEMUT && !ismonkey(M))
-				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
+				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] [span_danger("(MONKEY)")]")
 				log_msg += " (MONKEY)"
 				M = M.dna.add_mutation(mutation, MUT_OTHER, endtime)
 			else
@@ -476,10 +503,16 @@
 				M.dna.temporary_mutations[UE_CHANGED] = endtime
 			if(fields["UI"]) //UI+UE
 				if(!M.dna.previous["UI"])
-					M.dna.previous["UI"] = M.dna.uni_identity
-				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
-				M.updateappearance(mutations_overlay_update=1)
+					M.dna.previous["UI"] = M.dna.unique_identity
+				M.dna.unique_identity = merge_text(M.dna.unique_identity, fields["UI"])
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
+			if(fields["UF"]) //UI+UE
+				if(!M.dna.previous["UF"])
+					M.dna.previous["UF"] = M.dna.unique_features
+				M.dna.unique_features = merge_text(M.dna.unique_features, fields["UF"])
+				M.dna.temporary_mutations[UF_CHANGED] = endtime
+			if(fields["UI"] || fields["UF"])
+				M.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	else
@@ -505,7 +538,6 @@
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !HAS_TRAIT(M, TRAIT_GENELESS) && !HAS_TRAIT(M, TRAIT_BADDNA))
-		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/pref = ""
 		var/suff = ""
@@ -518,7 +550,7 @@
 					log_msg += "(FAILED)"
 				else
 					M.dna.add_mutation(HM, MUT_EXTRA)
-					pref = "expended"
+				pref = "expended"
 			else if(research && M.client)
 				filled = TRUE
 				pref = "filled"
@@ -528,9 +560,9 @@
 				for(var/datum/symptom/symp in disease.symptoms)
 					if((symp.type == /datum/symptom/genetic_mutation)||(symp.type == /datum/symptom/viralevolution))
 						crispr_charge = TRUE
-			suff = (crispr_charge ? "with CRISPR charge" : "")
+			suff = (crispr_charge ? " with CRISPR charge" : "")
 			log_msg += "([mutation])"
-		name = "[pref] [name] [suff]"
+		name = "[pref] [name][suff]"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE

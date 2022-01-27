@@ -11,7 +11,7 @@
 
 /obj/machinery/portable_atmospherics/pump
 	name = "portable air pump"
-	icon_state = "psiphon:0"
+	icon_state = "siphon"
 	density = TRUE
 	max_integrity = 250
 	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
@@ -28,13 +28,12 @@
 	volume = 1000
 
 /obj/machinery/portable_atmospherics/pump/Destroy()
-	var/turf/T = get_turf(src)
-	T.assume_air(air_contents)
-	air_update_turf(FALSE, FALSE)
+	var/turf/local_turf = get_turf(src)
+	local_turf.assume_air(air_contents)
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_icon_state()
-	icon_state = "psiphon:[on]"
+	icon_state = "[initial(icon_state)]_[on]"
 	return ..()
 
 /obj/machinery/portable_atmospherics/pump/update_overlays()
@@ -45,30 +44,33 @@
 		. += "siphon-connector"
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
-	. = ..()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the pumps and also set the amount of damage that the pump can receive, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
-		return
+		excited = TRUE
+		return ..()
 
 	if(!on)
-		return
+		return ..()
 
-	var/turf/T = get_turf(src)
+	excited = TRUE
+
+	var/turf/local_turf = get_turf(src)
 	var/datum/gas_mixture/sending
 	var/datum/gas_mixture/receiving
 	if(direction == PUMP_OUT) // Hook up the internal pump.
-		sending = (holding ? holding.air_contents : air_contents)
-		receiving = (holding ? air_contents : T.return_air())
+		sending = (holding ? holding.return_air() : air_contents)
+		receiving = (holding ? air_contents : local_turf.return_air())
 	else
-		sending = (holding ? air_contents : T.return_air())
-		receiving = (holding ? holding.air_contents : air_contents)
-
+		sending = (holding ? air_contents : local_turf.return_air())
+		receiving = (holding ? holding.return_air() : air_contents)
 
 	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf(FALSE, FALSE) // Update the environment if needed.
+
+	return ..()
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
 	. = ..()
@@ -78,6 +80,8 @@
 		return
 	if(prob(50 / severity))
 		on = !on
+		if(on)
+			SSair.start_processing_machine(src)
 	if(prob(100 / severity))
 		direction = PUMP_OUT
 	target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
@@ -114,7 +118,8 @@
 	if(holding)
 		data["holding"] = list()
 		data["holding"]["name"] = holding.name
-		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
+		var/datum/gas_mixture/holding_mix = holding.return_air()
+		data["holding"]["pressure"] = round(holding_mix.return_pressure())
 	else
 		data["holding"] = null
 	return data
@@ -126,6 +131,8 @@
 	switch(action)
 		if("power")
 			on = !on
+			if(on)
+				SSair.start_processing_machine(src)
 			if(on && !holding)
 				var/plasma = air_contents.gases[/datum/gas/plasma]
 				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
@@ -165,3 +172,7 @@
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_appearance()
+
+/obj/machinery/portable_atmospherics/pump/unregister_holding()
+	on = FALSE
+	return ..()

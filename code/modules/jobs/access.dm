@@ -1,31 +1,33 @@
 
 //returns TRUE if this mob has sufficient access to use this object
-/obj/proc/allowed(mob/M)
-	//check if it doesn't require any access at all
-	if(src.check_access(null))
+/obj/proc/allowed(mob/accessor)
+	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
 		return TRUE
-	if(issilicon(M))
-		if(ispAI(M))
+	//check if it doesn't require any access at all
+	if(check_access(null))
+		return TRUE
+	if(issilicon(accessor))
+		if(ispAI(accessor))
 			return FALSE
 		return TRUE //AI can do whatever it wants
-	if(isAdminGhostAI(M))
+	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE
-	else if(istype(M) && SEND_SIGNAL(M, COMSIG_MOB_ALLOWED, src))
+	//If the mob has the simple_access component with the requried access, we let them in.
+	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
+	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
+	else if(check_access(accessor.get_active_held_item()))
+		return TRUE
+	//if they are wearing a card that has access, that works
+	else if(ishuman(accessor))
+		var/mob/living/carbon/human/human_accessor = accessor
+		if(check_access(human_accessor.wear_id))
 			return TRUE
-	else if(isalienadult(M))
-		var/mob/living/carbon/george = M
-		//they can only hold things :(
-		if(check_access(george.get_active_held_item()))
-			return TRUE
-	else if(isanimal(M))
-		var/mob/living/simple_animal/A = M
-		if(check_access(A.get_active_held_item()) || check_access(A.access_card))
+	//if they have a hacky abstract animal ID with the required access, let them in i guess...
+	else if(isanimal(accessor))
+		var/mob/living/simple_animal/animal = accessor
+		if(check_access(animal.access_card))
 			return TRUE
 	return FALSE
 
@@ -109,15 +111,7 @@
 	if(!id_card)
 		return "hudno_id"
 
-	var/card_assignment
-	if(istype(id_card, /obj/item/card/id/advanced))
-		var/obj/item/card/id/advanced/advanced_id_card = id_card
-		card_assignment = advanced_id_card.trim_assignment_override ? advanced_id_card.trim_assignment_override : advanced_id_card.trim?.assignment
-	else
-		card_assignment = id_card.trim?.assignment
-
-	if(!card_assignment)
-		card_assignment = id_card.assignment
+	var/card_assignment = id_card.get_trim_assignment()
 
 	// Is this one of the jobs with dedicated HUD icons?
 	if(card_assignment in SSjob.station_jobs)

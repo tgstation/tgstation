@@ -2,9 +2,16 @@
 	name = "Nightwatcher's Secret"
 	desc = "Opens up the Path of Ash to you. Allows you to transmute a match with a kitchen knife, or its derivatives, into an Ashen Blade."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
-	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/final/rust_final,/datum/eldritch_knowledge/final/flesh_final,/datum/eldritch_knowledge/final/void_final,/datum/eldritch_knowledge/base_void)
+	banned_knowledge = list(
+		/datum/eldritch_knowledge/base_rust,
+		/datum/eldritch_knowledge/base_flesh,
+		/datum/eldritch_knowledge/final/rust_final,
+		/datum/eldritch_knowledge/final/flesh_final,
+		/datum/eldritch_knowledge/final/void_final,
+		/datum/eldritch_knowledge/base_void
+	)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
-	required_atoms = list(/obj/item/kitchen/knife,/obj/item/match)
+	required_atoms = list(/obj/item/knife, /obj/item/match)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
 	route = PATH_ASH
@@ -15,7 +22,11 @@
 	desc = "A short range jaunt that can help you escape from bad situations."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
-	next_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/essence,/datum/eldritch_knowledge/ashen_eyes)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/ash_mark,
+		/datum/eldritch_knowledge/essence,
+		/datum/eldritch_knowledge/ashen_eyes
+	)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ashen_grasp
@@ -30,26 +41,22 @@
 	. = ..()
 	if(!iscarbon(target))
 		return
-	var/mob/living/carbon/C = target
-	to_chat(C, "<span class='danger'>Your eyes burn horrifically!</span>") //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
-	C.become_nearsighted(EYE_DAMAGE)
-	C.blind_eyes(5)
-	C.blur_eyes(10)
-	return
+	var/mob/living/carbon/blind_victim = target
+	to_chat(blind_victim, span_danger("Your eyes burn horrifically!")) //pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
+	blind_victim.become_nearsighted(EYE_DAMAGE)
+	blind_victim.blind_eyes(5)
+	blind_victim.blur_eyes(10)
 
 /datum/eldritch_knowledge/ashen_grasp/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!iscarbon(target))
 		return
-	var/mob/living/carbon/C = target
-	var/datum/status_effect/eldritch/E = C.has_status_effect(/datum/status_effect/eldritch/rust) || C.has_status_effect(/datum/status_effect/eldritch/ash) || C.has_status_effect(/datum/status_effect/eldritch/flesh) || C.has_status_effect(/datum/status_effect/eldritch/void)
-	if(E)
-		E.on_effect()
-		for(var/X in user.mind.spell_list)
-			if(!istype(X,/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp))
-				continue
-			var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/MG = X
-			MG.charge_counter = min(round(MG.charge_counter + MG.charge_max * 0.75),MG.charge_max) // refunds 75% of charge.
+	var/mob/living/carbon/victim = target
+	var/datum/status_effect/eldritch/effect = victim.has_status_effect(/datum/status_effect/eldritch/rust) || victim.has_status_effect(/datum/status_effect/eldritch/ash) || victim.has_status_effect(/datum/status_effect/eldritch/flesh) || victim.has_status_effect(/datum/status_effect/eldritch/void)
+	if(effect)
+		effect.on_effect()
+		for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
+			grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.
 
 /datum/eldritch_knowledge/ashen_eyes
 	name = "Ashen Eyes"
@@ -66,7 +73,11 @@
 	desc = "Your Mansus Grasp now applies the Mark of Ash on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Ash causes stamina damage and burn damage, and spreads to an additional nearby opponent. The damage decreases with each spread."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/mad_mask)
-	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark,/datum/eldritch_knowledge/void_mark)
+	banned_knowledge = list(
+		/datum/eldritch_knowledge/rust_mark,
+		/datum/eldritch_knowledge/flesh_mark,
+		/datum/eldritch_knowledge/void_mark
+	)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_mark/on_mansus_grasp(target,user,proximity_flag,click_parameters)
@@ -74,7 +85,7 @@
 	if(isliving(target))
 		. = TRUE
 		var/mob/living/living_target = target
-		living_target.apply_status_effect(/datum/status_effect/eldritch/ash,5)
+		living_target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
 
 /datum/eldritch_knowledge/mad_mask
 	name = "Mask of Madness"
@@ -83,16 +94,24 @@
 	cost = 1
 	result_atoms = list(/obj/item/clothing/mask/void_mask)
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/clothing/mask,/obj/item/candle)
-	next_knowledge = list(/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/curse/paralysis)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/curse/corrosion,
+		/datum/eldritch_knowledge/ash_blade_upgrade,
+		/datum/eldritch_knowledge/curse/paralysis
+	)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/spell/flame_birth
 	name = "Flame Birth"
 	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
-	desc = "Short range spell that allows you to curse someone with massive sanity loss."
+	desc = "A spell that steals some health from every burning person around you."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
-	next_knowledge = list(/datum/eldritch_knowledge/spell/cleave,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/final/ash_final)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/spell/cleave,
+		/datum/eldritch_knowledge/summon/ashy,
+		/datum/eldritch_knowledge/final/ash_final
+	)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade
@@ -101,23 +120,30 @@
 	desc = "Your blade of choice will now light your enemies ablaze."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/flame_birth)
-	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade,/datum/eldritch_knowledge/void_blade_upgrade)
+	banned_knowledge = list(
+		/datum/eldritch_knowledge/rust_blade_upgrade,
+		/datum/eldritch_knowledge/flesh_blade_upgrade,
+		/datum/eldritch_knowledge/void_blade_upgrade
+	)
 	route = PATH_ASH
 
 /datum/eldritch_knowledge/ash_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.adjust_fire_stacks(1)
-		C.IgniteMob()
+		var/mob/living/carbon/burn_victim = target
+		burn_victim.adjust_fire_stacks(1)
+		burn_victim.IgniteMob()
 
 /datum/eldritch_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
-	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of blood, a heart, left arm and a right arm, and an item that the victim touched  with their bare hands."
+	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of vomit, a heart and an item that the victim touched  with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/wirecutters,/obj/effect/decal/cleanable/vomit,/obj/item/organ/heart)
-	next_knowledge = list(/datum/eldritch_knowledge/mad_mask,/datum/eldritch_knowledge/spell/area_conversion)
+	next_knowledge = list(
+		/datum/eldritch_knowledge/mad_mask,
+		/datum/eldritch_knowledge/spell/area_conversion
+	)
 	timer = 2 MINUTES
 
 /datum/eldritch_knowledge/curse/corrosion/curse(mob/living/chosen_mob)
@@ -164,16 +190,23 @@
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = PATH_ASH
-	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE)
+	var/list/trait_list = list(
+		TRAIT_RESISTHEAT,
+		TRAIT_NOBREATH,
+		TRAIT_RESISTCOLD,
+		TRAIT_RESISTHIGHPRESSURE,
+		TRAIT_RESISTLOWPRESSURE,
+		TRAIT_NOFIRE
+	)
 
 /datum/eldritch_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", ANNOUNCER_SPANOMALIES)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
-	var/mob/living/carbon/human/H = user
-	H.physiology.brute_mod *= 0.5
-	H.physiology.burn_mod *= 0.5
-	H.client?.give_award(/datum/award/achievement/misc/ash_ascension, H)
-	for(var/X in trait_list)
-		ADD_TRAIT(user,X,MAGIC_TRAIT)
+	var/mob/living/carbon/human/ascendant = user
+	ascendant.physiology.brute_mod *= 0.5
+	ascendant.physiology.burn_mod *= 0.5
+	ascendant.client?.give_award(/datum/award/achievement/misc/ash_ascension, ascendant)
+	for(var/trait in trait_list)
+		ADD_TRAIT(user, trait, MAGIC_TRAIT)
 	return ..()

@@ -127,6 +127,11 @@
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
+	
+/datum/mood_event/claustrophobia
+	description = "<span class='warning'>Why do I feel trapped?!  Let me out!!!</span>\n"
+	mood_change = -7
+	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
 	description = "<span class='boldwarning'>I hate it in the light...I need to find a darker place...</span>\n"
@@ -206,7 +211,7 @@
 	description = "<span class='warning'>[sadtarget.name] seems upset...</span>\n"
 
 /datum/mood_event/sacrifice_bad
-	description ="<span class='warning'>Those darn savages!</span>\n"
+	description = "<span class='warning'>Those darn savages!</span>\n"
 	mood_change = -5
 	timeout = 2 MINUTES
 
@@ -216,7 +221,7 @@
 	timeout = 2 MINUTES
 
 /datum/mood_event/graverobbing
-	description ="<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
+	description = "<span class='boldwarning'>I just desecrated someone's grave... I can't believe I did that...</span>\n"
 	mood_change = -8
 	timeout = 3 MINUTES
 
@@ -279,15 +284,8 @@
 	description = "<span class='boldwarning'>THEY'RE CUTTING ME OPEN!!</span>\n"
 	mood_change = -8
 
-/datum/mood_event/nanite_sadness
-	description = "<span class='warning robot'>+++++++HAPPINESS SUPPRESSION+++++++</span>\n"
-	mood_change = -7
-
-/datum/mood_event/nanite_sadness/add_effects(message)
-	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
-
 /datum/mood_event/bald
-	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	description = "<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
 
 /datum/mood_event/bad_touch
@@ -346,5 +344,29 @@
 
 /datum/mood_event/banished //when the chaplain is sus! (and gets forcably de-holy'd)
 	description = "<span class='boldwarning'>I have been excommunicated!</span>\n"
+	mood_change = -10
+	timeout = 10 MINUTES
+
+/datum/mood_event/heresy
+	description = "<span class='boldwarning'>I can hardly breathe with all this HERESY going on!</span>\n"
+	mood_change = -5
+	timeout = 5 MINUTES
+
+/datum/mood_event/soda_spill
+	description = span_warning("Cool! That's fine, I wanted to wear that soda, not drink it...\n")
+	mood_change = -2
+	timeout = 1 MINUTES
+
+/datum/mood_event/watersprayed
+	description = "<span class='boldwarning'>I hate being sprayed with water!</span>\n"
+	mood_change = -1
+	timeout = 30 SECONDS
+
+/datum/mood_event/gamer_withdrawal
+	description = span_warning("I wish I was gaming right now...\n")
+	mood_change = -5
+
+/datum/mood_event/gamer_lost
+	description = span_boldwarning("If I'm not good at video games, can I truly call myself a gamer?\n")
 	mood_change = -10
 	timeout = 10 MINUTES

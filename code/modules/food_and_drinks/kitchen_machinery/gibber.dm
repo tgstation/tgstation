@@ -12,17 +12,17 @@
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
 	var/gibtime = 40 // Time from starting until meat appears
-	var/meat_produced = 0
+	var/meat_produced = 2
 	var/ignore_clothing = FALSE
 
 
-/obj/machinery/gibber/Initialize()
+/obj/machinery/gibber/Initialize(mapload)
 	. = ..()
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
 	gibtime = 40
-	meat_produced = 0
+	meat_produced = initial(meat_produced)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
@@ -33,10 +33,10 @@
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.</span>"
+		. += span_notice("The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.")
 		for(var/obj/item/stock_parts/manipulator/M in component_parts)
 			if(M.rating >= 2)
-				. += "<span class='notice'>Gibber has been upgraded to process inorganic materials.</span>"
+				. += span_notice("Gibber has been upgraded to process inorganic materials.")
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
@@ -68,36 +68,36 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
-		to_chat(user, "<span class='danger'>It's locked and running.</span>")
+		to_chat(user, span_danger("It's locked and running."))
 		return
 
 	if(!anchored)
-		to_chat(user, "<span class='warning'>[src] cannot be used unless bolted to the ground!</span>")
+		to_chat(user, span_warning("[src] cannot be used unless bolted to the ground!"))
 		return
 
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/L = user.pulling
 		if(!iscarbon(L))
-			to_chat(user, "<span class='warning'>This item is not suitable for the gibber!</span>")
+			to_chat(user, span_warning("This item is not suitable for the gibber!"))
 			return
 		var/mob/living/carbon/C = L
 		if(C.buckled ||C.has_buckled_mobs())
-			to_chat(user, "<span class='warning'>[C] is attached to something!</span>")
+			to_chat(user, span_warning("[C] is attached to something!"))
 			return
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
-					to_chat(user, "<span class='warning'>Subject may not have abiotic items on!</span>")
+					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 
-		user.visible_message("<span class='danger'>[user] starts to put [C] into the gibber!</span>")
+		user.visible_message(span_danger("[user] starts to put [C] into the gibber!"))
 
 		add_fingerprint(user)
 
 		if(do_after(user, gibtime, target = src))
 			if(C && user.pulling == C && !C.buckled && !C.has_buckled_mobs() && !occupant)
-				user.visible_message("<span class='danger'>[user] stuffs [C] into the gibber!</span>")
+				user.visible_message(span_danger("[user] stuffs [C] into the gibber!"))
 				C.forceMove(src)
 				set_occupant(C)
 				update_appearance()
@@ -123,8 +123,9 @@
 	set category = "Object"
 	set name = "Empty gibber"
 	set src in oview(1)
-
 	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+		return
+	if(!usr.canUseTopic())
 		return
 	src.go_out()
 	add_fingerprint(usr)
@@ -138,11 +139,11 @@
 	if(operating)
 		return
 	if(!occupant)
-		audible_message("<span class='hear'>You hear a loud metallic grinding sound.</span>")
+		audible_message(span_hear("You hear a loud metallic grinding sound."))
 		return
 
 	use_power(1000)
-	audible_message("<span class='hear'>You hear a loud squelchy grinding sound.</span>")
+	audible_message(span_hear("You hear a loud squelchy grinding sound."))
 	playsound(loc, 'sound/machines/juicer.ogg', 50, TRUE)
 	operating = TRUE
 	update_appearance()

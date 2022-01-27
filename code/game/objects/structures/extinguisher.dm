@@ -10,12 +10,11 @@
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
+
 /obj/structure/extinguisher_cabinet/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -27 : 27)
-		pixel_y = (dir & 3)? (dir ==1 ? -30 : 30) : 0
 		opened = TRUE
 		icon_state = "extinguisher_empty"
 	else
@@ -23,7 +22,7 @@
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>"
+	. += span_notice("Alt-click to [opened ? "close":"open"] it.")
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -50,11 +49,11 @@
 
 /obj/structure/extinguisher_cabinet/attackby(obj/item/I, mob/living/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
+		to_chat(user, span_notice("You start unsecuring [name]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
+			to_chat(user, span_notice("You unsecure [name]."))
 			deconstruct(TRUE)
 		return
 
@@ -65,7 +64,7 @@
 			if(!user.transferItemToLoc(I, src))
 				return
 			stored_extinguisher = I
-			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
+			to_chat(user, span_notice("You place [I] in [src]."))
 			update_appearance()
 			return TRUE
 		else
@@ -84,7 +83,7 @@
 		return
 	if(stored_extinguisher)
 		user.put_in_hands(stored_extinguisher)
-		to_chat(user, "<span class='notice'>You take [stored_extinguisher] from [src].</span>")
+		to_chat(user, span_notice("You take [stored_extinguisher] from [src]."))
 		stored_extinguisher = null
 		if(!opened)
 			opened = 1
@@ -98,7 +97,7 @@
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(stored_extinguisher)
 		stored_extinguisher.forceMove(loc)
-		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
+		to_chat(user, span_notice("You telekinetically remove [stored_extinguisher] from [src]."))
 		stored_extinguisher = null
 		opened = TRUE
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
@@ -117,7 +116,7 @@
 
 /obj/structure/extinguisher_cabinet/proc/toggle_cabinet(mob/user)
 	if(opened && broken)
-		to_chat(user, "<span class='warning'>[src] is broken open.</span>")
+		to_chat(user, span_warning("[src] is broken open."))
 	else
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
@@ -136,7 +135,8 @@
 	icon_state = "extinguisher_full"
 	return ..()
 
-/obj/structure/extinguisher_cabinet/obj_break(damage_flag)
+/obj/structure/extinguisher_cabinet/atom_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = 1
 		opened = 1
@@ -157,20 +157,9 @@
 			stored_extinguisher = null
 	qdel(src)
 
-/obj/structure/extinguisher_cabinet/directional/north
-	pixel_y = 32
-
-/obj/structure/extinguisher_cabinet/directional/south
-	pixel_y = -32
-
-/obj/structure/extinguisher_cabinet/directional/east
-	pixel_x = 26
-
-/obj/structure/extinguisher_cabinet/directional/west
-	pixel_x = -26
-
 /obj/item/wallframe/extinguisher_cabinet
 	name = "extinguisher cabinet frame"
 	desc = "Used for building wall-mounted extinguisher cabinets."
 	icon_state = "extinguisher"
 	result_path = /obj/structure/extinguisher_cabinet
+	pixel_shift = 29

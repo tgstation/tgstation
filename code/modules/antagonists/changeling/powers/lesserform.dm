@@ -5,15 +5,24 @@
 	button_icon_state = "lesser_form"
 	chemical_cost = 5
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 //Transform into a monkey.
 /datum/action/changeling/lesserform/sting_action(mob/living/carbon/human/user)
 	if(!user || user.notransform)
 		return FALSE
-	to_chat(user, "<span class='warning'>Our genes cry out!</span>")
+	to_chat(user, span_warning("Our genes cry out!"))
 	..()
 
 	user.monkeyize()
 
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	var/datum/action/changeling/humanform/from_monkey/human_form_ability = new()
+	changeling.purchased_powers += human_form_ability
+	changeling.purchased_powers -= src
+
+	Remove(user)
+	human_form_ability.Grant(user)
+
+	qdel(src)
 	return TRUE

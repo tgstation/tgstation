@@ -11,9 +11,9 @@
 
 /obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M) //For attaching parts to a finished mech
 	if(!user.transferItemToLoc(src, M))
-		to_chat(user, "<span class='warning'>\The [src] is stuck to your hand, you cannot put it in \the [M]!</span>")
+		to_chat(user, span_warning("\The [src] is stuck to your hand, you cannot put it in \the [M]!"))
 		return FALSE
-	user.visible_message("<span class='notice'>[user] attaches [src] to [M].</span>", "<span class='notice'>You attach [src] to [M].</span>")
+	user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 	return TRUE
 
 /obj/item/mecha_parts/part/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
@@ -25,7 +25,7 @@
 	interaction_flags_item = NONE //Don't pick us up!!
 	var/construct_type
 
-/obj/item/mecha_parts/chassis/Initialize()
+/obj/item/mecha_parts/chassis/Initialize(mapload)
 	. = ..()
 	if(construct_type)
 		AddComponent(construct_type)
@@ -291,6 +291,46 @@
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 
+// Savannah-Ivanov
+
+/obj/item/mecha_parts/chassis/savannah_ivanov
+	name = "\improper Savannah-Ivanov chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/savannah_ivanov
+
+/obj/item/mecha_parts/part/savannah_ivanov_torso
+	name="\improper Savannah-Ivanov torso"
+	desc="A Savannah-Ivanov torso part. It's missing a huge chunk of space..."
+	icon_state = "savannah_ivanov_harness"
+
+/obj/item/mecha_parts/part/savannah_ivanov_head
+	name="\improper Savannah-Ivanov head"
+	desc="A Savannah-Ivanov head. It's sensors have been adjusted to support graceful landings."
+	icon_state = "savannah_ivanov_head"
+
+/obj/item/mecha_parts/part/savannah_ivanov_left_arm
+	name="\improper Savannah-Ivanov left arm"
+	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
+	icon_state = "savannah_ivanov_l_arm"
+
+/obj/item/mecha_parts/part/savannah_ivanov_right_arm
+	name="\improper Savannah-Ivanov right arm"
+	desc="A Savannah-Ivanov left arm. Hidden rocket fabrication included in the wrists."
+	icon_state = "savannah_ivanov_r_arm"
+
+/obj/item/mecha_parts/part/savannah_ivanov_left_leg
+	name="\improper Savannah-Ivanov left leg"
+	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	icon_state = "savannah_ivanov_l_leg"
+
+/obj/item/mecha_parts/part/savannah_ivanov_right_leg
+	name="\improper Savannah-Ivanov right leg"
+	desc="A Savannah-Ivanov left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	icon_state = "savannah_ivanov_r_leg"
+
+/obj/item/mecha_parts/part/savannah_ivanov_armor
+	name="Savannah-Ivanov armor"
+	desc="Savannah-Ivanov armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
+	icon_state = "savannah_ivanov_armor"
 
 ///////// Circuitboards
 
@@ -378,4 +418,16 @@
 
 /obj/item/circuitboard/mecha/clarke/main
 	name = "Clarke Central Control module (Exosuit Board)"
+	icon_state = "mainboard"
+
+/obj/item/circuitboard/mecha/savannah_ivanov/peripherals
+	name = "Savannah Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/savannah_ivanov/targeting
+	name = "Ivanov Weapon Control and Targeting module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/savannah_ivanov/main
+	name = "Savannah-Ivanov Combination Control Lock module (Exosuit Board)"
 	icon_state = "mainboard"

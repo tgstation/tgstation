@@ -12,7 +12,7 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "e" = (
@@ -27,9 +27,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/structure/sign/poster/official/enlist{
 	pixel_y = 32
 	},
@@ -44,13 +42,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "j" = (
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
-	},
-/obj/machinery/light{
-	dir = 1
+/obj/machinery/light/directional/north,
+/obj/machinery/requests_console/directional/north{
+	department = "Arrivals shuttle"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -70,12 +64,11 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "m" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "arrivy";
 	name = "ship shutters"
 	},
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "n" = (
@@ -102,7 +95,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "q" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "r" = (
@@ -119,18 +112,13 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "t" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -29
-	},
-/obj/machinery/light,
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "u" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/light,
+/obj/item/radio/intercom/directional/south,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "v" = (

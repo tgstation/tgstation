@@ -1,7 +1,12 @@
+#define VENUE_RESTAURANT "Restaurant Venue"
+#define VENUE_BAR "Bar Venue"
+
 ///Represents the abstract concept of a food venue in the code.
 /datum/venue
 	///Name of the venue, also used for the icon state of any radials it can be selected in
 	var/name = "unnamed venue"
+	///What kind of Venue are we
+	var/venue_type = VENUE_RESTAURANT
 	///Max amount of guests at any time
 	var/max_guests = 6
 	///Weighted list of customer types
@@ -43,7 +48,7 @@
 
 	// In practice, the list will never run out, but this is for sanity.
 	while (customer_types_to_choose.len)
-		customer_type = pickweight(customer_types_to_choose)
+		customer_type = pick_weight(customer_types_to_choose)
 
 		var/datum/customer_data/customer = SSrestaurant.all_customers[customer_type]
 		if (customer.can_use(src))
@@ -101,15 +106,13 @@
 	desc = "A robot-only gate into the wonders of Space Station cuisine!"
 	icon = 'icons/obj/machines/restaurant_portal.dmi'
 	icon_state = "portal"
-	density = TRUE
+	anchored = TRUE
+	density = FALSE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/restaurant_portal
-
 	layer = BELOW_OBJ_LAYER
-	density = FALSE
-	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue = /datum/venue
@@ -117,7 +120,7 @@
 	/// A weak reference to the mob who turned on the portal
 	var/datum/weakref/turned_on_portal
 
-/obj/machinery/restaurant_portal/Initialize()
+/obj/machinery/restaurant_portal/Initialize(mapload)
 	. = ..()
 	if(linked_venue)
 		linked_venue = SSrestaurant.all_venues[linked_venue]
@@ -126,6 +129,8 @@
 /obj/machinery/restaurant_portal/Destroy()
 	. = ..()
 	turned_on_portal = null
+	linked_venue.restaurant_portal = null
+	linked_venue = null
 
 /obj/machinery/restaurant_portal/update_overlays()
 	. = ..()
@@ -139,7 +144,7 @@
 		return ..()
 
 	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
+		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 
 	linked_venue.toggle_open()
@@ -152,7 +157,7 @@
 	var/obj/item/card/id/used_id = I
 
 	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
+		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 
 	var/list/radial_items = list()
@@ -173,15 +178,16 @@
 	turned_on_portal = WEAKREF(user)
 
 	if(!(chosen_venue.req_access in used_id.GetAccess()))
-		to_chat(user, "<span class='warning'>This card lacks the access to change this venues status.</span>")
+		to_chat(user, span_warning("This card lacks the access to change this venues status."))
 		return
 
-	to_chat(user, "<span class='notice'>You change the portal's linked venue.</span>")
+	to_chat(user, span_notice("You change the portal's linked venue."))
 
 	if(linked_venue && linked_venue.restaurant_portal) //We're already linked, unlink us.
 		if(linked_venue.open)
 			linked_venue.close()
-		linked_venue.restaurant_portal.linked_venue = null
+		linked_venue.restaurant_portal = null
+		linked_venue = null
 
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portal = src
@@ -206,7 +212,7 @@
 	use_vis_overlay = FALSE
 	var/datum/venue/linked_venue = /datum/venue
 
-/obj/structure/holosign/robot_seat/Initialize(loc, source_projector)
+/obj/structure/holosign/robot_seat/Initialize(mapload, loc, source_projector)
 	. = ..()
 	linked_venue = SSrestaurant.all_venues[linked_venue]
 	linked_venue.linked_seats[src] += null

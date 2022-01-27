@@ -10,6 +10,7 @@
 	icon_state = "cameracase"
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
+	wall_external = TRUE
 
 /obj/structure/camera_assembly
 	name = "camera assembly"
@@ -37,30 +38,30 @@
 		. += "It has electromagnetic interference shielding installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		. += "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>"
+		. += span_info("It can be shielded against electromagnetic interference with some <b>plasma</b>.")
 	if(xray_module)
 		. += "It has an X-ray photodiode installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		. += "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>"
+		. += span_info("It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.")
 	if(proxy_module)
 		. += "It has a proximity sensor installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		. += "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>"
+		. += span_info("It can be upgraded with a <b>proximity sensor</b>.")
 
 	//construction states
 	switch(state)
 		if(STATE_WRENCHED)
-			. += "<span class='info'>You can secure it in place with a <b>welder</b>, or removed with a <b>wrench</b>.</span>"
+			. += span_info("You can secure it in place with a <b>welder</b>, or removed with a <b>wrench</b>.")
 		if(STATE_WELDED)
-			. += "<span class='info'>You can add <b>wires</b> to it, or <b>unweld</b> it from the wall.</span>"
+			. += span_info("You can add <b>wires</b> to it, or <b>unweld</b> it from the wall.")
 		if(STATE_WIRED)
 			if(has_upgrades)
-				. += "<span class='info'>You can remove the contained upgrades with a <b>crowbar</b>.</span>"
-			. += "<span class='info'>You can complete it with a <b>screwdriver</b>, or <b>unwire</b> it to start removal.</span>"
+				. += span_info("You can remove the contained upgrades with a <b>crowbar</b>.")
+			. += span_info("You can complete it with a <b>screwdriver</b>, or <b>unwire</b> it to start removal.")
 		if(STATE_FINISHED)
-			. += "<span class='boldwarning'>You shouldn't be seeing this, tell a coder!</span>"
+			. += span_boldwarning("You shouldn't be seeing this, tell a coder!")
 
 /obj/structure/camera_assembly/Initialize(mapload, ndir, building)
 	. = ..()
@@ -126,7 +127,7 @@
 		if(STATE_WRENCHED)
 			if(W.tool_behaviour == TOOL_WELDER)
 				if(weld(W, user))
-					to_chat(user, "<span class='notice'>You weld [src] securely into place.</span>")
+					to_chat(user, span_notice("You weld [src] securely into place."))
 					set_anchored(TRUE)
 					state = STATE_WELDED
 				return
@@ -135,17 +136,17 @@
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
-					to_chat(user, "<span class='notice'>You add wires to [src].</span>")
+					to_chat(user, span_notice("You add wires to [src]."))
 					state = STATE_WIRED
 				else
-					to_chat(user, "<span class='warning'>You need two lengths of cable to wire a camera!</span>")
+					to_chat(user, span_warning("You need two lengths of cable to wire a camera!"))
 					return
 				return
 
 			else if(W.tool_behaviour == TOOL_WELDER)
 
 				if(weld(W, user))
-					to_chat(user, "<span class='notice'>You unweld [src] from its place.</span>")
+					to_chat(user, span_notice("You unweld [src] from its place."))
 					state = STATE_WRENCHED
 					set_anchored(TRUE)
 				return
@@ -153,7 +154,7 @@
 		if(STATE_WIRED) // Upgrades!
 			if(istype(W, /obj/item/stack/sheet/mineral/plasma)) //emp upgrade
 				if(emp_module)
-					to_chat(user, "<span class='warning'>[src] already contains a [emp_module]!</span>")
+					to_chat(user, span_warning("[src] already contains a [emp_module]!"))
 					return
 				if(!W.use_tool(src, user, 0, amount=1)) //only use one sheet, otherwise the whole stack will be consumed.
 					return
@@ -161,16 +162,16 @@
 				if(malf_xray_firmware_active)
 					malf_xray_firmware_active = FALSE //flavor reason: MALF AI Upgrade Camera Network ability's firmware is incompatible with the new part
 														//real reason: make it a normal upgrade so the finished camera's icons and examine texts are restored.
-				to_chat(user, "<span class='notice'>You attach [W] into [src]'s inner circuits.</span>")
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
 				return
 
 			else if(istype(W, /obj/item/analyzer)) //xray upgrade
 				if(xray_module)
-					to_chat(user, "<span class='warning'>[src] already contains a [xray_module]!</span>")
+					to_chat(user, span_warning("[src] already contains a [xray_module]!"))
 					return
 				if(!user.transferItemToLoc(W, src))
 					return
-				to_chat(user, "<span class='notice'>You attach [W] into [src]'s inner circuits.</span>")
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
 				xray_module = W
 				if(malf_xray_firmware_active)
 					malf_xray_firmware_active = FALSE //flavor reason: MALF AI Upgrade Camera Network ability's firmware is incompatible with the new part
@@ -180,11 +181,11 @@
 
 			else if(istype(W, /obj/item/assembly/prox_sensor)) //motion sensing upgrade
 				if(proxy_module)
-					to_chat(user, "<span class='warning'>[src] already contains a [proxy_module]!</span>")
+					to_chat(user, span_warning("[src] already contains a [proxy_module]!"))
 					return
 				if(!user.transferItemToLoc(W, src))
 					return
-				to_chat(user, "<span class='notice'>You attach [W] into [src]'s inner circuits.</span>")
+				to_chat(user, span_notice("You attach [W] into [src]'s inner circuits."))
 				proxy_module = W
 				return
 
@@ -200,12 +201,14 @@
 		droppable_parts += emp_module
 	if(proxy_module)
 		droppable_parts += proxy_module
-	if(!droppable_parts.len)
+	if(!length(droppable_parts))
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
 		return
-	to_chat(user, "<span class='notice'>You remove [choice] from [src].</span>")
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	to_chat(user, span_notice("You remove [choice] from [src]."))
 	drop_upgrade(choice)
 	tool.play_tool_sound(src)
 	return TRUE
@@ -218,13 +221,12 @@
 		return FALSE
 
 	tool.play_tool_sound(src)
-	var/input = stripped_input(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13")
-	if(!input)
-		to_chat(user, "<span class='warning'>No input found, please hang up and try your call again!</span>")
+	var/input = tgui_input_text(user, "Which networks would you like to connect this camera to? Separate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret", "Set Network", "SS13")
+	if(isnull(input))
 		return
 	var/list/tempnetwork = splittext(input, ",")
-	if(tempnetwork.len < 1)
-		to_chat(user, "<span class='warning'>No network found, please hang up and try your call again!</span>")
+	if(!length(tempnetwork))
+		to_chat(user, span_warning("No network found, please hang up and try your call again!"))
 		return
 	for(var/i in tempnetwork)
 		tempnetwork -= i
@@ -246,7 +248,7 @@
 
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
+	to_chat(user, span_notice("You cut the wires from the circuits."))
 	state = STATE_WELDED
 	return TRUE
 
@@ -255,7 +257,7 @@
 	if(state != STATE_WRENCHED)
 		return
 	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You detach [src] from its place.</span>")
+	to_chat(user, span_notice("You detach [src] from its place."))
 	new /obj/item/wallframe/camera(drop_location())
 	//drop upgrades
 	if(xray_module)
@@ -271,7 +273,7 @@
 /obj/structure/camera_assembly/proc/weld(obj/item/weldingtool/W, mob/living/user)
 	if(!W.tool_start_check(user, amount=3))
 		return FALSE
-	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
+	to_chat(user, span_notice("You start to weld [src]..."))
 	if(W.use_tool(src, user, 20, amount=3, volume = 50))
 		return TRUE
 	return FALSE

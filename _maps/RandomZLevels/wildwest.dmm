@@ -51,7 +51,7 @@
 /turf/open/floor/circuit/off,
 /area/awaymission/wildwest/vault)
 "an" = (
-/turf/open/floor/iron/cult{
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)
@@ -125,12 +125,12 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aK" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/engine/cult,
 /area/awaymission/wildwest/vault)
 "aL" = (
 /obj/item/paper/fluff/awaymissions/wildwest/grinder,
-/turf/open/floor/iron/cult{
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)
@@ -141,8 +141,8 @@
 /turf/closed/mineral,
 /area/awaymission/wildwest/mines)
 "aO" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando,
-/turf/open/floor/iron/cult{
+/obj/effect/mob_spawn/corpse/human/syndicatecommando,
+/turf/open/floor/cult{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/awaymission/wildwest/vault)
@@ -204,7 +204,7 @@
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "bi" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /obj/effect/mine/sound/bwoink,
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
@@ -236,7 +236,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "bq" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "br" = (
@@ -364,35 +364,6 @@
 "bP" = (
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/gov)
-"bQ" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
-	dir = 8
-	},
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
-"bR" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/grille,
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
-"bS" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
 "bT" = (
 /obj/structure/window/reinforced/tinted/frosted{
 	dir = 8
@@ -421,19 +392,6 @@
 	},
 /turf/open/space,
 /area/space/nearstation)
-"bX" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
 "bY" = (
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
@@ -459,7 +417,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cd" = (
-/obj/effect/mob_spawn/human/cook{
+/obj/effect/mob_spawn/corpse/human/cook{
 	mob_name = "Chef"
 	},
 /turf/open/floor/iron/cafeteria{
@@ -467,23 +425,9 @@
 	},
 /area/awaymission/wildwest/mines)
 "ce" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/obj/structure/grille,
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
-"cf" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/grille,
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
 "cg" = (
@@ -498,7 +442,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cj" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ck" = (
@@ -506,7 +450,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "cl" = (
-/obj/structure/chair/stool,
+/obj/structure/chair/stool/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "cm" = (
@@ -611,7 +555,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "cH" = (
-/obj/effect/mob_spawn/human/cook{
+/obj/effect/mob_spawn/corpse/human/cook{
 	mob_name = "Chef"
 	},
 /turf/open/floor/iron/cafeteria{
@@ -640,7 +584,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cM" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cN" = (
@@ -656,14 +600,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/gov)
 "cQ" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
 "cR" = (
@@ -671,17 +608,6 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/wildwest/gov)
-"cS" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted,
-/turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
 "cT" = (
 /obj/effect/decal/remains/human,
@@ -701,7 +627,7 @@
 /area/awaymission/wildwest/gov)
 "cW" = (
 /obj/structure/table/wood,
-/obj/item/kitchen/knife/butcher,
+/obj/item/knife/butcher,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -738,13 +664,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dc" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/floor/plating/ironsand,
@@ -770,21 +690,8 @@
 	dir = 5
 	},
 /area/awaymission/wildwest/gov)
-"dg" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/turf/open/floor/plating/ironsand,
-/area/awaymission/wildwest/gov)
 "dh" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando{
+/obj/effect/mob_spawn/corpse/human/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/carpet,
@@ -869,7 +776,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "dy" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "dz" = (
@@ -958,31 +865,17 @@
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wildwest/mines)
 "dR" = (
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
 "dS" = (
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/gov)
 "dT" = (
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
 /turf/open/floor/plating/ironsand,
@@ -1016,7 +909,7 @@
 /area/awaymission/wildwest/mines)
 "dY" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "dZ" = (
@@ -1026,12 +919,12 @@
 /area/awaymission/wildwest/mines)
 "ea" = (
 /obj/structure/table/wood,
-/obj/item/food/donut/jelly,
+/obj/item/food/donut/jelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eb" = (
 /obj/structure/table/wood,
-/obj/item/food/donut,
+/obj/item/food/donut/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "ec" = (
@@ -1177,7 +1070,7 @@
 "eG" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
-/obj/item/food/donut/jelly/slimejelly,
+/obj/item/food/donut/jelly/slimejelly/plain,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eH" = (
@@ -1207,7 +1100,7 @@
 /area/awaymission/wildwest/mines)
 "eL" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/carpet,
 /area/awaymission/wildwest/mines)
 "eN" = (
@@ -1218,43 +1111,9 @@
 	icon_state = "ironsand14"
 	},
 /area/awaymission/wildwest/gov)
-"eO" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
-/area/awaymission/wildwest/refine)
 "eP" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
-/area/awaymission/wildwest/refine)
-"eQ" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/grille,
-/turf/open/floor/iron,
-/area/awaymission/wildwest/refine)
-"eR" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted,
-/obj/structure/grille,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "eS" = (
 /obj/effect/mine/gas/plasma,
@@ -1334,7 +1193,7 @@
 	},
 /area/awaymission/wildwest/gov)
 "fd" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1361,7 +1220,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fh" = (
-/obj/effect/mob_spawn/human/doctor{
+/obj/effect/mob_spawn/corpse/human/doctor{
 	mob_name = "Doctor Mugabee"
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -1383,14 +1242,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fj" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "fk" = (
 /obj/structure/mecha_wreckage/seraph{
@@ -1415,14 +1270,10 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "fo" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
-/obj/structure/grille,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "fp" = (
 /obj/structure/toilet{
@@ -1498,7 +1349,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "fB" = (
 /obj/effect/mine/gas/plasma,
@@ -1599,7 +1450,7 @@
 /area/awaymission/wildwest/mines)
 "fR" = (
 /obj/effect/mine/sound/bwoink,
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "fS" = (
@@ -1634,17 +1485,10 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "fX" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "fY" = (
 /obj/effect/decal/cleanable/cobweb,
@@ -1676,7 +1520,7 @@
 /turf/open/floor/iron/airless,
 /area/space/nearstation)
 "ge" = (
-/obj/effect/mob_spawn/human/miner/rig,
+/obj/effect/mob_spawn/corpse/human/miner/mod,
 /turf/open/floor/iron,
 /area/awaymission/wildwest/refine)
 "gf" = (
@@ -1701,7 +1545,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/wildwest/mines)
 "gi" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -1767,53 +1611,28 @@
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
 "gy" = (
-/obj/effect/mob_spawn/human/corpse/syndicatecommando{
+/obj/effect/mob_spawn/corpse/human/syndicatecommando{
 	mob_name = "Syndicate Commando"
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gz" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "gA" = (
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
 	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "gB" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/frosted{
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
 	},
-/turf/open/floor/iron,
-/area/awaymission/wildwest/refine)
-"gC" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 1
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "gD" = (
 /obj/structure/window/reinforced/tinted/frosted{
@@ -1834,15 +1653,8 @@
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "gG" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 4
-	},
-/obj/structure/window/reinforced/tinted/frosted{
-	dir = 8
-	},
-/obj/structure/grille,
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/floor/plating,
 /area/awaymission/wildwest/refine)
 "gH" = (
 /obj/structure/sign/barsign,
@@ -1892,26 +1704,26 @@
 /turf/open/floor/plating/ironsand,
 /area/awaymission/wildwest/mines)
 "pD" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
 /area/awaymission/wildwest/refine)
 "Gh" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
 "Kh" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/wildwest/refine)
 "RN" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -17743,7 +17555,7 @@ br
 br
 bv
 bP
-bX
+dc
 ce
 ce
 ce
@@ -17999,7 +17811,7 @@ aa
 aa
 br
 bw
-bQ
+dR
 bY
 bY
 bY
@@ -18256,7 +18068,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 bP
@@ -18513,7 +18325,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 cm
@@ -18770,7 +18582,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 cm
@@ -19027,7 +18839,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 cm
@@ -19284,7 +19096,7 @@ aa
 aa
 br
 bw
-bR
+dS
 bY
 bP
 cm
@@ -19541,7 +19353,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 cm
@@ -19798,7 +19610,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 cm
@@ -20055,7 +19867,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 bP
@@ -20312,7 +20124,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bZ
 bP
 cn
@@ -20569,7 +20381,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 co
@@ -20826,7 +20638,7 @@ aa
 aa
 br
 bw
-bR
+dS
 bY
 bP
 cn
@@ -21083,7 +20895,7 @@ aa
 aa
 br
 bw
-bR
+dS
 bY
 bP
 co
@@ -21340,7 +21152,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 co
@@ -21597,7 +21409,7 @@ aa
 br
 br
 bv
-bR
+dS
 bY
 bP
 cn
@@ -21854,7 +21666,7 @@ aa
 br
 aa
 bv
-bR
+dS
 bY
 bP
 co
@@ -22111,7 +21923,7 @@ aa
 br
 br
 bw
-bR
+dS
 bY
 bP
 co
@@ -22368,7 +22180,7 @@ aa
 br
 aa
 bv
-bR
+dS
 bY
 bP
 cn
@@ -22625,7 +22437,7 @@ aa
 br
 br
 bv
-bR
+dS
 bY
 bP
 cn
@@ -22882,7 +22694,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 cn
@@ -23139,7 +22951,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bZ
 bP
 cn
@@ -23396,7 +23208,7 @@ aa
 aa
 br
 bw
-bR
+dS
 bY
 bP
 co
@@ -23653,7 +23465,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 bP
@@ -23910,7 +23722,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 cp
@@ -24167,7 +23979,7 @@ aa
 aa
 aa
 bw
-bR
+dS
 bY
 bP
 cq
@@ -24424,7 +24236,7 @@ aa
 aa
 br
 bw
-bR
+dS
 bY
 bP
 cr
@@ -24681,7 +24493,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 cq
@@ -24938,7 +24750,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 cs
@@ -25195,7 +25007,7 @@ aa
 aa
 br
 bv
-bR
+dS
 bY
 bP
 bP
@@ -25452,7 +25264,7 @@ aa
 aa
 br
 bv
-bS
+dT
 bY
 bY
 bY
@@ -25711,23 +25523,23 @@ br
 bv
 bP
 ca
-cf
-cf
-cf
-cf
-cf
-cS
+ce
+ce
+ce
+ce
+ce
+cQ
 bP
-dg
-cf
-cf
-cf
-cf
-cf
-cf
-cf
-cf
-cS
+dc
+ce
+ce
+ce
+ce
+ce
+ce
+ce
+ce
+cQ
 bP
 ed
 br
@@ -27019,9 +26831,9 @@ aa
 br
 aa
 aa
-eO
+gz
 fd
-eO
+gz
 aa
 aa
 aa
@@ -27533,7 +27345,7 @@ br
 br
 aa
 aa
-eQ
+eP
 eA
 eP
 aa
@@ -27790,11 +27602,11 @@ aG
 et
 et
 eJ
-eR
+gB
 RN
 fj
 fo
-fA
+gG
 et
 fX
 fo
@@ -27802,7 +27614,7 @@ fA
 et
 fX
 fo
-fA
+gG
 et
 aa
 aa
@@ -30373,7 +30185,7 @@ eA
 eA
 eA
 eA
-gC
+gB
 aa
 aG
 aG

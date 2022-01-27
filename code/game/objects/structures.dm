@@ -8,11 +8,12 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.6
 	pass_flags_self = PASSSTRUCTURE
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	var/broken = FALSE
 
-/obj/structure/Initialize()
+/obj/structure/Initialize(mapload)
 	if (!armor)
-		armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+		armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	. = ..()
 	if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
 		QUEUE_SMOOTH(src)
@@ -35,15 +36,15 @@
 	. = ..()
 	if(!(resistance_flags & INDESTRUCTIBLE))
 		if(resistance_flags & ON_FIRE)
-			. += "<span class='warning'>It's on fire!</span>"
+			. += span_warning("It's on fire!")
 		if(broken)
-			. += "<span class='notice'>It appears to be broken.</span>"
+			. += span_notice("It appears to be broken.")
 		var/examine_status = examine_status(user)
 		if(examine_status)
 			. += examine_status
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
-	var/healthpercent = (obj_integrity/max_integrity) * 100
+	var/healthpercent = (atom_integrity/max_integrity) * 100
 	switch(healthpercent)
 		if(50 to 99)
 			return  "It looks slightly damaged."
@@ -51,7 +52,7 @@
 			return  "It appears heavily damaged."
 		if(0 to 25)
 			if(!broken)
-				return  "<span class='warning'>It's falling apart!</span>"
+				return  span_warning("It's falling apart!")
 
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)

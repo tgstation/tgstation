@@ -16,9 +16,9 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WALLS)
 	can_be_unanchored = FALSE
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
+	material_flags = MATERIAL_EFFECTS
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
 	var/walltype = /turf/closed/wall
@@ -26,8 +26,11 @@
 	var/opening = FALSE
 
 
-/obj/structure/falsewall/Initialize()
+/obj/structure/falsewall/Initialize(mapload)
 	. = ..()
+	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
+	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
+	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
@@ -48,15 +51,15 @@
 
 /obj/structure/falsewall/proc/toggle_open()
 	if(!QDELETED(src))
-		density = !density
+		set_density(!density)
 		set_opacity(density)
 		opening = FALSE
 		update_appearance()
 		air_update_turf(TRUE, !density)
 
-/obj/structure/falsewall/update_icon()//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
+/obj/structure/falsewall/update_icon(updates=ALL)//Calling icon_update will refresh the smoothwalls if it's closed, otherwise it will make sure the icon is correct if it's open
 	. = ..()
-	if(!density)
+	if(!density || !(updates & UPDATE_SMOOTHING))
 		return
 
 	if(opening)
@@ -82,22 +85,22 @@
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(opening)
-		to_chat(user, "<span class='warning'>You must wait until the door has stopped moving!</span>")
+		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 		return
 
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(density)
 			var/turf/T = get_turf(src)
 			if(T.density)
-				to_chat(user, "<span class='warning'>[src] is blocked!</span>")
+				to_chat(user, span_warning("[src] is blocked!"))
 				return
 			if(!isfloorturf(T))
-				to_chat(user, "<span class='warning'>[src] bolts must be tightened on the floor!</span>")
+				to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
 				return
-			user.visible_message("<span class='notice'>[user] tightens some bolts on the wall.</span>", "<span class='notice'>You tighten the bolts on the wall.</span>")
+			user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 			ChangeToWall()
 		else
-			to_chat(user, "<span class='warning'>You can't reach, close it first!</span>")
+			to_chat(user, span_warning("You can't reach, close it first!"))
 
 	else if(W.tool_behaviour == TOOL_WELDER)
 		if(W.use_tool(src, user, 0, volume=50))
@@ -106,7 +109,7 @@
 		return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
-	user.visible_message("<span class='notice'>[user] dismantles the false wall.</span>", "<span class='notice'>You dismantle the false wall.</span>")
+	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
@@ -122,11 +125,11 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/falsewall/get_dumping_location()
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, "<span class='notice'>The outer plating is <b>welded</b> firmly in place.</span>")
+	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
 	return null
 
 /*
@@ -144,7 +147,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
-	to_chat(user, "<span class='notice'>The outer <b>grille</b> is fully intact.</span>")
+	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
 	return null
 
 /obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
@@ -182,7 +185,13 @@
 	if(!active)
 		if(world.time > last_event+15)
 			active = 1
-			radiation_pulse(src, 150)
+			radiation_pulse(
+				src,
+				max_range = 2,
+				threshold = RAD_LIGHT_INSULATION,
+				chance = URANIUM_IRRADIATION_CHANCE,
+				minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+			)
 			for(var/turf/closed/wall/mineral/uranium/T in orange(1,src))
 				T.radiate()
 			last_event = world.time
@@ -242,31 +251,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASMA_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASMA_WALLS)
 
-/obj/structure/falsewall/plasma/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
-
-/obj/structure/falsewall/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)
-		var/turf/T = get_turf(src)
-		message_admins("Plasma falsewall ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma falsewall ignited by [key_name(user)] in [AREACOORD(T)]")
-		burnbabyburn()
-	else
-		return ..()
-
-/obj/structure/falsewall/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/falsewall/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	burnbabyburn()
-
-/obj/structure/falsewall/plasma/proc/burnbabyburn(user)
-	playsound(src, 'sound/items/welder.ogg', 100, TRUE)
-	atmos_spawn_air("plasma=400;TEMP=1000")
-	new /obj/structure/girder/displaced(loc)
-	qdel(src)
-
 /obj/structure/falsewall/bananium
 	name = "bananium wall"
 	desc = "A wall with bananium plating. Honk!"
@@ -304,8 +288,19 @@
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
+/obj/structure/falsewall/bamboo
+	name = "bamboo wall"
+	desc = "A wall with bamboo finish. Zen."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo"
+	mineral = /obj/item/stack/sheet/mineral/bamboo
+	walltype = /turf/closed/wall/mineral/bamboo
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+
 /obj/structure/falsewall/iron
-	name = "rough metal wall"
+	name = "rough iron wall"
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"

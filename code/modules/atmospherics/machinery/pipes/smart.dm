@@ -1,5 +1,5 @@
 GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)))
-
+//Smart pipes... or are they?
 /obj/machinery/atmospherics/pipe/smart
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "pipe11-3"
@@ -7,58 +7,51 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 	name = "pipe"
 	desc = "A one meter section of regular pipe."
 
-	vis_flags = VIS_INHERIT_ICON | VIS_INHERIT_ICON_STATE | VIS_INHERIT_DIR | VIS_INHERIT_ID
-
 	device_type = QUATERNARY
 	construction_type = /obj/item/pipe/quaternary
 	pipe_state = "manifold4w"
-	connection_num = 0
-	var/list/connections
-	var/static/list/mutable_appearance/center_cache = list()
-	var/mutable_appearance/pipe_appearance
+	///Current active connections
+	var/connections = NONE
 
-/* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
- */
-/obj/machinery/atmospherics/pipe/smart/Initialize()
-	icon_state = ""
-	. = ..()
-
-/obj/machinery/atmospherics/pipe/smart/SetInitDirections()
-	initialize_directions = ALL_CARDINALS
-
-/obj/machinery/atmospherics/pipe/smart/proc/check_connections()
-	var/mutable_appearance/center
-	connection_num = 0
+/obj/machinery/atmospherics/pipe/smart/update_pipe_icon()
+	icon = 'icons/obj/atmospherics/pipes/pipes_bitmask.dmi'
 	connections = NONE
-	for(var/direction in GLOB.cardinals)
-		var/turf/turf = get_step(src, direction)
-		if(!turf)
+
+	for(var/i in 1 to device_type)
+		if(!nodes[i])
 			continue
-		for(var/obj/machinery/atmospherics/machine in turf)
-			if(connection_check(machine, piping_layer))
-				connections |= direction
-				connection_num++
-				break
+		var/obj/machinery/atmospherics/node = nodes[i]
+		var/connected_dir = get_dir(src, node)
+		connections |= connected_dir
+	var/bitfield = CARDINAL_TO_FULLPIPES(connections)
+	dir = check_binary_direction(connections)
 
-	switch(connection_num)
-		if(0)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold4w_center")
-			dir = SOUTH
-		if(1)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
-			dir = connections
-		if(2)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/simple.dmi', "pipe00-3")
-			dir = check_binary_direction(connections)
-		if(3)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_center")
-			dir = check_manifold_direction(connections)
+	// If we dont have enough bits to make a proper sprite, add some shortpipe bits
 
-		if(4)
-			center = mutable_appearance('icons/obj/atmospherics/pipes/manifold.dmi', "manifold4w_center")
-			dir = NORTH
-	return center
+	// Smart pipe icons differ from classic pipe icons in that we stop adding
+	// short pipe directions as soon as we find a valid sprite, rather than
+	// adding in all connectable directions.
+	// This prevents a lot of visual clutter, though it does make it harder to
+	// notice completely disconnected pipes.
+	if(ISSTUB(connections))
+		var/bits_to_add = NONE
+		if(connections != NONE)
+			bits_to_add |= REVERSE_DIR(connections) & initialize_directions
+		var/candidates = initialize_directions
+		var/shift = 0
+		// Note that candidates "should" never reach 0, as stub pipes are not allowed and break things
+		while (ISSTUB(connections | bits_to_add) && (candidates >> shift) != 0)
+			bits_to_add |= candidates & (1 << shift)
+			shift += 1
+		bitfield |= CARDINAL_TO_SHORTPIPES(bits_to_add)
+
+	icon_state = "[bitfield]_[piping_layer]"
+
+/obj/machinery/atmospherics/pipe/smart/set_init_directions(init_dir)
+	if(init_dir)
+		initialize_directions = init_dir
+	else
+		initialize_directions = ALL_CARDINALS
 
 /obj/machinery/atmospherics/pipe/smart/proc/check_binary_direction(direction)
 	switch(direction)
@@ -81,24 +74,6 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 			return NORTH
 		else
 			return null
-
-/obj/machinery/atmospherics/pipe/smart/update_overlays()
-	. = ..()
-	var/mutable_appearance/center = center_cache["[piping_layer]"]
-	center = check_connections()
-	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
-	center_cache["[piping_layer]"] = center
-	pipe_appearance = center
-	. += center
-
-	update_layer()
-
-	//Add non-broken pieces
-	for(var/i in 1 to device_type)
-		if(!nodes[i])
-			continue
-		. += pipe_overlay('icons/obj/atmospherics/pipes/manifold.dmi', "pipe-[piping_layer]", get_dir(src, nodes[i]), set_layer = (layer + 0.01))
-
 
 //mapping helpers
 /obj/machinery/atmospherics/pipe/smart/simple

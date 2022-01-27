@@ -86,12 +86,21 @@
 	assignment = "Gunner"
 	template_access = null
 
-/// Trim for silverscale pirates.
+/// Trim for pirates.
+/datum/id_trim/pirate
+	assignment = "Pirate"
+	trim_state = "trim_unknown"
+	access = list(ACCESS_SYNDICATE)
+
+/// Trim for pirates.
 /datum/id_trim/pirate/silverscale
 	assignment = "Silver Scale Member"
-	trim_state = "trim_unknown"
 
-/// Trim for silverscale pirates.
-/datum/id_trim/pirate/silverscale/captain
-	assignment = "Silver Scale VIP"
+/// Trim for the pirate captain.
+/datum/id_trim/pirate/captain
+	assignment = "Pirate Captain"
 	trim_state = "trim_captain"
+
+/// Trim for the pirate captain.
+/datum/id_trim/pirate/captain/silverscale
+	assignment = "Silver Scale VIP"

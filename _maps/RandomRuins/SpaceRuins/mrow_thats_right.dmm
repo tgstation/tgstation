@@ -103,14 +103,14 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "au" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "av" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aw" = (
@@ -123,9 +123,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "ax" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -141,9 +139,7 @@
 "az" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -167,9 +163,7 @@
 "aC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aD" = (
@@ -195,10 +189,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "aH" = (
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
+/obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -316,9 +307,7 @@
 	desc = "A slab of cat meat. Tastes like furball.";
 	name = "cat meat"
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "aY" = (
@@ -326,8 +315,8 @@
 	name = "kitty bed"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/damaged{
-	head = /obj/item/clothing/head/kitty
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head" = /obj/item/clothing/head/kitty)
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -341,18 +330,15 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bb" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/closet/cabinet,
 /obj/item/gps/spaceruin,
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bc" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/directional/west{
 	id = "meow";
-	name = "Emergency Kitty Lockdown";
-	pixel_x = -24
+	name = "Emergency Kitty Lockdown"
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -436,9 +422,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/cat_man)
 "bq" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/cat_man)
 "br" = (
@@ -456,7 +440,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bt" = (
 /obj/structure/table/optable,
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/item/organ/ears/cat,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/white,
@@ -470,10 +454,7 @@
 	},
 /area/ruin/space/has_grav/powered/cat_man)
 "bv" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/firealarm/directional/east,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -488,8 +469,8 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bx" = (
 /obj/structure/rack,
-/obj/item/melee/baton/cattleprod,
-/obj/item/melee/baton/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
+/obj/item/melee/baton/security/cattleprod,
 /obj/item/restraints/handcuffs,
 /obj/item/restraints/handcuffs,
 /turf/open/floor/carpet,
@@ -559,7 +540,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
@@ -656,7 +637,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "bT" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -672,7 +653,7 @@
 /area/ruin/space/has_grav/powered/cat_man)
 "bV" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
@@ -684,8 +665,8 @@
 /obj/structure/bed/dogbed{
 	name = "kitty bed"
 	},
-/obj/effect/mob_spawn/human/corpse/damaged{
-	head = /obj/item/clothing/head/kitty
+/obj/effect/mob_spawn/corpse/human/damaged{
+	outfit_override = list("head" = /obj/item/clothing/head/kitty)
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
@@ -731,9 +712,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "cd" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
@@ -898,7 +877,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cw" = (
-/obj/machinery/light/small,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "cx" = (
@@ -914,19 +893,19 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered/cat_man)
 "Bl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "RT" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/powered/cat_man)
 "Sl" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},

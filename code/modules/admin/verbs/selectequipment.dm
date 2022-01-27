@@ -23,7 +23,6 @@
 	var/mob/target_mob
 
 	var/dummy_key
-	var/mob/living/carbon/human/dummy/dummy
 
 	//static list to share all the outfit typepaths between all instances of this datum.
 	var/static/list/cached_outfits
@@ -38,7 +37,7 @@
 	user = CLIENT_FROM_VAR(_user)
 
 	if(!ishuman(target) && !isobserver(target))
-		alert("Invalid mob")
+		tgui_alert(usr,"Invalid mob")
 		return
 	target_mob = target
 
@@ -63,12 +62,7 @@
 
 /datum/select_equipment/proc/init_dummy()
 	dummy_key = "selectequipmentUI_[target_mob]"
-	dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/carbon_target = target_mob
-	if(istype(carbon_target))
-		carbon_target.dna.transfer_identity(dummy)
-		dummy.updateappearance()
-
+	generate_dummy_lookalike(dummy_key, target_mob)
 	unset_busy_human_dummy(dummy_key)
 	return
 
@@ -112,14 +106,16 @@
 
 /datum/select_equipment/ui_data(mob/user)
 	var/list/data = list()
-	if(!dummy)
+	if(!dummy_key)
 		init_dummy()
 
-	var/datum/preferences/prefs = target_mob?.client?.prefs
-	var/icon/dummysprite = get_flat_human_icon(null, prefs=prefs, dummy_key = dummy_key, outfit_override = selected_outfit)
+	var/icon/dummysprite = get_flat_human_icon(null,
+		dummy_key = dummy_key,
+		outfit_override = selected_outfit)
 	data["icon64"] = icon2base64(dummysprite)
 	data["name"] = target_mob
 
+	var/datum/preferences/prefs = user?.client?.prefs
 	data["favorites"] = list()
 	if(prefs)
 		data["favorites"] = prefs.favorite_outfits
@@ -200,7 +196,7 @@
 
 /client/proc/admin_apply_outfit(mob/target, dresscode)
 	if(!ishuman(target) && !isobserver(target))
-		alert("Invalid mob")
+		tgui_alert(usr,"Invalid mob")
 		return
 
 	if(!dresscode)
@@ -213,18 +209,22 @@
 	else
 		human_target = target
 		if(human_target.l_store || human_target.r_store || human_target.s_store) //saves a lot of time for admins and coders alike
-			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
+			if(tgui_alert(usr,"Drop Items in Pockets? No will delete them.", "Robust quick dress shop", list("Yes", "No")) == "No")
 				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
 		qdel(item)
+
+	var/obj/item/organ/brain/human_brain = human_target.getorganslot(BRAIN)
+	human_brain.destroy_all_skillchips() // get rid of skillchips to prevent runtimes
+
 	if(dresscode != "Naked")
 		human_target.equipOutfit(dresscode)
 
 	human_target.regenerate_icons()
 
 	log_admin("[key_name(usr)] changed the equipment of [key_name(human_target)] to [dresscode].")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(human_target)] to [dresscode].</span>")
+	message_admins(span_adminnotice("[key_name_admin(usr)] changed the equipment of [ADMIN_LOOKUPFLW(human_target)] to [dresscode]."))
 
 	return dresscode

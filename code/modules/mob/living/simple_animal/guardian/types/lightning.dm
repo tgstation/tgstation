@@ -49,7 +49,7 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
-			SLEEP_CHECK_DEATH(3)
+			SLEEP_CHECK_DEATH(3, src)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()
@@ -94,7 +94,7 @@
 			var/turf/T = get_turf_pixel(chainpart)
 			turfs |= T
 			if(T != get_turf(B.origin) && T != get_turf(B.target))
-				for(var/turf/TU in circlerange(T, 1))
+				for(var/turf/TU in circle_range(T, 1))
 					turfs |= TU
 	for(var/turf in turfs)
 		var/turf/T = turf
@@ -105,9 +105,9 @@
 				if(successfulshocks > 4)
 					L.electrocute_act(0)
 					L.visible_message(
-						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
-						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='hear'>You hear a heavy electrical crack.</span>" \
+						span_danger("[L] was shocked by the lightning chain!"), \
+						span_userdanger("You are shocked by the lightning chain!"), \
+						span_hear("You hear a heavy electrical crack.") \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

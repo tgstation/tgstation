@@ -42,5 +42,5 @@
 		if(!picked || !isturf(picked))
 			return
 
-		if(do_teleport(user, picked, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC))
+		if(do_teleport(user, picked, channel = TELEPORT_CHANNEL_MAGIC))
 			playsound(get_turf(user), sound1, 50,TRUE)

@@ -1,12 +1,14 @@
 /datum/job/lawyer
-	title = "Lawyer"
-	department_head = list("Head of Personnel")
-	faction = "Station"
+	title = JOB_LAWYER
+	description = "Advocate for prisoners, create law-binding contracts, \
+		ensure Security is following protocol and Space Law."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
+	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
-	var/lawyers = 0 //Counts lawyer amount
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/lawyer
 	plasmaman_outfit = /datum/outfit/plasmaman/bar
@@ -18,26 +20,30 @@
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_LAWYER
-	departments = DEPARTMENT_SERVICE
-
+	departments_list = list(
+		/datum/job_department/service,
+		)
+	rpg_title = "Magistrate"
 	family_heirlooms = list(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
-	belt = /obj/item/pda/lawyer
-	ears = /obj/item/radio/headset/headset_srvsec
+	id_trim = /datum/id_trim/job/lawyer
 	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
+	belt = /obj/item/pda/lawyer
+	ears = /obj/item/radio/headset/headset_srvsec
 	shoes = /obj/item/clothing/shoes/laceup
-	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+	l_hand = /obj/item/storage/briefcase/lawyer
 
 	chameleon_extras = /obj/item/stamp/law
-
-	id_trim = /datum/id_trim/job/lawyer
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -50,3 +56,8 @@
 	else
 		use_purple_suit = TRUE
 	..()
+
+/datum/outfit/job/lawyer/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+	. += /obj/item/clothing/suit/toggle/lawyer/purple

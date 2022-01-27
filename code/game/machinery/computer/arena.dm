@@ -65,17 +65,6 @@
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	LoadDefaultArenas()
-	GenerateAntagHuds()
-
-/obj/machinery/computer/arena/proc/GenerateAntagHuds()
-	for(var/team in teams)
-		var/datum/atom_hud/antag/teamhud = team_huds[team]
-		if(!teamhud) //These will be shared between arenas because this stuff is expensive and cross arena fighting is not a thing anyway
-			teamhud = new
-			teamhud.icon_color = team_colors[team]
-			GLOB.huds += teamhud
-			team_huds[team] = teamhud
-			team_hud_index[team] = length(GLOB.huds)
 
 /**
  * Loads the arenas from config directory.
@@ -117,7 +106,7 @@
 		return
 	var/datum/map_template/M = arena_templates[arena_template]
 	if(!M)
-		to_chat(user,"<span class='warning'>No such arena</span>")
+		to_chat(user,span_warning("No such arena"))
 		return
 	clear_arena() //Clear current arena
 	var/turf/A = get_landmark_turf(ARENA_CORNER_A)
@@ -125,7 +114,7 @@
 	var/wh = abs(A.x - B.x) + 1
 	var/hz = abs(A.y - B.y) + 1
 	if(M.width > wh || M.height > hz)
-		to_chat(user,"<span class='warning'>Arena template is too big for the current arena!</span>")
+		to_chat(user,span_warning("Arena template is too big for the current arena!"))
 		return
 	loading = TRUE
 	var/bd = M.load(get_load_point())
@@ -156,8 +145,10 @@
 	log_admin("[key_name(user)] uploaded new event arena: [friendly_name].")
 
 /obj/machinery/computer/arena/proc/load_team(user,team)
-	var/rawteam = stripped_multiline_input(user,"Enter team list (ckeys separated by newline)")
-	for(var/i in splittext(rawteam,"\n"))
+	var/rawteam = tgui_input_text(user, "Enter team member list (ckeys separated by comma)", "Team List", multiline = TRUE)
+	if(isnull(rawteam))
+		return
+	for(var/i in splittext(rawteam, ","))
 		var/key = ckey(i)
 		if(!i)
 			continue
@@ -168,9 +159,9 @@
 		var/list/keys = list()
 		for(var/mob/M in GLOB.player_list)
 			keys += M.client
-		var/client/selection = input("Please, select a player!", "Team member", null, null) as null|anything in sortKey(keys)
+		var/client/selection = tgui_input_list(user, "Select a player", "Team member", sort_key(keys))
 		//Could be freeform if you want to add disconnected i guess
-		if(!selection)
+		if(isnull(selection))
 			return
 		key = selection.ckey
 	if(!team_keys[team])
@@ -188,15 +179,11 @@
 	if(!isobserver(oldbody))
 		return
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(get_turf(spawnpoint))
-	oldbody.client.prefs.copy_to(M)
+	oldbody.client.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
 	M.set_species(/datum/species/human) // Could use setting per team
 	M.equipOutfit(outfits[team] ? outfits[team] : default_outfit)
 	M.faction += team //In case anyone wants to add team based stuff to arena special effects
 	M.key = ckey
-
-	var/datum/atom_hud/antag/team_hud = team_huds[team]
-	team_hud.join_hud(M)
-	set_antag_hud(M,"arena",team_hud_index[team])
 
 /obj/machinery/computer/arena/proc/change_outfit(mob/user,team)
 	outfits[team] = user.client.robust_dress_shop()
@@ -208,7 +195,7 @@
 	// Could use update_appearance on spawnpoints here to show they're on
 	if(ready_to_spawn)
 		for(var/mob/M in all_contestants())
-			to_chat(M,"<span class='userdanger'>Arena you're signed up for is ready!</span>")
+			to_chat(M,span_userdanger("Arena you're signed up for is ready!"))
 
 /obj/machinery/computer/arena/proc/all_contestants()
 	. = list()
@@ -230,9 +217,9 @@
 /obj/machinery/computer/arena/proc/start_match(mob/user)
 	//TODO: Check if everyone is spawned in, if not ask for confirmation.
 	var/timetext = DisplayTimeText(start_delay)
-	to_chat(user,"<span class='notice'>The match will start in [timetext].</span>")
+	to_chat(user,span_notice("The match will start in [timetext]."))
 	for(var/mob/M in all_contestants())
-		to_chat(M,"<span class='userdanger'>The gates will open in [timetext]!</span>")
+		to_chat(M,span_userdanger("The gates will open in [timetext]!"))
 	start_time = world.time + start_delay
 	addtimer(CALLBACK(src,.proc/begin),start_delay)
 	for(var/team in teams)
@@ -249,7 +236,7 @@
 			var/obj/machinery/arena_spawn/A = get_spawn(team)
 			playsound(A,start_sound, start_sound_volume)
 	for(var/mob/M in all_contestants())
-		to_chat(M,"<span class='userdanger'>START!</span>")
+		to_chat(M,span_userdanger("START!"))
 	//Clean up the countdowns
 	QDEL_LIST(countdowns)
 	start_time = null
@@ -281,6 +268,10 @@
 		toggle_spawn(user)
 	if(href_list["start"])
 		start_match(user)
+	if(href_list["follow"])
+		var/mob/observed_team_member = locate(href_list["follow"]) in GLOB.mob_list
+		if(observed_team_member)
+			user.client?.admin_follow(observed_team_member)
 	if(href_list["team_action"])
 		var/team = href_list["team"]
 		switch(href_list["team_action"])
@@ -311,7 +302,7 @@
 
 /obj/machinery/computer/arena/proc/load_random_arena(mob/user)
 	if(!length(arena_templates))
-		to_chat(user,"<span class='warning'>No arenas present</span>")
+		to_chat(user,span_warning("No arenas present"))
 		return
 	var/picked = pick(arena_templates)
 	load_arena(picked,user)
@@ -341,7 +332,7 @@
 				else
 					player_status = M.stat == DEAD ? "Dead" : "Alive"
 				dat += "<li>[ckey] - [player_status] - "
-				dat += "<a href='?_src_=holder;[HrefToken(TRUE)];adminplayerobservefollow=[REF(M)]'>FLW</a>"
+				dat += "<a href='?src=[REF(src)];follow=[REF(M)]'>FLW</a>"
 				dat += "<a href='?src=[REF(src)];member_action=remove;team=[team];ckey=[ckey]'>Remove</a>"
 				//Add more per player features here
 				dat += "</li>"
@@ -406,7 +397,7 @@
 	if(C.ready_to_spawn)
 		var/list/allowed_keys = C.team_keys[team]
 		if(!(user.ckey in allowed_keys))
-			to_chat(user,"<span class='warning'>You're not on the team list.</span>")
+			to_chat(user,span_warning("You're not on the team list."))
 			return
 		C.spawn_member(src,user.ckey,team)
 

@@ -14,8 +14,16 @@
 	/// List of typepaths for "/datum/blackmarket_market"s that this uplink can access.
 	var/list/accessible_markets = list(/datum/blackmarket_market/blackmarket)
 
-/obj/item/blackmarket_uplink/Initialize()
+/obj/item/blackmarket_uplink/Initialize(mapload)
 	. = ..()
+	// We don't want to go through this at mapload because the SSblackmarket isn't initialized yet.
+	if(mapload)
+		return
+
+	update_viewing_category()
+
+/// Simple internal proc for updating the viewing_category variable.
+/obj/item/blackmarket_uplink/proc/update_viewing_category()
 	if(accessible_markets.len)
 		viewing_market = accessible_markets[1]
 		var/list/categories = SSblackmarket.markets[viewing_market].categories
@@ -26,9 +34,9 @@
 	if(istype(I, /obj/item/holochip) || istype(I, /obj/item/stack/spacecash) || istype(I, /obj/item/coin))
 		var/worth = I.get_item_credit_value()
 		if(!worth)
-			to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
+			to_chat(user, span_warning("[I] doesn't seem to be worth anything!"))
 		money += worth
-		to_chat(user, "<span class='notice'>You slot [I] into [src] and it reports a total of [money] credits inserted.</span>")
+		to_chat(user, span_notice("You slot [I] into [src] and it reports a total of [money] credits inserted."))
 		qdel(I)
 		return
 	. = ..()
@@ -37,23 +45,24 @@
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
-	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5) as num|null, 1)
+	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? Current Amount: [money]", "Withdraw Funds", 5, money, 1)
+	if(isnull(amount_to_remove))
+		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-
-	if(!amount_to_remove || amount_to_remove < 0)
-		return
-	if(amount_to_remove > money)
-		to_chat(user, "<span class='warning'>There is only [money] credits in [src]</span>")
+	if(amount_to_remove <= 0)
 		return
 
 	var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 	money -= amount_to_remove
 	holochip.name = "washed " + holochip.name
 	user.put_in_hands(holochip)
-	to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+	to_chat(user, span_notice("You withdraw [amount_to_remove] credits into a holochip."))
 
 /obj/item/blackmarket_uplink/ui_interact(mob/user, datum/tgui/ui)
+	if(!viewing_category)
+		update_viewing_category()
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "BlackMarketUplink", name)

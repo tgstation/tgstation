@@ -22,13 +22,12 @@
 	permeability_coefficient = 0.5
 
 //Captain
-/obj/item/clothing/suit/captunic
-	name = "captain's parade tunic"
+/obj/item/clothing/suit/capjacket
+	name = "captain's parade jacket"
 	desc = "Worn by a Captain to show their class."
-	icon_state = "captunic"
+	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chef
@@ -37,11 +36,10 @@
 	desc = "An apron-jacket used by a high class chef."
 	icon_state = "chef"
 	inhand_icon_state = "chef"
-	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen)
-	togglename = "sleeves"
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
+	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
 //Cook
@@ -52,7 +50,7 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 
 //Detective
 /obj/item/clothing/suit/det_suit
@@ -62,11 +60,11 @@
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 
-/obj/item/clothing/suit/det_suit/Initialize()
+/obj/item/clothing/suit/det_suit/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
@@ -89,9 +87,14 @@
 	icon_state = "hazard"
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio, /obj/item/storage/bag/construction)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
+
+/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", alpha = src.alpha)
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -101,7 +104,6 @@
 	inhand_icon_state = "suitjacket_blue"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	togglename = "buttons"
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/toggle/lawyer/purple
@@ -125,8 +127,24 @@
 	icon_state = "suspenders"
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
-	togglename = "straps"
+	toggle_noun = "straps"
 	species_exception = list(/datum/species/golem)
+	greyscale_config = /datum/greyscale_config/suspenders
+	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
+	greyscale_colors = "#ff0000"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/toggle/suspenders/blue
+	name = "blue suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	greyscale_colors = "#0000ff"
+
+/obj/item/clothing/suit/toggle/suspenders/gray
+	name = "gray suspenders"
+	desc = "The symbol of hard labor and dirty jobs."
+	icon = 'icons/obj/clothing/belts.dmi'
+	greyscale_colors = "#888888"
 
 //Security
 /obj/item/clothing/suit/security/officer
@@ -155,7 +173,23 @@
 	name = "surgical apron"
 	desc = "A sterile blue surgical apron."
 	icon_state = "surgical"
-	allowed = list(/obj/item/scalpel, /obj/item/surgical_drapes, /obj/item/cautery, /obj/item/hemostat, /obj/item/retractor)
+	allowed = list(
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/scalpel,
+		/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/bonesetter,
+		/obj/item/flashlight/pen,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/storage/pill_bottle,
+		/obj/item/tank/internals/emergency_oxygen,
+		)
 
 //Curator
 /obj/item/clothing/suit/curator
@@ -165,8 +199,8 @@
 	inhand_icon_state = "curator"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
-	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 45)
+	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip, /obj/item/storage/bag/books)
+	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS
 
@@ -188,3 +222,16 @@
 	inhand_icon_state = "techpriesthood"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
+
+/obj/item/clothing/suit/det_suit/kim
+	name = "aerostatic bomber jacket"
+	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."
+	icon_state = "aerostatic_bomber_jacket"
+	inhand_icon_state = "aerostatic_bomber_jacket"
+
+/obj/item/clothing/suit/det_suit/disco
+	name = "disco ass blazer"
+	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
+	icon_state = "jamrock_blazer"
+	inhand_icon_state = "jamrock_blazer"
+

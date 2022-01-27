@@ -58,10 +58,23 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	///UI for screentips that appear when you mouse over things
 	var/atom/movable/screen/screentip/screentip_text
 
+	/// Whether or not screentips are enabled.
+	/// This is updated by the preference for cheaper reads than would be
+	/// had with a proc call, especially on one of the hottest procs in the
+	/// game (MouseEntered).
+	var/screentips_enabled = TRUE
+
+	/// The color to use for the screentips.
+	/// This is updated by the preference for cheaper reads than would be
+	/// had with a proc call, especially on one of the hottest procs in the
+	/// game (MouseEntered).
+	var/screentip_color
+
 	var/atom/movable/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = FALSE
 
 	var/atom/movable/screen/healths
+	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/internals
 	var/atom/movable/screen/wanted/wanted_lvl
@@ -74,12 +87,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	if (!ui_style)
 		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client && owner.client.prefs && owner.client.prefs.UI_style)
+		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	hide_actions_toggle = new
 	hide_actions_toggle.InitialiseIcon(src)
-	if(mymob.client)
-		hide_actions_toggle.locked = mymob.client.prefs.buttons_locked
+	if(mymob.client?.prefs)
+		hide_actions_toggle.locked = mymob.client.prefs.read_preference(/datum/preference/toggle/buttons_locked)
 
 	hand_slots = list()
 
@@ -88,11 +101,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	var/datum/preferences/preferences = owner?.client?.prefs
+	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
+	screentips_enabled = preferences?.read_preference(/datum/preference/toggle/enable_screentips)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
-		var/atom/movable/plane_master_controller/controller_instance = new mytype(src)
+		var/atom/movable/plane_master_controller/controller_instance = new mytype(null,src)
 		plane_master_controllers[controller_instance.name] = controller_instance
 
 	owner.overlay_fullscreen("see_through_darkness", /atom/movable/screen/fullscreen/see_through_darkness)
@@ -116,6 +132,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(infodisplay)
 
 	healths = null
+	stamina = null
 	healthdoll = null
 	wanted_lvl = null
 	internals = null
@@ -272,9 +289,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		to_chat(usr, "<span class='info'>Switched HUD mode. Press F12 to toggle.</span>")
+		to_chat(usr, span_info("Switched HUD mode. Press F12 to toggle."))
 	else
-		to_chat(usr, "<span class='warning'>This mob type does not use a HUD.</span>")
+		to_chat(usr, span_warning("This mob type does not use a HUD."))
 
 
 //(re)builds the hand ui slots, throwing away old ones

@@ -65,6 +65,7 @@
 #define ADMIN_COORDJMP(src) "[src ? src.Admin_Coordinates_Readable(FALSE, TRUE) : "nonexistent location"]"
 #define ADMIN_VERBOSEJMP(src) "[src ? src.Admin_Coordinates_Readable(TRUE, TRUE) : "nonexistent location"]"
 #define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
+#define ADMIN_TAG(datum) "(<A href='?src=[REF(src)];[HrefToken(TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
@@ -100,8 +101,6 @@
 #define MAX_KEYPRESS_COMMANDLENGTH 16
 ///Maximum keys that can be bound to one button
 #define MAX_COMMANDS_PER_KEY 5
-///Maximum keys per keybind
-#define MAX_KEYS_PER_KEYBIND 3
 ///Max amount of keypress messages per second over two seconds before client is autokicked
 #define MAX_KEYPRESS_AUTOKICK 50
 ///Length of held key buffer
@@ -142,3 +141,9 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 
 #define LIGHTNING_BOLT_DAMAGE 75
 #define LIGHTNING_BOLT_ELECTROCUTION_ANIMATION_LENGTH 40
+
+/// for asay pings, this is the index in the return list for [/proc/check_admin_pings] that contains the message modified with underlines for the spotted names
+#define ADMINSAY_PING_UNDERLINE_NAME_INDEX "!underlined_names"
+
+/// When passed in as the duration for ban_panel, will make the ban default to permanent
+#define BAN_PANEL_PERMANENT "permanent"

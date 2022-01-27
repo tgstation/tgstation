@@ -40,33 +40,36 @@
  * * user The mob that is being teleported
  */
 /obj/item/teleportation_scroll/proc/teleportscroll(mob/user)
-	var/A
-
-	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
-	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !A || !uses)
+	if(!length(GLOB.teleportlocs))
+		to_chat(user, span_warning("There are no locations available"))
 		return
-	var/area/thearea = GLOB.teleportlocs[A]
+	var/jump_target = tgui_input_list(user, "Area to jump to", "BOOYEA", GLOB.teleportlocs)
+	if(isnull(jump_target))
+		return
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated() || !uses)
+		return
+	var/area/thearea = GLOB.teleportlocs[jump_target]
 
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(2, user.loc)
 	smoke.attach(user)
 	smoke.start()
-	var/list/L = list()
-	for(var/turf/T in get_area_turfs(thearea.type))
-		if(!T.is_blocked_turf())
-			L += T
+	var/list/possible_locations = list()
+	for(var/turf/target_turf in get_area_turfs(thearea.type))
+		if(!target_turf.is_blocked_turf())
+			possible_locations += target_turf
 
-	if(!L.len)
-		to_chat(user, "<span class='warning'>The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.</span>")
+	if(!length(possible_locations))
+		to_chat(user, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason."))
 		return
 
-	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(do_teleport(user, pick(possible_locations), channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		smoke.start()
 		uses--
 		if(!uses)
-			to_chat(user, "<span class='warning'>[src] has run out of uses and crumbles to dust!</span>")
+			to_chat(user, span_warning("[src] has run out of uses and crumbles to dust!"))
 			qdel(src)
 		else
-			to_chat(user, "<span class='notice'>[src] has [uses] use\s remaining.</span>")
+			to_chat(user, span_notice("[src] has [uses] use\s remaining."))
 	else
-		to_chat(user, "<span class='warning'>The spell matrix was disrupted by something near the destination.</span>")
+		to_chat(user, span_warning("The spell matrix was disrupted by something near the destination."))

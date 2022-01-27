@@ -31,8 +31,10 @@
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
+	if (QDELING(src))
+		return
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
-	. = D.add_fingerprint(M, ignoregloves)
+	. = D?.add_fingerprint(M, ignoregloves)
 
 /atom/proc/add_fiber_list(list/fibertext) //ASSOC LIST FIBERTEXT = FIBERTEXT
 	if(length(fibertext))
@@ -77,8 +79,9 @@
 	var/obj/effect/decal/cleanable/blood/splatter/B = locate() in src
 	if(!B)
 		B = new /obj/effect/decal/cleanable/blood/splatter(src, diseases)
-	B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
-	return TRUE //we bloodied the floor
+	if(!QDELETED(B))
+		B.add_blood_DNA(blood_dna) //give blood info to the blood decal.
+		return TRUE //we bloodied the floor
 
 /mob/living/carbon/human/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	if(wear_suit)
@@ -96,7 +99,16 @@
 	update_inv_gloves() //handles bloody hands overlays and updating
 	return TRUE
 
-/atom/proc/transfer_fingerprints_to(atom/A)
-	A.add_fingerprint_list(return_fingerprints())
-	A.add_hiddenprint_list(return_hiddenprints())
-	A.fingerprintslast = fingerprintslast
+/*
+ * Transfer all the fingerprints and hidden prints from [src] to [transfer_to].
+ */
+/atom/proc/transfer_fingerprints_to(atom/transfer_to)
+	transfer_to.add_fingerprint_list(return_fingerprints())
+	transfer_to.add_hiddenprint_list(return_hiddenprints())
+	transfer_to.fingerprintslast = fingerprintslast
+
+/*
+ * Transfer all the fibers from [src] to [transfer_to].
+ */
+/atom/proc/transfer_fibers_to(atom/transfer_to)
+	transfer_to.add_fiber_list(return_fibers())

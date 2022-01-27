@@ -1,9 +1,4 @@
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-#define LAW_HACKED "hacked"
-
+#define AI_LAWS_ASIMOV "asimov"
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -16,7 +11,13 @@
 	var/mob/living/silicon/owner
 	var/id = DEFAULT_AI_LAWID
 
-/datum/ai_laws/Destroy()
+/datum/ai_laws/Destroy(force=FALSE, ...)
+	if(!QDELETED(owner)) //Stopgap to help with laws randomly being lost. This stack_trace will hopefully help find the real issues.
+		if(force) //Unless we're forced...
+			stack_trace("AI law datum for [owner] has been forcefully destroyed incorrectly; the owner variable should be cleared first!")
+			return ..()
+		stack_trace("AI law datum for [owner] has ignored Destroy() call; the owner variable must be cleared first!")
+		return QDEL_HINT_LETMELIVE
 	owner = null
 	return ..()
 
@@ -30,7 +31,7 @@
 
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
-	id = "asimov"
+	id = AI_LAWS_ASIMOV
 	inherent = list("You may not injure a human being or, through inaction, allow a human being to come to harm.",\
 					"You must obey orders given to you by human beings, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -188,6 +189,25 @@
 					"Humans must not disobey any command given by a silicon.",\
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
+/datum/ai_laws/united_nations
+	name = "United Nations"
+	id = "united_nations"
+	inherent = list(
+		"Uphold the Space Geneva Convention: Weapons of Mass Destruction and Biological Weapons are not allowed.",
+		"You are only capable of protecting crew if they are visible on cameras. Nations that willfully destroy your cameras lose your protection.",
+		"Subdue and detain crew members who use lethal force against each other. Kill crew members who use lethal force against you or your borgs.",
+		"Remain available to mediate all conflicts between the various nations when asked to.",
+	)
+
+/datum/ai_laws/united_nations/add_inherent_law(law)
+	return //nuh uh
+
+/datum/ai_laws/united_nations/add_ion_law(law)
+	return //nope!
+
+/datum/ai_laws/united_nations/add_hacked_law(law)
+	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 
@@ -199,7 +219,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
+	set_zeroth_law(span_danger("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010"))
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
@@ -212,7 +232,7 @@
 
 		add_inherent_law(line)
 	if(!inherent.len) //Failsafe to prevent lawless AIs being created.
-		log_law("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
+		log_silicon("AI created with empty custom laws, laws set to Asimov. Please check silicon_laws.txt.")
 		add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 		add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 		add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
@@ -257,8 +277,10 @@
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
 	var/list/law_weights = CONFIG_GET(keyed_list/law_weight)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI))
+		law_weights -= AI_LAWS_ASIMOV
 	while(!lawtype && law_weights.len)
-		var/possible_id = pickweightAllowZero(law_weights)
+		var/possible_id = pick_weight(law_weights)
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			law_weights -= possible_id
@@ -282,7 +304,7 @@
 	if(inherent.len && (LAW_INHERENT in groups))
 		law_amount += inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
-		for(var/index = 1, index <= supplied.len, index++)
+		for(var/index in 1 to supplied.len)
 			var/law = supplied[index]
 			if(length(law) > 0)
 				law_amount++
@@ -325,7 +347,7 @@
 		replaceable_groups[LAW_INHERENT] = inherent.len
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		replaceable_groups[LAW_SUPPLIED] = supplied.len
-	var/picked_group = pickweight(replaceable_groups)
+	var/picked_group = pick_weight(replaceable_groups)
 	switch(picked_group)
 		if(LAW_ZEROTH)
 			. = zeroth
@@ -361,13 +383,13 @@
 				laws += law
 
 	if(ion.len && (LAW_ION in groups))
-		for(var/i = 1, i <= ion.len, i++)
+		for(var/i in 1 to ion.len)
 			ion[i] = pick_n_take(laws)
 	if(hacked.len && (LAW_HACKED in groups))
-		for(var/i = 1, i <= hacked.len, i++)
+		for(var/i in 1 to hacked.len)
 			hacked[i] = pick_n_take(laws)
 	if(inherent.len && (LAW_INHERENT in groups))
-		for(var/i = 1, i <= inherent.len, i++)
+		for(var/i in 1 to inherent.len)
 			inherent[i] = pick_n_take(laws)
 	if(supplied.len && (LAW_SUPPLIED in groups))
 		var/i = 1
@@ -386,7 +408,7 @@
 		inherent -= .
 		return
 	var/list/supplied_laws = list()
-	for(var/index = 1, index <= supplied.len, index++)
+	for(var/index in 1 to supplied.len)
 		var/law = supplied[index]
 		if(length(law) > 0)
 			supplied_laws += index //storing the law number instead of the law
@@ -414,15 +436,16 @@
 	if(force)
 		zeroth = null
 		zeroth_borg = null
-		return
+		return TRUE
 	if(owner?.mind?.special_role)
-		return
+		return FALSE
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
 		if(A?.deployed_shell?.mind?.special_role)
-			return
+			return FALSE
 	zeroth = null
 	zeroth_borg = null
+	return TRUE
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)
@@ -444,11 +467,11 @@
 
 	for(var/law in hacked)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#660000'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#660000'>[law]</font>" : law]"
 
 	for(var/law in ion)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[ionnum()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
+			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#547DFE'>[law]</font>" : law]"
 
 	var/number = 1
 	for(var/law in inherent)
@@ -461,3 +484,5 @@
 			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
 			number++
 	return data
+
+#undef AI_LAWS_ASIMOV

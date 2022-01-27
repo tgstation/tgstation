@@ -2,7 +2,6 @@
 //
 // An invisible (no icon) mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
-
 /mob/camera/ai_eye
 	name = "Inactive AI Eye"
 
@@ -13,12 +12,13 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
-	var/use_static = USE_STATIC_OPAQUE
+	var/use_static = TRUE
 	var/static_visibility_range = 16
 	var/ai_detector_visible = TRUE
 	var/ai_detector_color = COLOR_RED
+	interaction_range = null
 
-/mob/camera/ai_eye/Initialize()
+/mob/camera/ai_eye/Initialize(mapload)
 	. = ..()
 	GLOB.aiEyes += src
 	update_ai_detect_hud()
@@ -39,17 +39,17 @@
 		QDEL_LIST(old_images)
 		return
 
-	if(!hud.hudusers.len)
-		//no one is watching, do not bother updating anything
-		return
+	if(!length(hud.hudusers))
+		return //no one is watching, do not bother updating anything
+
 	hud.remove_from_hud(src)
 
-	var/static/list/vis_contents_objects = list()
-	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_objects[ai_detector_color]
+	var/static/list/vis_contents_opaque = list()
+	var/obj/effect/overlay/ai_detect_hud/hud_obj = vis_contents_opaque[ai_detector_color]
 	if(!hud_obj)
 		hud_obj = new /obj/effect/overlay/ai_detect_hud()
 		hud_obj.color = ai_detector_color
-		vis_contents_objects[ai_detector_color] = hud_obj
+		vis_contents_opaque[ai_detector_color] = hud_obj
 
 	var/list/new_images = list()
 	var/list/turfs = get_visible_turfs()
@@ -75,18 +75,18 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/ai_eye/proc/setLoc(T, force_update = FALSE)
+/mob/camera/ai_eye/proc/setLoc(destination, force_update = FALSE)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
-		T = get_turf(T)
-		if(!force_update && (T == get_turf(src)) )
+		destination = get_turf(destination)
+		if(!force_update && (destination == get_turf(src)) )
 			return //we are already here!
-		if (T)
-			forceMove(T)
+		if (destination)
+			abstract_move(destination)
 		else
 			moveToNullspace()
-		if(use_static != USE_STATIC_NONE)
+		if(use_static)
 			ai.camera_visibility(src)
 		if(ai.client && !ai.multicam_on)
 			ai.client.eye = src
@@ -95,30 +95,20 @@
 		//Holopad
 		if(istype(ai.current, /obj/machinery/holopad))
 			var/obj/machinery/holopad/H = ai.current
-			H.move_hologram(ai, T)
+			H.move_hologram(ai, destination)
 		if(ai.camera_light_on)
 			ai.light_cameras()
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
-/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(ai, "<span class='warning'>There's nowhere to go in that direction!</span>")
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(ai, "<span class='warning'>You couldn't move there!</span>")
-		return FALSE
-	setLoc(target, TRUE)
-	return TRUE
+/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
+	. = ..()
+	if(.)
+		setLoc(loc, force_update = TRUE)
 
-/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
-	return TRUE
+/mob/camera/ai_eye/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	z_move_flags |= ZMOVE_IGNORE_OBSTACLES  //cameras do not respect these FLOORS you speak so much of
+	return ..()
 
 /mob/camera/ai_eye/Move()
 	return
@@ -188,6 +178,8 @@
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
+		stack_trace("AI eye object wasn't found! Location: [loc] / Eyeobj: [eyeobj] / QDELETED: [QDELETED(eyeobj)] / Eye loc: [eyeobj?.loc]")
+		QDEL_NULL(eyeobj)
 		create_eye()
 
 	eyeobj?.setLoc(loc)

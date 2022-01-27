@@ -10,6 +10,7 @@
 	initial_language_holder = /datum/language_holder/alien
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/food/meat/slab/xeno
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -23,7 +24,7 @@
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
 
-/mob/living/carbon/alien/Initialize()
+/mob/living/carbon/alien/Initialize(mapload)
 	add_verb(src, /mob/living/proc/mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
@@ -31,6 +32,7 @@
 
 	create_internal_organs()
 
+	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEVER_WOUNDED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -115,8 +117,8 @@ Des: Removes all infected images from the alien.
 	return TRUE
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
-	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
-	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	to_chat(src, span_noticealien("You begin to evolve!"))
+	visible_message(span_alertalien("[src] begins to twist and contort!"))
 	new_xeno.setDir(dir)
 	if(numba && unique_name)
 		new_xeno.numba = numba
@@ -125,11 +127,8 @@ Des: Removes all infected images from the alien.
 		new_xeno.name = name
 		new_xeno.real_name = real_name
 	if(mind)
+		mind.name = new_xeno.real_name
 		mind.transfer_to(new_xeno)
-	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
-	if(nanites)
-		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
-		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items(obj/item/I)

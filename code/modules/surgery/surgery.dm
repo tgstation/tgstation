@@ -21,23 +21,28 @@
 	var/self_operable = FALSE //Can the surgery be performed on yourself.
 	var/requires_tech = FALSE //handles techweb-oriented surgeries, previously restricted to the /advanced subtype (You still need to add designs)
 	var/replaced_by //type; doesn't show up if this type exists. Set to /datum/surgery if you want to hide a "base" surgery (useful for typing parents IE healing.dm just make sure to null it out again)
+	/// Organ being directly manipulated, used for checking if the organ is still in the body after surgery has begun
+	var/organ_to_manipulate 
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
-	if(surgery_target)
-		target = surgery_target
-		target.surgeries += src
-		if(surgery_location)
-			location = surgery_location
-		if(surgery_bodypart)
-			operated_bodypart = surgery_bodypart
-			if(targetable_wound)
-				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-				operated_wound.attached_surgery = src
+	if(!surgery_target)
+		return
+	target = surgery_target
+	target.surgeries += src
+	if(surgery_location)
+		location = surgery_location
+	if(!surgery_bodypart)
+		return
+	operated_bodypart = surgery_bodypart
+	if(targetable_wound)
+		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+		operated_wound.attached_surgery = src
 
 /datum/surgery/Destroy()
 	if(operated_wound)
 		operated_wound.attached_surgery = null
+		operated_wound = null
 	if(target)
 		target.surgeries -= src
 	target = null
@@ -51,7 +56,7 @@
 		return FALSE
 
 	// True surgeons (like abductor scientists) need no instructions
-	if(HAS_TRAIT(user, TRAIT_SURGEON) || HAS_TRAIT(user.mind, TRAIT_SURGEON))
+	if(HAS_TRAIT(user, TRAIT_SURGEON) || (!isnull(user.mind) && HAS_TRAIT(user.mind, TRAIT_SURGEON)))
 		if(replaced_by) // only show top-level surgeries
 			return FALSE
 		else
@@ -64,24 +69,19 @@
 		. = FALSE
 
 	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		var/obj/item/surgical_processor/SP = locate() in R.model.modules
-		if(SP) //no early return for !SP since we want to check optable should this not exist.
-			if(replaced_by in SP.advanced_surgeries)
+		var/mob/living/silicon/robot/robo_surgeon = user
+		var/obj/item/surgical_processor/surgical_processor = locate() in robo_surgeon.model.modules
+		if(surgical_processor) //no early return for !surgical_processor since we want to check optable should this not exist.
+			if(replaced_by in surgical_processor.advanced_surgeries)
 				return FALSE
-			if(type in SP.advanced_surgeries)
+			if(type in surgical_processor.advanced_surgeries)
 				return TRUE
 
-	var/turf/T = get_turf(patient)
+	var/turf/patient_turf = get_turf(patient)
 
 	//Get the relevant operating computer
-	var/obj/machinery/computer/operating/opcomputer
-	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table?.computer)
-		opcomputer = table.computer
-	if(!opcomputer)
-		return
-	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
+	var/obj/machinery/computer/operating/opcomputer = locate_operating_computer(patient_turf)
+	if (isnull(opcomputer))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
@@ -98,13 +98,13 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		try_to_fail = TRUE
 
-	var/datum/surgery_step/S = get_surgery_step()
-	if(S)
+	var/datum/surgery_step/step = get_surgery_step()
+	if(step)
 		var/obj/item/tool = user.get_active_held_item()
-		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
+		if(step.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
 		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
-			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
+			to_chat(user, span_warning("This step requires a different tool!"))
 			return TRUE
 	return FALSE
 
@@ -119,9 +119,34 @@
 	else
 		return null
 
-/datum/surgery/proc/complete()
+/datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
+	surgeon.mind.add_memory(
+		MEMORY_SUCCESSFUL_SURGERY,
+		list(
+			DETAIL_PROTAGONIST = surgeon,
+			DETAIL_DEUTERAGONIST = target,
+			DETAIL_SURGERY_TYPE = src,
+		),
+		story_value = STORY_VALUE_OKAY
+	)
 	qdel(src)
+
+/// Returns a nearby operating computer linked to an operating table
+/datum/surgery/proc/locate_operating_computer(turf/patient_turf)
+	if (isnull(patient_turf))
+		return null
+
+	var/obj/structure/table/optable/operating_table = locate(/obj/structure/table/optable, patient_turf)
+	var/obj/machinery/computer/operating/operating_computer = operating_table?.computer
+
+	if (isnull(operating_computer))
+		return null
+
+	if(operating_computer.machine_stat & (NOPOWER|BROKEN))
+		return null
+
+	return operating_computer
 
 /datum/surgery/advanced
 	name = "advanced surgery"
@@ -140,12 +165,11 @@
 	icon_state = "datadisk1"
 	custom_materials = list(/datum/material/iron=300, /datum/material/glass=100)
 
-/obj/item/disk/surgery/debug/Initialize()
+/obj/item/disk/surgery/debug/Initialize(mapload)
 	. = ..()
 	surgeries = list()
 	var/list/req_tech_surgeries = subtypesof(/datum/surgery)
-	for(var/i in req_tech_surgeries)
-		var/datum/surgery/beep = i
+	for(var/datum/surgery/beep as anything in req_tech_surgeries)
 		if(initial(beep.requires_tech))
 			surgeries += beep
 

@@ -43,9 +43,9 @@
 	return
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/A, mob/living/D)
-	D.visible_message("<span class='danger'>[A] hits [D] with Plasma Punch!</span>", \
-					"<span class='userdanger'>You're hit with a Plasma Punch by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
-	to_chat(A, "<span class='danger'>You hit [D] with Plasma Punch!</span>")
+	D.visible_message(span_danger("[A] hits [D] with Plasma Punch!"), \
+					span_userdanger("You're hit with a Plasma Punch by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
+	to_chat(A, span_danger("You hit [D] with Plasma Punch!"))
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(D, get_dir(D, get_step_away(D, A)))
 	D.throw_at(throw_target, 200, 4,A)
@@ -59,24 +59,24 @@
 	A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 	playsound(D.loc, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
 	A.say("PLASMA FIST!", forced="plasma fist")
-	D.visible_message("<span class='danger'>[A] hits [D] with THE PLASMA FIST TECHNIQUE!</span>", \
-					"<span class='userdanger'>You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, A)
-	to_chat(A, "<span class='danger'>You hit [D] with THE PLASMA FIST TECHNIQUE!</span>")
+	D.visible_message(span_danger("[A] hits [D] with THE PLASMA FIST TECHNIQUE!"), \
+					span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [A]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, A)
+	to_chat(A, span_danger("You hit [D] with THE PLASMA FIST TECHNIQUE!"))
 	log_combat(A, D, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(D)
 	D.gib()
 	if(nobomb)
 		return
 	if(!hasclient)
-		to_chat(A, "<span class='warning'>Taking this plasma energy for your </span><span class='notice'>Apotheosis</span><span class='warning'> would bring dishonor to the clan!</span>")
+		to_chat(A, span_warning("Taking this plasma energy for your </span>[span_notice("Apotheosis")]<span class='warning'> would bring dishonor to the clan!"))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 		return
 	else if(plasma_power >= plasma_cap)
-		to_chat(A, "<span class='warning'>You cannot power up your </span><span class='notice'>Apotheosis</span><span class='warning'> any more!</span>")
+		to_chat(A, span_warning("You cannot power up your </span>[span_notice("Apotheosis")]<span class='warning'> any more!"))
 		new /obj/effect/temp_visual/plasma_soul(Dturf)//doesn't beam to you, so it just hangs around and poofs.
 	else
 		plasma_power += plasma_increment
-		to_chat(A, "<span class='nicegreen'>Power increasing! Your </span><span class='notice'>Apotheosis</span><span class='nicegreen'> is now at power level [plasma_power]!</span>")
+		to_chat(A, span_nicegreen("Power increasing! Your </span>[span_notice("Apotheosis")]<span class='nicegreen'> is now at power level [plasma_power]!"))
 		new /obj/effect/temp_visual/plasma_soul(Dturf, A)
 		var/oldcolor = A.color
 		A.color = "#9C00FF"
@@ -84,37 +84,39 @@
 		animate(A, color = oldcolor, time = 3 SECONDS)
 
 
-/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/A, mob/living/D)
-	A.say("APOTHEOSIS!!", forced="plasma fist")
-	if (ishuman(A))
-		var/mob/living/carbon/human/human_attacker = A
+/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
+	user.say("APOTHEOSIS!!", forced="plasma fist")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
+		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
 		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
 		human_attacker.undershirt = "Nude"
 		human_attacker.socks = "Nude"
 		human_attacker.update_body()
-	var/turf/boomspot = get_turf(A)
 
+	var/turf/boomspot = get_turf(user)
 	//before ghosting to prevent issues
-	log_combat(A, A, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
-	message_admins("[key_name_admin(A)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
+	log_combat(user, user, "triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4] (Plasma Fist)")
+	message_admins("[key_name_admin(user)] triggered final plasma explosion with size [plasma_power], [plasma_power*2], [plasma_power*4].")
 
-	to_chat(A, "<span class='userdanger'>The explosion knocks your soul out of your body!</span>")
-	A.ghostize(FALSE) //prevents... horrible memes just believe me
+	to_chat(user, span_userdanger("The explosion knocks your soul out of your body!"))
+	user.ghostize(FALSE) //prevents... horrible memes just believe me
 
-	A.apply_damage(rand(50,70), BRUTE)
+	user.apply_damage(rand(50,70), BRUTE)
 
-	addtimer(CALLBACK(src,.proc/Apotheosis_end, A), 6 SECONDS)
+	addtimer(CALLBACK(src,.proc/Apotheosis_end, user), 6 SECONDS)
 	playsound(boomspot, 'sound/weapons/punch1.ogg', 50, TRUE, -1)
-	explosion(boomspot,plasma_power,plasma_power*2,plasma_power*4,ignorecap = TRUE)
+	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	var/datum/dna/dna = dying.has_dna()
-	if (dna?.species)
-		dna.species.species_traits -= TRAIT_BOMBIMMUNE
+	if(ishuman(dying))
+		var/mob/living/carbon/human/dying_human = dying
+		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
+		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
 	if(dying.stat == DEAD)
 		return
 	dying.death()
@@ -130,7 +132,7 @@
 	if(check_streak(A,D))
 		return TRUE
 	if(A == D)//there is no disarming yourself, so we need to let plasma fist user know
-		to_chat(A, "<span class='notice'>You have added a disarm to your streak.</span>")
+		to_chat(A, span_notice("You have added a disarm to your streak."))
 	return FALSE
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/A, mob/living/D)
@@ -146,11 +148,11 @@
 
 	var/datum/martial_art/plasma_fist/martial = usr.mind.martial_art
 	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
-	to_chat(usr, "<span class='notice'>Tornado Sweep</span>: Harm Harm Disarm. Repulses opponent and everyone back.")
-	to_chat(usr, "<span class='notice'>Throwback</span>: Disarm Harm Disarm. Throws the opponent and an item at them.")
-	to_chat(usr, "<span class='notice'>The Plasma Fist</span>: Harm Disarm Disarm Disarm Harm. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your <span class='notice'>Apotheosis</span> explosion size."]")
+	to_chat(usr, "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back.")
+	to_chat(usr, "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them.")
+	to_chat(usr, "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]")
 	if(!martial.nobomb)
-		to_chat(usr, "<span class='notice'>Apotheosis</span>: Use <span class='notice'>The Plasma Fist</span> on yourself. Sends you away in a glorious explosion.")
+		to_chat(usr, "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion.")
 
 
 /obj/effect/temp_visual/plasma_soul
@@ -171,7 +173,7 @@
 
 /obj/effect/temp_visual/plasma_soul/Destroy()
 	if(!beam_target)
-		visible_message("<span class='notice'>[src] fades away...</span>")
+		visible_message(span_notice("[src] fades away..."))
 	. = ..()
 
 /obj/effect/ebeam/plasma_fist

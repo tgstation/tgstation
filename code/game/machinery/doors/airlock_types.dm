@@ -20,6 +20,10 @@
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
 
+/obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
+	icon = 'icons/obj/doors/airlocks/station/hydroponics.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_hydro
+
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -102,6 +106,10 @@
 	opacity = FALSE
 	glass = TRUE
 
+/obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
+	opacity = FALSE
+	glass = TRUE
+
 /obj/machinery/door/airlock/research/glass
 	opacity = FALSE
 	glass = TRUE
@@ -110,15 +118,15 @@
 	autoclose = FALSE
 	frequency = FREQ_AIRLOCK_CONTROL
 	heat_proof = TRUE
-	req_access = list(ACCESS_TOXINS)
+	req_access = list(ACCESS_ORDNANCE)
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_interior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_interior
 	name = "Mixing Room Interior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_INTERIOR
 
-/obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior
+/obj/machinery/door/airlock/research/glass/incinerator/ordmix_exterior
 	name = "Mixing Room Exterior Airlock"
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
 
 /obj/machinery/door/airlock/mining/glass
 	opacity = FALSE
@@ -188,64 +196,49 @@
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
 	var/last_event = 0
+	//Is this airlock actually radioactive?
+	var/actually_radioactive = TRUE
 
 /obj/machinery/door/airlock/uranium/process()
-	if(world.time > last_event+20)
+	if(actually_radioactive && world.time > last_event+20)
 		if(prob(50))
 			radiate()
 		last_event = world.time
 	..()
 
 /obj/machinery/door/airlock/uranium/proc/radiate()
-	radiation_pulse(get_turf(src), 150)
-	return
+	radiation_pulse(
+		src,
+		max_range = 2,
+		threshold = RAD_LIGHT_INSULATION,
+		chance = URANIUM_IRRADIATION_CHANCE,
+		minimum_exposure_time = URANIUM_RADIATION_MINIMUM_EXPOSURE_TIME,
+	)
 
 /obj/machinery/door/airlock/uranium/glass
 	opacity = FALSE
 	glass = TRUE
+
+/obj/machinery/door/airlock/uranium/safe
+	actually_radioactive = FALSE
+
+/obj/machinery/door/airlock/uranium/glass/safe
+	actually_radioactive = FALSE
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
+	material_flags = MATERIAL_EFFECTS
+	material_modifier = 0.25
 
-/obj/machinery/door/airlock/plasma/ComponentInitialize()
+/obj/machinery/door/airlock/plasma/Initialize(mapload)
+	custom_materials = custom_materials ? custom_materials : list(/datum/material/plasma = 20000)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
 
-/obj/machinery/door/airlock/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
-/obj/machinery/door/airlock/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > 300)
-
-/obj/machinery/door/airlock/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	PlasmaBurn()
-
-/obj/machinery/door/airlock/plasma/proc/PlasmaBurn()
-	atmos_spawn_air("plasma=500;TEMP=1000")
-	var/obj/structure/door_assembly/DA
-	DA = new /obj/structure/door_assembly(loc)
-	if(glass)
-		DA.glass = TRUE
-	if(heat_proof)
-		DA.heat_proof_finished = TRUE
-	DA.update_appearance()
-	DA.update_name()
-	qdel(src)
-
-/obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
+/obj/machinery/door/airlock/plasma/block_superconductivity() //we don't stop the heat~
 	return 0
-
-/obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
-	if(C.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma airlock ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-		log_game("Plasma airlock ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(C.get_temperature())
-	else
-		return ..()
 
 /obj/machinery/door/airlock/plasma/glass
 	opacity = FALSE
@@ -341,10 +334,61 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
+	req_access = list(ACCESS_EXTERNAL_AIRLOCKS)
+
+	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
+	var/space_dir = null
+
+/obj/machinery/door/airlock/external/Initialize(mapload, ...)
+	// default setting is for mapping only, let overrides work
+	if(!mapload || req_access_txt || req_one_access_txt)
+		req_access = null
+
+	return ..()
+
+/obj/machinery/door/airlock/external/LateInitialize()
+	. = ..()
+	if(space_dir)
+		unres_sides |= space_dir
+
+/obj/machinery/door/airlock/external/examine(mob/user)
+	. = ..()
+	if(space_dir)
+		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the [dir2text(space_dir)] side with <b>just your hands</b> even if there's no power.")
+
+/obj/machinery/door/airlock/external/cyclelinkairlock()
+	. = ..()
+	var/obj/machinery/door/airlock/external/cycle_linked_external_airlock = cyclelinkedairlock
+	if(istype(cycle_linked_external_airlock))
+		cycle_linked_external_airlock.space_dir |= space_dir
+		space_dir |= cycle_linked_external_airlock.space_dir
+
+/obj/machinery/door/airlock/external/try_safety_unlock(mob/user)
+	if(space_dir && density)
+		if(!hasPower())
+			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
+			if(do_after(user, 15 SECONDS, target = src))
+				try_to_crowbar(null, user, TRUE)
+				return TRUE
+		else
+			// always open from the space side
+			// get_dir(src, user) & space_dir, checked in unresricted_sides
+			var/should_safety_open = shuttledocked || cyclelinkedairlock?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
+			return try_to_activate_door(user, should_safety_open)
+
+	return ..()
+
+/// Access free external airlock
+/obj/machinery/door/airlock/external/ruin
+	req_access = null
 
 /obj/machinery/door/airlock/external/glass
 	opacity = FALSE
 	glass = TRUE
+
+/// Access free external glass airlock
+/obj/machinery/door/airlock/external/glass/ruin
+	req_access = null
 
 //////////////////////////////////
 /*
@@ -459,12 +503,12 @@
 	var/friendly = FALSE
 	var/stealthy = FALSE
 
-/obj/machinery/door/airlock/cult/Initialize()
+/obj/machinery/door/airlock/cult/Initialize(mapload)
 	. = ..()
 	new openingoverlaytype(loc)
 
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
-	return (iscultist(user) && !isAllPowerCut())
+	return (IS_CULTIST(user) && !isAllPowerCut())
 
 /obj/machinery/door/airlock/cult/on_break()
 	if(!panel_open)
@@ -479,7 +523,7 @@
 /obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return TRUE
-	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
+	if(friendly || IS_CULTIST(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		if(!stealthy)
 			new openingoverlaytype(loc)
 		return TRUE
@@ -491,7 +535,7 @@
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
 			L.Paralyze(40)
-			L.throw_at(throwtarget, 5, 1,src)
+			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
 /obj/machinery/door/airlock/cult/proc/conceal()
@@ -547,7 +591,7 @@
 	desc = "An airlock hastily corrupted by blood magic, it is unusually brittle in this state."
 	normal_integrity = 150
 	damage_deflection = 5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
 
 //////////////////////////////////
 /*

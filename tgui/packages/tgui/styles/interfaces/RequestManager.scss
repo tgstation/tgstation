@@ -1,0 +1,106 @@
+/**
+ * Copyright (c) 2021 bobbahbrown (https://github.com/bobbahbrown)
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss';
+
+$color-prayer: colors.bg(colors.$purple) !default;
+$color-centcom: colors.bg(colors.$yellow) !default;
+$color-syndicate: colors.bg(colors.$red) !default;
+$color-nuke: colors.bg(colors.$yellow) !default;
+$color-muted: colors.bg(colors.$label) !default;
+$color-header: colors.bg(colors.$label) !default;
+$background-color: base.$color-bg-section !default;
+$text-color: base.$color-fg !default;
+
+.RequestManager__request_centcom,
+.RequestManager__request_nuke,
+.RequestManager__request_prayer,
+.RequestManager__request_syndicate {
+  margin-right: 0.5rem;
+}
+
+.RequestManager__request_prayer {
+  color: $color-prayer;
+}
+
+.RequestManager__request_centcom {
+  color: $color-centcom;
+}
+
+.RequestManager__request_syndicate {
+  color: $color-syndicate;
+}
+
+.RequestManager__request_nuke {
+  color: $color-nuke;
+}
+
+.RequestManager__header {
+  line-height: 1.375rem;
+  min-height: 1.375rem;
+  color: $color-muted;
+  white-space: break-spaces;
+  word-wrap: pre-wrap;
+  vertical-align: baseline;
+  margin-bottom: 0;
+  padding-bottom: 0.1rem;
+}
+
+.RequestManager__headerText {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: $color-header;
+}
+
+.RequestManager__timestamp {
+  font-size: 0.75rem;
+}
+
+.RequestManager__row:first-of-type {
+  margin-top: 0rem;
+}
+
+.RequestManager__row {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-top: 0.75rem;
+  min-height: 2.75rem;
+}
+
+.RequestManager__row:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.RequestManager__row:hover .RequestManager__controlsContainer {
+  opacity: 1;
+}
+
+.RequestManager__controlsContainer {
+  opacity: 0;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
+
+.RequestManager__row {
+  position: relative;
+}
+
+.RequestManager__filterPanel {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: functions.fake-alpha($background-color, base.$color-bg);
+  background-color: $background-color;
+  color: $text-color
+}
+
+.RequestManager__filterPanel tr:not(:last-of-type) {
+  margin-bottom: 0.5rem;
+}

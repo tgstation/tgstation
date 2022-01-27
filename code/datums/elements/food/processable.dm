@@ -32,13 +32,12 @@
 	SIGNAL_HANDLER
 
 	mutable_recipes += list(list(TOOL_PROCESSING_RESULT = result_atom_type, TOOL_PROCESSING_AMOUNT = amount_created, TOOL_PROCESSING_TIME = time_to_process))
-	return COMPONENT_NO_AFTERATTACK
 
 ///So people know what the frick they're doing without reading from a wiki page (I mean they will inevitably but i'm trying to help, ok?)
 /datum/element/processable/proc/OnExamine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(amount_created > 1)
-		examine_list += "<span class='notice'>It can be turned into [amount_created] [initial(result_atom_type.name)]s with <b>[tool_behaviour_name(tool_behaviour)]</b>!</span>"
+		examine_list += span_notice("It can be turned into [amount_created] [initial(result_atom_type.name)]s with <b>[tool_behaviour_name(tool_behaviour)]</b>!")
 	else
-		examine_list += "<span class='notice'>It can be turned into \a [initial(result_atom_type.name)] with <b>[tool_behaviour_name(tool_behaviour)]</b>!</span>"
+		examine_list += span_notice("It can be turned into \a [initial(result_atom_type.name)] with <b>[tool_behaviour_name(tool_behaviour)]</b>!")

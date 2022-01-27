@@ -5,6 +5,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	mutable = FALSE
 	var/mob/camera/disease/overmind
+	var/disease_id
 
 /datum/disease/advance/sentient_disease/New()
 	..()
@@ -12,6 +13,7 @@
 
 /datum/disease/advance/sentient_disease/Destroy()
 	. = ..()
+	overmind = null
 	GLOB.sentient_disease_instances -= src
 
 /datum/disease/advance/sentient_disease/remove_disease()
@@ -37,6 +39,7 @@
 /datum/disease/advance/sentient_disease/Copy()
 	var/datum/disease/advance/sentient_disease/D = ..()
 	D.overmind = overmind
+	D.disease_id = disease_id
 	return D
 
 /datum/disease/advance/sentient_disease/after_add()
@@ -45,7 +48,9 @@
 
 
 /datum/disease/advance/sentient_disease/GetDiseaseID()
-	return "[type]|[overmind ? overmind.tag : null]"
+	if (!disease_id) //if we don't set this here it can reinfect people after the disease dies, since overmind.tag won't be null when the disease is alive, but will be null afterwards, thus the disease ID changes
+		disease_id = "[type]|[overmind?.tag]"
+	return disease_id
 
 /datum/disease/advance/sentient_disease/GenerateCure()
 	if(cures.len)

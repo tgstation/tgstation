@@ -1,4 +1,10 @@
 #define SECURITY_OFFICER_DEPARTMENTS list("a", "b", "c", "d")
+#define SECURITY_OFFICER_DEPARTMENTS_TO_NAMES (list( \
+	"a" = SEC_DEPT_ENGINEERING, \
+	"b" = SEC_DEPT_MEDICAL, \
+	"c" = SEC_DEPT_SCIENCE, \
+	"d" = SEC_DEPT_SUPPLY, \
+))
 
 /// Test that security officers with specific distributions get their departments.
 /datum/unit_test/security_officer_roundstart_distribution
@@ -45,21 +51,26 @@
 		SECURITY_OFFICER_DEPARTMENTS,
 	)
 
-	TEST_ASSERT_EQUAL(outcome[REF(officer_a.new_character)], "a", "Officer A's department outcome was incorrect.")
-	TEST_ASSERT_EQUAL(outcome[REF(officer_b.new_character)], "b", "Officer B's department outcome was incorrect.")
-	TEST_ASSERT_EQUAL(outcome[REF(officer_c.new_character)], "b", "Officer C's department outcome was incorrect.")
-	TEST_ASSERT_EQUAL(outcome[REF(officer_d.new_character)], "a", "Officer D's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[REF(officer_a.new_character)], SECURITY_OFFICER_DEPARTMENTS_TO_NAMES["a"], "Officer A's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[REF(officer_b.new_character)], SECURITY_OFFICER_DEPARTMENTS_TO_NAMES["b"], "Officer B's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[REF(officer_c.new_character)], SECURITY_OFFICER_DEPARTMENTS_TO_NAMES["b"], "Officer C's department outcome was incorrect.")
+	TEST_ASSERT_EQUAL(outcome[REF(officer_d.new_character)], SECURITY_OFFICER_DEPARTMENTS_TO_NAMES["a"], "Officer D's department outcome was incorrect.")
 
 /datum/unit_test/security_officer_roundstart_distribution/proc/create_officer(preference)
 	var/mob/dead/new_player/new_player = allocate(/mob/dead/new_player)
 	var/datum/client_interface/mock_client = new
 
 	mock_client.prefs = new
-	mock_client.prefs.prefered_security_department = preference
+	var/write_success = mock_client.prefs.write_preference(
+		GLOB.preference_entries[/datum/preference/choiced/security_department],
+		SECURITY_OFFICER_DEPARTMENTS_TO_NAMES[preference],
+	)
+
+	TEST_ASSERT(write_success, "Couldn't write department [SECURITY_OFFICER_DEPARTMENTS_TO_NAMES[preference]]")
 
 	var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human)
 	new_character.mind_initialize()
-	new_character.mind.assigned_role = "Security Officer"
+	new_character.mind.set_assigned_role(SSjob.GetJobType(/datum/job/security_officer))
 
 	new_player.new_character = new_character
 	new_player.mock_client = mock_client

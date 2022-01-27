@@ -34,7 +34,7 @@
 
 /obj/item/greentext/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/point_of_interest)
+	SSpoints_of_interest.make_point_of_interest(src)
 	roundend_callback = CALLBACK(src,.proc/check_winner)
 	SSticker.OnRoundend(roundend_callback)
 
@@ -42,7 +42,7 @@
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
 	var/list/other_objectives = user.mind.get_all_objectives()
 	if(user.mind && other_objectives.len > 0)
-		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
+		to_chat(user, span_warning("... so long as you still perform your other objectives that is!"))
 	new_holder = user
 	if(!last_holder)
 		last_holder = user
@@ -54,7 +54,7 @@
 
 /obj/item/greentext/dropped(mob/living/user as mob)
 	if(user in color_altered_mobs)
-		to_chat(user, "<span class='warning'>A sudden wave of failure washes over you...</span>")
+		to_chat(user, span_warning("A sudden wave of failure washes over you..."))
 		user.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY) //ya blew it
 	last_holder = null
 	new_holder = null
@@ -75,7 +75,7 @@
 
 /obj/item/greentext/process()
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
-		to_chat(last_holder, "<span class='warning'>A sudden wave of failure washes over you...</span>")
+		to_chat(last_holder, span_warning("A sudden wave of failure washes over you..."))
 		last_holder.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
 		last_holder = new_holder //long live the king
 
@@ -83,7 +83,8 @@
 	if(!(resistance_flags & ON_FIRE) && !force)
 		return QDEL_HINT_LETMELIVE
 
-	SSticker.round_end_events -= roundend_callback
+	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
+	roundend_callback = null //This ought to free the callback datum, and prevent us from harddeling
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		var/message = "<span class='warning'>A dark temptation has passed from this world"

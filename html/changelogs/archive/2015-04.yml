@@ -1,0 +1,401 @@
+2015-04-01:
+  ACCount:
+  - tweak: You can now replace test range firing pins with any other pin.
+  - rscadd: The plasma cutter is now a gun that comes in the mining vending machine.
+      Use it to mine fast but expensively.
+  - tweak: It's also cheaper in RnD, and there's an advanced version of it there too.
+      Yay!
+  - tweak: Ripleys and Firefighters have been buffed significantly. Go wild.
+  - tweak: Precious mesons are cheaper in RnD.
+  - rscadd: Now you can mine bluespace crystals. They are extremely rare.
+  - rscadd: You can make remote bombs out of gibtonite. Figure out how.
+  - tweak: Gibtonite is a bit less stable. Do not hit it with anything heavy.
+  Fayrik:
+  - rscadd: Added a bowman headset for death squads and ERTs.
+  - tweak: Deathsquad radio channel is now called the Centcom radio channel.
+  - bugfix: Fixed the admin buttons not spawning ERT Medic gear properly.
+  - tweak: Expanded Emergency Shuttle dock to allow for more round end griff.
+  - bugfix: All 7 ERT members now spawn geared, not just the first 4.
+  - bugfix: Spawning an ERT or Deathsquad no longer stops a second ERT or Deathsquad
+      from being spawned.
+  - tweak: Pulse rifles now have 80 shots, not 40.
+  - tweak: Deathsquads now use loyalty pinned Pulse rifles.
+  Gun Hog:
+  - rscadd: NTSL has been updated! It can now read and modify verbs (says, yells,
+      asks)! You can set your own using $say, $yell, $ask, and $exclaim variables
+      in your scripts.
+  - rscadd: NTSL can now also modify the font, italics, and bolding of radio messages
+      in four ways! In a script, place $loud, $wacky, $emphasis, and/or $robot in
+      a vector to $filters.
+  Jordie0608:
+  - rscdel: The admin's old player panel has been removed and the new one has taken
+      it's name.
+  NikNakFlak:
+  - rscadd: Adds the ability to shave corgis.
+  Sawu:
+  - rscadd: 'Spraycans for Revheads: instant use crayons that can be used on walls.'
+  - rscadd: Spraycans can be used as ghetto pepper spray and leave their target with
+      colored faces that can be removed with space cleaner.
+  Xhuis:
+  - tweak: Area ambience and ship ambience are now separate toggles. If you want one
+      type of ambience but not the other, you only need to switch off the type you
+      don't want.
+  - rscadd: Added cigar cases. They come in three flavors and can be bought from cigarette
+      machines.
+2015-04-04:
+  ACCount:
+  - rscadd: Emergency welding tool added to emergency toolbox.
+  - rscadd: Changed industrial welding tool sprite.
+  - tweak: Replaced welder in syndicate toolbox with industrial one.
+  - tweak: All tools in syndicate toolbox are red. Corporate style!
+  - tweak: Red crowbar is a bit more robust.
+  - bugfix: 'Fixed two bugs: welder icon disappearing and drone toolbox spawning with
+      invisible cable coil.'
+  AnturK:
+  - rscadd: 'Picket signs: table crafted with a rod and two cardboard sheets, write
+      on them with pen or crayon.'
+  Cheridan:
+  - wip: The bar's layout has been changed with a poker table and re-arranged seating.
+  Dannno:
+  - rscadd: Added gun lockers for shotguns and energy guns. Click on the lockers with
+      an item to close them if they're full.
+  Gun Hog:
+  - rscadd: Nanotrasen research has finalized improvements for the experimental Reactive
+      Teleport Armor. The armor is now made of a thinner, lightweight material which
+      will not hinder movement. In addition, the armor shows an increase in responsiveness,
+      activating in at least 50% of tests.
+  Incoming:
+  - rscadd: The iconic blood-red hardsuits of nuke ops can now be purchased for a
+      moderate sum of 8 TC by traitors.
+  Jordie0608:
+  - tweak: Cyborg mining drills now use up their internal battery before drawing power
+      from a borg's cell.
+  - bugfix: Fixes cyborg mining drills not recharging.
+  RemieRichards:
+  - rscadd: Burning mobs will ignite others they bump into or when they are stepped
+      on.
+  Xhuis:
+  - tweak: Malfunctioning AIs can no longer leave the station z-level. Upon doing
+      this, they will fail the round.
+  - tweak: Phazon exosuits now require an anomaly core as the final step in their
+      construction.
+  xxalpha:
+  - rscadd: Added Nutriment Pump, Nutriment Pump Plus and Reviver implants.
+  - tweak: Added origin technologies to all implants.
+  - tweak: 'The following implants are now much harder to obtain: X-ray, Thermals,
+      Anti-Stun, Nutriment Pump Plus, Reviver.'
+  - tweak: Cauterizing a surgery wound will now heal some of the damage done by the
+      bonesaw if it was used as part of the same surgery.
+  - tweak: Added ability for Medical HUDs to detect cybernetic implants in humans.
+2015-04-09:
+  Iamgoofball:
+  - rscadd: Quite a lot of cleanables can now be scooped up with a beaker in order
+      to acquire the contents.
+  - rscadd: Light a piece of paper on fire with a lighter, and scoop up the ashes!
+  - rscadd: Scoop up the flour the clown sprayed everywhere as a 'joke'!
+  - rscadd: Scoop up the oil left behind by exploding robots for re-usage in chemistry!
+  - rscadd: You can splash the contents of a beaker onto the floor to create a Chemical
+      Pile! This pile can be heated or blown up and have the reagents take the effects.
+      Make a string of black powder around a department in maint. and then heat it
+      with a welder today!
+  - rscadd: Reagents now can have processing effects when just sitting in a beaker.
+  - rscadd: Pyrosium and Cryostylane now feed off of oxygen and heat/cool the beaker
+      without having to be inside of a person!
+  - rscadd: Reagents can now respond to explosions!
+  - rscadd: Black Powder now instantly detonates if there is an explosion that effects
+      it.
+  - rscadd: Fire now heats up beakers and their contents!
+  - rscadd: Activate some smoke powder in style by lighting the beaker on fire with
+      a burning hot plasma fire!
+  RemieRichards:
+  - tweak: Ninja stars are summoned to your hand to be thrown rather than automatically
+      targetting nearby mobs.
+  - rscadd: 'Added Sword Recall: pulls your katana towards you, hitting mobs in the
+      way. Free if within sight, cost scales with distance otherwise.'
+  - rscadd: Enemies can be electrocuted by a ninja as the cost of his energy, stunning
+      and injuring them.
+  - rscdel: Removed SpiderOS, functions moved to status panel.
+  - bugfix: Fixed energy nets not anchoring target, katana emag spam and sound delay.
+  optimumtact:
+  - bugfix: Mimes can't use megaphone without breaking their vow anymore.
+  phil235:
+  - tweak: Flying animals no longer triggers mouse traps, bear traps or mines.
+2015-04-11:
+  Gun Hog:
+  - tweak: Nanotrasen has approved an access upgrade for Cargo Technicians! They are
+      now authorized to release minerals from the ore redemption machine, to allow
+      proper inventory management and shipping.
+  Iamgoofball:
+  - tweak: Blobbernauts no longer deal chemical damage, brute damage increased however.
+  Ikarrus:
+  - experiment: Getting converted by a rev or cultist will stun you for a few seconds.
+  Incoming5643:
+  - bugfix: Fixes some AI malf powers being usable when dead.
+  MrPerson:
+  - tweak: Reduces movement speed penalty from being cold.
+  Xhuis:
+  - rscadd: Adds a pizza bomb traitor item for 4 telecrystals. It's a bomb, diguised
+      as a pizza box. You can also attempt to defuse it by using wirecutters.
+  kingofkosmos:
+  - rscadd: Activating internals with an adjusted breath mask will automatically push
+      it up to normal state.
+  - tweak: Masks can now be adjusted when buckled to a chair.
+  optimumtact:
+  - tweak: Stun batons no longer lose charge over time when on.
+  phil235:
+  - tweak: The AI holopads now use a popup window just like computers and other machines.
+  - rscdel: Nerfs kinetic accelerator and plasma cutters. Plasma cutter is no longer
+      in the mining vendor. Reduces the drilling cost of all drills.
+  - rscadd: Adding 40+ new food and drink recipes, mostly using the newest plants.
+      Notably rice recipes, burritos, nachos, salads, pizzas.
+  - tweak: Opening the tablecrafting window can now also be done by dragging the mouse
+      from any food (that's on a table) onto you.
+  - rscadd: The kitchen cabinet starts with one rice pack.
+  - tweak: Glasses with unknown reagent will no longer be always brown but will take
+      the color of their reagents.
+2015-04-13:
+  AnturK:
+  - rscadd: 'Spacemen have learned the basics of martial arts: Boxing, unleash it''s
+      power by wearing Boxing Gloves.'
+  - rscadd: While boxing you can't grab or disarm, but you hit harder with a knockout
+      chance that scales off stamina damage above 50.
+  - rscadd: Rumors have been heard of powerful martial styles avaliable only to the
+      gods themselves.
+  CosmicScientist:
+  - rscadd: Added a dehydrated space carp to traitor items, bought with telecrystals.
+      Use dehydrated space carp in hand to school them on loyalty. Add water to create
+      a vicious murder machine just for the halibut.
+  - tweak: The toy carp plushie now has attack verbs for fun, hit your friend with
+      one today. I put my sole into this mod.
+  - wip: If you can think of a better fish pun let minnow but I shouldn't leave it
+      to salmon else.
+  Ikarrus:
+  - tweak: Gang bosses can no longer purchase certain potent traitor items but instead
+      have access to some of a nuke op's arsenal of weapons.
+  Incoming5643:
+  - rscadd: 'Three new chemical types of blob can occur: Omnizine, Morphine and Space
+      Drugs.'
+  MrPerson:
+  - experiment: New lighting system! Lighting now smoothly transfers from one lighting
+      level to the next.
+  Xhuis:
+  - rscadd: There have been... odd sighting in Space Station 13's sector. Alien organisms
+      have appeared on stations 57, 23, and outlying.
+  - rscadd: Nanotrasen personnel have reason to believe that Space Station 13 is under
+      attack by shadowlings. We have little intel on these creatures, but be on the
+      lookout for odd behavior and dark areas. Use plenty of lights.
+  Zelacks:
+  - tweak: Defibs no longer have a minimum damage requirement for a successful revive.
+      Patients will have 150 total damage on a successful revive.
+  - tweak: Additional feedback is given for several failure states of the defib.
+  xxalpha:
+  - wip: Airlock crushing damage increased.
+2015-04-16:
+  AnturK:
+  - rscadd: Nanotrasen authorities are reporting sightings of unidentified space craft
+      near space station 13. Report any strange sightings or mental breakdowns to
+      central command.
+  - rscadd: 'PS : Abductions are not covered by health insurance.'
+  - rscadd: Shadowlings and their thralls now have HUD icons.
+  - rscadd: Thralls learn their master's objectives when enthralled.
+  - rscadd: Regenerate Chitin ability lets shadowlings re-equip their armor if lost.
+  - tweak: Loyalty implanted people take 25% longer to enthrall, but lose their implant
+      and become immune to re-implanting.
+  - experiment: Shadowlings now have a message in their spawning text which specifies
+      that cooperation is mandatory.
+  - bugfix: Veil now works on equipped lights.
+  - bugfix: Shadowlings now take correct amount of burn damage and in light and heal
+      clone and brain damage in darkness.
+  - bugfix: Fixes 'Round end code broke' displaying every round.
+  - bugfix: Shadowlings who ascend will nore greentext properly.
+  Gun Hog:
+  - rscadd: Thinktronic Systems, LTD. has increased the Value of the Value-PAK PDA
+      cartridge! Standard issue for Captain PDAs, it can now access security bots,
+      medibots, cleanbots, and floorbots ALL AT ONCE! In addition, it can also connect
+      to your station's Newscaster network at NO EXTRA CHARGE! As a Thank you for
+      our contract with them, they have thrown in Newscaster access for the HumanResources9001
+      cartridge, Heads of Personnel rejoice!
+  - tweak: The Newscaster app has also gotten a free upgrade which allows it to display
+      images and comments inside of posts!
+  - bugfix: Nanotrasen has concurrently released a patch for bots which will allow
+      off-station bots to properly patrol.
+  Incoming5643:
+  - rscadd: Changeling head slugs have been given player control, ventcrawling, and
+      a short escape period after egg laying.
+  MrStonedOne:
+  - rscadd: Admin ghosts can now drag ghosts to mobs to put that ghost in control
+      of that mob.
+  Xhuis:
+  - rscadd: Nanotrasen scientists have recently observed a strange genome shift in
+      green slimes. Experiments have shown that injection of radium into an active
+      green slime extract will create a very unstable mutation toxin. Use with caution.
+2015-04-19:
+  AnturK:
+  - bugfix: Observers can now see abductor hivemind messages.
+  - rscadd: 'Adds advanced baton for abductors: Stun, Sleep and Cuff in one tool.'
+  - rscadd: Abductor agents now have vest cameras.
+  - imageadd: New sprites for abductors and their gear made by Ausops.
+  Fayrik:
+  - rscadd: Added jobban options for Abductors and Deathsquads.
+  - tweak: Made admin antag spawning buttons more efficient and less prone to failure.
+  Xhuis:
+  - rscadd: Recent sightings aboard space stations shows that spirits seem to be manifesting
+      as malevolent revenants and draining the life of crew. The chaplain may be helpful
+      in stopping this new threat.
+  kingofkosmos:
+  - wip: Girder and machine frame construction protocols has been changed. They can
+      now be secured/unsecured with a wrench and disassembled with a welder.
+2015-04-20:
+  Fayrik:
+  - rscadd: Abductors now get advanced camera consoles.
+  - tweak: Redesigned Centcom again. There's a bar at the thunderdome now.
+  - rscadd: Headsets can now be locked to a spesific frequency, this only occurs for
+      nuke ops and deathsquads.
+  - rscadd: The Centcom channel is now available over all z-levels, regardless of
+      telecomms status.
+  - tweak: The Deathsquad space suits have been upgraded to hardsuits.
+  - rscadd: The Deathsquad now have thermal imaging huds, which can swap which hud
+      they display on the fly.
+  phil235:
+  - tweak: Reagents are now back to being metabolized every tick. Fixes frost oil
+      and capsaicin not working.
+  - tweak: Fixes not being able to make sterilizine.
+  - rscadd: Adding overdose to space drug, causing mild hallucination and toxin and
+      brain damage.
+  - tweak: Nerfed healing power of stimulant reagent. Buffed ephedrine a bit.
+  - rscadd: Nitroglycerin can now be stabilized with stabilizing agent, and explodes
+      when heated.
+2015-04-21:
+  Ikarrus:
+  - wip: Gang mode has had some considerable work done on it, including a new objective
+      and currency dynamic.
+  - rscadd: <b>New objective:</b> Claim half the station as territory by tagging it
+      with spray cans supplied to gang bosses, but usable by any member.
+  - wip: An area can only be tagged by one gang at a time, remove your opponent's
+      tag or spray over it.
+  - rscadd: <b>New recruitment:</b> Recruiment pens replace flashes, stab people to
+      recruit them.
+  - experiment: Recruitment is silent, but causes brief seizures and has a cooldown
+      that scales upwards with a gang's size.
+  - rscadd: <b>New tool:</b> The Gangtool is used by bosses and lieutenants to recall
+      the shuttle and purchase supplies.
+  - rscadd: Pistols, ammo, spraycans, recruitment pens and additional gangtools can
+      all be bought.
+  - tweak: Gangtools also alert the user of promotions, purchases and territory changes
+      within the gang.
+  - rscadd: Lieutenants are promoted from gang members when given their own gangtool;
+      they're immune to deconversion and able to do anything a boss can except promotion.
+  - rscadd: <b>New currency:</b> Influence is used to purchase with the gangtool and
+      is generated every 5 minutes by each territory owned by the gang.
+  - tweak: Thermite can be cleaned off walls now.
+2015-04-22:
+  Incoming5643:
+  - rscadd: 'Adds a new fun button for admins: ''Set Round End Sound''. You can use
+      the set round end sound button to set the round end sound. Glad we cleared that
+      up!'
+  Miauw62:
+  - wip: Very slightly expanded atmos and added an external airlock.
+  Xhuis:
+  - bugfix: A few issues have been fixed for revenants. In addition, the Mind Blast/Mind
+      Spike sound effect has been removed.
+  - rscadd: Adds the Hypnotize ability to revenants. It will cause a target to fall
+      asleep after a short time.
+  xxalpha:
+  - rscadd: Added an Exosuit Mining Scanner to the robotics fabricator.
+  - tweak: Buffed Ripley's movement and drilling speed in low pressure environments.
+2015-04-25:
+  Boggart:
+  - rscadd: Generalizes handheld instrument code and Ports Nienhaus's guitar, sounds
+      by BartNixon of Tau Ceti.
+  - rscadd: Fixes being unable to build disposal pipes on walls, makes changing the
+      RPD's settings not affect pipes that are currently building, makes the RPD use
+      the datum/browser ui, makes it use categories and makes it show the selected
+      mode.
+  Gun Hog:
+  - rscadd: Nanotrasen has provided designs for fabrication of APC power control modules.
+      You may print them at any autolathe.
+  Ikarrus:
+  - rscadd: Gangs can now purchase switchblades, a relatively cheap and decently robust
+      melee weapon.
+  - tweak: Gangs now require at least 66% control of the station to win.
+  - tweak: Gang spraycan uses reduced to 15.
+  - tweak: Pistol cost increased to 30 Influence
+  - tweak: Promotions now start off cheap at 20 influence but get more expensive the
+      more people you promote.
+  Xhuis:
+  - rscadd: Added a Create Antagonist button for revenants.
+  - rscdel: Removed Mind Blast.
+  - bugfix: Revenants no longer get killed by explosions.
+  - tweak: Mind spike cooldown increased to 4 seconds.
+  - tweak: Harvest now takes 8 seconds and requires you to be adjacent to the target.
+  - tweak: Hypnotise sleeps targets for longer.
+  - tweak: Revenant now starts with 3 strikes.
+  phil235:
+  - tweak: Telecom machines are now deconstructed the same way as all other constructable
+      machines.
+  - tweak: You can no longer overdose on nicotine but you can get addicted (very mild
+      effects).
+2015-04-29:
+  AndroidSFV:
+  - tweak: Dehydrated carp now are friendly to both the imprinter of the plushie as
+      well as any coded-in allies (I.E. Nuke Ops team), and unfriendly to carp of
+      other origin othan than yourself or your coded-in allies. Dehydrated carp that
+      are not imprinted will still have the same behavior as regular carp.
+  AnturK:
+  - rscadd: Advanced cameras now have all functionality of the abductor consoles.
+  - tweak: Pinpoint teleportation takes 8 seconds and spawns a flashy silhouette at
+      the target location. Can be used as distraction since it appears even if teleporter
+      is empty.
+  - bugfix: Abductors are now immune to viruses.
+  - bugfix: Dissection surgery ignores clothes.
+  - bugfix: Non-abductors can escape the ship by fiddling with consoles enough.
+  - rscadd: Three new negative glands.
+  - rscadd: Bloody glands spray blood everywhere and injure the host.
+  - rscadd: Bodysnatch glands turn the host into a cocoon that hatches doppelgangers.
+  - rscadd: Plasma glands cause the host to explode into a cloud of plasma.
+  GoonOnMoon:
+  - rscadd: Added a new assault rifle to the game for use by Nanotrasen fighting forces
+      in special events. Also happens to be available in the Liberation Station vending
+      machine and the summon guns spell usable by the wizard and badminnery.
+  Iamgoofball:
+  - rscdel: Acid blob has been removed.
+  - tweak: Charcoal and Silver Sulf are more powerful now.
+  - tweak: Styptic power and Silver Sulf metabolize at the default rate.
+  Ikarrus:
+  - rscadd: Spraycans and crayons can now draw Poseur Tags, aka Fake Gang Tags, as
+      grafiti.
+  - tweak: Influence income changed to provide weaker gangs a bigger boost, while
+      slowing down stronger gangs to promote opportunity for comebacks.
+  - tweak: Gangs only earn influence on territories they have held on to since the
+      previous Status Report (the income calculation every 5 minutes). This places
+      more significance on defending your existing territory.
+  - bugfix: You must be in the territory physically to tag it now. So no more tagging
+      everything from maint.
+  - tweak: Gang income delay reduced to 3 minutes intervals.
+  - tweak: Gang Capture goal reduced to 50%
+  - tweak: Gang spraycan use increased to 20
+  - tweak: Gang Boss icon is now a red [G] icon to make it stand out better from regular
+      gang icons
+  JJRcop:
+  - tweak: TED's kill duration has been halved.
+  - tweak: Escaping from the TED's field no longer kills you.
+  RemieRichards:
+  - rscadd: Adds Easels and canvases for custom drawings.
+  - imageadd: Place a canvas on an easel and draw on it with crayons, clean one pixel
+      with a rag or soap and activate it in-hand to erase the whole canvas.
+  - rscadd: Ports VG's Ventcrawling overhaul!
+  - tweak: Crawling through vents is no longer instant, you now have to move and navigate
+      manually
+  - rscadd: While inside pipes and other atmos machinery, you now see pipe vision
+  phil235:
+  - bugfix: Podplants are no longer unharvestable.
+  - tweak: Choosing your clown, mime, cyborg and AI name as well as religion and deity
+      is now done in the preferences window. As a chaplain , your bible's icon is
+      now chosen by clicking the bible.
+2015-04-30:
+  Fayrik:
+  - rscadd: Ported NanoUI to most atmospherics equipment.
+  TheVekter:
+  - tweak: Hooch is now made with 2 parts Ethanol, 1 part Welder fuel and 1 part Universal
+      Enzyme as a catalyst.
+  - tweak: No-slip shoes are paintable, painting them doesn't remove no-slip properties.

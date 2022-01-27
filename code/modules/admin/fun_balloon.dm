@@ -5,8 +5,9 @@
 	icon_state = "syndballoon"
 	anchored = TRUE
 	var/popped = FALSE
+	var/pop_sound_effect = 'sound/items/party_horn.ogg'
 
-/obj/effect/fun_balloon/Initialize()
+/obj/effect/fun_balloon/Initialize(mapload)
 	. = ..()
 	SSobj.processing |= src
 
@@ -27,25 +28,58 @@
 	return
 
 /obj/effect/fun_balloon/proc/pop()
-	visible_message("<span class='notice'>[src] pops!</span>")
-	playsound(get_turf(src), 'sound/items/party_horn.ogg', 50, TRUE, -1)
+	visible_message(span_notice("[src] pops!"))
+	playsound(get_turf(src), pop_sound_effect, 50, TRUE, -1)
 	qdel(src)
 
-//ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/effect/fun_balloon/attack_ghost(mob/user)
-	if(!user.client || !user.client.holder || popped)
-		return
-	var/confirmation = alert("Pop [src]?","Fun Balloon","Yes","No")
-	if(confirmation == "Yes" && !popped)
-		popped = TRUE
-		effect()
-		pop()
-
+// ----------- Sentience Balloon
 /obj/effect/fun_balloon/sentience
 	name = "sentience fun balloon"
 	desc = "When this pops, things are gonna get more aware around here."
-	var/effect_range = 3
 	var/group_name = "a bunch of giant spiders"
+	var/effect_range = 3
+
+/obj/effect/fun_balloon/sentience/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SentienceFunBalloon", name)
+		ui.open()
+
+/obj/effect/fun_balloon/sentience/ui_data(mob/user)
+	var/list/data = list()
+	data["group_name"] = group_name
+	data["range"] = effect_range
+	return data
+
+/obj/effect/fun_balloon/sentience/ui_state(mob/user)
+	return GLOB.admin_state
+
+/obj/effect/fun_balloon/sentience/ui_status(mob/user)
+	if(popped)
+		return UI_CLOSE
+	if(isAdminObserver(user)) // ignore proximity if we're an admin
+		return UI_INTERACTIVE
+	return ..()
+
+/obj/effect/fun_balloon/sentience/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("group_name")
+			group_name = params["updated_name"]
+
+		if("effect_range")
+			effect_range = params["updated_range"]
+
+		if("pop")
+			if(!popped)
+				popped = TRUE
+				effect()
+				pop()
+
+	return TRUE
 
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
@@ -54,7 +88,7 @@
 			bodies += possessable
 
 	var/question = "Would you like to be [group_name]?"
-	var/list/candidates = pollCandidatesForMobs(question, ROLE_PAI, null, FALSE, 100, bodies)
+	var/list/candidates = poll_candidates_for_mobs(question, ROLE_PAI, FALSE, 10 SECONDS, bodies)
 	while(LAZYLEN(candidates) && LAZYLEN(bodies))
 		var/mob/dead/observer/C = pick_n_take(candidates)
 		var/mob/living/body = pick_n_take(bodies)
@@ -64,6 +98,7 @@
 		body.key = C.key
 		new /obj/effect/temp_visual/gravpush(get_turf(body))
 
+// ----------- Emergency Shuttle Balloon
 /obj/effect/fun_balloon/sentience/emergency_shuttle
 	name = "shuttle sentience fun balloon"
 	var/trigger_time = 60
@@ -73,6 +108,7 @@
 	if(SSshuttle.emergency && (SSshuttle.emergency.timeLeft() <= trigger_time) && (SSshuttle.emergency.mode == SHUTTLE_CALL))
 		. = TRUE
 
+// ----------- Scatter Balloon
 /obj/effect/fun_balloon/scatter
 	name = "scatter fun balloon"
 	desc = "When this pops, you're not going to be around here anymore."
@@ -83,8 +119,10 @@
 		var/turf/T = find_safe_turf()
 		new /obj/effect/temp_visual/gravpush(get_turf(M))
 		M.forceMove(T)
-		to_chat(M, "<span class='notice'>Pop!</span>", confidential = TRUE)
+		to_chat(M, span_notice("Pop!"), confidential = TRUE)
 
+// ----------- Station Crash
+// Can't think of anywhere better to put it right now
 /obj/effect/station_crash
 	name = "station crash"
 	desc = "With no survivors!"
@@ -94,14 +132,14 @@
 	var/min_crash_strength = 3
 	var/max_crash_strength = 15
 
-/obj/effect/station_crash/Initialize()
+/obj/effect/station_crash/Initialize(mapload)
 	..()
 	shuttle_crash()
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/station_crash/proc/shuttle_crash()
 	var/crash_strength = rand(min_crash_strength,max_crash_strength)
-	for (var/S in SSshuttle.stationary)
+	for (var/S in SSshuttle.stationary_docking_ports)
 		var/obj/docking_port/stationary/SM = S
 		if (SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
@@ -113,68 +151,3 @@
 	desc = "Absolute Destruction. Will crash the shuttle far into the station."
 	min_crash_strength = 15
 	max_crash_strength = 25
-
-
-//Arena
-
-/obj/effect/forcefield/arena_shuttle
-	name = "portal"
-	timeleft = 0
-	var/list/warp_points = list()
-
-/obj/effect/forcefield/arena_shuttle/Initialize()
-	. = ..()
-	for(var/obj/effect/landmark/shuttle_arena_safe/exit in GLOB.landmarks_list)
-		warp_points += exit
-
-/obj/effect/forcefield/arena_shuttle/Bumped(atom/movable/AM)
-	if(!isliving(AM))
-		return
-
-	var/mob/living/L = AM
-	if(L.pulling && istype(L.pulling, /obj/item/bodypart/head))
-		to_chat(L, "<span class='notice'>Your offering is accepted. You may pass.</span>", confidential = TRUE)
-		qdel(L.pulling)
-		var/turf/LA = get_turf(pick(warp_points))
-		L.forceMove(LA)
-		L.hallucination = 0
-		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
-		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
-			qdel(chainsaw)
-		var/obj/item/skeleton_key/key = new(L)
-		L.put_in_hands(key)
-	else
-		to_chat(L, "<span class='warning'>You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions.</span>", confidential = TRUE)
-
-/obj/effect/landmark/shuttle_arena_safe
-	name = "hall of champions"
-	desc = "For the winners."
-
-/obj/effect/landmark/shuttle_arena_entrance
-	name = "\proper the arena"
-	desc = "A lava filled battlefield."
-
-
-/obj/effect/forcefield/arena_shuttle_entrance
-	name = "portal"
-	timeleft = 0
-	var/list/warp_points = list()
-
-/obj/effect/forcefield/arena_shuttle_entrance/Bumped(atom/movable/AM)
-	if(!isliving(AM))
-		return
-
-	if(!warp_points.len)
-		for(var/obj/effect/landmark/shuttle_arena_entrance/S in GLOB.landmarks_list)
-			warp_points |= S
-
-	var/obj/effect/landmark/LA = pick(warp_points)
-	var/mob/living/M = AM
-	M.forceMove(get_turf(LA))
-	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
-	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
-
-/area/shuttle_arena
-	name = "arena"
-	has_gravity = STANDARD_GRAVITY
-	requires_power = FALSE

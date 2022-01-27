@@ -8,7 +8,7 @@
 	active_power_usage = 300
 	max_integrity = 200
 	integrity_failure = 0.5
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 40, ACID = 20)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 40, ACID = 20)
 	var/brightness_on = 1
 	var/icon_keyboard = "generic_key"
 	var/icon_screen = "generic"
@@ -30,17 +30,20 @@
 
 /obj/machinery/computer/update_overlays()
 	. = ..()
-	if(machine_stat & NOPOWER)
-		. += "[icon_keyboard]_off"
-		return
-	. += icon_keyboard
+	if(icon_keyboard)
+		if(machine_stat & NOPOWER)
+			return . + "[icon_keyboard]_off"
+		. += icon_keyboard
 
 	// This whole block lets screens ignore lighting and be visible even in the darkest room
 	var/overlay_state = icon_screen
 	if(machine_stat & BROKEN)
 		overlay_state = "[icon_state]_broken"
-	. += mutable_appearance(icon, overlay_state, layer, plane)
-	. += mutable_appearance(icon, overlay_state, layer, EMISSIVE_PLANE)
+		. += mutable_appearance(icon, overlay_state)
+		return // If we don't do this broken computers glow in the dark.
+
+	. += mutable_appearance(icon, overlay_state)
+	. += emissive_appearance(icon, overlay_state)
 
 /obj/machinery/computer/power_change()
 	. = ..()
@@ -53,7 +56,7 @@
 	if(..())
 		return TRUE
 	if(circuit && !(flags_1&NODECONSTRUCT_1))
-		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
+		to_chat(user, span_notice("You start to disconnect the monitor..."))
 		if(I.use_tool(src, user, time_to_screwdrive, volume=50))
 			deconstruct(TRUE, user)
 	return TRUE
@@ -68,7 +71,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/machinery/computer/obj_break(damage_flag)
+/obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
 		return
 	. = ..()
@@ -82,10 +85,10 @@
 		switch(severity)
 			if(1)
 				if(prob(50))
-					obj_break(ENERGY)
+					atom_break(ENERGY)
 			if(2)
 				if(prob(10))
-					obj_break(ENERGY)
+					atom_break(ENERGY)
 
 /obj/machinery/computer/deconstruct(disassembled = TRUE, mob/user)
 	on_deconstruction()
@@ -99,7 +102,7 @@
 			A.set_anchored(TRUE)
 			if(machine_stat & BROKEN)
 				if(user)
-					to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
+					to_chat(user, span_notice("The broken glass falls out."))
 				else
 					playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 				new /obj/item/shard(drop_location())
@@ -108,7 +111,7 @@
 				A.icon_state = "3"
 			else
 				if(user)
-					to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
+					to_chat(user, span_notice("You disconnect the monitor."))
 				A.state = 4
 				A.icon_state = "4"
 		for(var/obj/C in src)
@@ -117,5 +120,7 @@
 
 /obj/machinery/computer/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational)
 		return

@@ -19,7 +19,7 @@
 /turf/open/floor/plating/abductor/setup_broken_states()
 	return list("alienpod1")
 
-/turf/open/floor/plating/abductor/Initialize()
+/turf/open/floor/plating/abductor/Initialize(mapload)
 	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
 
@@ -59,7 +59,7 @@
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
 
 
-/turf/open/floor/plating/ashplanet/Initialize()
+/turf/open/floor/plating/ashplanet/Initialize(mapload)
 	. = ..()
 	if(smoothing_flags & SMOOTH_BITMASK)
 		var/matrix/M = new
@@ -110,7 +110,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/ashplanet/wateryrock/Initialize()
+/turf/open/floor/plating/ashplanet/wateryrock/Initialize(mapload)
 	icon_state = "[icon_state][rand(1, 9)]"
 	. = ..()
 
@@ -130,7 +130,7 @@
 	return
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/floor/plating/beach/sand
 	gender = PLURAL
@@ -202,7 +202,7 @@
 /turf/open/floor/plating/ironsand/setup_broken_states()
 	return list("ironsand1")
 
-/turf/open/floor/plating/ironsand/Initialize()
+/turf/open/floor/plating/ironsand/Initialize(mapload)
 	. = ..()
 	icon_state = "ironsand[rand(1,15)]"
 
@@ -230,7 +230,7 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/ice/Initialize()
+/turf/open/floor/plating/ice/Initialize(mapload)
 	. = ..()
 	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
 
@@ -313,7 +313,7 @@
 /turf/open/floor/plating/grass/setup_broken_states()
 	return list("damaged")
 
-/turf/open/floor/plating/grass/Initialize()
+/turf/open/floor/plating/grass/Initialize(mapload)
 	. = ..()
 	if(smoothing_flags)
 		var/matrix/translation = new
@@ -344,3 +344,8 @@
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/floor/plating/elevatorshaft
+	name = "elevator shaft"
+	icon_state = "elevatorshaft"
+	base_icon_state = "elevatorshaft"

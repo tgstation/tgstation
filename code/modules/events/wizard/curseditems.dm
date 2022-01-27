@@ -40,7 +40,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(ruins_spaceworthiness && !is_station_level(H.z) || isspaceturf(H.loc) || isplasmaman(H))
 			continue //#savetheminers
-		if(ruins_wizard_loadout && iswizard(H))
+		if(ruins_wizard_loadout && IS_WIZARD(H))
 			continue
 		if(item_set == "catgirls2015") //Wizard code means never having to say you're sorry
 			H.gender = FEMALE
@@ -50,7 +50,7 @@
 				var/obj/item/I = new J //dumb but required because of byond throwing a fit anytime new gets too close to a list
 				H.dropItemToGround(H.get_item_by_slot(i), TRUE)
 				H.equip_to_slot_or_del(I, i)
-				ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+				ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT(I))
 				I.item_flags |= DROPDEL
 				I.name = "cursed " + I.name
 

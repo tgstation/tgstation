@@ -51,7 +51,7 @@
 	STR.set_holdable(null, list(/obj/item/disk/nuclear))
 
 /obj/item/storage/bag/trash/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!</span>")
+	user.visible_message(span_suicide("[user] puts [src] over [user.p_their()] head and starts chomping at the insides! Disgusting!"))
 	playsound(loc, 'sound/items/eatfood.ogg', 50, TRUE, -1)
 	return (TOXLOSS)
 
@@ -76,7 +76,7 @@
 		J.mybag=src
 		J.update_appearance()
 	else
-		to_chat(user, "<span class='warning'>You are unable to fit your [name] into the [J.name].</span>")
+		to_chat(user, span_warning("You are unable to fit your [name] into the [J.name]."))
 		return
 
 /obj/item/storage/bag/trash/filled
@@ -84,7 +84,7 @@
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
-		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
+		new /obj/effect/spawner/random/trash/garbage(src)
 	update_icon_state()
 
 /obj/item/storage/bag/trash/bluespace
@@ -121,7 +121,6 @@
 
 /obj/item/storage/bag/ore/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/rad_insulation, 0.01) //please datum mats no more cancer
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(/obj/item/stack/ore))
@@ -144,6 +143,7 @@
 		listeningTo = null
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
+	SIGNAL_HANDLER
 	var/show_message = FALSE
 	var/obj/structure/ore_box/box
 	var/turf/tile = user.loc
@@ -163,17 +163,17 @@
 				show_message = TRUE
 			else
 				if(!spam_protection)
-					to_chat(user, "<span class='warning'>Your [name] is full and can't hold any more!</span>")
+					to_chat(user, span_warning("Your [name] is full and can't hold any more!"))
 					spam_protection = TRUE
 					continue
 	if(show_message)
 		playsound(user, "rustle", 50, TRUE)
 		if (box)
-			user.visible_message("<span class='notice'>[user] offloads the ores beneath [user.p_them()] into [box].</span>", \
-			"<span class='notice'>You offload the ores beneath you into your [box].</span>")
+			user.visible_message(span_notice("[user] offloads the ores beneath [user.p_them()] into [box]."), \
+			span_notice("You offload the ores beneath you into your [box]."))
 		else
-			user.visible_message("<span class='notice'>[user] scoops up the ores beneath [user.p_them()].</span>", \
-				"<span class='notice'>You scoop up the ores beneath you with your [name].</span>")
+			user.visible_message(span_notice("[user] scoops up the ores beneath [user.p_them()]."), \
+				span_notice("You scoop up the ores beneath you with your [name]."))
 	spam_protection = FALSE
 
 /obj/item/storage/bag/ore/cyborg
@@ -222,14 +222,15 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
-/obj/item/storage/bag/plants/portaseeder/verb/dissolve_contents()
-	set name = "Activate Seed Extraction"
-	set category = "Object"
-	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.incapacitated())
+/obj/item/storage/bag/plants/portaseeder/examine(mob/user)
+	. = ..()
+	. += span_notice("Ctrl-click to activate seed extraction.")
+
+/obj/item/storage/bag/plants/portaseeder/CtrlClick(mob/user)
+	if(user.incapacitated())
 		return
-	for(var/obj/item/O in contents)
-		seedify(O, 1)
+	for(var/obj/item/plant in contents)
+		seedify(plant, 1)
 
 // -----------------------------
 //        Sheet Snatcher
@@ -252,8 +253,7 @@
 	var/datum/component/storage/concrete/stack/STR = GetComponent(/datum/component/storage/concrete/stack)
 	STR.allow_quick_empty = TRUE
 	STR.set_holdable(list(
-			/obj/item/stack/sheet,
-			/obj/item/stack/tile/bronze
+			/obj/item/stack/sheet
 			),
 		list(
 			/obj/item/stack/sheet/mineral/sandstone,
@@ -321,8 +321,9 @@
 /obj/item/storage/bag/tray/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_NORMAL //Allows stuff such as Bowls, and normal sized foods, to fit.
+	STR.max_w_class = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
 	STR.set_holdable(list(
+		/obj/item/plate,
 		/obj/item/reagent_containers/food,
 		/obj/item/reagent_containers/glass,
 		/obj/item/clothing/mask/cigarette,
@@ -345,8 +346,8 @@
 	var/list/obj/item/oldContents = contents.Copy()
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	// Make each item scatter a bit
-	for(var/obj/item/I in oldContents)
-		INVOKE_ASYNC(src, .proc/do_scatter, I)
+	for(var/obj/item/tray_item in oldContents)
+		do_scatter(tray_item)
 
 	if(prob(50))
 		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
@@ -358,11 +359,18 @@
 			M.Paralyze(40)
 	update_appearance()
 
-/obj/item/storage/bag/tray/proc/do_scatter(obj/item/I)
-	for(var/i in 1 to rand(1,2))
-		if(I)
-			step(I, pick(NORTH,SOUTH,EAST,WEST))
-			sleep(rand(2,4))
+/obj/item/storage/bag/tray/proc/do_scatter(obj/item/tray_item)
+	var/delay = rand(2,4)
+	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
+	//This does mean scattering is tied to the tray. Not sure how better to handle it
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
+
+/obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)
+	SIGNAL_HANDLER
+	var/new_delay = rand(2, 4)
+	var/count = source.lifetime / source.delay
+	source.lifetime = count * new_delay
+	source.delay = new_delay
 
 /obj/item/storage/bag/tray/update_overlays()
 	. = ..()
@@ -372,11 +380,11 @@
 		I_copy.layer = FLOAT_LAYER
 		. += I_copy
 
-/obj/item/storage/bag/tray/Entered()
+/obj/item/storage/bag/tray/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	update_appearance()
 
-/obj/item/storage/bag/tray/Exited()
+/obj/item/storage/bag/tray/Exited(atom/movable/gone, direction)
 	. = ..()
 	update_appearance()
 
@@ -459,6 +467,7 @@
 	icon_state = "construction_bag"
 	worn_icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
+	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()

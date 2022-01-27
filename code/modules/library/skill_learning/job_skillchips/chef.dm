@@ -8,7 +8,7 @@
 	deactivate_message = "<span class='notice'>You forget how to control your muscles to execute kicks, slams and restraints while in a kitchen environment.</span>"
 	var/datum/martial_art/cqc/under_siege/style
 
-/obj/item/skillchip/job/chef/Initialize()
+/obj/item/skillchip/job/chef/Initialize(mapload)
 	. = ..()
 	style = new
 	style.refresh_valid_areas()

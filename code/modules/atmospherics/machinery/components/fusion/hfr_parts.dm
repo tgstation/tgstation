@@ -11,6 +11,7 @@
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	layer = OBJ_LAYER
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	circuit = /obj/item/circuitboard/machine/thermomachine
@@ -22,14 +23,16 @@
 	var/active = FALSE
 	///Check if fusion has started
 	var/fusion_started = FALSE
+	///Check if the machine is cracked open
+	var/cracked = FALSE
 
-/obj/machinery/atmospherics/components/unary/hypertorus/Initialize()
+/obj/machinery/atmospherics/components/unary/hypertorus/Initialize(mapload)
 	. = ..()
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/components/unary/hypertorus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
 /obj/machinery/atmospherics/components/unary/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!fusion_started)
@@ -41,20 +44,32 @@
 		return
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/hypertorus/welder_act(mob/living/user, obj/item/tool)
+	if(!cracked)
+		return FALSE
+	if(user.combat_mode)
+		return FALSE
+	balloon_alert(user, "You start repairing the crack...")
+	if(tool.use_tool(src, user, 10 SECONDS, volume=30, amount=5))
+		balloon_alert(user, "You repaired the crack.")
+		cracked = FALSE
+		update_appearance()
+
 /obj/machinery/atmospherics/components/unary/hypertorus/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
 	if(.)
-		SetInitDirections()
+		set_init_directions()
 		var/obj/machinery/atmospherics/node = nodes[1]
 		if(node)
 			node.disconnect(src)
 			nodes[1] = null
-			nullifyPipenet(parents[1])
-		atmosinit()
+			if(parents[1])
+				nullify_pipenet(parents[1])
+		atmos_init()
 		node = nodes[1]
 		if(node)
-			node.atmosinit()
-			node.addMember(src)
+			node.atmos_init()
+			node.add_member(src)
 		SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/update_icon_state()
@@ -66,6 +81,14 @@
 		return ..()
 	icon_state = icon_state_off
 	return ..()
+
+/obj/machinery/atmospherics/components/unary/hypertorus/update_overlays()
+	. = ..()
+	if(!cracked)
+		return
+	var/image/crack = image(icon, icon_state = "crack")
+	crack.dir = dir
+	. += crack
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 	name = "HFR fuel input port"
@@ -106,6 +129,7 @@
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	power_channel = AREA_USAGE_ENVIRON
 	var/active = FALSE
 	var/icon_state_open
@@ -115,7 +139,7 @@
 
 /obj/machinery/hypertorus/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.</span>"
+	. += span_notice("[src] can be rotated by first opening the panel with a screwdriver and then using a wrench on it.")
 
 /obj/machinery/hypertorus/attackby(obj/item/I, mob/user, params)
 	if(!fusion_started)
@@ -158,7 +182,7 @@
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
-		to_chat(user, "<span class='notice'>Check all parts and then try again.</span>")
+		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
 	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
 	connected_core = centre
@@ -173,14 +197,37 @@
 			ui = new(user, src, "Hypertorus", name)
 			ui.open()
 	else
-		to_chat(user, "<span class='notice'>Activate the machine first by using a multitool on the interface.</span>")
+		to_chat(user, span_notice("Activate the machine first by using a multitool on the interface."))
+
+/obj/machinery/hypertorus/interface/proc/gas_list_to_gasid_list(list/gas_list)
+	var/list/gasid_list = list()
+	for(var/gas_type in gas_list)
+		var/datum/gas/gas = gas_type
+		gasid_list += initial(gas.id)
+	return gasid_list
+
+
 
 /obj/machinery/hypertorus/interface/ui_static_data()
 	var/data = list()
-	data["selected_fuel"] = list(list("name" = "Nothing", "id" = null))
+	data["base_max_temperature"] = FUSION_MAXIMUM_TEMPERATURE
+	data["selectable_fuel"] = list(list("name" = "Nothing", "id" = null))
 	for(var/path in GLOB.hfr_fuels_list)
 		var/datum/hfr_fuel/recipe = GLOB.hfr_fuels_list[path]
-		data["selected_fuel"] += list(list("name" = recipe.name, "id" = recipe.id))
+
+		data["selectable_fuel"] += list(list(
+			"name" = recipe.name,
+			"id" = recipe.id,
+			"requirements" = gas_list_to_gasid_list(recipe.requirements),
+			"fusion_byproducts" = gas_list_to_gasid_list(recipe.primary_products),
+			"product_gases" = gas_list_to_gasid_list(recipe.secondary_products),
+			"recipe_cooling_multiplier" = recipe.negative_temperature_multiplier,
+			"recipe_heating_multiplier" = recipe.positive_temperature_multiplier,
+			"energy_loss_multiplier" = recipe.energy_concentration_multiplier,
+			"fuel_consumption_multiplier" = recipe.fuel_consumption_multiplier,
+			"gas_production_multiplier" = recipe.gas_production_multiplier,
+			"temperature_multiplier" = recipe.temperature_change_multiplier,
+		))
 	return data
 
 /obj/machinery/hypertorus/interface/ui_data()
@@ -191,55 +238,36 @@
 	else
 		data["selected"] = ""
 
-	var/list/product_gases
-	if(!connected_core.selected_fuel)
-		product_gases = list("Select a fuel mix to see the output")
-	else
-		product_gases = list("The [connected_core.selected_fuel.name] mix will produce the following gases:")
-		for(var/gas_type in connected_core.selected_fuel.secondary_products)
-			var/datum/gas/gas_produced = gas_type
-			product_gases += "-[initial(gas_produced.name)]"
-		var/minimum_temp = connected_core.selected_fuel.negative_temperature_multiplier < 1 ? "Decrease" : "Increase"
-		var/maximum_temp = connected_core.selected_fuel.positive_temperature_multiplier < 1 ? "Decrease" : "Increase"
-		var/energy = connected_core.selected_fuel.energy_concentration_multiplier > 1 ? "Decrease" : "Increase"
-		var/fuel_consumption = connected_core.selected_fuel.fuel_consumption_multiplier > 1 ? "Decrease" : "Increase"
-		var/fuel_production = connected_core.selected_fuel.gas_production_multiplier < 1 ? "Decrease" : "Increase"
-		product_gases += "The fuel mix will"
-		product_gases += "-[minimum_temp] the minimum cooling by a factor of [connected_core.selected_fuel.negative_temperature_multiplier]"
-		product_gases += "-[maximum_temp] the maximum heating by a factor of [connected_core.selected_fuel.positive_temperature_multiplier]"
-		product_gases += "-[energy] the energy output consumption by a factor of [1 / connected_core.selected_fuel.energy_concentration_multiplier]"
-		product_gases += "-[fuel_consumption] the fuel consumption by a factor of [1 / connected_core.selected_fuel.fuel_consumption_multiplier]"
-		product_gases += "-[fuel_production] the gas production by a factor of [connected_core.selected_fuel.gas_production_multiplier]"
-		product_gases += "-Maximum fusion temperature with this mix: [FUSION_MAXIMUM_TEMPERATURE * connected_core.selected_fuel.temperature_change_multiplier] K."
-
-	data["product_gases"] = product_gases.Join("\n")
-
 	//Internal Fusion gases
 	var/list/fusion_gasdata = list()
 	if(connected_core.internal_fusion.total_moles())
-		for(var/gasid in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.gases)
+			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
-			"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
-			"amount" = round(connected_core.internal_fusion.gases[gasid][MOLES], 0.01),
+			"id"= initial(gas.id),
+			"amount" = round(connected_core.internal_fusion.gases[gas][MOLES], 0.01),
 			)))
 	else
-		for(var/gasid in connected_core.internal_fusion.gases)
+		for(var/gas_type in connected_core.internal_fusion.gases)
+			var/datum/gas/gas = gas_type
 			fusion_gasdata.Add(list(list(
-				"name"= connected_core.internal_fusion.gases[gasid][GAS_META][META_GAS_NAME],
+				"id"= initial(gas.id),
 				"amount" = 0,
 				)))
 	//Moderator gases
 	var/list/moderator_gasdata = list()
 	if(connected_core.moderator_internal.total_moles())
-		for(var/gasid in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.gases)
+			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
-			"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
-			"amount" = round(connected_core.moderator_internal.gases[gasid][MOLES], 0.01),
+			"id"= initial(gas.id),
+			"amount" = round(connected_core.moderator_internal.gases[gas][MOLES], 0.01),
 			)))
 	else
-		for(var/gasid in connected_core.moderator_internal.gases)
+		for(var/gas_type in connected_core.moderator_internal.gases)
+			var/datum/gas/gas = gas_type
 			moderator_gasdata.Add(list(list(
-				"name"= connected_core.moderator_internal.gases[gasid][GAS_META][META_GAS_NAME],
+				"id"= initial(gas.id),
 				"amount" = 0,
 				)))
 
@@ -248,8 +276,10 @@
 
 	data["energy_level"] = connected_core.energy
 	data["heat_limiter_modifier"] = connected_core.heat_limiter_modifier
-	data["heat_output"] = abs(connected_core.heat_output)
-	data["heat_output_bool"] = connected_core.heat_output >= 0 ? "" : "-"
+	data["heat_output_min"] = connected_core.heat_output_min
+	data["heat_output_max"] = connected_core.heat_output_max
+	data["heat_output"] = connected_core.heat_output
+	data["instability"] = connected_core.instability
 
 	data["heating_conductor"] = connected_core.heating_conductor
 	data["magnetic_constrictor"] = connected_core.magnetic_constrictor
@@ -258,24 +288,34 @@
 	data["current_damper"] = connected_core.current_damper
 
 	data["power_level"] = connected_core.power_level
+	data["apc_energy"] = connected_core.get_area_cell_percent()
 	data["iron_content"] = connected_core.iron_content
-	data["integrity"] = connected_core.get_integrity()
+	data["integrity"] = connected_core.get_integrity_percent()
 
 	data["start_power"] = connected_core.start_power
 	data["start_cooling"] = connected_core.start_cooling
 	data["start_fuel"] = connected_core.start_fuel
+	data["start_moderator"] = connected_core.start_moderator
 
 	data["internal_fusion_temperature"] = connected_core.fusion_temperature
 	data["moderator_internal_temperature"] = connected_core.moderator_temperature
 	data["internal_output_temperature"] = connected_core.output_temperature
 	data["internal_coolant_temperature"] = connected_core.coolant_temperature
 
+	data["internal_fusion_temperature_archived"] = connected_core.fusion_temperature_archived
+	data["moderator_internal_temperature_archived"] = connected_core.moderator_temperature_archived
+	data["internal_output_temperature_archived"] = connected_core.output_temperature_archived
+	data["internal_coolant_temperature_archived"] = connected_core.coolant_temperature_archived
+	data["temperature_period"] = connected_core.temperature_period
+
 	data["waste_remove"] = connected_core.waste_remove
 	data["filter_types"] = list()
-	data["filter_types"] += list(list("name" = "Nothing", "path" = "", "selected" = !connected_core.filter_type))
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
-		data["filter_types"] += list(list("name" = gas[META_GAS_NAME], "id" = gas[META_GAS_ID], "selected" = (path == gas_id2path(connected_core.filter_type))))
+		data["filter_types"] += list(list("gas_id" = gas[META_GAS_ID], "gas_name" = gas[META_GAS_NAME], "enabled" = (path in connected_core.moderator_scrubbing)))
+
+	data["cooling_volume"] = connected_core.airs[1].volume
+	data["mod_filtering_rate"] = connected_core.moderator_filtering_rate
 
 	return data
 
@@ -286,7 +326,7 @@
 	switch(action)
 		if("start_power")
 			connected_core.start_power = !connected_core.start_power
-			connected_core.use_power = connected_core.start_power ? ACTIVE_POWER_USE : IDLE_POWER_USE
+			connected_core.update_use_power(connected_core.start_power ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 			. = TRUE
 		if("start_cooling")
 			connected_core.start_cooling = !connected_core.start_cooling
@@ -294,53 +334,45 @@
 		if("start_fuel")
 			connected_core.start_fuel = !connected_core.start_fuel
 			. = TRUE
+		if("start_moderator")
+			connected_core.start_moderator = !connected_core.start_moderator
+			. = TRUE
 		if("heating_conductor")
-			var/heating_conductor = params["heating_conductor"]
-			if(text2num(heating_conductor) != null)
-				heating_conductor = text2num(heating_conductor)
-				. = TRUE
-			if(.)
+			var/heating_conductor = text2num(params["heating_conductor"])
+			if(heating_conductor != null)
 				connected_core.heating_conductor = clamp(heating_conductor, 50, 500)
+				. = TRUE
 		if("magnetic_constrictor")
-			var/magnetic_constrictor = params["magnetic_constrictor"]
-			if(text2num(magnetic_constrictor) != null)
-				magnetic_constrictor = text2num(magnetic_constrictor)
-				. = TRUE
-			if(.)
+			var/magnetic_constrictor = text2num(params["magnetic_constrictor"])
+			if(magnetic_constrictor != null)
 				connected_core.magnetic_constrictor = clamp(magnetic_constrictor, 50, 1000)
+				. = TRUE
 		if("fuel_injection_rate")
-			var/fuel_injection_rate = params["fuel_injection_rate"]
-			if(text2num(fuel_injection_rate) != null)
-				fuel_injection_rate = text2num(fuel_injection_rate)
+			var/fuel_injection_rate = text2num(params["fuel_injection_rate"])
+			if(fuel_injection_rate != null)
+				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 0.5, 150)
 				. = TRUE
-			if(.)
-				connected_core.fuel_injection_rate = clamp(fuel_injection_rate, 5, 1500)
 		if("moderator_injection_rate")
-			var/moderator_injection_rate = params["moderator_injection_rate"]
-			if(text2num(moderator_injection_rate) != null)
-				moderator_injection_rate = text2num(moderator_injection_rate)
+			var/moderator_injection_rate = text2num(params["moderator_injection_rate"])
+			if(moderator_injection_rate != null)
+				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 0.5, 150)
 				. = TRUE
-			if(.)
-				connected_core.moderator_injection_rate = clamp(moderator_injection_rate, 5, 1500)
 		if("current_damper")
-			var/current_damper = params["current_damper"]
-			if(text2num(current_damper) != null)
-				current_damper = text2num(current_damper)
-				. = TRUE
-			if(.)
+			var/current_damper = text2num(params["current_damper"])
+			if(current_damper != null)
 				connected_core.current_damper = clamp(current_damper, 0, 1000)
+				. = TRUE
 		if("waste_remove")
 			connected_core.waste_remove = !connected_core.waste_remove
 			. = TRUE
 		if("filter")
-			connected_core.filter_type = null
-			var/filter_name = "nothing"
-			var/gas = gas_id2path(params["mode"])
-			if(gas in GLOB.meta_gas_info)
-				connected_core.filter_type = gas
-				filter_name = GLOB.meta_gas_info[gas][META_GAS_NAME]
-			investigate_log("was set to filter [filter_name] by [key_name(usr)]", INVESTIGATE_ATMOS)
+			connected_core.moderator_scrubbing ^= gas_id2path(params["mode"])
 			. = TRUE
+		if("mod_filtering_rate")
+			var/mod_filtering_rate = text2num(params["mod_filtering_rate"])
+			if(mod_filtering_rate != null)
+				connected_core.moderator_filtering_rate = clamp(mod_filtering_rate, 5, 200)
+				. = TRUE
 		if("fuel")
 			connected_core.selected_fuel = null
 			var/fuel_mix = "nothing"
@@ -358,6 +390,11 @@
 			connected_core.linked_moderator.update_parents()
 			investigate_log("was set to recipe [fuel_mix ? fuel_mix : "null"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
+		if("cooling_volume")
+			var/cooling_volume = text2num(params["cooling_volume"])
+			if(cooling_volume != null)
+				connected_core.airs[1].volume = clamp(cooling_volume, 50, 2000)
+				. = TRUE
 
 /obj/machinery/hypertorus/corner
 	name = "HFR corner"
@@ -452,7 +489,7 @@
 			continue
 		if(box.box_type == "body")
 			if(direction in GLOB.cardinals)
-				box.dir = DIRFLIP(direction)
+				box.dir = direction
 				parts |= box
 			continue
 	if(parts.len == 8)

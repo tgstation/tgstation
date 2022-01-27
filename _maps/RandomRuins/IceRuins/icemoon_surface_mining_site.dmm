@@ -57,21 +57,17 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "o" = (
-/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "p" = (
-/obj/machinery/light/broken{
-	dir = 4
-	},
+/obj/machinery/light/broken/directional/east,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "q" = (
 /obj/structure/table/wood,
 /obj/item/pen,
-/obj/machinery/light/broken{
-	dir = 8
-	},
+/obj/machinery/light/broken/directional/west,
 /obj/item/paper/crumpled/bloody{
 	info = "help...";
 	text = ""
@@ -81,7 +77,7 @@
 "r" = (
 /obj/item/chair/wood,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human/miner/explorer,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/wood,
 /area/ruin/unpowered)

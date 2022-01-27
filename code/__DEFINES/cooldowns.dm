@@ -42,6 +42,24 @@
 //clown car cooldowns
 #define COOLDOWN_CLOWNCAR_RANDOMNESS "clown_car_randomness"
 
+// item cooldowns
+#define COOLDOWN_SIGNALLER_SEND "cooldown_signaller_send"
+
+//circuit cooldowns
+#define COOLDOWN_CIRCUIT_SOUNDEMITTER "circuit_soundemitter"
+#define COOLDOWN_CIRCUIT_SPEECH "circuit_speech"
+#define COOLDOWN_CIRCUIT_PATHFIND_SAME "circuit_pathfind_same"
+#define COOLDOWN_CIRCUIT_PATHFIND_DIF "circuit_pathfind_different"
+#define COOLDOWN_CIRCUIT_TARGET_INTERCEPT "circuit_target_intercept"
+
+// mob cooldowns
+#define COOLDOWN_YAWN_PROPAGATION "yawn_propagation_cooldown"
+
+//Shared cooldowns for actions
+#define MOB_SHARED_COOLDOWN_1 "mob_shared_cooldown_1"
+#define MOB_SHARED_COOLDOWN_2 "mob_shared_cooldown_2"
+#define MOB_SHARED_COOLDOWN_3 "mob_shared_cooldown_3"
+
 //TIMER COOLDOWN MACROS
 
 #define COMSIG_CD_STOP(cd_index) "cooldown_[cd_index]"
@@ -74,7 +92,7 @@
 
 #define COOLDOWN_DECLARE(cd_index) var/##cd_index = 0
 
-#define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + cd_time)
+#define COOLDOWN_START(cd_source, cd_index, cd_time) (cd_source.cd_index = world.time + (cd_time))
 
 //Returns true if the cooldown has run its course, false otherwise
 #define COOLDOWN_FINISHED(cd_source, cd_index) (cd_source.cd_index < world.time)

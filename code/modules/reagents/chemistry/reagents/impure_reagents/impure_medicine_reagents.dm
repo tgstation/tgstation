@@ -7,14 +7,14 @@
 
 //We don't want these to hide - they're helpful!
 /datum/reagent/impurity/healing
-	name = "Healing impure reagent"
+	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
-	name = "Healing inverse reagent"
+	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	chemical_flags = REAGENT_DONOTSPLIT
 	addiction_types = list(/datum/addiction/medicine = 3)
@@ -26,7 +26,7 @@
 
 //Catch all failed reaction for medicines - supposed to be non punishing
 /datum/reagent/impurity/healing/medicine_failure
-	name = "Insolvent medicinal precipitate"
+	name = "Insolvent Medicinal Precipitate"
 	description = "A viscous mess of various medicines. Will heal a damage type at random"
 	metabolization_rate = 1 * REM//This is fast
 	addiction_types = list(/datum/addiction/medicine = 7.5)
@@ -62,7 +62,7 @@
 
 //Warns you about the impenting hands
 /datum/reagent/inverse/helgrasp/on_mob_add(mob/living/L, amount)
-	to_chat(L, "<span class='hierophant'>You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!</span>")
+	to_chat(L, span_hierophant("You hear laughter as malevolent hands apparate before you, eager to drag you down to hell...! Look out!"))
 	playsound(L.loc, 'sound/chemistry/ahaha.ogg', 80, TRUE, -1) //Very obvious tell so people can be ready
 	. = ..()
 
@@ -182,7 +182,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	..()
 
 /datum/reagent/peptides_failed
-	name = "Prion peptides"
+	name = "Prion Peptides"
 	taste_description = "spearmint frosting"
 	description = "These inhibitory peptides cause cellular damage and cost nutrition to the patient!"
 	ph = 2.1
@@ -226,7 +226,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/ichiyuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	if(prob(resetting_probability) && !(HAS_TRAIT(owner, TRAIT_RESTRAINED) || owner.incapacitated()))
 		if(spammer < world.time)
-			to_chat(owner,"<span class='warning'>You can't help but itch yourself.</span>")
+			to_chat(owner,span_warning("You can't help but itch yourself."))
 			spammer = world.time + (10 SECONDS)
 		var/scab = rand(1,7)
 		owner.adjustBruteLoss(scab*REM)
@@ -278,8 +278,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	..()
 
 /datum/reagent/inverse/hercuri/on_new(data)
+	. = ..()
+	if(!data)
+		return
 	method |= data["method"]
-	..()
 
 /datum/reagent/inverse/hercuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	var/heating = rand(creation_purity * REM * 3, creation_purity * REM * 6)
@@ -333,7 +335,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/tirimol/on_mob_delete(mob/living/owner)
 	if(owner.IsSleeping())
-		owner.visible_message("<span class='notice'>[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!</span>")//small way of letting people know the supersnooze is ended
+		owner.visible_message(span_notice("[icon2html(owner, viewers(DEFAULT_MESSAGE_RANGE, src))] [owner] lets out a hearty snore!"))//small way of letting people know the supersnooze is ended
 	for(var/datum/reagent/reagent as anything in cached_reagent_list)
 		if(!reagent)
 			continue
@@ -419,16 +421,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 //Allows the scanner to detect organ health to the nearest 1% (similar use to irl) and upgrates the scan to advanced
 /datum/reagent/inverse/technetium
 	name = "Technetium 99"
-	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will irradiate the patient when present very slowly, purging or using a low dose is recommended after use."
+	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
 	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
 	tox_damage = 0
-	///Accumulates radiation, then adds it as a whole number to the owner
-	var/radiation_ticker
+
+	var/time_until_next_poison = 0
+
+	var/poison_interval = (9 SECONDS)
 
 /datum/reagent/inverse/technetium/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	//for some reason radiation doesn't work when small
-	owner.radiation += creation_purity * delta_time * 0.5
+	time_until_next_poison -= delta_time * (1 SECONDS)
+	if (time_until_next_poison <= 0)
+		time_until_next_poison = poison_interval
+		owner.adjustToxLoss(creation_purity * 1)
+
 	..()
 
 //Kind of a healing effect, Presumably you're using syrinver to purge so this helps that
@@ -544,9 +551,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	remove_buffs(owner)
 	var/obj/item/organ/heart/heart = owner.getorganslot(ORGAN_SLOT_HEART)
 	if(owner.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
-		explosion(owner, 0, 0, 1)
+		explosion(owner, light_impact_range = 1, explosion_cause = src)
 		qdel(heart)
-		owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
+		owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return ..()
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/owner)
@@ -557,9 +564,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 		owner.stat = DEAD
 		return ..()
-	explosion(owner, 0, 0, 1)
+	explosion(owner, light_impact_range = 1, explosion_cause = src)
 	qdel(heart)
-	owner.visible_message("<span class='boldwarning'>[owner]'s heart explodes!</span>")
+	owner.visible_message(span_boldwarning("[owner]'s heart explodes!"))
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/owner)
@@ -590,18 +597,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, NERVOUS, MUT_MUTE)
-	while(speech_options || !speech_option)
-		var/potential_option = pick(speech_options)
-		if(carbon.dna.get_mutation(potential_option))
-			speech_options -= potential_option
+	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, PIGLATIN, NERVOUS, MUT_MUTE)
+	speech_options = shuffle(speech_options)
+	for(var/option in speech_options)
+		if(carbon.dna.get_mutation(option))
 			continue
-		if(carbon.dna.activate_mutation(potential_option))
-			speech_option = potential_option
-			return
-		else
-			speech_options -= potential_option
-
+		carbon.dna.add_mutation(option)
+		speech_option = option
+		return
 
 /datum/reagent/impurity/mannitol/on_mob_delete(mob/living/owner)
 	. = ..()
@@ -628,16 +631,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!(DT_PROB(creation_purity*10, delta_time)))
 		return
 	var/traumalist = subtypesof(/datum/brain_trauma)
-	traumalist -= /datum/brain_trauma/severe/split_personality //Uses a ghost, I don't want to use a ghost for a temp thing.
-	traumalist -= /datum/brain_trauma/special/obsessed //Sets the owner as an antag - I presume this will lead to problems, so we'll remove it
+	var/list/forbiddentraumas = list(/datum/brain_trauma/severe/split_personality,  // Split personality uses a ghost, I don't want to use a ghost for a temp thing
+		/datum/brain_trauma/special/obsessed, // Obsessed sets the owner as an antag - I presume this will lead to problems, so we'll remove it
+		/datum/brain_trauma/hypnosis // Hypnosis, same reason as obsessed, plus a bug makes it remain even after the neurowhine purges and then turn into "nothing" on the med reading upon a second application
+		)
+	traumalist -= forbiddentraumas
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
-	while(traumalist || !temp_trauma)
-		var/datum/brain_trauma/trauma = pick(traumalist)
+	traumalist = shuffle(traumalist)
+	for(var/trauma in traumalist)
 		if(brain.brain_gain_trauma(trauma, TRAUMA_RESILIENCE_MAGIC))
 			temp_trauma = trauma
 			return
-		else
-			traumalist -= trauma
 
 /datum/reagent/inverse/neurine/on_mob_delete(mob/living/carbon/owner)
 	.=..()
@@ -654,7 +658,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	self_consuming = TRUE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 2.5)
-	metabolization_rate = 0.01 * REM
+	metabolization_rate = REM
 	chemical_flags = REAGENT_DEAD_PROCESS
 	tox_damage = 0
 	///The old heart we're swapping for
@@ -678,7 +682,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
 	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
-	to_chat(owner, "<span class='userdanger'>You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!</spans>")
+	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
 ///Intercepts the new heart and creates a new cursed heart - putting the old inside of it
@@ -716,7 +720,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
 		original_heart.Insert(carbon_mob, special = TRUE)
 	qdel(manual_heart)
-	to_chat(owner, "<span class='userdanger'>You feel your heart start beating normally again!</spans>")
+	to_chat(owner, span_userdanger("You feel your heart start beating normally again!"))
 	..()
 
 /datum/reagent/inverse/antihol
@@ -752,15 +756,15 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(headache)
 		return ..()
 	if(DT_PROB(100*(1-creation_purity), delta_time))
-		owner.become_blind("oculine_impure")
-		to_chat(owner, "<span class='warning'>You suddenly develop a pounding headache as your vision fluxuates.</spans>")
+		owner.become_blind(IMPURE_OCULINE)
+		to_chat(owner, span_danger("You suddenly develop a pounding headache as your vision fluxuates."))
 		headache = TRUE
 	..()
 
 /datum/reagent/inverse/oculine/on_mob_end_metabolize(mob/living/owner)
-	owner.cure_blind("oculine_impure")
+	owner.cure_blind(IMPURE_OCULINE)
 	if(headache)
-		to_chat(owner, "<span class='notice'>Your headache clears up!</spans>")
+		to_chat(owner, span_notice("Your headache clears up!"))
 	..()
 
 /datum/reagent/impurity/inacusiate
@@ -779,12 +783,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
-	to_chat(owner, "<span class='notice'>Your hearing seems to be a bit off...!</spans>")
+	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
 	..()
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
-	to_chat(owner, "<span class='notice'>You start hearing things normally again.</spans>")
+	to_chat(owner, span_notice("You start hearing things normally again."))
 	..()
 
 /datum/reagent/impurity/inacusiate/proc/owner_hear(datum/source, list/hearing_args)

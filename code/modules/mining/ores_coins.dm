@@ -14,6 +14,7 @@
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
+	material_flags = MATERIAL_EFFECTS
 	var/points = 0 //How many points this ore gets you from the ore redemption machine
 	var/refined_type = null //What this ore defaults to being refined into
 	var/mine_experience = 5 //How much experience do you get for mining this ore?
@@ -75,7 +76,7 @@
 	inhand_icon_state = "Uranium ore"
 	singular_name = "uranium ore chunk"
 	points = 30
-	material_flags = MATERIAL_NO_EFFECTS
+	material_flags = NONE
 	mats_per_unit = list(/datum/material/uranium=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
@@ -122,16 +123,16 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	var/mob/living/carbon/human/C = hit_atom
 	if(C.is_eyes_covered())
-		C.visible_message("<span class='danger'>[C]'s eye protection blocks the sand!</span>", "<span class='warning'>Your eye protection blocks the sand!</span>")
+		C.visible_message(span_danger("[C]'s eye protection blocks the sand!"), span_warning("Your eye protection blocks the sand!"))
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.add_confusion(5)
-	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
+	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
 
 /obj/item/stack/ore/glass/ex_act(severity, target)
-	if(severity != EXPLODE_NONE)
+	if(severity)
 		qdel(src)
 
 /obj/item/stack/ore/glass/basalt
@@ -156,7 +157,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	merge_type = /obj/item/stack/ore/plasma
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
-	to_chat(user, "<span class='warning'>You can't hit a high enough temperature to smelt [src] properly!</span>")
+	to_chat(user, span_warning("You can't hit a high enough temperature to smelt [src] properly!"))
 	return TRUE
 
 /obj/item/stack/ore/silver
@@ -255,7 +256,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
 	if(!wires && istype(I, /obj/item/assembly/igniter))
-		user.visible_message("<span class='notice'>[user] attaches [I] to [src].</span>", "<span class='notice'>You attach [I] to [src].</span>")
+		user.visible_message(span_notice("[user] attaches [I] to [src]."), span_notice("You attach [I] to [src]."))
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
 		qdel(I)
@@ -275,7 +276,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
-			user.visible_message("<span class='notice'>The chain reaction stopped! ...The ore's quality looks diminished.</span>", "<span class='notice'>You stopped the chain reaction. ...The ore's quality looks diminished.</span>")
+			user.visible_message(span_notice("The chain reaction stopped! ...The ore's quality looks diminished."), span_notice("You stopped the chain reaction. ...The ore's quality looks diminished."))
 			icon_state = "Gibtonite ore"
 			quality = GIBTONITE_QUALITY_LOW
 			return
@@ -313,7 +314,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			log_game(bomb_message)
 			GLOB.bombers += bomb_message
 		else
-			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
+			user.visible_message(span_warning("[user] strikes \the [src], causing a chain reaction!"), span_danger("You strike \the [src], causing a chain reaction."))
 			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
 		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
 
@@ -321,11 +322,11 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(primed)
 		switch(quality)
 			if(GIBTONITE_QUALITY_HIGH)
-				explosion(src,2,4,9,adminlog = notify_admins)
+				explosion(src, devastation_range = 2, heavy_impact_range = 4, light_impact_range = 9, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_MEDIUM)
-				explosion(src,1,2,5,adminlog = notify_admins)
+				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 5, adminlog = notify_admins)
 			if(GIBTONITE_QUALITY_LOW)
-				explosion(src,0,1,3,adminlog = notify_admins)
+				explosion(src, heavy_impact_range = 1, light_impact_range = 3, adminlog = notify_admins)
 		qdel(src)
 
 /obj/item/stack/ore/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
@@ -334,7 +335,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	pixel_y = base_pixel_y + rand(0, 8) - 8
 
 /obj/item/stack/ore/ex_act(severity, target)
-	if(severity == EXPLODE_DEVASTATE)
+	if(severity >= EXPLODE_DEVASTATE)
 		qdel(src)
 
 
@@ -352,7 +353,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/iron = 400)
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
@@ -360,7 +361,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/coinflip
 	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 
-/obj/item/coin/Initialize()
+/obj/item/coin/Initialize(mapload)
 	. = ..()
 	coinflip = pick(sideslist)
 	icon_state = "coin_[coinflip]"
@@ -378,9 +379,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return value
 
 /obj/item/coin/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
+	user.visible_message(span_suicide("[user] contemplates suicide with \the [src]!"))
 	if (!attack_self(user))
-		user.visible_message("<span class='suicide'>[user] couldn't flip \the [src]!</span>")
+		user.visible_message(span_suicide("[user] couldn't flip \the [src]!"))
 		return SHAME
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 10)//10 = time takes for flip animation
 	return MANUAL_SUICIDE_NONLETHAL
@@ -388,31 +389,31 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
 	if (index==2)//tails
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
 		user.adjustOxyLoss(200)
 		user.death(0)
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] keeps on living!</span>")
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!"))
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	. += "<span class='info'>It's worth [value] credit\s.</span>"
+	. += span_info("It's worth [value] credit\s.")
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)
-			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
+			to_chat(user, span_warning("There already is a string attached to this coin!"))
 			return
 
 		if (CC.use(1))
 			add_overlay("coin_string_overlay")
 			string_attached = 1
-			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")
+			to_chat(user, span_notice("You attach a string to the coin."))
 		else
-			to_chat(user, "<span class='warning'>You need one length of cable to attach a string to the coin!</span>")
+			to_chat(user, span_warning("You need one length of cable to attach a string to the coin!"))
 			return
 	else
 		..()
@@ -425,13 +426,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	new /obj/item/stack/cable_coil(drop_location(), 1)
 	overlays = list()
 	string_attached = null
-	to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")
+	to_chat(user, span_notice("You detach the string from the coin."))
 	return TRUE
 
 /obj/item/coin/attack_self(mob/user)
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
-			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
+			to_chat(user, span_warning("The coin won't flip very well with something attached!") )
 			return FALSE//do not flip the coin
 		cooldown = world.time + 15
 		flick("coin_[coinflip]_flip", src)
@@ -441,9 +442,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
-				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-				"<span class='hear'>You hear the clattering of loose change.</span>")
+			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
+				span_notice("You flip [src]. It lands on [coinflip]."), \
+				span_hear("You hear the clattering of loose change."))
 	return TRUE//did the coin flip? useful for suicide_act
 
 /obj/item/coin/gold
@@ -500,7 +501,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/gold/debug/attack_self(mob/user)
 	if(cooldown < world.time)
 		if(string_attached) //does the coin have a wire attached
-			to_chat(user, "<span class='warning'>The coin won't flip very well with something attached!</span>" )
+			to_chat(user, span_warning("The coin won't flip very well with something attached!") )
 			return FALSE//do not flip the coin
 		cooldown = world.time + 15
 		flick("coin_[coinflip]_flip", src)
@@ -510,11 +511,22 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		var/oldloc = loc
 		sleep(15)
 		if(loc == oldloc && user && !user.incapacitated())
-			user.visible_message("<span class='notice'>[user] flips [src]. It lands on [coinflip].</span>", \
-				"<span class='notice'>You flip [src]. It lands on [coinflip].</span>", \
-				"<span class='hear'>You hear the clattering of loose change.</span>")
+			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
+				span_notice("You flip [src]. It lands on [coinflip]."), \
+				span_hear("You hear the clattering of loose change."))
 		SSeconomy.fire()
 		to_chat(user,"<span class='bounty'>[SSeconomy.inflation_value()] is the inflation value.</span>")
 	return TRUE//did the coin flip? useful for suicide_act
+
+
+///Coins used in the dutchmen money bag.
+/obj/item/coin/silver/doubloon
+	name = "doubloon"
+
+/obj/item/coin/gold/doubloon
+	name = "doubloon"
+
+/obj/item/coin/adamantine/doubloon
+	name = "doubloon"
 
 #undef ORESTACK_OVERLAYS_MAX

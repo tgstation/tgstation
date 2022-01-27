@@ -22,12 +22,11 @@
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	is_flying_animal = TRUE
 	pressure_resistance = 100
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
@@ -39,14 +38,19 @@
 	var/playstyle_string = "<span class='big bold'>You are a generic construct!</span><b> Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
-	var/can_repair_constructs = FALSE
+	/// Whether this construct can repair other constructs or cult buildings.
+	var/can_repair = FALSE
+	/// Whether this construct can repair itself. Works independently of can_repair.
 	var/can_repair_self = FALSE
 	var/runetype
+	var/datum/action/innate/cult/create_rune/our_rune
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 
-/mob/living/simple_animal/hostile/construct/Initialize()
+/mob/living/simple_animal/hostile/construct/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
+	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	var/spellnum = 1
 	for(var/spell in construct_spells)
@@ -60,12 +64,17 @@
 		S.action.button.moved = "6:[pos],4:-2"
 		spellnum++
 	if(runetype)
-		var/datum/action/innate/cult/create_rune/CR = new runetype(src)
-		CR.Grant(src)
+		our_rune = new runetype(src)
+		our_rune.Grant(src)
 		var/pos = 2+spellnum*31
-		CR.button.screen_loc = "6:[pos],4:-2"
-		CR.button.moved = "6:[pos],4:-2"
-	add_overlay("glow_[icon_state]_[theme]")
+		our_rune.button.screen_loc = "6:[pos],4:-2"
+		our_rune.button.moved = "6:[pos],4:-2"
+	if(icon_state)
+		add_overlay("glow_[icon_state]_[theme]")
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	QDEL_NULL(our_rune)
+	return ..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	. = ..()
@@ -76,18 +85,26 @@
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	. = list("<span class='cult'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
+	var/text_span
+	switch(theme)
+		if(THEME_CULT)
+			text_span = "cult"
+		if(THEME_WIZARD)
+			text_span = "purple"
+		if(THEME_HOLY)
+			text_span = "blue"
+	. = list("<span class='[text_span]'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n[desc]")
 	if(health < maxHealth)
 		if(health >= maxHealth/2)
-			. += "<span class='warning'>[t_He] look[t_s] slightly dented.</span>"
+			. += span_warning("[t_He] look[t_s] slightly dented.")
 		else
-			. += "<span class='warning'><b>[t_He] look[t_s] severely dented!</b></span>"
+			. += span_warning("<b>[t_He] look[t_s] severely dented!</b>")
 	. += "*---------*</span>"
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(isconstruct(user)) //is it a construct?
 		var/mob/living/simple_animal/hostile/construct/doll = user
-		if(!doll.can_repair_constructs || (doll == src && !doll.can_repair_self))
+		if(!doll.can_repair || (doll == src && !doll.can_repair_self))
 			return ..()
 		if(theme != doll.theme)
 			return ..()
@@ -95,16 +112,16 @@
 			adjustHealth(-5)
 			if(src != user)
 				Beam(user, icon_state="sendbeam", time = 4)
-				user.visible_message("<span class='danger'>[user] repairs some of \the <b>[src]'s</b> dents.</span>", \
-						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
+				user.visible_message(span_danger("[user] repairs some of \the <b>[src]'s</b> dents."), \
+						   span_cult("You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health."))
 			else
-				user.visible_message("<span class='danger'>[user] repairs some of [p_their()] own dents.</span>", \
-						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health.</span>")
+				user.visible_message(span_danger("[user] repairs some of [p_their()] own dents."), \
+						   span_cult("You repair some of your own dents, leaving you at <b>[user.health]/[user.maxHealth]</b> health."))
 		else
 			if(src != user)
-				to_chat(user, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>")
+				to_chat(user, span_cult("You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!"))
 			else
-				to_chat(user, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
+				to_chat(user, span_cult("You cannot repair your own dents, as you have none!"))
 	else if(src != user)
 		return ..()
 
@@ -154,8 +171,8 @@
 		var/reflectchance = 40 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
-			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
-							"<span class='userdanger'>The [P.name] is reflected by your armored shell!</span>")
+			visible_message(span_danger("The [P.name] is reflected by [src]'s armored shell!"), \
+							span_userdanger("The [P.name] is reflected by your armored shell!"))
 
 			// Find a turf near or on the original location to bounce to
 			if(P.starting)
@@ -215,9 +232,10 @@
 
 /mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
 	var/prev_stat
-	if(isliving(target) && !iscultist(target))
-		var/mob/living/L = target
-		prev_stat = L.stat
+	var/mob/living/living_target = target
+
+	if(isliving(living_target) && !IS_CULTIST(living_target))
+		prev_stat = living_target.stat
 
 	. = ..()
 
@@ -283,12 +301,12 @@
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
-	can_repair_constructs = TRUE
+	can_repair = TRUE
 	can_repair_self = TRUE
 	///The health HUD applied to this mob.
 	var/health_hud = DATA_HUD_MEDICAL_ADVANCED
 
-/mob/living/simple_animal/hostile/construct/artificer/Initialize()
+/mob/living/simple_animal/hostile/construct/artificer/Initialize(mapload)
 	. = ..()
 	var/datum/atom_hud/datahud = GLOB.huds[health_hud]
 	datahud.add_hud_to(src)
@@ -384,7 +402,7 @@
 							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
-	can_repair_constructs = TRUE
+	can_repair = TRUE
 
 
 /mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
@@ -416,8 +434,8 @@
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
 			C.Paralyze(60)
-			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
-			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
+			visible_message(span_danger("[src] knocks [C] down!"))
+			to_chat(src, span_cultlarge("\"Bring [C.p_them()] to me.\""))
 			return FALSE
 		do_attack_animation(C)
 		var/obj/item/bodypart/BP = pick(parts)
@@ -425,7 +443,7 @@
 		return FALSE
 	. = ..()
 
-/mob/living/simple_animal/hostile/construct/harvester/Initialize()
+/mob/living/simple_animal/hostile/construct/harvester/Initialize(mapload)
 	. = ..()
 	var/datum/action/innate/seek_prey/seek = new()
 	seek.Grant(src)
@@ -478,15 +496,11 @@
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
 	button_icon_state = "cult_mark"
-	var/mob/living/simple_animal/hostile/construct/harvester/the_construct
-
-/datum/action/innate/seek_prey/Grant(mob/living/C)
-	the_construct = C
-	..()
 
 /datum/action/innate/seek_prey/Activate()
 	if(GLOB.cult_narsie == null)
 		return
+	var/mob/living/simple_animal/hostile/construct/harvester/the_construct = owner
 	if(the_construct.seeking)
 		desc = "None can hide from Nar'Sie, activate to track a survivor attempting to flee the red harvest!"
 		button_icon_state = "cult_mark"

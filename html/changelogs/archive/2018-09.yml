@@ -1,0 +1,618 @@
+2018-09-01:
+  ElPresidentePoole:
+  - rscdel: removes curator's fear of snakes
+  McDonald072:
+  - bugfix: Defibrillator nanites work properly.
+  Poojawa:
+  - bugfix: fixed clothing vendor fedoras having Detective Fedora grade armor
+  Potato Masher:
+  - tweak: The color of Wooden golems should be more in line with the color of the
+      wood used to make it.
+  WJohnston:
+  - imageadd: Reinforced floors are now shinier.
+2018-09-02:
+  Denton:
+  - spellcheck: Fixed species type names that show up on health scanners.
+2018-09-03:
+  Cdey78 (Ported by Floyd / Qustinnus):
+  - imageadd: AI can now think
+  - imageadd: 'New OOC emote: :thinking:!'
+  Naksu:
+  - admin: a new admin secret has been added to create a customized portal storm
+  Shdorsh:
+  - tweak: Makes it possible to create circuits that can get an item loaded into them
+      while they are in an assembly and the assembly is open.
+  - code_imp: Optimized electronic assemblies also.
+  - bugfix: A bug pertaining putting batteries in assemblies
+  Skoglol:
+  - bugfix: Eggplant and egg-plant seeds now have different names and plant names.
+  XDTM:
+  - bugfix: Fixed nanite cloud storage not allowing uploads.
+  octareenroon91:
+  - admin: Supermatter more likely to log fingerprintslast when it consumes any object.
+2018-09-04:
+  Denton:
+  - spellcheck: Mech construction messages no longer incorrectly mention high-tier
+      stock parts.
+  - tweak: Added a nanite lab to Deltastation! It's at the old EXPERIMENTOR lab.
+  - tweak: 'Delta: Moved the Xenobiology disposals bin to be less obstructive. Added
+      two sets of insulated gloves to Engineering.'
+  - bugfix: 'Delta: Fixed scientists not having maintenance access near the circuitry
+      lab and toxins launch chamber.'
+  Shdorsh:
+  - code_imp: Made all the extinguishers use less sleep and spawn procs
+2018-09-05:
+  Floyd / Qustinnus:
+  - rscadd: Clown cars can now fit any mob (besides megafauna)
+  - rscadd: Repair your clown car with bananas
+  - rscadd: Emag the clowncar to unlock a button panel. Activate it to press a random
+      button for a random effect!
+  - balance: lowers health and cost of clown car
+  - bugfix: removes a return in the clown car code that caused the wrong flags to
+      be assigned
+  - bugfix: you cant open the clowncar trunk from the inside anymore, you can still
+      escape though.
+  - bugfix: fixes broken to_chat in clown car
+  Naksu:
+  - admin: Ghost poll description button was broken in the ert spawner. It isn't anymore.
+  Nichlas0010:
+  - bugfix: IAA now has its own preference
+  Robustin and Subject217:
+  - balance: Once the blood cult reaches 20% of the active player population, they
+      will receive a notice that the cult is "rising" - and after a moderate delay
+      the eyes of all existing and new cultists will be permanently red. Examining
+      a cultist with uncovered eyes will confirm their supernatural appearance.
+  - balance: Once the blood cult reaches 40% of the active player population they
+      will receive a warning and after a moderate delay will glow red, permanently
+      revealing the identity of existing and new blood cultists.
+  - rscadd: Any non-cultist can now strike a (filled) soulshard with a bible to purify
+      it. Purified shades have a unique appearance and will be eager to get revenge
+      on the cult. Bibles can be printed in the library.
+  - balance: Juggernauts have 25% less HP and 35% less projectile reflection.
+  - balance: Cult mirror shield is slightly easier to break, has less illusions, and
+      has -33% throwing distance.
+  - balance: The EMP blood spell has -1 light and heavy radius.
+  - balance: The revive rune now requires 3 sacrifices per revive, it still starts
+      with one "freebie" revive. Giving "souls" to AFK/Catatonic cultists remains
+      free of charge.
+  - balance: Twisted Construction now has a channel time with added noise/effects
+      when used on doors. It also hurts you slightly more to use.
+  - balance: You can now only hold 1 blood spell without an empowering rune and 4
+      with one.
+  - rscdel: The Bloody Bastard Sword is no longer available in Blood Cult. It's still
+      spawnable with admin tools.
+  SpaceManiac:
+  - bugfix: The stealth box and chameleon projector no longer allow escaping lockers.
+  - bugfix: Combining the stealth box and chameleon projector should cause less teleportation
+      behavior.
+  - bugfix: In extreme lag scenarios, hyperspace ripples are no longer removed before
+      the location is actually safe.
+  - bugfix: Research points are no longer generated during the pre-round lobby.
+  WJohn:
+  - refactor: Refactored floor tiles to use decals like warning lines do.
+  jegub:
+  - bugfix: Chemicals should no longer vanish for some reactions.
+  - tweak: Health sensor's 'detect death' mode now triggers on death rather than extreme
+      unwellness.
+2018-09-07:
+  Denton:
+  - spellcheck: Added missing descriptions for objects that have alt+click functionality.
+  - bugfix: You can no longer infinitely sell immortality talismans.
+  - spellcheck: Added a cooldown message for the immortality talisman.
+  Shdorsh:
+  - rscadd: A gas named miasma, that has a ridiculously low chance of infecting people
+      with a very basic and benign disease
+  - rscadd: A gas reaction to remove miasma
+  - tweak: Corpses emit a gas named miasma
+  - tweak: Air alarms detect and automatically are set to scrub miasma
+  Skoglol:
+  - bugfix: SMES will no longer output if not connected to a powernet.
+  SpaceManiac:
+  - tweak: The status messages shown by shuttle consoles are now more useful.
+  - bugfix: Double-wide shuttle airlocks now cycle link properly, rather than always
+      thinking they are docked.
+  WJohn:
+  - bugfix: Fixed pubby's bugged R&D tiles.
+  XDTM:
+  - bugfix: Fixed nanite chambers not being interactable if placed under a window.
+  octareenroon91:
+  - bugfix: remove base types not meant to spawn from get_random_drink and from the
+      silver-slime spawnlist.
+  subject217:
+  - bugfix: You can actually purify shades with a Bible now, as intended.
+  - code_imp: Made deconversion just update_body instead of cutting and rebuilding
+      all mob overlays.
+  - spellcheck: Removed an extra exclamation point from the messages for purifying
+      bastard swords and soul stones.
+2018-09-08:
+  Denton:
+  - balance: Laser slug shells have been changed to fire scatter lasers.
+  Mickyan:
+  - tweak: the length of footprint trails from blood pools now scales with the amount
+      of blood they contain
+  - tweak: blood pools from bleeding will take slightly longer to congregate
+  Naksu:
+  - admin: a new admin secret has been added to create a customized portal storm
+  Shdorsh:
+  - bugfix: Made the self reference pins for reagents reference themselves automatically.
+  - tweak: Made it possible to copy datas frop pin to pin with the debugger.
+  - spellcheck: Removed ugly useless brackets from printers.
+  ShizCalev:
+  - spellcheck: Nar-Sie's name has been revised to Nar'Sie.
+  Supermichael777:
+  - rscadd: NTs crack archeo-gastronomers have discovered a long lost recipe for a
+      meat based donut.
+  Tlaltecuhtli:
+  - balance: stimulum now makes you stun/sleep immune and some generic stamina heal
+  WJohnston:
+  - imageadd: Added new bluespace floor tile sprites.
+  barbedwireqtip:
+  - tweak: Hand drills are now better ghetto alternatives for surgical drills than
+      standard screwdrivers
+  granpawalton:
+  - rscadd: pubby atmospherics now has black gloves and smart foam grenades
+  ninjanomnom:
+  - code_imp: Mappers no longer need to manually update the size and offset vars on
+      mobile docks while mapping.
+2018-09-09:
+  Cw3040:
+  - rscadd: Added Improvised Jetpacks, with approx. 2/7ths of the volume of a normal
+      jetpack, acts like a hardsuit jetpack in terms of speed and can cut out at random!
+  - imageadd: Sprite by obscolene
+  Naksu:
+  - bugfix: ghosts will no longer lose their hearing from jumping between z-levels
+      via orbiting
+  Tlaltecuhtli:
+  - balance: .38 no longer insta stuns, it still deals 25 brute
+2018-09-10:
+  Denton:
+  - bugfix: The CMO office and morgue disposal bins on Deltastation are now connected
+      to the disposal loop.
+  - spellcheck: Multitools and quantum pads now show infos about their buffer when
+      examined.
+  - bugfix: Players no longer bash quantum pads with multitools that contain no pad
+      in their buffer.
+  - tweak: You can no longer link a quantum pad to itself.
+  - balance: The damage caused by liver failure has been reduced, to give players
+      more time to seek help.
+  - tweak: Made feedback messages for liver failure/damage more obvious.
+  - spellcheck: Fixed typos and capitalization in health scanner messages.
+  Poojawaw:
+  - bugfix: APCs are now able to be rebuilt in Maintenance
+2018-09-11:
+  Cobby:
+  - rscadd: emojis
+  Denton:
+  - bugfix: Fixed the Cere emergency shuttle brig floor.
+  - tweak: Removed access restrictions on the Hi Daniel shuttle's booze-o-mat.
+  - tweak: Added missing surgical drills and cauteries to emergency shuttles.
+  - tweak: Replaced boring high traction floors in the SnapPop!(tm) shuttle with exciting
+      bananium floors.
+  Potato Masher:
+  - tweak: CentCom would like to announce that new station AIs will now support updated
+      surveillance software, allowing units to monitor multiple locations with ease
+      with customizable viewing range, albeit at an overall reduced viewing radius.
+  - config: Cruix's AI Multicamera mode has been finally enabled, with a new config
+      option for enabling and disabling it as well!
+  ninjanomnom:
+  - balance: Radiation toxin damage has been slightly increased.
+  - balance: Contaminated objects are overall a bit weaker but are easier to create
+      in the first place.
+  - balance: Showers deal with high amounts of contamination much faster but aren't
+      that great at dealing with weakly contaminated objects.
+  - rscadd: Atmos holo-barriers have been given radiation insulation like the engineering
+      ones.
+2018-09-13:
+  Cobby:
+  - bugfix: Employees at Centcom's supply department have been asked to wear glasses
+      so that you don't have to spread the adamantine across the floor to get the
+      proper reward.
+  Crazylemon:
+  - admin: '"Fill" Buildmode, "Area Edit" Buildmode, "Boom" Buildmode'
+  - refactor: Buildmode is now in modules instead of defining new modes by extra branches
+      of switch statements.
+  - imageadd: Switches buildmode button icons to something with a slightly more refined
+      background.
+  - admin: Buildmode now switches between modes using a discrete switcher, instead
+      of by repeatedly clicking.
+  Denton:
+  - tweak: Added nanite circuit boards to tech storage.
+  - rscadd: Added new available items to all departmental protolathes. Keep an eye
+      out for the new "Basic Tools" and "Basic Security Equipment" research nodes.
+  - tweak: Made the AI surveillance upgrade available through the "Illegal Technology"
+      research node.
+  - tweak: Created a "Tool Designs" lathe subsection and moved most tools into it.
+  - balance: Made defibrillators easier to print by moving them to the basic biotechnology
+      research node.
+  - bugfix: Health analyzers are now properly printable once researched.
+  - balance: Bees only inject the reagent they were mutated with. Non-mutated bees
+      still inject toxin when stinging someone.
+  - bugfix: Fixed various missing texture errors.
+  - bugfix: Heat resistant species no longer burn their hands on lightbulbs.
+  - rscadd: Added a plasmaman EVA suit pack to cargo for 4000 bucks each.
+  Naksu:
+  - code_imp: crayons now have about 10% less shitcode
+  The Dreamweaver:
+  - rscadd: An unknown, adventurous greyshirt has discovered a way to make a special
+      type of bola out of gondola hide. The effects of the gondola seem to rub off
+      on the victim while attached.
+  Tlaltecuhtli:
+  - bugfix: seed extractor and dna manipulator are now in the right tab
+  WJohn & Naksu:
+  - rscadd: Nuke ops may now order a borg with the Syndicate Saboteur module. It's
+      a streamlined engineering unit capable of extraordinary robustness by virtue
+      of not only not being able to leave its welder in the shuttle, but also quick
+      travel around the station via the disposal system. Oh and it can also disguise
+      itself.
+  - rscadd: Syndicate medical and assault modules have received improved sprites
+  subject217:
+  - balance: The Clown Car can no longer move unrestricted in zero gravity environments.
+  - balance: The Clown Car now costs 20 TC to purchase.
+2018-09-14:
+  Administrative Moonman:
+  - tweak: Fake nuclear disks no longer appear in null-crates, but can appear in surplus
+      traitor crates with the regularity they had before.
+  Cobby:
+  - rscadd: Cyberorgans give small benefits (advanced versions now also get these
+      obviously)
+  - balance: Cyber Heart - Gives Epinephrine once in hardcrit
+  - balance: Cyber Liver - 10% better health and toxicity tolerance, with 10% less
+      lethality
+  - balance: Cyber Lungs - Can breath at 13 kPa oxygen compared to the normal 16 kPa
+  Denton:
+  - tweak: The EngiVend, welding and electrical lockers in Meta/Delta shared engineering
+      storage have been moved back into the Engineering department. The reason for
+      this is that Atmos techs never had ID access to them in the first place.
+  Garen:
+  - bugfix: Fixes soap cleaning things before it checks that it can.
+  Granpawalton:
+  - bugfix: fixed some round start atmospherics differences on lavaland caused by
+      the ufo crash ruin
+  Mickyan:
+  - tweak: Gauzes can be deconstructed using any sharp object
+  Naksu:
+  - rscdel: archaeology component no longer handles sand-digging, it has been disabled
+      until someone works on xenoarch again.
+  Shdorsh:
+  - bugfix: atmos analyzer circuit not analyzing certain stuff
+  Skoglol:
+  - bugfix: Power sinks now explode within a reasonable amount of time.
+  - bugfix: Power changes between power ticks are now tracked by the powernets and
+      applied to the next power tick.
+  - bugfix: Power sinks now apply load before machines. This includes SMES and APC
+      charging.
+  - code_imp: Electric grilles, ninja gloves, apc terminals and power sinks now use
+      helper procs to add load.
+  - code_imp: Power beacons can no longer cause powernet excess to go negative instead
+      of turning off.
+  - code_imp: Shocks can no longer cause powernet excess to go negative.
+  XDTM:
+  - rscadd: Added the experimental dissection surgery, which can be performed once
+      per corpse to gain techweb points.
+  - rscadd: Rarer specimens are more valuable, so xenos and rare species are more
+      efficient subjects.
+  YPOQ:
+  - bugfix: Stealth implants work again
+  YoYoBatty:
+  - code_imp: Added signals for various mob attacking actions.
+  Zxaber:
+  - bugfix: Cyborg Self-Repair item no longer attaches an action button to anyone
+      that picks it up under certain circumstances. You can no longer remote-control
+      a borg's Self-Repair.
+  basilman:
+  - balance: mobs without an attached mind dont contribute towards his grace ascension
+2018-09-15:
+  Cobby (using cyclown's formula):
+  - balance: 'Techweb point gen via toxins are now very-hard-soft capped at 50K point
+      rewards. After 50K points have been awarded, you can still get points for bombs
+      that would reward higher than 50K, but they are worth only a flat 1K (hint:
+      it''s not beneficial). Give those other bombs to mining!'
+  - balance: Techweb toxins equation has been edited (once again)
+  actioninja:
+  - rscadd: Bone Hurting Juice
+  kevinz000:
+  - rscadd: All atom movables now have move force and move resist, and pull force
+      An atom can only pull another atom if its pull force is stronger than that atom's
+      move resist
+  - rscadd: 'Mobs with a higher move force than an atom''s move resist will automatically
+      try to force the atom out of its way. This might not always work, depending
+      on how snowflakey code is. experimental: As of right now, everything has a move
+      force and resist of 100, and a pull force of 101. Things take (resist - force)
+      damage when bumped into experimental; Failing to move onto a tile will now still
+      bump up your last move timer. However, successfully pushing something out of
+      your way will result in you automatically moving into where it was.'
+2018-09-16:
+  Naksu:
+  - code_imp: Added a new framework for saving memory on type-associated invariant
+      lists
+  - code_imp: windows no longer hold whole instances of the things that pop out from
+      them hoping for the day some assistant breaks the windows in reebe.
+  SpaceManiac:
+  - code_imp: Git revision info is now gathered by rust-g instead of manually reading
+      .git files.
+  - bugfix: The telecomms log computers now use the actual language of messages, rather
+      than mob type.
+2018-09-17:
+  AnturK:
+  - rscadd: Failsafe codes for uplinks are now available for purchase.
+  Dax Dupont:
+  - bugfix: Fixes missing human mob subtype for felinids.
+  Frosty Fridge:
+  - balance: Reduced steps for reconstruction surgery & increased healing
+  Tlaltecuhtli:
+  - balance: combat knifes can stick in the wounds now
+2018-09-18:
+  ShizCalev:
+  - bugfix: Lavarocks will no longer be invisible.
+  - bugfix: Flying and ventcrawling mobs will no longer make footstep sounds.
+  ShizClaev:
+  - bugfix: Bloodcrawling and jaunting mobs will no longer be consumed by chasms.
+2018-09-19:
+  Denton:
+  - spellcheck: Changed a few wizard spell descriptions to better explain what they
+      do.
+  Naksu & octareenroon91:
+  - rscadd: plasmaglass windows leave plasmaglass shards when destroyed, these shards
+      can also be used to make spears.
+  - bugfix: fulltile windows didn't give you the promised 2 shards, this has been
+      fixed.
+  ShizCalev:
+  - bugfix: Blood cultists using a stun spell now emit a flash of red light when....
+      they emit a flash of red light!
+  - bugfix: Blood cult stun spells now properly check for any holy items on the target
+      mob.
+  - tweak: Targets immune to blood cult stun spells will now glow with holy light
+      for a short duration after.
+  SpaceManiac:
+  - bugfix: Non-TGM format shuttle templates no longer leave some of their turfs behind.
+  cacogen:
+  - rscadd: The luxury shuttle now accepts dragged money. Useful for mobs without
+      hands.
+2018-09-20:
+  Denton:
+  - rscdel: Omegastation has been scrapped.
+  Granpawalton:
+  - rscadd: toxins on all maps now have an unlocked chamber air alarm, 2 air pumps,
+      a rpd, a heater, a freezer, and igniters
+  - tweak: the pipe arrangements in toxins have been reorganized for efficiency
+  ShizCalev:
+  - bugfix: Gas sensors in the incinerator chamber will no longer catch on fire.
+  - bugfix: Airlock sensors are no longer completely immune to damage
+  - tweak: No smoking signs are now flammable, fire warning signs are now fireproofed
+  - bugfix: The lavaproofing slime potion is now lavaproof!
+  Time-Green:
+  - bugfix: staff of the locker no longer gibs or deletes people
+  octareenroon91:
+  - bugfix: toolbelts will now show alien screwdrivers on the item sprite
+2018-09-21:
+  Mark9013100:
+  - rscadd: Added ERT backpacks, sprites by PlasmaRifle.
+  - rscadd: Replaced the old metal foam grenades with smart foam grenades in engineering
+      ERT locker.
+  MrDoomBringer:
+  - admin: Admins can now spawn things in ICly (as well as do a bunch of other cool
+      new stuff) using the Config/Launch Supplypod verb!
+  - code_imp: also supplypods have been refactored
+  ShizCalev:
+  - bugfix: Flashbangs will now make a sound if nobody is around to see them. (honk)
+  - tweak: Flashbangs now come with sparks and will also light things up around them
+      on detonation!
+  - tweak: Flashes, flashers, flash powder, and cameras also now produce lighting!
+      Woo!
+  - bugfix: Cameras will no longer give you a prompt when alt-clicking them while
+      not adjacent to them.
+  - bugfix: You can no longer put a pocket protector in your shirt pocket if you're
+      only wearing a pair of pants. This also applies to pinning medals on your chest
+      (owww.)
+2018-09-23:
+  MrDoomBringer:
+  - bugfix: Ever since Centcom got their own supplypod cannon, they've neglected any
+      of the station's requests for supply-pod delivered orders. The operators responsible
+      have been fired (out of an airlock) and replaced with better ones. As such,
+      Express Consoles work again.
+  - admin: Also, the centcom podlauncher verb no longer spams "Explosion with size
+      (0,0,0)"
+  Naksu:
+  - rscadd: RCDs now have a comfier interface
+  - bugfix: some floor tiles had their broken states broken by the list-culling PR
+      a while back. they're fixed now.
+  Shdorsh:
+  - bugfix: Fuel cell circuits are now using the right pin
+  ShizCalev:
+  - bugfix: Grenade launchers will no longer report an incorrect number of live rounds.
+  - bugfix: Every department has been given access to their corresponding mecha's
+      maintenance features. These accesses are provided at roundstart, and can be
+      altered by the HoP if need be.
+  - bugfix: In continuation with the mech accesses, station side personnel will no
+      longer be able to access the maintenance protocols of CentCom & Syndicate exclusive
+      mechas.
+  - bugfix: AIs can now unbolt again.
+  Tlaltecuhtli:
+  - bugfix: traps check for antimagic
+  bobbahbrown:
+  - rscadd: Unsecured grenade assemblies now show the number and type of beakers inside
+      when not wearing science goggles.
+  - tweak: Science goggles now show the type of beakers inside a grenade assembly.
+  - tweak: We are no longer shaked, but shaken.
+2018-09-25:
+  Barhandar:
+  - balance: Plasma cutters now flash you (same intensity as experimental welder)
+      when used for welding.
+  - bugfix: Plasma cutters also use charge to weld. 25 per most things like vents
+      or walls, more for specials like airlock shielding.
+  BeeSting12:
+  - bugfix: Sustenance vendors are free.
+  Denton:
+  - bugfix: Deltastation's hydroponics department now has an APC and no longer draws
+      its power from the twilight zone.
+  Kierany9:
+  - rscadd: A new gamemode called Assimilation.
+  - rscadd: 'Several probably-inhuman creatures wielding psionic powers, known only
+      as Hivemind Hosts, have appeared onboard the station and must assimilate as
+      many crew members as possible. Assimilated crew serve as vessels for the Host
+      to use their powers through (and on), and as a Host gains vessels, they gain
+      new abilities. remove: Vessels are not antagonists. Assimilation does not convert
+      crew in any way.'
+  - rscadd: Assimilated crewmembers can escape this nightmare by either getting a
+      mindshield implant or by dying. Mindshielding vessels will reveal the identity
+      of whoever assimilated them. Mindshielded crew are initially protected, but
+      should a Host get strong enough, they can break these implants with ease.
+  - rscadd: Nothing is stopping Hosts from working together, but as their hives grow,
+      so does the incentive to backstab. At 8 vessels, Hosts can probe the minds of
+      crew and discover the identity of any other Hosts who have assimilated them,
+      and at 18, they can steal every single vessel from a captured enemy Host.
+  - tweak: Assimilation requires 25 players roundstart.
+  ShizCalev:
+  - bugfix: Fixed vareditted bonfires not properly igniting at round start.
+  - bugfix: Fixed vareditted pianos switching to minimoogs at round start.
+  - bugfix: Fixed some vareddited flashlights not turning on properly at round start.
+  - bugfix: Fixed all missing floor icons
+  - bugfix: Fixed bookcases at the Wild West away mission not being properly populated.
+  XDTM:
+  - balance: Advanced Bluespace Research has been split in Bluespace Travel and Miniaturized
+      Bluespace Research, with the former relating to static teleporters and the latter
+      to small devices and stock parts.
+  - rscadd: Added Quantum Keycards, devices that can link to a quantum pad, and can
+      be used on any other quantum pad to teleport to its linked pad.
+  - tweak: Bluespace Power Technology now requires Applied Bluespace Research instead
+      of Advanced Bluespace Research.
+  - tweak: Sending an activation code to a nanite program will reset its timer.
+  - bugfix: Fixed self-deactivating programs being unable to be reactivated afterwards.
+  - bugfix: ID Cards now only display payday messages to the owner if they're being
+      carried. Cards on the ground will still display them to nearby mobs.
+  YoYoBatty:
+  - code_imp: Particle accelerator control box now uses multitool_act and better ui_interact
+  - bugfix: Particle accelerator wires can be opened by borgs with multitools now.
+  bandit:
+  - tweak: Due to cost-cutting measures throughout the company, Nanotrasen has changed
+      the recipes for food supplied to sustenance vendors in all station brigs. Nanotrasen
+      prides itself in its quality standards and is sure crew members will notice
+      no difference in taste!
+  cacogen:
+  - rscadd: Luxury shuttle now attempts to charge humans' bank accounts in addition
+      to taking held and dragged money
+  - rscadd: Luxury shuttle now attempts to return change to humans' bank accounts
+  - rscadd: You can now pay for the luxury shuttle in instalments (mostly useful for
+      handless mobs)
+  - tweak: Luxury shuttle ticket booth messages are now spoken, so you can spend loudly
+  imsxz:
+  - balance: plasma cutter blasts, including mech-mounted, no longer have a pressure
+      penalty, but do 1/4 their old damage
+  - balance: plasma cutters can no longer dismember at range regardless of pressure
+  ninjanomnom:
+  - bugfix: Orbiting is a little more aggressive about staying in orbit. The wisp
+      as a result now correctly follows you over shuttle moves.
+  subject217:
+  - spellcheck: Fixed a typo with 10mm ammo casings.
+2018-09-26:
+  XDTM:
+  - rscadd: Added credit holochips, a form of semi-physical currency to use in transactions.
+      They can be generated by id cards by drawing from bank accounts and can be used
+      to make payments.
+  - rscadd: There is no limit to the amount of credits that can be stored on a holochip,
+      but being holograms they are vulnerable to electromagnetic pulses, and may disappear
+      if exposed to one!
+  - rscadd: Holochips can be split with alt-click, and can be merged by clicking on
+      another holochip.
+2018-09-27:
+  Dennok:
+  - bugfix: Teleconsole now can be researched again.
+  Denton:
+  - rscadd: Geneticist and Chief Medical Officer traitors can now purchase a box of
+      gorilla cubes for 8TC.
+  - spellcheck: Changed the clown car uplink description to mention emag interaction.
+  - rscdel: Removed roundstart sulphuric acid beakers. These aren't needed as circuit
+      boards no longer require acid to print.
+  Floyd / Qustinnus (thx to mrdoombringer for sprite + idea):
+  - rscadd: The clowncar now comes with an inbuilt cannon that can be activated by
+      emagging its circuits
+  - bugfix: cars can only kidnap if they have the CAN_KIDNAP trait
+  - bugfix: removes a dot too much in a to_chat in clown car actions
+  MetroidLover:
+  - rscadd: E-Katana can now be stored on your back
+  MrDoomBringer:
+  - bugfix: Fixes advanced buildmode not having the picker
+  ShizCalev:
+  - rscadd: Nuke Ops now have the ability to purchase a usable RPG, as well as a couple
+      different types of rockets for it.
+  - bugfix: Storage items and parcels can no longer be fried.
+  - bugfix: Camera assembly upgrades can now only be placed in stage 3 (just before
+      completion.)
+  Tlaltecuhtli:
+  - bugfix: skate bounty now accept the item version of the sakteboard
+  Whoneedspacee:
+  - rscadd: new arena attack where ash drake summons lava around you
+  - rscdel: removed old swooping above you, instead flies above you instantly
+  - balance: ash drake now spawns temporary lava pools instead of meteors falling
+      down
+  - balance: ash drake takes twice as long to swoop down now that he instantly goes
+      above you
+  - balance: ash drake now moves twice as fast
+  - balance: increases the odds of lava spawns in the lava pool attack
+  - balance: increases fire line damage and decreases lava attacks direct damage
+  - tweak: ash drake fire now shoots in the direction of the target
+  - tweak: changes times of certain animations
+  - tweak: changes sounds of meteor falling to lava creation
+  - bugfix: a bug where ash drakes attacks did not damage mechs
+  - imageadd: changes meteor icon to lava creation animation from lava staff
+  cacogen:
+  - balance: Space cleaner in spray bottles travels 5 tiles instead of 3 (doesn't
+      affect other reagents)
+  - balance: Trash bag fits in exosuit slot of janitor biosuit
+  - balance: All soaps are faster
+  - balance: Soaps now clean all decals on a tile instead of just one
+  - balance: Soap now has limited uses (100 for most, 300 for NT brand which janitor
+      gets)
+  - balance: Mops are considerably faster
+  - balance: Basic mop holds twice the reagents
+  - balance: Janitorial cart now refills mops completely with one click
+  - balance: Basic and advanced mops are more robust (8 force and 12 force)
+  - balance: Galoshes no longer leave bloody footprints
+  - balance: Chameleon noslips no longer leave bloody footprints
+  - bugfix: Bulb boxes can be used on light replacers refill them in bulk
+  - balance: Light replacer can be used in-hand to change all bulbs on a tile
+  - rscadd: Custodial barrier projector which creates solid wet floor signs that force
+      people to walk to pass (available through service protolathe)
+2018-09-28:
+  Moon Farmer:
+  - rscadd: Both reagent universal enzyme & sacks of flour are now availible for their
+      respective costs from the biogenerator.
+  - rscadd: New crafting recipies for donut boxes, eggboxes & candle boxes have been
+      added to cardboard recipies for the collective benefit of service personnel
+      and the station.
+  Poojawa:
+  - rscadd: Fire Alarms are visible in low light situations
+  XDTM:
+  - rscadd: 'Added a new severe brain trauma: hypnotic stupor. Victims of hypnotic
+      stupor occasionally fall into a trance, and upon hearing a sentence they''ll
+      focus on it to the point of obsession, until it is replaced by a new hypnosis
+      or the trauma is cured.'
+2018-09-30:
+  Mickyan:
+  - rscadd: After rigorous mandatory art training for the crew, many new graffiti
+      styles are now available
+  MrDoomBringer:
+  - bugfix: Crew Monitors now only track crew with nanites when said crewmembers are
+      on the same (or station) z-level
+  - bugfix: 'massive service department nerf: space can no longer be extra crispy.'
+  - rscadd: 'Nanotrasen''s Alien Life Detection Department has issued new training
+      for crewmembers when facing blobs: the crew is now able to actually discern
+      when a blob is dead.'
+  Naksu:
+  - code_imp: squeezed a little bit more perf out of atmos
+  - code_imp: DB queries are now async by default, the code that runs in /world/New
+      has been adjusted to continue blocking as it apparently is not allowed to sleep.
+  Nanotrasen Reserve Bank:
+  - imageadd: Holochips have been given a noticeable redesign, and now use a combination
+      of color and shape to show how many credits are in an individual chip, along
+      with using a new coloring scheme outright.
+  - tweak: Holochips now show how many credits they contain in their name.
+  ShizCalev:
+  - bugfix: Fixed bottles not smashing properly when slipping on puddles/lube.
+  - bugfix: Fixed a bug related to reloading RPGs
+  'The Dreamweaver (Idea: Roth)':
+  - rscadd: Space Fashion has discovered a new way to wear bandannas. With some simple
+      minor adjustments and ties, bandannas can be made into fashionable neckerchiefs!
+  basilman:
+  - balance: changed the time for agent box to turn invisible from half a second to
+      2 seconds

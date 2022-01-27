@@ -36,6 +36,11 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
+//blast door (de)construction states
+#define BLASTDOOR_NEEDS_WIRES 0
+#define BLASTDOOR_NEEDS_ELECTRONICS 1
+#define BLASTDOOR_FINISHED 2
+
 //default_unfasten_wrench() return defines
 #define CANT_UNFASTEN 0
 #define FAILED_UNFASTEN 1
@@ -57,6 +62,10 @@
 #define FLOODLIGHT_NEEDS_WIRES 0
 #define FLOODLIGHT_NEEDS_LIGHTS 1
 #define FLOODLIGHT_NEEDS_SECURING 2
+
+// Stationary gas tanks
+#define TANK_FRAME 0
+#define TANK_PLATING_UNSECURED 1
 
 //other construction-related things
 
@@ -84,8 +93,12 @@
 #define CAT_BURGER "Burgers"
 #define CAT_CAKE "Cakes"
 #define CAT_EGG "Egg-Based Food"
+#define CAT_LIZARD "Lizard Food"
 #define CAT_MEAT "Meats"
+#define CAT_SEAFOOD "Seafood"
 #define CAT_MISCFOOD "Misc. Food"
+#define CAT_MEXICAN "Mexican Food"
+#define CAT_MOTH "Mothic Food"
 #define CAT_PASTRY "Pastries"
 #define CAT_PIE "Pies"
 #define CAT_PIZZA "Pizzas"
@@ -96,6 +109,7 @@
 #define CAT_ICE "Frozen"
 #define CAT_DRINK "Drinks"
 #define CAT_CHEMISTRY "Chemistry"
+#define CAT_ATMOSPHERIC "Atmospheric"
 
 //rcd modes
 #define RCD_FLOORWALL 0

@@ -29,7 +29,7 @@
 	idle_power_usage = 150
 	active_power_usage = 2000
 
-/obj/machinery/atmospherics/miner/Initialize()
+/obj/machinery/atmospherics/miner/Initialize(mapload)
 	. = ..()
 	set_active(active) //Force overlay update.
 
@@ -43,25 +43,25 @@
 		return FALSE
 	var/turf/T = get_turf(src)
 	if(!isopenturf(T))
-		broken_message = "<span class='boldnotice'>VENT BLOCKED</span>"
+		broken_message = span_boldnotice("VENT BLOCKED")
 		set_broken(TRUE)
 		return FALSE
 	var/turf/open/OT = T
 	if(OT.planetary_atmos)
-		broken_message = "<span class='boldwarning'>DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT</span>"
+		broken_message = span_boldwarning("DEVICE NOT ENCLOSED IN A PRESSURIZED ENVIRONMENT")
 		set_broken(TRUE)
 		return FALSE
 	if(isspaceturf(T))
-		broken_message = "<span class='boldnotice'>AIR VENTING TO SPACE</span>"
+		broken_message = span_boldnotice("AIR VENTING TO SPACE")
 		set_broken(TRUE)
 		return FALSE
 	var/datum/gas_mixture/G = OT.return_air()
 	if(G.return_pressure() > (max_ext_kpa - ((spawn_mol*spawn_temp*R_IDEAL_GAS_EQUATION)/(CELL_VOLUME))))
-		broken_message = "<span class='boldwarning'>EXTERNAL PRESSURE OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL PRESSURE OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(G.total_moles() > max_ext_mol)
-		broken_message = "<span class='boldwarning'>EXTERNAL AIR CONCENTRATION OVER THRESHOLD</span>"
+		broken_message = span_boldwarning("EXTERNAL AIR CONCENTRATION OVER THRESHOLD")
 		set_broken(TRUE)
 		return FALSE
 	if(broken)
@@ -87,15 +87,15 @@
 	var/P = G.return_pressure()
 	switch(power_draw)
 		if(GASMINER_POWER_NONE)
-			active_power_usage = 0
+			update_use_power(ACTIVE_POWER_USE, 0)
 		if(GASMINER_POWER_STATIC)
-			active_power_usage = power_draw_static
+			update_use_power(ACTIVE_POWER_USE, power_draw_static)
 		if(GASMINER_POWER_MOLES)
-			active_power_usage = spawn_mol * power_draw_dynamic_mol_coeff
+			update_use_power(ACTIVE_POWER_USE, spawn_mol * power_draw_dynamic_mol_coeff)
 		if(GASMINER_POWER_KPA)
-			active_power_usage = P * power_draw_dynamic_kpa_coeff
+			update_use_power(ACTIVE_POWER_USE, P * power_draw_dynamic_kpa_coeff)
 		if(GASMINER_POWER_FULLSCALE)
-			active_power_usage = (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff)
+			update_use_power(ACTIVE_POWER_USE, (spawn_mol * power_draw_dynamic_mol_coeff) + (P * power_draw_dynamic_kpa_coeff))
 
 /obj/machinery/atmospherics/miner/proc/do_use_power(amount)
 	var/turf/T = get_turf(src)
@@ -138,7 +138,6 @@
 	merger.gases[spawn_id][MOLES] = spawn_mol * delta_time
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
-	O.air_update_turf(FALSE, FALSE)
 
 /obj/machinery/atmospherics/miner/attack_ai(mob/living/silicon/user)
 	if(broken)
@@ -160,7 +159,7 @@
 	overlay_color = "#007FFF"
 	spawn_id = /datum/gas/oxygen
 
-/obj/machinery/atmospherics/miner/toxins
+/obj/machinery/atmospherics/miner/plasma
 	name = "\improper Plasma Gas Miner"
 	overlay_color = "#FF0000"
 	spawn_id = /datum/gas/plasma
@@ -210,10 +209,10 @@
 	overlay_color = "#395806"
 	spawn_id = /datum/gas/miasma
 
-/obj/machinery/atmospherics/miner/nitryl
-	name = "\improper Nitryl Gas Miner"
+/obj/machinery/atmospherics/miner/nitrium
+	name = "\improper Nitrium Gas Miner"
 	overlay_color = "#752b00"
-	spawn_id = /datum/gas/nitryl
+	spawn_id = /datum/gas/nitrium
 
 /obj/machinery/atmospherics/miner/pluoxium
 	name = "\improper Pluoxium Gas Miner"
@@ -224,11 +223,6 @@
 	name = "\improper Proto-Nitrate Gas Miner"
 	overlay_color = "#00571d"
 	spawn_id = /datum/gas/proto_nitrate
-
-/obj/machinery/atmospherics/miner/stimulum
-	name = "\improper Stimulum Gas Miner"
-	overlay_color = "#d577dd"
-	spawn_id = /datum/gas/stimulum
 
 /obj/machinery/atmospherics/miner/tritium
 	name = "\improper Tritium Gas Miner"

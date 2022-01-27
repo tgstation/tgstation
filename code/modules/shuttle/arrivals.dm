@@ -30,7 +30,7 @@
 /obj/docking_port/mobile/arrivals/register()
 	..()
 	if(SSshuttle.arrivals)
-		WARNING("More than one arrivals docking_port placed on map! Ignoring duplicates.")
+		log_mapping("More than one arrivals docking_port placed on map! Ignoring duplicates.")
 	SSshuttle.arrivals = src
 
 /obj/docking_port/mobile/arrivals/LateInitialize()
@@ -45,12 +45,12 @@
 		areas += A
 
 	if(SSjob.latejoin_trackers.len)
-		WARNING("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
+		log_mapping("Map contains predefined latejoin spawn points and an arrivals shuttle. Using the arrivals shuttle.")
 
 	if(!new_latejoin.len)
-		WARNING("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
+		log_mapping("Arrivals shuttle contains no chairs for spawn points. Reverting to latejoin landmarks.")
 		if(!SSjob.latejoin_trackers.len)
-			WARNING("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
+			log_mapping("No latejoin landmarks exist. Players will spawn unbuckled on the shuttle.")
 		return
 
 	SSjob.latejoin_trackers = new_latejoin
@@ -124,7 +124,7 @@
 	return FALSE
 
 /obj/docking_port/mobile/arrivals/proc/NukeDiskCheck()
-	for (var/obj/item/disk/nuclear/N in GLOB.poi_list)
+	for (var/obj/item/disk/nuclear/N in SSpoints_of_interest.real_nuclear_disks)
 		if (get_area(N) in areas)
 			return TRUE
 	return FALSE
@@ -190,7 +190,7 @@
 
 	Launch(TRUE)
 
-	to_chat(user, "<span class='notice'>Calling your shuttle. One moment...</span>")
+	to_chat(user, span_notice("Calling your shuttle. One moment..."))
 	while(mode != SHUTTLE_CALL && !damaged)
 		stoplag()
 
@@ -203,9 +203,9 @@
  */
 /obj/docking_port/mobile/arrivals/proc/QueueAnnounce(mob, rank)
 	if(mode != SHUTTLE_CALL)
-		AnnounceArrival(mob, rank)
+		announce_arrival(mob, rank)
 	else
-		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/AnnounceArrival, mob, rank))
+		LAZYADD(queued_announces, CALLBACK(GLOBAL_PROC, .proc/announce_arrival, mob, rank))
 
 /obj/docking_port/mobile/arrivals/vv_edit_var(var_name, var_value)
 	switch(var_name)

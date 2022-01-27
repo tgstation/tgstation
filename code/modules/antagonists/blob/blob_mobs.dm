@@ -10,7 +10,7 @@
 	faction = list(ROLE_BLOB)
 	bubble_icon = "blob"
 	speak_emote = null //so we use verb_yell/verb_say/etc
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	unique_name = 1
@@ -28,7 +28,7 @@
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
-/mob/living/simple_animal/hostile/blob/Initialize()
+/mob/living/simple_animal/hostile/blob/Initialize(mapload)
 	. = ..()
 	if(!independent) //no pulling people deep into the blob
 		remove_verb(src, /mob/living/verb/pulled)
@@ -62,7 +62,7 @@
 	else
 		adjustFireLoss(5)
 
-/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, turf/target)
+/mob/living/simple_animal/hostile/blob/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(istype(mover, /obj/structure/blob))
 		return TRUE
@@ -72,7 +72,9 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+	if(sanitize)
+		message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 	var/spanned_message = say_quote(message)
 	var/rendered = "<font color=\"#EE4000\"><b>\[Blob Telepathy\] [real_name]</b> [spanned_message]</font>"
 	for(var/M in GLOB.mob_list)
@@ -105,7 +107,6 @@
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
 	attack_sound = 'sound/weapons/genhit1.ogg'
-	is_flying_animal = TRUE
 	del_on_death = TRUE
 	deathmessage = "explodes into a cloud of gas!"
 	gold_core_spawnable = NO_SPAWN //gold slime cores should only spawn the independent subtype
@@ -117,6 +118,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -145,11 +147,11 @@
 		return
 	if(key || stat)
 		return
-	var/pod_ask = alert("Become a blob spore?", "Are you bulbous enough?", "Yes", "No")
+	var/pod_ask = tgui_alert(usr,"Become a blob spore?", "Are you bulbous enough?", list("Yes", "No"))
 	if(pod_ask == "No" || !src || QDELETED(src))
 		return
 	if(key)
-		to_chat(user, "<span class='warning'>Someone else already took this spore!</span>")
+		to_chat(user, span_warning("Someone else already took this spore!"))
 		return
 	key = user.key
 	log_game("[key_name(src)] took control of [name].")
@@ -177,7 +179,7 @@
 	H.forceMove(src)
 	oldguy = H
 	update_icons()
-	visible_message("<span class='warning'>The corpse of [H.name] suddenly rises!</span>")
+	visible_message(span_warning("The corpse of [H.name] suddenly rises!"))
 	if(!key)
 		notify_ghosts("\A [src] has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Blob Zombie Created")
 
@@ -271,7 +273,7 @@
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/living/blobbernaut
 
-/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize(mapload)
 	. = ..()
 	add_cell_sample()
 

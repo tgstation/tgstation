@@ -58,7 +58,6 @@
         "Mining Office",
         "Morgue",
         "Morgue Maintenance",
-        "Nanite Lab",
         "Primary Tool Storage",
         "Prison Wing",
         "Prisoner Education Chamber",
@@ -93,6 +92,6 @@
         "Warehouse",
         "Waste Disposal",
         "Xenobiology Lab",
-	"Cytology Lab"
+        "Cytology Lab"
     ]
 }

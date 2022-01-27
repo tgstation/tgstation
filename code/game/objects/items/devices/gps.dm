@@ -11,7 +11,7 @@
 	obj_flags = UNIQUE_RENAME
 	var/gpstag
 
-/obj/item/gps/Initialize()
+/obj/item/gps/Initialize(mapload)
 	. = ..()
 	add_gps_component()
 
@@ -40,7 +40,7 @@
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
 
-/obj/item/gps/cyborg/Initialize()
+/obj/item/gps/cyborg/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
@@ -66,7 +66,7 @@
 		for marking the area around the transition edges."
 	var/list/turf/tagged
 
-/obj/item/gps/visible_debug/Initialize()
+/obj/item/gps/visible_debug/Initialize(mapload)
 	. = ..()
 	tagged = list()
 	START_PROCESSING(SSfastprocess, src)

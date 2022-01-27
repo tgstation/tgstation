@@ -34,7 +34,7 @@
 	attack_sound = 'sound/magic/clockwork/ratvar_attack.ogg'
 	throw_message = "doesn't affect the purity of"
 	speed = 2
-	move_to_delay = 10
+	move_to_delay = 5
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/demon_dies.ogg'
 	deathmessage = "begins to shudder as it becomes transparent..."
@@ -60,7 +60,7 @@
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/become_ghost()
 	icon_state = "herald_ghost"
 
-/mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/asteroid/elite/herald/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	. = ..()
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 
@@ -143,7 +143,7 @@
 	ranged_cooldown = world.time + 30
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	var/target_turf = get_turf(target)
-	var/angle_to_target = Get_Angle(src, target_turf)
+	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, FALSE, TRUE)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 2)
 	addtimer(CALLBACK(src, .proc/shoot_projectile, target_turf, angle_to_target, FALSE, TRUE), 4)
@@ -178,7 +178,7 @@
 	ranged_cooldown = world.time + 30
 	playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	var/target_turf = get_turf(target)
-	var/angle_to_target = Get_Angle(src, target_turf)
+	var/angle_to_target = get_angle(src, target_turf)
 	shoot_projectile(target_turf, angle_to_target, TRUE, FALSE)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_mirror()
@@ -201,13 +201,13 @@
 	icon_aggro = "herald_mirror"
 	deathmessage = "shatters violently!"
 	deathsound = 'sound/effects/glassbr1.ogg'
-	is_flying_animal = TRUE
 	del_on_death = TRUE
 	is_mirror = TRUE
 	var/mob/living/simple_animal/hostile/asteroid/elite/herald/my_master = null
 
-/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize()
-	..()
+/mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/simple_flying)
 	toggle_ai(AI_OFF)
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/mirror/Destroy()
@@ -273,7 +273,7 @@
 	. = ..()
 	if(rand(1,100) > hit_reaction_chance)
 		return
-	owner.visible_message("<span class='danger'>[owner]'s [src] emits a loud noise as [owner] is struck!</span>")
+	owner.visible_message(span_danger("[owner]'s [src] emits a loud noise as [owner] is struck!"))
 	var/static/list/directional_shot_angles = list(0, 45, 90, 135, 180, 225, 270, 315)
 	playsound(get_turf(owner), 'sound/magic/clockwork/invoke_general.ogg', 20, TRUE)
 	addtimer(CALLBACK(src, .proc/reactionshot, owner), 10)

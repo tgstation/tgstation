@@ -1,0 +1,1249 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/seed,
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"aK" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/thelizardsgas)
+"aS" = (
+/obj/structure/rack,
+/obj/item/analyzer,
+/obj/item/crowbar/red,
+/obj/item/flashlight,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"bo" = (
+/obj/structure/rack,
+/obj/item/clothing/shoes/cowboy/lizard{
+	desc = "You can hear a faint hissing from inside the boots."
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"bp" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"bt" = (
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"bO" = (
+/obj/structure/closet/crate/secure/gear,
+/turf/closed/mineral,
+/area/ruin/space/has_grav/thelizardsgas)
+"bW" = (
+/obj/effect/spawner/random/structure/billboard/lizardsgas,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"cm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/sign/poster/contraband/lizards_gas_power{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"ct" = (
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"de" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"gL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"gS" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"hl" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"ig" = (
+/obj/structure/table/wood,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"iA" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"iO" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"jv" = (
+/obj/machinery/airalarm/directional/north{
+	locked = 0
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"jN" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"kS" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output{
+	internal_pressure_bound = 750
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"mN" = (
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/structure/closet/secure_closet/freezer/empty/open,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"mR" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"na" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"nL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"oZ" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"qX" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"rs" = (
+/obj/machinery/button/door/directional/west{
+	desc = "After all, what's more important than making sure you get what you're due?";
+	name = "Criminal Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"rC" = (
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"ss" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"sN" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"ua" = (
+/obj/effect/spawner/random/structure/billboard/roadsigns,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"uh" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Criminal Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"vj" = (
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/structure/closet/secure_closet/freezer/empty/open,
+/turf/open/floor/iron/white/corner,
+/area/ruin/space/has_grav/thelizardsgas)
+"wb" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"xb" = (
+/obj/structure/cable,
+/obj/structure/sign/warning/fire{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"xy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"yU" = (
+/obj/structure/sign/warning/nosmoking{
+	desc = "An incredibly bad idea.";
+	pixel_y = 32
+	},
+/turf/template_noop,
+/area/template_noop)
+"zn" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"zz" = (
+/obj/machinery/door/window,
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/lizards_gas_payment{
+	pixel_x = -32
+	},
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"AZ" = (
+/obj/machinery/light/directional/west,
+/obj/structure/closet/crate/secure/freezer{
+	desc = "There's a reason why this is behind the counter. Do not sell to minors.";
+	locked = 0;
+	name = "The GOOD Stuff"
+	},
+/obj/machinery/power/apc/auto_name/directional/north{
+	coverlocked = 0;
+	locked = 0;
+	network_id = null;
+	start_charge = 60
+	},
+/obj/structure/cable,
+/obj/item/paper/fluff/spaceruins/lizardsgas/memorandum,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas,
+/turf/open/floor/iron/dark/smooth_corner,
+/area/ruin/space/has_grav/thelizardsgas)
+"Bi" = (
+/obj/structure/closet{
+	desc = "Why leave the chairs in a locker?";
+	name = "CHAIRS"
+	},
+/obj/item/chair/plastic,
+/obj/item/chair/plastic,
+/obj/item/chair/plastic,
+/obj/item/chair/plastic,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"Bu" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"BJ" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 4
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"Cv" = (
+/obj/machinery/door/airlock/hatch,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"CA" = (
+/turf/template_noop,
+/area/template_noop)
+"DG" = (
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Es" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"EH" = (
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"FJ" = (
+/obj/machinery/computer/atmos_control/tank/plasma_tank{
+	dir = 8;
+	output_info = null
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Gr" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/snack/lizard,
+/obj/effect/spawner/random/food_or_drink/snack/lizard,
+/obj/effect/spawner/random/food_or_drink/snack/lizard,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"GM" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/machinery/door/airlock/external/glass,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Criminal Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"GR" = (
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"Hc" = (
+/obj/structure/flora/rock/pile{
+	icon_state = "basalt"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"Io" = (
+/obj/machinery/power/smes{
+	charge = 2e+006;
+	network_id = null;
+	output_level = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"Je" = (
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Jg" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"Jw" = (
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"JP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"JY" = (
+/obj/structure/cable,
+/turf/open/floor/iron/white/corner,
+/area/ruin/space/has_grav/thelizardsgas)
+"Kw" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"LA" = (
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"LT" = (
+/obj/structure/sign/warning/electricshock{
+	pixel_y = 32
+	},
+/obj/machinery/suit_storage_unit/standard_unit,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"Mw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"MB" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+	dir = 8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"Ow" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/ruin/space/has_grav/thelizardsgas)
+"OQ" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Pb" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/sign/warning/vacuum{
+	pixel_x = 32
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Pi" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"Qg" = (
+/turf/closed/mineral,
+/area/ruin/space/has_grav/thelizardsgas)
+"Qi" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"QQ" = (
+/obj/item/toy/plush/space_lizard_plushie{
+	desc = "How the fuck did he get in there?!";
+	name = "Zingo"
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"RB" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"Ss" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
+/obj/structure/sign/poster/contraband/lizards_gas_payment{
+	pixel_x = -32
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Tj" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"Ua" = (
+/mob/living/simple_animal/hostile/lizard/space{
+	desc = "How are you ALIVE?!";
+	name = "Blarpo"
+	},
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Ud" = (
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"Uh" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
+	dir = 4
+	},
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Um" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav/thelizardsgas)
+"UO" = (
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"Ve" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"VP" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"VV" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"Wh" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/ruin/space/has_grav/thelizardsgas)
+"WP" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/hidden,
+/turf/template_noop,
+/area/ruin/space/has_grav/thelizardsgas)
+"WY" = (
+/obj/machinery/air_sensor/atmos/plasma_tank,
+/turf/open/floor/engine/plasma,
+/area/ruin/space/has_grav/thelizardsgas)
+"XB" = (
+/obj/machinery/power/terminal,
+/turf/closed/wall,
+/area/ruin/space/has_grav/thelizardsgas)
+"Ys" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/thelizardsgas)
+"YK" = (
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/obj/structure/closet/secure_closet/freezer/empty/open,
+/turf/open/floor/iron/white/side,
+/area/ruin/space/has_grav/thelizardsgas)
+"Zr" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+"Zs" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/thelizardsgas)
+
+(1,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(2,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(3,1,1) = {"
+CA
+CA
+CA
+CA
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+Um
+wb
+Qg
+wb
+wb
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(4,1,1) = {"
+CA
+CA
+CA
+Qg
+Qg
+mR
+mR
+mR
+mR
+mR
+mR
+Qg
+Qg
+wb
+RB
+Um
+RB
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(5,1,1) = {"
+CA
+CA
+CA
+Qg
+Qg
+mR
+AZ
+rs
+zz
+JY
+ct
+mR
+Qg
+Qg
+wb
+bW
+wb
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(6,1,1) = {"
+CA
+CA
+CA
+Qg
+bO
+mR
+jv
+aK
+Ow
+hl
+Zr
+ct
+mR
+Qg
+RB
+wb
+RB
+CA
+Jg
+CA
+CA
+Jg
+CA
+CA
+CA
+"}
+(7,1,1) = {"
+CA
+CA
+Qg
+Qg
+Qg
+mR
+bt
+FJ
+VP
+hl
+Gr
+UO
+mR
+Qg
+wb
+wb
+wb
+CA
+de
+CA
+CA
+de
+CA
+CA
+CA
+"}
+(8,1,1) = {"
+CA
+CA
+Qg
+Qg
+LA
+LA
+rC
+rC
+rC
+hl
+Gr
+UO
+mR
+mR
+mR
+mR
+RB
+CA
+MB
+CA
+CA
+MB
+CA
+CA
+CA
+"}
+(9,1,1) = {"
+CA
+CA
+Qg
+Qg
+LA
+OQ
+DG
+kS
+Tj
+na
+sN
+iO
+Ss
+GM
+Pb
+ss
+Bu
+Bu
+WP
+Bu
+Bu
+WP
+CA
+CA
+CA
+"}
+(10,1,1) = {"
+CA
+CA
+Qg
+Qg
+LA
+DG
+WY
+QQ
+rC
+hl
+bp
+GR
+Wh
+mR
+mR
+mR
+yU
+CA
+MB
+CA
+CA
+MB
+CA
+CA
+CA
+"}
+(11,1,1) = {"
+CA
+CA
+CA
+Qg
+LA
+Uh
+DG
+DG
+rC
+hl
+Zs
+GR
+UO
+uh
+CA
+CA
+CA
+CA
+BJ
+CA
+CA
+BJ
+CA
+CA
+CA
+"}
+(12,1,1) = {"
+CA
+CA
+CA
+Qg
+LA
+Ud
+LA
+LA
+LA
+xb
+Zs
+zn
+UO
+uh
+CA
+CA
+CA
+CA
+Qi
+CA
+CA
+Qi
+CA
+CA
+CA
+"}
+(13,1,1) = {"
+CA
+CA
+CA
+Qg
+mR
+iA
+JP
+Ys
+mR
+ak
+Zs
+zn
+UO
+uh
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(14,1,1) = {"
+CA
+CA
+CA
+Jw
+oZ
+Es
+Ve
+aS
+mR
+gS
+Zs
+zn
+Ua
+uh
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(15,1,1) = {"
+CA
+CA
+CA
+Qg
+mR
+LT
+xy
+Kw
+mR
+bo
+Zs
+zn
+UO
+uh
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(16,1,1) = {"
+CA
+CA
+CA
+Qg
+XB
+Io
+cm
+Mw
+Cv
+nL
+gL
+zn
+UO
+uh
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(17,1,1) = {"
+CA
+CA
+CA
+Qg
+mR
+mR
+mR
+mR
+mR
+VV
+jN
+zn
+UO
+mR
+Qg
+Um
+wb
+wb
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(18,1,1) = {"
+CA
+Qg
+Qg
+Qg
+Qg
+Bi
+wb
+mR
+vj
+Pi
+GR
+zn
+UO
+mR
+Qg
+wb
+RB
+wb
+RB
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(19,1,1) = {"
+CA
+Qg
+wb
+wb
+wb
+wb
+Um
+mR
+YK
+GR
+GR
+zn
+UO
+mR
+Qg
+Qg
+wb
+ua
+wb
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(20,1,1) = {"
+CA
+Qg
+wb
+ig
+ig
+wb
+Qg
+mR
+mN
+Je
+qX
+Je
+EH
+mR
+Qg
+Hc
+RB
+wb
+RB
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(21,1,1) = {"
+CA
+CA
+wb
+wb
+wb
+wb
+Qg
+mR
+mR
+mR
+mR
+mR
+mR
+mR
+wb
+wb
+wb
+wb
+wb
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(22,1,1) = {"
+CA
+CA
+CA
+wb
+wb
+wb
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+Qg
+wb
+Qg
+RB
+wb
+RB
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(23,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(24,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}
+(25,1,1) = {"
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+CA
+"}

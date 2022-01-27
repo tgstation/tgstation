@@ -29,9 +29,12 @@
 	icon_state = "clown"
 	inhand_icon_state = "clown"
 	species_exception = list(/datum/species/golem/bananium)
+	fitted = FEMALE_UNIFORM_TOP
+	can_adjust = FALSE
 
-/obj/item/clothing/under/rank/civilian/clown/Initialize()
+/obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/under/rank/civilian/clown/blue
@@ -39,54 +42,41 @@
 	desc = "<i>'BLUE HONK!'</i>"
 	icon_state = "blueclown"
 	inhand_icon_state = "blueclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/green
 	name = "green clown suit"
 	desc = "<i>'GREEN HONK!'</i>"
 	icon_state = "greenclown"
 	inhand_icon_state = "greenclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/yellow
 	name = "yellow clown suit"
 	desc = "<i>'YELLOW HONK!'</i>"
 	icon_state = "yellowclown"
 	inhand_icon_state = "yellowclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/purple
 	name = "purple clown suit"
 	desc = "<i>'PURPLE HONK!'</i>"
 	icon_state = "purpleclown"
 	inhand_icon_state = "purpleclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/orange
 	name = "orange clown suit"
 	desc = "<i>'ORANGE HONK!'</i>"
 	icon_state = "orangeclown"
 	inhand_icon_state = "orangeclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/rainbow
 	name = "rainbow clown suit"
 	desc = "<i>'R A I N B O W HONK!'</i>"
 	icon_state = "rainbowclown"
 	inhand_icon_state = "rainbowclown"
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
 	icon_state = "jester"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/clown/jester/alt
 	icon_state = "jester2"
@@ -96,8 +86,3 @@
 	desc = "It makes you look HONKable!"
 	icon_state = "sexyclown"
 	inhand_icon_state = "sexyclown"
-	can_adjust = FALSE
-
-/obj/item/clothing/under/rank/civilian/clown/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please

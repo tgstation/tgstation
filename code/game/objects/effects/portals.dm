@@ -1,10 +1,9 @@
-
-/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal, atmos_link_override)
+/proc/create_portal_pair(turf/source, turf/destination, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
 	var/turf/actual_destination = get_teleport_turf(destination, accuracy)
-	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null, atmos_link_override)
-	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null, atmos_link_override)
+	var/obj/effect/portal/P1 = new newtype(source, _lifespan, null, FALSE, null)
+	var/obj/effect/portal/P2 = new newtype(actual_destination, _lifespan, P1, TRUE, null)
 	if(!istype(P1)||!istype(P2))
 		return
 	P1.link_portal(P2)
@@ -17,17 +16,17 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	anchored = TRUE
+	density = TRUE // dense for receiving bumbs
+	layer = HIGH_OBJ_LAYER
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE //Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
 	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
 	var/turf/hard_target //For when a portal needs a hard target and isn't to be linked.
-	var/atmos_link = FALSE //Link source/destination atmos.
-	var/turf/open/atmos_source //Atmos link source
-	var/turf/open/atmos_destination //Atmos link destination
 	var/allow_anchored = FALSE
 	var/innate_accuracy_penalty = 0
 	var/last_effect = 0
+	/// Does this portal bypass teleport restrictions? like TRAIT_NO_TELEPORT and NOTELEPORT flags.
 	var/force_teleport = FALSE
 
 /obj/effect/portal/anom
@@ -44,34 +43,34 @@
 			return FALSE
 	return ..()
 
+/obj/effect/portal/newtonian_move() // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+	return TRUE
+
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
-	if(force_stop)
-		return ..()
-	if(isobserver(AM))
-		return ..()
-	if(linked && (get_turf(oldloc) == get_turf(linked)))
-		return ..()
-	if(!teleport(AM))
-		return ..()
+/obj/effect/portal/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(HAS_TRAIT(mover, TRAIT_NO_TELEPORT) && !force_teleport)
+		return TRUE
 
-/obj/effect/portal/attack_tk(mob/user)
-	return
+/obj/effect/portal/Bumped(atom/movable/bumper)
+	teleport(bumper)
 
 /obj/effect/portal/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(get_turf(user) == get_turf(src))
-		teleport(user)
 	if(Adjacent(user))
-		user.forceMove(get_turf(src))
+		teleport(user)
 
-/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+/obj/effect/portal/attack_robot(mob/living/user)
+	if(Adjacent(user))
+		teleport(user)
+
+/obj/effect/portal/Initialize(mapload, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override)
 	. = ..()
 	GLOB.portals += src
 	if(!istype(_linked) && automatic_link)
@@ -79,8 +78,6 @@
 		CRASH("Somebody fucked up.")
 	if(_lifespan > 0)
 		QDEL_IN(src, _lifespan)
-	if(!isnull(atmos_link_override))
-		atmos_link = atmos_link_override
 	link_portal(_linked)
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
@@ -94,51 +91,9 @@
 
 /obj/effect/portal/proc/link_portal(obj/effect/portal/newlink)
 	linked = newlink
-	if(atmos_link)
-		link_atmos()
-
-//This proc breaks as soon as atmos turfs are reacalculated, someone fix it
-/obj/effect/portal/proc/link_atmos()
-	if(atmos_source || atmos_destination)
-		unlink_atmos()
-	if(!isopenturf(get_turf(src)))
-		return FALSE
-	if(linked)
-		if(isopenturf(get_turf(linked)))
-			atmos_source = get_turf(src)
-			atmos_destination = get_turf(linked)
-	else if(hard_target)
-		if(isopenturf(hard_target))
-			atmos_source = get_turf(src)
-			atmos_destination = hard_target
-	else
-		return FALSE
-	if(!istype(atmos_source) || !istype(atmos_destination))
-		return FALSE
-	LAZYINITLIST(atmos_source.atmos_adjacent_turfs)
-	LAZYINITLIST(atmos_destination.atmos_adjacent_turfs)
-	if(atmos_source.atmos_adjacent_turfs[atmos_destination] || atmos_destination.atmos_adjacent_turfs[atmos_source]) //Already linked!
-		return FALSE
-	atmos_source.atmos_adjacent_turfs[atmos_destination] = TRUE
-	atmos_destination.atmos_adjacent_turfs[atmos_source] = TRUE
-	atmos_source.air_update_turf(FALSE, FALSE)
-	atmos_destination.air_update_turf(FALSE, FALSE)
-
-/obj/effect/portal/proc/unlink_atmos()
-	if(istype(atmos_source))
-		if(istype(atmos_destination))
-			LAZYREMOVE(atmos_source.atmos_adjacent_turfs, atmos_destination)
-			atmos_source.ImmediateCalculateAdjacentTurfs() //Just in case they were next to each other
-		atmos_source = null
-	if(istype(atmos_destination))
-		if(istype(atmos_source))
-			LAZYREMOVE(atmos_destination.atmos_adjacent_turfs, atmos_source)
-			atmos_destination.ImmediateCalculateAdjacentTurfs()
-		atmos_destination = null
 
 /obj/effect/portal/Destroy()
 	GLOB.portals -= src
-	unlink_atmos()
 	if(hardlinked && !QDELETED(linked))
 		QDEL_NULL(linked)
 	else

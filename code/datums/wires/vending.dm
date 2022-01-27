@@ -11,6 +11,8 @@
 	..()
 
 /datum/wires/vending/interactable(mob/user)
+	if(!..())
+		return FALSE
 	var/obj/machinery/vending/V = holder
 	if(!issilicon(user) && V.seconds_electrified && V.shock(user, 100))
 		return FALSE

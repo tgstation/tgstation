@@ -10,15 +10,12 @@
 	var/mob/living/living_pawn = controller.pawn
 	var/obj/item/fetch_thing = controller.blackboard[BB_FETCH_TARGET]
 
-	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing)) //either we can't pick it up, or we'd rather eat it, so stop trying.
+	//either we can't pick it up, or we'd rather eat it, so stop trying.
+	if(fetch_thing.anchored || !isturf(fetch_thing.loc) || IS_EDIBLE(fetch_thing) || !living_pawn.CanReach(fetch_thing))
 		finish_action(controller, FALSE)
 		return
 
-	if(in_range(living_pawn, fetch_thing))
-		finish_action(controller, TRUE)
-		return
-
-	finish_action(controller, FALSE)
+	finish_action(controller, TRUE)
 
 /datum/ai_behavior/fetch/finish_action(datum/ai_controller/controller, success)
 	. = ..()
@@ -26,7 +23,7 @@
 	if(!success) //Don't try again on this item if we failed
 		var/obj/item/target = controller.blackboard[BB_FETCH_TARGET]
 		if(target)
-			controller.blackboard[BB_FETCH_IGNORE_LIST][target] = TRUE
+			controller.blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(target)] = TRUE
 		controller.blackboard[BB_FETCH_TARGET] = null
 		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
@@ -35,7 +32,7 @@
 /datum/ai_behavior/simple_equip/perform(delta_time, datum/ai_controller/controller)
 	. = ..()
 	var/obj/item/fetch_target = controller.blackboard[BB_FETCH_TARGET]
-	if(!isturf(fetch_target?.loc)) // someone picked it up or something happened to it
+	if(!isturf(fetch_target?.loc) || !isitem(fetch_target)) // someone picked it up, something happened to it, or it wasn't an item anyway
 		finish_action(controller, FALSE)
 		return
 
@@ -52,7 +49,7 @@
 /datum/ai_behavior/simple_equip/proc/pickup_item(datum/ai_controller/controller, obj/item/target)
 	var/atom/pawn = controller.pawn
 	drop_item(controller)
-	pawn.visible_message("<span class='notice'>[pawn] picks up [target] in [pawn.p_their()] mouth.</span>")
+	pawn.visible_message(span_notice("[pawn] picks up [target] in [pawn.p_their()] mouth."))
 	target.forceMove(pawn)
 	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = target
 	return TRUE
@@ -63,7 +60,7 @@
 		return
 
 	var/atom/pawn = controller.pawn
-	pawn.visible_message("<span class='notice'>[pawn] drops [carried_item].</span>")
+	pawn.visible_message(span_notice("[pawn] drops [carried_item]."))
 	carried_item.forceMove(get_turf(pawn))
 	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	return TRUE
@@ -96,12 +93,12 @@
 		return
 
 	if(ismob(return_target))
-		controller.pawn.visible_message("<span class='notice'>[controller.pawn] delivers [carried_item] at [return_target]'s feet.</span>")
+		controller.pawn.visible_message(span_notice("[controller.pawn] delivers [carried_item] at [return_target]'s feet."))
 	else // not sure how to best phrase this
-		controller.pawn.visible_message("<span class='notice'>[controller.pawn] delivers [carried_item] to [return_target].</span>")
+		controller.pawn.visible_message(span_notice("[controller.pawn] delivers [carried_item] to [return_target]."))
 
 	carried_item.forceMove(get_turf(return_target))
-	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = null
+	controller.blackboard -= BB_SIMPLE_CARRY_ITEM
 	return TRUE
 
 /// This behavior involves either eating a snack we can reach, or begging someone holding a snack
@@ -143,7 +140,7 @@
 		simple_pawn.icon_state = simple_pawn.icon_dead
 		if(simple_pawn.flip_on_death)
 			simple_pawn.transform = simple_pawn.transform.Turn(180)
-		simple_pawn.density = FALSE
+		simple_pawn.set_density(FALSE)
 
 	if(DT_PROB(10, delta_time))
 		finish_action(controller, TRUE)
@@ -154,11 +151,11 @@
 	if(!istype(simple_pawn) || simple_pawn.stat) // imagine actually dying while playing dead. hell, imagine being the kid waiting for your pup to get back up :(
 		return
 	controller.blackboard[BB_DOG_PLAYING_DEAD] = FALSE
-	simple_pawn.visible_message("<span class='notice'>[simple_pawn] springs to [simple_pawn.p_their()] feet, panting excitedly!</span>")
+	simple_pawn.visible_message(span_notice("[simple_pawn] springs to [simple_pawn.p_their()] feet, panting excitedly!"))
 	simple_pawn.icon_state = simple_pawn.icon_living
 	if(simple_pawn.flip_on_death)
 		simple_pawn.transform = simple_pawn.transform.Turn(180)
-	simple_pawn.density = initial(simple_pawn.density)
+	simple_pawn.set_density(initial(simple_pawn.density))
 
 /// This behavior involves either eating a snack we can reach, or begging someone holding a snack
 /datum/ai_behavior/harass
@@ -171,13 +168,14 @@
 	if(!istype(living_pawn) || !(isturf(living_pawn.loc) || HAS_TRAIT(living_pawn, TRAIT_AI_BAGATTACK)))
 		return
 
-	var/atom/movable/harass_target = controller.blackboard[BB_DOG_HARASS_TARGET]
+	var/datum/weakref/harass_ref = controller.blackboard[BB_DOG_HARASS_TARGET]
+	var/atom/movable/harass_target = harass_ref.resolve()
 	if(!harass_target || !can_see(living_pawn, harass_target, length=AI_DOG_VISION_RANGE))
 		finish_action(controller, FALSE)
 		return
 
-	if(controller.blackboard[BB_DOG_FRIENDS][harass_target])
-		living_pawn.visible_message("<span class='danger'>[living_pawn] looks sideways at [harass_target] for a moment, then shakes [living_pawn.p_their()] head and ceases aggression.</span>")
+	if(controller.blackboard[BB_DOG_FRIENDS][harass_ref])
+		living_pawn.visible_message(span_danger("[living_pawn] looks sideways at [harass_target] for a moment, then shakes [living_pawn.p_their()] head and ceases aggression."))
 		finish_action(controller, FALSE)
 		return
 

@@ -1,0 +1,21 @@
+{
+	"sneakers": [
+		{
+			"type": "icon_state",
+			"icon_state": "sneakers_back",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sneakers_front",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "sneakers_wheelys",
+			"blend_mode": "overlay"
+		}
+	]
+}

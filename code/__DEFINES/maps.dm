@@ -26,6 +26,34 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
+/// Distance from edge to move to another z-level
+#define TRANSITIONEDGE 7
+
+// Maploader bounds indices
+/// The maploader index for the maps minimum x
+#define MAP_MINX 1
+/// The maploader index for the maps minimum y
+#define MAP_MINY 2
+/// The maploader index for the maps minimum z
+#define MAP_MINZ 3
+/// The maploader index for the maps maximum x
+#define MAP_MAXX 4
+/// The maploader index for the maps maximum y
+#define MAP_MAXY 5
+/// The maploader index for the maps maximum z
+#define MAP_MAXZ 6
+
+/// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
+#define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
+
+/// List of directories we can load map .json files from
+#define MAP_DIRECTORY_MAPS "_maps"
+#define MAP_DIRECTORY_DATA "data"
+#define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS,MAP_DIRECTORY_DATA)
+
+/// Special map path value for custom adminloaded stations.
+#define CUSTOM_MAP_PATH "custom"
+
 // traits
 // boolean - marks a level as having that property if present
 #define ZTRAIT_CENTCOM "CentCom"
@@ -42,8 +70,16 @@ require only minor tweaks.
 // boolean - weather types that occur on the level
 #define ZTRAIT_SNOWSTORM "Weather_Snowstorm"
 #define ZTRAIT_ASHSTORM "Weather_Ashstorm"
-#define ZTRAIT_ACIDRAIN "Weather_Acidrain"
 #define ZTRAIT_VOIDSTORM "Weather_Voidstorm"
+
+/// boolean - does this z prevent ghosts from observing it
+#define ZTRAIT_SECRET "Secret"
+
+/// boolean - does this z prevent phasing
+#define ZTRAIT_NOPHASE "No Phase"
+
+/// boolean - does this z prevent xray/meson/thermal vision
+#define ZTRAIT_NOXRAY "No X-Ray"
 
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
@@ -68,15 +104,23 @@ require only minor tweaks.
 #define ZTRAIT_BASETURF "Baseturf"
 
 // default trait definitions, used by SSmapping
-#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
+///Z level traits for CentCom
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE, ZTRAIT_NOPHASE = TRUE)
+///Z level traits for Space Station 13
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
+///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
 	ZTRAIT_ASHSTORM = TRUE, \
 	ZTRAIT_LAVA_RUINS = TRUE, \
 	ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
 	ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+///Z level traits for Away Missions
+#define ZTRAITS_AWAY list(ZTRAIT_AWAY = TRUE)
+///Z level traits for Secret Away Missions
+#define ZTRAITS_AWAY_SECRET list(ZTRAIT_AWAY = TRUE, ZTRAIT_SECRET = TRUE, ZTRAIT_NOPHASE = TRUE)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"
@@ -106,7 +150,6 @@ require only minor tweaks.
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
 
-
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"
 #define PERLIN_LAYER_HUMIDITY "perlin_humidity"
@@ -121,3 +164,15 @@ require only minor tweaks.
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
+
+// Bluespace shelter deploy checks for survival capsules
+/// Shelter spot is allowed 
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+/// Shelter spot has turfs that restrict deployment
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+/// Shelter spot has areas that restrict deployment
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+/// Shelter spot has anchored objects that restrict deployment
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+/// Shelter spot is out of bounds from the maps x/y coordinates 
+#define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"

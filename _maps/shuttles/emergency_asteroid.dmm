@@ -5,11 +5,6 @@
 "ac" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
-"ad" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/escape)
 "ae" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -17,7 +12,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ah" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ai" = (
@@ -97,11 +92,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aF" = (
@@ -115,9 +106,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aH" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
-	},
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aI" = (
@@ -145,10 +134,7 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/structure/closet/emcloset,
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 23
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aN" = (
@@ -185,9 +171,7 @@
 /obj/structure/chair/office/light{
 	name = "Captain"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aV" = (
@@ -197,15 +181,8 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aW" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 23
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"aX" = (
-/obj/machinery/status_display/ai,
-/turf/closed/wall/mineral/titanium,
 /area/shuttle/escape)
 "aY" = (
 /obj/structure/chair/comfy/shuttle{
@@ -293,9 +270,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bn" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bp" = (
@@ -327,9 +302,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/structure/mirror{
-	pixel_x = -30
-	},
+/obj/structure/mirror/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bu" = (
@@ -346,19 +319,14 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bx" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "by" = (
@@ -370,14 +338,13 @@
 /area/shuttle/escape)
 "bz" = (
 /obj/machinery/stasis,
+/obj/machinery/vending/wallmed/directional/east{
+	use_power = 0
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bC" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
-	},
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bD" = (
@@ -388,9 +355,7 @@
 /obj/structure/toilet{
 	dir = 1
 	},
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bF" = (
@@ -414,35 +379,34 @@
 /obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
-"bI" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "bJ" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bM" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bN" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bP" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"hJ" = (
+/obj/machinery/status_display/ai/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Id" = (
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Jx" = (
 /turf/open/floor/mineral/titanium/white,
@@ -461,9 +425,9 @@ aa
 ac
 am
 ac
-ad
-ad
-bI
+ah
+ah
+ah
 ac
 am
 ac
@@ -516,7 +480,7 @@ ac
 ac
 "}
 (5,1,1) = {"
-ad
+ah
 ap
 aq
 bJ
@@ -528,7 +492,7 @@ ac
 bN
 bu
 bE
-ad
+ah
 "}
 (6,1,1) = {"
 ae
@@ -546,7 +510,7 @@ ac
 ac
 "}
 (7,1,1) = {"
-ad
+ah
 ar
 aq
 aq
@@ -558,7 +522,7 @@ ac
 Jx
 bu
 bE
-ad
+ah
 "}
 (8,1,1) = {"
 ac
@@ -566,9 +530,9 @@ ac
 ac
 aG
 ac
-aX
+ac
 bg
-bi
+ac
 az
 bu
 az
@@ -581,9 +545,9 @@ ac
 ac
 aH
 at
+hJ
 at
-at
-at
+Id
 at
 at
 ac
@@ -653,7 +617,7 @@ aa
 (14,1,1) = {"
 aa
 aa
-ad
+ah
 aK
 at
 aZ
@@ -661,14 +625,14 @@ ah
 aK
 at
 aZ
-ad
+ah
 aa
 aa
 "}
 (15,1,1) = {"
 aa
 aa
-ad
+ah
 aK
 at
 at
@@ -676,14 +640,14 @@ at
 at
 at
 aZ
-ad
+ah
 aa
 aa
 "}
 (16,1,1) = {"
 aa
 aa
-ad
+ah
 aK
 at
 aZ
@@ -691,7 +655,7 @@ ah
 aK
 at
 aZ
-ad
+ah
 aa
 aa
 "}
@@ -774,13 +738,13 @@ aa
 ac
 ac
 ac
-ad
+ah
 aP
-ad
+ah
 bi
-ad
+ah
 br
-ad
+ah
 ac
 ac
 ac
@@ -807,13 +771,13 @@ aw
 aw
 aw
 aw
-ad
+ah
 Jx
 Jx
 Jx
 Jx
 bG
-ad
+ah
 "}
 (25,1,1) = {"
 ac
@@ -835,11 +799,11 @@ ac
 ac
 ac
 ac
-ad
+ah
 aP
 ac
 bq
-ad
+ah
 JM
 ac
 ac
@@ -852,7 +816,7 @@ ac
 ac
 aQ
 aw
-ad
+ah
 Jx
 bs
 ac
@@ -866,9 +830,9 @@ aa
 aa
 ac
 ac
-ad
+ah
 ac
-ad
+ah
 ac
 ac
 aa

@@ -9,7 +9,7 @@
 	color = "#4F4441"
 	complementary_color = "#414C4F"
 	reagent = /datum/reagent/blob/networked_fibers
-	core_regen_bonus = 5
+	core_regen_bonus = 3
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/spawning_blob, obj/structure/blob/new_blob, turf/chosen_turf, mob/camera/blob/overmind)
 	if(!overmind && new_blob.overmind)

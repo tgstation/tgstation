@@ -1,6 +1,4 @@
 /*
-	output_atoms (list of atoms) The destination(s) for the sounds
-
 	mid_sounds (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end.
 	mid_length (num) The length to wait between playing mid_sounds
 
@@ -15,7 +13,7 @@
 	direct (bool) If true plays directly to provided atoms instead of from them
 */
 /datum/looping_sound
-	var/list/atom/output_atoms
+	var/atom/parent
 	var/mid_sounds
 	var/mid_length
 	///Override for volume of start sound
@@ -34,38 +32,46 @@
 	var/falloff_exponent
 	var/timerid
 	var/falloff_distance
+	var/skip_starting_sounds = FALSE
+	var/loop_started = FALSE
 
-/datum/looping_sound/New(list/_output_atoms=list(), start_immediately=FALSE, _direct=FALSE)
+/datum/looping_sound/New(_parent, start_immediately=FALSE, _direct=FALSE, _skip_starting_sounds = FALSE)
 	if(!mid_sounds)
 		WARNING("A looping sound datum was created without sounds to play.")
 		return
 
-	output_atoms = _output_atoms
+	set_parent(_parent)
 	direct = _direct
+	skip_starting_sounds = _skip_starting_sounds
 
 	if(start_immediately)
 		start()
 
 /datum/looping_sound/Destroy()
-	stop()
-	output_atoms = null
+	stop(TRUE)
 	return ..()
 
-/datum/looping_sound/proc/start(atom/add_thing)
-	if(add_thing)
-		output_atoms |= add_thing
+/datum/looping_sound/proc/start(on_behalf_of)
+	if(on_behalf_of)
+		set_parent(on_behalf_of)
 	if(timerid)
 		return
 	on_start()
 
-/datum/looping_sound/proc/stop(atom/remove_thing)
-	if(remove_thing)
-		output_atoms -= remove_thing
+/datum/looping_sound/proc/stop(null_parent = FALSE)
+	if(null_parent)
+		set_parent(null)
 	if(!timerid)
 		return
 	on_stop()
-	deltimer(timerid)
+	deltimer(timerid, SSsound_loops)
 	timerid = null
+	loop_started = FALSE
+
+/datum/looping_sound/proc/start_sound_loop()
+	loop_started = TRUE
+	sound_loop()
+	timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME, SSsound_loops)
 
 /datum/looping_sound/proc/sound_loop(starttime)
 	if(max_loops && world.time >= starttime + mid_length * max_loops)
@@ -73,34 +79,42 @@
 		return
 	if(!chance || prob(chance))
 		play(get_sound(starttime))
-	if(!timerid)
-		timerid = addtimer(CALLBACK(src, .proc/sound_loop, world.time), mid_length, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP)
 
 /datum/looping_sound/proc/play(soundfile, volume_override)
-	var/list/atoms_cache = output_atoms
 	var/sound/S = sound(soundfile)
 	if(direct)
 		S.channel = SSsounds.random_available_channel()
 		S.volume = volume_override || volume //Use volume as fallback if theres no override
-	for(var/i in 1 to atoms_cache.len)
-		var/atom/thing = atoms_cache[i]
-		if(direct)
-			SEND_SOUND(thing, S)
-		else
-			playsound(thing, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
+		SEND_SOUND(parent, S)
+	else
+		playsound(parent, S, volume, vary, extra_range, falloff_exponent = falloff_exponent, falloff_distance = falloff_distance)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds
 	while(!isfile(.) && !isnull(.))
-		. = pickweight(.)
+		. = pick_weight(.)
 
 /datum/looping_sound/proc/on_start()
 	var/start_wait = 0
-	if(start_sound)
+	if(start_sound && !skip_starting_sounds)
 		play(start_sound, start_volume)
 		start_wait = start_length
-	addtimer(CALLBACK(src, .proc/sound_loop), start_wait, TIMER_CLIENT_TIME)
+	timerid = addtimer(CALLBACK(src, .proc/start_sound_loop), start_wait, TIMER_CLIENT_TIME | TIMER_DELETE_ME | TIMER_STOPPABLE, SSsound_loops)
 
 /datum/looping_sound/proc/on_stop()
-	if(end_sound)
+	if(end_sound && loop_started)
 		play(end_sound, end_volume)
+
+/datum/looping_sound/proc/set_parent(new_parent)
+	if(parent)
+		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	parent = new_parent
+	if(parent)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+
+/datum/looping_sound/proc/is_active()
+	return !!timerid
+
+/datum/looping_sound/proc/handle_parent_del(datum/source)
+	SIGNAL_HANDLER
+	set_parent(null)

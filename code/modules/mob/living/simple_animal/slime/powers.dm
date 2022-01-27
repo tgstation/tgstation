@@ -30,15 +30,16 @@
 		return FALSE
 
 	var/list/choices = list()
-	for(var/mob/living/C in view(1,src))
-		if(C!=src && Adjacent(C))
-			choices += C
+	for(var/mob/living/nearby_mob in view(1,src))
+		if(nearby_mob != src && Adjacent(nearby_mob))
+			choices += nearby_mob
 
-	var/mob/living/M = input(src,"Who do you wish to feed on?") in null|sortNames(choices)
-	if(!M)
+	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
+	if(isnull(choice))
 		return FALSE
-	if(CanFeedon(M))
-		Feedon(M)
+	var/mob/living/victim = choice
+	if(CanFeedon(victim))
+		Feedon(victim)
 		return TRUE
 	return FALSE
 
@@ -76,31 +77,31 @@
 	if(isslime(M))
 		if(silent)
 			return FALSE
-		to_chat(src, "<span class='warning'><i>I can't latch onto another slime...</i></span>")
+		to_chat(src, span_warning("<i>I can't latch onto another slime...</i>"))
 		return FALSE
 
 	if(docile)
 		if(silent)
 			return FALSE
-		to_chat(src, "<span class='notice'><i>I'm not hungry anymore...</i></span>")
+		to_chat(src, span_notice("<i>I'm not hungry anymore...</i>"))
 		return FALSE
 
 	if(stat)
 		if(silent)
 			return FALSE
-		to_chat(src, "<span class='warning'><i>I must be conscious to do this...</i></span>")
+		to_chat(src, span_warning("<i>I must be conscious to do this...</i>"))
 		return FALSE
 
 	if(M.stat == DEAD)
 		if(silent)
 			return FALSE
-		to_chat(src, "<span class='warning'><i>This subject does not have a strong enough life energy...</i></span>")
+		to_chat(src, span_warning("<i>This subject does not have a strong enough life energy...</i>"))
 		return FALSE
 
 	if(locate(/mob/living/simple_animal/slime) in M.buckled_mobs)
 		if(silent)
 			return FALSE
-		to_chat(src, "<span class='warning'><i>Another slime is already feeding on this subject...</i></span>")
+		to_chat(src, span_warning("<i>Another slime is already feeding on this subject...</i>"))
 		return FALSE
 	return TRUE
 
@@ -108,10 +109,10 @@
 	M.unbuckle_all_mobs(force=1) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in CanFeedon())
 	if(M.buckle_mob(src, force=TRUE))
 		layer = M.layer+0.01 //appear above the target mob
-		M.visible_message("<span class='danger'>[name] latches onto [M]!</span>", \
-						"<span class='userdanger'>[name] latches onto [M]!</span>")
+		M.visible_message(span_danger("[name] latches onto [M]!"), \
+						span_userdanger("[name] latches onto [M]!"))
 	else
-		to_chat(src, "<span class='warning'><i>I have failed to latch onto the subject!</i></span>")
+		to_chat(src, span_warning("<i>I have failed to latch onto the subject!</i>"))
 
 /mob/living/simple_animal/slime/proc/Feedstop(silent = FALSE, living=1)
 	if(buckled)
@@ -121,8 +122,8 @@
 			"I am not satisified", "I can not feed from this subject", \
 			"I do not feel nourished", "This subject is not food")]!</span>")
 		if(!silent)
-			visible_message("<span class='warning'>[src] lets go of [buckled]!</span>", \
-							"<span class='notice'><i>I stopped feeding.</i></span>")
+			visible_message(span_warning("[src] lets go of [buckled]!"), \
+							span_notice("<i>I stopped feeding.</i>"))
 		layer = initial(layer)
 		buckled.unbuckle_mob(src,force=TRUE)
 
@@ -175,10 +176,9 @@
 			var/list/babies = list()
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
-			var/datum/component/nanites/original_nanites = GetComponent(/datum/component/nanites)
 			var/turf/drop_loc = drop_location()
 
-			for(var/i=1,i<=4,i++)
+			for(var/i in 1 to 4)
 				var/child_colour
 				if(mutation_chance >= 100)
 					child_colour = "rainbow"
@@ -193,14 +193,10 @@
 				M.powerlevel = new_powerlevel
 				if(i != 1)
 					step_away(M,src)
-				M.Friends = Friends.Copy()
+				M.set_friends(Friends)
 				babies += M
 				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
-
-				if(original_nanites)
-					M.AddComponent(/datum/component/nanites, original_nanites.nanite_volume*0.25)
-					SEND_SIGNAL(M, COMSIG_NANITE_SYNC, original_nanites, TRUE, TRUE) //The trues are to copy activation as well
 
 			var/mob/living/simple_animal/slime/new_slime = pick(babies)
 			new_slime.set_combat_mode(TRUE)

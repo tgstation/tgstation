@@ -4,13 +4,14 @@
 	name = "bottle"
 	desc = "A small bottle."
 	icon_state = "bottle"
+	fill_icon_state = "bottle"
 	inhand_icon_state = "atoxinbottle"
 	worn_icon_state = "bottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
-	fill_icon_thresholds = list(0, 10, 30, 50, 70)
+	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 
-/obj/item/reagent_containers/glass/bottle/Initialize()
+/obj/item/reagent_containers/glass/bottle/Initialize(mapload)
 	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
@@ -121,7 +122,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	var/extra_reagent = null
 
-/obj/item/reagent_containers/glass/bottle/traitor/Initialize()
+/obj/item/reagent_containers/glass/bottle/traitor/Initialize(mapload)
 	. = ..()
 	extra_reagent = pick(/datum/reagent/toxin/polonium, /datum/reagent/toxin/histamine, /datum/reagent/toxin/formaldehyde, /datum/reagent/toxin/venom, /datum/reagent/toxin/fentanyl, /datum/reagent/toxin/cyanide)
 	reagents.add_reagent(extra_reagent, 3)
@@ -211,7 +212,7 @@
 	name = "Buffer bottle"
 	desc = "A small bottle of chemical buffer."
 
-/obj/item/reagent_containers/glass/bottle/random_buffer/Initialize()
+/obj/item/reagent_containers/glass/bottle/random_buffer/Initialize(mapload)
 	. = ..()
 	if(prob(50))
 		name = "Acidic buffer bottle"
@@ -419,3 +420,35 @@
 /obj/item/reagent_containers/glass/bottle/thermite
 	name = "thermite bottle"
 	list_reagents = list(/datum/reagent/thermite = 30)
+
+// Bottles for mail goodies.
+
+/obj/item/reagent_containers/glass/bottle/clownstears
+	name = "bottle of distilled clown misery"
+	desc = "A small bottle. Contains a mythical liquid used by sublime bartenders; made from the unhappiness of clowns."
+	list_reagents = list(/datum/reagent/consumable/clownstears = 30)
+
+/obj/item/reagent_containers/glass/bottle/saltpetre
+	name = "saltpetre bottle"
+	desc = "A small bottle. Contains saltpetre."
+	list_reagents = list(/datum/reagent/saltpetre = 30)
+
+/obj/item/reagent_containers/glass/bottle/flash_powder
+	name = "flash powder bottle"
+	desc = "A small bottle. Contains flash powder."
+	list_reagents = list(/datum/reagent/flash_powder = 30)
+
+/obj/item/reagent_containers/glass/bottle/exotic_stabilizer
+	name = "exotic stabilizer bottle"
+	desc = "A small bottle. Contains exotic stabilizer."
+	list_reagents = list(/datum/reagent/exotic_stabilizer = 30)
+
+/obj/item/reagent_containers/glass/bottle/leadacetate
+	name = "lead acetate bottle"
+	desc = "A small bottle. Contains lead acetate."
+	list_reagents = list(/datum/reagent/toxin/leadacetate = 30)
+
+/obj/item/reagent_containers/glass/bottle/caramel
+	name = "bottle of caramel"
+	desc = "A bottle containing caramalized sugar, also known as caramel. Do not lick."
+	list_reagents = list(/datum/reagent/consumable/caramel = 30)

@@ -4,6 +4,7 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
+	visual = FALSE
 	var/causes_damage = TRUE
 	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 30
@@ -13,7 +14,7 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/Initialize()
+/obj/item/organ/zombie_infection/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
@@ -30,7 +31,7 @@
 /obj/item/organ/zombie_infection/Remove(mob/living/carbon/M, special = 0)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	if(iszombie(M) && old_species)
+	if(iszombie(M) && old_species && !QDELETED(M))
 		M.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)
@@ -50,7 +51,7 @@
 	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
 		owner.adjustToxLoss(0.5 * delta_time)
 		if(DT_PROB(5, delta_time))
-			to_chat(owner, "<span class='danger'>You feel sick...</span>")
+			to_chat(owner, span_danger("You feel sick..."))
 	if(timer_id)
 		return
 	if(owner.suiciding)
@@ -88,11 +89,11 @@
 		return
 
 	owner.grab_ghost()
-	owner.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
+	owner.visible_message(span_danger("[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!"), span_alien("You HUNGER!"))
 	playsound(owner.loc, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 	owner.do_jitter_animation(living_transformation_time)
 	owner.Stun(living_transformation_time)
-	to_chat(owner, "<span class='alertalien'>You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>")
+	to_chat(owner, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence."))
 
 /obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE

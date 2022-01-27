@@ -15,8 +15,8 @@
 	name = "holy driver"
 	id = MASSDRIVER_CHAPEL
 
-/obj/machinery/mass_driver/toxins
-	id = MASSDRIVER_TOXINS
+/obj/machinery/mass_driver/ordnance
+	id = MASSDRIVER_ORDNANCE
 
 /obj/machinery/mass_driver/trash
 	id = MASSDRIVER_DISPOSALS
@@ -45,7 +45,7 @@
 				continue
 			O_limit++
 			if(O_limit >= 20)
-				audible_message("<span class='notice'>[src] lets out a screech, it doesn't seem to be able to handle the load.</span>")
+				audible_message(span_notice("[src] lets out a screech, it doesn't seem to be able to handle the load."))
 				break
 			use_power(500)
 			O.throw_at(target, drive_range * power, power)

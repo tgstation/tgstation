@@ -4,7 +4,7 @@
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "dark_wizard"
 	icon_living = "dark_wizard"
-	move_to_delay = 10
+	move_to_delay = 5
 	projectiletype = /obj/projectile/temp/earth_bolt
 	projectilesound = 'sound/magic/ethereal_enter.ogg'
 	ranged = TRUE
@@ -26,10 +26,10 @@
 	sentience_type = SENTIENCE_HUMANOID
 	faction = list(ROLE_WIZARD)
 	footstep_type = FOOTSTEP_MOB_SHOE
-	weather_immunities = list("lava","ash")
+	weather_immunities = list(TRAIT_LAVA_IMMUNE, TRAIT_ASHSTORM_IMMUNE)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(/obj/effect/decal/remains/human)
 	del_on_death = TRUE
 

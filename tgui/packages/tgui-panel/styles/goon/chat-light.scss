@@ -329,7 +329,7 @@ em {
   font-weight: bold;
 }
 
-.say, .emote, .infoplain {
+.say, .emote, .infoplain, .oocplain, .warningplain {
 }
 
 .deadsay {
@@ -385,6 +385,10 @@ em {
 
 .syndradio {
   color: #6d3f40;
+}
+
+.gangradio {
+  color: #ac2ea1;
 }
 
 .centcomradio {

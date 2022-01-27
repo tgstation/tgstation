@@ -3,6 +3,7 @@
 	var/expire_time
 	var/required_clean_types = CLEAN_TYPE_DISEASE
 
+
 /datum/component/infective/Initialize(list/datum/disease/_diseases, expire_in)
 	if(islist(_diseases))
 		diseases = _diseases
@@ -14,10 +15,15 @@
 
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	var/static/list/disease_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
+	)
+	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
+
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/try_infect_collide)
-	RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/try_infect_crossed)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT_ZONE, .proc/try_infect_impact_zone)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK_ZONE, .proc/try_infect_attack_zone)
@@ -83,6 +89,7 @@
 	try_infect(target, hit_zone)
 
 /datum/component/infective/proc/try_infect_attack(datum/source, mob/living/target, mob/living/user)
+	SIGNAL_HANDLER
 	if(!iscarbon(target)) //this case will be handled by try_infect_attack_zone
 		try_infect(target)
 	try_infect(user, BODY_ZONE_L_ARM)
@@ -103,11 +110,11 @@
 		var/obj/item/I = parent
 		I.permeability_coefficient = old_permeability
 
-/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/M)
+/datum/component/infective/proc/try_infect_crossed(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if(isliving(M))
-		try_infect(M, BODY_ZONE_PRECISE_L_FOOT)
+	if(isliving(arrived))
+		try_infect(arrived, BODY_ZONE_PRECISE_L_FOOT)
 
 /datum/component/infective/proc/try_infect_streak(datum/source, list/directions, list/output_diseases)
 	SIGNAL_HANDLER

@@ -15,7 +15,7 @@
 	var/infinite = FALSE
 	var/start_lit = FALSE
 
-/obj/item/candle/Initialize()
+/obj/item/candle/Initialize(mapload)
 	. = ..()
 	if(start_lit)
 		light()
@@ -73,7 +73,7 @@
 
 /obj/item/candle/attack_self(mob/user)
 	if(put_out_candle())
-		user.visible_message("<span class='notice'>[user] snuffs [src].</span>")
+		user.visible_message(span_notice("[user] snuffs [src]."))
 
 /obj/item/candle/infinite
 	infinite = TRUE

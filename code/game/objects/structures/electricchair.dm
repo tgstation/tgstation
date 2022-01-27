@@ -6,7 +6,7 @@
 	var/last_time = 1
 	item_chair = null
 
-/obj/structure/chair/e_chair/Initialize()
+/obj/structure/chair/e_chair/Initialize(mapload)
 	. = ..()
 	var/obj/item/assembly/shock_kit/stored_kit = new(contents)
 	var/image/export_to_component = image('icons/obj/chairs.dmi', loc, "echair_over")

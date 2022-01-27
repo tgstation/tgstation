@@ -6,7 +6,7 @@
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, RAD = 100, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
 	var/password = "Swordfish"
@@ -20,7 +20,7 @@
 /obj/machinery/door/password/Initialize(mapload)
 	. = ..()
 	if(voice_activated)
-		flags_1 |= HEAR_1
+		become_hearing_sensitive()
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
@@ -32,12 +32,12 @@
 /obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
-/obj/machinery/door/password/try_to_activate_door(mob/user)
+/obj/machinery/door/password/try_to_activate_door(mob/user, access_bypass = FALSE)
 	add_fingerprint(user)
 	if(operating)
 		return
 	if(density)
-		if(ask_for_pass(user))
+		if(access_bypass || ask_for_pass(user))
 			open()
 		else
 			do_animate("deny")
@@ -59,7 +59,7 @@
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
-	var/guess = stripped_input(user,"Enter the password:", "Password", "")
+	var/guess = tgui_input_text(user, "Enter the password", "Password")
 	if(guess == password)
 		return TRUE
 	return FALSE

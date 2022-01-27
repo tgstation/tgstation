@@ -1,38 +1,44 @@
-/*****************************Dice Bags********************************/
-
-/obj/item/storage/pill_bottle/dice
+///holding bag for dice
+/obj/item/storage/dice
 	name = "bag of dice"
 	desc = "Contains all the luck you'll ever need."
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
-	var/list/special_die = list(
-				/obj/item/dice/d1,
-				/obj/item/dice/d2,
-				/obj/item/dice/fudge,
-				/obj/item/dice/d6/space,
-				/obj/item/dice/d00,
-				/obj/item/dice/eightbd20,
-				/obj/item/dice/fourdd6,
-				/obj/item/dice/d100
-				)
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/storage/pill_bottle/dice/PopulateContents()
+/obj/item/storage/dice/Initialize(mapload)
+	. = ..()
+	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	storage.allow_quick_gather = TRUE
+	storage.click_gather = TRUE
+	storage.set_holdable(list(/obj/item/dice))
+
+/obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d8(src)
 	new /obj/item/dice/d10(src)
 	new /obj/item/dice/d12(src)
 	new /obj/item/dice/d20(src)
-	var/picked = pick(special_die)
+	var/picked = pick(list(
+		/obj/item/dice/d1,
+		/obj/item/dice/d2,
+		/obj/item/dice/fudge,
+		/obj/item/dice/d6/space,
+		/obj/item/dice/d00,
+		/obj/item/dice/eightbd20,
+		/obj/item/dice/fourdd6,
+		/obj/item/dice/d100,
+	))
 	new picked(src)
 
-/obj/item/storage/pill_bottle/dice/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+/obj/item/storage/dice/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
-/obj/item/storage/pill_bottle/dice/hazard
+/obj/item/storage/dice/hazard
 
-/obj/item/storage/pill_bottle/dice/hazard/PopulateContents()
+/obj/item/storage/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
@@ -42,9 +48,8 @@
 		else
 			new /obj/item/dice/d6(src)
 
-/*****************************Dice********************************/
-
-/obj/item/dice //depreciated d6, use /obj/item/dice/d6 if you actually want a d6
+///this is a prototype for dice, for a real d6 use "/obj/item/dice/d6"
+/obj/item/dice
 	name = "die"
 	desc = "A die with six sides. Basic and serviceable."
 	icon = 'icons/obj/dice.dmi'
@@ -58,14 +63,14 @@
 	var/rigged = DICE_NOT_RIGGED
 	var/rigged_value
 
-/obj/item/dice/Initialize()
+/obj/item/dice/Initialize(mapload)
 	. = ..()
 	if(!result)
 		result = roll(sides)
 	update_appearance()
 
 /obj/item/dice/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
 /obj/item/dice/d1
@@ -89,7 +94,7 @@
 /obj/item/dice/d4/Initialize(mapload)
 	. = ..()
 	// 1d4 damage
-	AddElement(/datum/element/caltrop, min_damage = 1, max_damage = 4)
+	AddComponent(/datum/component/caltrop, min_damage = 1, max_damage = 4)
 
 /obj/item/dice/d6
 	name = "d6"
@@ -105,7 +110,7 @@
 	desc = "A die with six sides. 6 TIMES 255 TIMES 255 TILE TOTAL EXISTENCE, SQUARE YOUR MIND OF EDUCATED STUPID: 2 DOES NOT EXIST."
 	icon_state = "spaced6"
 
-/obj/item/dice/d6/space/Initialize()
+/obj/item/dice/d6/space/Initialize(mapload)
 	. = ..()
 	if(prob(10))
 		name = "spess cube"
@@ -184,8 +189,10 @@
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	diceroll(thrownby)
-	. = ..()
+	var/mob/thrown_by = thrownby?.resolve()
+	if(thrown_by)
+		diceroll(thrown_by)
+	return ..()
 
 /obj/item/dice/proc/diceroll(mob/user)
 	result = roll(sides)
@@ -209,11 +216,11 @@
 	if(special_faces.len == sides)
 		result = special_faces[result]
 	if(user != null) //Dice was rolled in someone's hand
-		user.visible_message("<span class='notice'>[user] throws [src]. It lands on [result]. [comment]</span>", \
-			"<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
-			"<span class='hear'>You hear [src] rolling, it sounds like a [fake_result].</span>")
+		user.visible_message(span_notice("[user] throws [src]. It lands on [result]. [comment]"), \
+			span_notice("You throw [src]. It lands on [result]. [comment]"), \
+			span_hear("You hear [src] rolling, it sounds like a [fake_result]."))
 	else if(!src.throwing) //Dice was thrown and is coming to rest
-		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
+		visible_message(span_notice("[src] rolls to a stop, landing on [result]. [comment]"))
 
 /obj/item/dice/update_overlays()
 	. = ..()

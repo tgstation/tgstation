@@ -10,7 +10,7 @@
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
 	var/variable_charges = TRUE
 
-/obj/item/gun/magic/wand/Initialize()
+/obj/item/gun/magic/wand/Initialize(mapload)
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
 		if(prob(33))
 			max_charges = CEILING(max_charges / 3, 1)
@@ -39,7 +39,7 @@
 		if(no_den_usage)
 			var/area/A = get_area(user)
 			if(istype(A, /area/wizard_station))
-				to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
+				to_chat(user, span_warning("You know better than to violate the security of The Den, best wait until you leave to use [src]."))
 				return
 			else
 				no_den_usage = 0
@@ -50,7 +50,7 @@
 
 
 /obj/item/gun/magic/wand/proc/zap_self(mob/living/user)
-	user.visible_message("<span class='danger'>[user] zaps [user.p_them()]self with [src].</span>")
+	user.visible_message(span_danger("[user] zaps [user.p_them()]self with [src]."))
 	playsound(user, fire_sound, 50, TRUE)
 	user.log_message("zapped [user.p_them()]self with a <b>[src]</b>", LOG_ATTACK)
 
@@ -73,13 +73,13 @@
 	..()
 	charges--
 	if(user.anti_magic_check())
-		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		user.visible_message(span_warning("[src] has no effect on [user]!"))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 			user.revive(full_heal = TRUE, admin_revive = TRUE)
-			to_chat(user, "<span class='notice'>You feel great!</span>")
+			to_chat(user, span_notice("You feel great!"))
 			return
 	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
@@ -112,7 +112,7 @@
 	..()
 	charges--
 	if(user.anti_magic_check())
-		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		user.visible_message(span_warning("[src] has no effect on [user]!"))
 		return
 	if(isliving(user))
 		var/mob/living/L = user
@@ -123,7 +123,7 @@
 			user.death(0)
 			return
 	user.revive(full_heal = TRUE, admin_revive = TRUE)
-	to_chat(user, "<span class='notice'>You feel great!</span>")
+	to_chat(user, span_notice("You feel great!"))
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
 	desc = "Is it possible for something to be even more powerful than regular magic? This wand is."
@@ -149,7 +149,7 @@
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
 
-	wabbajack(user)
+	user.wabbajack()
 	charges--
 
 /////////////////////////////////////
@@ -221,7 +221,7 @@
 	no_den_usage = 1
 
 /obj/item/gun/magic/wand/door/zap_self(mob/living/user)
-	to_chat(user, "<span class='notice'>You feel vaguely more open with your feelings.</span>")
+	to_chat(user, span_notice("You feel vaguely more open with your feelings."))
 	charges--
 	..()
 
@@ -241,7 +241,7 @@
 
 /obj/item/gun/magic/wand/fireball/zap_self(mob/living/user)
 	..()
-	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
+	explosion(user, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src)
 	charges--
 
 /////////////////////////////////////
@@ -252,5 +252,3 @@
 	name = "wand of nothing"
 	desc = "It's not just a stick, it's a MAGIC stick?"
 	ammo_type = /obj/item/ammo_casing/magic/nothing
-
-

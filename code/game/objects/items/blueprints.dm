@@ -36,7 +36,7 @@
 			return
 		var/area/A = get_area(usr)
 		if(A.area_flags & NOTELEPORT)
-			to_chat(usr, "<span class='warning'>You cannot edit restricted areas.</span>")
+			to_chat(usr, span_warning("You cannot edit restricted areas."))
 			return
 		in_use = TRUE
 		create_area(usr)
@@ -106,27 +106,30 @@
 	if(href_list["view_wireset"])
 		legend = href_list["view_wireset"];
 	if(href_list["view_blueprints"])
-		set_viewer(usr, "<span class='notice'>You flip the blueprints over to view the complex information diagram.</span>")
+		set_viewer(usr, span_notice("You flip the blueprints over to view the complex information diagram."))
 	if(href_list["hide_blueprints"])
-		clear_viewer(usr,"<span class='notice'>You flip the blueprints over to view the simple information diagram.</span>")
+		clear_viewer(usr,span_notice("You flip the blueprints over to view the simple information diagram."))
 	if(href_list["refresh"])
 		clear_viewer(usr)
 		set_viewer(usr)
 
 	attack_self(usr) //this is not the proper way, but neither of the old update procs work! it's too ancient and I'm tired shush.
 
-/obj/item/areaeditor/blueprints/proc/get_images(turf/T, viewsize)
+/obj/item/areaeditor/blueprints/proc/get_images(turf/central_turf, viewsize)
 	. = list()
-	for(var/turf/TT in RANGE_TURFS(viewsize, T))
-		if(TT.blueprint_data)
-			. += TT.blueprint_data
+	var/list/dimensions = getviewsize(viewsize)
+	var/horizontal_radius = dimensions[1] / 2
+	var/vertical_radius = dimensions[2] / 2
+	for(var/turf/nearby_turf as anything in RECT_TURFS(horizontal_radius, vertical_radius, central_turf))
+		if(nearby_turf.blueprint_data)
+			. += nearby_turf.blueprint_data
 
 /obj/item/areaeditor/blueprints/proc/set_viewer(mob/user, message = "")
 	if(user?.client)
 		if(viewing)
 			clear_viewer()
 		viewing = user.client
-		showing = get_images(get_turf(user), viewing.view)
+		showing = get_images(get_turf(viewing.eye || user), viewing.view)
 		viewing.images |= showing
 		if(message)
 			to_chat(user, message)
@@ -187,16 +190,16 @@
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area(usr)
 	var/prevname = "[A.name]"
-	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
+	var/str = tgui_input_text(usr, "New area name", "Area Creation", max_length = MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
-		to_chat(usr, "<span class='warning'>The given name is too long. The area's name is unchanged.</span>")
+		to_chat(usr, span_warning("The given name is too long. The area's name is unchanged."))
 		return
 
 	rename_area(A, str)
 
-	to_chat(usr, "<span class='notice'>You rename the '[prevname]' to '[str]'.</span>")
+	to_chat(usr, span_notice("You rename the '[prevname]' to '[str]'."))
 	log_game("[key_name(usr)] has renamed [prevname] to [str]")
 	A.update_areasize()
 	interact()

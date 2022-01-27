@@ -8,7 +8,6 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
@@ -36,8 +35,9 @@
 	. = ..()
 	if(starting_tape_type)
 		mytape = new starting_tape_type(src)
-	soundloop = new(list(src))
+	soundloop = new(src)
 	update_appearance()
+	become_hearing_sensitive()
 
 /obj/item/taperecorder/Destroy()
 	QDEL_NULL(soundloop)
@@ -47,18 +47,18 @@
 /obj/item/taperecorder/proc/readout()
 	if(mytape)
 		if(playing)
-			return "<span class='notice'><b>PLAYING</b></span>"
+			return span_notice("<b>PLAYING</b>")
 		else
 			var/time = mytape.used_capacity / 10 //deciseconds / 10 = seconds
 			var/mins = round(time / 60)
 			var/secs = time - mins * 60
-			return "<span class='notice'><b>[mins]</b>m <b>[secs]</b>s</span>"
-	return "<span class='notice'><b>NO TAPE INSERTED</b></span>"
+			return span_notice("<b>[mins]</b>m <b>[secs]</b>s")
+	return span_notice("<b>NO TAPE INSERTED</b>")
 
 /obj/item/taperecorder/examine(mob/user)
 	. = ..()
 	if(in_range(src, user) || isobserver(user))
-		. += "<span class='notice'>The wire panel is [open_panel ? "opened" : "closed"]. The display reads:</span>"
+		. += span_notice("The wire panel is [open_panel ? "opened" : "closed"]. The display reads:")
 		. += "[readout()]"
 
 /obj/item/taperecorder/AltClick(mob/user)
@@ -91,7 +91,7 @@
 		if(!user.transferItemToLoc(I,src))
 			return
 		mytape = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		to_chat(user, span_notice("You insert [I] into [src]."))
 		playsound(src, 'sound/items/taperecorder/taperecorder_close.ogg', 50, FALSE)
 		update_appearance()
 
@@ -99,7 +99,7 @@
 /obj/item/taperecorder/proc/eject(mob/user)
 	if(mytape)
 		playsound(src, 'sound/items/taperecorder/taperecorder_open.ogg', 50, FALSE)
-		to_chat(user, "<span class='notice'>You remove [mytape] from [src].</span>")
+		to_chat(user, span_notice("You remove [mytape] from [src]."))
 		stop()
 		user.put_in_hands(mytape)
 		mytape = null
@@ -239,7 +239,7 @@
 		if(mytape.storedinfo.len < i)
 			say("End of recording.")
 			break
-		say("[mytape.storedinfo[i]]")
+		say("[mytape.storedinfo[i]]", sanitize=FALSE)//We want to display this properly, don't double encode
 		if(mytape.storedinfo.len < i + 1)
 			playsleepseconds = 1
 			sleep(1 SECONDS)
@@ -256,10 +256,10 @@
 
 /obj/item/taperecorder/attack_self(mob/user)
 	if(!mytape)
-		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+		to_chat(user, span_notice("\The [src] is empty."))
 		return
 	if(mytape.unspooled)
-		to_chat(user, "<span class='warning'>\The tape inside \the [src] is broken!</span>")
+		to_chat(user, span_warning("\The tape inside \the [src] is broken!"))
 		return
 
 	update_available_icons()
@@ -290,7 +290,7 @@
 	if(!mytape)
 		return
 	if(!canprint)
-		to_chat(usr, "<span class='warning'>The recorder can't print that fast!</span>")
+		to_chat(usr, span_warning("The recorder can't print that fast!"))
 		return
 	if(recording || playing)
 		return
@@ -299,7 +299,7 @@
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
+	for(var/i in 1 to mytape.storedinfo.len)
 		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
 	var/tapename = mytape.name
@@ -350,7 +350,7 @@
 	unspool()
 	..()
 
-/obj/item/tape/Initialize()
+/obj/item/tape/Initialize(mapload)
 	. = ..()
 	initial_icon_state = icon_state //random tapes will set this after choosing their icon
 
@@ -380,13 +380,13 @@
 				if(loc != user)
 					return
 				tapeflip()
-				to_chat(user, "<span class='notice'>You turn \the [src] over.</span>")
+				to_chat(user, span_notice("You turn \the [src] over."))
 				playsound(src, 'sound/items/taperecorder/tape_flip.ogg', 70, FALSE)
 			if("Unwind tape")
 				if(loc != user)
 					return
 				unspool()
-				to_chat(user, "<span class='warning'>You pull out all the tape!</span>")
+				to_chat(user, span_warning("You pull out all the tape!"))
 
 /obj/item/tape/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(prob(50))
@@ -422,18 +422,19 @@
 	else if(icon_state == "[initial_icon_state]_reverse") //so flipping doesn't overwrite an unexpected icon_state (e.g. an admin's)
 		icon_state = initial_icon_state
 
-/obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(unspooled && (I.tool_behaviour == TOOL_SCREWDRIVER))
-		to_chat(user, "<span class='notice'>You start winding the tape back in...</span>")
-		if(I.use_tool(src, user, 120))
-			to_chat(user, "<span class='notice'>You wind the tape back in.</span>")
-			respool()
+/obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!unspooled)
+		return FALSE
+	to_chat(user, span_notice("You start winding the tape back in..."))
+	if(tool.use_tool(src, user, 120))
+		to_chat(user, span_notice("You wind the tape back in."))
+		respool()
 
 //Random colour tapes
 /obj/item/tape/random
 	icon_state = "random_tape"
 
-/obj/item/tape/random/Initialize()
+/obj/item/tape/random/Initialize(mapload)
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple", "greyscale")]"
 	. = ..()
 

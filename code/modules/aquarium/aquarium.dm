@@ -40,7 +40,7 @@
 	var/alive_fish = 0
 	var/dead_fish = 0
 
-/obj/structure/aquarium/Initialize()
+/obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
 	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
@@ -90,7 +90,7 @@
 
 /obj/structure/aquarium/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to [panel_open ? "close" : "open"] the control panel.</span>"
+	. += span_notice("Alt-click to [panel_open ? "close" : "open"] the control panel.")
 
 /obj/structure/aquarium/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -107,13 +107,13 @@
 		var/obj/item/stack/sheet/glass/glass = I
 		if(istype(glass))
 			if(glass.get_amount() < 2)
-				to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
+				to_chat(user, span_warning("You need two glass sheets to fix the case!"))
 				return
-			to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+			to_chat(user, span_notice("You start fixing [src]..."))
 			if(do_after(user, 2 SECONDS, target = src))
 				glass.use(2)
 				broken = FALSE
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
 			return TRUE
 	else
@@ -132,7 +132,7 @@
 /obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 	if(istype(thing, /obj/item/fish_feed))
-		to_chat(user,"<span class='notice'>You feed the fish.</span>")
+		to_chat(user,span_notice("You feed the fish."))
 	return NONE
 
 /obj/structure/aquarium/interact(mob/user)
@@ -152,22 +152,22 @@
 	if(user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
 		if(living_pulled.buckled || living_pulled.has_buckled_mobs())
-			to_chat(user, "<span class='warning'>[living_pulled] is attached to something!</span>")
+			to_chat(user, span_warning("[living_pulled] is attached to something!"))
 			return
-		user.visible_message("<span class='danger'>[user] starts to put [living_pulled] into [src]!</span>")
+		user.visible_message(span_danger("[user] starts to put [living_pulled] into [src]!"))
 		if(do_after(user, 10 SECONDS, target = src))
-			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled  || living_pulled.has_buckled_mobs())
+			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled || living_pulled.has_buckled_mobs())
 				return
 			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
 			if(content_component || content_component.is_ready_to_insert(src))
 				return
-			user.visible_message("<span class='danger'>[user] stuffs [living_pulled] into [src]!</span>")
+			user.visible_message(span_danger("[user] stuffs [living_pulled] into [src]!"))
 			living_pulled.forceMove(src)
 			update_appearance()
 
 ///Apply mood bonus depending on aquarium status
 /obj/structure/aquarium/proc/admire(mob/user)
-	to_chat(user,"<span class='notice'>You take a moment to watch [src].</span>")
+	to_chat(user,span_notice("You take a moment to watch [src]."))
 	if(do_after(user, 5 SECONDS, target = src))
 		//Check if there are live fish - good mood
 		//All fish dead - bad mood.
@@ -221,7 +221,7 @@
 					user.put_in_hands(inside)
 				else
 					inside.forceMove(get_turf(src))
-				to_chat(user,"<span class='notice'>You take out [inside] from [src].</span>")
+				to_chat(user,span_notice("You take out [inside] from [src]."))
 
 /obj/structure/aquarium/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -230,7 +230,7 @@
 		ui = new(user, src, "Aquarium", name)
 		ui.open()
 
-/obj/structure/aquarium/obj_break(damage_flag)
+/obj/structure/aquarium/atom_break(damage_flag)
 	. = ..()
 	if(!broken)
 		aquarium_smash()
@@ -249,7 +249,7 @@
 	if(fluid_type != AQUARIUM_FLUID_AIR)
 		var/datum/reagents/reagent_splash = new()
 		reagent_splash.add_reagent(/datum/reagent/water, 30)
-		chem_splash(droploc, 3, list(reagent_splash))
+		chem_splash(droploc, null, 3, list(reagent_splash))
 	update_appearance()
 
 #undef AQUARIUM_LAYER_STEP

@@ -15,7 +15,8 @@
 	program_icon = "eye"
 
 	var/list/network = list("ss13")
-	var/obj/machinery/camera/active_camera
+	/// Weakref to the active camera
+	var/datum/weakref/camera_ref
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
@@ -43,9 +44,11 @@
 	cam_screen.del_on_map_removal = FALSE
 	cam_screen.screen_loc = "[map_name]:1,1"
 	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master))
-		var/atom/movable/screen/instance = new plane()
+	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
+		var/atom/movable/screen/plane_master/instance = new plane()
 		instance.assigned_map = map_name
+		if(instance.blend_mode_override)
+			instance.blend_mode = instance.blend_mode_override
 		instance.del_on_map_removal = FALSE
 		instance.screen_loc = "[map_name]:CENTER"
 		cam_plane_masters += instance
@@ -54,9 +57,9 @@
 	cam_background.del_on_map_removal = FALSE
 
 /datum/computer_file/program/secureye/Destroy()
-	qdel(cam_screen)
+	QDEL_NULL(cam_screen)
 	QDEL_LIST(cam_plane_masters)
-	qdel(cam_background)
+	QDEL_NULL(cam_background)
 	return ..()
 
 /datum/computer_file/program/secureye/ui_interact(mob/user, datum/tgui/ui)
@@ -80,10 +83,17 @@
 		user.client.register_map_obj(cam_background)
 		return ..()
 
+/datum/computer_file/program/secureye/ui_status(mob/user)
+	. = ..()
+	if(. == UI_DISABLED)
+		return UI_CLOSE
+	return .
+
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = get_header_data()
 	data["network"] = network
 	data["activeCamera"] = null
+	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
@@ -113,7 +123,7 @@
 		var/c_tag = params["name"]
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
-		active_camera = selected_camera
+		camera_ref = WEAKREF(selected_camera)
 		playsound(src, get_sfx("terminal_type"), 25, FALSE)
 
 		if(!selected_camera)
@@ -133,10 +143,11 @@
 	user.client.clear_map(map_name)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
-		active_camera = null
+		camera_ref = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
+	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
 		show_camera_static()

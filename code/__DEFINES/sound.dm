@@ -1,4 +1,4 @@
-//max channel is 1024. Only go lower from here, because byond tends to pick the first availiable channel to play sounds on
+//max channel is 1024. Only go lower from here, because byond tends to pick the first available channel to play sounds on
 #define CHANNEL_LOBBYMUSIC 1024
 #define CHANNEL_ADMIN 1023
 #define CHANNEL_VOX 1022
@@ -6,7 +6,7 @@
 #define CHANNEL_HEARTBEAT 1020 //sound channel for heartbeats
 #define CHANNEL_AMBIENCE 1019
 #define CHANNEL_BUZZ 1018
-#define CHANNEL_BICYCLE 1017
+#define CHANNEL_TRAITOR 1017
 
 ///Default range of a sound.
 #define SOUND_RANGE 17
@@ -78,6 +78,7 @@
 #define SOUND_ENVIRONMENT_DIZZY 24
 #define SOUND_ENVIRONMENT_PSYCHOTIC 25
 //If we ever make custom ones add them here
+#define SOUND_ENVIROMENT_PHASED list(1.8, 0.5, -1000, -4000, 0, 5, 0.1, 1, -15500, 0.007, 2000, 0.05, 0.25, 1, 1.18, 0.348, -5, 2000, 250, 0, 3, 100, 63)
 
 //"sound areas": easy way of keeping different types of areas consistent.
 #define SOUND_AREA_STANDARD_STATION SOUND_ENVIRONMENT_PARKING_LOT

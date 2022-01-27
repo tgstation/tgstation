@@ -61,25 +61,19 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "ak" = (
-/obj/effect/mob_spawn/human/seed_vault,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "al" = (
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "am" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "an" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "ao" = (
@@ -87,17 +81,13 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "ap" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/machinery/light/directional/north,
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "aq" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/effect/mob_spawn/human/seed_vault,
+/obj/machinery/light/directional/north,
+/obj/effect/mob_spawn/ghost_role/human/seed_vault,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
@@ -141,7 +131,7 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "av" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -185,10 +175,10 @@
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aB" = (
-/obj/effect/spawner/lootdrop/seed_vault,
+/obj/effect/spawner/random/food_or_drink/seed_vault,
 /obj/structure/closet/crate/hydroponics,
-/obj/effect/spawner/lootdrop/seed_vault,
-/obj/effect/spawner/lootdrop/seed_vault,
+/obj/effect/spawner/random/food_or_drink/seed_vault,
+/obj/effect/spawner/random/food_or_drink/seed_vault,
 /obj/item/vending_refill/hydronutrients,
 /obj/item/vending_refill/hydroseeds,
 /turf/open/floor/vault,
@@ -199,7 +189,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aD" = (
@@ -207,7 +197,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aE" = (
@@ -220,9 +210,7 @@
 /obj/item/queen_bee/bought,
 /obj/item/clothing/head/beekeeper_head,
 /obj/item/clothing/suit/beekeeper_suit,
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aF" = (
@@ -244,9 +232,7 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "aI" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aJ" = (
@@ -264,9 +250,7 @@
 	dir = 8;
 	pixel_x = 11
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aL" = (
@@ -289,9 +273,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "aO" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/reagent_dispensers/watertank/high,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 6
@@ -343,7 +325,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
 "aU" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "aV" = (
@@ -387,9 +369,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/seedvault)
@@ -408,9 +388,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "bc" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
@@ -448,9 +426,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bg" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -497,9 +473,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "bl" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -520,9 +494,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/disposaloutlet,
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
@@ -552,9 +524,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bq" = (
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/machinery/light/directional/east,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
@@ -591,7 +561,7 @@
 /turf/open/floor/plating/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bv" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
@@ -601,7 +571,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bw" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -651,11 +621,15 @@
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors)
 "ca" = (
-/obj/machinery/atmospherics/components/unary/tank/air{
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 4
 	},
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
+"eq" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "oR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 10
@@ -676,7 +650,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "Eu" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
@@ -719,7 +693,7 @@
 /area/ruin/powered/seedvault)
 
 (1,1,1) = {"
-aa
+eq
 aa
 aa
 aa

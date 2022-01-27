@@ -49,6 +49,6 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			fullid += "[key]"
 
 	if(length(named_arguments))
-		named_arguments = sortList(named_arguments)
+		named_arguments = sort_list(named_arguments)
 		fullid += named_arguments
 	return list2params(fullid)

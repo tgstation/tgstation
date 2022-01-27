@@ -156,7 +156,7 @@ written either to a file opened in binary mode (mode='wb'),
 or to stdout by means of:   sys.stdout.buffer.write()
 
 my_opus = [
-    96, 
+    96,
     [   # track 0:
         ['patch_change', 0, 1, 8],   # and these are the events...
         ['note_on',   5, 1, 25, 96],
@@ -687,7 +687,7 @@ that a dedicated function is useful.
         input_score = opus2score([1000, input_track])
         for event in input_score[1]:
             output_score[1].append(event)
-    output_score[1].sort(key=_ticks) 
+    output_score[1].sort(key=_ticks)
     output_opus = score2opus(output_score)
     return output_opus[1]
 
@@ -1360,9 +1360,9 @@ The options:
         # from the MIDI file spec.  So, I'm going to assume that
         # they CAN, in practice, occur.  I don't know whether it's
         # proper for you to actually emit these into a MIDI file.
-        
+
         elif (first_byte == 0xF2):   # DTime, Beats
-            #  <song position msg> ::=     F2 <data pair>
+            #  <song position msg> ::=    F2 <data pair>
             E = ['song_position', time, _read_14_bit(trackdata[:2])]
             trackdata = trackdata[2:]
 
@@ -1417,7 +1417,7 @@ The options:
                     E = ['text_event', E[1], '']
                 else:
                     E = []   # EOT with a delta-time of 0; ignore it.
-        
+
         if E and not (E[0] in exclude):
             #if ( $exclusive_event_callback ):
             #    &{ $exclusive_event_callback }( @E );
@@ -1521,7 +1521,7 @@ def _encode(events_lol, unknown_callback=None, never_add_eot=False,
                 parameters = struct.pack('>B', int(E[1]) & 0xFF)
             elif (event == 'pitch_wheel_change'):
                 status = 0xE0 | (int(E[0]) & 0x0F)
-                parameters =  _write_14_bit(int(E[1]) + 0x2000)
+                parameters = _write_14_bit(int(E[1]) + 0x2000)
             else:
                 _warn("BADASS FREAKOUT ERROR 31415!")
 
@@ -1535,7 +1535,7 @@ def _encode(events_lol, unknown_callback=None, never_add_eot=False,
             if (status != last_status) or no_running_status:
                 data.append(struct.pack('>B', status))
             data.append(parameters)
- 
+
             last_status = status
             continue
         else:

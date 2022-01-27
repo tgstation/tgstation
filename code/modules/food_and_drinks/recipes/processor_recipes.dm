@@ -35,39 +35,48 @@
 /datum/food_processor_process/meat/human
 	input = /obj/item/food/meat/slab/human
 	output = /obj/item/food/raw_meatball/human
+	blacklist = null
 
 /datum/food_processor_process/cutlet/human
 	input = /obj/item/food/meat/cutlet/plain/human
 	output = /obj/item/food/raw_meatball/human
+	blacklist = null
 
 /datum/food_processor_process/meat/corgi
 	input = /obj/item/food/meat/slab/corgi
 	output = /obj/item/food/raw_meatball/corgi
+	blacklist = null
 
 /datum/food_processor_process/meat/xeno
 	input = /obj/item/food/meat/slab/xeno
 	output = /obj/item/food/raw_meatball/xeno
+	blacklist = null
 
 /datum/food_processor_process/cutlet/xeno
 	input = /obj/item/food/meat/cutlet/xeno
 	output = /obj/item/food/raw_meatball/xeno
+	blacklist = null
 
 /datum/food_processor_process/meat/bear
 	input = /obj/item/food/meat/slab/bear
 	output = /obj/item/food/raw_meatball/bear
+	blacklist = null
 
 /datum/food_processor_process/cutlet/bear
 	input = /obj/item/food/meat/cutlet/bear
 	output = /obj/item/food/raw_meatball/bear
+	blacklist = null
 
 /datum/food_processor_process/meat/chicken
 	input = /obj/item/food/meat/slab/chicken
 	output = /obj/item/food/raw_meatball/chicken
 	multiplier = 3
+	blacklist = null
 
 /datum/food_processor_process/cutlet/chicken
 	input = /obj/item/food/meat/cutlet/chicken
 	output = /obj/item/food/raw_meatball/chicken
+	blacklist = null
 
 /datum/food_processor_process/bacon
 	input = /obj/item/food/meat/rawcutlet
@@ -96,7 +105,7 @@
 
 /datum/food_processor_process/spaghetti
 	input = /obj/item/food/doughslice
-	output = /obj/item/food/spaghetti
+	output = /obj/item/food/spaghetti/raw
 
 /datum/food_processor_process/corn
 	input = /obj/item/food/grown/corn

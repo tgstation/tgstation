@@ -3,7 +3,7 @@
 	k_elasticity = 0
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden, /obj/structure/closet/crate/mail)
 
 /datum/export/large/crate/total_printout(datum/export_report/ex, notes = TRUE) // That's why a goddamn metal crate costs that much.
 	. = ..()
@@ -71,15 +71,10 @@
 	unit_name = "field generator"
 	export_types = list(/obj/machinery/field/generator)
 
-/datum/export/large/collector
-	cost = CARGO_CRATE_VALUE * 2
-	unit_name = "radiation collector"
-	export_types = list(/obj/machinery/power/rad_collector)
-
 /datum/export/large/tesla_coil
 	cost = CARGO_CRATE_VALUE * 2.25
 	unit_name = "tesla coil"
-	export_types = list(/obj/machinery/power/tesla_coil)
+	export_types = list(/obj/machinery/power/energy_accumulator/tesla_coil)
 
 /datum/export/large/supermatter
 	cost = CARGO_CRATE_VALUE * 16
@@ -89,7 +84,7 @@
 /datum/export/large/grounding_rod
 	cost = CARGO_CRATE_VALUE * 1.2
 	unit_name = "grounding rod"
-	export_types = list(/obj/machinery/power/grounding_rod)
+	export_types = list(/obj/machinery/power/energy_accumulator/grounding_rod)
 
 /datum/export/large/iv
 	cost = CARGO_CRATE_VALUE * 0.25
@@ -110,10 +105,11 @@
 /datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = cost
-	var/canister_mix = C.air_contents.gases
+	var/datum/gas_mixture/canister_mix = C.return_air()
+	var/canister_gas = canister_mix.gases
 	var/list/gases_to_check = list(
 								/datum/gas/bz,
-								/datum/gas/stimulum,
+								/datum/gas/nitrium,
 								/datum/gas/hypernoblium,
 								/datum/gas/miasma,
 								/datum/gas/tritium,
@@ -129,13 +125,13 @@
 								)
 
 	for(var/gasID in gases_to_check)
-		C.air_contents.assert_gas(gasID)
-		if(canister_mix[gasID][MOLES] > 0)
-			worth += get_gas_value(gasID, canister_mix[gasID][MOLES])
+		canister_mix.assert_gas(gasID)
+		if(canister_gas[gasID][MOLES] > 0)
+			worth += get_gas_value(gasID, canister_gas[gasID][MOLES])
 
-	C.air_contents.garbage_collect()
+	canister_mix.garbage_collect()
 	return worth
 
 /datum/export/large/gas_canister/proc/get_gas_value(datum/gas/gasType, moles)
 	var/baseValue = initial(gasType.base_value)
-	return round((baseValue/k_elasticity) * 1 - NUM_E**(-1 * k_elasticity * moles))
+	return round((baseValue/k_elasticity) * (1 - NUM_E**(-1 * k_elasticity * moles)))

@@ -9,7 +9,7 @@
 	BB_CUSTOMER_LEAVING = FALSE,
 	BB_CUSTOMER_ATTENDING_VENUE = null,
 	BB_CUSTOMER_SAID_CANT_FIND_SEAT_LINE = FALSE)
-
+	planning_subtrees = list(/datum/ai_planning_subtree/robot_customer)
 
 /datum/ai_controller/robot_customer/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /mob/living/simple_animal/robot_customer))
@@ -23,39 +23,11 @@
 	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_ATTACK_HAND))
 	return ..() //Run parent at end
 
-/datum/ai_controller/robot_customer/SelectBehaviors(delta_time)
-	current_behaviors = list()
-	if(blackboard[BB_CUSTOMER_LEAVING])
-		var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
-		current_movement_target = attending_venue.restaurant_portal
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/leave_venue)
-		return
-
-	if(blackboard[BB_CUSTOMER_CURRENT_TARGET])
-		current_movement_target = blackboard[BB_CUSTOMER_CURRENT_TARGET]
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/break_spine/robot_customer)
-		return
-
-	var/obj/my_seat = blackboard[BB_CUSTOMER_MY_SEAT]
-
-	if(!my_seat) //We havn't got a seat yet! find one!
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/find_seat)
-		return
-
-	current_movement_target = my_seat
-
-	if(!blackboard[BB_CUSTOMER_CURRENT_ORDER]) //We havn't ordered yet even ordered yet. go on! go over there and go do it!
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/order_food)
-		return
-	else
-		current_behaviors += GET_AI_BEHAVIOR(/datum/ai_behavior/wait_for_food)
-
-
 /datum/ai_controller/robot_customer/proc/on_attackby(datum/source, obj/item/I, mob/living/user)
 	SIGNAL_HANDLER
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(attending_venue.is_correct_order(I, blackboard[BB_CUSTOMER_CURRENT_ORDER]))
-		to_chat(user, "<span class='notice'>You hand [I] to [pawn]</span>")
+		to_chat(user, span_notice("You hand [I] to [pawn]"))
 		eat_order(I, attending_venue)
 		return COMPONENT_NO_AFTERATTACK
 	else
@@ -95,9 +67,10 @@
 	var/mob/living/simple_animal/robot_customer/customer = pawn
 	var/datum/venue/attending_venue = blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	var/datum/customer_data/customer_data = blackboard[BB_CUSTOMER_CUSTOMERINFO]
-	attending_venue.mob_blacklist[greytider] += 1
+	//Living mobs are tagged, so these will always be valid
+	attending_venue.mob_blacklist[REF(greytider)] += 1
 
-	switch(attending_venue.mob_blacklist[greytider])
+	switch(attending_venue.mob_blacklist[REF(greytider)])
 		if(1)
 			customer.say(customer_data.first_warning_line)
 			return

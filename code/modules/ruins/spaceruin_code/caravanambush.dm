@@ -1,20 +1,20 @@
 //caravan ambush
 
 /obj/item/wrench/caravan
-	color = "#ff0000"
+	icon_state = "wrench_caravan"
 	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster."
 	name = "experimental wrench"
 	toolspeed = 0.3
 
 /obj/item/screwdriver/caravan
-	color = "#ff0000"
+	icon_state = "screwdriver_caravan"
 	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."
 	name = "experimental screwdriver"
 	toolspeed = 0.3
 	random_color = FALSE
 
 /obj/item/wirecutters/caravan
-	color = "#ff0000"
+	icon_state = "cutters_caravan"
 	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."
 	name = "experimental wirecutters"
 	worn_icon_state = "cutters"
@@ -22,7 +22,7 @@
 	random_color = FALSE
 
 /obj/item/crowbar/red/caravan
-	color = "#ff0000"
+	icon_state = "crowbar_caravan"
 	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster."
 	name = "experimental crowbar"
 	toolspeed = 0.3
@@ -54,7 +54,7 @@
 	shuttleId = "caravantrade1"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;caravantrade1_custom;caravantrade1_ambush"
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize(mapload)
 	. = ..()
 	GLOB.jam_on_wardec += src
 
@@ -68,7 +68,7 @@
 	shuttleId = "caravantrade1"
 	lock_override = NONE
 	shuttlePortId = "caravantrade1_custom"
-	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
+	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
 	view_range = 6.5
 	x_offset = -5
 	y_offset = -5
@@ -92,7 +92,7 @@
 	shuttleId = "caravanpirate"
 	lock_override = NONE
 	shuttlePortId = "caravanpirate_custom"
-	jumpto_ports = list("caravanpirate_ambush" = 1)
+	jump_to_ports = list("caravanpirate_ambush" = 1)
 	view_range = 6.5
 	x_offset = 3
 	y_offset = -6
@@ -116,7 +116,7 @@
 	shuttleId = "caravansyndicate1"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate1_custom"
-	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 0
 	x_offset = 2
 	y_offset = 0
@@ -140,7 +140,7 @@
 	shuttleId = "caravansyndicate2"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate2_custom"
-	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 0
 	x_offset = 0
 	y_offset = 2
@@ -164,7 +164,7 @@
 	shuttleId = "caravansyndicate3"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate3_custom"
-	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
 	view_range = 2.5
 	x_offset = -1
 	y_offset = -3

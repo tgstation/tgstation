@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 #define testing_profile_global_output(NAME) testing_profile_output(NAME, GLOB.testing_global_profiler)
 #define testing_profile_global_output_all testing_profile_output_all(GLOB.testing_global_profiler)
 
-#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc"  = world.timeofday )
+#define testing_profile_local_init(PROFILE_NAME) var/list/_timer_system = list( "_PROFILE_NAME" = PROFILE_NAME, "_start_of_proc" = world.timeofday )
 #define testing_profile_local_start(NAME) testing_profile_start(NAME, _timer_system)
 #define testing_profile_local_current(NAME) testing_profile_current(NAME, _timer_system)
 #define testing_profile_local_output(NAME) testing_profile_output(NAME, _timer_system)
@@ -57,6 +57,18 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	SEND_TEXT(world.log, text)
 #endif
 
+#if defined(REFERENCE_DOING_IT_LIVE)
+#define log_reftracker(msg) log_harddel("## REF SEARCH [msg]")
+
+/proc/log_harddel(text)
+	WRITE_LOG(GLOB.harddel_log, text)
+
+#elif defined(REFERENCE_TRACKING) // Doing it locally
+#define log_reftracker(msg) log_world("## REF SEARCH [msg]")
+
+#else //Not tracking at all
+#define log_reftracker(msg)
+#endif
 
 /* Items with ADMINPRIVATE prefixed are stripped from public logs. */
 /proc/log_admin(text)
@@ -100,15 +112,29 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	WRITE_LOG(GLOB.world_paper_log, "PAPER: [text]")
 
 /proc/log_asset(text)
-	WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
+	if(CONFIG_GET(flag/log_asset))
+		WRITE_LOG(GLOB.world_asset_log, "ASSET: [text]")
 
 /proc/log_access(text)
 	if (CONFIG_GET(flag/log_access))
 		WRITE_LOG(GLOB.world_game_log, "ACCESS: [text]")
 
-/proc/log_law(text)
-	if (CONFIG_GET(flag/log_law))
-		WRITE_LOG(GLOB.world_game_log, "LAW: [text]")
+/proc/log_silicon(text)
+	if (CONFIG_GET(flag/log_silicon))
+		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+
+/**
+ * Writes to a special log file if the log_suspicious_login config flag is set,
+ * which is intended to contain all logins that failed under suspicious circumstances.
+ *
+ * Mirrors this log entry to log_access when access_log_mirror is TRUE, so this proc
+ * doesn't need to be used alongside log_access and can replace it where appropriate.
+ */
+/proc/log_suspicious_login(text, access_log_mirror = TRUE)
+	if (CONFIG_GET(flag/log_suspicious_login))
+		WRITE_LOG(GLOB.world_suspicious_login_log, "SUSPICIOUS_ACCESS: [text]")
+	if(access_log_mirror)
+		log_access(text)
 
 /proc/log_attack(text)
 	if (CONFIG_GET(flag/log_attack))
@@ -118,15 +144,19 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_econ))
 		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
-/proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
+/proc/log_traitor(text)
+	if (CONFIG_GET(flag/log_econ))
+		WRITE_LOG(GLOB.world_game_log, "TRAITOR: [text]")
+
+/proc/log_manifest(ckey, datum/mind/mind, mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))
-		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
+		WRITE_LOG(GLOB.world_manifest_log, "[ckey] \\ [body.real_name] \\ [mind.assigned_role.title] \\ [mind.special_role ? mind.special_role : "NONE"] \\ [latejoin ? "LATEJOIN":"ROUNDSTART"]")
 
 /proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][additional_details ? " [additional_details]" : ""]."
 
 	if(user)
-		user.log_message(bomb_message, LOG_GAME) //let it go to individual logs as well as the game log
+		user.log_message(bomb_message, LOG_ATTACK) //let it go to individual logs as well as the game log
 		bomb_message = "[key_name(user)] at [AREACOORD(user)] [bomb_message]"
 	else
 		log_game(bomb_message)
@@ -135,6 +165,15 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 	if(message_admins)
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")
+
+/// Logs the contents of the gasmix to the game log, prefixed by text
+/proc/log_atmos(text, datum/gas_mixture/mix)
+	var/message = text
+	message += "TEMP=[mix.temperature],MOL=[mix.total_moles()],VOL=[mix.volume]"
+	for(var/key in mix.gases)
+		var/list/gaslist = mix.gases[key]
+		message += "[gaslist[GAS_META][META_GAS_ID]]=[gaslist[MOLES]];"
+	log_game(message)
 
 /proc/log_say(text)
 	if (CONFIG_GET(flag/log_say))
@@ -151,6 +190,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_emote(text)
 	if (CONFIG_GET(flag/log_emote))
 		WRITE_LOG(GLOB.world_game_log, "EMOTE: [text]")
+
+/proc/log_radio_emote(text)
+	if (CONFIG_GET(flag/log_emote))
+		WRITE_LOG(GLOB.world_game_log, "RADIOEMOTE: [text]")
 
 /proc/log_prayer(text)
 	if (CONFIG_GET(flag/log_prayer))
@@ -200,6 +243,9 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_href(text)
 	WRITE_LOG(GLOB.world_href_log, "HREF: [text]")
 
+/proc/log_mob_tag(text)
+	WRITE_LOG(GLOB.world_mob_tag_log, "TAG: [text]")
+
 /proc/log_sql(text)
 	WRITE_LOG(GLOB.sql_error_log, "SQL: [text]")
 
@@ -229,8 +275,11 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	WRITE_LOG(GLOB.config_error_log, text)
 	SEND_TEXT(world.log, text)
 
-/proc/log_mapping(text)
+/proc/log_mapping(text, skip_world_log)
 	WRITE_LOG(GLOB.world_map_error_log, text)
+	if(skip_world_log)
+		return
+	SEND_TEXT(world.log, text)
 
 /proc/log_perf(list/perf_info)
 	. = "[perf_info.Join(",")]\n"

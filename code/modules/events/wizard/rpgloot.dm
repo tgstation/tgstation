@@ -6,28 +6,7 @@
 	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/rpgloot/start()
-	var/upgrade_scroll_chance = 0
-	for(var/obj/item/I in world)
-		CHECK_TICK
-
-		if(!(I.flags_1 & INITIALIZED_1) || QDELETED(I))
-			continue
-
-		I.AddComponent(/datum/component/fantasy)
-
-		if(istype(I, /obj/item/storage))
-			var/obj/item/storage/S = I
-			var/datum/component/storage/STR = S.GetComponent(/datum/component/storage)
-			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
-				var/obj/item/upgradescroll/scroll = new(get_turf(S))
-				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
-				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
-				if(isturf(scroll.loc))
-					qdel(scroll)
-
-			upgrade_scroll_chance += 25
-
-	GLOB.rpg_loot_items = TRUE
+	GLOB.rpgloot_controller = new /datum/rpgloot_controller
 
 /obj/item/upgradescroll
 	name = "item fortification scroll"
@@ -41,14 +20,16 @@
 	var/can_backfire = TRUE
 	var/uses = 1
 
-/obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
+/obj/item/upgradescroll/afterattack(obj/item/target, mob/user, proximity)
 	. = ..()
 	if(!proximity || !istype(target))
 		return
 
 	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
-	if(--uses <= 0)
+	uses -= 1
+	if(!uses)
+		visible_message(span_warning("[src] vanishes, its magic completely consumed from the fortification."))
 		qdel(src)
 
 /obj/item/upgradescroll/unlimited
@@ -56,3 +37,61 @@
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". This scroll is made from the tongues of dead paper wizards, and can be used an unlimited number of times, with no drawbacks."
 	uses = INFINITY
 	can_backfire = FALSE
+
+///Holds the global datum for rpgloot, so anywhere may check for its existence (it signals into whatever it needs to modify, so it shouldn't require fetching)
+GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
+
+/**
+ * ## rpgloot controller!
+ *
+ * Stored in a global datum, and created when rpgloot is turned on via event or VV'ing the GLOB.rpgloot_controller to be a new /datum/rpgloot_controller.
+ * Makes every item in the world fantasy, but also hooks into global signals for new items created to also bless them with fantasy.
+ *
+ * What do I mean by fantasy?
+ * * Items will have random qualities assigned to them
+ * * Good quality items will have positive buffs/special powers applied to them
+ * * Bad quality items will get the opposite!
+ * * All of this is reflected in a fitting name for the item
+ * * See fantasy.dm and read the component for more information :)
+ */
+/datum/rpgloot_controller
+
+/datum/rpgloot_controller/New()
+	. = ..()
+	//second operation takes MUCH longer, so lets set up signals first.
+	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
+	handle_current_items()
+
+///signal sent by a new item being created.
+/datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
+	SIGNAL_HANDLER
+
+	created_item.AddComponent(/datum/component/fantasy)
+
+/**
+ * ### handle_current_items
+ *
+ * Gives every viable item in the world the fantasy component.
+ * If the item it is giving fantasy to is a storage item, there's a chance it'll drop in an item fortification scroll. neat!
+ */
+/datum/rpgloot_controller/proc/handle_current_items()
+	var/upgrade_scroll_chance = 0
+	for(var/obj/item/fantasy_item in world)
+		CHECK_TICK
+
+		if(!(fantasy_item.flags_1 & INITIALIZED_1) || QDELETED(fantasy_item))
+			continue
+
+		fantasy_item.AddComponent(/datum/component/fantasy)
+
+		if(istype(fantasy_item, /obj/item/storage))
+			var/obj/item/storage/storage_item = fantasy_item
+			var/datum/component/storage/storage_component = storage_item.GetComponent(/datum/component/storage)
+			if(prob(upgrade_scroll_chance) && storage_item.contents.len < storage_component.max_items && !storage_item.invisibility)
+				var/obj/item/upgradescroll/scroll = new(get_turf(storage_item))
+				SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
+				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
+				if(isturf(scroll.loc))
+					qdel(scroll)
+
+			upgrade_scroll_chance += 25

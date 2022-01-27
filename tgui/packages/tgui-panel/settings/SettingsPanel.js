@@ -56,6 +56,8 @@ export const SettingsGeneral = (props, context) => {
     lineHeight,
     highlightText,
     highlightColor,
+    matchWord,
+    matchCase,
   } = useSelector(context, selectSettings);
   const dispatch = useDispatch(context);
   const [freeFont, setFreeFont] = useLocalState(context, "freeFont", false);
@@ -134,7 +136,7 @@ export const SettingsGeneral = (props, context) => {
       <Box>
         <Flex mb={1} color="label" align="baseline">
           <Flex.Item grow={1}>
-            Highlight words (comma separated):
+            Highlight text (comma separated):
           </Flex.Item>
           <Flex.Item shrink={0}>
             <ColorBox mr={1} color={highlightColor} />
@@ -154,6 +156,22 @@ export const SettingsGeneral = (props, context) => {
           onChange={(e, value) => dispatch(updateSettings({
             highlightText: value,
           }))} />
+        <Button.Checkbox
+          checked={matchWord}
+          tooltipPosition="bottom-start"
+          tooltip="Not compatible with punctuation."
+          onClick={() => dispatch(updateSettings({
+            matchWord: !matchWord,
+          }))}>
+          Match word
+        </Button.Checkbox>
+        <Button.Checkbox
+          checked={matchCase}
+          onClick={() => dispatch(updateSettings({
+            matchCase: !matchCase,
+          }))}>
+          Match case
+        </Button.Checkbox>
       </Box>
       <Divider />
       <Box>

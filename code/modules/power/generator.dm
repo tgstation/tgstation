@@ -113,7 +113,7 @@
 
 		t += "<div class='statusDisplay'>"
 
-		t += "Output: [DisplayPower(lastgenlev)]"
+		t += "Output: [display_power(lastgenlev)]"
 
 		t += "<BR>"
 
@@ -195,7 +195,7 @@
 	if(!anchored)
 		kill_circs()
 	connect_to_network()
-	to_chat(user, "<span class='notice'>You [anchored?"secure":"unsecure"] [src].</span>")
+	to_chat(user, span_notice("You [anchored?"secure":"unsecure"] [src]."))
 	return TRUE
 
 /obj/machinery/power/generator/multitool_act(mob/living/user, obj/item/I)
@@ -203,7 +203,7 @@
 	if(!anchored)
 		return
 	find_circs()
-	to_chat(user, "<span class='notice'>You update [src]'s circulator links.</span>")
+	to_chat(user, span_notice("You update [src]'s circulator links."))
 	return TRUE
 
 /obj/machinery/power/generator/screwdriver_act(mob/user, obj/item/I)
@@ -211,7 +211,7 @@
 		return TRUE
 	panel_open = !panel_open
 	I.play_tool_sound(src)
-	to_chat(user, "<span class='notice'>You [panel_open?"open":"close"] the panel on [src].</span>")
+	to_chat(user, span_notice("You [panel_open?"open":"close"] the panel on [src]."))
 	return TRUE
 
 /obj/machinery/power/generator/crowbar_act(mob/user, obj/item/I)

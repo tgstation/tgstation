@@ -19,7 +19,9 @@
 
 	cameraFollow = null
 
-	anchored = FALSE //unbolt floorbolts
+	set_anchored(FALSE) //unbolt floorbolts
+	status_flags |= CANPUSH //we want it to be pushable when unanchored on death
+	REMOVE_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT) //removes the anchor trait, because its not anchored anymore
 	move_resist = MOVE_FORCE_NORMAL
 
 	if(eyeobj)
@@ -33,7 +35,7 @@
 	ShutOffDoomsdayDevice()
 
 	if(explosive)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, 15), 1 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, loc, 3, 6, 12, null, 15), 1 SECONDS)
 
 	if(istype(loc, /obj/item/aicard/aitater))
 		loc.icon_state = "aitater-404"

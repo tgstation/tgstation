@@ -125,7 +125,7 @@
 	description = "This juice is VERY sour."
 	color = "#863333" // rgb: 175, 175, 0
 	taste_description = "sourness"
-	glass_icon_state  = "lemonglass"
+	glass_icon_state = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
 	ph = 2
@@ -188,7 +188,7 @@
 
 /datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(16, delta_time))
-		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
+		M.visible_message(span_danger("[M] bursts out into a fit of uncontrollable laughter!"), span_userdanger("You burst out in a fit of uncontrollable laughter!"))
 		M.Stun(5)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
@@ -226,7 +226,7 @@
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
 		if(myseed)
 			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
@@ -259,7 +259,7 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_description = "creamy milk"
-	glass_icon_state  = "glass_white"
+	glass_icon_state = "glass_white"
 	glass_name = "glass of cream"
 	glass_desc = "Ewwww..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -289,7 +289,7 @@
 
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
@@ -312,7 +312,7 @@
 
 /datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (2 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (1 * REM * delta_time), 0)
+	M.adjust_drowsyness(-1 * REM * delta_time)
 	M.jitteriness = max(M.jitteriness - (3 * REM * delta_time), 0)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
@@ -347,7 +347,7 @@
 
 /datum/reagent/consumable/tea/arnold_palmer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(2.5, delta_time))
-		to_chat(M, "<span class='notice'>[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]</span>")
+		to_chat(M, span_notice("[pick("You remember to square your shoulders.","You remember to keep your head down.","You can't decide between squaring your shoulders and keeping your head down.","You remember to relax.","You think about how someday you'll get two strokes off your golf game.")]"))
 	..()
 	. = TRUE
 
@@ -364,7 +364,7 @@
 
 /datum/reagent/consumable/icecoffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
@@ -384,7 +384,7 @@
 
 /datum/reagent/consumable/hot_ice_coffee/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-60 * REM * delta_time)
 	M.adjust_bodytemperature(-7 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
@@ -405,7 +405,7 @@
 
 /datum/reagent/consumable/icetea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (2 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (1 * REM * delta_time), 0)
+	M.adjust_drowsyness(-1 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)
@@ -418,13 +418,13 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
-	glass_icon_state  = "spacecola"
+	glass_icon_state = "spacecola"
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/space_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (5 * REM * delta_time), 0)
+	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -451,9 +451,48 @@
 	M.Jitter(20 * REM * delta_time)
 	M.set_drugginess(30 * REM * delta_time)
 	M.dizziness += 1.5 * REM * delta_time
-	M.drowsyness = 0
+	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	..()
+	. = TRUE
+
+/datum/reagent/consumable/rootbeer
+	name = "root beer"
+	description = "A delightfully bubbly root beer, filled with so much sugar that it can actually speed up the user's trigger finger."
+	color = "#181008" // rgb: 24, 16, 8
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	taste_description = "a monstrous sugar rush"
+	glass_icon_state = "spacecola"
+	glass_name = "glass of root beer"
+	glass_desc = "A glass of highly potent, incredibly sugary root beer."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// If we activated the effect
+	var/effect_enabled = FALSE
+
+
+/datum/reagent/consumable/rootbeer/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_DOUBLE_TAP, type)
+	if(current_cycle > 10)
+		to_chat(L, span_warning("You feel kinda tired as your sugar rush wears off..."))
+		L.adjustStaminaLoss(min(80, current_cycle * 3))
+		L.adjust_drowsyness(current_cycle)
+	..()
+
+/datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(current_cycle >= 3 && !effect_enabled) // takes a few seconds for the bonus to kick in to prevent microdosing
+		to_chat(M, span_notice("You feel your trigger finger getting itchy..."))
+		ADD_TRAIT(M, TRAIT_DOUBLE_TAP, type)
+		effect_enabled = TRUE
+
+	M.Jitter(2 * REM * delta_time)
+	if(prob(50))
+		M.dizziness += 1 * REM * delta_time
+	if(current_cycle > 10)
+		M.dizziness += 1.5 * REM * delta_time
+
 	..()
 	. = TRUE
 
@@ -479,7 +518,7 @@
 /datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(20 * REM * delta_time)
 	M.dizziness += 1 * REM * delta_time
-	M.drowsyness = 0
+	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -495,7 +534,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/spacemountainwind/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (7 * REM * delta_time), 0)
+	M.adjust_drowsyness(-7 * REM * delta_time)
 	M.AdjustSleeping(-20 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
@@ -513,7 +552,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/dr_gibb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.drowsyness = max(M.drowsyness - (6 * REM * delta_time), 0)
+	M.adjust_drowsyness(-6 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -601,12 +640,12 @@
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
@@ -622,7 +661,7 @@
 
 /datum/reagent/consumable/tonic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 * REM * delta_time), 0)
+	M.adjust_drowsyness(-3 * REM * delta_time)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -642,7 +681,7 @@
 /datum/reagent/consumable/monkey_energy/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(40 * REM * delta_time)
 	M.dizziness += 1 * REM * delta_time
-	M.drowsyness = 0
+	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
@@ -690,7 +729,7 @@
 
 /datum/reagent/consumable/soy_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (3 *REM * delta_time), 0)
+	M.adjust_drowsyness(-3 *REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
@@ -713,7 +752,7 @@
 
 /datum/reagent/consumable/cafe_latte/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.drowsyness = max(M.drowsyness - (6 * REM * delta_time), 0)
+	M.adjust_drowsyness(-6 * REM * delta_time)
 	M.SetSleeping(0)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	M.Jitter(5 * REM * delta_time)
@@ -821,7 +860,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grape_soda
-	name = "Grape soda"
+	name = "Grape Soda"
 	description = "Beloved by children and teetotalers."
 	color = "#E6CDFF"
 	taste_description = "grape soda"
@@ -847,7 +886,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
-	glass_icon_state  = "chocolateglass"
+	glass_icon_state = "chocolateglass"
 	glass_name = "glass of hot coco"
 	glass_desc = "A favorite winter drink to warm you up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -930,6 +969,7 @@
 	color = "#f7d26a"
 	quality = DRINK_NICE
 	taste_description = "sweet ginger spice"
+	glass_icon_state = "soldry"
 	glass_name = "Sol Dry"
 	glass_desc = "A soothing, mellow drink made from ginger."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -980,7 +1020,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/prunomix
-	name = "pruno mixture"
+	name = "Pruno Mixture"
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
@@ -1023,6 +1063,45 @@
 	if(M.druggy < 3)
 		M.adjust_drugginess(1 * REM * delta_time)
 	if(M.drowsyness < 3)
-		M.drowsyness += 1 * REM * delta_time
+		M.adjust_drowsyness(1 * REM * delta_time)
 	return ..()
 
+/datum/reagent/consumable/mushroom_tea
+	name = "Mushroom Tea"
+	description = "A savoury glass of tea made from polypore mushroom shavings, originally native to Tizira."
+	color = "#674945" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	taste_description = "mushrooms"
+	glass_icon_state = "mushroom_tea_glass"
+	glass_name = "glass of mushroom tea"
+	glass_desc = "Oddly savoury for a drink."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/mushroom_tea/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(islizard(M))
+		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
+	..()
+	. = TRUE
+
+//Moth Stuff
+/datum/reagent/consumable/toechtauese_juice
+	name = "Töchtaüse Juice"
+	description = "An unpleasant juice made from töchtaüse berries. Best made into a syrup, unless you enjoy pain."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "fiery itchy pain"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse juice"
+	glass_desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/toechtauese_syrup
+	name = "Töchtaüse Syrup"
+	description = "A harsh spicy and bitter syrup, made from töchtaüse berries. Useful as an ingredient, both for food and cocktails."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "sugar, spice, and nothing nice"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse syrup"
+	glass_desc = "Not for drinking on its own."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

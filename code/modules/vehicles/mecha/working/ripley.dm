@@ -13,7 +13,7 @@
 	max_integrity = 200
 	lights_power = 7
 	deflect_chance = 15
-	armor = list(MELEE = 40, BULLET = 20, LASER = 10, ENERGY = 20, BOMB = 40, BIO = 0, RAD = 20, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 40, BULLET = 20, LASER = 10, ENERGY = 20, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
 	max_equip = 6
 	wreckage = /obj/structure/mecha_wreckage/ripley
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
@@ -46,7 +46,7 @@
 		possible_int_damage -= (MECHA_INT_TEMP_CONTROL + MECHA_INT_TANK_BREACH)
 	return ..()
 
-/obj/vehicle/sealed/mecha/working/ripley/Initialize()
+/obj/vehicle/sealed/mecha/working/ripley/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
@@ -68,7 +68,7 @@
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
-	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, RAD = 70, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 60, BIO = 0, FIRE = 100, ACID = 100)
 	wreckage = /obj/structure/mecha_wreckage/ripley/mk2
 	enclosed = TRUE
 	enter_delay = 40
@@ -97,7 +97,7 @@
 	enter_delay = 40
 	silicon_icon_state = null
 
-/obj/vehicle/sealed/mecha/working/ripley/deathripley/Initialize()
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/Initialize(mapload)
 	. = ..()
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/fake/clamper = new(loc)
 	clamper.attach(src)
@@ -105,7 +105,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/deathripley/real
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE. FOR REAL"
 
-/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/Initialize()
+/obj/vehicle/sealed/mecha/working/ripley/deathripley/real/Initialize(mapload)
 	. = ..()
 	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 		E.detach()
@@ -117,9 +117,12 @@
 /obj/vehicle/sealed/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
-	obj_integrity = 75 //Low starting health
 
-/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize()
+/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
+	. = ..()
+	take_damage(125) // Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/mining/Initialize(mapload)
 	. = ..()
 	if(cell)
 		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
@@ -147,10 +150,9 @@
 	icon_state = "hauler"
 	base_icon_state = "hauler"
 	max_equip = 2
-	obj_integrity = 50 //Low starting health
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
-/obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize()
+/obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize(mapload)
 	. = ..()
 	if(cell)
 		cell.charge = FLOOR(cell.charge * 0.25, 1) //Starts at very low charge
@@ -159,8 +161,10 @@
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new
 	HC.attach(src)
 
-/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/O)
-	if(O in cargo)
+	take_damage(max_integrity * 0.5, sound_effect=FALSE) //Low starting health
+
+/obj/vehicle/sealed/mecha/working/ripley/Exit(atom/movable/leaving, direction)
+	if(leaving in cargo)
 		return FALSE
 	return ..()
 
@@ -169,7 +173,7 @@
 	if(href_list["drop_from_cargo"])
 		var/obj/cargoobj = locate(href_list["drop_from_cargo"]) in cargo
 		if(cargoobj)
-			to_chat(occupants, "[icon2html(src, occupants)]<span class='notice'>You unload [cargoobj].</span>")
+			to_chat(occupants, "[icon2html(src, occupants)][span_notice("You unload [cargoobj].")]")
 			cargoobj.forceMove(drop_location())
 			LAZYREMOVE(cargo, cargoobj)
 			if(cargoobj == box)
@@ -180,7 +184,7 @@
 /obj/vehicle/sealed/mecha/working/ripley/contents_explosion(severity, target)
 	for(var/i in cargo)
 		var/obj/cargoobj = i
-		if(prob(30/severity))
+		if(prob(10 * severity))
 			LAZYREMOVE(cargo, cargoobj)
 			cargoobj.forceMove(drop_location())
 	return ..()
@@ -197,16 +201,16 @@
 	return output
 
 /obj/vehicle/sealed/mecha/working/ripley/relay_container_resist_act(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You lean on the back of [O] and start pushing so it falls out of [src].</span>")
+	to_chat(user, span_notice("You lean on the back of [O] and start pushing so it falls out of [src]."))
 	if(do_after(user, 300, target = O))
 		if(!user || user.stat != CONSCIOUS || user.loc != src || O.loc != src )
 			return
-		to_chat(user, "<span class='notice'>You successfully pushed [O] out of [src]!</span>")
+		to_chat(user, span_notice("You successfully pushed [O] out of [src]!"))
 		O.forceMove(drop_location())
 		LAZYREMOVE(cargo, O)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, "<span class='warning'>You fail to push [O] out of [src]!</span>")
+			to_chat(user, span_warning("You fail to push [O] out of [src]!"))
 
 /**
  * Makes the mecha go faster and halves the mecha drill cooldown if in Lavaland pressure.

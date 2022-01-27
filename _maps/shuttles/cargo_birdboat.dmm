@@ -80,23 +80,19 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "p" = (
-/obj/machinery/button/door{
-	id = "QMLoaddoor2";
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = 8
-	},
-/obj/machinery/button/door{
-	id = "QMLoaddoor";
-	name = "Loading Doors";
-	pixel_x = 24;
-	pixel_y = -8
-	},
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoshuttle"
 	},
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/light/directional/east,
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor";
+	name = "Loading Doors";
+	pixel_y = -8
+	},
+/obj/machinery/button/door/directional/east{
+	id = "QMLoaddoor2";
+	name = "Loading Doors";
+	pixel_y = 8
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
@@ -151,15 +147,11 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
 "B" = (
-/obj/machinery/light{
-	dir = 8
-	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "G" = (

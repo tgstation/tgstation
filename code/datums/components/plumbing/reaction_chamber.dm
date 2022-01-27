@@ -23,7 +23,7 @@
 		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
 			if(required_reagent == containg_reagent.type)
 				has_reagent = TRUE
-				if(containg_reagent.volume < chamber.required_reagents[required_reagent])
+				if(containg_reagent.volume + CHEMICAL_QUANTISATION_LEVEL < chamber.required_reagents[required_reagent])
 					process_request(min(chamber.required_reagents[required_reagent] - containg_reagent.volume, MACHINE_REAGENT_TRANSFER) , required_reagent, dir)
 					return
 		if(!has_reagent)
@@ -37,7 +37,7 @@
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
 
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs seperate, like into a special internal acid container
+///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
 /datum/component/plumbing/acidic_input
 	demand_connects = WEST
 	demand_color = "yellow"
@@ -47,12 +47,12 @@
 /datum/component/plumbing/acidic_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/acidic_buffer, dir = dir)
 
-///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs seperate, like into a special internal base container
+///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal base container
 /datum/component/plumbing/alkaline_input
 	demand_connects = EAST
 	demand_color = "green"
 
-	ducting_layer = SECOND_DUCT_LAYER
+	ducting_layer = FOURTH_DUCT_LAYER
 
 /datum/component/plumbing/alkaline_input/send_request(dir)
 	process_request(amount = MACHINE_REAGENT_TRANSFER, reagent = /datum/reagent/reaction_agent/basic_buffer, dir = dir)

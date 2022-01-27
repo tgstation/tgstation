@@ -12,12 +12,16 @@
 	/// If set, we default armed to FALSE and set it to TRUE after this long from initializing
 	var/arm_delay
 
-/obj/effect/mine/Initialize()
+/obj/effect/mine/Initialize(mapload)
 	. = ..()
 	if(arm_delay)
 		armed = FALSE
 		icon_state = "uglymine-inactive"
 		addtimer(CALLBACK(src, .proc/now_armed), arm_delay)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/mine/examine(mob/user)
 	. = ..()
@@ -26,17 +30,17 @@
 
 /// The effect of the mine
 /obj/effect/mine/proc/mineEffect(mob/victim)
-	to_chat(victim, "<span class='danger'>*click*</span>")
+	to_chat(victim, span_danger("*click*"))
 
 /// If the landmine was previously inactive, this beeps and displays a message marking it active
 /obj/effect/mine/proc/now_armed()
 	armed = TRUE
 	icon_state = "uglymine"
 	playsound(src, 'sound/machines/nuke/angry_beep.ogg', 40, FALSE, -2)
-	visible_message("<span class='danger'>\The [src] beeps softly, indicating it is now active.<span>", vision_distance = COMBAT_MESSAGE_RANGE)
+	visible_message(span_danger("\The [src] beeps softly, indicating it is now active."), vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/effect/mine/Crossed(atom/movable/AM)
-	. = ..()
+/obj/effect/mine/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 
 	if(triggered || !isturf(loc) || !armed)
 		return
@@ -57,9 +61,9 @@
 	if(triggered) //too busy detonating to detonate again
 		return
 	if(triggerer)
-		visible_message("<span class='danger'>[triggerer] sets off [icon2html(src, viewers(src))] [src]!</span>")
+		visible_message(span_danger("[triggerer] sets off [icon2html(src, viewers(src))] [src]!"))
 	else
-		visible_message("<span class='danger'>[icon2html(src, viewers(src))] [src] detonates!</span>")
+		visible_message(span_danger("[icon2html(src, viewers(src))] [src] detonates!"))
 
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(3, 1, src)
@@ -72,13 +76,19 @@
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
+	/// The devastation range of the resulting explosion.
 	var/range_devastation = 0
+	/// The heavy impact range of the resulting explosion.
 	var/range_heavy = 1
+	/// The light impact range of the resulting explosion.
 	var/range_light = 2
+	/// The flame range of the resulting explosion.
+	var/range_flame = 0
+	/// The flash range of the resulting explosion.
 	var/range_flash = 3
 
 /obj/effect/mine/explosive/mineEffect(mob/victim)
-	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
+	explosion(src, range_devastation, range_heavy, range_light, range_flame, range_flash)
 
 /obj/effect/mine/stun
 	name = "stun mine"
@@ -93,7 +103,7 @@
 
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
-		to_chat(victim, "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>")
+		to_chat(victim, span_userdanger("You have been kicked FOR NO REISIN!"))
 		qdel(victim.client)
 
 
@@ -185,7 +195,7 @@
 
 
 	playsound(src, 'sound/weapons/armbomb.ogg', 70, TRUE)
-	to_chat(user, "<span class='warning'>You arm \the [src], causing it to shake! It will deploy in 3 seconds.</span>")
+	to_chat(user, span_warning("You arm \the [src], causing it to shake! It will deploy in 3 seconds."))
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/deploy_mine), 3 SECONDS)
 
@@ -194,7 +204,7 @@
 	do_alert_animation()
 	playsound(loc, 'sound/machines/chime.ogg', 30, FALSE, -3)
 	var/obj/effect/mine/new_mine = new mine_type(get_turf(src))
-	visible_message("<span class='danger'>\The [src] releases a puff of smoke, revealing \a [new_mine]!</span>")
+	visible_message(span_danger("\The [src] releases a puff of smoke, revealing \a [new_mine]!"))
 	var/obj/effect/particle_effect/smoke/poof = new (get_turf(src))
 	poof.lifetime = 3
 	qdel(src)

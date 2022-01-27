@@ -42,6 +42,7 @@
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
 		if (DRINK_FANTASTIC)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+			exposed_mob.mind?.add_memory(MEMORY_DRINK, list(DETAIL_DRINK = src), story_value = STORY_VALUE_OKAY)
 		if (FOOD_AMAZING)
 			SEND_SIGNAL(exposed_mob, COMSIG_ADD_MOOD_EVENT, "quality_food", /datum/mood_event/amazingtaste)
 
@@ -59,7 +60,7 @@
 /datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.2))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(30, delta_time))
@@ -68,6 +69,9 @@
 	..()
 
 /datum/reagent/consumable/nutriment/on_new(list/supplied_data)
+	. = ..()
+	if(!data)
+		return
 	// taste data can sometimes be ("salt" = 3, "chips" = 1)
 	// and we want it to be in the form ("salt" = 0.75, "chips" = 0.25)
 	// which is called "normalizing"
@@ -151,9 +155,9 @@
 	if(!isitem(exposed_obj) || istype(exposed_obj, /obj/item/food/deepfryholder))
 		return
 	if(is_type_in_typecache(exposed_obj, GLOB.oilfry_blacklisted_items) || (exposed_obj.resistance_flags & INDESTRUCTIBLE))
-		exposed_obj.loc.visible_message("<span class='notice'>The hot oil has no effect on [exposed_obj]!</span>")
+		exposed_obj.loc.visible_message(span_notice("The hot oil has no effect on [exposed_obj]!"))
 		return
-	exposed_obj.loc.visible_message("<span class='warning'>[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow.</span>")
+	exposed_obj.loc.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	var/obj/item/food/deepfryholder/fry_target = new(exposed_obj.drop_location(), exposed_obj)
 	fry_target.fry(volume)
 	fry_target.reagents.add_reagent(/datum/reagent/consumable/cooking_oil, reac_volume)
@@ -168,8 +172,8 @@
 		oil_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, oil_damage * reac_volume))
 	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
-		exposed_mob.visible_message("<span class='warning'>The boiling oil sizzles as it covers [exposed_mob]!</span>", \
-		"<span class='userdanger'>You're covered in boiling oil!</span>")
+		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
+		span_userdanger("You're covered in boiling oil!"))
 		if(FryLoss)
 			exposed_mob.emote("scream")
 		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
@@ -184,7 +188,7 @@
 		return
 
 	exposed_turf.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
-	exposed_turf.name = "deep-fried [initial(exposed_turf.name)]"
+	exposed_turf.name = "Deep-fried [initial(exposed_turf.name)]"
 	exposed_turf.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
 /datum/reagent/consumable/sugar
@@ -203,11 +207,11 @@
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWeeds(rand(1,2))
-		mytray.adjustPests(rand(1,2))
+		mytray.adjust_weedlevel(rand(1,2))
+		mytray.adjust_pestlevel(rand(1,2))
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You go into hyperglycaemic shock! Lay off the twinkies!</span>")
+	to_chat(M, span_userdanger("You go into hyperglycaemic shock! Lay off the twinkies!"))
 	M.AdjustSleeping(600)
 	. = TRUE
 
@@ -228,7 +232,7 @@
 /datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 0.5))
+		mytray.adjust_plant_health(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -361,7 +365,7 @@
 	if(methods & INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
 			if(prob(15))
-				to_chat(exposed_mob, "<span class='danger'>[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]</span>")
+				to_chat(exposed_mob, span_danger("[pick("Your head pounds.", "Your mouth feels like it's on fire.", "You feel dizzy.")]"))
 			if(prob(10))
 				victim.blur_eyes(1)
 			if(prob(10))
@@ -372,7 +376,7 @@
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!holder.has_reagent(/datum/reagent/consumable/milk))
 		if(DT_PROB(5, delta_time))
-			M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
+			M.visible_message(span_warning("[M] [pick("dry heaves!","coughs!","splutters!")]"))
 	..()
 
 /datum/reagent/consumable/salt
@@ -408,39 +412,6 @@
 	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/drug/mushroomhallucinogen
-	name = "Mushroom Hallucinogen"
-	description = "A strong hallucinogenic drug derived from certain species of mushroom."
-	color = "#E700E7" // rgb: 231, 0, 231
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
-	taste_description = "mushroom"
-	ph = 11
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	addiction_types = list(/datum/addiction/hallucinogens = 12)
-
-/datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(!M.slurring)
-		M.slurring = 1 * REM * delta_time
-	switch(current_cycle)
-		if(1 to 5)
-			M.Dizzy(5 * REM * delta_time)
-			M.set_drugginess(30 * REM * delta_time)
-			if(DT_PROB(5, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if(5 to 10)
-			M.Jitter(10 * REM * delta_time)
-			M.Dizzy(10 * REM * delta_time)
-			M.set_drugginess(35 * REM * delta_time)
-			if(DT_PROB(10, delta_time))
-				M.emote(pick("twitch","giggle"))
-		if (10 to INFINITY)
-			M.Jitter(20 * REM * delta_time)
-			M.Dizzy(20 * REM * delta_time)
-			M.set_drugginess(40 * REM * delta_time)
-			if(DT_PROB(16, delta_time))
-				M.emote(pick("twitch","giggle"))
-	..()
-
 /datum/reagent/consumable/garlic //NOTE: having garlic in your blood stops vampires from biting you.
 	name = "Garlic Juice"
 	description = "Crushed garlic. Chefs love it, but it can make you smell bad."
@@ -449,10 +420,18 @@
 	metabolization_rate = 0.15 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/garlic/on_mob_add(mob/living/L, amount)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+
+/datum/reagent/consumable/garlic/on_mob_delete(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L, TRAIT_GARLIC_BREATH, type)
+
 /datum/reagent/consumable/garlic/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(DT_PROB(min(current_cycle/2, 12.5), delta_time))
-			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
+			to_chat(M, span_danger("You can't get the scent of garlic out of your nose! You can barely think..."))
 			M.Paralyze(10)
 			M.Jitter(10)
 	else
@@ -597,9 +576,17 @@
 /datum/reagent/consumable/eggyolk
 	name = "Egg Yolk"
 	description = "It's full of protein."
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#FFB500"
 	taste_description = "egg"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/eggwhite
+	name = "Egg White"
+	description = "It's full of even more protein."
+	nutriment_factor = 1.5 * REAGENTS_METABOLISM
+	color = "#fffdf7"
+	taste_description = "bland egg"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/corn_starch
@@ -636,8 +623,8 @@
 		if(myseed && prob(20))
 			mytray.pollinate(1)
 		else
-			mytray.adjustWeeds(rand(1,2))
-			mytray.adjustPests(rand(1,2))
+			mytray.adjust_weedlevel(rand(1,2))
+			mytray.adjust_pestlevel(rand(1,2))
 
 /datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	holder.add_reagent(/datum/reagent/consumable/sugar, 3 * REM * delta_time)
@@ -672,6 +659,13 @@
 	taste_description = "rancid fungus"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/eggrot
+	name = "Rotten Eggyolk"
+	description = "It smells absolutely dreadful."
+	color ="#708a88"
+	taste_description = "rotten eggs"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"
 	description = "A blinding substance extracted from certain onions."
@@ -686,10 +680,10 @@
 		return
 
 	if(!exposed_mob.getorganslot(ORGAN_SLOT_EYES)) //can't blind somebody with no eyes
-		to_chat(exposed_mob, "<span class='notice'>Your eye sockets feel wet.</span>")
+		to_chat(exposed_mob, span_notice("Your eye sockets feel wet."))
 	else
 		if(!exposed_mob.eye_blurry)
-			to_chat(exposed_mob, "<span class='warning'>Tears well up in your eyes!</span>")
+			to_chat(exposed_mob, span_warning("Tears well up in your eyes!"))
 		exposed_mob.blind_eyes(2)
 		exposed_mob.blur_eyes(5)
 
@@ -698,7 +692,7 @@
 	if(M.eye_blurry) //Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4 * REM * delta_time)
 		if(DT_PROB(5, delta_time))
-			to_chat(M, "<span class='warning'>Your eyes sting!</span>")
+			to_chat(M, span_warning("Your eyes sting!"))
 			M.blind_eyes(2)
 
 
@@ -808,7 +802,10 @@
 	taste_description = "pure electricity"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/liquidelectricity/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
+/datum/reagent/consumable/liquidelectricity/enriched
+	name = "Enriched Liquid Electricity"
+
+/datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
 	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
 		return
@@ -816,11 +813,13 @@
 	var/mob/living/carbon/exposed_carbon = exposed_mob
 	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.getorganslot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
-		stomach.adjust_charge(reac_volume * REM * 20)
+		stomach.adjust_charge(reac_volume * 30)
 
-/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(13, delta_time) && !isethereal(M)) //lmao at the newbs who eat energy bars
-		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
+/datum/reagent/consumable/liquidelectricity/enriched/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(isethereal(M))
+		M.blood_volume += 1 * delta_time
+	else if(DT_PROB(10, delta_time)) //lmao at the newbs who eat energy bars
+		M.electrocute_act(rand(5,10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
 		playsound(M, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return ..()
 
@@ -943,8 +942,89 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/pancakebatter
-	name = "pancake batter"
+	name = "Pancake Batter"
 	description = "A very milky batter. 5 units of this on the griddle makes a mean pancake."
 	taste_description = "milky batter"
 	color = "#fccc98"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_flour
+	name = "Korta Flour"
+	description = "A coarsely ground, peppery flour made from korta nut shells."
+	taste_description = "earthy heat"
+	color = "#EEC39A"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_milk
+	name = "Korta Milk"
+	description = "A milky liquid made by crushing the centre of a korta nut."
+	taste_description = "sugary milk"
+	color = "#FFFFFF"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/korta_nectar
+	name = "Korta Nectar"
+	description = "A sweet, sugary syrup made from crushed sweet korta nuts."
+	color = "#d3a308"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	taste_description = "peppery sweetness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/whipped_cream
+	name = "Whipped Cream"
+	description = "A white fluffy cream made from whipping cream at intense speed."
+	color = "#efeff0"
+	nutriment_factor = 4 * REAGENTS_METABOLISM
+	taste_description = "fluffy sweet cream"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/peanut_butter
+	name = "Peanut Butter"
+	description = "A rich, creamy spread produced by grinding peanuts."
+	taste_description = "peanuts"
+	color = "#D9A066"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/M, delta_time, times_fired) //ET loves peanut butter
+	if(isabductor(M))
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "ET_pieces", /datum/mood_event/et_pieces, name)
+		M.set_drugginess(15 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/vinegar
+	name = "Vinegar"
+	description = "Useful for pickling, or putting on chips."
+	taste_description = "acid"
+	color = "#661F1E"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+//A better oil, representing choices like olive oil, argan oil, avocado oil, etc.
+/datum/reagent/consumable/quality_oil
+	name = "Quality Oil"
+	description = "A high quality oil, suitable for dishes where the oil is a key flavour."
+	taste_description = "olive oil"
+	color = "#DBCF5C"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cornmeal
+	name = "Cornmeal"
+	description = "Ground cornmeal, for making corn related things."
+	taste_description = "raw cornmeal"
+	color = "#ebca85"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/yoghurt
+	name = "Yoghurt"
+	description = "Creamy natural yoghurt, with applications in both food and drinks."
+	taste_description = "yoghurt"
+	color = "#efeff0"
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cornmeal_batter
+	name = "Cornmeal Batter"
+	description = "An eggy, milky, corny mixture that's not very good raw."
+	taste_description = "raw batter"
+	color = "#ebca85"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

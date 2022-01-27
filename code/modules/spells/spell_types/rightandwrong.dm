@@ -74,7 +74,6 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
 	/obj/item/warpwhistle,
-	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
@@ -89,7 +88,6 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 //everything above except for single use spellbooks, because they are counted separately (and are for basic bitches anyways)
 GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/antag_spawner/contract,
-	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/gun/magic,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword,
@@ -103,12 +101,10 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
+		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
 			return
 	var/datum/summon_guns_controller/controller = GLOB.summon_guns
 	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		SSticker.mode.traitors += H.mind
-
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
 		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
@@ -120,13 +116,13 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	var/in_hand = H.put_in_hands(G) // not always successful
 
-	to_chat(H, "<span class='warning'>\A [G] appears [in_hand ? "in your hand" : "at your feet"]!</span>")
+	to_chat(H, span_warning("\A [G] appears [in_hand ? "in your hand" : "at your feet"]!"))
 
 /proc/give_magic(mob/living/carbon/human/H)
 	if(H.stat == DEAD || !(H.client))
 		return
 	if(H.mind)
-		if(iswizard(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
+		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
 			return
 	if(!GLOB.summon_magic)
 		return
@@ -146,14 +142,14 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	var/in_hand = H.put_in_hands(M)
 
-	to_chat(H, "<span class='warning'>\A [M] appears [in_hand ? "in your hand" : "at your feet"]!</span>")
+	to_chat(H, span_warning("\A [M] appears [in_hand ? "in your hand" : "at your feet"]!"))
 	if(lucky)
-		to_chat(H, "<span class='notice'>You feel incredibly lucky.</span>")
+		to_chat(H, span_notice("You feel incredibly lucky."))
 
 
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
-		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
+		to_chat(user, span_warning("You summoned [summon_type]!"))
 		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
@@ -206,9 +202,10 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 ///signal proc to give magic to new crewmembers
-/proc/magic_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+/datum/summon_magic_controller/proc/magic_up_new_crew(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
+	if(ishuman(new_crewmember))
+		INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
 
 /**
  * The guns controller handles the summon guns event.
@@ -234,7 +231,8 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 ///signal proc to give guns to new crewmembers
-/proc/arm_up_new_crew(mob/living/carbon/human/new_crewmember, rank)
+/datum/summon_guns_controller/proc/arm_up_new_crew(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
-	INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
+	if(ishuman(new_crewmember))
+		INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
 

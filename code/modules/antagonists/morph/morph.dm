@@ -8,12 +8,11 @@
 	icon_state = "morph"
 	icon_living = "morph"
 	icon_dead = "morph_dead"
-	speed = 2
 	combat_mode = TRUE
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
@@ -43,7 +42,7 @@
 	/mob/living/simple_animal/hostile/morph,
 	/obj/effect))
 
-/mob/living/simple_animal/hostile/morph/Initialize()
+/mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -51,7 +50,7 @@
 	if(morphed)
 		. = form.examine(user)
 		if(get_dist(user,src)<=3)
-			. += "<span class='warning'>It doesn't look quite right...</span>"
+			. += span_warning("It doesn't look quite right...")
 	else
 		. = ..()
 
@@ -74,10 +73,10 @@
 
 /mob/living/simple_animal/hostile/morph/proc/eat(atom/movable/A)
 	if(morphed && !eat_while_disguised)
-		to_chat(src, "<span class='warning'>You cannot eat anything while you are disguised!</span>")
+		to_chat(src, span_warning("You cannot eat anything while you are disguised!"))
 		return FALSE
 	if(A && A.loc != src)
-		visible_message("<span class='warning'>[src] swallows [A] whole!</span>")
+		visible_message(span_warning("[src] swallows [A] whole!"))
 		A.forceMove(src)
 		return TRUE
 	return FALSE
@@ -90,15 +89,15 @@
 		if(istype(A) && allowed(A))
 			assume(A)
 	else
-		to_chat(src, "<span class='warning'>You need to be conscious to transform!</span>")
+		to_chat(src, span_warning("You need to be conscious to transform!"))
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
 	morphed = TRUE
 	form = target
 
-	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
-					"<span class='notice'>You twist your body and assume the form of [target].</span>")
+	visible_message(span_warning("[src] suddenly twists and changes shape, becoming a copy of [target]!"), \
+					span_notice("You twist your body and assume the form of [target]."))
 	appearance = target.appearance
 	copy_overlays(target)
 	alpha = max(alpha, 150) //fucking chameleons
@@ -109,7 +108,7 @@
 	//Morphed is weaker
 	melee_damage_lower = melee_damage_disguised
 	melee_damage_upper = melee_damage_disguised
-	set_varspeed(0)
+	add_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we're an object honest
@@ -117,7 +116,7 @@
 
 /mob/living/simple_animal/hostile/morph/proc/restore()
 	if(!morphed)
-		to_chat(src, "<span class='warning'>You're already in your normal form!</span>")
+		to_chat(src, span_warning("You're already in your normal form!"))
 		return
 	morphed = FALSE
 	form = null
@@ -127,8 +126,8 @@
 	animate_movement = SLIDE_STEPS
 	maptext = null
 
-	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
-					"<span class='notice'>You reform to your normal body.</span>")
+	visible_message(span_warning("[src] suddenly collapses in on itself, dissolving into a pile of green flesh!"), \
+					span_notice("You reform to your normal body."))
 	name = initial(name)
 	icon = initial(icon)
 	icon_state = initial(icon_state)
@@ -137,15 +136,15 @@
 	//Baseline stats
 	melee_damage_lower = initial(melee_damage_lower)
 	melee_damage_upper = initial(melee_damage_upper)
-	set_varspeed(initial(speed))
+	remove_movespeed_modifier(/datum/movespeed_modifier/morph_disguised)
 
 	med_hud_set_health()
 	med_hud_set_status() //we are not an object
 
 /mob/living/simple_animal/hostile/morph/death(gibbed)
 	if(morphed)
-		visible_message("<span class='warning'>[src] twists and dissolves into a pile of green flesh!</span>", \
-						"<span class='userdanger'>Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--</span>")
+		visible_message(span_warning("[src] twists and dissolves into a pile of green flesh!"), \
+						span_userdanger("Your skin ruptures! Your flesh breaks apart! No disguise can ward off de--"))
 		restore()
 	barf_contents()
 	..()
@@ -162,7 +161,8 @@
 
 /mob/living/simple_animal/hostile/morph/Aggro() // automated only
 	..()
-	restore()
+	if(morphed)
+		restore()
 
 /mob/living/simple_animal/hostile/morph/LoseAggro()
 	vision_range = initial(vision_range)
@@ -184,7 +184,7 @@
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
 	if(morphed && !melee_damage_disguised)
-		to_chat(src, "<span class='warning'>You can not attack while disguised!</span>")
+		to_chat(src, span_warning("You can not attack while disguised!"))
 		return
 	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
@@ -214,7 +214,7 @@
 	role_name = "morphling"
 
 /datum/round_event/ghost_role/morph/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
@@ -226,8 +226,8 @@
 		return MAP_ERROR
 	var/mob/living/simple_animal/hostile/morph/S = new /mob/living/simple_animal/hostile/morph(pick(GLOB.xeno_spawn))
 	player_mind.transfer_to(S)
-	player_mind.assigned_role = "Morph"
-	player_mind.special_role = "Morph"
+	player_mind.set_assigned_role(SSjob.GetJobType(/datum/job/morph))
+	player_mind.special_role = ROLE_MORPH
 	player_mind.add_antag_datum(/datum/antagonist/morph)
 	SEND_SOUND(S, sound('sound/magic/mutate.ogg'))
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a morph by an event.")

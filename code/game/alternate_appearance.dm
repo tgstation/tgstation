@@ -13,6 +13,9 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return
 	if(alternate_appearances && alternate_appearances[key])
 		return
+	if(!ispath(type, /datum/atom_hud/alternate_appearance))
+		CRASH("Invalid type passed in: [type]")
+
 	var/list/arguments = args.Copy(2)
 	return new type(arglist(arguments))
 
@@ -24,6 +27,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	..()
 	GLOB.active_alternate_appearances += src
 	appearance_key = key
+
+	for(var/mob in GLOB.player_list)
+		if(mobShouldSee(mob))
+			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	GLOB.active_alternate_appearances -= src
@@ -53,14 +60,14 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 //an alternate appearance that attaches a single image to a single atom
 /datum/atom_hud/alternate_appearance/basic
 	var/atom/target
-	var/image/theImage
+	var/image/image
 	var/add_ghost_version = FALSE
 	var/ghost_appearance
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
 	..()
 	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
-	theImage = I
+	image = I
 	target = I.loc
 	if(transfer_overlays)
 		I.copy_overlays(target)
@@ -77,12 +84,14 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
+	QDEL_NULL(image)
+	target = null
 	if(ghost_appearance)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/add_to_hud(atom/A)
 	LAZYINITLIST(A.hud_list)
-	A.hud_list[appearance_key] = theImage
+	A.hud_list[appearance_key] = image
 	. = ..()
 
 /datum/atom_hud/alternate_appearance/basic/remove_from_hud(atom/A)
@@ -92,27 +101,15 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		qdel(src)
 
 /datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
-		theImage.copy_overlays(other, cut_old)
+	image.copy_overlays(other, cut_old)
 
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE
 
-/datum/atom_hud/alternate_appearance/basic/everyone/New()
-	..()
-	for(var/mob in GLOB.mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
 /datum/atom_hud/alternate_appearance/basic/everyone/mobShouldSee(mob/M)
-	return !isobserver(M)
+	return !isdead(M)
 
 /datum/atom_hud/alternate_appearance/basic/silicons
-
-/datum/atom_hud/alternate_appearance/basic/silicons/New()
-	..()
-	for(var/mob in GLOB.silicon_mobs)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
 
 /datum/atom_hud/alternate_appearance/basic/silicons/mobShouldSee(mob/M)
 	if(issilicon(M))
@@ -122,55 +119,31 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/observers
 	add_ghost_version = FALSE //just in case, to prevent infinite loops
 
-/datum/atom_hud/alternate_appearance/basic/observers/New()
-	..()
-	for(var/mob in GLOB.dead_mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
 /datum/atom_hud/alternate_appearance/basic/observers/mobShouldSee(mob/M)
 	return isobserver(M)
 
 /datum/atom_hud/alternate_appearance/basic/noncult
 
-/datum/atom_hud/alternate_appearance/basic/noncult/New()
-	..()
-	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
 /datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!iscultist(M))
+	if(!IS_CULTIST(M))
 		return TRUE
 	return FALSE
 
 /datum/atom_hud/alternate_appearance/basic/cult
 
-/datum/atom_hud/alternate_appearance/basic/cult/New()
-	..()
-	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
 /datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(iscultist(M))
+	if(IS_CULTIST(M))
 		return TRUE
 	return FALSE
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware
 
-/datum/atom_hud/alternate_appearance/basic/blessed_aware/New()
-	..()
-	for(var/mob in GLOB.mob_list)
-		if(mobShouldSee(mob))
-			add_hud_to(mob)
-
 /datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/M)
-	if(M.mind && (M.mind.assigned_role == "Chaplain"))
+	if(M.mind?.holy_role)
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
 		return TRUE
-	if(isrevenant(M) || iswizard(M))
+	if(isrevenant(M) || IS_WIZARD(M))
 		return TRUE
 	return FALSE
 
@@ -185,7 +158,5 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/one_person/New(key, image/I, mob/living/M)
 	..(key, I, FALSE)
 	seer = M
-	add_hud_to(seer)
-
 
 /datum/atom_hud/alternate_appearance/basic/food_demands

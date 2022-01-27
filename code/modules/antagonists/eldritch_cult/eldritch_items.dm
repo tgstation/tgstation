@@ -12,54 +12,25 @@
 	if(!IS_HERETIC(user))
 		return
 	if(!target)
-		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on a transmutation rune and activate the rune to recieve a target.</span>")
+		to_chat(user,span_warning("No target could be found. Put the living heart on a transmutation rune and activate the rune to recieve a target."))
 		return
 	var/dist = get_dist(get_turf(user),get_turf(target))
 	var/dir = get_dir(get_turf(user),get_turf(target))
 	if(user.z != target.z)
-		to_chat(user,"<span class='warning'>[target.real_name] is on another plane of existence!</span>")
+		to_chat(user,span_warning("[target.real_name] is on another plane of existence!"))
 	else
 		switch(dist)
 			if(0 to 15)
-				to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [dir2text(dir)] of you!</span>")
+				to_chat(user,span_warning("[target.real_name] is near you. They are to the [dir2text(dir)] of you!"))
 			if(16 to 31)
-				to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinity. They are to the [dir2text(dir)] of you!</span>")
+				to_chat(user,span_warning("[target.real_name] is somewhere in your vicinity. They are to the [dir2text(dir)] of you!"))
 			if(32 to 127)
-				to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!</span>")
+				to_chat(user,span_warning("[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!"))
 			else
-				to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
+				to_chat(user,span_warning("[target.real_name] is beyond our reach."))
 
 	if(target.stat == DEAD)
-		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them to a transmutation rune!</span>")
-
-/datum/action/innate/heretic_shatter
-	name = "Shattering Offer"
-	desc = "By breaking your blade, you will be granted salvation from a dire situation. (Teleports you to a random safe turf on your current z level, but destroys your blade.)"
-	background_icon_state = "bg_ecult"
-	button_icon_state = "shatter"
-	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE
-	var/mob/living/carbon/human/holder
-	var/obj/item/melee/sickly_blade/sword
-
-/datum/action/innate/heretic_shatter/Grant(mob/user, obj/object)
-	sword = object
-	holder = user
-	//i know what im doing
-	return ..()
-
-/datum/action/innate/heretic_shatter/IsAvailable()
-	if(IS_HERETIC(holder) || IS_HERETIC_MONSTER(holder))
-		return TRUE
-	else
-		return FALSE
-
-/datum/action/innate/heretic_shatter/Activate()
-	var/turf/safe_turf = find_safe_turf(zlevels = sword.z, extended_safety_checks = TRUE)
-	do_teleport(holder,safe_turf,forceMove = TRUE)
-	to_chat(holder,"<span class='warning'>You feel a gust of energy flow through your body... the Rusted Hills heard your call...</span>")
-	qdel(sword)
-
+		to_chat(user,span_warning("[target.real_name] is dead. Bring them to a transmutation rune!"))
 
 /obj/item/melee/sickly_blade
 	name = "\improper Sickly Blade"
@@ -79,27 +50,26 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	var/datum/action/innate/heretic_shatter/linked_action
-
-/obj/item/melee/sickly_blade/Initialize()
-	. = ..()
-	linked_action = new(src)
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!(IS_HERETIC(user) || IS_HERETIC_MONSTER(user)))
-		to_chat(user,"<span class='danger'>You feel a pulse of alien intellect lash out at your mind!</span>")
+		to_chat(user,span_danger("You feel a pulse of alien intellect lash out at your mind!"))
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return FALSE
 	return ..()
 
-/obj/item/melee/sickly_blade/pickup(mob/user)
-	. = ..()
-	linked_action.Grant(user, src)
-
-/obj/item/melee/sickly_blade/dropped(mob/user, silent)
-	. = ..()
-	linked_action.Remove(user, src)
+/obj/item/melee/sickly_blade/attack_self(mob/user)
+	var/turf/safe_turf = find_safe_turf(zlevels = z, extended_safety_checks = TRUE)
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		if(do_teleport(user, safe_turf, channel = TELEPORT_CHANNEL_MAGIC))
+			to_chat(user,span_warning("As you shatter [src], you feel a gust of energy flow through your body. The Rusted Hills heard your call..."))
+		else
+			to_chat(user,span_warning("You shatter [src], but your plea goes unanswered."))
+	else
+		to_chat(user,span_warning("You shatter [src]."))
+	playsound(src, "shatter", 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -115,6 +85,11 @@
 			eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 		else
 			eldritch_knowledge_datum.on_ranged_attack_eldritch_blade(target,user,click_parameters)
+
+/obj/item/melee/sickly_blade/examine(mob/user)
+	. = ..()
+	if(IS_HERETIC(user) || IS_HERETIC_MONSTER(user))
+		. += span_notice("<B>A heretic (or a servant of one) can shatter this blade to teleport to a random, mostly safe location by activating it in-hand.</B>")
 
 /obj/item/melee/sickly_blade/rust
 	name = "\improper Rusted Blade"
@@ -183,7 +158,7 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book, /obj/item/living_heart)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// slightly better than normal cult robes
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, RAD = 0, FIRE = 20, ACID = 20)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50,ENERGY = 50, BOMB = 35, BIO = 20, FIRE = 20, ACID = 20)
 
 /obj/item/reagent_containers/glass/beaker/eldritch
 	name = "flask of eldritch essence"
@@ -199,7 +174,11 @@
 	flags_cover = NONE
 	desc = "Black like tar, doesn't reflect any light. Runic symbols line the outside, with each flash you loose comprehension of what you are seeing."
 	item_flags = EXAMINE_SKIP
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
+
+/obj/item/clothing/head/hooded/cult_hoodie/void/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NO_STRIP, REF(src))
 
 /obj/item/clothing/suit/hooded/cultrobes/void
 	name = "void cloak"
@@ -210,14 +189,17 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/void
 	flags_inv = NONE
 	// slightly worse than normal cult robes
-	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, RAD = 0, FIRE = 0, ACID = 0)
+	armor = list(MELEE = 30, BULLET = 30, LASER = 30,ENERGY = 30, BOMB = 15, BIO = 0, FIRE = 0, ACID = 0)
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/void_cloak
 	alternative_mode = TRUE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/RemoveHood()
+	if (!HAS_TRAIT(src, TRAIT_NO_STRIP))
+		return ..()
 	var/mob/living/carbon/carbon_user = loc
-	to_chat(carbon_user,"<span class='notice'>The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!</span>")
+	to_chat(carbon_user, span_notice("The kaleidoscope of colours collapses around you, as the cloak shifts to visibility!"))
 	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_NO_STRIP, src)
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/void/MakeHood()
@@ -227,11 +209,12 @@
 	var/mob/living/carbon/carbon_user = loc
 	if(IS_HERETIC(carbon_user) || IS_HERETIC_MONSTER(carbon_user))
 		. = ..()
-		to_chat(carbon_user,"<span class='notice'>The light shifts around you making the cloak invisible!</span>")
+		to_chat(carbon_user,span_notice("The light shifts around you making the cloak invisible!"))
 		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_NO_STRIP, src)
 		return
 
-	to_chat(carbon_user,"<span class='danger'>You can't force the hood onto your head!</span>")
+	to_chat(carbon_user,span_danger("You can't force the hood onto your head!"))
 
 /obj/item/clothing/mask/void_mask
 	name = "Abyssal Mask"
@@ -321,7 +304,7 @@
 	. += "This item can carve 'Grasping carving' - when stepped on it causes heavy damage to the legs and stuns for 5 seconds."
 	. += "This item can carve 'Mad carving' - when stepped on it causes dizzyness, jiterryness, temporary blindness, confusion , stuttering and slurring."
 
-/obj/item/melee/rune_carver/Initialize()
+/obj/item/melee/rune_carver/Initialize(mapload)
 	. = ..()
 	linked_action = new(src)
 
@@ -346,7 +329,7 @@
 /obj/item/melee/rune_carver/proc/carve_rune(atom/target, mob/user, proximity_flag, click_parameters)
 	var/obj/structure/trap/eldritch/elder = locate() in range(1,target)
 	if(elder)
-		to_chat(user,"<span class='notice'>You can't draw runes that close to each other!</span>")
+		to_chat(user,span_notice("You can't draw runes that close to each other!"))
 		return
 
 	for(var/_rune_ref in current_runes)
@@ -354,8 +337,8 @@
 		if(!rune_ref.resolve())
 			current_runes -= rune_ref
 
-	if(current_runes.len >= max_rune_amt)
-		to_chat(user,"<span class='notice'>The blade cannot support more runes!</span>")
+	if(length(current_runes) >= max_rune_amt)
+		to_chat(user,span_notice("The blade cannot support more runes!"))
 		return
 
 	var/list/pick_list = list()
@@ -365,13 +348,13 @@
 
 	drawing = TRUE
 
-	var/type = pick_list[input(user,"Choose the rune","Rune") as null|anything in pick_list ]
-	if(!type)
+	var/type = pick_list[tgui_input_list(user, "Choose the rune", "Rune", pick_list) ]
+	if(isnull(type))
 		drawing = FALSE
 		return
 
 
-	to_chat(user,"<span class='notice'>You start drawing the rune...</span>")
+	to_chat(user,span_notice("You start drawing the rune..."))
 	if(!do_after(user,5 SECONDS,target = target))
 		drawing = FALSE
 		return
@@ -410,7 +393,7 @@
 
 /obj/item/eldritch_potion/attack_self(mob/user)
 	. = ..()
-	to_chat(user,"<span class='notice'>You drink the potion and with the viscous liquid, the glass dematerializes.</span>")
+	to_chat(user,span_notice("You drink the potion and with the viscous liquid, the glass dematerializes."))
 	effect(user)
 	qdel(src)
 

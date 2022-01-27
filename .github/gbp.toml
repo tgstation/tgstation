@@ -2,19 +2,23 @@ no_balance_label = "GBP: No Update"
 reset_label = "GBP: Reset"
 
 [points]
+"Accessibility" = 3
+"Administration" = 2
 "Atomic" = 2
 "Balance/Rebalance" = -8
 "Code Improvement" = 2
-"Feature" = -10
+"Content Expansion" = -3
 "Feedback" = 2
 "Fix" = 3
 "Grammar and Formatting" = 1
+"Hard Deletes" = 12
 "Logging" = 1
+"Mechanic" = -10
 "Performance" = 12
 "Priority: CRITICAL" = 20
 "Priority: High" = 15
 "Quality of Life" = 1
 "Refactor" = 10
-"Sound" = 1
+"Sound" = 3
 "Sprites" = 3
 "Unit Tests" = 6

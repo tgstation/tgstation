@@ -90,9 +90,13 @@
 	//We cannot call it for items that have not been handled as they are not yet correctly
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
-		I.equipped(src, slot)
+		has_equipped(I, slot, initial)
 
 	return not_handled
+
+/// This proc is called after an item has been successfully handled and equipped to a slot.
+/mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
+	return item.equipped(src, slot, initial)
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
@@ -154,68 +158,60 @@
 	return index && hand_bodyparts[index]
 
 /**
- * Proc called when giving an item to another player
+ * Proc called when offering an item to another player
  *
  * This handles creating an alert and adding an overlay to it
  */
 /mob/living/carbon/proc/give()
-	var/obj/item/receiving = get_active_held_item()
-	if(!receiving)
-		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
+		to_chat(src, span_warning("You're not holding anything to give!"))
 		return
 
-	if(istype(receiving, /obj/item/slapper))
-		offer_high_five(receiving)
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
-	visible_message("<span class='notice'>[src] is offering [receiving].</span>", \
-					"<span class='notice'>You offer [receiving].</span>", null, 2)
-	for(var/mob/living/carbon/C in orange(1, src)) //Fixed that, now it shouldn't be able to give benos stunbatons and IDs
-		if(!CanReach(C))
-			continue
 
-		if(!C.can_hold_items())
-			continue
+	if(has_status_effect(STATUS_EFFECT_OFFERING))
+		to_chat(src, span_warning("You're already offering up something!"))
+		return
 
-		var/atom/movable/screen/alert/give/G = C.throw_alert("[src]", /atom/movable/screen/alert/give)
-		if(!G)
-			continue
-		G.setup(C, src, receiving)
+	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
+		return
+
+	visible_message(span_notice("[src] is offering [offered_item]."), \
+					span_notice("You offer [offered_item]."), null, 2)
+
+	apply_status_effect(STATUS_EFFECT_OFFERING, offered_item)
 
 /**
  * Proc called when the player clicks the give alert
  *
- * Handles checking if the player taking the item has open slots and is in range of the giver
+ * Handles checking if the player taking the item has open slots and is in range of the offerer
  * Also deals with the actual transferring of the item to the players hands
  * Arguments:
- * * giver - The person giving the original item
- * * I - The item being given by the giver
+ * * offerer - The person giving the original item
+ * * I - The item being given by the offerer
  */
-/mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
-	clear_alert("[giver]")
-	if(get_dist(src, giver) > 1)
-		to_chat(src, "<span class='warning'>[giver] is out of range! </span>")
+/mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
+	clear_alert("[offerer]")
+	if(get_dist(src, offerer) > 1)
+		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
-	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they were offering! </span>")
+	if(!I || offerer.get_active_held_item() != I)
+		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
 	if(!get_empty_held_indexes())
-		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
+		to_chat(src, span_warning("You have no empty hands!"))
 		return
-	if(!giver.temporarilyRemoveItemFromInventory(I))
-		visible_message("<span class='notice'>[giver] tries to hand over [I] but it's stuck to them....</span>")
+
+	if(I.on_offer_taken(offerer, src)) // see if the item has special behavior for being accepted
 		return
-	visible_message("<span class='notice'>[src] takes [I] from [giver]</span>", \
-					"<span class='notice'>You take [I] from [giver]</span>")
+
+	if(!offerer.temporarilyRemoveItemFromInventory(I))
+		visible_message(span_notice("[offerer] tries to hand over [I] but it's stuck to them...."))
+		return
+
+	visible_message(span_notice("[src] takes [I] from [offerer]."), \
+					span_notice("You take [I] from [offerer]."))
 	put_in_hands(I)
-
-/// Spin-off of [/mob/living/carbon/proc/give] exclusively for high-fiving
-/mob/living/carbon/proc/offer_high_five(obj/item/slap)
-	if(has_status_effect(STATUS_EFFECT_HIGHFIVE))
-		return
-	if(!(locate(/mob/living/carbon) in orange(1, src)))
-		visible_message("<span class='danger'>[src] raises [p_their()] arm, looking around for a high-five, but there's no one around! How embarassing...</span>", \
-			"<span class='warning'>You post up, looking for a high-five, but finding no one within range! How embarassing...</span>", null, 2)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high_five", /datum/mood_event/high_five_alone)
-		return
-
-	apply_status_effect(STATUS_EFFECT_HIGHFIVE, slap)

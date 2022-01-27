@@ -16,7 +16,7 @@
 	var/mob/living/L = locate() in buckled_mobs
 	if(!L)
 		return
-	to_chat(user, "<span class='notice'>Invoking the sacred ritual, you sacrifice [L].</span>")
+	to_chat(user, span_notice("Invoking the sacred ritual, you sacrifice [L]."))
 	L.gib()
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
 
@@ -35,10 +35,10 @@
 	if(.)
 		return
 	if(last_process + time_between_uses > world.time)
-		to_chat(user, "<span class='notice'>The fountain appears to be empty.</span>")
+		to_chat(user, span_notice("The fountain appears to be empty."))
 		return
 	last_process = world.time
-	to_chat(user, "<span class='notice'>The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards.</span>")
+	to_chat(user, span_notice("The water feels warm and soothing as you touch it. The fountain immediately dries up shortly afterwards."))
 	user.reagents.add_reagent(/datum/reagent/medicine/omnizine/godblood,20)
 	update_appearance()
 	addtimer(CALLBACK(src, /atom/.proc/update_appearance), time_between_uses)

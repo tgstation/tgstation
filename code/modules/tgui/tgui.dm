@@ -33,6 +33,8 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
+	/// Rate limit client refreshes to prevent DoS.
+	COOLDOWN_DECLARE(refresh_cooldown)
 
 /**
  * public
@@ -50,7 +52,7 @@
  */
 /datum/tgui/New(mob/user, datum/src_object, interface, title, ui_x, ui_y)
 	log_tgui(user,
-		"new [interface] fancy [user?.client?.prefs.tgui_fancy]",
+		"new [interface] fancy [user?.client?.prefs.read_preference(/datum/preference/toggle/tgui_fancy)]",
 		src_object = src_object)
 	src.user = user
 	src.src_object = src_object
@@ -58,10 +60,15 @@
 	src.interface = interface
 	if(title)
 		src.title = title
-	src.state = src_object.ui_state()
+	src.state = src_object.ui_state(user)
 	// Deprecated
 	if(ui_x && ui_y)
 		src.window_size = list(ui_x, ui_y)
+
+/datum/tgui/Destroy()
+	user = null
+	src_object = null
+	return ..()
 
 /**
  * public
@@ -85,9 +92,8 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
-			fancy = user.client.prefs.tgui_fancy,
+			fancy = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
 			inline_assets = list(
-				get_asset_datum(/datum/asset/simple/tgui_common),
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
 	else
@@ -214,8 +220,8 @@
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
-			"fancy" = user.client.prefs.tgui_fancy,
-			"locked" = user.client.prefs.tgui_lock,
+			"fancy" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy),
+			"locked" = user.client.prefs.read_preference(/datum/preference/toggle/tgui_lock),
 		),
 		"client" = list(
 			"ckey" = user.client.ckey,
@@ -248,7 +254,7 @@
 		return
 	var/datum/host = src_object.ui_host(user)
 	// If the object or user died (or something else), abort.
-	if(!src_object || !host || !user || !window)
+	if(QDELETED(src_object) || QDELETED(host) || QDELETED(user) || QDELETED(window))
 		close(can_be_suspended = FALSE)
 		return
 	// Validate ping
@@ -298,6 +304,10 @@
 		return FALSE
 	switch(type)
 		if("ready")
+			// Send a full update when the user manually refreshes the UI
+			if (initialized && COOLDOWN_FINISHED(src, refresh_cooldown))
+				send_full_update()
+				COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 			initialized = TRUE
 		if("pingReply")
 			initialized = TRUE

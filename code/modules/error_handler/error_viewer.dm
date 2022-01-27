@@ -122,7 +122,7 @@ GLOBAL_DATUM(error_cache, /datum/error_viewer/error_cache)
 			err_msg_delay = CONFIG_GET(number/error_msg_delay)
 		else
 			var/datum/config_entry/CE = /datum/config_entry/number/error_msg_delay
-			err_msg_delay = initial(CE.config_entry_value)
+			err_msg_delay = initial(CE.default)
 		error_source.next_message_at = world.time + err_msg_delay
 
 /datum/error_viewer/error_source

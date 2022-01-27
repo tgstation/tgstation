@@ -21,7 +21,7 @@
 	see_in_dark = 7
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
@@ -34,7 +34,7 @@
 	///Innate spells that are supposed to be added when a beast is created
 	var/list/spells_to_add
 
-/mob/living/simple_animal/hostile/eldritch/Initialize()
+/mob/living/simple_animal/hostile/eldritch/Initialize(mapload)
 	. = ..()
 	add_spells()
 
@@ -63,7 +63,7 @@
 
 	var/list/linked_mobs = list()
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize(mapload)
 	. = ..()
 	link_mob(src)
 
@@ -81,11 +81,11 @@
 	if(linked_mobs[mob_linked])
 		return FALSE
 
-	to_chat(mob_linked, "<span class='notice'>You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link.</span>")
+	to_chat(mob_linked, span_notice("You feel something new enter your sphere of mind, you hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."))
 	var/datum/action/innate/mansus_speech/action = new(src)
 	linked_mobs[mob_linked] = action
 	action.Grant(mob_linked)
-	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/unlink_mob)
+	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)), .proc/unlink_mob)
 	return TRUE
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
@@ -93,17 +93,17 @@
 
 	if(!linked_mobs[mob_linked])
 		return
-	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)))
 	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
 	action.Remove(mob_linked)
 	qdel(action)
-	to_chat(mob_linked, "<span class='notice'>Your mind shatters as the [src]'s Mansus Link leaves your mind.</span>")
+	to_chat(mob_linked, span_notice("Your mind shatters as the [src]'s Mansus Link leaves your mind."))
 	INVOKE_ASYNC(mob_linked, /mob.proc/emote, "scream")
 	//micro stun
 	mob_linked.AdjustParalyzed(0.5 SECONDS)
 	linked_mobs -= mob_linked
 
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/death(gibbed)
+/mob/living/simple_animal/hostile/eldritch/raw_prophet/Destroy()
 	for(var/linked_mob in linked_mobs)
 		unlink_mob(linked_mob)
 	return ..()
@@ -202,6 +202,7 @@
 
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
+	SIGNAL_HANDLER
 	if(!follow)
 		return
 	gib_trail()
@@ -240,7 +241,7 @@
 		if(current_stacks >= stacks_to_grow)
 			var/mob/living/simple_animal/hostile/eldritch/armsy/prev = new type(drop_location(),spawn_more = FALSE)
 			icon_state = "armsy_mid"
-			icon_living =  "armsy_mid"
+			icon_living = "armsy_mid"
 			back = prev
 			prev.icon_state = "armsy_end"
 			prev.icon_living = "armsy_end"
@@ -250,7 +251,7 @@
 			return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Shoot(atom/targeted_atom)
-	target = targeted_atom
+	GiveTarget(targeted_atom)
 	AttackingTarget()
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
@@ -261,7 +262,7 @@
 	if(target == back || target == front)
 		return
 	if(back)
-		back.target = target
+		back.GiveTarget(target)
 		back.AttackingTarget()
 	if(!Adjacent(target))
 		return
@@ -331,7 +332,7 @@
 	if(stat == DEAD)
 		return ..()
 	var/turf/T = get_turf(src)
-	if(istype(T,/turf/open/floor/plating/rust))
+	if(HAS_TRAIT(T, TRAIT_RUSTY))
 		adjustBruteLoss(-1.5 * delta_time, FALSE)
 		adjustFireLoss(-1.5 * delta_time, FALSE)
 	return ..()

@@ -52,7 +52,7 @@
 /// You want to override this if you have dynamic orders, such as the moth tourists requesting the chef's clothes.
 /// If the list of orders are static, just modify orderable_objects.
 /datum/customer_data/proc/get_order(datum/venue/venue)
-	return pickweight(orderable_objects[venue.type])
+	return pick_weight(orderable_objects[venue.venue_type])
 
 /datum/customer_data/proc/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	return
@@ -61,11 +61,6 @@
 	return
 
 /datum/customer_data/american
-	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/burger/plain = 25, /obj/item/food/burger/cheese = 15, /obj/item/food/burger/superbite = 1, /obj/item/food/fries = 10, /obj/item/food/cheesyfries = 6, /obj/item/food/pie/applepie = 4, /obj/item/food/pie/pumpkinpie = 2, /obj/item/food/hotdog = 8, /obj/item/food/pizza/pineapple = 1, /obj/item/food/burger/baconburger = 10, /obj/item/food/pancakes = 4),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/b52 = 6, /datum/reagent/consumable/ethanol/manhattan = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1, /datum/reagent/consumable/ethanol/beer = 25))
-
-
 	found_seat_lines = list("I hope there's a seat that supports my weight.", "I hope I can bring my gun in here.", "I hope they have the triple deluxe fatty burger.", "I just love the culture here.")
 	cant_find_seat_lines = list("I'm so tired from standing...", "I have chronic back pain, please hurry up and get me a seat!", "I'm not going to tip if I don't get a seat.")
 	leave_mad_lines = list("NO TIP FOR YOU. GOODBYE!", "At least at SpaceDonalds they serve their food FAST!", "This venue is horrendous!", "I will speak to your manager!", "I'll be sure to leave a bad Yelp review.")
@@ -75,6 +70,29 @@
 	first_warning_line = "Don't tread on me!"
 	second_warning_line = "Last chance buddy! Don't tread on me!"
 	self_defense_line = "CASTLE DOCTRINE ACTIVATED!"
+
+	orderable_objects = list(
+		VENUE_RESTAURANT = list(
+			/obj/item/food/burger/plain = 25,
+			/obj/item/food/burger/cheese = 15,
+			/obj/item/food/burger/superbite = 1,
+			/obj/item/food/fries = 10,
+			/obj/item/food/cheesyfries = 6,
+			/obj/item/food/pie/applepie = 4,
+			/obj/item/food/pie/pumpkinpie = 2,
+			/obj/item/food/hotdog = 8,
+			/obj/item/food/pizza/pineapple = 1,
+			/obj/item/food/burger/baconburger = 10,
+			/obj/item/food/pancakes = 4,
+			/obj/item/food/eggsausage = 5,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/b52 = 6,
+			/datum/reagent/consumable/ethanol/manhattan = 3,
+			/datum/reagent/consumable/ethanol/atomicbomb = 1,
+			/datum/reagent/consumable/ethanol/beer = 25,
+		),
+	)
 
 
 /datum/customer_data/italian
@@ -92,8 +110,32 @@
 	second_warning_line = "Last warning! Do not touch my spaghet."
 	self_defense_line = "I'm going to knead you like mama kneaded her delicious meatballs!"
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/spaghetti/pastatomato = 20, /obj/item/food/spaghetti/copypasta = 6, /obj/item/food/spaghetti/meatballspaghetti = 4, /obj/item/food/spaghetti/butternoodles = 4, /obj/item/food/pizza/vegetable = 2, /obj/item/food/pizza/mushroom = 2, /obj/item/food/pizza/meat = 2, /obj/item/food/pizza/margherita = 2, /obj/item/food/lasagna = 4, /obj/item/food/cannoli = 3, /obj/item/food/eggplantparm = 3, /obj/item/food/cornuto = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/fanciulli = 5, /datum/reagent/consumable/ethanol/branca_menta = 3, /datum/reagent/consumable/ethanol/beer = 5, , /datum/reagent/consumable/lemonade = 8, /datum/reagent/consumable/ethanol/godfather = 5, /datum/reagent/consumable/ethanol/wine = 3, /datum/reagent/consumable/ethanol/grappa = 3, /datum/reagent/consumable/ethanol/amaretto = 3))
+		VENUE_RESTAURANT = list(
+			/obj/item/food/spaghetti/pastatomato = 20,
+			/obj/item/food/spaghetti/copypasta = 6,
+			/obj/item/food/spaghetti/meatballspaghetti = 4,
+			/obj/item/food/spaghetti/butternoodles = 4,
+			/obj/item/food/pizza/vegetable = 2,
+			/obj/item/food/pizza/mushroom = 2,
+			/obj/item/food/pizza/meat = 2,
+			/obj/item/food/pizza/margherita = 2,
+			/obj/item/food/lasagna = 4,
+			/obj/item/food/cannoli = 3,
+			/obj/item/food/salad/risotto =5,
+			/obj/item/food/eggplantparm = 3,
+			/obj/item/food/cornuto = 2,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/fanciulli = 5,
+			/datum/reagent/consumable/ethanol/branca_menta = 3,
+			/datum/reagent/consumable/ethanol/beer = 5,
+			/datum/reagent/consumable/lemonade = 8,
+			/datum/reagent/consumable/ethanol/godfather = 5,
+			/datum/reagent/consumable/ethanol/wine = 3,
+			/datum/reagent/consumable/ethanol/grappa = 3,
+			/datum/reagent/consumable/ethanol/amaretto = 5,
+		),
+	)
 
 
 /datum/customer_data/french
@@ -111,8 +153,23 @@
 	self_defense_line = "I will break you like a baguette!"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_french.ogg'
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/baguette = 20, /obj/item/food/garlicbread = 5, /obj/item/food/soup/onion = 4, /obj/item/food/pie/berryclafoutis = 2, /obj/item/food/omelette = 15),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/champagne = 10, /datum/reagent/consumable/ethanol/cognac = 5, /datum/reagent/consumable/ethanol/mojito = 5, /datum/reagent/consumable/ethanol/sidecar = 5, /datum/reagent/consumable/ethanol/between_the_sheets = 4, /datum/reagent/consumable/ethanol/beer = 5, /datum/reagent/consumable/ethanol/wine = 5))
+		VENUE_RESTAURANT = list(
+			/obj/item/food/baguette = 20,
+			/obj/item/food/garlicbread = 5,
+			/obj/item/food/soup/onion = 4,
+			/obj/item/food/pie/berryclafoutis = 2,
+			/obj/item/food/omelette = 15,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/champagne = 10,
+			/datum/reagent/consumable/ethanol/cognac = 5,
+			/datum/reagent/consumable/ethanol/mojito = 5,
+			/datum/reagent/consumable/ethanol/sidecar = 5,
+			/datum/reagent/consumable/ethanol/between_the_sheets = 4,
+			/datum/reagent/consumable/ethanol/beer = 5,
+			/datum/reagent/consumable/ethanol/wine = 5,
+		),
+	)
 
 /datum/customer_data/french/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	if(customer.ai_controller.blackboard[BB_CUSTOMER_LEAVING])
@@ -138,8 +195,26 @@
 	self_defense_line = "OMAE WA MO, SHINDEROU!"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese1.ogg'
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/breadslice/plain = 5, /obj/item/food/soup/miso = 10, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/muffin/berry = 2, /obj/item/food/beef_stroganoff = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/sake = 8, /datum/reagent/consumable/cafe_latte = 6, /datum/reagent/consumable/ethanol/aloe = 6, /datum/reagent/consumable/chocolatepudding = 4, /datum/reagent/consumable/tea = 4, /datum/reagent/consumable/cherryshake = 1, /datum/reagent/consumable/ethanol/bastion_bourbon = 1))
+		VENUE_RESTAURANT = list(
+			/obj/item/food/tofu = 5,
+			/obj/item/food/breadslice/plain = 5,
+			/obj/item/food/soup/miso = 10,
+			/obj/item/food/soup/vegetable = 4,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/chawanmushi = 4,
+			/obj/item/food/muffin/berry = 2,
+			/obj/item/food/beef_stroganoff = 2,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/sake = 8,
+			/datum/reagent/consumable/cafe_latte = 6,
+			/datum/reagent/consumable/ethanol/aloe = 6,
+			/datum/reagent/consumable/chocolatepudding = 4,
+			/datum/reagent/consumable/tea = 4,
+			/datum/reagent/consumable/cherryshake = 1,
+			/datum/reagent/consumable/ethanol/bastion_bourbon = 1,
+		),
+	)
 
 /datum/customer_data/japanese/get_overlays(mob/living/simple_animal/robot_customer/customer)
 	//leaving and eaten
@@ -162,8 +237,24 @@
 	self_defense_line = "I didn't want it to end up like this."
 	speech_sound = 'sound/creatures/tourist/tourist_talk_japanese2.ogg'
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/tofu = 5, /obj/item/food/soup/miso = 6, /obj/item/food/soup/vegetable = 4, /obj/item/food/sashimi = 4, /obj/item/food/chawanmushi = 4, /obj/item/food/meatbun = 4, /obj/item/food/beef_stroganoff = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/beer = 14, /datum/reagent/consumable/ethanol/sake = 9, /datum/reagent/consumable/cafe_latte = 3, /datum/reagent/consumable/coffee = 3, /datum/reagent/consumable/soy_latte = 3, /datum/reagent/consumable/ethanol/atomicbomb = 1))
+		VENUE_RESTAURANT = list(
+			/obj/item/food/tofu = 5,
+			/obj/item/food/soup/miso = 6,
+			/obj/item/food/soup/vegetable = 4,
+			/obj/item/food/sashimi = 4,
+			/obj/item/food/chawanmushi = 4,
+			/obj/item/food/meatbun = 4,
+			/obj/item/food/beef_stroganoff = 2,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/beer = 14,
+			/datum/reagent/consumable/ethanol/sake = 9,
+			/datum/reagent/consumable/cafe_latte = 3,
+			/datum/reagent/consumable/coffee = 3,
+			/datum/reagent/consumable/soy_latte = 3,
+			/datum/reagent/consumable/ethanol/atomicbomb = 1,
+		),
+	)
 
 /datum/customer_data/moth
 	prefix_file = "strings/names/moth_prefix.txt"
@@ -182,7 +273,7 @@
 
 	// Always asks for the clothes that you have on, but this is a fallback.
 	orderable_objects = list(
-		/datum/venue/restaurant = list(
+		VENUE_RESTAURANT = list(
 			/obj/item/clothing/head/chefhat = 3,
 			/obj/item/clothing/shoes/sneakers/black = 3,
 			/obj/item/clothing/gloves/color/black = 1,
@@ -218,7 +309,7 @@
 		orderable[buffet.shoes] = 1
 
 	if (orderable.len)
-		var/datum/order = pickweight(orderable)
+		var/datum/order = pick_weight(orderable)
 		return order.type
 
 /datum/customer_data/moth/proc/get_wings(mob/living/simple_animal/robot_customer/customer)
@@ -265,9 +356,28 @@
 	speech_sound = 'sound/creatures/tourist/tourist_talk_mexican.ogg'
 	clothing_sets = list("mexican_poncho")
 	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/taco/plain = 25, /obj/item/food/taco = 15 , /obj/item/food/burrito = 15, /obj/item/food/fuegoburrito = 1, /obj/item/food/cheesyburrito = 4, /obj/item/food/nachos = 10, /obj/item/food/cheesynachos = 6, /obj/item/food/pie/dulcedebatata = 2, /obj/item/food/cubannachos = 3, /obj/item/food/stuffedlegion = 1),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/whiskey = 6, /datum/reagent/consumable/ethanol/tequila = 20, /datum/reagent/consumable/ethanol/tequila_sunrise = 1, /datum/reagent/consumable/ethanol/beer = 15, /datum/reagent/consumable/ethanol/patron = 5, /datum/reagent/consumable/ethanol/brave_bull = 5, /datum/reagent/consumable/ethanol/margarita = 8))
-
+		VENUE_RESTAURANT = list(
+			/obj/item/food/taco/plain = 25,
+			/obj/item/food/taco = 15,
+			/obj/item/food/burrito = 15,
+			/obj/item/food/fuegoburrito = 1,
+			/obj/item/food/cheesyburrito = 4,
+			/obj/item/food/nachos = 10,
+			/obj/item/food/cheesynachos = 6,
+			/obj/item/food/pie/dulcedebatata = 2,
+			/obj/item/food/cubannachos = 3,
+			/obj/item/food/stuffedlegion = 1,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/whiskey = 6,
+			/datum/reagent/consumable/ethanol/tequila = 20,
+			/datum/reagent/consumable/ethanol/tequila_sunrise = 1,
+			/datum/reagent/consumable/ethanol/beer = 15,
+			/datum/reagent/consumable/ethanol/patron = 5,
+			/datum/reagent/consumable/ethanol/brave_bull = 5,
+			/datum/reagent/consumable/ethanol/margarita = 8,
+		),
+	)
 
 	found_seat_lines = list("¿Como te va, space station 13?", "Who's ready to party!", "Ah, muchas gracias.", "Ahhh, smells like mi abuela's cooking!")
 	cant_find_seat_lines = list("¿En Serio? Seriously, no seats?", "Andele! I want a table to watch the football match!", "Ay Caramba...")
@@ -283,14 +393,36 @@
 	base_icon = "british"
 	prefix_file = "strings/names/british_prefix.txt"
 	speech_sound = 'sound/creatures/tourist/tourist_talk_british.ogg'
-	orderable_objects = list(
-	/datum/venue/restaurant = list(/obj/item/food/fishandchips = 10, /obj/item/food/soup/stew = 10, , /obj/item/food/salad/ricepudding = 5, /obj/item/food/grilled_cheese_sandwich = 5, /obj/item/food/pie/meatpie = 5, /obj/item/food/benedict = 5, /obj/item/food/full_english = 2, /obj/item/food/soup/indian_curry = 3, /obj/item/food/beef_wellington/slice = 2),
-	/datum/venue/bar = list(/datum/reagent/consumable/ethanol/ale = 10, /datum/reagent/consumable/ethanol/beer = 10, /datum/reagent/consumable/ethanol/gin = 5, /datum/reagent/consumable/ethanol/hcider = 10, /datum/reagent/consumable/ethanol/alliescocktail = 5, /datum/reagent/consumable/ethanol/martini = 5, /datum/reagent/consumable/ethanol/gintonic = 5, /datum/reagent/consumable/tea = 10))
 
 	friendly_pull_line = "I don't enjoy being pulled around like this."
 	first_warning_line = "Our sovereign lord the Queen chargeth and commandeth all persons, being assembled, immediately to disperse themselves."
 	second_warning_line = "And peaceably to depart to their habitations, or to their lawful business, upon the pains contained in the act made in the first year of King George, for preventing tumults and riotous assemblies. There will be no further warnings."
 	self_defense_line = "God Save the Queen."
+
+	orderable_objects = list(
+		VENUE_RESTAURANT = list(
+			/obj/item/food/fishandchips = 10,
+			/obj/item/food/soup/stew = 10,
+			/obj/item/food/salad/ricepudding = 5,
+			/obj/item/food/grilled_cheese_sandwich = 5,
+			/obj/item/food/pie/meatpie = 5,
+			/obj/item/food/benedict = 5,
+			/obj/item/food/full_english = 2,
+			/obj/item/food/soup/indian_curry = 3,
+			/obj/item/food/beef_wellington_slice = 2,
+		),
+		VENUE_BAR = list(
+			/datum/reagent/consumable/ethanol/ale = 10,
+			/datum/reagent/consumable/ethanol/beer = 10,
+			/datum/reagent/consumable/ethanol/gin = 5,
+			/datum/reagent/consumable/ethanol/hcider = 10,
+			/datum/reagent/consumable/ethanol/alliescocktail = 5,
+			/datum/reagent/consumable/ethanol/martini = 5,
+			/datum/reagent/consumable/ethanol/gintonic = 5,
+			/datum/reagent/consumable/tea = 10,
+		),
+	)
+
 
 /datum/customer_data/british/gent
 	clothing_sets = list("british_gentleman")
@@ -318,7 +450,7 @@
 	clothing_sets = list("defect_wires", "defect_bad_takes")
 	is_unique = TRUE
 	orderable_objects = list(
-		/datum/venue/restaurant = list(
+		VENUE_RESTAURANT = list(
 			/obj/item/toy/crayon/red = 1,
 			/obj/item/toy/crayon/orange = 1,
 			/obj/item/toy/crayon/yellow = 1,
@@ -327,7 +459,7 @@
 			/obj/item/toy/crayon/purple = 1,
 			/obj/item/food/canned/peaches/maint = 6,
 		),
-		/datum/venue/bar = list(
+		VENUE_BAR = list(
 			/datum/reagent/consumable/failed_reaction = 1,
 			/datum/reagent/spraytan = 1,
 			/datum/reagent/reaction_agent/basic_buffer = 1,

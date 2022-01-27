@@ -1,3 +1,8 @@
+/// Corner A area section for buildmode
+#define AREASELECT_CORNERA "corner A"
+/// Corner B area selection for buildmode
+#define AREASELECT_CORNERB "corner B"
+
 /datum/buildmode_mode
 	var/key = "oops"
 
@@ -34,7 +39,7 @@
 	CRASH("No help defined, yell at a coder")
 
 /datum/buildmode_mode/proc/change_settings(client/c)
-	to_chat(c, "<span class='warning'>There is no configuration available for this mode</span>")
+	to_chat(c, span_warning("There is no configuration available for this mode"))
 	return
 
 /datum/buildmode_mode/proc/Reset()
@@ -78,13 +83,16 @@
 				return
 			if(cornerA && !cornerB)
 				cornerB = select_tile(get_turf(object), AREASELECT_CORNERB)
-				to_chat(c, "<span class='boldwarning'>Region selected, if you're happy with your selection left click again, otherwise right click.</span>")
+				to_chat(c, span_boldwarning("Region selected, if you're happy with your selection left click again, otherwise right click."))
 				return
 			handle_selected_area(c, params)
 			deselect_region()
 		else
-			to_chat(c, "<span class='notice'>Region selection canceled!</span>")
+			to_chat(c, span_notice("Region selection canceled!"))
 			deselect_region()
 	return
 
 /datum/buildmode_mode/proc/handle_selected_area(client/c, params)
+
+#undef AREASELECT_CORNERA
+#undef AREASELECT_CORNERB

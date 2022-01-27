@@ -33,13 +33,15 @@
 		DO_FLOATING_ANIM(movable_target)
 
 /datum/element/movetype_handler/Detach(datum/source)
-	UnregisterSignal(source, list(
-		GLOB.movement_type_addtrait_signals,
-		GLOB.movement_type_removetrait_signals,
+	var/list/signals_to_remove = list(
 		SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM),
 		SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM),
 		COMSIG_PAUSE_FLOATING_ANIM
-	))
+	)
+	signals_to_remove += GLOB.movement_type_addtrait_signals
+	signals_to_remove += GLOB.movement_type_removetrait_signals
+	UnregisterSignal(source, signals_to_remove)
+
 	attached_atoms -= source
 	paused_floating_anim_atoms -= source
 	stop_floating(source)
@@ -51,10 +53,11 @@
 	var/flag = GLOB.movement_type_trait_to_flag[trait]
 	if(source.movement_type & flag)
 		return
-	if(!(source.movement_type & (FLOATING|FLYING)) && (trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !paused_floating_anim_atoms[source] && !HAS_TRAIT(source, TRAIT_NO_FLOATING_ANIM))
-		DO_FLOATING_ANIM(source)
+	var/old_state = source.movement_type
 	source.movement_type |= flag
-	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_ENABLED, flag)
+	if(!(old_state & (FLOATING|FLYING)) && (source.movement_type & (FLOATING|FLYING)) && !paused_floating_anim_atoms[source] && !HAS_TRAIT(source, TRAIT_NO_FLOATING_ANIM))
+		DO_FLOATING_ANIM(source)
+	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_ENABLED, flag, old_state)
 
 /// Called when a movement type trait is removed from the movable. Disables the relative bitflag if it wasn't there in the compile-time bitfield.
 /datum/element/movetype_handler/proc/on_movement_type_trait_loss(atom/movable/source, trait)
@@ -62,10 +65,14 @@
 	var/flag = GLOB.movement_type_trait_to_flag[trait]
 	if(initial(source.movement_type) & flag)
 		return
+	var/old_state = source.movement_type
 	source.movement_type &= ~flag
-	if((trait == TRAIT_MOVE_FLYING || trait == TRAIT_MOVE_FLOATING) && !(source.movement_type & (FLOATING|FLYING)))
+	if((old_state & (FLOATING|FLYING)) && !(source.movement_type & (FLOATING|FLYING)))
 		stop_floating(source)
-	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_DISABLED, flag)
+		var/turf/pitfall = source.loc //Things that don't fly fall in open space.
+		if(istype(pitfall))
+			pitfall.zFall(source)
+	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_DISABLED, flag, old_state)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the movable. Stops it from bobbing up and down.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_gain(atom/movable/source, trait)

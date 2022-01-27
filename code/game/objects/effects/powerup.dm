@@ -15,13 +15,17 @@
 	/// Cooldown for the powerup to respawn after it's been used
 	COOLDOWN_DECLARE(respawn_cooldown)
 
-/obj/effect/powerup/Initialize()
-	..()
+/obj/effect/powerup/Initialize(mapload)
+	. = ..()
 	if(lifetime)
 		QDEL_IN(src, lifetime)
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/powerup/Crossed(atom/movable/movable_atom)
-	. = ..()
+/obj/effect/powerup/proc/on_entered(datum/source, atom/movable/movable_atom)
+	SIGNAL_HANDLER
 	trigger(movable_atom)
 
 /obj/effect/powerup/Bump(atom/bumped_atom)
@@ -43,7 +47,7 @@
 	else
 		qdel(src)
 	if(pickup_message)
-		to_chat(target, "<span class='notice'>[pickup_message]</span>")
+		to_chat(target, span_notice("[pickup_message]"))
 	if(pickup_sound)
 		playsound(get_turf(target), pickup_sound, 50, TRUE, -1)
 	return TRUE
@@ -91,7 +95,7 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/obj/item/gun in target.GetAllContents())
+	for(var/obj/item/gun in target.get_all_contents())
 		if(!isgun(gun) && !istype(gun, /obj/item/flamethrower))
 			continue
 		SEND_SIGNAL(gun, COMSIG_ITEM_RECHARGED)

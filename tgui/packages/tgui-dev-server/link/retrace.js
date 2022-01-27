@@ -4,12 +4,14 @@
  * @license MIT
  */
 
-import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import { basename } from 'path';
-import SourceMap from 'source-map';
-import { parse as parseStackTrace } from 'stacktrace-parser';
+import { createLogger } from '../logging.js';
+import { require } from '../require.js';
 import { resolveGlob } from '../util.js';
+
+const SourceMap = require('source-map');
+const { parse: parseStackTrace } = require('stacktrace-parser');
 
 const logger = createLogger('retrace');
 

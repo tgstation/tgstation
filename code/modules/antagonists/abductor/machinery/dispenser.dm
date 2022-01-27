@@ -12,13 +12,13 @@
 	//TODO : replace with presets or spectrum
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
-/obj/machinery/abductor/gland_dispenser/Initialize()
+/obj/machinery/abductor/gland_dispenser/Initialize(mapload)
 	. = ..()
 	gland_types = subtypesof(/obj/item/organ/heart/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)
 	amounts = new/list(gland_types.len)
-	for(var/i=1,i<=gland_types.len,i++)
+	for(var/i in 1 to gland_types.len)
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
@@ -39,7 +39,7 @@
 /obj/machinery/abductor/gland_dispenser/ui_data(mob/user)
 	var/list/data = list()
 	data["glands"] = list()
-	for(var/gland_number=1,gland_number<=gland_colors.len,gland_number++)
+	for(var/gland_number in 1 to gland_colors.len)
 		var/list/gland_information = list(
 			"color" = gland_colors[gland_number],
 			"amount" = amounts[gland_number],
@@ -65,7 +65,7 @@
 	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return
-		for(var/i=1,i<=gland_colors.len,i++)
+		for(var/i in 1 to gland_colors.len)
 			if(gland_types[i] == W.type)
 				amounts[i]++
 	else

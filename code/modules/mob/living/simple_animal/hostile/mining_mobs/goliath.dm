@@ -10,7 +10,7 @@
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
-	move_to_delay = 40
+	move_to_delay = 20
 	ranged = 1
 	ranged_cooldown_time = 120
 	friendly_verb_continuous = "wails at"
@@ -68,7 +68,7 @@
 	if(!isturf(tturf))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message("<span class='warning'>[src] digs its tentacles under [target]!</span>")
+		visible_message(span_warning("[src] digs its tentacles under [target]!"))
 		new /obj/effect/temp_visual/goliath_tentacle/original(tturf, src)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
@@ -102,17 +102,20 @@
 	loot = list()
 	stat_attack = HARD_CRIT
 	robust_searching = 1
-	food_type = list(/obj/item/food/grown/ash_flora)//use lavaland plants to feed the lavaland monster
-	tame_chance = 10
-	bonus_tame_chance = 5
+
+	var/can_saddle = FALSE
 	var/saddled = FALSE
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(!istype(O, /obj/item/saddle) || saddled)
 		return ..()
 
-	if(tame && do_after(user,55,target=src))
-		user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
+	if(can_saddle && do_after(user,55,target=src))
+		user.visible_message(span_notice("You manage to put [O] on [src], you can now ride [p_them()]."))
 		qdel(O)
 		saddled = TRUE
 		can_buckle = TRUE
@@ -120,10 +123,13 @@
 		add_overlay("goliath_saddled")
 		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
 	else
-		user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
+		user.visible_message(span_warning("[src] is rocking around! You can't put the saddle on!"))
 	..()
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/proc/tamed(mob/living/tamer)
+	can_saddle = TRUE
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize(mapload)
 	. = ..()
 	if(prob(1))
 		new /mob/living/simple_animal/hostile/asteroid/goliath/beast/ancient(loc)
@@ -211,7 +217,7 @@
 	for(var/mob/living/L in loc)
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
-		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
+		visible_message(span_danger("[src] grabs hold of [L]!"))
 		L.Stun(100)
 		L.adjustBruteLoss(rand(10,15))
 		latched = TRUE

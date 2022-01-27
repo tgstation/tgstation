@@ -34,6 +34,21 @@
 	. = ..()
 	possible_gear = get_abductor_gear()
 
+/obj/machinery/abductor/console/Destroy()
+	if(gizmo)
+		gizmo.console = null
+		gizmo = null
+	if(experiment)
+		experiment.console = null
+		experiment = null
+	if(pad)
+		pad.console = null
+		pad = null
+	if(camera)
+		camera.console = null
+		camera = null
+	return ..()
+	
 /**
  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
  */
@@ -51,7 +66,7 @@
 	if(.)
 		return
 	if(!HAS_TRAIT(user, TRAIT_ABDUCTOR_TRAINING) && !HAS_TRAIT(user.mind, TRAIT_ABDUCTOR_TRAINING))
-		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
+		to_chat(user, span_warning("You start mashing alien buttons at random!"))
 		if(do_after(user,100, target = src))
 			TeleporterSend()
 
@@ -95,7 +110,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked_target?.resolve() ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -143,8 +158,9 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(pad && gizmo?.marked)
-		pad.Retrieve(gizmo.marked)
+	var/mob/living/marked = gizmo.marked_target?.resolve()
+	if(pad && marked)
+		pad.Retrieve(marked)
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
 	if(pad)
@@ -174,12 +190,12 @@
 
 /obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
 	if(!istype(location))
-		to_chat(user, "<span class='warning'>That place is not safe for the specimen.</span>")
+		to_chat(user, span_warning("That place is not safe for the specimen."))
 		return
 
 	if(pad)
 		pad.teleport_target = location
-		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
+		to_chat(user, span_notice("Location marked as test subject release point."))
 
 /obj/machinery/abductor/console/Initialize(mapload)
 	..()
@@ -192,6 +208,7 @@
 	for(var/obj/machinery/abductor/pad/p in GLOB.machines)
 		if(p.team_number == team_number)
 			pad = p
+			pad.console = src
 			break
 
 	for(var/obj/machinery/abductor/experiment/e in GLOB.machines)
@@ -244,9 +261,9 @@
 
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
-		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
+		to_chat(user, span_notice("You link the tool to the console."))
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
-		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
+		to_chat(user, span_notice("You link the vest to the console."))
 	else
 		return ..()
 

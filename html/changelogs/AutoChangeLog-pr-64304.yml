@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "Introducing: The Lizard's Gas! A brand new (gas) station for you to go out and refuel your ships and your stomachs. It's been a while since the power's been turned on, but everything is just the way it was left all those years ago. Explore!"
+  - rscdel: "gasthelizards.dmm has been deleted. you will never see gasthelizards.dmm ever again."
+  - config: "since gasthelizards.dmm is removed, the config has been updated as well. make sure it's up-to-date now that we've gotten rid of the dang ol' thing and replaced it with new hotness."

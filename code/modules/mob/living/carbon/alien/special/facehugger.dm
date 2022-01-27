@@ -32,34 +32,21 @@
 
 	var/attached = 0
 
-/obj/item/clothing/mask/facehugger/ComponentInitialize()
+/obj/item/clothing/mask/facehugger/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive)
-
-/obj/item/clothing/mask/facehugger/lamarr
-	name = "Lamarr"
-	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
-	sterile = 1
-
-/obj/item/clothing/mask/facehugger/dead
-	icon_state = "facehugger_dead"
-	inhand_icon_state = "facehugger_inactive"
-	worn_icon_state = "facehugger_dead"
-	stat = DEAD
-
-/obj/item/clothing/mask/facehugger/impregnated
-	icon_state = "facehugger_impregnated"
-	inhand_icon_state = "facehugger_impregnated"
-	worn_icon_state = "facehugger_impregnated"
-	stat = DEAD
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/item/clothing/mask/facehugger/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
-	if(obj_integrity < 90)
+	if(atom_integrity < 90)
 		Die()
 
 /obj/item/clothing/mask/facehugger/attackby(obj/item/O, mob/user, params)
-	return O.attack_obj(src, user, params)
+	return O.attack_atom(src, user, params)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/facehugger/attack_hand(mob/user, list/modifiers)
@@ -79,11 +66,11 @@
 		return
 	switch(stat)
 		if(DEAD,UNCONSCIOUS)
-			. += "<span class='boldannounce'>[src] is not moving.</span>"
+			. += span_boldannounce("[src] is not moving.")
 		if(CONSCIOUS)
-			. += "<span class='boldannounce'>[src] seems to be active!</span>"
+			. += span_boldannounce("[src] seems to be active!")
 	if (sterile)
-		. += "<span class='boldannounce'>It looks like the proboscis has been removed.</span>"
+		. += span_boldannounce("It looks like the proboscis has been removed.")
 
 /obj/item/clothing/mask/facehugger/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 300)
@@ -95,8 +82,8 @@
 	. = ..()
 	Attach(M)
 
-/obj/item/clothing/mask/facehugger/Crossed(atom/target)
-	. = ..()
+/obj/item/clothing/mask/facehugger/proc/on_entered(datum/source, atom/target)
+	SIGNAL_HANDLER
 	HasProximity(target)
 
 /obj/item/clothing/mask/facehugger/on_found(mob/finder)
@@ -156,8 +143,8 @@
 		if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
 			return FALSE
 	// passed initial checks - time to leap!
-	M.visible_message("<span class='danger'>[src] leaps at [M]'s face!</span>", \
-							"<span class='userdanger'>[src] leaps at your face!</span>")
+	M.visible_message(span_danger("[src] leaps at [M]'s face!"), \
+							span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
 	if(iscarbon(M))
@@ -166,16 +153,16 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.is_mouth_covered(head_only = 1))
-				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
-									"<span class='userdanger'>[src] smashes against your [H.head]!</span>")
+				H.visible_message(span_danger("[src] smashes against [H]'s [H.head]!"), \
+									span_userdanger("[src] smashes against your [H.head]!"))
 				Die()
 				return FALSE
 
 		if(target.wear_mask)
 			var/obj/item/clothing/W = target.wear_mask
 			if(target.dropItemToGround(W))
-				target.visible_message("<span class='danger'>[src] tears [W] off of [target]'s face!</span>", \
-									"<span class='userdanger'>[src] tears [W] off of your face!</span>")
+				target.visible_message(span_danger("[src] tears [W] off of [target]'s face!"), \
+									span_userdanger("[src] tears [W] off of your face!"))
 		target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1)
 	return TRUE // time for a smoke
 
@@ -209,8 +196,8 @@
 			return
 
 	if(!sterile)
-		target.visible_message("<span class='danger'>[src] falls limp after violating [target]'s face!</span>", \
-								"<span class='userdanger'>[src] falls limp after violating your face!</span>")
+		target.visible_message(span_danger("[src] falls limp after violating [target]'s face!"), \
+								span_userdanger("[src] falls limp after violating your face!"))
 
 		Die()
 		icon_state = "[base_icon_state]_impregnated"
@@ -223,8 +210,8 @@
 			log_game("[key_name(target)] was impregnated by a facehugger at [loc_name(T)]")
 
 	else
-		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \
-								"<span class='userdanger'>[src] violates your face!</span>")
+		target.visible_message(span_danger("[src] violates [target]'s face!"), \
+								span_userdanger("[src] violates your face!"))
 
 /obj/item/clothing/mask/facehugger/proc/GoActive()
 	if(stat == DEAD || stat == CONSCIOUS)
@@ -253,7 +240,7 @@
 	inhand_icon_state = "facehugger_inactive"
 	stat = DEAD
 
-	visible_message("<span class='danger'>[src] curls up into a ball!</span>")
+	visible_message(span_danger("[src] curls up into a ball!"))
 
 /proc/CanHug(mob/living/M)
 	if(!istype(M))
@@ -269,6 +256,33 @@
 			return FALSE
 		return TRUE
 	return FALSE
+
+/obj/item/clothing/mask/facehugger/lamarr
+	name = "Lamarr"
+	desc = "The Research Director's pet, a domesticated and debeaked xenomorph facehugger. Friendly, but may still try to couple with your head."
+	sterile = TRUE
+
+/obj/item/clothing/mask/facehugger/dead
+	icon_state = "facehugger_dead"
+	inhand_icon_state = "facehugger_inactive"
+	worn_icon_state = "facehugger_dead"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/impregnated
+	icon_state = "facehugger_impregnated"
+	inhand_icon_state = "facehugger_impregnated"
+	worn_icon_state = "facehugger_impregnated"
+	stat = DEAD
+
+/obj/item/clothing/mask/facehugger/toy
+	inhand_icon_state = "facehugger_inactive"
+	desc = "A toy often used to play pranks on other miners by putting it in their beds. It takes a bit to recharge after latching onto something."
+	real = FALSE
+	sterile = TRUE
+	tint = 3 //Makes it feel more authentic when it latches on
+
+/obj/item/clothing/mask/facehugger/toy/Die()
+	return
 
 #undef MIN_ACTIVE_TIME
 #undef MAX_ACTIVE_TIME

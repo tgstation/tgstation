@@ -28,18 +28,18 @@ In all, this is a lot like the monkey code. /N
 		AdjustParalyzed(-60)
 		AdjustUnconscious(-60)
 		AdjustSleeping(-100)
-		visible_message("<span class='notice'>[user.name] nuzzles [src] trying to wake [p_them()] up!</span>")
+		visible_message(span_notice("[user.name] nuzzles [src] trying to wake [p_them()] up!"))
 	else if(health > 0)
 		user.do_attack_animation(src, ATTACK_EFFECT_BITE)
 		playsound(loc, 'sound/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message("<span class='danger'>[user.name] bites [src]!</span>", \
-						"<span class='userdanger'>[user.name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, "<span class='danger'>You bite [src]!</span>")
+		visible_message(span_danger("[user.name] bites [src]!"), \
+						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
+		to_chat(user, span_danger("You bite [src]!"))
 		adjustBruteLoss(1)
 		log_combat(user, src, "attacked")
 		updatehealth()
 	else
-		to_chat(user, "<span class='warning'>[name] is too injured for that.</span>")
+		to_chat(user, span_warning("[name] is too injured for that."))
 
 
 

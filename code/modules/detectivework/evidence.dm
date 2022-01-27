@@ -29,23 +29,23 @@
 		return
 
 	if(SEND_SIGNAL(loc, COMSIG_CONTAINS_STORAGE) && SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE))
-		to_chat(user, "<span class='warning'>No matter what way you try, you can't get [I] to fit inside [src].</span>")
+		to_chat(user, span_warning("No matter what way you try, you can't get [I] to fit inside [src]."))
 		return TRUE //begone infinite storage ghosts, begone from me
 
 	if(istype(I, /obj/item/evidencebag))
-		to_chat(user, "<span class='warning'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
+		to_chat(user, span_warning("You find putting an evidence bag in another evidence bag to be slightly absurd."))
 		return TRUE //now this is podracing
 
-	if(loc in I.GetAllContents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
-		to_chat(user, "<span class='warning'>You find putting [I] in [src] while it's still inside it quite difficult!</span>")
+	if(loc in I.get_all_contents()) // fixes tg #39452, evidence bags could store their own location, causing I to be stored in the bag while being present inworld still, and able to be teleported when removed.
+		to_chat(user, span_warning("You find putting [I] in [src] while it's still inside it quite difficult!"))
 		return
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
-		to_chat(user, "<span class='warning'>[I] won't fit in [src]!</span>")
+		to_chat(user, span_warning("[I] won't fit in [src]!"))
 		return
 
 	if(contents.len)
-		to_chat(user, "<span class='warning'>[src] already has something inside it!</span>")
+		to_chat(user, span_warning("[src] already has something inside it!"))
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
@@ -54,8 +54,8 @@
 		if(!user.dropItemToGround(I))
 			return
 
-	user.visible_message("<span class='notice'>[user] puts [I] into [src].</span>", "<span class='notice'>You put [I] inside [src].</span>",\
-	"<span class='hear'>You hear a rustle as someone puts something into a plastic bag.</span>")
+	user.visible_message(span_notice("[user] puts [I] into [src]."), span_notice("You put [I] inside [src]."),\
+	span_hear("You hear a rustle as someone puts something into a plastic bag."))
 
 	icon_state = "evidence"
 
@@ -75,8 +75,8 @@
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)
 		var/obj/item/I = contents[1]
-		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>",\
-		"<span class='hear'>You hear someone rustle around in a plastic bag, and remove something.</span>")
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."),\
+		span_hear("You hear someone rustle around in a plastic bag, and remove something."))
 		cut_overlays() //remove the overlays
 		user.put_in_hands(I)
 		w_class = WEIGHT_CLASS_TINY
@@ -84,7 +84,7 @@
 		desc = "An empty evidence bag."
 
 	else
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		to_chat(user, span_notice("[src] is empty."))
 		icon_state = "evidenceobj"
 	return
 

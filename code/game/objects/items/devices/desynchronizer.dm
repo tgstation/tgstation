@@ -18,7 +18,7 @@
 
 /obj/item/desynchronizer/attack_self(mob/living/user)
 	if(world.time < next_use)
-		to_chat(user, "<span class='warning'>[src] is still recharging.</span>")
+		to_chat(user, span_warning("[src] is still recharging."))
 		return
 	if(!sync_holder)
 		desync(user)
@@ -28,26 +28,26 @@
 /obj/item/desynchronizer/examine(mob/user)
 	. = ..()
 	if(world.time < next_use)
-		. += "<span class='warning'>Time left to recharge: [DisplayTimeText(next_use - world.time)]</span>"
-	. += "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].</span>"
-	. += "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>"
+		. += span_warning("Time left to recharge: [DisplayTimeText(next_use - world.time)]")
+	. += span_notice("Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].")
+	. += span_notice("Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.")
 
 /obj/item/desynchronizer/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return
-	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
-	if(new_duration)
-		new_duration = new_duration SECONDS
-		new_duration = clamp(new_duration, 50, max_duration)
-		duration = new_duration
-		to_chat(user, "<span class='notice'>You set the duration to [DisplayTimeText(duration)].</span>")
+	var/new_duration = tgui_input_number(user, "Set the duration", "Desynchronizer", duration / 10, max_duration, 5 SECONDS)
+	if(isnull(new_duration))
+		return
+	new_duration = new_duration SECONDS
+	duration = round(new_duration)
+	to_chat(user, span_notice("You set the duration to [DisplayTimeText(duration)]."))
 
 /obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)
 		return
 	sync_holder = new(drop_location())
 	new /obj/effect/temp_visual/desynchronizer(drop_location())
-	to_chat(user, "<span class='notice'>You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality.</span>")
+	to_chat(user, span_notice("You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality."))
 	user.forceMove(sync_holder)
 	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	for(var/thing in user)

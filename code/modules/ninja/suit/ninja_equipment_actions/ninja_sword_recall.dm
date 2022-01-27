@@ -17,7 +17,7 @@
 	var/inview = TRUE
 
 	if(!energyKatana)
-		to_chat(ninja, "<span class='warning'>Could not locate Energy Katana!</span>")
+		to_chat(ninja, span_warning("Could not locate Energy Katana!"))
 		return
 
 	if(energyKatana in ninja)
@@ -40,7 +40,7 @@
 		if(inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.
 			energyKatana.spark_system.start()
 			playsound(ninja, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-			ninja.visible_message("<span class='danger'>\the [energyKatana] flies towards [ninja]!</span>","<span class='warning'>You hold out your hand and \the [energyKatana] flies towards you!</span>")
+			ninja.visible_message(span_danger("\the [energyKatana] flies towards [ninja]!"),span_warning("You hold out your hand and \the [energyKatana] flies towards you!"))
 			energyKatana.throw_at(ninja, distance+1, energyKatana.throw_speed, ninja)
 
 		else //Else just TP it to us.

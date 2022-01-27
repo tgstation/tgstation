@@ -24,18 +24,20 @@
 	throw_range = 4
 	custom_materials = list(/datum/material/iron = 500)
 	actions_types = list(/datum/action/item_action/set_internals)
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, RAD = 0, FIRE = 80, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 80, ACID = 30)
 	integrity_failure = 0.5
-	/// The gases this tank contains.
+	/// The gases this tank contains. Don't modify this directly, use return_air() to get it instead
 	var/datum/gas_mixture/air_contents = null
-	/// The volume of this tank.
-	var/volume = 70
+	/// The volume of this tank. Among other things gas tank explosions (including TTVs) scale off of this. Be sure to account for that if you change this or you will break ~~toxins~~ordinance.
+	var/volume = TANK_STANDARD_VOLUME
 	/// Whether the tank is currently leaking.
 	var/leaking = FALSE
 	/// The pressure of the gases this tank supplies to internals.
 	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Icon state when in a tank holder. Null makes it incompatible with tank holder.
 	var/tank_holder_icon_state = "holder_generic"
+	///Used by process() to track if there's a reason to process each tick
+	var/excited = TRUE
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -46,31 +48,31 @@
 		return
 
 	if(H.internal == src)
-		to_chat(H, "<span class='notice'>You close [src] valve.</span>")
+		to_chat(H, span_notice("You close [src] valve."))
 		H.internal = null
 		H.update_internals_hud_icon(0)
 	else
 		if(!H.getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 			if(!H.wear_mask)
-				to_chat(H, "<span class='warning'>You need a mask!</span>")
+				to_chat(H, span_warning("You need a mask!"))
 				return
 			var/is_clothing = isclothing(H.wear_mask)
 			if(is_clothing && H.wear_mask.mask_adjusted)
 				H.wear_mask.adjustmask(H)
 			if(!is_clothing || !(H.wear_mask.clothing_flags & MASKINTERNALS))
-				to_chat(H, "<span class='warning'>[H.wear_mask] can't use [src]!</span>")
+				to_chat(H, span_warning("[H.wear_mask] can't use [src]!"))
 				return
 
 		if(H.internal)
-			to_chat(H, "<span class='notice'>You switch your internals to [src].</span>")
+			to_chat(H, span_notice("You switch your internals to [src]."))
 		else
-			to_chat(H, "<span class='notice'>You open [src] valve.</span>")
+			to_chat(H, span_notice("You open [src] valve."))
 		H.internal = src
 		H.update_internals_hud_icon(1)
 	H.update_action_buttons_icon()
 
 
-/obj/item/tank/Initialize()
+/obj/item/tank/Initialize(mapload)
 	. = ..()
 
 	air_contents = new(volume) //liters
@@ -84,9 +86,7 @@
 	return
 
 /obj/item/tank/Destroy()
-	if(air_contents)
-		QDEL_NULL(air_contents)
-
+	air_contents = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -102,12 +102,12 @@
 		icon = src.loc
 	if(!in_range(src, user) && !isobserver(user))
 		if(icon == src)
-			. += "<span class='notice'>If you want any more information you'll need to get closer.</span>"
+			. += span_notice("If you want any more information you'll need to get closer.")
 		return
 
-	. += "<span class='notice'>The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.</span>"
+	. += span_notice("The pressure gauge reads [round(src.air_contents.return_pressure(),0.01)] kPa.")
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -123,26 +123,25 @@
 	else
 		descriptive = "furiously hot"
 
-	. += "<span class='notice'>It feels [descriptive].</span>"
+	. += span_notice("It feels [descriptive].")
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(location)
 		location.assume_air(air_contents)
-		location.air_update_turf(FALSE, FALSE)
 		playsound(location, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	return ..()
 
 /obj/item/tank/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if(!QDELETED(H) && air_contents && air_contents.return_pressure() >= 1000)
 		ADD_TRAIT(H, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		H.inflate_gib()
 		return MANUAL_SUICIDE
 	else
-		to_chat(user, "<span class='warning'>There isn't enough pressure in [src] to commit suicide with...</span>")
+		to_chat(user, span_warning("There isn't enough pressure in [src] to commit suicide with..."))
 	return SHAME
 
 /obj/item/tank/attackby(obj/item/W, mob/user, params)
@@ -205,15 +204,18 @@
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 
 /obj/item/tank/remove_air(amount)
+	START_PROCESSING(SSobj, src)
 	return air_contents.remove(amount)
 
 /obj/item/tank/return_air()
+	START_PROCESSING(SSobj, src)
 	return air_contents
 
 /obj/item/tank/return_analyzable_air()
 	return air_contents
 
 /obj/item/tank/assume_air(datum/gas_mixture/giver)
+	START_PROCESSING(SSobj, src)
 	air_contents.merge(giver)
 	handle_tolerances(ASSUME_AIR_DT_FACTOR)
 	return TRUE
@@ -247,20 +249,26 @@
 		return
 
 	//Allow for reactions
-	air_contents.react(src)
-	handle_tolerances(delta_time)
+	excited = (excited | air_contents.react(src))
+	excited = (excited | handle_tolerances(delta_time))
+	excited = (excited | leaking)
+
+	if(!excited)
+		STOP_PROCESSING(SSobj, src)
+	excited = FALSE
+
 	if(QDELETED(src) || !leaking || !air_contents)
 		return
-	var/turf/location = get_turf(src)
+	var/atom/location = loc
 	if(!location)
 		return
 	var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 	location.assume_air(leaked_gas)
-	location.air_update_turf(FALSE, FALSE)
 
 /**
  * Handles the minimum and maximum pressure tolerances of the tank.
  *
+ * Returns true if it did anything of significance, false otherwise
  * Arguments:
  * - delta_time: How long has passed between ticks.
  */
@@ -279,27 +287,26 @@
 	if(pressure >= TANK_LEAK_PRESSURE)
 		var/pressure_damage_ratio = (pressure - TANK_LEAK_PRESSURE) / (TANK_RUPTURE_PRESSURE - TANK_LEAK_PRESSURE)
 		take_damage(max_integrity * pressure_damage_ratio * delta_time, BRUTE, BOMB, FALSE, NONE)
-	return TRUE
+		return TRUE
+	return FALSE
 
 /// Handles the tank springing a leak.
-/obj/item/tank/obj_break(damage_flag)
+/obj/item/tank/atom_break(damage_flag)
 	. = ..()
 	if(leaking)
 		return
 
 	leaking = TRUE
-	if(obj_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
+	START_PROCESSING(SSobj, src)
+
+	if(atom_integrity < 0) // So we don't play the alerts while we are exploding or rupturing.
 		return
-	visible_message("<span class='warning'>[src] springs a leak!</span>")
+	visible_message(span_warning("[src] springs a leak!"))
 	playsound(src, 'sound/effects/spray.ogg', 10, TRUE, -3)
 
 /// Handles rupturing and fragmenting
-/obj/item/tank/obj_destruction(damage_flag)
+/obj/item/tank/atom_destruction(damage_flag)
 	if(!air_contents)
-		return ..()
-
-	var/turf/location = get_turf(src)
-	if(!location)
 		return ..()
 
 	/// Handle fragmentation
@@ -310,33 +317,11 @@
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react(src)
 		pressure = air_contents.return_pressure()
-		var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
 
-		explosion(location, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+		// As of writing this this is calibrated to maxcap at 140L and 160atm.
+		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
+		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
+		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
-
-/obj/item/tank/rad_act(strength)
-	. = ..()
-	var/gas_change = FALSE
-	var/list/cached_gases = air_contents.gases
-	if(cached_gases[/datum/gas/oxygen] && cached_gases[/datum/gas/carbon_dioxide] && air_contents.temperature <= PLUOXIUM_TEMP_CAP)
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/oxygen][MOLES] * 1000, cached_gases[/datum/gas/carbon_dioxide][MOLES] * 2000)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] -= pulse_strength / 2000
-		cached_gases[/datum/gas/oxygen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/pluoxium, air_contents)
-		cached_gases[/datum/gas/pluoxium][MOLES] += pulse_strength / 4000
-		strength -= pulse_strength
-
-	if(cached_gases[/datum/gas/hydrogen])
-		gas_change = TRUE
-		var/pulse_strength = min(strength, cached_gases[/datum/gas/hydrogen][MOLES] * 1000)
-		cached_gases[/datum/gas/hydrogen][MOLES] -= pulse_strength / 1000
-		ASSERT_GAS(/datum/gas/tritium, air_contents)
-		cached_gases[/datum/gas/tritium][MOLES] += pulse_strength / 1000
-		strength -= pulse_strength
-
-	if(gas_change)
-		air_contents.garbage_collect()
 
 #undef ASSUME_AIR_DT_FACTOR

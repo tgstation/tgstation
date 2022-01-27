@@ -1,12 +1,15 @@
 /datum/job/quartermaster
-	title = "Quartermaster"
-	department_head = list("Head of Personnel")
-	faction = "Station"
+	title = JOB_QUARTERMASTER
+	description = "Coordinate cargo technicians and shaft miners, assist with \
+		economical purchasing."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
+	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
-	exp_type_department = EXP_TYPE_SUPPLY // This is so the jobs menu can work properly
+	exp_required_type_department = EXP_TYPE_SUPPLY
+	exp_granted_type = EXP_TYPE_CREW
 
 	outfit = /datum/outfit/job/quartermaster
 	plasmaman_outfit = /datum/outfit/plasmaman/cargo
@@ -18,27 +21,30 @@
 
 	display_order = JOB_DISPLAY_ORDER_QUARTERMASTER
 	bounty_types = CIV_JOB_RANDOM
-	departments = DEPARTMENT_CARGO
-
-/datum/job/quartermaster/announce(mob/living/carbon/human/H, announce_captaincy = FALSE)
-	..()
-	if(announce_captaincy)
-		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Due to extreme staffing shortages, newly promoted Acting Captain [H.real_name] on deck!"))
-
+	departments_list = list(
+		/datum/job_department/cargo,
+		)
 	family_heirlooms = list(/obj/item/stamp, /obj/item/stamp/denied)
+	mail_goodies = list(
+		/obj/item/circuitboard/machine/emitter = 3
+	)
+	rpg_title = "Steward"
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
 	jobtype = /datum/job/quartermaster
 
+	id_trim = /datum/id_trim/job/quartermaster
+	uniform = /obj/item/clothing/under/rank/cargo/qm
+	backpack_contents = list(
+		/obj/item/modular_computer/tablet/preset/cargo/quartermaster = 1,
+		)
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/qm
-	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
+	shoes = /obj/item/clothing/shoes/sneakers/brown
 	l_hand = /obj/item/clipboard
-	backpack_contents = list(/obj/item/modular_computer/tablet/preset/cargo=1)
 
 	chameleon_extras = /obj/item/stamp/qm
-
-	id_trim = /datum/id_trim/job/quartermaster

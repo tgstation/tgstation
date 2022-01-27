@@ -7,7 +7,7 @@
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/grille,
-/obj/structure/window/shuttle/tinted,
+/obj/structure/window/reinforced/shuttle/tinted,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ad" = (
@@ -85,11 +85,15 @@
 "aj" = (
 /obj/structure/barricade/wooden,
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
+	},
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
@@ -105,14 +109,14 @@
 "an" = (
 /obj/structure/table/wood,
 /obj/item/candle/infinite,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ao" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "ap" = (
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "aq" = (
 /turf/open/floor/mineral/titanium,
@@ -128,28 +132,21 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "at" = (
-/obj/machinery/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = 6
-	},
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = -6
-	},
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
+	},
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
 	},
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "au" = (
 /obj/structure/chair/wood,
-/turf/open/floor/iron/cult,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "av" = (
 /obj/structure/chair/comfy/shuttle,
@@ -213,9 +210,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aG" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 27
-	},
+/obj/structure/extinguisher_cabinet/directional/east,
 /obj/structure/table/glass,
 /obj/item/storage/box/syringes{
 	pixel_x = 3;
@@ -253,9 +248,7 @@
 /area/shuttle/escape)
 "aM" = (
 /obj/machinery/chem_dispenser,
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aN" = (
@@ -373,10 +366,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "ba" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -422,10 +412,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "bd" = (
-/obj/structure/destructible/cult/forge{
-	desc = "An engine used in powering the shuttle.";
-	name = "magma engine"
-	},
+/obj/structure/destructible/cult/item_dispenser/forge/engine,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -454,7 +441,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bi" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -468,51 +455,32 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "bj" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "bk" = (
 /obj/structure/chair/wood,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/iron/cult,
+/obj/machinery/light/directional/west,
+/turf/open/floor/cult,
 /area/shuttle/escape)
 "bl" = (
-/obj/machinery/light{
-	dir = 1
-	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bm" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "bn" = (
-/obj/machinery/light,
+/obj/machinery/light/directional/south,
+/obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bo" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	brightness = 3;
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "bp" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ji" = (
@@ -570,7 +538,7 @@ at
 al
 as
 aq
-bm
+bo
 aI
 aI
 aq
@@ -670,7 +638,7 @@ aq
 aq
 aq
 bn
-aH
+ab
 ab
 ab
 ab

@@ -37,12 +37,7 @@
 
 /datum/outfit_editor/proc/init_dummy()
 	dummy_key = "outfit_editor_[owner]"
-	var/mob/living/carbon/human/dummy/dummy = generate_or_wait_for_human_dummy(dummy_key)
-	var/mob/living/carbon/carbon_target = owner.mob
-	if(istype(carbon_target))
-		carbon_target.dna.transfer_identity(dummy)
-		dummy.updateappearance()
-
+	generate_dummy_lookalike(dummy_key, owner.mob)
 	unset_busy_human_dummy(dummy_key)
 
 /datum/outfit_editor/ui_interact(mob/user, datum/tgui/ui)
@@ -78,9 +73,9 @@
 	data["outfit"] = serialize_outfit()
 	data["saveable"] = !GLOB.custom_outfits.Find(drip)
 
-	var/datum/preferences/prefs = owner.prefs
+	if(!dummy_key)
+		init_dummy()
 	var/icon/dummysprite = get_flat_human_icon(null,
-		prefs = prefs,
 		dummy_key = dummy_key,
 		showDirs = list(SOUTH),
 		outfit_override = drip)
@@ -105,7 +100,7 @@
 				drip.vars[slot] = null
 
 		if("rename")
-			var/newname = stripped_input(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
+			var/newname = tgui_input_text(owner, "What do you want to name this outfit?", OUTFIT_EDITOR_NAME)
 			if(newname)
 				drip.name = newname
 		if("save")
@@ -122,11 +117,11 @@
 	if(!choice)
 		return
 	if(!ispath(choice))
-		alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, "oh no")
+		tgui_alert(owner, "Invalid item", OUTFIT_EDITOR_NAME, list("oh no"))
 		return
 	if(initial(choice.icon_state) == null) //hacky check copied from experimentor code
 		var/msg = "Warning: This item's icon_state is null, indicating it is very probably not actually a usable item."
-		if(alert(owner, msg, OUTFIT_EDITOR_NAME, "Use it anyway", "Cancel") != "Use it anyway")
+		if(tgui_alert(owner, msg, OUTFIT_EDITOR_NAME, list("Use it anyway", "Cancel")) != "Use it anyway")
 			return
 
 	if(drip.vars.Find(slot))
@@ -172,8 +167,8 @@
 			if(suit)
 				suit = new suit //initial() doesn't like lists
 				options = suit.allowed
-			if(!options.len) //nothing will happen, but don't let the user think it's broken
-				to_chat(owner, "<span class='warning'>No options available for the current suit.</span>")
+			if(!length(options)) //nothing will happen, but don't let the user think it's broken
+				to_chat(owner, span_warning("No options available for the current suit."))
 
 		if("belt")
 			options = typesof(/obj/item/storage/belt)
@@ -194,8 +189,12 @@
 		if("r_pocket")
 			choose_any_item(slot)
 
-	if(length(options))
-		set_item(slot, tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options))
+	if(!length(options))
+		return
+	var/option = tgui_input_list(owner, "Choose an item", OUTFIT_EDITOR_NAME, options)
+	if(isnull(option))
+		return
+	set_item(slot, option)
 
 
 #undef OUTFIT_EDITOR_NAME

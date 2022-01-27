@@ -1,6 +1,5 @@
 #define SCANGATE_NONE "Off"
 #define SCANGATE_MINDSHIELD "Mindshield"
-#define SCANGATE_NANITES "Nanites"
 #define SCANGATE_DISEASE "Disease"
 #define SCANGATE_GUNS "Guns"
 #define SCANGATE_WANTED "Wanted"
@@ -36,8 +35,6 @@
 	var/scangate_mode = SCANGATE_NONE
 	///Is searching for a disease, what severity is enough to trigger the gate?
 	var/disease_threshold = DISEASE_SEVERITY_MINOR
-	///If scanning for a nanite strain, what cloud is it looking for?
-	var/nanite_cloud = 1
 	///If scanning for a specific species, what species is it looking for?
 	var/detect_species = SCANGATE_HUMAN
 	///Flips all scan results for inverse scanning. Signals if scan returns false.
@@ -52,10 +49,14 @@
 	var/ignore_signals = FALSE
 
 
-/obj/machinery/scanner_gate/Initialize()
+/obj/machinery/scanner_gate/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/scanner_gate(src)
 	set_scanline("passive")
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/machinery/scanner_gate/Destroy()
 	qdel(wires)
@@ -65,13 +66,13 @@
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 	if(locked)
-		. += "<span class='notice'>The control panel is ID-locked. Swipe a valid ID to unlock it.</span>"
+		. += span_notice("The control panel is ID-locked. Swipe a valid ID to unlock it.")
 	else
-		. += "<span class='notice'>The control panel is unlocked. Swipe an ID to lock it.</span>"
+		. += span_notice("The control panel is unlocked. Swipe an ID to lock it.")
 
-/obj/machinery/scanner_gate/Crossed(atom/movable/AM)
-	. = ..()
-	auto_scan(AM)
+/obj/machinery/scanner_gate/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, .proc/auto_scan, AM)
 
 /obj/machinery/scanner_gate/proc/auto_scan(atom/movable/AM)
 	if(!(machine_stat & (BROKEN|NOPOWER)) && isliving(AM) & (!panel_open))
@@ -91,16 +92,16 @@
 			if(allowed(user))
 				locked = FALSE
 				req_access = list()
-				to_chat(user, "<span class='notice'>You unlock [src].</span>")
+				to_chat(user, span_notice("You unlock [src]."))
 		else if(!(obj_flags & EMAGGED))
-			to_chat(user, "<span class='notice'>You lock [src] with [W].</span>")
+			to_chat(user, span_notice("You lock [src] with [W]."))
 			var/list/access = W.GetAccess()
 			req_access = access
 			locked = TRUE
 		else
-			to_chat(user, "<span class='warning'>You try to lock [src] with [W], but nothing happens.</span>")
+			to_chat(user, span_warning("You try to lock [src] with [W], but nothing happens."))
 	else
-		if(!locked && default_deconstruction_screwdriver(user, "scangate_open", "scangate", W))
+		if(!locked && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", initial(icon_state), W))
 			return
 		if(panel_open && is_wire_tool(W))
 			wires.interact(user)
@@ -112,7 +113,7 @@
 	locked = FALSE
 	req_access = list()
 	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You fry the ID checking system.</span>")
+	to_chat(user, span_notice("You fry the ID checking system."))
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
@@ -130,14 +131,6 @@
 		if(SCANGATE_MINDSHIELD)
 			if(HAS_TRAIT(M, TRAIT_MINDSHIELD))
 				beep = TRUE
-		if(SCANGATE_NANITES)
-			if(SEND_SIGNAL(M, COMSIG_HAS_NANITES))
-				if(nanite_cloud)
-					var/datum/component/nanites/nanites = M.GetComponent(/datum/component/nanites)
-					if(nanites && nanites.cloud_id == nanite_cloud)
-						beep = TRUE
-				else
-					beep = TRUE
 		if(SCANGATE_DISEASE)
 			if(iscarbon(M))
 				var/mob/living/carbon/C = M
@@ -188,11 +181,13 @@
 		beep = !beep
 	if(beep)
 		alarm_beep()
+		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_ACCEPT)
 			var/obj/item/assembly/assembly = wires.get_attached(color)
 			assembly?.activate()
 	else
+		SEND_SIGNAL(src, COMSIG_SCANGATE_PASS_NO_TRIGGER, M)
 		if(!ignore_signals)
 			color = wires.get_color_of_wire(WIRE_DENY)
 			var/obj/item/assembly/assembly = wires.get_attached(color)
@@ -223,7 +218,6 @@
 	data["locked"] = locked
 	data["scan_mode"] = scangate_mode
 	data["reverse"] = reverse
-	data["nanite_cloud"] = nanite_cloud
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = detect_species
 	data["target_nutrition"] = detect_nutrition
@@ -250,10 +244,6 @@
 			var/new_threshold = params["new_threshold"]
 			disease_threshold = new_threshold
 			. = TRUE
-		if("set_nanite_cloud")
-			var/new_cloud = text2num(params["new_cloud"])
-			nanite_cloud = clamp(round(new_cloud, 1), 1, 100)
-			. = TRUE
 		//Some species are not scannable, like abductors (too unknown), androids (too artificial) or skeletons (too magic)
 		if("set_target_species")
 			var/new_species = params["new_species"]
@@ -275,7 +265,6 @@
 
 #undef SCANGATE_NONE
 #undef SCANGATE_MINDSHIELD
-#undef SCANGATE_NANITES
 #undef SCANGATE_DISEASE
 #undef SCANGATE_GUNS
 #undef SCANGATE_WANTED

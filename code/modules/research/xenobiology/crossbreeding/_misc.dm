@@ -60,11 +60,11 @@ Slimecrossing Items
 		return
 	if(!used)//selfie time
 		if(user == target)
-			to_chat(user, "<span class=notice>You take a selfie!</span>")
+			to_chat(user, span_notice("You take a selfie!"))
 		else
-			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
-			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
-		to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
+			to_chat(user, span_notice("You take a photo with [target]!"))
+			to_chat(target, span_notice("[user] takes a photo with you!"))
+		to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 		used = TRUE
 		target.AddComponent(/datum/component/dejavu, 2)
@@ -110,11 +110,11 @@ Slimecrossing Items
 
 /obj/item/barriercube/attack_self(mob/user)
 	if(locate(/obj/structure/barricade/slime) in get_turf(loc))
-		to_chat(user, "<span class='warning'>You can't fit more than one barrier in the same space!</span>")
+		to_chat(user, span_warning("You can't fit more than one barrier in the same space!"))
 		return
-	to_chat(user, "<span class='notice'>You squeeze [src].</span>")
+	to_chat(user, span_notice("You squeeze [src]."))
 	var/obj/B = new /obj/structure/barricade/slime(get_turf(loc))
-	B.visible_message("<span class='warning'>[src] suddenly grows into a large, gelatinous barrier!</span>")
+	B.visible_message(span_warning("[src] suddenly grows into a large, gelatinous barrier!"))
 	qdel(src)
 
 //Slime barricade - Chilling Grey
@@ -132,7 +132,7 @@ Slimecrossing Items
 	desc = "A mass of solidified slime gel - completely impenetrable, but it's melting away!"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "slimebarrier_thick"
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	opacity = TRUE
 	timeleft = 100
 
@@ -150,9 +150,9 @@ Slimecrossing Items
 	icon_state = "frozen"
 	density = TRUE
 	max_integrity = 100
-	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, RAD = 100, FIRE = -80, ACID = 30)
+	armor = list(MELEE = 30, BULLET = 50, LASER = -50, ENERGY = -50, BOMB = 0, BIO = 100, FIRE = -80, ACID = 30)
 
-/obj/structure/ice_stasis/Initialize()
+/obj/structure/ice_stasis/Initialize(mapload)
 	. = ..()
 	playsound(src, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 
@@ -172,37 +172,37 @@ Slimecrossing Items
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
 	if(length(contents))
-		to_chat(user, "<span class='warning'>The device already has something inside.</span>")
+		to_chat(user, span_warning("The device already has something inside."))
 		return
 	if(!isanimal(M))
-		to_chat(user, "<span class='warning'>The capture device only works on simple creatures.</span>")
+		to_chat(user, span_warning("The capture device only works on simple creatures."))
 		return
 	if(M.mind)
-		to_chat(user, "<span class='notice'>You offer the device to [M].</span>")
-		if(alert(M, "Would you like to enter [user]'s capture device?", "Gold Capture Device", "Yes", "No") == "Yes")
+		to_chat(user, span_notice("You offer the device to [M]."))
+		if(tgui_alert(M, "Would you like to enter [user]'s capture device?", "Gold Capture Device", list("Yes", "No")) == "Yes")
 			if(user.canUseTopic(src, BE_CLOSE) && user.canUseTopic(M, BE_CLOSE))
-				to_chat(user, "<span class='notice'>You store [M] in the capture device.</span>")
-				to_chat(M, "<span class='notice'>The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you.</span>")
+				to_chat(user, span_notice("You store [M] in the capture device."))
+				to_chat(M, span_notice("The world warps around you, and you're suddenly in an endless void, with a window to the outside floating in front of you."))
 				store(M, user)
 			else
-				to_chat(user, "<span class='warning'>You were too far away from [M].</span>")
-				to_chat(M, "<span class='warning'>You were too far away from [user].</span>")
+				to_chat(user, span_warning("You were too far away from [M]."))
+				to_chat(M, span_warning("You were too far away from [user]."))
 		else
-			to_chat(user, "<span class='warning'>[M] refused to enter the device.</span>")
+			to_chat(user, span_warning("[M] refused to enter the device."))
 			return
 	else
 		if(istype(M, /mob/living/simple_animal/hostile) && !("neutral" in M.faction))
-			to_chat(user, "<span class='warning'>This creature is too aggressive to capture.</span>")
+			to_chat(user, span_warning("This creature is too aggressive to capture."))
 			return
-	to_chat(user, "<span class='notice'>You store [M] in the capture device.</span>")
+	to_chat(user, span_notice("You store [M] in the capture device."))
 	store(M)
 
 /obj/item/capturedevice/attack_self(mob/user)
 	if(contents.len)
-		to_chat(user, "<span class='notice'>You open the capture device!</span>")
+		to_chat(user, span_notice("You open the capture device!"))
 		release()
 	else
-		to_chat(user, "<span class='warning'>The device is empty...</span>")
+		to_chat(user, span_warning("The device is empty..."))
 
 /obj/item/capturedevice/proc/store(mob/living/M)
 	M.forceMove(src)

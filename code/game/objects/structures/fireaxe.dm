@@ -5,16 +5,18 @@
 	icon_state = "fireaxe"
 	anchored = TRUE
 	density = FALSE
-	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, RAD = 100, FIRE = 90, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 20, LASER = 0, ENERGY = 100, BOMB = 10, BIO = 100, FIRE = 90, ACID = 50)
 	max_integrity = 150
 	integrity_failure = 0.33
 	var/locked = TRUE
 	var/open = FALSE
 	var/obj/item/fireaxe/fireaxe
 
-/obj/structure/fireaxecabinet/Initialize()
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
+
+/obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
-	fireaxe = new
+	fireaxe = new(src)
 	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()
@@ -26,38 +28,38 @@
 	if(iscyborg(user) || I.tool_behaviour == TOOL_MULTITOOL)
 		toggle_lock(user)
 	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=2))
 				return
 
-			to_chat(user, "<span class='notice'>You begin repairing [src].</span>")
+			to_chat(user, span_notice("You begin repairing [src]."))
 			if(I.use_tool(src, user, 40, volume=50, amount=2))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_appearance()
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
+				to_chat(user, span_notice("You repair [src]."))
 		else
-			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 	else if(istype(I, /obj/item/stack/sheet/glass) && broken)
 		var/obj/item/stack/sheet/glass/G = I
 		if(G.get_amount() < 2)
-			to_chat(user, "<span class='warning'>You need two glass sheets to fix [src]!</span>")
+			to_chat(user, span_warning("You need two glass sheets to fix [src]!"))
 			return
-		to_chat(user, "<span class='notice'>You start fixing [src]...</span>")
+		to_chat(user, span_notice("You start fixing [src]..."))
 		if(do_after(user, 20, target = src) && G.use(2))
 			broken = FALSE
-			obj_integrity = max_integrity
+			atom_integrity = max_integrity
 			update_appearance()
 	else if(open || broken)
 		if(istype(I, /obj/item/fireaxe) && !fireaxe)
 			var/obj/item/fireaxe/F = I
 			if(F?.wielded)
-				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
+				to_chat(user, span_warning("Unwield the [F.name] first."))
 				return
 			if(!user.transferItemToLoc(F, src))
 				return
 			fireaxe = F
-			to_chat(user, "<span class='notice'>You place the [F.name] back in the [name].</span>")
+			to_chat(user, span_notice("You place the [F.name] back in the [name]."))
 			update_appearance()
 			return
 		else if(!broken)
@@ -82,7 +84,8 @@
 	if(.)
 		update_appearance()
 
-/obj/structure/fireaxecabinet/obj_break(damage_flag)
+/obj/structure/fireaxecabinet/atom_break(damage_flag)
+	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_appearance()
 		broken = TRUE
@@ -112,12 +115,12 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			to_chat(user, "<span class='notice'>You take the fire axe from the [name].</span>")
+			to_chat(user, span_notice("You take the fire axe from the [name]."))
 			src.add_fingerprint(user)
 			update_appearance()
 			return
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, span_warning("The [name] won't budge!"))
 		return
 	else
 		open = !open
@@ -135,7 +138,7 @@
 /obj/structure/fireaxecabinet/attack_tk(mob/user)
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	if(locked)
-		to_chat(user, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(user, span_warning("The [name] won't budge!"))
 		return
 	open = !open
 	update_appearance()
@@ -148,7 +151,7 @@
 	if(open)
 		. += "glass_raised"
 		return
-	var/hp_percent = obj_integrity/max_integrity * 100
+	var/hp_percent = atom_integrity/max_integrity * 100
 	if(broken)
 		. += "glass4"
 	else
@@ -165,10 +168,10 @@
 	. += locked ? "locked" : "unlocked"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	to_chat(user, "<span class='notice'>Resetting circuitry...</span>")
+	to_chat(user, span_notice("Resetting circuitry..."))
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, TRUE)
 	if(do_after(user, 20, target = src))
-		to_chat(user, "<span class='notice'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
+		to_chat(user, span_notice("You [locked ? "disable" : "re-enable"] the locking modules."))
 		locked = !locked
 		update_appearance()
 
@@ -178,7 +181,7 @@
 	set src in oview(1)
 
 	if(locked)
-		to_chat(usr, "<span class='warning'>The [name] won't budge!</span>")
+		to_chat(usr, span_warning("The [name] won't budge!"))
 		return
 	else
 		open = !open

@@ -6,9 +6,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/machinery/status_display/evac{
-	pixel_x = 32
-	},
+/obj/machinery/status_display/evac/directional/east,
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = -32
 	},
@@ -24,22 +22,18 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "Q" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "U" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	pixel_x = 25
-	},
+/obj/item/radio/intercom/directional/east,
 /obj/item/storage/pod{
 	pixel_x = -26
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "Z" = (

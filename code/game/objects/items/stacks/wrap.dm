@@ -9,13 +9,44 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
+	greyscale_config = /datum/greyscale_config/wrap_paper
 	item_flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/wrapping_paper
 
-/obj/item/stack/wrapping_paper/use(used, transfer)
+/obj/item/stack/wrapping_paper/Initialize(mapload)
+	. = ..()
+	if(!greyscale_colors)
+		//Generate random valid colors for paper and ribbon
+		var/generated_base_color = "#" + random_color()
+		var/generated_ribbon_color = "#" + random_color()
+		var/temp_base_hsv = RGBtoHSV(generated_base_color)
+		var/temp_ribbon_hsv = RGBtoHSV(generated_ribbon_color)
+
+		//If colors are too dark, set to original colors
+		if(ReadHSV(temp_base_hsv)[3] < ReadHSV("7F7F7F")[3])
+			generated_base_color = "#00FF00"
+		if(ReadHSV(temp_ribbon_hsv)[3] < ReadHSV("7F7F7F")[3])
+			generated_ribbon_color = "#FF0000"
+
+		//Set layers to these colors, base then ribbon
+		set_greyscale(colors = list(generated_base_color, generated_ribbon_color))
+
+/obj/item/stack/wrapping_paper/attack_hand_secondary(mob/user, modifiers)
+	var/new_base = input(user, "", "Select a base color", color) as color
+	var/new_ribbon = input(user, "", "Select a ribbon color", color) as color
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	set_greyscale(colors = list(new_base, new_ribbon))
+	return TRUE
+
+//preset wrapping paper meant to fill the original color configuration
+/obj/item/stack/wrapping_paper/xmas
+	greyscale_colors = "#00FF00#FF0000"
+
+/obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)
@@ -44,7 +75,7 @@
 	merge_type = /obj/item/stack/package_wrap
 
 /obj/item/stack/package_wrap/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins wrapping [user.p_them()]self in \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if(use(3))
 		var/obj/structure/big_delivery/P = new /obj/structure/big_delivery(get_turf(user.loc))
 		P.icon_state = "deliverypackage5"
@@ -52,7 +83,7 @@
 		P.add_fingerprint(user)
 		return OXYLOSS
 	else
-		to_chat(user, "<span class='warning'>You need more paper!</span>")
+		to_chat(user, span_warning("You need more paper!"))
 		return SHAME
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
@@ -93,7 +124,7 @@
 				user.put_in_hands(P)
 			I.forceMove(P)
 			var/size = round(I.w_class)
-			P.name = "[weightclass2text(size)] parcel"
+			P.name = "[weight_class_to_text(size)] parcel"
 			P.w_class = size
 			size = min(size, 5)
 			P.icon_state = "deliverypackage[size]"
@@ -103,25 +134,26 @@
 		if(O.opened)
 			return
 		if(!O.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
-			to_chat(user, "<span class='warning'>You can't wrap this!</span>")
+			to_chat(user, span_warning("You can't wrap this!"))
 			return
 		if(use(3))
 			var/obj/structure/big_delivery/P = new /obj/structure/big_delivery(get_turf(O.loc))
 			P.icon_state = O.delivery_icon
+			P.drag_slowdown = O.drag_slowdown
 			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else
-			to_chat(user, "<span class='warning'>You need more paper!</span>")
+			to_chat(user, span_warning("You need more paper!"))
 			return
 	else
-		to_chat(user, "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
+		to_chat(user, span_warning("The object you are trying to wrap is unsuitable for the sorting machinery!"))
 		return
 
-	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
+	user.visible_message(span_notice("[user] wraps [target]."))
 	user.log_message("has used [name] on [key_name(target)]", LOG_ATTACK, color="blue")
 
-/obj/item/stack/package_wrap/use(used, transfer = FALSE)
+/obj/item/stack/package_wrap/use(used, transfer = FALSE, check = TRUE)
 	var/turf/T = get_turf(src)
 	. = ..()
 	if(QDELETED(src) && !transfer)

@@ -8,7 +8,6 @@
 	name = "donut"
 	desc = "Goes great with robust coffee."
 	icon = 'icons/obj/food/donuts.dmi'
-	icon_state = "donut"
 	bite_consumption = 5
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
@@ -20,7 +19,7 @@
 	var/extra_reagent = null
 	var/decorated_adjective = "sprinkled"
 
-/obj/item/food/donut/Initialize()
+/obj/item/food/donut/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, amount_per_dunk = 10)
 	if(prob(DONUT_SPRINKLE_CHANCE))
@@ -55,12 +54,13 @@
 	return "[icon_state]_inbox"
 
 ///Override for checkliked in edible component, because all cops LOVE donuts
-/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/H)
-	if(!HAS_TRAIT(H, TRAIT_AGEUSIA) && H.mind && HAS_TRAIT(H.mind, TRAIT_DONUT_LOVER))
+/obj/item/food/donut/proc/check_liked(fraction, mob/living/carbon/human/consumer)
+	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && consumer.mind && HAS_TRAIT(consumer.mind, TRAIT_DONUT_LOVER))
 		return FOOD_LIKED
 
 //Use this donut ingame
 /obj/item/food/donut/plain
+	icon_state = "donut"
 
 /obj/item/food/donut/chaos
 	name = "chaos donut"
@@ -70,7 +70,7 @@
 	tastes = list("donut" = 3, "chaos" = 1)
 	is_decorated = TRUE
 
-/obj/item/food/donut/chaos/Initialize()
+/obj/item/food/donut/chaos/Initialize(mapload)
 	. = ..()
 	extra_reagent = pick(/datum/reagent/consumable/nutriment, /datum/reagent/consumable/capsaicin, /datum/reagent/consumable/frostoil, /datum/reagent/drug/krokodil, /datum/reagent/toxin/plasma, /datum/reagent/consumable/coco, /datum/reagent/toxin/slimejelly, /datum/reagent/consumable/banana, /datum/reagent/consumable/berryjuice, /datum/reagent/medicine/omnizine)
 	reagents.add_reagent(extra_reagent, 3)
@@ -161,7 +161,6 @@
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jelly"
-	decorated_icon = "jelly_homer"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	extra_reagent = /datum/reagent/consumable/berryjuice
 	tastes = list("jelly" = 1, "donut" = 3)
@@ -171,12 +170,13 @@
 /obj/item/food/donut/jelly/in_box_sprite()
 	return "[replacetext(icon_state, "jelly", "donut")]_inbox"
 
-/obj/item/food/donut/jelly/Initialize()
+/obj/item/food/donut/jelly/Initialize(mapload)
 	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent(extra_reagent, 3)
 
 /obj/item/food/donut/jelly/plain //use this ingame to avoid inheritance related crafting issues.
+	decorated_icon = "jelly_homer"
 
 /obj/item/food/donut/jelly/berry
 	name = "pink jelly donut"
@@ -254,11 +254,11 @@
 /obj/item/food/donut/jelly/slimejelly
 	name = "jelly donut"
 	desc = "You jelly?"
-	icon_state = "jelly"
 	extra_reagent = /datum/reagent/toxin/slimejelly
 	foodtypes = JUNKFOOD | GRAIN | FRIED | TOXIC | SUGAR | BREAKFAST
 
 /obj/item/food/donut/jelly/slimejelly/plain
+	icon_state = "jelly"
 
 /obj/item/food/donut/jelly/slimejelly/berry
 	name = "pink jelly donut"
@@ -339,6 +339,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("muffin" = 1)
 	foodtypes = GRAIN | SUGAR | BREAKFAST
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/muffin/berry
@@ -366,7 +367,7 @@
 
 /obj/item/food/muffin/moffin/Initialize(mapload)
 	. = ..()
-	icon_state = "[icon_state]_[rand(1,3)]"
+	icon_state = "[icon_state]_[rand(1, 3)]"
 
 /obj/item/food/muffin/moffin/examine(mob/user)
 	. = ..()
@@ -374,9 +375,9 @@
 		return
 	var/mob/living/carbon/human/moffin_observer = user
 	if(moffin_observer.dna.species.liked_food & CLOTH)
-		. += "<span class='nicegreen'>Ooh! It's even got bits of clothes on it! Yummy!</span>"
+		. += span_nicegreen("Ooh! It's even got bits of clothes on it! Yummy!")
 	else
-		. += "<span class='warning'>You're not too sure what's on top though...</span>"
+		. += span_warning("You're not too sure what's on top though...")
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
@@ -431,7 +432,12 @@
 	microwaved_type = /obj/item/food/donkpocket/warm
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+//donk pockets cook quick... try not to burn them for using an unoptimal tool
+/obj/item/food/donkpocket/MakeBakeable()
+	AddComponent(/datum/component/bakeable, microwaved_type, rand(25 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -440,6 +446,10 @@
 	microwaved_type = null
 	tastes = list("meat" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
+
+///Override for fast-burning food
+/obj/item/food/donkpocket/warm/MakeBakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
 
 /obj/item/food/dankpocket
 	name = "\improper Dank-pocket"
@@ -561,9 +571,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cookie/Initialize()
+/obj/item/food/cookie/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
 
@@ -574,10 +585,28 @@
 	name = "fortune cookie"
 	desc = "A true prophecy in each cookie!"
 	icon_state = "fortune_cookie"
+	trash_type = /obj/item/paper
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("cookie" = 1)
 	foodtypes = GRAIN | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/fortunecookie/proc/get_fortune()
+	var/atom/drop_location = drop_location()
+	
+	var/obj/item/paper/fortune = locate(/obj/item/paper) in src
+	// If a fortune exists, use that.
+	if (fortune)
+		fortune.forceMove(drop_location)
+		return fortune
+	// Otherwise, make a blank page.
+	var/out_paper = new trash_type(drop_location)
+	return out_paper
+
+/obj/item/food/fortunecookie/MakeLeaveTrash()
+	if(trash_type)
+		AddElement(/datum/element/food_trash, trash_type, food_flags, /obj/item/food/fortunecookie/proc/get_fortune)
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"
@@ -586,6 +615,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pretzel" = 1)
 	foodtypes = GRAIN | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/plumphelmetbiscuit
@@ -595,9 +625,10 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("mushroom" = 1, "biscuit" = 1)
 	foodtypes = GRAIN | VEGETABLES
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/plumphelmetbiscuit/Initialize()
+/obj/item/food/plumphelmetbiscuit/Initialize(mapload)
 	var/fey = prob(10)
 	if(fey)
 		name = "exceptional plump helmet biscuit"
@@ -615,31 +646,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("cracker" = 1)
 	foodtypes = GRAIN
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/food/hotdog
-	name = "hotdog"
-	desc = "Fresh footlong ready to go down on."
-	icon_state = "hotdog"
-	bite_consumption = 3
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/ketchup = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
-	tastes = list("bun" = 3, "meat" = 2)
-	foodtypes = GRAIN | MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_CHEAP
-
-/obj/item/food/hotdog/debug
-	eat_time = 0
-
-/obj/item/food/meatbun
-	name = "meat bun"
-	desc = "Has the potential to not be Dog."
-	icon_state = "meatbun"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 4)
-	tastes = list("bun" = 3, "meat" = 2)
-	foodtypes = GRAIN | MEAT | VEGETABLES
-	w_class = WEIGHT_CLASS_SMALL
-	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/khachapuri
 	name = "khachapuri"
@@ -658,7 +666,7 @@
 	tastes = list("sweetness" = 1)
 	foodtypes = GRAIN | JUNKFOOD | SUGAR
 
-/obj/item/food/cookie/sugar/Initialize()
+/obj/item/food/cookie/sugar/Initialize(mapload)
 	. = ..()
 	if(SSevents.holidays && SSevents.holidays[FESTIVE_SEASON])
 		var/shape = pick("tree", "bear", "santa", "stocking", "present", "cane")
@@ -697,6 +705,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("cake" = 3, "cherry" = 1)
 	foodtypes = GRAIN | FRUIT | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cherrycupcake/blue
@@ -761,7 +770,7 @@
 		return ..()
 	if(newresult)
 		qdel(garnish)
-		to_chat(user, "<span class='notice'>You add [garnish] to [src].</span>")
+		to_chat(user, span_notice("You add [garnish] to [src]."))
 		AddComponent(/datum/component/grillable, cook_result = newresult)
 
 /obj/item/food/pancakes/raw/examine(mob/user)
@@ -785,7 +794,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pancakes" = 1, "chocolate" = 1)
 
-/obj/item/food/pancakes/Initialize()
+/obj/item/food/pancakes/Initialize(mapload)
 	. = ..()
 	update_appearance()
 
@@ -793,7 +802,7 @@
 	name = contents.len ? "stack of pancakes" : initial(name)
 	return ..()
 
-/obj/item/food/pancakes/update_icon(updates=ALL)
+/obj/item/food/pancakes/update_icon(updates = ALL)
 	if(!(updates & UPDATE_OVERLAYS))
 		return ..()
 
@@ -828,11 +837,11 @@
 	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/pancake = item
 		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
-			to_chat(user, "<span class='warning'>You can't add that many pancakes to [src]!</span>")
+			to_chat(user, span_warning("You can't add that many pancakes to [src]!"))
 		else
 			if(!user.transferItemToLoc(pancake, src))
 				return
-			to_chat(user, "<span class='notice'>You add the [pancake] to the [src].</span>")
+			to_chat(user, span_notice("You add the [pancake] to the [src]."))
 			pancake.name = initial(pancake.name)
 			contents += pancake
 			update_snack_overlays(pancake)
@@ -851,17 +860,17 @@
 	..()
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/pancake)
-	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1,3)]")
-	pancake_visual.pixel_x = rand(-1,1)
+	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.inhand_icon_state]_[rand(1, 3)]")
+	pancake_visual.pixel_x = rand(-1, 1)
 	pancake_visual.pixel_y = 3 * contents.len - 1
 	add_overlay(pancake_visual)
 	update_appearance()
 
-/obj/item/food/pancakes/attack(mob/M, mob/living/user, params, stacked = TRUE)
+/obj/item/food/pancakes/attack(mob/target, mob/living/user, params, stacked = TRUE)
 	if(user.combat_mode || !contents.len || !stacked)
 		return ..()
-	var/obj/item/O = contents[contents.len]
-	. = O.attack(M, user, params, FALSE)
+	var/obj/item/item = contents[contents.len]
+	. = item.attack(target, user, params, FALSE)
 	update_appearance()
 
 #undef PANCAKE_MAX_STACK
@@ -885,6 +894,7 @@
 	tastes = list("cream" = 2, "waffle" = 1)
 	bite_consumption = 4
 	foodtypes = DAIRY | SUGAR
+	food_flags = FOOD_FINGER_FOOD
 	max_volume = 10 //The max volumes scales up with the number of scoops of ice cream served.
 	/// These two variables are used by the ice cream vat. Latter is the one that shows on the UI.
 	var/list/ingredients = list(/datum/reagent/consumable/flour, /datum/reagent/consumable/sugar)

@@ -17,18 +17,18 @@
 	/// The typepath of the assembly to attach to the TTV.
 	var/assembly_type
 
-/obj/effect/spawner/newbomb/Initialize()
+/obj/effect/spawner/newbomb/Initialize(mapload)
 	. = ..()
 	var/obj/item/transfer_valve/ttv = new(loc)
 	var/obj/item/tank/internals/plasma/plasma_tank = new(ttv)
 	var/obj/item/tank/internals/oxygen/oxygen_tank = new(ttv)
 
-	var/datum/gas_mixture/plasma_mix = plasma_tank.air_contents
+	var/datum/gas_mixture/plasma_mix = plasma_tank.return_air()
 	plasma_mix.assert_gas(/datum/gas/plasma)
 	plasma_mix.gases[/datum/gas/plasma][MOLES] = pressure_p*plasma_mix.volume/(R_IDEAL_GAS_EQUATION*temp_p)
 	plasma_mix.temperature = temp_p
 
-	var/datum/gas_mixture/oxygen_mix = oxygen_tank.air_contents
+	var/datum/gas_mixture/oxygen_mix = oxygen_tank.return_air()
 	oxygen_mix.assert_gas(/datum/gas/oxygen)
 	oxygen_mix.gases[/datum/gas/oxygen][MOLES] = pressure_o*oxygen_mix.volume/(R_IDEAL_GAS_EQUATION*temp_o)
 	oxygen_mix.temperature = temp_o

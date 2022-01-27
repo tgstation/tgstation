@@ -1,3 +1,10 @@
+// Skillchip categories
+//Various skillchip categories. Use these when setting which categories a skillchip restricts being paired with
+//while using the SKILLCHIP_RESTRICTED_CATEGORIES flag
+/// General related skillchip category
+#define SKILLCHIP_CATEGORY_GENERAL "general"
+
+
 /obj/item/skillchip
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
@@ -434,26 +441,22 @@
 	activate_message = "<span class='notice'>You feel that you know a lot about interpreting organs.</span>"
 	deactivate_message = "<span class='notice'>Knowledge of liver damage, heart strain and lung scars fades from your mind.</span>"
 
-/obj/item/skillchip/quickcarry
-	name = "Ant Hauler skillchip"
-	auto_traits = list(TRAIT_QUICK_CARRY)
-	skill_name = "Ant Hauler"
-	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
-	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
-	skill_description = "Discover various lifting techniques to more accurately and quickly lift someone up into a fireman carry."
-	skill_icon = "hand-holding"
-	activate_message = "<span class='notice'>You feel like you can easily lift and carry people around.</span>"
-	deactivate_message = "<span class='notice'>Your skill at lifting people into a fireman carry fades from your mind.</span>"
+/obj/item/skillchip/brainwashing
+	name = "suspicious skillchip"
+	auto_traits = list(TRAIT_BRAINWASHING)
+	skill_name = "Brainwashing"
+	skill_description = "WARNING: The integrity of this chip is compromised. Please discard this skillchip."
+	skill_icon = "soap"
+	activate_message = span_notice("...But all at once it comes to you... something involving putting a brain in a washing machine?")
+	deactivate_message = span_warning("All knowledge of the secret brainwashing technique is GONE.")
 
-/obj/item/skillchip/quickercarry
-	name = "RES-Q skillchip"
-	auto_traits = list(TRAIT_QUICKER_CARRY)
-	skill_name = "RES-Q"
-	chip_category = SKILLCHIP_CATEGORY_FIREMAN_CARRYING
-	skillchip_flags = SKILLCHIP_RESTRICTED_CATEGORIES
-	incompatibility_list = list(SKILLCHIP_CATEGORY_FIREMAN_CARRYING)
-	skill_description = "Learn how to fireman carry like a professional, and haul the injured, sick or dying with speed!"
-	skill_icon = "hand-holding"
-	activate_message = "<span class='notice'>Carrying people across your back feels like second nature to you.</span>"
-	deactivate_message = "<span class='notice'>Your expert knowledge in fireman carrying fades from your mind.</span>"
+/obj/item/skillchip/brainwashing/examine(mob/user)
+	. = ..()
+	. += span_warning("It seems to have been corroded over time, putting this in your head may not be the best idea...")
+
+/obj/item/skillchip/brainwashing/on_activate(mob/living/carbon/user, silent = FALSE)
+	to_chat(user, span_danger("You get a pounding headache as the chip sends corrupt memories into your head!"))
+	user.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
+	. = ..()
+
+#undef SKILLCHIP_CATEGORY_GENERAL

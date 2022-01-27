@@ -7,7 +7,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	move_resist = INFINITY
 	throwforce = 0
 
-/mob/dead/Initialize()
+/mob/dead/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -20,24 +20,22 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		add_verb(src, /mob/dead/proc/server_hop)
 	set_focus(src)
+	become_hearing_sensitive()
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/canUseStorage()
 	return FALSE
 
-/mob/dead/forceMove(atom/destination)
+/mob/dead/abstract_move(atom/destination)
 	var/turf/old_turf = get_turf(src)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
-		onTransitZ(old_turf?.z, new_turf?.z)
-	var/oldloc = loc
-	loc = destination
-	Moved(oldloc, NONE, TRUE)
+		on_changed_z_level(old_turf, new_turf)
+	return ..()
 
 /mob/dead/get_status_tab_items()
 	. = ..()
 	. += ""
-	. += "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]"
 
 	if(SSticker.HasRoundStarted())
 		return
@@ -53,6 +51,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players: [SSticker.totalPlayers]"
 	if(client.holder)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
+		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
@@ -63,26 +62,26 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)
 	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
 	var/pick
-	switch(csa.len)
+	switch(length(csa))
 		if(0)
 			remove_verb(src, /mob/dead/proc/server_hop)
-			to_chat(src, "<span class='notice'>Server Hop has been disabled.</span>")
+			to_chat(src, span_notice("Server Hop has been disabled."))
 		if(1)
 			pick = csa[1]
 		else
-			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
+			pick = tgui_input_list(src, "Server to jump to", "Server Hop", csa)
 
-	if(!pick)
+	if(isnull(pick))
 		return
 
 	var/addr = csa[pick]
 
-	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
+	if(tgui_alert(usr, "Jump to server [pick] ([addr])?", "Server Hop", list("Yes", "No")) != "Yes")
 		return
 
 	var/client/C = client
-	to_chat(C, "<span class='notice'>Sending you to [pick].</span>")
-	new /atom/movable/screen/splash(C)
+	to_chat(C, span_notice("Sending you to [pick]."))
+	new /atom/movable/screen/splash(null, C)
 
 	notransform = TRUE
 	sleep(29) //let the animation play
@@ -121,6 +120,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	update_z(null)
 	return ..()
 
-/mob/dead/onTransitZ(old_z,new_z)
+/mob/dead/on_changed_z_level(turf/old_turf, turf/new_turf)
 	..()
-	update_z(new_z)
+	update_z(new_turf?.z)

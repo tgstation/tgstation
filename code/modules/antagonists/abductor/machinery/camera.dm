@@ -2,18 +2,22 @@
 	name = "Human Observation Console"
 	var/team_number = 0
 	networks = list("ss13", "abductor")
-	var/datum/action/innate/teleport_in/tele_in_action = new
-	var/datum/action/innate/teleport_out/tele_out_action = new
-	var/datum/action/innate/teleport_self/tele_self_action = new
-	var/datum/action/innate/vest_mode_swap/vest_mode_action = new
-	var/datum/action/innate/vest_disguise_swap/vest_disguise_action = new
-	var/datum/action/innate/set_droppoint/set_droppoint_action = new
 	var/obj/machinery/abductor/console/console
+	/// We can't create our actions until after LateInitialize
+	/// So we instead do it on the first call to GrantActions
+	var/abduct_created = FALSE
 	lock_override = TRUE
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
+	icon_keyboard = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/machinery/computer/camera_advanced/abductor/Destroy()
+	if(console)
+		console.camera = null
+		console = null
+	return ..()
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
@@ -23,37 +27,15 @@
 	eyeobj.invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
+	if(!abduct_created)
+		abduct_created = TRUE
+		actions += new /datum/action/innate/teleport_in(console.pad)
+		actions += new /datum/action/innate/teleport_out(console)
+		actions += new /datum/action/innate/teleport_self(console.pad)
+		actions += new /datum/action/innate/vest_mode_swap(console)
+		actions += new /datum/action/innate/vest_disguise_swap(console)
+		actions += new /datum/action/innate/set_droppoint(console)
 	..()
-
-	if(tele_in_action)
-		tele_in_action.target = console.pad
-		tele_in_action.Grant(user)
-		actions += tele_in_action
-
-	if(tele_out_action)
-		tele_out_action.target = console
-		tele_out_action.Grant(user)
-		actions += tele_out_action
-
-	if(tele_self_action)
-		tele_self_action.target = console.pad
-		tele_self_action.Grant(user)
-		actions += tele_self_action
-
-	if(vest_mode_action)
-		vest_mode_action.target = console
-		vest_mode_action.Grant(user)
-		actions += vest_mode_action
-
-	if(vest_disguise_action)
-		vest_disguise_action.target = console
-		vest_disguise_action.Grant(user)
-		actions += vest_disguise_action
-
-	if(set_droppoint_action)
-		set_droppoint_action.target = console
-		set_droppoint_action.Grant(user)
-		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
@@ -71,7 +53,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
+		to_chat(owner, span_warning("You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!"))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
@@ -79,7 +61,7 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
 	use_delay = (world.time + abductor_pad_cooldown)
@@ -111,7 +93,7 @@
 	if(!target || !iscarbon(owner))
 		return
 	if(world.time < use_delay)
-		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
+		to_chat(owner, span_warning("You can only teleport to one place at a time!"))
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/ai_eye/remote/remote_eye = C.remote_control
@@ -119,7 +101,7 @@
 
 	var/area/target_area = get_area(remote_eye)
 	if(target_area.area_flags & ABDUCTOR_PROOF)
-		to_chat(owner, "<span class='warning'>This area is too heavily shielded to safely transport to.</span>")
+		to_chat(owner, span_warning("This area is too heavily shielded to safely transport to."))
 		return
 
 	use_delay = (world.time + teleport_self_cooldown)

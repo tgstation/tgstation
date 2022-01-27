@@ -262,9 +262,6 @@
 	delay_message = "Mining..."
 	loot_type = /obj/item/stack/sheet/mineral/plasma/thirty
 
-/obj/item/stack/sheet/mineral/plasma/thirty
-	amount = 30
-
 /datum/exploration_event/simple/resource/mineral_deposit
 	name = "MATERIAL Deposit"
 	required_site_traits = list(EXPLORATION_SITE_SURFACE)

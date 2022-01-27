@@ -13,10 +13,10 @@
 	/// If the cutout actually appears as what it portray and not a discolored version
 	var/deceptive = FALSE
 
-/obj/item/cardboard_cutout/Initialize()
+/obj/item/cardboard_cutout/Initialize(mapload)
 	. = ..()
-	possible_appearances = sortList(list(
-		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+	possible_appearances = sort_list(list(
+		JOB_ASSISTANT = image(icon = src.icon, icon_state = "cutout_greytide"),
 		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
 		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
 		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
@@ -28,7 +28,6 @@
 		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
 		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
 		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
-		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
 		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
@@ -41,7 +40,7 @@
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
 	if(!user.combat_mode || pushed_over)
 		return ..()
-	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
+	user.visible_message(span_warning("[user] pushes over [src]!"), span_danger("You push over [src]!"))
 	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	push_over()
 
@@ -57,7 +56,7 @@
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
 		return
-	to_chat(user, "<span class='notice'>You right [src].</span>")
+	to_chat(user, span_notice("You right [src]."))
 	desc = initial(desc)
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
@@ -79,15 +78,15 @@
 	user.do_attack_animation(src)
 
 	if(I.force)
-		user.visible_message("<span class='danger'>[user] hits [src] with [I]!</span>", \
-			"<span class='danger'>You hit [src] with [I]!</span>")
+		user.visible_message(span_danger("[user] hits [src] with [I]!"), \
+			span_danger("You hit [src] with [I]!"))
 		if(prob(I.force))
 			push_over()
 
 /obj/item/cardboard_cutout/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	if(istype(P, /obj/projectile/bullet/reusable))
 		P.on_hit(src, 0, piercing_hit)
-	visible_message("<span class='danger'>[src] is hit by [P]!</span>")
+	visible_message(span_danger("[src] is hit by [P]!"))
 	playsound(src, 'sound/weapons/slice.ogg', 50, TRUE)
 	if(prob(P.damage))
 		push_over()
@@ -108,7 +107,7 @@
 		return FALSE
 	if(!check_menu(user, crayon))
 		return FALSE
-	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
+	user.visible_message(span_notice("[user] gives [src] a new look."), span_notice("Voila! You give [src] a new look."))
 	crayon.use_charges(1)
 	crayon.check_empty(user)
 	alpha = 255
@@ -116,7 +115,7 @@
 	if(!deceptive)
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
-		if("Assistant")
+		if(JOB_ASSISTANT)
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
@@ -166,10 +165,6 @@
 			name = "lusty xenomorph maid ([rand(1, 999)])"
 			desc = "A cardboard cutout of a xenomorph maid."
 			icon_state = "cutout_lusty"
-		if("Swarmer")
-			name = "Swarmer ([rand(1, 999)])"
-			desc = "A cardboard cutout of a swarmer."
-			icon_state = "cutout_swarmer"
 		if("Ash Walker")
 			name = lizard_name(pick(MALE, FEMALE))
 			desc = "A cardboard cutout of an ash walker."
@@ -213,14 +208,14 @@
 	if(user.incapacitated())
 		return FALSE
 	if(pushed_over)
-		to_chat(user, "<span class='warning'>Right [src] first!</span>")
+		to_chat(user, span_warning("Right [src] first!"))
 		return FALSE
 	if(!crayon || !user.is_holding(crayon))
 		return FALSE
 	if(crayon.check_empty(user))
 		return FALSE
 	if(crayon.is_capped)
-		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
+		to_chat(user, span_warning("Take the cap off first!"))
 		return FALSE
 	return TRUE
 

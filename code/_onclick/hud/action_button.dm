@@ -12,8 +12,13 @@
 	var/ordered = TRUE //If the button gets placed into the default bar
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
-	if (linked_action)
-		return linked_action.owner == user
+	if(linked_action)
+		if(linked_action.owner == user)
+			return TRUE
+		for(var/datum/weakref/reference as anything in linked_action.sharers)
+			if(IS_WEAKREF_OF(user, reference))
+				return TRUE
+		return FALSE
 	else if (isobserver(user))
 		var/mob/dead/observer/O = user
 		return !O.observetarget
@@ -25,7 +30,7 @@
 		return
 	if((istype(over_object, /atom/movable/screen/movable/action_button) && !istype(over_object, /atom/movable/screen/movable/action_button/hide_toggle)))
 		if(locked)
-			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			to_chat(usr, span_warning("Action button \"[name]\" is locked, unlock it first."))
 			return
 		var/atom/movable/screen/movable/action_button/B = over_object
 		var/list/actions = usr.actions
@@ -45,21 +50,24 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(locked)
-			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			to_chat(usr, span_warning("Action button \"[name]\" is locked, unlock it first."))
 			return TRUE
 		moved = 0
 		usr.update_action_buttons() //redraw buttons that are no longer considered "moved"
 		return TRUE
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		locked = !locked
-		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		to_chat(usr, span_notice("Action button \"[name]\" [locked ? "" : "un"]locked."))
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
-	linked_action.Trigger()
+	var/trigger_flags
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		trigger_flags |= TRIGGER_SECONDARY_ACTION
+	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
 
 //Hide/Show Action Buttons ... Button
@@ -75,7 +83,7 @@
 	var/mutable_appearance/hide_appearance
 	var/mutable_appearance/show_appearance
 
-/atom/movable/screen/movable/action_button/hide_toggle/Initialize()
+/atom/movable/screen/movable/action_button/hide_toggle/Initialize(mapload)
 	. = ..()
 	var/static/list/icon_cache = list()
 
@@ -97,31 +105,32 @@
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(locked)
-			to_chat(usr, "<span class='warning'>Action button \"[name]\" is locked, unlock it first.</span>")
+			to_chat(usr, span_warning("Action button \"[name]\" is locked, unlock it first."))
 			return TRUE
 		moved = FALSE
 		usr.update_action_buttons(TRUE)
 		return TRUE
 	if(LAZYACCESS(modifiers, CTRL_CLICK))
 		locked = !locked
-		to_chat(usr, "<span class='notice'>Action button \"[name]\" [locked ? "" : "un"]locked.</span>")
+		to_chat(usr, span_notice("Action button \"[name]\" [locked ? "" : "un"]locked."))
 		if(id && usr.client) //try to (un)remember position
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = locked ? moved : null
 		return TRUE
 	if(LAZYACCESS(modifiers, ALT_CLICK))
+		var/buttons_locked = usr.client.prefs.read_preference(/datum/preference/toggle/buttons_locked)
 		for(var/V in usr.actions)
 			var/datum/action/A = V
 			var/atom/movable/screen/movable/action_button/B = A.button
 			B.moved = FALSE
 			if(B.id && usr.client)
 				usr.client.prefs.action_buttons_screen_locs["[B.name]_[B.id]"] = null
-			B.locked = usr.client.prefs.buttons_locked
-		locked = usr.client.prefs.buttons_locked
+			B.locked = buttons_locked
+		locked = buttons_locked
 		moved = FALSE
 		if(id && usr.client)
 			usr.client.prefs.action_buttons_screen_locs["[name]_[id]"] = null
 		usr.update_action_buttons(TRUE)
-		to_chat(usr, "<span class='notice'>Action button positions have been reset.</span>")
+		to_chat(usr, span_notice("Action button positions have been reset."))
 		return TRUE
 	usr.hud_used.action_buttons_hidden = !usr.hud_used.action_buttons_hidden
 
@@ -141,7 +150,7 @@
 	if(moved)
 		moved = FALSE
 	user.update_action_buttons(TRUE)
-	to_chat(user, "<span class='notice'>Action button positions have been reset.</span>")
+	to_chat(user, span_notice("Action button positions have been reset."))
 
 
 /atom/movable/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)

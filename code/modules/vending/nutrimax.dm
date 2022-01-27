@@ -5,19 +5,24 @@
 	product_ads = "We like plants!;Don't you want some?;The greenest thumbs ever.;We like big plants.;Soft soil..."
 	icon_state = "nutri"
 	icon_deny = "nutri-deny"
+	panel_type = "panel2"
 	light_mask = "nutri-light-mask"
-	products = list(/obj/item/reagent_containers/glass/bottle/nutrient/ez = 30,
-					/obj/item/reagent_containers/glass/bottle/nutrient/l4z = 20,
-					/obj/item/reagent_containers/glass/bottle/nutrient/rh = 10,
-					/obj/item/reagent_containers/spray/pestspray = 20,
-					/obj/item/reagent_containers/syringe = 5,
-					/obj/item/storage/bag/plants = 5,
-					/obj/item/cultivator = 3,
-					/obj/item/shovel/spade = 3,
-					/obj/item/secateurs = 3,
-					/obj/item/plant_analyzer = 4)
-	contraband = list(/obj/item/reagent_containers/glass/bottle/ammonia = 10,
-					  /obj/item/reagent_containers/glass/bottle/diethylamine = 5)
+	products = list(
+		/obj/item/reagent_containers/glass/bottle/nutrient/ez = 30,
+		/obj/item/reagent_containers/glass/bottle/nutrient/l4z = 20,
+		/obj/item/reagent_containers/glass/bottle/nutrient/rh = 10,
+		/obj/item/reagent_containers/spray/pestspray = 20,
+		/obj/item/reagent_containers/syringe = 5,
+		/obj/item/storage/bag/plants = 5,
+		/obj/item/cultivator = 3,
+		/obj/item/shovel/spade = 3,
+		/obj/item/secateurs = 3,
+		/obj/item/plant_analyzer = 4
+	)
+	contraband = list(
+		/obj/item/reagent_containers/glass/bottle/ammonia = 10,
+		/obj/item/reagent_containers/glass/bottle/diethylamine = 5
+	)
 	refill_canister = /obj/item/vending_refill/hydronutrients
 	default_price = PAYCHECK_ASSISTANT * 0.8
 	extra_price = PAYCHECK_HARD * 0.8

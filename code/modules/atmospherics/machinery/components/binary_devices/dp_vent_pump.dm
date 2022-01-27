@@ -40,7 +40,7 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "dpvent_cap", dir, pipe_color, piping_layer = piping_layer)
+		var/image/cap = get_pipe_image(icon, "dpvent_cap", dir, pipe_color, piping_layer = piping_layer)
 		add_overlay(cap)
 
 	if(!on || !is_operational)
@@ -82,7 +82,6 @@
 			return
 
 		loc.assume_air(removed)
-		air_update_turf(FALSE, FALSE)
 
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
@@ -107,7 +106,6 @@
 			return
 
 		air2.merge(removed)
-		air_update_turf(FALSE, FALSE)
 
 		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
@@ -115,7 +113,7 @@
 	//Radio remote control
 
 /**
- * Called in atmosinit(), used to change or remove the radio frequency from the component
+ * Called in atmos_init(), used to change or remove the radio frequency from the component
  * Arguments:
  * * -new_frequency: the frequency that should be used for the radio to attach to the component, use 0 to remove the radio
  */
@@ -126,7 +124,7 @@
 		radio_connection = SSradio.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
 /**
- * Called in atmosinit(), send the component status to the radio device connected
+ * Called in atmos_init(), send the component status to the radio device connected
  */
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
@@ -145,7 +143,7 @@
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/atmos_init()
 	..()
 	if(frequency)
 		set_frequency(frequency)
@@ -221,8 +219,8 @@
 	piping_layer = 4
 	icon_state = "dpvent_map_on-4"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix
-	id = INCINERATOR_TOXMIX_DP_VENTPUMP
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_ordmix
+	id = INCINERATOR_ORDMIX_DP_VENTPUMP
 	frequency = FREQ_AIRLOCK_CONTROL
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_atmos
