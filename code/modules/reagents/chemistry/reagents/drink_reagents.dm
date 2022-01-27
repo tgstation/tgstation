@@ -457,6 +457,45 @@
 	..()
 	. = TRUE
 
+/datum/reagent/consumable/rootbeer
+	name = "root beer"
+	description = "A delightfully bubbly root beer, filled with so much sugar that it can actually speed up the user's trigger finger."
+	color = "#181008" // rgb: 24, 16, 8
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	taste_description = "a monstrous sugar rush"
+	glass_icon_state = "spacecola"
+	glass_name = "glass of root beer"
+	glass_desc = "A glass of highly potent, incredibly sugary root beer."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// If we activated the effect
+	var/effect_enabled = FALSE
+
+
+/datum/reagent/consumable/rootbeer/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_DOUBLE_TAP, type)
+	if(current_cycle > 10)
+		to_chat(L, span_warning("You feel kinda tired as your sugar rush wears off..."))
+		L.adjustStaminaLoss(min(80, current_cycle * 3))
+		L.adjust_drowsyness(current_cycle)
+	..()
+
+/datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(current_cycle >= 3 && !effect_enabled) // takes a few seconds for the bonus to kick in to prevent microdosing
+		to_chat(M, span_notice("You feel your trigger finger getting itchy..."))
+		ADD_TRAIT(M, TRAIT_DOUBLE_TAP, type)
+		effect_enabled = TRUE
+
+	M.Jitter(2 * REM * delta_time)
+	if(prob(50))
+		M.dizziness += 1 * REM * delta_time
+	if(current_cycle > 10)
+		M.dizziness += 1.5 * REM * delta_time
+
+	..()
+	. = TRUE
+
 /datum/reagent/consumable/grey_bull
 	name = "Grey Bull"
 	description = "Grey Bull, it gives you gloves!"
@@ -1043,3 +1082,26 @@
 		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	..()
 	. = TRUE
+
+//Moth Stuff
+/datum/reagent/consumable/toechtauese_juice
+	name = "Töchtaüse Juice"
+	description = "An unpleasant juice made from töchtaüse berries. Best made into a syrup, unless you enjoy pain."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "fiery itchy pain"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse juice"
+	glass_desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/toechtauese_syrup
+	name = "Töchtaüse Syrup"
+	description = "A harsh spicy and bitter syrup, made from töchtaüse berries. Useful as an ingredient, both for food and cocktails."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "sugar, spice, and nothing nice"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse syrup"
+	glass_desc = "Not for drinking on its own."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -1,7 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - qol: "Leaders are now distributed evenly among the Families."
-  - qol: "As a result, the Families rulesets now only require 3 people to start, instead of 9."
-  - bugfix: "You can no longer become a Family Leader as a restricted role, such as a Head of Security."
-  - admin: "Admins can now promote people to Family Leader with a button from the traitor panel."

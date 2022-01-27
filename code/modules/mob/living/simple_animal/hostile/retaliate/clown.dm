@@ -27,7 +27,7 @@
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 1
-	loot = list(/obj/effect/mob_spawn/human/clown/corpse)
+	loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
@@ -298,7 +298,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/slow
 	speed = 20
-	move_to_delay = 60
+	move_to_delay = 30
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton
 	name = "banana glutton"
@@ -368,7 +368,7 @@
 								/obj/item/food/grown/tomato,
 								/obj/item/food/meatclown)
 
-	visible_message("<span class='warning>[src] eats [eaten_atom]!</span>", span_notice("You eat [eaten_atom]."))
+	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
 	if(is_type_in_list(eaten_atom, funny_items))
 		eaten_atom.forceMove(src)
 		prank_pouch += eaten_atom

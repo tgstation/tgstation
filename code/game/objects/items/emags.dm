@@ -57,7 +57,7 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/attack()
 	return
@@ -95,7 +95,7 @@
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
-	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
@@ -126,3 +126,32 @@
 			return TRUE
 	to_chat(user, span_warning("[src] is unable to interface with this. It only seems to fit into airlock electronics."))
 	return FALSE
+
+/*
+ * Battlecruiser Access
+ */
+/obj/item/card/emag/battlecruiser
+	name = "battlecruiser coordinates upload card"
+	desc = "An ominous card that contains the location of the station, and when applied to a communications console, \
+	the ability to long-distance contact the Syndicate fleet."
+	icon_state = "battlecruisercaller"
+	worn_icon_state = "battlecruisercaller"
+	///whether we have called the battlecruiser
+	var/used = FALSE
+
+/obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
+	used = TRUE
+	to_chat(user, span_boldwarning("You use [src], and it interfaces with the communication console. No going back..."))
+
+/obj/item/card/emag/battlecruiser/examine(mob/user)
+	. = ..()
+	. += span_notice("It can only be used on the communications console.")
+
+/obj/item/card/emag/battlecruiser/can_emag(atom/target, mob/user)
+	if(used)
+		to_chat(user, span_warning("[src] is used up."))
+		return FALSE
+	if(!istype(target, /obj/machinery/computer/communications))
+		to_chat(user, span_warning("[src] is unable to interface with this. It only seems to interface with the communication console."))
+		return FALSE
+	return TRUE

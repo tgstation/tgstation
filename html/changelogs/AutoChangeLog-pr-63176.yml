@@ -1,4 +1,0 @@
-author: "Pope"
-delete-after: True
-changes: 
-  - bugfix: "fixed an issue in orion.dm and orion_event.dm to let silicon play orion trail"

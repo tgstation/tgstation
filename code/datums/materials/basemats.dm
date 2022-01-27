@@ -137,11 +137,14 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	. = ..()
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250)
+		// Ideally exploding plasma objects should delete themselves but we still have the flooder and SSexplosions to rely on deleting it asynchronously so it's not that bad.
+		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250, delete_after = EXPLODABLE_NO_DELETE)
+	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*0.05) //Empty temp arg, fully dependent on whatever ignited it.
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
+	qdel(source.GetComponent(/datum/component/combustible_flooder))
 	qdel(source.GetComponent(/datum/component/explodable))
 
 /datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -514,8 +517,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bamboo
 	name = "bamboo"
 	desc = "If it's good enough for pandas, it's good enough for you."
-	color = "#339933"
-	greyscale_colors = "#339933"
+	color = "#87a852"
+	greyscale_colors = "#87a852"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	value_per_unit = 0.0025

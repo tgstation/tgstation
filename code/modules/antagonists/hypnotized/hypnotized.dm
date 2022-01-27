@@ -1,6 +1,6 @@
 /// Antag datum associated with the hypnosis brain trauma, used for displaying objectives and antag hud
 /datum/antagonist/hypnotized
-	name = "Hypnotized Victim"
+	name = "\improper Hypnotized Victim"
 	job_rank = ROLE_HYPNOTIZED
 	roundend_category = "hypnotized victims"
 	antag_hud_name = "brainwashed"

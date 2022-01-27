@@ -51,7 +51,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	. += "Players: [SSticker.totalPlayers]"
 	if(client.holder)
 		. += "Players Ready: [SSticker.totalPlayersReady]"
-		. += "Admins Ready: [SSticker.total_admins_ready] / [GLOB.admins.len]"
+		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
@@ -62,16 +62,16 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)
 	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
 	var/pick
-	switch(csa.len)
+	switch(length(csa))
 		if(0)
 			remove_verb(src, /mob/dead/proc/server_hop)
 			to_chat(src, span_notice("Server Hop has been disabled."))
 		if(1)
 			pick = csa[1]
 		else
-			pick = input(src, "Pick a server to jump to", "Server Hop") as null|anything in csa
+			pick = tgui_input_list(src, "Server to jump to", "Server Hop", csa)
 
-	if(!pick)
+	if(isnull(pick))
 		return
 
 	var/addr = csa[pick]

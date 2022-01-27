@@ -762,6 +762,30 @@
 	else
 		updateDialog()
 
+/obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(panel_open && detonated)
+		to_chat(user, span_warning("[src] has no maintenance panel!"))
+		return
+	panel_open = !panel_open
+	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
+	tool.play_tool_sound(src)
+	update_appearance()
+
+/obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
+	if(note)
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
+		else //telekinesis
+			visible_message(span_notice("[tool] cuts down [note] from [src]."))
+		tool.play_tool_sound(src)
+		note.forceMove(tool.drop_location())
+		note = null
+		update_appearance()
+		return TRUE
+	else
+		return FALSE
+
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
@@ -769,7 +793,7 @@
 			return
 	add_fingerprint(user)
 
-	if(panel_open)
+	if(panel_open || !is_wire_tool(C))
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
 				if(istype(C, /obj/item/stack/sheet/iron))
@@ -885,24 +909,8 @@
 											span_notice("You cut through \the [src]'s outer grille."))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
-	if(C.tool_behaviour == TOOL_SCREWDRIVER)
-		if(panel_open && detonated)
-			to_chat(user, span_warning("[src] has no maintenance panel!"))
-			return
-		panel_open = !panel_open
-		to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
-		C.play_tool_sound(src)
-		update_appearance()
-	else if((C.tool_behaviour == TOOL_WIRECUTTER) && note)
-		if(user.CanReach(src))
-			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
-		else //telekinesis
-			visible_message(span_notice("[C] cuts down [note] from [src]."))
-		C.play_tool_sound(src)
-		note.forceMove(C.drop_location())
-		note = null
-		update_appearance()
-	else if(is_wire_tool(C) && panel_open)
+
+	if(is_wire_tool(C) && panel_open)
 		attempt_wire_interaction(user)
 		return
 	else if(istype(C, /obj/item/pai_cable))
@@ -1198,8 +1206,8 @@
 		return
 
 	// reads from the airlock painter's `available paintjob` list. lets the player choose a paint option, or cancel painting
-	var/current_paintjob = input(user, "Please select a paintjob for this airlock.") as null|anything in sort_list(painter.available_paint_jobs)
-	if(!current_paintjob) // if the user clicked cancel on the popup, return
+	var/current_paintjob = tgui_input_list(user, "Paintjob for this airlock", "Customize", sort_list(painter.available_paint_jobs))
+	if(isnull(current_paintjob)) // if the user clicked cancel on the popup, return
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
@@ -1349,7 +1357,7 @@
 			if(!electronics)
 				ae = new/obj/item/electronics/airlock(loc)
 				gen_access()
-				if(req_one_access.len)
+				if(length(req_one_access))
 					ae.one_access = 1
 					ae.accesses = req_one_access
 				else
@@ -1384,7 +1392,12 @@
 	if(!note)
 		return
 	else if(istype(note, /obj/item/paper))
-		return "note"
+		var/obj/item/paper/pinned_paper = note
+		if(pinned_paper.info && pinned_paper.show_written_words)
+			return "note_words"
+		else
+			return "note"
+
 	else if(istype(note, /obj/item/photo))
 		return "photo"
 

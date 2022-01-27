@@ -56,8 +56,8 @@
 #define SCALING_METHOD_BLUR "blur"
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
-#define PARALLAX_DELAY_MED     1
-#define PARALLAX_DELAY_LOW     2
+#define PARALLAX_DELAY_MED 1
+#define PARALLAX_DELAY_LOW 2
 
 #define SEC_DEPT_NONE "None"
 #define SEC_DEPT_ENGINEERING "Engineering"
@@ -144,3 +144,9 @@
 /// These are preferences that are supplementary for main features,
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
+
+// Playtime is tracked in minutes
+/// The time needed to unlock hardcore random mode in preferences
+#define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
+/// The time needed to unlock the gamer cloak in preferences
+#define PLAYTIME_VETERAN 300000 // 5,000 hours

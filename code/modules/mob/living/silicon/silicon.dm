@@ -27,9 +27,13 @@
 	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_FIRE = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
-	var/lawcheck[1]
-	var/ioncheck[1]
-	var/hackedcheck[1]
+	//These lists will contain each law that should be announced / set to yes in the state laws menu.
+	///List keeping track of which laws to announce
+	var/list/lawcheck = list()
+	///List keeping track of hacked laws to announce
+	var/list/hackedcheck = list()
+	///List keeping track of ion laws to announce
+	var/list/ioncheck = list()
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -61,6 +65,8 @@
 	ADD_TRAIT(src, TRAIT_NOFIRE_SPREAD, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT)
 
+
+
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
@@ -81,7 +87,7 @@
 	return
 
 /mob/living/silicon/proc/queueAlarm(message, type, incoming = FALSE)
-	var/in_cooldown = (alarms_to_show.len > 0 || alarms_to_clear.len > 0)
+	var/in_cooldown = (length(alarms_to_show) || length(alarms_to_clear))
 	if(incoming)
 		alarms_to_show += message
 		alarm_types_show[type] += 1
@@ -95,10 +101,10 @@
 	addtimer(CALLBACK(src, .proc/show_alarms), 3 SECONDS)
 
 /mob/living/silicon/proc/show_alarms()
-	if(alarms_to_show.len < 5)
+	if(length(alarms_to_show) < 5)
 		for(var/msg in alarms_to_show)
 			to_chat(src, msg)
-	else if(alarms_to_show.len)
+	else if(length(alarms_to_show))
 
 		var/msg = "--- "
 		for(var/alarm_type in alarm_types_show)
@@ -107,11 +113,11 @@
 		msg += "<A href=?src=[REF(src)];showalerts=1'>\[Show Alerts\]</a>"
 		to_chat(src, msg)
 
-	if(alarms_to_clear.len < 3)
+	if(length(alarms_to_clear) < 3)
 		for(var/msg in alarms_to_clear)
 			to_chat(src, msg)
 
-	else if(alarms_to_clear.len)
+	else if(length(alarms_to_clear))
 		var/msg = "--- "
 
 		for(var/alarm_type in alarm_types_clear)
@@ -143,36 +149,48 @@
 		return TRUE
 	return FALSE
 
+/**
+ * Assembles all the zeroth, inherent and supplied laws into a single list.
+ */
+/mob/living/silicon/proc/assemble_laws()
+	var/list/laws_to_return = list()
+	laws_to_return += laws.zeroth
+	for (var/law in laws.inherent)
+		laws_to_return += law
+	for (var/law in laws.supplied)
+		if (law != "") // supplied laws start off with 15 blank strings, so don't add any of those
+			laws_to_return += law
+	return laws_to_return
+
 /mob/living/silicon/Topic(href, href_list)
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawc"])
-		switch(lawcheck[L+1])
-			if ("Yes")
-				lawcheck[L+1] = "No"
-			if ("No")
-				lawcheck[L+1] = "Yes"
+	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb
+		var/law_index = text2num(href_list["lawc"])
+		var/law = assemble_laws()[law_index + 1]
+		if (law in lawcheck)
+			lawcheck -= law
+		else
+			lawcheck += law
 		checklaws()
 
-	if (href_list["lawi"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
-		var/L = text2num(href_list["lawi"])
-		switch(ioncheck[L])
-			if ("Yes")
-				ioncheck[L] = "No"
-			if ("No")
-				ioncheck[L] = "Yes"
+	if (href_list["lawi"])
+		var/law_index = text2num(href_list["lawi"])
+		var/law = laws.ion[law_index]
+		if (law in ioncheck)
+			ioncheck -= law
+		else
+			ioncheck += law
 		checklaws()
 
 	if (href_list["lawh"])
-		var/L = text2num(href_list["lawh"])
-		switch(hackedcheck[L])
-			if ("Yes")
-				hackedcheck[L] = "No"
-			if ("No")
-				hackedcheck[L] = "Yes"
+		var/law_index = text2num(href_list["lawh"])
+		var/law = laws.hacked[law_index]
+		if (law in hackedcheck)
+			hackedcheck -= law
+		else
+			hackedcheck += law
 		checklaws()
 
-
-	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
+	if (href_list["laws"])
 		statelaws()
 
 	if (href_list["printlawtext"]) // this is kinda backwards
@@ -195,100 +213,97 @@
 	var/list/lawcache_lawcheck = lawcheck.Copy()
 	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
-
+	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	say("[radiomod] Current Active Laws:")
-	//laws_sanity_check()
-	//laws.show_laws(world)
-	var/number = 1
+	say("[radiomod] Current Active Laws:", forced = forced_log_message)
 	sleep(10)
 
 	if (lawcache_zeroth)
-		if (force || lawcache_lawcheck[1] == "Yes")
-			say("[radiomod] 0. [lawcache_zeroth]")
+		if (force || (lawcache_zeroth in lawcache_lawcheck))
+			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message)
 			sleep(10)
 
 	for (var/index in 1 to length(lawcache_hacked))
 		var/law = lawcache_hacked[index]
 		var/num = ion_num()
-		if (length(law) > 0)
-			if (force || lawcache_hackedcheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
-				sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_hackedcheck))
+			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			sleep(10)
 
 	for (var/index in 1 to length(lawcache_ion))
 		var/law = lawcache_ion[index]
 		var/num = ion_num()
-		if (length(law) > 0)
-			if (force || lawcache_ioncheck[index] == "Yes")
-				say("[radiomod] [num]. [law]")
-				sleep(10)
+		if (length(law) <= 0)
+			return
+		if (force || (law in lawcache_ioncheck))
+			say("[radiomod] [num]. [law]", forced = forced_log_message)
+			sleep(10)
 
+	var/number = 1
 	for (var/index in 1 to length(lawcache_inherent))
 		var/law = lawcache_inherent[index]
-
-		if (length(law) > 0)
-			if (force || lawcache_lawcheck[index+1] == "Yes")
-				say("[radiomod] [number]. [law]")
-				number++
-				sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_lawcheck))
+			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			number++
+			sleep(10)
 
 	for (var/index in 1 to length(lawcache_supplied))
 		var/law = lawcache_supplied[index]
 
-		if (length(law) > 0)
-			if(lawcache_lawcheck.len >= number+1)
-				if (force || lawcache_lawcheck[number+1] == "Yes")
-					say("[radiomod] [number]. [law]")
-					number++
-					sleep(10)
+		if (length(law) <= 0)
+			continue
+		if (force || (law in lawcache_lawcheck))
+			say("[radiomod] [number]. [law]", forced = forced_log_message)
+			number++
+			sleep(10)
 
-
-/mob/living/silicon/proc/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
-
+///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
+/mob/living/silicon/proc/checklaws()
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
+	var/law_display = "Yes"
 	if (laws.zeroth)
-		if (!lawcheck[1])
-			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[lawcheck[1]] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
+		if (!(laws.zeroth in lawcheck))
+			law_display = "No"
+		list += {"<A href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</A> <font color='#ff0000'><b>[laws.zeroth]</b></font><BR>"}
 
-	for (var/index in 1 to laws.hacked.len)
+	for (var/index in 1 to length(laws.hacked))
+		law_display = "Yes"
 		var/law = laws.hacked[index]
 		if (length(law) > 0)
-			if (!hackedcheck[index])
-				hackedcheck[index] = "No"
-			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[hackedcheck[index]] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
-			hackedcheck.len += 1
+			if (!(law in hackedcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</A> <font color='#660000'>[law]</font><BR>"}
 
-	for (var/index in 1 to laws.ion.len)
+	for (var/index in 1 to length(laws.ion))
+		law_display = "Yes"
 		var/law = laws.ion[index]
-
 		if (length(law) > 0)
-			if (!ioncheck[index])
-				ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[ioncheck[index]] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
-			ioncheck.len += 1
+			if(!(law in ioncheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</A> <font color='#547DFE'>[law]</font><BR>"}
 
 	var/number = 1
-	for (var/index in 1 to laws.inherent.len)
+	for (var/index in 1 to length(laws.inherent))
+		law_display = "Yes"
 		var/law = laws.inherent[index]
-
 		if (length(law) > 0)
-			lawcheck.len += 1
-
-			if (!lawcheck[number+1])
-				lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			if (!(law in lawcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index in 1 to laws.supplied.len)
+	for (var/index in 1 to length(laws.supplied))
+		law_display = "Yes"
 		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			lawcheck.len += 1
-			if (!lawcheck[number+1])
-				lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[lawcheck[number+1]] [number]:</A> <font color='#990099'>[law]</font><BR>"}
+			if (!(law in lawcheck))
+				law_display = "No"
+			list += {"<A href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</A> <font color='#990099'>[law]</font><BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=[REF(src)];laws=1'>State Laws</A>"}
 
@@ -312,22 +327,21 @@
 		return
 
 	//Ask the user to pick a channel from what it has available.
-	var/Autochan = input("Select a channel:") as null|anything in list("Default","None") + radio.channels
-
-	if(!Autochan)
+	var/chosen_channel = tgui_input_list(usr, "Select a channel", "Channel Selection", list("Default","None") + radio.channels)
+	if(isnull(chosen_channel))
 		return
-	if(Autochan == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
+	if(chosen_channel == "Default") //Autospeak on whatever frequency to which the radio is set, usually Common.
 		radiomod = ";"
-		Autochan += " ([radio.frequency])"
-	else if(Autochan == "None") //Prevents use of the radio for automatic annoucements.
+		chosen_channel += " ([radio.get_frequency()])"
+	if(chosen_channel == "None") //Prevents use of the radio for automatic annoucements.
 		radiomod = ""
 	else //For department channels, if any, given by the internal radio.
 		for(var/key in GLOB.department_radio_keys)
-			if(GLOB.department_radio_keys[key] == Autochan)
+			if(GLOB.department_radio_keys[key] == chosen_channel)
 				radiomod = ":" + key
 				break
 
-	to_chat(src, span_notice("Automatic announcements [Autochan == "None" ? "will not use the radio." : "set to [Autochan]."]"))
+	to_chat(src, span_notice("Automatic announcements [chosen_channel == "None" ? "will not use the radio." : "set to [chosen_channel]."]"))
 
 /mob/living/silicon/put_in_hand_check() // This check is for borgs being able to receive items, not put them in others' hands.
 	return FALSE

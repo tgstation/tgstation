@@ -1,5 +1,0 @@
-author: "Amrabol"
-delete-after: True
-changes: 
-  - qol: "Job specific bags can now be carried on labcoats, wintercoats and apron suit storage slot"
-  - rscadd: "Added tray sprite to mirror_belt.dmi"

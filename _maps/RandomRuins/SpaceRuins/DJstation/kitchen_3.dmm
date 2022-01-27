@@ -1,0 +1,162 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"e" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"j" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"l" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/djstation)
+"o" = (
+/turf/template_noop,
+/area/ruin/space/djstation)
+"t" = (
+/obj/structure/disposalpipe/trunk,
+/obj/structure/disposaloutlet{
+	dir = 1
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/djstation)
+"F" = (
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"J" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/turf/template_noop,
+/area/ruin/space/djstation)
+"L" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"N" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/ruin/space/djstation)
+"O" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/open/space/basic,
+/area/space/nearstation)
+"P" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage{
+	pixel_x = -6;
+	spawn_loot_count = 3;
+	spawn_random_offset = 1
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plastic,
+/area/ruin/space/djstation)
+"S" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/snack{
+	pixel_x = 6;
+	spawn_loot_count = 6;
+	spawn_random_offset = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/space/djstation)
+"V" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"W" = (
+/turf/open/floor/plastic,
+/area/ruin/space/djstation)
+"Y" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+O
+j
+e
+a
+"}
+(2,1,1) = {"
+e
+a
+V
+a
+a
+a
+V
+a
+e
+a
+"}
+(3,1,1) = {"
+e
+V
+L
+L
+L
+L
+L
+V
+e
+a
+"}
+(4,1,1) = {"
+a
+t
+F
+l
+P
+S
+L
+a
+j
+e
+"}
+(5,1,1) = {"
+a
+a
+L
+W
+W
+W
+Y
+a
+V
+a
+"}
+(6,1,1) = {"
+a
+a
+o
+o
+J
+N
+L
+a
+V
+V
+"}

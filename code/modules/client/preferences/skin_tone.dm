@@ -14,8 +14,7 @@
 	var/list/to_hex = list()
 	for (var/choice in get_choices())
 		var/hex_value = skintone2hex(choice)
-		var/list/rgb = hex2rgb("#[hex_value]")
-		var/list/hsl = rgb2hsl(rgb[1], rgb[2], rgb[3])
+		var/list/hsl = rgb2num(hex_value, COLORSPACE_HSL)
 
 		to_hex[choice] = list(
 			"lightness" = hsl[3],

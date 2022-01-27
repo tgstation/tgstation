@@ -24,7 +24,7 @@
 	var/powered = FALSE //if there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/cell/high/cell
-	var/combat = FALSE //if true, revive through hardsuits, allow for combat shocking
+	var/combat = FALSE //if true, revive through space suits, allow for combat shocking
 	var/cooldown_duration = 5 SECONDS//how long does it take to recharge
 	/// The icon state for the paddle overlay, not applied if null
 	var/paddle_state = "defibunit-paddles"
@@ -132,6 +132,15 @@
 			var/atom/movable/screen/inventory/hand/H = over_object
 			M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
+/obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
+	if(cell)
+		cell.update_appearance()
+		cell.forceMove(get_turf(src))
+		cell = null
+		tool.play_tool_sound(src, 50)
+		to_chat(user, span_notice("You remove the cell from [src]."))
+		update_power()
+
 /obj/item/defibrillator/attackby(obj/item/W, mob/user, params)
 	if(W == paddles)
 		toggle_paddles()
@@ -147,13 +156,6 @@
 				return
 			cell = W
 			to_chat(user, span_notice("You install a cell in [src]."))
-			update_power()
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(cell)
-			cell.update_appearance()
-			cell.forceMove(get_turf(src))
-			cell = null
-			to_chat(user, span_notice("You remove the cell from [src]."))
 			update_power()
 	else
 		return ..()
@@ -619,6 +621,8 @@
 						fail_reason = "No intelligence pattern can be detected in patient's brain. Further attempts futile."
 					if (DEFIB_FAIL_NO_BRAIN)
 						fail_reason = "Patient's brain is missing. Further attempts futile."
+					if (DEFIB_FAIL_BLACKLISTED)
+						fail_reason = "Patient has been blacklisted from revival. Further attempts futile."
 
 				if(fail_reason)
 					user.visible_message(span_warning("[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - [fail_reason]"))

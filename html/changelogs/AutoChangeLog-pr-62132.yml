@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - refactor: "Refactored and standardized multiz movement code. This should fix some issues about it."
-  - qol: "You can now drag movables, ride vehicles and fireman carry mobs upstairs and downstairs."

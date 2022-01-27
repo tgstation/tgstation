@@ -147,6 +147,9 @@
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)
 		return
+	if(HAS_TRAIT(M, TRAIT_NO_SOUL))
+		to_chat(user, span_warning("This body does not possess a soul to capture."))
+		return
 	log_combat(user, M, "captured [M.name]'s soul", src)
 	capture_soul(M, user)
 
@@ -213,6 +216,7 @@
 	occupant.death()
 
 	target_toolbox.name = "soulful toolbox"
+	target_toolbox.icon = 'icons/obj/storage.dmi'
 	target_toolbox.icon_state = "toolbox_blue_old"
 	target_toolbox.has_soul = TRUE
 	target_toolbox.has_latches = FALSE
