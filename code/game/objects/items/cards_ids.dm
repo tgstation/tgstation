@@ -63,7 +63,7 @@
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 	/// Linked holopay.
-	var/obj/structure/holopay/my_store
+	var/datum/weakref/holopay_ref
 	/// Cooldown between projecting holopays
 	COOLDOWN_DECLARE(last_holopay_projection)
 	/// Registered owner's age.
@@ -100,8 +100,8 @@
 /obj/item/card/id/Destroy()
 	if (registered_account)
 		registered_account.bank_cards -= src
-	if (my_store)
-		QDEL_NULL(my_store)
+	if (holopay_ref)
+		QDEL_NULL(holopay_ref)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -391,9 +391,10 @@
 
 /obj/item/card/id/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	/// Sanity checks
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	/// Right clicking will deactivate any current holopays
+	var/obj/structure/holopay/my_store = holopay_ref.resolve()
 	if(my_store)
 		my_store.dissapate()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -417,10 +418,11 @@
 		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	/// Success: Valid tile for holopay placement
-	my_store = new(projection)
-	if(my_store?.assign_card(projection, src))
+	var/obj/structure/holopay/new_store = new(projection)
+	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
 		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
+		holopay_ref = WEAKREF(new_store)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
