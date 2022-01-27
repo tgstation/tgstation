@@ -51,6 +51,7 @@
 	name = "speedbike trails"
 	icon_state = "ion_fade"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	duration = 10
 	randomdir = 0
 

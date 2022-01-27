@@ -233,6 +233,7 @@
 /obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 13
 	var/mob/owner
@@ -304,6 +305,7 @@
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 9
 

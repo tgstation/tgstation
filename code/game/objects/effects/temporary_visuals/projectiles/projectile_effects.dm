@@ -2,7 +2,7 @@
 	name = "pew"
 	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "nothing"
-	layer = ABOVE_MOB_LAYER
+	layer = HITSCAN_PROJECTILE_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

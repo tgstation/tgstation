@@ -926,6 +926,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "highfreq_slash"
 	alpha = 150
 	duration = 0.5 SECONDS
+	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 
 /obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed)

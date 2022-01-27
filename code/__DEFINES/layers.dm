@@ -91,10 +91,13 @@
 // GAME_PLANE_FOV_HIDDEN layers
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
+#define VEHICLE_LAYER 3.9
 #define MOB_BELOW_PIGGYBACK_LAYER 3.94
 //#define MOB_LAYER 4 //For easy recordkeeping; this is a byond define
 #define MOB_SHIELD_LAYER 4.01
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
+#define MOB_UPPER_LAYER 4.07
+#define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
 
 // GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
@@ -110,7 +113,7 @@
 // Intermediate layer used by both GAME_PLANE_FOV_HIDDEN and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
 
-//  ABOVE_GAME_PLANE_LAYERS
+// ABOVE_GAME_PLANE layers
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1

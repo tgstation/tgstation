@@ -792,6 +792,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/fake_door_lock
 	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
+	plane = GAME_PLANE
 	var/image/bolt_light
 	var/obj/machinery/door/airlock/airlock
 

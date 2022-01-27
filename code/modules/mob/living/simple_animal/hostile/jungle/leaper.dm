@@ -138,6 +138,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "lily_pad"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	pixel_x = -32
 	base_pixel_x = -32
 	pixel_y = -32
