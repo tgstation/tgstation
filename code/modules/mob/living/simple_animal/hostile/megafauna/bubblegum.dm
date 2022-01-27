@@ -99,6 +99,8 @@ Difficulty: Hard
 	hallucination_charge_surround.spawn_blood = TRUE
 	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+	if(spawn_blood)
+		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
 	QDEL_NULL(triple_charge)
@@ -304,12 +306,6 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	update_approach()
 	. = ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved(atom/OldLoc, Dir, Forced = FALSE)
-	. = ..()
-	if(spawn_blood)
-		new /obj/effect/decal/cleanable/blood/bubblegum(src.loc)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 200, TRUE, 2, TRUE)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
