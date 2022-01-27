@@ -144,6 +144,8 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_ALIEN_RESIN, SMOOTH_GROUP_ALIEN_WEEDS)
 	canSmoothWith = list(SMOOTH_GROUP_ALIEN_WEEDS, SMOOTH_GROUP_WALLS)
+	///the range of the weeds going to be affected by the node
+	var/node_range = NODERANGE
 	///the parent node that will determine if we grow or die
 	var/obj/structure/alien/weeds/node/parent_node
 	///the list of turfs that the weeds will not be able to grow over
@@ -218,8 +220,25 @@
  * Called when the parent node is destroyed
  */
 /obj/structure/alien/weeds/proc/after_parent_destroyed()
-	var/random_time = rand(2 SECONDS, 4 SECONDS)
-	addtimer(CALLBACK(src, .proc/do_qdel), random_time)
+	if(!find_new_parent())
+		var/random_time = rand(2 SECONDS, 8 SECONDS)
+		addtimer(CALLBACK(src, .proc/do_qdel), random_time)
+
+/**
+ * Called when trying to find a new parent after our previous parent died
+ * Will return false if it can't find a new_parent
+ * Will return the new parent if it can find one
+ */
+/obj/structure/alien/weeds/proc/find_new_parent()
+	var/previous_node = parent_node
+	parent_node = null
+	for(var/obj/structure/alien/weeds/node/new_parent in range(node_range, src))
+		if(new_parent == previous_node)
+			continue
+		parent_node = new_parent
+		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		return parent_node
+	return FALSE
 
 /**
  * Called to delete the weed
@@ -243,8 +262,6 @@
 	light_power = 0.5
 	///the range of the light for the node
 	var/lon_range = 4
-	///the range of the weeds going to be affected by the node
-	var/node_range = NODERANGE
 	///the minimum time it takes for another weed to spread from this one
 	var/minimum_growtime = 5 SECONDS
 	///the maximum time it takes for another weed to spread from this one
