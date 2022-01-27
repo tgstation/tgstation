@@ -101,7 +101,6 @@
 	/// Boolean value. If TRUE, the [Intern] tag gets prepended to this ID card when the label is updated.
 	var/is_intern = FALSE
 
-
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 
@@ -408,9 +407,9 @@
 
 /obj/item/card/id/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	/// Sanity checks
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	/// Sanity checks
 	var/obj/structure/holopay/my_store = holopay_ref?.resolve()
 	if(my_store)
 		my_store.dissapate()
