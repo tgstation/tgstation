@@ -2442,7 +2442,6 @@
 #include "code\modules\clothing\spacesuits\santa.dm"
 #include "code\modules\clothing\spacesuits\softsuit.dm"
 #include "code\modules\clothing\spacesuits\specialops.dm"
-#include "code\modules\clothing\spacesuits\swat.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
 #include "code\modules\clothing\suits\_suits.dm"
 #include "code\modules\clothing\suits\ablativecoat.dm"
