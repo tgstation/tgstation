@@ -8,7 +8,7 @@
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
 /// Max time interval between projecting holopays
-#define HOLOPAY_PROJECTION_INTERVAL 7
+#define HOLOPAY_PROJECTION_INTERVAL 7 SECONDS
 
 /* Cards
  * Contains:
@@ -63,7 +63,7 @@
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 	/// Linked holopay.
-	var/obj/effect/overlay/holopay/my_store
+	var/obj/structure/holopay/my_store
 	/// Cooldown between projecting holopays
 	COOLDOWN_DECLARE(last_holopay_projection)
 	/// Registered owner's age.
@@ -395,7 +395,7 @@
 		return
 	/// Right clicking will deactivate any current holopays
 	if(my_store)
-		QDEL_NULL(my_store)
+		my_store.dissapate()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
@@ -417,7 +417,7 @@
 		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	/// Success: Valid tile for holopay placement
-	my_store = new()
+	my_store = new(projection)
 	if(my_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
 		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
@@ -443,7 +443,7 @@
 	for(var/obj/checked_obj in target.contents)
 		if(checked_obj.density)
 			return FALSE
-		if(istype(checked_obj, /obj/effect/overlay/holopay))
+		if(istype(checked_obj, /obj/structure/holopay))
 			return FALSE
 	return TRUE
 

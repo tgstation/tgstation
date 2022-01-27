@@ -1,10 +1,12 @@
-/obj/effect/overlay/holopay
+/obj/structure/holopay
 	name = "holographic pay stand"
 	desc = "an unregistered pay stand"
 	icon = 'icons/obj/economy.dmi'
 	icon_state = "card_scanner"
 	alpha = 150
 	anchored = TRUE
+	armor = list(MELEE = 0, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 0, BIO = 0, FIRE = 20, ACID = 20)
+	max_integrity = 15
 	layer = FLY_LAYER
 	/// ID linked to the holopay
 	var/datum/weakref/card_ref
@@ -24,52 +26,47 @@
 	/// The brand icon chosen by the user
 	var/shop_logo = "donate"
 
-/**
- * Links the source card to the holopay. Begins checking if its in range.
- */
-/obj/effect/overlay/holopay/proc/assign_card(turf/target, obj/item/card/id/card)
-	loc = target
-	card_ref = WEAKREF(card)
-	desc = "Pays directly into [card.registered_account.account_holder]'s bank account."
-	add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-	set_light(2)
-	visible_message(span_notice("A holographic pay stand appears."))
-	/// Start checking if the owner has left or died
-	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	return TRUE
-
-/**
- * A periodic check to see if the projecting card is nearby.
- * Deletes the holopay if true.
- */
-/obj/effect/overlay/holopay/proc/check_operation()
-	SIGNAL_HANDLER
-	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(QDELETED(linked_card) || !IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
-		visible_message(span_notice("The pay stand vanishes."))
-		qdel(src)
-
-/obj/effect/overlay/holopay/examine(mob/user)
+/obj/structure/holopay/examine(mob/user)
 	. = ..()
 	if(force_fee)
 		. += span_boldnotice("This holopay forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.")
 
-/obj/effect/overlay/holopay/ui_interact(mob/user, datum/tgui/ui)
+/obj/structure/holopay/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(.)
+		return
+	if(!user.combat_mode)
+		ui_interact(user)
+		return .
+	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.changeNext_move(CLICK_CD_MELEE)
+	take_damage(5, BRUTE, MELEE, 1)
+
+/obj/structure/holopay/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+		if(BURN)
+			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
+
+/obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return FALSE
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "HoloPay")
 		ui.open()
 
-/obj/effect/overlay/holopay/ui_status(mob/user)
+/obj/structure/holopay/ui_status(mob/user)
 	. = ..()
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
 
-/obj/effect/overlay/holopay/ui_static_data(mob/user)
+/obj/structure/holopay/ui_static_data(mob/user)
 	. = list()
 	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(QDELETED(linked_card) || !istype(linked_card, /obj/item/card/id))
+	if(!linked_card || !istype(linked_card, /obj/item/card/id))
 		return .
 	.["available_logos"] = available_logos
 	.["description"] = desc
@@ -79,7 +76,7 @@
 	.["owner"] = linked_card.registered_account?.account_holder || null
 	.["shop_logo"] = shop_logo
 
-/obj/effect/overlay/holopay/ui_data(mob/user)
+/obj/structure/holopay/ui_data(mob/user)
 	. = list()
 	if(!isliving(user))
 		return .
@@ -91,7 +88,7 @@
 		.["user"]["name"] = account.account_holder
 		.["user"]["balance"] = account.account_balance
 
-/obj/effect/overlay/holopay/ui_act(action, list/params, datum/tgui/ui)
+/obj/structure/holopay/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return FALSE
@@ -127,9 +124,9 @@
 			return TRUE
 	return FALSE
 
-/obj/effect/overlay/holopay/attackby(obj/item/held_item, mob/user, params)
+/obj/structure/holopay/attackby(obj/item/held_item, mob/user, params)
 	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(QDELETED(linked_card) || !istype(linked_card, /obj/item/card/id))
+	if(!linked_card || !istype(linked_card, /obj/item/card/id))
 		CRASH("Holopay was hit but not linked to a card.")
 	/// Users can pay with an ID to skip the UI
 	if(istype(held_item, /obj/item/card/id))
@@ -165,7 +162,6 @@
 		/// Success: Alert buyer
 		alert_buyer(user, cash_deposit)
 		return TRUE
-
 	/// Throws errors if they try to use space cash
 	if(istype(held_item, /obj/item/stack/spacecash))
 		to_chat(user, "What is this, the 2000s? We only take card here.")
@@ -176,17 +172,62 @@
 	return ..()
 
 /**
+ * Links the source card to the holopay. Begins checking if its in range.
+ *
+ * Parameters:
+ * * turf/target - The tile to project the holopay onto
+ * * obj/item/card/id/card - The card to link to the holopay
+ * Returns:
+ * * TRUE - the card was linked
+ */
+/obj/structure/holopay/proc/assign_card(turf/target, obj/item/card/id/card)
+	card_ref = WEAKREF(card)
+	desc = "Pays directly into [card.registered_account.account_holder]'s bank account."
+	add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+	set_light(2)
+	visible_message(span_notice("A holographic pay stand appears."))
+	/// Start checking if the source projection is in range
+	if(!card.loc)
+		return FALSE
+	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	return TRUE
+
+/**
+ * A periodic check to see if the projecting card is nearby.
+ * Deletes the holopay if true.
+ */
+/obj/structure/holopay/proc/check_operation()
+	SIGNAL_HANDLER
+	var/obj/item/card/id/linked_card = card_ref.resolve()
+	if(!linked_card || !linked_card.loc)
+		qdel(src)
+	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range) || !IN_GIVEN_RANGE(src, linked_card.loc, max_holo_range))
+		dissapate()
+
+/**
+ * Creates holopay vanishing effects.
+ */
+/obj/structure/holopay/proc/dissapate()
+	var/obj/item/card/id/linked_card = card_ref.resolve()
+	if(!linked_card || !istype(linked_card, /obj/item/card/id))
+		qdel(src)
+	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
+	visible_message(span_notice("The pay stand vanishes."))
+	QDEL_NULL(linked_card.my_store)
+
+/**
  * Initiates a transaction between accounts.
  *
  * Parameters:
  * * user - The user who initiated the transaction.
  * Returns:
- * * TRUE if the transaction was successful, FALSE otherwise.
+ * * TRUE - transaction was successful
  */
-/obj/effect/overlay/holopay/proc/process_payment(mob/living/user)
+/obj/structure/holopay/proc/process_payment(mob/living/user)
 	var/obj/item/card/id/linked_card = card_ref.resolve()
 	// Preliminary sanity checks
-	if(QDELETED(linked_card) || !istype(linked_card, /obj/item/card/id) || !isliving(user) || issilicon(user))
+	if(!linked_card || !istype(linked_card, /obj/item/card/id) || !isliving(user) || issilicon(user))
 		CRASH("A payment failed at a holopay stand.")
 	/// Account checks
 	var/obj/item/card/id/id_card
@@ -199,10 +240,6 @@
 	if(payee == linked_card.registered_account)
 		balloon_alert(user, "invalid transaction")
 		to_chat(user, span_warning("You can't pay yourself."))
-		return FALSE
-	if(!payee.has_money(force_fee || 1))
-		balloon_alert(user, "insufficient credits")
-		to_chat(user, span_warning("You don't have the money to pay for this."))
 		return FALSE
 	/// If the user has enough money, ask them the amount or charge the force fee
 	var/amount = force_fee || tgui_input_number(user, "How much? (Max: [payee.account_balance])", "Patronage", max_value = payee.account_balance)
@@ -224,14 +261,15 @@
  * * user - The user who initiated the transaction.
  * * amount - The amount of money that was paid.
  * Returns:
- * * TRUE if the alert was successful.
+ * * TRUE - alert was successful.
  */
-/obj/effect/overlay/holopay/proc/alert_buyer(payee, amount)
-	/// Transfer the money
+/obj/structure/holopay/proc/alert_buyer(payee, amount)
+	/// Sanity checks
 	var/obj/item/card/id/linked_card = card_ref.resolve()
-	if(QDELETED(linked_card) || !istype(linked_card, /obj/item/card/id) || !linked_card.registered_account.adjust_money(amount))
+	if(!linked_card || !istype(linked_card, /obj/item/card/id))
 		CRASH("Could not transfer money to owner in a holopay transaction.")
-	/// Alert the owner
+	linked_card.registered_account.adjust_money(amount)
+	/// Alert owner, nearby users
 	linked_card.registered_account.bank_card_talk("[payee] has deposited [amount] cr at your holographic pay stand.")
 	say("Thank you for your patronage, [payee]!")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
