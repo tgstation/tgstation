@@ -210,7 +210,7 @@
  * Initiates a transaction between accounts.
  *
  * Parameters:
- * * user - The user who initiated the transaction.
+ * * mob/living/user - The user who initiated the transaction.
  * Returns:
  * * TRUE - transaction was successful
  */
@@ -246,7 +246,7 @@
  * Alerts the owner of the transaction.
  *
  * Parameters:
- * * user - The user who initiated the transaction.
+ * * payee - The user who initiated the transaction.
  * * amount - The amount of money that was paid.
  * Returns:
  * * TRUE - alert was successful.
