@@ -1067,3 +1067,51 @@
   tralezab:
   - bugfix: APOTHEOSIS! now forces you standing during your death animation, restoring
       the old (not forced) standing when I originally added APOTHEOSIS!
+2022-01-27:
+  Fikou:
+  - balance: lowers kilo's bombcap multiplier
+  Iamgoofball:
+  - balance: Removes the fucking 20 second stunlock rng from tourettes because it's
+      fucking stupid and I just had the most agonizing thirty fucking minutes of my
+      goddamn life, holy shit, I hate this fucking mutation so goddamn much, who the
+      fuck thought 20 second hard stun was a genius idea for a random mutation, especially
+      the fact it gives absolutely zero indication that it's from the tourettes because
+      the stun has no message attached
+  Kylerace:
+  - bugfix: the fast mc tab refresh pref actually works
+  Melbert:
+  - admin: Comms console hacks by ninjas and traitors (the ones that spawn antags)
+      are now logged (find them in user logs and in the game log!).
+  Pickle-Coding:
+  - bugfix: Bluespace gas vendors no longer deletes the gases it doesn't transfer
+      when transferring gases.
+  SkeletalElite:
+  - bugfix: Kilo uses regular newscasters instead of security variants
+  Wallem:
+  - expansion: Monkeys can now protect their village from the rubber menace.
+  Zonespace27:
+  - bugfix: Heads of Personnel can now be midround thieves, as intended.
+  blessedmulligan:
+  - bugfix: You can now remove attachments from weapons without standing across the
+      room
+  magatsuchi:
+  - bugfix: restructures some code to make airlocks hackable again
+  - bugfix: blood barrage no longer has a seizure when you use it
+  neopythagorean:
+  - refactor: the telecommunications server monitor now uses tgui.
+  san7890:
+  - bugfix: Followers of Nar'Sie who hope to summon her can hopefully ascertain the
+      correct area to summon her, as the gambling and gaming dens have now been seperated.
+  - bugfix: Whenever radiation shelters are blueprinted and labelled as a "radiation
+      shelter", you can rest easy now that the blueprint has an actual name. It doesn't
+      matter on a day-to-day basis, but it looks a lot nicer for the people working
+      with the blueprints.
+  tastyfish:
+  - bugfix: Central Command has finally informed the Plexagon vendor that service
+      hallway access exists, allowing HoP's to grant it to ID cards.
+  tralezab:
+  - rscadd: Separatists now have an antagonist ui!
+  - balance: Antagonists cannot roll for thieves anymore, as you already have a larger
+      amount of impact on the round than thief would give you.
+  - admin: Admins no longer roll for thief while they sit around on centcom testing
+      things.

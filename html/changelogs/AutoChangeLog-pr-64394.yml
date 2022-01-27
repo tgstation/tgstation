@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - bugfix: "the fast mc tab refresh pref actually works"
