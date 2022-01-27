@@ -172,6 +172,16 @@
 	},
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"aE" = (
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = -30
+	},
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = 30
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "aF" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "labor";
@@ -3123,6 +3133,16 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/medical)
+"kx" = (
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_y = -32
+	},
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "ky" = (
 /turf/open/floor/plating,
 /area/medical/virology)
@@ -3752,6 +3772,12 @@
 /obj/effect/turf_decal/bot_red,
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"my" = (
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = -30
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "mA" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -4992,7 +5018,7 @@
 /area/service/chapel)
 "qG" = (
 /obj/structure/sign/poster/contraband/random,
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/mine/storage)
 "qI" = (
 /obj/effect/turf_decal/bot,
@@ -6102,8 +6128,13 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "tV" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Public Mining Storage"
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Public Mining Storage";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -8184,6 +8215,17 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/medical)
+"Bh" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Public Mining Storage";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "Bi" = (
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/wood,
@@ -10154,8 +10196,7 @@
 /turf/open/floor/plating,
 /area/mine/mechbay)
 "Hv" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/closed/wall/r_wall,
 /area/mine/storage)
 "Hw" = (
 /turf/open/floor/iron/dark/side{
@@ -10862,6 +10903,10 @@
 	dir = 1
 	},
 /area/service/hydroponics)
+"JK" = (
+/obj/machinery/light/directional/north,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/mine/storage)
 "JL" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -13106,6 +13151,15 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/mine/production)
+"QW" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Public Mining Storage";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "QX" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -13751,8 +13805,8 @@
 /turf/open/floor/iron,
 /area/service/theater)
 "SR" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
 /area/mine/storage)
 "SS" = (
 /obj/structure/table/wood,
@@ -14971,6 +15025,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
+"WK" = (
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = -30
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "WM" = (
 /obj/machinery/shower{
 	pixel_y = 22
@@ -15294,8 +15354,8 @@
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "XV" = (
-/obj/structure/sign/warning,
-/turf/closed/wall,
+/obj/machinery/light/directional/east,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/mine/storage)
 "XW" = (
 /obj/machinery/door/window/northleft{
@@ -15640,6 +15700,17 @@
 /obj/item/stack/rods/ten,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"YZ" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Public Mining Storage";
+	opacity = 0
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "Za" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -15894,6 +15965,10 @@
 /obj/effect/turf_decal/tile/green/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/medical/virology)
+"ZN" = (
+/obj/structure/sign/warning/xeno_mining,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/mine/storage)
 "ZP" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -43084,9 +43159,9 @@ ak
 ak
 ak
 NH
+XV
 NH
-NH
-NH
+XV
 NH
 NH
 NH
@@ -43341,9 +43416,9 @@ ak
 ak
 NH
 NH
-NH
-NH
-NH
+SR
+Bh
+SR
 NH
 NH
 NH
@@ -43599,7 +43674,7 @@ NH
 NH
 NH
 Hv
-NH
+kx
 Hv
 NH
 NH
@@ -43854,11 +43929,11 @@ ak
 ak
 NH
 NH
-AF
-XV
+Hv
+Hv
 tV
-XV
-AF
+Hv
+Hv
 TE
 NH
 ak
@@ -44112,10 +44187,10 @@ ak
 NH
 NH
 qG
+my
 Fj
 Fj
-Fj
-AF
+Hv
 TE
 NH
 ak
@@ -44366,13 +44441,13 @@ ak
 ak
 ak
 ak
-AF
-AF
-AF
+Hv
+Hv
+Hv
 Fj
 Fj
 Fj
-AF
+Hv
 TE
 NH
 ak
@@ -44623,15 +44698,15 @@ ak
 ak
 ak
 ak
-AF
+Hv
 ZB
 AF
 AF
 AF
 AF
-XV
+Hv
 SR
-NH
+JK
 ak
 ak
 ak
@@ -44880,14 +44955,14 @@ ak
 ak
 ak
 ak
-AF
+Hv
 Hy
 fw
 ic
-BJ
-BJ
-tV
-NH
+WK
+QW
+aE
+YZ
 NH
 ak
 ak
@@ -45137,15 +45212,15 @@ ak
 ak
 ak
 ak
-AF
+Hv
 iw
 AF
 AF
 BJ
 AF
-XV
+Hv
 SR
-NH
+JK
 ak
 ak
 ak
@@ -45394,13 +45469,13 @@ ak
 ak
 ak
 ak
-AF
-AF
-AF
+Hv
+Hv
+Hv
 iX
 uP
 Ja
-AF
+Hv
 sT
 NH
 ak
@@ -45653,11 +45728,11 @@ ak
 ak
 NH
 sT
-AF
+Hv
 Sk
 KT
 LW
-AF
+Hv
 NH
 NH
 ak
@@ -45910,11 +45985,11 @@ ak
 NH
 NH
 NH
-AF
-AF
-AF
-AF
-AF
+Hv
+Hv
+Hv
+Hv
+Hv
 NH
 NH
 ak
@@ -46944,7 +47019,7 @@ ak
 ak
 ak
 NH
-NH
+ZN
 NH
 NH
 ak
