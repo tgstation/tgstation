@@ -56,6 +56,10 @@
 	desc = "Track your targets."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_ecult"
+	/// How long we have to wait between tracking uses.
+	var/track_cooldown_lenth = 8 SECONDS
+	/// The cooldown between button uses.
+	COOLDOWN_DECLARE(track_cooldown)
 
 /datum/action/item_action/organ_action/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -65,11 +69,13 @@
 
 /datum/action/item_action/organ_action/track_target/IsAvailable()
 	if(!IS_HERETIC(owner))
-		return
+		return FALSE
 	if(!isorgan(target))
-		return
+		return FALSE
 	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
-		return
+		return FALSE
+	if(!COOLDOWN_FINISHED(src, track_cooldown))
+		return FALSE
 
 	return ..()
 
@@ -86,6 +92,8 @@
 	if(!LAZYLEN(knowledge.sac_targets))
 		to_chat(owner, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
 		return TRUE
+
+	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
 
 	var/list/mob/living/carbon/human/human_targets = list()
 	for(var/datum/weakref/target_ref as anything in knowledge.sac_targets)

@@ -16,11 +16,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
-	desc = "Starts your journey in the Mansus. \
+	desc = "Starts your journey into the Mansus. \
 		Grants you the Mansus Grasp, a powerful disabling spell that can be cast regardless of having a focus."
-	gain_text = "Another day at a meaningless job. \
-		You feel a shimmer around you, as a realization of something strange in the air unfolds. \
-		You look within, unknowingly opening a new chapter in your life."
 	next_knowledge = list(
 		/datum/heretic_knowledge/base_rust,
 		/datum/heretic_knowledge/base_ash,
@@ -39,11 +36,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/living_heart
 	name = "The Living Heart"
-	desc = "Grants you a Living Heart, allowing you to track and sacrifice targets to the Mansus. \
-		Should you lose your heart, also allows you to stand on a transformation rune with a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. This allows you to track targets to sacrifice. \
-		If your heart is cybernetic, you will additionally require a usable organic heart."
-	gain_text = "Your heart flutters rapidly. The Gates of the Mansus have opened within."
+	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
+		Should you lose your heart, you can stand on a transformation rune with a poppy and a pool of blood \
+		to awaken your heart into a Living Heart. If your heart is cybernetic, \
+		you will additionally require a usable organic heart."
 	cost = 0
 	required_atoms = list(/obj/effect/decal/cleanable/blood = 1, /obj/item/food/grown/poppy = 1)
 	route = PATH_START
@@ -102,29 +98,33 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart_sacrificing
 	name = "Heartbeat of the Mansus"
 	desc = "Allows you to sacrifice targets to the Gates of Mansus. \
-		Stand on a transmutation circle and invoke it to aquire your targets. \
-		Once captured, bring them back to the rune and invoke it to sacrifice them. \
-		They must be in critical (or worse) condition."
-	gain_text = "You hear a heartbeat. Figures glow red in the distance."
+		Once captured, bring them back to the rune to sacrifice them. They must be in critical (or worse) condition. \
+		If you have no targets, stand on a transmutation rune and invoke it to aquire some."
 	cost = 0
 	required_atoms = list(/mob/living/carbon/human = 1)
 	route = PATH_START
+	/// If TRUE, we skip the ritual. Done when no targets can be found, to avoid locking up the heretic.
+	var/skip_this_ritual = FALSE
 	/// Lazylist of weakrefs to humans that we have as targets.
 	var/list/datum/weakref/sac_targets
 	/// Lazylist of weakrefs to minds that we won't pick as targets.
 	var/list/datum/weakref/target_blacklist
+
+/datum/heretic_knowledge/living_heart_sacrificing/on_gain(mob/user)
+	. = ..()
+	obtain_targets(user)
 
 /datum/heretic_knowledge/living_heart_sacrificing/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
 	if(!our_heart || !HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
 		return FALSE
 
-	// We've got no targets set -
-	// if we're standing on the rune,
-	// return TRUE so we can generate some
+	// We've got no targets set, let's try to set some. Adds the user to the list of atoms,
+	// then returns TRUE if skip_this_ritual is FALSE and the user's on top of the rune.
+	// If skip_this_ritual is TRUE, returns FALSE to fail the check and move onto the next ritual.
 	if(!LAZYLEN(sac_targets))
 		atoms += user
-		return (user in range(1, loc))
+		return !skip_this_ritual || (user in range(1, loc))
 
 	// Determine if livings in our atoms are valid
 	for(var/mob/living/carbon/human/sacrifice in atoms)
@@ -188,7 +188,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		valid_targets += possible_target
 
 	if(!valid_targets.len)
-		to_chat(user, span_danger("No targets could be found!"))
+		to_chat(user, span_danger("No targets could be found! Try again later!"))
+		skip_this_ritual = TRUE
+		addtimer(VARSET_CALLBACK(src, skip_this_ritual, FALSE), 5 MINUTES)
 		return
 
 	// Now, let's try to get four targets.
@@ -238,9 +240,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/cicatrix_focus
 	name = "Cicatrix Focus"
-	desc = "Allows you to create Cicatrix Focus to allow you to cast advanced spells. \
-		Requires a pair of eyes."
-	gain_text = "Their hand is at your throat, yet you see Them not."
+	desc = "Allows you to create Cicatrix Focus with a pair of eyes. \
+		A focus is required in order to cast advanced spells."
 	cost = 0
 	required_atoms = list(/obj/item/organ/eyes = 1)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)

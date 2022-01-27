@@ -63,12 +63,12 @@
 
 
 // Heretic path defines.
-#define PATH_START "Start"
-#define PATH_SIDE "Side"
-#define PATH_ASH "Ash"
-#define PATH_RUST "Rust"
-#define PATH_FLESH "Flesh"
-#define PATH_VOID "Void"
+#define PATH_START "Start Path"
+#define PATH_SIDE "Side Path"
+#define PATH_ASH "Ash Path"
+#define PATH_RUST "Rust Path"
+#define PATH_FLESH "Flesh Path"
+#define PATH_VOID "Void Path"
 
 /// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1

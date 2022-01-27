@@ -1,7 +1,7 @@
 /datum/heretic_knowledge/base_rust
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. Allows you to transmute a kitchen knife, or its derivatives, with any trash item into a Rusty Blade."
-	gain_text = "'Let me tell you a story', said the Blacksmith, as he gazed deep into his rusty blade."
+	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
 	banned_knowledge = list(
 		/datum/heretic_knowledge/base_ash,
 		/datum/heretic_knowledge/base_flesh,
@@ -19,7 +19,8 @@
 
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
-	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. Already rusted surfaces are destroyed. You only rust surfaces and machinery while in combat mode."
+	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. \
+		Already rusted surfaces are destroyed. You only rust surfaces and machinery while in combat mode."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
@@ -125,8 +126,11 @@
 
 /datum/heretic_knowledge/rust_mark
 	name = "Mark of Rust"
-	desc = "Your Mansus Grasp now applies the Mark of Rust on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Rust has a chance to deal between 0 to 200 damage to 75% of your enemy's held items."
-	gain_text = "Rusted Hills help those in dire need at a cost."
+	desc = "Your Mansus Grasp now applies the Mark of Rust on hit. \
+		Attack the afflicted with your Sickly Blade to detonate the mark. \
+		Upon detonation, the Mark of Rust has a chance to deal \
+		between 0 to 200 damage to 75% of your enemy's held items."
+	gain_text = "Rusted Hills help those in dire need... at a cost."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
 	banned_knowledge = list(/datum/heretic_knowledge/ash_mark,/datum/heretic_knowledge/flesh_mark,/datum/heretic_knowledge/void_mark)
@@ -142,8 +146,8 @@
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
+	desc = "Your blade will now poison your enemies on hit."
 	gain_text = "The Blade will guide you through the flesh, should you let it."
-	desc = "Your blade of choice will now poison your enemies on hit."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	banned_knowledge = list(/datum/heretic_knowledge/ash_blade_upgrade,/datum/heretic_knowledge/flesh_blade_upgrade,/datum/heretic_knowledge/void_blade_upgrade)
@@ -158,7 +162,9 @@
 
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
-	desc = "You can now send a disorienting plume of pure entropy that blinds, poisons and makes enemies strike each other. It also rusts any tiles it affects."
+	desc = "You can now send a disorienting plume of pure entropy that \
+		blinds, poisons and makes enemies strike each other. \
+		It also rusts any tiles it affects."
 	gain_text = "Messengers of Hope, fear the Rustbringer!"
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
@@ -167,7 +173,8 @@
 
 /datum/heretic_knowledge/armor
 	name = "Armorer's Ritual"
-	desc = "You can now create Eldritch Armor using a table and a gas mask."
+	desc = "You can now create Eldritch Armor using a table and a gas mask. \
+		The armor both protect from damage and works as a focus, allowing you to cast spells."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/cold_snap)
@@ -176,7 +183,8 @@
 
 /datum/heretic_knowledge/essence
 	name = "Priest's Ritual"
-	desc = "You can now transmute a tank of water and a glass shard into a bottle of eldritch water."
+	desc = "Allows you to transmute a tank of water and a glass shard into a flask of eldritch water. \
+		Eldritch water can be consumed for potent healing, or given to heathens for deadly poisoning."
 	gain_text = "This is an old recipe. The Owl whispered it to me."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/spell/ashen_shift)
@@ -185,7 +193,9 @@
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become extremely more resillient."
+	desc = "Bring 3 corpses onto the transmutation rune. \
+		After you finish the ritual rust will now automatically spread from the rune. \
+		Your healing on rust is also tripled, while you become extremely more resillient."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human = 3)

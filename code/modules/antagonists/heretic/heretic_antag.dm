@@ -39,33 +39,41 @@
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
 
+	var/static/list/path_to_color = list(
+		PATH_START = "grey",
+		PATH_SIDE = "green",
+		PATH_RUST = "brown",
+		PATH_FLESH = "red",
+		PATH_ASH = "white",
+		PATH_VOID = "blue",
+	)
+
 	data["charges"] = knowledge_points
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = list()
-		knowledge_data["type"] = knowledge
+		knowledge_data["path"] = knowledge
 		knowledge_data["name"] = initial(knowledge.name)
+		knowledge_data["desc"] = initial(knowledge.desc)
+		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
-		knowledge_data["path"] = initial(knowledge.route)
-		knowledge_data["state"] = "Research"
-		knowledge_data["flavour"] = initial(knowledge.gain_text)
-		knowledge_data["desc"] = initial(knowledge.desc)
+		knowledge_data["hereticPath"] = initial(knowledge.route)
+		knowledge_data["color"] = path_to_color[initial(knowledge.route)]
 
-		data["learnable_knowledge"] += list(knowledge_data)
+		data["learnableKnowledge"] += list(knowledge_data)
 
 	for(var/path in researched_knowledge)
 		var/list/knowledge_data = list()
 		var/datum/heretic_knowledge/found_knowledge = researched_knowledge[path]
 		knowledge_data["name"] = found_knowledge.name
-		knowledge_data["cost"] = found_knowledge.cost
-		knowledge_data["disabled"] = TRUE
-		knowledge_data["path"] = found_knowledge.route
-		knowledge_data["state"] = "Researched"
-		knowledge_data["flavour"] = found_knowledge.gain_text
 		knowledge_data["desc"] = found_knowledge.desc
+		knowledge_data["gainFlavor"] = found_knowledge.gain_text
+		knowledge_data["cost"] = found_knowledge.cost
+		knowledge_data["hereticPath"] = found_knowledge.route
+		knowledge_data["color"] = path_to_color[found_knowledge.route]
 
-		data["learned_knowledge"] += list(knowledge_data)
+		data["learnedKnowledge"] += list(knowledge_data)
 
 	return data
 
@@ -77,6 +85,26 @@
 	data["objectives"] = get_objectives()
 
 	return data
+
+/datum/antagonist/heretic/ui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("research")
+			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
+			if(!ispath(researched_path))
+				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path])")
+
+			if(initial(researched_path.cost) > knowledge_points)
+				return
+			if(!gain_knowledge(researched_path))
+				return
+
+			log_codex_ciatrix("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			knowledge_points -= initial(researched_path.cost)
+			return TRUE
 
 /datum/antagonist/heretic/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
@@ -114,13 +142,13 @@
 	if(give_objectives)
 		forge_primary_objectives()
 
-	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
 
 	GLOB.reality_smash_track.add_tracked_mind(owner)
+	return ..()
 
 /datum/antagonist/heretic/on_removal()
 	for(var/knowledge_index in researched_knowledge)
@@ -164,7 +192,10 @@
 	// If we've got the trait, we don't care
 	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
 		return
+	if(ascended)
+		return
 
+	balloon_alert("need a focus!")
 	// We shouldn't be able to cast this! Cancel it.
 	return COMPONENT_CANCEL_SPELL
 
@@ -302,8 +333,13 @@
 /*
  * Learns the passed [typepath] of knowledge, creating a knowledge datum
  * and adding it to our researched knowledge list.
+ *
+ * Returns TRUE if the knowledge was added successfully. FALSE otherwise.
  */
 /datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type)
+	if(!ispath(knowledge_type))
+		stack_trace("[type] gain_knowledge was given an invalid path! (Got: [knowledge_type])")
+		return FALSE
 	if(get_knowledge(knowledge_type))
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()

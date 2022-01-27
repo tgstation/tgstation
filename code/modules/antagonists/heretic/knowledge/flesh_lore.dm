@@ -3,7 +3,8 @@
 
 /datum/heretic_knowledge/base_flesh
 	name = "Principle of Hunger"
-	desc = "Opens up the Path of Flesh to you. Allows you to transmute a pool of blood with a kitchen knife, or its derivatives, into a Flesh Blade."
+	desc = "Opens up the Path of Flesh to you. \
+		Allows you to transmute a pool of blood with a kitchen knife, or its derivatives, into a Flesh Blade."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
 	banned_knowledge = list(
 		/datum/heretic_knowledge/base_ash,
@@ -21,7 +22,9 @@
 
 /datum/heretic_knowledge/flesh_ghoul
 	name = "Imperfect Ritual"
-	desc = "Allows you to resurrect the dead as voiceless dead by sacrificing them on the transmutation rune with a poppy. Voiceless dead are mute and have 50 HP. You can only have 2 at a time."
+	desc = "Allows you to resurrect the dead as voiceless dead by \
+		sacrificing them on the transmutation rune with a poppy. \
+		Voiceless dead are mute and have 50 HP. You can only have 2 at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	cost = 1
 	required_atoms = list(/mob/living/carbon/human = 1, /obj/item/food/grown/poppy = 1)
@@ -92,8 +95,9 @@
 
 /datum/heretic_knowledge/flesh_grasp
 	name = "Grasp of Flesh"
+	desc = "Empowers your mansus grasp to be able to create a single ghoul out of a dead person. \
+		Ghouls have only 25 HP and look like husks to the heathens' eyes."
 	gain_text = "My new found desires drove me to greater and greater heights."
-	desc = "Empowers your mansus grasp to be able to create a single ghoul out of a dead person. Ghouls have only 25 HP and look like husks to the heathens' eyes."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul)
 	route = PATH_FLESH
@@ -164,8 +168,10 @@
 
 /datum/heretic_knowledge/flesh_mark
 	name = "Mark of Flesh"
-	gain_text = "I saw them, the marked ones. The screams... the silence."
-	desc = "Your Mansus Grasp now applies the Mark of Flesh on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Flesh causes additional bleeding."
+	desc = "Your Mansus Grasp now applies the Mark of Flesh on hit. \
+		Attack the afflicted with your Sickly Blade to detonate the mark. \
+		Upon detonation, the Mark of Flesh causes additional bleeding."
+	gain_text = "I saw them, the marked ones. The screams... then... silence."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
 	banned_knowledge = list(/datum/heretic_knowledge/rust_mark, /datum/heretic_knowledge/ash_mark, /datum/heretic_knowledge/void_mark)
@@ -181,8 +187,8 @@
 
 /datum/heretic_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
-	gain_text = "And then, blood rained from the heavens. That's when I finally understood the Marshal's teachings."
 	desc = "Your Sickly Blade will now cause additional bleeding."
+	gain_text = "And then, blood rained from the heavens. That's when I finally understood the Marshal's teachings."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
 	banned_knowledge = list(/datum/heretic_knowledge/ash_blade_upgrade,/datum/heretic_knowledge/rust_blade_upgrade,/datum/heretic_knowledge/void_blade_upgrade)
@@ -200,7 +206,8 @@
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
 	gain_text = "The Uncanny Man, who walks alone in the valley between the worlds... I was able to summon his aid."
-	desc = "You can now summon a Raw Prophet by transmutating a pair of eyes, a left arm and a pool of blood. Raw prophets have increased seeing range, as well as X-Ray vision, but they are very fragile."
+	desc = "You can now summon a Raw Prophet by transmutating a pair of eyes, a left arm and a pool of blood. \
+		Raw prophets have increased seeing range, as well as x-ray vision, but they are very fragile."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes = 1, /obj/effect/decal/cleanable/blood = 1, /obj/item/bodypart/l_arm = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
@@ -213,8 +220,10 @@
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. An ever shapeshifting mass of flesh, it knew well my goals."
-	desc = "You can now summon a Stalker by transmutating a pair of eyes, a candle, a pen and a piece of paper. Stalkers can shapeshift into harmless animals to get close to the victim."
+	desc = "You can now summon a Stalker by transmutating a pair of eyes, a candle, a pen and a piece of paper. \
+		Stalkers can shapeshift into harmless animals to get close to the victim."
+	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
+		An ever shapeshifting mass of flesh, it knew well my goals."
 	cost = 1
 	required_atoms = list(/obj/item/pen = 1, /obj/item/organ/eyes = 1 ,/obj/item/candle = 1, /obj/item/paper = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/stalker
@@ -227,8 +236,8 @@
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
-	gain_text = "I combined my principle of hunger with my desire for destruction. And the Nightwatcher knew my name."
 	desc = "You can now summon an Ash Man by transmutating a pile of ash, a head and a book."
+	gain_text = "I combined my principle of hunger with my desire for destruction. And the Nightwatcher knew my name."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/ash = 1, /obj/item/bodypart/head = 1, /obj/item/book = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
@@ -236,8 +245,8 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	gain_text = "I combined my principle of hunger with my desire for corruption. And the Rusted Hills called my name."
 	desc = "You can now summon a Rust Walker by transmutating a vomit pool, a severed head and a book."
+	gain_text = "I combined my principle of hunger with my desire for corruption. And the Rusted Hills called my name."
 	cost = 1
 	required_atoms = list(/obj/effect/decal/cleanable/vomit = 1, /obj/item/book = 1, /obj/item/bodypart/head = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
@@ -245,16 +254,16 @@
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
-	gain_text = "No matter the man, we bleed all the same. That's what the Marshal told me."
 	desc = "You gain a spell that drains health from your enemies to restores your own."
+	gain_text = "No matter the man, we bleed all the same. That's what the Marshal told me."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker,/datum/heretic_knowledge/spell/voidpull)
 
 /datum/heretic_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
-	gain_text = "Men of this world. Hear me, for the time of the Lord of Arms has come! The Emperor of Flesh guides my army!"
 	desc = "Bring 3 bodies onto a transmutation rune to shed your human form and ascend to untold power."
+	gain_text = "Men of this world. Hear me, for the time of the Lord of Arms has come! The Emperor of Flesh guides my army!"
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

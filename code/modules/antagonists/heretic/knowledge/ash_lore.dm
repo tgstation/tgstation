@@ -1,6 +1,7 @@
 /datum/heretic_knowledge/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Opens up the Path of Ash to you. Allows you to transmute a match with a kitchen knife, or its derivatives, into an Ashen Blade."
+	desc = "Opens up the Path of Ash to you. \
+		Allows you to transmute a match with a kitchen knife, or its derivatives, into an Ashen Blade."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	banned_knowledge = list(
 		/datum/heretic_knowledge/base_rust,
@@ -18,8 +19,8 @@
 
 /datum/heretic_knowledge/spell/ashen_shift
 	name = "Ashen Shift"
-	gain_text = "The Nightwatcher was the first of them, his treason started it all."
-	desc = "A short range jaunt that can help you escape from bad situations."
+	desc = "Grants Ashen Shift, a short range jaunt that can help you escape from dire situations."
+	gain_text = "He knew how to walk between the planes."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	next_knowledge = list(
@@ -31,8 +32,8 @@
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	gain_text = "He knew how to walk between the planes."
 	desc = "Empowers your Mansus Grasp to blind opponents you touch with it."
+	gain_text = "The Nightwatcher was the first of them, his treason started it all."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/spell/ashen_shift)
 	route = PATH_ASH
@@ -63,8 +64,8 @@
 
 /datum/heretic_knowledge/ashen_eyes
 	name = "Ashen Eyes"
-	gain_text = "Piercing eyes, guide me through the mundane."
 	desc = "Allows you to craft thermal vision amulet by transmutating eyes with a glass shard."
+	gain_text = "Piercing eyes guided them through the mundane. Their watch was eternal."
 	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/spell/ashen_shift,/datum/heretic_knowledge/flesh_ghoul)
 	required_atoms = list(/obj/item/organ/eyes = 1, /obj/item/shard = 1)
@@ -72,8 +73,12 @@
 
 /datum/heretic_knowledge/ash_mark
 	name = "Mark of Ash"
-	gain_text = "The Nightwatcher was a very particular man, always watching in the dead of night. But in spite of his duty, he regularly tranced through the manse with his blazing lantern held high."
-	desc = "Your Mansus Grasp now applies the Mark of Ash on hit. Attack the afflicted with your Sickly Blade to detonate the mark. Upon detonation, the Mark of Ash causes stamina damage and burn damage, and spreads to an additional nearby opponent. The damage decreases with each spread."
+	desc = "Your Mansus Grasp now applies the Mark of Ash on hit. \
+		Attack the afflicted with your Sickly Blade to detonate the mark. \
+		Upon detonation, the Mark of Ash causes stamina damage and burn damage, \
+		and spreads to an additional nearby opponent. The damage decreases with each spread."
+	gain_text = "The Nightwatcher was a very particular man, always watching in the dead of night. \
+		But in spite of his duty, he regularly tranced through the manse with his blazing lantern held high."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
 	banned_knowledge = list(
@@ -93,8 +98,10 @@
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
+	desc = "Allows you to transmute any mask, with a candle and a pair of eyes, to create a mask of madness. \
+		It causes passive stamina damage to everyone around the wearer and hallucinations. \
+		It can also be forced onto a heathan, to make them unable to take it off..."
 	gain_text = "He walks the world, unnoticed by the masses."
-	desc = "Allows you to transmute any mask, with a candle and a pair of eyes, to create a mask of madness, It causes passive stamina damage to everyone around the wearer and hallucinations, can be forced on a non believer to make him unable to take it off..."
 	cost = 1
 	result_atoms = list(/obj/item/clothing/mask/void_mask)
 	required_atoms = list(/obj/item/organ/eyes = 1, /obj/item/clothing/mask = 1, /obj/item/candle = 1)
@@ -107,8 +114,8 @@
 
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Flame Birth"
-	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
 	desc = "A spell that steals some health from every burning person around you."
+	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	next_knowledge = list(
@@ -120,8 +127,9 @@
 
 /datum/heretic_knowledge/ash_blade_upgrade
 	name = "Fiery Blade"
-	gain_text = "Blade in hand, he swung and swung as the ash fell from the skies. His city, his people... all burnt to cinders, and yet life still remained in his charred body."
-	desc = "Your blade of choice will now light your enemies ablaze."
+	desc = "Your blade will now light your enemies ablaze."
+	gain_text = "Blade in hand, he swung and swung as the ash fell from the skies. \
+		His city, his people... all burnt to cinders, and yet life still remained in his charred body."
 	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
 	banned_knowledge = list(
@@ -142,7 +150,8 @@
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
-	desc = "Curse someone for 2 minutes of vomiting and major organ damage. Using a wirecutter, a pool of vomit, a heart and an item that the victim touched  with their bare hands."
+	desc = "Curse someone for 2 minutes of vomiting and major organ damage. \
+		Requires wirecutters, a pool of vomit, a heart, and an item that the victim touched with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/wirecutters = 1, /obj/effect/decal/cleanable/vomit = 1, /obj/item/organ/heart = 1)
 	next_knowledge = list(
@@ -162,7 +171,8 @@
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
 	gain_text = "Corrupt their flesh, make them bleed."
-	desc = "Curse someone for 5 minutes of inability to walk. Sacrifice a knife, a pool of blood, a pair of legs, a hatchet and an item that the victim touched with their bare hands. "
+	desc = "Curse someone for 5 minutes of inability to walk. \
+		Requires a hatchet, a pool of blood, a leg, a hatchet and an item that the victim touched with their bare hands."
 	cost = 1
 	required_atoms = list(/obj/item/bodypart/l_leg = 1, /obj/item/bodypart/r_leg = 1, /obj/item/hatchet = 1)
 	next_knowledge = list(/datum/heretic_knowledge/mad_mask, /datum/heretic_knowledge/summon/raw_prophet)
@@ -182,16 +192,21 @@
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
-	gain_text = "At first I didn't understand these instruments of war, but the priest told me to use them regardless. Soon, he said, I would know them well."
-	desc = "Gives AOE spell that causes heavy bleeding and blood loss."
+	desc = "Grants you Cleave, an AOE spell that causes heavy bleeding and blood loss."
+	gain_text = "At first I didn't understand these instruments of war, but the priest \
+		told me to use them regardless. Soon, he said, I would know them well."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume,/datum/heretic_knowledge/spell/flame_birth)
 
 /datum/heretic_knowledge/final/ash_final
 	name = "Ashlord's Rite"
+	desc = "Bring 3 corpses onto a transmutation rune. \
+		You will become immune to fire, the vacuum of space, cold and other enviromental hazards \
+		while overall becoming sturdier to all other damages. \
+		You will gain a spell that passively creates ring of fire around you, \
+		as well as a powerful ability that lets you create a wave of flames all around you."
 	gain_text = "The Nightwatcher found the rite and shared it amongst mankind! For now I am one with the fire, WITNESS MY ASCENSION!"
-	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire, the vacuum of space, cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful ability that lets you create a wave of flames all around you."
 	route = PATH_ASH
 	/// A list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(

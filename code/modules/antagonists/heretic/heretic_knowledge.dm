@@ -7,25 +7,26 @@
  * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
  */
 /datum/heretic_knowledge
-	///Name of the knowledge
+	/// Name of the knowledge, shown to the heretic.
 	var/name = "Basic knowledge"
-	///Description of the knowledge
+	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
-	///What shows up
-	var/gain_text = ""
-	///Cost of knowledge in souls
+	/// What's shown to the heretic when the knowledge is aquired
+	var/gain_text
+	/// Cost of knowledge in knowlege points
 	var/cost = 0
-	///Next knowledge in the research tree
+	/// The knowledge this unlocks next after learning.
 	var/list/next_knowledge = list()
-	///What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.
+	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
 	var/list/banned_knowledge = list()
-	///Assoc list of [typepaths we need] to [amount needed].
+	/// Assoc list of [typepaths we need] to [amount needed].
+	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	var/list/required_atoms = list()
-	///What do we get out of this
+	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
-	///What path is this on defaults to "Side"
+	/// What path is this on. Sefaults to "Side".
 	var/route = PATH_SIDE
-	///Whether this knowledge processes on life ticks
+	/// Whether this knowledge processes on life ticks.
 	var/processes_on_life = FALSE
 
 /**
@@ -36,7 +37,8 @@
 /datum/heretic_knowledge/proc/on_gain(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 
-	to_chat(user, span_warning("[gain_text]"))
+	if(gain_text)
+		to_chat(user, span_warning("[gain_text]"))
 	if(processes_on_life)
 		RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
