@@ -161,10 +161,10 @@
 	icon_state = "green"
 
 
-//Ruin of gas the lizard
+//Ruin of The Lizard's Gas (Station)
 
-/area/ruin/space/has_grav/gasthelizard
-	name = "Gas the lizard"
+/area/ruin/space/has_grav/thelizardsgas
+	name = "\improper The Lizard's Gas"
 
 
 //Ruin of Deep Storage
