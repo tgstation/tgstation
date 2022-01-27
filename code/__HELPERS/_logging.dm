@@ -122,6 +122,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_silicon(text)
 	if (CONFIG_GET(flag/log_silicon))
 		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+	
+/proc/log_tool(text, mob/initiator)
+	if(CONFIG_GET(flag/log_tools))
+		WRITE_LOG(GLOB.world_tool_log, "TOOL: [text]")
 
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
