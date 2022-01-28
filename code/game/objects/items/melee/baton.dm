@@ -61,7 +61,7 @@
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
 
-	register_context()
+	register_item_context()
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -90,7 +90,7 @@
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
 
-/obj/item/melee/baton/add_context(datum/source, list/context, atom/target, mob/living/user)
+/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
 	if (isturf(target))
 		return NONE
 

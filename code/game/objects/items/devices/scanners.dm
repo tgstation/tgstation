@@ -101,7 +101,7 @@ GENE SCANNER
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
 
-	register_context()
+	register_item_context()
 
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
@@ -151,7 +151,7 @@ GENE SCANNER
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/healthanalyzer/add_context(
+/obj/item/healthanalyzer/add_item_context(
 	obj/item/source,
 	list/context,
 	atom/target,

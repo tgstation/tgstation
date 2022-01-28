@@ -2,7 +2,7 @@
 /// These are used for items that are defined by their behavior. They define their contextual text within *themselves*,
 /// not in their targets.
 /// Examples include syringes (LMB to inject, RMB to draw) and health analyzers (LMB to scan health/wounds, RMB for chems)
-/// Items can override `add_context()`, and call `register_context()` in order to easily connect to this.
+/// Items can override `add_item_context()`, and call `register_item_context()` in order to easily connect to this.
 /// Called on /obj/item with a mutable screentip context list, the hovered target, and the mob hovering.
 /// A screentip context list is a list that has context keys (SCREENTIP_CONTEXT_*, from __DEFINES/screentips.dm)
 /// that map to the action as text.
