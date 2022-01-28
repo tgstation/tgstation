@@ -264,6 +264,49 @@
 		),
 	)
 
+/datum/mod_theme/loader
+	name = "loader"
+	desc = "An experimental powered harness manufactured by Scarborough Arms for quick and efficient munition supplies."
+	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
+		This fully articulated titanium exoskeleton is Scarborough Arms' suit of choice for their munition delivery men, \
+		and what it lacks in EVA protection, it makes up for in strength and flexibility. The primary feature of \
+		this suit are the two manipulator arms, carefully synchronized with the user's thoughts and \
+		duplicating their motions almost exactly. These are driven by myomer, an artificial analog of muscles, \
+		requiring large amounts of voltage to function; occasionally sparking under load with the sheer power of a \
+		suit capable of lifting 250 tons. Even the legs in the suit have been tuned to incredible capacity, \
+		the user being able to run at greater speeds for much longer distances and times than an unsuited equivalent. \
+		A lot of people would say loading cargo is a dull job. You could not disagree more."
+	default_skin = "loader"
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 10, FIRE = 25, ACID = 25, WOUND = 5)
+	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
+	permeability_coefficient = 0.5
+	siemens_coefficient = 0.25
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
+	slowdown_inactive = 0.5
+	slowdown_active = 0
+	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
+	skins = list(
+		"loader" = list(
+			HELMET_LAYER = null,
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+			),
+			GAUNTLETS_FLAGS = list(
+				SEALED_CLOTHING = THICKMATERIAL,
+			),
+			BOOTS_FLAGS = list(
+				SEALED_CLOTHING = THICKMATERIAL,
+			),
+		),
+	)
+
 /datum/mod_theme/medical
 	name = "medical"
 	desc = "A lightweight suit by DeForest Medical Corporation, allows for easier movement."

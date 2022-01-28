@@ -95836,10 +95836,10 @@
 /area/command/bridge)
 "utp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/cargo/qm)
 "uty" = (
@@ -98873,6 +98873,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -10
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "viJ" = (
