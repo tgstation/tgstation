@@ -237,7 +237,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
-	if(offset_old != APC_PIXEL_OFFSET && !building)
+	if(abs(offset_old) != APC_PIXEL_OFFSET && !building)
 		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Destroy()
@@ -304,7 +304,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 	if (area)
 		if (area.apc)
-			WARNING("Duplicate APC created at [AREACOORD(src)]")
+			log_mapping("Duplicate APC created at [AREACOORD(src)]")
 		area.apc = src
 
 	update_appearance()
@@ -337,7 +337,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		else
 			. += "The cover is closed."
 
-	. += span_notice("Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.")
+	. += span_notice("Right-click the APC to [ locked ? "unlock" : "lock"] the interface.")
 
 	if(issilicon(user))
 		. += span_notice("Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].")
@@ -775,14 +775,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 				return FALSE
 	return FALSE
 
-/obj/machinery/power/apc/AltClick(mob/user)
+/obj/machinery/power/apc/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(!can_interact(user))
 		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
-	else
-		togglelock(user)
+	togglelock(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/apc/proc/togglelock(mob/living/user)
 	if(obj_flags & EMAGGED)

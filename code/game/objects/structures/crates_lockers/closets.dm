@@ -62,7 +62,7 @@
 	contents_thermal_insulation = 0
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// true whenever someone with the strong pull component is dragging this, preventing opening
+	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
 	var/strong_grab = FALSE
 	///electronics for access
 	var/obj/item/electronics/airlock/electronics
@@ -243,7 +243,7 @@
 	for(var/atom/movable/AM in location)
 		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
 			if(mapload) // Yea, it's a mapping issue. Blame mappers.
-				WARNING("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
+				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
@@ -390,6 +390,8 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
+		if (user.combat_mode)
+			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)

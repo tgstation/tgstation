@@ -134,6 +134,31 @@
 	force = 0
 	var/random_color = TRUE
 
+/obj/item/toy/balloon/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/ammo_casing/caseless/foam_dart) && ismonkey(user))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+/obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/caseless/foam_dart))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+/obj/item/toy/balloon/bullet_act(obj/projectile/P)
+	if((istype(P,/obj/projectile/bullet/p50) || istype(P,/obj/projectile/bullet/reusable/foam_dart)) && ismonkey(P.firer))
+		pop_balloon(monkey_pop = TRUE)
+	else
+		return ..()
+
+
+/obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
+	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
+	if(monkey_pop) // Monkeys make money from popping bloons
+		new /obj/item/coin/iron(get_turf(src))
+	qdel(src)
+
 /obj/item/toy/balloon/Initialize(mapload)
 	. = ..()
 	if(random_color)
@@ -715,7 +740,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 	///The parent deck of the cards
-	var/parentdeck = null
+	var/datum/weakref/parentdeck
 	///Artistic style of the deck
 	var/deckstyle = "nanotrasen"
 	var/card_hitsound = null
@@ -769,7 +794,7 @@
 	if (istype(src, /obj/item/toy/cards/cardhand))
 		to_cardhand = TRUE
 
-	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != src))
+	if ((card_to_add.parentdeck != src.parentdeck) && (card_to_add.parentdeck != WEAKREF(src)))
 		to_chat(user, span_warning("You can't mix cards from other decks!"))
 		return
 	if (!user.temporarilyRemoveItemFromInventory(card_to_add))
@@ -832,6 +857,7 @@
 	icon = 'icons/obj/toy.dmi'
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_SMALL
 	///Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
@@ -858,7 +884,7 @@
 	if(holo)
 		holo.spawned += card_to_add
 	card_to_add.cardname = name
-	card_to_add.parentdeck = src
+	card_to_add.parentdeck = WEAKREF(src)
 	card_to_add.apply_card_vars(card_to_add, src)
 	return card_to_add
 
@@ -915,6 +941,7 @@
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "none"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_TINY
 	///Cards in this hand of cards.
 	var/list/cards = list()
@@ -1020,6 +1047,7 @@
 	desc = "A playing card used to play card games like poker."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "singlecard_down_nanotrasen"
+	worn_icon_state = "card"
 	w_class = WEIGHT_CLASS_TINY
 	pixel_x = -5
 	///The name of the card
@@ -1298,7 +1326,7 @@
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/toy.dmi'
 	icon_state = "dread_ipad"
 	worn_icon_state = "dread_ipad"
 	slot_flags = ITEM_SLOT_BELT
@@ -1324,7 +1352,7 @@
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

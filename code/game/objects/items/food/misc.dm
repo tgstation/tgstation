@@ -692,22 +692,6 @@
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/cornchips
-	name = "boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
-	icon_state = "boritos"
-	trash_type = /obj/item/trash/boritos
-	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
-	junkiness = 20
-	tastes = list("fried corn" = 1)
-	foodtypes = JUNKFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cornchips/MakeLeaveTrash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
 
 /obj/item/food/rationpack
 	name = "ration pack"
@@ -952,4 +936,4 @@
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
 	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
-	foodtypes = GRAIN | DAIRY | JUNKFOOD
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD

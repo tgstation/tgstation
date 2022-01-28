@@ -5,6 +5,7 @@
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
 	hijack_speed = 0.5
+	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
@@ -110,6 +111,13 @@
 	T.update_name()
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] and [key_name_admin(bro)] into blood brothers.")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] and [key_name(bro)] into blood brothers.")
+
+/datum/antagonist/brother/ui_static_data(mob/user)
+	var/list/data = list()
+	data["antag_name"] = name
+	data["objectives"] = get_objectives()
+	data["brothers"] = get_brother_names()
+	return data
 
 /datum/team/brother_team
 	name = "brotherhood"

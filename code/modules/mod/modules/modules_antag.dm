@@ -9,7 +9,7 @@
 		so this extra armor provides zero ability for extravehicular activity while deployed."
 	icon_state = "armor_booster"
 	module_type = MODULE_TOGGLE
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
 	incompatible_modules = list(/obj/item/mod/module/armor_booster)
 	cooldown_time = 0.5 SECONDS
@@ -44,11 +44,9 @@
 		var/obj/item/clothing/clothing_part = part
 		if(clothing_part.clothing_flags & STOPSPRESSUREDAMAGE)
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = NONE
-			clothing_part.cold_protection = NONE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation()
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -66,8 +64,6 @@
 		var/obj/item/clothing/clothing_part = part
 		if(spaceproofed[clothing_part])
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
-			clothing_part.heat_protection = initial(clothing_part.heat_protection)
-			clothing_part.cold_protection = initial(clothing_part.cold_protection)
 	spaceproofed = list()
 
 /obj/item/mod/module/armor_booster/elite
@@ -84,8 +80,8 @@
 		though with its' low amount of separate charges, the user remains mortal."
 	icon_state = "energy_shield"
 	complexity = 3
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.5
-	use_power_cost = DEFAULT_CELL_DRAIN * 2
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	/// Max charges of the shield.
 	var/max_charges = 3
@@ -134,8 +130,8 @@
 		This shield can perfectly nullify attacks ranging from high-caliber rifles to magic missiles, \
 		though can also be drained by more mundane attacks. It will not protect the caster from social ridicule."
 	icon_state = "battlemage_shield"
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0 //magic
-	use_power_cost = DEFAULT_CELL_DRAIN * 0 //magic too
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0 //magic too
 	max_charges = 15
 	recharge_start_delay = 0 SECONDS
 	charge_recovery = 8
@@ -226,7 +222,7 @@
 		in protest of these modules being legal."
 	icon_state = "noslip"
 	complexity = 1
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.1
 	incompatible_modules = list(/obj/item/mod/module/noslip)
 
 /obj/item/mod/module/noslip/on_suit_activation()
@@ -234,3 +230,30 @@
 
 /obj/item/mod/module/noslip/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
+
+/obj/item/mod/module/springlock/bite_of_87
+
+/obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
+	. = ..()
+	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
+	name = initial(the_dna_lock_behind_the_slaughter.name)
+	desc = initial(the_dna_lock_behind_the_slaughter.desc)
+	icon_state = initial(the_dna_lock_behind_the_slaughter.icon_state)
+	complexity = initial(the_dna_lock_behind_the_slaughter.complexity)
+	use_power_cost = initial(the_dna_lock_behind_the_slaughter.use_power_cost)
+
+/obj/item/mod/module/springlock/bite_of_87/on_install()
+	mod.activation_step_time *= 0.1
+
+/obj/item/mod/module/springlock/bite_of_87/on_uninstall()
+	mod.activation_step_time *= 10
+
+/obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
+	..()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
+		var/list/all_parts = mod.mod_parts.Copy() + mod
+		for(var/obj/item/part in all_parts) // turns the suit yellow
+			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
+		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
+		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)

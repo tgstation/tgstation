@@ -422,8 +422,12 @@
 	eat(user)
 
 /datum/spacevine_controller
+	///Canonical list of all the vines we "own"
 	var/list/obj/structure/spacevine/vines
+	///Queue of vines to process
 	var/list/growth_queue
+	//List of currently processed vines, on this level to prevent runtime tomfoolery
+	var/list/obj/structure/spacevine/queue_end
 	var/spread_multiplier = 5
 	var/spread_cap = 30
 	var/list/vine_mutations_list
@@ -432,6 +436,7 @@
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
+	queue_end = list()
 	var/obj/structure/spacevine/vine = spawn_spacevine_piece(location, null, muts)
 	if(event)
 		event.announce_to_ghosts(vine)
@@ -459,6 +464,9 @@
 
 /datum/spacevine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	vines.Cut()
+	growth_queue.Cut()
+	queue_end.Cut()
 	return ..()
 
 /datum/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
@@ -466,9 +474,8 @@
 	growth_queue += vine
 	vines += vine
 	vine.master = src
-	if(length(muts))
-		for(var/datum/spacevine_mutation/mutation in muts)
-			mutation.add_mutation_to_vinepiece(vine)
+	for(var/datum/spacevine_mutation/mutation in muts)
+		mutation.add_mutation_to_vinepiece(vine)
 	if(parent)
 		vine.mutations |= parent.mutations
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
@@ -486,45 +493,45 @@
 	vine.master = null
 	vines -= vine
 	growth_queue -= vine
-	if(!length(vines))
-		var/obj/item/seeds/kudzu/seed = new(vine.loc)
-		seed.mutations |= vine.mutations
-		seed.set_potency(mutativeness * 10)
-		seed.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
-		qdel(src)
+	queue_end -= vine
+	if(length(vines))
+		return
+	var/obj/item/seeds/kudzu/seed = new(vine.loc)
+	seed.mutations |= vine.mutations
+	seed.set_potency(mutativeness * 10)
+	seed.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
+	qdel(src)
 
 /// Life cycle of a space vine
 /datum/spacevine_controller/process(delta_time)
-	if(!LAZYLEN(vines))
+	var/vine_count = length(vines)
+	if(!vine_count)
 		qdel(src) //space vines exterminated. Remove the controller
 		return
-	if(!growth_queue)
-		qdel(src) //Sanity check
-		return
 
-	var/length = round(clamp(delta_time * 0.5 * length(vines) / spread_multiplier, 1, spread_cap))
-	var/index = 0
-	var/list/obj/structure/spacevine/queue_end = list()
-
-	for(var/obj/structure/spacevine/vine in growth_queue)
-		if(QDELETED(vine))
-			continue
-		index++
-		queue_end += vine
+	var/spread_max = round(clamp(delta_time * 0.5 * vine_count / spread_multiplier, 1, spread_cap))
+	var/amount_processed = 0
+	for(var/obj/structure/spacevine/vine as anything in growth_queue)
 		growth_queue -= vine
+		queue_end += vine
 		for(var/datum/spacevine_mutation/mutation in vine.mutations)
 			mutation.process_mutation(vine)
-		if(vine.energy < 2) //If tile isn't fully grown
-			if(DT_PROB(10, delta_time))
-				vine.grow()
-		else //If tile is fully grown
+
+		if(vine.energy >= 2) //If tile is fully grown
 			vine.entangle_mob()
+		else if(DT_PROB(10, delta_time)) //If tile isn't fully grown
+			vine.grow()
 
 		vine.spread()
-		if(index >= length)
+
+		amount_processed++
+		if(amount_processed >= spread_max)
 			break
 
-	growth_queue = growth_queue + queue_end
+	//We can only do so much work per process, but we still want to process everything at some point
+	//So we shift the queue a bit
+	growth_queue += queue_end
+	queue_end = list()
 
 /// Updates the icon as the space vine grows
 /obj/structure/spacevine/proc/grow()
@@ -568,7 +575,13 @@
 				for(var/datum/spacevine_mutation/mutation in mutations)
 					mutation.on_spread(src, stepturf) //Only do the on_spread proc if it actually spreads.
 					stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen
-				master.spawn_spacevine_piece(stepturf, src)
+				var/obj/structure/spacevine/spawning_vine = master.spawn_spacevine_piece(stepturf, src) //Let's do a cool little animate
+				if(NSCOMPONENT(direction))
+					spawning_vine.pixel_y = direction == NORTH ? -32 : 32
+					animate(spawning_vine, pixel_y = 0, time = 1 SECONDS)
+				else
+					spawning_vine.pixel_x = direction == EAST ? -32 : 32
+					animate(spawning_vine, pixel_x = 0, time = 1 SECONDS)
 
 /// Destroying an explosive vine sets off a chain reaction
 /obj/structure/spacevine/ex_act(severity, target)

@@ -424,6 +424,21 @@
 					return holder_reagent
 	return FALSE
 
+/**
+ * Check if this holder contains a reagent with a chemical_flags containing this flag
+ * Reagent takes the bitflag to search for
+ * Amount checks for having a specific amount of reagents matching that chemical
+ */
+/datum/reagents/proc/has_chemical_flag(chemical_flag, amount = 0)
+	var/found_amount = 0
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
+		if (holder_reagent.chemical_flags & chemical_flag)
+			found_amount += holder_reagent.volume
+			if(found_amount >= amount)
+				return TRUE
+	return FALSE
+
 
 /**
  * Transfer some stuff from this holder to a target object
@@ -1947,6 +1962,10 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+
+/atom/movable/chem_holder
+	name = "This atom exists to hold chems. If you can see this, make an issue report"
+	desc = "God this is stupid"
 
 #undef REAGENT_TRANSFER_AMOUNT
 #undef REAGENT_PURITY

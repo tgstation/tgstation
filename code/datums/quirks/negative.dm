@@ -853,7 +853,7 @@
 
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
-	desc = "You are terrified of small spaces. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
+	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
 	icon = "box-open"
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
@@ -867,11 +867,37 @@
 	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
 		return
 
-	if(isturf(quirk_holder.loc))
+	var/nick_spotted = FALSE
+
+	for(var/mob/living/carbon/human/possible_claus in view(5, quirk_holder))
+		if(evaluate_jolly_levels(possible_claus))
+			nick_spotted = TRUE
+			break
+
+	if(!nick_spotted && isturf(quirk_holder.loc))
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "claustrophobia", /datum/mood_event/claustrophobia)
-		return 
-	
+		return
+
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "claustrophobia")
 	quirk_holder.losebreath += 0.25 // miss a breath one in four times
 	if(DT_PROB(25, delta_time))
-		to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
+		if(nick_spotted)
+			to_chat(quirk_holder, span_warning("Santa Claus is here! I gotta get out of here!"))
+		else
+			to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
+
+///investigates whether possible_saint_nick possesses a high level of christmas cheer
+/datum/quirk/claustrophobia/proc/evaluate_jolly_levels(mob/living/carbon/human/possible_saint_nick)
+	if(!istype(possible_saint_nick))
+		return FALSE
+
+	if(istype(possible_saint_nick.back, /obj/item/storage/backpack/santabag))
+		return TRUE
+
+	if(istype(possible_saint_nick.head, /obj/item/clothing/head/santa))
+		return TRUE
+
+	if(istype(possible_saint_nick.wear_suit, /obj/item/clothing/suit/space/santa))
+		return TRUE
+
+	return FALSE

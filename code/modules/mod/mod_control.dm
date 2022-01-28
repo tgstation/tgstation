@@ -2,9 +2,9 @@
 /obj/item/mod
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
-	icon = 'icons/obj/mod.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-control"
-	worn_icon = 'icons/mob/mod.dmi'
+	worn_icon = 'icons/mob/clothing/mod.dmi'
 
 /obj/item/mod/control
 	name = "MOD control unit"
@@ -14,7 +14,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
 	strip_delay = 10 SECONDS
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 25, ACID = 25, WOUND = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0, WOUND = 0)
 	actions_types = list(
 		/datum/action/item_action/mod/deploy,
 		/datum/action/item_action/mod/activate,
@@ -56,7 +56,7 @@
 	/// How much module complexity this MOD is carrying.
 	var/complexity = 0
 	/// Power usage of the MOD.
-	var/cell_drain = DEFAULT_CELL_DRAIN
+	var/charge_drain = DEFAULT_CHARGE_DRAIN
 	/// Slowdown of the MOD when not active.
 	var/slowdown_inactive = 1.25
 	/// Slowdown of the MOD when active.
@@ -65,8 +65,6 @@
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Extended description of the theme.
 	var/extended_desc
-	/// MOD cell.
-	var/obj/item/stock_parts/cell/cell
 	/// MOD helmet.
 	var/obj/item/clothing/head/mod/helmet
 	/// MOD chestplate.
@@ -75,6 +73,8 @@
 	var/obj/item/clothing/gloves/mod/gauntlets
 	/// MOD boots.
 	var/obj/item/clothing/shoes/mod/boots
+	/// MOD core.
+	var/obj/item/mod/core/core
 	/// List of parts (helmet, chestplate, gauntlets, boots).
 	var/list/mod_parts = list()
 	/// Modules the MOD should spawn with.
@@ -92,7 +92,7 @@
 	/// Person wearing the MODsuit.
 	var/mob/living/carbon/human/wearer
 
-/obj/item/mod/control/Initialize(mapload, new_theme, new_skin)
+/obj/item/mod/control/Initialize(mapload, datum/mod_theme/new_theme, new_skin, obj/item/mod/core/new_core)
 	. = ..()
 	if(new_theme)
 		theme = new_theme
@@ -103,13 +103,12 @@
 	complexity_max = theme.complexity_max
 	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
-	cell_drain = theme.cell_drain
+	charge_drain = theme.charge_drain
 	initial_modules += theme.inbuilt_modules
 	wires = new /datum/wires/mod(src)
 	if(length(req_access))
 		locked = TRUE
-	if(ispath(cell))
-		cell = new cell(src)
+	new_core?.install(src)
 	helmet = new /obj/item/clothing/head/mod(src)
 	helmet.mod = src
 	mod_parts += helmet
@@ -129,6 +128,7 @@
 		piece.desc = "[piece.desc] [theme.desc]"
 		piece.armor = getArmor(arglist(theme.armor))
 		piece.resistance_flags = theme.resistance_flags
+		piece.flags_1 |= theme.atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
 		piece.heat_protection = NONE
 		piece.cold_protection = NONE
 		piece.max_heat_protection_temperature = theme.max_heat_protection_temperature
@@ -148,6 +148,9 @@
 /obj/item/mod/control/Destroy()
 	if(active)
 		STOP_PROCESSING(SSobj, src)
+	for(var/obj/item/mod/module/module as anything in modules)
+		module.mod = null
+		modules -= module
 	var/atom/deleting_atom
 	if(!QDELETED(helmet))
 		deleting_atom = helmet
@@ -173,11 +176,9 @@
 		boots = null
 		mod_parts -= deleting_atom
 		qdel(deleting_atom)
-	for(var/obj/item/mod/module/module as anything in modules)
-		module.mod = null
-		modules -= module
+	if(core)
+		QDEL_NULL(core)
 	QDEL_NULL(wires)
-	QDEL_NULL(cell)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -196,7 +197,7 @@
 /obj/item/mod/control/examine(mob/user)
 	. = ..()
 	if(active)
-		. += span_notice("Cell power: [cell ? "[round(cell.percent(), 1)]%" : "No cell"].")
+		. += span_notice("Charge: [core ? "[get_charge_percent()]%" : "No core"].")
 		. += span_notice("Selected module: [selected_module || "None"].")
 	if(!open && !active)
 		. += span_notice("You could put it on your <b>back</b> to turn it on.")
@@ -206,11 +207,11 @@
 		. += span_notice("You could use <b>modules</b> on it to install them.")
 		. += span_notice("You could remove modules with a <b>crowbar</b>.")
 		. += span_notice("You could update the access with an <b>ID</b>.")
-		. += span_notice("You could access the wire panel with a <b>wire configuring tool</b>.")
-		if(cell)
-			. += span_notice("You could remove the cell with an <b>empty hand</b>.")
+		. += span_notice("You could access the wire panel with a <b>wire tool</b>.")
+		if(core)
+			. += span_notice("You could remove [core] with a <b>wrench</b>.")
 		else
-			. += span_notice("You could use a <b>cell</b> on it to install one.")
+			. += span_notice("You could use a <b>MOD core</b> on it to install one.")
 		if(ai)
 			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
 		else
@@ -223,17 +224,17 @@
 /obj/item/mod/control/process(delta_time)
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if((!cell || !cell.charge) && active && !activating)
+	if(!get_charge() && active && !activating)
 		power_off()
 		return PROCESS_KILL
 	var/malfunctioning_charge_drain = 0
 	if(malfunctioning)
 		malfunctioning_charge_drain = rand(1,20)
-	cell.charge = max(0, cell.charge - (cell_drain + malfunctioning_charge_drain)*delta_time)
-	update_cell_alert()
+	subtract_charge((charge_drain + malfunctioning_charge_drain)*delta_time)
+	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
-			module.on_deactivation()
+			module.on_deactivation(display_message = TRUE)
 		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
@@ -255,7 +256,7 @@
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			balloon_alert(user, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
@@ -264,7 +265,7 @@
 /obj/item/mod/control/MouseDrop(atom/over_object)
 	if(usr != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
 		return ..()
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			balloon_alert(wearer, "retract parts first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
@@ -275,24 +276,25 @@
 			add_fingerprint(usr)
 			return ..()
 
-/obj/item/mod/control/attack_hand(mob/user)
-	if(seconds_electrified && cell?.charge)
-		if(shock(user))
-			return
-	if(open && loc == user)
-		if(!cell)
-			balloon_alert(user, "no cell!")
-			return
-		balloon_alert(user, "removing cell...")
-		if(!do_after(user, 1.5 SECONDS, target = src))
+/obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
+	if(..())
+		return TRUE
+	if(seconds_electrified && get_charge() && shock(user))
+		return TRUE
+	if(open)
+		if(!core)
+			balloon_alert(user, "no core!")
+			return TRUE
+		balloon_alert(user, "removing core...")
+		wrench.play_tool_sound(src, 100)
+		if(!wrench.use_tool(src, user, 3 SECONDS) || !open)
 			balloon_alert(user, "interrupted!")
-			return
-		balloon_alert(user, "cell removed")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		if(!user.put_in_hands(cell))
-			cell.forceMove(drop_location())
-		update_cell_alert()
-		return
+			return TRUE
+		wrench.play_tool_sound(src, 100)
+		balloon_alert(user, "core removed")
+		core.forceMove(drop_location())
+		update_charge_alert()
+		return TRUE
 	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
@@ -352,20 +354,20 @@
 			return FALSE
 		install(attacking_item, user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/stock_parts/cell))
+	else if(istype(attacking_item, /obj/item/mod/core))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
-		if(cell)
-			balloon_alert(user, "cell already installed!")
+		if(core)
+			balloon_alert(user, "core already installed!")
 			playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
-		attacking_item.forceMove(src)
-		cell = attacking_item
-		balloon_alert(user, "cell installed")
+		var/obj/item/mod/core/attacking_core = attacking_item
+		attacking_core.install(src)
+		balloon_alert(user, "core installed")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-		update_cell_alert()
+		update_charge_alert()
 		return TRUE
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
@@ -379,13 +381,17 @@
 			balloon_alert(user, "not painted!")
 		return TRUE
 	else if(open && attacking_item.GetID())
-		update_access(user, attacking_item)
+		update_access(user, attacking_item.GetID())
 		return TRUE
 	return ..()
 
 /obj/item/mod/control/get_cell()
-	if(open)
-		return cell
+	if(!open)
+		return
+	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	if(!istype(cell))
+		return
+	return cell
 
 /obj/item/mod/control/GetAccess()
 	if(ai_controller)
@@ -404,7 +410,7 @@
 	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	selected_module?.on_deactivation()
+	selected_module?.on_deactivation(display_message = TRUE)
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if(wearer.stat < UNCONSCIOUS && prob(10))
@@ -418,7 +424,7 @@
 /obj/item/mod/control/doStrip(mob/stripper, mob/owner)
 	if(active && !toggle_activate(stripper, force_deactivate = TRUE))
 		return
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc == src)
 			continue
 		conceal(null, part)
@@ -437,7 +443,7 @@
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
-	update_cell_alert()
+	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
 
@@ -452,7 +458,7 @@
 /obj/item/mod/control/proc/on_unequip()
 	SIGNAL_HANDLER
 
-	for(var/obj/item/part in mod_parts)
+	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			return COMPONENT_ITEM_BLOCK_UNEQUIP
 
@@ -492,10 +498,15 @@
 			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected")
 		else if(module.active)
 			module_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_active")
+		if(!COOLDOWN_FINISHED(module, cooldown_timer))
+			module_image.add_overlay(image(icon = 'icons/hud/radial.dmi', icon_state = "module_cooldown"))
 		items += list(module.name = module_image)
 	if(!length(items))
 		return
-	var/pick = show_radial_menu(user, src, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
+	var/radial_anchor = src
+	if(istype(user.loc, /obj/effect/dummy/phased_mob))
+		radial_anchor = get_turf(user.loc) //they're phased out via some module, anchor the radial on the turf so it may still display
+	var/pick = show_radial_menu(user, radial_anchor, items, custom_check = FALSE, require_near = TRUE, tooltips = TRUE)
 	if(!pick)
 		return
 	var/module_reference = display_names[pick]
@@ -522,11 +533,11 @@
 	return TRUE
 
 /obj/item/mod/control/proc/shock(mob/living/user)
-	if(!istype(user) || cell?.charge < 1)
+	if(!istype(user) || get_charge() < 1)
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, cell, src, 0.7, check_range)
+	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, mob/user)
 	var/obj/item/mod/module/new_module = module
@@ -555,6 +566,13 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
+		if(action)
+			action.Grant(wearer)
+	if(ai)
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
+		if(action)
+			action.Grant(ai)
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -566,9 +584,17 @@
 	if(active)
 		old_module.on_suit_deactivation()
 		if(old_module.active)
-			old_module.on_deactivation()
+			old_module.on_deactivation(display_message = TRUE)
 	if(wearer)
 		old_module.on_unequip()
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
+		if(action)
+			action.Remove(wearer)
+	if(ai)
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
+		if(action)
+			action.Remove(ai)
+	old_module.pinned_to.Cut()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -580,28 +606,36 @@
 	req_access = card.access.Copy()
 	balloon_alert(user, "access updated")
 
-/obj/item/mod/control/proc/update_cell_alert()
+/obj/item/mod/control/proc/get_charge_source()
+	return core?.charge_source()
+
+/obj/item/mod/control/proc/get_charge()
+	return core?.charge_amount() || 0
+
+/obj/item/mod/control/proc/get_max_charge()
+	return core?.max_charge_amount() || 1 //avoid dividing by 0
+
+/obj/item/mod/control/proc/get_charge_percent()
+	return ROUND_UP((get_charge() / get_max_charge()) * 100)
+
+/obj/item/mod/control/proc/add_charge(amount)
+	return core?.add_charge(amount) || FALSE
+
+/obj/item/mod/control/proc/subtract_charge(amount)
+	return core?.subtract_charge(amount) || FALSE
+
+/obj/item/mod/control/proc/update_charge_alert()
 	if(!wearer)
 		return
-	if(!cell)
-		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+	if(!core)
+		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocore)
 		return
-	var/remaining_cell = cell.charge/cell.maxcharge
-	switch(remaining_cell)
-		if(0.75 to INFINITY)
-			wearer.clear_alert("mod_charge")
-		if(0.5 to 0.75)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
-		if(0.25 to 0.5)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
-		if(0.01 to 0.25)
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
-		else
-			wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
+	core.update_charge_alert()
 
 /obj/item/mod/control/proc/update_speed()
-	for(var/obj/item/part as anything in mod_parts)
-		part.slowdown = (active ? slowdown_active : slowdown_inactive) / length(mod_parts)
+	var/list/all_parts = mod_parts + src
+	for(var/obj/item/part as anything in all_parts)
+		part.slowdown = (active ? slowdown_active : slowdown_inactive) / length(all_parts)
 	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()
@@ -613,9 +647,9 @@
 
 	if(part.loc == src)
 		return
-	if(part == cell)
-		cell = null
-		update_cell_alert()
+	if(part == core)
+		core.uninstall()
+		update_charge_alert()
 		return
 	if(part.loc == wearer)
 		return
@@ -631,10 +665,11 @@
 /obj/item/mod/control/proc/on_borg_charge(datum/source, amount)
 	SIGNAL_HANDLER
 
-	if(!cell)
+	update_charge_alert()
+	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	if(!istype(cell))
 		return
 	cell.give(amount)
-	update_cell_alert()
 
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER

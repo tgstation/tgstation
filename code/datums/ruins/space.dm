@@ -123,11 +123,11 @@
 	name = "Empty Shell"
 	description = "Cosy, rural property available for young professional couple. Only twelve parsecs from the nearest hyperspace lane!"
 
-/datum/map_template/ruin/space/gas_the_lizards
-	id = "gas-the-lizards"
-	suffix = "gasthelizards.dmm"
-	name = "Disposal Facility 17"
-	description = "Gas efficiency at 95.6%, fluid elimination at 96.2%. Will require renewed supplies of 'carpet' before the end of the quarter."
+/datum/map_template/ruin/space/the_lizards_gas
+	id = "the-lizards-gas"
+	suffix = "thelizardsgas.dmm"
+	name = "The Lizard's Gas"
+	description = "A refueling station stocked with enough plasma for any space-worthy vessel. Well, maybe if it weren't 50 years ago."
 
 /datum/map_template/ruin/space/intact_empty_ship
 	id = "intact-empty-ship"
@@ -317,3 +317,9 @@
 	suffix = "hellfactory.dmm"
 	name = "Heck Brewery"
 	description = "An abandoned warehouse and brewing facility, which has been recently rediscovered. Reports claim that the security system entered an ultra-hard lockdown, but these reports are inconclusive."
+
+/datum/map_template/ruin/space/space_billboard
+	id = "space_billboard"
+	suffix = "space_billboard.dmm"
+	name = "Space Billboard"
+	description = "Frequently found alongside well-traversed sublight routes, space billboards have fallen out of favour in recent years as advertisers finally realised that people are incapable of reading billboards going by at over 2/3rds the speed of light."

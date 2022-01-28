@@ -3,6 +3,7 @@
 	desc = "A hefty wooden crate. You'll need a crowbar to get it open."
 	icon_state = "largecrate"
 	density = TRUE
+	pass_flags_self = PASSSTRUCTURE
 	material_drop = /obj/item/stack/sheet/mineral/wood
 	material_drop_amount = 4
 	delivery_icon = "deliverybox"

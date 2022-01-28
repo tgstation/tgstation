@@ -53,11 +53,11 @@
 		target.cut_overlay(plastic_overlay, TRUE)
 		qdel(src)
 		return
-	. = ..()
 	//Since we already did the checks in afterattack, the denonator must be a ninja with the bomb objective.
 	if(!detonator)
 		return
 	var/mob/ninja = detonator.resolve()
+	. = ..()
 	if (isnull(ninja))
 		return
 	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
