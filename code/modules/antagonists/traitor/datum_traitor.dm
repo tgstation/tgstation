@@ -77,6 +77,11 @@
 
 	return ..()
 
+/datum/antagonist/traitor/on_removal()
+	if(uplink_handler)
+		uplink_handler.has_objectives = FALSE
+	return ..()
+
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
 	var/string = "[to_display.name]"
 	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE || to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
