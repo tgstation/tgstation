@@ -36,4 +36,24 @@ SUBSYSTEM_DEF(input)
 
 /datum/controller/subsystem/input/fire()
 	for(var/mob/user as anything in GLOB.keyloop_list)
-		user.focus?.keyLoop(user.client)
+		if(user.focus)
+			var/movement_dir = NONE
+			for(var/_key in user.client?.keys_held)
+				movement_dir = movement_dir | user.movement_keys[_key]
+			if(user?.next_move_dir_add)
+				movement_dir |= user.client.next_move_dir_add
+			if(user?.next_move_dir_sub)
+				movement_dir &= ~user.client.next_move_dir_sub
+			// Sanity checks in case you hold left and right and up to make sure you only go up
+			if((movement_dir & NORTH) && (movement_dir & SOUTH))
+				movement_dir &= ~(NORTH|SOUTH)
+			if((movement_dir & EAST) && (movement_dir & WEST))
+				movement_dir &= ~(EAST|WEST)
+
+			if(user.client && movement_dir) //If we're not moving, don't compensate, as byond will auto-fill dir otherwise
+				movement_dir = turn(movement_dir, -dir2angle(user.client.dir)) //By doing this we ensure that our input direction is offset by the client (camera) direction
+
+			if(user.client?.movement_locked)
+				user.focus?.keybind_face_direction(movement_dir)
+			else
+				user.client?.Move(get_step(src, movement_dir), movement_dir)
