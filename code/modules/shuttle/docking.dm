@@ -174,11 +174,15 @@
 		var/turf/newT = new_turfs[i]
 		newT.afterShuttleMove(oldT, rotation) //turfs
 		var/turf/newCeiling = get_step_multiz(newT, UP)
-		if(newCeiling && istype(newCeiling, /turf/open/openspace))
-			newCeiling.ChangeTurf(/turf/open/floor/engine/hull, list(/turf/open/openspace))
+		if(newCeiling)
+			if(istype(newCeiling, /turf/open/openspace))
+				newCeiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/openspace))
+			else if (istype(newCeiling, /turf/open/space/openspace))
+				newCeiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/space/openspace))
 		var/turf/oldCeiling = get_step_multiz(oldT, UP)
-		if(oldCeiling && istype(oldCeiling, /turf/open/floor/engine/hull))
-			oldCeiling.ChangeTurf(/turf/open/openspace)
+		if(oldCeiling && istype(oldCeiling, /turf/open/floor/engine/hull/ceiling))
+			var/turf/open/floor/engine/hull/ceiling/oldShuttleCeiling = oldCeiling
+			oldShuttleCeiling.ChangeTurf(oldShuttleCeiling.old_turf_type)
 
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK
