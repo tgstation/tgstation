@@ -5,6 +5,7 @@
  * @author Changes stylemistake
  * @author Changes ThePotato97
  * @author Changes Ghommie
+ * @author Changes Timberpoes
  * @license MIT
  */
 
