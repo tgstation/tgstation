@@ -27,7 +27,7 @@
 /obj/structure/c_transit_tube/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, \
-		rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS, \
+		rotation_flags = ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS, \
 		after_rotation = CALLBACK(src,.proc/after_rot) \
 	)
 

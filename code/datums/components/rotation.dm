@@ -1,6 +1,4 @@
-/// If an object can be rotated by alt clicking
-#define ROTATION_ALTCLICK (1<<0)
-/// If an object can be rotated with a wrench
+/// If an object needs to be rotated with a wrench
 #define ROTATION_REQUIRE_WRENCH (1<<1)
 /// If an object will have rotation options presented as verbs to a mob
 #define ROTATION_VERBS (1<<2)
@@ -55,10 +53,9 @@
 		default_rotation_direction = ROTATION_CLOCKWISE
 
 /datum/component/simple_rotation/proc/add_signals()
-	if(rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
-		RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
+	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)

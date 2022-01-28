@@ -32,7 +32,7 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS , can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS , can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
