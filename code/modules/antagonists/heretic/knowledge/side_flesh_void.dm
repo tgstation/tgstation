@@ -5,10 +5,17 @@
 	desc = "A cloak that can become invisbile at will, hiding items you store in it. \
 		To create it, transmute a glass shard, any item of clothing that you can fit over your uniform and any type of bedsheet."
 	gain_text = "Owl is the keeper of things that quite not are in practice, but in theory are."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul, /datum/heretic_knowledge/cold_snap)
+	next_knowledge = list(
+		/datum/heretic_knowledge/flesh_ghoul,
+		/datum/heretic_knowledge/cold_snap,
+	)
+	required_atoms = list(
+		/obj/item/shard = 1,
+		/obj/item/clothing/suit = 1,
+		/obj/item/bedsheet = 1,
+	)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
-	required_atoms = list(/obj/item/shard = 1, /obj/item/clothing/suit = 1, /obj/item/bedsheet = 1)
+	cost = 1
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"

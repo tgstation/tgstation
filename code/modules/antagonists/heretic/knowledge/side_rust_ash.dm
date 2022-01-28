@@ -5,10 +5,16 @@
 	desc = "Allows you to transmute a tank of water and a glass shard into a flask of eldritch water. \
 		Eldritch water can be consumed for potent healing, or given to heathens for deadly poisoning."
 	gain_text = "This is an old recipe. The Owl whispered it to me."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/spell/ashen_shift)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/item/shard = 1)
+	next_knowledge = list(
+		/datum/heretic_knowledge/rust_regen,
+		/datum/heretic_knowledge/spell/ashen_shift,
+		)
+	required_atoms = list(
+		/obj/structure/reagent_dispensers/watertank = 1,
+		/obj/item/shard = 1,
+	)
 	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
+	cost = 1
 
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
