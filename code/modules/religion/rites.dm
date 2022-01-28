@@ -369,7 +369,7 @@
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(joining_now in honormut.guilty)
 		honormut.guilty -= joining_now
 	GLOB.religious_sect.adjust_favor(200, user)
@@ -389,7 +389,7 @@
 /datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut)
 		return FALSE
 	if(!length(honormut.guilty))
@@ -405,7 +405,7 @@
 	..()
 	if(in_range(user, religious_tool))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut) //edge case
 		return FALSE
 	honormut.guilty -= who
