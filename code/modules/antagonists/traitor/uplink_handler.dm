@@ -172,8 +172,8 @@
 
 /// Updates the objectives on the uplink and deletes
 /datum/uplink_handler/proc/update_objectives()
-	var/list/potential_objectives_copy = potential_objectives.Copy()
-	for(var/datum/traitor_objective/objective as anything in potential_objectives_copy)
+	var/list/objectives_copy = potential_objectives + active_objectives
+	for(var/datum/traitor_objective/objective as anything in objectives_copy)
 		if(progression_points > objective.progression_maximum && !objective.forced)
 			objective.fail_objective(trigger_update = FALSE)
 			continue
