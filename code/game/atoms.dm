@@ -2103,15 +2103,39 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 	var/mob/user = client?.mob
+	if (isnull(user))
+		return
 
 	// Screentips
-	var/datum/hud/active_hud = user?.hud_used
+	var/datum/hud/active_hud = user.hud_used
 	if(active_hud)
 		if(!active_hud.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
 			active_hud.screentip_text.maptext = ""
 		else
+			var/extra_context = ""
+
+			if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1)
+				var/list/context = list()
+
+				var/obj/item/held_item = user.get_active_held_item()
+
+				var/contextual_screentip_returns = \
+					SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+					| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+
+				if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+					var/list/extra_context_stable_order = list()
+
+					if (SCREENTIP_CONTEXT_LMB in context)
+						extra_context_stable_order += "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]"
+
+					if (SCREENTIP_CONTEXT_RMB in context)
+						extra_context_stable_order += "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]"
+
+					extra_context = "<br><span style='font-size: 7px'>[extra_context_stable_order.Join(" | ")]</span>"
+
 			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-			active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name]</span>"
+			active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)
