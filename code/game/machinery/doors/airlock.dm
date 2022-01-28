@@ -1066,7 +1066,6 @@
 	if (!panel_open)
 		return FALSE
 
-	// (obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)
 	if (obj_flags & EMAGGED)
 		return TRUE
 
