@@ -10,7 +10,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("telepathically cries")
 	speed = 2
-	move_to_delay = 1
+	move_to_delay = 2
 	projectiletype = /obj/projectile/temp/basilisk/ice
 	projectilesound = 'sound/weapons/pierce.ogg'
 	ranged = TRUE
