@@ -196,3 +196,6 @@ Temporary Items
 /tools/LinuxOneShot/TGS_Config
 /tools/LinuxOneShot/TGS_Instances
 /tools/LinuxOneShot/TGS_Logs
+
+# Autowiki
+/tools/autowiki/node_modules
