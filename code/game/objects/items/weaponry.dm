@@ -286,6 +286,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
+/obj/item/wirerod/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/shard = list(
+			SCREENTIP_CONTEXT_LMB = "Craft spear",
+		),
+
+		/obj/item/assembly/igniter = list(
+			SCREENTIP_CONTEXT_LMB = "Craft stunprod",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
 		var/obj/item/spear/S = new /obj/item/spear

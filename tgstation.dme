@@ -963,6 +963,7 @@
 #include "code\datums\elements\food\processable.dm"
 #include "code\datums\elements\food\venue_price.dm"
 #include "code\datums\elements\screentips\contextual_screentip_bare_hands.dm"
+#include "code\datums\elements\screentips\contextual_screentip_item_typechecks.dm"
 #include "code\datums\elements\screentips\contextual_screentip_tools.dm"
 #include "code\datums\greyscale\_greyscale_config.dm"
 #include "code\datums\greyscale\json_reader.dm"
