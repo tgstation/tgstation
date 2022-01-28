@@ -56,7 +56,7 @@ These are basically advanced cells.
 
 /obj/item/stock_parts/cell/microfusion/emp_act(severity)
 	var/prob_percent = charge / 100 * severity
-	if(prob(prob_percent) && !meltdown && !stabilised && parent_gun)
+	if(prob(prob_percent) && !meltdown && !stabilised)
 		process_instability()
 
 /obj/item/stock_parts/cell/microfusion/use(amount)
