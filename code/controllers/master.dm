@@ -505,7 +505,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 					bg_calc = TRUE
 				else
 					//error state, do sane fallback behavior
-					if (. = 0)
+					if (. == 0)
 						log_world("MC: Queue logic failure, non-background subsystem queued to run after a background subsystem: [queue_node] queue_prev:[queue_node.queue_prev]")
 					. = -1
 					current_tick_budget = queue_priority_count //this won't even be right, but is the closet we have.
