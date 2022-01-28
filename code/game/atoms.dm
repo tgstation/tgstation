@@ -2125,15 +2125,24 @@
 						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
 
 					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
-						var/list/extra_context_stable_order = list()
+						// LMB and RMB on one line...
+						var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
+						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
 
-						if (SCREENTIP_CONTEXT_LMB in context)
-							extra_context_stable_order += "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]"
+						if (lmb_text)
+							extra_context = lmb_text
+							if (rmb_text)
+								extra_context += " | [rmb_text]"
+						else if (rmb_text)
+							extra_context = rmb_text
 
-						if (SCREENTIP_CONTEXT_RMB in context)
-							extra_context_stable_order += "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]"
+						// Ctrl-LMB and (in the future) Alt-LMB on another
+						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+							if (extra_context != "")
+								extra_context += "<br>"
+							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
 
-						extra_context = "<br><span style='font-size: 7px'>[extra_context_stable_order.Join(" | ")]</span>"
+						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
 
 			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
 			active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name][extra_context]</span>"

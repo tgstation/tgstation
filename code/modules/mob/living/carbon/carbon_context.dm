@@ -4,10 +4,16 @@
 	if (!isnull(held_item))
 		return .
 
+	if (!ishuman(user))
+		return .
+
 	if (user.combat_mode)
 		context[SCREENTIP_CONTEXT_LMB] = "Attack"
 	else if (user == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Check injuries"
+
+		if (get_bodypart(user.zone_selected)?.get_bleed_rate())
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Grab limb"
 
 	if (user != src)
 		context[SCREENTIP_CONTEXT_RMB] = "Shove"
