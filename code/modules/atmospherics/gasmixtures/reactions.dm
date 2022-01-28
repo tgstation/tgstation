@@ -978,12 +978,13 @@
 		location = get_turf(pick(pipenet.members))
 	else
 		location = get_turf(holder)
-	var/consumed_amount = min(0.000008 * temperature * cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] / (cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] * 8 + cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] * 0.000001 * temperature + cached_gases[/datum/gas/oxygen][MOLES] * cached_gases[/datum/gas/antinoblium][MOLES] * 0.000008 * temperature), cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.125))
+	var/antinoblium_efficiency = cached_gases[/datum/gas/antinoblium][MOLES] * 0.000002 * temperature
+	var/consumed_amount = min(8 * antinoblium_efficiency * cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] / (antinoblium_efficiency * (cached_gases[/datum/gas/nitrogen][MOLES] + cached_gases[/datum/gas/oxygen][MOLES] * 8) + cached_gases[/datum/gas/nitrogen][MOLES] * cached_gases[/datum/gas/oxygen][MOLES] * 8), cached_gases[/datum/gas/nitrogen][MOLES], cached_gases[/datum/gas/oxygen][MOLES] * INVERSE(0.125))
 	ASSERT_GAS(/datum/gas/nitrium, air)
 	cached_gases[/datum/gas/nitrogen][MOLES] -= consumed_amount
 	cached_gases[/datum/gas/oxygen][MOLES] -= consumed_amount * 0.125
 	cached_gases[/datum/gas/nitrium][MOLES] += consumed_amount
-	energy_released += consumed_amount * 40000000
+	energy_released += consumed_amount * 80000000
 	cached_results["fire"] += consumed_amount
 	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
 	var/zap_type = DEFAULT_ZAP_ICON_STATE

@@ -226,7 +226,7 @@
 		return
 
 	//Not enough / nothing to burn
-	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen)) && (INSUFFICIENT(/datum/gas/antinoblium) | INSUFFICIENT(/datum/gas/nitrogen)) || INSUFFICIENT(/datum/gas/oxygen))
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen) && (INSUFFICIENT(/datum/gas/antinoblium) || INSUFFICIENT(/datum/gas/nitrogen))) || INSUFFICIENT(/datum/gas/oxygen))
 		qdel(src)
 		return
 
