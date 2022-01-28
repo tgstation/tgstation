@@ -11,9 +11,22 @@
 	/// If set, the text to show for RMB
 	var/rmb_text
 
+	/// If set, the text to show for LMB when in combat mode. Otherwise, defaults to lmb_text.
+	var/lmb_text_combat_mode
+
+	/// If set, the text to show for RMB when in combat mode. Otherwise, defaults to rmb_text.
+	var/rmb_text_combat_mode
+
 // If you're curious about `use_named_parameters`, it's because you should use named parameters!
 // AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Do the thing")
-/datum/element/contextual_screentip_bare_hands/Attach(datum/target, use_named_parameters, lmb_text, rmb_text)
+/datum/element/contextual_screentip_bare_hands/Attach(
+	datum/target,
+	use_named_parameters,
+	lmb_text,
+	rmb_text,
+	lmb_text_combat_mode,
+	rmb_text_combat_mode,
+)
 	. = ..()
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -23,6 +36,8 @@
 
 	src.lmb_text = lmb_text
 	src.rmb_text = rmb_text
+	src.lmb_text_combat_mode = lmb_text_combat_mode || lmb_text
+	src.rmb_text_combat_mode = rmb_text_combat_mode || rmb_text
 
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -42,6 +57,7 @@
 	datum/source,
 	list/context,
 	obj/item/held_item,
+	mob/living/user,
 )
 	SIGNAL_HANDLER
 
@@ -49,9 +65,9 @@
 		return NONE
 
 	if (!isnull(lmb_text))
-		context[SCREENTIP_CONTEXT_LMB] = lmb_text
+		context[SCREENTIP_CONTEXT_LMB] = user.combat_mode ? lmb_text_combat_mode : lmb_text
 
 	if (!isnull(rmb_text))
-		context[SCREENTIP_CONTEXT_RMB] = rmb_text
+		context[SCREENTIP_CONTEXT_RMB] = user.combat_mode ? rmb_text_combat_mode : rmb_text
 
 	return CONTEXTUAL_SCREENTIP_SET
