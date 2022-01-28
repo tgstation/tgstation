@@ -401,7 +401,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				iteration++
 			error_level++
 			current_ticklimit = TICK_LIMIT_RUNNING
-			sleep((1 SECOND) * error_level)
+			sleep((1 SECONDS) * error_level)
 			continue
 
 		if (queue_head)
@@ -413,9 +413,10 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 					iteration++
 				error_level++
 				current_ticklimit = TICK_LIMIT_RUNNING
-				sleep((1 SECOND) * error_level)
+				sleep((1 SECONDS) * error_level)
 				continue
-		error_level--
+		if (error_level > 0)
+			error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
 			queue_priority_count = 0
 			queue_priority_count_bg = 0
