@@ -234,29 +234,35 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /obj/mystery_box_item/proc/start_animation(atom/parent)
 	parent_box = parent
 
-	var/matrix/starting = matrix()
-	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
+
 	loop_icon_changes()
 
 /// Keep changing the icon and selected path
 /obj/mystery_box_item/proc/loop_icon_changes()
-	set waitfor = FALSE
-
 	var/change_delay = 1
-	var/change_delay_delta = 0.2
-	var/start_time = world.time
+	var/change_delay_delta = 1
+	var/change_counter = 0
 
 	/// The uninstantiated item that's currently selected based off selected_path, for use with initial()
 	var/obj/item/selected_item
 
-	while(world.time < start_time + MBOX_DURATION_CHOOSING)
+	var/matrix/starting = matrix()
+	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
+
+	var/i = 0
+	while(change_counter < MBOX_DURATION_CHOOSING)
+		i++
+		testing("Iter [i]: change_delay: [change_delay] | change_counter: [change_counter]")
 		change_delay += change_delay_delta
+		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
 		selected_item = selected_path
-		icon = initial(selected_item.icon)
-		icon_state = initial(selected_item.icon_state)
-		sleep(change_delay)
+		animate(icon = initial(selected_item.icon), icon_state = initial(selected_item.icon_state), time = change_counter)
 
+	addtimer(CALLBACK(src, .proc/present_item), MBOX_DURATION_CHOOSING)
+
+/obj/mystery_box_item/proc/present_item()
+	var/obj/item/selected_item = selected_path
 	add_filter("ready_outline", 2, list("type" = "outline", "color" = "#FBFF23", "size" = 0.2))
 	name = initial(selected_item.name)
 	parent_box.present_weapon()
