@@ -1,22 +1,21 @@
 /// If an object needs to be rotated with a wrench
-#define ROTATION_REQUIRE_WRENCH (1<<1)
-/// If an object will have rotation options presented as verbs to a mob
-#define ROTATION_VERBS (1<<2)
-/// If an object can be rotated counterclockwise
-#define ROTATION_COUNTERCLOCKWISE (1<<3)
-/// If an object can be rotated clockwise
-#define ROTATION_CLOCKWISE (1<<4)
-/// If an object can be rotated 180 degrees
-#define ROTATION_FLIP (1<<5)
+#define ROTATION_REQUIRE_WRENCH (1<<0)
 /// If ghosts can rotate an object (if the ghost config is enabled)
-#define ROTATION_GHOSTS_ALLOWED (1<6)
-/// If an object can be rotated if it's anchored (used for chairs)
-#define ROTATION_ANCHORED_ALLOWED (1<7)
+#define ROTATION_GHOSTS_ALLOWED (1<1)
+/// If an object will ignore anchored for rotation (used for chairs)
+#define ROTATION_IGNORE_ANCHORED (1<2)
+
+/// Rotate an object clockwise
+#define ROTATION_CLOCKWISE 1
+/// Rotate an object counterclockwise
+#define ROTATION_COUNTERCLOCKWISE 2
+/// Rotate an object upside down
+#define ROTATION_FLIP 3
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
 	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
-	var/datum/callback/after_rotation     //Additional stuff to do after rotation
+	var/datum/callback/after_rotation  //Additional stuff to do after rotation
 
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
@@ -25,32 +24,10 @@
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	//throw if no rotation direction is specificed ?
-
 	src.rotation_flags = rotation_flags
-
-	if(can_user_rotate)
-		src.can_user_rotate = can_user_rotate
-	else
-		src.can_user_rotate = CALLBACK(src,.proc/default_can_user_rotate)
-
-	if(can_be_rotated)
-		src.can_be_rotated = can_be_rotated
-	else
-		src.can_be_rotated = CALLBACK(src,.proc/default_can_be_rotated)
-
-	if(after_rotation)
-		src.after_rotation = after_rotation
-	else
-		src.after_rotation = CALLBACK(src,.proc/default_after_rotation)
-
-	//Try Clockwise,counter,flip in order
-	if(src.rotation_flags & ROTATION_FLIP)
-		default_rotation_direction = ROTATION_FLIP
-	if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
-		default_rotation_direction = ROTATION_COUNTERCLOCKWISE
-	if(src.rotation_flags & ROTATION_CLOCKWISE)
-		default_rotation_direction = ROTATION_CLOCKWISE
+	src.can_user_rotate = can_user_rotate || CALLBACK(src,.proc/default_can_user_rotate)
+	src.can_be_rotated = can_be_rotated || CALLBACK(src,.proc/default_can_be_rotated)
+	src.after_rotation = after_rotation || CALLBACK(src,.proc/default_after_rotation)
 
 /datum/component/simple_rotation/proc/add_signals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
@@ -58,14 +35,10 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 
 /datum/component/simple_rotation/proc/add_verbs()
-	if(rotation_flags & ROTATION_VERBS)
-		var/atom/movable/AM = parent
-		if(rotation_flags & ROTATION_FLIP)
-			AM.verbs += /atom/movable/proc/simple_rotate_flip
-		if(src.rotation_flags & ROTATION_CLOCKWISE)
-			AM.verbs += /atom/movable/proc/simple_rotate_clockwise
-		if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
-			AM.verbs += /atom/movable/proc/simple_rotate_counterclockwise
+	var/atom/movable/AM = parent
+	AM.verbs += /atom/movable/proc/simple_rotate_flip
+	AM.verbs += /atom/movable/proc/simple_rotate_clockwise
+	AM.verbs += /atom/movable/proc/simple_rotate_counterclockwise
 
 /datum/component/simple_rotation/proc/remove_verbs()
 	if(parent)
@@ -111,19 +84,13 @@
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
-/datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user, rotation = default_rotation_direction)
+/datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user)
 	SIGNAL_HANDLER
+	Rotate(user, ROTATION_CLOCKWISE)
 
-	if(rotation_flags & ROTATION_CLOCKWISE)
-		rotation = ROTATION_CLOCKWISE
-		Rotate(user, rotation)
-
-/datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user, rotation = default_rotation_direction)
+/datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user)
 	SIGNAL_HANDLER
-
-	if(rotation_flags & ROTATION_COUNTERCLOCKWISE)
-		rotation = ROTATION_COUNTERCLOCKWISE
-		Rotate(user, rotation)
+	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
 	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
