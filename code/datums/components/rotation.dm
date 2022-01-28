@@ -61,6 +61,8 @@
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(rotation_flags & ROTATION_WRENCH)
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
+
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
@@ -129,10 +131,11 @@
 		rotation = ROTATION_COUNTERCLOCKWISE
 		Rotate(user, rotation)
 
-/datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
+/datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user) // mob/living/user, obj/item/I)
 	SIGNAL_HANDLER
 
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
+		//balloon_alert(user, "you need a wrench!")
 		return
 	Rotate(user,default_rotation_direction)
 	return COMPONENT_BLOCK_TOOL_ATTACK
@@ -168,11 +171,13 @@
 		return TRUE
 	else
 		var/atom/movable/AM = parent
+		//to_chat(user, span_warning("It is fastened to the floor!"))
 		return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
-	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
-	add_fingerprint(user)
+	var/atom/rotated_atom = parent
+	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_atom]."))
+	rotated_atom.add_fingerprint(user)
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"
