@@ -12,9 +12,17 @@
 
 /obj/effect/heretic_rune/Initialize(mapload)
 	. = ..()
-	var/image/I = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
-	I.override = TRUE
-	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", I)
+	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
+	silicon_image.override = TRUE
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
+
+/obj/effect/heretic_rune/examine(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+
+	. += span_notice("Allows you to transmute objects by invoking the rune after collecting the prerequisites overhead.")
+	. += span_notice("You can use your <i>Mansus Grasp</i> on the rune to remove it.")
 
 /obj/effect/heretic_rune/can_interact(mob/living/user)
 	. = ..()
@@ -119,7 +127,7 @@
 
 		return
 
-	to_chat(user, span_warning("Your ritual failed! You either used the wrong components or are missing something important."))
+	balloon_alert(user, "ritual failed, incorrect components!")
 
 /obj/effect/heretic_rune/big
 	name = "transmutation rune"

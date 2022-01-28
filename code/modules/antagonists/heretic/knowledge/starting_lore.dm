@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		valid_targets += possible_target
 
 	if(!valid_targets.len)
-		to_chat(user, span_danger("No targets could be found! Try again later!"))
+		to_chat(user, span_danger("No sacrifice targets could be found! Attempt the ritual later."))
 		skip_this_ritual = TRUE
 		addtimer(VARSET_CALLBACK(src, skip_this_ritual, FALSE), 5 MINUTES)
 		return FALSE

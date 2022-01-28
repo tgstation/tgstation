@@ -17,6 +17,19 @@
 	catchphrase = "R'CH T'H TR'TH"
 	on_use_sound = 'sound/items/welder.ogg'
 
+/obj/item/melee/touch_attack/mansus_fist/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You remove %THEEFFECT.", \
+		on_clear_callback = CALLBACK(src, .proc/after_clear_rune), \
+		effects_we_clear = list(/obj/effect/heretic_rune))
+
+/*
+ * Callback for effect_remover component.
+ */
+/obj/item/melee/touch_attack/mansus_fist/proc/after_clear_rune(obj/effect/target, mob/living/user)
+	use_charge(user)
+
 /obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/to_light, mob/user)
 	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
 	use_charge(user)

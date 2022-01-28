@@ -31,6 +31,8 @@
 	var/list/researched_knowledge = list()
 	/// Lazylist of weakrefs to humans that we have as targets.
 	var/list/datum/weakref/sac_targets
+	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
+	var/passive_gain_timer = 20 MINUTES
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed.
@@ -67,6 +69,13 @@
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
 		knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
+
+		// Final knowledge can't be learned until all objectives are complete.
+		if(ispath(knowledge, /datum/heretic_knowledge/final))
+			for(var/datum/objective/must_be_done as anything in objectives)
+				if(!must_be_done.check_completion())
+					knowledge_data["disabled"] = TRUE
+
 		knowledge_data["hereticPath"] = initial(knowledge.route)
 		knowledge_data["color"] = path_to_color?[initial(knowledge.route)] || "grey"
 
@@ -162,6 +171,7 @@
 		gain_knowledge(starting_knowledge)
 
 	GLOB.reality_smash_track.add_tracked_mind(owner)
+	addtimer(CALLBACK(src, .proc/passive_influence_gain), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
@@ -306,7 +316,9 @@
 
 	GLOB.reality_smash_track.rework_network()
 
-/// Forge our objectives for our heretic.
+/**
+ * Forge our objectives for our heretic.
+ */
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/datum/objective/heretic_research/research_objective = new()
 	research_objective.owner = owner
@@ -325,6 +337,15 @@
 		var/datum/objective/major_sacrifice/other_sac_objective = new()
 		other_sac_objective.owner = owner
 		objectives += other_sac_objective
+
+/**
+ * Increments knowledge by one.
+ * Used in callbacks for passive gain over time.
+ */
+/datum/antagonist/heretic/proc/passive_influence_gain()
+	knowledge_points++
+	to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message")))]")
+	addtimer(CALLBACK(src, .proc/passive_influence_gain), passive_gain_timer)
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()

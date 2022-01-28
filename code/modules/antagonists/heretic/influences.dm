@@ -1,7 +1,4 @@
 
-/// JSON string file for all of our heretic influence names.
-#define HERETIC_INFLUENCE_FILE "heretic_influences.json"
-
 /**
  * #Reality smash tracker
  *
@@ -312,5 +309,3 @@
  */
 /obj/effect/heretic_influence/proc/generate_name()
 	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
-
-#undef HERETIC_INFLUENCE_FILE

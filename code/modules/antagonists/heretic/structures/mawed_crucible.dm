@@ -48,11 +48,11 @@
 
 	. += span_info("The following potions can be brewed:")
 	for(var/obj/item/eldritch_potion/potion as anything in subtypesof(/obj/item/eldritch_potion))
-		var/potion_string = span_info("\t" + initial(potion.name) + " - " + initial(potion.crucible_tip))
+		var/potion_string = span_info("\tThe " + initial(potion.name) + " - " + initial(potion.crucible_tip))
 		. += potion_string
 
 /obj/structure/destructible/eldritch_crucible/examine_status(mob/user)
-	if(IS_CULTIST(user) || isobserver(user))
+	if(IS_HERETIC_OR_MONSTER(user) || isobserver(user))
 		return span_notice("It's at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.")
 	return ..()
 
@@ -221,7 +221,7 @@
 
 /obj/item/eldritch_potion/attack_self(mob/user)
 	. = ..()
-	if(!.)
+	if(.)
 		return
 
 	if(!iscarbon(user))

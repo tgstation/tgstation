@@ -243,7 +243,7 @@
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
-		to_chat(user, span_warning("Your ritual failed! The spirits lie dormant, and the summon falls apart. Perhaps try later?"))
+		loc.balloon_alert(user, "ritual failed, no ghosts!")
 		qdel(summoned)
 		return FALSE
 

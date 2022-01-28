@@ -63,7 +63,7 @@ const IntroductionSection = () => {
       height="100%"
       width="100%">
       <Stack.Item grow>
-        <Section title="You are the Heretic!" fill>
+        <Section title="You are the Heretic!" fill fontSize="14px">
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
@@ -85,17 +85,22 @@ const IntroductionSection = () => {
 const FlavorSection = () => {
   return (
     <Stack.Item>
-      <Stack vertical>
+      <Stack vertical textAlign="center" fontSize="14px">
         <Stack.Item>
-          Another day at a meaningless job. You feel a&nbsp;
-          <span style={hereticBlue}>shimmer</span>
-          &nbsp;around you, as a realization of something&nbsp;
-          <span style={hereticRed}>strange</span>
-          &nbsp;in the air unfolds.
+          <i>
+            Another day at a meaningless job. You feel a&nbsp;
+            <span style={hereticBlue}>shimmer</span>
+            &nbsp;around you, as a realization of something&nbsp;
+            <span style={hereticRed}>strange</span>
+            &nbsp;in the air unfolds. You look inwards and
+            discover something that will change your life.
+          </i>
         </Stack.Item>
-        <Stack.Item textAlign="center">
-          The <span style={hereticPurple}>Gates of Mansus</span>
-          &nbsp;open up to your mind.
+        <Stack.Item>
+          <b>
+            The <span style={hereticPurple}>Gates of Mansus</span>
+            &nbsp;open up to your mind.
+          </b>
         </Stack.Item>
       </Stack>
     </Stack.Item>
@@ -105,41 +110,39 @@ const FlavorSection = () => {
 const GuideSection = () => {
   return (
     <Stack.Item>
-      <Stack vertical>
+      <Stack vertical fontSize="12px">
         <Stack.Item>
-          - Around the station are multiple&nbsp;
-          <span style={hereticPurple}>Influences</span>: breaches
-          in the fabric of reality only visible to people like you.&nbsp;
-          <b>Right click</b> on them to harvest them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span> -
-          doing this makes them visible to all, and those
-          with keen eyes may <i>notice</i> you.
+          - Find reality smashing&nbsp;
+          <span style={hereticPurple}>influences</span>
+          &nbsp;around the station invisible to the normal eye and&nbsp;
+          <b>right click</b> on them to harvest them for&nbsp;
+          <span style={hereticBlue}>knowledge points</span>.
+          Tapping them makes them visible to all after a short time.
         </Stack.Item>
         <Stack.Item>
-          - The Old Ones have special interest in certain crewmembers.
-          Capture them and bring them to a&nbsp;
+          - Use your&nbsp;
+          <span style={hereticRed}>Living Heart action</span>
+          &nbsp;to track down&nbsp;
+          <span style={hereticRed}>sacrifice targets</span>,
+          but be careful: Pulsing it will produce a
+          heartbeat sound that nearby people may hear.
+        </Stack.Item>
+        <Stack.Item>
+          - Draw a&nbsp;
+          <span style={hereticGreen}>transmutation rune</span> by using a
+          drawing tool (a pen or crayon) on the floor while having&nbsp;
+          <span style={hereticGreen}>Mansus Grasp</span>
+          &nbsp;active in your other hand. This rune allows you to complete
+          rituals and sacrifices.
+        </Stack.Item>
+        <Stack.Item>
+          - Follow your <span style={hereticRed}>Living Heart</span> to
+          find your targets. Bring them back to a&nbsp;
           <span style={hereticGreen}>transmutation rune</span> to&nbsp;
           <span style={hereticRed}>sacrifice</span> them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>.&nbsp;
-          <span style={hereticRed}>
-            They must be in critical or worse condition.
-          </span>
-          &nbsp;You can <b>only</b> sacrifice these targets.
-        </Stack.Item>
-        <Stack.Item>
-          - Your heart has transformed into a&nbsp;
-          <span style={hereticRed}>Living Heart</span>. Use it
-          to track your <span style={hereticRed}>sacrifice targets</span>,
-          but be warned: pulsing it will produce a
-          heartbeat sound that nearby people may hear.
-          Should you lose your heart, you can complete a ritual to regain it.
-        </Stack.Item>
-        <Stack.Item>
-          - You can draw a&nbsp;
-          <span style={hereticGreen}>transmutation rune</span> by using a
-          drawing tool (a pen or crayon) while having Mansus Grasp
-          active in your other hand. This rune allows you to complete
-          rituals and sacrifices.
+          <span style={hereticBlue}>knowledge points</span>.
+          The Mansus <b>ONLY</b> accepts targets pointed to by the&nbsp;
+          <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
           - Complete all of your objectives and

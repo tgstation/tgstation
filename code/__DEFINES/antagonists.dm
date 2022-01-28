@@ -106,6 +106,9 @@
 ///File to the thief flavor
 #define THIEF_FLAVOR_FILE "antagonist_flavor/thief_flavor.json"
 
+/// JSON string file for all of our heretic influence flavors
+#define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
+
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",
