@@ -84,6 +84,7 @@
 
 /obj/item/mod/module/clamp/loader
 	name = "MOD loader hydraulic clamp module"
+	icon_state = "clamp_loader"
 	complexity = 0
 	removable = FALSE
 	overlay_state_inactive = null
@@ -191,7 +192,7 @@
 /obj/item/mod/module/hydraulic
 	name = "MOD loader hydraulic arms module"
 	desc = "A pair of powerful hydraulic arms installed in a MODsuit."
-	icon_state = "hydraulic"
+	icon_state = "launch_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
 	use_power_cost = DEFAULT_CHARGE_DRAIN*10
@@ -279,7 +280,7 @@
 /obj/item/mod/module/magnet
 	name = "MOD loader hydraulic magnet module"
 	desc = "A powerful hydraulic electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
-	icon_state = "hydraulicmagnet"
+	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
 	use_power_cost = DEFAULT_CHARGE_DRAIN*3
