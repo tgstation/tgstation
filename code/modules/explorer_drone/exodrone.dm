@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 /obj/item/exodrone/proc/ui_description()
 	switch(drone_status)
 		if(EXODRONE_TRAVEL)
-			return travel_target ? "Traveling to exploration site." : "Traveling back to station."
+			return travel_target ? "Traveling to [travel_target.display_name()]." : "Traveling back to station."
 		if(EXODRONE_EXPLORATION, EXODRONE_ADVENTURE, EXODRONE_BUSY)
 			return "Exploring [location?.display_name() || "ERROR"]." // better safe than sorry.
 		if(EXODRONE_IDLE)
