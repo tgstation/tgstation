@@ -511,7 +511,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			else
 				//error state
 				if (. == 0)
-					log_world("MC: tick_budget sync error. [json_encode(list(current_tick_budget, queue_priority_count, queue_priority_count_bg, bg_calc, SS, queue_node_priority))]")
+					log_world("MC: tick_budget sync error. [json_encode(list(current_tick_budget, queue_priority_count, queue_priority_count_bg, bg_calc, queue_node, queue_node_priority))]")
 				. = -1
 				tick_precentage = tick_remaining //just because we lost track of priority calculations doesn't mean we can't try to finish off the run, if the error state persists, we don't want to stop ticks from happening
 
