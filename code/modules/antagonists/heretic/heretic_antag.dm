@@ -372,6 +372,7 @@
 	. = ..()
 	.["Add Heart Target (Marked Mob)"] = CALLBACK(src, .proc/add_marked_as_target)
 	.["Remove Heart Target"] = CALLBACK(src, .proc/remove_target)
+	.["Adjust Knowledge Points"] = CALLBACK(src, .proc/admin_change_points)
 
 /*
  * Admin proc for adding a marked mob to a heretic's sac list.
@@ -421,6 +422,20 @@
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets."))
+
+/*
+ * Admin proc for easily adding / removing knowledge points.
+ */
+/datum/antagonist/heretic/proc/admin_change_points(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+
+	var/change_num = tgui_input_number(user, "Add or remove knowledge points", "Points", 0, -100, 100)
+	if(!change_num || QDELETED(src))
+		return
+
+	knowledge_points += change_num
 
 /*
  * Learns the passed [typepath] of knowledge, creating a knowledge datum

@@ -134,7 +134,7 @@
 	desc = "You gain a long range pointed blink that allows you to instantly teleport to your location, \
 		causing aoe damage around you and your chosen location."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_blink
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
 	next_knowledge = list(
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
