@@ -18,22 +18,13 @@
 
 	. = ..()
 
-	GLOB.human_list += src
-
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
-
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Hug", /* In the future, make this display "headpat" when aiming for the head */ \
-		rmb_text = "Shove", \
-		lmb_text_combat_mode = "Attack", \
-	)
-
+	GLOB.human_list += src
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
