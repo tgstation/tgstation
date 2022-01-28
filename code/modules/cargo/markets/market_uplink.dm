@@ -148,7 +148,8 @@
 	desc = "An illegal black market uplink. If command wanted you to have these, they wouldn't have made it so hard to get one."
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
-	accessible_markets = list(/datum/market/blackmarket) ///The original black market uplink
+	//The original black market uplink
+	accessible_markets = list(/datum/market/blackmarket)
 
 
 /datum/crafting_recipe/blackmarket_uplink
