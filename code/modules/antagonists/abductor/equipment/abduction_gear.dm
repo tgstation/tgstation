@@ -167,7 +167,7 @@
 	icon_state = "gizmo_scan"
 	inhand_icon_state = "silencer"
 	var/mode = GIZMO_SCAN
-	var/datum/weakref/marked_target 
+	var/datum/weakref/marked_target
 	var/obj/machinery/abductor/console/console
 
 /obj/item/abductor/gizmo/attack_self(mob/user)
@@ -226,7 +226,7 @@
 		to_chat(user, span_warning("This specimen is already marked!"))
 		return
 	if(isabductor(target) || iscow(target))
-		marked = target
+		marked_target = WEAKREF(target)
 		to_chat(user, span_notice("You mark [target] for future retrieval."))
 	else
 		prepare(target,user)
