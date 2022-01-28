@@ -2000,6 +2000,7 @@
 		register_uplink_items()
 
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
+	SIGNAL_HANDLER
 	UnregisterSignal(SStraitor, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	boost_item_paths = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
