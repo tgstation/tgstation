@@ -1,0 +1,7 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - qol: "Purified shades now show who they were prior to becoming a shade."
+  - bugfix: "Purified shades that get converted to shades now become regular cult shades."
+  - qol: "Purified soulstones (and the shades inside) can now directly be converted into cult soulstones (and cult shades) with Twisted Construction."
+  - spellcheck: "\"Shade of\" does not get duplicated anymore for soulstones under certain conditions"
