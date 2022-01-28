@@ -18,12 +18,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-		return FALSE
-	return TRUE
-
 /obj/machinery/plumbing/fermenter/setDir(newdir)
 	. = ..()
 	eat_dir = newdir

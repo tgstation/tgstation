@@ -9,6 +9,11 @@
 	buildstackamount = 3
 	item_chair = null
 
+///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
+/obj/structure/chair/pew/MakeRotate()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_ANCHORED_ALLOWED)
+
 /obj/structure/chair/pew/left
 	name = "left wooden pew end"
 	icon_state = "pewend_left"
@@ -70,16 +75,3 @@
 /obj/structure/chair/pew/right/post_unbuckle_mob()
 	. = ..()
 	update_rightpewarmrest()
-
-/obj/structure/chair/pew/can_user_rotate(mob/user)
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/living_user = user
-	if(!istype(living_user))
-		return
-	var/obj/item/tool = living_user.get_active_held_item()
-	if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-		balloon_alert(user, "you need a wrench!")
-		return FALSE
