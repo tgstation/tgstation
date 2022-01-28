@@ -7,7 +7,7 @@
 
 /datum/traitor_objective/final
 	abstract_type = /datum/traitor_objective/final
-	progression_minimum = 160 MINUTES // Earliest recorded final objective was an 83 minute romerol, so 120 + (120-83) = 157 minutes.
+	progression_minimum = 140 MINUTES
 
 	var/progression_points_in_objectives = 20 MINUTES
 
