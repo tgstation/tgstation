@@ -237,7 +237,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
-	if(offset_old != APC_PIXEL_OFFSET && !building)
+	if(offset_old != pixel_x && offset_old != pixel_y && !building)
 		log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 
 /obj/machinery/power/apc/Destroy()
