@@ -86,7 +86,7 @@ GENE SCANNER
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject. Has a side button to scan for chemicals, and can be toggled to scan wounds."
 	flags_1 = CONDUCT_1
-	item_flags = NOBLUDGEON | ITEM_HAS_CONTEXTUAL_SCREENTIPS
+	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
@@ -101,7 +101,7 @@ GENE SCANNER
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/on_requesting_context_for_target)
+	register_context()
 
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
@@ -151,15 +151,13 @@ GENE SCANNER
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/healthanalyzer/proc/on_requesting_context_for_target(
-	datum/source,
+/obj/item/healthanalyzer/add_context(
+	obj/item/source,
 	list/context,
 	atom/target,
 )
-	SIGNAL_HANDLER
-
 	if (!isliving(target))
-		return
+		return NONE
 
 	switch (scanmode)
 		if (SCANMODE_HEALTH)

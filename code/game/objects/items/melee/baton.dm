@@ -37,11 +37,31 @@
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 
+	/// The context to show when the baton is active and targetting a living thing
+	var/context_living_target_active = "Stun"
+
+	/// The context to show when the baton is active and targetting a living thing in combat mode
+	var/context_living_target_active_combat_mode = "Stun"
+
+	/// The context to show when the baton is inactive and targetting a living thing
+	var/context_living_target_inactive = "Prod"
+
+	/// The context to show when the baton is inactive and targetting a living thing in combat mode
+	var/context_living_target_inactive_combat_mode = "Attack"
+
+	/// The RMB context to show when the baton is active and targetting a living thing
+	var/context_living_rmb_active = "Attack"
+
+	/// The RMB context to show when the baton is inactive and targetting a living thing
+	var/context_living_rmb_inactive = "Attack"
+
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
+
+	register_context()
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -69,6 +89,30 @@
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
+
+/obj/item/melee/baton/add_context(datum/source, list/context, atom/target, mob/living/user)
+	if (isturf(target))
+		return NONE
+
+	if (isobj(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+	else
+		if (active)
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
+
+			if (user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
+		else
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
+
+			if (user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/baton/proc/baton_attack(mob/living/target, mob/living/user, modifiers)
 	. = BATON_ATTACKING
@@ -352,6 +396,8 @@
 	on_stun_sound = 'sound/weapons/egloves.ogg'
 	on_stun_volume = 50
 	active = FALSE
+
+	context_living_rmb_active = "Harmful Stun"
 
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
