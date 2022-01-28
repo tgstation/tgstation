@@ -2686,32 +2686,39 @@
 		M.adjustStaminaLoss(-0.25 * REM * delta_time) // the more wounds, the more stamina regen
 	..()
 
-/datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
+// unholy water, but for heretics.
+// why couldn't they have both just used the same reagent?
+// who knows.
+// maybe nar'sie is considered to be too "mainstream" of a god to worship in the heretic community.
+/datum/reagent/eldritch
 	name = "Eldritch Essence"
-	description = "A strange liquid that defies the laws of physics. It re-energizes and heals those who can see beyond this fragile reality, but is incredibly harmful to the closed-minded. It metabolizes very quickly."
+	description = "A strange liquid that defies the laws of physics. \
+		It re-energizes and heals those who can see beyond this fragile reality, \
+		but is incredibly harmful to the closed-minded. It metabolizes very quickly."
 	taste_description = "Ag'hsj'saje'sh"
 	color = "#1f8016"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(IS_HERETIC(M))
-		M.adjust_drowsyness(-5 * REM * delta_time)
-		M.AdjustAllImmobility(-40 * REM * delta_time)
-		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
-		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3 * REM * delta_time
+/datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(IS_HERETIC(drinker))
+		drinker.adjust_drowsyness(-5 * REM * delta_time)
+		drinker.AdjustAllImmobility(-40 * REM * delta_time)
+		drinker.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
+		drinker.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(-2 * REM * delta_time, FALSE)
+		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
+			drinker.blood_volume += 3 * REM * delta_time
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
-		M.adjustToxLoss(2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(2 * REM * delta_time, FALSE)
-		M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+		drinker.adjustToxLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOxyLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
+	return TRUE
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"

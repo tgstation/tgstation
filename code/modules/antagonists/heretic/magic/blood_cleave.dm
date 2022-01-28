@@ -26,7 +26,7 @@
 			continue
 		if(victim.anti_magic_check())
 			victim.visible_message(
-				span_danger("[target]'s flashes in a firey glow, but repels the blaze!"),
+				span_danger("[victim]'s flashes in a firey glow, but repels the blaze!"),
 				span_danger("Your body begins to flash a firey glow, but you are protected!!")
 			)
 			continue
@@ -35,15 +35,15 @@
 			continue
 
 		victim.visible_message(
-			span_danger("[target]'s veins are shredded from within as an unholy blaze erupts from [target.p_their()] blood!"),
+			span_danger("[victim]'s veins are shredded from within as an unholy blaze erupts from [victim.p_their()] blood!"),
 			span_danger("Your veins burst from within and unholy flame erupts from your blood!")
 		)
 
-		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
+		var/obj/item/bodypart/bodypart = pick(victim.bodyparts)
 		var/datum/wound/slash/critical/crit_wound = new()
 		crit_wound.apply_wound(bodypart)
-		target.adjustFireLoss(20)
-		new /obj/effect/temp_visual/cleave(target.drop_location())
+		victim.adjustFireLoss(20)
+		new /obj/effect/temp_visual/cleave(victim.drop_location())
 
 /obj/effect/proc_holder/spell/pointed/cleave/can_target(atom/target, mob/user, silent)
 	if(!ishuman(target))

@@ -72,24 +72,25 @@
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
+	if(target.stat != DEAD)
+		return
+
 	// Skeletons can't become husks, and monkeys are monkeys.
 	if(!ishuman(target) || isskeleton(target) || ismonkey(target))
-		return
+		target.balloon_alert(source, "invalid body!")
+		return COMPONENT_BLOCK_CHARGE_USE
 
 	var/mob/living/carbon/human/human_target = target
-	if(QDELETED(human_target) || human_target.stat != DEAD)
-		return
-
 	human_target.grab_ghost()
 	if(!human_target.mind || !human_target.client)
 		target.balloon_alert(source, "no soul!")
-		return
+		return COMPONENT_BLOCK_CHARGE_USE
 	if(HAS_TRAIT(human_target, TRAIT_HUSK))
 		target.balloon_alert(source, "husked!")
-		return
+		return COMPONENT_BLOCK_CHARGE_USE
 	if(LAZYLEN(created_items) >= limit)
 		target.balloon_alert(source, "at ghoul limit!")
-		return
+		return COMPONENT_BLOCK_CHARGE_USE
 
 	LAZYADD(created_items, WEAKREF(human_target))
 	log_game("[key_name(source)] created a ghoul, controlled by [key_name(human_target)].")

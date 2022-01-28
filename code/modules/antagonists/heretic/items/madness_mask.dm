@@ -33,7 +33,7 @@
 	if(!local_user)
 		return PROCESS_KILL
 
-	if(IS_HERETIC_OR_MONSTER(local_user) && HAS_TRAIT(src,TRAIT_NODROP))
+	if(IS_HERETIC_OR_MONSTER(local_user) && HAS_TRAIT(src, TRAIT_NODROP))
 		REMOVE_TRAIT(src, TRAIT_NODROP, CLOTHING_TRAIT)
 
 	for(var/mob/living/carbon/human/human_in_range in view(local_user))

@@ -103,12 +103,13 @@
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
 
 		// We temporarily make all of our chosen atoms invisible,
-		// as some rituals may sleep, and we don't want people to be able to run off with ritual items.
+		// as some rituals may sleep, and we don't want people
+		// to be able to run off with ritual items.
 		var/list/atoms_to_disappear = selected_atoms.Copy()
 		for(var/atom/to_disappear as anything in atoms_to_disappear)
 			to_disappear.invisibility = INVISIBILITY_ABSTRACT
 
-		// on_finished_recipe, in the case of some rituals like summons.
+		// on_finished_recipe may sleep in the case of some rituals like summons.
 		if(current_eldritch_knowledge.on_finished_recipe(user, selected_atoms, loc))
 			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
 

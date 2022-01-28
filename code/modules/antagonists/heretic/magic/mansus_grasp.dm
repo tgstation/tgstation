@@ -70,14 +70,14 @@
  * Otherwise, returns TRUE.
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/on_mob_hit(mob/living/hit, mob/living/heretic)
+	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
+		return FALSE
+
 	hit.adjustBruteLoss(10)
 	if(iscarbon(hit))
 		var/mob/living/carbon/carbon_hit = hit
 		carbon_hit.AdjustKnockdown(5 SECONDS)
 		carbon_hit.adjustStaminaLoss(80)
-
-	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
-		return FALSE
 
 	return TRUE
 

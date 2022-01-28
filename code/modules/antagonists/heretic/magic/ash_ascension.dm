@@ -65,7 +65,6 @@
 	var/current_range = 1
 	for(var/i in 0 to max_range)
 		for(var/turf/nearby_turf as anything in spiral_range_turfs(current_range, centre))
-			already_hit_turfs |= nearby_turf
 			new /obj/effect/hotspot(nearby_turf)
 			nearby_turf.hotspot_expose(750, 50, 1)
 			for(var/mob/living/fried_living in nearby_turf.contents - centre)

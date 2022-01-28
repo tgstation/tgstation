@@ -91,8 +91,6 @@
 /datum/action/item_action/organ_action/track_target/IsAvailable()
 	if(!IS_HERETIC(owner))
 		return FALSE
-	if(!isorgan(target))
-		return FALSE
 	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, track_cooldown))

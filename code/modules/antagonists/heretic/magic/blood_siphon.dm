@@ -20,7 +20,7 @@
 	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 	if(real_target.anti_magic_check())
 		user.balloon_alert(user, "spell blocked!")
-		target.visible_message(
+		real_target.visible_message(
 			span_danger("The spell bounces off of [real_target]!"),
 			span_danger("The spell bounces off of you!"),
 		)
@@ -41,10 +41,11 @@
 	if(living_user.blood_volume < BLOOD_VOLUME_MAXIMUM) // we dont want to explode from casting
 		living_user.blood_volume += 20
 
-	if(!iscarbon(target))
+	if(!iscarbon(real_target))
 		return
 
 	var/mob/living/carbon/carbon_target = real_target
+	var/mob/living/carbon/carbon_user = living_user
 	for(var/obj/item/bodypart/bodypart as anything in carbon_user.bodyparts)
 		for(var/datum/wound/iter_wound as anything in bodypart.wounds)
 			if(prob(50))
