@@ -1,5 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - qol: "Mailbags can be worn on cargo coat."
-  - imageadd: "Mailbags have their own sprite instead of borrowing it from book bags."

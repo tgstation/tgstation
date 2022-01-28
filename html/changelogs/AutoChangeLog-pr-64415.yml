@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "The warden can no longer consider half of security to be their office on KiloStation."

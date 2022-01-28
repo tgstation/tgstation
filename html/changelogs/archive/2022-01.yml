@@ -1115,3 +1115,52 @@
       amount of impact on the round than thief would give you.
   - admin: Admins no longer roll for thief while they sit around on centcom testing
       things.
+2022-01-28:
+  JohnFulpWillard:
+  - admin: Tool usage is now (config-locked) logged!
+  Jolly-66:
+  - bugfix: DJ Space ruin no longer uses incorrect turfs.
+  Maxymax13:
+  - imageadd: resprites pills
+  Sheits:
+  - imageadd: Resprites the mega legion and all legion related mobs
+  Wallem:
+  - qol: Mailbags can be worn on cargo coat.
+  - imageadd: Mailbags have their own sprite instead of borrowing it from book bags.
+  Zonespace27:
+  - qol: You can now use autosurgeons on other people after a delay.
+  axietheaxolotl:
+  - imageadd: New sprites for the Parcel Parceaux, base Mime mask, Mime outfit and
+      skirt, and mime sexy outfit.
+  - imageadd: new sprites for lace-up shoes.
+  - code_imp: Mimes spawn with lace-ups instead of black shoes
+  castawaynont:
+  - balance: CentComm's Mark One SWAT suit's design has been reworked; it now lacks
+      spaceproofing, but it has become significantly faster to move in and retains
+      temperature-proofing. These adjustments have allowed CC to sell them for a lower
+      cost of 1400.
+  jjpark-kb:
+  - qol: safes now use balloon alerts for the hint
+  san7890:
+  - bugfix: Nanotrasen decided to redirect some of the plasma rivers on IceBox station
+      towards the labor camp, helping add another layer of security between the station
+      and those awful, awful prisoners.
+  - bugfix: Area definitions for the IceBox and Lavaland Labor Camps have been updated.
+      That means that gulag point-prisoners no longer have a safe haven inside the
+      security portion of IceBox's security wing.
+  - bugfix: The warden can no longer consider half of security to be their office
+      on KiloStation.
+  - rscadd: 'Introducing: The Lizard''s Gas! A brand new (gas) station for you to
+      go out and refuel your ships and your stomachs. It''s been a while since the
+      power''s been turned on, but everything is just the way it was left all those
+      years ago. Explore!'
+  - rscdel: gasthelizards.dmm has been deleted. you will never see gasthelizards.dmm
+      ever again.
+  - config: since gasthelizards.dmm is removed, the config has been updated as well.
+      make sure it's up-to-date now that we've gotten rid of the dang ol' thing and
+      replaced it with new hotness.
+  - bugfix: The IceBox Station Telecommunications Room now has a fire alarm.
+  - bugfix: Atmossians, no longer fret. You now own all of the walls in TramStation's
+      Incinerator Room.
+  - bugfix: The camera in the Ice Box Station Locker Room is no longer inside of a
+      door.
