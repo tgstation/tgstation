@@ -127,7 +127,6 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
-	route = null
 	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_gain().
 	var/obj/effect/proc_holder/spell/spell_to_add
 
@@ -139,10 +138,44 @@
 	user.mind.RemoveSpell(spell_to_add)
 
 /*
+ * A knowledge subtype for knowledge that can only
+ * have a limited amount of it's resulting atoms
+ * created at once.
+ */
+/datum/heretic_knowledge/limited_amount
+	/// The limit to how many items we can create at once.
+	var/limit = 1
+	/// A list of weakrefs to all items we've created.
+	var/list/datum/weakref/created_items
+
+/datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	return LAZYLEN(created_items) < limit
+
+/datum/heretic_knowledge/limited_amount/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	if(!length(result_atoms))
+		return FALSE
+	for(var/result in result_atoms)
+		var/atom/created_thing = new result(loc)
+		LAZYADD(created_items, WEAKREF(created_thing))
+		RegisterSignal(created_thing, COMSIG_PARENT_QDELETING, .proc/free_from_list)
+	return TRUE
+
+/*
+ * Signal proc for [COMSIG_PARENT_QDELETING],
+ * called from an item in our created_items list
+ *
+ * Removes the weakref to the item when it's deleted.
+ */
+/datum/heretic_knowledge/limited_amount/proc/free_from_list(atom/source)
+	SIGNAL_HANDLER
+
+	LAZYREMOVE(created_items, WEAKREF(source))
+	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+
+/*
  * A knowledge subtype lets the heretic curse someone with a ritual.
  */
 /datum/heretic_knowledge/curse
-	route = null
 	/// The duration of the curse
 	var/duration = 5 MINUTES
 	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
@@ -198,7 +231,6 @@
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
-	route = null
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
@@ -232,7 +264,6 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/final
-	route = null
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human = 3)
 

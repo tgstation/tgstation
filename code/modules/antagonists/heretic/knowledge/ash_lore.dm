@@ -4,7 +4,7 @@
  * Goes as follows:
  *
  * Nightwatcher's Secret
- * Ashen Shift
+ * Ashen Passage
  * Grasp of Ash
  * > Sidepaths:
  *   Priest's Ritual
@@ -17,81 +17,72 @@
  *   Curse of Paralysis
  *
  * Fiery Blade
- * Flame Birth
+ * Nightwater's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
  *   Blood Cleave
  *
  * Ashlord's Rite
  */
-/datum/heretic_knowledge/base_ash
+/datum/heretic_knowledge/limited_amount/base_ash
 	name = "Nightwatcher's Secret"
 	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match with a kitchen knife, or its derivatives, into an Ashen Blade."
+		Allows you to transmute a match and a knife into an Ashen Blade. \
+		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
 	banned_knowledge = list(
-		/datum/heretic_knowledge/base_rust,
-		/datum/heretic_knowledge/base_flesh,
+		/datum/heretic_knowledge/limited_amount/base_rust,
+		/datum/heretic_knowledge/limited_amount/base_flesh,
+		/datum/heretic_knowledge/limited_amount/base_void,
 		/datum/heretic_knowledge/final/rust_final,
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/base_void,
 	)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
+	limit = 2
 	cost = 1
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp
 	name = "Grasp of Ash"
-	desc = "Empowers your Mansus Grasp to blind opponents you touch with it."
+	desc = "Your Mansus Grasp will burn the eyes of the victim, causing damage and blindness."
 	gain_text = "The Nightwatcher was the first of them, his treason started it all."
-	next_knowledge = list(/datum/heretic_knowledge/spell/ashen_shift)
+	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
 	cost = 1
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(target))
+	if(target.is_blind())
 		return
 
-	//pocket sand! also, this is the message that changeling blind stings use, and no, I'm not ashamed about reusing it
-	var/mob/living/carbon/blind_victim = target
-	to_chat(blind_victim, span_danger("Your eyes burn horrifically!"))
-	blind_victim.become_nearsighted(EYE_DAMAGE)
-	blind_victim.blind_eyes(5)
-	blind_victim.blur_eyes(10)
+	if(!target.getorganslot(ORGAN_SLOT_EYES))
+		return
 
-/datum/heretic_knowledge/ashen_grasp/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
+	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
+	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
+	target.blur_eyes(10)
 
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(istype(mark))
-		mark.on_effect()
-
-	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
-		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.
-
-/datum/heretic_knowledge/spell/ashen_shift
-	name = "Ashen Shift"
-	desc = "Grants Ashen Shift, a short range jaunt that can help you escape from dire situations."
+/datum/heretic_knowledge/spell/ash_passage
+	name = "Ashen Passage"
+	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
 	next_knowledge = list(
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/ash_mark,
-		/datum/heretic_knowledge/ashen_eyes,
+		/datum/heretic_knowledge/medallion,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	cost = 1
@@ -99,10 +90,9 @@
 
 /datum/heretic_knowledge/ash_mark
 	name = "Mark of Ash"
-	desc = "Your Mansus Grasp now applies the Mark of Ash on hit. \
-		Attack the afflicted with your Sickly Blade to detonate the mark. \
-		Upon detonation, the Mark of Ash causes stamina damage and burn damage, \
-		and spreads to an additional nearby opponent. The damage decreases with each spread."
+	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
+		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to any nearby heathens. \
+		Damage dealt is decreased with each transfer."
 	gain_text = "The Nightwatcher was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the manse with his blazing lantern held high."
 	next_knowledge = list(
@@ -119,20 +109,33 @@
 
 /datum/heretic_knowledge/ash_mark/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/ash_mark/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/ash_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
-	target.apply_status_effect(/datum/status_effect/eldritch/ash, 5)
+	target.apply_status_effect(/datum/status_effect/eldritch/ash)
+
+/datum/heretic_knowledge/ash_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
+
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	if(!istype(mark))
+		return
+
+	mark.on_effect()
+	 // Also refunds 75% of charge!
+	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
+		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max)
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, with a candle and a pair of eyes, to create a mask of madness. \
-		It causes passive stamina damage to everyone around the wearer and hallucinations. \
-		It can also be forced onto a heathan, to make them unable to take it off..."
+	desc = "Allows you to transmute a mask, a candle and a pair of eyes to create a Mask of Madness. \
+		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
+		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "He walks the world, unnoticed by the masses."
 	next_knowledge = list(
 		/datum/heretic_knowledge/curse/corrosion,
@@ -150,7 +153,7 @@
 
 /datum/heretic_knowledge/ash_blade_upgrade
 	name = "Fiery Blade"
-	desc = "Your blade will now light your enemies ablaze."
+	desc = "Your blade now lights enemies ablaze on attack."
 	gain_text = "Blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, his people... all burnt to cinders, and yet life still remained in his charred body."
 	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
@@ -162,11 +165,11 @@
 	cost = 2
 	route = PATH_ASH
 
-/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
+/datum/heretic_knowledge/ash_blade_upgrade/on_gain(mob/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
-/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
+/datum/heretic_knowledge/ash_blade_upgrade/on_lose(mob/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
@@ -191,8 +194,10 @@
 	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
 /datum/heretic_knowledge/spell/flame_birth
-	name = "Flame Birth"
-	desc = "A spell that steals some health from every burning person around you."
+	name = "Nightwater's Rebirth"
+	desc = "Grants you Nightwater's Rebirth, a spell that extinguishes you and \
+		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
+		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The Nightwatcher was a man of principles, and yet his power arose from the chaos he vowed to combat."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cleave,
@@ -205,11 +210,10 @@
 
 /datum/heretic_knowledge/final/ash_final
 	name = "Ashlord's Rite"
-	desc = "Bring 3 corpses onto a transmutation rune. \
-		You will become immune to fire, the vacuum of space, cold and other enviromental hazards \
-		while overall becoming sturdier to all other damages. \
-		You will gain a spell that passively creates ring of fire around you, \
-		as well as a powerful ability that lets you create a wave of flames all around you."
+	desc = "The ascension ritual of the Path of Ash. When completed, you become a harbinger of flames, \
+		gaining two abilites. Cascade, which causes a massive, growing ring of fire around you, and Oath of Flame. \
+		causing you to passively create a ring of flames as you walk. \
+		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Nightwatcher found the rite and shared it amongst mankind! For now I am one with the fire, WITNESS MY ASCENSION!"
 	route = PATH_ASH
 	/// A list of all traits we apply on ascension.

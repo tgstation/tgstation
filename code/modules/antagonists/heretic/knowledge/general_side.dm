@@ -2,8 +2,8 @@
 
 /datum/heretic_knowledge/reroll_targets
 	name = "The Relentless Heartbeat"
-	desc = "Allows you to reroll your sacrifice targets by standing on a transmutation rune \
-		and invoking it with a harebell, a book, and a jumpsuit."
+	desc = "Allows you transmute a harebell, a book, and a jumpsuit while standing over a rune \
+		to reroll your sacrifice targets."
 	gain_text = "The heart is the principle that continues and preserves."
 	required_atoms = list(
 		/obj/item/food/grown/harebell = 1,

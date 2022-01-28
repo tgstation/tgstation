@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
-	desc = "A short range spell allowing you to pass unimpeded through a few walls."
+	desc = "A short range spell that allows you to pass unimpeded through walls."
 	school = SCHOOL_FORBIDDEN
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER

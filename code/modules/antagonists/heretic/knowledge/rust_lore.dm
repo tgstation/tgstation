@@ -24,31 +24,34 @@
  *
  * Rustbringer's Oath
  */
-/datum/heretic_knowledge/base_rust
+/datum/heretic_knowledge/limited_amount/base_rust
 	name = "Blacksmith's Tale"
-	desc = "Opens up the Path of Rust to you. Allows you to transmute a kitchen knife, or its derivatives, with any trash item into a Rusty Blade."
+	desc = "Opens up the Path of Rust to you. \
+		Allows you to transmute a knife with any trash item into a Rusty Blade. \
+		You can only create two at a time."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
 	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
 	banned_knowledge = list(
-		/datum/heretic_knowledge/base_ash,
-		/datum/heretic_knowledge/base_flesh,
+		/datum/heretic_knowledge/limited_amount/base_ash,
+		/datum/heretic_knowledge/limited_amount/base_flesh,
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/base_void,
+		/datum/heretic_knowledge/limited_amount/base_void,
 		)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
+	limit = 2
 	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
-	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. You only rust surfaces and machinery with Right Click."
+	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
+		Already rusted surfaces are destroyed. Surfaces can only be rusted by using Right-Click."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
@@ -57,10 +60,9 @@
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, COMSIG_HERETIC_BLADE_ATTACK))
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -74,32 +76,9 @@
 	SIGNAL_HANDLER
 
 	target.rust_heretic_act()
-
-/datum/heretic_knowledge/rust_fist/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(istype(mark))
-		mark.on_effect()
-
-	if(!iscarbon(target))
-		return
-
-	var/static/list/possible_organs = list(
-		ORGAN_SLOT_BRAIN,
-		ORGAN_SLOT_EARS,
-		ORGAN_SLOT_EYES,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_LUNGS,
-		ORGAN_SLOT_STOMACH,
-		ORGAN_SLOT_HEART,
-	)
-
-	target.adjustOrganLoss(pick(possible_organs), 25)
-
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
-	desc = "Passively heals you and provides stun resistance when you are on rusted tiles."
+	desc = "Grants you passive healing and stun resistance while standing over rust."
 	gain_text = "The strength was unparalleled, unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
@@ -153,10 +132,8 @@
 
 /datum/heretic_knowledge/rust_mark
 	name = "Mark of Rust"
-	desc = "Your Mansus Grasp now applies the Mark of Rust on hit. \
-		Attack the afflicted with your Sickly Blade to detonate the mark. \
-		Upon detonation, the Mark of Rust has a chance to deal \
-		between 0 to 200 damage to 75% of your enemy's held items."
+	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
+		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
 	gain_text = "Rusted Hills help those in dire need... at a cost."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/area_conversion,
@@ -172,23 +149,34 @@
 
 /datum/heretic_knowledge/rust_mark/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_mark/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/rust_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	target.apply_status_effect(/datum/status_effect/eldritch/rust)
 
+/datum/heretic_knowledge/rust_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+	SIGNAL_HANDLER
+
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	if(!istype(mark))
+		return
+
+	mark.on_effect()
+
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
-	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
+	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
+		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to touch the Bound King."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rust_blade_upgrade,
 		/datum/heretic_knowledge/curse/corrosion,
-		/datum/heretic_knowledge/crucible
+		/datum/heretic_knowledge/rust_blade_upgrade,
+		/datum/heretic_knowledge/crucible,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	cost = 1
@@ -196,7 +184,7 @@
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
-	desc = "Your blade will now poison your enemies on hit."
+	desc = "Your Rusty Blade now poisons enemies on attack."
 	gain_text = "The Blade will guide you through the flesh, should you let it."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	banned_knowledge = list(
@@ -220,9 +208,9 @@
 
 /datum/heretic_knowledge/spell/entropic_plume
 	name = "Entropic Plume"
-	desc = "You can now send a disorienting plume of pure entropy that \
-		blinds, poisons and makes enemies strike each other. \
-		It also rusts any tiles it affects."
+	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
+		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
+		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
 	gain_text = "Messengers of Hope, fear the Rustbringer!"
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cleave,
@@ -235,9 +223,10 @@
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. \
-		After you finish the ritual rust will now automatically spread from the rune. \
-		Your healing on rust is also tripled, while you become extremely more resillient."
+	desc = "The ascension ritual of the Path of Void. When completed, the ritual site will \
+		endlessly spread rust onto any surface, stopping for nothing. \
+		Additionally, you will become extremely resilient on rust, healing at triple the rate \
+		and becoming immune to many effects and dangers."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
 	route = PATH_RUST
 	/// A list of traits we give to the heretic when on rust.

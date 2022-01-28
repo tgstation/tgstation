@@ -66,7 +66,7 @@
 	inhand_icon_state = "ash_blade"
 
 /obj/item/melee/sickly_blade/flesh
-	name = "Flesh Blade"
+	name = "Bloody Blade"
 	desc = "A crescent blade born from a fleshwarped creature. Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins."
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"

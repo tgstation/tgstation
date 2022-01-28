@@ -17,12 +17,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/spell/basic
 	name = "Break of Dawn"
 	desc = "Starts your journey into the Mansus. \
-		Grants you the Mansus Grasp, a powerful disabling spell that can be cast regardless of having a focus."
+		Grants you the Mansus Grasp, a powerful and upgradable \
+		disabling spell that can be cast regardless of having a focus."
 	next_knowledge = list(
-		/datum/heretic_knowledge/base_rust,
-		/datum/heretic_knowledge/base_ash,
-		/datum/heretic_knowledge/base_flesh,
-		/datum/heretic_knowledge/base_void,
+		/datum/heretic_knowledge/limited_amount/base_rust,
+		/datum/heretic_knowledge/limited_amount/base_ash,
+		/datum/heretic_knowledge/limited_amount/base_flesh,
+		/datum/heretic_knowledge/limited_amount/base_void,
 		)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
 	cost = 0
@@ -37,9 +38,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart
 	name = "The Living Heart"
 	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
-		Should you lose your heart, you can stand on a transformation rune with a poppy and a pool of blood \
+		Should you lose your heart, you can transmute a poppy and a pool of blood \
 		to awaken your heart into a Living Heart. If your heart is cybernetic, \
-		you will additionally require a usable organic heart."
+		you will additionally require a usable organic heart in the transmutation."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -83,14 +84,21 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(our_heart.status != ORGAN_ORGANIC)
 		var/obj/item/organ/heart/our_replacement_heart = locate() in selected_atoms
 		if(our_replacement_heart)
+			user.visible_message("[user]'s [our_replacement_heart.name] bursts suddenly out of [user.p_their()] chest!")
+			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
+			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
+
 			our_replacement_heart.Insert(user, special = TRUE, drop_if_replaced = TRUE)
+			our_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
 			our_heart = our_replacement_heart
 
 	if(!our_heart)
 		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
 
-	selected_atoms += our_heart
+	if(our_heart in selected_atoms)
+		selected_atoms -= our_heart
 	our_heart.AddComponent(/datum/component/living_heart)
+	to_chat(user, span_warning("You feel your [our_heart.name] begin pulse faster and faster as it awakens!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 
 /**
@@ -98,8 +106,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
-	desc = "Allows you to sacrifice targets to the Mansus. \
-		Once captured, bring them back to the rune to sacrifice them. They must be in critical (or worse) condition. \
+	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
 		If you have no targets, stand on a transmutation rune and invoke it to aquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
@@ -247,8 +254,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/cicatrix_focus
 	name = "Cicatrix Focus"
-	desc = "Allows you to create Cicatrix Focus with a sheet of glass and pair of eyes. \
-		A focus is required in order to cast advanced spells."
+	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create a Cicatrix Focus. \
+		A focus must be worn in order to cast more advanced spells."
 	required_atoms = list(
 		/obj/item/organ/eyes = 1,
 		/obj/item/stack/sheet/glass = 1,

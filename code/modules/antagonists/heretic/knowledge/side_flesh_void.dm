@@ -6,7 +6,7 @@
 		To create it, transmute a glass shard, any item of clothing that you can fit over your uniform and any type of bedsheet."
 	gain_text = "Owl is the keeper of things that quite not are in practice, but in theory are."
 	next_knowledge = list(
-		/datum/heretic_knowledge/flesh_ghoul,
+		/datum/heretic_knowledge/limited_amount/flesh_ghoul,
 		/datum/heretic_knowledge/cold_snap,
 	)
 	required_atoms = list(
@@ -20,10 +20,10 @@
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"
+	desc = "Allows you to transmute a knife, a shard of glass, and a piece of paper to create a Carving Knife. \
+		The Carving Knife allows you to etch difficul to see traps that trigger on heathens who walk overhead. \
+		Also makes for a handy throwing weapon."
 	gain_text = "Etched, carved... eternal. I can carve the monolith and evoke their powers!"
-	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor \
-		that have various effects on nonbelievers who walk over them. Also makes quite a handy throwing weapon. \
-		To create the carving knife, transmute a knife with a glass shard and a piece of paper."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/summon/raw_prophet,
@@ -39,7 +39,8 @@
 
 /datum/heretic_knowledge/spell/blood_siphon
 	name = "Blood Siphon"
-	desc = "You gain a spell that drains health from your enemies to restores your own."
+	desc = "Grants you Blood Siphon, a spell that drains a victim of blood and health, transferring it to you. \
+		Also has a chance to transfer wounds from you to the victim."
 	gain_text = "No matter the man, we bleed all the same. That's what the Marshal told me."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/stalker,

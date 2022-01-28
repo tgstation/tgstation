@@ -2,8 +2,8 @@
 
 /datum/heretic_knowledge/armor
 	name = "Armorer's Ritual"
-	desc = "You can now create Eldritch Armor using a table and a gas mask. \
-		The armor both protect from damage and works as a focus, allowing you to cast spells."
+	desc = "Allows you to transmute a table and a gas mask to create Eldritch Armor. \
+		Eldritch Armor provides great protection while also acting as a focus when hooded."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_regen,
@@ -19,9 +19,9 @@
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
+	desc = "Allows you to transmute a portable water tank and a table to create a Mawed Crucible. \
+		The Mawed Crubile can brew powerful potions for combat and utility, but must be fed bodyparts and organs between uses."
 	gain_text = "This is pure agony. I wasn't able to summon the dereliction of the emperor, but I stumbled upon a different recipe..."
-	desc = "Allows you to create a mawed crucible, eldritch structure that allows you to create potions of various effects. \
-		To do so, transmute a table with a portable water tank."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/spell/area_conversion,
@@ -36,7 +36,8 @@
 
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
-	desc = "You can now summon a Rust Walker by transmutating a vomit pool, a severed head and a book."
+	desc = "Allows you to transmute a pool of vomit, a book, and a head into a Rust Walker. \
+		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my principle of hunger with my desire for corruption. And the Rusted Hills called my name."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/voidpull,
@@ -50,3 +51,12 @@
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
 	cost = 1
 	route = PATH_SIDE
+
+/datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
+	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
+	if(!ritual_head)
+		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
+
+	// Spill out any brains or stuff before we delete it.
+	ritual_head.drop_organs()
+	return ..()

@@ -40,6 +40,9 @@
 		if(IS_HERETIC_OR_MONSTER(human_in_range))
 			continue
 
+		if(human_in_range.is_blind())
+			continue
+
 		SEND_SIGNAL(human_in_range, COMSIG_HERETIC_MASK_ACT, rand(-2, -20) * delta_time)
 
 		if(DT_PROB(60, delta_time))
@@ -49,7 +52,7 @@
 			human_in_range.Jitter(5)
 
 		if(human_in_range.getStaminaLoss() >= 85 && DT_PROB(30, delta_time))
-			human_in_range.emote(pick("giggle","laugh"))
+			human_in_range.emote(pick("giggle", "laugh"))
 			human_in_range.adjustStaminaLoss(10)
 
 		if(DT_PROB(25, delta_time))

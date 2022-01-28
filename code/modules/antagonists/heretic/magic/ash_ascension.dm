@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/fire_sworn
-	name = "Oath of Fire"
+	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
@@ -26,16 +26,23 @@
 
 /obj/effect/proc_holder/spell/targeted/fire_sworn/proc/remove()
 	has_fire_ring = FALSE
+	current_user = null
 
 /obj/effect/proc_holder/spell/targeted/fire_sworn/process(delta_time)
 	. = ..()
 	if(!has_fire_ring)
 		return
-	for(var/turf/T in RANGE_TURFS(1,current_user))
-		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700, 250 * delta_time, 1)
-		for(var/mob/living/livies in T.contents - current_user)
-			livies.adjustFireLoss(2.5 * delta_time)
+	if(current_user.stat == DEAD)
+		remove()
+		return
+	if(!isturf(current_user.loc))
+		return
+
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, current_user))
+		new /obj/effect/hotspot(nearby_turf)
+		nearby_turf.hotspot_expose(750, 25 * delta_time, 1)
+		for(var/mob/living/fried_living in nearby_turf.contents - current_user)
+			fried_living.adjustFireLoss(2.5 * delta_time)
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
@@ -51,19 +58,21 @@
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/cast(list/targets, mob/user = usr)
-	INVOKE_ASYNC(src, .proc/fire_cascade, user,range)
+	INVOKE_ASYNC(src, .proc/fire_cascade, user, range)
 
-/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre,max_range)
+/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre, max_range)
 	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
-	var/_range = 1
+	var/current_range = 1
 	for(var/i in 0 to max_range)
-		for(var/turf/T in spiral_range_turfs(_range,centre))
-			new /obj/effect/hotspot(T)
-			T.hotspot_expose(700,50,1)
-			for(var/mob/living/livies in T.contents - centre)
-				livies.adjustFireLoss(5)
-		_range++
-		sleep(3)
+		for(var/turf/nearby_turf as anything in spiral_range_turfs(current_range, centre))
+			already_hit_turfs |= nearby_turf
+			new /obj/effect/hotspot(nearby_turf)
+			nearby_turf.hotspot_expose(750, 50, 1)
+			for(var/mob/living/fried_living in nearby_turf.contents - centre)
+				fried_living.adjustFireLoss(5)
+
+		current_range++
+		stoplag(0.3 SECONDS)
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big
 	range = 6

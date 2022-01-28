@@ -316,9 +316,15 @@
 	sac_objective.owner = owner
 	objectives += sac_objective
 
-	var/datum/objective/major_sacrifice/other_sac_objective = new()
-	other_sac_objective.owner = owner
-	objectives += other_sac_objective
+	var/num_heads = 0
+	for(var/mob/player in GLOB.alive_player_list)
+		if(player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			num_heads++
+
+	if(num_heads >= 2)
+		var/datum/objective/major_sacrifice/other_sac_objective = new()
+		other_sac_objective.owner = owner
+		objectives += other_sac_objective
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
@@ -419,7 +425,7 @@
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
 
-	var/change_num = tgui_input_number(admin, "Add or remove knowledge points", "Points", 0, -100, 100)
+	var/change_num = tgui_input_number(admin, "Add or remove knowledge points", "Points", 0, 100, -100)
 	if(!change_num || QDELETED(src))
 		return
 
@@ -491,7 +497,7 @@
 /datum/objective/major_sacrifice
 	name = "major sacrifice"
 	target_amount = 1
-	explanation_text = "Sacrifice a high value crewmember."
+	explanation_text = "Sacrifice 1 high value crewmember."
 
 /datum/objective/major_sacrifice/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)

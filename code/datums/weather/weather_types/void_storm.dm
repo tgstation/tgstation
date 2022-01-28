@@ -30,7 +30,7 @@
 		return FALSE
 
 /datum/weather/void_storm/weather_act(mob/living/victim)
-	victim.adjustOxyLoss(rand(1,3))
-	victim.adjustFireLoss(rand(1,3))
-	victim.adjust_blurriness(rand(0,1))
-	victim.adjust_bodytemperature(-rand(5,15))
+	victim.adjustOxyLoss(rand(1, 3))
+	victim.adjustFireLoss(rand(1, 3))
+	victim.adjust_blurriness(rand(0, 1))
+	victim.adjust_bodytemperature(-rand(5, 15))

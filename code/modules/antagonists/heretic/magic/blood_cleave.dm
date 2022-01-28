@@ -13,39 +13,42 @@
 
 /obj/effect/proc_holder/spell/pointed/cleave/cast(list/targets, mob/user)
 	if(!targets.len)
-		to_chat(user, span_warning("No target found in range!"))
+		user.balloon_alert(user, "no targets!")
 		return FALSE
 	if(!can_target(targets[1], user))
 		return FALSE
 
-	for(var/mob/living/carbon/human/C in range(1,targets[1]))
-		targets |= C
+	for(var/mob/living/carbon/human/nearby_human in range(1, targets[1]))
+		targets |= nearby_human
 
-	for(var/X in targets)
-		var/mob/living/carbon/human/target = X
-		if(target == user)
+	for(var/mob/living/carbon/human/victim as anything in targets)
+		if(victim == user)
 			continue
-		if(target.anti_magic_check())
-			to_chat(user, span_warning("The spell had no effect!"))
-			target.visible_message(span_danger("[target]'s veins flash with fire, but their magic protection repulses the blaze!"), \
-							span_danger("Your veins flash with fire, but your magic protection repels the blaze!"))
+		if(victim.anti_magic_check())
+			victim.visible_message(
+				span_danger("[target]'s flashes in a firey glow, but repels the blaze!"),
+				span_danger("Your body begins to flash a firey glow, but you are protected!!")
+			)
 			continue
 
-		target.visible_message(span_danger("[target]'s veins are shredded from within as an unholy blaze erupts from their blood!"), \
-							span_danger("Your veins burst from within and unholy flame erupts from your blood!"))
+		if(!victim.blood_volume)
+			continue
+
+		victim.visible_message(
+			span_danger("[target]'s veins are shredded from within as an unholy blaze erupts from [target.p_their()] blood!"),
+			span_danger("Your veins burst from within and unholy flame erupts from your blood!")
+		)
+
 		var/obj/item/bodypart/bodypart = pick(target.bodyparts)
-		var/datum/wound/slash/critical/crit_wound = new
+		var/datum/wound/slash/critical/crit_wound = new()
 		crit_wound.apply_wound(bodypart)
 		target.adjustFireLoss(20)
 		new /obj/effect/temp_visual/cleave(target.drop_location())
 
 /obj/effect/proc_holder/spell/pointed/cleave/can_target(atom/target, mob/user, silent)
-	. = ..()
-	if(!.)
-		return FALSE
-	if(!istype(target,/mob/living/carbon/human))
+	if(!ishuman(target))
 		if(!silent)
-			to_chat(user, span_warning("You are unable to cleave [target]!"))
+			target.balloon_alert(user, "invalid target!")
 		return FALSE
 	return TRUE
 
