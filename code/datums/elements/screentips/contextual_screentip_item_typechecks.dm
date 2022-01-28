@@ -19,6 +19,16 @@
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
+/datum/element/contextual_screentip_item_typechecks/Detach(datum/source, ...)
+	UnregisterSignal(source, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM)
+
+	// We don't remove HAS_CONTEXTUAL_SCREENTIPS_1, since there could be other stuff still hooked to it,
+	// and being set without signals is not dangerous, just less performant.
+	// A lot of things don't do this, perhaps make a proc that checks if any signals are still set, and if not,
+	// remove the flag.
+
+	return ..()
+
 /datum/element/contextual_screentip_item_typechecks/proc/on_requesting_context_from_item(
 	datum/source,
 	list/context,
