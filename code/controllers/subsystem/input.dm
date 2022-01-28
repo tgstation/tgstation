@@ -53,7 +53,17 @@ SUBSYSTEM_DEF(input)
 			if(user.client && movement_dir) //If we're not moving, don't compensate, as byond will auto-fill dir otherwise
 				movement_dir = turn(movement_dir, -dir2angle(user.client.dir)) //By doing this we ensure that our input direction is offset by the client (camera) direction
 
-			if(user.client?.movement_locked)
-				user.focus?.keybind_face_direction(movement_dir)
+			if(user.client?.movement_locked && user.focus)
+				if(isliving(user.focus))
+					var/mob/living/living_focus = user.focus
+					if(stat > SOFT_CRIT)
+						continue
+					living_focus.SetDir(movement_dir)
+				else if(istype(user.focus, /mob/camera/imaginary_friend))
+					var/mob/camera/imaginary_friend/dave = user.focus
+					dave.SetDir(movement_dir)
+					dave.Show()
+				else
+					user.focus?.keybind_face_direction(movement_dir)
 			else
 				user.client?.Move(get_step(src, movement_dir), movement_dir)
