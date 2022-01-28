@@ -26,7 +26,7 @@
 
 	var/atom/atom_target = target
 	atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_request_context_from_item)
+	RegisterSignal(atom_target, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
 
 /datum/element/contextual_screentip_bare_hands/Detach(datum/source, ...)
 	UnregisterSignal(source, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM)
@@ -38,7 +38,7 @@
 
 	return ..()
 
-/datum/element/contextual_screentip_bare_hands/proc/on_request_context_from_item(
+/datum/element/contextual_screentip_bare_hands/proc/on_requesting_context_from_item(
 	datum/source,
 	list/context,
 	obj/item/held_item,

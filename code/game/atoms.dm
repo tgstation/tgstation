@@ -2113,11 +2113,10 @@
 			active_hud.screentip_text.maptext = ""
 		else
 			var/extra_context = ""
+			var/obj/item/held_item = user.get_active_held_item()
 
-			if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1)
+			if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
 				var/list/context = list()
-
-				var/obj/item/held_item = user.get_active_held_item()
 
 				var/contextual_screentip_returns = \
 					SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \

@@ -86,7 +86,7 @@ GENE SCANNER
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject. Has a side button to scan for chemicals, and can be toggled to scan wounds."
 	flags_1 = CONDUCT_1
-	item_flags = NOBLUDGEON
+	item_flags = NOBLUDGEON | ITEM_HAS_CONTEXTUAL_SCREENTIPS
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
 	w_class = WEIGHT_CLASS_TINY
@@ -97,6 +97,11 @@ GENE SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_HARD
+
+/obj/item/healthanalyzer/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/on_requesting_context_for_target)
 
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
@@ -145,6 +150,26 @@ GENE SCANNER
 /obj/item/healthanalyzer/attack_secondary(mob/living/victim, mob/living/user, params)
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/healthanalyzer/proc/on_requesting_context_for_target(
+	datum/source,
+	list/context,
+	atom/target,
+)
+	SIGNAL_HANDLER
+
+	if (!isliving(target))
+		return
+
+	switch (scanmode)
+		if (SCANMODE_HEALTH)
+			context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+		if (SCANMODE_WOUND)
+			context[SCREENTIP_CONTEXT_LMB] = "Scan wounds"
+
+	context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
