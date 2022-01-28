@@ -391,7 +391,6 @@
 /proc/sort_names(list/list_to_sort, order=1)
 	return sortTim(list_to_sort.Copy(), order >= 0 ? /proc/cmp_name_asc : /proc/cmp_name_dsc)
 
-
 ///Converts a bitfield to a list of numbers (or words if a wordlist is provided)
 /proc/bitfield_to_list(bitfield = 0, list/wordlist)
 	var/list/return_list = list()

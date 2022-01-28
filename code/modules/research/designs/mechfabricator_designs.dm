@@ -1328,13 +1328,6 @@
 	materials = list(/datum/material/diamond = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/dna_lock
 
-/datum/design/module/mod_circuit
-	name = "MOD Module: Circuit Adapter"
-	id = "mod_circuit"
-	materials = list(/datum/material/glass = 2000)
-	build_path = /obj/item/mod/module/circuit
-	department_type = MODULE_SCIENCE
-
 /datum/design/module/mod_plasma_stabilizer
 	name = "MOD Module: Plasma Stabilizer"
 	id = "mod_plasma"

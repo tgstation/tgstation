@@ -286,29 +286,32 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	keyslot2 = new /obj/item/encryptionkey/ai
 	command = TRUE
 
+/obj/item/radio/headset/screwdriver_act(mob/living/user, obj/item/tool)
+	user.set_machine(src)
+	if(keyslot || keyslot2)
+		for(var/ch_name in channels)
+			SSradio.remove_object(src, GLOB.radiochannels[ch_name])
+			secure_radio_connections[ch_name] = null
+
+		if(keyslot)
+			user.put_in_hands(keyslot)
+			keyslot = null
+		if(keyslot2)
+			user.put_in_hands(keyslot2)
+			keyslot2 = null
+
+		recalculateChannels()
+		to_chat(user, span_notice("You pop out the encryption keys in the headset."))
+
+	else
+		to_chat(user, span_warning("This headset doesn't have any unique encryption keys! How useless..."))
+	tool.play_tool_sound(src, 10)
+	return TRUE
+
 /obj/item/radio/headset/attackby(obj/item/W, mob/user, params)
 	user.set_machine(src)
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(keyslot || keyslot2)
-			for(var/ch_name in channels)
-				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
-
-			if(keyslot)
-				user.put_in_hands(keyslot)
-				keyslot = null
-			if(keyslot2)
-				user.put_in_hands(keyslot2)
-				keyslot2 = null
-
-			recalculateChannels()
-			to_chat(user, span_notice("You pop out the encryption keys in the headset."))
-
-		else
-			to_chat(user, span_warning("This headset doesn't have any unique encryption keys! How useless..."))
-
-	else if(istype(W, /obj/item/encryptionkey))
+	if(istype(W, /obj/item/encryptionkey))
 		if(keyslot && keyslot2)
 			to_chat(user, span_warning("The headset can't hold another key!"))
 			return

@@ -165,9 +165,6 @@
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
 
-/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
-
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null

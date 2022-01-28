@@ -16488,6 +16488,7 @@
 	dir = 4
 	},
 /obj/item/multitool,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/tcommsat/computer)
 "eYB" = (
@@ -17776,6 +17777,9 @@
 "fEo" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera/directional/east{
+	c_tag = "Locker Room East"
+	},
 /turf/open/floor/iron,
 /area/commons/locker)
 "fEE" = (
@@ -33422,9 +33426,6 @@
 /area/security/checkpoint/engineering)
 "nGa" = (
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/camera/directional/east{
-	c_tag = "Locker Room East"
-	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/commons/locker)
@@ -49419,9 +49420,6 @@
 /turf/open/floor/glass/reinforced,
 /area/engineering/atmos)
 "vFL" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Locker Room South"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance{
