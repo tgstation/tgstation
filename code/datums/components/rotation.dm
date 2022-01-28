@@ -1,7 +1,7 @@
 /// If an object can be rotated by alt clicking
 #define ROTATION_ALTCLICK (1<<0)
 /// If an object can be rotated with a wrench
-#define ROTATION_WRENCH (1<<1)
+#define ROTATION_REQUIRE_WRENCH (1<<1)
 /// If an object will have rotation options presented as verbs to a mob
 #define ROTATION_VERBS (1<<2)
 /// If an object can be rotated counterclockwise
@@ -111,7 +111,7 @@
 	SIGNAL_HANDLER
 
 	examine_list += span_notice("Alt-click + LMB to rotate it clockwise. Alt-click + RMB to rotate it counterclockwise.")
-	if(rotation_flags & ROTATION_WRENCH)
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
 /datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user, rotation = default_rotation_direction)
@@ -155,18 +155,19 @@
 	return FALSE
 
 /datum/component/simple_rotation/proc/default_can_be_rotated(mob/living/user, rotation_type)
-	if(src.rotation_flags & ROTATION_WRENCH)
+	var/atom/movable/AM = parent
+
+	if(src.rotation_flags & ROTATION_REQUIRE_WRENCH)
 		if(!istype(user))
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
-			balloon_alert(user, "You need a wrench to rotate [parent]!")
+			AM.balloon_alert(user, "You need a wrench to rotate [AM]!")
 			return FALSE
 			//return COMPONENT_BLOCK_TOOL_ATTACK do we need this?  I don't think we do...
 	if(src.rotation_flags & ROTATION_ANCHORED_ALLOWED) // used to ignore chairs being anchored
 		return TRUE
 
-	var/atom/movable/AM = parent
 	//to_chat(user, span_warning("It is fastened to the floor!"))
 	return !AM.anchored
 
