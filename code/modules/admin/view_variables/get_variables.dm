@@ -81,7 +81,7 @@
 				VV_RESTORE_DEFAULT,
 				VV_TEXT_LOCATE,
 				VV_PROCCALL_RETVAL,
-				VV_WEAKREF
+				VV_WEAKREF,
 				)
 
 		var/markstring
