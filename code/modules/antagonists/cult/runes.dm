@@ -283,6 +283,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		H.cultslurring = 0
 		if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 			H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
+	if(isshade(convertee))
+		convertee.icon_state = "shade_cult"
+		convertee.name = convertee.real_name
 	return TRUE
 
 /obj/effect/rune/convert/proc/do_sacrifice(mob/living/sacrificial, list/invokers)
