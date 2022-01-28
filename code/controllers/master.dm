@@ -401,7 +401,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				iteration++
 			error_level++
 			current_ticklimit = TICK_LIMIT_RUNNING
-			sleep(10)
+			sleep((1 SECOND) * error_level)
 			continue
 
 		if (queue_head)
@@ -413,7 +413,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 					iteration++
 				error_level++
 				current_ticklimit = TICK_LIMIT_RUNNING
-				sleep(10)
+				sleep((1 SECOND) * error_level)
 				continue
 		error_level--
 		if (!queue_head) //reset the counts if the queue is empty, in the off chance they get out of sync
@@ -465,7 +465,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	. = 1
 
 
-/// Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
+/// RunQueue - Run thru the queue of subsystems to run, running them while balancing out their allocated tick precentage
+/// Returns 0 if runtimed, a negitive number for logic errors, and a positive number if the operation completed without errors
 /datum/controller/master/proc/RunQueue()
 	. = 0
 	var/datum/controller/subsystem/queue_node
@@ -507,7 +508,11 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				//Give the subsystem a precentage of the remaining tick based on the remaning priority
 				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
-				tick_precentage = tick_remaining
+				//error state
+				if (. == 0)
+					log_world("MC: tick_budget sync error. [json_encode(list(current_tick_budget, queue_priority_count, queue_priority_count_bg, bg_calc, SS, queue_node_priority))]")
+				. = -1
+				tick_precentage = tick_remaining //just because we lost track of priority calculations doesn't mean we can't try to finish off the run, if the error state persists, we don't want to stop ticks from happening
 
 			tick_precentage = max(tick_precentage*0.5, tick_precentage-queue_node.tick_overrun)
 
@@ -566,7 +571,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 			queue_node = queue_node.queue_next
 
-	. = 1
+	if (. == 0)
+		. = 1
 
 //resets the queue, and all subsystems, while filtering out the subsystem lists
 // called if any mc's queue procs runtime or exit improperly.
