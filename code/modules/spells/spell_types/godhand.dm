@@ -33,11 +33,17 @@
 	. = ..()
 	if(!proximity)
 		return
+	if(charges > 0)
+		use_charge(user)
+
+/obj/item/melee/touch_attack/proc/use_charge(mob/living/user)
+	if(QDELETED(src))
+		return
+
 	if(catchphrase)
 		user.say(catchphrase, forced = "spell")
-	playsound(get_turf(user), on_use_sound,50,TRUE)
-	charges--
-	if(charges <= 0)
+	playsound(get_turf(user), on_use_sound, 50, TRUE)
+	if(--charges <= 0)
 		qdel(src)
 
 /obj/item/melee/touch_attack/Destroy()

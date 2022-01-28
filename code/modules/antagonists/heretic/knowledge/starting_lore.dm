@@ -123,8 +123,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	// then returns TRUE if skip_this_ritual is FALSE and the user's on top of the rune.
 	// If skip_this_ritual is TRUE, returns FALSE to fail the check and move onto the next ritual.
 	if(!LAZYLEN(sac_targets))
+		if(skip_this_ritual)
+			return FALSE
+
 		atoms += user
-		return !skip_this_ritual || (user in range(1, loc))
+		return (user in range(1, loc))
 
 	// Determine if livings in our atoms are valid
 	for(var/mob/living/carbon/human/sacrifice in atoms)

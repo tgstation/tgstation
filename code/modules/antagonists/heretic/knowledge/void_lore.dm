@@ -61,8 +61,10 @@
 /datum/heretic_knowledge/void_grasp/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
 
+
 	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	mark?.on_effect()
+	if(istype(mark))
+		mark.on_effect()
 
 	if(!iscarbon(target))
 		return
@@ -136,7 +138,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
-		/datum/heretic_knowledge/void_blade_upgrade
+		/datum/heretic_knowledge/void_blade_upgrade,
 	)
 	route = PATH_VOID
 

@@ -320,7 +320,7 @@ export const AntagInfoHeretic = (props, context) => {
 
   return (
     <Window
-      width={625}
+      width={675}
       height={575}>
       <Window.Content
         style={{

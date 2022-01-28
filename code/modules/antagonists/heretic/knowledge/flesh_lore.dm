@@ -153,7 +153,8 @@
 	SIGNAL_HANDLER
 
 	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	mark?.on_effect()
+	if(istype(mark))
+		mark.on_effect()
 
 	if(!iscarbon(target))
 		return

@@ -64,7 +64,8 @@
 	SIGNAL_HANDLER
 
 	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	mark?.on_effect()
+	if(istype(mark))
+		mark.on_effect()
 
 	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
 		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max) // refunds 75% of charge.

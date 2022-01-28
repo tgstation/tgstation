@@ -46,10 +46,11 @@
 	icon_state = "mansus"
 	inhand_icon_state = "mansus"
 	catchphrase = "R'CH T'H TR'TH"
+	on_use_sound = 'sound/items/welder.ogg'
 
-/obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/A, mob/user)
-	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [A], igniting it with eldritch energies. Fucking badass!")
-	qdel(src)
+/obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/to_light, mob/user)
+	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
+	use_charge(user)
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag || !isliving(target) || !IS_HERETIC(user) || target == user)
@@ -57,11 +58,10 @@
 	if(ishuman(target) && antimagic_backfire(target, user))
 		return ..()
 
-	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
-
 	if(!on_mob_hit(target, user))
 		return
 
+	use_charge(user)
 	return ..()
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
@@ -75,6 +75,7 @@
 	if(SEND_SIGNAL(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, target) & COMPONENT_BLOCK_CHARGE_USE)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+	use_charge(user)
 	return ..()
 
 /**
@@ -83,8 +84,8 @@
  * Returns TRUE If the attack was blocked. FALSE otherwise.
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/antimagic_backfire(mob/living/carbon/human/target, mob/living/carbon/user)
+	use_charge(user)
 	if(target.anti_magic_check())
-		playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 		target.visible_message(
 			span_danger("The spell bounces off of [target]!"),
 			span_danger("The spell bounces off of you!"),
@@ -801,7 +802,8 @@
 
 /obj/effect/proc_holder/spell/pointed/void_blink/can_target(atom/target, mob/user, silent)
 	. = ..()
-	if(get_dist(get_turf(user),get_turf(target)) < 3 )
+	if(get_dist(get_turf(user), get_turf(target)) < 3 )
+		user.balloon_alert(user, "too close!")
 		return FALSE
 
 /obj/effect/proc_holder/spell/pointed/void_blink/cast(list/targets, mob/user)
