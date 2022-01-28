@@ -374,5 +374,9 @@ GLOBAL_VAR(restart_counter)
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
 
+/world/proc/Profile(command, type, format)
+	if(!CONFIG_GET(flag/forbid_all_profiling))
+		. = ..()
+
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER
 #undef NO_INIT_PARAMETER
