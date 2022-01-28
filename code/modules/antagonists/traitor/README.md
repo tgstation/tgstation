@@ -50,7 +50,7 @@ If you want to balance the expected timeframe an objective should be available, 
 
 ### Overcompensate
 
-You do not want to overcompensate variables such as `progression_minimum` and `progression_maximum` if you are looking to make it so that it matches a timeframe that the `progression_minimum` and `progression_maximum` values do not represent. Such values need to be an accurate representation of roughly around the time a player should unlock the objective or uplink item. progression_scaling_deviance is supposed to represents the limit that a casual player can be at before it becomes significantly harder for them to progress throughout. You should expect people to be within `progression_scaling_deviance` + `progression_scaling_deviance` * `global_progression_deviance_required`. (Assuming `progression_scaling_deviance` is 20 minutes and `progression_scaling_deviance_required` is 0.5, 20 + 0.5 * 20 = 30; this gives us a value of 30 minutes). This is the expected deviance.
+You do not want to overcompensate variables such as `progression_minimum` and `progression_maximum`. Such values need to be an accurate representation of roughly around the time a player should unlock the objective or uplink item. progression_scaling_deviance is supposed to represents the limit that a casual player can be at before it becomes significantly harder for them to progress throughout. You should expect people to be within `progression_scaling_deviance` + `progression_scaling_deviance` * `global_progression_deviance_required`. (Assuming `progression_scaling_deviance` is 20 minutes and `progression_scaling_deviance_required` is 0.5, 20 + 0.5 * 20 = 30; this gives us a value of 30 minutes). This is the expected deviance.
 
 ### Reward large amounts of progression points
 
