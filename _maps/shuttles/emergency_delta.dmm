@@ -173,17 +173,6 @@
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"an" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/shuttle/escape)
 "ao" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1066,17 +1055,16 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "cA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21";
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -1471,6 +1459,15 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"RJ" = (
+/obj/effect/turf_decal/delivery,
+/obj/item/kirbyplants{
+	icon_state = "plant-21";
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "Tv" = (
 /obj/machinery/computer/communications,
 /obj/effect/turf_decal/tile/blue{
@@ -1608,18 +1605,18 @@ bE
 bE
 bw
 af
-ao
+aE
 aH
+av
+av
+av
 av
 aE
 qA
 aE
-an
-av
-av
 av
 cA
-aE
+RJ
 af
 dj
 rZ
