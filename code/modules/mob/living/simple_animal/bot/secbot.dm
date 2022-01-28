@@ -307,7 +307,7 @@
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
-		target_name = human_target.get_id_name()
+		target_name = human_target.get_face_name(get_id_name())
 	else
 		current_target.Paralyze(100)
 		current_target.stuttering = 5
