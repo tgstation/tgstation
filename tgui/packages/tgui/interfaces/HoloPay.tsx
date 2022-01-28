@@ -154,13 +154,7 @@ const TerminalDisplay = (props, context) => {
  */
 const SetupDisplay = (props, context) => {
   const { act, data } = useBackend<HoloPayData>(context);
-  const {
-    available_logos = [],
-    force_fee,
-    max_fee,
-    name,
-    shop_logo,
-  } = data;
+  const { available_logos = [], force_fee, max_fee, name, shop_logo } = data;
   const { onClick } = props;
   const decodedName = name.replace(/&#(\d+);/g, (_, dec) => {
     return String.fromCharCode(dec);

@@ -12,17 +12,17 @@ const DEFAULT_MAX = 10000;
  * If none: Minimum is set.
  * Else: Clamps it to the given range.
  */
-const getSafeNumber = (value, minValue, maxValue) => {
+const getClampedNumber = (value, minValue, maxValue) => {
   const minimum = minValue || DEFAULT_MIN;
   const maximum = maxValue || maxValue === 0 ? maxValue : DEFAULT_MAX;
-  if (!value.length) {
-    return minimum;
+  if (!value || !value.length) {
+    return String(minimum);
   }
   let parsedValue = parseInt(value.replace(/\D/g, ''), 10);
   if (isNaN(parsedValue)) {
-    return minimum;
+    return String(minimum);
   } else {
-    return clamp(parsedValue, minimum, maximum);
+    return String(clamp(parsedValue, minimum, maximum));
   }
 };
 
@@ -41,7 +41,7 @@ export class RestrictedInput extends Component {
     };
     this.handleChange = (e) => {
       const { maxValue, minValue, onChange } = this.props;
-      e.target.value = getSafeNumber(e.target.value, minValue, maxValue);
+      e.target.value = getClampedNumber(e.target.value, minValue, maxValue);
       if (onChange) {
         onChange(e, +e.target.value);
       }
@@ -65,7 +65,7 @@ export class RestrictedInput extends Component {
     this.handleKeyDown = (e) => {
       const { maxValue, minValue, onChange, onEnter } = this.props;
       if (e.keyCode === KEY_ENTER) {
-        const safeNum = getSafeNumber(e.target.value, minValue, maxValue);
+        const safeNum = getClampedNumber(e.target.value, minValue, maxValue);
         this.setEditing(false);
         if (onChange) {
           onChange(e, safeNum);
@@ -91,10 +91,10 @@ export class RestrictedInput extends Component {
 
   componentDidMount() {
     const { maxValue, minValue } = this.props;
-    const nextValue = this.props.value && this.props.value.toString();
+    const nextValue = this.props.value?.toString();
     const input = this.inputRef.current;
     if (input) {
-      input.value = getSafeNumber(nextValue, minValue, maxValue);
+      input.value = getClampedNumber(nextValue, minValue, maxValue);
     }
     if (this.props.autoFocus || this.props.autoSelect) {
       setTimeout(() => {
@@ -110,11 +110,13 @@ export class RestrictedInput extends Component {
   componentDidUpdate(prevProps, _) {
     const { maxValue, minValue } = this.props;
     const { editing } = this.state;
-    const prevValue = prevProps.value;
+    const prevValue = prevProps.value?.toString();
+    const nextValue = this.props.value?.toString();
     const input = this.inputRef.current;
-    const nextValue = this.props.value.toString();
-    if (input && !editing && prevValue !== nextValue) {
-      input.value = getSafeNumber(nextValue, minValue, maxValue);
+    if (input && !editing) {
+      if (nextValue !== prevValue && nextValue !== input.value) {
+        input.value = getClampedNumber(nextValue, minValue, maxValue);
+      }
     }
   }
 
