@@ -11,7 +11,6 @@
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/pew/MakeRotate()
-	. = ..()
 	AddComponent(/datum/component/simple_rotation, ROTATION_WRENCH | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_ANCHORED_ALLOWED)
 
 /obj/structure/chair/pew/left
