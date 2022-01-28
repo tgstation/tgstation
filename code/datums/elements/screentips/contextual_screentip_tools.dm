@@ -1,4 +1,4 @@
-/// Apply basic contextual screentips when the user hovers over this item with an empty hand.
+/// Apply basic contextual screentips when the user hovers over this item with an item of the given tool behavior.
 /// A "Type B" interaction.
 /// This stacks with other contextual screentip elements, though you may want to register the signal/flag manually at that point for performance.
 /datum/element/contextual_screentip_tools
