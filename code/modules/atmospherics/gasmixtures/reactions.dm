@@ -985,7 +985,7 @@
 	cached_gases[/datum/gas/oxygen][MOLES] -= consumed_amount * 0.125
 	cached_gases[/datum/gas/nitrium][MOLES] += consumed_amount
 	energy_released += consumed_amount * 80000000
-	cached_results["fire"] += consumed_amount
+	cached_results["fire"] += consumed_amount * 300
 	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
 	var/zap_type = DEFAULT_ZAP_ICON_STATE
 	var/flags = (ZAP_SUPERMATTER_FLAGS | ZAP_MOB_DAMAGE)
@@ -997,7 +997,7 @@
 	if(consumed_amount >= 256)
 		zap_type = OVER_9000_ZAP_ICON_STATE
 		flags |= ZAP_MACHINE_EXPLOSIVE
-	supermatter_zap(location, range = min(sqrt(consumed_amount) / 2, 8), zap_str = energy_released / 1000000, zap_cutoff = energy_released / 2000000, zap_icon = zap_type, zap_flags = flags, power_level = energy_released / 1000000)
+	supermatter_zap(location, range = min(sqrt(consumed_amount) / 2, 8), zap_str = energy_released / 1000000, zap_flags = flags, zap_cutoff = sqrt(energy_released) / 100, power_level = log(4, 1 + consumed_amount) * 2500, zap_icon = zap_type)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
