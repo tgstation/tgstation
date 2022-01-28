@@ -298,7 +298,7 @@
 		locker.forceMove(mod.wearer.loc)
 		locker.throw_at(target, range = 7, speed = 4, thrower = mod.wearer)
 		return
-	if(!(target in view(mod.wearer)) || !istype(target, /obj/structure/closet))
+	if(!istype(target, /obj/structure/closet) || !(target in view(mod.wearer)))
 		balloon_alert(mod.wearer, "invalid target!")
 		return
 	var/obj/structure/closet/locker = target
@@ -322,12 +322,12 @@
 		return
 	if(!locker.Adjacent(mod.wearer) || !isturf(locker.loc) || !isturf(mod.wearer.loc))
 		return
-	mod.wearer.AddComponent(/datum/component/strong_pull)
 	mod.wearer.start_pulling(locker)
+	locker.strong_grab = TRUE
 	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
 
-/obj/item/mod/module/magnet/proc/on_stop_pull(datum/source, atom/movable/last_puller)
+/obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
-	qdel(mod.wearer.GetComponent(/datum/component/strong_pull))
-	UnregisterSignal(source, COMSIG_ATOM_NO_LONGER_PULLED)
+	locker.strong_grab = FALSE
+	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)

@@ -253,7 +253,10 @@
 
 /obj/item/stamp/mod/attack_self(mob/user, modifiers)
 	. = ..()
-	icon_state = (icon_state == "stamp-ok") ? "stamp-deny" : "stamp-ok"
+	if(icon_state == "stamp-ok")
+		icon_state = "stamp-deny"
+	else
+		icon_state = "stamp-ok"
 	balloon_alert(user, "switched mode")
 
 ///Atrocinator - Flips your gravity.
