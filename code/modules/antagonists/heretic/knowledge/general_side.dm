@@ -6,11 +6,13 @@
 		and invoking it with a harebell, a book, and a jumpsuit."
 	gain_text = "The heart is the principle that continues and preserves."
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/food/grown/harebell = 1,
 		/obj/item/book = 1,
 		/obj/item/clothing/under = 1,
+		/mob/living/carbon/human = 1,
 	)
 	cost = 1
+	route = PATH_SIDE
 
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)

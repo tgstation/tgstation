@@ -13,6 +13,7 @@
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
+	route = PATH_SIDE
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
@@ -30,6 +31,7 @@
 	)
 	duration = 5 MINUTES
 	cost = 1
+	route = PATH_SIDE
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
@@ -46,3 +48,4 @@
 		)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/ash_spirit
 	cost = 1
+	route = PATH_SIDE

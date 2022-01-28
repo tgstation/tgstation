@@ -66,9 +66,9 @@
 		knowledge_data["desc"] = initial(knowledge.desc)
 		knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 		knowledge_data["cost"] = initial(knowledge.cost)
-		knowledge_data["disabled"] = initial(knowledge.cost) > knowledge_points
+		knowledge_data["disabled"] = (initial(knowledge.cost) > knowledge_points)
 		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_color[initial(knowledge.route)]
+		knowledge_data["color"] = path_to_color?[initial(knowledge.route)] || "grey"
 
 		data["learnableKnowledge"] += list(knowledge_data)
 
@@ -80,7 +80,7 @@
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_color[found_knowledge.route]
+		knowledge_data["color"] = path_to_color?[found_knowledge.route] || "grey"
 
 		data["learnedKnowledge"] += list(knowledge_data)
 

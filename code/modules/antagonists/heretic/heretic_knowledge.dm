@@ -26,8 +26,8 @@
 	var/list/result_atoms = list()
 	/// Cost of knowledge in knowlege points
 	var/cost = 0
-	/// What path is this on. Sefaults to "Side".
-	var/route = PATH_SIDE
+	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
+	var/route
 
 /**
  * Called when the knowledge is first researched.
@@ -127,6 +127,7 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
+	route = null
 	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_gain().
 	var/obj/effect/proc_holder/spell/spell_to_add
 
@@ -141,6 +142,7 @@
  * A knowledge subtype lets the heretic curse someone with a ritual.
  */
 /datum/heretic_knowledge/curse
+	route = null
 	/// The duration of the curse
 	var/duration = 5 MINUTES
 	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
@@ -196,6 +198,7 @@
  * A knowledge subtype lets the heretic summon a monster with the ritual.
  */
 /datum/heretic_knowledge/summon
+	route = null
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
 
@@ -229,6 +232,7 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/final
+	route = null
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human = 3)
 
