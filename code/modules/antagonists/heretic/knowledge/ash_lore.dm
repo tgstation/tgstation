@@ -39,12 +39,10 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -97,11 +95,9 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ash_mark/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/ash_mark/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/ash_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -180,11 +176,9 @@
 	timer = 2 MINUTES
 
 /datum/heretic_knowledge/curse/corrosion/curse(mob/living/chosen_mob)
-	. = ..()
 	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
 
 /datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/chosen_mob)
-	. = ..()
 	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
 
 /datum/heretic_knowledge/curse/paralysis
@@ -198,16 +192,12 @@
 	timer = 5 MINUTES
 
 /datum/heretic_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
-	. = ..()
-	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
-	ADD_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-
+	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
+	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
 /datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
-	. = ..()
-	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_L_LEG,MAGIC_TRAIT)
-	REMOVE_TRAIT(chosen_mob,TRAIT_PARALYSIS_R_LEG,MAGIC_TRAIT)
-
+	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
+	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"

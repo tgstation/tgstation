@@ -1,7 +1,20 @@
-// TODO move to components folder //
+/**
+ * # Living Heart Component
+ *
+ * Applied to a heart to turn it into a heretic's 'living heart'.
+ * The living heart is what they use to track people they need to sacrifice.
+ *
+ * This component handles adding the associated action, as well as updating the heart's icon.
+ *
+ * Must be attached to an organ located within a heretic.
+ * If removed from the body of a heretic, it will self-delete and become a normal heart again.
+ */
 /datum/component/living_heart
+	/// The action we create and give to our heart.
 	var/datum/action/item_action/organ_action/track_target/action
+	/// The icon of the heart before we made it a living heart.
 	var/old_icon
+	/// The icon_state of the heart before we made it a living heart.
 	var/old_icon_state
 
 /datum/component/living_heart/Initialize()
@@ -44,13 +57,21 @@
 
 	return ..()
 
+/**
+ * Signal proc for [COMSIG_ORGAN_REMOVED].
+ *
+ * If the organ is removed, the component will remove itself.
+ */
 /datum/component/living_heart/proc/on_organ_removed(obj/item/organ/source, mob/living/carbon/old_owner)
 	SIGNAL_HANDLER
 
 	to_chat(old_owner, span_userdanger("As your living [source.name] leaves your body, you feel less connected to the Mansus!"))
 	qdel(src)
 
-// The associated action
+/*
+ * The action associated with the living heart.
+ * Allows a heretic to track sacrifice targets.
+ */
 /datum/action/item_action/organ_action/track_target
 	name = "Living Heartbeat"
 	desc = "Track your targets."

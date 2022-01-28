@@ -164,9 +164,11 @@
 
 /datum/antagonist/heretic/on_removal()
 
-	on_death() // removal is like death
-	GLOB.reality_smash_track.remove_tracked_mind(owner)
+	for(var/knowledge_index in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		knowledge.on_lose(old_body)
 
+	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
 	return ..()
 
@@ -175,7 +177,6 @@
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
 	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
-	RegisterSignal(our_mob, COMSIG_LIVING_DEATH, .proc/on_death)
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
 
@@ -183,7 +184,7 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_LIVING_DEATH, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -215,19 +216,6 @@
 	source.balloon_alert(source, "you need a focus!")
 	// We shouldn't be able to cast this! Cancel it.
 	return COMPONENT_CANCEL_SPELL
-
-/*
- * Signal proc for [COMSIG_LIVING_DEATH].
- *
- * Used to remove any custom perks from
- * knowlede or such when the heretic dies.
- */
-/datum/antagonist/heretic/proc/on_death(datum/source)
-	SIGNAL_HANDLER
-
-	for(var/knowledge_index in researched_knowledge)
-		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_death(owner.current)
 
 /*
  * Signal proc for [COMSIG_MOB_ITEM_AFTERATTACK].

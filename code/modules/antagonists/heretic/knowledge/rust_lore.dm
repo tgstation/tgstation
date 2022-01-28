@@ -34,13 +34,11 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -102,15 +100,13 @@
 		/datum/heretic_knowledge/essence,
 	)
 	route = PATH_RUST
-	processes_on_life = TRUE
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /datum/heretic_knowledge/rust_regen/on_lose(mob/user)
-	. = ..()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -127,20 +123,25 @@
 
 	REMOVE_TRAIT(source, TRAIT_STUNRESISTANCE, type)
 
-/datum/heretic_knowledge/rust_regen/on_life(mob/user)
-	if(!isliving(user))
-		return
-	var/turf/our_turf = get_turf(user)
+/**
+ * Signal proc for [COMSIG_LIVING_LIFE].
+ *
+ * Gradually heals the heretic ([source]) on rust,
+ * including stuns and stamina damage.
+ */
+/datum/heretic_knowledge/rust_regen/proc/on_life(mob/living/source, delta_time, times_fired)
+	SIGNAL_HANDLER
+
+	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	var/mob/living/living_user = user
-	living_user.adjustBruteLoss(-2, FALSE)
-	living_user.adjustFireLoss(-2, FALSE)
-	living_user.adjustToxLoss(-2, FALSE, forced = TRUE)
-	living_user.adjustOxyLoss(-0.5, FALSE)
-	living_user.adjustStaminaLoss(-2)
-	living_user.AdjustAllImmobility(-5)
+	source.adjustBruteLoss(-2, FALSE)
+	source.adjustFireLoss(-2, FALSE)
+	source.adjustToxLoss(-2, FALSE, forced = TRUE)
+	source.adjustOxyLoss(-0.5, FALSE)
+	source.adjustStaminaLoss(-2)
+	source.AdjustAllImmobility(-5)
 
 /datum/heretic_knowledge/rust_mark
 	name = "Mark of Rust"
@@ -155,11 +156,9 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_mark/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/rust_mark/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/rust_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -177,11 +176,9 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
 /datum/heretic_knowledge/rust_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
@@ -254,12 +251,13 @@
 	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
  *
- * Gives our heretic buffs if they stand on rust.
+ * Gives our heretic ([source]) buffs if they stand on rust.
  */
 /datum/heretic_knowledge/final/rust_final/proc/on_move(mob/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
@@ -279,19 +277,23 @@
 				REMOVE_TRAIT(source, trait, type)
 			immunities_active = FALSE
 
-/datum/heretic_knowledge/final/rust_final/on_life(mob/user)
-	if(!isliving(user))
-		return
-	var/turf/our_turf = get_turf(user)
+/**
+ * Signal proc for [COMSIG_LIVING_LIFE].
+ *
+ * Gradually heals the heretic ([source]) on rust.
+ */
+/datum/heretic_knowledge/final/rust_final/proc/on_life(mob/living/source, delta_time, times_fired)
+	SIGNAL_HANDLER
+
+	var/turf/our_turf = get_turf(source)
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	var/mob/living/living_user = user
-	living_user.adjustBruteLoss(-4, FALSE)
-	living_user.adjustFireLoss(-4, FALSE)
-	living_user.adjustToxLoss(-4, FALSE, forced = TRUE)
-	living_user.adjustOxyLoss(-4, FALSE)
-	living_user.adjustStaminaLoss(-20)
+	source.adjustBruteLoss(-4, FALSE)
+	source.adjustFireLoss(-4, FALSE)
+	source.adjustToxLoss(-4, FALSE, forced = TRUE)
+	source.adjustOxyLoss(-4, FALSE)
+	source.adjustStaminaLoss(-20)
 
 /**
  * #Rust spread datum

@@ -1,10 +1,12 @@
 
 /**
- * #Eldritch Knowledge
+ * # Heretic Knowledge
  *
- * Datum that makes eldritch cultist interesting.
+ * The datums that allow heretics to progress and learn new spells and rituals.
  *
- * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
+ * Heretic Knowledge datums are not singletons - they are instantiated as they
+ * are given to heretics, and deleted if the heretic antagonist is removed.
+ *
  */
 /datum/heretic_knowledge
 	/// Name of the knowledge, shown to the heretic.
@@ -31,6 +33,10 @@
 
 /**
  * Called when the knowledge is first researched.
+ * This is only ever called once per heretic.
+ *
+ * Arguments
+ * * user - the heretic who researched something
  */
 /datum/heretic_knowledge/proc/on_research(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
@@ -41,52 +47,56 @@
 
 /**
  * Called when the knowledge is applied to a mob.
+ * This can be called multiple times per heretic,
+ * in the case of bodyswap shenanigans.
+ *
+ * Arguments
+ * * user - the heretic which we're applying things to
  */
 /datum/heretic_knowledge/proc/on_gain(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(processes_on_life)
-		RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /**
  * Called when the knowledge is removed from a mob,
- * either due to a heretic being de-heretic'd
- * or bodyswap memery.
+ * either due to a heretic being de-heretic'd or bodyswap memery.
+ *
+ * Arguments
+ * * user - the heretic which we're removing things from
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(processes_on_life)
-		UnregisterSignal(user, COMSIG_LIVING_LIFE)
 
 /**
- * Signal proc for [COMSIG_LIVING_LIFE].
+ * Special check for rituals.
+ * Called before any of the required atoms are checked.
  *
- * Used for effects done from knowledge of every life tick.
- * Will not be called unless processes_on_life = TRUE.
- */
-/datum/heretic_knowledge/proc/on_life(mob/user)
-	SIGNAL_HANDLER
-
-/**
- * Special check for recipes
+ * If you are adding a more complex summoning,
+ * or something that requires a special check
+ * that parses through all the atoms,
+ * you should override this.
  *
- * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
+ * Arguments
+ * * user - the mob doing the ritual
+ * * atoms - a list of all atoms being checked in the ritual.
+ * * selected_atoms - an empty list(!) instance passed in by the ritual. You can add atoms to it in this proc.
+ * * loc - the turf the ritual's occuring on
+ *
+ * Returns: TRUE, if the ritual will continue, or FALSE, if the ritual is skipped / cancelled
  */
 /datum/heretic_knowledge/proc/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return TRUE
 
 /**
- * A proc that handles the code when the mob dies
+ * Called whenever the knowledge's associated ritual is completed successfully.
  *
- * This proc is primarily used to end any soundloops when the heretic dies
- */
-/datum/heretic_knowledge/proc/on_death(mob/user)
-
-/**
- * What happens once the recipe is succesfully finished
+ * Creates atoms from types in result_atoms.
+ * Override this is you want something else to happen.
+ * This CAN sleep, such as for summoning rituals which poll for ghosts.
  *
- * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
+ * Arguments
+ * * user - the mob who did the  ritual
+ * * selected_atoms - an list of atoms chosen as a part of this ritual.
+ * * loc - the turf the ritual's occuring on
+ *
+ * Returns: TRUE, if the ritual should cleanup afterwards, or FALSE, to avoid calling cleanup after.
  */
 /datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	if(!length(result_atoms))
@@ -96,9 +106,16 @@
 	return TRUE
 
 /**
- * Used atom cleanup
+ * Called after on_finished_recipe returns TRUE
+ * and a ritual was successfully completed.
  *
- * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
+ * Goes through and cleans up (deletes)
+ * all atoms in the selected_atoms list.
+ *
+ * Overide this proc if you don't want ALL ATOMS to be destroyed.
+ *
+ * Arguments
+ * * selected_atoms - a list of all atoms we intend on destroying.
  */
 /datum/heretic_knowledge/proc/cleanup_atoms(list/selected_atoms)
 	for(var/atom/sacrificed as anything in selected_atoms)
@@ -108,34 +125,38 @@
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
+/*
+ * A knowledge subtype that grants the heretic a certain spell.
+ */
 /datum/heretic_knowledge/spell
-	/// The proc holder spell we add to the heretic. Typepath that becomes an instance on gain.
+	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_gain().
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
-	spell_to_add = new spell_to_add
+	spell_to_add = new spell_to_add()
 	user.mind.AddSpell(spell_to_add)
-	return ..()
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
 	user.mind.RemoveSpell(spell_to_add)
-	return ..()
 
+/*
+ * A knowledge subtype lets the heretic curse someone with a ritual.
+ */
 /datum/heretic_knowledge/curse
+	/// The duration of the curse
 	var/timer = 5 MINUTES
-	var/list/fingerprints = list()
-	var/list/dna = list()
+	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
+	var/list/fingerprints
 
 /datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	fingerprints = list()
 	for(var/atom/requirements as anything in atoms)
-		fingerprints |= requirements.return_fingerprints()
+		fingerprints[requirements.return_fingerprints()] = 1
 	list_clear_nulls(fingerprints)
-	if(!length(fingerprints))
-		return FALSE
-	return TRUE
 
-/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,loc)
+	return length(fingerprints) // No fingerprints? No ritual
+
+/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
 
 	var/list/compiled_list = list()
 
@@ -145,22 +166,37 @@
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(!length(compiled_list))
-		to_chat(user, span_warning("These items don't possess the required fingerprints or DNA."))
+		loc.balloon_alert(user, "no fingerprints!")
 		return FALSE
 
 	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
 	if(isnull(chosen_mob))
 		return FALSE
-	curse(compiled_list[chosen_mob])
-	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)
+
+	var/mob/living/carbon/human/to_curse = compiled_list[chosen_mob]
+	if(QDELETED(to_curse))
+		loc.balloon_alert(user, "invalid choice!")
+		return FALSE
+
+	curse(to_curse)
+	addtimer(CALLBACK(src, .proc/uncurse, to_curse),timer)
 	return TRUE
 
+/**
+ * Calls a curse onto [chosen_mob].
+ */
 /datum/heretic_knowledge/curse/proc/curse(mob/living/chosen_mob)
 	return
 
+/**
+ * Removes a curse from [chosen_mob]. Used in timers / callbacks.
+ */
 /datum/heretic_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
 	return
 
+/*
+ * A knowledge subtype lets the heretic summon a monster with the ritual.
+ */
 /datum/heretic_knowledge/summon
 	/// Typepath of a mob to summon when we finish the recipe.
 	var/mob/living/mob_to_summon
@@ -170,7 +206,6 @@
 	// Fade in the summon while the ghost poll is ongoing.
 	summoned.alpha = 0
 	animate(summoned, 10 SECONDS, alpha = 155)
-
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
@@ -192,7 +227,9 @@
 
 	return TRUE
 
-//Ascension knowledge
+/*
+ * The special final tier of knowledges that unlocks ASCENSION.
+ */
 /datum/heretic_knowledge/final
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human = 3)

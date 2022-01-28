@@ -52,8 +52,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		our_heart.AddComponent(/datum/component/living_heart)
 
 /datum/heretic_knowledge/living_heart/on_lose(mob/user)
-	. = ..()
-
 	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
 	if(our_heart)
 		qdel(our_heart.GetComponent(/datum/component/living_heart))

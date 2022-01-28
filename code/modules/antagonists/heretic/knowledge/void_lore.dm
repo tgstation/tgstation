@@ -38,12 +38,10 @@
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/void_grasp/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -82,14 +80,12 @@
 	next_knowledge = list(/datum/heretic_knowledge/void_cloak,/datum/heretic_knowledge/void_mark,/datum/heretic_knowledge/armor)
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_RESISTCOLD, MAGIC_TRAIT)
-	ADD_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
+	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
+	ADD_TRAIT(user, TRAIT_NOBREATH, type)
 
 /datum/heretic_knowledge/cold_snap/on_lose(mob/user)
-	. = ..()
-	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, MAGIC_TRAIT)
-	REMOVE_TRAIT(user, TRAIT_NOBREATH, MAGIC_TRAIT)
+	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
+	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
 /datum/heretic_knowledge/void_cloak
 	name = "Void Cloak"
@@ -116,11 +112,9 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_mark/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/void_mark/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
@@ -178,11 +172,9 @@
 
 
 /datum/heretic_knowledge/void_blade_upgrade/on_gain(mob/user)
-	. = ..()
 	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
 
 /datum/heretic_knowledge/void_blade_upgrade/on_lose(mob/user)
-	. = ..()
 	UnregisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK)
 
 /datum/heretic_knowledge/void_blade_upgrade/proc/on_ranged_eldritch_blade(mob/living/user, mob/living/target)
@@ -236,15 +228,22 @@
 	sound_loop = new(user, TRUE, TRUE)
 	processes_on_life = TRUE
 	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/on_death)
 
-/datum/heretic_knowledge/final/void_final/on_death()
-	if(sound_loop)
-		sound_loop.stop()
-	if(storm)
-		storm.end()
-		QDEL_NULL(storm)
+/datum/heretic_knowledge/final/void_final/on_lose(mob/user)
+	on_death() // Losing is pretty much dying. I think
 
-/datum/heretic_knowledge/final/void_final/on_life(mob/user)
+/**
+ * Signal proc for [COMSIG_LIVING_LIFE].
+ *
+ * Any non-heretics nearby the heretic ([source])
+ * are constantly silenced and battered by the storm.
+ *
+ * Also starts storms in any area that doesn't have one.
+ */
+/datum/heretic_knowledge/final/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
+	SIGNAL_HANDLER
+
 	for(var/mob/living/carbon/close_carbon in spiral_range(7,user) - user)
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
@@ -265,3 +264,17 @@
 	storm.area_type = user_area.type
 	storm.impacted_areas = list(user_area)
 	storm.update_areas()
+
+/**
+ * Signal proc for [COMSIG_LIVING_DEATH].
+ *
+ * Stop the storm when the heretic passes away.
+ */
+/datum/heretic_knowledge/final/void_final/proc/on_death()
+	SIGNAL_HANDLER
+
+	if(sound_loop)
+		sound_loop.stop()
+	if(storm)
+		storm.end()
+		QDEL_NULL(storm)
