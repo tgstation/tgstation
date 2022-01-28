@@ -133,13 +133,13 @@
 		};\
 	} while(FALSE)
 
-#define FIRST_INDEX(list) (list[1])
-
+#define SORT_FIRST_INDEX(list) (list[1])
+#define SORT_VAR_NO_TYPE(varname) var/varname
 /****
 	* Even more custom binary search sorted insert, using defines instead of vars
 	* INPUT: Item to be inserted
 	* LIST: List to insert INPUT into
-	* TYPECONT: The typepath of the contents of the list, if any
+	* TYPECONT: A define setting the var to the typepath of the contents of the list
 	* COMPARE: The item to compare against, usualy the same as INPUT
 	* COMPARISON: A define that takes an item to compare as input, and returns their comparable value
 	* COMPTYPE: How should the list be compared? Either COMPARE_KEY or COMPARE_VALUE.
@@ -154,7 +154,7 @@
 			var/__BIN_LEFT = 1;\
 			var/__BIN_RIGHT = __BIN_CTTL;\
 			var/__BIN_MID = (__BIN_LEFT + __BIN_RIGHT) >> 1;\
-			UNLINT(var ##TYPECONT/__BIN_ITEM);\
+			##TYPECONT(__BIN_ITEM);\
 			while(__BIN_LEFT < __BIN_RIGHT) {\
 				__BIN_ITEM = COMPTYPE;\
 				if(##COMPARISON(__BIN_ITEM) <= ##COMPARISON(COMPARE)) {\
