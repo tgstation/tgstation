@@ -499,9 +499,18 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				queue_node = queue_node.queue_next
 				continue
 
-			if (!bg_calc && (queue_node_flags & SS_BACKGROUND))
-				current_tick_budget = queue_priority_count_bg
-				bg_calc = TRUE
+			if ((queue_node_flags & SS_BACKGROUND))
+				if (!bg_calc)
+					current_tick_budget = queue_priority_count_bg
+					bg_calc = TRUE
+				else
+					//error state, do sane fallback behavior
+					if (. = 0)
+						log_world("MC: Queue logic failure, non-background subsystem queued to run after a background subsystem: [queue_node] queue_prev:[queue_node.queue_prev]")
+					. = -1
+					current_tick_budget = queue_priority_count //this won't even be right, but is the closet we have.
+					bg_calc = FALSE
+					
 
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
