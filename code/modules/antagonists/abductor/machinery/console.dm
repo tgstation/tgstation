@@ -48,7 +48,7 @@
 		camera.console = null
 		camera = null
 	return ..()
-	
+
 /**
  * get_abductor_gear: Returns a list of a filtered abductor gear sorted by categories
  */
@@ -110,7 +110,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked_target?.resolve() ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked_target_weakref?.resolve() ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -158,7 +158,7 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	var/mob/living/marked = gizmo.marked_target?.resolve()
+	var/mob/living/marked = gizmo.marked_target_weakref?.resolve()
 	if(pad && marked)
 		pad.Retrieve(marked)
 
