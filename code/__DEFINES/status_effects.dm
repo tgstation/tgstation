@@ -14,7 +14,7 @@
 #define STATUS_EFFECT_NORMAL_PROCESS 1
 
 //several flags for the Necropolis curse status effect
-/ //makes the edges of the target's screen obscured
+///makes the edges of the target's screen obscured
 #define CURSE_BLINDING (1<<0)
 ///spawns creatures that attack the target only
 #define CURSE_SPAWNING (1<<1)
