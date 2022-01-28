@@ -293,7 +293,7 @@
 		if(isliving(owner))
 			var/mob/living/living_owner = owner
 			to_chat(living_owner, span_notice("You succesfuly remove the durathread strand."))
-			living_owner.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			living_owner.remove_status_effect(/datum/status_effect/strandling)
 
 //OTHER DEBUFFS
 /datum/status_effect/pacify
@@ -496,7 +496,7 @@
 /datum/status_effect/confusion/tick()
 	strength -= 1
 	if (strength <= 0)
-		owner.remove_status_effect(STATUS_EFFECT_CONFUSION)
+		owner.remove_status_effect(/datum/status_effect/confusion)
 		return
 
 /datum/status_effect/confusion/proc/set_strength(new_strength)
@@ -556,11 +556,11 @@
 		H.emote(pick("gasp", "gag", "choke"))
 
 /mob/living/proc/apply_necropolis_curse(set_curse)
-	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+	var/datum/status_effect/necropolis_curse/C = has_status_effect(/datum/status_effect/necropolis_curse)
 	if(!set_curse)
 		set_curse = pick(CURSE_BLINDING, CURSE_SPAWNING, CURSE_WASTING, CURSE_GRASPING)
 	if(QDELETED(C))
-		apply_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE, set_curse)
+		apply_status_effect(/datum/status_effect/necropolis_curse, set_curse)
 	else
 		C.apply_curse(set_curse)
 		C.duration += 3000 //time added by additional curses
@@ -1029,7 +1029,7 @@
 
 /datum/status_effect/ants/proc/ants_washed()
 	SIGNAL_HANDLER
-	owner.remove_status_effect(STATUS_EFFECT_ANTS)
+	owner.remove_status_effect(/datum/status_effect/ants)
 	return COMPONENT_CLEANED
 
 /datum/status_effect/ants/tick()
@@ -1062,7 +1062,7 @@
 					ants_remaining -= 5 // To balance out the blindness, it'll be a little shorter.
 	ants_remaining--
 	if(ants_remaining <= 0 || victim.stat >= HARD_CRIT)
-		victim.remove_status_effect(STATUS_EFFECT_ANTS) //If this person has no more ants on them or are dead, they are no longer affected.
+		victim.remove_status_effect(/datum/status_effect/ants) //If this person has no more ants on them or are dead, they are no longer affected.
 
 /atom/movable/screen/alert/status_effect/ants
 	name = "Ants!"

@@ -806,7 +806,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Manifest rune failed - user not standing on rune")
 		return list()
-	if(user.has_status_effect(STATUS_EFFECT_SUMMONEDGHOST))
+	if(user.has_status_effect(/datum/status_effect/cultghost))
 		to_chat(user, "<span class='cult italic'>Ghosts can't summon more ghosts!</span>")
 		fail_invoke()
 		log_game("Manifest rune failed - user is a ghost")
@@ -842,7 +842,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		new_human.real_name = ghost_to_spawn.real_name
 		new_human.alpha = 150 //Makes them translucent
 		new_human.equipOutfit(/datum/outfit/ghost_cultist) //give them armor
-		new_human.apply_status_effect(STATUS_EFFECT_SUMMONEDGHOST) //ghosts can't summon more ghosts
+		new_human.apply_status_effect(/datum/status_effect/cultghost) //ghosts can't summon more ghosts
 		new_human.see_invisible = SEE_INVISIBLE_OBSERVER
 		ghosts++
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)

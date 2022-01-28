@@ -253,7 +253,7 @@
 
 /obj/item/mayhem/attack_self(mob/user)
 	for(var/mob/living/carbon/human/target in range(7,user))
-		target.apply_status_effect(STATUS_EFFECT_MAYHEM)
+		target.apply_status_effect(/datum/status_effect/mayhem)
 	to_chat(user, span_notice("You shatter the bottle!"))
 	playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
 	message_admins(span_adminnotice("[ADMIN_LOOKUPFLW(user)] has activated a bottle of mayhem!"))
@@ -908,11 +908,11 @@
 /obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
 		return
-	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
+	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(/datum/status_effect/stacking/saw_bleed)
 	if(existing_bleed)
 		existing_bleed.add_stacks(bleed_stacks_per_hit)
 	else
-		target.apply_status_effect(STATUS_EFFECT_SAWBLEED, bleed_stacks_per_hit)
+		target.apply_status_effect(/datum/status_effect/stacking/saw_bleed, bleed_stacks_per_hit)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
