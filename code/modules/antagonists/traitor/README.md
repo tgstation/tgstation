@@ -9,7 +9,7 @@ This guide will only explain progression values.
 - Expected Progression - A global value that increments by a value of 1 minute every minute, representing the 'time' that a player should be at if they had not completed any objectives.
 - Objectives - An activity or job that a player can take for rewards such as TC and progression points.
 - Player - The user(s) that are playing as the antagonist in this new system.
-- Expected deviances - The amount of deviance that can be expected from the minimum and maximum progressions. Usually calculated by `progression_scaling_deviance` + `progression_scaling_deviance` * `global_progression_deviance_required` (explained further down)
+- Expected deviance - The amount of deviance that can be expected from the minimum and maximum progressions. Usually calculated by `progression_scaling_deviance` + `progression_scaling_deviance` * `global_progression_deviance_required` (explained further down)
 
 ## How it works
 
