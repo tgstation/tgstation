@@ -15,7 +15,7 @@
 	data["selected_module"] = selected_module?.name
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
-	data["AI"] = ai?.name
+	data["pAI"] = mod_pai?.name
 	data["core"] = core?.name
 	data["charge"] = get_charge_percent()
 	data["modules"] = list()
@@ -51,11 +51,17 @@
 	data["boots"] = boots?.name
 	return data
 
+/obj/item/mod/control/ui_state(mob/user)
+	if(user == mod_pai)
+		return GLOB.contained_state
+	return ..()
+
 /obj/item/mod/control/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
-	if(!allowed(usr) && locked)
+	// allowed() doesn't allow for pAIs
+	if((!allowed(usr) || !ispAI(usr)) && locked)
 		balloon_alert(usr, "insufficient access!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return

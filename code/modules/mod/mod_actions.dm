@@ -2,28 +2,28 @@
 	background_icon_state = "bg_tech_blue"
 	icon_icon = 'icons/mob/actions/actions_mod.dmi'
 	check_flags = AB_CHECK_CONSCIOUS
-	/// Whether this action is intended for the AI. Stuff breaks a lot if this is done differently.
-	var/ai_action = FALSE
+	/// Whether this action is intended for the inserted pAI. Stuff breaks a lot if this is done differently.
+	var/pai_action = FALSE
 	/// The MODsuit linked to this action
 	var/obj/item/mod/control/mod
 
 /datum/action/item_action/mod/New(Target)
 	..()
 	mod = Target
-	if(ai_action)
-		background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	if(pai_action)
+		background_icon_state = "bg_tech"
 
 /datum/action/item_action/mod/Grant(mob/user)
-	if(ai_action && user != mod.ai)
+	if(pai_action && user != mod.mod_pai)
 		return
-	else if(!ai_action && user == mod.ai)
+	else if(!pai_action && user == mod.mod_pai)
 		return
 	return ..()
 
 /datum/action/item_action/mod/Remove(mob/user)
-	if(ai_action && user != mod.ai)
+	if(pai_action && user != mod.mod_pai)
 		return
-	else if(!ai_action && user == mod.ai)
+	else if(!pai_action && user == mod.mod_pai)
 		return
 	return ..()
 
@@ -49,8 +49,8 @@
 	else
 		mod.choose_deploy(usr)
 
-/datum/action/item_action/mod/deploy/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/deploy/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/activate
 	name = "Activate MODsuit"
@@ -66,7 +66,7 @@
 	if(!(trigger_flags & TRIGGER_SECONDARY_ACTION) && !ready)
 		ready = TRUE
 		button_icon_state = "activate-ready"
-		if(!ai_action)
+		if(!pai_action)
 			background_icon_state = "bg_tech"
 		UpdateButtonIcon()
 		addtimer(CALLBACK(src, .proc/reset_ready), 3 SECONDS)
@@ -74,16 +74,16 @@
 	reset_ready()
 	mod.toggle_activate(usr)
 
+/datum/action/item_action/mod/activate/pai
+	pai_action = TRUE
+
 /// Resets the state requiring to be doubleclicked again.
 /datum/action/item_action/mod/activate/proc/reset_ready()
 	ready = FALSE
 	button_icon_state = initial(button_icon_state)
-	if(!ai_action)
+	if(!pai_action)
 		background_icon_state = initial(background_icon_state)
 	UpdateButtonIcon()
-
-/datum/action/item_action/mod/activate/ai
-	ai_action = TRUE
 
 /datum/action/item_action/mod/module
 	name = "Toggle Module"
@@ -96,8 +96,8 @@
 		return
 	mod.quick_module(usr)
 
-/datum/action/item_action/mod/module/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/module/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/panel
 	name = "MODsuit Panel"
@@ -110,8 +110,8 @@
 		return
 	mod.ui_interact(usr)
 
-/datum/action/item_action/mod/panel/ai
-	ai_action = TRUE
+/datum/action/item_action/mod/panel/pai
+	pai_action = TRUE
 
 /datum/action/item_action/mod/pinned_module
 	desc = "Activate the module."
@@ -123,8 +123,8 @@
 	var/mob/pinner
 
 /datum/action/item_action/mod/pinned_module/New(Target, obj/item/mod/module/linked_module, mob/user)
-	if(isAI(user))
-		ai_action = TRUE
+	if(user == mod.mod_pai)
+		pai_action = TRUE
 	..()
 	module = linked_module
 	name = "Activate [capitalize(linked_module.name)]"

@@ -20,10 +20,10 @@
 		/datum/action/item_action/mod/activate,
 		/datum/action/item_action/mod/panel,
 		/datum/action/item_action/mod/module,
-		/datum/action/item_action/mod/deploy/ai,
-		/datum/action/item_action/mod/activate/ai,
-		/datum/action/item_action/mod/panel/ai,
-		/datum/action/item_action/mod/module/ai,
+		/datum/action/item_action/mod/deploy/pai,
+		/datum/action/item_action/mod/activate/pai,
+		/datum/action/item_action/mod/panel/pai,
+		/datum/action/item_action/mod/module/pai,
 	)
 	resistance_flags = NONE
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
@@ -83,8 +83,8 @@
 	var/list/modules = list()
 	/// Currently used module.
 	var/obj/item/mod/module/selected_module
-	/// AI mob inhabiting the MOD.
-	var/mob/living/silicon/ai/ai
+	/// pAI mob inhabiting the MOD.
+	var/mob/living/silicon/pai/mod_pai
 	/// Delay between moves as AI.
 	var/movedelay = 0
 	/// Cooldown for AI moves.
@@ -185,13 +185,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		for(var/obj/item/item in module)
 			item.forceMove(drop_location())
-	if(ai)
-		ai.controlled_equipment = null
-		ai.remote_control = null
-		for(var/datum/action/action as anything in actions)
-			if(action.owner == ai)
-				action.Remove(ai)
-		new /obj/item/mod/ai_minicard(drop_location(), ai)
+	remove_pai()
 	return ..()
 
 /obj/item/mod/control/examine(mob/user)
@@ -212,10 +206,10 @@
 			. += span_notice("You could remove [core] with a <b>wrench</b>.")
 		else
 			. += span_notice("You could use a <b>MOD core</b> on it to install one.")
-		if(ai)
-			. += span_notice("You could remove [ai] with an <b>intellicard</b>.")
+		if(mod_pai)
+			. += span_notice("You could remove [mod_pai] with <b>right-click</b>")
 		else
-			. += span_notice("You could install an AI with an <b>intellicard</b>.")
+			. += span_notice("You could install a pAI with a <b>pAI card</b>.")
 
 /obj/item/mod/control/examine_more(mob/user)
 	. = ..()
@@ -298,7 +292,8 @@
 	return ..()
 
 /obj/item/mod/control/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	if(active || activating || ai_controller)
 		balloon_alert(user, "deactivate suit first!")
@@ -347,6 +342,12 @@
 	return FALSE
 
 /obj/item/mod/control/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(istype(attacking_item, /obj/item/paicard))
+		if(!open) //mod must be open
+			balloon_alert(user, "suit must be open to transfer!")
+			return FALSE
+		insert_pai(user, attacking_item)
+		return TRUE
 	if(istype(attacking_item, /obj/item/mod/module))
 		if(!open)
 			balloon_alert(user, "open the cover first!")
