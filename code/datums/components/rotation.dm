@@ -59,10 +59,6 @@
 		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
 		RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	if(rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
-		RegisterSignal(parent, COMSIG_ATOM_SECONDARY_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
-
 
 /datum/component/simple_rotation/proc/add_verbs()
 	if(rotation_flags & ROTATION_VERBS)
@@ -114,8 +110,9 @@
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if(rotation_flags & ROTATION_ALTCLICK)
-		examine_list += span_notice("Alt-click + LMB to rotate it clockwise. Alt-click + RMB to rotate it counterclockwise.")
+	examine_list += span_notice("Alt-click + LMB to rotate it clockwise. Alt-click + RMB to rotate it counterclockwise.")
+	if(rotation_flags & ROTATION_WRENCH)
+		examine_list += span_notice("This requires a wrench to be rotated.")
 
 /datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user, rotation = default_rotation_direction)
 	SIGNAL_HANDLER
@@ -130,15 +127,6 @@
 	if(rotation_flags & ROTATION_COUNTERCLOCKWISE)
 		rotation = ROTATION_COUNTERCLOCKWISE
 		Rotate(user, rotation)
-
-/datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user) // mob/living/user, obj/item/I)
-	SIGNAL_HANDLER
-
-	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
-		//balloon_alert(user, "you need a wrench!")
-		return
-	Rotate(user,default_rotation_direction)
-	return COMPONENT_BLOCK_TOOL_ATTACK
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
 	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
@@ -156,8 +144,8 @@
 			rot_degree = 90
 		if(ROTATION_FLIP)
 			rot_degree = 180
-	AM.setDir(turn(AM.dir,rot_degree))
-	after_rotation.Invoke(user,rotation_type)
+	AM.setDir(turn(AM.dir, rot_degree))
+	after_rotation.Invoke(user, rotation_type)
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
 	if(istype(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
@@ -166,13 +154,21 @@
 		return TRUE	
 	return FALSE
 
-/datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
-	if(src.rotation_flags & ROTATION_ANCHORED_ALLOWED)
+/datum/component/simple_rotation/proc/default_can_be_rotated(mob/living/user, rotation_type)
+	if(src.rotation_flags & ROTATION_WRENCH)
+		if(!istype(user))
+			return FALSE
+		var/obj/item/tool = user.get_active_held_item()
+		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
+			balloon_alert(user, "You need a wrench to rotate [parent]!")
+			return FALSE
+			//return COMPONENT_BLOCK_TOOL_ATTACK do we need this?  I don't think we do...
+	if(src.rotation_flags & ROTATION_ANCHORED_ALLOWED) // used to ignore chairs being anchored
 		return TRUE
-	else
-		var/atom/movable/AM = parent
-		//to_chat(user, span_warning("It is fastened to the floor!"))
-		return !AM.anchored
+
+	var/atom/movable/AM = parent
+	//to_chat(user, span_warning("It is fastened to the floor!"))
+	return !AM.anchored
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	var/atom/rotated_atom = parent
