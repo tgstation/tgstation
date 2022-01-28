@@ -29,6 +29,8 @@
 	var/knowledge_points = 1
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
+	/// Lazylist of weakrefs to humans that we have as targets.
+	var/list/datum/weakref/sac_targets
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed.
@@ -370,7 +372,6 @@
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
 
-	var/datum/heretic_knowledge/living_heart_sacrificing/knowledge = get_knowledge(/datum/heretic_knowledge/living_heart_sacrificing)
 	var/mob/living/carbon/human/new_target = admin.client?.holder.marked_datum
 	if(!istype(new_target))
 		to_chat(admin, span_warning("You need to mark a human to do this!"))
@@ -380,7 +381,7 @@
 		to_chat(owner.current, span_danger("The Mansus has modified your targets. Go find them!"))
 		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role || "human"]."))
 
-	LAZYADD(knowledge.sac_targets, WEAKREF(new_target))
+	LAZYADD(sac_targets, WEAKREF(new_target))
 
 /*
  * Admin proc for removing a mob from a heretic's sac list.
@@ -390,23 +391,22 @@
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
 
-	var/datum/heretic_knowledge/living_heart_sacrificing/knowledge = get_knowledge(/datum/heretic_knowledge/living_heart_sacrificing)
 	var/list/removable = list()
-	for(var/datum/weakref/ref as anything in knowledge.sac_targets)
+	for(var/datum/weakref/ref as anything in sac_targets)
 		var/mob/living/carbon/human/old_target = ref?.resolve()
 		if(!QDELETED(old_target))
 			removable[old_target.name] = old_target
 
 	var/name_of_removed = tgui_input_list(admin, "Choose a human to remove", "Who to Spare", removable)
-	if(QDELETED(src) || QDELETED(knowledge) || !admin.client?.holder || isnull(name_of_removed))
+	if(QDELETED(src) || !admin.client?.holder || isnull(name_of_removed))
 		return
 	var/mob/living/carbon/human/chosen_target = removable[name_of_removed]
 	if(QDELETED(chosen_target) || !ishuman(chosen_target))
 		return
-	if(!(WEAKREF(chosen_target) in knowledge.sac_targets))
+	if(!(WEAKREF(chosen_target) in sac_targets))
 		return
 
-	LAZYREMOVE(knowledge.sac_targets, WEAKREF(chosen_target))
+	LAZYREMOVE(sac_targets, WEAKREF(chosen_target))
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets."))

@@ -215,7 +215,10 @@
 		Attack the afflicted with your Sickly Blade to detonate the mark. \
 		Upon detonation, the Mark of Flesh causes additional bleeding."
 	gain_text = "I saw them, the marked ones. The screams... then... silence."
-	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
+	next_knowledge = list(
+		/datum/heretic_knowledge/summon/raw_prophet,
+		/datum/heretic_knowledge/reroll_targets,
+	)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/ash_mark,

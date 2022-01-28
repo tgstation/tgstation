@@ -158,9 +158,16 @@
 		Upon detonation, the Mark of Rust has a chance to deal \
 		between 0 to 200 damage to 75% of your enemy's held items."
 	gain_text = "Rusted Hills help those in dire need... at a cost."
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/area_conversion,
+		/datum/heretic_knowledge/reroll_targets,
+		)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/ash_mark,
+		/datum/heretic_knowledge/flesh_mark,
+		/datum/heretic_knowledge/void_mark,
+	)
 	cost = 2
-	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
-	banned_knowledge = list(/datum/heretic_knowledge/ash_mark,/datum/heretic_knowledge/flesh_mark,/datum/heretic_knowledge/void_mark)
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_mark/on_gain(mob/user)

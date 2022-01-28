@@ -106,18 +106,14 @@
 		return
 
 	var/datum/antagonist/heretic/heretic_datum = owner.mind.has_antag_datum(/datum/antagonist/heretic)
-	var/datum/heretic_knowledge/living_heart_sacrificing/knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/living_heart_sacrificing)
-	if(!knowledge)
-		return FALSE
-
-	if(!LAZYLEN(knowledge.sac_targets))
+	if(!LAZYLEN(heretic_datum.sac_targets))
 		to_chat(owner, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
 		return TRUE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
 
 	var/list/mob/living/carbon/human/human_targets = list()
-	for(var/datum/weakref/target_ref as anything in knowledge.sac_targets)
+	for(var/datum/weakref/target_ref as anything in heretic_datum.sac_targets)
 		var/mob/living/carbon/human/real_target = target_ref?.resolve()
 		if(!QDELETED(real_target))
 			human_targets += real_target

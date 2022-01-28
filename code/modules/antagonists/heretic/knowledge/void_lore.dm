@@ -122,7 +122,10 @@
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, my senses betrayed me. My mind is my enemy."
 	desc = "Your mansus grasp now applies mark of void status effect. \
 		To trigger the mark, use your sickly blade on the marked. Mark of void when procced lowers the victims body temperature significantly."
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/reroll_targets,
+	)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/ash_mark,
@@ -225,12 +228,12 @@
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
-	processes_on_life = TRUE
 	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/heretic_knowledge/final/void_final/on_lose(mob/user)
 	on_death() // Losing is pretty much dying. I think
+	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].

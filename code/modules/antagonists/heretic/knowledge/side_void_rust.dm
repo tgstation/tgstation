@@ -6,7 +6,7 @@
 		The armor both protect from damage and works as a focus, allowing you to cast spells."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity."
 	next_knowledge = list(
-		datum/heretic_knowledge/rust_regen,
+		/datum/heretic_knowledge/rust_regen,
 		/datum/heretic_knowledge/cold_snap,
 	)
 	required_atoms = list(

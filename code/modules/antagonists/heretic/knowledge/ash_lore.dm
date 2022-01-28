@@ -105,7 +105,10 @@
 		and spreads to an additional nearby opponent. The damage decreases with each spread."
 	gain_text = "The Nightwatcher was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the manse with his blazing lantern held high."
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	next_knowledge = list(
+		/datum/heretic_knowledge/mad_mask,
+		/datum/heretic_knowledge/reroll_targets,
+	)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/flesh_mark,
