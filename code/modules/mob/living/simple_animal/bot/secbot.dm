@@ -298,6 +298,7 @@
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
 	var/threat = 5
+	var/target_name = current_target
 
 	if(harm)
 		weapon.attack(current_target, src)
@@ -306,6 +307,7 @@
 		current_target.Paralyze(100)
 		var/mob/living/carbon/human/human_target = current_target
 		threat = human_target.assess_threat(judgement_criteria, weaponcheck = CALLBACK(src, .proc/check_for_weapons))
+		target_name = human_target.get_id_name()
 	else
 		current_target.Paralyze(100)
 		current_target.stuttering = 5
@@ -314,7 +316,7 @@
 	log_combat(src, target, "stunned")
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
-		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[current_target]</b> in [location].", radio_channel)
+		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag <b>[target_name]</b> in [location].", radio_channel)
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
