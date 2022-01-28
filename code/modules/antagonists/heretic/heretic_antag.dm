@@ -166,7 +166,7 @@
 
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge.on_lose(old_body)
+		knowledge.on_lose(owner.current)
 
 	GLOB.reality_smash_track.remove_tracked_mind(owner)
 	QDEL_LIST_ASSOC_VAL(researched_knowledge)
@@ -419,7 +419,7 @@
 		to_chat(admin, span_warning("You shouldn't be using this!"))
 		return
 
-	var/change_num = tgui_input_number(user, "Add or remove knowledge points", "Points", 0, -100, 100)
+	var/change_num = tgui_input_number(admin, "Add or remove knowledge points", "Points", 0, -100, 100)
 	if(!change_num || QDELETED(src))
 		return
 

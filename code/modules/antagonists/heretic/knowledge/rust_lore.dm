@@ -1,7 +1,34 @@
+/**
+ * # The path of Rust.
+ *
+ * Goes as follows:
+ *
+ * Blacksmith's Tale
+ * Grasp of Rust
+ * Leeching Walk
+ * > Sidepaths:
+ *   Priest's Ritual
+ *   Armorer's Ritual
+ *
+ * Mark of Rust
+ * Aggressive Spread
+ * > Sidepaths:
+ *   Curse of Corrosion
+ *   Mawed Crucible
+ *
+ * Toxic Blade
+ * Entropic Plume
+ * > Sidepaths:
+ *   Rusted Ritual
+ *   Blood Cleave
+ *
+ * Rustbringer's Oath
+ */
 /datum/heretic_knowledge/base_rust
 	name = "Blacksmith's Tale"
 	desc = "Opens up the Path of Rust to you. Allows you to transmute a kitchen knife, or its derivatives, with any trash item into a Rusty Blade."
 	gain_text = "\"Let me tell you a story\", said the Blacksmith, as he gazed deep into his rusty blade."
+	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/base_ash,
 		/datum/heretic_knowledge/base_flesh,
@@ -10,9 +37,10 @@
 		/datum/heretic_knowledge/final/void_final,
 		/datum/heretic_knowledge/base_void,
 		)
-
-	next_knowledge = list(/datum/heretic_knowledge/rust_fist)
-	required_atoms = list(/obj/item/knife = 1, /obj/item/trash = 1)
+	required_atoms = list(
+		/obj/item/knife = 1,
+		/obj/item/trash = 1,
+	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
 	cost = 1
 	route = PATH_RUST
@@ -22,15 +50,8 @@
 	desc = "Empowers your Mansus Grasp to deal 500 damage to non-living matter and rust any surface it touches. \
 		Already rusted surfaces are destroyed. You only rust surfaces and machinery with Right Click."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
-	cost = 1
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
-	var/rust_force = 500
-	var/static/list/blacklisted_turfs = typecacheof(list(
-		/turf/closed,
-		/turf/open/space,
-		/turf/open/lava,
-		/turf/open/chasm,
-	))
+	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user)
@@ -76,29 +97,16 @@
 
 	target.adjustOrganLoss(pick(possible_organs), 25)
 
-/datum/heretic_knowledge/spell/area_conversion
-	name = "Aggressive Spread"
-	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
-	gain_text = "All wise men know well not to touch the Bound King."
-	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
-	next_knowledge = list(
-		/datum/heretic_knowledge/rust_blade_upgrade,
-		/datum/heretic_knowledge/curse/corrosion,
-		/datum/heretic_knowledge/crucible
-	)
-	route = PATH_RUST
-
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
 	desc = "Passively heals you and provides stun resistance when you are on rusted tiles."
 	gain_text = "The strength was unparalleled, unnatural. The Blacksmith was smiling."
-	cost = 1
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
 	)
+	cost = 1
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user)
@@ -166,13 +174,30 @@
 
 	target.apply_status_effect(/datum/status_effect/eldritch/rust)
 
+/datum/heretic_knowledge/spell/area_conversion
+	name = "Aggressive Spread"
+	desc = "Spreads rust to nearby surfaces. Already rusted surfaces are destroyed."
+	gain_text = "All wise men know well not to touch the Bound King."
+	next_knowledge = list(
+		/datum/heretic_knowledge/rust_blade_upgrade,
+		/datum/heretic_knowledge/curse/corrosion,
+		/datum/heretic_knowledge/crucible
+	)
+	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
+	cost = 1
+	route = PATH_RUST
+
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
 	desc = "Your blade will now poison your enemies on hit."
 	gain_text = "The Blade will guide you through the flesh, should you let it."
-	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
-	banned_knowledge = list(/datum/heretic_knowledge/ash_blade_upgrade,/datum/heretic_knowledge/flesh_blade_upgrade,/datum/heretic_knowledge/void_blade_upgrade)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/ash_blade_upgrade,
+		/datum/heretic_knowledge/flesh_blade_upgrade,
+		/datum/heretic_knowledge/void_blade_upgrade,
+	)
+	cost = 2
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
@@ -192,30 +217,14 @@
 		blinds, poisons and makes enemies strike each other. \
 		It also rusts any tiles it affects."
 	gain_text = "Messengers of Hope, fear the Rustbringer!"
-	cost = 1
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/final/rust_final,
+		/datum/heretic_knowledge/summon/rusty,
+	)
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
-	next_knowledge = list(/datum/heretic_knowledge/final/rust_final, /datum/heretic_knowledge/spell/cleave, /datum/heretic_knowledge/summon/rusty)
+	cost = 1
 	route = PATH_RUST
-
-/datum/heretic_knowledge/armor
-	name = "Armorer's Ritual"
-	desc = "You can now create Eldritch Armor using a table and a gas mask. \
-		The armor both protect from damage and works as a focus, allowing you to cast spells."
-	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/cold_snap)
-	required_atoms = list(/obj/structure/table = 1, /obj/item/clothing/mask/gas = 1)
-	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
-
-/datum/heretic_knowledge/essence
-	name = "Priest's Ritual"
-	desc = "Allows you to transmute a tank of water and a glass shard into a flask of eldritch water. \
-		Eldritch water can be consumed for potent healing, or given to heathens for deadly poisoning."
-	gain_text = "This is an old recipe. The Owl whispered it to me."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/rust_regen, /datum/heretic_knowledge/spell/ashen_shift)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/item/shard = 1)
-	result_atoms = list(/obj/item/reagent_containers/glass/beaker/eldritch)
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
@@ -223,10 +232,7 @@
 		After you finish the ritual rust will now automatically spread from the rune. \
 		Your healing on rust is also tripled, while you become extremely more resillient."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
-	cost = 3
-	required_atoms = list(/mob/living/carbon/human = 3)
 	route = PATH_RUST
-	processes_on_life = TRUE
 	/// A list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_STUNIMMUNE,

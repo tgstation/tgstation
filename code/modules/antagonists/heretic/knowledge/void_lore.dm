@@ -1,9 +1,36 @@
+/**
+ * # The path of VOID.
+ *
+ * Goes as follows:
+ *
+ * Glimmer of Winter
+ * Grasp of Void
+ * Aristocrat's Way
+ * > Sidepaths:
+ *   Void Cloak
+ *   Armorer's Ritual
+ *
+ * Mark of Void
+ * Void Phase
+ * > Sidepaths:
+ *   Carving Knife
+ *   Mawed Crucible
+ *
+ * Seeking blade
+ * Void Pull
+ * > Sidepaths:
+ *   Rusted Ritual
+ *   Blood Siphon
+ *
+ * Waltz at the End of Time
+ */
 /datum/heretic_knowledge/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the path of void to you. \
 		Allows you to transmute a knife in a sub-zero temperature into a void blade."
 	gain_text = "I feel a shimmer in the air, the atmosphere around me gets colder. \
 		I feel my body realizing the emptiness of existance. Something's watching me."
+	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/base_ash,
 		/datum/heretic_knowledge/base_flesh,
@@ -12,7 +39,6 @@
 		/datum/heretic_knowledge/base_rust,
 		/datum/heretic_knowledge/final/rust_final,
 	)
-	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	cost = 1
@@ -33,9 +59,9 @@
 	desc = "Temporarily mutes your victim, also lowers their body temperature."
 	gain_text = "I found the cold watcher who observes me. The resonance of cold grows within me. \
 		This isn't the end of the mystery."
+	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 	cost = 1
 	route = PATH_VOID
-	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
@@ -75,9 +101,13 @@
 	desc = "Makes you immune to cold temperatures, and you no longer need to breathe, you can still take damage from lack of pressure."
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
+	next_knowledge = list(
+		/datum/heretic_knowledge/void_cloak,
+		/datum/heretic_knowledge/void_mark,
+		/datum/heretic_knowledge/armor,
+	)
 	cost = 1
 	route = PATH_VOID
-	next_knowledge = list(/datum/heretic_knowledge/void_cloak,/datum/heretic_knowledge/void_mark,/datum/heretic_knowledge/armor)
 
 /datum/heretic_knowledge/cold_snap/on_gain(mob/user)
 	ADD_TRAIT(user, TRAIT_RESISTCOLD, type)
@@ -87,28 +117,18 @@
 	REMOVE_TRAIT(user, TRAIT_RESISTCOLD, type)
 	REMOVE_TRAIT(user, TRAIT_NOBREATH, type)
 
-/datum/heretic_knowledge/void_cloak
-	name = "Void Cloak"
-	desc = "A cloak that can become invisbile at will, hiding items you store in it. \
-		To create it, transmute a glass shard, any item of clothing that you can fit over your uniform and any type of bedsheet."
-	gain_text = "Owl is the keeper of things that quite not are in practice, but in theory are."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/flesh_ghoul, /datum/heretic_knowledge/cold_snap)
-	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/void)
-	required_atoms = list(/obj/item/shard = 1, /obj/item/clothing/suit = 1, /obj/item/bedsheet = 1)
-
 /datum/heretic_knowledge/void_mark
 	name = "Mark of Void"
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, my senses betrayed me. My mind is my enemy."
 	desc = "Your mansus grasp now applies mark of void status effect. \
 		To trigger the mark, use your sickly blade on the marked. Mark of void when procced lowers the victims body temperature significantly."
-	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/ash_mark,
-		/datum/heretic_knowledge/flesh_mark
+		/datum/heretic_knowledge/flesh_mark,
 	)
+	cost = 2
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_mark/on_gain(mob/user)
@@ -127,47 +147,26 @@
 	gain_text = "Reality bends under the power of memory. All is fleeting, but what else stays?"
 	desc = "You gain a long range pointed blink that allows you to instantly teleport to your location, \
 		causing aoe damage around you and your chosen location."
-	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
 	next_knowledge = list(
 		/datum/heretic_knowledge/rune_carver,
-		/datum/heretic_knowledge/crucible,
 		/datum/heretic_knowledge/void_blade_upgrade,
+		/datum/heretic_knowledge/crucible,
 	)
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
+	cost = 1
 	route = PATH_VOID
-
-/datum/heretic_knowledge/rune_carver
-	name = "Carving Knife"
-	gain_text = "Etched, carved... eternal. I can carve the monolith and evoke their powers!"
-	desc = "You can create a carving knife, which allows you to create up to 3 carvings on the floor \
-		that have various effects on nonbelievers who walk over them. Also makes quite a handy throwing weapon. \
-		To create the carving knife, transmute a knife with a glass shard and a piece of paper."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase, /datum/heretic_knowledge/summon/raw_prophet)
-	required_atoms = list(/obj/item/knife = 1, /obj/item/shard = 1, /obj/item/paper = 1)
-	result_atoms = list(/obj/item/melee/rune_carver)
-
-/datum/heretic_knowledge/crucible
-	name = "Mawed Crucible"
-	gain_text = "This is pure agony. I wasn't able to summon the dereliction of the emperor, but I stumbled upon a different recipe..."
-	desc = "Allows you to create a mawed crucible, eldritch structure that allows you to create potions of various effects. \
-		To do so, transmute a table with a portable water tank."
-	cost = 1
-	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase, /datum/heretic_knowledge/spell/area_conversion)
-	required_atoms = list(/obj/structure/reagent_dispensers/watertank = 1, /obj/structure/table = 1)
-	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 
 /datum/heretic_knowledge/void_blade_upgrade
 	name = "Seeking blade"
 	gain_text = "Fleeting memories, fleeting feet. I can mark my way with the frozen blood upon the snow. Covered and forgotten."
 	desc = "You can now use your blade on a distant marked target to move to them and attack them."
-	cost = 2
 	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/ash_blade_upgrade,
 		/datum/heretic_knowledge/flesh_blade_upgrade,
-		/datum/heretic_knowledge/rust_blade_upgrade
+		/datum/heretic_knowledge/rust_blade_upgrade,
 	)
+	cost = 2
 	route = PATH_VOID
 
 
@@ -196,13 +195,13 @@
 	name = "Void Pull"
 	gain_text = "This entity calls itself the aristocrat, I'm close to ending what was started."
 	desc = "You gain an ability that let's you pull people around you closer to you."
-	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
 	next_knowledge = list(
-		/datum/heretic_knowledge/final/void_final,
 		/datum/heretic_knowledge/spell/blood_siphon,
+		/datum/heretic_knowledge/final/void_final,
 		/datum/heretic_knowledge/summon/rusty
 	)
+	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
+	cost = 1
 	route = PATH_VOID
 
 /datum/heretic_knowledge/final/void_final
@@ -244,25 +243,25 @@
 /datum/heretic_knowledge/final/void_final/proc/on_life(mob/living/source, delta_time, times_fired)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/carbon/close_carbon in spiral_range(7,user) - user)
+	for(var/mob/living/carbon/close_carbon in spiral_range(7, source) - source)
 		if(IS_HERETIC_OR_MONSTER(close_carbon))
 			continue
 		close_carbon.silent += 1
 		close_carbon.adjust_bodytemperature(-20)
 
-	var/turf/open/user_turf = get_turf(user)
-	if(!isopenturf(user_turf))
+	var/turf/open/source_turf = get_turf(source)
+	if(!isopenturf(source_turf))
 		return
-	user_turf.TakeTemperature(-20)
+	source_turf.TakeTemperature(-20)
 
-	var/area/user_area = get_area(user)
+	var/area/source_area = get_area(source)
 
 	if(!storm)
-		storm = new /datum/weather/void_storm(list(user_turf.z))
+		storm = new /datum/weather/void_storm(list(source_turf.z))
 		storm.telegraph()
 
-	storm.area_type = user_area.type
-	storm.impacted_areas = list(user_area)
+	storm.area_type = source_area.type
+	storm.impacted_areas = list(source_area)
 	storm.update_areas()
 
 /**

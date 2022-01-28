@@ -397,33 +397,37 @@
 	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
 	return ..()
 
+/datum/status_effect/eldritch/Destroy()
+	QDEL_NULL(marked_underlay)
+	return ..()
+
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
-		owner.update_appearance()
+		owner.update_icon(UPDATE_OVERLAYS)
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
-	owner.update_appearance()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+/**
+ * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
+ *
+ * Adds the generated mark overlay to the afflicted.
+ */
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
 	overlays += marked_underlay
 
-/datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
-	return ..()
-
 /**
- * What happens when this mark gets poppedd
- *
- * Adds actual functionality to each mark
+ * Called when the mark is activated by the heretic.
  */
 /datum/status_effect/eldritch/proc/on_effect()
-	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
 
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.

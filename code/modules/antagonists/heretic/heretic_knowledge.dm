@@ -15,8 +15,6 @@
 	var/desc = "Basic knowledge of forbidden arts."
 	/// What's shown to the heretic when the knowledge is aquired
 	var/gain_text
-	/// Cost of knowledge in knowlege points
-	var/cost = 0
 	/// The knowledge this unlocks next after learning.
 	var/list/next_knowledge = list()
 	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
@@ -26,10 +24,10 @@
 	var/list/required_atoms = list()
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
+	/// Cost of knowledge in knowlege points
+	var/cost = 0
 	/// What path is this on. Sefaults to "Side".
 	var/route = PATH_SIDE
-	/// Whether this knowledge processes on life ticks.
-	var/processes_on_life = FALSE
 
 /**
  * Called when the knowledge is first researched.
@@ -144,7 +142,7 @@
  */
 /datum/heretic_knowledge/curse
 	/// The duration of the curse
-	var/timer = 5 MINUTES
+	var/duration = 5 MINUTES
 	/// Cache list of fingerprints (actual fingerprint strings) we have from our current ritual
 	var/list/fingerprints
 
@@ -179,7 +177,7 @@
 		return FALSE
 
 	curse(to_curse)
-	addtimer(CALLBACK(src, .proc/uncurse, to_curse),timer)
+	addtimer(CALLBACK(src, .proc/uncurse, to_curse), duration)
 	return TRUE
 
 /**
