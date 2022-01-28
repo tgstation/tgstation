@@ -176,7 +176,7 @@
 	. = list()
 
 	.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
-	.["local"] = span_userdanger("[target] tries to... knock you down with [src]?") //look at the top of his head!
+	.["local"] = span_userdanger("[user] tries to... knock you down with [src]?") //look at the top of his head!
 
 	return .
 
