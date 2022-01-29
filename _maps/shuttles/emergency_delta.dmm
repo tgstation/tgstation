@@ -682,15 +682,6 @@
 /obj/machinery/recharger,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
-"bA" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "bB" = (
 /obj/structure/table,
 /obj/item/clipboard,
@@ -1237,6 +1228,18 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"tl" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/stasis{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
 /area/shuttle/escape)
 "tm" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -1876,7 +1879,7 @@ Dx
 cc
 NF
 af
-bA
+bS
 QB
 bG
 Yq
@@ -1980,7 +1983,7 @@ ay
 JQ
 JQ
 aL
-aQ
+tl
 af
 aY
 ba
