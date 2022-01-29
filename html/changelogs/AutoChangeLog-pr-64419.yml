@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "Thermite will no longer leave an impassable fire tile if the turf beneath it is deleted/deconstructed."

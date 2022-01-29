@@ -1164,3 +1164,35 @@
       Incinerator Room.
   - bugfix: The camera in the Ice Box Station Locker Room is no longer inside of a
       door.
+2022-01-29:
+  Fikou, TetraZeta for sprites, Nerevar for description.:
+  - expansion: Loader Class MODsuit, equipped with hydraulic arms, available in your
+      nearby cargo storage (or qm office on delta).
+  - expansion: BEPIS MODsuit modules, currently available one lets you change your
+      disposal destination.
+  Improvedname:
+  - bugfix: Ash drake shapeshift now converts your health like shapeshifting is supposed
+      to
+  LemonInTheDark:
+  - bugfix: APCs will no longer error and complain about something that doesn't actually
+      matter
+  - bugfix: I accidentally doubled the speed of all simple mobs. It's fixed now. I
+      also know how byond's internal movement stuff works now. I hate this codebase
+  OneAsianTortoise:
+  - bugfix: Fixes being able to load C-4/X-4 into the grenade launcher, and it duplicating
+      when you try to load it
+  RandomGamer123:
+  - qol: Purified shades now show who they were prior to becoming a shade.
+  - bugfix: Purified shades that get converted to shades now become regular cult shades.
+  - qol: Purified soulstones (and the shades inside) can now directly be converted
+      into cult soulstones (and cult shades) with Twisted Construction.
+  - spellcheck: '"Shade of" does not get duplicated anymore for soulstones under certain
+      conditions'
+  SmoSmoSmoSmok:
+  - bugfix: Cuffing people as a PAI/ghost controlled beepsky no longer glitches out
+  SuperNovaa41:
+  - bugfix: Thermite will no longer leave an impassable fire tile if the turf beneath
+      it is deleted/deconstructed.
+  - bugfix: Spiders will now have a randomized number next to their name.
+  tralezab:
+  - balance: Statues can now phase around when unseen.

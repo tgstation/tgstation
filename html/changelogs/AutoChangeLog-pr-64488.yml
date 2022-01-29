@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "APCs will no longer error and complain about something that doesn't actually matter"
