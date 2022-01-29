@@ -293,6 +293,7 @@ const ParametersSection = (props, context) => {
     wearer_name,
     wearer_job,
     pAI,
+    ispAI,
   } = data;
   const status = malfunctioning
     ? 'Malfunctioning' : active
@@ -332,7 +333,13 @@ const ParametersSection = (props, context) => {
         <LabeledList.Item label="Occupant">
           {wearer_name}, {wearer_job}
         </LabeledList.Item>
-        <LabeledList.Item label="Onboard pAI">
+        <LabeledList.Item label="Onboard pAI" buttons={
+          <Button
+            icon="eject"
+            disabled={!pAI || ispAI}
+            content="Eject pAI"
+            onClick={() => act('remove_pai')} />
+        } >
           {pAI || 'None'}
         </LabeledList.Item>
       </LabeledList>

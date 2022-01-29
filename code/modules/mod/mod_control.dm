@@ -187,7 +187,7 @@
 	for(var/obj/item/mod/module/module as anything in modules)
 		for(var/obj/item/item in module)
 			item.forceMove(drop_location())
-	remove_pai()
+	remove_pai(forced = TRUE)
 	return ..()
 
 /obj/item/mod/control/examine(mob/user)

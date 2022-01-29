@@ -16,6 +16,7 @@
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["pAI"] = mod_pai?.name
+	data["ispAI"] = mod_pai ? mod_pai == user : FALSE
 	data["core"] = core?.name
 	data["charge"] = get_charge_percent()
 	data["modules"] = list()
@@ -89,4 +90,8 @@
 			if(!module)
 				return
 			module.pin(usr)
+		if("remove_pai")
+			if(ishuman(usr)) // Only the MODsuit's wearer should be removing the pAI.
+				var/mob/user = usr
+				remove_pai(user)
 	return TRUE
