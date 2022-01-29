@@ -16263,7 +16263,9 @@
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/atmos)
 "eRR" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/large,
 /area/medical/treatment_center)

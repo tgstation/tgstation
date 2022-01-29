@@ -30112,6 +30112,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
+"isu" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "isE" = (
 /obj/structure/dresser,
 /obj/machinery/newscaster/directional/north,
@@ -94850,7 +94868,7 @@ uWR
 dux
 mVW
 dux
-jqO
+isu
 nCO
 gIf
 vjp
