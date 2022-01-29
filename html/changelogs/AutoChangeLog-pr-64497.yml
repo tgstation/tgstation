@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "If you've been noticing some weirdness in the light as you spacewalk over to the AI Satellite on MetaStation, fear no longer for they have been fixed."

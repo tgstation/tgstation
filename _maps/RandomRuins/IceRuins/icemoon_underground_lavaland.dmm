@@ -26,7 +26,7 @@
 /area/icemoon/underground)
 "y" = (
 /mob/living/simple_animal/hostile/megafauna/dragon{
-	desc = "Hunted to extinction, the icey moon of lavaland is the final resting place for these creatures.";
+	desc = "Hunted to extinction, this icey moon is the final resting place for these creatures.";
 	name = "\proper the last ash drake"
 	},
 /turf/open/floor/mineral/gold,

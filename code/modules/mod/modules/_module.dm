@@ -96,7 +96,7 @@
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 		else
 			on_activation()
 	else
@@ -118,7 +118,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
-		if(mod.selected_module && !mod.selected_module.on_deactivation())
+		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
 			return
 		mod.selected_module = src
 		if(device)
@@ -140,16 +140,16 @@
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation()
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
+		if(display_message)
+			balloon_alert(mod.wearer, device ? "[device] retracted" : "[src] deactivated")
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, force = TRUE)
-			balloon_alert(mod.wearer, "[device] retracted")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
-			balloon_alert(mod.wearer, "[src] deactivated")
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
 	mod.wearer.update_inv_back()
@@ -195,7 +195,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -247,7 +247,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation()
+		on_deactivation(display_message = TRUE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)

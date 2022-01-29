@@ -349,13 +349,12 @@
 			return TRUE
 		stop_pulling()
 
-	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
-
 	if(pulled_atom.pulledby)
 		log_combat(pulled_atom, pulled_atom.pulledby, "pulled from", src)
 		pulled_atom.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = pulled_atom
 	pulled_atom.set_pulledby(src)
+	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
 	setGrabState(state)
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom

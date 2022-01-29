@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - imageadd: "Abandoned Kitchens now have a special sprite indicating that they are now abandoned."

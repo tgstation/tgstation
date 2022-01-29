@@ -154,6 +154,7 @@
 /area/engineering/gravity_generator)
 "aH" = (
 /obj/machinery/light/directional/east,
+/obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/engineering/main)
 "aI" = (
@@ -468,6 +469,7 @@
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/backpack/holding,
+/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/command/bridge)
 "bL" = (

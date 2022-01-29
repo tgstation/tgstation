@@ -61,7 +61,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation()
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

@@ -19,7 +19,7 @@
 		return
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, MOD_TRAIT)
 
-/obj/item/mod/module/reagent_scanner/on_deactivation()
+/obj/item/mod/module/reagent_scanner/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -38,7 +38,7 @@
 	mod.wearer.research_scanner++
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
-/obj/item/mod/module/reagent_scanner/advanced/on_deactivation()
+/obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -77,7 +77,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 
-/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation()
+/obj/item/mod/module/anomaly_locked/antigrav/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -112,15 +112,16 @@
 		balloon_alert(mod.wearer, "invalid target!")
 		return
 	balloon_alert(mod.wearer, "teleporting...")
-	var/matrix/user_matrix = matrix(mod.wearer.transform)
-	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = user_matrix.Scale(4, 0.25), easing = EASE_OUT)
+	var/matrix/pre_matrix = matrix()
+	pre_matrix.Scale(4, 0.25)
+	var/matrix/post_matrix = matrix()
+	post_matrix.Scale(0.25, 4)
+	animate(mod.wearer, teleport_time, color = COLOR_CYAN, transform = pre_matrix.Multiply(mod.wearer.transform), easing = EASE_OUT)
 	if(!do_after(mod.wearer, teleport_time, target = mod))
 		balloon_alert(mod.wearer, "interrupted!")
-		var/matrix/post_matrix = matrix(mod.wearer.transform)
-		animate(mod.wearer, teleport_time, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
+		animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = EASE_IN)
 		return
-	var/matrix/post_matrix = matrix(mod.wearer.transform)
-	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Scale(0.25, 4), easing = EASE_IN)
+	animate(mod.wearer, teleport_time*0.1, color = null, transform = post_matrix.Multiply(mod.wearer.transform), easing = EASE_IN)
 	if(!do_teleport(mod.wearer, target_turf, asoundin = 'sound/effects/phasein.ogg'))
 		return
 	drain_power(use_power_cost)

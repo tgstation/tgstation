@@ -276,7 +276,7 @@
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
-	addtimer(CALLBACK(src, .proc/handcuff_target, target), 6 SECONDS)
+	addtimer(CALLBACK(src, .proc/handcuff_target, current_target), 6 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
 	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
@@ -285,12 +285,14 @@
 		return
 	if(!Adjacent(current_target))
 		return
-
 	if(!current_target.handcuffed)
 		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
 		current_target.update_handcuffed()
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
+
+
+
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
@@ -355,7 +357,7 @@
 
 			// not next to perp
 			var/turf/olddist = get_dist(src, target)
-			SSmove_manager.move_to(src, target, 1, 2)
+			SSmove_manager.move_to(src, target, 1, 4)
 			if((get_dist(src, target)) >= (olddist))
 				frustration++
 			else

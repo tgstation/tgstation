@@ -34,7 +34,7 @@
 /obj/effect/mob_spawn/ghost_role/spider
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."
-	mob_name = "a spider"
+	mob_name = "\improper spider"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "eggs"
 	move_resist = MOVE_FORCE_NORMAL
@@ -168,4 +168,5 @@
 	if(QDELETED(src) || QDELETED(user) || !chosen_spider)
 		return FALSE
 	mob_type = chosen_spider
+	mob_name = "[mob_name] ([rand(1, 1000)])"
 	return ..()

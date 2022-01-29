@@ -1,0 +1,4 @@
+author: "Vire, san7890, mrmelbert, Sealed101"
+delete-after: True
+changes: 
+  - bugfix: "Autonamed cameras should no longer show static in camera consoles."

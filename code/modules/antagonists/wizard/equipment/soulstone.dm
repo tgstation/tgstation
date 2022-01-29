@@ -52,9 +52,31 @@
 		mob_cultist.mind.remove_antag_datum(/datum/antagonist/cult)
 	for(var/mob/living/simple_animal/shade/sharded_shade in src)
 		sharded_shade.icon_state = "ghost1"
-		sharded_shade.name = "Purified [initial(sharded_shade.name)]"
+		sharded_shade.name = "Purified [sharded_shade.real_name]"
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
 	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
+
+/**
+ * corrupt: turns the soulstone into a cult one and turns the occupant shade, if any, into a cultist
+ */
+/obj/item/soulstone/proc/corrupt()
+	if(theme == THEME_CULT)
+		return FALSE
+	required_role = null
+	theme = THEME_CULT
+	icon_state = "soulstone"
+	for(var/mob/shade_to_convert in contents)
+		if(!shade_to_convert.mind)
+			continue
+		icon_state = "soulstone2"
+		if(IS_CULTIST(shade_to_convert))
+			continue
+		shade_to_convert.mind.add_antag_datum(/datum/antagonist/cult)
+	for(var/mob/living/simple_animal/shade/sharded_shade in src)
+		sharded_shade.icon_state = "shade_cult"
+		sharded_shade.name = sharded_shade.real_name
+	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
+	return TRUE
 
 /obj/item/soulstone/proc/role_check(mob/who)
 	return required_role ? (who.mind && who.mind.has_antag_datum(required_role, TRUE)) : TRUE
@@ -175,7 +197,7 @@
 			if(THEME_HOLY)
 				icon_state = "purified_soulstone"
 				A.icon_state = "shade_holy"
-				A.name = "Purified [initial(A.name)]"
+				A.name = "Purified [A.real_name]"
 				A.loot = list(/obj/item/ectoplasm/angelic)
 			if(THEME_WIZARD)
 				icon_state = "mystic_soulstone"
@@ -289,7 +311,7 @@
 		icon_state = "mystic_soulstone2"
 	if(theme == THEME_CULT)
 		icon_state = "soulstone2"
-	name = "soulstone: Shade of [shade.real_name]"
+	name = "soulstone: [shade.real_name]"
 	to_chat(shade, span_notice("Your soul has been captured by [src]. Its arcane energies are reknitting your ethereal form."))
 	if(user != shade)
 		to_chat(user, "[span_info("<b>Capture successful!</b>:")] [shade.real_name]'s soul has been captured and stored within [src].")
