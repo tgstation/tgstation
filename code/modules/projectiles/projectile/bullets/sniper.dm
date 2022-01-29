@@ -34,6 +34,7 @@
 	name = "penetrator round"
 	icon_state = "gauss"
 	damage = 60
+	range = 50
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
 	phasing_ignore_direct_target = TRUE
