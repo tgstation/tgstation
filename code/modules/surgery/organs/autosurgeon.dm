@@ -82,6 +82,7 @@
 	user.visible_message(span_notice("[user] presses a button on [src], and you hear a short mechanical noise."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	to_chat(target, span_notice("You feel a sharp sting as something plunges into your body!"))
 	playsound(get_turf(user), 'sound/weapons/circsawhit.ogg', 50, vary = TRUE)
+	storedorgan.Insert(user)//insert stored organ into the user
 	use_autosurgeon()
 
 /obj/item/autosurgeon/organ/screwdriver_act(mob/living/user, obj/item/screwtool)
