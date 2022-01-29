@@ -63,7 +63,7 @@
 		Yet still it bites, ripping flesh and bone with jagged, rotten teeth."
 	icon_state = "rust_blade"
 	inhand_icon_state = "rust_blade"
-	after_use_message = "The Rusted Hills hear your call...""
+	after_use_message = "The Rusted Hills hear your call..."
 
 /obj/item/melee/sickly_blade/ash
 	name = "\improper ashen blade"
@@ -71,7 +71,7 @@
 		Unmade, it aspires to be more than it is, and shears soot-filled wounds with a blunt edge."
 	icon_state = "ash_blade"
 	inhand_icon_state = "ash_blade"
-	after_use_message = "The Night Watchmen hear your call...""
+	after_use_message = "The Nightwater hears your call..."
 
 /obj/item/melee/sickly_blade/flesh
 	name = "\improper bloody blade"
@@ -79,7 +79,7 @@
 		Keenly aware, it seeks to spread to others the suffering it has endured from its dreadful origins."
 	icon_state = "flesh_blade"
 	inhand_icon_state = "flesh_blade"
-	after_use_message = "The Emperor of Flesh hears your call...""
+	after_use_message = "The Marshal hears your call..."
 
 /obj/item/melee/sickly_blade/void
 	name = "\improper void blade"
@@ -87,7 +87,7 @@
 		It is a real depiction of purity, and chaos that ensues after its implementation."
 	icon_state = "void_blade"
 	inhand_icon_state = "void_blade"
-	after_use_message = "The Aristocrat hears your call...""
+	after_use_message = "The Aristocrat hears your call..."
 
 /obj/item/melee/rune_carver
 	name = "carving knife"

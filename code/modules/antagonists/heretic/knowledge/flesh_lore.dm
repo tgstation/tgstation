@@ -197,7 +197,7 @@
 	name = "Mark of Flesh"
 	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
 		When triggered, the victim begins to bleed significantly."
-	gain_text = "I saw them, the marked ones. The screams... then... silence."
+	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/raw_prophet,
 		/datum/heretic_knowledge/reroll_targets,
@@ -236,7 +236,8 @@
 	desc = "Allows you to transmute a pair of eyes, a left arm, and a pool of blood to create a Raw Prophet. \
 		Raw Prophets have a greatly increased sight range and x-ray vision, as well as a long range jaunt and \
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
-	gain_text = "The Uncanny Man, who walks alone in the valley between the worlds... I was able to summon his aid."
+	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
+		The screams... once constant, now silenced by the Uncanny Man's appearance. Nothing was out of reach."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/flesh_blade_upgrade,
@@ -254,7 +255,8 @@
 /datum/heretic_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
 	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
-	gain_text = "And then, blood rained from the heavens. That's when I finally understood the Marshal's teachings."
+	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
+		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/ash_blade_upgrade,
@@ -286,7 +288,7 @@
 	desc = "Allows you to transmute a pair of eyes, a candle, a pen and a piece of paper to create a Stalker. \
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
-		An ever shapeshifting mass of flesh, it knew well my goals."
+		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/final/flesh_final,
@@ -310,7 +312,9 @@
 		While in the Lord of the Night form, you can consume arms to heal and regain segments. \
 		Additionally, you can summon three times as many Ghouls and Voiceless Dead, \
 		and can create unlimited blades to arm them all."
-	gain_text = "Men of this world. Hear me, for the time of the Lord of the Night has come! The Emperor of Flesh guides my army!"
+	gain_text = "With the Marshal's knowledge, my power had peaked. The throne was open to claim. \
+		Men of this world, hear me, for the time has come! The Marshal guides my army! \
+		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

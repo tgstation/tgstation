@@ -58,7 +58,7 @@
 			pixel_y = -64
 			pixel_x = -128
 
-// Shoots a straight cone of rusty stuff ahead of the caster, what rust monsters get
+// Shoots a straight line of rusty stuff ahead of the caster, what rust monsters get
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
 	name = "Patron's Reach"
 	desc = "Channels energy into your hands to release a wave of rust."

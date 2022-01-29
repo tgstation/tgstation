@@ -317,21 +317,24 @@
 	GLOB.reality_smash_track.rework_network()
 
 /**
- * Forge our objectives for our heretic.
+ * Create our objectives for our heretic.
  */
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/datum/objective/heretic_research/research_objective = new()
 	research_objective.owner = owner
 	objectives += research_objective
 
-	var/datum/objective/minor_sacrifice/sac_objective = new()
-	sac_objective.owner = owner
-	objectives += sac_objective
-
 	var/num_heads = 0
 	for(var/mob/player in GLOB.alive_player_list)
 		if(player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			num_heads++
+
+	var/datum/objective/minor_sacrifice/sac_objective = new()
+	sac_objective.owner = owner
+	if(num_heads < 2) // They won't get major sacrifice, so bump up minor sacrifice a bit
+		sac_objective.target_amount += 2
+		sac_objective.update_explanation_text()
+	objectives += sac_objective
 
 	if(num_heads >= 2)
 		var/datum/objective/major_sacrifice/other_sac_objective = new()

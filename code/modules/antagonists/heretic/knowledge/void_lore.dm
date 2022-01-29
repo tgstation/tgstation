@@ -29,8 +29,8 @@
 	desc = "Opens up the path of void to you. \
 		Allows you to transmute a knife in a sub-zero temperature into a Void Blade. \
 		You can only create two at a time."
-	gain_text = "I feel a shimmer in the air, the atmosphere around me gets colder. \
-		I feel my body realizing the emptiness of existance. Something's watching me."
+	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
+		I start to realize the emptiness of existance. Something's watching me."
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/base_ash,
@@ -59,8 +59,8 @@
 /datum/heretic_knowledge/void_grasp
 	name = "Grasp of Void"
 	desc = "Your Masus Grasp will temporarily mute and chill the victim."
-	gain_text = "I found the cold watcher who observes me. The resonance of cold grows within me. \
-		This isn't the end of the mystery."
+	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
+		They are quiet. This isn't the end of the mystery."
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)
 	cost = 1
 	route = PATH_VOID
@@ -109,7 +109,8 @@
 	name = "Mark of Void"
 	desc = "Your Mansus Grasp now applies the Mark of Void. The mark is triggered from an attack with your Void Blade. \
 		When triggered, silences the victim and lowers their body temperature significantly."
-	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, my senses betrayed me. My mind is my enemy."
+	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
+		my senses began to betray me. My mind is my own enemy."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_phase,
 		/datum/heretic_knowledge/reroll_targets,
@@ -147,7 +148,8 @@
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
 		Additionally causes damage to heathens around your original and target destination."
-	gain_text = "Reality bends under the power of memory. All is fleeting, but what else stays?"
+	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
+		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/void_blade_upgrade,
@@ -159,8 +161,8 @@
 
 /datum/heretic_knowledge/void_blade_upgrade
 	name = "Seeking blade"
-	gain_text = "Fleeting memories, fleeting feet. I can mark my way with the frozen blood upon the snow. Covered and forgotten."
 	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
+	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/ash_blade_upgrade,
@@ -195,7 +197,8 @@
 /datum/heretic_knowledge/spell/voidpull
 	name = "Void Pull"
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
-	gain_text = "This entity calls itself the aristocrat, I'm close to ending what was started."
+	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
+		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/final/void_final,
@@ -211,8 +214,8 @@
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
 		Additionally, you will become immune to the effects of space."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
-		The aristocrat stands before me, he motions to me. We will play a waltz to the whispers of dying reality, \
-		as the world is destroyed before our eyes."
+		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
+		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
 	route = PATH_VOID
 	///soundloop for the void theme
 	var/datum/looping_sound/void_loop/sound_loop

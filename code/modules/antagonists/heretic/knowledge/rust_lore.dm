@@ -79,7 +79,7 @@
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and stun resistance while standing over rust."
-	gain_text = "The strength was unparalleled, unnatural. The Blacksmith was smiling."
+	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/armor,
@@ -134,7 +134,7 @@
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
 		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
-	gain_text = "Rusted Hills help those in dire need... at a cost."
+	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/area_conversion,
 		/datum/heretic_knowledge/reroll_targets,
@@ -172,7 +172,7 @@
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
-	gain_text = "All wise men know well not to touch the Bound King."
+	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/rust_blade_upgrade,
@@ -185,7 +185,8 @@
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
 	desc = "Your Rusty Blade now poisons enemies on attack."
-	gain_text = "The Blade will guide you through the flesh, should you let it."
+	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
+		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/ash_blade_upgrade,
@@ -211,7 +212,8 @@
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
-	gain_text = "Messengers of Hope, fear the Rustbringer!"
+	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
+		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/cleave,
 		/datum/heretic_knowledge/final/rust_final,
@@ -227,7 +229,8 @@
 		endlessly spread rust onto any surface, stopping for nothing. \
 		Additionally, you will become extremely resilient on rust, healing at triple the rate \
 		and becoming immune to many effects and dangers."
-	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for the Rustbringer has come! Rusted Hills, CALL MY NAME!"
+	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
+		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME!"
 	route = PATH_RUST
 	/// A list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(

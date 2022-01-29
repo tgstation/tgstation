@@ -38,16 +38,17 @@
 	button_icon_state = "link_speech"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_ecult"
+	/// The raw prophet that hosts our link.
 	var/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/originator
 
-/datum/action/innate/mansus_speech/New(_originator)
+/datum/action/innate/mansus_speech/New(originator)
 	. = ..()
-	originator = _originator
+	src.originator = originator
 
 /datum/action/innate/mansus_speech/Activate()
 	var/mob/living/living_owner = owner
 	if(!originator?.linked_mobs[living_owner])
-		CRASH("Uh oh the mansus link got somehow activated without it being linked to a raw prophet or the mob not being in a list of mobs that should be able to do it.")
+		CRASH("Uh oh, a Mansus Link ([type]) got somehow called Activate() [isnull(originator) ? "without an originator Raw Prophet" : "without being in the originator's linked_mobs list"].")
 
 	var/message = sanitize(tgui_input_text(living_owner, "Enter your message", "Telepathy from the Manse"))
 	if(!message)
