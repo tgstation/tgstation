@@ -85,6 +85,8 @@
 	var/obj/item/mod/module/selected_module
 	/// pAI mob inhabiting the MOD.
 	var/mob/living/silicon/pai/mod_pai
+	/// Whether or not an on-board pAI can move the suit. FALSE by default, intended to be modified either via VV or via a possible future pAI program.
+	var/can_pai_move_suit = FALSE
 	/// Delay between moves as AI.
 	var/movedelay = 0
 	/// Cooldown for AI moves.
@@ -570,10 +572,10 @@
 		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
 		if(action)
 			action.Grant(wearer)
-	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
+	if(mod_pai)
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[mod_pai]
 		if(action)
-			action.Grant(ai)
+			action.Grant(mod_pai)
 	if(user)
 		balloon_alert(user, "[new_module] added")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -591,10 +593,10 @@
 		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
 		if(action)
 			action.Remove(wearer)
-	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
+	if(mod_pai)
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[mod_pai]
 		if(action)
-			action.Remove(ai)
+			action.Remove(mod_pai)
 	old_module.pinned_to.Cut()
 	old_module.on_uninstall()
 	old_module.mod = null
