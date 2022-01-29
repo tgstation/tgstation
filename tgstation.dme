@@ -107,6 +107,7 @@
 #include "code\__DEFINES\mecha.dm"
 #include "code\__DEFINES\melee.dm"
 #include "code\__DEFINES\memory_defines.dm"
+#include "code\__DEFINES\mergers.dm"
 #include "code\__DEFINES\mob_spawn.dm"
 #include "code\__DEFINES\mobs.dm"
 #include "code\__DEFINES\mod.dm"
