@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "For those of you into code, some stuff with the icon pathing has been shuffled around so it's no longer in the roots of the icon/ folder. If you aren't into code, that's fine too."
