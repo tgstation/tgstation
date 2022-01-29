@@ -43,10 +43,6 @@ Buildable meters
 /obj/item/pipe/quaternary
 	RPD_type = PIPE_ONEDIR
 
-/obj/item/pipe/ComponentInitialize()
-	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation)
-
 /obj/item/pipe/Initialize(mapload, _pipe_type, _dir, obj/machinery/atmospherics/make_from, device_color, device_init_dir = SOUTH)
 	if(make_from)
 		make_from_existing(make_from)
@@ -59,6 +55,9 @@ Buildable meters
 	update()
 	pixel_x += rand(-5, 5)
 	pixel_y += rand(-5, 5)
+	
+	//Flipping handled manually due to custom handling for trinary pipes
+	AddComponent(/datum/component/simple_rotation)
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)

@@ -14,6 +14,10 @@
 	var/flipped_build_type
 	var/base_icon
 
+/obj/structure/c_transit_tube/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src,.proc/after_rot))
+
 /obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
 	var/turf/source_turf = get_turf(loc)
 	var/existing_tubes = 0
@@ -23,10 +27,6 @@
 			to_chat(user, "[span_warning("You cannot wrench any more transit tubes!")] ")
 			return FALSE
 	return TRUE
-
-/obj/structure/c_transit_tube/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src,.proc/after_rot))
 
 /obj/structure/c_transit_tube/proc/after_rot(mob/user,rotation_type)
 	if(flipped_build_type && rotation_type == ROTATION_FLIP)

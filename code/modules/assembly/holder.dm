@@ -14,7 +14,7 @@
 	var/obj/item/assembly/a_left = null
 	var/obj/item/assembly/a_right = null
 
-/obj/item/assembly_holder/ComponentInitialize()
+/obj/item/assembly_holder/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 

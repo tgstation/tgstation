@@ -40,6 +40,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddComponent(/datum/component/simple_rotation, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -320,12 +321,6 @@
 
 	//Update to reflect changes(if applicable)
 	update_appearance()
-
-
-
-/obj/structure/windoor_assembly/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, can_be_rotated=CALLBACK(src, .proc/can_be_rotated), after_rotation=CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/windoor_assembly/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)

@@ -232,20 +232,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A stationary, plumbed, water tank."
 	can_be_tanked = FALSE
 
+/obj/structure/reagent_dispensers/plumbed/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
-
-/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/storage
 	name = "stationary storage tank"
 	icon_state = "tank_stationary"
 	reagent_id = null //start empty
 
-/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+/obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
 
