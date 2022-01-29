@@ -47,15 +47,15 @@
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	supermatters = list()
-	var/turf/T = get_turf(ui_host())
-	if(!T)
+	var/turf/user_turf = get_turf(ui_host())
+	if(!user_turf)
 		return
-	for(var/obj/machinery/power/supermatter_crystal/S in GLOB.machines)
+	for(var/obj/machinery/power/supermatter_crystal/crystal in GLOB.machines)
 		//Exclude Syndicate owned, Delaminating, not within coverage, not on a tile.
-		if (S.radio_key == /obj/item/encryptionkey/syndicate || !isturf(S.loc) || !(is_station_level(S.z) || is_mining_level(S.z) || S.z == T.z))
+		if (crystal.radio_key == /obj/item/encryptionkey/syndicate || !isturf(crystal.loc) || !(is_station_level(crystal.z) || is_mining_level(crystal.z) || crystal.z == user_turf.z))
 			continue
-		supermatters.Add(S)
-		RegisterSignal(S, COMSIG_PARENT_QDELETING, .proc/react_to_del)
+		supermatters.Add(crystal)
+		RegisterSignal(crystal, COMSIG_PARENT_QDELETING, .proc/react_to_del)
 
 /datum/computer_file/program/supermatter_monitor/proc/get_status()
 	. = SUPERMATTER_INACTIVE
