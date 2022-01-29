@@ -313,6 +313,11 @@
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/unpowered/no_grav)
+"uo" = (
+/obj/structure/closet/crate/grave,
+/obj/item/clothing/head/collectable/swat,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 "XA" = (
 /obj/structure/fluff/bus/passable/seat,
 /obj/effect/decal/cleanable/dirt,
@@ -428,7 +433,7 @@ aa
 ab
 ab
 ab
-ad
+uo
 ad
 aj
 am
