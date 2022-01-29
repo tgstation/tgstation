@@ -123,6 +123,7 @@
 	var/mob/pinner
 
 /datum/action/item_action/mod/pinned_module/New(Target, obj/item/mod/module/linked_module, mob/user)
+	mod = Target // We have to do this otherwise it's going to runtime
 	if(user == mod.mod_pai)
 		pai_action = TRUE
 	..()
