@@ -17,7 +17,7 @@
 	var/obj/item/part = locate(part_reference) in mod_parts
 	if(!istype(part) || user.incapacitated())
 		return
-	if(active || activating)
+	if((active && part != helmet) || activating)
 		balloon_alert(user, "deactivate the suit first!")
 		playsound(src, 'sound/machines/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return
