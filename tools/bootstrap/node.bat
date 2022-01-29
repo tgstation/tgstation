@@ -1,4 +1,5 @@
 @echo off
+set NODE_SKIP_PLATFORM_CHECK=1
 call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Download-Node
 for /f "tokens=* USEBACKQ" %%s in (`
 	call powershell -NoLogo -ExecutionPolicy Bypass -File "%~dp0\node_.ps1" Get-Path
