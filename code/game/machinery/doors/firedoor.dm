@@ -472,14 +472,7 @@
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
-
-/obj/machinery/door/firedoor/closed/Initialize()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/door/firedoor/closed/LateInitialize()
-	icon_state = "door_closed"
-	close()
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
