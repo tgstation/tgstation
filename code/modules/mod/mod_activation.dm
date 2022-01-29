@@ -143,6 +143,9 @@
 		module.on_deactivation(display_message = FALSE)
 	activating = TRUE
 	to_chat(wearer, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
+	if(mod_pai)
+		to_chat(mod_pai, span_notice("MODsuit [active ? "shutting down" : "starting up"]."))
+
 	if(do_after(wearer, activation_step_time, wearer, MOD_ACTIVATION_STEP_FLAGS))
 		to_chat(wearer, span_notice("[boots] [active ? "relax their grip on your legs" : "seal around your feet"]."))
 		playsound(src, 'sound/mecha/mechmove03.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
