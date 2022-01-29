@@ -610,15 +610,6 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
-"ca" = (
-/obj/machinery/iv_drip,
-/mob/living/simple_animal/bot/medbot{
-	name = "\improper emergency medibot";
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
 "cb" = (
 /obj/machinery/stasis,
 /turf/open/floor/carpet/cyan,
@@ -633,12 +624,6 @@
 "cd" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Emergency Shuttle Infirmary"
-	},
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"ce" = (
-/obj/machinery/vending/wallmed/directional/east{
-	use_power = 0
 	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
@@ -693,8 +678,11 @@
 /turf/open/floor/iron,
 /area/shuttle/escape/luxury)
 "cl" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
+/mob/living/simple_animal/bot/medbot{
+	name = "\improper emergency medibot";
+	pixel_x = -3;
+	pixel_y = 2
+	},
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cm" = (
@@ -825,11 +813,6 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape/luxury)
 "cG" = (
-/obj/machinery/stasis,
-/obj/machinery/light/directional/north,
-/turf/open/floor/carpet/cyan,
-/area/shuttle/escape/luxury)
-"cH" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/advanced,
 /obj/item/storage/firstaid/regular,
@@ -860,7 +843,13 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/cyan,
+/area/shuttle/escape/luxury)
+"cH" = (
 /obj/machinery/light/directional/south,
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
 /turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "cI" = (
@@ -905,6 +894,14 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape/luxury)
+"zh" = (
+/turf/open/floor/mineral/diamond,
+/area/shuttle/escape/luxury)
+"Eg" = (
+/obj/machinery/vending/wallmed/directional/north,
+/obj/machinery/iv_drip,
+/turf/open/floor/carpet/cyan,
 /area/shuttle/escape/luxury)
 "Lt" = (
 /obj/machinery/door/airlock/security/glass{
@@ -1258,9 +1255,9 @@ aw
 aw
 bP
 ag
-ca
-aB
 cj
+aB
+cm
 ag
 ag
 ag
@@ -1288,9 +1285,9 @@ ag
 aM
 aM
 aM
-aM
+zh
 ag
-cb
+Eg
 aB
 cl
 ag
@@ -1307,8 +1304,8 @@ bl
 bv
 ag
 cb
-ce
-cm
+cb
+cb
 ag
 qa
 bb

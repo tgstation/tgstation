@@ -239,7 +239,9 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aK" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aL" = (

@@ -470,6 +470,12 @@
 /obj/structure/table/optable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
+"im" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -752,7 +758,7 @@ aW
 aX
 aZ
 ac
-bf
+im
 bg
 bp
 ab

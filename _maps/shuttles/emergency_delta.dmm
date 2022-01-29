@@ -1333,6 +1333,18 @@
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"Rk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/stasis{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
 "TK" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -1757,7 +1769,7 @@ ay
 aE
 aE
 aL
-aQ
+Rk
 af
 aY
 ba
