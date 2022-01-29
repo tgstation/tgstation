@@ -473,6 +473,14 @@
 	icon_state = "door_closed"
 	density = TRUE
 
+/obj/machinery/door/firedoor/closed/Initialize()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/firedoor/closed/LateInitialize()
+	icon_state = "door_closed"
+	close()
+
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
 	can_crush = FALSE
