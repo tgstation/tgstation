@@ -208,9 +208,7 @@
 			. += span_notice("You could remove [core] with a <b>wrench</b>.")
 		else
 			. += span_notice("You could use a <b>MOD core</b> on it to install one.")
-		if(mod_pai)
-			. += span_notice("You could remove [mod_pai] with <b>right-click</b>")
-		else
+		if(!mod_pai)
 			. += span_notice("You could install a pAI with a <b>pAI card</b>.")
 
 /obj/item/mod/control/examine_more(mob/user)
