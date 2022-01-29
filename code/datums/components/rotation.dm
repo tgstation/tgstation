@@ -139,8 +139,7 @@
 
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
-	to_chat(user, span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]."))
-	rotated_obj.add_fingerprint(user)
+	rotated_obj.balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"
