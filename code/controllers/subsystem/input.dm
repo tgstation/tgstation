@@ -64,6 +64,7 @@ SUBSYSTEM_DEF(input)
 					dave.setDir(movement_dir)
 					dave.Show()
 				else
-					user.focus?.setDir(movement_dir)
+					var/atom/movable/atom_focus = user.focus
+					atom_focus?.setDir(movement_dir)
 			else
 				user.client?.Move(get_step(src, movement_dir), movement_dir)
