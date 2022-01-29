@@ -52,7 +52,7 @@
 		return
 	for(var/obj/machinery/power/supermatter_crystal/crystal in GLOB.machines)
 		//Exclude Syndicate owned, Delaminating, not within coverage, not on a tile.
-		if (crystal.radio_key == /obj/item/encryptionkey/syndicate || !isturf(crystal.loc) || !(is_station_level(crystal.z) || is_mining_level(crystal.z) || crystal.z == user_turf.z))
+		if (!crystal.include_in_cims || !isturf(crystal.loc) || !(is_station_level(crystal.z) || is_mining_level(crystal.z) || crystal.z == user_turf.z))
 			continue
 		supermatters.Add(crystal)
 		RegisterSignal(crystal, COMSIG_PARENT_QDELETING, .proc/react_to_del)
