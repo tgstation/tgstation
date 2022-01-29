@@ -108,3 +108,8 @@
 
 /datum/circuit_datatype/composite_instance/get_datatypes()
 	return composite_datatypes
+
+/datum/circuit_datatype/composite_instance/get_datatype(index)
+	if(index > length(composite_datatypes) || index < 0)
+		return
+	return composite_datatypes[index]
