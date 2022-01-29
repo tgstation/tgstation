@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Ice Box Public Mining downstairs now uses proper external airlocks"

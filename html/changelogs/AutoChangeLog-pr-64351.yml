@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "I accidentally doubled the speed of all simple mobs. It's fixed now. I also know how byond's internal movement stuff works now. I hate this codebase"
