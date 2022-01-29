@@ -6,16 +6,23 @@
 /obj/effect/spawner/random/trash/garbage
 	name = "garbage spawner"
 	loot = list(
-		/obj/effect/spawner/random/trash/food_packaging = 56,
-		/obj/item/trash/can = 8,
-		/obj/item/shard = 8,
-		/obj/effect/spawner/random/trash/botanical_waste = 8,
-		/obj/effect/spawner/random/trash/cigbutt = 8,
-		/obj/item/reagent_containers/syringe = 5,
-		/obj/item/light/tube/broken = 3,
-		/obj/item/food/deadmouse = 2,
-		/obj/item/light/tube/broken = 1,
+		/obj/effect/spawner/random/trash/food_packaging = 20,
+		/obj/item/trash/can = 15,
+		/obj/item/shard = 10,
+		/obj/effect/spawner/random/trash/cigbutt = 10,
+		/obj/effect/spawner/random/trash/botanical_waste = 5,
+		/obj/item/reagent_containers/glass = 5,
+		/obj/item/broken_bottle = 5,
+		/obj/item/reagent_containers/glass/bowl = 5,
+		/obj/item/light/tube/broken = 5,
+		/obj/item/light/tube/broken = 5,
+		/obj/item/assembly/mousetrap/armed = 5,
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/food/deadmouse = 1,
 		/obj/item/trash/candle = 1,
+		/obj/item/popsicle_stick = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/reagent_containers/food/drinks/sillycup = 1,
 	)
 
 /obj/effect/spawner/random/trash/cigbutt
@@ -42,12 +49,17 @@
 		/obj/item/trash/boritos/purple = 1,
 		/obj/item/trash/boritos/red = 1,
 		/obj/item/trash/can/food/beans = 1,
+		/obj/item/trash/can/food/peaches = 1,
+		/obj/item/trash/can/food/envirochow = 1,
 		/obj/item/trash/popcorn = 1,
 		/obj/item/trash/energybar = 1,
 		/obj/item/trash/can/food/peaches/maint = 1,
 		/obj/item/trash/semki = 1,
 		/obj/item/trash/cnds = 1,
 		/obj/item/trash/syndi_cakes = 1,
+		/obj/item/trash/shrimp_chips = 1,
+		/obj/item/trash/waffles = 1,
+		/obj/item/trash/tray = 1,
 	)
 
 /obj/effect/spawner/random/trash/botanical_waste
@@ -184,7 +196,7 @@
 	)
 
 
-/obj/effect/spawner/random/structure/bucket
+/obj/effect/spawner/random/trash/bucket
 	name = "bucket spawner"
 	icon_state = "caution"
 	loot = list(
