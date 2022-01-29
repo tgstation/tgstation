@@ -1255,21 +1255,26 @@ GLOBAL_LIST_EMPTY(vending_products)
 			break
 	if(!dispensed_item)
 		return FALSE
+	/// Charges the user if its not the owner
 	if(!compartmentLoadAccessCheck(user))
 		if(!payee.has_money(dispensed_item.custom_price))
 			balloon_alert(user, "insufficient funds")
 			return TRUE
+		/// Make the transaction
 		payee.adjust_money(-dispensed_item.custom_price)
 		linked_account.adjust_money(dispensed_item.custom_price)
-		linked_account.bank_card_talk("You received [dispensed_item.custom_price] \
-		cr from a purchase made at your custom vendor by [payee.account_holder].")
+		linked_account.bank_card_talk("[payee.account_holder] made a [dispensed_item.custom_price] \
+		cr purchase at your custom vendor.")
+		/// Log the transaction
 		SSblackbox.record_feedback("amount", "vending_spent", dispensed_item.custom_price)
 		log_econ("[dispensed_item.custom_price] credits were spent on [src] buying a \
 		[dispensed_item] by [payee.account_holder], owned by [linked_account.account_holder].")
+		/// Make an alert
 		if(last_shopper != REF(usr) || purchase_message_cooldown < world.time)
 			say("Thank you for your patronage [user]!")
 			purchase_message_cooldown = world.time + 5 SECONDS
 			last_shopper = REF(usr)
+	/// Remove the item
 	loaded_items--
 	use_power(5)
 	vending_machine_input[choice] = max(vending_machine_input[choice] - 1, 0)

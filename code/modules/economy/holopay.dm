@@ -50,6 +50,8 @@
 		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(istype(held_item, /obj/item/card/id))
+		if(force_fee && tgui_alert(holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+			return TRUE
 		process_payment(user)
 		return TRUE
 	/// Users can also pay by holochip

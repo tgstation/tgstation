@@ -120,20 +120,37 @@ const TerminalDisplay = (props, context) => {
           </Tooltip>
         </Stack.Item>
         <Stack.Item>
-          <Button.Confirm
-            content={
-              <>
-                <Icon name="coins" />
-                Pay {!!force_fee && force_fee + ' cr'}
-              </>
-            }
-            disabled={cannot_pay}
-            fluid
-            height="2rem"
-            onClick={() => act('pay')}
-            pt={0.2}
-            textAlign="center"
-          />
+          {force_fee ? (
+            <Button.Confirm
+              content={
+                <>
+                  <Icon name="coins" />
+                  Pay {force_fee + ' cr'}
+                </>
+              }
+              disabled={cannot_pay}
+              fluid
+              height="2rem"
+              onClick={() => act('pay')}
+              pt={0.2}
+              textAlign="center"
+            />
+          ) : (
+            <Button
+              content={
+                <>
+                  <Icon name="coins" />
+                  Pay
+                </>
+              }
+              disabled={cannot_pay}
+              fluid
+              height="2rem"
+              onClick={() => act('pay')}
+              pt={0.2}
+              textAlign="center"
+            />
+          )}
         </Stack.Item>
         <Stack.Item>
           {/* @ts-ignore */}
