@@ -15,7 +15,7 @@
 		/obj/item/broken_bottle = 5,
 		/obj/item/reagent_containers/glass/bowl = 5,
 		/obj/item/light/tube/broken = 5,
-		/obj/item/light/tube/broken = 5,
+		/obj/item/light/bulb/broken = 5,
 		/obj/item/assembly/mousetrap/armed = 5,
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/food/deadmouse = 1,
