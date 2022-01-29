@@ -458,7 +458,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
 
 /obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)

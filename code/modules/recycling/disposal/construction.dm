@@ -87,7 +87,7 @@
 
 /obj/structure/disposalconstruct/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE | ROTATION_FLIP | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated), CALLBACK(src, .proc/after_rot))
+	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated), after_rotation = CALLBACK(src, .proc/after_rot))
 
 /obj/structure/disposalconstruct/proc/after_rot(mob/user,rotation_type)
 	if(rotation_type == ROTATION_FLIP)

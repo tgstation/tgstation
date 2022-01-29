@@ -1,9 +1,9 @@
 /// If an object needs to be rotated with a wrench
 #define ROTATION_REQUIRE_WRENCH (1<<0)
 /// If ghosts can rotate an object (if the ghost config is enabled)
-#define ROTATION_GHOSTS_ALLOWED (1<1)
+#define ROTATION_GHOSTS_ALLOWED (1<<1)
 /// If an object will ignore anchored for rotation (used for chairs)
-#define ROTATION_IGNORE_ANCHORED (1<2)
+#define ROTATION_IGNORE_ANCHORED (1<<2)
 
 /// Rotate an object clockwise
 #define ROTATION_CLOCKWISE 1
@@ -82,7 +82,7 @@
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("Alt-click + LMB to rotate it clockwise. Alt-click + RMB to rotate it counterclockwise.")
+	examine_list += span_notice("Alt-click + RMB to rotate it clockwise. Alt-click + LMB to rotate it counterclockwise.")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 

@@ -21,7 +21,10 @@
 	. = ..()
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
+	AddComponent(/datum/component/simple_rotation, \
+		can_user_rotate = CALLBACK(src, .proc/can_user_rotate), \ 
+		can_be_rotated = CALLBACK(src, .proc/can_be_rotated) \
+	)
 
 /obj/structure/statue/proc/can_be_rotated(mob/user)
 	if(!anchored)

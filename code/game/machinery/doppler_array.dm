@@ -26,7 +26,7 @@
 
 /obj/machinery/doppler_array/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src,.proc/rot_message))
 
 /datum/data/tachyon_record
 	name = "Log Recording"

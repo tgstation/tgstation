@@ -24,7 +24,7 @@
 
 /obj/machinery/power/generator/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS )
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/power/generator/Destroy()
 	kill_circs()

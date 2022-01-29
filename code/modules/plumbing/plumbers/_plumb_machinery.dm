@@ -21,7 +21,7 @@
 	. = ..()
 	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation, ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
