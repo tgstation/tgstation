@@ -375,7 +375,7 @@ GLOBAL_VAR(restart_counter)
 	SStimer?.reset_buckets()
 
 /world/Profile(command, type, format)
-	if(!CONFIG_GET(flag/forbid_all_profiling))
+	if(!global.config || !CONFIG_GET(flag/forbid_all_profiling))
 		. = ..()
 
 #undef OVERRIDE_LOG_DIRECTORY_PARAMETER
