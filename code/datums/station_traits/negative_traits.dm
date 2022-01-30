@@ -135,9 +135,10 @@
 	SIGNAL_HANDLER
 	var/list/acceptable_replacement_jobs = list(
 		/datum/job/scientist,
-		/datum/job/medical_doctor,
+		/datum/job/doctor,
 		/datum/job/station_engineer,
 		/datum/job/cargo_technician,
+		/datum/job/cook,
 	)
 	for(var/datum/job/job as anything in SSjob.joinable_occupations)
 		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_ASSISTANT)))
