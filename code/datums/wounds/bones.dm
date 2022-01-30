@@ -187,7 +187,7 @@
 		else
 			limp_slowdown = initial(limp_slowdown)
 			limp_chance = initial(limp_chance)
-		victim.apply_status_effect(STATUS_EFFECT_LIMP)
+		victim.apply_status_effect(/datum/status_effect/limp)
 	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		if(limb.current_gauze?.splint_factor)
 			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * limb.current_gauze.splint_factor)

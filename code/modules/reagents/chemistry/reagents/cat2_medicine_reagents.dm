@@ -87,7 +87,7 @@
 
 /datum/reagent/medicine/c2/helbital/on_mob_delete(mob/living/L)
 	if(helbent)
-		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+		L.remove_status_effect(/datum/status_effect/necropolis_curse)
 	..()
 
 /datum/reagent/medicine/c2/libital //messes with your liber
