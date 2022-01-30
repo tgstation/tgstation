@@ -589,10 +589,6 @@ GENE SCANNER
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
-/obj/item/analyzer/attack_self(mob/user)
-	..()
-	add_fingerprint(user)
-
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
 
