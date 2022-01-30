@@ -252,12 +252,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	var/i = 0
 	while(change_counter < MBOX_DURATION_CHOOSING)
 		i++
-		testing("Iter [i]: change_delay: [change_delay] | change_counter: [change_counter]")
 		change_delay += change_delay_delta
 		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
 		selected_item = selected_path
 		animate(icon = initial(selected_item.icon), icon_state = initial(selected_item.icon_state), time = change_counter)
+		testing("Iter [i]: change_delay: [change_delay] | change_counter: [change_counter] | icon: [selected_item.icon] | icon_state: [selected_item.icon_state]")
 
 	addtimer(CALLBACK(src, .proc/present_item), MBOX_DURATION_CHOOSING)
 
