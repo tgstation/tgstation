@@ -261,7 +261,7 @@
 /datum/design/component/element_find
 	name = "Element Find"
 	id = "comp_element_find"
-	build_path = /obj/item/circuit_component/variable/list/listin
+	build_path = /obj/item/circuit_component/listin
 
 /datum/design/component/select_query
 	name = "Select Query Component"
