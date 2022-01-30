@@ -3,7 +3,6 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
-	icon_state = "standard-control"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
 
 /obj/item/mod/control
@@ -114,7 +113,7 @@
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
-	chestplate.allowed = theme.allowed.Copy()
+	chestplate.allowed = theme.allowed_suit_storage.Copy()
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src

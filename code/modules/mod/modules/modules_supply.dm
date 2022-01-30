@@ -370,6 +370,7 @@
 			/turf/open/floor/plating/snowed,
 			/turf/open/floor/plating/sandy_dirt,
 			/turf/open/floor/plating/ironsand,
+			/turf/open/floor/plating/ice,
 			/turf/open/indestructible/hierophant,
 			/turf/open/indestructible/boss,
 			/turf/open/indestructible/necropolis,
@@ -402,7 +403,7 @@
 /obj/item/mod/module/ash_accretion/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	if(!isturf(mod.wearer.loc)) //dont lose ash from going in a locker
 		return
-	if(traveled_tiles && prob(25)) //leave ash every few tiles
+	if(traveled_tiles) //leave ash every tile
 		new /obj/effect/temp_visual/light_ash(get_turf(src))
 	if(is_type_in_typecache(mod.wearer.loc, accretion_turfs))
 		if(traveled_tiles >= max_traveled_tiles)
@@ -446,7 +447,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN*0.5
 	use_power_cost = DEFAULT_CHARGE_DRAIN*3
 	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
-	cooldown_time = 1.5 SECONDS
+	cooldown_time = 1.25 SECONDS
 	/// Time it takes us to complete the animation.
 	var/animate_time = 0.25 SECONDS
 
@@ -463,9 +464,13 @@
 	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 1.5), animate_time)
 	ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_IGNORETURFSLOWDOWN, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_NOSLIPALL, MOD_TRAIT)
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
-	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6)
+	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
+	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
 
 /obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
 	. = ..()
@@ -477,9 +482,13 @@
 	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
 	REMOVE_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_IGNORETURFSLOWDOWN, MOD_TRAIT)
-	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6)
+	REMOVE_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPALL, MOD_TRAIT)
+	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
 
 /obj/item/mod/module/sphere_transform/on_use()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
@@ -492,11 +501,80 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bomb = new /obj/projectile/mining_bomb(mod.wearer.loc)
+	var/obj/projectile/bomb = new /obj/projectile/bullet/reusable/mining_bomb(mod.wearer.loc)
 	bomb.preparePixelProjectile(target, mod.wearer)
 	bomb.firer = mod.wearer
 	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
 	INVOKE_ASYNC(bomb, /obj/projectile.proc/fire)
 	drain_power(use_power_cost)
 
-/obj/projectile/mining_bomb
+/obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
+	SIGNAL_HANDLER
+
+	if(!mod.wearer.stat)
+		return
+	on_deactivation()
+
+/obj/projectile/bullet/reusable/mining_bomb
+	name = "mining bomb"
+	desc = "A bomb. Why are you examining this?"
+	icon_state = "mine_bomb"
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	damage = 0
+	nodamage = TRUE
+	range = 6
+	suppressed = SUPPRESSED_VERY
+	flag = BOMB
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_power = 1
+	light_color = COLOR_LIGHT_ORANGE
+	ammo_type = /obj/structure/mining_bomb
+
+/obj/structure/mining_bomb
+	name = "mining bomb"
+	desc = "A bomb. Why are you examining this?"
+	icon_state = "mine_bomb"
+	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF|LAVA_PROOF
+	light_system = MOVABLE_LIGHT
+	light_range = 1
+	light_power = 1
+	light_color = COLOR_LIGHT_ORANGE
+	/// Time to prime the explosion
+	var/prime_time = 0.5 SECONDS
+	/// Time to explode from the priming
+	var/explosion_time = 1 SECONDS
+	/// Damage done on explosion.
+	var/damage = 15
+	/// Damage multiplier on hostile fauna.
+	var/fauna_boost = 4
+	/// Damage multiplier on objects
+	var/object_boost = 2
+	/// Image overlaid on explosion.
+	var/static/image/explosion_image
+
+/obj/structure/mining_bomb/Initialize(mapload)
+	. = ..()
+	if(!explosion_image)
+		explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
+		explosion_image.pixel_x = -32
+		explosion_image.pixel_y = -32
+		explosion_image.plane = ABOVE_GAME_PLANE
+	addtimer(CALLBACK(src, .proc/prime), prime_time)
+
+/obj/structure/mining_bomb/proc/prime()
+	add_overlay(explosion_image)
+	addtimer(CALLBACK(src, .proc/boom), explosion_time)
+
+/obj/structure/mining_bomb/proc/boom()
+	visible_message(span_danger("[src] explodes!"))
+	playsound(src, 'sound/magic/magic_missile.ogg', 200, vary = TRUE)
+	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 2))
+		rock.gets_drilled()
+	for(var/mob/living/mob in range(1, src))
+		mob.apply_damage(12 * (ishostile(mob) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
+	for(var/obj/object in range(1, src))
+		object.take_damage(damage * object_boost, BRUTE, BOMB)
+	qdel(src)

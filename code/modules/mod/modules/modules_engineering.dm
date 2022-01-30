@@ -112,7 +112,6 @@
 	name = "tether"
 	icon_state = "tether_projectile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
 	range = 10

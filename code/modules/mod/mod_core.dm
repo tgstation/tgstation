@@ -254,7 +254,7 @@
 	/// How much charge we are currently storing.
 	var/charge = 10000
 	/// Charge per plasma ore.
-	var/charge_given = 2500
+	var/charge_given = 1500
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
@@ -283,7 +283,7 @@
 	return TRUE
 
 /obj/item/mod/core/plasma/subtract_charge(amount)
-	charge = max(maxcharge, charge - amount)
+	charge = max(0, charge - amount)
 	return TRUE
 
 /obj/item/mod/core/plasma/update_charge_alert()
