@@ -536,7 +536,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(L.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))
+	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
 			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \
