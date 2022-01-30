@@ -221,8 +221,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
-	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
-	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
+	mutation_index[/datum/mutation/human/race] = create_sequence(/datum/mutation/human/race, FALSE)
+	default_mutation_genes[/datum/mutation/human/race] = mutation_index[/datum/mutation/human/race]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
 		mutation_index[M.type] = create_sequence(M.type, FALSE, M.difficulty)
@@ -698,7 +698,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(exclude_monkey)
-		possible.Remove(RACEMUT)
+		possible.Remove(/datum/mutation/human/race)
 	if(LAZYLEN(possible))
 		var/mutation = pick(possible)
 		. = dna.activate_mutation(mutation)

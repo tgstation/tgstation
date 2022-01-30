@@ -793,7 +793,7 @@
 		else
 			species_color = ""
 
-		if(!dropping_limb && human_owner.dna.check_mutation(HULK))
+		if(!dropping_limb && human_owner.dna.check_mutation(/datum/mutation/human/hulk))
 			mutation_color = "#00aa00"
 		else
 			mutation_color = ""

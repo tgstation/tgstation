@@ -45,7 +45,7 @@
 	SIGNAL_HANDLER
 
 	if(user?.has_dna())
-		if(user.dna.check_mutation(HULK))
+		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You lack the grace to wield this!"))
 			return COMPONENT_TWOHANDED_BLOCK_WIELD
 	wielded = TRUE
@@ -120,7 +120,7 @@
 
 /obj/item/dualsaber/attack(mob/target, mob/living/carbon/human/user)
 	if(user.has_dna())
-		if(user.dna.check_mutation(HULK))
+		if(user.dna.check_mutation(/datum/mutation/human/hulk))
 			to_chat(user, span_warning("You grip the blade too hard and accidentally drop it!"))
 			if(wielded)
 				user.dropItemToGround(src, force=TRUE)

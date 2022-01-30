@@ -685,7 +685,7 @@
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
 				//assures BAD END is the natural state if things go wrong
 				//I think this should be like with viruses, probability cascade or switch/case on random?
-				var/result_mutation = ACIDFLESH
+				var/result_mutation = /datum/mutation/human/acidflesh
 				//If we found the replacement mutation
 				if(matched_mutation)
 					//and the old sequence matches the real sequence of the old mutation
