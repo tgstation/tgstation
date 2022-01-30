@@ -122,7 +122,6 @@
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
 	show_in_report = TRUE
-	var/chosen_job_name
 
 /datum/station_trait/no_gods_no_masters/New()
 	. = ..()
