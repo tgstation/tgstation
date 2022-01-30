@@ -16,7 +16,8 @@
 	pixel_x = -9
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "l" = (
 /obj/effect/decal/cleanable/dirt,
@@ -37,10 +38,12 @@
 /obj/structure/table,
 /obj/item/toy/talking/owl,
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "u" = (
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "x" = (
 /obj/effect/decal/cleanable/dirt,
@@ -52,11 +55,13 @@
 /obj/structure/sign/poster/official/the_owl{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "N" = (
 /obj/structure/bed/maint,
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "Q" = (
 /turf/closed/wall,
@@ -79,7 +84,8 @@
 	pixel_y = 10
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 "V" = (
 /obj/structure/flora/tree/pine{
@@ -90,7 +96,8 @@
 	pixel_y = -3
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
 /area/maintenance/central/secondary)
 
 (1,1,1) = {"

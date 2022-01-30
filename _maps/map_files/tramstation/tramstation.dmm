@@ -46630,18 +46630,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/cargo/storage)
-"pxU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/robot_debris/limb,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/central/secondary)
 "pya" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -110715,7 +110703,7 @@ dhe
 aJo
 iPv
 mRB
-pxU
+mRB
 iPv
 aJo
 dhe
@@ -111226,7 +111214,7 @@ mRB
 mRB
 mRB
 mRB
-pxU
+mRB
 iPv
 aJo
 bSZ
@@ -161292,9 +161280,9 @@ dhe
 dhe
 dhe
 dhe
-dhe
-dhe
-dhe
+aBM
+aBM
+aBM
 aBM
 aBM
 aBM
@@ -161807,10 +161795,10 @@ iPD
 aBM
 ieJ
 aBM
-aBM
-aBM
-aBM
-aBM
+dhe
+dhe
+dhe
+dhe
 dhe
 dhe
 dhe
@@ -162062,10 +162050,10 @@ dhe
 dhe
 rLt
 aBM
-aBM
 dhe
 dhe
-aBM
+dhe
+dhe
 dhe
 dhe
 dhe
