@@ -175,6 +175,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	var/datum/job/their_job = sacrifice.mind?.assigned_role
 	if(their_job?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 
 	heretic_datum.total_sacrifices++

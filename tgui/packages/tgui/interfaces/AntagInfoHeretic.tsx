@@ -145,9 +145,9 @@ const GuideSection = () => {
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
         <Stack.Item>
-          - Complete all of your objectives and
-          the <span style={hereticYellow}>final ritual</span> to
-          become all powerful!
+          - Accomplish all of your objectives to be able to learn
+          the <span style={hereticYellow}>final ritual</span>. Complete
+          the ritual to become all powerful!
         </Stack.Item>
       </Stack>
     </Stack.Item>

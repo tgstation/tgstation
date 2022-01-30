@@ -27,7 +27,7 @@
 /datum/heretic_knowledge/limited_amount/base_void
 	name = "Glimmer of Winter"
 	desc = "Opens up the path of void to you. \
-		Allows you to transmute a knife in a sub-zero temperature into a Void Blade. \
+		Allows you to transmute a knife in sub-zero temperatures into a Void Blade. \
 		You can only create two at a time."
 	gain_text = "I feel a shimmer in the air, the air around me gets colder. \
 		I start to realize the emptiness of existance. Something's watching me."
@@ -210,7 +210,9 @@
 
 /datum/heretic_knowledge/final/void_final
 	name = "Waltz at the End of Time"
-	desc = "The ascension ritual of the Path of Void. When completed, causes a violent storm of void snow \
+	desc = "The ascension ritual of the Path of Void. \
+		Bring 3 corpses to a transumation rune in sub-zero temperatures to complete the ritual. \
+		When completed, causes a violent storm of void snow \
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
 		Additionally, you will become immune to the effects of space."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
@@ -221,6 +223,16 @@
 	var/datum/looping_sound/void_loop/sound_loop
 	///Reference to the ongoing voidstrom that surrounds the heretic
 	var/datum/weather/void_storm/storm
+
+/datum/heretic_knowledge/final/void_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
+		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		return FALSE
+
+	return ..()
 
 /datum/heretic_knowledge/final/void_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

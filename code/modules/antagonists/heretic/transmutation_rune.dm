@@ -39,11 +39,18 @@
 	INVOKE_ASYNC(src, .proc/try_rituals, user)
 	return TRUE
 
+/**
+ * Wrapper for do_rituals to ensure is_in_use
+ * is enabled and disabled before and after.
+ */
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
 	do_rituals(user)
 	is_in_use = FALSE
 
+/**
+ * Attempt to invoke a ritual from our user's known heretic knowledges.
+ */
 /obj/effect/heretic_rune/proc/do_rituals(mob/living/user)
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = heretic_datum.get_all_knowledge()

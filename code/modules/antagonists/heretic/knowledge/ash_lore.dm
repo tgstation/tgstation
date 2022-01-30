@@ -213,15 +213,17 @@
 
 /datum/heretic_knowledge/final/ash_final
 	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. When completed, you become a harbinger of flames, \
-		gaining two abilites. Cascade, which causes a massive, growing ring of fire around you, and Oath of Flame. \
-		causing you to passively create a ring of flames as you walk. \
+	desc = "The ascension ritual of the Path of Ash. \
+		Bring 3 burning or husked corpses to a transumation rune to complete the ritual. \
+		When completed, you become a harbinger of flames, gaining two abilites. \
+		Cascade, which causes a massive, growing ring of fire around you, \
+		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
 		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwater brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
 	route = PATH_ASH
-	/// A list of all traits we apply on ascension.
+	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_RESISTHEAT,
 		TRAIT_NOBREATH,
@@ -230,6 +232,17 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_NOFIRE,
 	)
+
+/datum/heretic_knowledge/final/ash_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+	. = ..()
+	if(!.)
+		return
+
+	if(sacrifice.on_fire)
+		return TRUE
+	if(HAS_TRAIT_FROM(sacrifice, TRAIT_HUSK, BURN))
+		return TRUE
+	return FALSE
 
 /datum/heretic_knowledge/final/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

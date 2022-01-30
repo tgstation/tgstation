@@ -225,14 +225,19 @@
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
-	desc = "The ascension ritual of the Path of Void. When completed, the ritual site will \
-		endlessly spread rust onto any surface, stopping for nothing. \
+	desc = "The ascension ritual of the Path of Rust. \
+		Bring 3 corpses to a transumation rune on the bridge of the station to complete the ritual. \
+		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
 		Additionally, you will become extremely resilient on rust, healing at triple the rate \
 		and becoming immune to many effects and dangers."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
-		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME!"
+		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
-	/// A list of traits we give to the heretic when on rust.
+	/// If TRUE, then immunities are currently active.
+	var/immunities_active = FALSE
+	/// A typepath to an area that we must finish the ritual in.
+	var/ritual_location = /area/command/bridge
+	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_STUNIMMUNE,
 		TRAIT_SLEEPIMMUNE,
@@ -248,8 +253,13 @@
 		TRAIT_BOMBIMMUNE,
 		TRAIT_NOBREATH,
 		)
-	/// If TRUE, then immunities are active.
-	var/immunities_active = FALSE
+
+/datum/heretic_knowledge/final/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	var/area/our_area = get_area(loc)
+	if(!istype(our_area, ritual_location))
+		return FALSE
+
+	return ..()
 
 /datum/heretic_knowledge/final/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

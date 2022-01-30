@@ -25,21 +25,20 @@
 	preview_outfit = /datum/outfit/heretic
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
+	/// Whether we've ascended! (Completed one of the final rituals)
+	var/ascended = FALSE
 	/// A list of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
-	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
-	var/list/researched_knowledge = list()
-	/// Lazylist of weakrefs to humans that we have as targets.
-	var/list/datum/weakref/sac_targets
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
 	var/passive_gain_timer = 20 MINUTES
+	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
+	var/list/researched_knowledge = list()
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed.
 	var/high_value_sacrifices = 0
-	/// Whether we've ascended!
-	var/ascended = FALSE
-
+	/// Lazylist of weakrefs to humans that we have as targets.
+	var/list/datum/weakref/sac_targets
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
@@ -222,11 +221,12 @@
 	// If we've got the trait, we don't care
 	if(HAS_TRAIT(source, TRAIT_ALLOW_HERETIC_CASTING))
 		return
+	// All powerful, don't care
 	if(ascended)
 		return
 
-	source.balloon_alert(source, "you need a focus!")
 	// We shouldn't be able to cast this! Cancel it.
+	source.balloon_alert(source, "you need a focus!")
 	return COMPONENT_CANCEL_SPELL
 
 /*

@@ -306,8 +306,10 @@
 
 /datum/heretic_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
-	desc = "The ascension ritual of the Path of Flesh. When completed, you gain the ability \
-		to shed your human form and become the Lord of the Night, a supremely powerful creature. \
+	desc = "The ascension ritual of the Path of Flesh. \
+		Bring 3 corpses to a transumation rune to complete the ritual. \
+		When completed, you gain the ability to shed your human form \
+		and become the Lord of the Night, a supremely powerful creature. \
 		Just the act of transforming causes nearby heathens great fear and trauma. \
 		While in the Lord of the Night form, you can consume arms to heal and regain segments. \
 		Additionally, you can summon three times as many Ghouls and Voiceless Dead, \

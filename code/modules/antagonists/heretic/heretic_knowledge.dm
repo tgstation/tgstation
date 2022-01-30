@@ -264,7 +264,7 @@
  * The special final tier of knowledges that unlocks ASCENSION.
  */
 /datum/heretic_knowledge/final
-	cost = 3
+	cost = 2
 	required_atoms = list(/mob/living/carbon/human = 3)
 
 /datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -275,12 +275,18 @@
 	// Remove all non-dead humans from the atoms list.
 	// (We only want to sacrifice dead folk.)
 	for(var/mob/living/carbon/human/sacrifice in atoms)
-		if(sacrifice.stat != DEAD)
+		if(!is_valid_sacrifice(sacrifice))
 			atoms -= sacrifice
 
 	// All the non-dead humans are removed in this proc.
 	// We handle checking if we have enough humans in the ritual itself.
 	return TRUE
+
+/**
+ * Checks if the passed human is a valid sacrifice for our ritual.
+ */
+/datum/heretic_knowledge/final/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
+	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
 
 /datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
