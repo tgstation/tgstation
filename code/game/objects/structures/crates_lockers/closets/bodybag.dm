@@ -14,6 +14,7 @@
 	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
+	cutting_tool = null // Bodybags are not deconstructed by cutting
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
 	has_closed_overlay = FALSE
@@ -141,6 +142,11 @@
 		content.forceMove(B)
 		if(isliving(content))
 			to_chat(content, span_userdanger("You're suddenly forced into a tiny, compressed space!"))
+		if(iscarbon(content))
+			var/mob/living/carbon/mob = content
+			if (mob.dna.get_mutation(/datum/mutation/human/dwarfism))
+				max_weight_of_contents = max(WEIGHT_CLASS_NORMAL, max_weight_of_contents)
+				continue
 		if(!isitem(content))
 			max_weight_of_contents = max(WEIGHT_CLASS_BULKY, max_weight_of_contents)
 			continue

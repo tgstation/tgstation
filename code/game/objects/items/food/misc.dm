@@ -445,6 +445,11 @@
 	/// The amount to metabolize per second
 	var/metabolization_amount = REAGENTS_METABOLISM / 2
 
+/obj/item/food/bubblegum/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	qdel(src)
+	return TOXLOSS
+
 /obj/item/food/bubblegum/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
@@ -469,6 +474,8 @@
 	food_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
 	metabolization_amount = REAGENTS_METABOLISM
+	/// What the player hears from the bubblegum hallucination, and also says one of these when suiciding
+	var/static/list/hallucination_lines = list("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")
 
 /obj/item/food/bubblegum/bubblegum/process()
 	. = ..()
@@ -499,9 +506,13 @@
 		return
 	if(prob(15))
 		new /datum/hallucination/oh_yeah(victim)
-		to_chat(victim, span_colossus("<b>[pick("I AM IMMORTAL.", "I SHALL TAKE YOUR WORLD.", "I SEE YOU.", "YOU CANNOT ESCAPE ME FOREVER.", "NOTHING CAN HOLD ME.")]</b>"))
+		to_chat(victim, span_colossus("<b>[pick(hallucination_lines)]</b>"))
 	else
 		to_chat(victim, span_warning("[pick("You hear faint whispers.", "You smell ash.", "You feel hot.", "You hear a roar in the distance.")]"))
+
+/obj/item/food/bubblegum/bubblegum/suicide_act(mob/user)
+	user.say(";[pick(hallucination_lines)]")
+	return ..()
 
 /obj/item/food/gumball
 	name = "gumball"
@@ -681,22 +692,6 @@
 	foodtypes = MEAT | DAIRY | GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 
-/obj/item/food/cornchips
-	name = "boritos corn chips"
-	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
-	icon_state = "boritos"
-	trash_type = /obj/item/trash/boritos
-	bite_consumption = 2
-	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
-	junkiness = 20
-	tastes = list("fried corn" = 1)
-	foodtypes = JUNKFOOD | FRIED
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/food/cornchips/MakeLeaveTrash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
 
 /obj/item/food/rationpack
 	name = "ration pack"
@@ -773,7 +768,7 @@
 
 ///This makes the animal eat the food, and applies the buff status effect to them.
 /obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
-	hungry_pet.apply_status_effect(STATUS_EFFECT_HEALTH_BUFFED) //the status effect keeps track of the stacks
+	hungry_pet.apply_status_effect(/datum/status_effect/limited_buff/health_buff) //the status effect keeps track of the stacks
 	hungry_pet.visible_message(
 		span_notice("[hungry_pet] chows down on [src]."),
 		span_nicegreen("You chow down on [src]."),
@@ -941,4 +936,4 @@
 	desc = "Donk Co's signature Donkhiladas with Donk sauce, served as hot as the Mexican sun."
 	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
-	foodtypes = GRAIN | DAIRY | JUNKFOOD
+	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD

@@ -42,6 +42,7 @@
 
 
 /datum/reagent/blood/on_new(list/data)
+	. = ..()
 	if(istype(data))
 		SetViruses(src, data)
 
@@ -155,7 +156,7 @@
 	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /*
  * Water reaction to turf
@@ -240,7 +241,7 @@
 	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -1150,7 +1151,7 @@
 	penetrates_skin = NONE
 	var/clean_types = CLEAN_WASH
 	ph = 5.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2437,11 +2438,11 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
-	if(L.mind)
-		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
+/datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
+	if(target.mind)
+		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.chem_charges = max(changeling.chem_charges - (2 * REM * delta_time), 0)
+			changeling.adjust_chemicals(-2 * REM * delta_time)
 	return ..()
 
 /datum/reagent/pax/peaceborg
@@ -2667,13 +2668,13 @@
 			var/datum/wound/W = thing
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
 		M.adjustStaminaLoss(stam_crash)
-	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
+	M.remove_status_effect(/datum/status_effect/determined)
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
-		M.apply_status_effect(STATUS_EFFECT_DETERMINED) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
+		M.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 
 	volume = min(volume, WOUND_DETERMINATION_MAX)
 
@@ -2768,7 +2769,7 @@
 		return
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
-		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)
+		exposed_mob.apply_status_effect(/datum/status_effect/ants, amount_left)
 
 /datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2820,4 +2821,3 @@
 	. = ..()
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
-

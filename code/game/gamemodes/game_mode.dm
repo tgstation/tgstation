@@ -186,7 +186,7 @@
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
-	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+	while(possible.len && goal_weights < CONFIG_GET(number/station_goal_budget))
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		GLOB.station_goals += new picked

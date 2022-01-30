@@ -1,12 +1,17 @@
-//Contains the target item datums for Steal objectives.
+#define ADD_STEAL_ITEM(Source, Type) GLOB.steal_item_handler.objectives_by_path[Type] += Source
 
+//Contains the target item datums for Steal objectives.
 /datum/objective_item
 	var/name = "A silly bike horn! Honk!"
-	var/targetitem = /obj/item/bikehorn //typepath of the objective item
+	var/targetitem = /obj/item/bikehorn
+	var/list/valid_containers = list() // Valid containers that the target item can be in.
 	var/difficulty = 9001 //vaguely how hard it is to do this objective
 	var/list/excludefromjob = list() //If you don't want a job to get a certain objective (no captain stealing his own medal, etcetc)
 	var/list/altitems = list() //Items which can serve as an alternative to the objective (darn you blueprints)
 	var/list/special_equipment = list()
+	var/objective_type = OBJECTIVE_ITEM_TYPE_NORMAL
+	/// Whether this item exists on the station map at the start of a round.
+	var/exists_on_map = FALSE
 
 /datum/objective_item/proc/check_special_completion() //for objectives with special checks (is that slime extract unused? does that intellicard have an ai in it? etcetc)
 	return 1
@@ -25,88 +30,247 @@
 	GLOB.possible_items -= src
 	return ..()
 
+// Low risk steal objectives
+/datum/objective_item/steal/low_risk
+	objective_type = OBJECTIVE_ITEM_TYPE_TRAITOR
+
+/datum/objective_item/steal/low_risk/techboard
+	name = "the (TECH BOARD) circuitboard in secure tech storage"
+	var/circuitboard_name
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_RESEARCH_DIRECTOR,
+	)
+	exists_on_map = TRUE
+
+/datum/objective_item/steal/low_risk/techboard/aiupload
+	targetitem = /obj/item/circuitboard/computer/aiupload
+	circuitboard_name = "ai upload"
+
+/obj/item/circuitboard/computer/aiupload/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/aiupload)
+
+/datum/objective_item/steal/low_risk/techboard/borgupload
+	targetitem = /obj/item/circuitboard/computer/borgupload
+	circuitboard_name = "cyborg upload"
+
+/obj/item/circuitboard/computer/borgupload/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/circuitboard/computer/borgupload)
+
+/datum/objective_item/steal/low_risk/techboard/New()
+	. = ..()
+	name = replacetext(name, "(TECH BOARD)", circuitboard_name)
+
+/datum/objective_item/steal/low_risk/aicard
+	targetitem = /obj/item/aicard
+	name = "an intelliCard"
+	excludefromjob = list(
+		JOB_CAPTAIN,
+		JOB_CHIEF_ENGINEER,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_HEAD_OF_SECURITY,
+		JOB_STATION_ENGINEER,
+		JOB_SCIENTIST,
+		JOB_ATMOSPHERIC_TECHNICIAN,
+	)
+	exists_on_map = TRUE
+
+/obj/item/aicard/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/aicard)
+
+// Unique-ish low risk objectives
+/datum/objective_item/steal/low_risk/bartender_shotgun
+	name = "the bartender's shotgun"
+	targetitem = /obj/item/gun/ballistic/shotgun/doublebarrel
+	excludefromjob = list(JOB_BARTENDER)
+	exists_on_map = TRUE
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
+
+/datum/objective_item/steal/low_risk/fireaxe
+	name = "a fire axe"
+	targetitem = /obj/item/fireaxe
+	excludefromjob = list(JOB_CHIEF_ENGINEER,JOB_STATION_ENGINEER,JOB_ATMOSPHERIC_TECHNICIAN)
+	exists_on_map = TRUE
+
+/obj/item/fireaxe/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/fireaxe)
+
+/datum/objective_item/steal/low_risk/nullrod
+	name = "the chaplain's null rod"
+	targetitem = /obj/item/nullrod
+	excludefromjob = list(JOB_CHAPLAIN)
+	exists_on_map = TRUE
+
+/obj/item/nullrod/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/nullrod)
+
+/datum/objective_item/steal/low_risk/clown_shoes
+	name = "the clown's shoes"
+	targetitem = /obj/item/clothing/shoes/clown_shoes
+	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
+
+/obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/clothing/shoes/clown_shoes)
+
+/datum/objective_item/steal/low_risk/clown_shoes/TargetExists()
+	for(var/mob/player as anything in GLOB.player_list)
+		if(player.stat == DEAD)
+			continue
+		if(player.job != JOB_CLOWN)
+			continue
+		if(is_centcom_level(player.z))
+			continue
+		return TRUE
+	return FALSE
+
+/datum/objective_item/steal/low_risk/cargo_budget
+	name = "cargo's departmental budget"
+	targetitem = /obj/item/card/id/departmental_budget/car
+	excludefromjob = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN)
+	exists_on_map = TRUE
+
+/obj/item/card/id/departmental_budget/car/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/card/id/departmental_budget/car)
+
+// High risk steal objectives
 /datum/objective_item/steal/caplaser
-	name = "the captain's antique laser gun."
+	name = "the captain's antique laser gun"
 	targetitem = /obj/item/gun/energy/laser/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
+
+/obj/item/gun/energy/laser/captain/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/gun/energy/laser/captain)
 
 /datum/objective_item/steal/hoslaser
-	name = "the head of security's personal laser gun."
+	name = "the head of security's personal laser gun"
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
+	exists_on_map = TRUE
+
+/obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/gun/energy/e_gun/hos)
 
 /datum/objective_item/steal/handtele
-	name = "a hand teleporter."
+	name = "a hand teleporter"
 	targetitem = /obj/item/hand_tele
 	difficulty = 5
-	excludefromjob = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR)
+	excludefromjob = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR, JOB_HEAD_OF_PERSONNEL)
+	exists_on_map = TRUE
+
+/obj/item/hand_tele/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/hand_tele)
 
 /datum/objective_item/steal/jetpack
-	name = "the Captain's jetpack."
+	name = "the Captain's jetpack"
 	targetitem = /obj/item/tank/jetpack/oxygen/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
+
+/obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/tank/jetpack/oxygen/captain)
 
 /datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots."
+	name = "the chief engineer's advanced magnetic boots"
 	targetitem = /obj/item/clothing/shoes/magboots/advance
 	difficulty = 5
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
+	exists_on_map = TRUE
+
+/obj/item/clothing/shoes/magboots/advance/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/clothing/shoes/magboots/advance)
 
 /datum/objective_item/steal/capmedal
-	name = "the medal of captaincy."
+	name = "the medal of captaincy"
 	targetitem = /obj/item/clothing/accessory/medal/gold/captain
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+	exists_on_map = TRUE
+
+/obj/item/clothing/accessory/medal/gold/captain/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/clothing/accessory/medal/gold/captain)
 
 /datum/objective_item/steal/hypo
-	name = "the hypospray."
+	name = "the hypospray"
 	targetitem = /obj/item/reagent_containers/hypospray/cmo
 	difficulty = 5
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
+	exists_on_map = TRUE
+
+/obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/reagent_containers/hypospray/cmo)
 
 /datum/objective_item/steal/nukedisc
-	name = "the nuclear authentication disk."
+	name = "the nuclear authentication disk"
 	targetitem = /obj/item/disk/nuclear
 	difficulty = 5
 	excludefromjob = list(JOB_CAPTAIN)
+
+/obj/item/disk/nuclear/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/disk/nuclear)
 
 /datum/objective_item/steal/nukedisc/check_special_completion(obj/item/disk/nuclear/N)
 	return !N.fake
 
 /datum/objective_item/steal/reflector
-	name = "a reflector trenchcoat."
+	name = "a reflector trenchcoat"
 	targetitem = /obj/item/clothing/suit/hooded/ablative
 	difficulty = 3
 	excludefromjob = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN)
+	exists_on_map = TRUE
+
+/obj/item/clothing/suit/hooded/ablative/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/clothing/suit/hooded/ablative)
 
 /datum/objective_item/steal/reactive
-	name = "the reactive teleport armor."
+	name = "the reactive teleport armor"
 	targetitem = /obj/item/clothing/suit/armor/reactive/teleport
 	difficulty = 5
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
+	exists_on_map = TRUE
+
+/obj/item/clothing/suit/armor/reactive/teleport/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/clothing/suit/armor/reactive/teleport)
 
 /datum/objective_item/steal/documents
-	name = "any set of secret documents of any organization."
-	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
+	name = "any set of secret documents of any organization"
+	targetitem = /obj/item/documents
 	difficulty = 5
+	exists_on_map = TRUE
+
+/obj/item/documents/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
 
 /datum/objective_item/steal/nuke_core
-	name = "the heavily radioactive plutonium core from the onboard self-destruct. Take care to wear the proper safety equipment when extracting the core!"
+	name = "the heavily radioactive plutonium core from the onboard self-destruct"
+	valid_containers = list(/obj/item/nuke_core_container)
 	targetitem = /obj/item/nuke_core
 	difficulty = 15
+	exists_on_map = TRUE
+
+/obj/item/nuke_core/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/nuke_core)
 
 /datum/objective_item/steal/nuke_core/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/nuke
 	..()
 
 /datum/objective_item/steal/hdd_extraction
-	name = "the source code for Project Goon from the master R&D server mainframe."
+	name = "the source code for Project Goon from the master R&D server mainframe"
 	targetitem = /obj/item/computer_hardware/hard_drive/cluster/hdd_theft
 	difficulty = 10
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
+	exists_on_map = TRUE
+
+/obj/item/computer_hardware/hard_drive/cluster/hdd_theft/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/computer_hardware/hard_drive/cluster/hdd_theft)
 
 /datum/objective_item/steal/hdd_extraction/New()
 	special_equipment += /obj/item/paper/guides/antag/hdd_extraction
@@ -114,9 +278,13 @@
 
 
 /datum/objective_item/steal/supermatter
-	name = "a sliver of a supermatter crystal. Be sure to use the proper safety equipment when extracting the sliver!"
+	name = "a sliver of a supermatter crystal"
 	targetitem = /obj/item/nuke_core/supermatter_sliver
+	valid_containers = list(/obj/item/nuke_core_container/supermatter)
 	difficulty = 15
+
+/obj/item/nuke_core/supermatter_sliver/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/nuke_core/supermatter_sliver)
 
 /datum/objective_item/steal/supermatter/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
@@ -127,13 +295,16 @@
 
 //Items with special checks!
 /datum/objective_item/steal/plasma
-	name = "28 moles of plasma (full tank)."
+	name = "28 moles of plasma (full tank)"
 	targetitem = /obj/item/tank
 	difficulty = 3
 	excludefromjob = list(
 		JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN,
 		JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST,
 	)
+
+/obj/item/tank/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/tank)
 
 /datum/objective_item/steal/plasma/check_special_completion(obj/item/tank/T)
 	var/target_amount = text2num(name)
@@ -144,9 +315,12 @@
 
 
 /datum/objective_item/steal/functionalai
-	name = "a functional AI."
+	name = "a functional AI"
 	targetitem = /obj/item/aicard
 	difficulty = 20 //beyond the impossible
+
+/obj/item/aicard/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/aicard)
 
 /datum/objective_item/steal/functionalai/check_special_completion(obj/item/aicard/C)
 	for(var/mob/living/silicon/ai/A in C)
@@ -155,11 +329,15 @@
 	return FALSE
 
 /datum/objective_item/steal/blueprints
-	name = "the station blueprints."
+	name = "the station blueprints"
 	targetitem = /obj/item/areaeditor/blueprints
 	difficulty = 10
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
+	exists_on_map = TRUE
+
+/obj/item/areaeditor/blueprints/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/areaeditor/blueprints)
 
 /datum/objective_item/steal/blueprints/check_special_completion(obj/item/I)
 	if(istype(I, /obj/item/areaeditor/blueprints))
@@ -171,10 +349,13 @@
 	return FALSE
 
 /datum/objective_item/steal/slime
-	name = "an unused sample of slime extract."
+	name = "an unused sample of slime extract"
 	targetitem = /obj/item/slime_extract
 	difficulty = 3
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
+
+/obj/item/slime_extract/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/slime_extract)
 
 /datum/objective_item/steal/slime/check_special_completion(obj/item/slime_extract/E)
 	if(E.Uses > 0)
@@ -182,10 +363,14 @@
 	return 0
 
 /datum/objective_item/steal/blackbox
-	name = "The Blackbox."
+	name = "the Blackbox"
 	targetitem = /obj/item/blackbox
 	difficulty = 10
 	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
+	exists_on_map = TRUE
+
+/obj/item/blackbox/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/blackbox)
 
 //Unique Objectives
 /datum/objective_item/special/New()
@@ -201,39 +386,61 @@
 
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
-	name = "the captain's pinpointer."
+	name = "the captain's pinpointer"
 	targetitem = /obj/item/pinpointer/nuke
 	difficulty = 10
+	exists_on_map = TRUE
+
+/obj/item/pinpointer/nuke/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/pinpointer/nuke)
 
 /datum/objective_item/special/aegun
-	name = "an advanced energy gun."
+	name = "an advanced energy gun"
 	targetitem = /obj/item/gun/energy/e_gun/nuclear
 	difficulty = 10
 
+/obj/item/gun/energy/e_gun/nuclear/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/gun/energy/e_gun/nuclear)
+
 /datum/objective_item/special/ddrill
-	name = "a diamond drill."
+	name = "a diamond drill"
 	targetitem = /obj/item/pickaxe/drill/diamonddrill
 	difficulty = 10
 
+/obj/item/pickaxe/drill/diamonddrill/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/pickaxe/drill/diamonddrill)
+
 /datum/objective_item/special/boh
-	name = "a bag of holding."
+	name = "a bag of holding"
 	targetitem = /obj/item/storage/backpack/holding
 	difficulty = 10
 
+/obj/item/storage/backpack/holding/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/storage/backpack/holding)
+
 /datum/objective_item/special/hypercell
-	name = "a hyper-capacity power cell."
+	name = "a hyper-capacity power cell"
 	targetitem = /obj/item/stock_parts/cell/hyper
 	difficulty = 5
 
+/obj/item/stock_parts/cell/hyper/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/stock_parts/cell/hyper)
+
 /datum/objective_item/special/laserpointer
-	name = "a laser pointer."
+	name = "a laser pointer"
 	targetitem = /obj/item/laser_pointer
 	difficulty = 5
 
+/obj/item/laser_pointer/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/laser_pointer)
+
 /datum/objective_item/special/corgimeat
-	name = "a piece of corgi meat."
+	name = "a piece of corgi meat"
 	targetitem = /obj/item/food/meat/slab/corgi
 	difficulty = 5
+
+/obj/item/food/meat/slab/corgi/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/food/meat/slab/corgi)
 
 /datum/objective_item/stack/New()
 	..()
@@ -248,9 +455,12 @@
 
 //Stack objectives get their own subtype
 /datum/objective_item/stack
-	name = "5 cardboard."
+	name = "5 cardboard"
 	targetitem = /obj/item/stack/sheet/cardboard
 	difficulty = 9001
+
+/obj/item/stack/sheet/cardboard/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/cardboard)
 
 /datum/objective_item/stack/check_special_completion(obj/item/stack/S)
 	var/target_amount = text2num(name)
@@ -261,16 +471,27 @@
 	return found_amount>=target_amount
 
 /datum/objective_item/stack/diamond
-	name = "10 diamonds."
+	name = "10 diamonds"
 	targetitem = /obj/item/stack/sheet/mineral/diamond
 	difficulty = 10
 
+/obj/item/stack/sheet/mineral/diamond/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/diamond)
+
 /datum/objective_item/stack/gold
-	name = "50 gold bars."
+	name = "50 gold bars"
 	targetitem = /obj/item/stack/sheet/mineral/gold
 	difficulty = 15
 
+/obj/item/stack/sheet/mineral/gold/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/gold)
+
 /datum/objective_item/stack/uranium
-	name = "25 refined uranium bars."
+	name = "25 refined uranium bars"
 	targetitem = /obj/item/stack/sheet/mineral/uranium
 	difficulty = 10
+
+/obj/item/stack/sheet/mineral/uranium/add_stealing_item_objective()
+	ADD_STEAL_ITEM(src, /obj/item/stack/sheet/mineral/uranium)
+
+#undef ADD_STEAL_ITEM

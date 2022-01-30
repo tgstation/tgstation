@@ -667,7 +667,7 @@
 	return
 
 /atom/movable/screen/splash
-	icon = 'icons/blank_title.png'
+	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	screen_loc = "1,1"
 	plane = SPLASHSCREEN_PLANE
@@ -754,3 +754,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 		intent_icon.pixel_x = 16 * (i - 1) - 8 * length(streak)
 		add_overlay(intent_icon)
 	return ..()
+
+/atom/movable/screen/stamina
+	name = "stamina"
+	icon_state = "stamina0"
+	screen_loc = ui_stamina

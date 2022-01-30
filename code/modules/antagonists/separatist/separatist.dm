@@ -3,20 +3,19 @@
 	member_name = "separatist"
 	///a list of ranks that can join this nation.
 	var/list/potential_recruits
-	///checked by the department revolt event to prevent trying to make a nation that is already independent... double independent.
-	var/nation_department
 	///department said team is related to
 	var/datum/job_department/department
 	///whether to forge objectives attacking other nations
 	var/dangerous_nation = TRUE
 
-/datum/team/nation/New(starting_members, potential_recruits, nation_department)
+/datum/team/nation/New(starting_members, potential_recruits, department)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
 	src.potential_recruits = potential_recruits
-	src.nation_department = nation_department
+	src.department = department
 
 /datum/team/nation/Destroy(force, ...)
+	department = null
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()
 
@@ -76,11 +75,15 @@
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	suicide_cry = "FOR THE MOTHERLAND!!"
+	ui_name = "AntagInfoSeparatist"
 	///team datum
 	var/datum/team/nation/nation
+	///background color of the ui
+	var/ui_color
 
 /datum/antagonist/separatist/on_gain()
 	create_objectives()
+	setup_ui_color()
 	. = ..()
 
 //give ais their role as UN
@@ -101,6 +104,11 @@
 /datum/antagonist/separatist/proc/remove_objectives()
 	objectives -= nation.objectives
 
+/datum/antagonist/separatist/proc/setup_ui_color()
+	var/list/hsl = rgb2num(nation.department.latejoin_color, COLORSPACE_HSL)
+	hsl[3] = 25 //setting lightness very low
+	ui_color = rgb(hsl[1], hsl[2], hsl[3], space = COLORSPACE_HSL)
+
 /datum/antagonist/separatist/create_team(datum/team/nation/new_team)
 	if(!new_team)
 		return
@@ -109,7 +117,9 @@
 /datum/antagonist/separatist/get_team()
 	return nation
 
-/datum/antagonist/separatist/greet()
-	. = ..()
-	to_chat(owner, span_boldannounce("You are a separatist for an independent [nation.nation_department]! [nation.name] forever! Protect the sovereignty of your newfound land with your comrades (fellow department members) in arms!"))
-	owner.announce_objectives()
+/datum/antagonist/separatist/ui_static_data(mob/user)
+	var/list/data = list()
+	data["objectives"] = get_objectives()
+	data["nation"] = nation.name
+	data["nationColor"] = ui_color
+	return data

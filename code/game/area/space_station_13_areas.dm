@@ -365,7 +365,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Radation storm shelter
 /area/maintenance/radshelter
 	name = "\improper Radstorm Shelter"
-	icon_state = "green"
+	icon_state = "radstorm_shelter"
 
 /area/maintenance/radshelter/medical
 	name = "\improper Medical Radstorm Shelter"
@@ -577,6 +577,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Female Sleep Barracks"
 	icon_state = "dorms_female"
 
+/area/commons/dorms/laundry
+	name = "\improper Laundry Room"
+	icon_state = "laundry_room"
+
 /area/commons/toilet
 	name = "\improper Dormitory Toilets"
 	icon_state = "toilet"
@@ -688,6 +692,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
+	icon_state = "abandoned_kitchen"
 
 /area/service/bar
 	name = "\improper Bar"
@@ -713,14 +718,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
-	icon_state = "abandoned_g_den"
-
-/area/service/abandoned_gambling_den/secondary
-	icon_state = "abandoned_g_den_2"
+	icon_state = "abandoned_gambling_den"
 
 /area/service/abandoned_gambling_den/gaming
 	name = "\improper Abandoned Gaming Den"
-	icon_state = "abandoned_g_den_2"
+	icon_state = "abandoned_gaming_den"
 
 /area/service/theater
 	name = "\improper Theater"
@@ -853,6 +855,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
 
+/area/engineering/atmos/storage
+	name = "\improper Atmospherics Storage Room"
+
+/area/engineering/atmos/office
+	name = "\improper Atmospherics Office"
+
+/area/engineering/atmos/hfr_room
+	name = "\improper Atmospherics HFR Room"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
@@ -886,12 +896,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage
 	name = "Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/engineering/storage_shared
 	name = "Shared Engineering Storage"
-	icon_state = "engi_storage"
+	icon_state = "engine_storage_shared"
 
 /area/engineering/transit_tube
 	name = "\improper Transit Tube"
@@ -1279,7 +1289,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "customs_point"
 
 /area/security/checkpoint/customs/auxiliary
+	name = "Auxiliary Customs"
 	icon_state = "customs_point_aux"
+
+/area/security/checkpoint/customs/fore
+	name = "Fore Customs"
+	icon_state = "customs_point_fore"
+
+/area/security/checkpoint/customs/aft
+	name = "Aft Customs"
+	icon_state = "customs_point_aft"
 
 //Security - AI Monitored
 /area/ai_monitored/security/armory

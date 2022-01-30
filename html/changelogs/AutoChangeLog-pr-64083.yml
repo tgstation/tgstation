@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - admin: "Bounty Hunters can now be called via admin ert"
+  - expansion: "Oh, and they have cool flame ids as well!"

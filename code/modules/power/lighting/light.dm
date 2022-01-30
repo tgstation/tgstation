@@ -473,7 +473,7 @@
 
 	if(protection_amount > 0 || HAS_TRAIT(user, TRAIT_RESISTHEAT) || HAS_TRAIT(user, TRAIT_RESISTHEATHANDS))
 		to_chat(user, span_notice("You remove the light [fitting]."))
-	else if(istype(user) && user.dna.check_mutation(TK))
+	else if(istype(user) && user.dna.check_mutation(/datum/mutation/human/telekinesis))
 		to_chat(user, span_notice("You telekinetically remove the light [fitting]."))
 	else
 		var/obj/item/bodypart/affecting = electrician.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")

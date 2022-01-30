@@ -174,7 +174,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 			var/racechoice = tgui_input_list(amazed_human, "What are we again?", "Race change", selectable_races)
 			if(isnull(racechoice))
 				return TRUE
-			if(selectable_races[racechoice])
+			if(!selectable_races[racechoice])
 				return TRUE
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return TRUE

@@ -305,7 +305,7 @@
 		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(HONORBOUND)
+	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
 /datum/religion_sect/burden
 	name = "Punished God"

@@ -2170,7 +2170,7 @@
 	pixel_y = 12
 	},
 /obj/item/toy/cards/cardhand{
-	currenthand = list("2 of Diamonds","3 of Clubs");
+	init_cards = list("2 of Diamonds","3 of Clubs");
 	pixel_x = -5
 	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{

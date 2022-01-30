@@ -1,0 +1,4 @@
+author: "Maurukas"
+delete-after: True
+changes: 
+  - bugfix: "NT CIMS no longer detects Supermatter crystals and shards that are not owned by Nanotrasen"

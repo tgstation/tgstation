@@ -17,7 +17,7 @@
 /datum/objective/destroy_nation/update_explanation_text()
 	. = ..()
 	if(target_team)
-		explanation_text = "Make sure no member of [target_team] ([target_team.nation_department]) nation escapes alive!"
+		explanation_text = "Make sure no member of [target_team] ([target_team.department.department_name]) nation escapes alive!"
 	else
 		explanation_text = "Free Objective"
 
@@ -26,7 +26,7 @@
 		return TRUE
 
 	for(var/datum/antagonist/separatist/separatist_datum in GLOB.antagonists)
-		if(separatist_datum.nation.nation_department != target_team.nation_department) //a separatist, but not one part of the department we need to destroy
+		if(separatist_datum.nation.department != target_team.department) //a separatist, but not one part of the department we need to destroy
 			continue
 		var/datum/mind/target = separatist_datum.owner
 		if(target && considered_alive(target) && (target.current.onCentCom() || target.current.onSyndieBase()))

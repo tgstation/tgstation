@@ -66,7 +66,7 @@
 /mob/living/simple_animal/hostile/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(!.) //dead
-		walk(src, 0) //stops walking
+		SSmove_manager.stop_looping(src)
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -283,11 +283,11 @@
 			if(!target.Adjacent(target_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
 				OpenFire(target)
 		if(!Process_Spacemove()) //Drifting
-			walk(src,0)
+			SSmove_manager.stop_looping(src)
 			return 1
 		if(retreat_distance != null) //If we have a retreat distance, check if we need to run from our target
 			if(target_distance <= retreat_distance) //If target's closer than our retreat distance, run
-				walk_away(src,target,retreat_distance,move_to_delay)
+				SSmove_manager.move_away(src, target, retreat_distance, move_to_delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 			else
 				Goto(target,move_to_delay,minimum_distance) //Otherwise, get to our minimum distance so we chase them
 		else
@@ -320,7 +320,7 @@
 		approaching_target = TRUE
 	else
 		approaching_target = FALSE
-	walk_to(src, target, minimum_distance, delay)
+	SSmove_manager.move_to(src, target, minimum_distance, delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -359,7 +359,7 @@
 	GiveTarget(null)
 	approaching_target = FALSE
 	in_melee = FALSE
-	walk(src, 0)
+	SSmove_manager.stop_looping(src)
 	LoseAggro()
 
 //////////////END HOSTILE MOB TARGETTING AND AGGRESSION////////////

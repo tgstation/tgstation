@@ -36,11 +36,14 @@
 	var/list/required_experiments = list()
 	/// If completed, these experiments give a specific point amount discount to the node.area
 	var/list/discount_experiments = list()
+	/// Whether or not this node should show on the wiki
+	var/show_on_wiki = TRUE
 
 /datum/techweb_node/error_node
 	id = "ERROR"
 	display_name = "ERROR"
 	description = "This usually means something in the database has corrupted. If it doesn't go away automatically, inform Central Command for their techs to fix it ASAP(tm)"
+	show_on_wiki = FALSE
 
 /datum/techweb_node/proc/Initialize()
 	//Make lists associative for lookup

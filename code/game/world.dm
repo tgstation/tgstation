@@ -1,5 +1,10 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
+/// Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+/// Prevent the master controller from starting automatically
+#define NO_INIT_PARAMETER "no-init"
+
 GLOBAL_VAR(restart_counter)
 
 /**
@@ -35,6 +40,9 @@ GLOBAL_VAR(restart_counter)
 	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+	#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = GLOB.world_game_log
+	#endif
 
 	GLOB.revdata = new
 
@@ -75,6 +83,10 @@ GLOBAL_VAR(restart_counter)
 
 	#ifdef UNIT_TESTS
 	HandleTestRun()
+	#endif
+
+	#ifdef AUTOWIKI
+	setup_autowiki()
 	#endif
 
 /world/proc/InitTgs()
@@ -119,6 +131,7 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
@@ -147,6 +160,10 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 	GLOB.test_log = "[GLOB.log_directory]/tests.log"
 	start_log(GLOB.test_log)
+#endif
+#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
+	start_log(GLOB.harddel_log)
 #endif
 	start_log(GLOB.world_game_log)
 	start_log(GLOB.world_attack_log)
@@ -205,7 +222,7 @@ GLOBAL_VAR(restart_counter)
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
 
 	var/final_composed = span_announce("PR: [announcement]")
@@ -361,3 +378,6 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+#undef OVERRIDE_LOG_DIRECTORY_PARAMETER
+#undef NO_INIT_PARAMETER

@@ -51,7 +51,7 @@
 
 
 /datum/outfit/job/rd
-	name = "Research Director"
+	name = JOB_RESEARCH_DIRECTOR
 	jobtype = /datum/job/research_director
 
 	id = /obj/item/card/id/advanced/silver
@@ -82,5 +82,4 @@
 	back = /obj/item/mod/control/pre_equipped/research
 	suit = null
 	mask = /obj/item/clothing/mask/breath
-	l_hand = null
 	internals_slot = ITEM_SLOT_SUITSTORE

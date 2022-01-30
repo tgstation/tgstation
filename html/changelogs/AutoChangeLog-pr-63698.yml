@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - bugfix: "fixes pirates not getting their antag status, alongside a non-pirate name"

@@ -59,6 +59,7 @@
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
 	mask = /obj/item/clothing/mask/gas/mime
+	shoes = /obj/item/clothing/shoes/laceup
 
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime

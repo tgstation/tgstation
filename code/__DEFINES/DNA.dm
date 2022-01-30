@@ -2,68 +2,6 @@
 
 #define CHECK_DNA_AND_SPECIES(C) if(!(C.dna?.species)) return
 
-//Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
-#define ACIDFLESH /datum/mutation/human/acidflesh
-#define ANTENNA /datum/mutation/human/antenna
-#define ANTIGLOWY /datum/mutation/human/glow/anti
-#define AUTONOMY /datum/mutation/human/self_amputation
-#define BADBLINK /datum/mutation/human/badblink
-#define BADSIGHT /datum/mutation/human/nearsight
-#define BIOTECHCOMPAT /datum/mutation/human/biotechcompat
-#define BLINDMUT /datum/mutation/human/blind
-#define CHAMELEON /datum/mutation/human/chameleon
-#define CHAV /datum/mutation/human/chav
-#define CLOWNMUT /datum/mutation/human/clumsy
-#define COUGH /datum/mutation/human/cough
-#define CRYOKINESIS /datum/mutation/human/cryokinesis
-#define DEAFMUT /datum/mutation/human/deaf
-#define DWARFISM /datum/mutation/human/dwarfism
-#define ELVIS /datum/mutation/human/elvis
-#define EPILEPSY /datum/mutation/human/epilepsy
-#define EXTRASTUN /datum/mutation/human/extrastun
-#define FIREBREATH /datum/mutation/human/firebreath
-#define FIRESWEAT /datum/mutation/human/fire
-#define GELADIKINESIS /datum/mutation/human/geladikinesis
-#define GIGANTISM /datum/mutation/human/gigantism
-#define GLOWY /datum/mutation/human/glow
-#define HARS /datum/mutation/human/headless
-#define HULK /datum/mutation/human/hulk
-#define INSULATED /datum/mutation/human/insulated
-#define LASEREYES /datum/mutation/human/laser_eyes
-#define MARTYRDOM /datum/mutation/human/martyrdom
-#define MEDIEVAL /datum/mutation/human/medieval
-#define MINDREAD /datum/mutation/human/mindreader
-#define MUTATE /datum/mutation/human/bad_dna
-#define MUT_MUTE /datum/mutation/human/mute
-#define NERVOUS /datum/mutation/human/nervousness
-#define OLFACTION /datum/mutation/human/olfaction
-#define PARANOIA /datum/mutation/human/paranoia
-#define PIGLATIN /datum/mutation/human/piglatin
-#define RACEMUT /datum/mutation/human/race
-#define RADIOACTIVE /datum/mutation/human/radioactive
-#define SHOCKTOUCH /datum/mutation/human/shock
-#define TEMPADAPT /datum/mutation/human/temperature_adaptation
-#define PRESSUREADAPT /datum/mutation/human/pressure_adaptation
-#define SPASTIC /datum/mutation/human/spastic
-#define SPIDER_WEB /datum/mutation/human/webbing
-#define STIMMED /datum/mutation/human/stimmed
-#define STONER /datum/mutation/human/stoner
-#define STRONG /datum/mutation/human/strong
-#define SWEDISH /datum/mutation/human/swedish
-#define TELEPATHY /datum/mutation/human/telepathy
-#define THERMAL /datum/mutation/human/thermal
-#define TK /datum/mutation/human/telekinesis
-#define TONGUESPIKE /datum/mutation/human/tonguespike
-#define TONGUESPIKECHEM /datum/mutation/human/tongue_spike/chem
-#define TOURETTES /datum/mutation/human/tourettes
-#define UNINTELLIGIBLE /datum/mutation/human/unintelligible
-#define VOID /datum/mutation/human/void
-#define WACKY /datum/mutation/human/wacky
-#define XRAY /datum/mutation/human/xray
-
-#define BURDENED /datum/mutation/human/burdened
-#define HONORBOUND /datum/mutation/human/honorbound
-
 #define UE_CHANGED "ue changed"
 #define UI_CHANGED "ui changed"
 #define UF_CHANGED "uf changed"

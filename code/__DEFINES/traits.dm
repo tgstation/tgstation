@@ -305,6 +305,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Galactic Common Sign Language
 #define TRAIT_SIGN_LANG "sign_language"
+/// This mob is able to use sign language over the radio.
+#define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// You've been cursed with a living duffelbag, and can't have more added
@@ -333,6 +335,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMABURNT "plasma_burnt"
 /// Addictions don't tick down, basically they're permanently addicted
 #define TRAIT_HOPELESSLY_ADDICTED "hopelessly_addicted"
+/// This mob has a cult halo.
+#define TRAIT_CULT_HALO "cult_halo"
 /// Their eyes glow an unnatural red colour. Currently used to set special examine text on humans. Does not guarantee the mob's eyes are coloured red, nor that there is any visible glow on their character sprite.
 #define TRAIT_UNNATURAL_RED_GLOWY_EYES "unnatural_red_glowy_eyes"
 /// Their eyes are bloodshot. Currently used to set special examine text on humans. Examine text is overridden by TRAIT_UNNATURAL_RED_GLOWY_EYES.
@@ -379,6 +383,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
+
+/// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
+#define TRAIT_DOUBLE_TAP "double_tap"
 
 /// Trait applied to [/datum/mind] to stop someone from using the cursed hot springs to polymorph more than once.
 #define TRAIT_HOT_SPRING_CURSED "hot_spring_cursed"
@@ -498,6 +505,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_IMMOBILIZE "no_immobilize"
 /// Prevents stripping this equipment
 #define TRAIT_NO_STRIP "no_strip"
+/// Disallows this item from being pricetagged with a barcode
+#define TRAIT_NO_BARCODES "no_barcode"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -531,6 +540,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
+
+///Trait for the gamer quirk.
+#define TRAIT_GAMER "gamer"
 
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"

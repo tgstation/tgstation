@@ -175,6 +175,7 @@
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
+	//This should just be atmos adjacent turfs, come on guys
 	for(var/turf/T in t_loc.reachableAdjacentTurfs())
 		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
@@ -202,8 +203,10 @@
 ///////////////////////////////////////////////
 //FOAM EFFECT DATUM
 /datum/effect_system/foam_spread
-	var/amount = 10 // the size of the foam spread.
-	var/obj/chemholder
+	/// the size of the foam spread.
+	var/amount = 10
+	/// Stupid hack alertm exists to hold chems for us
+	var/atom/movable/chem_holder/chemholder
 	effect_type = /obj/effect/particle_effect/foam
 	var/metal = 0
 
@@ -221,14 +224,11 @@
 
 /datum/effect_system/foam_spread/New()
 	..()
-	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //same as above
-	chemholder.reagents = R
-	R.my_atom = chemholder
+	chemholder = new()
+	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
-	qdel(chemholder)
-	chemholder = null
+	QDEL_NULL(chemholder)
 	return ..()
 
 /datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null, metaltype = 0)
@@ -272,10 +272,12 @@
 	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
-	desc = "A lightweight foamed metal wall."
+	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
 	gender = PLURAL
 	max_integrity = 20
 	can_atmos_pass = ATMOS_PASS_DENSITY
+	///Var used to prevent spamming of the construction sound
+	var/next_beep = 0
 
 /obj/structure/foamedmetal/Initialize(mapload)
 	. = ..()
@@ -305,6 +307,37 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, TRUE)
 
+/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
+	///A speed modifier for how fast the wall is build
+	var/platingmodifier = 1
+	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))
+		platingmodifier = 0.7
+		if(next_beep <= world.time)
+			next_beep = world.time + 10
+			playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)
+	add_fingerprint(user)
+
+	if(!istype(W, /obj/item/stack/sheet))
+		return ..()
+
+	var/obj/item/stack/sheet/sheet_for_plating = W
+	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
+		if(sheet_for_plating.get_amount() < 2)
+			to_chat(user, span_warning("You need two sheets of iron to finish a wall!"))
+			return
+		to_chat(user, span_notice("You start adding plating to the foam structure..."))
+		if (do_after(user, 40*platingmodifier, target = src))
+			if(!sheet_for_plating.use(2))
+				return
+			to_chat(user, span_notice("You add the plating."))
+			var/turf/T = get_turf(src)
+			T.PlaceOnTop(/turf/closed/wall)
+			transfer_fingerprints_to(T)
+			qdel(src)
+		return
+
+	add_hiddenprint(user)
+
 /obj/structure/foamedmetal/iron
 	max_integrity = 50
 	icon_state = "ironfoam"
@@ -312,7 +345,7 @@
 //Atmos Backpack Resin, transparent, prevents atmos and filters the air
 /obj/structure/foamedmetal/resin
 	name = "\improper ATMOS Resin"
-	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature."
+	desc = "A lightweight, transparent resin used to suffocate fires, scrub the air of toxins, and restore the air to a safe temperature. It can be used as base to construct a wall."
 	opacity = FALSE
 	icon_state = "atmos_resin"
 	alpha = 120

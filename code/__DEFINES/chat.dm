@@ -18,3 +18,19 @@
 #define MESSAGE_TYPE_ADMINLOG "adminlog"
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"
+
+//debug printing macros (for development and testing)
+/// Used for debug messages to the world
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
+/// Used for debug messages to the player
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
+/// Used for debug messages to the admins
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, \
+	type = MESSAGE_TYPE_DEBUG, \
+	text = "DEBUG: [msg]")
+/// Used for debug messages to the server
+#define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")

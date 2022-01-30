@@ -38,7 +38,6 @@
 	if(swooping || !target)
 		return
 	// stop swooped target movement
-	//RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
 	swooping = TRUE
 	owner.set_density(FALSE)
 	owner.visible_message(span_boldwarning("[owner] swoops up high!"))

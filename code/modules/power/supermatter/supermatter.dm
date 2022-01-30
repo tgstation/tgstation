@@ -244,6 +244,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/processes = TRUE
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
+	///Do we show this crystal in the CIMS modular program
+	var/include_in_cims = TRUE
 
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
@@ -263,6 +265,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
+
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
 	soundloop = new(src, TRUE)
 	if(ispath(psyOverlay))
@@ -482,6 +489,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	explode()
 
+/// Consume things that run into the supermatter from the tram. The tram calls forceMove (doesn't call Bump/ed) and not Move, and I'm afraid changing it will do something chaotic
+/obj/machinery/power/supermatter_crystal/proc/tram_contents_consume(datum/source, list/tram_contents)
+	SIGNAL_HANDLER
+
+	for(var/atom/thing_to_consume as anything in tram_contents)
+		Bumped(thing_to_consume)
+
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	if(!processes) //Just fuck me up bro
 		return
@@ -653,11 +667,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(gas_comp[/datum/gas/carbon_dioxide] && gas_comp[/datum/gas/oxygen])
 			var/carbon_dioxide_pp = env.return_pressure() * gas_comp[/datum/gas/carbon_dioxide]
 			var/consumed_carbon_dioxide = clamp(((carbon_dioxide_pp - CO2_CONSUMPTION_PP) / (carbon_dioxide_pp + CO2_PRESSURE_SCALING)), CO2_CONSUMPTION_RATIO_MIN, CO2_CONSUMPTION_RATIO_MAX)
-			consumed_carbon_dioxide *= gas_comp[/datum/gas/carbon_dioxide] * combined_gas
+			consumed_carbon_dioxide = min(consumed_carbon_dioxide * gas_comp[/datum/gas/carbon_dioxide] * combined_gas, removed.gases[/datum/gas/carbon_dioxide][MOLES], removed.gases[/datum/gas/oxygen][MOLES] * INVERSE(0.5))
 			if(consumed_carbon_dioxide)
 				removed.gases[/datum/gas/carbon_dioxide][MOLES] -= consumed_carbon_dioxide
-				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide / 2
-				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide / 2
+				removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide * 0.5
+				removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide * 0.5
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
@@ -866,13 +880,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/bullet_act(obj/projectile/projectile)
 	var/turf/local_turf = loc
+	var/kiss_power = 0
+	switch(projectile.type)
+		if(/obj/projectile/kiss)
+			kiss_power = 60
+		if(/obj/projectile/kiss/death)
+			kiss_power = 20000
 	if(!istype(local_turf))
 		return FALSE
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
-	if(projectile.flag != BULLET)
+	if(projectile.flag != BULLET || kiss_power)
+		if(kiss_power)
+			psyCoeff = 1
+			psy_overlay = TRUE
 		if(power_changes) //This needs to be here I swear
-			power += projectile.damage * bullet_energy
+			power += projectile.damage * bullet_energy + kiss_power
 			if(!has_been_powered)
 				investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 				message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")

@@ -353,7 +353,8 @@
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
-	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness)
+	var/attack_direction = get_dir(user, src)
+	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/user, list/modifiers)
@@ -370,7 +371,8 @@
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
 	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
-	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness)
+	var/attack_direction = get_dir(user, src)
+	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -696,11 +698,11 @@
 		return
 
 	if(src == M)
-		if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+		if(has_status_effect(/datum/status_effect/strandling))
 			to_chat(src, span_notice("You attempt to remove the durathread strand from around your neck."))
 			if(do_after(src, 3.5 SECONDS, src))
 				to_chat(src, span_notice("You succesfuly remove the durathread strand."))
-				remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+				remove_status_effect(/datum/status_effect/strandling)
 			return
 		check_self_for_injuries()
 

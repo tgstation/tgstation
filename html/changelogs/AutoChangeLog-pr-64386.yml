@@ -1,0 +1,4 @@
+author: "Guillaume Prata"
+delete-after: True
+changes: 
+  - qol: "Metalfoam structures can now be used as a girder to finish building walls."

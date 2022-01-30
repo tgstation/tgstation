@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - config: "Add PR_ANNOUNCEMENTS_PER_ROUND and STATION_GOAL_BUDGET to be a config instead of define"
