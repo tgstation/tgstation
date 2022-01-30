@@ -2459,12 +2459,15 @@
 /turf/open/floor/plating,
 /area/mine/storage)
 "id" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
-/obj/structure/window/reinforced/spawner/east,
+/obj/machinery/door/poddoor/shutters/window{
+	id = "drone_bay";
+	name = "drone bay shutters"
+	},
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/cargo/drone_bay)
 "ie" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/flasher/directional/west{
@@ -3312,6 +3315,10 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/cargo/drone_bay)
 "kP" = (
@@ -3537,6 +3544,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline,
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = -29
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/living_quarters)
 "lx" = (
@@ -4263,12 +4274,12 @@
 /obj/effect/turf_decal/siding/brown/corner{
 	dir = 4
 	},
-/obj/structure/sign/warning/vacuum{
-	pixel_x = -32;
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
@@ -4920,6 +4931,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
+	},
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
@@ -6592,6 +6606,17 @@
 	},
 /turf/open/floor/plating,
 /area/cargo/drone_bay)
+"vr" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = -29
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 2;
+	pixel_y = -32
+	},
+/turf/open/floor/iron/smooth,
+/area/mine/eva)
 "vs" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -10681,11 +10706,14 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 "IA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/plating,
-/area/mine/eva)
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: EXTERNAL AIRLOCK";
+	pixel_x = 32
+	},
+/turf/closed/wall/r_wall,
+/area/mine/production)
 "IC" = (
 /turf/closed/wall,
 /area/service/chapel)
@@ -13023,6 +13051,10 @@
 "Qc" = (
 /obj/structure/table,
 /obj/item/food/chococoin,
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = 30
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "Qd" = (
@@ -14885,6 +14917,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/trimline,
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = -29
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "VH" = (
@@ -15198,6 +15234,13 @@
 "WN" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = -29
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 2;
+	pixel_y = -32
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/living_quarters)
 "WO" = (
@@ -16162,6 +16205,12 @@
 /area/service/chapel)
 "ZQ" = (
 /obj/effect/turf_decal/bot,
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = 32
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 29
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "ZS" = (
@@ -28724,7 +28773,7 @@ JY
 zW
 cM
 rz
-kQ
+rz
 rz
 JQ
 Fp
@@ -28982,7 +29031,7 @@ AH
 CS
 lw
 WN
-id
+rz
 Fp
 PG
 Fp
@@ -34355,7 +34404,7 @@ mO
 mO
 mO
 jn
-Du
+id
 vp
 Du
 rP
@@ -34624,7 +34673,7 @@ yE
 bf
 QV
 QV
-vC
+IA
 QV
 QV
 vC
@@ -37461,8 +37510,8 @@ dK
 NS
 or
 VG
-ZQ
-or
+vr
+Kq
 tA
 Fp
 Fp
@@ -39243,7 +39292,7 @@ Fp
 Jf
 Fp
 Fp
-IA
+Kq
 ZQ
 sY
 Qc
@@ -39501,9 +39550,9 @@ RT
 PG
 BG
 Kq
-zL
+Kq
 bw
-hR
+Kq
 nM
 qF
 IN
@@ -41152,11 +41201,6 @@ ak
 ak
 ak
 ak
-ak
-ak
-ak
-ak
-ak
 "}
 (98,1,1) = {"
 ak
@@ -41319,11 +41363,6 @@ Fp
 Fp
 Fp
 As
-ak
-ak
-ak
-ak
-ak
 ak
 ak
 ak

@@ -39,7 +39,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/structure/sign/poster/official/random{
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = -2;
 	pixel_y = 32
 	},
 /turf/open/floor/iron/dark/side{
@@ -100,7 +102,8 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/official/random{
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = -2;
 	pixel_y = -32
 	},
 /turf/open/floor/iron/dark/side,
@@ -599,10 +602,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/mechbay)
-"uj" = (
-/obj/effect/gibspawner/human/bodypartless,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
 "uL" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,
@@ -627,6 +626,12 @@
 "vx" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small/directional/south,
+/obj/structure/sign/warning/coldtemp{
+	pixel_y = -32
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 29
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "vB" = (
@@ -728,6 +733,10 @@
 	dir = 4
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/coldtemp{
+	pixel_x = 3;
+	pixel_y = 32
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -1091,7 +1100,7 @@
 	pixel_y = 32
 	},
 /obj/structure/sign/warning/xeno_mining{
-	pixel_x = 32
+	pixel_x = 29
 	},
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -1131,6 +1140,10 @@
 /obj/effect/turf_decal/trimline,
 /obj/machinery/shower{
 	dir = 1
+	},
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_y = -32
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
@@ -1239,6 +1252,11 @@
 	dir = 8
 	},
 /obj/machinery/light/small/directional/west,
+/obj/structure/sign/warning/gasmask{
+	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
+	pixel_x = 3;
+	pixel_y = -32
+	},
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "Rs" = (
@@ -1291,6 +1309,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/sign/warning/xeno_mining{
+	pixel_x = 29
 	},
 /turf/open/floor/plating,
 /area/mine/eva)
@@ -23531,7 +23552,7 @@ wk
 GR
 Rn
 Xw
-BT
+GR
 MP
 LC
 EX
