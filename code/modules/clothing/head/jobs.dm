@@ -35,7 +35,7 @@
 	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
-	if(L.incapacitated(ignore_restraints = TRUE)) //just in case
+	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
 		return
 	step_towards(L, get_step(L, direction))
 
