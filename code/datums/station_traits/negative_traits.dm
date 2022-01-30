@@ -117,6 +117,36 @@
 	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 
+/datum/station_trait/no_gods_no_masters
+	name = "No Assistants, No Security"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 5
+	show_in_report = TRUE
+	var/chosen_job_name
+
+/datum/station_trait/no_gods_no_masters/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/no_gods_no_masters)
+
+/datum/station_trait/no_gods_no_masters/get_report()
+	return "[name] - Assistants and Security Officers across the SSC today are at home watching the nailbiting peace talks between the two eternally warring factions. \
+	As a result, your station isn't equipped with any Assistants or Security department staffers. We've chosen a basic departmental staffer to function as extra staffing overflow."
+
+/datum/station_trait/no_gods_no_masters/proc/no_gods_no_masters(datum/source)
+	SIGNAL_HANDLER
+	var/list/acceptable_replacement_jobs = list(
+		/datum/job/scientist,
+		/datum/job/medical_doctor,
+		/datum/job/station_engineer,
+		/datum/job/cargo_technician,
+	)
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(!(job.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_ASSISTANT)))
+			continue
+		job.allow_bureaucratic_error = FALSE
+		job.total_positions = 0
+	SSjob.set_overflow_role(pick(acceptable_replacement_jobs))
+
 /datum/station_trait/slow_shuttle
 	name = "Slow Shuttle"
 	trait_type = STATION_TRAIT_NEGATIVE
