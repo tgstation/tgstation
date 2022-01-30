@@ -107,7 +107,7 @@
 		var/value_to_add = handler.convert_value(list_output, value)
 		if(isdatum(value_to_add))
 			value_to_add = WEAKREF(value_to_add)
-		new_literal += value_to_add
+		new_literal += list(value_to_add)
 
 	list_output.set_output(new_literal)
 
