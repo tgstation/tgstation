@@ -112,6 +112,17 @@
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[rmat.local_size]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.")
+	if(panel_open)
+		. += span_notice("Alt-click to rotate the output direction.")
+
+/obj/machinery/mecha_part_fabricator/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(panel_open)
+		dir = turn(dir, -90)
+		balloon_alert(user, "rotated to [dir2text(dir)].")
+		return TRUE
 
 /**
  * Generates an info list for a given part.
