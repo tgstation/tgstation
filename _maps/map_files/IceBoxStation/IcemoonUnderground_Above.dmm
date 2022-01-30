@@ -1338,12 +1338,12 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/button/door/directional/south{
-	id = "drone_bay_external";
-	name = "Exterior Shutter Control";
+	id = "drone_bay";
+	name = "Shutter Control";
 	pixel_x = 23;
-	pixel_y = 9;
-	req_access = null;
-	req_access_txt = "31"
+	pixel_y = 10;
+	req_access_txt = "31";
+	sync_doors = 0
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/cargo/drone_bay)
@@ -4473,8 +4473,8 @@
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
 "oJ" = (
-/obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay_external";
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "drone_bay";
 	name = "drone bay shutters"
 	},
 /turf/open/floor/plating,
@@ -6587,7 +6587,7 @@
 "vp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay_internal";
+	id = "drone_bay";
 	name = "drone bay shutters"
 	},
 /turf/open/floor/plating,
@@ -8918,6 +8918,19 @@
 /obj/item/clothing/mask/cigarette/pipe,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"Db" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/south{
+	id = "drone_bay";
+	name = "Shutter Control";
+	pixel_x = 23;
+	pixel_y = 9;
+	req_access_txt = "31"
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/underground/explored)
 "Dc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -9032,7 +9045,7 @@
 /area/science/xenobiology)
 "Du" = (
 /obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay_internal";
+	id = "drone_bay";
 	name = "drone bay shutters"
 	},
 /turf/open/floor/plating,
@@ -14178,11 +14191,12 @@
 	pixel_x = -9
 	},
 /obj/machinery/button/door/directional/south{
-	id = "drone_bay_internal";
-	name = "Interior Shutter Control";
-	pixel_x = -22;
-	pixel_y = 9;
-	req_access_txt = "31"
+	id = "drone_bay";
+	name = "Shutter Control";
+	pixel_x = -23;
+	pixel_y = 10;
+	req_access_txt = "31";
+	sync_doors = 0
 	},
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
@@ -15007,8 +15021,8 @@
 /area/medical/virology)
 "We" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "drone_bay_external";
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	id = "drone_bay";
 	name = "drone bay shutters"
 	},
 /turf/open/floor/plating,
@@ -15355,19 +15369,11 @@
 	},
 /obj/machinery/light/small/directional/south,
 /obj/machinery/button/door/directional/south{
-	id = "drone_bay_internal";
-	name = "Interior Shutter Control";
-	pixel_x = 10;
-	pixel_y = -23;
-	req_access_txt = "31"
-	},
-/obj/machinery/button/door/directional/south{
-	id = "drone_bay_external";
-	name = "Exterior Shutter Control";
-	pixel_x = -9;
-	pixel_y = -23;
-	req_access = null;
-	req_access_txt = "31"
+	id = "drone_bay";
+	name = "Shutter Control";
+	pixel_y = -22;
+	req_access_txt = "31";
+	sync_doors = 0
 	},
 /turf/open/floor/plating,
 /area/cargo/drone_bay)
@@ -33582,7 +33588,7 @@ ZT
 mv
 VO
 eD
-nt
+Db
 XS
 mO
 mO
