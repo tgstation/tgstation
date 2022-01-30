@@ -371,6 +371,10 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, span_danger("Failed to establish database connection."), confidential = TRUE)
 		return
+
+	//Needs to be requested before url retrieval since you can view your notes before SSassets finishes initialization
+	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
+
 	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
 	var/list/navbar = list("<a href='?_src_=holder;[HrefToken()];nonalpha=1'>All</a><a href='?_src_=holder;[HrefToken()];nonalpha=2'>#</a>")
@@ -621,7 +625,6 @@
 		output += "<center><a href='?_src_=holder;[HrefToken()];addmessageempty=1'>Add message</a><a href='?_src_=holder;[HrefToken()];addwatchempty=1'>Add watchlist entry</a><a href='?_src_=holder;[HrefToken()];addnoteempty=1'>Add note</a></center>"
 		output += ruler
 	var/datum/browser/browser = new(usr, "Note panel", "Manage player notes", 1000, 500)
-	var/datum/asset/notes_assets = get_asset_datum(/datum/asset/simple/notes)
 	notes_assets.send(usr.client)
 	browser.set_content(jointext(output, ""))
 	browser.open()

@@ -47,3 +47,8 @@
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner
+
+/datum/outfit/job/cargo_tech/mod
+	name = "Cargo Technician (MODsuit)"
+
+	back = /obj/item/mod/control/pre_equipped/loader

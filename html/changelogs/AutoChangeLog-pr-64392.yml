@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Whenever radiation shelters are blueprinted and labelled as a \"radiation shelter\", you can rest easy now that the blueprint has an actual name. It doesn't matter on a day-to-day basis, but it looks a lot nicer for the people working with the blueprints."

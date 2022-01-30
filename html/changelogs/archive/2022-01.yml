@@ -1067,3 +1067,158 @@
   tralezab:
   - bugfix: APOTHEOSIS! now forces you standing during your death animation, restoring
       the old (not forced) standing when I originally added APOTHEOSIS!
+2022-01-27:
+  Fikou:
+  - balance: lowers kilo's bombcap multiplier
+  Iamgoofball:
+  - balance: Removes the fucking 20 second stunlock rng from tourettes because it's
+      fucking stupid and I just had the most agonizing thirty fucking minutes of my
+      goddamn life, holy shit, I hate this fucking mutation so goddamn much, who the
+      fuck thought 20 second hard stun was a genius idea for a random mutation, especially
+      the fact it gives absolutely zero indication that it's from the tourettes because
+      the stun has no message attached
+  Kylerace:
+  - bugfix: the fast mc tab refresh pref actually works
+  Melbert:
+  - admin: Comms console hacks by ninjas and traitors (the ones that spawn antags)
+      are now logged (find them in user logs and in the game log!).
+  Pickle-Coding:
+  - bugfix: Bluespace gas vendors no longer deletes the gases it doesn't transfer
+      when transferring gases.
+  SkeletalElite:
+  - bugfix: Kilo uses regular newscasters instead of security variants
+  Wallem:
+  - expansion: Monkeys can now protect their village from the rubber menace.
+  Zonespace27:
+  - bugfix: Heads of Personnel can now be midround thieves, as intended.
+  blessedmulligan:
+  - bugfix: You can now remove attachments from weapons without standing across the
+      room
+  magatsuchi:
+  - bugfix: restructures some code to make airlocks hackable again
+  - bugfix: blood barrage no longer has a seizure when you use it
+  neopythagorean:
+  - refactor: the telecommunications server monitor now uses tgui.
+  san7890:
+  - bugfix: Followers of Nar'Sie who hope to summon her can hopefully ascertain the
+      correct area to summon her, as the gambling and gaming dens have now been seperated.
+  - bugfix: Whenever radiation shelters are blueprinted and labelled as a "radiation
+      shelter", you can rest easy now that the blueprint has an actual name. It doesn't
+      matter on a day-to-day basis, but it looks a lot nicer for the people working
+      with the blueprints.
+  tastyfish:
+  - bugfix: Central Command has finally informed the Plexagon vendor that service
+      hallway access exists, allowing HoP's to grant it to ID cards.
+  tralezab:
+  - rscadd: Separatists now have an antagonist ui!
+  - balance: Antagonists cannot roll for thieves anymore, as you already have a larger
+      amount of impact on the round than thief would give you.
+  - admin: Admins no longer roll for thief while they sit around on centcom testing
+      things.
+2022-01-28:
+  JohnFulpWillard:
+  - admin: Tool usage is now (config-locked) logged!
+  Jolly-66:
+  - bugfix: DJ Space ruin no longer uses incorrect turfs.
+  Maxymax13:
+  - imageadd: resprites pills
+  Sheits:
+  - imageadd: Resprites the mega legion and all legion related mobs
+  Wallem:
+  - qol: Mailbags can be worn on cargo coat.
+  - imageadd: Mailbags have their own sprite instead of borrowing it from book bags.
+  Zonespace27:
+  - qol: You can now use autosurgeons on other people after a delay.
+  axietheaxolotl:
+  - imageadd: New sprites for the Parcel Parceaux, base Mime mask, Mime outfit and
+      skirt, and mime sexy outfit.
+  - imageadd: new sprites for lace-up shoes.
+  - code_imp: Mimes spawn with lace-ups instead of black shoes
+  castawaynont:
+  - balance: CentComm's Mark One SWAT suit's design has been reworked; it now lacks
+      spaceproofing, but it has become significantly faster to move in and retains
+      temperature-proofing. These adjustments have allowed CC to sell them for a lower
+      cost of 1400.
+  jjpark-kb:
+  - qol: safes now use balloon alerts for the hint
+  san7890:
+  - bugfix: Nanotrasen decided to redirect some of the plasma rivers on IceBox station
+      towards the labor camp, helping add another layer of security between the station
+      and those awful, awful prisoners.
+  - bugfix: Area definitions for the IceBox and Lavaland Labor Camps have been updated.
+      That means that gulag point-prisoners no longer have a safe haven inside the
+      security portion of IceBox's security wing.
+  - bugfix: The warden can no longer consider half of security to be their office
+      on KiloStation.
+  - rscadd: 'Introducing: The Lizard''s Gas! A brand new (gas) station for you to
+      go out and refuel your ships and your stomachs. It''s been a while since the
+      power''s been turned on, but everything is just the way it was left all those
+      years ago. Explore!'
+  - rscdel: gasthelizards.dmm has been deleted. you will never see gasthelizards.dmm
+      ever again.
+  - config: since gasthelizards.dmm is removed, the config has been updated as well.
+      make sure it's up-to-date now that we've gotten rid of the dang ol' thing and
+      replaced it with new hotness.
+  - bugfix: The IceBox Station Telecommunications Room now has a fire alarm.
+  - bugfix: Atmossians, no longer fret. You now own all of the walls in TramStation's
+      Incinerator Room.
+  - bugfix: The camera in the Ice Box Station Locker Room is no longer inside of a
+      door.
+2022-01-29:
+  Fikou, TetraZeta for sprites, Nerevar for description.:
+  - expansion: Loader Class MODsuit, equipped with hydraulic arms, available in your
+      nearby cargo storage (or qm office on delta).
+  - expansion: BEPIS MODsuit modules, currently available one lets you change your
+      disposal destination.
+  Improvedname:
+  - bugfix: Ash drake shapeshift now converts your health like shapeshifting is supposed
+      to
+  LemonInTheDark:
+  - bugfix: APCs will no longer error and complain about something that doesn't actually
+      matter
+  - bugfix: I accidentally doubled the speed of all simple mobs. It's fixed now. I
+      also know how byond's internal movement stuff works now. I hate this codebase
+  OneAsianTortoise:
+  - bugfix: Fixes being able to load C-4/X-4 into the grenade launcher, and it duplicating
+      when you try to load it
+  RandomGamer123:
+  - qol: Purified shades now show who they were prior to becoming a shade.
+  - bugfix: Purified shades that get converted to shades now become regular cult shades.
+  - qol: Purified soulstones (and the shades inside) can now directly be converted
+      into cult soulstones (and cult shades) with Twisted Construction.
+  - spellcheck: '"Shade of" does not get duplicated anymore for soulstones under certain
+      conditions'
+  SmoSmoSmoSmok:
+  - bugfix: Cuffing people as a PAI/ghost controlled beepsky no longer glitches out
+  SuperNovaa41:
+  - bugfix: Thermite will no longer leave an impassable fire tile if the turf beneath
+      it is deleted/deconstructed.
+  - bugfix: Spiders will now have a randomized number next to their name.
+  tralezab:
+  - balance: Statues can now phase around when unseen.
+2022-01-30:
+  Melbert:
+  - bugfix: Balloon alerts sourced on turfs work properly.
+  ReinaCoder:
+  - bugfix: The adjusted versions of the Head of Security's jumpsuit and skirt are
+      now the same colour as the non-adjusted.
+  Timberpoes:
+  - bugfix: Attempting to write to paper no longer comically bluescreens.
+  Vire, san7890, mrmelbert, Sealed101:
+  - bugfix: Autonamed cameras should no longer show static in camera consoles.
+  antropod:
+  - balance: Folded bluespace bodybag with dwarves fit into backpack
+  cacogen:
+  - bugfix: Ice Box Public Mining downstairs now uses proper external airlocks
+  san7890:
+  - bugfix: If you've been noticing some weirdness in the light as you spacewalk over
+      to the AI Satellite on MetaStation, fear no longer for they have been fixed.
+  - spellcheck: The last ash drake currently residing on the celestial body underneath
+      Ice Box Station no longer thinks it's on lavaland.
+  - bugfix: For those of you into code, some stuff with the icon pathing has been
+      shuffled around so it's no longer in the roots of the icon/ folder. If you aren't
+      into code, that's fine too.
+  - imageadd: Abandoned Kitchens now have a special sprite indicating that they are
+      now abandoned.
+  theOOZ:
+  - bugfix: Runechat reads the y offset value of the sayer instead of the hearer

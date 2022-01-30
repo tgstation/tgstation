@@ -46,7 +46,7 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation()
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -230,9 +230,9 @@
 
 /obj/item/mod/module/noslip/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
-	
+
 /obj/item/mod/module/springlock/bite_of_87
-	
+
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
 	. = ..()
 	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
@@ -247,11 +247,11 @@
 
 /obj/item/mod/module/springlock/bite_of_87/on_uninstall()
 	mod.activation_step_time *= 10
-	
+
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
-		var/list/all_parts = mod.mod_parts.Copy() + mod 
+		var/list/all_parts = mod.mod_parts.Copy() + mod
 		for(var/obj/item/part in all_parts) // turns the suit yellow
 			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)

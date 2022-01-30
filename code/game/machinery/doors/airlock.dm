@@ -793,7 +793,7 @@
 			return
 	add_fingerprint(user)
 
-	if(panel_open)
+	if(panel_open || !is_wire_tool(C))
 		switch(security_level)
 			if(AIRLOCK_SECURITY_NONE)
 				if(istype(C, /obj/item/stack/sheet/iron))
@@ -909,7 +909,8 @@
 											span_notice("You cut through \the [src]'s outer grille."))
 						security_level = AIRLOCK_SECURITY_PLASTEEL_O
 					return
-	else if(is_wire_tool(C) && panel_open)
+
+	if(is_wire_tool(C) && panel_open)
 		attempt_wire_interaction(user)
 		return
 	else if(istype(C, /obj/item/pai_cable))

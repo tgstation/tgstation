@@ -83,7 +83,7 @@
 	ranged = 1
 	retreat_distance = 5
 	minimum_distance = 5
-	move_to_delay = 2
+	move_to_delay = 4
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 4,
 							/obj/item/stack/sheet/animalhide/xeno = 1)
 	projectiletype = /obj/projectile/neurotox
@@ -132,7 +132,7 @@
 	icon_dead = "alienq_dead"
 	health_doll_icon = "alienq"
 	bubble_icon = "alienroyal"
-	move_to_delay = 2
+	move_to_delay = 4
 	maxHealth = 400
 	health = 400
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 10,

@@ -76,7 +76,7 @@
 /obj/structure/disposaloutlet{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/djstation)
 "J" = (
 /obj/machinery/griddle,

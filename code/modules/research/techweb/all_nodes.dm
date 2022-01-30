@@ -1994,6 +1994,14 @@
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
+	if(!SStraitor.initialized)
+		RegisterSignal(SStraitor, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+	else
+		register_uplink_items()
+
+/datum/techweb_node/syndicate_basic/proc/register_uplink_items()
+	SIGNAL_HANDLER
+	UnregisterSignal(SStraitor, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	boost_item_paths = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
@@ -2088,6 +2096,18 @@
 	design_ids = list(
 		"tackle_dolphin",
 		"tackle_rocket",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/mod_experimental
+	id = "mod_experimental"
+	display_name = "Experimental Modular Suits"
+	description = "Applications of experimentality when creating MODsuits has created these..."
+	prereq_ids = list("base")
+	design_ids = list(
+		"mod_disposal",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

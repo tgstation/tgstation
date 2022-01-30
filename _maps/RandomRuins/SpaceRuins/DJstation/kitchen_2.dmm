@@ -14,14 +14,14 @@
 	},
 /area/ruin/space/djstation)
 "k" = (
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/djstation)
 "o" = (
 /obj/structure/table_frame,
 /obj/machinery/light/broken/directional/east,
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
 /area/ruin/space/djstation)
@@ -69,7 +69,7 @@
 /turf/template_noop,
 /area/template_noop)
 "S" = (
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/djstation)
@@ -78,7 +78,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "W" = (
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/djstation)

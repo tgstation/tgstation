@@ -85,6 +85,10 @@ GLOBAL_VAR(restart_counter)
 	HandleTestRun()
 	#endif
 
+	#ifdef AUTOWIKI
+	setup_autowiki()
+	#endif
+
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
@@ -127,6 +131,7 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"

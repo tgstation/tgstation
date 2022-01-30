@@ -47,7 +47,7 @@
 				if(!spawned_loot)
 					spawn_loot()
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
-				togglelock()
+				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
 				to_chat(user, span_notice("You leave the crate alone."))
 			else
