@@ -260,10 +260,14 @@
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	update_icon()
-	correct_state()
+
 	if(machine_stat & NOPOWER)
 		soundloop.stop()
-	else if(is_playing_alarm)
+		return
+
+	correct_state()
+
+	if(is_playing_alarm)
 		soundloop.start()
 
 
