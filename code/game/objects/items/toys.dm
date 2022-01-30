@@ -682,7 +682,7 @@
 		sleep(10)
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
-	user.loc.visible_message("<span class='[span]'>[icon2html(src, viewers(user.loc))] [message]</span>")
+	say(message, spans = list(span))
 	if(chattering)
 		chatter(message, phomeme, user)
 
