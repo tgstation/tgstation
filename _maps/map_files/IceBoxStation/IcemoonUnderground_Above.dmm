@@ -1376,11 +1376,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/grass,
 /area/service/hydroponics)
-"eP" = (
-/obj/structure/lattice,
-/obj/machinery/light/small/directional/north,
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/underground/explored)
 "eQ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -33854,7 +33849,7 @@ Va
 Va
 Va
 Fe
-eP
+Rj
 mO
 br
 NR
