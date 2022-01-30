@@ -1,4 +1,0 @@
-author: "theOOZ"
-delete-after: True
-changes: 
-  - bugfix: "Runechat reads the y offset value of the sayer instead of the hearer"

@@ -1196,3 +1196,29 @@
   - bugfix: Spiders will now have a randomized number next to their name.
   tralezab:
   - balance: Statues can now phase around when unseen.
+2022-01-30:
+  Melbert:
+  - bugfix: Balloon alerts sourced on turfs work properly.
+  ReinaCoder:
+  - bugfix: The adjusted versions of the Head of Security's jumpsuit and skirt are
+      now the same colour as the non-adjusted.
+  Timberpoes:
+  - bugfix: Attempting to write to paper no longer comically bluescreens.
+  Vire, san7890, mrmelbert, Sealed101:
+  - bugfix: Autonamed cameras should no longer show static in camera consoles.
+  antropod:
+  - balance: Folded bluespace bodybag with dwarves fit into backpack
+  cacogen:
+  - bugfix: Ice Box Public Mining downstairs now uses proper external airlocks
+  san7890:
+  - bugfix: If you've been noticing some weirdness in the light as you spacewalk over
+      to the AI Satellite on MetaStation, fear no longer for they have been fixed.
+  - spellcheck: The last ash drake currently residing on the celestial body underneath
+      Ice Box Station no longer thinks it's on lavaland.
+  - bugfix: For those of you into code, some stuff with the icon pathing has been
+      shuffled around so it's no longer in the roots of the icon/ folder. If you aren't
+      into code, that's fine too.
+  - imageadd: Abandoned Kitchens now have a special sprite indicating that they are
+      now abandoned.
+  theOOZ:
+  - bugfix: Runechat reads the y offset value of the sayer instead of the hearer
