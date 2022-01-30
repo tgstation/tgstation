@@ -28,10 +28,12 @@
 /obj/effect/spawner/random/trash/cigbutt
 	name = "cigarette butt spawner"
 	loot = list(
-		/obj/item/cigbutt = 50,
-		/obj/item/cigbutt/roach = 30,
-		/obj/item/food/candy_trash = 10,
-		/obj/item/cigbutt/cigarbutt = 10,
+		/obj/item/cigbutt = 25,
+		/obj/item/cigbutt/roach = 25,
+		/obj/effect/decal/cleanable/ash = 25,
+		/obj/item/cigbutt/cigarbutt = 15,
+		/obj/item/food/candy_trash = 5,
+		/obj/item/food/candy_trash/nicotine = 5,
 	)
 
 /obj/effect/spawner/random/trash/food_packaging
