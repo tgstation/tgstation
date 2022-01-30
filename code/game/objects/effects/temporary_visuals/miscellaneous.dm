@@ -529,3 +529,8 @@
 	icon_state = "thunderbolt"
 	icon = 'icons/effects/32x96.dmi'
 	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/light_ash
+	icon_state = "light_ash"
+	icon = 'icons/effects/weather_effects.dmi'
+	duration = 3.2 SECONDS

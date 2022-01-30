@@ -7,18 +7,21 @@
 		down to the exact coordinates. This information is fed to a central database viewable from the device itself, \
 		though using it to help people is up to you."
 	icon_state = "gps"
-	module_type = MODULE_ACTIVE
+	module_type = MODULE_USABLE
 	complexity = 1
-	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	device = /obj/item/gps/mod
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
 
-/obj/item/gps/mod
-	name = "MOD internal GPS"
-	desc = "Common Nanotrasen technology that calcaulates the user's position from anywhere in space, down to their coordinates."
-	icon_state = "gps-b"
-	gpstag = "MOD0"
+/obj/item/mod/module/gps/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay = null)
+
+/obj/item/mod/module/gps/on_use()
+	. = ..()
+	if(!.)
+		return
+	attack_self(mod.wearer)
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
@@ -103,6 +106,7 @@
 	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/drill)
 	cooldown_time = 0.5 SECONDS
+	overlay_state_active = "module_drill"
 
 /obj/item/mod/module/drill/on_activation()
 	. = ..()
@@ -149,7 +153,7 @@
 		It's recommended by Nakamura Engineering to actually deposit that ore at local refineries."
 	icon_state = "ore"
 	module_type = MODULE_USABLE
-	complexity = 2
+	complexity = 1
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/orebag)
 	cooldown_time = 0.5 SECONDS
@@ -331,3 +335,168 @@
 
 	locker.strong_grab = FALSE
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
+
+/obj/item/mod/module/ash_accretion
+	name = "MOD ash accretion module"
+	desc = "A module that collects ash from the terrain, covering the suit in a protective layer, this layer is \
+		lost when moving across standard terrain."
+	icon_state = "ash_accretion"
+	removable = FALSE
+	incompatible_modules = list(/obj/item/mod/module/ash_accretion)
+	/// How many tiles we can travel to max out the armor.
+	var/max_traveled_tiles = 10
+	/// How many tiles we traveled through.
+	var/traveled_tiles = 0
+	/// Armor values per tile.
+	var/list/armor_values = list(MELEE = 5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
+	/// Speed added when you're fully covered in ash.
+	var/speed_added = 0.5
+	/// Turfs that let us accrete ash.
+	var/static/list/accretion_turfs
+	/// Turfs that let us keep ash.
+	var/static/list/keep_turfs
+
+/obj/item/mod/module/ash_accretion/Initialize(mapload)
+	. = ..()
+	if(!accretion_turfs)
+		accretion_turfs = typecacheof(list(
+			/turf/open/floor/plating/asteroid,
+			/turf/open/floor/plating/ashplanet,
+			/turf/open/floor/plating/dirt,
+		))
+	if(!keep_turfs)
+		keep_turfs = typecacheof(list(
+			/turf/open/floor/plating/grass,
+			/turf/open/floor/plating/snowed,
+			/turf/open/floor/plating/sandy_dirt,
+			/turf/open/floor/plating/ironsand,
+			/turf/open/indestructible/hierophant,
+			/turf/open/indestructible/boss,
+			/turf/open/indestructible/necropolis,
+			/turf/open/lava,
+			/turf/open/water,
+		))
+
+/obj/item/mod/module/ash_accretion/on_suit_activation()
+	ADD_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/obj/item/mod/module/ash_accretion/on_suit_deactivation()
+	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	if(!traveled_tiles)
+		return
+	var/list/parts = mod.mod_parts + mod
+	var/list/removed_armor = armor_values.Copy()
+	for(var/armor_type in removed_armor)
+		removed_armor[armor_type] = -removed_armor[armor_type] * traveled_tiles
+	for(var/obj/item/part as anything in parts)
+		part.armor = part.armor.modifyRating(arglist(removed_armor))
+	if(traveled_tiles == max_traveled_tiles)
+		mod.slowdown += speed_added
+		mod.wearer.update_equipment_speed_mods()
+	traveled_tiles = 0
+
+/obj/item/mod/module/ash_accretion/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	if(!isturf(mod.wearer.loc)) //dont lose ash from going in a locker
+		return
+	if(traveled_tiles && prob(25)) //leave ash every few tiles
+		new /obj/effect/temp_visual/light_ash(get_turf(src))
+	if(is_type_in_typecache(mod.wearer.loc, accretion_turfs))
+		if(traveled_tiles >= max_traveled_tiles)
+			return
+		traveled_tiles++
+		var/list/parts = mod.mod_parts + mod
+		for(var/obj/item/part as anything in parts)
+			part.armor = part.armor.modifyRating(arglist(armor_values))
+		if(traveled_tiles >= max_traveled_tiles)
+			balloon_alert(mod.wearer, "fully ash covered")
+			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
+			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+			playsound(src, 'sound/effects/sparks1.ogg', 100, TRUE)
+			mod.slowdown -= speed_added
+			mod.wearer.update_equipment_speed_mods()
+	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
+		return
+	else
+		if(traveled_tiles <= 0)
+			return
+		if(traveled_tiles == max_traveled_tiles)
+			mod.slowdown += speed_added
+			mod.wearer.update_equipment_speed_mods()
+		traveled_tiles--
+		var/list/parts = mod.mod_parts + mod
+		var/list/removed_armor = armor_values.Copy()
+		for(var/armor_type in removed_armor)
+			removed_armor[armor_type] = -removed_armor[armor_type]
+		for(var/obj/item/part as anything in parts)
+			part.armor = part.armor.modifyRating(arglist(removed_armor))
+		if(traveled_tiles <= 0)
+			balloon_alert(mod.wearer, "ran out of ash!")
+
+/obj/item/mod/module/sphere_transform
+	name = "MOD sphere transform module"
+	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
+		The sphere can move quickly, even through lava, and launch mining bombs to decimate terrain."
+	icon_state = "sphere"
+	module_type = MODULE_ACTIVE
+	removable = FALSE
+	active_power_cost = DEFAULT_CHARGE_DRAIN*0.5
+	use_power_cost = DEFAULT_CHARGE_DRAIN*3
+	incompatible_modules = list(/obj/item/mod/module/sphere_transform)
+	cooldown_time = 1.5 SECONDS
+	/// Time it takes us to complete the animation.
+	var/animate_time = 0.25 SECONDS
+
+/obj/item/mod/module/sphere_transform/on_activation()
+	. = ..()
+	if(!.)
+		return
+	playsound(src, 'sound/items/modsuit/ballin.ogg', 100)
+	mod.wearer.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/mod.dmi', "ball_mask"), flags = MASK_INVERSE))
+	mod.wearer.add_filter("mod_blur", 2, angular_blur_filter(size = 15))
+	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
+	mod.wearer.base_pixel_y -= 4
+	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 1.5), animate_time)
+	ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
+	ADD_TRAIT(mod.wearer, TRAIT_IGNORETURFSLOWDOWN, MOD_TRAIT)
+	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6)
+	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
+
+/obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
+	. = ..()
+	if(!.)
+		return
+	playsound(src, 'sound/items/modsuit/ballout.ogg', 100)
+	mod.wearer.base_pixel_y = 0
+	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y)
+	addtimer(CALLBACK(mod.wearer, /atom.proc/remove_filter, list("mod_ball", "mod_blur", "mod_outline")), animate_time)
+	REMOVE_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
+	REMOVE_TRAIT(mod.wearer, TRAIT_IGNORETURFSLOWDOWN, MOD_TRAIT)
+	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6)
+	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
+
+/obj/item/mod/module/sphere_transform/on_use()
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		balloon_alert(mod.wearer, "too much pressure!")
+		playsound(src, 'sound/weapons/gun/general/dry_fire.ogg', 25, TRUE)
+		return FALSE
+	return ..()
+
+/obj/item/mod/module/sphere_transform/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/obj/projectile/bomb = new /obj/projectile/mining_bomb(mod.wearer.loc)
+	bomb.preparePixelProjectile(target, mod.wearer)
+	bomb.firer = mod.wearer
+	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
+	INVOKE_ASYNC(bomb, /obj/projectile.proc/fire)
+	drain_power(use_power_cost)
+
+/obj/projectile/mining_bomb

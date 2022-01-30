@@ -41,6 +41,27 @@
 /obj/item/mod/core/proc/update_charge_alert()
 	mod.wearer.clear_alert("mod_charge")
 
+/obj/item/mod/core/infinite
+	name = "MOD infinite core"
+	icon_state = "mod-core-infinite"
+	desc = "A fusion core using the rare palladium to sustain enough energy for the lifetime of the MOD's user. \
+		This might be because of the slowly killing poison inside, but those are just rumors."
+
+/obj/item/mod/core/infinite/charge_source()
+	return src
+
+/obj/item/mod/core/infinite/charge_amount()
+	return INFINITY
+
+/obj/item/mod/core/infinite/max_charge_amount()
+	return INFINITY
+
+/obj/item/mod/core/infinite/add_charge(amount)
+	return TRUE
+
+/obj/item/mod/core/infinite/subtract_charge(amount)
+	return TRUE
+
 /obj/item/mod/core/standard
 	name = "MOD standard core"
 	icon_state = "mod-core-standard"
@@ -68,7 +89,6 @@
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	uninstall_cell()
 	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY))
 	return ..()
 
@@ -224,23 +244,74 @@
 		return
 	mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
 
-/obj/item/mod/core/infinite
-	name = "MOD infinite core"
-	icon_state = "mod-core-infinite"
-	desc = "A fusion core using the rare palladium to sustain enough energy for the lifetime of the MOD's user. \
-		This might be because of the slowly killing poison inside, but those are just rumors."
+/obj/item/mod/core/plasma
+	name = "MOD plasma core"
+	icon_state = "mod-core-plasma"
+	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
+		through plasma ore, allowing for easy continued use by their mining squads."
+	/// How much charge we can store.
+	var/maxcharge = 10000
+	/// How much charge we are currently storing.
+	var/charge = 10000
+	/// Charge per plasma ore.
+	var/charge_given = 2500
 
-/obj/item/mod/core/infinite/charge_source()
+/obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
+	. = ..()
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+
+/obj/item/mod/core/plasma/uninstall()
+	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
+	return ..()
+
+/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
+	if(charge_plasma(attacking_item, user))
+		return TRUE
+	return ..()
+
+/obj/item/mod/core/plasma/charge_source()
 	return src
 
-/obj/item/mod/core/infinite/charge_amount()
-	return INFINITY
+/obj/item/mod/core/plasma/charge_amount()
+	return charge
 
-/obj/item/mod/core/infinite/max_charge_amount()
-	return INFINITY
+/obj/item/mod/core/plasma/max_charge_amount()
+	return maxcharge
 
-/obj/item/mod/core/infinite/add_charge(amount)
+/obj/item/mod/core/plasma/add_charge(amount)
+	charge = min(maxcharge, charge + amount)
 	return TRUE
 
-/obj/item/mod/core/infinite/subtract_charge(amount)
+/obj/item/mod/core/plasma/subtract_charge(amount)
+	charge = max(maxcharge, charge - amount)
+	return TRUE
+
+/obj/item/mod/core/plasma/update_charge_alert()
+	var/remaining_plasma = charge_amount() / max_charge_amount()
+	switch(remaining_plasma)
+		if(0.75 to INFINITY)
+			mod.wearer.clear_alert("mod_charge")
+		if(0.5 to 0.75)
+			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 1)
+		if(0.25 to 0.5)
+			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 2)
+		if(0.01 to 0.25)
+			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell/plasma, 3)
+		else
+			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell/plasma)
+
+/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(charge_plasma(attacking_item, user))
+		return COMPONENT_NO_AFTERATTACK
+	return NONE
+
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/attacking_item, mob/user)
+	if(!istype(attacking_item, /obj/item/stack/ore/plasma))
+		return FALSE
+	if(!attacking_item.use(1))
+		return FALSE
+	add_charge(charge_given)
+	balloon_alert(user, "core refueled")
 	return TRUE

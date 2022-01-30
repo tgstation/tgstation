@@ -373,4 +373,4 @@
 
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
-	#define SPEED_POTION_SUCCESSFUL (1<<0)
+	#define SPEED_POTION_STOP (1<<0)

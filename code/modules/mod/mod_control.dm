@@ -537,7 +537,7 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
+	return electrocute_mob(user, get_cell(), src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, mob/user)
 	var/obj/item/mod/module/new_module = module
@@ -666,8 +666,8 @@
 	SIGNAL_HANDLER
 
 	update_charge_alert()
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
-	if(!istype(cell))
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(!cell)
 		return
 	cell.give(amount)
 
@@ -676,10 +676,10 @@
 
 	if(slowdown_inactive <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
-		return
+		return SPEED_POTION_STOP
 	if(wearer)
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
-		return
+		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	var/list/all_parts = mod_parts.Copy() + src
 	for(var/obj/item/part as anything in all_parts)
@@ -689,4 +689,4 @@
 	slowdown_active = 0
 	update_speed()
 	qdel(speed_potion)
-	return SPEED_POTION_SUCCESSFUL
+	return SPEED_POTION_STOP

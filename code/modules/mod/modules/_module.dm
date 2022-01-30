@@ -96,7 +96,7 @@
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			on_deactivation(display_message = TRUE)
+			on_deactivation()
 		else
 			on_activation()
 	else
@@ -125,6 +125,7 @@
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
@@ -149,6 +150,7 @@
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, force = TRUE)
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+			UnregisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN)
 		else
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
@@ -195,7 +197,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation(display_message = TRUE)
+			on_deactivation()
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -247,7 +249,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation(display_message = TRUE)
+		on_deactivation(display_message = FALSE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
@@ -293,6 +295,14 @@
 		action = new(mod, src, user)
 		action.Grant(user)
 		pinned_to[user] = action
+
+/// On drop key, concels a device item.
+/obj/item/mod/module/proc/dropkey(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(user.get_active_held_item() != device)
+		return
+	on_deactivation()
 
 ///Anomaly Locked - Causes the module to not function without an anomaly.
 /obj/item/mod/module/anomaly_locked

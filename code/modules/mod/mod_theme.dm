@@ -224,7 +224,7 @@
 
 /datum/mod_theme/mining
 	name = "mining"
-	desc = "A high-power Nanotrasen mining suit, supporting more complexity at a bigger drain."
+	desc = "A Nanotrasen mining suit."
 	extended_desc = "A high-powered Nanotrasen-designed suit, based off the work of Nakamura Engineering. \
 		While initial designs were built for the rigors of asteroid mining, given blast resistance through inbuilt ceramics, \
 		mining teams have since heavily tweaked the suit themselves. Aftermarket armor plating has been added, \
@@ -234,10 +234,12 @@
 		making it demand more power in exchange."
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF|LAVA_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
+	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
 			HELMET_LAYER = null,

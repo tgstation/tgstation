@@ -888,7 +888,7 @@
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return
-	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_SUCCESSFUL)
+	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
 		return
 	if(isitem(C))
 		var/obj/item/I = C

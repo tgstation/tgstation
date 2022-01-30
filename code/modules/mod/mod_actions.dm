@@ -145,8 +145,6 @@
 	. = ..()
 	if(!.)
 		return
-	if(!mod.active)
-		mod.balloon_alert(usr, "suit not on!")
 	module.on_select()
 
 /datum/action/item_action/mod/pinned_module/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force)
