@@ -35,7 +35,6 @@
 		"micro_mani",
 		"oven_tray",
 		"packagewrap",
-		"paystand",
 		"plasmaglass",
 		"plasmareinforcedglass",
 		"plasteel",

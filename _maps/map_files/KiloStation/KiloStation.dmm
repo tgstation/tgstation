@@ -15451,7 +15451,6 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/folder/red,
-/obj/item/circuitboard/machine/paystand,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron/dark,
 /area/maintenance/port)
@@ -61919,7 +61918,6 @@
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/newscaster/directional/south,
 /obj/item/clipboard,
-/obj/item/circuitboard/machine/paystand,
 /turf/open/floor/iron/dark,
 /area/commons/vacant_room/commissary)
 "qeZ" = (
