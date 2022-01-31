@@ -74,6 +74,9 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "wooden"
 	pixel_y = -4
+	anchored = TRUE
+	density = TRUE
+	uses_integrity = FALSE
 
 	var/crate_open_sound = 'sound/machines/crate_open.ogg'
 	var/crate_close_sound = 'sound/machines/crate_close.ogg'
@@ -204,6 +207,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	icon = 'icons/obj/guns/ballistic.dmi'
 	icon_state = "detective"
 	pixel_y = -8
+	uses_integrity = FALSE
 
 	/// The currently selected item. Constantly changes while choosing, determines what is spawned if the prize is claimed, and its current icon
 	var/selected_path = /obj/item/gun/ballistic/revolver/detective
@@ -233,8 +237,6 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /// Start pushing the prize up
 /obj/mystery_box_item/proc/start_animation(atom/parent)
 	parent_box = parent
-
-
 	loop_icon_changes()
 
 /// Keep changing the icon and selected path
@@ -250,16 +252,21 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
 
 	var/i = 0
-	while(change_counter < MBOX_DURATION_CHOOSING)
+	while((change_counter + change_delay_delta + change_delay) < MBOX_DURATION_CHOOSING)
 		i++
 		change_delay += change_delay_delta
 		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
 		selected_item = selected_path
-		animate(icon = initial(selected_item.icon), icon_state = initial(selected_item.icon_state), time = change_counter)
-		testing("Iter [i]: change_delay: [change_delay] | change_counter: [change_counter] | icon: [selected_item.icon] | icon_state: [selected_item.icon_state]")
+		addtimer(CALLBACK(src, .proc/update_random_icon, selected_path), change_counter)
 
 	addtimer(CALLBACK(src, .proc/present_item), MBOX_DURATION_CHOOSING)
+
+/// animate() isn't up to the task for queueing up icon changes, so this is the proc we call with timers to update our icon
+/obj/mystery_box_item/proc/update_random_icon(new_item_type)
+	var/obj/item/new_item = new_item_type
+	icon = initial(new_item.icon)
+	icon_state = initial(new_item.icon_state)
 
 /obj/mystery_box_item/proc/present_item()
 	var/obj/item/selected_item = selected_path
