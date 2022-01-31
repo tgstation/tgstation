@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the \"skeletal guardian\" away mission role not being a skeleton."
