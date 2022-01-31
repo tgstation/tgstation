@@ -67,7 +67,7 @@ export class AlertModal extends Component {
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);
     const windowHeight
-    = 105
+    = 115
     + Math.ceil(message.length / 3);
 
     return (
