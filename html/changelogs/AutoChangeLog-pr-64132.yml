@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Final objective battlecruiser will now make you a battlecruiser ally, giving you the nuke codes and making it obvious to other battlecruiser members that you are one of them."
+  - expansion: "Added telecom disruption and blackout purchases for traitors to purchase, and moved the elite syndicate hardsuit from the nukie uplink to the traitor uplink as a high progression cost item."
+  - balance: "Rebalanced TC rewards from assassinations to be less, and lowered TC rewards for plentiful objectives."
+  - balance: "Lowers the progression reward of assassination objectives."
