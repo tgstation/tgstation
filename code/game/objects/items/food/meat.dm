@@ -716,6 +716,16 @@
 /obj/item/food/meat/slab/human/mutant/skeleton/MakeProcessable()
 	return //skeletons dont have cutlets
 
+///special type of bone meat that returns to you!
+/obj/item/food/meat/slab/human/mutant/skeleton/boomerang
+	name = "bone boomerang"
+	desc = "Surprisingly painful to get bonked by this in the head."
+	throwforce = 20
+
+/obj/item/food/meat/slab/human/mutant/skeleton/boomerang/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boomerang, throw_range, TRUE)
+
 /obj/item/food/meat/slab/human/mutant/zombie
 	name = " meat (rotten)"
 	icon_state = "rottenmeat"

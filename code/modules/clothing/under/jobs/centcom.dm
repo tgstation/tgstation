@@ -15,6 +15,10 @@
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/centcom/intern/monster_hunters
+	name = "hunting underfit"
+	desc = "A classic green look while you send them back to whence they came!"
+
 /obj/item/clothing/under/rank/centcom/officer
 	name = "\improper CentCom turtleneck suit"
 	desc = "A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe."

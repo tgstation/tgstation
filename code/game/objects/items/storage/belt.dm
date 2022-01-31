@@ -29,6 +29,19 @@
 	. = ..()
 	update_appearance()
 
+/obj/item/storage/belt/knives
+	name = "belt of knives"
+	desc = "Can hold various things, but you're gonna fill it with knives."
+
+/obj/item/storage/belt/knives/PopulateContents()
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+	SSwardrobe.provide_type(/obj/item/knife/hunting, src)
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."

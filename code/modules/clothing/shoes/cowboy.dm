@@ -68,6 +68,10 @@
 	desc = "You get the feeling someone might have been hanged in these boots."
 	icon_state = "cowboy_black"
 
+/obj/item/clothing/shoes/cowboy/black/monster_hunters
+	name = "monster hunting boots"
+	desc = "To protect yourself from getting pulled under while sending them back to their graves."
+
 /obj/item/clothing/shoes/cowboy/fancy
 	name = "bilton wrangler boots"
 	desc = "A pair of authentic haute couture boots from Japanifornia. You doubt they have ever been close to cattle."

@@ -27,7 +27,7 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/proc/generate_pirate_name(spawn_gender)
 	var/beggings = strings(PIRATE_NAMES_FILE, "beginnings")
 	var/endings = strings(PIRATE_NAMES_FILE, "endings")
-	return "[rank] [pick(beggings)][pick(endings)]"
+	return "[rank ? rank + " " : ""][pick(beggings)][pick(endings)]"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/Destroy()
 	if(spawn_oldpod)
@@ -72,7 +72,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/generate_pirate_name(spawn_gender)
 	var/first_name
-	switch(gender)
+	switch(spawn_gender)
 		if(MALE)
 			first_name = pick(GLOB.lizard_names_male)
 		if(FEMALE)
@@ -88,3 +88,44 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/silverscale/gunner
 	rank = "Top-drawer"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/monster_hunters
+	name = "coffin"
+	desc = "It's a burial receptacle for the dearly departed."
+	icon = 'icons/obj/crates.dmi'
+	icon_state = "coffin"
+	prompt_name = "a monster hunter"
+	outfit = /datum/outfit/pirate
+	rank = null
+	var/list/static/outfits_picked = list()
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/monster_hunters/equip(mob/living/spawned_mob)
+	switch(spawned_mob.gender)
+		if(MALE)
+			var/list/possible = list(
+				/datum/outfit/pirate/antonio,
+				/datum/outfit/pirate/gennaro,
+				/datum/outfit/pirate/arca,
+				/datum/outfit/pirate/mortaccio,
+			) - outfits_picked
+			outfit = pick(possible)
+		if(FEMALE)
+			var/list/possible = list(
+				/datum/outfit/pirate/imelda,
+				/datum/outfit/pirate/pasqualina,
+				/datum/outfit/pirate/porta,
+				/datum/outfit/pirate/mortaccio,
+			) - outfits_picked
+			outfit = pick(possible)
+		else
+			var/list/possible = list(
+				/datum/outfit/pirate/antonio,
+				/datum/outfit/pirate/gennaro,
+				/datum/outfit/pirate/arca,
+				/datum/outfit/pirate/imelda,
+				/datum/outfit/pirate/pasqualina,
+				/datum/outfit/pirate/porta,
+				/datum/outfit/pirate/mortaccio,
+			) - outfits_picked
+			outfit = pick(possible)
+	. = ..()

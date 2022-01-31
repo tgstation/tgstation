@@ -664,6 +664,10 @@
 	suffix = "dutchman"
 	name = "pirate ship (Flying Dutchman)"
 
+/datum/map_template/shuttle/pirate/monster_hunters
+	suffix = "monsterhunters"
+	name = "pirate ship (Monster Hunters)"
+
 /datum/map_template/shuttle/hunter/space_cop
 	suffix = "space_cop"
 	name = "Police Spacevan"

@@ -24,6 +24,11 @@
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
 
+///Minimum amount the pirates will demand
+#define PAYOFF_MIN 20000
+///How long pirates will wait for a response before attacking
+#define RESPONSE_MAX_TIME 2 MINUTES
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"

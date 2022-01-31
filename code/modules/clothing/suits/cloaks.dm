@@ -67,6 +67,23 @@
 	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
 	transparent_protection = HIDEMASK
 
+//has the armor values of a sec vest + helmet
+/obj/item/clothing/suit/hooded/cloak/monster_hunters
+	name = "hooded cuirass"
+	desc = "A lighter plate armor used to still keep out those pesky arrows, while retaining the ability to move."
+	icon_state = "cuirass"
+	inhand_icon_state = "armor"
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
+
+/obj/item/clothing/head/hooded/cloakhood/monster_hunters
+	name = "cuirass hood"
+	icon_state = "monsterhood"
+	desc = "A protective & concealing blue hood against the forces of evil."
+	armor = list(MELEE = 35, BULLET = 30, LASER = 30,ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 50, ACID = 50, WOUND = 10)
+	clothing_flags = SNUG_FIT
+	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR
+	transparent_protection = HIDEMASK
+
 /obj/item/clothing/suit/hooded/cloak/drake
 	name = "drake armour"
 	icon_state = "dragon"

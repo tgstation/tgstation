@@ -533,6 +533,18 @@
 	hitsound = 'sound/weapons/chainhit.ogg'
 	menu_description = "A whip. Deals extra damage to vampires. Fits in pockets. Can be worn on the belt."
 
+///essentially a combination of the nullrod whip's holiness, and the curator whip's disarming and look.
+/obj/item/nullrod/whip/monster_hunters
+	icon_state = "whip"
+	hitsound = 'sound/weapons/whip.ogg'
+
+/obj/item/nullrod/whip/monster_hunters/afterattack(target, mob/user, proximity_flag)
+	. = ..()
+	if(ishuman(target) && proximity_flag)
+		var/mob/living/carbon/human/human_target = target
+		human_target.drop_all_held_items()
+		human_target.visible_message(span_danger("[user] disarms [human_target]!"), span_userdanger("[user] disarmed you!"))
+
 /obj/item/nullrod/fedora
 	name = "atheist's fedora"
 	desc = "The brim of the hat is as sharp as your wit. The edge would hurt almost as much as disproving the existence of God."

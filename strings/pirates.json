@@ -97,5 +97,27 @@
 		"Thesaurus Terror",
 		"Archduke's Silver Ring",
 		"Silver Steed"
+	],
+	"monsterhunter_names":[
+		"Bat out of Hell",
+		"Bethlehem's Star",
+		"Breath of Life",
+		"Classico",
+		"Godhead",
+		"Heaven Can Wait",
+		"Heaven and Hell",
+		"Holy Diver",
+		"Holy Mantle",
+		"Hungry for Heaven",
+		"Sacred Heart",
+		"Seraphim",
+		"Shame on the Night",
+		"Straight Through the Heart",
+		"To Hell and Back",
+		"Tribute",
+		"Vade Retro"
+	],
+	"skeleton_names":[
+		"Flying Dutchman"
 	]
 }
