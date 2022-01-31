@@ -781,27 +781,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 		return
 	if(!user.canUseTopic(src, !issilicon(user)) || !isturf(loc))
 		return
-	if(ishuman(user))
+	if(!ishuman(user))
+		return
+	else
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+		if(!istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+			togglelock(user)
+		else
 			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
 			if(stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
 				togglelock(user)
 			ethereal_interact(user,modifiers)
-		else
-			togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/power/apc/proc/ethereal_interact(mob/living/user,list/modifiers)
-	if(ishuman(user))
+	if(!ishuman(user))
+		return
+	else
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/stomach/maybe_stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 
-		if(istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+		if(!istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+			return
+		else
 			var/charge_limit = ETHEREAL_CHARGE_DANGEROUS - APC_POWER_GAIN
 			var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
-			if((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			if(!((stomach?.drain_time < world.time) && LAZYACCESS(modifiers, RIGHT_CLICK)))
+				return
+			else
 				if(H.combat_mode)
 					if(cell.charge <= (cell.maxcharge / 2)) // ethereals can't drain APCs under half charge, this is so that they are forced to look to alternative power sources if the station is running low
 						to_chat(H, span_warning("The APC's syphon safeties prevent you from draining power!"))
