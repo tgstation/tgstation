@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(atoms)
 	queued_deletions.Cut()
 
 	#ifdef PROFILE_MAPLOAD_INIT_ATOM
-	text2file(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
+	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
 	#endif
 
 /// Init this specific atom
