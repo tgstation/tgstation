@@ -36,8 +36,7 @@
 		var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(plundered_account)
 			if(plundered_account.adjust_money(-payoff))
-				priority_announce(chosen_gang.response_recieved, sender_override = chosen_gang.ship_name)
-				return
+				priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name)
 			else
 				priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name)
 				spawn_pirates(threat, chosen_gang, TRUE)

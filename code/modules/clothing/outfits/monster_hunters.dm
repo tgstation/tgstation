@@ -15,7 +15,7 @@
 
 	l_hand = /obj/item/nullrod/whip/monster_hunters
 
-/datum/outfit/pirate/antonio/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/pirate/antonio/pre_equip(mob/living/carbon/human/prequipped, visualsOnly)
 	. = ..()
 	if(visualsOnly)
 		return
@@ -39,9 +39,9 @@
 	if(visualsOnly)
 		return
 	prequipped.fully_replace_character_name(prequipped.real_name, name)
-	equipped.hairstyle = "Flair"
-	equipped.hair_color = "#e8eb41"
-	equipped.update_hair()
+	prequipped.hairstyle = "Flair"
+	prequipped.hair_color = "#e8eb41"
+	prequipped.update_hair()
 
 /datum/outfit/pirate/arca
 	name = "Arca Ladonna"
@@ -149,4 +149,4 @@
 	prequipped.socks = "Nude"
 	prequipped.update_body()
 	//see, YOU'RE not a monster, lil mortaccio
-	equipped.AddElement(/datum/element/halo/holy, initial_delay = 0)
+	prequipped.AddElement(/datum/element/halo/holy, initial_delay = 0)

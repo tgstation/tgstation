@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 		shuttle in case of any disaster."
 	possible_answers = list("Purchase Insurance.","Reject Offer.")
 
-	response_recieved = "Sweet, free cash. Let's get outta here, boys."
+	response_received = "Sweet, free cash. Let's get outta here, boys."
 	response_too_late = "Payment or not, ignoring us was a matter of pride. Now it's time for us to teach some respect."
 	response_not_enough = "You thought we wouldn't notice if you underpaid? Funny. We'll be seeing you soon."
 
@@ -83,12 +83,12 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	ship_template = /datum/map_template/shuttle/pirate/silverscale
 	ship_name_pool = "silverscale_names"
 
-	threat_title = "Sector protection offer"
+	threat_title = "Tribute request"
 	threat_content = "This is the %SHIPNAME. The Silver Scales wish for some tribute \
 		from your plebeian lizards. %PAYOFF credits should do the trick."
 	possible_answers = list("We'll pay.","Tribute? Really? Go away.")
 
-	response_recieved = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
+	response_received = "A most generous donation. May the claws of Tizira reach into the furthest points of the cosmos."
 	response_too_late = "I see you're trying to pay, but the hunt is already on."
 	response_not_enough = "You've sent an insulting \"donation\". The hunt is on for you."
 
@@ -99,11 +99,11 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	ship_template = /datum/map_template/shuttle/pirate/dutchman
 	ship_name_pool = "skeleton_names" //just points to THE ONE AND ONLY
 
-	threat_title = "Sector protection offer"
+	threat_title = "Transfer of goods"
 	threat_content = "Ahoy! This be the %SHIPNAME. Cough up %PAYOFF credits or you'll walk the plank."
 	possible_answers = list("We'll pay.","We will not be extorted.")
 
-	response_recieved = "Thanks for the credits, landlubbers."
+	response_received = "Thanks for the credits, landlubbers."
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
 
@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 		what you plundered from the living."
 	possible_answers = list("Pay Tithe.","Refuse Demand.")
 
-	response_recieved = "You've bought yourself another day unburied, creatures of the depths."
+	response_received = "You've bought yourself another day unburied, creatures of the depths."
 	response_too_late = "You're only grovelling by trying to send us money now. We'll take what we need."
 	response_not_enough = "This wasn't what we demanded. We'll take what we need."
 
