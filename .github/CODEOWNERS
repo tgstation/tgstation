@@ -84,6 +84,17 @@
 
 /code/modules/wiremod/ @Watermelon914
 
+# Ryll-Ryll
+
+/code/__DEFINES/wounds.dm @Ryll-Ryll
+/code/modules/jobs/job_types/chief_medical_officer.dm @Ryll-Ryll
+/code/modules/jobs/job_types/medical_doctor.dm @Ryll-Ryll
+/code/modules/jobs/job_types/paramedic.dm @Ryll-Ryll
+/code/modules/surgery/ @Ryll-Ryll
+/code/datums/wounds/ @Ryll-Ryll
+/code/datums/status_effects/wound_effects.dm @Ryll-Ryll
+/code/modules/surgery/bodyparts/ @Ryll-Ryll
+
 # CONTRIBUTORS
 
 # Fikou
