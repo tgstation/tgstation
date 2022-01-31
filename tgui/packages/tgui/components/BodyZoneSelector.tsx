@@ -1,3 +1,7 @@
+import { Component, createRef } from "inferno";
+import { resolveAsset } from "../assets";
+import { Box } from "./Box";
+
 export enum BodyZone {
   Head = "head",
   Chest = "chest",
@@ -40,10 +44,7 @@ const bodyZonePixelToZone: (x: number, y: number) => (BodyZone | null)
     } else if (y < 30 && (x > 12 && x < 20)) {
       if (y > 23 && y < 24 && (x > 15 && x < 17)) {
         return BodyZone.Mouth;
-      } else if (y > 26.00 && y < 26.99 && (x > 15 && x < 17)) {
-        // The eyeline
-        return BodyZone.Eyes;
-      } else if (y > 25 && y < 27 && (x > 15 && x < 17)) {
+      } else if (y > 25 && y < 27 && (x > 14 && x < 18)) {
         return BodyZone.Eyes;
       } else {
         return BodyZone.Head;
@@ -52,3 +53,98 @@ const bodyZonePixelToZone: (x: number, y: number) => (BodyZone | null)
 
     return null;
   };
+
+type BodyZoneSelectorProps = {
+  onClick?: (zone: BodyZone) => void,
+  scale?: number,
+  selectedZone: BodyZone | null,
+}
+
+type BodyZoneSelectorState = {
+  hoverZone: BodyZone | null,
+}
+
+export class BodyZoneSelector
+  extends Component<BodyZoneSelectorProps, BodyZoneSelectorState>
+{
+  ref = createRef<HTMLDivElement>();
+  state: BodyZoneSelectorState = {
+    hoverZone: null,
+  }
+
+  render() {
+    const { hoverZone } = this.state;
+    const { scale = 3, selectedZone } = this.props;
+
+    return (
+      <div ref={this.ref} style={{
+        width: `${32 * scale}px`,
+        height: `${32 * scale}px`,
+        position: "relative",
+      }}>
+        <Box
+          as="img"
+          src={resolveAsset("body_zones.base.png")}
+          onClick={() => {
+            const onClick = this.props.onClick;
+            if (onClick && this.state.hoverZone) {
+              onClick(this.state.hoverZone);
+            }
+          }}
+          onMouseMove={(event) => {
+            if (!this.props.onClick) {
+              return;
+            }
+
+            const rect = this.ref.current?.getBoundingClientRect();
+            if (!rect) {
+              return;
+            }
+
+            const x = event.clientX - rect.left;
+            const y = (32 * scale) - (event.clientY - rect.top);
+
+            this.setState({
+              hoverZone: bodyZonePixelToZone(x / scale, y / scale),
+            });
+          }}
+          style={{
+            "-ms-interpolation-mode": "nearest-neighbor",
+            "position": "absolute",
+            "width": `${32 * scale}px`,
+            "height": `${32 * scale}px`,
+          }}
+        />
+
+        {selectedZone && (
+          <Box
+            as="img"
+            src={resolveAsset(`body_zones.${selectedZone}.png`)}
+            style={{
+              "-ms-interpolation-mode": "nearest-neighbor",
+              "pointer-events": "none",
+              "position": "absolute",
+              "width": `${32 * scale}px`,
+              "height": `${32 * scale}px`,
+            }}
+          />
+        )}
+
+        {hoverZone && (hoverZone !== selectedZone) && (
+          <Box
+            as="img"
+            src={resolveAsset(`body_zones.${hoverZone}.png`)}
+            style={{
+              "-ms-interpolation-mode": "nearest-neighbor",
+              "opacity": 0.5,
+              "pointer-events": "none",
+              "position": "absolute",
+              "width": `${32 * scale}px`,
+              "height": `${32 * scale}px`,
+            }}
+          />
+        )}
+      </div>
+    );
+  }
+}

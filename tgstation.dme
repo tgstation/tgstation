@@ -2123,6 +2123,7 @@
 #include "code\modules\asset_cache\assets\achievements.dm"
 #include "code\modules\asset_cache\assets\adventure.dm"
 #include "code\modules\asset_cache\assets\arcade.dm"
+#include "code\modules\asset_cache\assets\body_zones.dm"
 #include "code\modules\asset_cache\assets\chat.dm"
 #include "code\modules\asset_cache\assets\circuits.dm"
 #include "code\modules\asset_cache\assets\common.dm"

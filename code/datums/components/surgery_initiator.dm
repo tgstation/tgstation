@@ -28,10 +28,10 @@
 	SIGNAL_HANDLER
 	if(!isliving(target))
 		return
-	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, source, target, user)
+	INVOKE_ASYNC(src, .proc/do_initiate_surgery_moment, target, user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/surgery_initiator/proc/do_initiate_surgery_moment(datum/source, mob/living/target, mob/user)
+/datum/component/surgery_initiator/proc/do_initiate_surgery_moment(mob/living/target, mob/user)
 	selected_zone = user.zone_selected
 
 	var/datum/surgery/current_surgery
@@ -40,8 +40,9 @@
 		var/datum/surgery/surgeryloop = i_one
 		if(surgeryloop.location == selected_zone)
 			current_surgery = surgeryloop
+			break
 
-	if (current_surgery?.step_in_progress)
+	if (!isnull(current_surgery) && !current_surgery.step_in_progress)
 		attempt_cancel_surgery(current_surgery, target, user)
 		return
 
@@ -85,7 +86,7 @@
 			continue
 		for(var/path in surgery.target_mobtypes)
 			if(istype(target, path))
-				available_surgeries[surgery.name] = surgery
+				available_surgeries += surgery
 				break
 
 	return available_surgeries
@@ -101,6 +102,8 @@
 			span_notice("[user] removes [parent] from [patient]'s [parse_zone(selected_zone)]."),
 			span_notice("You remove [parent] from [patient]'s [parse_zone(selected_zone)]."),
 		)
+
+		patient.balloon_alert(user, "closed up [parse_zone(selected_zone)]")
 
 		qdel(the_surgery)
 		return
@@ -153,7 +156,17 @@
 	switch (action)
 		if ("change_zone")
 			var/zone = params["new_zone"]
-			if (isnull(slot2body_zone(zone)))
+			if (!(zone in list(
+				BODY_ZONE_HEAD,
+				BODY_ZONE_CHEST,
+				BODY_ZONE_L_ARM,
+				BODY_ZONE_R_ARM,
+				BODY_ZONE_L_LEG,
+				BODY_ZONE_R_LEG,
+				BODY_ZONE_PRECISE_EYES,
+				BODY_ZONE_PRECISE_MOUTH,
+				BODY_ZONE_PRECISE_GROIN,
+			)))
 				return TRUE
 
 			selected_zone = zone
@@ -163,6 +176,11 @@
 				if (surgery.name == params["surgery_name"])
 					try_choose_surgery(user, surgery_target, surgery)
 					return TRUE
+
+/datum/component/surgery_initiator/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/simple/body_zones),
+	)
 
 /datum/component/surgery_initiator/ui_data(mob/user)
 	var/mob/living/surgery_target = surgery_target_ref.resolve()
@@ -267,4 +285,4 @@
 	ui_close()
 
 /datum/component/surgery_initiator/proc/surgery_needs_exposure(datum/surgery/surgery, mob/living/target)
-	return !surgery.ignore_clothes && get_location_accessible(target, selected_zone)
+	return !surgery.ignore_clothes && !get_location_accessible(target, selected_zone)
