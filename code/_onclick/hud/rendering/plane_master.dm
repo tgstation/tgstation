@@ -77,6 +77,7 @@
 /atom/movable/screen/plane_master/game_world_fov_hidden
 	name = "game world fov hidden plane master"
 	plane = GAME_PLANE_FOV_HIDDEN
+	render_relay_plane = GAME_PLANE
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
