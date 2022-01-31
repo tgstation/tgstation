@@ -73,7 +73,7 @@
 	clear_grab()
 
 /obj/item/mod/module/anomaly_locked/kinesis/process(delta_time)
-	if(!mod.wearer.client || mod.wearer.incapacitated(ignore_grab = TRUE))
+	if(!mod.wearer.client || mod.wearer.incapacitated(IGNORE_GRAB))
 		clear_grab()
 		return
 	if(!range_check(grabbed_atom))
