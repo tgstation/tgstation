@@ -655,6 +655,7 @@
 #include "code\datums\components\area_sound_manager.dm"
 #include "code\datums\components\areabound.dm"
 #include "code\datums\components\armor_plate.dm"
+#include "code\datums\components\atmospheric_scanner.dm"
 #include "code\datums\components\aura_healing.dm"
 #include "code\datums\components\bakeable.dm"
 #include "code\datums\components\beetlejuice.dm"
