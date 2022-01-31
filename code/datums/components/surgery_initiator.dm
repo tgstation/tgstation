@@ -22,6 +22,14 @@
 
 /datum/component/surgery_initiator/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	unregister_target_signals()
+
+/datum/component/surgery_initiator/proc/unregister_target_signals()
+	var/mob/living/surgery_target = surgery_target_ref.resolve()
+	if (isnull(surgery_target_ref))
+		return
+
+	UnregisterSignal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
 
 /// Does the surgery initiation.
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
@@ -57,6 +65,9 @@
 		return
 
 	surgery_target_ref = WEAKREF(target)
+
+	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
+
 	ui_interact(user)
 
 /datum/component/surgery_initiator/proc/get_available_surgeries(mob/user, mob/living/target)
@@ -103,7 +114,7 @@
 			span_notice("You remove [parent] from [patient]'s [parse_zone(selected_zone)]."),
 		)
 
-		patient.balloon_alert(user, "closed up [parse_zone(selected_zone)]")
+		patient.balloon_alert(user, "stopped work on [parse_zone(selected_zone)]")
 
 		qdel(the_surgery)
 		return
@@ -132,9 +143,25 @@
 
 	patient.surgeries -= the_surgery
 	REMOVE_TRAIT(patient, TRAIT_ALLOWED_HONORBOUND_ATTACK, ELEMENT_TRAIT(type))
-	user.visible_message(span_notice("[user] closes [patient]'s [parse_zone(selected_zone)] with [close_tool] and removes [parent]."), \
-		span_notice("You close [patient]'s [parse_zone(selected_zone)] with [close_tool] and remove [parent]."))
+
+	user.visible_message(
+		span_notice("[user] closes [patient]'s [parse_zone(selected_zone)] with [close_tool] and removes [parent]."),
+		span_notice("You close [patient]'s [parse_zone(selected_zone)] with [close_tool] and remove [parent]."),
+	)
+
+	patient.balloon_alert(user, "closed up [parse_zone(selected_zone)]")
+
 	qdel(the_surgery)
+
+/datum/component/surgery_initiator/proc/on_mob_surgery_started(mob/source, datum/surgery/surgery, surgery_location)
+	SIGNAL_HANDLER
+
+	if (surgery_location == selected_zone)
+		if (ismob(loc))
+			source.balloon_alert(loc, "someone else started a surgery!")
+
+		ui_close()
+		return
 
 /datum/component/surgery_initiator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -203,6 +230,12 @@
 		"surgeries" = surgeries,
 	)
 
+/datum/component/surgery_initiator/ui_close(mob/user)
+	unregister_target_signals()
+	surgery_target_ref = null
+
+	return ..()
+
 /datum/component/surgery_initiator/ui_status(mob/user, datum/ui_state/state)
 	var/obj/item/item_parent = parent
 	if (user != item_parent.loc)
@@ -226,7 +259,6 @@
 		return FALSE
 
 	// While we were choosing, another surgery was started at the same location
-	// MOTHBLOCKS TODO: Throw a balloon alert here, USE A SIGNAL!!!
 	for (var/datum/surgery/surgery in target.surgeries)
 		if (surgery.location == selected_zone)
 			return FALSE
