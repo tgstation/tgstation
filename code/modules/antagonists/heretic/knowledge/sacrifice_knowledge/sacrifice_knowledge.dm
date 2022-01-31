@@ -1,5 +1,10 @@
 // The knowledge and process of heretic sacrificing.
 
+/// How long we put the target so sleep for (during sacrifice).
+#define SACRIFICE_SACRIFICE_SLEEP_DURATION 12 SECONDS
+/// How long sacrifices must stay in the shadow realm to survive.
+#define SACRIFICE_REALM_DURATION 2.5 MINUTES
+
 /**
  * Allows the heretic to sacrifice living heart targets.
  */
@@ -10,8 +15,6 @@
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	route = PATH_START
-	/// How long sacrifices must stay in the shadow realm to survive.
-	var/sac_stay_duration = 3 MINUTES
 	/// If TRUE, we skip the ritual. Done when no targets can be found, to avoid locking up the heretic.
 	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
@@ -172,7 +175,8 @@
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
 
-	begin_sacrifice(sacrifice)
+	if(!begin_sacrifice(sacrifice))
+		disembowel_target(sacrifice)
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].
@@ -183,22 +187,21 @@
  * * sac_target - the mob being sacrificed.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/begin_sacrifice(mob/living/carbon/human/sac_target)
+	. = FALSE
+
 	var/datum/mind/our_heretic_mind = heretic_mind_weakref?.resolve()
 	var/datum/antagonist/heretic/our_heretic = our_heretic_mind?.has_antag_datum(/datum/antagonist/heretic)
-	if(our_heretic)
-		disembowel_target(sac_target)
+	if(!our_heretic)
 		CRASH("[type] - begin_sacrifice was called, and no heretic [our_heretic_mind ? "antag datum":"mind"] could be found!")
 
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
-		disembowel_target(sac_target)
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
 
 	var/obj/effect/landmark/heretic/destination_landmark = GLOB.heretic_sacrifice_landmarks[our_heretic.heretic_path]
-	var/turf/destination = get_turf(destination_landmark)
+	if(!destination_landmark)
+		CRASH("[type] - begin_sacrifice could not find a destination landmark to send the sacrifice! (heretic's path: [our_heretic.heretic_path])")
 
-	if(!destination)
-		disembowel_target(sac_target)
-		CRASH("[type] - begin_sacrifice was and a destination turf could not be found to send the sacrifice!")
+	var/turf/destination = get_turf(destination_landmark)
 
 	sac_target.visible_message(span_danger("[sac_target] begins to shudder violenty as dark tendrils begin to drag them into thin air!"))
 	sac_target.set_handcuffed(new /obj/item/restraints/handcuffs/energy/cult(sac_target))
@@ -206,28 +209,24 @@
 	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation(100)
 
-	// How long we put the target so sleep for (during sacrifice).
-	var/sleep_duration = 12 SECONDS
-
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), sleep_duration * (1/3))
-	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), sleep_duration * (2/3))
+	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (1/3))
+	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (2/3))
 
 	 // If our target is dead, and we fail to revive them, just disembowel them and be done
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
-		disembowel_target(sac_target)
 		return
 
-	if(sac_target.AdjustUnconscious(sleep_duration))
+	if(sac_target.AdjustUnconscious(SACRIFICE_SLEEP_DURATION))
 		to_chat(sac_target, span_hypnophrase("Your mind feels torn apart as you fall into a shallow slumber..."))
 	else
 		to_chat(sac_target, span_hypnophrase("Your mind begins to tear apart as you watch dark tendrils envelop you."))
 
-	sac_target.AdjustParalyzed(sleep_duration * 1.2)
-	sac_target.AdjustImmobilized(sleep_duration * 1.2)
+	sac_target.AdjustParalyzed(SACRIFICE_SLEEP_DURATION * 1.2)
+	sac_target.AdjustImmobilized(SACRIFICE_SLEEP_DURATION * 1.2)
 
-	addtimer(CALLBACK(src, .proc/after_target_sleep, sac_target, destination), sleep_duration / 2) // Teleport to the minigame
-	addtimer(CALLBACK(src, .proc/after_target_awaken, sac_target), sleep_duration) // Begin the minigame
-	addtimer(CALLBACK(src, .proc/return_target, sac_target), sac_stay_duration) // Win condition
+	addtimer(CALLBACK(src, .proc/after_target_sleeps, sac_target, destination), SACRIFICE_SLEEP_DURATION * 0.5) // Teleport to the minigame
+
+	return TRUE
 
 /**
  * This proc is called from [proc/begin_sacrifice] after the [sac_target] falls asleep, shortly after the sacrifice occurs.
@@ -239,7 +238,7 @@
  * * sac_target - the mob being sacrificed.
  * * destination - the spot they're being teleported to.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_sleep(mob/living/carbon/human/sac_target, turf/destination)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_sleeps(mob/living/carbon/human/sac_target, turf/destination)
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target()
@@ -252,12 +251,13 @@
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
-	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, sac_stay_duration)
+	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
+	addtimer(CALLBACK(src, .proc/after_target_wakes, sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
 
 /**
- * This proc is called from [proc/begin_sacrifice] when the [sac_target] should be waking up.
+ * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.
  *
  * Begins the survival minigame, featuring the sacrifice targets.
  * Gives them Helgrasp, throwing cursed hands towards them that they must dodge to survive.
@@ -265,15 +265,15 @@
  *
  * Then applies some miscellaneous effects.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_awaken(mob/living/carbon/human/sac_target)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_wakes(mob/living/carbon/human/sac_target)
 	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
 
 	sac_target.reagents?.add_reagent(/datum/reagent/inverse/helgrasp, helgrasp_time / 20)
+	sac_target.apply_necropolis_curse(CURSE_BLINDING | CURSE_GRASPING)
 
 	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm", /datum/mood_event/shadow_realm)
 
-	sac_target.apply_necropolis_curse(CURSE_BLINDING | CURSE_GRASPING)
 	sac_target.flash_act()
 	sac_target.blur_eyes(15)
 	sac_target.Jitter(10)
@@ -285,9 +285,10 @@
 	to_chat(sac_target, span_hypnophrase("You feel invigorated! Fight to survive!"))
 	// When it runs out, let them know they're almost home free
 	addtimer(CALLBACK(src, .proc/after_helgrasp_ends, sac_target), helgrasp_time)
+	addtimer(CALLBACK(src, .proc/return_target, sac_target), SACRIFICE_REALM_DURATION) // Win condition
 
 /**
- * This proc is called from [proc/after_target_awaken] after the helgrasp runs out in the [sac_target].
+ * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].
  *
  * It gives them a message letting them know it's getting easier and they're almost free.
  */
