@@ -52,7 +52,7 @@
  * Attempt to invoke a ritual from our user's known heretic knowledges.
  */
 /obj/effect/heretic_rune/proc/do_rituals(mob/living/user)
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/list/knowledge = heretic_datum.get_all_knowledge()
 	var/list/atoms_in_range = list()
 

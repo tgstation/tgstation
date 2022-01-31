@@ -734,6 +734,41 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 
 
+/*
+ * Heals up the [target] to up to [heal_to] brute and burn, and [heal_to / 2] tox and oxy.
+ *
+ * If the target is dead, also revives them and heals up their organs / restores blood slightly.
+ * If we have a [revive_message], play a visible message if the revive was successful.
+ *
+ * Arguments
+ * * heal_to - the percentage of health to heal the mob for. Halved for toxins and oxygen.
+ * * revive_message - if provided, a visible message to show on a successful revive.
+ *
+ * Returns TRUE if the mob is alive afterwards, or FALSE if they're dead.
+ */
+/mob/living/proc/heal_and_revive(heal_to = 75, revive_message)
+	var/brute_to_heal = heal_to - getBruteLoss()
+	var/burn_to_heal = heal_to - getFireLoss()
+	var/tox_to_heal = (heal_to/2) - getToxLoss()
+	var/oxy_to_heal = (heal_to/2) - getOxyLoss()
+	if(brute_to_heal < 0)
+		adjustBruteLoss(brute_to_heal, FALSE)
+	if(burn_to_heal < 0)
+		adjustFireLoss(burn_to_heal, FALSE)
+	if(tox_to_heal < 0)
+		adjustToxLoss(tox_to_heal, FALSE, TRUE)
+	if(oxy_to_heal < 0)
+		adjustOxyLoss(oxy_to_heal, FALSE, TRUE)
+
+	var/overall_health = getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss()
+	if(overall_health < 200 && stat == DEAD)
+		revive(FALSE, FALSE, 10)
+		if(revive_message)
+			visible_message(revive_message)
+	updatehealth()
+
+	return stat != DEAD
+
 /mob/living/proc/remove_CC()
 	SetStun(0)
 	SetKnockdown(0)

@@ -27,6 +27,8 @@
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
 	var/ascended = FALSE
+	/// The path our heretic has chosen. Mostly used for flavor.
+	var/heretic_path = PATH_START
 	/// A list of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.

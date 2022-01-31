@@ -103,7 +103,7 @@
 	if(!.)
 		return
 
-	var/datum/antagonist/heretic/heretic_datum = owner.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		to_chat(owner, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
 		return TRUE

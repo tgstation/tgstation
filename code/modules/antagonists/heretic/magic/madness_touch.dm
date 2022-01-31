@@ -26,6 +26,6 @@
 			if(tar.anti_magic_check())
 				tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 				return
-		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
+		if(target.mind && !IS_HERETIC(target))
 			to_chat(user, span_warning("[target.name] has been cursed!"))
 			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)

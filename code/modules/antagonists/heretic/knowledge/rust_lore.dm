@@ -48,6 +48,11 @@
 	cost = 1
 	route = PATH_RUST
 
+/datum/heretic_knowledge/limited_amount/base_rust/on_research(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.heretic_path = route
+
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \

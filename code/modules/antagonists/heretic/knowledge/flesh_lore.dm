@@ -53,6 +53,11 @@
 	cost = 1
 	route = PATH_FLESH
 
+/datum/heretic_knowledge/limited_amount/base_flesh/on_research(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.heretic_path = route
+
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
 	desc = "Your Mansus Grasp gains the ability to create a single ghoul out of corpse with a soul. \
@@ -325,7 +330,7 @@
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shed_human_form)
 	user.client?.give_award(/datum/award/achievement/misc/flesh_ascension, user)
 
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/datum/heretic_knowledge/limited_amount/flesh_grasp/grasp_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_grasp)
 	grasp_ghoul.limit *= 3
 	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)

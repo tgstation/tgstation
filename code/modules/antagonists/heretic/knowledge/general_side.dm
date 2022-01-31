@@ -19,7 +19,7 @@
 	if(!our_heart || !HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
 		return FALSE
 
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		return FALSE
 
@@ -27,7 +27,7 @@
 	return (user in range(1, loc))
 
 /datum/heretic_knowledge/reroll_targets/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = user.mind.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	LAZYCLEARLIST(heretic_datum.sac_targets)
 
 	var/datum/heretic_knowledge/hunt_and_sacrifice/target_finder = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
