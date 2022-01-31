@@ -23,7 +23,9 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
 	printer_ready = world.time + PRINTER_TIMEOUT
-	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src,.proc/rot_message))
+	// Alt clicking when unwrenched does not rotate. (likely from UI not returning the mouse click)
+	// Also there is no sprite change for rotation dir, this shouldn't even have a rotate component tbh
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/rot_message))
 
 /datum/data/tachyon_record
 	name = "Log Recording"
