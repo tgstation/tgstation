@@ -481,7 +481,11 @@
 /mob/proc/get_contents()
 
 
-//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/**
+ * Gets ID card from a mob.
+ * Argument:
+ * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
+ */
 /mob/living/proc/get_idcard(hand_first)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
