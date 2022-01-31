@@ -603,17 +603,19 @@
 /obj/item/card/id/proc/set_new_account(mob/living/user)
 	. = FALSE
 	var/datum/bank_account/old_account = registered_account
-
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
 	var/new_bank_id = tgui_input_number(user, "Enter your account ID number", "Account Reclamation", 111111, 999999, 111111)
 	if(!new_bank_id || QDELETED(user) || QDELETED(src) || issilicon(user) || !alt_click_can_use_id(user) || loc != user)
-		return
+		return FALSE
 	if(registered_account?.account_id == new_bank_id)
 		to_chat(user, span_warning("The account ID was already assigned to this card."))
-		return
+		return FALSE
 	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[new_bank_id]"]
 	if(isnull(account))
 		to_chat(user, span_warning("The account ID number provided is invalid."))
-		return
+		return FALSE
 	if(old_account)
 		old_account.bank_cards -= src
 	account.bank_cards += src
@@ -629,6 +631,9 @@
 		return
 	if (registered_account.being_dumped)
 		registered_account.bank_card_talk(span_warning("内部服务器错误"), TRUE)
+		return
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return
 	var/amount_to_remove = tgui_input_number(user, "How much do you want to withdraw? (Max: [registered_account.account_balance] cr)", "Withdraw Funds", max_value = registered_account.account_balance)
 	if(!amount_to_remove || QDELETED(user) || QDELETED(src) || issilicon(user) || loc != user)
@@ -1096,7 +1101,10 @@
 	..()
 	var/list/id_access = C.GetAccess()
 	if(!(ACCESS_BRIG in id_access))
-		return
+		return FALSE
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the ID to continue!"))
+		return FALSE
 	if(timed)
 		timed = FALSE
 		time_to_assign = initial(time_to_assign)
@@ -1106,7 +1114,7 @@
 		return
 	var/choice = tgui_input_number(user, "Sentence time in seconds", "Sentencing")
 	if(!choice || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
-		return
+		return FALSE
 	time_to_assign = choice
 	to_chat(user, "You set the sentence time to [time_to_assign] seconds.")
 	timed = TRUE

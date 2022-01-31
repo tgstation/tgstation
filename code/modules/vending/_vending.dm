@@ -1303,7 +1303,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/price = 1
 
 /obj/item/price_tagger/attack_self(mob/user)
-	var/chosen_price = tgui_input_number(user, "Set price", "Price", price, min_value = 1)
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the price tagger to continue!"))
+		return
+	var/chosen_price = tgui_input_number(user, "Set price", "Price", price)
 	if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
 	price = chosen_price

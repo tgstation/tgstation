@@ -101,6 +101,9 @@
 /obj/item/holochip/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		return
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the holochip to continue!"))
+		return FALSE
 	var/split_amount = tgui_input_number(user, "How many credits do you want to extract from the holochip? (Max: [credits] cr)", "Holochip", max_value = credits)
 	if(!split_amount || QDELETED(user) || QDELETED(src) || issilicon(user) || !usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)) || loc != user)
 		return

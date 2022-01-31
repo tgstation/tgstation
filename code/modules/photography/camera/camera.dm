@@ -57,6 +57,9 @@
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
 
 /obj/item/camera/proc/adjust_zoom(mob/user)
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the camera to continue!"))
+		return
 	var/desired_x = tgui_input_number(user, "How wide do you want the camera to shoot?", "Zoom", picture_size_x, picture_size_x_max, picture_size_x_min)
 	if (!desired_x || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return

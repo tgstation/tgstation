@@ -126,6 +126,9 @@
 	. = ..()
 	if(.)
 		return
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the pen to continue!"))
+		return
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", max_value = 360)
 	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
