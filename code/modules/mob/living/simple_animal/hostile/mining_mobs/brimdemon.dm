@@ -38,6 +38,7 @@
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 5
 	light_range = 1.4
+	crusher_loot = /obj/item/crusher_trophy/brimdemon_fang
 	/// Are we charging/firing? If yes stops our movement.
 	var/firing = FALSE
 	/// A list of all the beam parts.
@@ -72,7 +73,7 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/asteroid/brimdemon/Move(atom/newloc, dir , step_x , step_y)
+/mob/living/simple_animal/hostile/asteroid/brimdemon/Move(atom/newloc, dir, step_x , step_y)
 	if(firing)
 		return FALSE
 	return ..()
@@ -104,11 +105,11 @@
 	if(stat == DEAD)
 		return
 	visible_message("<span class='danger'>[src] fires a brimbeam!</span>", "<span class='notice'>You fire a brimbeam!</span>")
-	playsound(src, 'sound/creatures/brimdemon.ogg', 100, FALSE, 0, 3)
+	playsound(src, 'sound/creatures/brimdemon.ogg', 150, FALSE, 0, 3)
 	cut_overlay("brimdemon_telegraph_dir")
 	var/turf/target_turf = get_ranged_target_turf(src, dir, BRIMBEAM_RANGE)
 	var/turf/origin_turf = get_turf(src)
-	var/list/affected_turfs = getline(origin_turf, target_turf) - origin_turf
+	var/list/affected_turfs = get_line(origin_turf, target_turf) - origin_turf
 	for(var/turf/affected_turf in affected_turfs)
 		var/blocked = FALSE
 		if(affected_turf.opacity)
@@ -167,13 +168,22 @@
 	for(var/mob/living/hit_mob in get_turf(src))
 		damage(hit_mob)
 
-/obj/effect/brimbeam/Crossed(atom/movable/AM, oldloc)
-	. = ..()
-	if(isliving(AM))
-		damage(AM)
-
 /obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
 	if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
 		return
 	hit_mob.adjustFireLoss(5)
 	to_chat(hit_mob, "<span class='danger'>You're damaged by [src]!</span>")
+
+/obj/item/crusher_trophy/brimdemon_fang
+	name = "brimdemon's fang"
+	icon_state = "brimdemon_fang"
+	desc = "A fang from a brimdemon's corpse."
+	denied_type = /obj/item/crusher_trophy/brimdemon_fang
+	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
+
+/obj/item/crusher_trophy/brimdemon_fang/effect_desc()
+	return "mark detonation creates effects on the target"
+
+/obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
+	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
+	playsound(target, 'sound/lavaland/brimdemon_crush.ogg', 100)
