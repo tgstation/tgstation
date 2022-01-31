@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - expansion: "Gave lower Ice Box public mining an air alarm, vent and scrubber and made its elevator shaft more warning-like"
