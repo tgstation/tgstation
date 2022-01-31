@@ -698,7 +698,7 @@
 			return FALSE
 		is_listed = TRUE
 	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
-	if(!(carp_ask == "Yes") || !src || QDELETED(src) || QDELETED(user))
+	if(carp_ask != "Yes" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))
