@@ -60,7 +60,7 @@
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
 			update_indicator()
 			return
 

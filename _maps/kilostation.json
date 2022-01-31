@@ -10,6 +10,11 @@
 	    "cargo": "cargo_kilo",
 	    "whiteship": "whiteship_kilo"
     },
+	"traits": [
+		{
+			"Bombcap Multiplier": 0.7
+		}
+	],
 	"job_changes": {
 		"cook": {
 			"additional_cqc_areas": ["/area/service/bar/atrium"]

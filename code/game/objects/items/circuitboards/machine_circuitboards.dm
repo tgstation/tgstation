@@ -397,12 +397,6 @@
 		/obj/item/stock_parts/manipulator = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
-/obj/item/circuitboard/machine/paystand
-	name = "Pay Stand (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/paystand
-	req_components = list()
-
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC

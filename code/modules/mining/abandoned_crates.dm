@@ -47,7 +47,7 @@
 				if(!spawned_loot)
 					spawn_loot()
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
-				togglelock()
+				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
 				to_chat(user, span_notice("You leave the crate alone."))
 			else
@@ -139,7 +139,7 @@
 		if(6 to 10)
 			new /obj/item/melee/skateboard/pro(src)
 		if(11 to 15)
-			new /mob/living/simple_animal/bot/honkbot(src)
+			new /mob/living/simple_animal/bot/secbot/honkbot(src)
 		if(16 to 20)
 			new /obj/item/stack/ore/diamond(src, 10)
 		if(21 to 25)

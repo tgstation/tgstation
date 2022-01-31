@@ -336,7 +336,7 @@ GENE SCANNER
 
 		// Species and body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = humantarget.dna.check_mutation(HULK) \
+		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk) \
 			|| targetspecies.mutantlungs != initial(targetspecies.mutantlungs) \
 			|| targetspecies.mutantbrain != initial(targetspecies.mutantbrain) \
 			|| targetspecies.mutantheart != initial(targetspecies.mutantheart) \

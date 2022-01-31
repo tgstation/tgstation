@@ -1,4 +1,4 @@
-/*
+/**
  * Tippable component. For making mobs able to be tipped, like cows and medibots.
  */
 /datum/component/tippable
@@ -73,7 +73,7 @@
 		QDEL_NULL(roleplay_callback)
 	return ..()
 
-/*
+/**
  * Attempt to interact with [source], either tipping it or helping it up.
  *
  * source - the mob being tipped over
@@ -95,7 +95,7 @@
 
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/*
+/**
  * Try to tip over [tipped_mob].
  * If the mob is dead, or optional callback returns a value, or our do-after fails, we don't tip the mob.
  * Otherwise, upon completing of the do_after, tip over the mob.
@@ -123,7 +123,7 @@
 			return
 	do_tip(tipped_mob, tipper)
 
-/*
+/**
  * Actually tip over the mob, setting it to tipped.
  * Also invoking any callbacks we have, with the tipper as the argument,
  * and set a timer to right our self-right our tipped mob if we can.
@@ -154,7 +154,7 @@
 	else
 		self_untip_timer = addtimer(CALLBACK(src, .proc/right_self, tipped_mob), self_right_time, TIMER_UNIQUE | TIMER_STOPPABLE)
 
-/*
+/**
  * Try to untip a mob that has been tipped.
  * After a do-after is completed, we untip the mob.
  *
@@ -176,7 +176,7 @@
 
 	do_untip(tipped_mob, untipper)
 
-/*
+/**
  * Actually untip over the mob, setting it to untipped.
  * Also invoke any untip callbacks we have, with the untipper as the argument.
  *
@@ -199,7 +199,7 @@
 	set_tipped_status(tipped_mob, FALSE)
 	post_untipped_callback?.Invoke(untipper)
 
-/*
+/**
  * Proc called after a timer to have a tipped mob un-tip itself after a certain length of time.
  * Sets our mob to untipped and invokes the untipped callback without any arguments if we have one.
  *
@@ -217,7 +217,7 @@
 		span_notice("You right yourself.")
 		)
 
-/*
+/**
  * Toggles our tipped status between tipped or untipped (TRUE or FALSE)
  * also handles rotating our mob and adding immobilization traits
  *
@@ -233,6 +233,13 @@
 		tipped_mob.transform = turn(tipped_mob.transform, -180)
 		REMOVE_TRAIT(tipped_mob, TRAIT_IMMOBILIZED, TIPPED_OVER)
 
+/**
+ * Accepts "roleplay" in the form of emotes, which removes a quarter of the remaining time left to untip ourself.
+ *
+ * Arguments:
+ * * mob/living/user - The tipped mob
+ * * datum/emote/emote - The emote used by the mob
+ */
 /datum/component/tippable/proc/accept_roleplay(mob/living/user, datum/emote/emote)
 	SIGNAL_HANDLER
 

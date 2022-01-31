@@ -1,0 +1,9 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - code_imp: "Created a new input component that accepts only integers. More usage to come."
+  - refactor: "Pay stands are now holographic. It's 2562! Create one by right-clicking your ID."
+  - rscdel: "Circuit boards for pay stands."
+  - refactor: "Pay stands now have their own TGUI."
+  - bugfix: "Custom vendors now alert you when someone makes a purchase."
+  - bugfix: "Custom vendors now place items in your hand when you make a purchase."

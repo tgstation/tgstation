@@ -84,7 +84,7 @@
 
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
-	icon_state = "security"
+	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
 
 

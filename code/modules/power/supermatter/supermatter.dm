@@ -244,6 +244,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/processes = TRUE
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
+	///Do we show this crystal in the CIMS modular program
+	var/include_in_cims = TRUE
 
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
