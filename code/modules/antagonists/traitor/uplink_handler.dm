@@ -38,6 +38,8 @@
 	var/list/potential_duplicate_objectives = list()
 	/// The role that this uplink handler is associated to.
 	var/assigned_role
+	/// The species this uplink handler is associated to.
+	var/assigned_species
 	/// Whether this is in debug mode or not. If in debug mode, allows all purchases
 	var/debug_mode = FALSE
 
@@ -59,6 +61,8 @@
 			return FALSE
 
 		if(length(to_purchase.restricted_roles) && !(assigned_role in to_purchase.restricted_roles))
+			return FALSE
+		if(length(to_purchase.restricted_species) && !(assigned_species in to_purchase.restricted_species))
 			return FALSE
 
 	var/stock = item_stock[to_purchase] || INFINITY
