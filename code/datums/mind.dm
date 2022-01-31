@@ -703,7 +703,7 @@
 					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
 				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
-				if(!give_uplink(antag_datum = traitor_datum ? traitor_datum : null))
+				if(!give_uplink(antag_datum = traitor_datum || null))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else
