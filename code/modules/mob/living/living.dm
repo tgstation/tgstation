@@ -452,7 +452,7 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated 
 **/
 /mob/living/incapacitated(flags)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED) && !(flags & IGNORE_RESTRAINTS))
