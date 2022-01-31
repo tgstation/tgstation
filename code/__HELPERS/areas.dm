@@ -91,6 +91,9 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/engineerin
 
 	newA.reg_in_areas_in_z()
 
+	if(!isarea(area_choice) && newA.static_lighting)
+		newA.create_area_lighting_objects()
+
 	var/list/firedoors = oldA.firedoors
 	for(var/door in firedoors)
 		var/obj/machinery/door/firedoor/FD = door
