@@ -66,12 +66,15 @@ export class AlertModal extends Component {
     const { title, message, buttons, timeout } = data;
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);
+    const windowHeight
+    = 105
+    + Math.ceil(message.length / 3);
 
     return (
       <Window
         title={title}
         width={350}
-        height={150}>
+        height={windowHeight}>
         {timeout && <Loader value={timeout} />}
         <Window.Content
           onFocus={focusCurrentButton}
@@ -79,11 +82,9 @@ export class AlertModal extends Component {
           <Section fill>
             <Stack fill vertical>
               <Stack.Item grow>
-
-                <Box m={1}>
+                <Box color="label" m={1}>
                   {message}
                 </Box>
-
               </Stack.Item>
               <Stack.Item my={2}>
                 <Stack className="AlertModal__Buttons">

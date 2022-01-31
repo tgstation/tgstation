@@ -174,7 +174,6 @@
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
 			SStgui.close_uis(src)
 			return TRUE
 

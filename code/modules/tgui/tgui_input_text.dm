@@ -177,12 +177,11 @@
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
 			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(entry)
+	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
 
