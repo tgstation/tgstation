@@ -363,6 +363,7 @@
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))
 		attune_pizza(user)
+		to_chat(user, span_notice("Another pizza immediately appears in the box, what the hell?))
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"
