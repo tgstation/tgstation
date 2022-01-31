@@ -7,7 +7,7 @@
 import { Loader } from "./common/Loader";
 import { useBackend } from '../backend';
 import { Component, createRef } from 'inferno';
-import { Box, Flex, Section } from '../components';
+import { Box, Stack, Section } from '../components';
 import { Window } from '../layouts';
 import {
   KEY_ENTER,
@@ -77,23 +77,18 @@ export class AlertModal extends Component {
           onFocus={focusCurrentButton}
           onClick={focusCurrentButton}>
           <Section fill>
-            <Flex direction="column" height="100%">
-              <Flex.Item grow={1}>
-                <Flex
-                  direction="column"
-                  className="AlertModal__Message"
-                  height="100%">
-                  <Flex.Item>
-                    <Box m={1}>
-                      {message}
-                    </Box>
-                  </Flex.Item>
-                </Flex>
-              </Flex.Item>
-              <Flex.Item my={2}>
-                <Flex className="AlertModal__Buttons">
+            <Stack fill vertical>
+              <Stack.Item grow>
+
+                <Box m={1}>
+                  {message}
+                </Box>
+
+              </Stack.Item>
+              <Stack.Item my={2}>
+                <Stack className="AlertModal__Buttons">
                   {buttons.map((button, buttonIndex) => (
-                    <Flex.Item key={buttonIndex} mx={1}>
+                    <Stack.Item key={buttonIndex} mx={1}>
                       <div
                         ref={this.buttonRefs[buttonIndex]}
                         className="Button Button--color--default"
@@ -121,11 +116,11 @@ export class AlertModal extends Component {
                         }}>
                         {button}
                       </div>
-                    </Flex.Item>
+                    </Stack.Item>
                   ))}
-                </Flex>
-              </Flex.Item>
-            </Flex>
+                </Stack>
+              </Stack.Item>
+            </Stack>
           </Section>
         </Window.Content>
       </Window>

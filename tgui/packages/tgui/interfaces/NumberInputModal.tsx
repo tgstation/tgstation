@@ -2,7 +2,7 @@ import { Loader } from './common/Loader';
 import { InputButtons, Preferences } from './common/InputButtons';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, NumberInput, Section, Stack } from '../components';
+import { Box, Button, RestrictedInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type NumberInputData = {
@@ -86,14 +86,14 @@ const InputArea = (props, context) => {
         />
       </Stack.Item>
       <Stack.Item grow>
-        <NumberInput
+        <RestrictedInput
           autoFocus
           autoSelect
           fluid
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
-          onEnter={() => act('submit', { entry: input })}
+          onEnter={(_, value) => act('submit', { entry: value })}
           value={input}
         />
       </Stack.Item>

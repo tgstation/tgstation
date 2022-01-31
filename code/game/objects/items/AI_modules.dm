@@ -285,7 +285,7 @@ AI MODULES
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
-	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50, 1)
+	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50)
 	if(!lawpos || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
 	to_chat(user, span_notice("Law [lawpos] selected."))

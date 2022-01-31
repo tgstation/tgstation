@@ -91,7 +91,7 @@
 		to_chat(user, span_notice("New sound file set to [sound_file]."), confidential = TRUE)
 	if(href_list["edit_volume"])
 		var/new_volume = tgui_input_number(user, "Choose a volume", "Sound Emitter", sound_volume, 100)
-		if(isnull(new_volume))
+		if(!new_volume)
 			return
 		sound_volume = new_volume
 		to_chat(user, span_notice("Volume set to [sound_volume]%."), confidential = TRUE)

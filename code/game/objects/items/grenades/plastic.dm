@@ -1,4 +1,6 @@
+/// Minimum timer for c4 charges
 #define MIN_TIMER 10 SECONDS
+/// Maximum timer for c4 charges
 #define MAX_TIMER 6000 SECONDS
 
 /obj/item/grenade/c4

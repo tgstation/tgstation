@@ -14,7 +14,7 @@
 		. += span_notice("Its channel ID is '[id]'.")
 
 /obj/item/assembly/control/multitool_act(mob/living/user)
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100, 1)
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door ID", id, 100)
 	if(!change_id || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	id = change_id

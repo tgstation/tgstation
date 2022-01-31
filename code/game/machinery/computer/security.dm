@@ -856,7 +856,7 @@ What a mess.*/
 							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
 							if(!t1)
 								return
-							var/fine = tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine, 1)
+							var/fine = tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine)
 							if (!fine || QDELETED(usr) || QDELETED(src) || !canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
 							var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
