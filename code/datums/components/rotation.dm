@@ -4,6 +4,8 @@
 #define ROTATION_GHOSTS_ALLOWED (1<<1)
 /// If an object will ignore anchored for rotation (used for chairs)
 #define ROTATION_IGNORE_ANCHORED (1<<2)
+/// If an object will omit flipping from rotation (used for pipes since they use custom handling)
+#define ROTATION_NO_FLIPPING (1<<3)
 
 /// Rotate an object clockwise
 #define ROTATION_CLOCKWISE 1
@@ -38,9 +40,10 @@
 
 /datum/component/simple_rotation/proc/add_verbs()
 	var/obj/rotated_obj = parent
-	rotated_obj.verbs += /atom/movable/proc/simple_rotate_flip
 	rotated_obj.verbs += /atom/movable/proc/simple_rotate_clockwise
 	rotated_obj.verbs += /atom/movable/proc/simple_rotate_counterclockwise
+	if(!(rotation_flags & ROTATION_NO_FLIPPING))
+		rotated_obj.verbs += /atom/movable/proc/simple_rotate_flip
 
 /datum/component/simple_rotation/proc/remove_verbs()
 	if(parent)

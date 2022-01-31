@@ -57,7 +57,7 @@ Buildable meters
 	pixel_y += rand(-5, 5)
 	
 	//Flipping handled manually due to custom handling for trinary pipes
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation, ROTATION_NO_FLIPPING)
 	return ..()
 
 /obj/item/pipe/proc/make_from_existing(obj/machinery/atmospherics/make_from)
