@@ -33,10 +33,6 @@ class SurgeryInitiatorInner extends Component<
     selectedSurgeryIndex: 0,
   }
 
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.updateSelectedSurgeryIndexState();
   }
