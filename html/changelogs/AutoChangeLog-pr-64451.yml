@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - qol: "Default FPS (if you have it unset) is now 100 instead of 40."
