@@ -66,6 +66,7 @@ export class AlertModal extends Component {
     const { title, message, buttons, timeout } = data;
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);
+    // Dynamically sets window height
     const windowHeight
     = 115
     + Math.ceil(message.length / 3);
