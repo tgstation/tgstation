@@ -25,8 +25,8 @@
 	. = ..()
 	if(victim.anti_magic_check() || IS_HERETIC_OR_MONSTER(victim))
 		return
-	victim.apply_status_effect(STATUS_EFFECT_AMOK)
-	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level * 10))
+	victim.apply_status_effect(/datum/status_effect/amok)
+	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level * 10))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6 - level))

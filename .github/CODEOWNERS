@@ -45,6 +45,7 @@
 
 # Mothblocks
 
+/code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
 /code/modules/preferences.dm @Mothblocks

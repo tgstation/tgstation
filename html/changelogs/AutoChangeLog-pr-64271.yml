@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - qol: "Blackmarket uplinks now draw from the player's ID card, not from an internal supply of credits."
+  - code_imp: "Blackmarket uplinks on the backend were tweaked in a way consistent with other sold items."

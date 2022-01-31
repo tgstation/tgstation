@@ -66,7 +66,7 @@
 	kinesis_catcher.RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, /atom/movable/screen/fullscreen/kinesis.proc/on_move)
 	soundloop.start()
 
-/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation()
+/obj/item/mod/module/anomaly_locked/kinesis/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

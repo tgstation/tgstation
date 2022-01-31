@@ -51,6 +51,10 @@
 
 //#define UNIT_TESTS //If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
 
+/// If this is uncommented, Autowiki will generate edits and shut down the server.
+/// Prefer the autowiki build target instead.
+// #define AUTOWIKI
+
 #ifndef PRELOAD_RSC //set to:
 #define PRELOAD_RSC 2 // 0 to allow using external resources or on-demand behaviour;
 #endif // 1 to use the default behaviour;
