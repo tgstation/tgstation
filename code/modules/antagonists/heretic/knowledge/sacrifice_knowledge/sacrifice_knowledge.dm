@@ -165,14 +165,14 @@
 
 	to_chat(user, span_hypnophrase("Your patrons accepts your offer."))
 
-	var/are_we_high_value = (sacrifice.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-	if(are_we_high_value)
+	if(sacrifice.mind?.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 
 	heretic_datum.total_sacrifices++
 	heretic_datum.knowledge_points += 2
-	begin_sacrifice(sacrifice, are_we_high_value)
+
+	begin_sacrifice(sacrifice)
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].
@@ -181,9 +181,8 @@
  *
  * Arguments
  * * sac_target - the mob being sacrificed.
- * * high_value_target - whether the target's been determined to be a 'high value' target.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/begin_sacrifice(mob/living/carbon/human/sac_target, high_value_target = FALSE)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/begin_sacrifice(mob/living/carbon/human/sac_target)
 	var/datum/mind/our_heretic_mind = heretic_mind_weakref?.resolve()
 	var/datum/antagonist/heretic/our_heretic = our_heretic_mind?.has_antag_datum(/datum/antagonist/heretic)
 	if(our_heretic)
@@ -236,6 +235,9 @@
  * Teleports the [sac_target] to the heretic room, asleep.
  * If it fails to teleport, they will be disemboweled and stop the chain.
  *
+ * Arguments
+ * * sac_target - the mob being sacrificed.
+ * * destination - the spot they're being teleported to.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_sleep(mob/living/carbon/human/sac_target, turf/destination)
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
@@ -311,6 +313,7 @@
 	sac_target.remove_status_effect(/datum/status_effect/necropolis_curse)
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp)
+	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
 	if(!is_station_level(sac_target.z))
 		return
@@ -327,12 +330,10 @@
 		sac_target.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [sac_target] to the observer start turf. Forcemoving.")
 
-	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 	if(sac_target.stat == DEAD)
-		INVOKE_ASYNC(src, .proc/after_return_dead_target, sac_target, safe_turf)
+		after_return_dead_target(sac_target)
 	else
-		INVOKE_ASYNC(src, .proc/after_return_live_target, sac_target, safe_turf)
-		SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm_survived_sadness", /datum/mood_event/shadow_realm_live_sad)
+		after_return_live_target(sac_target)
 
 	var/datum/mind/our_heretic_mind = heretic_mind_weakref?.resolve()
 	if(our_heretic_mind?.current)
@@ -376,6 +377,7 @@
 	to_chat(sac_target, span_hypnophrase("The fight is over - but at great cost. You have been returned to your realm in one piece."))
 	to_chat(sac_target, span_hypnophrase("You can hardly remember anything from before and leading up to the experience - all you can think about are those horrific hands..."))
 
+	// Oh god where are we?
 	sac_target.flash_act()
 	sac_target.add_confusion(60)
 	sac_target.Jitter(60)
@@ -384,25 +386,28 @@
 	sac_target.AdjustKnockdown(80)
 	sac_target.adjustStaminaLoss(120)
 
-	// A little pick-me-up
+	// Glad i'm outta there, though!
+	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm_survived", /datum/mood_event/shadow_realm_live)
+	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm_survived_sadness", /datum/mood_event/shadow_realm_live_sad)
+
+	// Could use a little pick-me-up...
 	sac_target.reagents?.add_reagent(/datum/reagent/medicine/atropine, 8)
 	sac_target.reagents?.add_reagent(/datum/reagent/medicine/epinephrine, 8)
-
-	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm_survived", /datum/mood_event/shadow_realm_live)
 
 /**
  * This proc is called from [proc/return_target] if the target dies in the shadow realm.
  *
- * After teleporting [sac_target] back to [landing_turf] dead,
+ * After teleporting the target back to the station (dead),
  * it spawns a special broken illusion to hint to the rescuers what happened.
- * After 1 to 2 minutes, a centcom announcement is sent detailing where the person landed.
+ *
+ * 1 to 2 minutes later, a centcom announcement is sent detailing where the person landed.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_dead_target(mob/living/carbon/human/sac_target)
 	var/turf/landing_turf = get_turf(sac_target)
 	addtimer(CALLBACK(src, .proc/announce_dead_target, landing_turf), rand(1 MINUTES, 2 MINUTES))
 
 	var/obj/effect/visible_heretic_influence/illusion = new(landing_turf)
-	illusion.name = "Weakened rift in reality"
+	illusion.name = "\improper weakened rift in reality"
 	illusion.desc = "A rift wide enough for something... or someone... to come through."
 	illusion.color = COLOR_DARK_RED
 
@@ -416,8 +421,8 @@
 		"Central Command Higher Dimensional Affairs")
 
 /**
- * "Fuck you" proc that gets called if the chain is interrupted at points.
- * Simply disembowels the [sac_target] and brutilizes their body.
+ * "Fuck you" proc that gets called if the chain is interrupted at some points.
+ * Simply disembowels the [sac_target] and brutilizes their body, as it did.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/disembowel_target(mob/living/carbon/human/sac_target)
 	sac_target.spill_organs()
