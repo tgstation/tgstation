@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	var/list/possible_answers = list("Please, go away! We'll pay!", "I accept oblivion.")
 
 	///station responds to message and pays the pirates
-	var/response_recieved = "Yum! Bungopoints!"
+	var/response_received = "Yum! Bungopoints!"
 	///station pays the pirates, but after the ship spawned
 	var/response_too_late = "Your Bungopoints arrived too late, rebooting world..."
 	///station pays the pirates... but doesn't have enough cash.
