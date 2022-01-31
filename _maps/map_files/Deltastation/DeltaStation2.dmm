@@ -33204,7 +33204,9 @@
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "ene" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -34334,7 +34336,9 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "eDj" = (
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
