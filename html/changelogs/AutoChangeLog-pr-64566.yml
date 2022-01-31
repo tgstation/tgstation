@@ -1,0 +1,4 @@
+author: "Jolly-66"
+delete-after: True
+changes: 
+  - bugfix: "Last two Active Turfs in DJ Space Ruin were fixed."
