@@ -8367,11 +8367,15 @@
 /turf/open/floor/iron,
 /area/security/prison)
 "btd" = (
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1;
-	name = "sorting disposal pipe (Robotics)";
-	sortType = 14
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
 "btl" = (
@@ -37838,6 +37842,14 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/science/genetics)
+"mfN" = (
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1;
+	name = "sorting disposal pipe (Robotics)";
+	sortType = 14
+	},
+/turf/open/floor/iron/white,
+/area/science/research)
 "mfZ" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -39374,9 +39386,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
@@ -179150,7 +179159,7 @@ lJk
 wfS
 pfN
 mJd
-pfN
+btd
 pfN
 pfN
 pfN
@@ -179406,8 +179415,8 @@ lar
 jLP
 wwN
 nYd
-btd
 nYd
+mfN
 nYd
 nYd
 nYd
