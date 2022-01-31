@@ -437,9 +437,31 @@
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
 	death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
+/**
+ * Checks if a mob is incapacitated 
+ *
+ * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+ * unless there is a flag being used to check if it's ignored
+ * 
+ * args:
+ * * flags (optional) bitflags that determine if special situations are exempt from being considered incapacitated
+ * 
+ * bitflags: (see code/__DEFINES/status_effects.dm)
+ * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+ * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+ * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated 
+**/
+/mob/living/incapacitated(flags)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED)
 		return TRUE
+
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED) && !(flags & IGNORE_RESTRAINTS))
+		return TRUE
+	if(IS_IN_STASIS(src) && !(flags & IGNORE_STASIS))
+		return TRUE
+	if((pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) && !(flags & IGNORE_GRAB)) 
+		return TRUE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
