@@ -1557,6 +1557,8 @@
 /turf/closed/wall,
 /area/icemoon/underground/explored)
 "fw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/mine/storage)
 "fx" = (
@@ -2113,6 +2115,16 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
+"hm" = (
+/obj/machinery/button/elevator{
+	id = "publicElevator";
+	pixel_y = -25
+	},
+/obj/machinery/door/window/southleft{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/mine/storage)
 "hn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2362,6 +2374,12 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
+"hV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "hX" = (
 /obj/structure/sign/poster/random{
 	pixel_y = 32
@@ -2386,6 +2404,8 @@
 /area/hallway/secondary/service)
 "ic" = (
 /obj/machinery/door/airlock/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/mine/storage)
 "id" = (
@@ -2725,6 +2745,8 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "iZ" = (
@@ -4256,6 +4278,12 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/mine/eva)
+"om" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "on" = (
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
@@ -6409,6 +6437,8 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "uS" = (
@@ -6954,6 +6984,12 @@
 "wS" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/unexplored)
+"wT" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "wU" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -7377,6 +7413,12 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"yu" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "yv" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit";
@@ -8386,6 +8428,8 @@
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "BJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/mine/storage)
 "BL" = (
@@ -9485,6 +9529,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "Fj" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/mine/storage)
 "Fk" = (
@@ -10205,6 +10252,15 @@
 /turf/closed/wall,
 /area/service/chapel/office)
 "Hy" = (
+/obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4{
+	color = "#0000ff";
+	name = "Supply multi deck pipe adapter"
+	},
+/obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2{
+	color = "#ff0000";
+	name = "Scrubbers multi deck pipe adapter"
+	},
+/obj/effect/turf_decal/stripes/box,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/storage)
@@ -10696,6 +10752,9 @@
 "Ja" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
@@ -14307,6 +14366,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/wood/parquet,
 /area/service/bar/atrium)
+"Up" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating/elevatorshaft,
+/area/mine/storage)
 "Uq" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on/layer2{
 	dir = 8
@@ -44179,8 +44244,8 @@ NH
 NH
 qG
 Fj
-Fj
-Fj
+hV
+yu
 Hv
 TE
 NH
@@ -44435,9 +44500,9 @@ ak
 Hv
 Hv
 Hv
-Fj
-Fj
-Fj
+om
+wT
+Up
 Hv
 TE
 NH
@@ -44693,7 +44758,7 @@ Hv
 ZB
 AF
 AF
-AF
+hm
 AF
 Hv
 SR
