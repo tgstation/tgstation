@@ -3,9 +3,8 @@
 	/// The currently selected target that the user is proposing a surgery on
 	var/datum/weakref/surgery_target_ref
 
-	/// The currently selected body zone
-	// MOTHBLOCKS TODO: Update when the user changes their own body zone
-	var/selected_zone
+	/// The last user, as a weakref
+	var/datum/weakref/last_user_ref
 
 /datum/component/surgery_initiator/Initialize()
 	. = ..()
@@ -13,6 +12,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/surgery_initiator/Destroy(force, silent)
+	last_user_ref = null
 	surgery_target_ref = null
 
 	return ..()
@@ -22,14 +22,16 @@
 
 /datum/component/surgery_initiator/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
-	unregister_target_signals()
+	unregister_signals()
 
-/datum/component/surgery_initiator/proc/unregister_target_signals()
-	var/mob/living/surgery_target = surgery_target_ref.resolve()
-	if (isnull(surgery_target_ref))
-		return
+/datum/component/surgery_initiator/proc/unregister_signals()
+	var/mob/living/last_user = last_user_ref?.resolve()
+	if (!isnull(last_user_ref))
+		UnregisterSignal(last_user, COMSIG_MOB_SELECTED_ZONE_SET)
 
-	UnregisterSignal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
+	var/mob/living/surgery_target = surgery_target_ref?.resolve()
+	if (!isnull(surgery_target_ref))
+		UnregisterSignal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
 
 /// Does the surgery initiation.
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
@@ -40,13 +42,11 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/surgery_initiator/proc/do_initiate_surgery_moment(mob/living/target, mob/user)
-	selected_zone = user.zone_selected
-
 	var/datum/surgery/current_surgery
 
 	for(var/i_one in target.surgeries)
 		var/datum/surgery/surgeryloop = i_one
-		if(surgeryloop.location == selected_zone)
+		if(surgeryloop.location == user.zone_selected)
 			current_surgery = surgeryloop
 			break
 
@@ -64,8 +64,10 @@
 
 		return
 
+	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
+	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
 	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
 
 	ui_interact(user)
@@ -77,10 +79,10 @@
 	var/obj/item/bodypart/affecting
 	if (iscarbon(target))
 		carbon_target = target
-		affecting = carbon_target.get_bodypart(check_zone(selected_zone))
+		affecting = carbon_target.get_bodypart(check_zone(user.zone_selected))
 
 	for(var/datum/surgery/surgery as anything in GLOB.surgeries_list)
-		if(!surgery.possible_locs.Find(selected_zone))
+		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
 		if(affecting)
 			if(!surgery.requires_bodypart)
@@ -156,12 +158,18 @@
 /datum/component/surgery_initiator/proc/on_mob_surgery_started(mob/source, datum/surgery/surgery, surgery_location)
 	SIGNAL_HANDLER
 
-	if (surgery_location == selected_zone)
-		if (ismob(loc))
-			source.balloon_alert(loc, "someone else started a surgery!")
+	var/mob/living/last_user = last_user_ref.resolve()
 
-		ui_close()
+	if (surgery_location != last_user.zone_selected)
 		return
+
+	if (!isnull(last_user))
+		source.balloon_alert(last_user, "someone else started a surgery!")
+
+	ui_close()
+
+/datum/component/surgery_initiator/proc/on_set_selected_zone(mob/source, new_zone)
+	ui_interact(source)
 
 /datum/component/surgery_initiator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -196,7 +204,9 @@
 			)))
 				return TRUE
 
-			selected_zone = zone
+			var/atom/movable/screen/zone_sel/zone_selector = user.hud_used?.zone_select
+			zone_selector?.set_selected_zone(zone, user)
+
 			return TRUE
 		if ("start_surgery")
 			for (var/datum/surgery/surgery as anything in get_available_surgeries(user, surgery_target))
@@ -225,13 +235,13 @@
 			surgeries += list(surgery_info)
 
 	return list(
-		"selected_zone" = selected_zone,
+		"selected_zone" = user.zone_selected,
 		"target_name" = surgery_target?.name,
 		"surgeries" = surgeries,
 	)
 
 /datum/component/surgery_initiator/ui_close(mob/user)
-	unregister_target_signals()
+	unregister_signals()
 	surgery_target_ref = null
 
 	return ..()
@@ -260,7 +270,7 @@
 
 	// While we were choosing, another surgery was started at the same location
 	for (var/datum/surgery/surgery in target.surgeries)
-		if (surgery.location == selected_zone)
+		if (surgery.location == user.zone_selected)
 			return FALSE
 
 	return TRUE
@@ -273,6 +283,8 @@
 		return
 
 	var/obj/item/bodypart/affecting_limb
+
+	var/selected_zone = user.zone_selected
 
 	if (iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
@@ -302,6 +314,8 @@
 		target.balloon_alert(user, "expose [target.p_their()] [parse_zone(selected_zone)]!")
 		return
 
+	ui_close()
+
 	var/datum/surgery/procedure = new surgery.type(target, selected_zone, affecting_limb)
 	ADD_TRAIT(target, TRAIT_ALLOWED_HONORBOUND_ATTACK, type)
 
@@ -314,7 +328,9 @@
 
 	log_combat(user, target, "operated on", null, "(OPERATION TYPE: [procedure.name]) (TARGET AREA: [selected_zone])")
 
-	ui_close()
-
 /datum/component/surgery_initiator/proc/surgery_needs_exposure(datum/surgery/surgery, mob/living/target)
-	return !surgery.ignore_clothes && !get_location_accessible(target, selected_zone)
+	var/mob/living/user = last_user_ref?.resolve()
+	if (isnull(user))
+		return FALSE
+
+	return !surgery.ignore_clothes && !get_location_accessible(target, user.zone_selected)
