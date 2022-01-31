@@ -16107,6 +16107,7 @@
 	c_tag = "Research Division West";
 	network = list("ss13","rd")
 	},
+/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
@@ -24857,7 +24858,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white/side{
 	dir = 10
 	},
