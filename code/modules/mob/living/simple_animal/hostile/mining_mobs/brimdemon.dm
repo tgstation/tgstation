@@ -80,14 +80,15 @@
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/OpenFire()
 	if(firing)
-		to_chat(src, "<span class='warning'>You are already firing!</span>")
+		balloon_alert(src, "already firing!")
 		return
 	firing = TRUE
 	set_dir_on_move = FALSE
 	icon_state = "brimdemon_firing"
 	move_resist = MOVE_FORCE_VERY_STRONG
 	add_overlay("brimdemon_telegraph_dir")
-	visible_message("<span class='danger'>[src] starts charging!</span>", "<span class='notice'>You start charging...</span>")
+	visible_message(span_danger("[src] starts charging!"))
+	balloon_alert(src, "charging...")
 	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
@@ -104,7 +105,8 @@
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
 	if(stat == DEAD)
 		return
-	visible_message("<span class='danger'>[src] fires a brimbeam!</span>", "<span class='notice'>You fire a brimbeam!</span>")
+	visible_message(span_danger("[src] fires a brimbeam!"))
+	balloon_alert(src, "brimbeam fired")
 	playsound(src, 'sound/creatures/brimdemon.ogg', 150, FALSE, 0, 3)
 	cut_overlay("brimdemon_telegraph_dir")
 	var/turf/target_turf = get_ranged_target_turf(src, dir, BRIMBEAM_RANGE)
@@ -127,7 +129,7 @@
 			if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
 				continue
 			hit_mob.adjustFireLoss(25)
-			to_chat(hit_mob, "<span class='userdanger'>You're hit by [src]'s brimbeam!</span>")
+			to_chat(hit_mob, span_userdanger("You're hit by [src]'s brimbeam!"))
 	if(length(beamparts))
 		var/atom/last_brimbeam = beamparts[length(beamparts)]
 		last_brimbeam.icon_state = "brimbeam_end"
@@ -172,7 +174,7 @@
 	if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
 		return
 	hit_mob.adjustFireLoss(5)
-	to_chat(hit_mob, "<span class='danger'>You're damaged by [src]!</span>")
+	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
 
 /obj/item/crusher_trophy/brimdemon_fang
 	name = "brimdemon's fang"
