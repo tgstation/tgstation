@@ -636,7 +636,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	if(delta_y < 0)

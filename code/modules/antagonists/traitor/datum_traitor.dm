@@ -51,8 +51,6 @@
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.has_objectives = TRUE
-		uplink_handler.owner = owner
-		uplink_handler.assigned_role = owner.assigned_role.title
 		uplink_handler.generate_objectives()
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
@@ -60,7 +58,10 @@
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
 			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
-				&&  !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				uplink_items += item
+			if(item.item && (!length(item.restricted_species) || (uplink_handler.assigned_species in item.restricted_species)) \
+				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
 				uplink_items += item
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 

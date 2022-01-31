@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen realized that when you punt someone down using IceBox Station's execution room, they would only fall a meager one Z-level (or sometimes, wouldn't even fall at all!). This has been corrected to allow you to punt them down to the intended height of TWO Z-Levels. Nifty, eh?"

@@ -1,0 +1,5 @@
+author: "jjpark-kb"
+delete-after: True
+changes: 
+  - expansion: "xeno weeds will now be destroyed when their parent node is destroyed"
+  - balance: "xeno weeds spread cooldown lowered from 15-20 seconds to 5-10 seconds"
