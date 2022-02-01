@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an oversight with the skittish trait that let players dive into burial mounds, which are technically a subtype of crates."
+  - bugfix: "Fixed a runtime error that made abandoned crates not update their lock lights when unlocked."
+  - bugfix: "Fixed an oversight with abandoned crates not resetting the number of attempts left and not nulling the last attempted code when re-locked."
+  - bugfix: "Fixed burial mounds somehow getting lock lights overlays."

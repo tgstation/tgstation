@@ -1,0 +1,99 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/clothing/head/hardhat,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"e" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/table,
+/obj/item/paper{
+	info = "What exactly is the plan with all these rooms? I've dug out like 15 rooms in maintenance that aren't even labeled on the station blueprint. Seems like all we're doing is fucking up the structural stability of the asteroid.";
+	name = "sand-covered note"
+	},
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"h" = (
+/obj/structure/table,
+/obj/item/folder/blue,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"i" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"k" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"s" = (
+/turf/closed/wall/rock/porous,
+/area/mine/explored)
+"w" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"H" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/shovel{
+	pixel_x = -5
+	},
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"R" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"W" = (
+/obj/structure/barricade/wooden,
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+R
+i
+a
+"}
+(2,1,1) = {"
+W
+R
+R
+k
+"}
+(3,1,1) = {"
+a
+R
+c
+h
+"}
+(4,1,1) = {"
+a
+w
+R
+e
+"}
+(5,1,1) = {"
+s
+i
+H
+a
+"}
+(6,1,1) = {"
+a
+i
+i
+i
+"}
+(7,1,1) = {"
+a
+a
+s
+a
+"}

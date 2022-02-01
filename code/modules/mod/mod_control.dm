@@ -234,7 +234,7 @@
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
-			module.on_deactivation()
+			module.on_deactivation(display_message = TRUE)
 		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
@@ -410,7 +410,7 @@
 	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	selected_module?.on_deactivation()
+	selected_module?.on_deactivation(display_message = TRUE)
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if(wearer.stat < UNCONSCIOUS && prob(10))
@@ -584,7 +584,7 @@
 	if(active)
 		old_module.on_suit_deactivation()
 		if(old_module.active)
-			old_module.on_deactivation()
+			old_module.on_deactivation(display_message = TRUE)
 	if(wearer)
 		old_module.on_unequip()
 		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]

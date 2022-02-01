@@ -46,7 +46,7 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation()
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -232,6 +232,8 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
 
 // Bite of 87 springlock
+/obj/item/mod/module/springlock/bite_of_87
+
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
 	. = ..()
 	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
