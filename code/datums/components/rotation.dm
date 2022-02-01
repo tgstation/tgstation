@@ -53,7 +53,7 @@
 		rotated_obj.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
 
 /datum/component/simple_rotation/proc/remove_signals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	add_verbs()
