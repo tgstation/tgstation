@@ -8109,7 +8109,7 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/computer/department_orders/service,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "bmx" = (
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating/asteroid/airless,
@@ -9737,6 +9737,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/button/door{
+	id = "bridge blast";
+	name = "Bridge Blast Door Control";
+	pixel_x = 28;
+	pixel_y = -24;
+	req_access_txt = "19"
+	},
 /turf/open/floor/carpet,
 /area/command/bridge)
 "bRO" = (
@@ -10391,7 +10398,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "cem" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/techstorage/tcomms_all,
@@ -17780,7 +17787,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "eSj" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -20088,7 +20095,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "fFR" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22560,7 +22567,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "gCq" = (
 /obj/machinery/shower{
 	dir = 4
@@ -24891,7 +24898,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "huk" = (
 /obj/structure/chair,
 /obj/machinery/airalarm/directional/north,
@@ -29935,7 +29942,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "jmz" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
@@ -31926,7 +31933,6 @@
 	name = "Supermatter Chamber";
 	req_one_access_txt = "10;24"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
@@ -33466,6 +33472,9 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/central)
+"kFt" = (
+/turf/closed/wall,
+/area/hallway/secondary/service)
 "kFu" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 9
@@ -33476,7 +33485,7 @@
 	network = list("ss13","Service")
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "kFY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/machinery/airalarm/all_access{
@@ -33673,8 +33682,10 @@
 "kJv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 8
+	},
 /turf/open/floor/carpet,
 /area/command/bridge)
 "kJw" = (
@@ -35369,7 +35380,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "loK" = (
 /obj/machinery/door/airlock{
 	id_tag = "restroom_5";
@@ -37685,7 +37696,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "mjF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -41639,7 +41650,7 @@
 	dir = 6
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "nJI" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -41973,6 +41984,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "bridge-right"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "bridge blast door"
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -43582,7 +43597,7 @@
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/corner,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "otD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -45272,6 +45287,16 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar)
+"oYF" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
 "oYI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -45838,7 +45863,7 @@
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "pjl" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/light/small/directional/west,
@@ -47701,7 +47726,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "pPr" = (
 /obj/machinery/camera/emp_proof{
 	c_tag = "Engineering - Atmospherics N2O Chamber";
@@ -47754,7 +47779,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "pPX" = (
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
@@ -50809,6 +50833,10 @@
 	cycle_id = "bridge-right"
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "bridge blast door"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "rcc" = (
@@ -51430,7 +51458,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "rnn" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
@@ -51642,7 +51670,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "rsl" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
@@ -52024,7 +52052,7 @@
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "ryW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -52361,12 +52389,6 @@
 	},
 /turf/open/floor/iron,
 /area/science/robotics/mechbay)
-"rGo" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/central)
 "rGq" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -53021,7 +53043,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "rRU" = (
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/cafeteria,
@@ -56916,6 +56938,10 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "bridge-left"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "bridge blast door"
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -63479,6 +63505,15 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter/room)
+"vSd" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/central)
 "vSl" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -63609,7 +63644,7 @@
 "vUo" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /turf/open/floor/iron,
-/area/hallway/primary/central)
+/area/hallway/secondary/service)
 "vUv" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -65422,10 +65457,10 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "wCA" = (
@@ -66628,6 +66663,10 @@
 	cycle_id = "bridge-left"
 	},
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "bridge blast door"
+	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "xbu" = (
@@ -66695,7 +66734,6 @@
 	name = "Supermatter Chamber";
 	req_one_access_txt = "10;24"
 	},
-/obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/engine,
 /area/engineering/supermatter)
@@ -70187,6 +70225,14 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/service/lawoffice)
+"ymc" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 9
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/hallway/primary/central)
 
 (1,1,1) = {"
 ajc
@@ -98577,7 +98623,7 @@ aGF
 dhe
 dhe
 aac
-rGo
+gpq
 ehd
 cBL
 jwd
@@ -98838,7 +98884,7 @@ wyR
 pyR
 pYP
 aac
-szP
+vSd
 bBg
 bBg
 iae
@@ -165400,7 +165446,7 @@ abW
 pnI
 fiF
 pnI
-nxe
+ymc
 wrF
 wrF
 wrF
@@ -166675,9 +166721,9 @@ nrP
 lgI
 amK
 amK
-kqz
+kFt
 loo
-kqz
+kFt
 aGY
 aGY
 xTf
@@ -168475,7 +168521,7 @@ irr
 cEY
 amK
 bmm
-cGf
+oYF
 nJA
 aGY
 pcP
@@ -168731,9 +168777,9 @@ dlE
 olk
 amK
 amK
-kqz
+kFt
 eRZ
-kqz
+kFt
 aGY
 aGY
 xJG
