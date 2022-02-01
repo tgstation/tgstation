@@ -241,12 +241,9 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /// Keep changing the icon and selected path
 /obj/mystery_box_item/proc/loop_icon_changes()
-	var/change_delay = 1
-	var/change_delay_delta = 1
-	var/change_counter = 0
-
-	/// The uninstantiated item that's currently selected based off selected_path, for use with initial()
-	var/obj/item/selected_item
+	var/change_delay = 1 // the running count of the delay
+	var/change_delay_delta = 1 // How much to increment the delay per step so the changing slows down
+	var/change_counter = 0 // The running count of the running count
 
 	var/matrix/starting = matrix()
 	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
