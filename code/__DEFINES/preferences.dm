@@ -104,7 +104,7 @@
 #define RANDOM_ENABLED 3
 
 //recommened client FPS
-#define RECOMMENDED_FPS 40
+#define RECOMMENDED_FPS 100
 
 // randomise_appearance_prefs() and randomize_human_appearance() proc flags
 #define RANDOMIZE_SPECIES (1<<0)
@@ -144,3 +144,9 @@
 /// These are preferences that are supplementary for main features,
 /// such as hair color being affixed to hair.
 #define PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES "supplemental_features"
+
+// Playtime is tracked in minutes
+/// The time needed to unlock hardcore random mode in preferences
+#define PLAYTIME_HARDCORE_RANDOM 120 // 2 hours
+/// The time needed to unlock the gamer cloak in preferences
+#define PLAYTIME_VETERAN 300000 // 5,000 hours

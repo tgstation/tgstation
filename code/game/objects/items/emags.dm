@@ -57,7 +57,7 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/attack()
 	return
@@ -95,7 +95,7 @@
 
 /obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
-	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(typesof(/obj/machinery/door/airlock), typesof(/obj/machinery/door/window/), typesof(/obj/machinery/door/firedoor)) //list of all acceptable typepaths that this device can affect
 
 /obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
@@ -138,6 +138,8 @@
 	worn_icon_state = "battlecruisercaller"
 	///whether we have called the battlecruiser
 	var/used = FALSE
+	/// The battlecruiser team that the battlecruiser will get added to
+	var/datum/team/battlecruiser/team
 
 /obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
 	used = TRUE

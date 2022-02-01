@@ -1,0 +1,65 @@
+2022-02-01:
+  ArcaneMusic:
+  - qol: Blackmarket uplinks now draw from the player's ID card, not from an internal
+      supply of credits.
+  - code_imp: Blackmarket uplinks on the backend were tweaked in a way consistent
+      with other sold items.
+  CRITAWAKETS:
+  - refactor: The environmental atmos scanning ability of the gas analyzer is now
+      a component.
+  Ghommie:
+  - bugfix: Fixed the "skeletal guardian" away mission role not being a skeleton.
+  JohnFulpWillard:
+  - bugfix: Species-locked traitor items (currently the moth suspicious lantern) has
+      been re-added after an accidental removal.
+  Jolly-66:
+  - bugfix: Last two Active Turfs in DJ Space Ruin were fixed.
+  LemonInTheDark:
+  - bugfix: Kilo and tram's whiteships should actually spawn now. No promises on them
+      docking though
+  Melbert:
+  - balance: Icebox's cursed spring now only spawns on the lower levels of the moon.
+  Mothblocks:
+  - qol: Default FPS (if you have it unset) is now 100 instead of 40.
+  RandomGamer123:
+  - bugfix: Prevents silicons from opening circuit airlocks by walking through them.
+  Ryll/Shaps:
+  - bugfix: Iron walls built on top of metal foam will produce metal foam instead
+      of a girder when decon'd.
+  TiviPlus:
+  - bugfix: fixed new areas over starlight areas not having lighting objects
+  Watermelon914:
+  - expansion: Final objective battlecruiser will now make you a battlecruiser ally,
+      giving you the nuke codes and making it obvious to other battlecruiser members
+      that you are one of them.
+  - expansion: Added telecom disruption and blackout purchases for traitors to purchase,
+      and moved the elite syndicate hardsuit from the nukie uplink to the traitor
+      uplink as a high progression cost item.
+  - balance: Rebalanced TC rewards from assassinations to be less, and lowered TC
+      rewards for plentiful objectives.
+  - balance: Lowers the progression reward of assassination objectives.
+  cacogen:
+  - expansion: Gave lower Ice Box public mining an air alarm, vent and scrubber and
+      made its elevator shaft more warning-like
+  jjpark-kb:
+  - expansion: xeno weeds will now be destroyed when their parent node is destroyed
+  - balance: xeno weeds spread cooldown lowered from 15-20 seconds to 5-10 seconds
+  jlsnow301:
+  - code_imp: Created a new input component that accepts only integers. More usage
+      to come.
+  - refactor: Pay stands are now holographic. It's 2562! Create one by right-clicking
+      your ID.
+  - rscdel: Circuit boards for pay stands.
+  - refactor: Pay stands now have their own TGUI.
+  - bugfix: Custom vendors now alert you when someone makes a purchase.
+  - bugfix: Custom vendors now place items in your hand when you make a purchase.
+  san7890:
+  - bugfix: Nanotrasen realized that when you punt someone down using IceBox Station's
+      execution room, they would only fall a meager one Z-level (or sometimes, wouldn't
+      even fall at all!). This has been corrected to allow you to punt them down to
+      the intended height of TWO Z-Levels. Nifty, eh?
+  - bugfix: If you're looking through the Medbay on some stations (and shuttles too),
+      take a moment to appreciate that the stasis beds have been re-arranged.
+  timothymtorres:
+  - code_imp: Refactored the incapacitated proc to skip optional arguments and use
+      the named arguments properly to improve readability.

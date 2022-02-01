@@ -26,6 +26,22 @@ require only minor tweaks.
 
 #define SPACERUIN_MAP_EDGE_PAD 15
 
+/// Distance from edge to move to another z-level
+#define TRANSITIONEDGE 7
+
+// Maploader bounds indices
+/// The maploader index for the maps minimum x
+#define MAP_MINX 1
+/// The maploader index for the maps minimum y
+#define MAP_MINY 2
+/// The maploader index for the maps minimum z
+#define MAP_MINZ 3
+/// The maploader index for the maps maximum x
+#define MAP_MAXX 4
+/// The maploader index for the maps maximum y
+#define MAP_MAXY 5
+/// The maploader index for the maps maximum z
+#define MAP_MAXZ 6
 
 /// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
@@ -134,7 +150,6 @@ require only minor tweaks.
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
 
-
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"
 #define PERLIN_LAYER_HUMIDITY "perlin_humidity"
@@ -149,3 +164,15 @@ require only minor tweaks.
 #define BIOME_LOWMEDIUM_HUMIDITY "lowmedium_humidity"
 #define BIOME_HIGHMEDIUM_HUMIDITY "highmedium_humidity"
 #define BIOME_HIGH_HUMIDITY "high_humidity"
+
+// Bluespace shelter deploy checks for survival capsules
+/// Shelter spot is allowed 
+#define SHELTER_DEPLOY_ALLOWED "allowed"
+/// Shelter spot has turfs that restrict deployment
+#define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
+/// Shelter spot has areas that restrict deployment
+#define SHELTER_DEPLOY_BAD_AREA "bad area"
+/// Shelter spot has anchored objects that restrict deployment
+#define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
+/// Shelter spot is out of bounds from the maps x/y coordinates 
+#define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"

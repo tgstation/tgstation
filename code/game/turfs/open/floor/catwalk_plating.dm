@@ -29,6 +29,15 @@
 	underlays += catwalk_underlays[catwalk_type]
 	update_appearance()
 
+/turf/open/floor/catwalk_floor/examine(mob/user)
+	. = ..()
+
+	if(covered)
+		. += span_notice("You can <b>unscrew</b> it to reveal the contents beneath.")
+	else
+		. += span_notice("You can <b>screw</b> it to hide the contents beneath.")
+		. += span_notice("There's a <b>small crack</b> on the edge of it.")
+
 /turf/open/floor/catwalk_floor/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	covered = !covered
@@ -43,6 +52,7 @@
 		plane = GAME_PLANE
 		icon_state = "[catwalk_type]_above"
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
+	tool.play_tool_sound(src)
 	update_appearance()
 
 /turf/open/floor/catwalk_floor/crowbar_act(mob/user, obj/item/crowbar)

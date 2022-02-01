@@ -119,8 +119,12 @@
 	if(L && istype(L, /datum/ai_laws))
 		laws = L
 		laws.associate(src)
+		for (var/law in laws.inherent)
+			lawcheck += law
 	else
 		make_laws()
+		for (var/law in laws.inherent)
+			lawcheck += law
 
 	if(target_ai.mind)
 		target_ai.mind.transfer_to(src)

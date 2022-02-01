@@ -1,0 +1,353 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/telecomms)
+"c" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/mapping_helpers/no_lava,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"d" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/telecomms)
+"e" = (
+/obj/machinery/button/door{
+	id = "lavalandsyndi_fredrickleft";
+	name = "Security Blast Door Control";
+	pixel_y = -26;
+	req_access_txt = "150"
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"h" = (
+/obj/structure/railing,
+/obj/effect/mapping_helpers/no_lava,
+/obj/effect/turf_decal/stripes/line,
+/obj/item/clothing/gloves/tackler/offbrand{
+	desc = "For a different kind of tackle fishing."
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"j" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"k" = (
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/structure/closet/cardboard,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"m" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/power/apc/syndicate{
+	name = "Telecommunications APC";
+	pixel_y = -23
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"o" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"p" = (
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"q" = (
+/obj/structure/girder,
+/turf/open/floor/plating/lavaland_atmos,
+/area/ruin/syndicate_lava_base/telecomms)
+"r" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"s" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"t" = (
+/obj/structure/sign/poster/contraband/syndiemoth{
+	pixel_x = -32
+	},
+/obj/item/radio/intercom{
+	freerange = 1;
+	name = "Syndicate Radio Intercom";
+	pixel_y = 5
+	},
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/cobweb,
+/obj/item/phone{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"v" = (
+/obj/structure/railing,
+/obj/effect/mapping_helpers/no_lava,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"w" = (
+/obj/machinery/door/poddoor{
+	id = "lavalandsyndi_fredrickleft"
+	},
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/telecomms)
+"y" = (
+/obj/machinery/door/airlock/security{
+	name = "Security Office";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"z" = (
+/obj/machinery/airalarm/syndicate{
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/item/pda/chameleon/broken{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/food/cherrycupcake{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"A" = (
+/obj/machinery/door/poddoor{
+	id = "lavalandsyndi_fredrickright"
+	},
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/telecomms)
+"B" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/computer/security{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/syndicate_lava_base/telecomms)
+"C" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"D" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/no_lava,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"E" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/modular_map_connector,
+/obj/machinery/door/airlock/security{
+	name = "Security Office";
+	req_access_txt = "150"
+	},
+/turf/template_noop,
+/area/ruin/syndicate_lava_base/telecomms)
+"G" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/syndicate_lava_base/telecomms)
+"H" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/multitool,
+/obj/machinery/button/door{
+	id = "lavalandsyndi_telecomms";
+	name = "Telecomms Blast Door Control";
+	pixel_x = 26;
+	req_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"I" = (
+/obj/machinery/firealarm/directional/north,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"K" = (
+/obj/effect/mapping_helpers/no_lava,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"P" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"Q" = (
+/obj/effect/mapping_helpers/no_lava,
+/obj/structure/chair/plastic,
+/turf/open/floor/plating/lavaland_atmos,
+/area/template_noop)
+"U" = (
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/telecomms)
+"W" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 10
+	},
+/obj/structure/noticeboard/directional/east,
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+"X" = (
+/obj/machinery/button/door{
+	id = "lavalandsyndi_fredrickright";
+	name = "Security Blast Door Control";
+	pixel_y = 26;
+	req_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/tile/iron/grimy,
+/turf/open/floor/plating,
+/area/ruin/syndicate_lava_base/telecomms)
+"Z" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/syndicate_lava_base/telecomms)
+
+(1,1,1) = {"
+a
+G
+G
+G
+G
+G
+a
+a
+"}
+(2,1,1) = {"
+G
+G
+t
+B
+z
+G
+D
+c
+"}
+(3,1,1) = {"
+q
+A
+r
+o
+b
+w
+K
+h
+"}
+(4,1,1) = {"
+G
+G
+X
+U
+e
+G
+Q
+v
+"}
+(5,1,1) = {"
+a
+G
+G
+y
+d
+G
+G
+G
+"}
+(6,1,1) = {"
+a
+G
+I
+C
+Z
+p
+j
+G
+"}
+(7,1,1) = {"
+a
+G
+p
+s
+p
+j
+k
+G
+"}
+(8,1,1) = {"
+a
+G
+H
+W
+P
+m
+G
+G
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+E
+a
+a
+a
+"}

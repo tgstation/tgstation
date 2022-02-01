@@ -970,7 +970,7 @@
 	build_path = /obj/item/assembly/flash/handheld
 	category = list("Misc")
 
-//MODsuit stuff
+//MODsuit construction
 
 /datum/design/mod_shell
 	name = "MOD shell"
@@ -1085,6 +1085,8 @@
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
 	category = list("Misc")
+
+//MODsuit modules
 
 /datum/design/module
 	name = "MOD Module"
@@ -1328,13 +1330,6 @@
 	materials = list(/datum/material/diamond = 500, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module/dna_lock
 
-/datum/design/module/mod_circuit
-	name = "MOD Module: Circuit Adapter"
-	id = "mod_circuit"
-	materials = list(/datum/material/glass = 2000)
-	build_path = /obj/item/mod/module/circuit
-	department_type = MODULE_SCIENCE
-
 /datum/design/module/mod_plasma_stabilizer
 	name = "MOD Module: Plasma Stabilizer"
 	id = "mod_plasma"
@@ -1346,6 +1341,17 @@
 	id = "mod_sign_radio"
 	materials = list(/datum/material/iron = 750, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/signlang_radio
+
+//MODsuit bepis modules
+
+/datum/design/module/disposal
+	name = "MOD Module: Disposal Connector"
+	id = "mod_disposal"
+	materials = list(/datum/material/iron = 2500, /datum/material/titanium = 1000)
+	build_path = /obj/item/mod/module/disposal_connector
+	department_type = MODULE_SUPPLY
+
+//MODsuit anomalock modules
 
 /datum/design/module/mod_antigrav
 	name = "MOD Module: Anti-Gravity"
