@@ -213,8 +213,8 @@
 		else
 			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
 	else
-		var/option = tgui_alert(user, "What action do you wish to perform?","Apiary",list("Remove a Honey Frame","Remove the Queen Bee", "Cancel"))
-		if(!Adjacent(user))
+		var/option = tgui_alert(user, "What action do you wish to perform?", "Apiary", list("Remove a Honey Frame", "Remove the Queen Bee"))
+		if(!option || !user.canUseTopic(src, BE_CLOSE, FALSE))
 			return
 		switch(option)
 			if("Remove a Honey Frame")
