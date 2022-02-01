@@ -173,7 +173,7 @@
 		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
 	if(!id_card.registered_account || !id_card.registered_account.account_job)
-		to_chat(user, span_warning("No valid non-departamental account found."))
+		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
 	if(!account.has_money(painting_metadata.credit_value))
