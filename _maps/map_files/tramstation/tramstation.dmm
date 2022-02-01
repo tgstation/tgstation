@@ -34283,11 +34283,6 @@
 /obj/effect/landmark/secequipment,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera{
-	c_tag = "Security - Equipment Room";
-	dir = 9;
-	network = list("ss13","Security")
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/lockers)
 "kXk" = (
@@ -66233,6 +66228,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/sign/poster/official/safety_report{
 	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Security - Equipment Room";
+	dir = 9;
+	network = list("ss13","Security")
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/lockers)
