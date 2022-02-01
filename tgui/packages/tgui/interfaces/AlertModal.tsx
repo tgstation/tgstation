@@ -25,14 +25,15 @@ const KEY_INCREMENT = 1;
 
 export const AlertModal = (_, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { autofocus, buttons, message, timeout, title } = data;
+  const { autofocus, buttons = [], message, timeout, title } = data;
   const { large_buttons } = data.preferences;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
   const windowHeight
     = 100
     + Math.ceil(message.length / 3)
-    + (message.length && large_buttons ? 5 : 0);
+    + (message.length && large_buttons ? 5 : 0)
+    + (buttons.length > 2 ? buttons.length * 12 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -96,7 +97,8 @@ const ButtonDisplay = (props, context) => {
       align="center"
       direction={!swapped_buttons ? 'row-reverse' : 'row'}
       fill
-      justify="space-around">
+      justify="space-around"
+      wrap>
       {buttons?.map((button, index) =>
         !large_buttons ? (
           <Flex.Item key={index}>
@@ -135,8 +137,7 @@ const AlertButton = (props, context) => {
       onClick={() => act('choose', { choice: button })}
       pl={2}
       pr={2}
-      ml={0.5}
-      mr={0.5}
+      m={0.5}
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
       textAlign="center"
