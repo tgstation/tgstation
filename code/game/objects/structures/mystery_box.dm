@@ -248,13 +248,10 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	var/matrix/starting = matrix()
 	animate(src, pixel_y = 6, transform = starting, time = MBOX_DURATION_CHOOSING, easing = QUAD_EASING | EASE_OUT)
 
-	var/i = 0
 	while((change_counter + change_delay_delta + change_delay) < MBOX_DURATION_CHOOSING)
-		i++
 		change_delay += change_delay_delta
 		change_counter += change_delay
 		selected_path = pick(parent_box.valid_types)
-		selected_item = selected_path
 		addtimer(CALLBACK(src, .proc/update_random_icon, selected_path), change_counter)
 
 	addtimer(CALLBACK(src, .proc/present_item), MBOX_DURATION_CHOOSING)
