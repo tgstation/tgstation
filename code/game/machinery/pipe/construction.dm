@@ -301,23 +301,28 @@ Buildable meters
 /obj/item/pipe/examine(mob/user)
 	. = ..()
 	. += span_notice("The pipe layer is set to [piping_layer].")
-	. += span_notice("You can change the pipe layer by Alt-Right-Clicking the device.")
-	. += span_notice("You can rotate it by using it in hand or by Alt-Left-Clicking the device.")
+	. += span_notice("You can change the pipe layer by Right-Clicking the device.")
 
-/obj/item/pipe/alt_click_secondary(mob/user)
+/obj/item/pipe/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/layer_to_set = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	set_piping_layer(layer_to_set)
-	visible_message("You set the pipe layer to [piping_layer].")
+	balloon_alert(user, "pipe layer set to [piping_layer]")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe/trinary/flippable/examine(mob/user)
 	. = ..()
-	. += span_notice("You can flip the device by Ctrl-Clicking it.")
+	. += span_notice("You can flip the device by Right-Clicking it.")
 
-/obj/item/pipe/trinary/flippable/CtrlClick(mob/user)
+/obj/item/pipe/trinary/flippable/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	do_a_flip()
-	visible_message("You flip the device.")
+	balloon_alert(user, "pipe was flipped")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_meter
 	name = "meter"
