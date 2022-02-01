@@ -54,10 +54,10 @@
 /obj/effect/heretic_rune/proc/do_rituals(mob/living/user)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/list/knowledge = heretic_datum.get_all_knowledge()
-	var/list/atoms_in_range = list()
+	var/list/atom/movable/atoms_in_range = list()
 
 	for(var/atom/close_atom as anything in range(1, src))
-		if(isturf(close_atom) || iseffect(close_atom))
+		if(!ismovable(close_atom))
 			continue
 		if(close_atom.invisibility)
 			continue
@@ -103,11 +103,13 @@
 		// All of the atoms have been checked, let's see if the ritual was successful
 		var/requirements_fulfilled = TRUE
 		for(var/req_type in requirements_list)
+			if(requirements_list[req_type] <= 0)
+				continue
+
 			// One if our requirements wasn't entirely filled
 			// This ritual failed, move on to the next one
-			if(requirements_list[req_type] > 0)
-				requirements_fulfilled = FALSE
-				break
+			requirements_fulfilled = FALSE
+			break
 
 		if(!requirements_fulfilled)
 			continue

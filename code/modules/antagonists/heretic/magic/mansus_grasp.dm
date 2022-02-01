@@ -14,7 +14,7 @@
 	desc = "A sinister looking aura that distorts the flow of reality around it. Causes knockdown and major stamina damage in addition to some brute. It gains additional beneficial effects as you expand your knowledge of the Mansus."
 	icon_state = "mansus"
 	inhand_icon_state = "mansus"
-	catchphrase = "R'CH T'H TR'TH"
+	catchphrase = "R'CH T'H TR'TH!"
 	on_use_sound = 'sound/items/welder.ogg'
 
 /obj/item/melee/touch_attack/mansus_fist/Initialize(mapload)
@@ -28,7 +28,7 @@
  * Callback for effect_remover component.
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/after_clear_rune(obj/effect/target, mob/living/user)
-	use_charge(user)
+	use_charge(user, whisper = TRUE)
 
 /obj/item/melee/touch_attack/mansus_fist/ignition_effect(atom/to_light, mob/user)
 	. = span_notice("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with eldritch energies. Fucking badass!")
@@ -43,22 +43,23 @@
 	if(!on_mob_hit(target, user))
 		return
 
-	use_charge(user)
 	return ..()
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(!proximity_flag || !IS_HERETIC(user) || target == user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(isliving(target)) // if it's a living mob, go with our normal afterattack
 		return SECONDARY_ATTACK_CALL_NORMAL
 
-	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
-
-	if(SEND_SIGNAL(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, target) & COMPONENT_BLOCK_CHARGE_USE)
+	if(SEND_SIGNAL(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, target) & COMPONENT_USE_CHARGE)
+		use_charge(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	use_charge(user)
-	return ..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /**
  * Checks if the [target] has some form of anti-magic.

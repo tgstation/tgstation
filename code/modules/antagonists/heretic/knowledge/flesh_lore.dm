@@ -130,8 +130,9 @@
 		You can only create two at a time. "
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	next_knowledge = list(
-		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/flesh_mark,
+		/datum/heretic_knowledge/codex_cicatrix,
+		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/medallion,
 	)
 	required_atoms = list(
@@ -203,10 +204,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
-	next_knowledge = list(
-		/datum/heretic_knowledge/summon/raw_prophet,
-		/datum/heretic_knowledge/reroll_targets,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/flesh)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/ash_mark,
@@ -236,6 +234,15 @@
 
 	mark.on_effect()
 
+/datum/heretic_knowledge/knowledge_ritual/flesh
+	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/knowledge_ritual/ash,
+		/datum/heretic_knowledge/knowledge_ritual/void,
+		/datum/heretic_knowledge/knowledge_ritual/rust,
+	)
+	route = PATH_FLESH
+
 /datum/heretic_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
 	desc = "Allows you to transmute a pair of eyes, a left arm, and a pool of blood to create a Raw Prophet. \
@@ -244,8 +251,9 @@
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by the Uncanny Man's appearance. Nothing was out of reach."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/flesh_blade_upgrade,
+		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
@@ -290,19 +298,20 @@
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
-	desc = "Allows you to transmute a pair of eyes, a candle, a pen and a piece of paper to create a Stalker. \
+	desc = "Allows you to transmute a tail of any kind, a stomach, a tongue, a pen and a piece of paper to create a Stalker. \
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
-	next_knowledge = list(
-		/datum/heretic_knowledge/summon/ashy,
+	next_knowledge = list(,
 		/datum/heretic_knowledge/final/flesh_final,
+		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/blood_siphon,
 	)
 	required_atoms = list(
+		/obj/item/organ/tail = 1,
+		/obj/item/organ/stomach = 1,
+		/obj/item/organ/tongue = 1,
 		/obj/item/pen = 1,
-		/obj/item/organ/eyes = 1,
-		/obj/item/candle = 1,
 		/obj/item/paper = 1,
 	)
 	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/stalker
@@ -312,7 +321,7 @@
 /datum/heretic_knowledge/final/flesh_final
 	name = "Priest's Final Hymn"
 	desc = "The ascension ritual of the Path of Flesh. \
-		Bring 3 corpses to a transumation rune to complete the ritual. \
+		Bring 4 corpses to a transumation rune to complete the ritual. \
 		When completed, you gain the ability to shed your human form \
 		and become the Lord of the Night, a supremely powerful creature. \
 		Just the act of transforming causes nearby heathens great fear and trauma. \
@@ -322,6 +331,7 @@
 	gain_text = "With the Marshal's knowledge, my power had peaked. The throne was open to claim. \
 		Men of this world, hear me, for the time has come! The Marshal guides my army! \
 		Reality will bend to THE LORD OF THE NIGHT or be unraveled! WITNESS MY ASCENSION!"
+	required_atoms = list(/mob/living/carbon/human = 4)
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/final/flesh_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)

@@ -22,6 +22,7 @@
 	ADD_TRAIT(owner, TRAIT_COAGULATING, type)
 	ADD_TRAIT(owner, TRAIT_NOCRITDAMAGE, type)
 	ADD_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
+	return TRUE
 
 /datum/status_effect/unholy_determination/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_COAGULATING, type)

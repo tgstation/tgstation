@@ -1,7 +1,7 @@
 // The knowledge and process of heretic sacrificing.
 
 /// How long we put the target so sleep for (during sacrifice).
-#define SACRIFICE_SACRIFICE_SLEEP_DURATION 12 SECONDS
+#define SACRIFICE_SLEEP_DURATION 12 SECONDS
 /// How long sacrifices must stay in the shadow realm to survive.
 #define SACRIFICE_REALM_DURATION 2.5 MINUTES
 
@@ -15,17 +15,19 @@
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	route = PATH_START
-	/// If TRUE, we skip the ritual. Done when no targets can be found, to avoid locking up the heretic.
+	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
 	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
 	var/datum/weakref/heretic_mind_weakref
 	/// Lazylist of weakrefs to minds that we won't pick as targets.
 	var/list/datum/weakref/target_blacklist
+	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
+	var/return_timers
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
 	. = ..()
 	obtain_targets(user)
-	heretic_mind_weakref = WEAKREF(user)
+	heretic_mind_weakref = WEAKREF(user.mind)
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
 		message_admins("Generating z-level for heretic sacrifices...")
 		INVOKE_ASYNC(src, .proc/generate_heretic_z_level)
@@ -34,6 +36,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/generate_heretic_z_level()
 	var/datum/map_template/heretic_sacrifice_level/new_level = new()
 	if(!new_level.load_new_z())
+		message_admins("The heretic sacrifice z-level failed to load. Any heretics are gonna have a field day disemboweling people, probably. Up to you if you're fine with it.")
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
@@ -239,6 +242,9 @@
  * * destination - the spot they're being teleported to.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_sleeps(mob/living/carbon/human/sac_target, turf/destination)
+	if(QDELETED(sac_target))
+		return
+
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target()
@@ -253,6 +259,7 @@
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, .proc/after_target_wakes, sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
+
 	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
 	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
 
@@ -266,6 +273,9 @@
  * Then applies some miscellaneous effects.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_target_wakes(mob/living/carbon/human/sac_target)
+	if(QDELETED(sac_target))
+		return
+
 	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
 
@@ -285,7 +295,9 @@
 	to_chat(sac_target, span_hypnophrase("You feel invigorated! Fight to survive!"))
 	// When it runs out, let them know they're almost home free
 	addtimer(CALLBACK(src, .proc/after_helgrasp_ends, sac_target), helgrasp_time)
-	addtimer(CALLBACK(src, .proc/return_target, sac_target), SACRIFICE_REALM_DURATION) // Win condition
+	// Win condition
+	var/win_timer = addtimer(CALLBACK(src, .proc/return_target, sac_target), SACRIFICE_REALM_DURATION, TIMER_STOPPABLE)
+	LAZYSET(return_timers, REF(sac_target), win_timer)
 
 /**
  * This proc is called from [proc/after_target_wakes] after the helgrasp runs out in the [sac_target].
@@ -293,6 +305,9 @@
  * It gives them a message letting them know it's getting easier and they're almost free.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_helgrasp_ends(mob/living/carbon/human/sac_target)
+	if(QDELETED(sac_target) || sac_target.stat == DEAD)
+		return
+
 	to_chat(sac_target, span_hypnophrase("The worst is behind you... Not much longer! Hold fast, or expire!"))
 
 /**
@@ -307,7 +322,13 @@
  * * heretic - the heretic who originally did the sacrifice.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/return_target(mob/living/carbon/human/sac_target)
-	SIGNAL_HANDLER
+	if(QDELETED(sac_target))
+		return
+
+	var/current_timer = LAZYACCESS(return_timers, REF(sac_target))
+	if(current_timer)
+		deltimer(current_timer)
+	LAZYREMOVE(return_timers, REF(sac_target))
 
 	UnregisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED)
 	UnregisterSignal(sac_target, COMSIG_LIVING_DEATH)
@@ -316,7 +337,8 @@
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp)
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
-	if(!is_station_level(sac_target.z))
+	// They're already back on the station for some reason, don't bother teleporting
+	if(is_station_level(sac_target.z))
 		return
 
 	// Teleport them to a random safe coordinate on the station z level.
@@ -366,8 +388,10 @@
 	SIGNAL_HANDLER
 
 	to_chat(sac_target, span_userdanger("Your attempt to escape the Mansus is not taken kindly!"))
+	// Ends up calling return_target() via death signal to clean up.
 	disembowel_target(sac_target)
-	sac_target.death() // Ends up calling return_target() via signal
+	if(sac_target.stat != DEAD)
+		sac_target.death()
 
 /**
  * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.
@@ -376,7 +400,7 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_live_target(mob/living/carbon/human/sac_target)
 	to_chat(sac_target, span_hypnophrase("The fight is over - but at great cost. You have been returned to your realm in one piece."))
-	to_chat(sac_target, span_hypnophrase("You can hardly remember anything from before and leading up to the experience - all you can think about are those horrific hands..."))
+	to_chat(sac_target, span_hypnophrase("You can't remember a thing from before the experience - all you can think about are those horrific hands..."))
 
 	// Oh god where are we?
 	sac_target.flash_act()
@@ -429,6 +453,6 @@
 	sac_target.spill_organs()
 	sac_target.apply_damage(250, BRUTE)
 	sac_target.visible_message(
-		span_danger("[sac_target]'s organs are pulled out of their chest by shadowy hands!"),
+		span_danger("[sac_target]'s organs are pulled out of [sac_target.p_their()] chest by shadowy hands!"),
 		span_userdanger("Your organs are violently pulled out of your chest by shadowy hands!")
 	)

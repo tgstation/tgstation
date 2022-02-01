@@ -125,7 +125,9 @@ const GuideSection = () => {
           &nbsp;to track down&nbsp;
           <span style={hereticRed}>sacrifice targets</span>,
           but be careful: Pulsing it will produce a
-          heartbeat sound that nearby people may hear.
+          heartbeat sound that nearby people may hear. This action
+          is tied to your <b>heart</b> - if you lose it,
+          you must complete a ritual to regain it.
         </Stack.Item>
         <Stack.Item>
           - Draw a&nbsp;

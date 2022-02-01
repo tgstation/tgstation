@@ -260,6 +260,92 @@
 
 	return TRUE
 
+/// The amount of knowledge points the knowledge ritual gives on success.
+#define KNOWLEDGE_RITUAL_POINTS 4
+
+/*
+ * A subtype of knowledge that generates random ritual components.
+ */
+/datum/heretic_knowledge/knowledge_ritual
+	name = "Minor Ritual of Knowledge"
+	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
+	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
+	cost = 1
+	route = PATH_SIDE
+	/// Whether we've done the ritual. Only doable once.
+	var/was_completed = FALSE
+
+/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user)
+	. = ..()
+	var/static/list/potential_organs = list(
+		/obj/item/organ/appendix,
+		/obj/item/organ/tail,
+		/obj/item/organ/eyes,
+		/obj/item/organ/tongue,
+		/obj/item/organ/ears,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/stomach,
+		/obj/item/organ/lungs,
+	)
+
+	var/static/list/potential_easy_items = list(
+		/obj/item/shard,
+		/obj/item/candle,
+		/obj/item/book,
+		/obj/item/pen,
+		/obj/item/paper,
+		/obj/item/toy/crayon,
+		/obj/item/flashlight,
+		/obj/item/clipboard,
+	)
+
+	var/static/list/potential_uncommoner_items = list(
+		/obj/item/restraints/legcuffs/beartrap,
+		/obj/item/restraints/handcuffs/cable/zipties,
+		/obj/item/circular_saw,
+		/obj/item/scalpel,
+		/obj/item/binoculars,
+		/obj/item/clothing/gloves/color/yellow,
+		/obj/item/melee/baton/security,
+		/obj/item/clothing/glasses/sunglasses,
+	)
+
+	// 2 organs. Can be the same.
+	required_atoms[pick(potential_organs)] += 1
+	required_atoms[pick(potential_organs)] += 1
+	// 2-3 random easy items.
+	required_atoms[pick(potential_easy_items)] += rand(2, 3)
+	// 1 uncommon item.
+	required_atoms[pick(potential_uncommoner_items)] += 1
+
+	var/list/requirements_string = list()
+
+	to_chat(user, span_hierophant("The [name] requires the following:"))
+	for(var/obj/item/path as anything in required_atoms)
+		var/amount_needed = required_atoms[path]
+		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)][amount_needed == 1 ? "":"s"]..."))
+		requirements_string += "[amount_needed == 1 ? "a":"[amount_needed]"] [initial(path.name)][amount_needed == 1 ? "":"s"]"
+
+	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
+
+	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+
+/datum/heretic_knowledge/knowledge_ritual/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	return !was_completed
+
+/datum/heretic_knowledge/knowledge_ritual/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
+	was_completed = TRUE
+
+	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
+	to_chat(user, span_notice("[name] completed!"))
+	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	return TRUE
+
+#undef KNOWLEDGE_RITUAL_POINTS
+
 /*
  * The special final tier of knowledges that unlocks ASCENSION.
  */

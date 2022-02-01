@@ -121,7 +121,7 @@
 			if(!gain_knowledge(researched_path))
 				return
 
-			log_codex_ciatrix("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			knowledge_points -= initial(researched_path.cost)
 			return TRUE
 
@@ -250,34 +250,48 @@
 	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
 		return
 
-	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target))
+	try_draw_rune(source, target, additional_checks = CALLBACK(src, .proc/check_mansus_grasp_offhand, source))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/**
+ * Attempt to draw a rune on [target_turf].
+ *
+ * Arguments
+ * * user - the mob drawing the rune
+ * * target_turf - the place the rune's being drawn
+ * * drawing_time - how long the do_after takes to make the rune
+ * * additional checks - optional callbacks to be ran while drawing the rune
+ */
+/datum/antagonist/heretic/proc/try_draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
 		if(!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_rune_turfs))
-			target.balloon_alert(source, "invalid placement for rune!")
+			target_turf.balloon_alert(user, "invalid placement for rune!")
 			return
 
-	if(locate(/obj/effect/heretic_rune/big) in range(3, target))
-		target.balloon_alert(source, "to close to another rune!")
+	if(locate(/obj/effect/heretic_rune) in range(3, target_turf))
+		target_turf.balloon_alert(user, "to close to another rune!")
 		return
 
 	if(drawing_rune)
-		source.balloon_alert(source, "already drawing a rune!")
+		target_turf.balloon_alert(user, "already drawing a rune!")
 		return
 
-	INVOKE_ASYNC(src, .proc/draw_rune, source, weapon, target)
+	INVOKE_ASYNC(src, .proc/draw_rune, user, target_turf, drawing_time, additional_checks)
 
 /**
  * The actual process of drawing a rune.
  *
  * Arguments
  * * user - the mob drawing the rune
- * * scribing_tool - the object being used to draw the rune
  * * target_turf - the place the rune's being drawn
+ * * drawing_time - how long the do_after takes to make the rune
+ * * additional checks - optional callbacks to be ran while drawing the rune
  */
-/datum/antagonist/heretic/proc/draw_rune(mob/living/user, obj/item/scribing_tool, turf/target_turf)
+/datum/antagonist/heretic/proc/draw_rune(mob/living/user, turf/target_turf, drawing_time = 30 SECONDS, additional_checks)
 	drawing_rune = TRUE
 
 	target_turf.balloon_alert(user, "drawing rune...")
-	if(!do_after(user, 30 SECONDS, target_turf, extra_checks = CALLBACK(src, .proc/rune_drawing_checks, user, scribing_tool)))
+	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks))
 		target_turf.balloon_alert(user, "interrupted!")
 		drawing_rune = FALSE
 		return
@@ -287,24 +301,14 @@
 	drawing_rune = FALSE
 
 /**
- * Callback for use in draw_rune to check that the user
- * doesn't drop their tool or hide their hand.
+ * Callback to check that the user's still got their Mansus Grasp out when drawing a rune.
  *
  * Arguments
  * * user - the mob drawing the rune
- * * scribing_tool - the object being used to draw the rune
  */
-/datum/antagonist/heretic/proc/rune_drawing_checks(mob/living/user, obj/item/scribing_tool)
-
-	var/obj/item/mainhand = user.get_active_held_item()
-	if(QDELETED(mainhand) || mainhand != scribing_tool)
-		return FALSE
-
+/datum/antagonist/heretic/proc/check_mansus_grasp_offhand(mob/living/user)
 	var/obj/item/offhand = user.get_inactive_held_item()
-	if(QDELETED(offhand) || !istype(offhand, /obj/item/melee/touch_attack/mansus_fist))
-		return FALSE
-
-	return TRUE
+	return !QDELETED(offhand) && istype(offhand, /obj/item/melee/touch_attack/mansus_fist)
 
 /*
  * Signal proc for [COMSIG_MOB_LOGIN].
@@ -349,7 +353,8 @@
  */
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	knowledge_points++
-	to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message")))]")
+	if(owner.current.stat <= SOFT_CRIT)
+		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick(strings(HERETIC_INFLUENCE_FILE, "drain_message")))]")
 	addtimer(CALLBACK(src, .proc/passive_influence_gain), passive_gain_timer)
 
 /datum/antagonist/heretic/roundend_report()
@@ -371,22 +376,23 @@
 			count++
 
 	if(ascended)
-		parts += "<span class='greentext big'>THE HERETIC ASCENDED!</span>"
+		parts += span_greentext(span_big("THE HERETIC ASCENDED!"))
 
 	else
 		if(succeeded)
-			parts += span_greentext("The heretic was successful!")
+			parts += span_greentext("The heretic was successful, but did not ascend!")
 		else
 			parts += span_redtext("The heretic has failed.")
 
 	parts += "<b>Knowledge Researched:</b> "
 
-	var/list/knowledge_message = list()
-	var/list/researched_knowledge = get_all_knowledge()
+	var/list/string_of_knowledge = list()
+
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		knowledge_message += "[knowledge.name]"
-	parts += knowledge_message.Join(", ")
+		string_of_knowledge += knowledge.name
+
+	parts += english_list(string_of_knowledge)
 
 	return parts.Join("<br>")
 
@@ -456,6 +462,33 @@
 		return
 
 	knowledge_points += change_num
+
+/datum/antagonist/heretic/antag_panel_data()
+	var/list/string_of_knowledge = list()
+
+	for(var/knowledge_index in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		if(istype(knowledge, /datum/heretic_knowledge/final))
+			string_of_knowledge += span_bold(knowledge.name)
+		else
+			string_of_knowledge += knowledge.name
+
+	return "<br><b>Research Done:</b><br>[english_list(string_of_knowledge, and_text = ", and ")]<br>"
+
+/datum/antagonist/heretic/antag_panel_objectives()
+	. = ..()
+
+	. += "<br>"
+	. += "<i><b>Current Targets:</b></i><br>"
+	if(LAZYLEN(sac_targets))
+		for(var/datum/weakref/ref as anything in sac_targets)
+			var/mob/living/carbon/human/actual_target = ref?.resolve()
+			if(QDELETED(actual_target))
+				continue
+			. += " - <b>[actual_target.real_name]</b>, the [actual_target.mind?.assigned_role || "human"].<br>"
+	else
+		. += "<i>None!</i><br>"
+	. += "<br>"
 
 /*
  * Learns the passed [typepath] of knowledge, creating a knowledge datum

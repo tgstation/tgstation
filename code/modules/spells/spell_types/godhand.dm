@@ -36,12 +36,15 @@
 	if(charges > 0)
 		use_charge(user)
 
-/obj/item/melee/touch_attack/proc/use_charge(mob/living/user)
+/obj/item/melee/touch_attack/proc/use_charge(mob/living/user, whisper = FALSE)
 	if(QDELETED(src))
 		return
 
 	if(catchphrase)
-		user.say(catchphrase, forced = "spell")
+		if(whisper)
+			user.say("#[catchphrase]", forced = "spell")
+		else
+			user.say(catchphrase, forced = "spell")
 	playsound(get_turf(user), on_use_sound, 50, TRUE)
 	if(--charges <= 0)
 		qdel(src)

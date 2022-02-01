@@ -38,3 +38,26 @@
 		return FALSE
 
 	return TRUE
+
+/datum/heretic_knowledge/codex_cicatrix
+	name = "Codex Cicatrix"
+	desc = "Allows you to transmute a bible, a fountain pen, and hide from an animal (or human) to create a Codex Cicatrix. \
+		The Codex Cicatrix can be used when draining influences to gain additional knowledge, but comes at greater risk of being noticed. \
+		It can also be used to draw and remove transmutation runes easier."
+	gain_text = "The occult leaves fragments of knowledge and power anywhere and everywhere. The Codex Cicatrix is one such example. \
+		Within the leather-bound faces and age old pages, a path into the Mansus is revealed."
+	required_atoms = list(
+		/obj/item/storage/book/bible = 1,
+		/obj/item/pen/fountain = 1,
+		/obj/item/stack/sheet/animalhide = 1,
+	)
+	result_atoms = list(/obj/item/forbidden_book)
+	cost = 1
+	route = PATH_SIDE
+
+/datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)
+	var/obj/item/stack/sheet/animalhide/hide = locate() in selected_atoms
+	if(hide)
+		selected_atoms -= hide
+		hide.use(1)
+	return ..()

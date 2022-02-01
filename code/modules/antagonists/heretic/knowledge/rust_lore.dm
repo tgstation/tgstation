@@ -81,12 +81,15 @@
 	SIGNAL_HANDLER
 
 	target.rust_heretic_act()
+	return COMPONENT_USE_CHARGE
+
 /datum/heretic_knowledge/rust_regen
 	name = "Leeching Walk"
 	desc = "Grants you passive healing and stun resistance while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
+		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
 	)
@@ -140,10 +143,7 @@
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
 		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/area_conversion,
-		/datum/heretic_knowledge/reroll_targets,
-		)
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/ash_mark,
 		/datum/heretic_knowledge/flesh_mark,
@@ -173,14 +173,24 @@
 
 	mark.on_effect()
 
+/datum/heretic_knowledge/knowledge_ritual/rust
+	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/knowledge_ritual/ash,
+		/datum/heretic_knowledge/knowledge_ritual/void,
+		/datum/heretic_knowledge/knowledge_ritual/flesh,
+	)
+	route = PATH_RUST
+
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
-		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/rust_blade_upgrade,
+		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/crucible,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion

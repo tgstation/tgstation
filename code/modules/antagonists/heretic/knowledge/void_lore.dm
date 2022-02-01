@@ -95,8 +95,9 @@
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
-		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/void_mark,
+		/datum/heretic_knowledge/codex_cicatrix,
+		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/armor,
 	)
 	cost = 1
@@ -116,10 +117,7 @@
 		When triggered, silences the victim and lowers their body temperature significantly."
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_phase,
-		/datum/heretic_knowledge/reroll_targets,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/ash_mark,
@@ -149,6 +147,15 @@
 
 	mark.on_effect()
 
+/datum/heretic_knowledge/knowledge_ritual/void
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_phase)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/knowledge_ritual/ash,
+		/datum/heretic_knowledge/knowledge_ritual/rust,
+		/datum/heretic_knowledge/knowledge_ritual/flesh,
+	)
+	route = PATH_RUST
+
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
 	desc = "Grants you Void Phase, a long range targeted teleport spell. \
@@ -156,8 +163,9 @@
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like\
 		nothing leaving a harsh, cold breeze in their wake. They disappear, and I am left in the snow."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/void_blade_upgrade,
+		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
@@ -205,8 +213,8 @@
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/final/void_final,
+		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/summon/rusty
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull

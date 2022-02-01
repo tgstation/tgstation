@@ -1,7 +1,7 @@
 // Sidepaths for knowledge between Ash and Flesh.
 /datum/heretic_knowledge/medallion
 	name = "Ashen Eyes"
-	desc = "Allows you to transmute a pair of eyes and a glass shard into an Eldritch Medallion. \
+	desc = "Allows you to transmute a pair of eyes, a candle, and a glass shard into an Eldritch Medallion. \
 		The Eldritch Medallion grants you thermal vision while worn."
 	gain_text = "Piercing eyes guided them through the mundane. Neither darkness nor terror could stop them."
 	next_knowledge = list(
@@ -11,6 +11,7 @@
 	required_atoms = list(
 		/obj/item/organ/eyes = 1,
 		/obj/item/shard = 1,
+		/obj/item/candle = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/eldritch_amulet)
 	cost = 1
@@ -18,7 +19,7 @@
 
 /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
-	desc = "Allows you to transmute hatchet, a pool of blood, a leg, \
+	desc = "Allows you to transmute a hatchet, a left and right leg, \
 		and an item containing fingerprints to cast a curse of immobility \
 		on one of the fingerprint's owners for five minutes. While cursed, \
 		the victim will be unable to walk."
@@ -35,6 +36,14 @@
 	duration = 5 MINUTES
 	cost = 1
 	route = PATH_SIDE
+
+/datum/heretic_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
+	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
+	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
+
+/datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
+	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
+	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"

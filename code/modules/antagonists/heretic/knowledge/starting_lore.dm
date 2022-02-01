@@ -102,14 +102,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	our_heart.AddComponent(/datum/component/living_heart)
 	to_chat(user, span_warning("You feel your [our_heart.name] begin pulse faster and faster as it awakens!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	return TRUE
 
 /**
  * Allows the heretic to craft a spell focus.
  * They require a focus to cast advanced spells.
  */
-/datum/heretic_knowledge/cicatrix_focus
-	name = "Cicatrix Focus"
-	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create a Cicatrix Focus. \
+/datum/heretic_knowledge/amber_focus
+	name = "Amber Focus"
+	desc = "Allows you to transmute a sheet of glass and a pair of eyes to create an Amber Focus. \
 		A focus must be worn in order to cast more advanced spells."
 	required_atoms = list(
 		/obj/item/organ/eyes = 1,
@@ -118,3 +119,10 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
 	cost = 0
 	route = PATH_START
+
+/datum/heretic_knowledge/amber_focus/cleanup_atoms(list/selected_atoms)
+	var/obj/item/stack/sheet/glass/sheets = locate() in selected_atoms
+	if(sheets)
+		selected_atoms -= sheets
+		sheets.use(1)
+	return ..()

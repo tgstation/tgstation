@@ -227,9 +227,22 @@
 	if(being_drained)
 		balloon_alert(user, "already being drained!")
 	else
-		INVOKE_ASYNC(src, .proc/drain_influence, user)
+		INVOKE_ASYNC(src, .proc/drain_influence, user, 1)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/effect/heretic_influence/attackby(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(.)
+		return
+
+	// Using a codex will give you two knowledge points for draining.
+	if(!being_drained && istype(weapon, /obj/item/forbidden_book))
+		var/obj/item/forbidden_book/codex = weapon
+		codex.open_animation()
+		INVOKE_ASYNC(src, .proc/drain_influence, user, 2)
+		return TRUE
+
 
 /**
  * Begin to drain the influence, setting being_drained,
@@ -237,7 +250,7 @@
  *
  * If successful, the influence is drained and deleted.
  */
-/obj/effect/heretic_influence/proc/drain_influence(mob/living/user)
+/obj/effect/heretic_influence/proc/drain_influence(mob/living/user, knowledge_to_gain)
 
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
@@ -254,7 +267,7 @@
 	balloon_alert(user, "influence drained")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	heretic_datum.knowledge_points++
+	heretic_datum.knowledge_points += knowledge_to_gain
 
 	// Aaand now we delete it
 	after_drain(user)

@@ -38,6 +38,12 @@
 	cost = 1
 	route = PATH_SIDE
 
+/datum/heretic_knowledge/curse/corrosion/curse(mob/living/chosen_mob)
+	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
+
+/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/chosen_mob)
+	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
+
 /datum/heretic_knowledge/spell/cleave
 	name = "Blood Cleave"
 	desc = "Grants you Cleave, an area-of-effect targeted spell \

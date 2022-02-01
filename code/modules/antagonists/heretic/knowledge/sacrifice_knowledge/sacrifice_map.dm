@@ -9,7 +9,7 @@ GLOBAL_LIST(heretic_sacrifice_landmarks)
  */
 /datum/map_template/heretic_sacrifice_level
 	name = "Heretic Sacrifice Level"
-	mappath = "maps/templates/heretic_sacrifice_template.dmm"
+	mappath = "_maps/templates/heretic_sacrifice_template.dmm"
 
 /// Lardmarks meant to designate where heretic sacrifices are sent.
 /obj/effect/landmark/heretic

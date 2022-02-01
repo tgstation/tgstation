@@ -157,9 +157,7 @@
 	quickdraw = TRUE
 	max_items = 3
 
-/*
 /datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
+	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/forbidden_book))
 	exception_hold = exception_cache
-*/

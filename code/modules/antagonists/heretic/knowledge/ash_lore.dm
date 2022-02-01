@@ -4,8 +4,8 @@
  * Goes as follows:
  *
  * Nightwatcher's Secret
- * Ashen Passage
  * Grasp of Ash
+ * Ashen Passage
  * > Sidepaths:
  *   Priest's Ritual
  *   Ashen Eyes
@@ -86,8 +86,9 @@
 	desc = "Grants you Ashen Passage, a silent but short range jaunt."
 	gain_text = "He knew how to walk between the planes."
 	next_knowledge = list(
-		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/ash_mark,
+		/datum/heretic_knowledge/codex_cicatrix,
+		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/medallion,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
@@ -102,10 +103,7 @@
 	gain_text = "He was a very particular man, always watching in the dead of night. \
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mad_mask,
-		/datum/heretic_knowledge/reroll_targets,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
 	banned_knowledge = list(
 		/datum/heretic_knowledge/rust_mark,
 		/datum/heretic_knowledge/flesh_mark,
@@ -138,21 +136,32 @@
 	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
 		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max)
 
+/datum/heretic_knowledge/knowledge_ritual/ash
+	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
+	banned_knowledge = list(
+		/datum/heretic_knowledge/knowledge_ritual/flesh,
+		/datum/heretic_knowledge/knowledge_ritual/void,
+		/datum/heretic_knowledge/knowledge_ritual/rust,
+	)
+	route = PATH_ASH
+
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"
-	desc = "Allows you to transmute a mask, a candle and a pair of eyes to create a Mask of Madness. \
+	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
 		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
 		It can also be forced onto a heathen, to make them unable to take it off..."
 	gain_text = "The Nightwater was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
 	next_knowledge = list(
-		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/ash_blade_upgrade,
+		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
-		/obj/item/organ/eyes = 1,
+		/obj/item/organ/liver = 1,
+		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
 		/obj/item/clothing/mask = 1,
-		/obj/item/candle = 1,
+		/obj/item/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
 	cost = 1
@@ -186,20 +195,6 @@
 	target.adjust_fire_stacks(1)
 	target.IgniteMob()
 
-/datum/heretic_knowledge/curse/corrosion/curse(mob/living/chosen_mob)
-	chosen_mob.apply_status_effect(/datum/status_effect/corrosion_curse)
-
-/datum/heretic_knowledge/curse/corrosion/uncurse(mob/living/chosen_mob)
-	chosen_mob.remove_status_effect(/datum/status_effect/corrosion_curse)
-
-/datum/heretic_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
-	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
-	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
-
-/datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
-	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
-	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
-
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwater's Rebirth"
 	desc = "Grants you Nightwater's Rebirth, a spell that extinguishes you and \
@@ -208,9 +203,9 @@
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwater was a particular man, always watching."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cleave,
-		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/final/ash_final,
+		/datum/heretic_knowledge/summon/ashy,
+		/datum/heretic_knowledge/spell/cleave,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	cost = 1
