@@ -17,10 +17,10 @@
 	ranged_cooldown_time = 5 SECONDS
 	vision_range = 9
 	retreat_distance = 2
-	speed = 5
+	speed = 3
 	move_to_delay = 5
-	maxHealth = 200
-	health = 200
+	maxHealth = 250
+	health = 250
 	obj_damage = 15
 	melee_damage_lower = 7.5
 	melee_damage_upper = 7.5
@@ -29,7 +29,7 @@
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
-	butcher_results = list(/obj/item/food/meat/slab = 2)
+	butcher_results = list(/obj/item/food/meat/slab = 2, /obj/effect/decal/cleanable/brimdust = 1)
 	loot = list()
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
@@ -82,6 +82,9 @@
 	if(firing)
 		balloon_alert(src, "already firing!")
 		return
+	if(!COOLDOWN_FINISHED(src, ranged_cooldown))
+		balloon_alert(src, "on cooldown!")
+		return
 	firing = TRUE
 	set_dir_on_move = FALSE
 	icon_state = "brimdemon_firing"
@@ -90,14 +93,14 @@
 	visible_message(span_danger("[src] starts charging!"))
 	balloon_alert(src, "charging...")
 	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
-	ranged_cooldown = world.time + ranged_cooldown_time
+	COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Moved()
 	. = ..()
 	check_fire()
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/check_fire()
-	if(firing || key || QDELETED(target) || ranged_cooldown > world.time || get_dist(src, target) > BRIMBEAM_RANGE || !(get_dir(src, target) in GLOB.cardinals))
+	if(key || QDELETED(target) || get_dist(src, target) > BRIMBEAM_RANGE || !(get_dir(src, target) in GLOB.cardinals))
 		return
 	face_atom(target)
 	OpenFire()
@@ -153,6 +156,7 @@
 	icon = 'icons/mob/brimdemon.dmi'
 	icon_state = "brimbeam_mid"
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_power = 3
@@ -189,3 +193,42 @@
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")
 	playsound(target, 'sound/lavaland/brimdemon_crush.ogg', 100)
+
+/obj/effect/decal/cleanable/brimdust
+	name = "brimdust"
+	desc = "Dust from a brimdemon. It is considered valuable for its' botanical abilities."
+	icon_state = "brimdust"
+	icon = 'icons/obj/mining.dmi'
+	layer = FLOOR_CLEAN_LAYER
+	mergeable_decal = FALSE
+
+/obj/effect/decal/cleanable/brimdust/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/brimdust, 15)
+
+/obj/item/ore_sensor
+	name = "ore sensor"
+	desc = "Using demonic frequencies, this ear-mounted tool detects ores in the nearby terrain."
+	icon_state = "oresensor"
+	icon = 'icons/obj/mining.dmi'
+	slot_flags = ITEM_SLOT_EARS
+	var/range = 5
+	var/cooldown = 4 SECONDS //between the standard and the advanced ore scanner in strength
+	COOLDOWN_DECLARE(ore_sensing_cooldown)
+
+/obj/item/ore_sensor/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot == ITEM_SLOT_EARS)
+		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/ore_sensor/dropped(mob/user, silent)
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/ore_sensor/process(delta_time)
+	if(!COOLDOWN_FINISHED(src, ore_sensing_cooldown))
+		return
+	COOLDOWN_START(src, ore_sensing_cooldown, cooldown)
+	mineral_scan_pulse(get_turf(src), range)
