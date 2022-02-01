@@ -1,0 +1,9 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - expansion: "Changes to Ice Box mining lower levels:"
+  - expansion: "Replaces external-facing regular walls with reinforced ones"
+  - expansion: "Replaces external shutters with external airlocks except for drone bay"
+  - expansion: "Replaces the drone bay's single set of external shutters with a pair"
+  - expansion: "Adds outside lights to external airlocks missing them and to fenced-in areas"
+  - expansion: "Adds warning signs to external airlocks"
