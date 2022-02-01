@@ -36,12 +36,12 @@
 	//might need to insert the AddComponent for rotation above the if(flip)
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-		rotcomp.Rotate(null,ROTATION_FLIP)
+		rotcomp.Rotate(null, ROTATION_FLIP)
 
 	update_appearance()
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated), after_rotation = CALLBACK(src, .proc/after_rot))
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rot))
 
 
 /obj/structure/disposalconstruct/Move()
@@ -88,20 +88,15 @@
 			dpdir |= turn(dir, 180)
 	return dpdir
 
-/obj/structure/disposalconstruct/proc/after_rot(mob/user,rotation_type)
+/obj/structure/disposalconstruct/proc/after_rot(mob/user, rotation_type)
 	if(rotation_type == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
 			if(ISDIAGONALDIR(dir)) // Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
+	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")	
 	update_appearance()
-
-/obj/structure/disposalconstruct/proc/can_be_rotated(mob/user,rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("You must unfasten the pipe before rotating it!"))
-		return FALSE
-	return TRUE
 
 // construction/deconstruction
 // wrench: (un)anchor

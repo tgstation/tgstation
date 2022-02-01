@@ -248,7 +248,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()
@@ -261,11 +261,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
 	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
 	. += tank_color
-
-/obj/structure/reagent_dispensers/plumbed/storage/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
 
 /obj/structure/reagent_dispensers/plumbed/fuel
 	name = "stationary fuel tank"

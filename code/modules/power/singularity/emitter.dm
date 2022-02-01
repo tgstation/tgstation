@@ -71,7 +71,7 @@
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
-	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
@@ -118,12 +118,6 @@
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
-
-/obj/machinery/power/emitter/proc/can_be_rotated(mob/user, rotation_type)
-	if(!anchored)
-		return TRUE
-	to_chat(user, span_warning("It is fastened to the floor!"))
-	return FALSE
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded

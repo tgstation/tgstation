@@ -21,10 +21,11 @@
 
 /obj/item/assembly/infra/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, after_rotation=CALLBACK(src,.proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rotation))
 
-/obj/item/assembly/infra/proc/after_rotation()
+/obj/item/assembly/infra/proc/after_rotation(mob/user, rotation_type)
 	refreshBeam()
+	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)

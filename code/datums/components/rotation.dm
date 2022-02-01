@@ -6,6 +6,8 @@
 #define ROTATION_IGNORE_ANCHORED (1<<2)
 /// If an object will omit flipping from rotation (used for pipes since they use custom handling)
 #define ROTATION_NO_FLIPPING (1<<3)
+/// 
+#define ROTATION_
 
 /// Rotate an object clockwise
 #define ROTATION_CLOCKWISE 1

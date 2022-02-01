@@ -295,21 +295,22 @@
 	if (fulltile)
 		. += new /obj/item/shard(location)
 
-/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
+/obj/structure/window/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
-		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to the floor!"))
+		balloon_alert(user, "need to unscrew")
 		return FALSE
 
 	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
 
 	if(!valid_window_location(loc, target_dir, is_fulltile = fulltile))
-		to_chat(user, span_warning("[src] cannot be rotated in that direction!"))
+		balloon_alert(user, "cannot rotate in that direction")
 		return FALSE
 	return TRUE
 
-/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
+/obj/structure/window/proc/after_rotation(mob/user, rotation_type)
 	air_update_turf(TRUE, FALSE)
 	add_fingerprint(user)
+	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
