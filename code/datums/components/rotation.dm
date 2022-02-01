@@ -145,6 +145,8 @@
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
 	rotated_obj.balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
+	if(src.rotation_flags & ROTATION_REQUIRE_WRENCH)
+		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
 
 /atom/movable/proc/simple_rotate_clockwise()
 	set name = "Rotate Clockwise"
