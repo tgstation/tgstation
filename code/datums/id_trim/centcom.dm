@@ -3,7 +3,7 @@
 	access = list(ACCESS_CENT_GENERAL)
 	assignment = JOB_CENTCOM
 	trim_state = "trim_centcom"
-	sechud_icon_state = SECHUD_CENTCOMM
+	sechud_icon_state = SECHUD_CENTCOM
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip

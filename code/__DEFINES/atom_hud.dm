@@ -75,7 +75,7 @@
 
 #define SECHUD_NO_ID "hudno_id"
 #define SECHUD_UNKNOWN "hudunknown"
-#define SECHUD_CENTCOMM "hudcentcom"
+#define SECHUD_CENTCOM "hudcentcom"
 
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
