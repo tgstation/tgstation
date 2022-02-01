@@ -174,9 +174,11 @@
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
 			set_entry(params["entry"])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 

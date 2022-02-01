@@ -171,9 +171,11 @@
 				stack_trace("A number less than the min value was input into tgui input number by [usr]")
 				return FALSE
 			set_entry(choice)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 

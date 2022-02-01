@@ -136,6 +136,11 @@
 			if (!(params["choice"] in buttons))
 				return
 			set_choice(params["choice"])
+			closed = TRUE
+			SStgui.close_uis(src)
+			return TRUE
+		if("cancel")
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 

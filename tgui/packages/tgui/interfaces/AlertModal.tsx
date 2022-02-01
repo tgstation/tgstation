@@ -2,6 +2,7 @@ import { Loader } from './common/Loader';
 import { Preferences } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import {
+  KEY_ESCAPE,
   KEY_ENTER,
   KEY_LEFT,
   KEY_RIGHT,
@@ -56,6 +57,8 @@ export const AlertModal = (_, context) => {
            */
           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
             act('choose', { choice: buttons[selected] });
+          } else if (keyCode === KEY_ESCAPE) {
+            act('cancel');
           } else if (
             keyCode === KEY_LEFT
             || (e.shiftKey && keyCode === KEY_TAB)
