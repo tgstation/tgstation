@@ -1164,3 +1164,89 @@
       Incinerator Room.
   - bugfix: The camera in the Ice Box Station Locker Room is no longer inside of a
       door.
+2022-01-29:
+  Fikou, TetraZeta for sprites, Nerevar for description.:
+  - expansion: Loader Class MODsuit, equipped with hydraulic arms, available in your
+      nearby cargo storage (or qm office on delta).
+  - expansion: BEPIS MODsuit modules, currently available one lets you change your
+      disposal destination.
+  Improvedname:
+  - bugfix: Ash drake shapeshift now converts your health like shapeshifting is supposed
+      to
+  LemonInTheDark:
+  - bugfix: APCs will no longer error and complain about something that doesn't actually
+      matter
+  - bugfix: I accidentally doubled the speed of all simple mobs. It's fixed now. I
+      also know how byond's internal movement stuff works now. I hate this codebase
+  OneAsianTortoise:
+  - bugfix: Fixes being able to load C-4/X-4 into the grenade launcher, and it duplicating
+      when you try to load it
+  RandomGamer123:
+  - qol: Purified shades now show who they were prior to becoming a shade.
+  - bugfix: Purified shades that get converted to shades now become regular cult shades.
+  - qol: Purified soulstones (and the shades inside) can now directly be converted
+      into cult soulstones (and cult shades) with Twisted Construction.
+  - spellcheck: '"Shade of" does not get duplicated anymore for soulstones under certain
+      conditions'
+  SmoSmoSmoSmok:
+  - bugfix: Cuffing people as a PAI/ghost controlled beepsky no longer glitches out
+  SuperNovaa41:
+  - bugfix: Thermite will no longer leave an impassable fire tile if the turf beneath
+      it is deleted/deconstructed.
+  - bugfix: Spiders will now have a randomized number next to their name.
+  tralezab:
+  - balance: Statues can now phase around when unseen.
+2022-01-30:
+  Melbert:
+  - bugfix: Balloon alerts sourced on turfs work properly.
+  ReinaCoder:
+  - bugfix: The adjusted versions of the Head of Security's jumpsuit and skirt are
+      now the same colour as the non-adjusted.
+  Timberpoes:
+  - bugfix: Attempting to write to paper no longer comically bluescreens.
+  Vire, san7890, mrmelbert, Sealed101:
+  - bugfix: Autonamed cameras should no longer show static in camera consoles.
+  antropod:
+  - balance: Folded bluespace bodybag with dwarves fit into backpack
+  cacogen:
+  - bugfix: Ice Box Public Mining downstairs now uses proper external airlocks
+  san7890:
+  - bugfix: If you've been noticing some weirdness in the light as you spacewalk over
+      to the AI Satellite on MetaStation, fear no longer for they have been fixed.
+  - spellcheck: The last ash drake currently residing on the celestial body underneath
+      Ice Box Station no longer thinks it's on lavaland.
+  - bugfix: For those of you into code, some stuff with the icon pathing has been
+      shuffled around so it's no longer in the roots of the icon/ folder. If you aren't
+      into code, that's fine too.
+  - imageadd: Abandoned Kitchens now have a special sprite indicating that they are
+      now abandoned.
+  theOOZ:
+  - bugfix: Runechat reads the y offset value of the sayer instead of the hearer
+2022-01-31:
+  Donpedrito:
+  - rscadd: Added blue shoes to the MediDrobe.
+  Ghommie:
+  - bugfix: Fixed the Illegal tech node being unobtainable.
+  Guillaume Prata:
+  - qol: Metalfoam structures can now be used as a girder to finish building walls.
+  Jackraxxus:
+  - bugfix: Examining the pirate Dutchman's mast will no longer shatter your immersion.
+  Maurukas:
+  - bugfix: NT CIMS no longer detects Supermatter crystals and shards that are not
+      owned by Nanotrasen
+  Melbert:
+  - qol: blind people can hear talking toys
+  SmoSmoSmoSmok:
+  - spellcheck: Fixes popup text resulting from someone batoning a cyborg
+  TemporalOroboros:
+  - balance: The sniper rifle can now shoot things from much further away.
+  Zonespace27:
+  - bugfix: Using an autosurgeon on someone else now properly gives them the implant.
+  jjpark-kb:
+  - qol: You can now rotate the direction of the mecha fab if its wire panel is open
+  timothymtorres:
+  - config: Add PR_ANNOUNCEMENTS_PER_ROUND and STATION_GOAL_BUDGET to be a config
+      instead of define
+  tralezab:
+  - admin: Bounty Hunters can now be called via admin ert
+  - expansion: Oh, and they have cool flame ids as well!

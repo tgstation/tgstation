@@ -93,9 +93,9 @@
 			if("Power")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
 				to_chat(user, "The Wish Granter punishes you for your selfishness, claiming your soul and warping your body to match the darkness in your heart.")
-				user.dna.add_mutation(LASEREYES)
-				user.dna.add_mutation(PRESSUREADAPT)
-				user.dna.add_mutation(XRAY)
+				user.dna.add_mutation(/datum/mutation/human/laser_eyes)
+				user.dna.add_mutation(/datum/mutation/human/pressure_adaptation)
+				user.dna.add_mutation(/datum/mutation/human/xray)
 				user.set_species(/datum/species/shadow)
 			if("Wealth")
 				to_chat(user, "<B>Your wish is granted, but at a terrible cost...</B>")
@@ -166,8 +166,8 @@
 	if(!C.stat)
 		to_chat(C, span_notice("You're not dead yet!"))
 		return
-	if(C.has_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT))
+	if(C.has_status_effect(/datum/status_effect/wish_granters_gift))
 		to_chat(C, span_warning("You're already resurrecting!"))
 		return
-	C.apply_status_effect(STATUS_EFFECT_WISH_GRANTERS_GIFT)
+	C.apply_status_effect(/datum/status_effect/wish_granters_gift)
 	return 1

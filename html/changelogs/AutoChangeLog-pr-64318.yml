@@ -1,4 +1,0 @@
-author: "OneAsianTortoise"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to load C-4/X-4 into the grenade launcher, and it duplicating when you try to load it"

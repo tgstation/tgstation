@@ -30112,6 +30112,24 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
+"isu" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/stasis{
+	dir = 4
+	},
+/obj/machinery/defibrillator_mount/directional/north,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "isE" = (
 /obj/structure/dresser,
 /obj/machinery/newscaster/directional/north,
@@ -31306,9 +31324,8 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms)
 "iPC" = (
-/obj/effect/spawner/random/maintenance,
-/obj/structure/closet/crate/internals,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/industrial/loader,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "iPD" = (
@@ -38481,7 +38498,6 @@
 /obj/item/radio/intercom/directional/east{
 	pixel_y = 8
 	},
-/obj/item/circuitboard/machine/paystand,
 /obj/item/stack/cable_coil/five,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -39579,6 +39595,7 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
+/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "lTd" = (
@@ -60232,6 +60249,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"tca" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/stripes/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "tcf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64770,10 +64794,9 @@
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "uJq" = (
+/obj/effect/spawner/random/maintenance,
+/obj/structure/closet/crate/internals,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "uJY" = (
@@ -93502,7 +93525,7 @@ lZy
 dne
 hCI
 doJ
-aRG
+tca
 xZo
 hPP
 dne
@@ -94844,7 +94867,7 @@ uWR
 dux
 mVW
 dux
-jqO
+isu
 nCO
 gIf
 vjp

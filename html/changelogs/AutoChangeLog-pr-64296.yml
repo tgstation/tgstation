@@ -1,0 +1,5 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "Tramstation's maintenance has taken broken down into more modular segments that will now load in randomly each round."
+  - rscadd: "There is now a medical console and crew console in the main medbay treatment room."

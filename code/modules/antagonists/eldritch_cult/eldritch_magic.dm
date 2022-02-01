@@ -699,8 +699,8 @@
 	. = ..()
 	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
 		return
-	victim.apply_status_effect(STATUS_EFFECT_AMOK)
-	victim.apply_status_effect(STATUS_EFFECT_CLOUDSTRUCK, (level*10))
+	victim.apply_status_effect(/datum/status_effect/amok)
+	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level*10))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		carbon_victim.reagents.add_reagent(/datum/reagent/eldritch, min(1, 6-level))
@@ -737,7 +737,7 @@
 		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/outside = new(user.loc,TRUE,segment_length)
 		target.mind.transfer_to(outside, TRUE)
 		target.forceMove(outside)
-		target.apply_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT)
+		target.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_ASCENSION_EFFECT)
 		for(var/mob/living/carbon/human/humie in view(9,outside)-target)
 			if(IS_HERETIC(humie) || IS_HERETIC_MONSTER(humie))
 				continue
@@ -750,7 +750,7 @@
 
 	if(iscarbon(mob_inside))
 		var/mob/living/simple_animal/hostile/eldritch/armsy/prime/armsy = target
-		if(mob_inside.remove_status_effect(STATUS_EFFECT_STASIS,STASIS_ASCENSION_EFFECT))
+		if(mob_inside.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_ASCENSION_EFFECT))
 			mob_inside.forceMove(armsy.loc)
 		armsy.mind.transfer_to(mob_inside, TRUE)
 		segment_length = armsy.get_length()

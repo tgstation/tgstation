@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - bugfix: "Fixes exodrones erroneously reporting \"travelling back to station\" in the status panel of their console UI when travelling from site to site."
+  - qol: "exodrones will now report the name of the target sites they're travelling to."
