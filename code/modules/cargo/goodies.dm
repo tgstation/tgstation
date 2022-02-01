@@ -68,7 +68,7 @@
 
 /datum/supply_pack/goody/thermal_single
 	name = "Thermal Pistol Holster Single-Pack"
-	desc = "Contains two thermal pistols in a holster, ready for use in the field."
+	desc = "Contains twinned thermal pistols in a holster, ready for use in the field."
 	cost = PAYCHECK_HARD * 15
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/belt/holster/thermal)

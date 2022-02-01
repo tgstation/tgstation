@@ -303,7 +303,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
 	for(var/i in 1 to 3)
-		/obj/item/gun/energy/e_gun/thermal
+		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"

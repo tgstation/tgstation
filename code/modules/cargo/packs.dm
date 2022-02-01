@@ -645,7 +645,7 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/thermal,
 					/obj/item/storage/belt/holster/thermal)
-	crate_name = "wt-550 auto rifle crate"
+	crate_name = "thermal pistol crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////

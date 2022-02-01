@@ -36,10 +36,15 @@
 	unit_name = "energy gun"
 	export_types = list(/obj/item/gun/energy/e_gun)
 
-/datum/export/weapon/thermal
+/datum/export/weapon/inferno
 	cost = CARGO_CRATE_VALUE * 1.5
-	unit_name = "thermal pistol"
-	export_types = list(/obj/item/gun/energy/e_gun/thermal)
+	unit_name = "inferno pistol"
+	export_types = list(/obj/item/gun/energy/laser/thermal/inferno)
+
+/datum/export/weapon/cryo
+	cost = CARGO_CRATE_VALUE * 1.5
+	unit_name = "cryo pistol"
+	export_types = list(/obj/item/gun/energy/laser/thermal/cryo)
 
 /datum/export/weapon/shotgun
 	cost = CARGO_CRATE_VALUE * 1.5
