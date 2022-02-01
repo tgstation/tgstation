@@ -29,7 +29,8 @@ export const AlertModal = (_, context) => {
   const { large_buttons } = data.preferences;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
-  const windowHeight = 95
+  const windowHeight
+    = 95
     + Math.ceil(message.length / 3)
     + (message.length && large_buttons ? 5 : 0);
   const onKey = (direction: number) => {
@@ -70,7 +71,7 @@ export const AlertModal = (_, context) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
-              {autofocus && <Autofocus /> }
+              {autofocus && <Autofocus />}
               <ButtonDisplay selected={selected} />
             </Stack.Item>
           </Stack>

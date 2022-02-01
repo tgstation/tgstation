@@ -89,7 +89,7 @@ const InputArea = (props, context) => {
     <TextArea
       autoFocus
       autoSelect
-      height={multiline || input.length >= 30 ? "100%" : "1.8rem"}
+      height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;

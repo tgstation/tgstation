@@ -55,7 +55,11 @@ export const InputButtons = (props: InputButtonsProps, context) => {
   );
 
   return (
-    <Flex align="center" direction={!swapped_buttons ? "row" : "row-reverse"} fill justify="space-around">
+    <Flex
+      align="center"
+      direction={!swapped_buttons ? 'row' : 'row-reverse'}
+      fill
+      justify="space-around">
       {large_buttons ? (
         <Flex.Item grow>{cancelButton}</Flex.Item>
       ) : (
