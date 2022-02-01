@@ -62,7 +62,7 @@
 	icon_state = "lobster_claw"
 	desc = "A lobster claw."
 	denied_type = /obj/item/crusher_trophy/lobster_claw
-	bonus_value = 3
+	bonus_value = 1
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly stagger the target for [bonus_value] seconds"
