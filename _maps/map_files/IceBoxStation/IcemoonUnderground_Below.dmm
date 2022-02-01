@@ -915,9 +915,6 @@
 	dir = 4;
 	name = "Supply multi deck pipe adapter"
 	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "GR" = (
@@ -1149,9 +1146,6 @@
 /area/mine/eva)
 "Ng" = (
 /obj/structure/cable/multilayer/multiz,
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "Nt" = (
