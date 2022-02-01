@@ -8,7 +8,7 @@
 	var/volume
 	///The list of sounds played, picked randomly.
 	var/list/sounds
-	///Uses left before the sound player deletes itself
+	///Uses left before the sound player deletes itself. If set to a negative number that will mean infinite uses.
 	var/uses
 
 /datum/component/sound_player/Initialize(
