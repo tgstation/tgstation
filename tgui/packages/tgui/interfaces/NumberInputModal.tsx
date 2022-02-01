@@ -59,7 +59,7 @@ export const NumberInputModal = (_, context) => {
             <Stack.Item>
               <InputArea input={input} onClick={onClick} onChange={onChange} />
             </Stack.Item>
-            <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
+            <Stack.Item>
               <InputButtons input={input} />
             </Stack.Item>
           </Stack>

@@ -66,7 +66,7 @@ export const TextInputModal = (_, context) => {
             <Stack.Item grow>
               <InputArea input={input} onType={onType} />
             </Stack.Item>
-            <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
+            <Stack.Item>
               <InputButtons
                 input={input}
                 message={`${input.length}/${max_length}`}
