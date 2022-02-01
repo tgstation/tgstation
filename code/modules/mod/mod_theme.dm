@@ -471,10 +471,8 @@
 		leading to an overall lower capacity for modules."
 	default_skin = "security"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 25, BIO = 100, FIRE = 75, ACID = 75, WOUND = 20)
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_inactive = 0.75
+	slowdown_active = 0.25
 	skins = list(
 		"security" = list(
 			HELMET_LAYER = null,
@@ -515,8 +513,6 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, 	BOMB = 40, BIO = 100, FIRE = 100, ACID = 95, WOUND = 25)
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	siemens_coefficient = 0
-	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	skins = list(
@@ -1032,6 +1028,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
+	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	skins = list(
@@ -1075,6 +1072,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0
+	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
 	skins = list(

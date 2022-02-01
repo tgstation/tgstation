@@ -68,7 +68,7 @@
 		return
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, .proc/handle_speech)
 
-/obj/item/mod/module/megaphone/on_deactivation()
+/obj/item/mod/module/megaphone/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -106,7 +106,7 @@
 /obj/item/mod/module/criminalcapture/Initialize(mapload)
 	. = ..()
 	for(var/i in 1 to max_capacity)
-		criminal_capture_bags += new /obj/structure/closet/body_bag/environmental/prisoner(src)
+		criminal_capture_bags += new /obj/structure/closet/body_bag/environmental/prisoner/pressurized(src)
 
 /obj/item/mod/module/criminalcapture/on_select_use(atom/target)
 	. = ..()
@@ -115,20 +115,22 @@
 	if(!mod.wearer.Adjacent(target))
 		return
 	if(isliving(target))
-		var/turf/target_turf = get_turf(target)
-		if(!do_after(mod.wearer, capture_time, target = target))
+		var/mob/living/living_target = target
+		var/turf/target_turf = get_turf(living_target)
+		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
+		if(!do_after(mod.wearer, capture_time, target = living_target))
 			balloon_alert(mod.wearer, "interrupted!")
-			return
-		if(!mod.wearer.Adjacent(target))
 			return
 		var/obj/structure/closet/body_bag/environmental/prisoner/dropped_bag = pop(criminal_capture_bags)
 		dropped_bag.forceMove(target_turf)
-		target.forceMove(dropped_bag)
+		dropped_bag.close()
+		living_target.forceMove(dropped_bag)
 	else if(istype(target, /obj/structure/closet/body_bag/environmental/prisoner) || istype(target, /obj/item/bodybag/environmental/prisoner))
 		var/obj/item/bodybag/environmental/prisoner/bag = target
 		if(criminal_capture_bags.len >= max_capacity)
 			balloon_alert(mod.wearer, "bag limit reached!")
 			return
+		playsound(src, 'sound/items/zip.ogg', 25, TRUE)
 		if(!do_after(mod.wearer, packup_time, target = bag))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
@@ -138,8 +140,6 @@
 		if(locate(/mob/living) in bag)
 			balloon_alert(mod.wearer, "living creatures inside!")
 			return
-		if(!mod.wearer.Adjacent(target))
-			return
 		if(istype(bag, /obj/item/bodybag/environmental/prisoner))
 			bag = bag.deploy_bodybag(mod.wearer, get_turf(bag))
 		var/obj/structure/closet/body_bag/environmental/prisoner/structure_bag = bag
@@ -147,3 +147,37 @@
 			structure_bag.open(mod.wearer, force = TRUE)
 		bag.forceMove(src)
 		criminal_capture_bags += bag
+		balloon_alert(mod.wearer, "bag stored")
+	else
+		balloon_alert(mod.wearer, "invalid target!")
+
+///Mirage grenade dispenser - Dispenses grenades that copy the user's appearance.
+/obj/item/mod/module/dispenser/mirage
+	name = "MOD mirage grenade dispenser module"
+	desc = "This module can create mirage grenades at the user's liking. These grenades create holographic copies of the user."
+	cooldown_time = 20 SECONDS
+	dispense_type = /obj/item/grenade/mirage
+
+/obj/item/mod/module/dispenser/mirage/on_use()
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/grenade/mirage/grenade = .
+	grenade.thrower = mod.wearer
+	grenade.arm_grenade(mod.wearer)
+
+/obj/item/grenade/mirage
+	name = "mirage grenade"
+	desc = "A special device that, when activated, produces a holographic copy of the user."
+	icon_state = "delivery"
+	inhand_icon_state = "flashbang"
+	det_time = 3 SECONDS
+	var/mob/living/thrower
+
+/obj/item/grenade/mirage/detonate(mob/living/lanced_by)
+	. = ..()
+	do_sparks(rand(3, 6), FALSE, src)
+	if(thrower)
+		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
+		mirage.Copy_Parent(thrower, 15 SECONDS)
+	qdel(src)

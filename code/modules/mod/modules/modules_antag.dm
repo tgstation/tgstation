@@ -289,7 +289,7 @@
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/stealth/on_deactivation()
+/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

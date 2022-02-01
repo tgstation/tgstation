@@ -115,10 +115,14 @@
 	icon_state = "prisonerenvirobag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner
 
+/obj/item/bodybag/environmental/prisoner/pressurized
+	name = "pressurized prisoner transport bag"
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized
+
 /obj/item/bodybag/environmental/prisoner/syndicate
 	name = "syndicate prisoner transport bag"
 	desc = "An alteration of Nanotrasen's environmental protection bag which has been used in several high-profile kidnappings. Designed to keep a victim unconscious, alive, and secured until they are transported to a required location."
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "syndieenvirobag_folded"
-	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/syndicate
+	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/prisoner/pressurized/syndicate
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF | LAVA_PROOF
