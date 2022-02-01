@@ -34,8 +34,9 @@
 /area/mine/explored)
 "z" = (
 /obj/structure/mecha_wreckage/ripley,
-/obj/effect/turf_decal/sand,
-/turf/open/floor/iron/recharge_floor,
+/turf/open/floor/iron/recharge_floor/asteroid{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/mine/explored)
 "B" = (
 /obj/effect/turf_decal/sand/plating,
