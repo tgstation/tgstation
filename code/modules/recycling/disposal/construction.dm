@@ -33,16 +33,14 @@
 
 	pipename = initial(pipe_type.name)
 
-	//might need to insert the AddComponent for rotation above the if(flip)
+	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rot))
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 	if(flip)
 		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
-		rotcomp.Rotate(null, ROTATION_FLIP)
+		rotcomp.Rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
 	update_appearance()
-
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rot))
-
 
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir
