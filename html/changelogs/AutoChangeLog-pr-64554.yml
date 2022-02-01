@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Fire alarms will be renamed with areas like air alarms, e.g. Bar fire alarm --> The Adminbus fire alarm"
