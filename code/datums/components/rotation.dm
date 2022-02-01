@@ -87,7 +87,7 @@
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_notice("Alt-click + RMB to rotate it clockwise. Alt-click + LMB to rotate it counterclockwise.")
+	examine_list += span_notice("Alt + Right-click to rotate it clockwise. Alt + Left-click to rotate it counterclockwise.")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
@@ -101,9 +101,6 @@
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
 	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
-		// delete this message_admins logging
-		// reminder!  DO NOT FORGET before PR is merged... 
-		message_admins("[src] would not rotate properly and is being early returned")
 		return
 
 	var/obj/rotated_obj = parent
