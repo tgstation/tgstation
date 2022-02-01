@@ -92,7 +92,7 @@
 	add_overlay("brimdemon_telegraph_dir")
 	visible_message(span_danger("[src] starts charging!"))
 	balloon_alert(src, "charging...")
-	addtimer(CALLBACK(src, .proc/fire_laser), 1.5 SECONDS)
+	addtimer(CALLBACK(src, .proc/fire_laser), 1 SECONDS)
 	COOLDOWN_START(src, ranged_cooldown, ranged_cooldown_time)
 
 /mob/living/simple_animal/hostile/asteroid/brimdemon/Moved()
