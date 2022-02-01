@@ -30,7 +30,7 @@ export const AlertModal = (_, context) => {
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
   const windowHeight
-    = 95
+    = 100
     + Math.ceil(message.length / 3)
     + (message.length && large_buttons ? 5 : 0);
   const onKey = (direction: number) => {
@@ -47,7 +47,6 @@ export const AlertModal = (_, context) => {
     <Window height={windowHeight} title={title} width={325}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
-        onClick={() => act('choose', { choice: selected })}
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
           /**
@@ -81,6 +80,11 @@ export const AlertModal = (_, context) => {
   );
 };
 
+/**
+ * Displays a list of buttons ordered by user prefs.
+ * Technically this handles more than 2 buttons, but you
+ * should just be using a list input in that case.
+ */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
   const { buttons = [] } = data;
