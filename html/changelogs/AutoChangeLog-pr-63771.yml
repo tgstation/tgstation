@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - code_imp: "Refactored the incapacitated proc to skip optional arguments and use the named arguments properly to improve readability."

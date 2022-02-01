@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Species-locked traitor items (currently the moth suspicious lantern) has been re-added after an accidental removal."

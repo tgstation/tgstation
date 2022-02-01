@@ -1,4 +1,0 @@
-author: "CRITAWAKETS"
-delete-after: True
-changes: 
-  - refactor: "The environmental atmos scanning ability of the gas analyzer is now a component."

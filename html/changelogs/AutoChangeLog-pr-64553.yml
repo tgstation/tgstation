@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Iron walls built on top of metal foam will produce metal foam instead of a girder when decon'd."
