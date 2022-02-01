@@ -1,5 +1,5 @@
 // Ye old forbidden book, the Codex Cicatrix.
-/obj/item/forbidden_book
+/obj/item/codex_cicatrix
 	name = "Codex Cicatrix"
 	desc = "This book describes the secrets of the veil between worlds."
 	icon = 'icons/obj/eldritch.dmi'
@@ -8,13 +8,13 @@
 	worn_icon_state = "book"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/forbidden_book/Initialize(mapload)
+/obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		effects_we_clear = list(/obj/effect/heretic_rune))
 
-/obj/item/forbidden_book/examine(mob/user)
+/obj/item/codex_cicatrix/examine(mob/user)
 	. = ..()
 	if(!IS_HERETIC(user))
 		return
@@ -22,7 +22,14 @@
 	. += span_notice("Can be used to tap influences for additional knowledge points.")
 	. += span_notice("Can also be used to draw or remove transmutation runes with ease.")
 
-/obj/item/forbidden_book/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/codex_cicatrix/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+
+	open_animation()
+
+/obj/item/codex_cicatrix/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!proximity_flag)
 		return
@@ -38,7 +45,7 @@
 /*
  * Plays a little animation that shows the book opening and closing.
  */
-/obj/item/forbidden_book/proc/open_animation()
+/obj/item/codex_cicatrix/proc/open_animation()
 	icon_state = "[base_icon_state]_open"
 	flick("[base_icon_state]_opening", src)
 
@@ -47,6 +54,6 @@
 /*
  * Plays a closing animation and resets the icon state.
  */
-/obj/item/forbidden_book/proc/close_animation()
+/obj/item/codex_cicatrix/proc/close_animation()
 	icon_state = base_icon_state
 	flick("[base_icon_state]_closing", src)

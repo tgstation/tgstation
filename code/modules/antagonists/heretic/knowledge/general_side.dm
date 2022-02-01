@@ -51,7 +51,7 @@
 		/obj/item/pen/fountain = 1,
 		/obj/item/stack/sheet/animalhide = 1,
 	)
-	result_atoms = list(/obj/item/forbidden_book)
+	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	route = PATH_SIDE
 

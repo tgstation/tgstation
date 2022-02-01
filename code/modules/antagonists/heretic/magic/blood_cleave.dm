@@ -1,15 +1,15 @@
 /obj/effect/proc_holder/spell/pointed/cleave
 	name = "Cleave"
 	desc = "Causes severe bleeding on a target and several targets around them."
-	school = SCHOOL_FORBIDDEN
-	charge_max = 350
-	clothes_req = FALSE
-	invocation = "CL'VE"
-	invocation_type = INVOCATION_WHISPER
-	range = 9
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "cleave"
 	action_background_icon_state = "bg_ecult"
+	invocation = "CL'VE"
+	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
+	charge_max = 350
+	clothes_req = FALSE
+	range = 9
 
 /obj/effect/proc_holder/spell/pointed/cleave/cast(list/targets, mob/user)
 	if(!targets.len)

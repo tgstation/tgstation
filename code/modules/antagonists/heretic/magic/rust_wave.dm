@@ -2,13 +2,13 @@
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	name = "Entropic Plume"
 	desc = "Spews forth a disorienting plume that causes enemies to strike each other, briefly blinds them(increasing with range) and poisons them(decreasing with range). Also spreads rust in the path of the plume."
-	school = SCHOOL_FORBIDDEN
-	invocation = "'NTR'P'C PL'M'"
-	invocation_type = INVOCATION_WHISPER
-	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "entropic_plume"
+	invocation = "'NTR'P'C PL'M'"
+	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
+	clothes_req = FALSE
 	charge_max = 300
 	cone_levels = 5
 	respect_density = TRUE

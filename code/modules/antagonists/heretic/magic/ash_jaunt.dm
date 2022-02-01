@@ -1,14 +1,14 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash
 	name = "Ashen Passage"
 	desc = "A short range spell that allows you to pass unimpeded through walls."
-	school = SCHOOL_FORBIDDEN
-	invocation = "ASH'N P'SSG'"
-	invocation_type = INVOCATION_WHISPER
-	charge_max = 150
-	range = -1
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "ash_shift"
 	action_background_icon_state = "bg_ecult"
+	invocation = "ASH'N P'SSG'"
+	invocation_type = INVOCATION_WHISPER
+	school = SCHOOL_FORBIDDEN
+	charge_max = 150
+	range = -1
 	jaunt_in_time = 13
 	jaunt_duration = 10
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/ash_shift

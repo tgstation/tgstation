@@ -237,8 +237,8 @@
 		return
 
 	// Using a codex will give you two knowledge points for draining.
-	if(!being_drained && istype(weapon, /obj/item/forbidden_book))
-		var/obj/item/forbidden_book/codex = weapon
+	if(!being_drained && istype(weapon, /obj/item/codex_cicatrix))
+		var/obj/item/codex_cicatrix/codex = weapon
 		codex.open_animation()
 		INVOKE_ASYNC(src, .proc/drain_influence, user, 2)
 		return TRUE

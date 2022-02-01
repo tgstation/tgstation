@@ -302,7 +302,7 @@
 		Stalkers can jaunt, release EMPs, shapeshift into animals or automatons, and are strong in combat."
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast I had never seen before. \
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
-	next_knowledge = list(,
+	next_knowledge = list(
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/summon/ashy,
 		/datum/heretic_knowledge/spell/blood_siphon,

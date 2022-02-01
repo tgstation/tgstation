@@ -1,16 +1,16 @@
 /obj/effect/proc_holder/spell/targeted/fire_sworn
 	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "fire_ring"
+	action_background_icon_state = "bg_ecult"
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
-	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE
 	charge_max = 700
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "fire_ring"
 	///how long it lasts
 	var/duration = 1 MINUTES
 	///who casted it right now

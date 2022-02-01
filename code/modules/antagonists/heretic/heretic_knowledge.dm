@@ -237,18 +237,26 @@
 /datum/heretic_knowledge/summon/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/summoned = new mob_to_summon(loc)
 	// Fade in the summon while the ghost poll is ongoing.
+	// Also don't let them mess with the summon while waiting
 	summoned.alpha = 0
+	summoned.notransform = TRUE
+	summoned.move_resist = MOVE_FORCE_OVERPOWERING
 	animate(summoned, 10 SECONDS, alpha = 155)
 
 	message_admins("A [summoned.name] is being summoned by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(summoned)].")
 	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [summoned.real_name]?", ROLE_HERETIC, FALSE, 10 SECONDS, summoned)
 	if(!LAZYLEN(candidates))
 		loc.balloon_alert(user, "ritual failed, no ghosts!")
-		qdel(summoned)
+		animate(summoned, 0.5 SECONDS, alpha = 0)
+		QDEL_IN(summoned, 0.6 SECONDS)
 		return FALSE
 
 	var/mob/dead/observer/picked_candidate = pick(candidates)
+	// Ok let's make them an interactable mob now, since we got a ghost
 	summoned.alpha = 255
+	summoned.notransform = FALSE
+	summoned.move_resist = initial(summoned.move_resist)
+
 	summoned.ghostize(FALSE)
 	summoned.key = picked_candidate.key
 
@@ -342,6 +350,7 @@
 	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_notice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	desc += " (Completed!)"
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS

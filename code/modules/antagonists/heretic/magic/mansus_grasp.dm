@@ -43,6 +43,7 @@
 	if(!on_mob_hit(target, user))
 		return
 
+	message_admins("MELBERT TODO attack chain continues")
 	return ..()
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
@@ -85,6 +86,7 @@
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/on_mob_hit(mob/living/hit, mob/living/heretic)
 	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
+		message_admins("MELBERT TODO blocking charge!")
 		return FALSE
 
 	hit.adjustBruteLoss(10)

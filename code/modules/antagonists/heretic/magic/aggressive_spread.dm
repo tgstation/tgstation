@@ -5,11 +5,11 @@
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "corrode"
 	action_background_icon_state = "bg_ecult"
+	invocation = "A'GRSV SPR'D"
+	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
-	invocation = "A'GRSV SPR'D"
-	invocation_type = INVOCATION_WHISPER
 	range = 3
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)

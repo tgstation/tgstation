@@ -159,5 +159,5 @@
 
 /datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/forbidden_book))
+	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/codex_cicatrix))
 	exception_hold = exception_cache

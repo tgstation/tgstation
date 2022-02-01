@@ -1,15 +1,15 @@
 /obj/effect/proc_holder/spell/pointed/manse_link
 	name = "Mansus Link"
 	desc = "Piercing through reality, connecting minds. This spell allows you to add people to a Mansus Net, allowing them to communicate with each other from afar."
-	school = SCHOOL_FORBIDDEN
-	charge_max = 300
-	clothes_req = FALSE
-	invocation = "PI'RC' TH' M'ND"
-	invocation_type = "whisper"
-	range = 10
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_link"
 	action_background_icon_state = "bg_ecult"
+	invocation = "PI'RC' TH' M'ND"
+	invocation_type = "whisper"
+	school = SCHOOL_FORBIDDEN
+	charge_max = 300
+	clothes_req = FALSE
+	range = 10
 
 /obj/effect/proc_holder/spell/pointed/manse_link/can_target(atom/target, mob/user, silent)
 	if(!isliving(target))

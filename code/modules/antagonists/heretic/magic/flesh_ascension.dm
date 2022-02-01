@@ -1,16 +1,16 @@
 /obj/effect/proc_holder/spell/targeted/shed_human_form
 	name = "Shed form"
 	desc = "Shed your fragile form, become one with the arms, become one with the emperor."
-	invocation_type = INVOCATION_SHOUT
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "worm_ascend"
 	invocation = "REALITY UNCOIL!"
+	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE
 	charge_max = 100
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "worm_ascend"
 	/// The length of our new wormy when we shed.
 	var/segment_length = 10
 

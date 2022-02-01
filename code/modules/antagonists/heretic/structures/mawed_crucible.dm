@@ -7,7 +7,7 @@
 	base_icon_state = "crucible"
 	break_sound = 'sound/hallucinations/wail.ogg'
 	light_power = 1
-	anchored = FALSE
+	anchored = TRUE
 	density = TRUE
 	///How much mass this currently holds
 	var/current_mass = 5
@@ -46,6 +46,7 @@
 	else
 		. += span_boldnotice("[src] is bubbling to the brim with viscous liquid, and is ready to use.")
 
+	. += span_notice("You can <b>[anchored ? "unanchor and move":"anchor in place"]</b> [src] with a <b>Codex Cicatrix</b> or <b>Mansus Grasp</b>.")
 	. += span_info("The following potions can be brewed:")
 	for(var/obj/item/eldritch_potion/potion as anything in subtypesof(/obj/item/eldritch_potion))
 		var/potion_string = span_info("\tThe " + initial(potion.name) + " - " + initial(potion.crucible_tip))
@@ -60,10 +61,17 @@
 	if(!iscarbon(user))
 		return ..()
 
+	if(!IS_HERETIC_OR_MONSTER(user))
+		bite_the_hand(user)
+		return TRUE
+
+	if(istype(weapon, /obj/item/codex_cicatrix) || istype(weapon, /obj/item/melee/touch_attack/mansus_fist))
+		playsound(src, 'sound/items/deconstruct.ogg', 30, TRUE, ignore_walls = FALSE)
+		set_anchored(!anchored)
+		balloon_alert(user, "[anchored ? "":"un"]anchored")
+		return TRUE
+
 	if(istype(weapon, /obj/item/bodypart))
-		if(!IS_HERETIC_OR_MONSTER(user))
-			bite_the_hand(user)
-			return TRUE
 
 		var/obj/item/bodypart/consumed = weapon
 		if(consumed.status != BODYPART_ORGANIC)
@@ -74,10 +82,6 @@
 		return TRUE
 
 	if(istype(weapon, /obj/item/organ))
-		if(!IS_HERETIC_OR_MONSTER(user))
-			bite_the_hand(user)
-			return TRUE
-
 		var/obj/item/organ/consumed = weapon
 		if(consumed.status != ORGAN_ORGANIC)
 			balloon_alert(user, "not organic!")
@@ -189,12 +193,13 @@
 			balloon_alert(feeder, "crucible full!")
 		return
 
+	current_mass++
+	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
+	visible_message(span_notice("[src] devours [consumed] and fills itself with a little bit of liquid!"))
+
 	if(feeder)
 		balloon_alert(feeder, "crubile fed ([current_mass] / [max_mass])")
 
-	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
-	visible_message(span_notice("[src] devours [consumed] and fills itself with a little bit of liquid!"))
-	current_mass++
 	qdel(consumed)
 	update_appearance(UPDATE_ICON_STATE)
 

@@ -1,10 +1,10 @@
 /*
- * This test checks all heretic knowledge nodes
- * (excluding the ones which are unreachable on purpose)
- * and ensures players can reach them in game.
- *
- * If it finds a node that is unreachable, it throws an error.
+ * This test checks all heretic knowledge nodes and validates they are setup correctly.
+ * We check that all knowledge is reachable by players (through the research tree)
+ * and that all knowledge have a valid next_knowledge list.
  */
+/datum/unit_test/heretic_knowledge
+
 /datum/unit_test/heretic_knowledge/Run()
 
 	// First, we get a list of all knowledge types
@@ -22,8 +22,12 @@
 	var/list/list_to_check = GLOB.heretic_start_knowledge.Copy()
 	var/i = 0
 	while(i < length(list_to_check))
-		var/datum/heretic_knowledge/eldritch_knowledge = allocate(list_to_check[++i])
-		for(var/next_knowledge in eldritch_knowledge.next_knowledge)
+		var/datum/heretic_knowledge/instantiated_knowledge = allocate(list_to_check[++i])
+		// Next knowledge is a list of typepaths.
+		for(var/datum/heretic_knowledge/next_knowledge as anything in instantiated_knowledge.next_knowledge)
+			if(!ispath(next_knowledge))
+				Fail("[next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
+				continue
 			if(next_knowledge in list_to_check)
 				continue
 			list_to_check += next_knowledge
@@ -32,6 +36,7 @@
 	// Let's compare it to our original list (all_possible_knowledge). If they're not identical,
 	// then somewhere we missed a knowledge somewhere, and should throw a fail.
 	if(length(all_possible_knowledge) != length(all_possible_knowledge & list_to_check))
+		// Unreachables is a list of typepaths - all paths that cannot be obtained.
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
-			Fail("[initial(lost_knowledge.name)] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
+			Fail("[lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
