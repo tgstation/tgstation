@@ -251,7 +251,7 @@
 		span_notice("You offer to induct people into the Family."),
 		vision_distance = 2,
 		)
-	if(human_owner.has_status_effect(STATUS_EFFECT_HANDSHAKE))
+	if(human_owner.has_status_effect(/datum/status_effect/offering/secret_handshake))
 		return FALSE
 	if(!(locate(/mob/living/carbon) in orange(1, owner)))
 		owner.visible_message(
@@ -261,7 +261,7 @@
 			)
 		return FALSE
 
-	human_owner.apply_status_effect(STATUS_EFFECT_HANDSHAKE, secret_handshake_item)
+	human_owner.apply_status_effect(/datum/status_effect/offering/secret_handshake, secret_handshake_item)
 	return TRUE
 
 /datum/antagonist/gang/russian_mafia

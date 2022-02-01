@@ -131,7 +131,7 @@
 "fb" = (
 /obj/item/clothing/head/helmet/skull,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
+/area/icemoon/underground/explored)
 "fk" = (
 /obj/structure/fluff/tram_rail/end{
 	dir = 4;
@@ -208,8 +208,9 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "hf" = (
+/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
+/area/icemoon/underground/explored)
 "hh" = (
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -367,7 +368,7 @@
 /obj/item/bodypart/chest,
 /obj/item/organ/heart,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
+/area/icemoon/underground/explored)
 "lX" = (
 /obj/structure/fence{
 	dir = 1
@@ -498,7 +499,7 @@
 "qy" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
+/area/icemoon/underground/explored)
 "qA" = (
 /obj/structure/fence,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -585,10 +586,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/mine/mechbay)
-"uj" = (
-/obj/effect/gibspawner/human/bodypartless,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/commons/storage/mining)
 "uV" = (
 /obj/structure/fluff/tram_rail,
 /obj/structure/fluff/tram_rail{
@@ -730,6 +727,10 @@
 "AY" = (
 /obj/structure/fence,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
+"Bf" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "BH" = (
 /obj/effect/turf_decal/stripes/end{
@@ -21316,7 +21317,7 @@ qI
 qI
 qI
 qI
-hf
+fQ
 qI
 qI
 qI
@@ -21572,10 +21573,10 @@ qI
 qI
 qI
 qI
-hf
-hf
-hf
-hf
+fQ
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -21827,12 +21828,12 @@ qI
 qI
 qI
 qI
-hf
+fQ
 fb
-uj
 hf
-hf
-hf
+fQ
+fQ
+fQ
 hf
 qI
 qI
@@ -22085,13 +22086,13 @@ qI
 qI
 qI
 qI
-hf
-hf
-hf
-hf
-hf
-hf
-hf
+fQ
+fQ
+fQ
+Bf
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -22340,15 +22341,15 @@ qI
 qI
 qI
 qI
-hf
-hf
-hf
-hf
+fQ
+fQ
+fQ
+fQ
 qy
+fQ
 hf
-uj
-hf
-hf
+fQ
+fQ
 qI
 qI
 qI
@@ -22597,15 +22598,15 @@ qI
 qI
 qI
 qI
+fQ
 hf
-uj
-hf
+fQ
 lV
+fQ
+fQ
 hf
-hf
-hf
-hf
-qI
+fQ
+fQ
 qI
 qI
 qI
@@ -22855,14 +22856,14 @@ qI
 qI
 qI
 qI
-hf
+fQ
 qI
+fQ
+fQ
 hf
-hf
-uj
-hf
-hf
-hf
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -23112,12 +23113,12 @@ qI
 qI
 qI
 qI
-hf
+fQ
 qI
 hf
-hf
-hf
-hf
+fQ
+fQ
+fQ
 qI
 qI
 qI
@@ -23371,10 +23372,10 @@ qI
 qI
 qI
 qI
-hf
+fQ
 qI
-hf
-hf
+fQ
+fQ
 qI
 qI
 qI

@@ -768,7 +768,7 @@
 
 ///This makes the animal eat the food, and applies the buff status effect to them.
 /obj/item/food/canned/envirochow/proc/apply_buff(mob/living/simple_animal/hungry_pet, mob/living/dog_mom)
-	hungry_pet.apply_status_effect(STATUS_EFFECT_HEALTH_BUFFED) //the status effect keeps track of the stacks
+	hungry_pet.apply_status_effect(/datum/status_effect/limited_buff/health_buff) //the status effect keeps track of the stacks
 	hungry_pet.visible_message(
 		span_notice("[hungry_pet] chows down on [src]."),
 		span_nicegreen("You chow down on [src]."),

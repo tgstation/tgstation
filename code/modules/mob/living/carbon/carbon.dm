@@ -909,7 +909,7 @@
 			return DEFIB_FAIL_FAILING_HEART
 
 	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(HARS))
+	if (!dna?.check_mutation(/datum/mutation/human/headless))
 		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 
 		if (QDELETED(BR))

@@ -1,0 +1,5 @@
+author: "Aerden"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the thermomachine board being listed as a freezer/heater board in the circuit imprinter."
+  - code_imp: "Changes the descriptions of the HFR boards to not be the same as the freezer/heater."

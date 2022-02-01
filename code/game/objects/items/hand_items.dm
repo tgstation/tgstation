@@ -140,7 +140,7 @@
 		affix_desc = "on [target.p_their()] sensitive antennae"
 		affix_desc_target = "on your highly sensitive antennae"
 		brutal_noogie = TRUE
-	if(user.dna?.check_mutation(HULK))
+	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
 		prefix_desc = "sickeningly brutal"
 		brutal_noogie = TRUE
 
@@ -175,7 +175,7 @@
 	var/damage = rand(1, 5)
 	if(HAS_TRAIT(target, TRAIT_ANTENNAE))
 		damage += rand(3,7)
-	if(user.dna?.check_mutation(HULK))
+	if(user.dna?.check_mutation(/datum/mutation/human/hulk))
 		damage += rand(3,7)
 
 	if(damage >= 5)
@@ -220,7 +220,7 @@
 	user.do_attack_animation(slapped)
 
 	var/slap_volume = 50
-	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(STATUS_EFFECT_OFFERING)
+	var/datum/status_effect/offering/kiss_check = slapped.has_status_effect(/datum/status_effect/offering)
 	if(kiss_check && istype(kiss_check.offered_item, /obj/item/kisser) && (user in kiss_check.possible_takers))
 		user.visible_message(
 			span_danger("[user] scoffs at [slapped]'s advance, winds up, and smacks [slapped.p_them()] hard to the ground!"),
@@ -306,7 +306,7 @@
 
 	offerer.visible_message(span_notice("[offerer] raises [offerer.p_their()] arm, looking for a high-five!"), \
 		span_notice("You post up, looking for a high-five!"), null, 2)
-	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src, /atom/movable/screen/alert/give/highfive)
+	offerer.apply_status_effect(/datum/status_effect/offering, src, /atom/movable/screen/alert/give/highfive)
 
 /// Yeah broh! This is where we do the high-fiving (or high-tenning :o)
 /obj/item/slapper/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
@@ -453,7 +453,7 @@
 	cheek_kiss = (offerer.zone_selected != BODY_ZONE_PRECISE_MOUTH)
 	offerer.visible_message(span_notice("[offerer] leans in slightly, offering a kiss[cheek_kiss ? " on the cheek" : ""]!"),
 		span_notice("You lean in slightly, indicating you'd like to offer a kiss[cheek_kiss ? " on the cheek" : ""]!"), null, 2)
-	offerer.apply_status_effect(STATUS_EFFECT_OFFERING, src)
+	offerer.apply_status_effect(/datum/status_effect/offering, src)
 	return TRUE
 
 /obj/item/kisser/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)

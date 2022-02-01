@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen moved around some of the wall decorations in IceBoxStation's Science to appease the ghostly overlords (as well as the AI)."
