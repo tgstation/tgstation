@@ -18,9 +18,6 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-
-/obj/item/assembly/infra/ComponentInitialize()
-	. = ..()
 	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rotation))
 
 /obj/item/assembly/infra/proc/after_rotation(mob/user, rotation_type)
