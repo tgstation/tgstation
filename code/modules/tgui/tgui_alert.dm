@@ -134,7 +134,7 @@
 	switch(action)
 		if("choose")
 			if (!(params["choice"] in buttons))
-				return
+				CRASH("[usr] entered a non-existent button choice: [params["choice"]]")
 			set_choice(params["choice"])
 			closed = TRUE
 			SStgui.close_uis(src)
