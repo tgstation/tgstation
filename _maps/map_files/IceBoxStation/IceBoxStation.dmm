@@ -6444,9 +6444,7 @@
 /area/hallway/primary/central)
 "bet" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bez" = (
@@ -6582,7 +6580,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/large,
 /area/medical/medbay/lobby)
 "bgc" = (
 /turf/closed/wall/r_wall,
@@ -6711,7 +6709,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "bhR" = (
@@ -9243,6 +9240,8 @@
 /area/construction)
 "bSw" = (
 /obj/item/radio/intercom/directional/south,
+/obj/effect/turf_decal/tile/blue,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bST" = (
@@ -9466,12 +9465,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/machinery/requests_console/directional/north,
-/obj/machinery/camera{
-	c_tag = "Pharmacy";
-	dir = 9;
-	network = list("ss13","medbay")
-	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "bWc" = (
@@ -9657,6 +9650,12 @@
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/iron/dark/telecomms,
 /area/tcommsat/server)
+"bYD" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "bYF" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13446,7 +13445,7 @@
 	pixel_x = -32;
 	pixel_y = 56
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/security/checkpoint/medical)
 "drO" = (
 /obj/machinery/airalarm/directional/south,
@@ -15996,7 +15995,7 @@
 	pixel_x = -35;
 	pixel_y = -56
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/security/checkpoint/medical)
 "eHX" = (
 /obj/effect/spawner/random/clothing/costume,
@@ -20079,6 +20078,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage_shared)
+"gKK" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "gKQ" = (
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/plating,
@@ -20387,6 +20390,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/medical/medbay/aft)
+"gRD" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "gSh" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
@@ -24636,6 +24646,14 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"iVS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "pharmacy_shutters3";
+	name = "Pharmacy Shutter"
+	},
+/turf/open/floor/plating,
+/area/medical/pharmacy)
 "iVY" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -28270,9 +28288,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_y = 32
-	},
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "kNs" = (
@@ -29828,7 +29844,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/full,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/large,
 /area/medical/medbay/lobby)
 "lHY" = (
 /obj/effect/turf_decal/tile/purple{
@@ -33901,6 +33917,8 @@
 /obj/item/book/manual/wiki/chemistry{
 	pixel_x = 8
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "nQQ" = (
@@ -34452,6 +34470,9 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = 32
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/medical/pharmacy)
 "oep" = (
@@ -36033,12 +36054,6 @@
 	name = "Medbay Delivery";
 	req_access_txt = "5"
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	dir = 4;
-	freq = 1400;
-	location = "Medbay"
-	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -36197,7 +36212,6 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "oWb" = (
@@ -36617,6 +36631,12 @@
 	layer = 2.9
 	},
 /obj/structure/plasticflaps/opaque,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	dir = 4;
+	freq = 1400;
+	location = "Medbay"
+	},
 /turf/open/floor/iron/dark,
 /area/maintenance/department/medical)
 "pij" = (
@@ -38275,6 +38295,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
+"pZl" = (
+/obj/structure/cable,
+/obj/machinery/button/door/directional/north{
+	id = "pharmacy_shutters3";
+	name = "Pharmacy Shutter Controls";
+	pixel_y = 55;
+	req_access_txt = "69"
+	},
+/turf/open/floor/iron/white,
+/area/medical/pharmacy)
 "pZC" = (
 /turf/closed/wall,
 /area/service/hydroponics)
@@ -43168,6 +43198,9 @@
 /area/command/meeting_room)
 "sxE" = (
 /obj/effect/landmark/event_spawn,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "sys" = (
@@ -43628,7 +43661,7 @@
 	dir = 10
 	},
 /obj/effect/landmark/start/depsec/medical,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/security/checkpoint/medical)
 "sLc" = (
 /obj/structure/window/reinforced{
@@ -45038,6 +45071,7 @@
 /area/maintenance/department/medical/central)
 "tuY" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "tvk" = (
@@ -45272,6 +45306,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"tAS" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "tBh" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
@@ -46515,7 +46556,7 @@
 	dir = 9
 	},
 /obj/effect/landmark/start/depsec/medical,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/security/checkpoint/medical)
 "uhD" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
@@ -47449,6 +47490,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/requests_console/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "uBY" = (
@@ -47903,6 +47945,11 @@
 	dir = 1
 	},
 /obj/structure/tank_holder/extinguisher,
+/obj/machinery/camera{
+	c_tag = "Pharmacy";
+	dir = 9;
+	network = list("ss13","medbay")
+	},
 /turf/open/floor/iron/white,
 /area/medical/pharmacy)
 "uNH" = (
@@ -48664,6 +48711,13 @@
 /obj/effect/landmark/start/station_engineer,
 /turf/open/floor/iron,
 /area/engineering/lobby)
+"vks" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/hallway/primary/starboard)
 "vkx" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/landmark/start/chief_medical_officer,
@@ -88329,7 +88383,7 @@ pPh
 pZf
 bfF
 bfF
-bfF
+iVS
 bfF
 bfF
 hYL
@@ -88583,7 +88637,7 @@ mbl
 iBJ
 aYV
 jtG
-aYV
+gKK
 bfF
 nQI
 oVT
@@ -88840,7 +88894,7 @@ oiK
 iBJ
 aYV
 jtG
-aYV
+gKK
 bfF
 ylt
 oYL
@@ -89100,7 +89154,7 @@ jtG
 bSw
 bfF
 wuL
-oYL
+pZl
 ggT
 bfF
 vol
@@ -89611,7 +89665,7 @@ pZC
 pZC
 aYV
 jtG
-aYV
+gKK
 bfF
 uNr
 bjL
@@ -89868,8 +89922,8 @@ iKY
 aYV
 aYV
 eaB
-evz
-bfF
+gKK
+iVS
 bVZ
 uvt
 xFX
@@ -90125,8 +90179,8 @@ aYV
 aYV
 mju
 jtG
-bet
-bfF
+gKK
+iVS
 bhQ
 pvs
 pNE
@@ -90639,7 +90693,7 @@ ect
 bcr
 aYV
 jtG
-bet
+gKK
 bfF
 odW
 owD
@@ -90896,7 +90950,7 @@ cAG
 aYV
 aYV
 jtG
-bet
+gKK
 bfF
 rrM
 eiq
@@ -91153,7 +91207,7 @@ eUk
 bez
 bez
 eaB
-bet
+gKK
 bfF
 cJg
 bir
@@ -91410,7 +91464,7 @@ ect
 aYV
 aDA
 jtG
-bet
+gKK
 bmK
 laB
 dvJ
@@ -91667,7 +91721,7 @@ cAG
 aYV
 aYV
 jtG
-bet
+gKK
 bmK
 lFG
 wjZ
@@ -91924,7 +91978,7 @@ cAG
 aYV
 rmv
 jtG
-cLK
+evz
 kLg
 hpP
 pOE
@@ -92952,7 +93006,7 @@ sRN
 aYV
 mju
 oOF
-jxN
+cLK
 kLg
 wsW
 azg
@@ -93209,7 +93263,7 @@ mjA
 ect
 iaK
 oOF
-tuY
+tAS
 bfK
 vGk
 iNf
@@ -93723,7 +93777,7 @@ mjA
 ubX
 aYV
 bDd
-rmv
+vks
 bfK
 jXV
 drl
@@ -93980,7 +94034,7 @@ mjA
 qkV
 aDA
 jjc
-aYV
+bYD
 bfK
 ijO
 dAB
@@ -94237,7 +94291,7 @@ mjA
 rxC
 aYV
 bDd
-aYV
+bYD
 bfK
 bfK
 bfK
@@ -94494,7 +94548,7 @@ alP
 alP
 bcq
 unB
-bcq
+gRD
 ibn
 fqX
 xWu
@@ -94751,7 +94805,7 @@ hek
 alP
 aYV
 oOF
-rmv
+vks
 ibn
 gYG
 fyi
@@ -95008,7 +95062,7 @@ omM
 alP
 juU
 oOF
-aYV
+bYD
 ibn
 kOA
 uwd
@@ -95265,7 +95319,7 @@ oeR
 alP
 iaK
 bDd
-aYV
+bYD
 ibn
 ibn
 ibn
