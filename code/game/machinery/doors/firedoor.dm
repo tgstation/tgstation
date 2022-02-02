@@ -487,6 +487,7 @@
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
 	density = TRUE
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
