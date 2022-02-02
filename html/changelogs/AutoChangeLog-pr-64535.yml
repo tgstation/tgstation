@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Merge datums will no longer spit blood if two mergable objects are on the first tile examined. The directions are also trustworthy now"
