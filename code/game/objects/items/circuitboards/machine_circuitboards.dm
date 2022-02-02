@@ -146,6 +146,13 @@
 	req_components = list(/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/suit_storage
+	name = "Suit Storage Unit (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/suit_storage_unit
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2)
+
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -823,13 +830,6 @@
 	build_path = /obj/machinery/rnd/production/techfab/department/medical
 
 //Science
-
-/obj/item/circuitboard/machine/suit_storage
-	name = "Suit Storage Unit (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/suit_storage_unit
-	req_components = list(
-		/obj/item/stock_parts/manipulator = 2)
 
 /obj/item/circuitboard/machine/circuit_imprinter/department/science
 	name = "Departmental Circuit Imprinter - Science (Machine Board)"
