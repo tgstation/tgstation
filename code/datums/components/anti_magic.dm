@@ -11,13 +11,27 @@
 	/// The proc that is triggered when the object is depleted of charges
 	var/datum/callback/expire
 
-/datum/component/anti_magic/Initialize(
-		resistances = null, 
-		total_charges = null, 
-		inventory_slots = null, 
-		datum/callback/reaction = null, 
-		datum/callback/expiration = null
-	)
+/**
+ * Adds magic resistances to an object
+ *
+ * Magic resistance will prevent magic from affecting the user if it has resistance to
+ * the type of magic being used
+ * 
+ * args:
+ * * resistances (optional) The types of magic resistance on the object
+ * * total_charges (optional) The amount of times the object can protect the user from magic 
+ * * inventory_slots (optional) The inventory slot the object must be located at in order to activate
+ * * reaction (optional) The proc that is triggered when magic has been successfully blocked
+ * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * 
+ * resistances bitflags: (see code/__DEFINES/magic.dm)
+ * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
+ * * MAGIC_RESISTANCE_MIND - Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
+ * * MAGIC_RESISTANCE_HOLY - Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
+ * * MAGIC_CASTING_RESTRICTION - Prevents a user from casting magic
+ * * MAGIC_RESISTANCE_ALL - All magic resistances combined
+**/
+/datum/component/anti_magic/Initialize(resistances, total_charges, inventory_slots, datum/callback/reaction, datum/callback/expiration)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
