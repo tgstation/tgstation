@@ -16104,7 +16104,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Public Mining APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/item/reagent_containers/food/drinks/bottle/hooch,
 /turf/open/floor/plating,

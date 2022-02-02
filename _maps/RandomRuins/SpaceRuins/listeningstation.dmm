@@ -858,7 +858,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Syndicate Listening Post APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
