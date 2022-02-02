@@ -15272,7 +15272,6 @@
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/lockers)
