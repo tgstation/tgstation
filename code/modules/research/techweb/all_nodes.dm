@@ -972,6 +972,7 @@
 	design_ids = list(
 		"adaptive_cutout",
 		"decoy_disk",
+		"pie_cannon",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	hidden = TRUE
