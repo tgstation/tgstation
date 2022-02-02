@@ -56,8 +56,9 @@
 
 /obj/effect/immovablerod/wizard/New(atom/start, atom/end, aimed_at, force_looping, mob/living/wizard, max_distance, damage_bonus)
 	. = ..()
-	set_wizard(wizard)
-	start_turf = start
+	if(wizard)
+		set_wizard(wizard)
+	start_turf = get_turf(start)
 	src.max_distance = max_distance
 	src.damage_bonus = damage_bonus
 
