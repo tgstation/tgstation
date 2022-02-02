@@ -25,6 +25,14 @@
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/board/suit_storage
+	name = "Machine Design (Suit Storage Unit Board)"
+	desc = "The circuit board for a suit storage unit."
+	id = "suit_storage"
+	build_path = /obj/item/circuitboard/machine/suit_storage
+	category = list("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
 	desc = "The circuit board for a power turbine console."

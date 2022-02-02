@@ -501,6 +501,7 @@
 		"solarcontrol",
 		"stack_console",
 		"stack_machine",
+		"suit_storage",
 		"tesla_coil",
 		"thermomachine",
 		"w-recycler" , "emitter",
