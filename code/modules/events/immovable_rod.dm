@@ -77,7 +77,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
-	var/turf/real_destination = isturf(end) ? end : get_turf(end)
+	var/turf/real_destination = get_turf(end)
 	destination_turf = real_destination
 	special_target = aimed_at
 	loopy_rod = force_looping
@@ -271,7 +271,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		return
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	for(var/mob/nearby_mob in urange(8, src))
+	for(var/mob/living/nearby_mob in urange(8, src))
 		if(nearby_mob.stat != CONSCIOUS)
 			continue
 		shake_camera(nearby_mob, 2, 3)

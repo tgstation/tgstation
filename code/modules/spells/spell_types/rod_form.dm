@@ -1,3 +1,6 @@
+/// The base distance a wizard rod will go without upgrades.
+#define BASE_WIZ_ROD_RANGE 13
+
 /obj/effect/proc_holder/spell/targeted/rod_form
 	name = "Rod Form"
 	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
@@ -11,23 +14,32 @@
 	invocation = "CLANG!"
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "immrod"
+	/// The extra distance we travel per additional spell level.
+	var/distance_per_spell_rank = 3
+	/// The extra damage we deal per additional spell level.
+	var/damage_per_spell_rank = 20
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets, mob/user = usr)
 	var/area/our_area = get_area(user)
 	if(istype(our_area, /area/wizard_station))
 		to_chat(user, span_warning("You know better than to trash Wizard Federation property. Best wait until you leave to use [src]."))
 		return
-	for(var/mob/living/caster in targets)
-		var/turf/start = get_turf(caster)
-		var/obj/effect/immovablerod/wizard/wiz_rod = new(start, get_ranged_target_turf(start, caster.dir, (15 + spell_level * 3)))
-		wiz_rod.our_wizard = WEAKREF(caster)
-		wiz_rod.max_distance += spell_level * 3 //You travel farther when you upgrade the spell
-		wiz_rod.damage_bonus += spell_level * 20 //You do more damage when you upgrade the spell
-		wiz_rod.start_turf = start
 
-		caster.forceMove(wiz_rod)
-		caster.notransform = TRUE
-		caster.status_flags |= GODMODE
+	// You travel farther when you upgrade the spell.
+	var/rod_max_distance = BASE_WIZ_ROD_RANGE + (spell_level * distance_per_spell_rank)
+	// You do more damage when you upgrade the spell.
+	var/rod_damage_bonus = (spell_level * damage_per_spell_rank)
+
+	for(var/mob/living/caster in targets)
+		var/turf/start_turf = get_turf(caster)
+		new /obj/effect/immovablerod/wizard(
+			start_turf,
+			start = start_turf,
+			end = get_ranged_target_turf(start_turf, caster.dir, (rod_max_distance + 2)), // Just a bit over the distance we got
+			wizard = caster,
+			max_distance = rod_max_distance,
+			damage_bonus = rod_damage_bonus,
+		)
 
 /// Wizard Version of the Immovable Rod.
 /obj/effect/immovablerod/wizard
@@ -36,11 +48,18 @@
 	/// The wizard who's piloting our rod.
 	var/datum/weakref/our_wizard
 	/// The distance the rod will go.
-	var/max_distance = 13
+	var/max_distance = BASE_WIZ_ROD_RANGE
 	/// The damage bonus of the rod when it smacks people.
 	var/damage_bonus = 0
 	/// The turf the rod started from, to calcuate distance.
 	var/turf/start_turf
+
+/obj/effect/immovablerod/wizard/New(atom/start, atom/end, aimed_at, force_looping, mob/living/wizard, max_distance, damage_bonus)
+	. = ..()
+	set_wizard(wizard)
+	start_turf = start
+	src.max_distance = max_distance
+	src.damage_bonus = damage_bonus
 
 /obj/effect/immovablerod/wizard/Destroy(force)
 	start_turf = null
@@ -79,19 +98,40 @@
 		)
 	to_chat(wizard, span_boldwarning("You're suddenly jolted out of rod-form as [strongman] somehow manages to grab you, slamming you into the ground!"))
 	stop_travel()
-	wizard.Stun(60)
+	wizard.Stun(6 SECONDS)
 	wizard.apply_damage(25, BRUTE)
 	return TRUE
 
 /**
- * Called when the wizard rod reaches it's maximum distance.
- * Dumps out the wizard and deletes.
+ * Called when the wizard rod reaches it's maximum distance
+ * or is otherwise stopped by something.
+ * Dumps out the wizard, and deletes.
  */
 /obj/effect/immovablerod/wizard/proc/stop_travel()
-	var/mob/living/wizard = our_wizard?.resolve()
-	if(!QDELETED(wizard))
-		wizard.status_flags &= ~GODMODE
-		wizard.notransform = FALSE
-		wizard.forceMove(get_turf(src))
-		our_wizard = null
+	eject_wizard()
 	qdel(src)
+
+/**
+ * Set wizard as our_wizard, placing them in the rod
+ * and preparing them for travel.
+ */
+/obj/effect/immovablerod/wizard/proc/set_wizard(mob/living/wizard)
+	our_wizard = WEAKREF(wizard)
+
+	wizard.forceMove(src)
+	wizard.notransform = TRUE
+	wizard.status_flags |= GODMODE
+
+/**
+ * Eject our current wizard, removing them from the rod
+ * and fixing all of the variables we changed.
+ */
+/obj/effect/immovablerod/wizard/proc/eject_wizard()
+	var/mob/living/wizard = our_wizard?.resolve()
+	if(QDELETED(wizard))
+		return
+
+	wizard.status_flags &= ~GODMODE
+	wizard.notransform = FALSE
+	wizard.forceMove(get_turf(src))
+	our_wizard = null
