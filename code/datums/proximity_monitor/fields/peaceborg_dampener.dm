@@ -11,20 +11,18 @@
 	var/static/image/northeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_northeast")
 	var/static/image/southeast_corner = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_southeast")
 	var/static/image/generic_edge = image('icons/effects/fields.dmi', icon_state = "projectile_dampen_generic")
-	var/obj/item/borg/projectile_dampen/projector = null
 	var/list/obj/projectile/tracked = list()
 	var/list/obj/projectile/staging = list()
 	// lazylist that keeps track of the overlays added to the edge of the field
 	var/list/edgeturf_effects
 
-/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, obj/item/borg/projectile_dampen/projector)
+/datum/proximity_monitor/advanced/peaceborg_dampener/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, atom/projector)
 	..()
-	src.projector = projector
+	RegisterSignal(projector, COMSIG_PARENT_QDELETING, .proc/on_projector_del)
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/Destroy()
-	projector = null
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -88,13 +86,18 @@
 /datum/proximity_monitor/advanced/peaceborg_dampener/proc/capture_projectile(obj/projectile/P, track_projectile = TRUE)
 	if(P in tracked)
 		return
-	projector.dampen_projectile(P, track_projectile)
+	SEND_SIGNAL(src, COMSIG_DAMPENER_CAPTURE, P, track_projectile)
 	if(track_projectile)
 		tracked += P
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/proc/release_projectile(obj/projectile/P)
-	projector.restore_projectile(P)
+	SEND_SIGNAL(src, COMSIG_DAMPENER_RELEASE, P)
 	tracked -= P
+
+/datum/proximity_monitor/advanced/peaceborg_dampener/proc/on_projector_del(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/proximity_monitor/advanced/peaceborg_dampener/field_edge_uncrossed(atom/movable/movable, turf/location)
 	if(istype(movable, /obj/projectile) && get_dist(movable, host) > current_range)
