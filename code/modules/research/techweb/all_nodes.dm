@@ -931,11 +931,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000)
 
-/////////////////////////Clown tech/////////////////////////
-/datum/techweb_node/clown
-	id = "clown"
-	display_name = "Clown Technology"
-	description = "Honk?!"
+/////////////////////////Social Psych/////////////////////////
+/datum/techweb_node/social_psych
+	id = "social_psych"
+	display_name = "Social Psychology"
+	description = "Study into the social psychology of the station crew."
 	prereq_ids = list("base")
 	design_ids = list(
 		"air_horn",
