@@ -46,6 +46,7 @@ SUBSYSTEM_DEF(movement)
 			return
 		pour_bucket(bucket_info)
 
+/// Processes a bucket of movement loops (This should only ever be called by fire(), it exists to prevent runtime fuckery)
 /datum/controller/subsystem/movement/proc/pour_bucket(list/bucket_info)
 	var/list/processing = bucket_info[MOVEMENT_BUCKET_LIST] // Cache for lookup speed
 	while(processing.len)
@@ -61,16 +62,19 @@ SUBSYSTEM_DEF(movement)
 	if(length(processing))
 		return // Still work to be done
 	var/bucket_time = bucket_info[MOVEMENT_BUCKET_TIME]
-	remove_bucket(bucket_time)
+	smash_bucket(1, bucket_time) // We assume we're the first bucket in the queue right now
 	visual_delay = MC_AVERAGE_FAST(visual_delay, max((world.time - canonical_time) / wait, 1))
 
-/datum/controller/subsystem/movement/proc/remove_bucket(bucket_time)
-	for(var/i in 1 to length(sorted_buckets))
-		var/list/bucket_info = sorted_buckets[i]
-		if(bucket_info[MOVEMENT_BUCKET_TIME] != bucket_time)
-			continue
-		sorted_buckets.Cut(i, i + 1) //Removes just this list
-		break
+/// Removes a bucket from our system. You only need to pass in the time, but if you pass in the index of the list you save us some work
+/datum/controller/subsystem/movement/proc/smash_bucket(index, bucket_time)
+	if(!index)
+		for(var/i in 1 to length(sorted_buckets))
+			var/list/bucket_info = sorted_buckets[i]
+			if(bucket_info[MOVEMENT_BUCKET_TIME] != bucket_time)
+				continue
+			index = i
+			break
+	sorted_buckets.Cut(index, index + 1) //Removes just this list
 	//Removes the assoc lookup too
 	buckets -= "[bucket_time]"
 
@@ -86,10 +90,10 @@ SUBSYSTEM_DEF(movement)
 		BINARY_INSERT_DEFINE(new_bucket, sorted_buckets, SORT_VAR_NO_TYPE, list(target_time), SORT_FIRST_INDEX, COMPARE_KEY)
 
 /datum/controller/subsystem/movement/proc/dequeue_loop(datum/move_loop/loop)
-	var/loop_time = "[loop.timer]"
-	buckets[loop_time] -= loop
-	if(!length(buckets[loop_time]))
-		remove_bucket(loop.timer)
+	var/list/our_entries = buckets["[loop.timer]"]
+	our_entries -= loop
+	if(!our_entries)
+		smash_bucket(bucket_time = loop.timer) // We can't pass a list in for context because we don't have a ref to the relevent list
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
 	add.start_loop()
