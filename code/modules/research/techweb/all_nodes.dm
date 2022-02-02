@@ -967,12 +967,11 @@
 	id = "prank_adv"
 	display_name = "Unregulated Pranking"
 	description = "The use of social science and restricted technology to push the boundaries of pranking. WARNING: can be disastrously funny."
-	prereq_ids = list("social_psych", "syndicate_basic")
+	prereq_ids = list("social_psych")
 	design_ids = list(
 		"adaptive_cutout",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	hidden = TRUE
 
 ////////////////////////Computer tech////////////////////////
 /datum/techweb_node/comptech
