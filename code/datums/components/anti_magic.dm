@@ -11,15 +11,10 @@
 
 /// This provides different types of magic resistance on an object
 /datum/component/anti_magic
-	/// The types of magic resistance present on the object
 	var/antimagic_flags
-	/// The amount of times the object can protect the user
 	var/charges
-	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
-	/// The proc that is triggered when magic has been successfully blocked
 	var/datum/callback/reaction
-	/// The proc that is triggered when the object is depleted of charges
 	var/datum/callback/expiration
 
 /**
@@ -70,15 +65,15 @@
 
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
-/datum/component/anti_magic/proc/protect(datum/source, mob/user, resistances, charge_cost, list/protection_sources)
+/datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost, list/protection_sources)
 	SIGNAL_HANDLER
 
-	// ignore magic casting restrictions since proc/protect is only called
-	// when being attacked with magic by another mob
-	var/antimagic = antimagic_flags & ~MAGIC_CASTING_RESTRICTION
-	if(resistances & antimagic) 
+	// ignore magic casting restrictions since protect is only called when magic is being casted at you
+	casted_magic_flags = casted_magic_flags & ~MAGIC_CASTING_RESTRICTION
+
+	if(casted_magic_flags & antimagic_flags) 
 		protection_sources += parent
-		react?.Invoke(user, charge_cost, parent)
+		reaction?.Invoke(user, charge_cost, parent)
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(user, parent)

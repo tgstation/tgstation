@@ -924,21 +924,21 @@
 	if(client)
 		client << output(null, "statbrowser:check_spells")
 
-///Return any anti magic atom on this mob that matches the magic type
-/mob/proc/anti_magic_check(resistances = MAGIC_RESISTANCE, charge_cost = 1) // see DEFINES/magic.dm for list of antimagic flags
-	if(resistances == NONE)
+///Return any anti magic atom on this mob that matches the magic being cast
+/mob/proc/anti_magic_check(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+	if(casted_magic_flags == NONE)
 		return
 	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, resistances, charge_cost, protection_sources) & COMPONENT_BLOCK_MAGIC)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
-	if(resistances & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		return src 
-	if((resistances & ~MAGIC_CASTING_RESTRICTION) && (resistances & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+	if((casted_magic_flags & ~MAGIC_CASTING_RESTRICTION) && (casted_magic_flags & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
 		return src
-	if((resistances & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		return src
 
 /**
