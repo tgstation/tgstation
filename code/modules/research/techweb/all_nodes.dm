@@ -1546,7 +1546,7 @@
 	id = "mod_entertainment"
 	display_name = "Entertainment Modular Suits"
 	description = "Powered suits for protection against low-humor environments."
-	prereq_ids = list("mod_advanced", "clown")
+	prereq_ids = list("mod_advanced", "social_psych")
 	design_ids = list(
 		"mod_armor_cosmohonk",
 		"mod_bikehorn",
