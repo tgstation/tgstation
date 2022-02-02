@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Bluespace gas vendors no longer deletes the gases it doesn't transfer when transferring gases."
