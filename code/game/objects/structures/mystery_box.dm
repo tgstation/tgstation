@@ -104,12 +104,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 /obj/structure/mystery_box/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	switch(box_state)
-		if(MYSTERY_BOX_COOLING_DOWN)
-
 		if(MYSTERY_BOX_STANDBY)
 			activate(user)
-
-		if(MYSTERY_BOX_CHOOSING)
 
 		if(MYSTERY_BOX_PRESENTING)
 			if(presented_item.claimable)
@@ -124,7 +120,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	valid_types = list()
 
 	for(var/iter_path in typesof(selectable_base_type))
-		if(ispath(iter_path) && ispath(iter_path, /obj/item))
+		if(ispath(iter_path, /obj/item))
 			var/obj/item/iter_item = iter_path
 			if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
 				continue
@@ -138,7 +134,6 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	presented_item.start_animation(src)
 	playsound(src, open_sound, 80, FALSE, channel = CHANNEL_MBOX)
 	playsound(src, crate_open_sound, 80)
-	//addtimer(CALLBACK(src, .proc/present_weapon), MBOX_DURATION_CHOOSING)
 
 /// The box has finished choosing, mark it as available for grabbing
 /obj/structure/mystery_box/proc/present_weapon()
