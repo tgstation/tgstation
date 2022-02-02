@@ -19,6 +19,7 @@
 
 /obj/item/reagent_containers/syringe/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
