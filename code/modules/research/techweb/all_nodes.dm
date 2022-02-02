@@ -940,6 +940,9 @@
 	design_ids = list(
 		"air_horn",
 		"borg_transform_clown",
+		"card_deck",
+		"crayon_box",
+		"dice_bag",
 		"honk_chassis",
 		"honk_head",
 		"honk_left_arm",
@@ -955,9 +958,8 @@
 		"mech_honker",
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
-		"dice_bag",
-		"card_deck",
-		"crayon_box",
+		"piano_synth",
+
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

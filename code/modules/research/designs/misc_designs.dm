@@ -364,6 +364,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/piano_synth
+	name = "Synthesizer"
+	desc = "An advanced electronic synthesizer that can be used as various instruments."
+	id = "piano_synth"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 200)
+	build_path = /obj/item/instrument/piano_synth
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
