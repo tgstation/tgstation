@@ -77,13 +77,6 @@
 		return
 
 	switch(action)
-		if("killbot")
-			if(isAI(usr)&&IS_MALF_AI(usr))
-				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
-				if(can_control(usr, R) && !..())
-					R.self_destruct(usr)
-			else
-				to_chat(usr, span_danger("Access Denied."))
 		if("stopbot")
 			if(allowed(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
@@ -100,7 +93,7 @@
 						if(R.connected_ai)
 							to_chat(R.connected_ai, "[!R.lockcharge ? span_notice("NOTICE - Cyborg lockdown lifted") : span_alert("ALERT - Cyborg lockdown detected")]: <a href='?src=[REF(R.connected_ai)];track=[html_encode(R.name)]'>[R.name]</a><br>")
 					else
-					to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
+						to_chat(usr, span_danger("Cyborg locked by an user with superior permissions."))
 			else
 				to_chat(usr, span_danger("Access Denied."))
 		if("magbot")
