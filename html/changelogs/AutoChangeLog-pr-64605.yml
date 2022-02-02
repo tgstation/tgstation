@@ -1,0 +1,5 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "Upgraded BEPISes now longer give tech for free. For a fully upgraded machine, you now need 200 credits for a 50% chance of a minor reward, and 600 credits for a 50% chance of a major reward."
+  - bugfix: "The BEPIS message telling you that you've gotten all the tech disks and therefore are getting a minor reward instead now properly displays."
