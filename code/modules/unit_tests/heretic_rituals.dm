@@ -20,7 +20,7 @@
 	// so we don't give them one here. The heretic antag datum has side effects when applied,
 	// like creating influences and learning the default knowledge types, so better safe than sorry.
 
-	// Slap them down somewhere. The heretic should be in the middle of the rune, though this doesn't matter.
+	// Slap them down somewhere. The "heretic" should be in the middle of the rune, though this doesn't really matter.
 	our_rune.forceMove(run_loc_floor_bottom_left)
 	our_heretic.forceMove(locate((run_loc_floor_bottom_left.x + 1), (run_loc_floor_bottom_left.y + 1), run_loc_floor_bottom_left.z))
 
@@ -53,25 +53,25 @@
 		// Let's do a dry run of any special checks the knowledge may have
 		// without any atoms passed at all. This is to ensure that,
 		// if the ritual requires specific circumstances we can't setup in this test,
-		// such as freezing temperatures or sacrifice targets,
+		// such as freezing temperatures or humans that are augmented on completion,
 		// that we don't proceede to try to test them (as they'll fail anyways).
 		if(!knowledge.recipe_snowflake_check(our_heretic, list(), list(), get_turf(our_rune)))
 			continue
 
-		// Okay, so we've got a knowledge by this point we definitely want to test
-		// Go though all the atoms it wants for it's ritual and create them on the rune
+		// Okay, so we've got a knowledge by this point we definitely want to test.
+		// Go though all the atoms it wants for it's ritual and create them on the rune.
 		var/list/created_atoms = list()
 		for(var/ritual_item_path in knowledge.required_atoms)
 			var/amount_to_create = knowledge.required_atoms[ritual_item_path]
 			for(var/i in 1 to amount_to_create)
 				created_atoms += new ritual_item_path(get_turf(our_heretic))
 
-		// Now we actually can run the ritual.
+		// Now, we can ACTUALLY run the ritual. Let's do it.
 		// Attempt to run the knowledge via the sacrifice rune.
-		// (do_rituals() is passed a list of knowledges, so we wrap it in a list here.)
 		// If do_rituals() returns FALSE with our knowledge, it messed up.
+		// If do_rituals() returns TRUE, then it was successful.
 		if(!our_rune.do_rituals(our_heretic, list(knowledge)))
-			// Failure state. The knowledge should have everything to succeed, yet it returned FALSE.
+			// We failed. The knowledge should have everything to succeed, yet it returned FALSE!
 			// Clean up the atoms it was meant to consume, so we can keep testing.
 			for(var/atom/leftover as anything in created_atoms)
 				created_atoms -= leftover

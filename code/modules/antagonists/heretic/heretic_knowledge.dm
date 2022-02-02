@@ -346,7 +346,7 @@
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
 		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)][amount_needed == 1 ? "":"s"]..."))
-		requirements_string += "[amount_needed == 1 ? "a":"[amount_needed]"] [initial(path.name)][amount_needed == 1 ? "":"s"]"
+		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)][amount_needed == 1 ? "":"s"]"
 
 	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
@@ -374,6 +374,17 @@
 /datum/heretic_knowledge/final
 	cost = 2
 	required_atoms = list(/mob/living/carbon/human = 3)
+
+/datum/heretic_knowledge/final/on_research(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/total_points = 0
+	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(heretic_datum.get_all_knowledge()))
+		total_points += knowledge.cost
+
+	log_heretic_knowledge("[key_name(owner)] gained knowledge of their final ritual at [worldtime2text()]. \
+		They have [length(heretic_datum)] knowledge nodes researched, totalling [total_points] points \
+		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
 /datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

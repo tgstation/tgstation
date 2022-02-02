@@ -291,7 +291,7 @@
 /datum/heretic_knowledge/flesh_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(target))
+	if(!iscarbon(target) || user == target)
 		return
 
 	var/mob/living/carbon/carbon_target = target

@@ -37,13 +37,12 @@
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag || !isliving(target) || !IS_HERETIC(user) || target == user)
 		return
-	if(ishuman(target) && antimagic_backfire(target, user))
+	if(ishuman(target) && antimagic_check(target, user))
 		return ..()
 
 	if(!on_mob_hit(target, user))
 		return
 
-	message_admins("MELBERT TODO attack chain continues")
 	return ..()
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
@@ -67,8 +66,7 @@
  *
  * Returns TRUE If the attack was blocked. FALSE otherwise.
  */
-/obj/item/melee/touch_attack/mansus_fist/proc/antimagic_backfire(mob/living/carbon/human/target, mob/living/carbon/user)
-	use_charge(user)
+/obj/item/melee/touch_attack/mansus_fist/proc/antimagic_check(mob/living/carbon/human/target, mob/living/carbon/user)
 	if(target.anti_magic_check())
 		target.visible_message(
 			span_danger("The spell bounces off of [target]!"),
@@ -86,7 +84,6 @@
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/on_mob_hit(mob/living/hit, mob/living/heretic)
 	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
-		message_admins("MELBERT TODO blocking charge!")
 		return FALSE
 
 	hit.adjustBruteLoss(10)

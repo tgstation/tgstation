@@ -141,8 +141,15 @@
 	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	move_resist = MOVE_FORCE_OVERPOWERING + 1
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
 	movement_type = GROUND
+	mob_size = MOB_SIZE_HUGE
+	sentience_type = SENTIENCE_BOSS
+	environment_smash = ENVIRONMENT_SMASH_RWALLS
+	mob_biotypes = MOB_ORGANIC|MOB_EPIC
+	obj_damage = 200
 	ranged_cooldown_time = 5
 	ranged = TRUE
 	rapid = 1
@@ -277,7 +284,9 @@
  * a certain health threshold,  we even gain back parts!
  */
 /mob/living/simple_animal/hostile/heretic_summon/armsy/proc/heal()
-	back?.heal()
+	if(back)
+		back.heal()
+		return
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
 	adjustFireLoss(-maxHealth * 0.5, FALSE)
@@ -285,10 +294,14 @@
 	if(health < maxHealth * 0.8)
 		return
 
+	// MELBERT TODO: Bugged, gaining new stacks makes you unlink or something
 	if(++current_stacks < stacks_to_grow)
 		return
 
-	var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = new type(drop_location(),spawn_more = FALSE)
+	if(health)
+		return
+
+	var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = new type(drop_location(), FALSE)
 	icon_state = "armsy_mid"
 	icon_living = "armsy_mid"
 	back = prev
@@ -304,6 +317,7 @@
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/AttackingTarget()
 	if(istype(target, /obj/item/bodypart/r_arm) || istype(target, /obj/item/bodypart/l_arm))
+		playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
 		qdel(target)
 		heal()
 		return
@@ -315,11 +329,6 @@
 	if(!Adjacent(target))
 		return
 	do_attack_animation(target)
-
-	//have fun
-	if(istype(target,/turf/closed/wall))
-		var/turf/closed/wall = target
-		wall.ScrapeAway()
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target

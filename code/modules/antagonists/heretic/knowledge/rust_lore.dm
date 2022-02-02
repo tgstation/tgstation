@@ -56,7 +56,7 @@
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. Surfaces can only be rusted by using Right-Click."
+		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
@@ -220,6 +220,7 @@
 /datum/heretic_knowledge/rust_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
 
+	// No user == target check here, cause it's technically good for the heretic?
 	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
 
 /datum/heretic_knowledge/spell/entropic_plume

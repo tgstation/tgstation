@@ -132,7 +132,8 @@
 		return
 
 	mark.on_effect()
-	 // Also refunds 75% of charge!
+
+	// Also refunds 75% of charge!
 	for(var/obj/effect/proc_holder/spell/targeted/touch/mansus_grasp/grasp in user.mind.spell_list)
 		grasp.charge_counter = min(round(grasp.charge_counter + grasp.charge_max * 0.75), grasp.charge_max)
 
@@ -191,6 +192,9 @@
 
 /datum/heretic_knowledge/ash_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
+
+	if(user == target)
+		return
 
 	target.adjust_fire_stacks(1)
 	target.IgniteMob()
