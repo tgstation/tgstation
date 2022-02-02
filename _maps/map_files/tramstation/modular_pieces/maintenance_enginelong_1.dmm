@@ -11,73 +11,73 @@
 	},
 /obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "b" = (
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "c" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "g" = (
 /turf/closed/wall,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "o" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "s" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "t" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "B" = (
 /obj/modular_map_root/tramstation{
 	key = "maintenance_engine_5x6_east"
 	},
 /turf/closed/wall/rust,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "F" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "K" = (
 /turf/closed/wall/rock/porous,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "N" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "O" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "R" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "U" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_one_access_txt = "12"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "X" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
@@ -96,7 +96,7 @@
 /area/maintenance/tram/mid)
 "Y" = (
 /turf/closed/wall/rust,
-/area/maintenance/central/secondary)
+/area/maintenance/starboard/lesser)
 "Z" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 1
