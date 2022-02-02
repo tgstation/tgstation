@@ -955,7 +955,7 @@
 		"mech_honker",
 		"mech_mousetrap_mortar",
 		"mech_punching_face",
-		"dice_bag"
+		"dice_bag",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
