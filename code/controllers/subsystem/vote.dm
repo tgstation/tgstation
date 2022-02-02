@@ -1,14 +1,16 @@
 SUBSYSTEM_DEF(vote)
 	name = "Vote"
-	wait = 10
-
+	wait = 1 SECONDS
 	flags = SS_KEEP_TIMING|SS_NO_INIT
-
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
+	/// A list of all possible choices for the current vote. Strings
 	var/list/choices = list()
+	/// An assoc list of [vote choices] to [ckeys who have voted for it].
 	var/list/choice_by_ckey = list()
-	var/list/generated_actions = list()
+	/// A list of all generated action buttons
+	var/list/datum/action/generated_actions = list()
+	/// String name of whoever initiated the vote. Usually an admin's key, but can be anything (ex: "the server", "automated vote")
 	var/initiator
 	var/mode
 	var/question
