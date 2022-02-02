@@ -251,7 +251,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "xenomaint"
 	area_flags = VALID_TERRITORY | BLOBS_ALLOWED | UNIQUE_AREA | XENOBIOLOGY_COMPATIBLE | CULT_PERMITTED
 
-//Maintenance - Generic
+//Maintenance - Generic Tunnels
 
 /area/maintenance/aft
 	name = "Aft Maintenance"
@@ -293,7 +293,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Greater Fore Maintenance"
 	icon_state = "greaterforemaint"
 
-/area/maintenace/fore/lesser
+/area/maintenance/fore/lesser
 	name = "Lesser Fore Maintenance"
 	icon_state = "lesserforemaint"
 
@@ -318,11 +318,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "lesserstarboardmaint"
 
 /area/maintenance/starboard/aft
-	name = "Starboard Quarter Maintenance"
+	name = "Aft Starboard Maintenance"
 	icon_state = "asmaint"
 
 /area/maintenance/starboard/fore
-	name = "Starboard Bow Maintenance"
+	name = "Fore Starboard Maintenance"
 	icon_state = "fsmaint"
 
 /area/maintenance/port
@@ -342,17 +342,32 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "lesserportmaint"
 
 /area/maintenance/port/aft
-	name = "Port Quarter Maintenance"
+	name = "Aft Port Maintenance"
 	icon_state = "apmaint"
 
 /area/maintenance/port/fore
-	name = "Port Bow Maintenance"
+	name = "Fore Port Maintenance"
 	icon_state = "fpmaint"
 
+/area/maintenance/tram
+	name = "Primary Tram Maintenance"
+
+/area/maintenance/tram/left
+	name = "\improper Port Tram Underpass"
+	icon_state = "mainttramL"
+
+/area/maintenance/tram/mid
+	name = "\improper Central Tram Underpass"
+	icon_state = "mainttramM"
+
+/area/maintenance/tram/right
+	name = "\improper Starboard Tram Underpass"
+	icon_state = "mainttramR"
+
+//Maintenance - Discrete Areas
 /area/maintenance/disposal
 	name = "Waste Disposal"
 	icon_state = "disposal"
-
 /area/maintenance/disposal/incinerator
 	name = "\improper Incinerator"
 	icon_state = "incinerator"
@@ -369,21 +384,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/maintenance/space_hut/observatory
 	name = "\improper Space Observatory"
-
-/area/maintenance/tram
-	name = "Primary Tram Maintenance"
-
-/area/maintenance/tram/left
-	name = "\improper Port Tram Underpass"
-	icon_state = "mainttramL"
-
-/area/maintenance/tram/mid
-	name = "\improper Central Tram Underpass"
-	icon_state = "mainttramM"
-
-/area/maintenance/tram/right
-	name = "\improper Starboard Tram Underpass"
-	icon_state = "mainttramR"
 
 //Radation storm shelter
 /area/maintenance/radshelter
