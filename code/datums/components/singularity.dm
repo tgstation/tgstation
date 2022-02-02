@@ -220,7 +220,7 @@
 			cached_index = 0
 			return
 
-	turfs_to_consume = list()
+	turfs_to_consume.Cut()
 	cached_index = 0
 
 /datum/component/singularity/proc/move()

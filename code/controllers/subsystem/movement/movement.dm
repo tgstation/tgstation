@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(movement)
 
 /datum/controller/subsystem/movement/stat_entry(msg)
 	var/total_len = 0
-	for(var/list/bucket in sorted_buckets)
+	for(var/list/bucket as anything in sorted_buckets)
 		total_len += length(bucket[MOVEMENT_BUCKET_LIST])
 	msg = "B:[length(sorted_buckets)] E:[total_len]"
 	return ..()
@@ -40,7 +40,7 @@ SUBSYSTEM_DEF(movement)
 	if(!resumed)
 		canonical_time = world.time
 
-	for(var/list/bucket_info in sorted_buckets)
+	for(var/list/bucket_info as anything in sorted_buckets)
 		var/time = bucket_info[MOVEMENT_BUCKET_TIME]
 		if(time > canonical_time || MC_TICK_CHECK)
 			return
