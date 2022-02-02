@@ -24,6 +24,15 @@
 	/// Rotation flags for special behavior 
 	var/rotation_flags = NONE
 
+/**
+ * Adds the ability to rotate an object by Alt-click or using Right-click verbs.
+ * 
+ * args:
+ * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
+ * * can_user_rotate (optional) Callback proc that determines if a user can rotate the object (is user human? nearby? etc.)
+ * * can_be_rotated (optional) Callback proc that determines if the object can be rotated (is obj anchored, etc.)
+ * * after_rotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
+**/
 /datum/component/simple_rotation/Initialize(rotation_flags = NONE, can_user_rotate, can_be_rotated, after_rotation)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
