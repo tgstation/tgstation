@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - balance: "Nerfs the stun on touching a field gen from 30 seconds(!) down to 10. Adds sound and chat message feedback."
