@@ -64,6 +64,8 @@
 
 		return
 
+	unregister_signals()
+
 	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
