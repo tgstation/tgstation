@@ -63,3 +63,57 @@
   timothymtorres:
   - code_imp: Refactored the incapacitated proc to skip optional arguments and use
       the named arguments properly to improve readability.
+2022-02-02:
+  Aerden:
+  - bugfix: Fixed the thermomachine board being listed as a freezer/heater board in
+      the circuit imprinter.
+  - code_imp: Changes the descriptions of the HFR boards to not be the same as the
+      freezer/heater.
+  Capsandi:
+  - bugfix: missing delta turbine air supply pipe has been installed
+  Ghommie:
+  - bugfix: Fixes exodrones erroneously reporting "travelling back to station" in
+      the status panel of their console UI when travelling from site to site.
+  - qol: exodrones will now report the name of the target sites they're travelling
+      to.
+  - bugfix: Fixed an oversight with the skittish trait that let players dive into
+      burial mounds, which are technically a subtype of crates.
+  - bugfix: Fixed a runtime error that made abandoned crates not update their lock
+      lights when unlocked.
+  - bugfix: Fixed an oversight with abandoned crates not resetting the number of attempts
+      left and not nulling the last attempted code when re-locked.
+  - bugfix: Fixed burial mounds somehow getting lock lights overlays.
+  JohnFulpWillard:
+  - bugfix: Clowns uploading their PDA cartridge to a screwdrivered-open airlock will
+      now properly cause it to Honk.
+  MMMiracles:
+  - rscadd: Tramstation's maintenance has taken broken down into more modular segments
+      that will now load in randomly each round.
+  - rscadd: There is now a medical console and crew console in the main medbay treatment
+      room.
+  MacBlaze1:
+  - qol: made ethereals charging from lights repeat until they move.
+  Melbert:
+  - bugfix: Cult deconversion text is the right color again
+  SmoSmoSmoSmok:
+  - bugfix: Connects robotics trashbin to disposal system on tramstation
+  SuperNovaa41:
+  - bugfix: Drones can now properly insert items into machines frames... or really
+      anything else.
+  cacogen:
+  - expansion: 'Changes to Ice Box mining lower levels:'
+  - expansion: Replaces external-facing regular walls with reinforced ones
+  - expansion: Replaces external shutters with external airlocks except for drone
+      bay
+  - expansion: Replaces the drone bay's single set of external shutters with a pair
+  - expansion: Adds outside lights to external airlocks missing them and to fenced-in
+      areas
+  - expansion: Adds warning signs to external airlocks
+  - bugfix: Fire alarms will be renamed with areas like air alarms, e.g. Bar fire
+      alarm --> The Adminbus fire alarm
+  san7890:
+  - bugfix: Nanotrasen moved around some of the wall decorations in IceBoxStation's
+      Science to appease the ghostly overlords (as well as the AI).
+  - balance: Security Officers (and the whole lot) now have a name assigned to their
+      locker room, rather than have it be another appendage of the large beast known
+      as Brig.
