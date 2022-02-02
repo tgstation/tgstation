@@ -394,6 +394,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/decoy_disk
+	name = "Decoy Nuclear Authentication Disk"
+	desc = "A convincing copy of the nuclear authentication disk. Will not stand up to greater scrutiny."
+	id = "decoy_disk"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
+	build_path = /obj/item/disk/nuclear/fake
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////

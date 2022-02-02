@@ -971,6 +971,7 @@
 	prereq_ids = list("social_psych", "syndicate_basic")
 	design_ids = list(
 		"adaptive_cutout",
+		"decoy_disk",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	hidden = TRUE
