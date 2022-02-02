@@ -336,11 +336,31 @@
 
 /datum/design/dice_bag
 	name = "Bag of Dice"
-	desc = "An assorted bag of colorful plastic dice"
+	desc = "An assorted bag of colorful plastic dice."
 	id = "dice_bag"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/dice
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/card_deck
+	name = "Deck of Cards"
+	desc = "A deck of NT standard playing cards."
+	id = "card_deck"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/toy/cards/deck
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/crayon_box
+	name = "Box of Crayons"
+	desc = "A box full of crayons"
+	id = "crayon_box"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/storage/crayons
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
