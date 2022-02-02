@@ -374,6 +374,16 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/adaptive_cutout
+	name = "Adaptive Cutout"
+	desc = "Advanced variety of cardboard cutout typically employed by Syndicate agents."
+	id = "adaptive_cutout"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 2000, /datum/material/gold = 500)
+	build_path = /obj/item/cardboard_cutout/adaptive
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
