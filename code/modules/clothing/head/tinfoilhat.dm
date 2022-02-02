@@ -13,9 +13,9 @@
 	. = ..()
 	if(!warped)
 		AddComponent(/datum/component/anti_magic, \
-			resistances = MAGIC_RESISTANCE_MIND|MAGIC_CASTING_RESTRICTION, \
-			inventory_slots = ITEM_SLOT_HEAD, \
-			total_charges = 6, \
+			antimagic_flags = MAGIC_RESISTANCE_MIND|MAGIC_CASTING_RESTRICTION, \
+			inventory_flags = ITEM_SLOT_HEAD, \
+			charges = 6, \
 			expiration = CALLBACK(src, .proc/warp_up) \
 		)
 	else

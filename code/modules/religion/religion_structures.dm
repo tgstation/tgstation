@@ -92,8 +92,8 @@
 /obj/item/ritual_totem/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, \
-		resistances = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
-		total_charges = 1, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
+		charges = 1, \
 		reaction = CALLBACK(src, .proc/block_magic), \
 		expiration = CALLBACK(src, .proc/expire), \
 	)

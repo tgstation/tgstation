@@ -14,7 +14,7 @@
 	/// The types of magic resistance present on the object
 	var/antimagic_flags
 	/// The amount of times the object can protect the user
-	var/remaining_charges
+	var/charges
 	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
 	/// The proc that is triggered when magic has been successfully blocked
@@ -29,15 +29,15 @@
  * against the type of magic being used
  * 
  * args:
- * * resistances (optional) The types of magic resistance on the object
- * * total_charges (optional) The amount of times the object can protect the user from magic 
- * * inventory_slots (optional) The inventory slot the object must be located at in order to activate
+ * * antimagic_flags (optional) A bitflag with the types of magic resistance on the object
+ * * charges (optional) The amount of times the object can protect the user from magic 
+ * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
  * * reaction (optional) The proc that is triggered when magic has been successfully blocked
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
 **/
 /datum/component/anti_magic/Initialize(
 		antimagic_flags = MAGIC_RESISTANCE,
-		remaining_charges = INFINITY, 
+		charges = INFINITY, 
 		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
 		reaction, 
 		expiration
@@ -51,14 +51,11 @@
 	else
 		return COMPONENT_INCOMPATIBLE
 
-	if(resistances)
-		src.antimagic_flags =  || 
-	if(total_charges)
-		src.remaining_charges = total_charges
-	if(inventory_slots)
-		src.inventory_flags = inventory_slots 
-	src.react = reaction
-	src.expire = expiration
+	src.antimagic_flags = antimagic_flags
+	src.charges = charges
+	src.inventory_flags = inventory_flags 
+	src.reaction = reaction
+	src.expiration = expiration
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
@@ -82,8 +79,8 @@
 	if(resistances & antimagic) 
 		protection_sources += parent
 		react?.Invoke(user, charge_cost, parent)
-		remaining_charges -= charge_cost
-		if(remaining_charges <= 0)
-			expire?.Invoke(user, parent)
+		charges -= charge_cost
+		if(charges <= 0)
+			expiration?.Invoke(user, parent)
 			qdel(src)
 		return COMPONENT_BLOCK_MAGIC

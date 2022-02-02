@@ -598,7 +598,7 @@
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_ALL, inventory_slots = ITEM_SLOT_OCLOTHING)
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_ALL, inventory_flags = ITEM_SLOT_OCLOTHING)
 
 #define MAX_BERSERK_CHARGE 100
 #define PROJECTILE_HIT_MULTIPLIER 1.5
