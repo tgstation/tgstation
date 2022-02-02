@@ -105,6 +105,7 @@
 	face_atom(target)
 	OpenFire()
 
+/// Fires a brimbeam, getting a line of turfs between it and the direction to the target and creating a brimbeam effect on every one of them.
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/fire_laser()
 	if(stat == DEAD)
 		return
@@ -129,8 +130,6 @@
 		new_brimbeam.dir = dir
 		beamparts += new_brimbeam
 		for(var/mob/living/hit_mob in affected_turf.contents)
-			if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
-				continue
 			hit_mob.adjustFireLoss(25)
 			to_chat(hit_mob, span_userdanger("You're hit by [src]'s brimbeam!"))
 	if(length(beamparts))
@@ -140,6 +139,7 @@
 		first_brimbeam.icon_state = "brimbeam_start"
 	addtimer(CALLBACK(src, .proc/end_laser), 2 SECONDS)
 
+/// Deletes all the brimbeam parts and sets variables back to their initial ones.
 /mob/living/simple_animal/hostile/asteroid/brimdemon/proc/end_laser()
 	if(stat != DEAD)
 		icon_state = initial(icon_state)
@@ -175,8 +175,6 @@
 		damage(hit_mob)
 
 /obj/effect/brimbeam/proc/damage(mob/living/hit_mob)
-	if(istype(hit_mob, /mob/living/simple_animal/hostile/asteroid/brimdemon))
-		return
 	hit_mob.adjustFireLoss(5)
 	to_chat(hit_mob, span_danger("You're damaged by [src]!"))
 
@@ -188,7 +186,7 @@
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
 /obj/item/crusher_trophy/brimdemon_fang/effect_desc()
-	return "mark detonation creates effects on the target"
+	return "mark detonation creates visual and audiosensory effects on the target"
 
 /obj/item/crusher_trophy/brimdemon_fang/on_mark_detonation(mob/living/target, mob/living/user)
 	target.balloon_alert_to_viewers("[pick(comic_phrases)]!")

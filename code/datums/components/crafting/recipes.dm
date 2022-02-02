@@ -951,9 +951,11 @@
 /datum/crafting_recipe/ore_sensor
 	name = "Ore Sensor"
 	time = 3 SECONDS
-	reqs = list(/datum/reagent/brimdust = 15,
+	reqs = list(
+		/datum/reagent/brimdust = 15,
 		/obj/item/stack/sheet/bone = 1,
-		/obj/item/stack/sheet/sinew = 1)
+		/obj/item/stack/sheet/sinew = 1,
+	)
 	result = /obj/item/ore_sensor
 	category = CAT_PRIMAL
 
