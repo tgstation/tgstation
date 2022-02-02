@@ -339,7 +339,7 @@
 	desc = "An assorted bag of colorful plastic dice"
 	id = "dice_bag"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/materials/plastic = 1000)
+	materials = list(/datum/material/plastic = 1000)
 	build_path = /obj/item/storage/dice
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
