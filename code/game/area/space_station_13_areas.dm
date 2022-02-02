@@ -880,6 +880,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/storage
 	name = "\improper Atmospherics Storage Room"
+	icon_state = "atmos_storage"
+
+/area/engineering/atmos/storage/gas
+	name = "\improper Atmospherics Gas Storage"
+	icon_state = "atmos_storage_gas"
 
 /area/engineering/atmos/office
 	name = "\improper Atmospherics Office"
