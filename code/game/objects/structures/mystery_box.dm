@@ -120,11 +120,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	valid_types = list()
 
 	for(var/iter_path in typesof(selectable_base_type))
-		if(ispath(iter_path, /obj/item))
-			var/obj/item/iter_item = iter_path
-			if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
-				continue
-			valid_types += iter_path
+		if(!ispath(iter_path, /obj/item))
+			continue
+		var/obj/item/iter_item = iter_path
+		if((initial(iter_item.item_flags) & ABSTRACT) || !initial(iter_item.icon_state) || !initial(iter_item.inhand_icon_state))
+			continue
+		valid_types += iter_path
 
 /// The box has been activated, play the sound and spawn the prop item
 /obj/structure/mystery_box/proc/activate(mob/living/user)
