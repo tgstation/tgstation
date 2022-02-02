@@ -93,7 +93,7 @@ SUBSYSTEM_DEF(movement)
 	var/list/our_entries = buckets["[loop.timer]"]
 	our_entries -= loop
 	if(!our_entries)
-		smash_bucket(bucket_time = loop.timer) // We can't pass a list in for context because we don't have a ref to the relevent list
+		smash_bucket(bucket_time = loop.timer) // We can't pass an index in for context because we don't know our position
 
 /datum/controller/subsystem/movement/proc/add_loop(datum/move_loop/add)
 	add.start_loop()
