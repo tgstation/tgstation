@@ -368,7 +368,7 @@
 	desc = "Load cream pie for optimal results."
 	id = "pie_cannon"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 10000, datum/material/bananium = 3000)
+	materials = list(/datum/material/iron = 10000, /datum/material/bananium = 3000)
 	build_path = /obj/item/pneumatic_cannon/pie
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE | DEPARTMENTAL_FLAG_SECURITY
