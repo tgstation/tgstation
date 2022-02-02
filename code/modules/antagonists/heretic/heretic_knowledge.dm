@@ -21,7 +21,7 @@
 	var/list/banned_knowledge = list()
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
-	var/list/required_atoms = list()
+	var/list/required_atoms
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
 	/// Cost of knowledge in knowlege points
@@ -130,6 +130,11 @@
 	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_gain().
 	var/obj/effect/proc_holder/spell/spell_to_add
 
+/datum/heretic_knowledge/spell/Destroy(force, ...)
+	if(istype(spell_to_add))
+		QDEL_NULL(spell_to_add)
+	return ..()
+
 /datum/heretic_knowledge/spell/on_gain(mob/user)
 	spell_to_add = new spell_to_add()
 	user.mind.AddSpell(spell_to_add)
@@ -147,6 +152,10 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
+
+/datum/heretic_knowledge/limited_amount/Destroy(force, ...)
+	LAZYCLEARLIST(created_items)
+	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return LAZYLEN(created_items) < limit
@@ -283,7 +292,7 @@
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
-/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user)
+/datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
 	var/static/list/potential_organs = list(
 		/obj/item/organ/appendix,
@@ -319,6 +328,7 @@
 		/obj/item/clothing/glasses/sunglasses,
 	)
 
+	required_atoms = list()
 	// 2 organs. Can be the same.
 	required_atoms[pick(potential_organs)] += 1
 	required_atoms[pick(potential_organs)] += 1
@@ -326,6 +336,9 @@
 	required_atoms[pick(potential_easy_items)] += rand(2, 3)
 	// 1 uncommon item.
 	required_atoms[pick(potential_uncommoner_items)] += 1
+
+/datum/heretic_knowledge/knowledge_ritual/on_research(mob/user)
+	. = ..()
 
 	var/list/requirements_string = list()
 

@@ -45,15 +45,25 @@
  */
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
-	do_rituals(user)
+
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	do_rituals(user, flatten_list(heretic_datum?.get_all_knowledge()))
+
 	is_in_use = FALSE
 
 /**
- * Attempt to invoke a ritual from our user's known heretic knowledges.
+ * Attempt to invoke a ritual from the past list of knowledges.
+ *
+ * Arguments
+ * * user - the heretic / the person who invoked the rune
+ * * knowledge_list - a non-assoc list of heretic_knowledge datums.
+ *
+ * returns TRUE if any rituals passed succeeded, FALSE if they all failed.
  */
-/obj/effect/heretic_rune/proc/do_rituals(mob/living/user)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/list/knowledge = heretic_datum.get_all_knowledge()
+/obj/effect/heretic_rune/proc/do_rituals(mob/living/user, list/knowledge_list)
+	if(!length(knowledge_list))
+		CRASH("[type] do_rituals called without any passed knowledge!")
+
 	var/list/atom/movable/atoms_in_range = list()
 
 	for(var/atom/close_atom as anything in range(1, src))
@@ -66,22 +76,21 @@
 
 		atoms_in_range += close_atom
 
-	for(var/knowledge_key in knowledge)
-		var/datum/heretic_knowledge/current_eldritch_knowledge = knowledge[knowledge_key]
+	for(var/datum/heretic_knowledge/knowledge as anything in knowledge_list)
 
 		// It's not a ritual, we don't care.
-		if(!LAZYLEN(current_eldritch_knowledge.required_atoms))
+		if(!LAZYLEN(knowledge.required_atoms))
 			continue
 
 		// A copy of our requirements list.
 		// We decrement the values of to determine if enough of each key is present.
-		var/list/requirements_list = current_eldritch_knowledge.required_atoms.Copy()
+		var/list/requirements_list = knowledge.required_atoms.Copy()
 		// A list of all atoms we've selected to use in this recipe.
 		var/list/selected_atoms = list()
 
 		// Do the snowflake check to see if we can continue or not.
 		// selected_atoms is passed and can be modified by this proc.
-		if(!current_eldritch_knowledge.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
+		if(!knowledge.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
 			continue
 
 		// Now go through all our nearby atoms and see which are good for our ritual.
@@ -127,16 +136,17 @@
 			to_disappear.invisibility = INVISIBILITY_ABSTRACT
 
 		// on_finished_recipe may sleep in the case of some rituals like summons.
-		if(current_eldritch_knowledge.on_finished_recipe(user, selected_atoms, loc))
-			current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+		if(knowledge.on_finished_recipe(user, selected_atoms, loc))
+			knowledge.cleanup_atoms(selected_atoms)
 
 		// Re-appear anything left in the list
 		for(var/atom/to_appear as anything in atoms_to_disappear)
 			to_appear.invisibility = initial(to_appear.invisibility)
 
-		return
+		return TRUE
 
 	balloon_alert(user, "ritual failed, incorrect components!")
+	return FALSE
 
 /obj/effect/heretic_rune/big
 	name = "transmutation rune"

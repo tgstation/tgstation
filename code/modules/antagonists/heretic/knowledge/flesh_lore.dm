@@ -149,6 +149,9 @@
 		if(body.stat != DEAD || isskeleton(body) || ismonkey(body) || HAS_TRAIT(body, TRAIT_HUSK))
 			atoms -= body
 
+	if(!(locate(/mob/living/carbon/human) in atoms))
+		return FALSE
+
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
