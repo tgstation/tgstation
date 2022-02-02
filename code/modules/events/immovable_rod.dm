@@ -35,12 +35,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	priority_announce("What the fuck was that?!", "General Alert")
 
 /datum/round_event/immovable_rod/start()
-	var/datum/round_event_control/immovable_rod/C = control
+	var/datum/round_event_control/immovable_rod/our_controller = control
 	var/startside = pick(GLOB.cardinals)
-	var/turf/endT = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
-	var/turf/startT = spaceDebrisStartLoc(startside, endT.z)
-	var/atom/rod = new /obj/effect/immovablerod(startT, endT, C.special_target, C.force_looping)
-	C.special_target = null //Cleanup for future event rolls.
+	var/turf/end_turf = get_edge_target_turf(get_random_station_turf(), turn(startside, 180))
+	var/turf/start_turf = spaceDebrisStartLoc(startside, end_turf.z)
+	var/atom/rod = new /obj/effect/immovablerod(start_turf, end_turf, our_controller.special_target, our_controller.force_looping)
+	our_controller.special_target = null //Cleanup for future event rolls.
+	our_controller.force_looping = FALSE
 	announce_to_ghosts(rod)
 
 /obj/effect/immovablerod
@@ -73,13 +74,13 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
 
-/obj/effect/immovablerod/New(atom/start, atom/end, aimed_at, force_looping)
+/obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
 	SSaugury.register_doom(src, 2000)
 
-	var/turf/real_destination = get_turf(end)
+	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
-	special_target = aimed_at
+	special_target = specific_target
 	loopy_rod = force_looping
 
 	SSpoints_of_interest.make_point_of_interest(src)
@@ -95,6 +96,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
 	SSaugury.unregister_doom(src)
 	destination_turf = null
+	special_target = null
 	return ..()
 
 /obj/effect/immovablerod/examine(mob/user)

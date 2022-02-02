@@ -31,14 +31,14 @@
 	var/rod_damage_bonus = (spell_level * damage_per_spell_rank)
 
 	for(var/mob/living/caster in targets)
-		var/turf/start_turf = get_turf(caster)
 		new /obj/effect/immovablerod/wizard(
-			start_turf,
-			start = start_turf,
-			end = get_ranged_target_turf(start_turf, caster.dir, (rod_max_distance + 2)), // Just a bit over the distance we got
-			wizard = caster,
-			max_distance = rod_max_distance,
-			damage_bonus = rod_damage_bonus,
+			get_turf(caster),
+			get_ranged_target_turf(get_turf(caster), caster.dir, (rod_max_distance + 2)), // Just a bit over the distance we got
+			null,
+			FALSE,
+			caster,
+			rod_max_distance,
+			rod_damage_bonus,
 		)
 
 /// Wizard Version of the Immovable Rod.
@@ -54,11 +54,11 @@
 	/// The turf the rod started from, to calcuate distance.
 	var/turf/start_turf
 
-/obj/effect/immovablerod/wizard/New(atom/start, atom/end, aimed_at, force_looping, mob/living/wizard, max_distance, damage_bonus)
+/obj/effect/immovablerod/wizard/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE, mob/living/wizard, max_distance = BASE_WIZ_ROD_RANGE, damage_bonus = 0)
 	. = ..()
 	if(wizard)
 		set_wizard(wizard)
-	start_turf = get_turf(start)
+	start_turf = get_turf(src)
 	src.max_distance = max_distance
 	src.damage_bonus = damage_bonus
 
