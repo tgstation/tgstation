@@ -25,7 +25,7 @@
 		ADD_TRAIT(mod.wearer, trait, MOD_TRAIT)
 	mod.wearer.update_sight()
 
-/obj/item/mod/module/visor/on_deactivation()
+/obj/item/mod/module/visor/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

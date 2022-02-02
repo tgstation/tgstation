@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes: 
+  - bugfix: "lost sprites for connectable t-ray goggles found and restored"
