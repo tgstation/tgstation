@@ -11,6 +11,7 @@
 	density = TRUE
 	obj_flags = NO_BUILD // Becomes undense when the unit is open
 	max_integrity = 250
+	circuit = /obj/item/circuitboard/machine/suit_storage
 
 	var/obj/item/clothing/suit/space/suit = null
 	var/obj/item/clothing/head/helmet/space/helmet = null
@@ -210,13 +211,6 @@
 	mod = null
 	storage = null
 	set_occupant(null)
-
-/obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		open_machine()
-		dump_inventory_contents()
-		new /obj/item/stack/sheet/iron(loc, 2)
-	qdel(src)
 
 /obj/machinery/suit_storage_unit/interact(mob/living/user)
 	var/static/list/items
@@ -538,10 +532,12 @@
 		wires.interact(user)
 		return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "close", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))
 			return
 	if(default_pry_open(I))
 		dump_inventory_contents()
+		return
+	if(default_deconstruction_crowbar(I))
 		return
 
 	return ..()
