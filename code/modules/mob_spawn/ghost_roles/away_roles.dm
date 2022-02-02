@@ -9,6 +9,7 @@
 	icon_state = "remains"
 	mob_name = "skeleton"
 	prompt_name = "a skeletal guardian"
+	mob_species = /datum/species/skeleton
 	you_are_text = "By unknown powers, your skeletal remains have been reanimated!"
 	flavour_text = "Walk this mortal plane and terrorize all living adventurers who dare cross your path."
 	spawner_job_path = /datum/job/skeleton

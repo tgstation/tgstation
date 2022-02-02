@@ -34,7 +34,7 @@
 	src.priority = priority
 	src.flags = flags
 
-/datum/move_loop/proc/setup(delay = world.tick_lag, timeout = INFINITY)
+/datum/move_loop/proc/setup(delay = 1, timeout = INFINITY)
 	if(!ismovable(moving) || !owner)
 		return FALSE
 
@@ -95,6 +95,9 @@
 
 	timer = world.time + delay
 	if(QDELETED(src) || !success) //Can happen
+		return
+
+	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
 		return
 
 	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))

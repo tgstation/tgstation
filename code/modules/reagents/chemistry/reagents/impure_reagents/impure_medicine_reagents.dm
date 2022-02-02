@@ -597,7 +597,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/carbon = owner
 	if(!carbon.dna)
 		return
-	var/list/speech_options = list(SWEDISH, UNINTELLIGIBLE, STONER, MEDIEVAL, WACKY, PIGLATIN, NERVOUS, MUT_MUTE)
+	var/list/speech_options = list(
+		/datum/mutation/human/swedish,
+		/datum/mutation/human/unintelligible,
+		/datum/mutation/human/stoner,
+		/datum/mutation/human/medieval,
+		/datum/mutation/human/wacky,
+		/datum/mutation/human/piglatin,
+		/datum/mutation/human/nervousness,
+		/datum/mutation/human/mute,
+		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
 		if(carbon.dna.get_mutation(option))
