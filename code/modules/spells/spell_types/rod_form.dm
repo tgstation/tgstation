@@ -136,3 +136,5 @@
 	wizard.notransform = FALSE
 	wizard.forceMove(get_turf(src))
 	our_wizard = null
+
+#undef BASE_WIZ_ROD_RANGE
