@@ -65,7 +65,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Cargo Bay APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -658,8 +658,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Power Storage APC";
-	pixel_x = 24;
-	pixel_y = 2;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -741,7 +740,7 @@
 "ck" = (
 /obj/machinery/power/apc{
 	name = "Tradepost APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -1456,7 +1455,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Cargo Storage APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
