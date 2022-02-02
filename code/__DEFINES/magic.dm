@@ -27,18 +27,6 @@
 ///Forces the wizard to whisper (and be able to) to cast the spell.
 #define INVOCATION_WHISPER "whisper"
 
-// magic resistance bitflags - used by /mob/proc/anti_magic_check and anti_magic componenent
-/// Default magic resistance that blocks normal magic (wizard, spells, staffs)
-#define MAGIC_RESISTANCE (1<<0)
-/// Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
-#define MAGIC_RESISTANCE_MIND (1<<1)
-/// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god, )
-#define MAGIC_RESISTANCE_HOLY (1<<2)
-/// Prevents a user from casting magic
-#define MAGIC_CASTING_RESTRICTION (1<<3)
-/// All magic resistances combined
-#define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION)
-
 ///Spawns random guns near players and gives some players antag objectives
 #define SUMMON_GUNS "guns"
 ///Spawns random wands and spellbooks near players and gives some players antag objectives
