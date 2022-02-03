@@ -12370,10 +12370,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/science/xenobiology)
-"Ot" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "Ou" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -15745,10 +15741,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
-"YV" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers)
 "YX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -43392,7 +43384,7 @@ Fp
 Fp
 Fp
 Fp
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -43646,9 +43638,9 @@ Fp
 Fp
 Fp
 Fp
-Ot
 Fp
-Ot
+Fp
+Fp
 Fp
 Fp
 Fp
@@ -43902,7 +43894,7 @@ Fp
 Fp
 Fp
 Fp
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -44158,7 +44150,7 @@ Fp
 Fp
 Fp
 Fp
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -44924,7 +44916,7 @@ Fp
 Fp
 Fp
 Fp
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -45174,7 +45166,7 @@ ak
 ak
 ak
 ak
-YV
+ak
 Fp
 Fp
 Fp
@@ -45945,7 +45937,7 @@ ak
 ak
 Fp
 Fp
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -46199,7 +46191,7 @@ ak
 ak
 ak
 ak
-YV
+ak
 Fp
 Fp
 Fp
@@ -46712,7 +46704,7 @@ ak
 ak
 ak
 ak
-Ot
+Fp
 Fp
 Fp
 Fp
@@ -46968,7 +46960,7 @@ ak
 ak
 ak
 ak
-Ot
+Fp
 Fp
 Fp
 Fp
