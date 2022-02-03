@@ -388,7 +388,7 @@
 "kI" = (
 /obj/structure/flora/grass/green,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "lm" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -445,15 +445,15 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "nr" = (
 /obj/structure/flora/rock/icy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "om" = (
 /obj/structure/flora/grass/brown,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "ow" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -612,7 +612,7 @@
 "tX" = (
 /obj/structure/fence/door,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "uU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -624,7 +624,7 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "vO" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -656,7 +656,7 @@
 "wP" = (
 /obj/structure/grille,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "wS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -919,7 +919,7 @@
 /obj/item/wheelchair,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Ex" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 8
@@ -949,13 +949,13 @@
 "FL" = (
 /obj/structure/fence/corner,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "GM" = (
 /obj/structure/fence/corner{
 	dir = 5
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Hm" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1044,7 +1044,7 @@
 /obj/effect/spawner/random/entertainment/cigarette,
 /obj/machinery/light/small/built/directional/south,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "IY" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -1068,7 +1068,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Jt" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1083,7 +1083,7 @@
 /area/ruin/pizzeria)
 "Jv" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "JG" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -1232,7 +1232,7 @@
 "NK" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "NL" = (
 /turf/closed/wall,
 /area/ruin/pizzeria)
@@ -1281,7 +1281,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Pj" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1393,7 +1393,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "RW" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -1409,11 +1409,11 @@
 "RX" = (
 /obj/structure/fence,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Sm" = (
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Sw" = (
 /obj/structure/chair/sofa,
 /obj/effect/turf_decal/tile/blue{
@@ -1438,13 +1438,13 @@
 /obj/item/chair,
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "ST" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Ty" = (
 /obj/machinery/door/airlock{
 	name = "Restrooms"
@@ -1472,7 +1472,7 @@
 /area/ruin/pizzeria)
 "TK" = (
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "TU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1534,7 +1534,7 @@
 "Vi" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Vs" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -1583,7 +1583,7 @@
 "WH" = (
 /obj/structure/flora/rock/pile/icy,
 /turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "WO" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -1617,7 +1617,7 @@
 "WW" = (
 /obj/structure/girder,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "WX" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -1654,7 +1654,7 @@
 "XB" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "XS" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/yellow{
@@ -1680,7 +1680,7 @@
 "YW" = (
 /obj/structure/girder/displaced,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 "Za" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -1712,7 +1712,7 @@
 /obj/vehicle/ridden/scooter/skateboard,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 qR

@@ -11,6 +11,8 @@
 	/// Key used to look up the appropriate map paths in the associated .toml file
 	var/key = null
 
+INITIALIZE_IMMEDIATE(/obj/modular_map_root)
+
 /obj/modular_map_root/Initialize(mapload)
 	. = ..()
 	INVOKE_ASYNC(src, .proc/load_map)

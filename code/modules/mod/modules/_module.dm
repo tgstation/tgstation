@@ -1,4 +1,4 @@
-///MOD module - A special device installed in a MODsuit allowing the suit to do new stuff.
+///MOD Module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
 	name = "MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
@@ -91,10 +91,12 @@
 /// Called when the module is selected from the TGUI, radial or the action button
 /obj/item/mod/module/proc/on_select()
 	if(!mod.active || mod.activating || module_type == MODULE_PASSIVE)
+		if(mod.wearer)
+			balloon_alert(mod.wearer, "not active!")
 		return
 	if(module_type != MODULE_USABLE)
 		if(active)
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 		else
 			on_activation()
 	else
@@ -116,7 +118,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
-		if(mod.selected_module && !mod.selected_module.on_deactivation())
+		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
 			return
 		mod.selected_module = src
 		if(device)
@@ -125,6 +127,7 @@
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
+				mod.wearer.transferItemToLoc(device, src, force = TRUE)
 				return
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
@@ -137,16 +140,16 @@
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation()
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
+		if(display_message)
+			balloon_alert(mod.wearer, device ? "[device] retracted" : "[src] deactivated")
 		if(device)
-			mod.wearer.transferItemToLoc(device, src, TRUE)
-			balloon_alert(mod.wearer, "[device] retracted")
+			mod.wearer.transferItemToLoc(device, src, force = TRUE)
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
 		else
-			balloon_alert(mod.wearer, "[src] deactivated")
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
 	mod.wearer.update_inv_back()
@@ -159,6 +162,7 @@
 		balloon_alert(mod.wearer, "on cooldown!")
 		return FALSE
 	if(!check_power(use_power_cost))
+		balloon_alert(mod.wearer, "not enough charge!")
 		return FALSE
 	if(!allowed_in_phaseout && istype(mod.wearer.loc, /obj/effect/dummy/phased_mob))
 		//specifically a to_chat because the user is phased out.
@@ -174,7 +178,7 @@
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
-	if(mod.wearer.incapacitated(ignore_grab = TRUE))
+	if(mod.wearer.incapacitated(IGNORE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
 	if(!on_use())
@@ -191,7 +195,7 @@
 /obj/item/mod/module/proc/on_process(delta_time)
 	if(active)
 		if(!drain_power(active_power_cost * delta_time))
-			on_deactivation()
+			on_deactivation(display_message = TRUE)
 			return FALSE
 		on_active_process(delta_time)
 	else
@@ -207,6 +211,7 @@
 	if(!check_power(amount))
 		return FALSE
 	mod.subtract_charge(amount)
+	mod.update_charge_alert()
 	return TRUE
 
 /// Checks if there is enough power in the suit
@@ -242,7 +247,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation()
+		on_deactivation(display_message = TRUE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
@@ -288,3 +293,90 @@
 		action = new(mod, src, user)
 		action.Grant(user)
 		pinned_to[user] = action
+
+///Anomaly Locked - Causes the module to not function without an anomaly.
+/obj/item/mod/module/anomaly_locked
+	name = "MOD anomaly locked module"
+	desc = "A form of a module, locked behind an anomalous core to function."
+	incompatible_modules = list(/obj/item/mod/module/anomaly_locked)
+	/// The core item the module runs off.
+	var/obj/item/assembly/signaler/anomaly/core
+	/// Accepted types of anomaly cores.
+	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)
+	/// If this one starts with a core in.
+	var/prebuilt = FALSE
+
+/obj/item/mod/module/anomaly_locked/Initialize(mapload)
+	. = ..()
+	if(!prebuilt || !length(accepted_anomalies))
+		return
+	var/core_path = pick(accepted_anomalies)
+	core = new core_path(src)
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/Destroy()
+	QDEL_NULL(core)
+	return ..()
+
+/obj/item/mod/module/anomaly_locked/examine(mob/user)
+	. = ..()
+	if(!length(accepted_anomalies))
+		return
+	if(core)
+		. += span_notice("There is a [core.name] installed in it. You could remove it with a <b>screwdriver</b>...")
+	else
+		var/list/core_list = list()
+		for(var/path in accepted_anomalies)
+			var/atom/core_path = path
+			core_list += initial(core_path.name)
+		. += span_notice("You need to insert \a [english_list(core_list, and_text = " or ")] for this module to function.")
+
+/obj/item/mod/module/anomaly_locked/on_select()
+	if(!core)
+		balloon_alert(mod.wearer, "no core!")
+		return
+	return ..()
+
+/obj/item/mod/module/anomaly_locked/on_process(delta_time)
+	. = ..()
+	if(!core)
+		return FALSE
+
+/obj/item/mod/module/anomaly_locked/on_active_process(delta_time)
+	if(!core)
+		return FALSE
+	return TRUE
+
+/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
+	if(item.type in accepted_anomalies)
+		if(core)
+			balloon_alert(user, "core already in!")
+			return
+		if(!user.transferItemToLoc(item, src))
+			return
+		core = item
+		balloon_alert(user, "core installed")
+		playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+		update_icon_state()
+	else
+		return ..()
+
+/obj/item/mod/module/anomaly_locked/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!core)
+		balloon_alert(user, "no core!")
+		return
+	balloon_alert(user, "removing core...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return
+	balloon_alert(user, "core removed")
+	core.forceMove(drop_location())
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(core)
+	core = null
+	update_icon_state()
+
+/obj/item/mod/module/anomaly_locked/update_icon_state()
+	icon_state = initial(icon_state) + (core ? "-core" : "")
+	return ..()

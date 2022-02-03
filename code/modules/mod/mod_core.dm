@@ -93,7 +93,7 @@
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
 	if(!charge_source)
 		return FALSE
-	return charge_source.use(amount)
+	return charge_source.use(amount, TRUE)
 
 /obj/item/mod/core/standard/update_charge_alert()
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
@@ -158,9 +158,9 @@
 		return
 	mod.balloon_alert(user, "cell removed")
 	playsound(mod, 'sound/machines/click.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	uninstall_cell()
-	cell.forceMove(drop_location())
-	user.put_in_hands(cell)
+	var/obj/item/cell_to_move = cell
+	cell_to_move.forceMove(drop_location())
+	user.put_in_hands(cell_to_move)
 	mod.update_charge_alert()
 
 /obj/item/mod/core/standard/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)

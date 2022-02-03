@@ -194,5 +194,8 @@
 	if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 		outstring += "\n<br>Works on the dead"
 
+	if(reagent.chemical_flags & REAGENT_CLEANS)
+		outstring += "\n<br>Sanitizes well"
+
 	outstring += "\n|-"
 	return outstring
