@@ -629,9 +629,12 @@
 	reqs = list(/obj/item/clothing/gloves/color/black = 1,
 				/obj/item/stack/cable_coil = 2,
 				/obj/item/radio = 1)
-	blacklist = list(/obj/item/radio/headset, /obj/item/radio/intercom, /obj/item/radio/borg, /obj/item/radio/mech)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= subtypesof(/obj/item/radio)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
