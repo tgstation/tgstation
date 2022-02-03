@@ -95,8 +95,12 @@
 			continue
 
 	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
-	if(!our_turf || !turf_gas)
+	var/datum/gas_mixture/turf_gas
+
+	if(isopenturf(our_turf))
+		turf_gas = our_turf.air
+
+	if(!turf_gas)
 		return FALSE
 
 	check_atmos_process(src, turf_gas, turf_gas.temperature)
