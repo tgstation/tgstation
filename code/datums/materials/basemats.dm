@@ -517,8 +517,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bamboo
 	name = "bamboo"
 	desc = "If it's good enough for pandas, it's good enough for you."
-	color = "#339933"
-	greyscale_colors = "#339933"
+	color = "#87a852"
+	greyscale_colors = "#87a852"
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bamboo
 	value_per_unit = 0.0025

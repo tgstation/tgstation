@@ -237,6 +237,15 @@
 		"pill22" = 'icons/ui_icons/pills/pill22.png',
 	)
 
+/datum/asset/spritesheet/simple/patches
+	name = "patches"
+	assets = list(
+		"bandaid" = 'icons/ui_icons/patches/bandaid.png',
+		"bandaid_brute" = 'icons/ui_icons/patches/bandaid_brute.png',
+		"bandaid_burn" = 'icons/ui_icons/patches/bandaid_burn.png',
+		"bandaid_both" = 'icons/ui_icons/patches/bandaid_both.png'
+	)
+
 /datum/asset/spritesheet/simple/condiments
 	name = "condiments"
 	assets = list(
@@ -569,6 +578,7 @@
 				"restricted" = item.restricted,
 				"limited_stock" = item.limited_stock,
 				"restricted_roles" = item.restricted_roles,
+				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
 			))
 		}

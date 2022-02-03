@@ -183,27 +183,47 @@
 /obj/structure/closet/secure_closet/brig/genpop
 	name = "genpop storage locker"
 	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
-	/// reference to the ID linked to the locker, done by swiping a prisoner ID on it
-	var/datum/weakref/assigned_id = null
 
-/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/C, mob/user)
-	..()
-	if(!assigned_id && istype(C, /obj/item/card/id/advanced/prisoner))
-		assigned_id = WEAKREF(C)
-		name = "genpop storage locker - [C.registered_name]"
-		say("Prisoner ID linked to locker.")
-		return
-	if(C == assigned_id)
-		locked = FALSE
-		assigned_id = initial(assigned_id)
-		name = initial(name)
-		say("Linked prisoner ID detected. Unlocking locker and resetting ID.")
-		update_appearance()
+	///Reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id_ref = null
+
+/obj/structure/closet/secure_closet/brig/genpop/Destroy()
+	assigned_id_ref = null
+	return ..()
 
 /obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
 	. = ..()
-	if(assigned_id)
-		. += span_notice("The digital display on the locker shows it is currently owned by [assigned_id].")
+	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/used_id, mob/user, params)
+	. = ..()
+	if(!istype(used_id, /obj/item/card/id/advanced/prisoner))
+		return
+
+	if(!assigned_id_ref)
+		say("Prisoner ID linked to locker.")
+		assigned_id_ref = WEAKREF(used_id)
+		name = "genpop storage locker - [used_id.registered_name]"
+		return
+	var/obj/item/card/id/advanced/prisoner/registered_id = assigned_id_ref.resolve()
+	if(used_id == registered_id)
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
+	. = ..()
+
+	var/list/id_access = used_id.GetAccess()
+	if(assigned_id_ref && (ACCESS_BRIG in id_access))
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE

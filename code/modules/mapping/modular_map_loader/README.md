@@ -14,6 +14,8 @@ This root object handled picking and loading in map modules. It has two variable
 * `var/key` - A string, used to pull a list of `.dmm` files from the configuration file.
 * `load_map()` - Called asynchronously in the root's `Initialize()`. This proc creates a new instance of `/datum/map_template/map_module`, ingests the configuration file `config_file` points to, and picks a `.dmm` file path which maps to the root's `key`, by picking a random filename from among those which `key` maps to, and appending it to a folder path. This file path is passed into the map templace instance's `load()`, and the template takes over.
 
+INITIALIZE_IMMEDIATE is used to ensure the ruins are loaded at the right time to avoid runtime errors related to lighting.
+
 ### /datum/map_template/map_module
 
 This map templace subtype is responsible for loading in the module, it has two variables and two relevant procs.

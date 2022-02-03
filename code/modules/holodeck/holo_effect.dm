@@ -108,10 +108,21 @@
 
 /obj/effect/holodeck_effect/mobspawner/pet/Initialize(mapload)
 	. = ..()
-	mobtype = list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/chick/holo, /mob/living/simple_animal/pet/fox)
-	mobtype += pick(/mob/living/simple_animal/pet/dog/corgi, /mob/living/simple_animal/pet/dog/corgi/puppy,
-		/mob/living/simple_animal/pet/dog/pug)
-	mobtype += pick(/mob/living/simple_animal/pet/cat, /mob/living/simple_animal/pet/cat/kitten)
+	mobtype = list(
+		/mob/living/simple_animal/butterfly,
+		/mob/living/simple_animal/chick/holo,
+		/mob/living/simple_animal/pet/fox,
+		/mob/living/simple_animal/rabbit,
+	)
+	mobtype += pick(
+		/mob/living/simple_animal/pet/dog/corgi,
+		/mob/living/simple_animal/pet/dog/corgi/puppy,
+		/mob/living/simple_animal/pet/dog/pug,
+	)
+	mobtype += pick(
+		/mob/living/simple_animal/pet/cat,
+		/mob/living/simple_animal/pet/cat/kitten,
+	)
 
 /obj/effect/holodeck_effect/mobspawner/bee
 	mobtype = /mob/living/simple_animal/hostile/bee/toxin

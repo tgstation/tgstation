@@ -1,4 +1,0 @@
-author: "FlamingCheese"
-delete-after: True
-changes: 
-  - bugfix: "Replaced snowed over plating in icebox airlocks with regular plating to make the plating unable to generate dangerous gases"
