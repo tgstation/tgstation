@@ -455,7 +455,9 @@
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
-	if(!(flags & IGNORE_RESTRAINTS) && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)))
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
 		return TRUE
 	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
 		return TRUE
@@ -941,7 +943,7 @@
 /mob/living/can_resist()
 	if(next_move > world.time)
 		return FALSE
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_GRAB))
 		return FALSE
 	return TRUE
 
