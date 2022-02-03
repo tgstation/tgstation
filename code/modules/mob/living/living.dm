@@ -939,7 +939,7 @@
 	..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	if(!(next_move > world.time))
+	if(next_move > world.time)
 		return FALSE
 	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return FALSE
