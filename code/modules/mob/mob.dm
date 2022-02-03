@@ -943,7 +943,7 @@
 	return FALSE
 
 /**
- * Checks to see if the mob can block or prevent magic usage
+ * Checks to see if the mob can block magic
  * 
  * args:
  * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
