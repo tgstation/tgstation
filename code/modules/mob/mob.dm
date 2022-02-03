@@ -928,24 +928,23 @@
  * Checks to see if the mob can block magic
  * 
  * args:
- * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked
+ * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
  * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
 **/
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
-	if(casted_magic_flags == NONE)
-		return
-	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost, protection_sources) & COMPONENT_BLOCK_MAGIC)
-		if(protection_sources.len)
-			return pick(protection_sources)
-		else
-			return src
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost) & COMPONENT_BLOCK_MAGIC)
+		return TRUE
+
 	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
-		return src
-	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
-		return src 
+		return TRUE
+	if(casted_magic_flags & MAGIC_RESISTANCE_HOLY && HAS_TRAIT(src, TRAIT_HOLY))
+		return TRUE 
 	if((casted_magic_flags & ~MAGIC_CASTING_RESTRICTION) && (casted_magic_flags & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
-		return src
+		return TRUE
+	return FALSE
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob

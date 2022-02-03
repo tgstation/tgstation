@@ -65,14 +65,14 @@
 
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
-/datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost, list/protection_sources)
+/datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
 	// ignore magic casting restrictions since protect is only called when magic is being casted at you
 	casted_magic_flags = casted_magic_flags & ~MAGIC_CASTING_RESTRICTION
 
+	// disclaimer - All anti_magic sources will be drained a charge_cost
 	if(casted_magic_flags & antimagic_flags) 
-		protection_sources += parent
 		reaction?.Invoke(user, charge_cost, parent)
 		charges -= charge_cost
 		if(charges <= 0)
