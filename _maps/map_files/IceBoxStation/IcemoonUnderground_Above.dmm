@@ -132,13 +132,6 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"ay" = (
-/obj/effect/turf_decal/trimline/green/filled/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/requests_console/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
-/turf/open/floor/iron/dark,
-/area/medical/virology)
 "az" = (
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -517,13 +510,6 @@
 /obj/item/wirecutters,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"bB" = (
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 10
-	},
-/obj/machinery/requests_console/directional/south,
-/turf/open/floor/iron/white,
-/area/medical/virology)
 "bC" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -749,6 +735,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"cs" = (
+/obj/structure/stairs/south{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/commons/dorms/laundry)
 "ct" = (
 /obj/machinery/disposal/bin,
 /obj/structure/window/reinforced,
@@ -2678,12 +2670,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
-"iG" = (
-/obj/structure/stairs/south{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/commons/dorms/laundry)
 "iH" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/tile/purple,
@@ -5398,6 +5384,17 @@
 "rz" = (
 /turf/closed/wall/r_wall,
 /area/mine/living_quarters)
+"rA" = (
+/obj/effect/turf_decal/trimline/green/filled/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
+/obj/machinery/requests_console/directional/south{
+	department = "Virology";
+	name = "Virology Requests Console";
+	receive_ore_updates = 1
+	},
+/turf/open/floor/iron/dark,
+/area/medical/virology)
 "rB" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
@@ -6828,6 +6825,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"wb" = (
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 10
+	},
+/obj/machinery/requests_console/directional/south{
+	department = "Virology";
+	name = "Virology Requests Console";
+	receive_ore_updates = 1
+	},
+/turf/open/floor/iron/white,
+/area/medical/virology)
 "wc" = (
 /obj/structure/table,
 /obj/item/paper{
@@ -34386,7 +34394,7 @@ ak
 ak
 ak
 iK
-iG
+cs
 fn
 cP
 vc
@@ -34643,7 +34651,7 @@ ak
 ak
 ak
 iK
-iG
+cs
 fn
 cP
 Qg
@@ -54457,7 +54465,7 @@ hY
 hx
 QM
 fA
-bB
+wb
 RW
 RW
 Fp
@@ -56770,7 +56778,7 @@ Vg
 MH
 jA
 Bo
-ay
+rA
 RW
 RW
 Et
