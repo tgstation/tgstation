@@ -448,7 +448,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
-				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
+				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged && LAZYLEN(faction))
 					targets+= sillyconerobot
 
 		else if(iscarbon(A))
