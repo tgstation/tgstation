@@ -950,8 +950,6 @@
  * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
 **/
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
-	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
-		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost) & COMPONENT_BLOCK_MAGIC)
 		return TRUE
 	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))

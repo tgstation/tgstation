@@ -72,6 +72,9 @@
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+		
 	// ignore magic casting restrictions since protect is only called when magic is being casted at you
 	casted_magic_flags = casted_magic_flags & ~MAGIC_CASTING_RESTRICTION
 
