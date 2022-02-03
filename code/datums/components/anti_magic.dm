@@ -43,6 +43,7 @@
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect)
+		RegisterSignal(parent, COMSIG_MOB_CAST_MAGIC, .proc/try_casting)
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -57,13 +58,16 @@
 
 	if(!(inventory_flags & slot)) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
+		UnregisterSignal(equipper, COMSIG_MOB_CAST_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_CAST_MAGIC, .proc/try_casting)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
+	UnregisterSignal(user, COMSIG_MOB_CAST_MAGIC)
 
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
@@ -78,4 +82,12 @@
 		if(charges <= 0)
 			expiration?.Invoke(user, parent)
 			qdel(src)
+		return COMPONENT_BLOCK_MAGIC
+
+/datum/component/anti_magic/proc/try_casting(datum/source, mob/user, magic_flags)
+	SIGNAL_HANDLER
+
+	// if we are trying to cast wizard spells (not mime abilities, abductor telepathy, etc.)
+	// and we have an antimagic equipped that blocks casting, we can't cast that type of magic
+	if((magic_flags & MAGIC_RESISTANCE) && (antimagic_flags & MAGIC_CASTING_RESTRICT))
 		return COMPONENT_BLOCK_MAGIC

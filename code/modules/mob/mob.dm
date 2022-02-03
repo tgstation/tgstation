@@ -925,7 +925,25 @@
 		client << output(null, "statbrowser:check_spells")
 
 /**
- * Checks to see if the mob can block magic
+ * Checks to see if the mob can cast normal magic spells.
+ * 
+ * args:
+ * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
+**/
+/mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	var/static/charge_cost = 0 // charge cost will always be zero when checking if we can cast magic
+
+	// if all equipped antimagic items don't have a casting magic restriction we can cast magic
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_CAST_MAGIC, src, magic_flags = MAGIC_CASTING_RESTRICT, charge_cost) & COMPONENT_BLOCK_MAGIC))
+		return TRUE
+	// if we have this trait the magic casting restrictions can be bypassed
+	if(!HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+		return TRUE
+
+	return FALSE
+
+/**
+ * Checks to see if the mob can block or prevent magic usage
  * 
  * args:
  * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
@@ -934,16 +952,12 @@
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
-
 	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost) & COMPONENT_BLOCK_MAGIC)
 		return TRUE
-
 	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		return TRUE
 	if(casted_magic_flags & MAGIC_RESISTANCE_HOLY && HAS_TRAIT(src, TRAIT_HOLY))
 		return TRUE 
-	if((casted_magic_flags & ~MAGIC_CASTING_RESTRICTION) && (casted_magic_flags & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
-		return TRUE
 	return FALSE
 
 /**
