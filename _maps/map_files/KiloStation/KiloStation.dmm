@@ -5433,7 +5433,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Genetics Lab";
-	req_access_txt = "47, 9"
+	req_one_access_txt = "47;9"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -12165,7 +12165,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research{
 	name = "Genetics Lab";
-	req_access_txt = "47, 9"
+	req_one_access_txt = "47;9"
 	},
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 1
@@ -14605,7 +14605,7 @@
 	},
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "8"
+	req_one_access_txt = "47;9"
 	},
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
@@ -25103,13 +25103,13 @@
 /turf/closed/wall/rust,
 /area/maintenance/starboard)
 "cNO" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Connector";
-	req_one_access_txt = "10;24;5"
+	req_one_access_txt = "10;24"
 	},
-/obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/abandoned,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard)
 "cNR" = (
@@ -45537,7 +45537,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Lab";
-	req_access_txt = "8"
+	req_access_txt = "55"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -60609,7 +60609,7 @@
 /obj/machinery/door/airlock/research{
 	id_tag = "ResearchInt";
 	name = "Research Division";
-	req_one_access_txt = "47"
+	req_one_access_txt = "47;9"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
@@ -72197,7 +72197,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/research{
 	name = "Xenobiology Closet";
-	req_access_txt = "47"
+	req_access_txt = "55"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -81853,7 +81853,7 @@
 /obj/machinery/door/airlock/research{
 	id_tag = "ResearchInt";
 	name = "Research Division";
-	req_one_access_txt = "47, 9"
+	req_one_access_txt = "47;9"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 4
