@@ -1,7 +1,7 @@
-// Flags for [/obj/item/grenade/var/dud]
-/// The grenade cannot detontate. At all.
+// Flags for [/obj/item/grenade/var/dud_flags]
+/// The grenade cannot detonate at all. It is innately nonfunctional.
 #define GRENADE_DUD (1<<0)
-/// The grenade has been used and as such, cannot detonate.
+/// The grenade has been used and as such cannot detonate.
 #define GRENADE_USED (1<<1)
 
 /**
@@ -23,8 +23,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
-	/// Whether this grenade can detonate.
-	var/dud = FALSE
+	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
+	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
 	///How long it takes for a grenade to explode after being armed
@@ -59,7 +59,7 @@
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
-	return dud ? SHAME : BRUTELOSS
+	return dud_flags ? SHAME : BRUTELOSS
 
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -95,7 +95,7 @@
 			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
 			. += "\The [src] is set for instant detonation."
-	if (dud & GRENADE_USED)
+	if (dud_flags & GRENADE_USED)
 		. += span_warning("It looks like [p_theyve()] already been used.")
 
 /obj/item/grenade/attack_self(mob/user)
@@ -112,7 +112,7 @@
 		arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user)
-	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud)
+	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
@@ -142,11 +142,11 @@
  * * lanced_by- If this grenade was detonated by an elance, we need to pass that along with the COMSIG_GRENADE_DETONATE signal for pellet clouds
  */
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
-	if (dud)
+	if (dud_flags)
 		active = FALSE
 		return FALSE
 
-	dud |= GRENADE_USED // Don't detonate if we have already detonated.
+	dud_flags |= GRENADE_USED // Don't detonate if we have already detonated.
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)

@@ -61,7 +61,7 @@
 	shrapnel_radius = 12
 
 /obj/item/grenade/stingbang/detonate(mob/living/lanced_by)
-	if(dud)
+	if(dud_flags)
 		return FALSE
 
 	if(iscarbon(loc))

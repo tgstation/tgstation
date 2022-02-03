@@ -56,7 +56,7 @@
 /datum/wires/explosive/chem_grenade/explode()
 	var/obj/item/grenade/chem_grenade/grenade = holder
 	var/obj/item/assembly/assembly = get_attached(get_wire(1))
-	if(!grenade.dud)
+	if(!grenade.dud_flags)
 		message_admins("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
 	log_game("\An [assembly] has pulsed [grenade] ([grenade.type]), which was installed by [fingerprint].")
 	var/mob/M = get_mob_by_ckey(fingerprint)

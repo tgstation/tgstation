@@ -101,11 +101,11 @@
 
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
-	if(dud & GRENADE_USED)
+	if(dud_flags & GRENADE_USED)
 		balloon_alert(user, span_notice("resetting trigger..."))
 		if (do_after(user, 2 SECONDS, src))
 			balloon_alert(user, span_notice("trigger reset"))
-			dud &= GRENADE_USED
+			dud_flags &= GRENADE_USED
 		return
 
 	if(stage == GRENADE_WIRED)
@@ -204,9 +204,9 @@
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
-		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud)
+		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud_flags)
 	else
-		log_bomber(user, "primed a", src, "containing:[reagent_string]", message_admins = !dud)
+		log_bomber(user, "primed a", src, "containing:[reagent_string]", message_admins = !dud_flags)
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	log_grenade(user) //Inbuilt admin procs already handle null users
@@ -261,7 +261,7 @@
 	threatscale = 1.1 // 10% more effective.
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY || dud)
+	if(stage != GRENADE_READY || dud_flags)
 		active = FALSE
 		return FALSE
 
@@ -361,7 +361,7 @@
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY || dud)
+	if(stage != GRENADE_READY || dud_flags)
 		active = FALSE
 		return
 

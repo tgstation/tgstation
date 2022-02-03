@@ -45,7 +45,7 @@
 		return ..()
 
 /obj/item/grenade/c4/detonate(mob/living/lanced_by)
-	if(QDELETED(src) || dud)
+	if(QDELETED(src) || dud_flags)
 		return
 
 	. = ..()
