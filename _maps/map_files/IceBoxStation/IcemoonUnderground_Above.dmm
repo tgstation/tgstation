@@ -2682,7 +2682,7 @@
 /obj/structure/stairs/south{
 	dir = 1
 	},
-/turf/open/genturf,
+/turf/open/floor/iron,
 /area/commons/dorms/laundry)
 "iH" = (
 /obj/structure/closet/firecloset,
