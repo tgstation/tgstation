@@ -323,7 +323,7 @@
 	var/obj/item/stack/sheet/sheet_for_plating = W
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
-			to_chat(user, span_warning("You need four sheets of iron to finish a wall on [src]!"))
+			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40*platingmodifier, target = src))

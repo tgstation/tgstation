@@ -516,6 +516,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "VP" = (
 /obj/structure/table/reinforced,
+/obj/item/gps/spaceruin,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},

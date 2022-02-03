@@ -117,3 +117,46 @@
   - balance: Security Officers (and the whole lot) now have a name assigned to their
       locker room, rather than have it be another appendage of the large beast known
       as Brig.
+2022-02-03:
+  Fikou, Armhulen, smartkar:
+  - rscadd: Brimdemons have invaded Lavaland.
+  - rscdel: Lobstrocities have awakened from their lavaland slumber, this somehow
+      made them unavailable in the gold slime pool.
+  Gamer025:
+  - bugfix: Stickyban subsystem no longer runtimes on invalid entries
+  Jolly-66:
+  - bugfix: Removed a duped pipe from Icebox and a duped power cable from Tram.
+  LemonInTheDark:
+  - bugfix: Merge datums will no longer spit blood if two mergable objects are on
+      the first tile examined. The directions are also trustworthy now
+  Melbert:
+  - bugfix: Fixes a hard delete with rod form. Also cleans up some rod code.
+  - bugfix: Admin sending a looping rod will no longer make all following rods loop
+  Pepsilawn:
+  - bugfix: lost sprites for connectable t-ray goggles found and restored
+  RandomGamer123:
+  - bugfix: Upgraded BEPISes now longer give tech for free. For a fully upgraded machine,
+      you now need 200 credits for a 50% chance of a minor reward, and 600 credits
+      for a 50% chance of a major reward.
+  - bugfix: The BEPIS message telling you that you've gotten all the tech disks and
+      therefore are getting a minor reward instead now properly displays.
+  Ryll/Shaps:
+  - rscadd: Added in a new admin spawn, the mystery box! Dealing randomized (maybe)
+      death to thunderdomes near you! Maybe!
+  Tastyfish:
+  - bugfix: Calls via holopads now transmit the caller's speech again.
+  jlsnow301:
+  - balance: Nerfs the stun on touching a field gen from 30 seconds(!) down to 10.
+      Adds sound and chat message feedback.
+  san7890:
+  - balance: Nanotrasen has updated how they name and define different parts of their
+      loot-laden maintenance tunnels. Take a look around you!
+  tastyfish:
+  - server: Added some more CI linter checks for maps, that are otherwise caught at
+      runtime. This will likely fail downstream maps if they're double stacking objects
+      which aren't allowed to stack, or misplacing APC's.
+  tf-4:
+  - spellcheck: Not having enough iron to create a foam wall no longer erroneously
+      tells you that you need four iron sheets instead of two.
+  timothymtorres:
+  - qol: Adds more trash items to the garbage and cigbutt spawner.
