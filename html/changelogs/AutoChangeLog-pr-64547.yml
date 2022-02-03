@@ -1,0 +1,4 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - bugfix: "ethereals can now charge themselves using right click, but they will also lock/unlock the APC above normal charge"
