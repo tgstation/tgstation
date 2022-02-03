@@ -101,6 +101,13 @@
 
 /obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
+	if(dud & GRENADE_USED)
+		balloon_alert(user, span_notice("resetting trigger..."))
+		if (do_after(user, 2 SECONDS, src))
+			balloon_alert(user, span_notice("trigger reset"))
+			dud &= GRENADE_USED
+		return
+
 	if(stage == GRENADE_WIRED)
 		if(beakers.len)
 			stage_change(GRENADE_READY)
@@ -197,9 +204,9 @@
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
-		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]")
+		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud)
 	else
-		log_bomber(user, "primed a", src, "containing:[reagent_string]")
+		log_bomber(user, "primed a", src, "containing:[reagent_string]", message_admins = !dud)
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	log_grenade(user) //Inbuilt admin procs already handle null users
@@ -224,6 +231,9 @@
 		return
 
 	. = ..()
+	if(!.)
+		return
+
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
 		reactants += glass_beaker.reagents
@@ -251,7 +261,8 @@
 	threatscale = 1.1 // 10% more effective.
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud)
+		active = FALSE
 		return FALSE
 
 
@@ -350,7 +361,8 @@
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud)
+		active = FALSE
 		return
 
 	var/total_volume = 0
