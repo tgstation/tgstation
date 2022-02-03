@@ -584,7 +584,7 @@
 	var/energy_recharge_cyborg_drain_coefficient = 0.4
 	var/cyborg_cell_critical_percentage = 0.05
 	var/mob/living/silicon/robot/host = null
-	var/datum/proximity_monitor/advanced/peaceborg_dampener/dampening_field
+	var/datum/proximity_monitor/advanced/projectile_dampener/peaceborg/dampening_field
 	var/projectile_damage_coefficient = 0.5
 	/// Energy cost per tracked projectile damage amount per second
 	var/projectile_damage_tick_ecost_coefficient = 10
@@ -652,8 +652,6 @@
 /obj/item/borg/projectile_dampen/proc/deactivate_field()
 	QDEL_NULL(dampening_field)
 	visible_message(span_warning("\The [src] shuts off!"))
-	for(var/P in tracked)
-		restore_projectile(P)
 	active = FALSE
 
 	var/mob/living/silicon/robot/owner = get_host()
@@ -708,11 +706,8 @@
 		host.cell.use(energy_recharge * delta_time * energy_recharge_cyborg_drain_coefficient)
 		energy += energy_recharge * delta_time
 
-/obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/P, track_projectile = TRUE)
-	if(tracked[P])
-		return
-	if(track_projectile)
-		tracked[P] = P.damage
+/obj/item/borg/projectile_dampen/proc/dampen_projectile(datum/source, obj/projectile/P)
+	tracked[P] = P.damage
 	P.damage *= projectile_damage_coefficient
 	P.speed *= projectile_speed_coefficient
 	P.add_overlay(projectile_effect)

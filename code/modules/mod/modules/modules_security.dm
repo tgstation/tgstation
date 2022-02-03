@@ -181,3 +181,55 @@
 		var/mob/living/simple_animal/hostile/illusion/mirage/mirage = new(get_turf(src))
 		mirage.Copy_Parent(thrower, 15 SECONDS)
 	qdel(src)
+
+///Projectile Dampener - Weakens projectiles in range.
+/obj/item/mod/module/projectile_dampener
+	name = "MOD projectile dampener module"
+	desc = "Using technology from peaceborgs, this module weakens all projectiles in nearby range."
+	module_type = MODULE_TOGGLE
+	complexity = 3
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/projectile_dampener)
+	cooldown_time = 1.5 SECONDS
+	/// Radius of the dampening field.
+	var/field_radius = 2
+	/// Damage multiplier on projectiles.
+	var/damage_multiplier = 0.75
+	/// Speed multiplier on projectiles, higher means slower.
+	var/speed_multiplier = 2.5
+	/// List of all tracked projectiles.
+	var/list/tracked_projectiles = list()
+	/// Effect image on projectiles.
+	var/image/projectile_effect
+	/// The dampening field
+	var/datum/proximity_monitor/advanced/projectile_dampener/dampening_field
+
+/obj/item/mod/module/projectile_dampener/Initialize(mapload)
+	. = ..()
+	projectile_effect = image('icons/effects/fields.dmi', "projectile_dampen_effect")
+
+/obj/item/mod/module/projectile_dampener/on_activation()
+	. = ..()
+	if(!.)
+		return
+	if(istype(dampening_field))
+		QDEL_NULL(dampening_field)
+	dampening_field = new(mod.wearer, field_radius, TRUE, src)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_CAPTURE, .proc/dampen_projectile)
+	RegisterSignal(dampening_field, COMSIG_DAMPENER_RELEASE, .proc/release_projectile)
+
+/obj/item/mod/module/projectile_dampener/on_deactivation(display_message)
+	. = ..()
+	if(!.)
+		return
+	QDEL_NULL(dampening_field)
+
+/obj/item/mod/module/projectile_dampener/proc/dampen_projectile(datum/source, obj/projectile/projectile)
+	projectile.damage *= damage_multiplier
+	projectile.speed *= speed_multiplier
+	projectile.add_overlay(projectile_effect)
+
+/obj/item/mod/module/projectile_dampener/proc/release_projectile(datum/source, obj/projectile/projectile)
+	projectile.damage /= damage_multiplier
+	projectile.speed /= speed_multiplier
+	projectile.cut_overlay(projectile_effect)
