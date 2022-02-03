@@ -420,9 +420,9 @@
 /datum/design/clown_cartridge
 	name = "Clown PDA Cartridge"
 	desc = "PDA Cartridge covered with polytetrafluoroethylene and banana drippings. Very funny."
-	id =  "clown_cartridge"
+	id = "clown_cartridge"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = = list(/datum/material/iron = 500, /datum/material/bananium = 100)
+	materials =  list(/datum/material/iron = 500, /datum/material/bananium = 100)
 	build_path = /obj/item/cartridge/virus/clown
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
