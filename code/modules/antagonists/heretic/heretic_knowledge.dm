@@ -110,12 +110,16 @@
  * Goes through and cleans up (deletes)
  * all atoms in the selected_atoms list.
  *
- * Overide this proc if you don't want ALL ATOMS to be destroyed.
+ * Remove atoms from the selected_atoms
+ * (either in this proc or in on_finished_recipe)
+ * to NOT have certain atoms deleted on cleanup.
  *
  * Arguments
  * * selected_atoms - a list of all atoms we intend on destroying.
  */
 /datum/heretic_knowledge/proc/cleanup_atoms(list/selected_atoms)
+	SHOULD_CALL_PARENT(TRUE)
+
 	for(var/atom/sacrificed as anything in selected_atoms)
 		if(isliving(sacrificed))
 			continue
@@ -135,8 +139,11 @@
 		QDEL_NULL(spell_to_add)
 	return ..()
 
-/datum/heretic_knowledge/spell/on_gain(mob/user)
+/datum/heretic_knowledge/spell/on_research(mob/user)
+	. = ..()
 	spell_to_add = new spell_to_add()
+
+/datum/heretic_knowledge/spell/on_gain(mob/user)
 	user.mind.AddSpell(spell_to_add)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user)
@@ -158,6 +165,11 @@
 	return ..()
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/datum/weakref/ref as anything in created_items)
+		var/atom/real_thing = ref?.resolve()
+		if(QDELETED(real_thing))
+			LAZYREMOVE(created_items.ref)
+
 	return LAZYLEN(created_items) < limit
 
 /datum/heretic_knowledge/limited_amount/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
@@ -228,13 +240,11 @@
  * Calls a curse onto [chosen_mob].
  */
 /datum/heretic_knowledge/curse/proc/curse(mob/living/chosen_mob)
-	return
 
 /**
  * Removes a curse from [chosen_mob]. Used in timers / callbacks.
  */
 /datum/heretic_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
-	return
 
 /*
  * A knowledge subtype lets the heretic summon a monster with the ritual.
@@ -382,7 +392,7 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(heretic_datum.get_all_knowledge()))
 		total_points += knowledge.cost
 
-	log_heretic_knowledge("[key_name(owner)] gained knowledge of their final ritual at [worldtime2text()]. \
+	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
 		They have [length(heretic_datum)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
