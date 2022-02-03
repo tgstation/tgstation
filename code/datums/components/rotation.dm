@@ -38,9 +38,9 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.rotation_flags = rotation_flags
-	src.can_user_rotate = can_user_rotate || CALLBACK(src,.proc/default_can_user_rotate)
-	src.can_be_rotated = can_be_rotated || CALLBACK(src,.proc/default_can_be_rotated)
-	src.after_rotation = after_rotation || CALLBACK(src,.proc/default_after_rotation)
+	src.can_user_rotate = can_user_rotate || CALLBACK(src,. proc/default_can_user_rotate)
+	src.can_be_rotated = can_be_rotated || CALLBACK(src,. proc/default_can_be_rotated)
+	src.after_rotation = after_rotation || CALLBACK(src, .proc/default_after_rotation)
 
 /datum/component/simple_rotation/proc/add_signals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
