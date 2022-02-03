@@ -263,6 +263,7 @@
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY || dud_flags)
 		active = FALSE
+		update_appearance()
 		return FALSE
 
 
@@ -363,6 +364,7 @@
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
 	if(stage != GRENADE_READY || dud_flags)
 		active = FALSE
+		update_appearance()
 		return
 
 	var/total_volume = 0

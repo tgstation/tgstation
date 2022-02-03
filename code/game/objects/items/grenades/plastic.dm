@@ -45,8 +45,12 @@
 		return ..()
 
 /obj/item/grenade/c4/detonate(mob/living/lanced_by)
-	if(QDELETED(src) || dud_flags)
-		return
+	if(QDELETED(src))
+		return FALSE
+	if(dud_flags)
+		active = FALSE
+		update_appearance()
+		return FALSE
 
 	. = ..()
 	var/turf/location

@@ -62,6 +62,8 @@
 
 /obj/item/grenade/stingbang/detonate(mob/living/lanced_by)
 	if(dud_flags)
+		active = FALSE
+		update_appearance()
 		return FALSE
 
 	if(iscarbon(loc))

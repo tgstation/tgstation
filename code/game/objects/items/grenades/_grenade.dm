@@ -144,6 +144,7 @@
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
 	if (dud_flags)
 		active = FALSE
+		update_appearance()
 		return FALSE
 
 	dud_flags |= GRENADE_USED // Don't detonate if we have already detonated.
