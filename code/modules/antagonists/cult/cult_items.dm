@@ -765,7 +765,7 @@ Striking a noncultist, however, will tear their flesh."}
 			else
 				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
 		else if(!..())
-			if(!L.anti_magic_check())
+			if(!L.can_block_magic())
 				L.Paralyze(50)
 			break_halberd(T)
 	else
@@ -1080,7 +1080,7 @@ Striking a noncultist, however, will tear their flesh."}
 			else
 				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
 		else if(!..())
-			if(!L.anti_magic_check())
+			if(!L.can_block_magic())
 				L.Paralyze(30)
 				if(D?.thrower)
 					for(var/mob/living/Next in orange(2, T))

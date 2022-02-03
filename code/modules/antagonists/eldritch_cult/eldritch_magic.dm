@@ -58,7 +58,7 @@
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
-		if(tar.anti_magic_check())
+		if(tar.can_block_magic())
 			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 			return ..()
 	var/datum/mind/M = user.mind
@@ -156,7 +156,7 @@
 	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
-		if(tar.anti_magic_check())
+		if(tar.can_block_magic())
 			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 			return ..()
 	var/mob/living/carbon/carbon_user = user
@@ -272,7 +272,7 @@
 		var/mob/living/carbon/human/target = X
 		if(target == user)
 			continue
-		if(target.anti_magic_check())
+		if(target.can_block_magic())
 			to_chat(user, span_warning("The spell had no effect!"))
 			target.visible_message(span_danger("[target]'s veins flash with fire, but their magic protection repulses the blaze!"), \
 							span_danger("Your veins flash with fire, but your magic protection repels the blaze!"))
@@ -326,7 +326,7 @@
 	for(var/mob/living/carbon/target in targets)
 		if(ishuman(targets))
 			var/mob/living/carbon/human/tar = target
-			if(tar.anti_magic_check())
+			if(tar.can_block_magic())
 				tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
 				return
 		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
@@ -380,7 +380,7 @@
 			break
 
 		for(var/mob/living/L in T.contents)
-			if(L.anti_magic_check())
+			if(L.can_block_magic())
 				L.visible_message(span_danger("The spell bounces off of [L]!"),span_danger("The spell bounces off of you!"))
 				continue
 			if(L in hit_list || L == source)
@@ -697,7 +697,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/entropic_plume/do_mob_cone_effect(mob/living/victim, level)
 	. = ..()
-	if(victim.anti_magic_check() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
+	if(victim.can_block_magic() || IS_HERETIC(victim) || IS_HERETIC_MONSTER(victim))
 		return
 	victim.apply_status_effect(/datum/status_effect/amok)
 	victim.apply_status_effect(/datum/status_effect/cloudstruck, (level*10))

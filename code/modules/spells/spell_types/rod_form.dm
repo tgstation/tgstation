@@ -50,7 +50,7 @@
 	return ..()
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/L)
-	if(L.anti_magic_check())
+	if(L.can_block_magic())
 		L.visible_message(span_danger("[src] hits [L], but it bounces back, then vanishes!") , span_userdanger("[src] hits you... but it bounces back, then vanishes!") , span_danger("You hear a weak, sad, CLANG."))
 		qdel(src)
 		return

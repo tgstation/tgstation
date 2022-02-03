@@ -66,7 +66,7 @@
 /obj/effect/proc_holder/spell/targeted/tesla/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,mob/user = usr)
 	origin.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
 	var/mob/living/carbon/current = target
-	if(current.anti_magic_check())
+	if(current.can_block_magic())
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, TRUE, -1)
 		current.visible_message(span_warning("[current] absorbs the spell, remaining unharmed!"), span_userdanger("You absorb the spell, remaining unharmed!"))
 	else if(bounces < 1)

@@ -222,7 +222,7 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(target.anti_magic_check(MAGIC_RESISTANCE_MIND, charge_cost = 0))
+	if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
 		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new

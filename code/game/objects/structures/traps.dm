@@ -76,7 +76,7 @@
 		var/mob/M = AM
 		if(M.mind in immune_minds)
 			return
-		if(checks_antimagic && M.anti_magic_check())
+		if(checks_antimagic && M.can_block_magic())
 			flare()
 			return
 	if(charges <= 0)

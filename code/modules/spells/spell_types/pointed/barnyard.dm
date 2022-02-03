@@ -26,7 +26,7 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
-	if(target.anti_magic_check())
+	if(target.can_block_magic())
 		to_chat(user, span_warning("The spell had no effect!"))
 		target.visible_message(span_danger("[target]'s face bursts into flames, which instantly burst outward, leaving [target] unharmed!"), \
 						span_danger("Your face starts burning up, but the flames are repulsed by your anti-magic protection!"))

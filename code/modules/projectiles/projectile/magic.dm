@@ -16,7 +16,7 @@
 	if(!istype(target))
 		return
 
-	if(target.anti_magic_check())
+	if(target.can_block_magic())
 		target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 		return BULLET_ACT_BLOCK
 
@@ -40,7 +40,7 @@
 /obj/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
 	if(isliving(target))
-		if(target.anti_magic_check())
+		if(target.can_block_magic())
 			target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
@@ -65,7 +65,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 	var/teleammount = 0
@@ -91,7 +91,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 	if(isturf(target))
@@ -146,7 +146,7 @@
 	. = ..()
 	if(isliving(change))
 		var/mob/living/M = change
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] fizzles on contact with [M]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -209,7 +209,7 @@
 /obj/projectile/magic/spellblade/on_hit(target)
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -226,7 +226,7 @@
 /obj/projectile/magic/arcane_barrage/on_hit(target)
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -251,7 +251,7 @@
 	. = ..()
 	if(isliving(A) && locker_suck)
 		var/mob/living/M = A
-		if(M.anti_magic_check()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
+		if(M.can_block_magic()) // no this doesn't check if ..() returned to phase through do I care no it's magic ain't gotta explain shit
 			M.visible_message(span_warning("[src] vanishes on contact with [A]!"))
 			return PROJECTILE_DELETE_WITHOUT_HITTING
 		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
@@ -322,7 +322,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check())
+		if(L.can_block_magic())
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		var/atom/throw_target = get_edge_target_turf(L, angle2dir(Angle))
@@ -336,7 +336,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
+		if(L.can_block_magic() || !firer)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(/datum/status_effect/bounty, firer)
@@ -349,7 +349,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check())
+		if(L.can_block_magic())
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(/datum/status_effect/antimagic )
@@ -362,7 +362,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !firer)
+		if(L.can_block_magic() || !firer)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		var/atom/throw_target = get_edge_target_turf(L, get_dir(L, firer))
@@ -376,7 +376,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
@@ -389,7 +389,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind)
+		if(L.can_block_magic() || !L.mind)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		to_chat(L, span_danger("Your body feels drained and there is a burning pain in your chest."))
@@ -411,7 +411,7 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		for(var/x in M.get_traumas())//checks to see if the victim is already going through possession
@@ -459,7 +459,7 @@
 /obj/projectile/magic/aoe/Range()
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
+			if(L.stat != DEAD && L != firer && !L.can_block_magic())
 				return Bump(L)
 	..()
 
@@ -487,7 +487,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
@@ -520,7 +520,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately

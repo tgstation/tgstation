@@ -924,8 +924,14 @@
 	if(client)
 		client << output(null, "statbrowser:check_spells")
 
-///Return any anti magic atom on this mob that matches the magic being cast
-/mob/proc/anti_magic_check(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+/**
+ * Checks to see if the mob can block magic
+ * 
+ * args:
+ * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked
+ * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
+**/
+/mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
 	if(casted_magic_flags == NONE)
 		return
 	var/list/protection_sources = list()
@@ -935,10 +941,10 @@
 		else
 			return src
 	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
-		return src 
-	if((casted_magic_flags & ~MAGIC_CASTING_RESTRICTION) && (casted_magic_flags & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
 		return src
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+		return src 
+	if((casted_magic_flags & ~MAGIC_CASTING_RESTRICTION) && (casted_magic_flags & MAGIC_RESISTANCE) && HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
 		return src
 
 /**

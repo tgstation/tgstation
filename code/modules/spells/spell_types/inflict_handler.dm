@@ -21,7 +21,7 @@
 /obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,TRUE)
-		if(target.anti_magic_check(antimagic_obstructions))
+		if(target.can_block_magic(antimagic_obstructions))
 			return
 		switch(destroys)
 			if("gib")

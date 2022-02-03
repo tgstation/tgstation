@@ -33,7 +33,7 @@
 	. = ..()
 	if(ismob(target))
 		var/mob/M = target
-		if(M.anti_magic_check())
+		if(M.can_block_magic())
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 
@@ -278,7 +278,7 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.anti_magic_check(antimagic_obstructions))
+			if(M.can_block_magic(antimagic_obstructions))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -337,12 +337,12 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
-		if(L.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
+		if(L.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		if(!U.anti_magic_check(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
+		if(!U.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
 			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
@@ -369,7 +369,7 @@
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
-			if(!M.anti_magic_check())
+			if(!M.can_block_magic())
 				M.electrocute_act(80, src, flags = SHOCK_ILLUSION)
 		qdel(src)
 

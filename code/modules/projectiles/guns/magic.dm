@@ -32,7 +32,7 @@
 			return
 		else
 			no_den_usage = 0
-	if(user.anti_magic_check(antimagic_obstructions, charge_cost = 0))
+	if(user.can_block_magic(antimagic_obstructions, charge_cost = 0))
 		add_fingerprint(user)
 		to_chat(user, span_warning("Something is interfering with [src]."))
 		return

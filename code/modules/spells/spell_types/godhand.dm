@@ -63,7 +63,7 @@
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
-	var/atom/A = target.anti_magic_check()
+	var/atom/A = target.can_block_magic()
 	if(A)
 		if(isitem(A))
 			target.visible_message(span_warning("[target]'s [A] glows brightly as it wards off the spell!"))
@@ -101,7 +101,7 @@
 		to_chat(user, span_warning("You can't get the words out!"))
 		return
 	var/mob/living/M = target
-	if(M.anti_magic_check())
+	if(M.can_block_magic())
 		to_chat(user, span_warning("The spell can't seem to affect [M]!"))
 		to_chat(M, span_warning("You feel your flesh turn to stone for a moment, then revert back!"))
 		..()
@@ -130,7 +130,7 @@
 		return
 	var/mob/living/carbon/duffelvictim = target
 	var/elaborate_backstory = pick("spacewar origin story", "military background", "corporate connections", "life in the colonies", "anti-government activities", "upbringing on the space farm", "fond memories with your buddy Keith")
-	if(duffelvictim.anti_magic_check())
+	if(duffelvictim.can_block_magic())
 		to_chat(user, span_warning("The spell can't seem to affect [duffelvictim]!"))
 		to_chat(duffelvictim, span_warning("You really don't feel like talking about your [elaborate_backstory] with complete strangers today."))
 		..()
