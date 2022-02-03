@@ -943,7 +943,7 @@
 /mob/living/can_resist()
 	if(next_move > world.time)
 		return FALSE
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_GRAB))
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return FALSE
 	return TRUE
 
