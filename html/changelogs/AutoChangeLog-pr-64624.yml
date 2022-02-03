@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - imageadd: "Updated the icon for the Legion achievement."
+  - imageadd: "Added an icon to the \"Look Out, Sir!\" achievement."
