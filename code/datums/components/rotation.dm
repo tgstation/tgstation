@@ -29,44 +29,44 @@
  * 
  * args:
  * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
- * * can_user_rotate (optional) Callback proc that determines if a user can rotate the object (is user human? nearby? etc.)
- * * can_be_rotated (optional) Callback proc that determines if the object can be rotated (is obj anchored, etc.)
- * * after_rotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
+ * * CanUserRotate (optional) Callback proc that determines if a user can rotate the object (is user human? nearby? etc.)
+ * * CanBeRotated (optional) Callback proc that determines if the object can be rotated (is obj anchored, etc.)
+ * * AfterRotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
 **/
-/datum/component/simple_rotation/Initialize(rotation_flags = NONE, can_user_rotate, can_be_rotated, after_rotation)
+/datum/component/simple_rotation/Initialize(rotation_flags = NONE, CanUserRotate, CanBeRotated, AfterRotation)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.rotation_flags = rotation_flags
-	src.can_user_rotate = can_user_rotate || CALLBACK(src, .proc/default_can_user_rotate)
-	src.can_be_rotated = can_be_rotated || CALLBACK(src, .proc/default_can_be_rotated)
-	src.after_rotation = after_rotation || CALLBACK(src, .proc/default_after_rotation)
+	src.CanUserRotate = CanUserRotate || CALLBACK(src, .proc/DefaultCanUserRotate)
+	src.CanBeRotated = CanBeRotated || CALLBACK(src, .proc/DefaultCanBeRotated)
+	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
 
-/datum/component/simple_rotation/proc/add_signals()
+/datum/component/simple_rotation/proc/AddSignals()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
 	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 
-/datum/component/simple_rotation/proc/add_verbs()
+/datum/component/simple_rotation/proc/AddVerbs()
 	var/obj/rotated_obj = parent
-	rotated_obj.verbs += /atom/movable/proc/simple_rotate_clockwise
-	rotated_obj.verbs += /atom/movable/proc/simple_rotate_counterclockwise
+	rotated_obj.verbs += /atom/movable/proc/SimpleRotateClockwise
+	rotated_obj.verbs += /atom/movable/proc/SimpleRotateCounterclockwise
 	if(!(rotation_flags & ROTATION_NO_FLIPPING))
-		rotated_obj.verbs += /atom/movable/proc/simple_rotate_flip
+		rotated_obj.verbs += /atom/movable/proc/SimpleRotateFlip
 
-/datum/component/simple_rotation/proc/remove_verbs()
+/datum/component/simple_rotation/proc/RemoveVerbs()
 	if(parent)
 		var/obj/rotated_obj = parent
-		rotated_obj.verbs -= /atom/movable/proc/simple_rotate_flip
-		rotated_obj.verbs -= /atom/movable/proc/simple_rotate_clockwise
-		rotated_obj.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateFlip
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateClockwise
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
 
-/datum/component/simple_rotation/proc/remove_signals()
+/datum/component/simple_rotation/proc/RemoveSignals()
 	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
 
 /datum/component/simple_rotation/RegisterWithParent()
-	add_verbs()
-	add_signals()
+	AddVerbs()
+	AddSignals()
 	. = ..()
 
 /datum/component/simple_rotation/PostTransfer()
@@ -76,19 +76,19 @@
 	return COMPONENT_NOTRANSFER
 
 /datum/component/simple_rotation/UnregisterFromParent()
-	remove_verbs()
-	remove_signals()
+	RemoveVerbs()
+	RemoveSignals()
 	. = ..()
 
 /datum/component/simple_rotation/Destroy()
-	QDEL_NULL(can_user_rotate)
-	QDEL_NULL(can_be_rotated)
-	QDEL_NULL(after_rotation)
+	QDEL_NULL(CanUserRotate)
+	QDEL_NULL(CanBeRotated)
+	QDEL_NULL(AfterRotation)
 	//Signals + verbs removed via UnRegister
 	. = ..()
 
 /datum/component/simple_rotation/ClearFromParent()
-	remove_verbs()
+	RemoveVerbs()
 	return ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
@@ -113,7 +113,7 @@
 	if(!istype(user))
 		return FALSE
 		
-	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
+	if(!CanBeRotated.Invoke(user, rotation_type) || !CanUserRotate.Invoke(user, rotation_type))
 		return
 
 	var/obj/rotated_obj = parent
@@ -126,16 +126,16 @@
 		if(ROTATION_FLIP)
 			rot_degree = 180
 	rotated_obj.setDir(turn(rotated_obj.dir, rot_degree))
-	after_rotation.Invoke(user, rotation_type)
+	AfterRotation.Invoke(user, rotation_type)
 
-/datum/component/simple_rotation/proc/default_can_user_rotate(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultCanUserRotate(mob/user, rotation_type)
 	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && (isobserver(user) && CONFIG_GET(flag/ghost_interaction)))
 		return TRUE	
 	return FALSE
 
-/datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultCanBeRotated(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
@@ -152,13 +152,13 @@
 		return FALSE
 	return TRUE
 
-/datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
 	rotated_obj.balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
 
-/atom/movable/proc/simple_rotate_clockwise()
+/atom/movable/proc/SimpleRotateClockwise()
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
@@ -166,7 +166,7 @@
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_CLOCKWISE)
 
-/atom/movable/proc/simple_rotate_counterclockwise()
+/atom/movable/proc/SimpleRotateCounterclockwise()
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
@@ -174,7 +174,7 @@
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_COUNTERCLOCKWISE)
 
-/atom/movable/proc/simple_rotate_flip()
+/atom/movable/proc/SimpleRotateFlip()
 	set name = "Flip"
 	set category = "Object"
 	set src in oview(1)
