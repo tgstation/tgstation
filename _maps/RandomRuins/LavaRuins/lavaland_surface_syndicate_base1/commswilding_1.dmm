@@ -106,7 +106,7 @@
 	},
 /obj/machinery/power/apc/syndicate{
 	name = "Telecommunications APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
