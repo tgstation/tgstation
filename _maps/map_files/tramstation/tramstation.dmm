@@ -14933,6 +14933,13 @@
 	dir = 5
 	},
 /area/science/breakroom)
+"dTy" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/dead_body_placer,
+/turf/open/floor/iron/dark,
+/area/medical/morgue)
 "dTC" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
@@ -171422,7 +171429,7 @@ xOj
 lbM
 sDR
 new
-vLv
+dTy
 eHQ
 new
 ccP
