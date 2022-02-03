@@ -145,9 +145,7 @@
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
 			rotated_obj.balloon_alert(user, "need a wrench")
 			return FALSE
-	if(rotation_flags & ROTATION_IGNORE_ANCHORED) // used to ignore chairs being anchored
-		return TRUE
-	if(rotated_obj.anchored)
+	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
 		rotated_obj.balloon_alert(user, "need to unwrench")
 		return FALSE
 	return TRUE
