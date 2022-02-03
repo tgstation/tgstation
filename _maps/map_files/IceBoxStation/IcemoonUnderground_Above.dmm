@@ -993,6 +993,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side,
 /area/mine/eva)
 "di" = (
@@ -2179,6 +2182,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
 "hq" = (
@@ -3295,6 +3299,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/frame/computer{
 	dir = 1
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
@@ -4631,17 +4638,17 @@
 "pe" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/firealarm/directional/south,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cargo-warehouse-external"
+	},
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Cargo Warehouse External Airlock";
 	opacity = 0;
 	req_access_txt = "54"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "cargo-warehouse-external"
-	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
@@ -4944,7 +4951,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/cargo/drone_bay)
@@ -5112,6 +5119,7 @@
 /area/service/chapel)
 "qF" = (
 /obj/machinery/mechpad,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
 "qG" = (
@@ -6970,6 +6978,21 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"wx" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "mining-aux-mechbay-external"
+	},
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Mining Mech Bay External Airlock";
+	opacity = 0;
+	req_access_txt = "48"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/large,
+/area/mine/mechbay)
 "wy" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -8715,9 +8738,6 @@
 	},
 /turf/open/floor/iron,
 /area/service/bar)
-"Co" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "Cq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -10360,17 +10380,17 @@
 /area/commons/dorms/laundry)
 "Hu" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "mining-aux-mechbay-external"
+	},
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Mech Bay External Airlock";
 	opacity = 0;
 	req_access_txt = "48"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "mining-aux-mechbay-external"
-	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/large,
 /area/mine/mechbay)
@@ -12187,17 +12207,17 @@
 /area/mine/eva)
 "Nk" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cargo-warehouse-external"
+	},
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Cargo Warehouse External Airlock";
 	opacity = 0;
 	req_access_txt = "54"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "cargo-warehouse-external"
-	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/iron/smooth_large,
 /area/cargo/warehouse)
@@ -12851,6 +12871,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/mine/eva)
 "Pw" = (
@@ -14608,6 +14629,19 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/science/xenobiology)
+"UB" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron/dark/side{
+	dir = 1
+	},
+/area/mine/eva)
 "UC" = (
 /obj/machinery/light/directional/west,
 /obj/structure/closet/secure_closet/freezer/gulag_fridge,
@@ -15859,6 +15893,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
@@ -38572,7 +38609,7 @@ ny
 Nk
 pe
 ny
-NK
+UB
 MP
 dh
 Zx
@@ -39863,7 +39900,7 @@ PG
 XT
 nM
 Hu
-EO
+wx
 XT
 pP
 pP
@@ -41911,7 +41948,7 @@ Et
 Et
 ak
 ak
-Co
+ak
 Et
 Et
 ak
@@ -42168,9 +42205,9 @@ ak
 ak
 ak
 ak
-Co
-Co
-Co
+ak
+ak
+ak
 ak
 ak
 ak
