@@ -65,6 +65,8 @@
 		var/detail = extra_info[key]
 		extra_info_parsed[key] = build_story_detail(detail)
 
+	SEND_SOUND(current, sound('sound/effects/waterphone.ogg', volume = 50))
+
 	memories[memory_type] = new /datum/memory(src, build_story_mob(current), memory_type, extra_info_parsed, story_mood, story_value, memory_flags)
 	return memories[memory_type]
 
