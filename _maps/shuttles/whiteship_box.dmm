@@ -345,11 +345,7 @@
 /obj/item/food/muffin/berry,
 /obj/item/food/tofu,
 /obj/item/food/burrito,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Hospital Ship Crew Quarters APC";
-	pixel_y = 23
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
