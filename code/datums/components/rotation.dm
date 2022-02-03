@@ -38,8 +38,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 	src.rotation_flags = rotation_flags
-	src.can_user_rotate = can_user_rotate || CALLBACK(src,. proc/default_can_user_rotate)
-	src.can_be_rotated = can_be_rotated || CALLBACK(src,. proc/default_can_be_rotated)
+	src.can_user_rotate = can_user_rotate || CALLBACK(src, .proc/default_can_user_rotate)
+	src.can_be_rotated = can_be_rotated || CALLBACK(src, .proc/default_can_be_rotated)
 	src.after_rotation = after_rotation || CALLBACK(src, .proc/default_after_rotation)
 
 /datum/component/simple_rotation/proc/add_signals()
@@ -125,21 +125,21 @@
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
 	if(istype(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
-	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction) && (src.rotation_flags & ROTATION_GHOSTS_ALLOWED))
+	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction) && (rotation_flags & ROTATION_GHOSTS_ALLOWED))
 		return TRUE	
 	return FALSE
 
 /datum/component/simple_rotation/proc/default_can_be_rotated(mob/living/user, rotation_type)
 	var/obj/rotated_obj = parent
 
-	if(src.rotation_flags & ROTATION_REQUIRE_WRENCH)
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		if(!istype(user))
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
 			rotated_obj.balloon_alert(user, "need a wrench")
 			return FALSE
-	if(src.rotation_flags & ROTATION_IGNORE_ANCHORED) // used to ignore chairs being anchored
+	if(rotation_flags & ROTATION_IGNORE_ANCHORED) // used to ignore chairs being anchored
 		return TRUE
 	if(rotated_obj.anchored)
 		rotated_obj.balloon_alert(user, "need to unwrench")
@@ -149,7 +149,7 @@
 /datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
 	rotated_obj.balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
-	if(src.rotation_flags & ROTATION_REQUIRE_WRENCH)
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
 
 /atom/movable/proc/simple_rotate_clockwise()
