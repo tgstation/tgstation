@@ -578,6 +578,7 @@
 				"restricted" = item.restricted,
 				"limited_stock" = item.limited_stock,
 				"restricted_roles" = item.restricted_roles,
+				"restricted_species" = item.restricted_species,
 				"progression_minimum" = item.progression_minimum,
 			))
 		}

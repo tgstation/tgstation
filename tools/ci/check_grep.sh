@@ -6,6 +6,7 @@ shopt -s globstar
 
 st=0
 
+echo "Checking for map issues"
 if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     echo "ERROR: Non-TGM formatted map detected. Please convert it using Map Merger!"
     st=1
@@ -26,7 +27,6 @@ if grep -P 'pixel_[^xy]' _maps/**/*.dmm;	then
     echo "ERROR: incorrect pixel offset variables detected in maps, please remove them."
     st=1
 fi;
-echo "Checking for cable varedits"
 if grep -P '/obj/structure/cable(/\w+)+\{' _maps/**/*.dmm;	then
     echo "ERROR: vareditted cables detected, please remove them."
     st=1
@@ -35,9 +35,26 @@ if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
     echo "ERROR: d1/d2 cable variables detected in maps, please remove them."
     st=1
 fi;
-echo "Checking for stacked cables"
-if grep -P '"\w+" = \(\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/obj/structure/cable,\n([^)]+\n)*/area/.+\)' _maps/**/*.dmm;	then
-    echo "found multiple cables on the same tile, please remove them."
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/cable,\n[^)]*?/obj/structure/cable,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple cables on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple lattices on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/machinery/atmospherics/pipe/(?<type>[/\w]*),\n[^)]*?/obj/machinery/atmospherics/pipe/\g{type},\n[^)]*?/area/.+\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found multiple identical pipes on the same tile, please remove them."
+    st=1
+fi;
+if grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?[013-9]\d*?[^\d]*?\s*?\},?\n' _maps/**/*.dmm ||
+	grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?\d+?[0-46-9][^\d]*?\s*?\},?\n' _maps/**/*.dmm ||
+	grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?\d{3,1000}[^\d]*?\s*?\},?\n' _maps/**/*.dmm ;	then
+	echo
+    echo "ERROR: found an APC with a manually set pixel_x or pixel_y that is not +-25."
     st=1
 fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
@@ -52,12 +69,11 @@ if grep -P '^/*var/' code/**/*.dm; then
     echo "ERROR: Unmanaged global var use detected in code, please use the helpers."
     st=1
 fi;
-echo "Checking for space indentation"
+echo "Checking for whitespace issues"
 if grep -P '(^ {2})|(^ [^ * ])|(^    +)' code/**/*.dm; then
     echo "space indentation detected"
     st=1
 fi;
-echo "Checking for mixed indentation"
 if grep -P '^\t+ [^ *]' code/**/*.dm; then
     echo "mixed <tab><space> indentation detected"
     st=1
@@ -72,6 +88,7 @@ while read f; do
         st=1
     fi;
 done < <(find . -type f -name '*.dm')
+echo "Checking for common mistakes"
 if grep -P '^/[\w/]\S+\(.*(var/|, ?var/.*).*\)' code/**/*.dm; then
     echo "changed files contains proc argument starting with 'var'"
     st=1

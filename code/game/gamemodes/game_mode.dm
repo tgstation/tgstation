@@ -183,7 +183,7 @@
 		to_chat(C, msg.Join())
 
 /datum/game_mode/proc/generate_station_goals(greenshift)
-	var/goal_budget = greenshift ? INFINITY : STATION_GOAL_BUDGET
+	var/goal_budget = greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
 	while(possible.len && goal_weights < goal_budget)

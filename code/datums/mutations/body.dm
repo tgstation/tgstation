@@ -89,7 +89,7 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
-	conflicts = list(GIGANTISM)
+	conflicts = list(/datum/mutation/human/gigantism)
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -360,7 +360,7 @@
 	desc = "The cells within the subject spread out to cover more area, making the subject appear larger."
 	quality = MINOR_NEGATIVE
 	difficulty = 12
-	conflicts = list(DWARFISM)
+	conflicts = list(/datum/mutation/human/dwarfism)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -389,12 +389,12 @@
 /datum/mutation/human/spastic/on_acquiring()
 	if(..())
 		return
-	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+	owner.apply_status_effect(/datum/status_effect/spasms)
 
 /datum/mutation/human/spastic/on_losing()
 	if(..())
 		return
-	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	owner.remove_status_effect(/datum/status_effect/spasms)
 
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"

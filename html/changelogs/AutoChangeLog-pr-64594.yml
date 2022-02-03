@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed being able to fry objects that are actively storing other objects."

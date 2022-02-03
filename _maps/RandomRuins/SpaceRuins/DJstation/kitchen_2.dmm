@@ -9,7 +9,7 @@
 /area/space/nearstation)
 "h" = (
 /obj/structure/girder,
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/djstation)
@@ -84,7 +84,7 @@
 /area/ruin/space/djstation)
 "X" = (
 /obj/structure/girder,
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
 /area/ruin/space/djstation)
