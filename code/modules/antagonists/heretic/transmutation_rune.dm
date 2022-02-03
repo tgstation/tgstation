@@ -47,7 +47,7 @@
 	is_in_use = TRUE
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	do_rituals(user, flatten_list(heretic_datum?.get_all_knowledge()))
+	do_rituals(user, flatten_list(heretic_datum.researched_knowledge))
 
 	is_in_use = FALSE
 

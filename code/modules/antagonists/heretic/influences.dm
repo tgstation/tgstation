@@ -1,13 +1,20 @@
 
+/// The number of influences spawned per heretic
+#define NUM_INFLUENCES_PER_HERETIC 4
+
 /**
  * #Reality smash tracker
  *
- * Stupid fucking list holder, DONT create new ones, it will break the game
- * this is automatically created whenever eldritch cultists are created.
+ * A global singleton data that tracks all the heretic
+ * influences ("reality smashes") that we've created,
+ * and all of the heretics (minds) that can see them.
  *
- * Tracks relevant data, generates relevant data, useful tool
+ * Handles ensuring all minds can see influences, generating
+ * new influences for new heretic minds, and allowing heretics
+ * to see new influences that are created.
  */
 /datum/reality_smash_tracker
+	var/num_drained = 0
 	/// List of tracked influences (reality smashes)
 	var/list/obj/effect/heretic_influence/smashes = list()
 	/// List of minds with the ability to see influences
@@ -29,7 +36,6 @@
 /datum/reality_smash_tracker/proc/rework_network()
 	SIGNAL_HANDLER
 
-	list_clear_nulls(smashes)
 	for(var/mind in tracked_heretics)
 		if(isnull(mind))
 			stack_trace("A null somehow landed in the [type] list of minds. How?")
@@ -43,10 +49,6 @@
  */
 /datum/reality_smash_tracker/proc/add_to_smashes(datum/mind/to_add)
 	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		if(QDELETED(reality_smash))
-			smashes -= reality_smash
-			continue
-
 		reality_smash.add_mind(to_add)
 
 /**
@@ -54,12 +56,7 @@
  */
 /datum/reality_smash_tracker/proc/remove_from_smashes(datum/mind/to_remove)
 	for(var/obj/effect/heretic_influence/reality_smash as anything in smashes)
-		if(QDELETED(reality_smash))
-			smashes -= reality_smash
-			continue
-
 		reality_smash.remove_mind(to_remove)
-
 
 /**
  * Generates a set amount of reality smashes
@@ -67,17 +64,23 @@
  * and the number of minds we're tracking.
  */
 /datum/reality_smash_tracker/proc/generate_new_influences()
-	var/number_of_heretics = length(tracked_heretics)
-	var/number_of_smashes = length(smashes)
-	var/how_many_should_we_make = max(number_of_heretics * (4 - (number_of_heretics - 1)) - number_of_smashes, 1)
+	// 1 heretic = 4 influences
+	// 2 heretics = 7 influences
+	// 3 heretics = 9 influences
+	// 4 heretics = 10 influences, +1 for each onwards.
+	var/how_many_can_we_make = 0
+	for(var/heretic_number in 1 to length(tracked_heretics))
+		how_many_can_we_make += max(NUM_INFLUENCES_PER_HERETIC - heretic_number + 1, 1)
 
-	for(var/i in 0 to how_many_should_we_make)
+	var/location_sanity = 0
+	while((length(smashes) + num_drained) < how_many_can_we_make && location_sanity < 100)
 		var/turf/chosen_location = get_safe_random_station_turf()
 
 		// We don't want them close to each other - at least 1 tile of seperation
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in range(1, chosen_location)
-		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_got_used = locate() in range(1, chosen_location)
-		if(what_if_i_have_one || what_if_i_had_one_but_got_used)
+		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in range(1, chosen_location)
+		if(what_if_i_have_one || what_if_i_had_one_but_its_used)
+			location_sanity++
 			continue
 
 		new /obj/effect/heretic_influence(chosen_location)
@@ -105,7 +108,6 @@
  * Use this whenever you want to remove someone from the list
  */
 /datum/reality_smash_tracker/proc/remove_tracked_mind(datum/mind/heretic)
-	UnregisterSignal(heretic.current, COMSIG_MOB_LOGIN)
 	tracked_heretics -= heretic
 
 	remove_from_smashes(heretic)
@@ -202,7 +204,7 @@
 	/// The icon state applied to the image created for this influence.
 	var/real_icon_state = "reality_smash"
 	/// A list of all minds that can see us.
-	var/list/minds = list()
+	var/list/datum/mind/minds = list()
 	/// The image shown to heretics
 	var/image/heretic_image
 
@@ -283,6 +285,7 @@
 	var/obj/effect/visible_heretic_influence/illusion = new /obj/effect/visible_heretic_influence(drop_location())
 	illusion.name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "drained")) + " " + format_text(name)
 
+	GLOB.reality_smash_track.num_drained++
 	qdel(src)
 
 /*
@@ -322,3 +325,5 @@
  */
 /obj/effect/heretic_influence/proc/generate_name()
 	name = "\improper" + pick(strings(HERETIC_INFLUENCE_FILE, "prefix")) + " " + pick(strings(HERETIC_INFLUENCE_FILE, "postfix"))
+
+#undef NUM_INFLUENCES_PER_HERETIC

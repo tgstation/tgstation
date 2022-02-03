@@ -20,7 +20,7 @@
 	/// A weakref to the mind of our heretic.
 	var/datum/weakref/heretic_mind_weakref
 	/// Lazylist of weakrefs to minds that we won't pick as targets.
-	var/list/datum/weakref/target_blacklist
+	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/return_timers
 
@@ -93,7 +93,7 @@
 			continue
 		if(istype(get_area(possible_target), /area/shuttle/arrival))
 			continue
-		if(WEAKREF(possible_target) in target_blacklist)
+		if(possible_target in target_blacklist)
 			continue
 
 		valid_targets += possible_target
@@ -144,8 +144,8 @@
 
 	to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
 	for(var/datum/mind/chosen_mind as anything in final_targets)
-		LAZYADD(heretic_datum.sac_targets, WEAKREF(chosen_mind.current))
-		to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role]."))
+		heretic_datum.add_sacrifice_target(chosen_mind.current)
+		to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
 	return TRUE
 
 /**
@@ -166,7 +166,7 @@
 		CRASH("[type] sacrifice_process managed to get a non-target human. This is incorrect.")
 
 	if(sacrifice.mind)
-		LAZYADD(target_blacklist, WEAKREF(sacrifice.mind))
+		LAZYADD(target_blacklist, sacrifice.mind)
 	LAZYREMOVE(heretic_datum.sac_targets, WEAKREF(sacrifice))
 
 	to_chat(user, span_hypnophrase("Your patrons accepts your offer."))

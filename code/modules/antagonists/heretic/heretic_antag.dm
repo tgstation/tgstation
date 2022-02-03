@@ -39,7 +39,7 @@
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed.
 	var/high_value_sacrifices = 0
-	/// Lazylist of weakrefs to humans that we have as targets.
+	/// Lazy assoc list of [weakrefs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
 	var/list/datum/weakref/sac_targets
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
@@ -348,6 +348,17 @@
 		objectives += other_sac_objective
 
 /**
+ * Add [target] as a sacrifice target for the heretic.
+ * Generates a preview image and associates it with a weakref of the mob.
+ */
+/datum/antagonist/heretic/proc/add_sacrifice_target(mob/living/carbon/human/target)
+
+	var/image/target_image = image(icon = target.icon, icon_state = target.icon_state)
+	target_image.overlays = target.overlays
+
+	LAZYSET(sac_targets, WEAKREF(target), target_image)
+
+/**
  * Increments knowledge by one.
  * Used in callbacks for passive gain over time.
  */
@@ -417,9 +428,9 @@
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets. Go find them!"))
-		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role || "human"]."))
+		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role?.title || "human"]."))
 
-	LAZYADD(sac_targets, WEAKREF(new_target))
+	add_sacrifice_target(new_target)
 
 /*
  * Admin proc for removing a mob from a heretic's sac list.
@@ -431,7 +442,7 @@
 
 	var/list/removable = list()
 	for(var/datum/weakref/ref as anything in sac_targets)
-		var/mob/living/carbon/human/old_target = ref?.resolve()
+		var/mob/living/carbon/human/old_target = ref.resolve()
 		if(!QDELETED(old_target))
 			removable[old_target.name] = old_target
 
@@ -482,7 +493,7 @@
 	. += "<i><b>Current Targets:</b></i><br>"
 	if(LAZYLEN(sac_targets))
 		for(var/datum/weakref/ref as anything in sac_targets)
-			var/mob/living/carbon/human/actual_target = ref?.resolve()
+			var/mob/living/carbon/human/actual_target = ref.resolve()
 			if(QDELETED(actual_target))
 				continue
 			. += " - <b>[actual_target.real_name]</b>, the [actual_target.mind?.assigned_role || "human"].<br>"
@@ -527,12 +538,6 @@
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
-/*
- * Returns all research knowledge. Assoc list of [typepath] to [instance].
- */
-/datum/antagonist/heretic/proc/get_all_knowledge()
-	return researched_knowledge
-
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"
@@ -556,7 +561,7 @@
 /datum/objective/major_sacrifice
 	name = "major sacrifice"
 	target_amount = 1
-	explanation_text = "Sacrifice 1 high value crewmember."
+	explanation_text = "Sacrifice 1 head of staff."
 
 /datum/objective/major_sacrifice/check_completion()
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)

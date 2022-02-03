@@ -140,8 +140,8 @@
 	return ..()
 
 /datum/heretic_knowledge/spell/on_research(mob/user)
-	. = ..()
 	spell_to_add = new spell_to_add()
+	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user)
 	user.mind.AddSpell(spell_to_add)
@@ -166,9 +166,9 @@
 
 /datum/heretic_knowledge/limited_amount/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/datum/weakref/ref as anything in created_items)
-		var/atom/real_thing = ref?.resolve()
+		var/atom/real_thing = ref.resolve()
 		if(QDELETED(real_thing))
-			LAZYREMOVE(created_items.ref)
+			LAZYREMOVE(created_items, ref)
 
 	return LAZYLEN(created_items) < limit
 
@@ -389,7 +389,7 @@
 	. = ..()
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	var/total_points = 0
-	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(heretic_datum.get_all_knowledge()))
+	for(var/datum/heretic_knowledge/knowledge as anything in flatten_list(heretic_datum.researched_knowledge))
 		total_points += knowledge.cost
 
 	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \

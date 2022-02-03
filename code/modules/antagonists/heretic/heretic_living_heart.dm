@@ -77,6 +77,8 @@
 	desc = "Track your targets."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_ecult"
+	/// Whether the target radial is currently opened.
+	var/radial_open = FALSE
 	/// How long we have to wait between tracking uses.
 	var/track_cooldown_lenth = 8 SECONDS
 	/// The cooldown between button uses.
@@ -95,6 +97,8 @@
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, track_cooldown))
 		return FALSE
+	if(radial_open)
+		return
 
 	return ..()
 
@@ -105,34 +109,65 @@
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(owner)
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		to_chat(owner, span_danger("You have no targets. Visit a transmutation rune to aquire targets!"))
+		owner.balloon_alert(owner, "no targets, visit a rune!")
 		return TRUE
 
-	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
-
+	var/list/targets_to_choose = list()
 	var/list/mob/living/carbon/human/human_targets = list()
 	for(var/datum/weakref/target_ref as anything in heretic_datum.sac_targets)
-		var/mob/living/carbon/human/real_target = target_ref?.resolve()
-		if(!QDELETED(real_target))
-			human_targets += real_target
+		var/mob/living/carbon/human/real_target = target_ref.resolve()
+		if(QDELETED(real_target))
+			continue
 
-	playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE, SILENCED_SOUND_EXTRARANGE)
-	for(var/mob/living/carbon/human/mob_target as anything in human_targets)
-		var/dist = get_dist(get_turf(owner), get_turf(mob_target))
-		var/dir = get_dir(get_turf(owner), get_turf(mob_target))
+		human_targets[real_target.real_name] = real_target
+		targets_to_choose[real_target.real_name] = heretic_datum.sac_targets[target_ref]
 
-		if(isturf(mob_target.loc) && owner.z != mob_target.z)
-			to_chat(owner, span_warning("[mob_target.real_name] is on another plane of existence!"))
-		else
-			switch(dist)
-				if(0 to 15)
-					to_chat(owner, span_warning("[mob_target.real_name] is near you. They are to the [dir2text(dir)] of you!"))
-				if(16 to 31)
-					to_chat(owner, span_warning("[mob_target.real_name] is somewhere in your vicinity. They are to the [dir2text(dir)] of you!"))
-				if(32 to 127)
-					to_chat(owner, span_warning("[mob_target.real_name] is far away from you. They are to the [dir2text(dir)] of you!"))
-				else
-					to_chat(owner, span_warning("[mob_target.real_name] is beyond our reach."))
+	radial_open = TRUE
+	var/to_track = show_radial_menu(
+		owner,
+		owner,
+		targets_to_choose,
+		custom_check = CALLBACK(src, .proc/check_menu),
+		radius = 40,
+		require_near = TRUE,
+		tooltips = TRUE,
+	)
+	radial_open = FALSE
 
-		if(mob_target.stat == DEAD)
-			to_chat(owner, span_warning("[mob_target.real_name] is dead. Bring them to a transmutation rune!"))
+	if(isnull(to_track))
+		return
+
+	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
+	var/mob/living/carbon/human/tracked_mob = human_targets[to_track]
+	var/balloon_message = "error text!"
+
+	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	if(isturf(tracked_mob.loc) && owner.z != tracked_mob.z)
+		balloon_message = "on another plane!"
+	else
+		var/dist = get_dist(get_turf(owner), get_turf(tracked_mob))
+		var/dir = get_dir(get_turf(owner), get_turf(tracked_mob))
+
+		switch(dist)
+			if(0 to 15)
+				balloon_message = "very near, [dir2text(dir)]!"
+			if(16 to 31)
+				balloon_message = "near, [dir2text(dir)]!"
+			if(32 to 127)
+				balloon_message = "far, [dir2text(dir)]!"
+			else
+				balloon_message = "very far!"
+
+	if(tracked_mob.stat == DEAD)
+		balloon_message = "they're dead, " + balloon_message
+
+	owner.balloon_alert(owner, balloon_message)
+
+/datum/action/item_action/organ_action/track_target/proc/check_menu()
+	if(QDELETED(src))
+		return FALSE
+	if(!IS_HERETIC(owner))
+		return FALSE
+	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
+		return FALSE
+	return TRUE
