@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "You no longer need beakers to build component printers or module duplicators."
