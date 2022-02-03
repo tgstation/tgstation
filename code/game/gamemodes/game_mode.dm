@@ -49,7 +49,6 @@
 			)
 			query_round_game_mode.Execute()
 			qdel(query_round_game_mode)
-	generate_station_goals()
 	return TRUE
 
 
@@ -183,7 +182,8 @@
 	for (var/C in GLOB.admins)
 		to_chat(C, msg.Join())
 
-/datum/game_mode/proc/generate_station_goals()
+/datum/game_mode/proc/generate_station_goals(greenshift)
+	var/goal_budget = greenshift ? INFINITY : STATION_GOAL_BUDGET
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
 	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
