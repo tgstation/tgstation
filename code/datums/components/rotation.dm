@@ -93,20 +93,26 @@
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-
 	examine_list += span_notice("Alt + Right-click to rotate it clockwise. Alt + Left-click to rotate it counterclockwise.")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		examine_list += span_notice("This requires a wrench to be rotated.")
 
 /datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user)
 	SIGNAL_HANDLER
+	if(!istype(user))
+		return FALSE
 	Rotate(user, ROTATION_CLOCKWISE)
 
 /datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user)
 	SIGNAL_HANDLER
+	if(!istype(user))
+		return FALSE
 	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
+	if(!istype(user))
+		return FALSE
+		
 	if(!can_be_rotated.Invoke(user, rotation_type) || !can_user_rotate.Invoke(user, rotation_type))
 		return
 
@@ -122,18 +128,18 @@
 	rotated_obj.setDir(turn(rotated_obj.dir, rot_degree))
 	after_rotation.Invoke(user, rotation_type)
 
-/datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(istype(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+/datum/component/simple_rotation/proc/default_can_user_rotate(mob/user, rotation_type)
+	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
-	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction) && (rotation_flags & ROTATION_GHOSTS_ALLOWED))
+	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && (isobserver(user) && CONFIG_GET(flag/ghost_interaction)))
 		return TRUE	
 	return FALSE
 
-/datum/component/simple_rotation/proc/default_can_be_rotated(mob/living/user, rotation_type)
+/datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
-		if(!istype(user))
+		if(!isliving(user))
 			return FALSE
 		var/obj/item/tool = user.get_active_held_item()
 		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
