@@ -127,16 +127,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/air_horn
-	name = "Air Horn"
-	desc = "Damn son, where'd you find this?"
-	id = "air_horn"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
-	build_path = /obj/item/bikehorn/airhorn
-	category = list("Equipment")
-
-
 /datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
@@ -334,6 +324,19 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
 
+/////////////////////////////////////////
+////////Social Psychology Designs////////
+/////////////////////////////////////////
+
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
+	build_path = /obj/item/bikehorn/airhorn
+	category = list("Equipment")
+
 /datum/design/dice_bag
 	name = "Bag of Dice"
 	desc = "An assorted bag of colorful plastic dice."
@@ -401,6 +404,16 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
 	build_path = /obj/item/disk/nuclear/fake
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/bike_horn
+	name = "Bike Horn"
+	desc = "honk honk"
+	id = "bike_horn"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 750)
+	build_path = /obj/item/bikehorn
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 

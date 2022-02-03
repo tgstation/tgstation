@@ -939,6 +939,7 @@
 	prereq_ids = list("base")
 	design_ids = list(
 		"air_horn",
+		"bike_horn",
 		"borg_transform_clown",
 		"card_deck",
 		"cardboard_cutout",
