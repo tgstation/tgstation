@@ -186,7 +186,7 @@
 	var/goal_budget = greenshift ? INFINITY : STATION_GOAL_BUDGET
 	var/list/possible = subtypesof(/datum/station_goal)
 	var/goal_weights = 0
-	while(possible.len && goal_weights < STATION_GOAL_BUDGET)
+	while(possible.len && goal_weights < goal_budget)
 		var/datum/station_goal/picked = pick_n_take(possible)
 		goal_weights += initial(picked.weight)
 		GLOB.station_goals += new picked
