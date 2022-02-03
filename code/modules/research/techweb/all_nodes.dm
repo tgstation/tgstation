@@ -972,6 +972,7 @@
 	prereq_ids = list("social_psych", "syndicate_basic")
 	design_ids = list(
 		"adaptive_cutout",
+		"clown_cartridge",
 		"decoy_disk",
 		"pie_cannon",
 	)
