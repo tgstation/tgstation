@@ -538,7 +538,7 @@
 			var/datum/design/design = SSresearch.techweb_design_by_id(id)
 			if(!(design.build_type & MECHFAB) || design.id != id)
 				return
-			add_to_queue(id)
+			add_to_queue(design)
 			return
 		if("del_queue_part")
 			// Delete a specific from from the queue
