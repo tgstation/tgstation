@@ -138,9 +138,9 @@ const AlertButton = (props, context) => {
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('choose', { choice: button })}
+      m={0.5}
       pl={2}
       pr={2}
-      m={0.5}
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
       textAlign="center"

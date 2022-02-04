@@ -19,15 +19,13 @@ export const InputButtons = (props: InputButtonsProps, context) => {
   const { act, data } = useBackend<InputButtonsData>(context);
   const { large_buttons, swapped_buttons } = data.preferences;
   const { input, message } = props;
-
   const submitButton = (
     <Button
       color="good"
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('submit', { entry: input })}
-      ml={0.5}
-      mr={0.5}
+      m={0.5}
       pl={2}
       pr={2}
       pt={large_buttons ? 0.33 : 0}
@@ -43,8 +41,7 @@ export const InputButtons = (props: InputButtonsProps, context) => {
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('cancel')}
-      ml={0.5}
-      mr={0.5}
+      m={0.5}
       pl={2}
       pr={2}
       pt={large_buttons ? 0.33 : 0}

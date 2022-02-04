@@ -42,7 +42,7 @@ export const TextInputModal = (_, context) => {
   const windowHeight
     = 125
     + Math.ceil(message.length / 3)
-    + (multiline || input.length >= 30 ? 75 : 0)
+    + (multiline ? 75 : Math.floor(input.length / 33) * 18)
     + (message.length && large_buttons ? 5 : 0);
 
   return (
@@ -90,7 +90,7 @@ const InputArea = (props, context) => {
       autoFocus
       autoSelect
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
-      maxLength={max_length}
+      // maxLength={max_length}
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;
         if (keyCode === KEY_ENTER) {

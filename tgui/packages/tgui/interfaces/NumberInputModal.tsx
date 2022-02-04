@@ -34,7 +34,7 @@ export const NumberInputModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125
+    = 130
     + Math.ceil(message.length / 3)
     + (message.length && large_buttons ? 5 : 0);
 
@@ -53,7 +53,7 @@ export const NumberInputModal = (_, context) => {
         }}>
         <Section fill>
           <Stack fill vertical>
-            <Stack.Item>
+            <Stack.Item grow>
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
