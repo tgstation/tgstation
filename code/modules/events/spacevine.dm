@@ -445,9 +445,11 @@
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
+	for(var/mutation in vine_mutations_list)
+		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
-		mutativeness = potency / 10 // If potency is 10, 1 mutativeness; if 1: 0.1 mutativeness
-		max_mutation_severity = potency * 2 // If potency is 10, 20 max mutation severity; if 1, 2 max mutation severity
+		mutativeness = potency / 10 // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
+		max_mutation_severity = round(potency / 10 + 5) // If potency is 100, 15 max mutation severity; if 1, 5 max mutation severity
 	if(production != null && production <= 10) //Prevents runtime in case production is set to 11.
 		spread_cap *= (11 - production) / 7.5 //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
 		spread_multiplier /= (11 - production) / 10 // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
@@ -484,7 +486,7 @@
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
-			var/datum/spacevine_mutation/random_mutate = pick(vine_mutations_list - vine.mutations)
+			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
 			random_mutate.add_mutation_to_vinepiece(vine)
 
 	for(var/datum/spacevine_mutation/mutation in vine.mutations)
@@ -502,7 +504,7 @@
 	var/obj/item/seeds/kudzu/seed = new(vine.loc)
 	seed.mutations |= vine.mutations
 	seed.set_potency(mutativeness * 10)
-	seed.set_production(11 - (spread_cap / initial(spread_cap)) * 5) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
+	seed.set_production(11 - (10 * initial(spread_multiplier) / spread_multiplier)) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
 	qdel(src)
 
 /// Life cycle of a space vine
