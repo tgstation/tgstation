@@ -172,7 +172,7 @@
 			continue
 		var/turf/old_turf = old_turfs[i]
 		var/turf/new_turf = new_turfs[i]
-		new_turf.afterShuttleMove(oldT, rotation) //turfs
+		new_turf.afterShuttleMove(old_turf, rotation) //turfs
 		var/turf/new_ceiling = get_step_multiz(new_turf, UP) // check if a ceiling is needed
 		if(new_ceiling)
 			// generate ceiling
