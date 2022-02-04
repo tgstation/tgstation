@@ -599,7 +599,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/honk/Activate()
 	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
 	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
-		if(!found_intercom.on || !found_intercom.listening || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
+		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
 			continue
 		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
 		playsound(found_intercom, 'sound/items/airhorn.ogg', 100, TRUE)
