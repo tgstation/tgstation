@@ -22,15 +22,20 @@
 	var/list/list_to_check = GLOB.heretic_start_knowledge.Copy()
 	var/i = 0
 	while(i < length(list_to_check))
-		var/datum/heretic_knowledge/instantiated_knowledge = allocate(list_to_check[++i])
+		var/datum/heretic_knowledge/path_to_create = list_to_check[++i]
+		if(!ispath(path_to_create))
+			Fail("Heretic Knowlege: Got a non-heretic knowledge datum (Got: [path_to_create]) in the list knowledges!")
+		var/datum/heretic_knowledge/instantiated_knowledge = new path_to_create()
 		// Next knowledge is a list of typepaths.
 		for(var/datum/heretic_knowledge/next_knowledge as anything in instantiated_knowledge.next_knowledge)
 			if(!ispath(next_knowledge))
-				Fail("[next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
+				Fail("Heretic Knowlege: [next_knowledge.type] has a [isnull(next_knowledge) ? "null":"invalid path"] in its next_knowledge list!")
 				continue
 			if(next_knowledge in list_to_check)
 				continue
 			list_to_check += next_knowledge
+
+		qdel(instantiated_knowledge)
 
 	// We now have a list that SHOULD contain all knowledges with a path set (list_to_check).
 	// Let's compare it to our original list (all_possible_knowledge). If they're not identical,
@@ -39,4 +44,4 @@
 		// Unreachables is a list of typepaths - all paths that cannot be obtained.
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
-			Fail("[lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
+			Fail("Heretic Knowlege: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
