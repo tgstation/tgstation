@@ -2668,6 +2668,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "iF" = (
@@ -4795,6 +4796,11 @@
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/caution{
+	pixel_y = 9
+	},
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "pC" = (
@@ -5897,6 +5903,10 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "sX" = (
@@ -7520,6 +7530,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "service-hall-external"
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -7556,6 +7569,19 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/port)
+"yA" = (
+/obj/machinery/door/airlock/external{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/hallway/secondary/service)
 "yC" = (
 /obj/structure/chair/pew/left{
 	dir = 1
@@ -8999,6 +9025,22 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/hallway/secondary/service)
+"Df" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
 /area/hallway/secondary/service)
 "Dg" = (
 /turf/closed/wall,
@@ -56513,7 +56555,7 @@ ak
 Et
 Et
 qJ
-iE
+yA
 iE
 fK
 fK
@@ -57027,7 +57069,7 @@ ak
 ak
 Et
 qJ
-yv
+Df
 yv
 qJ
 Et
