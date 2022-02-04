@@ -7,9 +7,7 @@
 	shared_cooldown = MOB_SHARED_COOLDOWN_1
 
 /datum/action/cooldown/mob_cooldown/meteors/Activate(atom/target_atom)
-	StartCooldown(10 SECONDS)
 	create_meteors(target_atom)
-	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/meteors/proc/create_meteors(atom/target)
 	if(!target)

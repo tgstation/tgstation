@@ -27,9 +27,7 @@
 		default_projectile_spread = spread
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
-	StartCooldown(100)
 	attack_sequence(owner, target_atom)
-	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/proc/attack_sequence(mob/living/firer, atom/target)
 	shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
@@ -78,6 +76,10 @@
 		shoot_projectile(firer, target, null, firer, rand(-default_projectile_spread, default_projectile_spread), null)
 		SLEEP_CHECK_DEATH(shot_delay, src)
 
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct
+	shot_count = 40
+	default_projectile_spread = 5
+
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel
 	name = "Shrapnel Fire"
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
@@ -107,6 +109,11 @@
 		// no speed multiplier for shrapnel
 		shoot_projectile(to_explode, target, angle + rand(-shrapnel_spread, shrapnel_spread), firer, null, 1, shrapnel_projectile_type, FALSE)
 	qdel(to_explode)
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/strong
+	name = "Strong Shrapnel Fire"
+	shot_count = 16
+	shot_delay = 0.5 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots
 	name = "Spiral Shots"
@@ -193,6 +200,14 @@
 		var/list/pattern = shot_angles[i % length(shot_angles) + 1] // changing patterns
 		fire_shotgun(firer, target, pattern)
 		SLEEP_CHECK_DEATH(0.8 SECONDS, firer)
+
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular
+	name = "Circular Shotgun Fire"
+	shot_angles = list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30))
+
+/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete
+	shot_angles = list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160))
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots
 	name = "Directional Shots"

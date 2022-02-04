@@ -13,9 +13,7 @@
 	var/remove_inner_pools = TRUE
 
 /datum/action/cooldown/mob_cooldown/blood_warp/Activate(atom/target_atom)
-	StartCooldown(10 SECONDS)
 	blood_warp(target_atom)
-	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(atom/target)
 	if(owner.Adjacent(target))

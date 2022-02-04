@@ -42,7 +42,7 @@
 	QDEL_NULL(button)
 	return ..()
 
-/datum/action/proc/Grant(mob/M)
+/datum/action/proc/Grant(mob/M, visibility = TRUE)
 	if(M)
 		if(owner)
 			if(owner == M)
@@ -67,7 +67,7 @@
 			bitflag *= 2
 
 		LAZYADD(M.actions, src)
-		if(M.client)
+		if(M.client && visibility)
 			M.client.screen += button
 			button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
 			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
@@ -513,7 +513,7 @@
 	buttontooltipstyle = "cult"
 	background_icon_state = "bg_demon"
 
-/datum/action/item_action/cult_dagger/Grant(mob/M)
+/datum/action/item_action/cult_dagger/Grant(mob/M, visibility = TRUE)
 	if(!IS_CULTIST(M))
 		Remove(owner)
 		return
@@ -734,7 +734,9 @@
 /datum/action/cooldown/proc/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return
+	StartCooldown(60 SECONDS)
 	. = Activate(target)
+	StartCooldown()
 	SEND_SIGNAL(owner, COMSIG_ABILITY_FINISHED, src)
 
 /// To be implemented by subtypes
@@ -758,7 +760,7 @@
 		STOP_PROCESSING(SSfastprocess, src)
 	UpdateButtonIcon()
 
-/datum/action/cooldown/Grant(mob/M)
+/datum/action/cooldown/Grant(mob/M, visibility = TRUE)
 	..()
 	if(owner)
 		UpdateButtonIcon()

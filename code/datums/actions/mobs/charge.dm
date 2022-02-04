@@ -39,10 +39,7 @@
 		destroy_objects = destroy
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
-	// start pre-cooldown so that the ability can't come up while the charge is happening
-	StartCooldown(10 SECONDS)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
-	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	do_charge(owner, target_atom, charge_delay, charge_past)
@@ -220,7 +217,6 @@
 /datum/action/cooldown/mob_cooldown/charge/hallucination_charge/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
 	if(!enraged)
 		hallucination_charge(target_atom, 6, 8, 0, 6, TRUE)
-		StartCooldown(cooldown_time * 0.5)
 		return
 	for(var/i in 0 to 2)
 		hallucination_charge(target_atom, 4, 9 - 2 * i, 0, 4, TRUE)
