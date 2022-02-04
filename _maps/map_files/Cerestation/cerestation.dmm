@@ -5376,8 +5376,6 @@
 /turf/open/floor/iron,
 /area/security/processing)
 "aup" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/item/radio,
 /obj/machinery/camera{
 	c_tag = "Brig Equipment North";
 	dir = 9;
@@ -5389,11 +5387,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/vending/security,
 /turf/open/floor/iron,
 /area/security/brig)
 "auq" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/item/radio,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
 	},
@@ -5403,11 +5400,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/sec_wardrobe,
 /turf/open/floor/iron,
 /area/security/brig)
 "aur" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/item/radio,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -9203,7 +9199,7 @@
 /turf/open/floor/iron,
 /area/cargo/office)
 "aFb" = (
-/obj/structure/closet/wardrobe/cargotech,
+/obj/machinery/vending/wardrobe/cargo_wardrobe,
 /turf/open/floor/iron,
 /area/cargo/office)
 "aFc" = (
@@ -15452,7 +15448,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aTX" = (
-/obj/structure/closet/jcloset,
+/obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/iron,
 /area/service/janitor)
 "aTY" = (
@@ -18684,7 +18680,7 @@
 /turf/open/floor/iron/freezer,
 /area/service/kitchen)
 "bdY" = (
-/obj/structure/closet/chefcloset,
+/obj/machinery/vending/wardrobe/chef_wardrobe,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen)
 "bdZ" = (
@@ -20288,6 +20284,9 @@
 /area/service/kitchen)
 "bhH" = (
 /obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -7
+	},
 /obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
@@ -20667,11 +20666,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
-"biB" = (
-/obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker,
-/turf/open/floor/iron/cafeteria,
-/area/service/kitchen)
 "biC" = (
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
@@ -20983,9 +20977,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "bju" = (
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/machinery/griddle,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "bjv" = (
@@ -20994,8 +20986,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "bjw" = (
-/obj/structure/table,
-/obj/machinery/microwave,
+/obj/machinery/oven,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "bjx" = (
@@ -21466,7 +21457,8 @@
 /area/service/kitchen)
 "bku" = (
 /obj/structure/table,
-/obj/item/storage/box/donkpockets,
+/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/food/condiment/enzyme,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "bkv" = (
@@ -24315,7 +24307,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bpU" = (
-/obj/structure/closet/wardrobe/virology_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -24326,6 +24317,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/viro_wardrobe,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "bpW" = (
@@ -31091,7 +31083,6 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "bDO" = (
-/obj/structure/closet/wardrobe/botanist,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -31102,6 +31093,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/hydro_wardrobe,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "bDP" = (
@@ -31668,9 +31660,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
+/obj/machinery/vending/wardrobe/atmos_wardrobe,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "bEY" = (
@@ -33546,7 +33536,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "bIL" = (
-/obj/structure/closet/secure_closet/chemical,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -33554,6 +33543,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/chem_wardrobe,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "bIM" = (
@@ -35466,11 +35456,11 @@
 /turf/open/floor/iron/white,
 /area/space)
 "bMM" = (
-/obj/structure/closet/wardrobe/white/medical,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/medi_wardrobe,
 /turf/open/floor/iron/white,
 /area/space)
 "bMN" = (
@@ -40689,7 +40679,7 @@
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "caL" = (
-/obj/structure/closet/wardrobe/chaplain_black,
+/obj/machinery/vending/wardrobe/chap_wardrobe,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
 "caN" = (
@@ -48617,15 +48607,12 @@
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "ctw" = (
-/obj/structure/closet/wardrobe/robotics_black,
-/obj/item/radio/headset/headset_sci{
-	pixel_x = -3
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
 "ctx" = (
@@ -49018,7 +49005,6 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "cuy" = (
-/obj/structure/closet/wardrobe/science_white,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -49029,6 +49015,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "cuz" = (
@@ -55444,8 +55431,7 @@
 /turf/open/floor/iron/freezer,
 /area/commons/toilet)
 "cKo" = (
-/obj/structure/sign/nanotrasen,
-/turf/closed/wall,
+/turf/open/space/basic,
 /area/hallway/secondary/entry)
 "cKp" = (
 /obj/structure/sign/poster/official/pda_ad{
@@ -57489,7 +57475,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/engineering_welding,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
 /turf/open/floor/iron,
 /area/engineering/supermatter)
 "cPU" = (
@@ -66439,8 +66425,6 @@
 /turf/open/floor/plating/asteroid,
 /area/maintenance/fore)
 "dsm" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/item/radio,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -66453,8 +66437,6 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "dso" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/item/radio,
 /obj/item/radio/intercom{
 	broadcasting = 0;
 	listening = 1;
@@ -68124,12 +68106,7 @@
 /turf/closed/wall,
 /area/security/detectives_office)
 "dxD" = (
-/obj/structure/table/wood,
-/obj/item/tape/random,
-/obj/item/tape/random{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "dxE" = (
@@ -68398,10 +68375,10 @@
 /turf/closed/wall,
 /area/security/detectives_office)
 "dyx" = (
-/obj/structure/closet/lawcloset,
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/vending/wardrobe/law_wardrobe,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "dyy" = (
@@ -71743,6 +71720,25 @@
 	},
 /turf/closed/wall/rust,
 /area/maintenance/disposal)
+"nFG" = (
+/obj/item/radio/intercom{
+	broadcasting = 0;
+	name = "Station Intercom (General)";
+	pixel_y = 28
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/vending/clothing,
+/turf/open/floor/iron/dark,
+/area/commons/fitness)
 "nJi" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -72546,6 +72542,22 @@
 /obj/effect/baseturf_helper/asteroid,
 /turf/open/floor/iron/grimy,
 /area/maintenance/disposal)
+"rUb" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/security/brig)
 "rUL" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
@@ -73497,6 +73509,15 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/maintenance/disposal)
+"wXM" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "wYd" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/turf_decal/tile/neutral{
@@ -73735,6 +73756,18 @@
 "xRT" = (
 /turf/closed/wall,
 /area/maintenance/disposal)
+"xRU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen"
+	},
+/obj/machinery/door/firedoor,
+/obj/item/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -7
+	},
+/turf/open/floor/iron/cafeteria,
+/area/service/kitchen)
 "xZk" = (
 /turf/closed/wall/rust,
 /area/maintenance/disposal)
@@ -83902,7 +83935,7 @@ tCI
 dsF
 dqV
 dqX
-dsN
+rUb
 awB
 axy
 dug
@@ -86810,7 +86843,7 @@ bkU
 djM
 djz
 bEM
-bGl
+nFG
 bHQ
 bJp
 bKn
@@ -91417,8 +91450,8 @@ baF
 bgT
 cTP
 biy
-bjt
-bjt
+wXM
+xRU
 bjt
 baF
 baF
@@ -92187,7 +92220,7 @@ baF
 bfL
 bgV
 bhH
-biB
+bju
 bju
 bkt
 bhJ
