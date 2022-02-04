@@ -84,7 +84,7 @@
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/obj/item/assembly/signaler/ui_act(action, params, new_frequency)
+/obj/item/assembly/signaler/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
