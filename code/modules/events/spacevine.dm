@@ -1,3 +1,10 @@
+#define LIGHT_MUTATION_BRIGHTNESS 4
+#define TOXICITY_MUTATION_PROB 10
+#define EXPLOSION_MUTATION_IMPACT_RADIUS 2
+#define GAS_MUTATION_REMOVAL_MULTIPLIER 3
+#define THORN_MUTATION_CUT_PROB 10
+#define FLOWERING_MUTATION_SPAWN_PROB 10
+
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
@@ -82,7 +89,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
-		holder.set_light(severity, 0.3)
+		holder.set_light(LIGHT_MUTATION_BRIGHTNESS, 0.3)
 
 /datum/spacevine_mutation/toxicity
 	name = "Toxic"
@@ -93,7 +100,7 @@
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(issilicon(crosser))
 		return
-	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+	if(prob(TOXICITY_MUTATION_PROB) && istype(crosser) && !isvineimmune(crosser))
 		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
 		crosser.adjustToxLoss(5)
 
@@ -115,7 +122,7 @@
 		QDEL_IN(holder, 5)
 
 /datum/spacevine_mutation/explosive/on_death(obj/structure/spacevine/holder, mob/hitter, obj/item/item)
-	explosion(holder, light_impact_range = severity, adminlog = FALSE)
+	explosion(holder, light_impact_range = EXPLOSION_MUTATION_IMPACT_RADIUS, adminlog = FALSE)
 
 /datum/spacevine_mutation/fire_proof
 	name = "Fire proof"
@@ -216,7 +223,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/oxygen])
 			return
-		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - severity * holder.energy, 0)
+		gas_mix.gases[/datum/gas/oxygen][MOLES] = max(gas_mix.gases[/datum/gas/oxygen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/nitro_eater
@@ -231,7 +238,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/nitrogen])
 			return
-		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - severity * holder.energy, 0)
+		gas_mix.gases[/datum/gas/nitrogen][MOLES] = max(gas_mix.gases[/datum/gas/nitrogen][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/carbondioxide_eater
@@ -246,7 +253,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/carbon_dioxide])
 			return
-		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - severity * holder.energy, 0)
+		gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] = max(gas_mix.gases[/datum/gas/carbon_dioxide][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/plasma_eater
@@ -261,7 +268,7 @@
 		var/datum/gas_mixture/gas_mix = turf.air
 		if(!gas_mix.gases[/datum/gas/plasma])
 			return
-		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - severity * holder.energy, 0)
+		gas_mix.gases[/datum/gas/plasma][MOLES] = max(gas_mix.gases[/datum/gas/plasma][MOLES] - GAS_MUTATION_REMOVAL_MULTIPLIER * holder.energy, 0)
 		gas_mix.garbage_collect()
 
 /datum/spacevine_mutation/thorns
@@ -271,13 +278,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
+	if(prob(THORN_MUTATION_CUT_PROB) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/victim = crosser
 		victim.adjustBruteLoss(5)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
+	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/victim = hitter
 		victim.adjustBruteLoss(5)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
@@ -306,7 +313,7 @@
 	severity = 10
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
-	if(holder.energy == 2 && prob(severity) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
+	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
 		new/obj/structure/alien/resin/flower_bud(get_turf(holder))
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -621,3 +628,10 @@
 		if(("vines" in victim.faction) || ("plants" in victim.faction))
 			return TRUE
 	return FALSE
+
+#undef LIGHT_MUTATION_BRIGHTNESS
+#undef TOXICITY_MUTATION_PROB
+#undef EXPLOSION_MUTATION_IMPACT_RADIUS
+#undef GAS_MUTATION_REMOVAL_MULTIPLIER
+#undef THORN_MUTATION_CUT_PROB
+#undef FLOWERING_MUTATION_SPAWN_PROB
