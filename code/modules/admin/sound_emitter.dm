@@ -99,7 +99,7 @@
 		var/new_mode
 		var/mode_list = list("Local (normal sound)" = SOUND_EMITTER_LOCAL, "Direct (not affected by environment/location)" = SOUND_EMITTER_DIRECT)
 		new_mode = tgui_input_list(user, "Choose a new mode", "Sound Emitter", mode_list)
-		if(isnull(new_mode))
+		if(!new_mode)
 			return
 		motus_operandi = mode_list[new_mode]
 		to_chat(user, span_notice("Mode set to [motus_operandi]."), confidential = TRUE)
@@ -107,13 +107,13 @@
 		var/new_range
 		var/range_list = list("Radius (all mobs within a radius)" = SOUND_EMITTER_RADIUS, "Z-Level (all mobs on the same z)" = SOUND_EMITTER_ZLEVEL, "Global (all players)" = SOUND_EMITTER_GLOBAL)
 		new_range = tgui_input_list(user, "Choose a new range", "Sound Emitter", range_list)
-		if(isnull(new_range))
+		if(!new_range)
 			return
 		emitter_range = range_list[new_range]
 		to_chat(user, span_notice("Range set to [emitter_range]."), confidential = TRUE)
 	if(href_list["edit_radius"])
 		var/new_radius = tgui_input_number(user, "Choose a radius", "Sound Emitter", sound_volume, 127)
-		if(isnull(new_radius))
+		if(!new_radius)
 			return
 		play_radius = new_radius
 		to_chat(user, span_notice("Audible radius set to [play_radius]."), confidential = TRUE)

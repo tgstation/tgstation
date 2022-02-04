@@ -1,8 +1,3 @@
-/// Minimum timer for c4 charges
-#define MIN_TIMER 10 SECONDS
-/// Maximum timer for c4 charges
-#define MAX_TIMER 6000 SECONDS
-
 /obj/item/grenade/c4
 	name = "C-4 charge"
 	desc = "Used to put holes in specific areas without too much extra hole. A saboteur's favorite."
@@ -23,6 +18,10 @@
 	var/aim_dir = NORTH
 	var/boom_sizes = list(0, 0, 3)
 	var/full_damage_on_mobs = FALSE
+	/// Minimum timer for c4 charges
+	var/minimum_timer = 10
+	/// Maximum timer for c4 charges
+	var/maximum_timer = 3600
 
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
@@ -76,8 +75,8 @@
 	detonate()
 
 /obj/item/grenade/c4/attack_self(mob/user)
-	var/newtime = tgui_input_number(usr, "Please set the timer", "C4 Timer", MIN_TIMER, MAX_TIMER, MIN_TIMER)
-	if (!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/newtime = tgui_input_number(user, "Please set the timer", "C4 Timer", minimum_timer, maximum_timer, minimum_timer)
+	if(!newtime || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	det_time = newtime
 	to_chat(user, "Timer set for [det_time] seconds.")
@@ -156,6 +155,3 @@
 	worn_icon_state = "x4"
 	directional = TRUE
 	boom_sizes = list(0, 2, 5)
-
-#undef MAX_TIMER
-#undef MIN_TIMER

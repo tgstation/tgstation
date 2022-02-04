@@ -85,7 +85,7 @@
 	switch (action)
 		if ("set_charge")
 			var/newcharge = tgui_input_number(usr, "Set new charge", borg.name, borg.cell.charge, borg.cell.maxcharge)
-			if (isnull(newcharge))
+			if(isnull(newcharge))
 				return
 			borg.cell.charge = newcharge
 			message_admins("[key_name_admin(user)] set the charge of [ADMIN_LOOKUPFLW(borg)] to [borg.cell.charge].")

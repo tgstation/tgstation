@@ -151,7 +151,7 @@
 				return
 			else
 				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
-				if (!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
 				bomb_defused = FALSE
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
