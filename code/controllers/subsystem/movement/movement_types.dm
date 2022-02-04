@@ -20,6 +20,8 @@
 	///Delay between each move in deci-seconds
 	var/delay = 1
 	///The next time we should process
+	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
+	///Should not be modified directly outside of [start_loop]
 	var/timer = 0
 	///Is this loop running or not
 	var/running = FALSE
@@ -71,10 +73,9 @@
 	extra_info = null
 	return ..()
 
-///Exists as a helper so outside code can modify delay while also modifying timer
+///Exists as a helper so outside code can modify delay in a sane way
 /datum/move_loop/proc/set_delay(new_delay)
 	delay =  max(new_delay, world.tick_lag)
-	timer = world.time + delay
 
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
@@ -93,8 +94,10 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
-	timer = world.time + delay
 	if(QDELETED(src) || !success) //Can happen
+		return
+
+	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
 		return
 
 	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
@@ -396,7 +399,6 @@
 
 /datum/move_loop/has_target/dist_bound/move()
 	if(!check_dist()) //If we're too close don't do the move
-		timer = world.time //Make sure to move as soon as possible
 		return FALSE
 	return TRUE
 
@@ -424,7 +426,7 @@
 /datum/move_loop/has_target/dist_bound/move_to
 
 /datum/move_loop/has_target/dist_bound/move_to/check_dist()
-	return (get_dist(moving, target) >= distance) //If you get too close, stop moving closer
+	return (get_dist(moving, target) > distance) //If you get too close, stop moving closer
 
 /datum/move_loop/has_target/dist_bound/move_to/move()
 	. = ..()
@@ -457,7 +459,7 @@
 /datum/move_loop/has_target/dist_bound/move_away
 
 /datum/move_loop/has_target/dist_bound/move_away/check_dist()
-	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
+	return (get_dist(moving, target) < distance) //If you get too far out, stop moving away
 
 /datum/move_loop/has_target/dist_bound/move_away/move()
 	. = ..()

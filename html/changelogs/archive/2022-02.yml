@@ -1,0 +1,218 @@
+2022-02-01:
+  ArcaneMusic:
+  - qol: Blackmarket uplinks now draw from the player's ID card, not from an internal
+      supply of credits.
+  - code_imp: Blackmarket uplinks on the backend were tweaked in a way consistent
+      with other sold items.
+  CRITAWAKETS:
+  - refactor: The environmental atmos scanning ability of the gas analyzer is now
+      a component.
+  Ghommie:
+  - bugfix: Fixed the "skeletal guardian" away mission role not being a skeleton.
+  JohnFulpWillard:
+  - bugfix: Species-locked traitor items (currently the moth suspicious lantern) has
+      been re-added after an accidental removal.
+  Jolly-66:
+  - bugfix: Last two Active Turfs in DJ Space Ruin were fixed.
+  LemonInTheDark:
+  - bugfix: Kilo and tram's whiteships should actually spawn now. No promises on them
+      docking though
+  Melbert:
+  - balance: Icebox's cursed spring now only spawns on the lower levels of the moon.
+  Mothblocks:
+  - qol: Default FPS (if you have it unset) is now 100 instead of 40.
+  RandomGamer123:
+  - bugfix: Prevents silicons from opening circuit airlocks by walking through them.
+  Ryll/Shaps:
+  - bugfix: Iron walls built on top of metal foam will produce metal foam instead
+      of a girder when decon'd.
+  TiviPlus:
+  - bugfix: fixed new areas over starlight areas not having lighting objects
+  Watermelon914:
+  - expansion: Final objective battlecruiser will now make you a battlecruiser ally,
+      giving you the nuke codes and making it obvious to other battlecruiser members
+      that you are one of them.
+  - expansion: Added telecom disruption and blackout purchases for traitors to purchase,
+      and moved the elite syndicate hardsuit from the nukie uplink to the traitor
+      uplink as a high progression cost item.
+  - balance: Rebalanced TC rewards from assassinations to be less, and lowered TC
+      rewards for plentiful objectives.
+  - balance: Lowers the progression reward of assassination objectives.
+  cacogen:
+  - expansion: Gave lower Ice Box public mining an air alarm, vent and scrubber and
+      made its elevator shaft more warning-like
+  jjpark-kb:
+  - expansion: xeno weeds will now be destroyed when their parent node is destroyed
+  - balance: xeno weeds spread cooldown lowered from 15-20 seconds to 5-10 seconds
+  jlsnow301:
+  - code_imp: Created a new input component that accepts only integers. More usage
+      to come.
+  - refactor: Pay stands are now holographic. It's 2562! Create one by right-clicking
+      your ID.
+  - rscdel: Circuit boards for pay stands.
+  - refactor: Pay stands now have their own TGUI.
+  - bugfix: Custom vendors now alert you when someone makes a purchase.
+  - bugfix: Custom vendors now place items in your hand when you make a purchase.
+  san7890:
+  - bugfix: Nanotrasen realized that when you punt someone down using IceBox Station's
+      execution room, they would only fall a meager one Z-level (or sometimes, wouldn't
+      even fall at all!). This has been corrected to allow you to punt them down to
+      the intended height of TWO Z-Levels. Nifty, eh?
+  - bugfix: If you're looking through the Medbay on some stations (and shuttles too),
+      take a moment to appreciate that the stasis beds have been re-arranged.
+  timothymtorres:
+  - code_imp: Refactored the incapacitated proc to skip optional arguments and use
+      the named arguments properly to improve readability.
+2022-02-02:
+  Aerden:
+  - bugfix: Fixed the thermomachine board being listed as a freezer/heater board in
+      the circuit imprinter.
+  - code_imp: Changes the descriptions of the HFR boards to not be the same as the
+      freezer/heater.
+  Capsandi:
+  - bugfix: missing delta turbine air supply pipe has been installed
+  Ghommie:
+  - bugfix: Fixes exodrones erroneously reporting "travelling back to station" in
+      the status panel of their console UI when travelling from site to site.
+  - qol: exodrones will now report the name of the target sites they're travelling
+      to.
+  - bugfix: Fixed an oversight with the skittish trait that let players dive into
+      burial mounds, which are technically a subtype of crates.
+  - bugfix: Fixed a runtime error that made abandoned crates not update their lock
+      lights when unlocked.
+  - bugfix: Fixed an oversight with abandoned crates not resetting the number of attempts
+      left and not nulling the last attempted code when re-locked.
+  - bugfix: Fixed burial mounds somehow getting lock lights overlays.
+  JohnFulpWillard:
+  - bugfix: Clowns uploading their PDA cartridge to a screwdrivered-open airlock will
+      now properly cause it to Honk.
+  MMMiracles:
+  - rscadd: Tramstation's maintenance has taken broken down into more modular segments
+      that will now load in randomly each round.
+  - rscadd: There is now a medical console and crew console in the main medbay treatment
+      room.
+  MacBlaze1:
+  - qol: made ethereals charging from lights repeat until they move.
+  Melbert:
+  - bugfix: Cult deconversion text is the right color again
+  SmoSmoSmoSmok:
+  - bugfix: Connects robotics trashbin to disposal system on tramstation
+  SuperNovaa41:
+  - bugfix: Drones can now properly insert items into machines frames... or really
+      anything else.
+  cacogen:
+  - expansion: 'Changes to Ice Box mining lower levels:'
+  - expansion: Replaces external-facing regular walls with reinforced ones
+  - expansion: Replaces external shutters with external airlocks except for drone
+      bay
+  - expansion: Replaces the drone bay's single set of external shutters with a pair
+  - expansion: Adds outside lights to external airlocks missing them and to fenced-in
+      areas
+  - expansion: Adds warning signs to external airlocks
+  - bugfix: Fire alarms will be renamed with areas like air alarms, e.g. Bar fire
+      alarm --> The Adminbus fire alarm
+  san7890:
+  - bugfix: Nanotrasen moved around some of the wall decorations in IceBoxStation's
+      Science to appease the ghostly overlords (as well as the AI).
+  - balance: Security Officers (and the whole lot) now have a name assigned to their
+      locker room, rather than have it be another appendage of the large beast known
+      as Brig.
+2022-02-03:
+  Fikou, Armhulen, smartkar:
+  - rscadd: Brimdemons have invaded Lavaland.
+  - rscdel: Lobstrocities have awakened from their lavaland slumber, this somehow
+      made them unavailable in the gold slime pool.
+  Gamer025:
+  - bugfix: Stickyban subsystem no longer runtimes on invalid entries
+  Jolly-66:
+  - bugfix: Removed a duped pipe from Icebox and a duped power cable from Tram.
+  LemonInTheDark:
+  - bugfix: Merge datums will no longer spit blood if two mergable objects are on
+      the first tile examined. The directions are also trustworthy now
+  Melbert:
+  - bugfix: Fixes a hard delete with rod form. Also cleans up some rod code.
+  - bugfix: Admin sending a looping rod will no longer make all following rods loop
+  Pepsilawn:
+  - bugfix: lost sprites for connectable t-ray goggles found and restored
+  RandomGamer123:
+  - bugfix: Upgraded BEPISes now longer give tech for free. For a fully upgraded machine,
+      you now need 200 credits for a 50% chance of a minor reward, and 600 credits
+      for a 50% chance of a major reward.
+  - bugfix: The BEPIS message telling you that you've gotten all the tech disks and
+      therefore are getting a minor reward instead now properly displays.
+  Ryll/Shaps:
+  - rscadd: Added in a new admin spawn, the mystery box! Dealing randomized (maybe)
+      death to thunderdomes near you! Maybe!
+  Tastyfish:
+  - bugfix: Calls via holopads now transmit the caller's speech again.
+  jlsnow301:
+  - balance: Nerfs the stun on touching a field gen from 30 seconds(!) down to 10.
+      Adds sound and chat message feedback.
+  san7890:
+  - balance: Nanotrasen has updated how they name and define different parts of their
+      loot-laden maintenance tunnels. Take a look around you!
+  tastyfish:
+  - server: Added some more CI linter checks for maps, that are otherwise caught at
+      runtime. This will likely fail downstream maps if they're double stacking objects
+      which aren't allowed to stack, or misplacing APC's.
+  tf-4:
+  - spellcheck: Not having enough iron to create a foam wall no longer erroneously
+      tells you that you need four iron sheets instead of two.
+  timothymtorres:
+  - qol: Adds more trash items to the garbage and cigbutt spawner.
+2022-02-04:
+  Donpedrito:
+  - bugfix: Tramstation and Kilostation now have bodies in their morgues shiftstart,
+      bringing them in line with other stations.
+  Ghommie:
+  - imageadd: Updated the icon for the Legion achievement.
+  - imageadd: Added an icon to the "Look Out, Sir!" achievement.
+  JohnFulpWillard:
+  - bugfix: You can now once again resist out of aggressive grabs.
+  Jolly-66:
+  - bugfix: Chaplains rejoice, you can now stop burying the dead in your own robes!
+      Burial garments have been added to the Religious Supply Crate, as was already
+      promised in the description.
+  LemonInTheDark:
+  - bugfix: Optimized automated movement. Should feel a mite smoother now
+  - bugfix: Changed how the singulo eats turfs to hopefully be less of a load on the
+      server. Behavior's changed a bit tho, lemme know if anything looks too off
+  - bugfix: Welding up a disposal segment will not longer delete most of the people/things/dogs
+      inside it
+  MacBlaze1:
+  - bugfix: ethereals can now charge themselves using right click, but they will also
+      lock/unlock the APC above normal charge
+  Melbert:
+  - bugfix: Fixes being able to vote for maps which are outside their configured population
+      range (Such as Kilostation).
+  Mothblocks:
+  - balance: You no longer need beakers to build component printers or module duplicators.
+  Nari Harimoto:
+  - bugfix: Icebox medbay has had a slight change in the lobby and pharmacy to fix
+      some ugly spots
+  - bugfix: Icebox dept order consoles now work, both the computer and the wallmounted
+      ones
+  Potato-Masher:
+  - bugfix: Kilostation's xenobiology lab airlock is no longer incorrectly accessed
+      with Ordnance lab access.
+  - bugfix: Fixed the genturfs under icebox's laundry room stairs.
+  RandomGamer123:
+  - qol: The cargo shuttle cannot be sent message has been updated to remind people
+      that you also cannot send the shuttle when there are undelivered departmental
+      order crates or syndicate bombs on it.
+  Ryll/Shaps:
+  - config: Added ALLOW_ADMIN_PROFILING entry to the config, controlling whether admins
+      are given access to the server profiler
+  ShizCalev:
+  - bugfix: Fixed being able to fry objects that are actively storing other objects.
+  SmoSmoSmoSmok:
+  - bugfix: Clicking cancel on the carp rift will no longer summon you as a carp
+  jlsnow301:
+  - balance: Returning to lobby is now the default assignment if your job spot was
+      taken.
+  san7890:
+  - rscadd: The Space Ruin "The Lizard's Gas" now has a GPS on it, so you can seek
+      it out a little bit easier now.
+  zxaber:
+  - expansion: Alarm sounds for Fire Locks and Fire Alarms now loops slightly differently,
+      and will respond to changes quicker.

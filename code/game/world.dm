@@ -1,5 +1,10 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
+/// Force the log directory to be something specific in the data/logs folder
+#define OVERRIDE_LOG_DIRECTORY_PARAMETER "log-directory"
+/// Prevent the master controller from starting automatically
+#define NO_INIT_PARAMETER "no-init"
+
 GLOBAL_VAR(restart_counter)
 
 /**
@@ -80,6 +85,10 @@ GLOBAL_VAR(restart_counter)
 	HandleTestRun()
 	#endif
 
+	#ifdef AUTOWIKI
+	setup_autowiki()
+	#endif
+
 /world/proc/InitTgs()
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	GLOB.revdata.load_tgs_info()
@@ -122,6 +131,7 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
+	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
 	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
@@ -212,7 +222,7 @@ GLOBAL_VAR(restart_counter)
 		PRcounts[id] = 1
 	else
 		++PRcounts[id]
-		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+		if(PRcounts[id] > CONFIG_GET(number/pr_announcements_per_round))
 			return
 
 	var/final_composed = span_announce("PR: [announcement]")
@@ -368,3 +378,10 @@ GLOBAL_VAR(restart_counter)
 
 /world/proc/on_tickrate_change()
 	SStimer?.reset_buckets()
+
+/world/Profile(command, type, format)
+	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))
+		. = ..()
+
+#undef OVERRIDE_LOG_DIRECTORY_PARAMETER
+#undef NO_INIT_PARAMETER

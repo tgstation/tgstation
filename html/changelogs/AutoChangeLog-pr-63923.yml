@@ -1,6 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - balance: "Tritiumfire will need more tritium burned in order to release radiation. The higher the volume of the gasmixture, the more tritium is needed."
-  - balance: "Tritiumfire radiation pulse will always have a range of at least 6, but will need more tritium in order to increase range."
-  - balance: "Tritiumfire will be less likely to irradiate you if there is less tritium getting burned."
