@@ -1,4 +1,14 @@
 
+// patronage thresholds for different paintings. The prestigiousness of their frames scales with the amount of credits spent on them.
+#define PATRONAGE_OK_PAINTING PAYCHECK_ASSISTANT * STARTING_PAYCHECKS // iron/bamboo/bones
+#define PATRONAGE_NICE_FRAME PAYCHECK_COMMAND * STARTING_PAYCHECKS // bronze/clown/frog/orange
+#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME + 1100 // silver/woodwork/necropolis
+#define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2 //gold/platinum
+#define PATRONAGE_AMAZING_FRAME PATRONAGE_GREAT_FRAME * 2 //diamond/sanctuary/fleshy
+#define PATRONAGE_SUPERB_FRAME PATRONAGE_FANTASTIC_FRAME * 2 // rainbow/bluespace
+#define PATRONAGE_LEGENDARY_FRAME PATRONAGE_SUPERB_FRAME * 2.5 // singulo/supermatter/TCs
+#define PATRONAGE_OMEGA_FRAME PATRONAGE_SUPERB_FRAME * 2 // anomalous/flashing
+
 ///////////
 // EASEL //
 ///////////
@@ -192,6 +202,9 @@
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
 	to_chat(user,span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	if(istype(loc, /obj/structure/sign/painting))
+		var/obj/structure/sign/painting/holder = loc
+		holder.update_appearance() //Embellish the painting frame based on the amount of credits spent on it.
 
 /obj/item/canvas/update_overlays()
 	. = ..()
@@ -319,8 +332,8 @@
 	height = 24
 	pixel_x = 2
 	pixel_y = 1
-	framed_offset_x = 4
-	framed_offset_y = 5
+	framed_offset_x = 3
+	framed_offset_y = 4
 
 /obj/item/wallframe/painting
 	name = "painting frame"
@@ -410,14 +423,14 @@
 	if(!current_canvas?.generated_icon)
 		return
 
-	var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
-	MA.pixel_x = current_canvas.framed_offset_x
-	MA.pixel_y = current_canvas.framed_offset_y
-	. += MA
-	var/mutable_appearance/frame = mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame")
-	frame.pixel_x = current_canvas.framed_offset_x - 1
-	frame.pixel_y = current_canvas.framed_offset_y - 1
-	. += frame
+	var/mutable_appearance/painting = mutable_appearance(current_canvas.generated_icon)
+	painting.pixel_x = current_canvas.framed_offset_x
+	painting.pixel_y = current_canvas.framed_offset_y
+	. += painting
+	var/frame_tier = ""
+	switch(current_canvas.painting_metadata.credit_value)
+		if(PAYCHECK_ASSISTANT * STARTING_PAYCHECKS to PAYCHECK_HARD * STARTING_PAYCHECKS)
+	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame") //add the frame
 
 /**
  * Loads a painting from SSpersistence. Called globally by said subsystem when it inits
