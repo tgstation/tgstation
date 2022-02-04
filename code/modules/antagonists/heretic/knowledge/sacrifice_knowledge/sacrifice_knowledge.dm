@@ -337,6 +337,11 @@
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp)
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
+	// Wherever we end up, we sure as hell won't be able to explain
+	sac_target.slurring += 20
+	sac_target.cultslurring += 20
+	sac_target.stuttering += 20
+
 	// They're already back on the station for some reason, don't bother teleporting
 	if(is_station_level(sac_target.z))
 		return
@@ -423,27 +428,13 @@
  * This proc is called from [proc/return_target] if the target dies in the shadow realm.
  *
  * After teleporting the target back to the station (dead),
- * it spawns a special broken illusion to hint to the rescuers what happened.
- *
- * 1 to 2 minutes later, a centcom announcement is sent detailing where the person landed.
+ * it spawns a special red broken illusion on their spot, for style.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_dead_target(mob/living/carbon/human/sac_target)
-	var/turf/landing_turf = get_turf(sac_target)
-	addtimer(CALLBACK(src, .proc/announce_dead_target, landing_turf), rand(1 MINUTES, 2 MINUTES))
-
-	var/obj/effect/visible_heretic_influence/illusion = new(landing_turf)
+	var/obj/effect/visible_heretic_influence/illusion = new(get_turf(sac_target))
 	illusion.name = "\improper weakened rift in reality"
 	illusion.desc = "A rift wide enough for something... or someone... to come through."
 	illusion.color = COLOR_DARK_RED
-
-/**
- * Makes a centcom announcement about our dead person returning on [landing_turf].
- */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/announce_dead_target(turf/landing_turf)
-	priority_announce("Attention, crew. We recorded an anomalous dimensional occurance in: \
-		[get_area_name(landing_turf, TRUE)]. We're unsure of what it could be, \
-		but something just appeared in the area. We suggest checking it out.", \
-		"Central Command Higher Dimensional Affairs")
 
 /**
  * "Fuck you" proc that gets called if the chain is interrupted at some points.
