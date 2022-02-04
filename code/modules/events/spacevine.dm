@@ -147,7 +147,7 @@
 
 /datum/spacevine_mutation/cold_proof
 	name = "Cold proof"
-	hue = ""
+	hue = "#0BD5D9"
 	quality = MINOR_NEGATIVE
 	severity = 5
 
