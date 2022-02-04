@@ -260,7 +260,7 @@ SUBSYSTEM_DEF(air)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
-		var/datum/thing = currentrun[length(currentrun)]
+		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
 			thing.process()
@@ -572,7 +572,7 @@ SUBSYSTEM_DEF(air)
 		EG = new
 		EG.add_turf(src)
 
-	for (var/turf/open/ET as anything in atmos_adjacent_turfs)
+	for (var/turf/open/ET in atmos_adjacent_turfs)
 		if (ET.blocks_air || !ET.air)
 			continue
 

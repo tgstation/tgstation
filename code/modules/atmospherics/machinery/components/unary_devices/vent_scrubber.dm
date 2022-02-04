@@ -76,11 +76,15 @@
 			continue
 
 	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
-	if(!our_turf || !turf_gas)
+
+	if(!isopenturf(our_turf))
 		return FALSE
 
-	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	var/datum/gas_mixture/turf_gas = our_turf.air
+	if(!turf_gas)
+		return FALSE
+
+	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/remove_filters(filter_or_filters)
@@ -103,7 +107,7 @@
 	if(!turf_gas)
 		return FALSE
 
-	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/toggle_filters(filter_or_filters)
@@ -120,11 +124,16 @@
 				filter_types |= translated_gas
 
 	var/turf/open/our_turf = get_turf(src)
-	var/datum/gas_mixture/turf_gas = our_turf?.air
-	if(!our_turf || !turf_gas)
+
+	if(!isopenturf(our_turf))
 		return FALSE
 
-	check_atmos_process(src, turf_gas, turf_gas.temperature)
+	var/datum/gas_mixture/turf_gas = our_turf.air
+
+	if(!turf_gas)
+		return FALSE
+
+	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
@@ -367,7 +376,7 @@
 		try_start_processing = FALSE
 
 	if(try_start_processing)//check if our changes should make us start processing
-		check_atmos_process(src, turf_gas, turf_gas.temperature)
+		check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 
 	if(length(filter_types) == old_filter_length && old_scrubbing == scrubbing && old_widenet == widenet)
 		return

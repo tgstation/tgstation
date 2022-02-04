@@ -44,12 +44,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 ///assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 ///Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
-	ASSERT_GAS(gas_id, gases)
+	ASSERT_GAS(gas_id, src)
 
 ///assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases(...)
 	for(var/id in args)
-		ASSERT_GAS(id, gases)
+		ASSERT_GAS(id, src)
 
 ///add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
 ///Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /// Do NOT use this in code where performance matters!
 /// It's better to batch calls to garbage_collect(), especially in places where you're checking many gastypes
 /datum/gas_mixture/proc/has_gas(gas_id, amount=0)
-	ASSERT_GAS(gas_id, gases)
+	ASSERT_GAS(gas_id, src)
 	var/is_there_gas = amount < gases[gas_id][MOLES]
 	garbage_collect()
 	return is_there_gas
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
-///Update archived versions of variables. Returns: TRUE in all cases
+///Update archived versions of variables. Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
 	var/list/cached_gases = gases
 
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return TRUE
 
-///Merges all air from giver into self. Deletes giver. Returns: TRUE if we are mutable and the merge is sucessful, FALSE otherwise
+///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return FALSE
@@ -161,7 +161,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/giver_gases = giver.gases
 	//gas transfer
 	for(var/giver_id in giver_gases)
-		ASSERT_GAS(giver_id, cached_gases)
+		ASSERT_GAS(giver_id, src)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return TRUE
@@ -286,8 +286,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return copy
 
-///Copies variables from sample, moles multiplied by partial.
-///Returns: TRUE if we are mutable, null otherwise
+///Copies variables from sample, moles multiplicated by partial
+///Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, partial = 1)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
@@ -297,10 +297,10 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	temperature = sample.temperature
 	for(var/id in sample_gases)
-		ASSERT_GAS(id, cached_gases)
+		ASSERT_GAS(id,src)
 		cached_gases[id][MOLES] = sample_gases[id][MOLES] * partial
 
-	return TRUE
+	return 1
 
 ///Copies all gas info from the turf into the gas list along with temperature
 ///Returns: TRUE if we are mutable, FALSE otherwise
@@ -401,7 +401,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	//THERMAL ENERGY TRANSFER
 	if(abs_temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-
 		var/new_self_heat_capacity = old_self_heat_capacity + heat_capacity_sharer_to_self - heat_capacity_self_to_sharer
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
@@ -414,7 +413,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		//thermal energy of the system (self and sharer) is unchanged
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY)
-				if(abs(new_sharer_heat_capacity / old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
+				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
 	if(length(only_in_sharer + only_in_cached)) //if all gases were present in both mixtures, we know that no gases are 0
@@ -425,9 +424,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
-		TOTAL_MOLES(cached_gases, our_moles)
+		TOTAL_MOLES(cached_gases,our_moles)
 		var/their_moles
-		TOTAL_MOLES(sharer_gases, their_moles)
+		TOTAL_MOLES(sharer_gases,their_moles)
 		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 ///Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
@@ -454,24 +453,30 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
-///Compares sample to self to see if within acceptable ranges that group processing may be enabled.
+///Compares sample to self to see if within acceptable ranges that group processing may be enabled
 ///Returns: a string indicating what check failed, or "" if check passes
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
-	var/our_moles = 0
 	for(var/id in cached_gases | sample_gases) // compare gases from either mixture
-		var/gas_moles = cached_gases[id]?[MOLES]
-
-		var/delta = abs(gas_moles - sample_gases[id]?[MOLES])
-		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
+		var/gas_moles = cached_gases[id]
+		gas_moles = gas_moles ? gas_moles[MOLES] : 0
+		var/sample_moles = sample_gases[id]
+		sample_moles = sample_moles ? sample_moles[MOLES] : 0
+		var/delta = abs(gas_moles - sample_moles)
+		if(delta > MINIMUM_MOLES_DELTA_TO_MOVE && \
+			delta > gas_moles * MINIMUM_AIR_RATIO_TO_MOVE)
 			return id
 
-		our_moles += gas_moles
-
+	var/our_moles
+	TOTAL_MOLES(cached_gases, our_moles)
 	if(our_moles > MINIMUM_MOLES_DELTA_TO_MOVE) //Don't consider temp if there's not enough mols
-		if(abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		var/temp = temperature
+		var/sample_temp = sample.temperature
+
+		var/temperature_delta = abs(temp - sample_temp)
+		if(temperature_delta > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 			return "temp"
 
 	return ""
@@ -488,15 +493,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/mid_formation = list()
 	var/list/post_formation = list()
 	var/list/fires = list()
-	var/static/list/gas_reactions = SSair.gas_reactions
+	var/list/gas_reactions = SSair.gas_reactions
 	for(var/gas_id in cached_gases)
 		var/list/reaction_set = gas_reactions[gas_id]
 		if(!reaction_set)
 			continue
-		pre_formation += reaction_set[PRIORITY_PRE_FORMATION]
-		mid_formation += reaction_set[PRIORITY_FORMATION]
-		post_formation += reaction_set[PRIORITY_POST_FORMATION]
-		fires += reaction_set[PRIORITY_FIRE]
+		pre_formation += reaction_set[1]
+		mid_formation += reaction_set[2]
+		post_formation += reaction_set[3]
+		fires += reaction_set[4]
 
 	var/list/reactions = pre_formation + mid_formation + post_formation + fires
 
