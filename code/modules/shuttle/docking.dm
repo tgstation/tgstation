@@ -173,14 +173,16 @@
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
 		newT.afterShuttleMove(oldT, rotation) //turfs
-		var/turf/newCeiling = get_step_multiz(newT, UP)
+		var/turf/newCeiling = get_step_multiz(newT, UP) // check if a ceiling is needed
 		if(newCeiling)
-			if(istype(newCeiling, /turf/open/openspace))
+			// generate ceiling
+			if(istype(newCeiling, /turf/open/openspace)) // why is this needed? because we have 2 different typepaths for openspace
 				newCeiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/openspace))
 			else if (istype(newCeiling, /turf/open/space/openspace))
 				newCeiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/space/openspace))
-		var/turf/oldCeiling = get_step_multiz(oldT, UP)
-		if(oldCeiling && istype(oldCeiling, /turf/open/floor/engine/hull/ceiling))
+		var/turf/oldCeiling = get_step_multiz(oldT, UP) 
+		if(oldCeiling && istype(oldCeiling, /turf/open/floor/engine/hull/ceiling)) // check if a ceiling was generated previously
+			// remove old ceiling
 			var/turf/open/floor/engine/hull/ceiling/oldShuttleCeiling = oldCeiling
 			oldShuttleCeiling.ChangeTurf(oldShuttleCeiling.old_turf_type)
 

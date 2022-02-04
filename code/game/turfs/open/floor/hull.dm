@@ -12,6 +12,7 @@
 		return FALSE
 	return ..()
 
+/// RCD-immune plating generated only by shuttle code for shuttle ceilings on multi-z maps, should not be mapped in or creatable in any other way
 /turf/open/floor/engine/hull/ceiling
 	name = "shuttle ceiling plating"
 	var/old_turf_type
