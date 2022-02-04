@@ -136,12 +136,14 @@
 		logging_data = "[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
 		GLOB.lastsignalers.Add(logging_data)
 
-	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
+	var/datum/signal/signal = new(list("code" = code, "freq" = frequency), logging_data = logging_data)
 	radio_connection.post_signal(src, signal)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
+		return
+	if(signal.data["freq"] != frequency)
 		return
 	if(signal.data["code"] != code)
 		return
