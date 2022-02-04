@@ -274,7 +274,7 @@
 
 	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		for(var/obj/item/content_item in attacking_item.contents)
-			if(!do_after(user, 5, src))
+			if(!do_after(user, 0.5 SECONDS, src))
 				return FALSE
 			attackby(content_item, user)
 		return TRUE
