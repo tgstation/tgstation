@@ -113,7 +113,6 @@
 			if(grinding)
 				grinding_mulitipler = 2
 			victim.Knockdown(4 * grinding_mulitipler SECONDS)
-			victim.Paralyze(1 * grinding_mulitipler SECONDS)
 	else
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
@@ -153,10 +152,6 @@
 			if(victim.body_position == LYING_DOWN)
 				var/total_brute = victim.getBruteLoss()
 				playsound(location, 'sound/items/trayhit2.ogg', 40)
-				if(victim.stat == DEAD && total_brute >= 175)
-					victim.gib() // Beaten and brutalised, your body gives up
-					playsound(victim, 'sound/effects/splat.ogg', 50)
-				else
 					var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
 					victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
 					victim.Paralyze(1.5 SECONDS)

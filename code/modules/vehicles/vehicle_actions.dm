@@ -290,7 +290,8 @@
 	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger(trigger_flags)
-	if(..())
+	. = ..()
+	if(.)
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
 		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
