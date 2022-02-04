@@ -377,6 +377,14 @@
 					/obj/item/clothing/head/hos/beret/navyhos)
 	crate_name = "security clothing crate"
 
+/datum/supply_pack/security/hosturtlenecks
+	name = "Head of Security Turtlenecks"
+	desc = "Contains the HOS's turtleneck and turtleneck skirt. Requires HOS access to open."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_HOS
+	contains = list(/obj/item/clothing/under/rank/security/head_of_security/alt,
+					/obj/item/clothing/under/rank/security/head_of_security/alt/skirt)
+
 /datum/supply_pack/security/stingpack
 	name = "Stingbang Grenade Pack"
 	desc = "Contains five \"stingbang\" grenades, perfect for stopping riots and playing morally unthinkable pranks. Requires Security access to open."
@@ -1337,6 +1345,14 @@
 					/obj/item/assembly/timer)
 	crate_name = "plasma assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/medical/RDturtlenecks
+	name = "Research Director Turtlenecks"
+	desc = "Contains the RD's turtleneck and turtleneck skirt. Requires RD access to open."
+	cost = CARGO_CRATE_VALUE * 2
+	access = ACCESS_RD
+	contains = list(/obj/item/clothing/under/rank/rnd/research_director/turtleneck,
+					/obj/item/clothing/under/rank/rnd/research_director/turtleneck/skirt)
 
 /datum/supply_pack/science/raw_flux_anomaly
 	name = "Raw Flux Anomaly"
