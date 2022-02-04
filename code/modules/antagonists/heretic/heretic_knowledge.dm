@@ -131,7 +131,7 @@
  * A knowledge subtype that grants the heretic a certain spell.
  */
 /datum/heretic_knowledge/spell
-	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_gain().
+	/// The proc holder spell we add to the heretic. Type-path, becomes an instance via on_research().
 	var/obj/effect/proc_holder/spell/spell_to_add
 
 /datum/heretic_knowledge/spell/Destroy(force, ...)
@@ -173,25 +173,10 @@
 	return LAZYLEN(created_items) < limit
 
 /datum/heretic_knowledge/limited_amount/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	if(!length(result_atoms))
-		return FALSE
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
-		RegisterSignal(created_thing, COMSIG_PARENT_QDELETING, .proc/free_from_list)
 	return TRUE
-
-/*
- * Signal proc for [COMSIG_PARENT_QDELETING],
- * called from an item in our created_items list
- *
- * Removes the weakref to the item when it's deleted.
- */
-/datum/heretic_knowledge/limited_amount/proc/free_from_list(atom/source)
-	SIGNAL_HANDLER
-
-	LAZYREMOVE(created_items, WEAKREF(source))
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
 /*
  * A knowledge subtype lets the heretic curse someone with a ritual.
@@ -371,7 +356,7 @@
 	was_completed = TRUE
 
 	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
-	to_chat(user, span_notice("[name] completed!"))
+	to_chat(user, span_boldnotice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	desc += " (Completed!)"
 	return TRUE

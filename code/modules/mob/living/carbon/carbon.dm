@@ -850,6 +850,17 @@
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
+/mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
+	if(needs_heart() && !getorganslot(ORGAN_SLOT_HEART))
+		return FALSE
+
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
+		return FALSE
+
+	if(!getorganslot(ORGAN_SLOT_BRAIN))
+		return FALSE
+
+	return ..()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)

@@ -27,7 +27,7 @@
 		return
 
 	real_target.visible_message(
-		span_danger("[real_target] turns pale as a red glow envelops [real_target.p_them()]"),
+		span_danger("[real_target] turns pale as a red glow envelops [real_target.p_them()]!"),
 		span_danger("You pale as a red glow enevelops you!"),
 	)
 

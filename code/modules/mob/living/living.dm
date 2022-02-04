@@ -751,6 +751,10 @@
  * Returns TRUE if the mob is alive afterwards, or FALSE if they're dead.
  */
 /mob/living/proc/heal_and_revive(heal_to = 75, revive_message)
+
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+
 	var/brute_to_heal = heal_to - getBruteLoss()
 	var/burn_to_heal = heal_to - getFireLoss()
 	var/tox_to_heal = (heal_to/2) - getToxLoss()

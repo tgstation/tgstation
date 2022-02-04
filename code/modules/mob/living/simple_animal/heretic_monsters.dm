@@ -294,11 +294,7 @@
 	if(health < maxHealth * 0.8)
 		return
 
-	// MELBERT TODO: Bugged, gaining new stacks makes you unlink or something
 	if(++current_stacks < stacks_to_grow)
-		return
-
-	if(health)
 		return
 
 	var/mob/living/simple_animal/hostile/heretic_summon/armsy/prev = new type(drop_location(), FALSE)

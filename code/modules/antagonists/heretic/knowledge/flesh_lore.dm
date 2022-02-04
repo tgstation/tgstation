@@ -252,7 +252,7 @@
 		Raw Prophets have a greatly increased sight range and x-ray vision, as well as a long range jaunt and \
 		the ability to link minds to communicate with ease, but are very fragile and weak in combat."
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
-		The screams... once constant, now silenced by the Uncanny Man's appearance. Nothing was out of reach."
+		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
 	next_knowledge = list(
 		/datum/heretic_knowledge/flesh_blade_upgrade,
 		/datum/heretic_knowledge/reroll_targets,
