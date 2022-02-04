@@ -212,7 +212,7 @@
 		on = FALSE
 		return FALSE
 
-	var/list/changed_gas = air?.gases
+	var/list/changed_gas = air.gases
 
 	if(!changed_gas)
 		return FALSE
@@ -241,6 +241,9 @@
 			scrub(tile)
 	return TRUE
 
+///filtered gases at or below this amount automatically get removed from the mix
+#define MINIMUM_MOLES_TO_SCRUB MOLAR_ACCURACY*100
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/scrub(turf/tile)
 	if(!istype(tile))
 		return FALSE
@@ -253,32 +256,35 @@
 
 	if(scrubbing == SCRUBBING)
 		if(length(env_gases & filter_types))
-			var/transfer_moles = min(1, volume_rate / environment.volume) * environment.total_moles()
-
-			//Take a gas sample
-			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
-
-			//Nothing left to remove from the tile
-			if(isnull(removed))
-				return FALSE
-
-			var/list/removed_gases = removed.gases
-
-			//Filter it
+			///contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 			var/datum/gas_mixture/filtered_out = new
 			var/list/filtered_gases = filtered_out.gases
-			filtered_out.temperature = removed.temperature
+			filtered_out.temperature = environment.temperature
 
-			for(var/gas in filter_types & removed_gases)
+			///maximum percentage of the turfs gas we can filter
+			var/removal_ratio =  min(1, volume_rate / environment.volume)
+
+			var/total_moles_to_remove = 0
+			for(var/gas in filter_types & env_gases)
+				total_moles_to_remove += env_gases[gas][MOLES]
+
+			if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
+				environment.garbage_collect()
+				return FALSE
+
+			for(var/gas in filter_types & env_gases)
 				filtered_out.add_gas(gas)
-				filtered_gases[gas][MOLES] = removed_gases[gas][MOLES]
-				removed_gases[gas][MOLES] = 0
+				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
+				var/transfered_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
 
-			removed.garbage_collect()
+				filtered_gases[gas][MOLES] = transfered_moles
+				env_gases[gas][MOLES] -= transfered_moles
+
+			//removed.garbage_collect()
+			environment.garbage_collect()
 
 			//Remix the resulting gases
 			air_contents.merge(filtered_out)
-			tile.assume_air(removed)
 			update_parents()
 
 	else //Just siphoning all air
@@ -291,6 +297,8 @@
 		update_parents()
 
 	return TRUE
+
+#undef MINIMUM_MOLES_TO_SCRUB
 
 ///we populate a list of turfs with nonatmos-blocked cardinal turfs AND
 /// diagonal turfs that can share atmos with *both* of the cardinal turfs
