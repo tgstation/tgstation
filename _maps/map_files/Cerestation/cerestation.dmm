@@ -21658,7 +21658,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/surgery)
 "bkR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -22217,14 +22216,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "blU" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
-/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/virology)
 "blV" = (
@@ -22880,7 +22881,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/surgery)
 "bnm" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -22891,12 +22891,13 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/virology)
 "bnn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -22907,18 +22908,24 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/virology)
 "bno" = (
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /turf/open/floor/iron/white,
@@ -22940,16 +22947,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bnq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Virology Breakroom";
-	dir = 10;
-	network = list("SS13","CMO")
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -22961,9 +22964,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bnr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
 /obj/structure/table/glass,
 /obj/item/wrench,
 /obj/item/crowbar,
@@ -22974,9 +22974,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bns" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -22988,6 +22985,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -23003,14 +23003,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"bnv" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/mine/unexplored{
-	name = "Medical Asteroid"
-	})
 "bnw" = (
 /obj/structure/disposaloutlet{
 	dir = 4
@@ -23409,11 +23401,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/surgery)
 "bon" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_x = -32
 	},
@@ -23427,14 +23414,15 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/viro_wardrobe,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "boo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
@@ -23450,9 +23438,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "boq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 1
-	},
 /obj/machinery/holopad,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -23467,9 +23452,6 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "bor" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/white,
@@ -23493,13 +23475,8 @@
 "bow" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 10
-	},
 /obj/effect/turf_decal/tile/green,
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "box" = (
@@ -24282,10 +24259,12 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bpS" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -24317,7 +24296,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+<<<<<<< HEAD
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+=======
 /obj/machinery/vending/wardrobe/viro_wardrobe,
+>>>>>>> cere-restoration-project
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "bpW" = (
@@ -25047,10 +25032,6 @@
 /area/medical/medbay/central)
 "brd" = (
 /obj/structure/closet/l3closet/virology,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -25060,6 +25041,8 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bre" = (
@@ -25088,10 +25071,6 @@
 /area/medical/virology)
 "brg" = (
 /obj/structure/closet/l3closet/virology,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -25099,6 +25078,8 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "brh" = (
@@ -25124,13 +25105,16 @@
 	pixel_y = 2
 	},
 /obj/item/storage/box/syringes,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "brj" = (
@@ -25938,15 +25922,6 @@
 /area/medical/medbay/central)
 "bsI" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/virology{
-	autoclose = 0;
-	frequency = 1449;
-	icon_state = "door_locked";
-	id_tag = "virology_airlock_exterior";
-	locked = 1;
-	name = "Virology Exterior Airlock";
-	req_access_txt = "39"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -25954,6 +25929,13 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	id_tag = "virology_airlock_exterior";
+	name = "Virology Exterior Airlock";
+	req_access_txt = "39"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bsK" = (
@@ -25982,12 +25964,10 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bsM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/medical/virology)
+/area/maintenance)
 "bsN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -26000,7 +25980,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bsO" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green{
@@ -26013,12 +25992,13 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/medical/virology)
 "bsP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
@@ -26030,6 +26010,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -26591,9 +26574,6 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -26604,9 +26584,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bug" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
 /obj/structure/sign/poster/official/safety_internals,
 /turf/closed/wall/r_wall,
 /area/medical/virology)
@@ -26618,9 +26595,6 @@
 	name = "Virology Access Console";
 	pixel_y = -22;
 	req_access_txt = "39"
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
 	},
 /obj/item/kirbyplants{
 	icon_state = "plant-25"
@@ -26634,14 +26608,11 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bui" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/medical/virology)
+/obj/item/assembly/mousetrap/armed,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance)
 "buj" = (
 /obj/item/paper_bin{
 	pixel_x = -2;
@@ -27372,28 +27343,22 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bvN" = (
-/obj/machinery/power/apc{
-	areastring = "/area/medical/virology";
-	dir = 8;
-	name = "Virology APC";
-	pixel_x = -25;
-	pixel_y = 1
-	},
-/obj/structure/cable,
 /obj/effect/turf_decal/stripes/asteroid/end{
 	dir = 4;
 	icon_state = "ast_warn_end"
 	},
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance)
 "bvO" = (
-/obj/structure/cable,
 /obj/structure/grille/broken,
 /obj/effect/turf_decal/sand/plating,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance)
 "bvT" = (
@@ -27914,10 +27879,10 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "bwW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /mob/living/carbon/human/species/monkey,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bwX" = (
@@ -27925,6 +27890,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bwY" = (
@@ -28392,8 +28358,8 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "byd" = (
-/obj/machinery/light,
 /mob/living/carbon/human/species/monkey,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "bye" = (
@@ -55382,9 +55348,7 @@
 /turf/open/floor/iron/freezer,
 /area/medical/virology)
 "cKf" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
+/obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/freezer,
 /area/medical/virology)
 "cKg" = (
@@ -56979,9 +56943,6 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
 "cOP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_y = 32
 	},
@@ -56994,6 +56955,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/medical/virology)
@@ -57035,18 +56999,7 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/virology)
-"cOS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/medical/virology)
 "cOT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 10
-	},
 /obj/machinery/vending/medical,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -57057,15 +57010,13 @@
 /obj/structure/table,
 /obj/item/hand_labeler,
 /obj/item/radio/headset/headset_med,
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "cOV" = (
@@ -57139,7 +57090,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/wall/rust,
+/turf/closed/mineral/random/labormineral,
 /area/mine/unexplored{
 	name = "Medical Asteroid"
 	})
@@ -57152,9 +57103,6 @@
 /turf/open/floor/plating,
 /area/command/heads_quarters/cmo)
 "cPf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -57164,6 +57112,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/medical/virology)
@@ -57185,17 +57136,11 @@
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "cPh" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/medical/virology)
 "cPi" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/structure/closet/crate/freezer/blood,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/green{
@@ -57207,7 +57152,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/closed/wall/rust,
+/turf/closed/mineral,
 /area/maintenance)
 "cPk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
@@ -68821,18 +68766,13 @@
 /turf/open/floor/iron/white,
 /area/medical/surgery)
 "dzE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
 /obj/structure/table/glass,
-/obj/machinery/airalarm/directional/north{
-	pixel_y = 23
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dzF" = (
@@ -68875,6 +68815,11 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Virology Breakroom";
+	dir = 10;
+	network = list("SS13","CMO")
 	},
 /turf/open/floor/iron/dark,
 /area/medical/virology)
@@ -68950,17 +68895,22 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dzN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
@@ -68977,6 +68927,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/medical/virology)
@@ -68998,13 +68951,15 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/virology)
 "dzR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -69014,6 +68969,12 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
 	},
 /turf/open/floor/iron,
 /area/medical/virology)
@@ -69266,15 +69227,6 @@
 /area/medical/virology)
 "dAv" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/virology{
-	autoclose = 0;
-	frequency = 1449;
-	icon_state = "door_locked";
-	id_tag = "virology_airlock_interior";
-	locked = 1;
-	name = "Virology Interior Airlock";
-	req_access_txt = "39"
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -69285,6 +69237,14 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/virology{
+	autoclose = 0;
+	frequency = 1449;
+	id_tag = "virology_airlock_interior";
+	name = "Virology Interior Airlock";
+	req_access_txt = "39"
+	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dAw" = (
@@ -69295,11 +69255,12 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "dAz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
@@ -69310,7 +69271,6 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dAD" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -69318,6 +69278,10 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dAE" = (
@@ -70024,9 +69988,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/virology)
 "dCE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -70041,16 +70002,15 @@
 /turf/open/floor/iron,
 /area/medical/virology)
 "dCF" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dCG" = (
-/obj/machinery/atmospherics{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -70059,6 +70019,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/tank/air{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -70118,6 +70081,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dCO" = (
@@ -70128,14 +70092,8 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
-/area/medical/virology)
-"dCS" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/medical/virology)
 "dCT" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -70313,13 +70271,11 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "eWp" = (
@@ -129745,7 +129701,7 @@ djR
 djW
 djW
 bil
-cOS
+cPh
 blT
 cPh
 dzZ
@@ -130518,11 +130474,11 @@ dki
 bil
 cOT
 bnm
-boo
+dAA
 bjb
 bjb
 eRJ
-dAz
+dAA
 dCT
 dCU
 bwY
@@ -130779,7 +130735,7 @@ bop
 bpR
 bri
 bsN
-bui
+dAA
 blU
 bwW
 bjY
@@ -131294,7 +131250,7 @@ bov
 brj
 bsP
 dAE
-dCS
+dCT
 dCV
 bjY
 bil
@@ -131803,7 +131759,7 @@ djG
 bil
 bil
 bnp
-bsM
+blS
 bjb
 bil
 bil
@@ -132322,7 +132278,7 @@ dzV
 cKd
 cKf
 bil
-xvx
+bsM
 ctX
 djz
 djW
@@ -132579,7 +132535,7 @@ bpU
 bil
 bil
 bil
-djK
+bui
 djD
 djW
 djW
@@ -133093,7 +133049,7 @@ bil
 bil
 djG
 djE
-xvx
+bsM
 djE
 djE
 djD
@@ -133341,12 +133297,12 @@ aZO
 djW
 djG
 djE
-dkf
+xvx
 xvx
 dCv
 cAm
 xvx
-dkf
+xvx
 xvx
 cTt
 xvx
@@ -134372,7 +134328,7 @@ aZM
 aZO
 aZO
 dCz
-bnv
+cPd
 djz
 bpW
 bro
