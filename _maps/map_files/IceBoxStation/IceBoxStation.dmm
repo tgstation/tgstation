@@ -16280,7 +16280,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/wood,
 /area/service/lawoffice)
 "eZJ" = (
 /obj/structure/sign/warning/electricshock,
