@@ -38,16 +38,6 @@
 	target = null
 	return ..()
 
-/obj/item/grenade/c4/examine(mob/user)
-	. = ..()
-	. += {"A digital display on it reads "[seconds_remaining()]"."}
-
-/obj/item/grenade/c4/proc/seconds_remaining()
-	if(active)
-		. = max(0, round((det_time - world.time) / 10))
-	else
-		. = det_time
-
 /obj/item/grenade/c4/screwdriver_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
 	return TRUE
