@@ -40930,6 +40930,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
+"gBM" = (
+/obj/structure/table,
+/obj/effect/turf_decal/delivery,
+/obj/item/storage/fancy/cigarettes/dromedaryco{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "gBN" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 4
@@ -52926,6 +52936,12 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron,
 /area/engineering/atmos/storage)
+"jDm" = (
+/obj/structure/table,
+/obj/effect/turf_decal/delivery,
+/obj/item/cardpack/series_one,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "jDt" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -93452,6 +93468,13 @@
 	},
 /turf/open/floor/iron,
 /area/command/heads_quarters/rd)
+"tMC" = (
+/obj/structure/table,
+/obj/effect/turf_decal/delivery,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/iron,
+/area/hallway/secondary/exit/departure_lounge)
 "tMG" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -148184,7 +148207,7 @@ dZo
 aPO
 iQq
 aPO
-dZo
+tMC
 dUx
 iQq
 aPO
@@ -148698,7 +148721,7 @@ cxy
 nfh
 qnG
 nfh
-cxy
+gBM
 nfh
 qnG
 nfh
@@ -149208,7 +149231,7 @@ fgY
 aPO
 iQq
 aPO
-mtg
+jDm
 aPO
 iQq
 aPO
@@ -149722,7 +149745,7 @@ fgY
 nfh
 dXL
 nfh
-cAB
+tMC
 nfh
 dXL
 nfh
