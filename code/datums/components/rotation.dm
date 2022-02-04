@@ -99,19 +99,15 @@
 
 /datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(!istype(user))
-		return FALSE
 	Rotate(user, ROTATION_CLOCKWISE)
 
 /datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user)
 	SIGNAL_HANDLER
-	if(!istype(user))
-		return FALSE
 	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
 	if(!istype(user))
-		return FALSE
+		stack_trace("[src] is being rotated without a user")
 		
 	if(!CanBeRotated.Invoke(user, rotation_type) || !CanUserRotate.Invoke(user, rotation_type))
 		return
