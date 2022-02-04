@@ -2660,6 +2660,16 @@
 	dir = 1
 	},
 /area/service/hydroponics)
+"iE" = (
+/obj/machinery/door/airlock/external{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/hallway/secondary/service)
 "iF" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -4276,6 +4286,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
+"oe" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
 "of" = (
 /obj/machinery/conveyor{
 	dir = 8;
@@ -4773,16 +4792,10 @@
 /turf/open/floor/iron/smooth_edge,
 /area/medical/chemistry)
 "pB" = (
-/obj/machinery/door/window/westleft{
-	name = "Exterior Access"
-	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "pC" = (
 /obj/structure/rack,
@@ -5880,16 +5893,11 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "sW" = (
-/obj/machinery/door/window/westright{
-	name = "Exterior Access"
-	},
 /obj/structure/sign/warning{
 	pixel_y = 32
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "sX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7509,6 +7517,9 @@
 	req_one_access_txt = "73"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -11519,6 +11530,15 @@
 /area/service/chapel)
 "Lb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: EXTERNAL AIRLOCK";
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "Lc" = (
@@ -55978,7 +55998,7 @@ ak
 Et
 qJ
 qJ
-Ji
+LA
 Ji
 TV
 fK
@@ -56237,7 +56257,7 @@ Et
 qJ
 qJ
 Lb
-TV
+oe
 GN
 rQ
 rQ
@@ -56493,8 +56513,8 @@ ak
 Et
 Et
 qJ
-LA
-Ji
+iE
+iE
 fK
 fK
 fK
