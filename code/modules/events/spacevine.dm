@@ -5,6 +5,9 @@
 #define THORN_MUTATION_CUT_PROB 10
 #define FLOWERING_MUTATION_SPAWN_PROB 10
 
+/// Temperature below which the kudzu can't spread
+#define VINE_FREEZING_POINT 100
+
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
@@ -45,6 +48,7 @@
 /datum/spacevine_mutation/proc/process_mutation(obj/structure/spacevine/holder)
 	return
 
+/// Returns true to stop temperature processing
 /datum/spacevine_mutation/proc/process_temperature(obj/structure/spacevine/holder, temp, volume)
 	return
 
@@ -85,7 +89,7 @@
 	name = "Light"
 	hue = "#B2EA70"
 	quality = POSITIVE
-	severity = 4
+	severity = 2
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
@@ -94,7 +98,7 @@
 /datum/spacevine_mutation/toxicity
 	name = "Toxic"
 	hue = "#9B3675"
-	severity = 10
+	severity = 4
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -112,7 +116,7 @@
 	name = "Explosive"
 	hue = "#D83A56"
 	quality = NEGATIVE
-	severity = 2
+	severity = 7
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
@@ -128,9 +132,12 @@
 	name = "Fire proof"
 	hue = "#FF616D"
 	quality = MINOR_NEGATIVE
+	severity = 7
 
 /datum/spacevine_mutation/fire_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	return 1
+	if(temp > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+		return TRUE
+	return FALSE
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
 	if(item && item.damtype == BURN)
@@ -138,10 +145,22 @@
 	else
 		. = expected_damage
 
+/datum/spacevine_mutation/cold_proof
+	name = "Cold proof"
+	hue = ""
+	quality = MINOR_NEGATIVE
+	severity = 5
+
+/datum/spacevine_mutation/cold_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
+	if(temp < VINE_FREEZING_POINT)
+		return TRUE
+	return FALSE
+
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
 	hue = "#F4A442"
 	quality = MINOR_NEGATIVE
+	severity = 2
 
 /// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
@@ -151,7 +170,7 @@
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "Aggressive spreading"
 	hue = "#316b2f"
-	severity = 3
+	severity = 11
 	quality = NEGATIVE
 
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
@@ -206,6 +225,7 @@
 	name = "transparent"
 	hue = ""
 	quality = POSITIVE
+	severity = 1
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
 	holder.set_opacity(0)
@@ -214,7 +234,7 @@
 /datum/spacevine_mutation/oxy_eater
 	name = "Oxygen consuming"
 	hue = "#28B5B5"
-	severity = 3
+	severity = 4
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
@@ -229,7 +249,7 @@
 /datum/spacevine_mutation/nitro_eater
 	name = "Nitrogen consuming"
 	hue = "#FF7B54"
-	severity = 3
+	severity = 4
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
@@ -244,7 +264,7 @@
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
 	hue = "#798777"
-	severity = 3
+	severity = 2
 	quality = POSITIVE
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
@@ -259,7 +279,7 @@
 /datum/spacevine_mutation/plasma_eater
 	name = "Plasma consuming"
 	hue = "#9074b6"
-	severity = 3
+	severity = 4
 	quality = POSITIVE
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
@@ -274,7 +294,7 @@
 /datum/spacevine_mutation/thorns
 	name = "Thorny"
 	hue = "#9ECCA4"
-	severity = 10
+	severity = 4
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -294,6 +314,7 @@
 	name = "Hardened"
 	hue = "#997700"
 	quality = NEGATIVE
+	severity = 7
 
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
@@ -310,7 +331,7 @@
 	name = "Flowering"
 	hue = "#66DE93"
 	quality = NEGATIVE
-	severity = 10
+	severity = 11
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
@@ -333,6 +354,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	max_integrity = 50
 	var/energy = 0
+	var/can_spread = TRUE //Can this kudzu spread?
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
@@ -511,7 +533,7 @@
 	var/obj/item/seeds/kudzu/seed = new(vine.loc)
 	seed.mutations |= vine.mutations
 	seed.set_potency(mutativeness * 10)
-	seed.set_production(11 - (10 * initial(spread_multiplier) / spread_multiplier)) //Reverts spread_cap formula so resulting seed gets original production stat or equivalent back.
+	seed.set_production(11 - (10 * initial(spread_multiplier) / spread_multiplier)) //Reverts spread_multiplier formula so resulting seed gets original production stat or equivalent back.
 	qdel(src)
 
 /// Life cycle of a space vine
@@ -524,6 +546,8 @@
 	var/spread_max = round(clamp(delta_time * 0.5 * vine_count / spread_multiplier, 1, spread_cap))
 	var/amount_processed = 0
 	for(var/obj/structure/spacevine/vine as anything in growth_queue)
+		if(!vine.can_spread)
+			continue
 		growth_queue -= vine
 		queue_end += vine
 		for(var/datum/spacevine_mutation/mutation in vine.mutations)
@@ -604,14 +628,19 @@
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD //if you're cold you're safe
+	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
+	if(!can_spread && exposed_temperature >= VINE_FREEZING_POINT)
+		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
 	var/volume = air.return_volume()
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		if(mutation.process_temperature(src, exposed_temperature, volume)) //If it's ever true we're safe
 			return
-	qdel(src)
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+		qdel(src)
+	else if (exposed_temperature < VINE_FREEZING_POINT)
+		can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -635,3 +664,4 @@
 #undef GAS_MUTATION_REMOVAL_MULTIPLIER
 #undef THORN_MUTATION_CUT_PROB
 #undef FLOWERING_MUTATION_SPAWN_PROB
+#undef VINE_FREEZING_POINT
