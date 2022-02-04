@@ -18,9 +18,9 @@
 	. = ..()
 	beams = list()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/simple_rotation, after_rotation = CALLBACK(src, .proc/after_rotation))
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
 
-/obj/item/assembly/infra/proc/after_rotation(mob/user, rotation_type)
+/obj/item/assembly/infra/proc/AfterRotation(mob/user, rotation_type)
 	refreshBeam()
 	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 

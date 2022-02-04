@@ -32,7 +32,7 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-	AddComponent(/datum/component/simple_rotation, can_be_rotated = CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, CanBeRotated = CALLBACK(src, .proc/CanBeRotated))
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
@@ -111,7 +111,7 @@
 	leaving.Bump(src)
 	return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/railing/proc/can_be_rotated(mob/user, rotation_type)
+/obj/structure/railing/proc/CanBeRotated(mob/user, rotation_type)
 	if(anchored)
 		balloon_alert(user, "need to unwrench")
 		return FALSE
