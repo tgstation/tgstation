@@ -610,3 +610,12 @@
 
 /datum/config_entry/flag/station_name_in_hub_entry
 	default = FALSE
+
+/datum/config_entry/number/pr_announcements_per_round
+	default = 5
+	min_val = 0
+	integer = TRUE
+
+/datum/config_entry/flag/forbid_all_profiling
+
+/datum/config_entry/flag/forbid_admin_profiling

@@ -177,6 +177,12 @@
 /// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
 #define JOB_ASSIGN_QUIRKS (1<<7)
 
+/* Job type datum job_type_flags */
+/// Stating this job is a station job
+#define JOB_STATION_JOB (1<<0)
+/// Stating this job is a Command/Head of staff job
+#define JOB_HEAD_JOB (1<<1)
+
 
 #define FACTION_NONE "None"
 #define FACTION_STATION "Station"
