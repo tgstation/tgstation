@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds list manipulation with circuits, letting you add to and remove from lists that you create and other various things. It's pretty basic so more list mutation components will need to be added, but this sets up the foundation for it."
