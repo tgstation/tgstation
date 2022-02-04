@@ -1,10 +1,16 @@
 /obj/item/clothing/neck/heretic_focus
-	name = "Focusing Heart"
-	desc = "A link to the world beyond."
-	icon = 'icons/obj/eldritch.dmi'
-	icon_state = "living_heart"
+	name = "Amber Focus"
+	desc = "A amber focusing glass that provides a link to the world beyond. The necklace seems to twitch, but only when you look at it from the corner of your eye."
+	icon_state = "eldritch_necklace"
 	w_class = WEIGHT_CLASS_SMALL
 	clothing_traits = list(TRAIT_ALLOW_HERETIC_CASTING)
+
+/obj/item/clothing/neck/heretic_focus/examine(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+
+	. += span_notice("Allows you to cast advanced heretic spells when worn.")
 
 /obj/item/clothing/neck/eldritch_amulet
 	name = "Warm Eldritch Medallion"
