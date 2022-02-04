@@ -284,11 +284,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "Good luck."
 
 	var/min_threat = 100
-	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		var/weight = initial(ruleset.weight)
-		if(weight <= 0)
-			continue
-		min_threat = min(weight, min_threat)
+	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
+		min_threat = min(ruleset.costcost, min_threat)
 	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
 
 	generate_station_goals(greenshift)
