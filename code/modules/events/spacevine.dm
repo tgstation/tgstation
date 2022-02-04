@@ -428,8 +428,8 @@
 	var/list/growth_queue
 	//List of currently processed vines, on this level to prevent runtime tomfoolery
 	var/list/obj/structure/spacevine/queue_end
-	var/spread_multiplier = 5
-	var/spread_cap = 30
+	var/spread_multiplier = 5 // corresponds to artifical kudzu with production speed of 1, 10% of total vines will spread per second
+	var/spread_cap = 30 // corresponds to artifical kudzu with production speed of 3.5
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 
@@ -446,8 +446,8 @@
 	if(potency != null)
 		mutativeness = potency / 10
 	if(production != null && production <= 10) //Prevents runtime in case production is set to 11.
-		spread_cap *= (11 - production) / 5 //Best production speed of 1 doubles spread_cap to 60 while worst speed of 10 lowers it to 6. Even distribution.
-		spread_multiplier /= (11 - production) / 5
+		spread_cap *= (11 - production) / 7.5 //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
+		spread_multiplier /= (11 - production) / 10 // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
 
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
