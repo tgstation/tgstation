@@ -98,8 +98,7 @@
 			INVOKE_ASYNC(src, .proc/signal)
 			. = TRUE
 		if("freq")
-			new_frequency = unformat_frequency(params["freq"])
-			new_frequency = sanitize_frequency(new_frequency, TRUE)
+			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)
 			set_frequency(new_frequency)
 			. = TRUE
 		if("code")
