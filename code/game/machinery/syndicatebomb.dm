@@ -18,7 +18,7 @@
 
 	var/minimum_timer = 90
 	var/timer_set = 90
-	var/maximum_timer = 3600
+	var/maximum_timer = 60000
 
 	var/can_unanchor = TRUE
 

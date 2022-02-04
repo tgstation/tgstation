@@ -21,7 +21,7 @@
 	/// Minimum timer for c4 charges
 	var/minimum_timer = 10
 	/// Maximum timer for c4 charges
-	var/maximum_timer = 3600
+	var/maximum_timer = 60000
 
 /obj/item/grenade/c4/Initialize(mapload)
 	. = ..()
@@ -37,6 +37,16 @@
 	wires = null
 	target = null
 	return ..()
+
+/obj/item/grenade/c4/examine(mob/user)
+	. = ..()
+	. += {"A digital display on it reads "[seconds_remaining()]"."}
+
+/obj/item/grenade/c4/proc/seconds_remaining()
+	if(active)
+		. = max(0, round((det_time - world.time) / 10))
+	else
+		. = det_time
 
 /obj/item/grenade/c4/screwdriver_act(mob/living/user, obj/item/tool)
 	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
