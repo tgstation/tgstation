@@ -1,4 +1,0 @@
-author: "Donpedrito"
-delete-after: True
-changes: 
-  - bugfix: "Tramstation and Kilostation now have bodies in their morgues shiftstart, bringing them in line with other stations."

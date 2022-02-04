@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Welding up a disposal segment will not longer delete most of the people/things/dogs inside it"

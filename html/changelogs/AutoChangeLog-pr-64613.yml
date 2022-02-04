@@ -1,4 +1,0 @@
-author: "Potato-Masher"
-delete-after: True
-changes: 
-  - bugfix: "Kilostation's xenobiology lab airlock is no longer incorrectly accessed with Ordnance lab access."
