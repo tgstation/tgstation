@@ -28,6 +28,17 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	dog_fashion = null
 	var/obj/item/encryptionkey/keyslot2 = null
 
+/obj/item/radio/headset/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
+	if(iscarbon(talking_movable))
+		var/mob/living/carbon/carbon_talker = talking_movable
+		if(carbon_talker.handcuffed)
+			to_chat(carbon_talker, "<span class='warning'>You can't use the radio while handcuffed!</span>")
+			return FALSE
+		if(HAS_TRAIT(carbon_talker, TRAIT_HANDS_BLOCKED))
+			to_chat(carbon_talker, "<span class='warning'>You can't use the radio without the use of your hands!</span>")
+			return FALSE
+	return ..()
+
 /obj/item/radio/headset/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins putting \the [src]'s antenna up [user.p_their()] nose! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer!"))
 	return TOXLOSS
