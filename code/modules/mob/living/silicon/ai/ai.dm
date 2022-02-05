@@ -59,6 +59,8 @@
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
 
+	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
+
 	var/obj/machinery/power/apc/malfhack
 	var/explosive = FALSE //does the AI explode when it dies?
 
@@ -1050,3 +1052,9 @@
 	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
+
+/mob/living/silicon/ai/GetVoice()
+	. = ..()
+	if(ai_voicechanger.changing_voice)
+		return ai_voicechanger.say_name
+	return
