@@ -173,7 +173,7 @@
 		if("submit")
 			if(max_length)
 				if(length(params["entry"]) > max_length)
-					return FALSE
+					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
 			set_entry(params["entry"])
