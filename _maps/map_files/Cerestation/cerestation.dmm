@@ -1897,6 +1897,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"aiL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/girder,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/closed/wall/r_wall,
+/area/hallway/secondary)
 "aiM" = (
 /obj/machinery/light,
 /turf/open/floor/iron/dark,
@@ -16172,7 +16181,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 10
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aWj" = (
@@ -16180,7 +16191,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 6
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aWk" = (
@@ -16253,13 +16266,17 @@
 /area/ai_monitored/command/nuke_storage)
 "aWx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aWy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aWz" = (
@@ -16395,13 +16412,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aWZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aXb" = (
@@ -16556,7 +16577,9 @@
 "aYk" = (
 /obj/structure/cable,
 /obj/structure/girder,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aYl" = (
@@ -16598,7 +16621,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aYs" = (
@@ -16606,7 +16631,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 5
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aYt" = (
@@ -16748,7 +16775,9 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "aYR" = (
@@ -38732,7 +38761,9 @@
 	},
 /obj/structure/cable,
 /obj/structure/girder,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "bVd" = (
@@ -39028,14 +39059,18 @@
 "bVD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "bVE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/girder,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "bVF" = (
@@ -41112,7 +41147,9 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "ccd" = (
@@ -41144,7 +41181,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "ccg" = (
@@ -41153,7 +41192,9 @@
 	dir = 5
 	},
 /obj/structure/girder,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "cch" = (
@@ -41194,13 +41235,17 @@
 	})
 "ccl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "ccm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "ccn" = (
@@ -42017,7 +42062,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "cex" = (
@@ -42025,7 +42072,9 @@
 	dir = 5
 	},
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary)
 "cey" = (
@@ -59806,28 +59855,28 @@
 /turf/open/space,
 /area/space)
 "cXu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/grille,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/hallway)
 "cXv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway)
 "cXw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/hallway)
 "cXx" = (
@@ -68582,9 +68631,11 @@
 /turf/closed/wall/r_wall,
 /area/engineering/supermatter/room)
 "dzg" = (
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 6
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/hallway)
@@ -71992,6 +72043,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"poA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 10
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary)
 "ppM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -72668,6 +72732,13 @@
 	dir = 1
 	},
 /area/shuttle/syndicate)
+"spn" = (
+/obj/structure/girder,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary)
 "src" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -73405,6 +73476,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate)
+"wun" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 10
+	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary)
 "wvJ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -73769,6 +73849,12 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"xXK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary)
 "xZk" = (
 /turf/closed/wall/rust,
 /area/maintenance/disposal)
@@ -88161,7 +88247,7 @@ bEM
 bEM
 bEM
 bEM
-cbZ
+wun
 ccl
 ccl
 ccl
@@ -89105,24 +89191,24 @@ chI
 aKp
 aKp
 aKp
-cme
-cme
-cme
+xXK
+xXK
+xXK
 cXh
-cme
-cme
-cme
+xXK
+xXK
+xXK
 cXh
-cme
-cme
+xXK
+xXK
 cXh
-cme
-cme
-cme
+xXK
+xXK
+xXK
 cXh
-cme
-cme
-cme
+xXK
+xXK
+xXK
 aYw
 aYX
 aZz
@@ -120268,7 +120354,7 @@ aZq
 aZq
 aZq
 aZq
-bVb
+poA
 bVD
 bVD
 bVD
@@ -121300,7 +121386,7 @@ bVc
 bVE
 bVE
 bVE
-cWY
+aiL
 bVE
 bVE
 bVE
@@ -126118,20 +126204,20 @@ aZq
 aZq
 aZq
 aZq
-cpC
-cpC
-cpC
-cpC
+spn
+spn
+spn
+spn
 cXh
-cpC
-cpC
-cpC
-cpC
+spn
+spn
+spn
+spn
 cXh
-cpC
-cpC
-cpC
-cpC
+spn
+spn
+spn
+spn
 aZq
 aZq
 aZq
