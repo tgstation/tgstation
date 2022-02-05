@@ -40,7 +40,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddComponent(/datum/component/simple_rotation, CanBeRotated=CALLBACK(src, .proc/CanBeRotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/windoor_assembly/Destroy()
 	set_density(FALSE)
@@ -321,18 +321,6 @@
 
 	//Update to reflect changes(if applicable)
 	update_appearance()
-
-/obj/structure/windoor_assembly/proc/CanBeRotated(mob/user,rotation_type)
-	if(anchored)
-		balloon_alert(user, "need to unwrench")
-		return FALSE
-
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
-
-	if(!valid_window_location(loc, target_dir, is_fulltile = FALSE))
-		balloon_alert(user, "cannot rotate in that direction")
-		return FALSE
-	return TRUE
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()

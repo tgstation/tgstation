@@ -32,7 +32,7 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-	AddComponent(/datum/component/simple_rotation, CanBeRotated = CALLBACK(src, .proc/CanBeRotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()
@@ -110,18 +110,6 @@
 
 	leaving.Bump(src)
 	return COMPONENT_ATOM_BLOCK_EXIT
-
-/obj/structure/railing/proc/CanBeRotated(mob/user, rotation_type)
-	if(anchored)
-		balloon_alert(user, "need to unwrench")
-		return FALSE
-
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
-
-	if(!valid_window_location(loc, target_dir, is_fulltile = FALSE)) //Expanded to include rails, as well!
-		balloon_alert(user, "cannot rotate in that direction")
-		return FALSE
-	return TRUE
 
 /obj/structure/railing/proc/check_anchored(checked_anchored)
 	if(anchored == checked_anchored)

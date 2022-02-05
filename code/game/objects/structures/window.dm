@@ -70,7 +70,7 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	AddComponent(/datum/component/simple_rotation, CanBeRotated = CALLBACK(src, .proc/CanBeRotated), AfterRotation = CALLBACK(src,.proc/AfterRotation))
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = .proc/on_exit,
@@ -291,18 +291,6 @@
 		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
 	if (fulltile)
 		. += new /obj/item/shard(location)
-
-/obj/structure/window/proc/CanBeRotated(mob/user, rotation_type)
-	if(anchored)
-		balloon_alert(user, "need to unscrew")
-		return FALSE
-
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
-
-	if(!valid_window_location(loc, target_dir, is_fulltile = fulltile))
-		balloon_alert(user, "cannot rotate in that direction")
-		return FALSE
-	return TRUE
 
 /obj/structure/window/proc/AfterRotation(mob/user, rotation_type)
 	air_update_turf(TRUE, FALSE)

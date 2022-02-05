@@ -6,13 +6,15 @@
 #define ROTATION_IGNORE_ANCHORED (1<<2)
 /// If an object will omit flipping from rotation (used for pipes since they use custom handling)
 #define ROTATION_NO_FLIPPING (1<<3)
+/// If an object needs to have an empty spot available in target direction (used for windoors and railings)
+#define ROTATION_NEEDS_ROOM
 
 /// Rotate an object clockwise
-#define ROTATION_CLOCKWISE 1
+#define ROTATION_CLOCKWISE -90
 /// Rotate an object counterclockwise
-#define ROTATION_COUNTERCLOCKWISE 2
+#define ROTATION_COUNTERCLOCKWISE 90
 /// Rotate an object upside down
-#define ROTATION_FLIP 3
+#define ROTATION_FLIP 180
 
 /datum/component/simple_rotation
 	/// Checks if user can rotate
@@ -105,33 +107,25 @@
 	SIGNAL_HANDLER
 	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
-/datum/component/simple_rotation/proc/Rotate(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/Rotate(mob/user, degrees)
 	if(!istype(user))
 		stack_trace("[src] is being rotated without a user")
 		
-	if(!CanBeRotated.Invoke(user, rotation_type) || !CanUserRotate.Invoke(user, rotation_type))
+	if(!CanBeRotated.Invoke(user, degrees) || !CanUserRotate.Invoke(user, degrees))
 		return
 
 	var/obj/rotated_obj = parent
-	var/rot_degree
-	switch(rotation_type)
-		if(ROTATION_CLOCKWISE)
-			rot_degree = -90
-		if(ROTATION_COUNTERCLOCKWISE)
-			rot_degree = 90
-		if(ROTATION_FLIP)
-			rot_degree = 180
-	rotated_obj.setDir(turn(rotated_obj.dir, rot_degree))
-	AfterRotation.Invoke(user, rotation_type)
+	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
+	AfterRotation.Invoke(user, degrees)
 
-/datum/component/simple_rotation/proc/DefaultCanUserRotate(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultCanUserRotate(mob/user, degrees)
 	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && (isobserver(user) && CONFIG_GET(flag/ghost_interaction)))
 		return TRUE	
 	return FALSE
 
-/datum/component/simple_rotation/proc/DefaultCanBeRotated(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultCanBeRotated(mob/user, degrees)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
@@ -144,11 +138,18 @@
 	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
 		rotated_obj.balloon_alert(user, "need to unwrench")
 		return FALSE
+
+	if(rotation_flags & ROTATION_NEEDS_ROOM)
+		var/target_dir = turn(rotated_obj.dir, degrees)
+		var/fulltile = rotated_obj.fulltile ? TRUE : FALSE
+		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
+			balloon_alert(user, "cannot rotate in that direction")
+			return FALSE
 	return TRUE
 
-/datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, rotation_type)
+/datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
 	var/obj/rotated_obj = parent
-	rotated_obj.balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
+	rotated_obj.balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
 
