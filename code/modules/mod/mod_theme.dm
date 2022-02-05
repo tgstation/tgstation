@@ -224,14 +224,24 @@
 
 /datum/mod_theme/mining
 	name = "mining"
-	desc = "A Nanotrasen mining suit."
+	desc = "A Nanotrasen mining suit for on-site operations, fit with accreting ash armor and a sphere form."
 	extended_desc = "A high-powered Nanotrasen-designed suit, based off the work of Nakamura Engineering. \
 		While initial designs were built for the rigors of asteroid mining, given blast resistance through inbuilt ceramics, \
-		mining teams have since heavily tweaked the suit themselves. Aftermarket armor plating has been added, \
-		giving way to incredible protection against corrosives and thermal protection good enough for volcanic environments. \
-		The systems have been upgraded as well, giving space for further modification down the line. \
-		However, all of this has proven to be straining on the power and the actuators of the suit, \
-		making it demand more power in exchange."
+		mining teams have since heavily tweaked the suit themselves with assistance from devices crafted by \
+		destructive analysis of unknown technologies discovered on the Indecipheres mining sites, patterned off \
+		their typical non-EVA exploration suits. The visor has been expanded to a system of seven arachnid-like cameras, \
+		offering full view of the land and its soon-to-be-dead inhabitants. The armor plating has been trimmed down to \
+		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
+		this gives way to incredible protection against corrosives and thermal protection good enough for \
+		both casual backstroking through molten magma and romantic walks through arctic terrain. \
+		Instead, the suit is capable of using its' anomalous properties to attract and \
+		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
+		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
+		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
+		roll around at half their original size; leaving high-powered mining ordinance in its wake. \
+		However, all of this has proven to be straining on all Nanotrasen-approved cells, \
+		so much so that it comes default fueled by equally-enigmatic plasma fuel rather than a simple recharge. \
+		Additionally, the systems have been put to near their maximum load, allowing for far less customization than others."
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
 	resistance_flags = FIRE_PROOF|LAVA_PROOF
