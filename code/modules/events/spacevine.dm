@@ -8,6 +8,12 @@
 /// Temperature below which the kudzu can't spread
 #define VINE_FREEZING_POINT 100
 
+#define SEVERITY_TRIVIAL 1
+#define SEVERITY_MINOR 2
+#define SEVERITY_AVERAGE 4
+#define SEVERITY_ABOVE_AVERAGE 7
+#define SEVERITY_MAJOR 10
+
 /datum/round_event_control/spacevine
 	name = "Space Vines"
 	typepath = /datum/round_event/spacevine
@@ -87,7 +93,7 @@
 	name = "Light"
 	hue = "#B2EA70"
 	quality = POSITIVE
-	severity = 2
+	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
@@ -96,7 +102,7 @@
 /datum/spacevine_mutation/toxicity
 	name = "Toxic"
 	hue = "#9B3675"
-	severity = 4
+	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -114,7 +120,7 @@
 	name = "Explosive"
 	hue = "#D83A56"
 	quality = NEGATIVE
-	severity = 7
+	severity = SEVERITY_ABOVE_AVERAGE
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
@@ -130,7 +136,7 @@
 	name = "Fire proof"
 	hue = "#FF616D"
 	quality = MINOR_NEGATIVE
-	severity = 7
+	severity = SEVERITY_ABOVE_AVERAGE
 
 /datum/spacevine_mutation/fire_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	. = ..()
@@ -146,7 +152,7 @@
 	name = "Cold proof"
 	hue = "#0BD5D9"
 	quality = MINOR_NEGATIVE
-	severity = 4
+	severity = SEVERITY_AVERAGE
 
 /datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
 	. = ..()
@@ -156,7 +162,7 @@
 	name = "Vine eating"
 	hue = "#F4A442"
 	quality = MINOR_NEGATIVE
-	severity = 2
+	severity = SEVERITY_MINOR
 
 /// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/holder, turf/target)
@@ -166,7 +172,7 @@
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "Aggressive spreading"
 	hue = "#316b2f"
-	severity = 10
+	severity = SEVERITY_MAJOR
 	quality = NEGATIVE
 
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
@@ -221,7 +227,7 @@
 	name = "transparent"
 	hue = ""
 	quality = POSITIVE
-	severity = 1
+	severity = SEVERITY_TRIVIAL
 
 /datum/spacevine_mutation/transparency/on_grow(obj/structure/spacevine/holder)
 	holder.set_opacity(0)
@@ -230,7 +236,7 @@
 /datum/spacevine_mutation/oxy_eater
 	name = "Oxygen consuming"
 	hue = "#28B5B5"
-	severity = 4
+	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/oxy_eater/process_mutation(obj/structure/spacevine/holder)
@@ -245,7 +251,7 @@
 /datum/spacevine_mutation/nitro_eater
 	name = "Nitrogen consuming"
 	hue = "#FF7B54"
-	severity = 4
+	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/nitro_eater/process_mutation(obj/structure/spacevine/holder)
@@ -260,7 +266,7 @@
 /datum/spacevine_mutation/carbondioxide_eater
 	name = "CO2 consuming"
 	hue = "#798777"
-	severity = 2
+	severity = SEVERITY_MINOR
 	quality = POSITIVE
 
 /datum/spacevine_mutation/carbondioxide_eater/process_mutation(obj/structure/spacevine/holder)
@@ -275,7 +281,7 @@
 /datum/spacevine_mutation/plasma_eater
 	name = "Plasma consuming"
 	hue = "#9074b6"
-	severity = 4
+	severity = SEVERITY_AVERAGE
 	quality = POSITIVE
 
 /datum/spacevine_mutation/plasma_eater/process_mutation(obj/structure/spacevine/holder)
@@ -290,7 +296,7 @@
 /datum/spacevine_mutation/thorns
 	name = "Thorny"
 	hue = "#9ECCA4"
-	severity = 4
+	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -310,7 +316,7 @@
 	name = "Hardened"
 	hue = "#997700"
 	quality = NEGATIVE
-	severity = 7
+	severity = SEVERITY_ABOVE_AVERAGE
 
 /datum/spacevine_mutation/woodening/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy)
@@ -327,7 +333,7 @@
 	name = "Flowering"
 	hue = "#66DE93"
 	quality = NEGATIVE
-	severity = 10
+	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
@@ -664,3 +670,8 @@
 #undef THORN_MUTATION_CUT_PROB
 #undef FLOWERING_MUTATION_SPAWN_PROB
 #undef VINE_FREEZING_POINT
+#undef SEVERITY_TRIVIAL
+#undef SEVERITY_MINOR
+#undef SEVERITY_AVERAGE
+#undef SEVERITY_ABOVE_AVERAGE
+#undef SEVERITY_MAJOR
