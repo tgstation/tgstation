@@ -6,15 +6,25 @@ SUBSYSTEM_DEF(vote)
 
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
+	/// Options listed on the vote panel
 	var/list/choices = list()
+	/// Maintains a list of who voted for what
 	var/list/choice_by_ckey = list()
+	/// Actions given to mob to vote
 	var/list/generated_actions = list()
+	/// Ckey of the user that initiated the vote
 	var/initiator
+	/// What type of vote this is
 	var/mode
+	/// For custom votes: What the vote is about
 	var/question
+	/// World time when the vote was initiated
 	var/started_time
+	/// Time remaining on the vote
 	var/time_remaining
+	/// List of players that have voted
 	var/list/voted = list()
+	/// List of players that have the vote panel open
 	var/list/voting = list()
 
 // Called by master_controller
@@ -172,7 +182,7 @@ SUBSYSTEM_DEF(vote)
 		reset()
 		switch(vote_type)
 			if("restart")
-				choices.Add("Restart Round","Continue Playing")
+				choices.Add("Restart Round", "Continue Playing")
 			if("map")
 				if(!lower_admin && SSmapping.map_voted)
 					to_chat(usr, span_warning("The next map has already been selected."))
@@ -212,16 +222,16 @@ SUBSYSTEM_DEF(vote)
 		var/vp = CONFIG_GET(number/vote_period)
 		to_chat(world, "\n<span class='infoplain'><font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font></span>")
 		time_remaining = round(vp/10)
-		for(var/c in GLOB.clients)
-			var/client/C = c
-			var/datum/action/vote/V = new
+		for(var/client/user as anything in GLOB.clients)
+			var/datum/action/vote/votepanel = new
 			if(question)
-				V.name = "Vote: [question]"
-			C.player_details.player_actions += V
-			V.Grant(C.mob)
-			generated_actions += V
-			if(C.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				SEND_SOUND(C, sound('sound/misc/bloop.ogg'))
+				votepanel.name = "Vote: [question]"
+			user.player_details.player_actions += votepanel
+			votepanel.Grant(user.mob)
+			generated_actions += votepanel
+			user.mob.vote()
+			if(user.prefs.toggles & SOUND_ANNOUNCEMENTS)
+				SEND_SOUND(user, sound('sound/misc/bloop.ogg'))
 		return TRUE
 	return FALSE
 
@@ -243,31 +253,31 @@ SUBSYSTEM_DEF(vote)
 		ui.open()
 
 /datum/controller/subsystem/vote/ui_data(mob/user)
-	var/list/data = list(
-		"allow_vote_map" = CONFIG_GET(flag/allow_vote_map),
-		"allow_vote_restart" = CONFIG_GET(flag/allow_vote_restart),
-		"choices" = list(),
-		"lower_admin" = !!user.client?.holder,
-		"mode" = mode,
-		"question" = question,
-		"selected_choice" = choice_by_ckey[user.client?.ckey],
-		"time_remaining" = time_remaining,
-		"upper_admin" = check_rights_for(user.client, R_ADMIN),
-		"voting" = list(),
-	)
+	. = list()
+	.["choices"] = list()
+	.["lower_admin"] = !!user.client?.holder
+	.["mode"] = mode
+	.["question"] = question
+	.["selected_choice"] = choice_by_ckey[user.client?.ckey]
+	.["time_remaining"] = time_remaining
+	.["upper_admin"] = check_rights_for(user.client, R_ADMIN)
+	.["voting"] = list()
 
 	if(!!user.client?.holder)
-		data["voting"] = voting
+		.["voting"] = voting
 
 	for(var/key in choices)
-		data["choices"] += list(list(
+		.["choices"] += list(list(
 			"name" = key,
 			"votes" = choices[key] || 0
 		))
 
-	return data
+/datum/controller/subsystem/vote/ui_static_data(mob/user)
+	. = list()
+	.["allow_vote_map"] = CONFIG_GET(flag/allow_vote_map)
+	.["allow_vote_restart"] = CONFIG_GET(flag/allow_vote_restart)
 
-/datum/controller/subsystem/vote/ui_act(action, params)
+/datum/controller/subsystem/vote/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
@@ -279,25 +289,27 @@ SUBSYSTEM_DEF(vote)
 
 	switch(action)
 		if("cancel")
-			if(usr.client.holder)
+			if(time_remaining && usr.client.holder)
 				usr.log_message("[key_name_admin(usr)] cancelled a vote.", LOG_ADMIN)
 				message_admins("[key_name_admin(usr)] has cancelled the current vote.")
 				reset()
 		if("toggle_restart")
 			if(usr.client.holder && upper_admin)
 				CONFIG_SET(flag/allow_vote_restart, !CONFIG_GET(flag/allow_vote_restart))
+				ui.send_full_update()
 		if("toggle_map")
 			if(usr.client.holder && upper_admin)
 				CONFIG_SET(flag/allow_vote_map, !CONFIG_GET(flag/allow_vote_map))
+				ui.send_full_update()
 		if("restart")
 			if(CONFIG_GET(flag/allow_vote_restart) || usr.client.holder)
-				initiate_vote("restart",usr.key)
+				initiate_vote("restart", usr.key)
 		if("map")
 			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
-				initiate_vote("map",usr.key)
+				initiate_vote("map", usr.key)
 		if("custom")
 			if(usr.client.holder)
-				initiate_vote("custom",usr.key)
+				initiate_vote("custom", usr.key)
 		if("vote")
 			submit_vote(round(text2num(params["index"])))
 	return TRUE
