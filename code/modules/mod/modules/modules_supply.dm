@@ -15,7 +15,7 @@
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = null)
+	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
 /obj/item/mod/module/gps/on_use()
 	. = ..()
@@ -349,7 +349,7 @@
 	/// How many tiles we traveled through.
 	var/traveled_tiles = 0
 	/// Armor values per tile.
-	var/list/armor_values = list(MELEE = 5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
+	var/list/armor_values = list(MELEE = 5.5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
 	/// Turfs that let us accrete ash.
@@ -462,7 +462,7 @@
 	mod.wearer.add_filter("mod_outline", 3, outline_filter(color = "#000000AA"))
 	mod.wearer.base_pixel_y -= 4
 	animate(mod.wearer, animate_time, pixel_y = mod.wearer.base_pixel_y, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(mod.wearer, /atom.proc/SpinAnimation, 1.5), animate_time)
+	mod.wearer.SpinAnimation(1.5)
 	ADD_TRAIT(mod.wearer, TRAIT_LAVA_IMMUNE, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_HANDS_BLOCKED, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_FORCED_STANDING, MOD_TRAIT)
@@ -508,6 +508,12 @@
 	playsound(src, 'sound/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
 	INVOKE_ASYNC(bomb, /obj/projectile.proc/fire)
 	drain_power(use_power_cost)
+
+/obj/item/mod/module/sphere_transform/on_active_process(delta_time)
+	animate(mod.wearer) //stop the animation
+	mod.wearer.SpinAnimation(1.5) //start it back again
+	if(!mod.wearer.has_gravity())
+		on_deactivation() //deactivate in no grav
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
