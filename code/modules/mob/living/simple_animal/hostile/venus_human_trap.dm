@@ -180,32 +180,6 @@
 	. = ..()
 	to_chat(src, span_boldwarning("You are a venus human trap!  Protect the kudzu at all costs, and feast on those who oppose you!"))
 
-/mob/living/simple_animal/hostile/venus_human_trap/attack_ghost(mob/user)
-	. = ..()
-	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
-		return
-	humanize_plant(user)
-
-/**
- * Sets a ghost to control the plant if the plant is eligible
- *
- * Asks the interacting ghost if they would like to control the plant.
- * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the plant.
- * Arguments:
- * * mob/user - The ghost to possibly control the plant
- */
-/mob/living/simple_animal/hostile/venus_human_trap/proc/humanize_plant(mob/user)
-	if(key || !playable_plant || stat)
-		return
-	var/plant_ask = tgui_alert(usr,"Become a venus human trap?", "Are you reverse vegan?", list("Yes", "No"))
-	if(plant_ask == "No" || QDELETED(src))
-		return
-	if(key)
-		to_chat(user, span_warning("Someone else already took this plant!"))
-		return
-	key = user.key
-	log_game("[key_name(src)] took control of [name].")
-
 /**
  * Manages how the vines should affect the things they're attached to.
  *
