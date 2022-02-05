@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - balance: "The Dynamic report for Peaceful Waypoint/Core Territory no longer guarantees providing any meta information. Previously, \"Core Territory\" guaranteed there were roundstart antagonists, and \"Peaceful Waypoint\" guaranteed the inverse. There is now a 15% chance to show the opposite result, meaning you can use the report as a good guess of what is coming, but cannot rely on it."

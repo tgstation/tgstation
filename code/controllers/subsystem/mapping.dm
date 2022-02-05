@@ -388,6 +388,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
 		return
 
+	if (VM.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
+		message_admins("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+		log_game("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+	if (VM.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
+		message_admins("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+		log_game("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+
 	next_map_config = VM
 	return TRUE
 

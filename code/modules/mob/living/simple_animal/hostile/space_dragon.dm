@@ -626,6 +626,8 @@
 
 /obj/structure/carp_rift/attack_ghost(mob/user)
 	. = ..()
+	if(.)
+		return
 	summon_carp(user)
 
 /**
@@ -695,8 +697,8 @@
 			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
 			return FALSE
 		is_listed = TRUE
-	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
-	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
+	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
+	if(carp_ask != "Yes" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))

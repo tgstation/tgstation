@@ -108,6 +108,7 @@
 	name = "Look Out, Sir!"
 	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
 	database_id = MEDAL_LOOKOUTSIR
+	icon = "martyr" // purple heart on an explosive danger warning sign (well, sort of)
 
 /datum/award/achievement/misc/gottem
 	name = "HA, GOTTEM"
