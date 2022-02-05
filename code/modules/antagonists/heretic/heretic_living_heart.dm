@@ -74,9 +74,11 @@
  */
 /datum/action/item_action/organ_action/track_target
 	name = "Living Heartbeat"
-	desc = "Track your targets."
+	desc = "LMB: Chose one of your sacrifice targets to track. RMB: Repeats last target you chose to track."
 	check_flags = AB_CHECK_CONSCIOUS
 	background_icon_state = "bg_ecult"
+	/// The real name of the last mob we tracked
+	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
 	/// How long we have to wait between tracking uses.
@@ -122,23 +124,31 @@
 		human_targets[real_target.real_name] = real_target
 		targets_to_choose[real_target.real_name] = heretic_datum.sac_targets[target_ref]
 
-	radial_open = TRUE
-	var/to_track = show_radial_menu(
-		owner,
-		owner,
-		targets_to_choose,
-		custom_check = CALLBACK(src, .proc/check_menu),
-		radius = 40,
-		require_near = TRUE,
-		tooltips = TRUE,
-	)
-	radial_open = FALSE
+	// If we don't have a last tracked name, open a radial to set one.
+	// If we DO have a last tracked name, we skip the radial if they right click the action.
+	if(isnull(last_tracked_name) || !(trigger_flags & TRIGGER_SECONDARY_ACTION))
+		radial_open = TRUE
+		last_tracked_name = show_radial_menu(
+			owner,
+			owner,
+			targets_to_choose,
+			custom_check = CALLBACK(src, .proc/check_menu),
+			radius = 40,
+			require_near = TRUE,
+			tooltips = TRUE,
+		)
+		radial_open = FALSE
 
-	if(isnull(to_track))
+	// If our last tracked name is still null, skip the trigger
+	if(isnull(last_tracked_name))
+		return
+
+	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
+	if(QDELETED(tracked_mob))
+		last_tracked_mob = null
 		return
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
-	var/mob/living/carbon/human/tracked_mob = human_targets[to_track]
 	var/balloon_message = "error text!"
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
@@ -163,6 +173,7 @@
 
 	owner.balloon_alert(owner, balloon_message)
 
+/// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/item_action/organ_action/track_target/proc/check_menu()
 	if(QDELETED(src))
 		return FALSE

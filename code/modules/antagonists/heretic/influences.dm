@@ -14,6 +14,7 @@
  * to see new influences that are created.
  */
 /datum/reality_smash_tracker
+	/// The total number of influences that have been drained, for tracking.
 	var/num_drained = 0
 	/// List of tracked influences (reality smashes)
 	var/list/obj/effect/heretic_influence/smashes = list()
