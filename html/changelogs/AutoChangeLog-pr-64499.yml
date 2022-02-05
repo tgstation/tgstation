@@ -1,7 +1,0 @@
-author: "ErdinyoBarboza"
-delete-after: True
-changes: 
-  - qol: "TramStation Bridge now has lockdown shutters."
-  - qol: "TramStation SM chamber no longer has Firelocks."
-  - qol: "TramStation Middle Hallway and Lower Middle Maints have their APC's outside the power access like rest of the APC's"
-  - qol: "TramStation now has a proper service hall"
