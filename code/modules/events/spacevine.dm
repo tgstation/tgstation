@@ -50,10 +50,6 @@
 /datum/spacevine_mutation/proc/process_mutation(obj/structure/spacevine/holder)
 	return
 
-/// Returns true to stop temperature processing
-/datum/spacevine_mutation/proc/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	return
-
 /datum/spacevine_mutation/proc/on_birth(obj/structure/spacevine/holder)
 	return
 
@@ -108,11 +104,11 @@
 		return
 	if(prob(TOXICITY_MUTATION_PROB) && istype(crosser) && !isvineimmune(crosser))
 		to_chat(crosser, span_alert("You accidentally touch the vine and feel a strange sensation."))
-		crosser.adjustToxLoss(5)
+		crosser.adjustToxLoss(20)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/structure/spacevine/holder, mob/living/eater)
 	if(!isvineimmune(eater))
-		eater.adjustToxLoss(5)
+		eater.adjustToxLoss(20)
 
 /datum/spacevine_mutation/explosive  // JC IT'S A BOMB
 	name = "Explosive"
@@ -136,10 +132,8 @@
 	quality = MINOR_NEGATIVE
 	severity = 7
 
-/datum/spacevine_mutation/fire_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	if(temp > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
-		return TRUE
-	return FALSE
+/datum/spacevine_mutation/fire_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
+	holder.trait_flags |= SPACEVINE_HEAT_RESISTANT;
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
 	if(item && item.damtype == BURN)
@@ -153,10 +147,8 @@
 	quality = MINOR_NEGATIVE
 	severity = 4
 
-/datum/spacevine_mutation/cold_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
-	if(temp < VINE_FREEZING_POINT)
-		return TRUE
-	return FALSE
+/datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
+	holder.trait_flags |= SPACEVINE_COLD_RESISTANT;
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
@@ -302,13 +294,13 @@
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/victim = crosser
-		victim.adjustBruteLoss(5)
+		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/item, expected_damage)
 	if(prob(THORN_MUTATION_CUT_PROB) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/victim = hitter
-		victim.adjustBruteLoss(5)
+		victim.adjustBruteLoss(15)
 		to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 	. = expected_damage
 
@@ -337,7 +329,8 @@
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
-		new/obj/structure/alien/resin/flower_bud(get_turf(holder))
+		var/obj/structure/alien/resin/flower_bud/spawned_flower_bud = new/obj/structure/alien/resin/flower_bud(get_turf(holder))
+		spawned_flower_bud.trait_flags = holder.trait_flags
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(25))
@@ -360,6 +353,7 @@
 	var/datum/spacevine_controller/master = null
 	/// List of mutations for a specific vine
 	var/list/mutations = list()
+	var/trait_flags = 0
 
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
@@ -637,15 +631,11 @@
 	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(!can_spread && exposed_temperature >= VINE_FREEZING_POINT)
+	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
-	var/volume = air.return_volume()
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		if(mutation.process_temperature(src, exposed_temperature, volume)) //If it's ever true we're safe
-			return
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
 		qdel(src)
-	else if (exposed_temperature < VINE_FREEZING_POINT)
+	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
 		can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)

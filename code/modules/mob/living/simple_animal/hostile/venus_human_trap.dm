@@ -29,7 +29,9 @@
 	var/finish_time
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
-
+	
+	var/trait_flags = 0
+	
 	var/list/vines = list()
 
 /obj/structure/alien/resin/flower_bud/Initialize(mapload)
@@ -48,6 +50,11 @@
 	addtimer(CALLBACK(src, .proc/progress_growth), growth_time/4)
 	countdown.start()
 
+/obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
+		damage_amount = 0
+	. = ..()
+
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
 	return ..()
@@ -59,7 +66,11 @@
  */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
 	visible_message(span_danger("The plant has borne fruit!"))
-	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
+	var/mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap = new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
+	if(trait_flags & SPACEVINE_HEAT_RESISTANT)
+		spawned_human_trap.unsuitable_heat_damage = 0
+	if(trait_flags & SPACEVINE_COLD_RESISTANT)
+		spawned_human_trap.unsuitable_cold_damage = 0
 	qdel(src)
 
 /obj/structure/alien/resin/flower_bud/proc/progress_growth()
@@ -122,7 +133,8 @@
 	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
 	deathsound = 'sound/creatures/venus_trap_death.ogg'
 	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
-	unsuitable_heat_damage = 5 //note that venus human traps do not take cold damage, only heat damage- this is because space vines can cause hull breaches
+	unsuitable_heat_damage = 5 // note that venus human traps do not take cold damage, only heat damage- this is because space vines can cause hull breaches
+	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
 	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that doesn't have the transparency mutation
