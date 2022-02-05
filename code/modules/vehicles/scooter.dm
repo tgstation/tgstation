@@ -150,18 +150,18 @@
 
 		for(var/mob/living/carbon/victim in location)
 			if(victim.body_position == LYING_DOWN)
-				var/total_brute = victim.getBruteLoss()
 				playsound(location, 'sound/items/trayhit2.ogg', 40)
-					var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
-					victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
-					victim.Paralyze(1.5 SECONDS)
-					skater.adjustStaminaLoss(instability)
-					victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
+				var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
+				victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
+				victim.Paralyze(1.5 SECONDS)
+				skater.adjustStaminaLoss(instability)
+				victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 		for(var/obj/item/cut_thing in location)
-			var/cut_holder = new/obj/item/knife(null) // The lore implications is that when a skateboard runs over cheese, it summons a knife from the shadow realm to cut it
-			cut_thing.tool_act(skater, cut_holder, TOOL_KNIFE, instant_proccess = TRUE)
-			qdel(cut_holder) // and then disapears the knife back to where it came from.
 	addtimer(CALLBACK(src, .proc/grind), 1)
+
+			//var/cut_holder = new/obj/item/knife(null) // The lore implications is that when a skateboard runs over cheese, it summons a knife from the shadow realm to cut it
+			//cut_thing.tool_act(skater, cut_holder, TOOL_KNIFE, instant_proccess = TRUE)
+			//qdel(cut_holder) // and then disapears the knife back to where it came from.
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
 	. = ..()

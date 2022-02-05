@@ -1372,7 +1372,7 @@
 	var/signal_result
 	if(!is_right_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes)
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, processing_recipes)
 		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
 			return TOOL_ACT_SIGNAL_BLOCKING
 		if(processing_recipes.len)
