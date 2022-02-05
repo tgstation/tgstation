@@ -17,10 +17,6 @@
 #define ROTATION_FLIP 180
 
 /datum/component/simple_rotation
-	/// Checks if user can rotate
-	var/datum/callback/CanUserRotate
-	/// Check if object can be rotated at all
-	var/datum/callback/CanBeRotated
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
 	/// Rotation flags for special behavior 
@@ -31,17 +27,13 @@
  * 
  * args:
  * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
- * * CanUserRotate (optional) Callback proc that determines if a user can rotate the object (is user human? nearby? etc.)
- * * CanBeRotated (optional) Callback proc that determines if the object can be rotated (is obj anchored, etc.)
  * * AfterRotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
 **/
-/datum/component/simple_rotation/Initialize(rotation_flags = NONE, CanUserRotate, CanBeRotated, AfterRotation)
+/datum/component/simple_rotation/Initialize(rotation_flags = NONE, AfterRotation)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.rotation_flags = rotation_flags
-	src.CanUserRotate = CanUserRotate || CALLBACK(src, .proc/DefaultCanUserRotate)
-	src.CanBeRotated = CanBeRotated || CALLBACK(src, .proc/DefaultCanBeRotated)
 	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
 
 /datum/component/simple_rotation/proc/AddSignals()
@@ -83,8 +75,6 @@
 	. = ..()
 
 /datum/component/simple_rotation/Destroy()
-	QDEL_NULL(CanUserRotate)
-	QDEL_NULL(CanBeRotated)
 	QDEL_NULL(AfterRotation)
 	//Signals + verbs removed via UnRegister
 	. = ..()
@@ -111,21 +101,21 @@
 	if(!istype(user))
 		stack_trace("[src] is being rotated without a user")
 		
-	if(!CanBeRotated.Invoke(user, degrees) || !CanUserRotate.Invoke(user, degrees))
+	if(!CanBeRotated(user, degrees) || !CanUserRotate(user, degrees))
 		return
 
 	var/obj/rotated_obj = parent
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
 	AfterRotation.Invoke(user, degrees)
 
-/datum/component/simple_rotation/proc/DefaultCanUserRotate(mob/user, degrees)
+/datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
 	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && (isobserver(user) && CONFIG_GET(flag/ghost_interaction)))
 		return TRUE	
 	return FALSE
 
-/datum/component/simple_rotation/proc/DefaultCanBeRotated(mob/user, degrees)
+/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees)
 	var/obj/rotated_obj = parent
 
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
