@@ -129,20 +129,20 @@
 		if("add_argument")
 			arguments += add_input_port("Port [length(arguments)]", PORT_TYPE_ANY)
 		if("remove_argument")
-			var/index = params["index"]
+			var/index = round(text2num(params["index"]))
 			if(index < 1 || index > length(arguments))
 				return
 			remove_input_port(arguments[index])
 			arguments.Splice(index, index+1)
 		if("rename_argument")
-			var/index = params["index"]
+			var/index = round(text2num(params["index"]))
 			if(index < 1 || index > length(arguments))
 				return
 			var/datum/port/input/argument = arguments[index]
 			argument.name = trim(copytext(params["name"], 1, PORT_MAX_NAME_LENGTH))
 			SStgui.update_uis(parent)
 		if("set_argument_datatype")
-			var/index = params["index"]
+			var/index = round(text2num(params["index"]))
 			if(index < 1 || index > length(arguments))
 				return
 			var/datum/port/input/argument = arguments[index]
