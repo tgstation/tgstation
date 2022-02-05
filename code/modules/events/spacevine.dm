@@ -172,7 +172,7 @@
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "Aggressive spreading"
 	hue = "#316b2f"
-	severity = 11
+	severity = 10
 	quality = NEGATIVE
 
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
@@ -333,7 +333,7 @@
 	name = "Flowering"
 	hue = "#66DE93"
 	quality = NEGATIVE
-	severity = 11
+	severity = 10
 
 /datum/spacevine_mutation/flowering/on_grow(obj/structure/spacevine/holder)
 	if(holder.energy == 2 && prob(FLOWERING_MUTATION_SPAWN_PROB) && !locate(/obj/structure/alien/resin/flower_bud) in range(5,holder))
