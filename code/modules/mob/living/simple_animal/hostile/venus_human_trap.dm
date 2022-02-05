@@ -201,6 +201,10 @@
 		return
 	humanize_plant(user)
 
+/mob/living/simple_animal/hostile/venus_human_trap/Destroy()
+	for(var/datum/beam/vine in vines)
+		qdel(vine) // reference is automatically deleted by remove_vine
+
 /**
  * Sets a ghost to control the plant if the plant is eligible
  *
