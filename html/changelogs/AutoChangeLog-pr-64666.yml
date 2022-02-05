@@ -1,0 +1,4 @@
+author: "Jackraxxus"
+delete-after: True
+changes: 
+  - bugfix: "The 145.7 frequency is no longer received by all signalers."
