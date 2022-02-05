@@ -771,3 +771,102 @@
 
 	for(var/department_type in department_types)
 		create_separatist_nation(department_type, announcement = FALSE, dangerous = FALSE, message_admins = FALSE)
+
+//////////////////////////////////////////////
+//                                          //
+//          JOE JOE                         //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/joejoe
+	name = "Joe Joe"
+	antag_flag = ROLE_TRAITOR
+	antag_datum = /datum/antagonist/joejoe
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+	)
+	required_candidates = 0
+	weight = 3
+	cost = 20
+	requirements = list(90,90,90,80,60,40,30,20,10,10)
+	flags = HIGH_IMPACT_RULESET
+	var/list/stands = list()
+	var/list/guardian_users = list()
+
+/datum/dynamic_ruleset/roundstart/joejoe/pre_execute(population)
+	. = ..()
+	var/amount_of_peeps = 0
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/player = i
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
+			amount_of_peeps++
+			if(amount_of_peeps % 2 == 0) // every second player becomes a STAND
+				var/mob/dead/observer/stand_holder = new /mob/dead/observer(SSmapping.get_station_center())
+				stand_holder.key = player.key
+				stands += stand_holder
+			else
+				guardian_users += player.mind
+	message_admins("Assigned [stands.len] stands and [guardian_users.len] guardian users.")
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/joejoe/execute()
+	for(var/datum/mind/M in guardian_users)
+		if(!stands.len) // if there are no stands, then we can't assign a guardian
+			break
+		var/datum/antagonist/joejoe/stand_user = new antag_datum()
+		M.add_antag_datum(stand_user)
+		var/mob/dead/observer/new_stand = pick_n_take(stands)
+		create_guardian(M.current, new_stand)
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/joejoe/proc/create_guardian(mob/living/user, mob/dead/candidate)
+	var/guardiantype = pick(list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic"))
+	var/pickedtype = /mob/living/simple_animal/hostile/guardian/punch
+	switch(guardiantype)
+
+		if("Chaos")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
+
+		if("Standard")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
+
+		if("Ranged")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/ranged
+
+		if("Support")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/healer
+
+		if("Explosive")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/bomb
+
+		if("Lightning")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/beam
+
+		if("Protector")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/protector
+
+		if("Charger")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/charger
+
+		if("Assassin")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/assassin
+
+		if("Dextrous")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/dextrous
+
+		if("Gravitokinetic")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
+	var/mob/living/simple_animal/hostile/guardian/G = new pickedtype(user, "magic")
+	G.name = "Stand"
+	G.summoner = user
+	G.key = candidate.key
+	G.mind.enslave_mind_to_creator(user)
+	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
+	to_chat(user, "[G.magic_fluff_string]")
+	to_chat(user, span_holoparasite("<b>[G.real_name]</b> has been summoned!"))
+	add_verb(user, list(/mob/living/proc/guardian_comm, \
+						/mob/living/proc/guardian_recall, \
+						/mob/living/proc/guardian_reset))
+	G?.client.init_verbs()
+	return G

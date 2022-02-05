@@ -68,6 +68,7 @@
 #define ROLE_FREE_GOLEM "Free Golem"
 #define ROLE_SERVANT_GOLEM "Servant Golem"
 #define ROLE_NUCLEAR_OPERATIVE "Nuclear Operative"
+#define ROLE_JOEJOE "Guardian User"
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_WIZARD_APPRENTICE "apprentice"
 #define ROLE_SLAUGHTER_DEMON "Slaughter Demon"
