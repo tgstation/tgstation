@@ -36,6 +36,7 @@
 			bank_account.account_job = /datum/job/unassigned
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
 		to_chat(user, span_notice("New account registered under account identification number [bank_account.account_id]."))
+		balloon_alert(user, "new account [bank_account.account_id] registered")
 		update_appearance()
 		return
 	else
