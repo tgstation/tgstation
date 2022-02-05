@@ -1,14 +1,7 @@
 import { Loader } from './common/Loader';
 import { Preferences } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
-import {
-  KEY_ESCAPE,
-  KEY_ENTER,
-  KEY_LEFT,
-  KEY_RIGHT,
-  KEY_SPACE,
-  KEY_TAB,
-} from '../../common/keycodes';
+import { KEY_ESCAPE, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -34,7 +27,7 @@ export const AlertModal = (_, context) => {
     = 100
     + Math.ceil(message.length / 3)
     + (message.length && large_buttons ? 5 : 0)
-    + (buttons.length > 2 ? buttons.length * 12 : 0);
+    + (buttons.length > 2 ? buttons.length * 25 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -74,7 +67,7 @@ export const AlertModal = (_, context) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
-              {autofocus && <Autofocus />}
+              {!!autofocus && <Autofocus />}
               <ButtonDisplay selected={selected} />
             </Stack.Item>
           </Stack>
@@ -94,17 +87,15 @@ const ButtonDisplay = (props, context) => {
   const { buttons = [] } = data;
   const { selected } = props;
   const { large_buttons, swapped_buttons } = data.preferences;
+  const buttonDirection
+    = (buttons.length > 2 ? 'column' : 'row')
+    + (!swapped_buttons ? '-reverse' : '');
 
   return (
-    <Flex
-      align="center"
-      direction={!swapped_buttons ? 'row-reverse' : 'row'}
-      fill
-      justify="space-around"
-      wrap>
+    <Flex align="center" direction={buttonDirection} fill>
       {buttons?.map((button, index) =>
-        !large_buttons ? (
-          <Flex.Item key={index}>
+        !!large_buttons && buttons.length < 3 ? (
+          <Flex.Item grow key={index}>
             <AlertButton
               button={button}
               id={index.toString()}
@@ -112,7 +103,7 @@ const ButtonDisplay = (props, context) => {
             />
           </Flex.Item>
         ) : (
-          <Flex.Item grow key={index}>
+          <Flex.Item key={index}>
             <AlertButton
               button={button}
               id={index.toString()}

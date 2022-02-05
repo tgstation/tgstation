@@ -129,10 +129,12 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
+	var/whatever = tgui_alert(user, "Message", "Title", list("Rotate", "Nothing at all", "New pen description"))
 	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
 	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
 		return
-	to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
+	degrees = deg
+	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
