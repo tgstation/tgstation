@@ -784,11 +784,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/apc_interactor = user
-	var/obj/item/organ/stomach/maybe_stomach = apc_interactor.getorganslot(ORGAN_SLOT_STOMACH)
-	if(!istype(maybe_stomach, /obj/item/organ/stomach/ethereal))
+	var/obj/item/organ/stomach/ethereal/maybe_ethereal_stomach = apc_interactor.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
-		var/obj/item/organ/stomach/ethereal/stomach = maybe_stomach
+		var/obj/item/organ/stomach/ethereal/stomach = maybe_ethereal_stomach
 		if(stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
 			togglelock(user)
 		ethereal_interact(user,modifiers)
