@@ -126,7 +126,11 @@
 			rotated_obj.balloon_alert(user, "need a wrench")
 			return FALSE
 	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
-		rotated_obj.balloon_alert(user, "need to unwrench")
+		var/obj/structure/window/rotated_window = rotated_obj
+		if(istype(rotated_obj, /obj/structure/window)
+			rotated_obj.balloon_alert(user, "need to unscrew")
+		else
+			rotated_obj.balloon_alert(user, "need to unwrench")
 		return FALSE
 
 	if(rotation_flags & ROTATION_NEEDS_ROOM)
