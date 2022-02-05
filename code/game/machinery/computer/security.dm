@@ -927,12 +927,19 @@ What a mess.*/
 				switch(href_list["choice"])
 					if("Change Rank")
 						if(active1)
-							var/path = text2path(strip_html(href_list["rank"]))
+							var/text = strip_html(href_list["rank"])
+							var/path = text2path(text)
 							if(ispath(path))
 								var/rank = SSid_access.station_job_templates[path]
 								if(rank)
 									active1.fields["rank"] = rank
 									active1.fields["trim"] = active1.fields["rank"]
+								else
+									message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+									log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+							else if(!isnull(text))
+								message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
+								log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
 
 					if("Change Criminal Status")
 						if(active2)
