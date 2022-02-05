@@ -7,7 +7,7 @@
 /// If an object will omit flipping from rotation (used for pipes since they use custom handling)
 #define ROTATION_NO_FLIPPING (1<<3)
 /// If an object needs to have an empty spot available in target direction (used for windoors and railings)
-#define ROTATION_NEEDS_ROOM
+#define ROTATION_NEEDS_ROOM (1<<4)
 
 /// Rotate an object clockwise
 #define ROTATION_CLOCKWISE -90
