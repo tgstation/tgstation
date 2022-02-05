@@ -127,6 +127,7 @@
 	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	minbodytemp = 100
 	combat_mode = TRUE
 	del_on_death = TRUE
 	deathmessage = "collapses into bits of plant matter."
@@ -204,6 +205,7 @@
 /mob/living/simple_animal/hostile/venus_human_trap/Destroy()
 	for(var/datum/beam/vine in vines)
 		qdel(vine) // reference is automatically deleted by remove_vine
+	. = ..()
 
 /**
  * Sets a ghost to control the plant if the plant is eligible
