@@ -68,13 +68,16 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		if(max_length)
+		if(encode)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default) as text|null
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/async/text_input = new(user, message, title, default, max_length, multiline, encode, callback, timeout)
 	text_input.ui_interact(user)
 
@@ -170,23 +173,20 @@
 		if("submit")
 			if(max_length)
 				if(length(params["entry"]) > max_length)
-					return FALSE
+					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
-			if(!length(params["entry"]))
-				set_entry(null)
-				SStgui.close_uis(src)
-				return TRUE
 			set_entry(params["entry"])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(entry)
+	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
 
