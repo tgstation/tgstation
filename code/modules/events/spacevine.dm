@@ -133,7 +133,8 @@
 	severity = 7
 
 /datum/spacevine_mutation/fire_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	holder.trait_flags |= SPACEVINE_HEAT_RESISTANT;
+	. = ..()
+	holder.trait_flags |= SPACEVINE_HEAT_RESISTANT
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/item, expected_damage)
 	if(item && item.damtype == BURN)
@@ -148,7 +149,8 @@
 	severity = 4
 
 /datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	holder.trait_flags |= SPACEVINE_COLD_RESISTANT;
+	. = ..()
+	holder.trait_flags |= SPACEVINE_COLD_RESISTANT
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
