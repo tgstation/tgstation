@@ -29,7 +29,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	alternate_worn_layer = BODY_FRONT_LAYER
+	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
