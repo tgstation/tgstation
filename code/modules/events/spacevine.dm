@@ -151,7 +151,7 @@
 	name = "Cold proof"
 	hue = "#0BD5D9"
 	quality = MINOR_NEGATIVE
-	severity = 5
+	severity = 4
 
 /datum/spacevine_mutation/cold_proof/process_temperature(obj/structure/spacevine/holder, temp, volume)
 	if(temp < VINE_FREEZING_POINT)
