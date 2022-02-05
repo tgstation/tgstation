@@ -40,6 +40,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/bodyCensor
 	///Referece to the photo used in picture messages.
 	var/photo_file
+	///What is the channel ID of the parent channel?
+	var/parent_ID
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -74,15 +76,49 @@ GLOBAL_LIST_EMPTY(allCasters)
 	GLOB.news_network.lastAction ++
 
 /datum/newscaster/feed_channel
+	/// The name of the channel, players see this on the channel selection list
 	var/channel_name = ""
+	/// The description of the channel, players see this upon clicking on the channel before seeing messages.
+	var/channel_desc = ""
+	/// Datum list of all feed_messages.
 	var/list/datum/newscaster/feed_message/messages = list()
+	/// Is the channel locked? Locked channels cannot be commented on.
 	var/locked = FALSE
+	/// Who is the author of this channel? Taken from the user's ID card.
 	var/author = ""
+	/// Has this channel been censored? Where Locked channels cannot be commented on, Censored channels cannot be viewed at all.
 	var/censored = FALSE
+	/// At what times has the author been censored?
 	var/list/authorCensorTime = list()
+	/// At what times has the author been D-Class censored.
 	var/list/DclassCensorTime = list()
+	/// Has the author of the channel been censored, as opposed to the message itself?
 	var/authorCensor
+	/// Is this an admin channel? Allows for actions to be taken by the admin only.
 	var/is_admin_channel = FALSE
+	/// Channel ID is a random number sequence similar to account ID number that allows for us to link messages to the proper channels through the UI backend.
+	var/channel_ID
+
+/datum/newscaster/feed_channel/New()
+	. = ..()
+	channel_ID = random_channel_id_setup()
+
+/**
+ * This proc assigns each feed_channel a random integer, from 1-999 as a unique identifer.
+ * Using this value, the TGUI window has a unique identifier to attach to messages that can be used to reattach them
+ * to their parent channels back in dreammaker.
+ * Based on implementation, we're limiting outselves to only 998 player made channels maximum. How we'd use all of them, I don't know.
+ */
+/datum/newscaster/feed_channel/proc/random_channel_id_setup()
+	if(!GLOB.news_network.channel_IDs)
+		GLOB.news_network.channel_IDs += rand(1,999)
+		return //This will almost always be the station annoucements channel here.
+	var/channel_id
+	for(var/i in 1 to 10000)
+		channel_id = rand(1, 999)
+		if(!GLOB.news_network.channel_IDs["[channel_ID]"])
+			break
+	return channel_id
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -109,30 +145,45 @@ GLOBAL_LIST_EMPTY(allCasters)
 	GLOB.news_network.lastAction ++
 
 /datum/newscaster/wanted_message
+	/// Is this criminal alert still active?
 	var/active
+	/// What is the criminal in question's name? Not a mob reference as this is a text field.
 	var/criminal
+	/// Message body used to describe what crime has been comitted.
 	var/body
+	/// Who was it that created this wanted message?
 	var/scannedUser
+	/// Is this an admin message? Prevents editing unless performed by an admin rank.
 	var/isAdminMsg
+	/// Icon image to be attached to the newscaster message.
 	var/icon/img
+	/// Reference to the photo file used by wanted message on creation.
 	var/photo_file
 
 /datum/newscaster/feed_network
+	/// All the feed channels that have been made on the feed network.
 	var/list/datum/newscaster/feed_channel/network_channels = list()
+	/// What is the wanted issue being sent out to all newscasters.
 	var/datum/newscaster/wanted_message/wanted_issue
+	/// What time was the last action taken on the feed_network?
 	var/lastAction
+	/// What does this feed network say when a message/author is redacted?
 	var/redactedText = "\[REDACTED\]"
+	/// List of all the network_channels Channel Id numbers, kept in a global easy to find place.
+	var/list/channel_IDs = list()
 
 /datum/newscaster/feed_network/New()
-	CreateFeedChannel("Station Announcements", "SS13", 1)
+	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!" , 1)
 	wanted_issue = new /datum/newscaster/wanted_message
 
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, locked, adminChannel = FALSE)
+/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, desc, locked, adminChannel = FALSE)
 	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
+	newChannel.channel_desc = desc
 	newChannel.locked = locked
 	newChannel.is_admin_channel = adminChannel
+	newChannel.channelID = newChannel.random_channel_id_setup()
 	network_channels += newChannel
 
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
@@ -149,6 +200,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	for(var/datum/newscaster/feed_channel/FC in network_channels)
 		if(FC.channel_name == channel_name)
 			FC.messages += newMsg
+			newMsg.parent_ID = FC.channel_ID
 			break
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
 		NEWSCASTER.newsAlert(channel_name, update_alert)
@@ -544,7 +596,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 				var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 				if(choice=="Confirm")
 					scan_user(usr)
-					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, c_locked)
+					GLOB.news_network.CreateFeedChannel(channel_name, scanned_user, "Yeah I know default channel desc" , c_locked)
 					SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 					screen=5
 			updateUsrDialog()

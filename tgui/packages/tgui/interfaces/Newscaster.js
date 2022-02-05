@@ -1,14 +1,16 @@
-import { useBackend, useSharedState } from '../backend';
-import { BlockQuote, Button, Collapsible, Flex, LabeledList, Section, Stack, Tabs, TextArea } from '../components';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     index,
-    name = "Station Annoucements",
+    name,
     description,
     icon,
+    viewing_channel,
+    current_channel = [],
   } = props;
   return (
     <Window
@@ -21,122 +23,128 @@ export const Newscaster = (props, context) => {
           </Flex.Item>
           <Flex.Item grow={1} basis={0}>
             <NewscasterInfobox />
-            <NewscasterChannelBox />
+            <NewscasterChannelBox
+              channelName={current_channel.name}
+              channelOwner={current_channel.owner}
+              channelDesc={current_channel.desc} />
           </Flex.Item>
         </Flex>
+        <Section p={1}>
+          <NewscasterChannelComments />
+        </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const NewscasterButton = (props, context) => {
-  const {
-    index,
-    name,
-    description,
-    icon,
-  } = props;
-  const { act, data } = useBackend(context);
-  const [channelIndex, setChannelIndex] = useSharedState(context, 'channelIndex');
-  const paid = data[`active_status_${index}`];
-  return (
-    <Stack
-      align="baseline"
-      wrap>
-      <Stack.Item grow basis="content">
-        <Button
-          fluid
-          icon={icon}
-          selected={paid && channelIndex === index}
-          tooltip={description}
-          tooltipPosition="right"
-          content={name}
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
-
+/** The Infobox is the user information panel in the top right. */
 const NewscasterInfobox = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    user_name = "Joey Quiver",
-    user_job = "Captain",
-  } = data;
-  return (
-    <Section>
-      <LabeledList title="Newscaster" minHeight="100%">
-        <LabeledList.Item label="User">
-          {user_name}
-        </LabeledList.Item>
-        <LabeledList.Item label="Occupation">
-          {user_job}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
+  const { data } = useBackend(context);
+  const { user } = data;
+
+  if (!user) {
+    return (
+      <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
+    );
+  } else {
+    return (
+      <Section>
+        <Stack>
+          <Stack.Item>
+            <Icon name="id-card" size={3} mr={1} />
+          </Stack.Item>
+          <Stack.Item>
+            <LabeledList>
+              <LabeledList.Item label="User">{user.name}</LabeledList.Item>
+              <LabeledList.Item label="Occupation">
+                {user.job || 'Unemployed'}
+              </LabeledList.Item>
+            </LabeledList>
+          </Stack.Item>
+        </Stack>
+      </Section>
+    );
+  }
 };
 
+/** The Channel Box is the basic channel information where buttons live.*/
 const NewscasterChannelBox = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    channel_name = "Crab Shack",
-    channel_owner = "Sleezy Adashi",
-    channel_description = "This is my description box!",
+    channelName,
+    channelOwner,
+    channelDesc,
   } = data;
   return (
-    <Section title={channel_name} >
+    <Section title={channelName} >
       <BlockQuote italic mb={1} ml={1} fontSize={1.2}>
-        {channel_description}
+        {channelDesc}
       </BlockQuote>
       <LabeledList mt={1} mb={1}>
         <LabeledList.Item label="Owner">
-          {channel_owner}
+          {channelOwner}
         </LabeledList.Item>
       </LabeledList>
-      <Collapsible
-        title="New Story"
-        color="green"
-        mt={1}>
-        <Section>
-          <TextArea
-            fluid
-            height={(window.innerHeight - 260) + "px"}
-            backgroundColor="black"
-            textColor="white"
-            onChange={(e, value) => act('storyText', {
-              bountytext: value,
-            })} />
-          <Button
-            icon="print"
-            content="Submit Story"
-            onClick={() => act('createStory')}
-            mt={1} />
-        </Section>
-      </Collapsible>
+      <Box>
+        <Button
+          icon="print"
+          content="Submit Story"
+          onClick={() => act('createStory')}
+          mt={1} />
+      </Box>
     </Section>
   );
 };
 
+/** Channel select is the left-hand menu where all the channels are listed. */
 const NewscasterChannelSelector = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    channels = [],
+    channel = [],
+    viewing_channel,
   } = data;
   return (
     <Section
       minHeight="100%"
-      width={(window.innerWidth - 400) + "px"}>
+      width={(window.innerWidth - 410) + "px"}>
       <Tabs vertical>
-        {channels.map(channel => (
+        {channel?.map(channels => (
           <Tabs.Tab
-            key={channel.name}
-            selected={channel.name === activeChannelName}
-            onClick={() => setActiveChannelName(channel.name)}>
-            {channel.name}
+            key={channels.name}
+            pt={0.75}
+            pb={0.75}
+            mr={1}
+            selected={viewing_channel === channels}
+            textColor="white"
+            onClick={() => act('setChannel', {
+              channels: channels,
+            })}>
+            {channels.name}
           </Tabs.Tab>
         ))}
       </Tabs>
+    </Section>
+  );
+};
+
+/** This is where the channels comments get spangled out (tm) */
+const NewscasterChannelComments = (props, context) => {
+  const {
+    messages = [],
+  } = props;
+  const { act, data } = useBackend(context);
+  return (
+    <Section>
+      {messages?.map(message => (
+        <Box key={message.body}>
+          <BlockQuote>
+            {message.body}
+            <Box italic>
+              {message.auth}
+            </Box>
+          </BlockQuote>
+        </Box>
+      ))}
     </Section>
   );
 };
