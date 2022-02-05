@@ -74,8 +74,18 @@
 	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
-	pixel_y = -3
+	pixel_y = 5
 	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/material/mining{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
