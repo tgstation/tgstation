@@ -29,9 +29,9 @@
 	var/finish_time
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
-	
+
 	var/trait_flags = 0
-	
+
 	var/list/vines = list()
 
 /obj/structure/alien/resin/flower_bud/Initialize(mapload)
