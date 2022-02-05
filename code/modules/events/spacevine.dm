@@ -32,11 +32,13 @@
 
 	if(length(turfs)) //Pick a turf to spawn at if we can
 		var/turf/floor = pick(turfs)
-		new /datum/spacevine_controller(floor, list(pick(subtypesof(/datum/spacevine_mutation))), rand(10,100), rand(1,6), src) //spawn a controller at turf with randomized stats and a single random mutation
+		new /datum/spacevine_controller(floor, list(pick(subtypesof(/datum/spacevine_mutation))), rand(50,100), rand(1,4), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
+	/// Displayed name of mutation
 	var/name = ""
+	/// Severity of mutation in terms of gameplay, affects appearance chance and how many mutations can be on the same vine
 	var/severity = 1
 	var/hue
 	var/quality
@@ -474,7 +476,7 @@
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
-	for(var/mutation in vine_mutations_list)
+	for(var/datum/spacevine_mutation/mutation as anything in vine_mutations_list)
 		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency / 10 // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
@@ -516,7 +518,11 @@
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
 			var/datum/spacevine_mutation/random_mutate = pick_weight(vine_mutations_list - vine.mutations)
-			random_mutate.add_mutation_to_vinepiece(vine)
+			var/total_severity = random_mutate.severity
+			for(var/datum/spacevine_mutation/mutation as anything in vine.mutations)
+				total_severity += mutation.severity
+			if(total_severity <= max_mutation_severity)
+				random_mutate.add_mutation_to_vinepiece(vine)
 
 	for(var/datum/spacevine_mutation/mutation in vine.mutations)
 		mutation.on_birth(vine)
