@@ -36277,7 +36277,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/openspace,
-/area/space/nearstation)
+/area/ai_monitored/turret_protected/aisat/hallway)
 "lHh" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
