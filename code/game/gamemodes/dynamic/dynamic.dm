@@ -283,13 +283,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
 
+	var/min_threat = 100
+	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
+		if(ruleset.weight <= 0 || ruleset.cost <= 0)
+			continue
+		min_threat = min(ruleset.cost, min_threat)
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+
+	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
-	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+	if(greenshift)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())
+	else
+		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
+		if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
+			set_security_level(SEC_LEVEL_BLUE)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
