@@ -311,8 +311,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 			remove_item_from_storage(user)
 
-			to_chat(user, span_notice("You fasten [attacking_item] to the top of the rod with the cable."))
-
 			qdel(attacking_item)
 			qdel(src)
 
