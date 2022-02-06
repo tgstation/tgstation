@@ -396,7 +396,6 @@
 			set_anchored(!anchored)
 			W.play_tool_sound(src, 75)
 			user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"].")
-			span_hear("You hear a ratchet.")
 			return // This return prevents us from putting the wrench inside the locker when we bolt/unbolt it
 		if (user.combat_mode)
 			return FALSE
