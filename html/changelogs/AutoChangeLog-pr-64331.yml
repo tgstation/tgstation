@@ -1,6 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Tgui number input now uses a new component that makes it easier to use. It now autofocuses and autoselects, just like the original."
-  - bugfix: "Alert modals have been rewritten. Messages no longer clip, they also now respond to TGUI input preferences (UI tab) and you can press ESC to close."
-  - bugfix: "You should now be able to enter a blank text to succumb."

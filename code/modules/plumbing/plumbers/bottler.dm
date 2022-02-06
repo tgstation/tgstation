@@ -29,12 +29,6 @@
 	if(!valid_output_configuration)
 		. += span_warning("A flashing notification on the screen reads: \"Output location error!\"")
 
-/obj/machinery/plumbing/bottler/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-		return FALSE
-	return TRUE
-
 ///changes the tile array
 /obj/machinery/plumbing/bottler/setDir(newdir)
 	. = ..()
