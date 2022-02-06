@@ -46,12 +46,42 @@ SUBSYSTEM_DEF(atoms)
 #define PROFILE_INIT_ATOM_END(...)
 #endif
 
-/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return = null)
+/datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD)
 
+	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
+	CreateAtoms()
+	clear_tracked_initalize()
+
+	if(late_loaders.len)
+		for(var/I in 1 to late_loaders.len)
+			var/atom/A = late_loaders[I]
+			//I hate that we need this
+			if(QDELETED(A))
+				continue
+			A.LateInitialize()
+		testing("Late initialized [late_loaders.len] atoms")
+		late_loaders.Cut()
+
+	if (created_atoms)
+		atoms_to_return += created_atoms
+		created_atoms = null
+
+	for (var/queued_deletion in queued_deletions)
+		qdel(queued_deletion)
+
+	testing("[queued_deletions.len] atoms were queued for deletion.")
+	queued_deletions.Cut()
+
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
+	#endif
+
+/// Actually creates the list of atoms. Exists soley so a runtime in the creation logic doesn't cause initalized to totally break
+/datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null)
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
 
@@ -79,32 +109,6 @@ SUBSYSTEM_DEF(atoms)
 
 	testing("Initialized [count] atoms")
 	pass(count)
-
-	clear_tracked_initalize()
-
-	if(late_loaders.len)
-		for(var/I in 1 to late_loaders.len)
-			var/atom/A = late_loaders[I]
-			//I hate that we need this
-			if(QDELETED(A))
-				continue
-			A.LateInitialize()
-		testing("Late initialized [late_loaders.len] atoms")
-		late_loaders.Cut()
-
-	if (created_atoms)
-		atoms_to_return += created_atoms
-		created_atoms = null
-
-	for (var/queued_deletion in queued_deletions)
-		qdel(queued_deletion)
-
-	testing("[queued_deletions.len] atoms were queued for deletion.")
-	queued_deletions.Cut()
-
-	#ifdef PROFILE_MAPLOAD_INIT_ATOM
-	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
-	#endif
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)
