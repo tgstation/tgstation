@@ -106,6 +106,10 @@
 
 	var/obj/rotated_obj = parent
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
+	rotated_obj.balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
+		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
+		
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
@@ -143,10 +147,7 @@
 	return TRUE
 
 /datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
-	var/obj/rotated_obj = parent
-	rotated_obj.balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [rotated_obj]")
-	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
-		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
+	return 
 
 /atom/movable/proc/SimpleRotateClockwise()
 	set name = "Rotate Clockwise"
