@@ -89,5 +89,5 @@
 
 	// if we are trying to cast wizard spells (not mime abilities, abductor telepathy, etc.)
 	// and we have an antimagic equipped that blocks casting, we can't cast that type of magic
-	if((magic_flags & MAGIC_RESISTANCE) && (antimagic_flags & MAGIC_CASTING_RESTRICT))
+	if((magic_flags & MAGIC_RESISTANCE) && (antimagic_flags & MAGIC_CASTING_RESTRICTION))
 		return COMPONENT_BLOCK_MAGIC
