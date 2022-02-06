@@ -288,8 +288,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/shard))
+		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
 		user.balloon_alert(user, "crafting spear")
-		if(do_after(user, 4 SECONDS, src))
+		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
 			var/obj/item/spear/crafted_spear = new /obj/item/spear()
 
 			remove_item_from_storage(user)
@@ -304,8 +305,9 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return
 
 	if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
+		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
 		user.balloon_alert(user, "crafting cattleprod")
-		if(do_after(user, 4 SECONDS, src))
+		if(do_after(user, initial(recipe_to_use.time), src))
 			var/obj/item/melee/baton/security/cattleprod/prod = new
 
 			remove_item_from_storage(user)
