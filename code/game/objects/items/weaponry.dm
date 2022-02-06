@@ -281,35 +281,41 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
-		var/obj/item/spear/S = new /obj/item/spear
+		user.balloon_alert(user, "crafting spear")
+		if(do_after(user, 4 SECONDS, src))
+			var/obj/item/spear/S = new /obj/item/spear
 
-		remove_item_from_storage(user)
-		if (!user.transferItemToLoc(I, S))
-			return
-		S.CheckParts(list(I))
-		qdel(src)
+			remove_item_from_storage(user)
+			if (!user.transferItemToLoc(I, S))
+				return
+			S.CheckParts(list(I))
+			qdel(src)
 
-		user.put_in_hands(S)
-		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
+			user.put_in_hands(S)
+			to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
+			user.balloon_alert(user, "crafted")
 
 	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
-		var/obj/item/melee/baton/security/cattleprod/prod = new
+		user.balloon_alert(user, "crafting cattleprod")
+		if(do_after(user, 4 SECONDS, src))
+			var/obj/item/melee/baton/security/cattleprod/prod = new
 
-		remove_item_from_storage(user)
+			remove_item_from_storage(user)
 
-		to_chat(user, span_notice("You fasten [I] to the top of the rod with the cable."))
+			to_chat(user, span_notice("You fasten [I] to the top of the rod with the cable."))
 
-		qdel(I)
-		qdel(src)
+			qdel(I)
+			qdel(src)
 
-		user.put_in_hands(prod)
+			user.put_in_hands(prod)
+			user.balloon_alert(user, "crafted")
 	else
 		return ..()
 
