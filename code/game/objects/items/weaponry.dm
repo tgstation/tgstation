@@ -298,7 +298,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			S.CheckParts(list(I))
 			qdel(src)
 
-			user.put_in_hands(S)
+			user.put_in_hands(crafted_spear)
 			to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 			user.balloon_alert(user, "crafted")
 
