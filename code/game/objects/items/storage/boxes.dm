@@ -1617,7 +1617,6 @@
 	new /obj/item/stack/sheet/iron/fifty(src)
 	new /obj/item/stack/sheet/glass/fifty(src)
 
-
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
 
