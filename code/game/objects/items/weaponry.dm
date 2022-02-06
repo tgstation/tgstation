@@ -315,7 +315,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			qdel(src)
 
 			user.put_in_hands(prod)
-			user.balloon_alert(user, "crafted")
+			user.balloon_alert(user, "crafted cattleprod")
 		return
 	return ..()
 
