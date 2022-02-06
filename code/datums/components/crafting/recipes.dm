@@ -381,8 +381,30 @@
 				/obj/item/storage/firstaid = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(/obj/item/storage/firstaid = 1,
+				 /obj/item/healthanalyzer = 1)
 	time = 40
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
+	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/obj/item/storage/firstaid/FA = bot.contents[3]
+	bot.firstaid = FA
+	bot.healthanalyzer = bot.contents[4]
+
+	if (istype(FA, /obj/item/storage/firstaid/fire))
+		bot.skin = "ointment"
+	else if (istype(FA, /obj/item/storage/firstaid/toxin))
+		bot.skin = "tox"
+	else if (istype(FA, /obj/item/storage/firstaid/o2))
+		bot.skin = "o2"
+	else if (istype(FA, /obj/item/storage/firstaid/brute))
+		bot.skin = "brute"
+	else if (istype(FA, /obj/item/storage/firstaid/advanced))
+		bot.skin = "advanced"
+
+	bot.damagetype_healer = initial(FA.damagetype_healed) ? initial(FA.damagetype_healed) : BRUTE
+	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
