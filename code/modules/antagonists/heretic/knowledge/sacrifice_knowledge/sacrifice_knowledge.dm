@@ -20,16 +20,21 @@
 	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
 	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
-	var/datum/weakref/heretic_mind_weakref
-	/// Lazylist of weakrefs to minds that we won't pick as targets.
+	var/datum/datum/mind/heretic_mind
+	/// Lazylist of minds that we won't pick as targets.
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/return_timers
 
+/datum/heretic_knowledge/Destroy(force, ...)
+	heretic_mind = null
+	LAZYCLEARLIST(target_blacklist)
+	return ..()
+
 /datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
 	. = ..()
 	obtain_targets(user)
-	heretic_mind_weakref = WEAKREF(user.mind)
+	heretic_mind = user.mind
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
 		message_admins("Generating z-level for heretic sacrifices...")
@@ -195,10 +200,9 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/begin_sacrifice(mob/living/carbon/human/sac_target)
 	. = FALSE
 
-	var/datum/mind/our_heretic_mind = heretic_mind_weakref?.resolve()
-	var/datum/antagonist/heretic/our_heretic = our_heretic_mind?.has_antag_datum(/datum/antagonist/heretic)
+	var/datum/antagonist/heretic/our_heretic = heretic_mind?.has_antag_datum(/datum/antagonist/heretic)
 	if(!our_heretic)
-		CRASH("[type] - begin_sacrifice was called, and no heretic [our_heretic_mind ? "antag datum":"mind"] could be found!")
+		CRASH("[type] - begin_sacrifice was called, and no heretic [heretic_mind ? "antag datum":"mind"] could be found!")
 
 	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
 		CRASH("[type] - begin_sacrifice was called, but no heretic sacrifice landmarks were found!")
@@ -214,13 +218,13 @@
 	sac_target.update_handcuffed()
 	sac_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 85, 150)
 	sac_target.do_jitter_animation(100)
+	log_combat(heretic_mind.current, sac_target, "sacrificed")
 
 	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (1/3))
 	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (2/3))
 
 	// If our target is dead, try to revive them
-	// and if we fail to revive them,
-	// just disembowel them and be done
+	// and if we fail to revive them, don't proceede the chain
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -250,9 +254,14 @@
 	if(QDELETED(sac_target))
 		return
 
+	// The target disconnected or something, we shouldn't bother sending them along.
+	if(!sac_target.client || !sac_target.mind)
+		disembowel_target(sac_target)
+		return
+
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
 	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
-		disembowel_target()
+		disembowel_target(sac_target)
 		return
 
 	// If our target died during the (short) wait timer,
@@ -286,7 +295,7 @@
 	// About how long should the helgrasp last? (1 metab a tick = helgrasp_time / 2 ticks (so, 1 minute = 60 seconds = 30 ticks))
 	var/helgrasp_time = 1 MINUTES
 
-	sac_target.reagents?.add_reagent(/datum/reagent/inverse/helgrasp, helgrasp_time / 20)
+	sac_target.reagents?.add_reagent(/datum/reagent/inverse/helgrasp/heretic, helgrasp_time / 20)
 	sac_target.apply_necropolis_curse(CURSE_BLINDING | CURSE_GRASPING)
 
 	SEND_SIGNAL(sac_target, COMSIG_ADD_MOOD_EVENT, "shadow_realm", /datum/mood_event/shadow_realm)
@@ -341,7 +350,7 @@
 	UnregisterSignal(sac_target, COMSIG_LIVING_DEATH)
 	sac_target.remove_status_effect(/datum/status_effect/necropolis_curse)
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
-	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp)
+	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
 	// Wherever we end up, we sure as hell won't be able to explain
@@ -370,8 +379,7 @@
 	else
 		after_return_live_target(sac_target)
 
-	var/datum/mind/our_heretic_mind = heretic_mind_weakref?.resolve()
-	if(our_heretic_mind?.current)
+	if(heretic_mind?.current)
 		var/composed_return_message = ""
 		composed_return_message += span_notice("Your victim, [sac_target], was returned to the station - ")
 		if(sac_target.stat == DEAD)
@@ -381,7 +389,7 @@
 
 		composed_return_message += span_notice("You hear a whisper... ")
 		composed_return_message += span_hypnophrase(get_area_name(safe_turf, TRUE))
-		to_chat(our_heretic_mind.current, composed_return_message)
+		to_chat(heretic_mind.current, composed_return_message)
 
 /**
  * If they die in the shadow realm, they lost. Send them back.
@@ -389,9 +397,10 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/on_target_death(mob/living/carbon/human/sac_target, gibbed)
 	SIGNAL_HANDLER
 
-	to_chat(sac_target, span_userdanger("You failed to resist the horrors of the Mansus!"))
-	if(!gibbed)
-		return_target(sac_target)
+	if(gibbed) // Nothing to return
+		return
+
+	return_target(sac_target)
 
 /**
  * If they somehow cheese the shadow realm by teleporting out, they are disemboweled and killed.
@@ -399,11 +408,9 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/on_target_escape(mob/living/carbon/human/sac_target, old_z, new_z)
 	SIGNAL_HANDLER
 
-	to_chat(sac_target, span_userdanger("Your attempt to escape the Mansus is not taken kindly!"))
+	to_chat(sac_target, span_boldwarning("Your attempt to escape the Mansus is not taken kindly!"))
 	// Ends up calling return_target() via death signal to clean up.
 	disembowel_target(sac_target)
-	if(sac_target.stat != DEAD)
-		sac_target.death()
 
 /**
  * This proc is called from [proc/return_target] if the [sac_target] survives the shadow realm.
@@ -411,8 +418,8 @@
  * Gives the sacrifice target some after effects upon ariving back to reality.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_live_target(mob/living/carbon/human/sac_target)
-	to_chat(sac_target, span_hypnophrase("The fight is over - but at great cost. You have been returned to your realm in one piece."))
-	to_chat(sac_target, span_hypnophrase("You can't remember a thing from before the experience - all you can think about are those horrific hands..."))
+	to_chat(sac_target, span_hypnophrase("The fight is over, but at great cost. You have been returned to the station in one piece."))
+	to_chat(sac_target, span_big(span_hypnophrase("You don't remember anything leading up to the experience - All you can think about are those horrific hands...")))
 
 	// Oh god where are we?
 	sac_target.flash_act()
@@ -438,6 +445,9 @@
  * it spawns a special red broken illusion on their spot, for style.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/after_return_dead_target(mob/living/carbon/human/sac_target)
+	to_chat(sac_target, span_hypnophrase("You failed to resist the horrors of the Mansus! Your ruined body has been returned to the station."))
+	to_chat(sac_target, span_big(span_hypnophrase("The experience leaves your mind torn and memories tattered. You will not remember anything leading up to the experience if revived.")))
+
 	var/obj/effect/visible_heretic_influence/illusion = new(get_turf(sac_target))
 	illusion.name = "\improper weakened rift in reality"
 	illusion.desc = "A rift wide enough for something... or someone... to come through."
@@ -445,12 +455,18 @@
 
 /**
  * "Fuck you" proc that gets called if the chain is interrupted at some points.
- * Simply disembowels the [sac_target] and brutilizes their body, as it did.
+ * Disembowels the [sac_target] and brutilizes their body. Throws some gibs around for good measure.
  */
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/disembowel_target(mob/living/carbon/human/sac_target)
+	if(heretic_mind)
+		log_combat(heretic_mind.current, sac_target, "disemboweled via sacrifice")
 	sac_target.spill_organs()
 	sac_target.apply_damage(250, BRUTE)
+	if(sac_target.stat != DEAD)
+		sac_target.death()
 	sac_target.visible_message(
 		span_danger("[sac_target]'s organs are pulled out of [sac_target.p_their()] chest by shadowy hands!"),
 		span_userdanger("Your organs are violently pulled out of your chest by shadowy hands!")
 	)
+
+	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))

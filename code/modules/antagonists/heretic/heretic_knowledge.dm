@@ -217,6 +217,7 @@
 		loc.balloon_alert(user, "invalid choice!")
 		return FALSE
 
+	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
 	curse(to_curse)
 	addtimer(CALLBACK(src, .proc/uncurse, to_curse), duration)
 	return TRUE

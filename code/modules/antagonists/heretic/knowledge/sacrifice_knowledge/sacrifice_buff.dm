@@ -9,7 +9,7 @@
 /// The buff given to people within the shadow realm to assist them in surviving.
 /datum/status_effect/unholy_determination
 	id = "unholy_determination"
-	duration = 3 MINUTES
+	duration = 3 MINUTES // Given a default duration so no one gets to hold onto this buff forever by accident.
 	tick_interval = 1 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/unholy_determination
 
@@ -30,14 +30,15 @@
 	REMOVE_TRAIT(owner, TRAIT_NOSOFTCRIT, type)
 
 /datum/status_effect/unholy_determination/tick()
-	// The amount we heal of each damage type per tick.
-	var/healing_amount = 1.5
-	// In softcrit you're strong enough to stay up
+	// The amount we heal of each damage type per tick. If we're missing legs we heal better because we can't dodge.
+	var/healing_amount = 1 + (2 - owner.usable_legs)
+
+	// In softcrit you're, strong enough to stay up.
 	if(owner.health <= owner.crit_threshold && owner.health >= owner.hardcrit_threshold)
 		if(prob(5))
 			to_chat(owner, span_hypnophrase("Your body feels like giving up, but you fight on!"))
 		healing_amount *= 2
-	// ...But in hardcrit you're in big danger
+	// ...But reach hardcrit and you're done. You now die faster.
 	if (owner.health < owner.hardcrit_threshold)
 		if(prob(5))
 			to_chat(owner, span_big(span_hypnophrase("You can't hold on for much longer...")))
@@ -47,6 +48,7 @@
 		owner.Jitter(10)
 		owner.Dizzy(5)
 		owner.hallucination = min(owner.hallucination + 3, 24)
+
 	if(prob(2))
 		playsound(owner, pick(GLOB.creepy_ambience), 50, TRUE)
 
@@ -55,7 +57,7 @@
 	adjust_bleed_wounds()
 
 /*
- * Heal up all the owner
+ * Heals up all the owner a bit, fire stacks and losebreath included.
  */
 /datum/status_effect/unholy_determination/proc/adjust_all_damages(amount)
 
@@ -66,7 +68,6 @@
 	owner.adjustOxyLoss(-amount, FALSE)
 	owner.adjustBruteLoss(-amount, FALSE)
 	owner.adjustFireLoss(-amount)
-
 
 /*
  * Adjust the owner's temperature up or down to standard body temperatures.
