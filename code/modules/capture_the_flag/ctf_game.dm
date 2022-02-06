@@ -588,7 +588,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
-	var/point_rate = 0.5
+	var/point_rate = 1
 	var/game_area = /area/ctf
 
 /obj/machinery/control_point/process(delta_time)
