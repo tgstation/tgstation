@@ -1009,6 +1009,7 @@
 #include "code\datums\martial\plasma_fist.dm"
 #include "code\datums\martial\psychotic_brawl.dm"
 #include "code\datums\martial\sleeping_carp.dm"
+#include "code\datums\martial\tribal_claw.dm"
 #include "code\datums\martial\wrestling.dm"
 #include "code\datums\materials\_material.dm"
 #include "code\datums\materials\alloys.dm"
