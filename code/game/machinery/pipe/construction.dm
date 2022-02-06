@@ -98,7 +98,7 @@ Buildable meters
 
 /obj/item/pipe/verb/flip()
 	set category = "Object"
-	set name = "Flip Pipe"
+	set name = "Invert Pipe"
 	set src in view(1)
 
 	if ( usr.incapacitated() )

@@ -28,9 +28,9 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/c_transit_tube/proc/AfterRotation(mob/user,rotation_type)
-	if(flipped_build_type && rotation_type == ROTATION_FLIP)
-		setDir(turn(dir,-180)) //Turn back we don't actually flip
+/obj/structure/c_transit_tube/proc/AfterRotation(mob/user, degrees)
+	if(flipped_build_type && degrees == ROTATION_FLIP)
+		setDir(turn(dir, degrees)) //Turn back we don't actually flip
 		flipped = !flipped
 		var/cur_flip = initial(flipped) ? !flipped : flipped
 		if(cur_flip)

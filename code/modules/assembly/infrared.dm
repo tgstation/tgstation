@@ -20,9 +20,9 @@
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
 
-/obj/item/assembly/infra/proc/AfterRotation(mob/user, rotation_type)
+/obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
-	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")
+	balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)

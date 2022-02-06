@@ -86,14 +86,14 @@
 			dpdir |= turn(dir, 180)
 	return dpdir
 
-/obj/structure/disposalconstruct/proc/AfterRotation(mob/user, rotation_type)
-	if(rotation_type == ROTATION_FLIP)
+/obj/structure/disposalconstruct/proc/AfterRotation(mob/user, degrees)
+	if(degrees == ROTATION_FLIP)
 		var/obj/structure/disposalpipe/temp = pipe_type
 		if(initial(temp.flip_type))
 			if(ISDIAGONALDIR(dir)) // Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
-	balloon_alert(user, "you [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [src]")	
+	balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [src]")	
 	update_appearance()
 
 // construction/deconstruction
