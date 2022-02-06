@@ -73,6 +73,10 @@
 	multiplier = 3
 	blacklist = null
 
+/datum/food_processor_process/cutlet/chicken
+	input = /obj/item/food/meat/cutlet/chicken
+	output = /obj/item/food/raw_meatball/chicken
+
 /datum/food_processor_process/fishmeat
 	input = /obj/item/food/fishmeat/carp
 	output = /obj/item/food/fishmeat
