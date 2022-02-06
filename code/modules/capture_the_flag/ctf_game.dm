@@ -588,6 +588,7 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
+	///This var controls how many points are added each tick while being captured, one tick in this case is aproximately one second
 	var/point_rate = 1
 	var/game_area = /area/ctf
 
