@@ -15,6 +15,8 @@
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	route = PATH_START
+	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
+	var/static/heretic_level_generated = FALSE
 	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
 	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
@@ -28,7 +30,8 @@
 	. = ..()
 	obtain_targets(user)
 	heretic_mind_weakref = WEAKREF(user.mind)
-	if(!LAZYLEN(GLOB.heretic_sacrifice_landmarks))
+	if(!heretic_level_generated)
+		heretic_level_generated = TRUE
 		message_admins("Generating z-level for heretic sacrifices...")
 		INVOKE_ASYNC(src, .proc/generate_heretic_z_level)
 
