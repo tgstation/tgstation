@@ -39,6 +39,9 @@ map tramstation
 	votable
 endmap
 
+map cerestation
+endmap
+
 map runtimestation
 endmap
 
