@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Wizards who exit rodform in a wall will no longer self gib. Skill issue?"

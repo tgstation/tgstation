@@ -1,0 +1,5 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - balance: "blast doors and shutters are now above windows and doors, and will hide them. Both layers have been increased to 3.3."
+  - balance: "shutters now cost 5 plasteel and 5 coil and 1 airlock electronic and take 10 seconds to build"

@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Fixes some active turfs + airlock issues on the icebox mining outpost"

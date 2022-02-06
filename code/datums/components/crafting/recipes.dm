@@ -654,6 +654,10 @@
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= subtypesof(/obj/item/radio)
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
@@ -1226,13 +1230,13 @@
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 10,
-				/obj/item/stack/cable_coil = 10,
+	reqs = list(/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 5,
 				/obj/item/electronics/airlock = 1
 				)
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 15 SECONDS
+	time = 10 SECONDS
 	category = CAT_MISC
 	one_per_turf = TRUE
 

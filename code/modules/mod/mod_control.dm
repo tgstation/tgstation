@@ -566,11 +566,11 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(wearer)]
 		if(action)
 			action.Grant(wearer)
 	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(ai)]
 		if(action)
 			action.Grant(ai)
 	if(user)
@@ -585,16 +585,7 @@
 		old_module.on_suit_deactivation()
 		if(old_module.active)
 			old_module.on_deactivation(display_message = TRUE)
-	if(wearer)
-		old_module.on_unequip()
-		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
-		if(action)
-			action.Remove(wearer)
-	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
-		if(action)
-			action.Remove(ai)
-	old_module.pinned_to.Cut()
+	QDEL_LIST(old_module.pinned_to)
 	old_module.on_uninstall()
 	old_module.mod = null
 
