@@ -1,3 +1,9 @@
+// Flags for [/obj/item/grenade/var/dud_flags]
+/// The grenade cannot detonate at all. It is innately nonfunctional.
+#define GRENADE_DUD (1<<0)
+/// The grenade has been used and as such cannot detonate.
+#define GRENADE_USED (1<<1)
+
 /**
  * Base class for all grenades.
  */
@@ -17,6 +23,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
+	/// Bitfields which prevent the grenade from detonating if set. Includes ([GRENADE_DUD]|[GRENADE_USED])
+	var/dud_flags = NONE
 	///Is this grenade currently armed?
 	var/active = FALSE
 	///How long it takes for a grenade to explode after being armed
@@ -51,7 +59,7 @@
 	arm_grenade(user, det_time)
 	user.transferItemToLoc(src, user, TRUE)//>eat a grenade set to 5 seconds >rush captain
 	sleep(det_time)//so you dont die instantly
-	return BRUTELOSS
+	return dud_flags ? SHAME : BRUTELOSS
 
 /obj/item/grenade/deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -87,6 +95,8 @@
 			. += "The timer is set to [DisplayTimeText(det_time)]."
 		else
 			. += "\The [src] is set for instant detonation."
+	if (dud_flags & GRENADE_USED)
+		. += span_warning("It looks like [p_theyve()] already been used.")
 
 /obj/item/grenade/attack_self(mob/user)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
@@ -96,12 +106,13 @@
 			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 		return
 
-	if(!active)
-		if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
-			arm_grenade(user)
+	if (active)
+		return
+	if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
+		arm_grenade(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user)
-	log_bomber(user, "has primed a", src, "for detonation")
+	log_bomber(user, "has primed a", src, "for detonation", message_admins = !dud_flags)
 
 /**
  * arm_grenade (formerly preprime) refers to when a grenade with a standard time fuze is activated, making it go beepbeepbeep and then detonate a few seconds later.
@@ -131,6 +142,12 @@
  * * lanced_by- If this grenade was detonated by an elance, we need to pass that along with the COMSIG_GRENADE_DETONATE signal for pellet clouds
  */
 /obj/item/grenade/proc/detonate(mob/living/lanced_by)
+	if (dud_flags)
+		active = FALSE
+		update_appearance()
+		return FALSE
+
+	dud_flags |= GRENADE_USED // Don't detonate if we have already detonated.
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type = shrapnel_type, magnitude = shrapnel_radius)
@@ -138,6 +155,8 @@
 	SEND_SIGNAL(src, COMSIG_GRENADE_DETONATE, lanced_by)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
 		explosion(src, ex_dev, ex_heavy, ex_light, ex_flame)
+
+	return TRUE
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))
