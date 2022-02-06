@@ -894,7 +894,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 /datum/action/innate/ai/voice_changer
 	name="Voice Changer"
-	button_icon_state = "doomsday_device"
+	button_icon_state = "voice_changer"
 	auto_use_uses  = FALSE
 	var/obj/machinery/ai_voicechanger/voice_changer_machine
 
