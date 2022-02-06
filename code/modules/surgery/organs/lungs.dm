@@ -586,7 +586,7 @@
 
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
 
-	if(!mix) // this typically means we didn't load lavaland, like if we're using #define LOWMEMORYMODE
+	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using #define LOWMEMORYMODE
 		return
 
 	// Take a "breath" of the air
