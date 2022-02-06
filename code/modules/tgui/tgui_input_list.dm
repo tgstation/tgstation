@@ -167,11 +167,12 @@
 			if (!(params["entry"] in items))
 				return
 			set_choice(items_map[params["entry"]])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			SStgui.close_uis(src)
 			closed = TRUE
+			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_list_input/proc/set_choice(choice)

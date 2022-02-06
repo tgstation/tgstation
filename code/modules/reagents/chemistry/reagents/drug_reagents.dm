@@ -677,7 +677,7 @@
 		return
 	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
 		return
-	if(invisible_man.has_status_effect(STATUS_EFFECT_STASIS))
+	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
 	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)

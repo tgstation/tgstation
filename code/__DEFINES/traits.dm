@@ -541,6 +541,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
 
+///Trait for the gamer quirk.
+#define TRAIT_GAMER "gamer"
+
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items

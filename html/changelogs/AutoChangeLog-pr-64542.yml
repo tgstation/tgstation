@@ -1,0 +1,4 @@
+author: "Jolly-66"
+delete-after: True
+changes: 
+  - bugfix: "Mapped in firelocks that are closed will STAY closed."

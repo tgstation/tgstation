@@ -1,0 +1,5 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - qol: "Used grenades now look used when examined."
+  - bugfix: "It should no longer be possible to DC admins by spamming grenades."

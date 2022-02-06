@@ -31,10 +31,10 @@
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100, 1)
-	if(isnull(change_id))
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	id = round(change_id)
+	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
 	balloon_alert(user, "ID changed")
 

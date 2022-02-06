@@ -1,6 +1,6 @@
 //Antag modules for MODsuits
 
-///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection.
+///Armor Booster - Grants your suit more armor and speed in exchange for EVA protection. Also acts as a welding screen.
 /obj/item/mod/module/armor_booster
 	name = "MOD armor booster module"
 	desc = "A retrofitted series of retractable armor plates, allowing the suit to function as essentially power armor, \
@@ -11,7 +11,7 @@
 	module_type = MODULE_TOGGLE
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	removable = FALSE
-	incompatible_modules = list(/obj/item/mod/module/armor_booster)
+	incompatible_modules = list(/obj/item/mod/module/armor_booster, /obj/item/mod/module/welding)
 	cooldown_time = 0.5 SECONDS
 	overlay_state_inactive = "module_armorbooster_off"
 	overlay_state_active = "module_armorbooster_on"
@@ -24,10 +24,11 @@
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
-	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
-	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
-	return ..()
+/obj/item/mod/module/armor_booster/on_suit_activation()
+	mod.helmet.flash_protect = FLASH_PROTECTION_WELDER
+
+/obj/item/mod/module/armor_booster/on_suit_deactivation()
+	mod.helmet.flash_protect = initial(mod.helmet.flash_protect)
 
 /obj/item/mod/module/armor_booster/on_activation()
 	. = ..()
@@ -46,7 +47,7 @@
 			clothing_part.clothing_flags &= ~STOPSPRESSUREDAMAGE
 			spaceproofed[clothing_part] = TRUE
 
-/obj/item/mod/module/armor_booster/on_deactivation()
+/obj/item/mod/module/armor_booster/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -66,10 +67,10 @@
 			clothing_part.clothing_flags |= STOPSPRESSUREDAMAGE
 	spaceproofed = list()
 
-/obj/item/mod/module/armor_booster/elite
-	name = "MOD elite armor booster module"
-	armor_values = list(MELEE = 60, BULLET = 60, LASER = 50, ENERGY = 60)
-	added_slowdown = -0.25
+/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
+	return ..()
 
 ///Energy Shield - Gives you a rechargeable energy shield that nullifies attacks.
 /obj/item/mod/module/energy_shield
@@ -230,9 +231,9 @@
 
 /obj/item/mod/module/noslip/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_NOSLIPWATER, MOD_TRAIT)
-	
+
 /obj/item/mod/module/springlock/bite_of_87
-	
+
 /obj/item/mod/module/springlock/bite_of_87/Initialize(mapload)
 	. = ..()
 	var/obj/item/mod/module/dna_lock/the_dna_lock_behind_the_slaughter = /obj/item/mod/module/dna_lock
@@ -247,11 +248,11 @@
 
 /obj/item/mod/module/springlock/bite_of_87/on_uninstall()
 	mod.activation_step_time *= 10
-	
+
 /obj/item/mod/module/springlock/bite_of_87/on_suit_activation()
 	..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS] || prob(1))
-		var/list/all_parts = mod.mod_parts.Copy() + mod 
+		var/list/all_parts = mod.mod_parts.Copy() + mod
 		for(var/obj/item/part in all_parts) // turns the suit yellow
 			part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)

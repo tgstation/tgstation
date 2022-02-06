@@ -170,9 +170,21 @@
 		CHECK_TICK
 		if(!(old_turfs[old_turfs[i]] & MOVE_TURF))
 			continue
-		var/turf/oldT = old_turfs[i]
-		var/turf/newT = new_turfs[i]
-		newT.afterShuttleMove(oldT, rotation) //turfs
+		var/turf/old_turf = old_turfs[i]
+		var/turf/new_turf = new_turfs[i]
+		new_turf.afterShuttleMove(old_turf, rotation) //turfs
+		var/turf/new_ceiling = get_step_multiz(new_turf, UP) // check if a ceiling is needed
+		if(new_ceiling)
+			// generate ceiling
+			if(istype(new_ceiling, /turf/open/openspace)) // why is this needed? because we have 2 different typepaths for openspace
+				new_ceiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/openspace))
+			else if (istype(new_ceiling, /turf/open/space/openspace))
+				new_ceiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/space/openspace))
+		var/turf/old_ceiling = get_step_multiz(old_turf, UP) 
+		if(old_ceiling && istype(old_ceiling, /turf/open/floor/engine/hull/ceiling)) // check if a ceiling was generated previously
+			// remove old ceiling
+			var/turf/open/floor/engine/hull/ceiling/old_shuttle_ceiling = old_ceiling
+			old_shuttle_ceiling.ChangeTurf(old_shuttle_ceiling.old_turf_type)
 
 	for(var/i in 1 to moved_atoms.len)
 		CHECK_TICK

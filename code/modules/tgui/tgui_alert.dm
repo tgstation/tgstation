@@ -10,7 +10,7 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0, autofocus = TRUE)
+/proc/tgui_alert(mob/user, message = "", title, list/buttons = list("Ok"), timeout = 0, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -39,7 +39,7 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0, autofocus = TRUE)
+/proc/tgui_alert_async(mob/user, message = "", title, list/buttons = list("Ok"), datum/callback/callback, timeout = 0, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -76,10 +76,10 @@
 	var/closed
 
 /datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, autofocus)
-	src.title = title
-	src.message = message
-	src.buttons = buttons.Copy()
 	src.autofocus = autofocus
+	src.buttons = buttons.Copy()
+	src.message = message
+	src.title = title
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -111,14 +111,19 @@
 /datum/tgui_modal/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/tgui_modal/ui_data(mob/user)
+/datum/tgui_modal/ui_static_data(mob/user)
 	. = list(
-		"title" = title,
-		"message" = message,
+		"autofocus" = autofocus,
 		"buttons" = buttons,
-		"autofocus" = autofocus
+		"message" = message,
+		"preferences" = list(),
+		"title" = title
 	)
+	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 
+/datum/tgui_modal/ui_data(mob/user)
+	. = list()
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 
@@ -129,8 +134,13 @@
 	switch(action)
 		if("choose")
 			if (!(params["choice"] in buttons))
-				return
+				CRASH("[usr] entered a non-existent button choice: [params["choice"]]")
 			set_choice(params["choice"])
+			closed = TRUE
+			SStgui.close_uis(src)
+			return TRUE
+		if("cancel")
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 

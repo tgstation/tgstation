@@ -66,7 +66,7 @@ export const TextInputModal = (_, context) => {
             <Stack.Item grow>
               <InputArea input={input} onType={onType} />
             </Stack.Item>
-            <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
+            <Stack.Item>
               <InputButtons
                 input={input}
                 message={`${input.length}/${max_length}`}
@@ -89,7 +89,7 @@ const InputArea = (props, context) => {
     <TextArea
       autoFocus
       autoSelect
-      height={multiline || input.length >= 30 ? "100%" : "1.8rem"}
+      height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;

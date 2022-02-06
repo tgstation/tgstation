@@ -107,3 +107,7 @@
 	force = 5
 	throwforce = 5
 	sharpness = SHARP_EDGED
+
+/obj/item/plate_shard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = force)
