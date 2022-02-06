@@ -1610,7 +1610,7 @@
 /obj/item/storage/box/hero/mothpioneer/PopulateContents()
 	new /obj/item/clothing/suit/mothcoat/original(src)
 	new /obj/item/clothing/head/mothcap(src)
-	new /obj/item/flashlight/lantern
+	new /obj/item/flashlight/lantern(src)
 	new /obj/item/screwdriver(src)
 	new /obj/item/wrench(src)
 	new /obj/item/crowbar(src)
