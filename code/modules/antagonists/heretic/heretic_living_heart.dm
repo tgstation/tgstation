@@ -145,7 +145,7 @@
 
 	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
 	if(QDELETED(tracked_mob))
-		last_tracked_mob = null
+		last_tracked_name = null
 		return
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)

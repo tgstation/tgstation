@@ -496,7 +496,7 @@
 			var/mob/living/carbon/human/actual_target = ref.resolve()
 			if(QDELETED(actual_target))
 				continue
-			. += " - <b>[actual_target.real_name]</b>, the [actual_target.mind?.assigned_role || "human"].<br>"
+			. += " - <b>[actual_target.real_name]</b>, the [actual_target.mind?.assigned_role?.title || "human"].<br>"
 	else
 		. += "<i>None!</i><br>"
 	. += "<br>"
