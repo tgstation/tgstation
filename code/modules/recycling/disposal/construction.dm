@@ -93,7 +93,6 @@
 			if(ISDIAGONALDIR(dir)) // Fix RPD-induced diagonal turning
 				setDir(turn(dir, 45))
 			pipe_type = initial(temp.flip_type)
-	balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [src]")	
 	update_appearance()
 
 // construction/deconstruction
