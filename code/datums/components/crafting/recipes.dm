@@ -632,6 +632,10 @@
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= subtypesof(/obj/item/radio)
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
