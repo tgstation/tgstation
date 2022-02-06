@@ -286,32 +286,32 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
-/obj/item/wirerod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/shard))
+/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/shard))
 		user.balloon_alert(user, "crafting spear")
 		if(do_after(user, 4 SECONDS, src))
-			var/obj/item/spear/crafted_spear = new /obj/item/spear
+			var/obj/item/spear/crafted_spear = new /obj/item/spear()
 
 			remove_item_from_storage(user)
-			if (!user.transferItemToLoc(I, S))
+			if (!user.transferItemToLoc(attacking_item, crafted_spear))
 				return
-			S.CheckParts(list(I))
+			crafted_spear.CheckParts(list(attacking_item))
 			qdel(src)
 
 			user.put_in_hands(crafted_spear)
 			to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 			user.balloon_alert(user, "crafted")
 
-	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
+	else if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		user.balloon_alert(user, "crafting cattleprod")
 		if(do_after(user, 4 SECONDS, src))
 			var/obj/item/melee/baton/security/cattleprod/prod = new
 
 			remove_item_from_storage(user)
 
-			to_chat(user, span_notice("You fasten [I] to the top of the rod with the cable."))
+			to_chat(user, span_notice("You fasten [attacking_item] to the top of the rod with the cable."))
 
-			qdel(I)
+			qdel(attacking_item)
 			qdel(src)
 
 			user.put_in_hands(prod)
