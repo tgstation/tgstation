@@ -317,8 +317,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 			user.put_in_hands(prod)
 			user.balloon_alert(user, "crafted")
-	else
-		return ..()
+			return
+	return ..()
 
 
 /obj/item/throwing_star
