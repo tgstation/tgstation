@@ -390,10 +390,21 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
+		if(W.tool_behaviour == TOOL_WRENCH && anchorable) // The locker is open and we're using a wrench
+			if(isinspace() && !anchored)
+				return
+			set_anchored(!anchored)
+			W.play_tool_sound(src, 75)
+			user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
+						balloon_alert(user, "You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
+						span_hear("You hear a ratchet."))
+			return // This return prevents us from putting the wrench inside the locker when we bolt/unbolt it
 		if (user.combat_mode)
 			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
+	else if(W.tool_behaviour == TOOL_WRENCH && anchorable) // Bolts are on the inside now, so we make sure that the locker isn't closed
+		balloon_alert(user, "Locker must be open to access bolts!")
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
@@ -409,14 +420,6 @@
 							span_hear("You hear welding."))
 			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_appearance()
-	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
-		if(isinspace() && !anchored)
-			return
-		set_anchored(!anchored)
-		W.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_notice("You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_hear("You hear a ratchet."))
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
