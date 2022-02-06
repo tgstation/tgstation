@@ -58,7 +58,7 @@
 	melee_damage_lower += rand(3, 5)
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(40,60)
-	move_to_delay = rand(1.5, 5.5)
+	move_to_delay = rand(3,11)
 	cap_living = cap_living || mutable_appearance(icon, "mushroom_cap")
 	cap_dead = cap_dead || mutable_appearance(icon, "mushroom_cap_dead")
 

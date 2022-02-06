@@ -209,6 +209,18 @@
 	if(istype(new_team))
 		ert_team = new_team
 
+/datum/antagonist/ert/bounty_armor
+	role = "Armored Bounty Hunter"
+	outfit = /datum/outfit/bountyarmor/ert
+
+/datum/antagonist/ert/bounty_hook
+	role = "Hookgun Bounty Hunter"
+	outfit = /datum/outfit/bountyarmor/ert
+
+/datum/antagonist/ert/bounty_synth
+	role = "Synthetic Bounty Hunter"
+	outfit = /datum/outfit/bountysynth/ert
+
 /datum/antagonist/ert/proc/forge_objectives()
 	if(ert_team)
 		objectives |= ert_team.objectives

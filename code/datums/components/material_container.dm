@@ -147,29 +147,29 @@
 	user_insert(I, user, mat_container_flags)
 
 /// Proc used for when player inserts materials
-/datum/component/material_container/proc/user_insert(obj/item/I, mob/living/user, breakdown_flags = mat_container_flags)
+/datum/component/material_container/proc/user_insert(obj/item/held_item, mob/living/user, breakdown_flags = mat_container_flags)
 	set waitfor = FALSE
 	var/requested_amount
 	var/active_held = user.get_active_held_item()  // differs from I when using TK
-	if(istype(I, /obj/item/stack) && precise_insertion)
+	if(istype(held_item, /obj/item/stack) && precise_insertion)
 		var/atom/current_parent = parent
-		var/obj/item/stack/S = I
-		requested_amount = round(tgui_input_number(user, "How much do you want to insert?", "Inserting [S.singular_name]s"))
-		if(isnull(requested_amount) || (requested_amount <= 0))
+		var/obj/item/stack/item_stack = held_item
+		requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
+		if(!requested_amount || QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
-		if(QDELETED(I) || QDELETED(user) || QDELETED(src) || parent != current_parent || user.physical_can_use_topic(current_parent) < UI_INTERACTIVE || user.get_active_held_item() != active_held)
+		if(parent != current_parent || user.get_active_held_item() != active_held)
 			return
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, span_warning("[I] is stuck to you and cannot be placed into [parent]."))
+	if(!user.temporarilyRemoveItemFromInventory(held_item))
+		to_chat(user, span_warning("[held_item] is stuck to you and cannot be placed into [parent]."))
 		return
-	var/inserted = insert_item(I, stack_amt = requested_amount, breakdown_flags= mat_container_flags)
+	var/inserted = insert_item(held_item, stack_amt = requested_amount, breakdown_flags= mat_container_flags)
 	if(inserted)
 		to_chat(user, span_notice("You insert a material total of [inserted] into [parent]."))
-		qdel(I)
+		qdel(held_item)
 		if(after_insert)
-			after_insert.Invoke(I, last_inserted_id, inserted)
-	else if(I == active_held)
-		user.put_in_active_hand(I)
+			after_insert.Invoke(held_item, last_inserted_id, inserted)
+	else if(held_item == active_held)
+		user.put_in_active_hand(held_item)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
 /datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1, stack_amt, breakdown_flags = mat_container_flags)

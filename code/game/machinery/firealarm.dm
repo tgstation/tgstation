@@ -358,7 +358,7 @@
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
-		. += "<b>Right-Click</b> or <b>Alt-Click</b> to reset firelocks in this area."
+		. += "<b>Right-Click</b> to reset firelocks in this area."
 	else
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."

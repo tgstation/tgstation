@@ -23,12 +23,12 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
 /area/ruin/space/djstation/solars)
 "n" = (
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/djstation/solars)
@@ -64,7 +64,7 @@
 	pixel_x = -8;
 	pixel_y = -3
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
 /area/ruin/space/djstation/solars)

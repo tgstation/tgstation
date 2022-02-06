@@ -239,6 +239,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
+	if(mapload)
+		add_stealing_item_objective()
 
 /obj/item/Destroy()
 	// This var exists as a weird proxy "owner" ref
@@ -250,6 +252,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	for(var/X in actions)
 		qdel(X)
 	return ..()
+
+/// Called if this item is supposed to be a steal objective item objective. Only done at mapload
+/obj/item/proc/add_stealing_item_objective()
+	return
 
 /// Adds the weapon_description element, which shows the 'warning label' for especially dangerous objects. Override this for item types with special notes.
 /obj/item/proc/add_weapon_description()

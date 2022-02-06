@@ -13,12 +13,17 @@
 	var/datum/circuit_variable/current_variable
 	circuit_size = 0
 
+	var/should_listen = FALSE
+
 /obj/item/circuit_component/variable/populate_options()
 	variable_name = add_option_port("Variable", null)
 
 /obj/item/circuit_component/variable/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
-	variable_name.possible_options = added_to.circuit_variables
+	variable_name.possible_options = get_variable_list(added_to)
+
+/obj/item/circuit_component/variable/proc/get_variable_list(obj/item/integrated_circuit/integrated_circuit)
+	return integrated_circuit.circuit_variables
 
 /obj/item/circuit_component/variable/removed_from(obj/item/integrated_circuit/removed_from)
 	variable_name.possible_options = null
@@ -43,7 +48,8 @@
 /obj/item/circuit_component/variable/proc/remove_current_variable()
 	SIGNAL_HANDLER
 	if(current_variable)
-		current_variable.remove_listener(src)
+		if(should_listen)
+			current_variable.remove_listener(src)
 		UnregisterSignal(current_variable, COMSIG_PARENT_QDELETING)
 		current_variable = null
 
@@ -53,5 +59,6 @@
 
 	remove_current_variable()
 	current_variable = variable
-	current_variable.add_listener(src)
+	if(should_listen)
+		current_variable.add_listener(src)
 	RegisterSignal(current_variable, COMSIG_PARENT_QDELETING, .proc/remove_current_variable)
