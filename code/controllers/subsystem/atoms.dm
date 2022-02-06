@@ -9,6 +9,8 @@ SUBSYSTEM_DEF(atoms)
 	flags = SS_NO_FIRE
 
 	var/old_initialized
+	/// A count of how many initalize changes we've made. We want to prevent old_initialize being overriden by some other value, breaking init code
+	var/initialized_changed = 0
 
 	var/list/late_loaders = list()
 
@@ -48,8 +50,7 @@ SUBSYSTEM_DEF(atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
-	old_initialized = initialized
-	initialized = INITIALIZATION_INNEW_MAPLOAD
+	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD)
 
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
@@ -79,7 +80,7 @@ SUBSYSTEM_DEF(atoms)
 	testing("Initialized [count] atoms")
 	pass(count)
 
-	initialized = old_initialized
+	clear_tracked_initalize()
 
 	if(late_loaders.len)
 		for(var/I in 1 to late_loaders.len)
@@ -149,11 +150,24 @@ SUBSYSTEM_DEF(atoms)
 	return qdeleted || QDELING(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
-	old_initialized = initialized
-	initialized = INITIALIZATION_INSSATOMS
+	set_tracked_initalized(INITIALIZATION_INSSATOMS)
 
 /datum/controller/subsystem/atoms/proc/map_loader_stop()
-	initialized = old_initialized
+	clear_tracked_initalize()
+
+/// Use this to set initialized to prevent error states where old_initialized is overriden. It keeps happening and it's cheesing me off
+/datum/controller/subsystem/atoms/proc/set_tracked_initalized(value)
+	if(!initialized_changed)
+		old_initialized = initialized
+		initialized = value
+	else
+		stack_trace("We started maploading while we were already maploading. You doing something odd?")
+	initialized_changed += 1
+
+/datum/controller/subsystem/atoms/proc/clear_tracked_initalize()
+	initialized_changed -= 1
+	if(!initialized_changed)
+		initialized = old_initialized
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized
