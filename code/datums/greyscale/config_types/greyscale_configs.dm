@@ -436,9 +436,21 @@
 /datum/greyscale_config/mothcoat
 	name = "Moth Coat"
 	icon_file = 'icons/obj/clothing/suits/moth.dmi'
-	json_config = 'code/datums/greyscale/json_configs/moth_clothes.json'
+	json_config = 'code/datums/greyscale/json_configs/moth_coat.json'
 
 /datum/greyscale_config/mothcoat_worn
 	name = "Worn Moth Coat"
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
-	json_config = 'code/datums/greyscale/json_configs/moth_clothes_worn.json'
+	json_config = 'code/datums/greyscale/json_configs/moth_coat_worn.json'
+
+/datum/greyscale_config/mothcoat_winter
+	name = "Moth Winter Coat"
+	icon_file = 'icons/obj/clothing/suits/moth.dmi'
+	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter.json'
+
+/datum/greyscale_config/mothcoat_winter_worn
+	name = "Worn Moth Winter Coat"
+	icon_file = 'icons/mob/clothing/suits/moth.dmi'
+	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
+
+
